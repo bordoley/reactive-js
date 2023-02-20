@@ -42,6 +42,8 @@
 
 ▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
+Returns a ContainerLike which emits all values from each source sequentially.
+
 #### Type parameters
 
 | Name |

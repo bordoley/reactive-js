@@ -43,6 +43,8 @@
 
 ▸ **empty**<`T`\>(`options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
+Return an ContainerLike that emits no items.
+
 #### Type parameters
 
 | Name |

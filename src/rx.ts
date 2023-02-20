@@ -7,7 +7,6 @@ import {
   ContainerOperator,
   StatefulContainerLike,
   StatefulContainerLike_state,
-  Zip,
 } from "./containers";
 import { Factory, Function1, Function2 } from "./functions";
 import { DispatcherLike, SchedulerLike } from "./scheduling";
@@ -362,9 +361,71 @@ export interface WithLatestFrom<C extends ObservableLike> extends Container<C> {
  */
 export interface ZipLatest<C extends ObservableLike> extends Container<C> {
   /**
-   * @category Operator
+   * Returns a container that zips the latest values from
+   * multiple sources.
+   *
+   * @category Constructor
    */
-  zipLatest: Zip<C>["zip"];
+  zipLatest<TA, TB>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+  ): ContainerOf<C, readonly [TA, TB]>;
+  zipLatest<TA, TB, TC>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+  ): ContainerOf<C, readonly [TA, TB, TC]>;
+  zipLatest<TA, TB, TC, TD>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD]>;
+  zipLatest<TA, TB, TC, TD, TE>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE]>;
+  zipLatest<TA, TB, TC, TD, TE, TF>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+    h: ContainerOf<C, TH>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+    h: ContainerOf<C, TH>,
+    i: ContainerOf<C, TI>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
 
 /**

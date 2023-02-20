@@ -52,6 +52,8 @@
 
 ▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
 
+Returns a ContainerLike which emits all values from each source sequentially.
+
 #### Type parameters
 
 | Name |
@@ -75,6 +77,8 @@ ___
 ### empty
 
 ▸ **empty**<`T`\>(`options?`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+Return an ContainerLike that emits no items.
 
 #### Type parameters
 
@@ -144,6 +148,9 @@ ___
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
 
+Generates a ContainerLike from a generator function
+that is applied to an accumulator value between emitted items.
+
 #### Type parameters
 
 | Name |
@@ -152,11 +159,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `undefined` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
+| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -167,6 +174,9 @@ ___
 ### zip
 
 ▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<readonly [`TA`, `TB`]\>
+
+Combines multiple sources to create a ContainerLike whose values are calculated from the values,
+in order, of each of its input sources.
 
 #### Type parameters
 
@@ -480,6 +490,8 @@ ___
 
 ▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
 
+Converts the ContainerLike to a `IterableLike`.
+
 #### Type parameters
 
 | Name |
@@ -525,6 +537,8 @@ ___
 ### toReadonlyArray
 
 ▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+Converts the ContainerLike to a `ReadonlyArrayLike`.
 
 #### Type parameters
 
@@ -596,6 +610,9 @@ ___
 
 ▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
 
+Returns a ContainerLike which buffers items produced by the source until either the
+number of items reaches the specified maximum buffer size.
+
 #### Type parameters
 
 | Name |
@@ -619,6 +636,9 @@ ___
 
 ▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, `T`\>
 
+Converts a higher-order ContainerLike into a first-order
+ContainerLike by concatenating the inner sources in order.
+
 #### Type parameters
 
 | Name |
@@ -640,6 +660,9 @@ ___
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerOperator that emits all items emitted by the source that
+are distinct by comparison from the previous item.
 
 #### Type parameters
 
@@ -664,6 +687,9 @@ ___
 
 ▸ **forEach**<`T`\>(`effect`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a ContainerOperator that applies the side effect function to each
+value emitted by the source.
+
 #### Type parameters
 
 | Name |
@@ -686,6 +712,9 @@ ___
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerOperator that only emits items produced by the
+source that satisfy the specified predicate.
 
 #### Type parameters
 
@@ -711,7 +740,7 @@ ___
 ▸ **map**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `mapper` function to each
-value produced by the source.
+value emitted by the source.
 
 **`Typeparam`**
 
@@ -732,7 +761,7 @@ TB - The inner type of the mapped container
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value produced by the source |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
 | `options?` | `undefined` | - |
 
 #### Returns
@@ -767,6 +796,8 @@ ___
 
 ▸ **repeat**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a ContainerLike that mirrors the source, repeating it whenever the predicate returns true.
+
 #### Type parameters
 
 | Name |
@@ -786,6 +817,8 @@ ___
 
 ▸ **repeat**<`T`\>(`count`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a ContainerLike that mirrors the source, repeating it `count` times.
+
 #### Type parameters
 
 | Name |
@@ -804,6 +837,8 @@ ___
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
 
 ▸ **repeat**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerLike that mirrors the source, continually repeating it.
 
 #### Type parameters
 
@@ -827,6 +862,9 @@ ___
 
 ▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
+Returns a ContainerLike that applies an accumulator function over the source,
+and emits each intermediate result.
+
 #### Type parameters
 
 | Name |
@@ -836,11 +874,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
-| `options?` | `undefined` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
+| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -851,6 +889,8 @@ ___
 ### skipFirst
 
 ▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerLike that skips the first count items emitted by the source.
 
 #### Type parameters
 
@@ -875,6 +915,8 @@ ___
 
 ▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a ContainerLike that only emits the first `count` values emitted by the source.
+
 #### Type parameters
 
 | Name |
@@ -897,6 +939,8 @@ ___
 ### takeLast
 
 ▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerLike that only emits the last `count` items emitted by the source.
 
 #### Type parameters
 
@@ -921,6 +965,10 @@ ___
 
 ▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a ContainerLike which emits values emitted by the source as long
+as each value satisfies the given predicate, and then completes as soon as
+this predicate is not satisfied.
+
 #### Type parameters
 
 | Name |
@@ -929,11 +977,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `Object` |
-| `options.inclusive?` | `boolean` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> | The predicate function. |
+| `options?` | `Object` | - |
+| `options.inclusive?` | `boolean` | - |
 
 #### Returns
 
@@ -945,6 +993,8 @@ ___
 
 ▸ **throwIfEmpty**<`T`\>(`factory`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a StatefulContainerLike that emits an error if the source completes without emitting a value.
+
 #### Type parameters
 
 | Name |
@@ -953,10 +1003,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`unknown`\> |
-| `options?` | `undefined` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`unknown`\> | A factory function invoked to produce the error to be thrown. |
+| `options?` | `undefined` | - |
 
 #### Returns
 

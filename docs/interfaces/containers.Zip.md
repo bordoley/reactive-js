@@ -42,6 +42,9 @@
 
 ▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, readonly [`TA`, `TB`]\>
 
+Combines multiple sources to create a ContainerLike whose values are calculated from the values,
+in order, of each of its input sources.
+
 #### Type parameters
 
 | Name |

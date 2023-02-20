@@ -19,6 +19,8 @@ import {
   Map,
   Pairwise,
   Reduce,
+  Repeat,
+  Scan,
   SkipFirst,
   SomeSatisfy,
   TakeFirst,
@@ -49,7 +51,17 @@ import {
 } from "../functions";
 import { FromEnumerable } from "../ix";
 import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
-import { ObservableLike, ObserverLike, ScanAsync, Throttle } from "../rx";
+import {
+  ObservableLike,
+  ObserverLike,
+  Retry,
+  ScanAsync,
+  TakeUntil,
+  Throttle,
+  Timeout,
+  WithLatestFrom,
+  ZipLatest,
+} from "../rx";
 import { SchedulerLike } from "../scheduling";
 import { FromFlowable } from "../streaming";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable";
@@ -394,11 +406,11 @@ export const pairwise: Pairwise<ObservableLike>["pairwise"] =
 
 export const reduce: Reduce<ObservableLike>["reduce"] = Observable_reduce;
 
-export const repeat = Observable_repeat;
+export const repeat: Repeat<ObservableLike>["repeat"] = Observable_repeat;
 
-export const retry = Observable_retry;
+export const retry: Retry<ObservableLike>["retry"] = Observable_retry;
 
-export const scan = Observable_scan;
+export const scan: Scan<ObservableLike>["scan"] = Observable_scan;
 
 export const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"] =
   Observable_scanAsync;
@@ -435,7 +447,8 @@ export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
 export const takeLast: TakeLast<ObservableLike>["takeLast"] =
   Observable_takeLast;
 
-export const takeUntil = Observable_takeUntil;
+export const takeUntil: TakeUntil<ObservableLike>["takeUntil"] =
+  Observable_takeUntil;
 
 export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
   Observable_takeWhile;
@@ -446,13 +459,18 @@ export const throttle: Throttle<ObservableLike>["throttle"] =
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-export const timeout = Observable_timeout;
+export const timeout: Timeout<ObservableLike>["timeout"] = Observable_timeout;
 
 export const toPromise = Observable_toPromise;
 
-export const withLatestFrom = Observable_withLatestFrom;
-export const zip = Observable_zip;
-export const zipLatest = Observable_zipLatest;
+export const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"] =
+  Observable_withLatestFrom;
+
+export const zip: Zip<ObservableLike>["zip"] = Observable_zip;
+
+export const zipLatest: ZipLatest<ObservableLike>["zipLatest"] =
+  Observable_zipLatest;
+
 export const zipWithLatestFrom = Observable_zipWithLatestFrom;
 
 /** @ignore */

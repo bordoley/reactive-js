@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`StatefulContainerLike`](containers.StatefulContainerLike.md) |
 | `O` | `never` |
 
 ## Hierarchy
@@ -42,6 +42,9 @@
 ### forEach
 
 ▸ **forEach**<`T`\>(`effect`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
+
+Returns a ContainerOperator that applies the side effect function to each
+value emitted by the source.
 
 #### Type parameters
 

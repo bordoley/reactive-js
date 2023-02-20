@@ -37,6 +37,9 @@
 
 ▸ <`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>
 
+Returns a ContainerLike which buffers items produced by the source until either the
+number of items reaches the specified maximum buffer size.
+
 ##### Type parameters
 
 | Name |

@@ -43,6 +43,9 @@
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
+Generates a ContainerLike from a generator function
+that is applied to an accumulator value between emitted items.
+
 #### Type parameters
 
 | Name |
@@ -51,11 +54,11 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
-| `options?` | `O` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> | the generator function. |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
+| `options?` | `O` | - |
 
 #### Returns
 

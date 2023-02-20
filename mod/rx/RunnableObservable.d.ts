@@ -435,67 +435,67 @@ declare const RunnableObservable: {
         ]>;
     };
     zipLatest: {
-        <TA, TB>(a: RunnableObservableLike<TA>, b: RunnableObservableLike<TB>): RunnableObservableLike<readonly [
-            TA,
-            TB
+        <TA_10, TB_10>(a: RunnableObservableLike<TA_10>, b: RunnableObservableLike<TB_10>): RunnableObservableLike<readonly [
+            TA_10,
+            TB_10
         ]>;
-        <TA_1, TB_1, TC>(a: RunnableObservableLike<TA_1>, b: RunnableObservableLike<TB_1>, c: RunnableObservableLike<TC>): RunnableObservableLike<readonly [
-            TA_1,
-            TB_1,
-            TC
+        <TA_11, TB_11, TC_7>(a: RunnableObservableLike<TA_11>, b: RunnableObservableLike<TB_11>, c: RunnableObservableLike<TC_7>): RunnableObservableLike<readonly [
+            TA_11,
+            TB_11,
+            TC_7
         ]>;
-        <TA_2, TB_2, TC_1, TD>(a: RunnableObservableLike<TA_2>, b: RunnableObservableLike<TB_2>, c: RunnableObservableLike<TC_1>, d: RunnableObservableLike<TD>): RunnableObservableLike<readonly [
-            TA_2,
-            TB_2,
-            TC_1,
-            TD
+        <TA_12, TB_12, TC_8, TD_6>(a: RunnableObservableLike<TA_12>, b: RunnableObservableLike<TB_12>, c: RunnableObservableLike<TC_8>, d: RunnableObservableLike<TD_6>): RunnableObservableLike<readonly [
+            TA_12,
+            TB_12,
+            TC_8,
+            TD_6
         ]>;
-        <TA_3, TB_3, TC_2, TD_1, TE>(a: RunnableObservableLike<TA_3>, b: RunnableObservableLike<TB_3>, c: RunnableObservableLike<TC_2>, d: RunnableObservableLike<TD_1>, e: RunnableObservableLike<TE>): RunnableObservableLike<readonly [
-            TA_3,
-            TB_3,
-            TC_2,
-            TD_1,
-            TE
+        <TA_13, TB_13, TC_9, TD_7, TE_5>(a: RunnableObservableLike<TA_13>, b: RunnableObservableLike<TB_13>, c: RunnableObservableLike<TC_9>, d: RunnableObservableLike<TD_7>, e: RunnableObservableLike<TE_5>): RunnableObservableLike<readonly [
+            TA_13,
+            TB_13,
+            TC_9,
+            TD_7,
+            TE_5
         ]>;
-        <TA_4, TB_4, TC_3, TD_2, TE_1, TF>(a: RunnableObservableLike<TA_4>, b: RunnableObservableLike<TB_4>, c: RunnableObservableLike<TC_3>, d: RunnableObservableLike<TD_2>, e: RunnableObservableLike<TE_1>, f: RunnableObservableLike<TF>): RunnableObservableLike<readonly [
-            TA_4,
-            TB_4,
-            TC_3,
-            TD_2,
-            TE_1,
-            TF
+        <TA_14, TB_14, TC_10, TD_8, TE_6, TF_4>(a: RunnableObservableLike<TA_14>, b: RunnableObservableLike<TB_14>, c: RunnableObservableLike<TC_10>, d: RunnableObservableLike<TD_8>, e: RunnableObservableLike<TE_6>, f: RunnableObservableLike<TF_4>): RunnableObservableLike<readonly [
+            TA_14,
+            TB_14,
+            TC_10,
+            TD_8,
+            TE_6,
+            TF_4
         ]>;
-        <TA_5, TB_5, TC_4, TD_3, TE_2, TF_1, TG>(a: RunnableObservableLike<TA_5>, b: RunnableObservableLike<TB_5>, c: RunnableObservableLike<TC_4>, d: RunnableObservableLike<TD_3>, e: RunnableObservableLike<TE_2>, f: RunnableObservableLike<TF_1>, g: RunnableObservableLike<TG>): RunnableObservableLike<readonly [
-            TA_5,
-            TB_5,
-            TC_4,
-            TD_3,
-            TE_2,
-            TF_1,
-            TG
+        <TA_15, TB_15, TC_11, TD_9, TE_7, TF_5, TG_3>(a: RunnableObservableLike<TA_15>, b: RunnableObservableLike<TB_15>, c: RunnableObservableLike<TC_11>, d: RunnableObservableLike<TD_9>, e: RunnableObservableLike<TE_7>, f: RunnableObservableLike<TF_5>, g: RunnableObservableLike<TG_3>): RunnableObservableLike<readonly [
+            TA_15,
+            TB_15,
+            TC_11,
+            TD_9,
+            TE_7,
+            TF_5,
+            TG_3
         ]>;
-        <TA_6, TB_6, TC_5, TD_4, TE_3, TF_2, TG_1, TH>(a: RunnableObservableLike<TA_6>, b: RunnableObservableLike<TB_6>, c: RunnableObservableLike<TC_5>, d: RunnableObservableLike<TD_4>, e: RunnableObservableLike<TE_3>, f: RunnableObservableLike<TF_2>, g: RunnableObservableLike<TG_1>, h: RunnableObservableLike<TH>): RunnableObservableLike<readonly [
-            TA_6,
-            TB_6,
-            TC_5,
-            TD_4,
-            TE_3,
-            TF_2,
-            TG_1,
-            TH
+        <TA_16, TB_16, TC_12, TD_10, TE_8, TF_6, TG_4, TH_2>(a: RunnableObservableLike<TA_16>, b: RunnableObservableLike<TB_16>, c: RunnableObservableLike<TC_12>, d: RunnableObservableLike<TD_10>, e: RunnableObservableLike<TE_8>, f: RunnableObservableLike<TF_6>, g: RunnableObservableLike<TG_4>, h: RunnableObservableLike<TH_2>): RunnableObservableLike<readonly [
+            TA_16,
+            TB_16,
+            TC_12,
+            TD_10,
+            TE_8,
+            TF_6,
+            TG_4,
+            TH_2
         ]>;
-        <TA_7, TB_7, TC_6, TD_5, TE_4, TF_3, TG_2, TH_1, TI>(a: RunnableObservableLike<TA_7>, b: RunnableObservableLike<TB_7>, c: RunnableObservableLike<TC_6>, d: RunnableObservableLike<TD_5>, e: RunnableObservableLike<TE_4>, f: RunnableObservableLike<TF_3>, g: RunnableObservableLike<TG_2>, h: RunnableObservableLike<TH_1>, i: RunnableObservableLike<TI>): RunnableObservableLike<readonly [
-            TA_7,
-            TB_7,
-            TC_6,
-            TD_5,
-            TE_4,
-            TF_3,
-            TG_2,
-            TH_1,
-            TI
+        <TA_17, TB_17, TC_13, TD_11, TE_9, TF_7, TG_5, TH_3, TI_1>(a: RunnableObservableLike<TA_17>, b: RunnableObservableLike<TB_17>, c: RunnableObservableLike<TC_13>, d: RunnableObservableLike<TD_11>, e: RunnableObservableLike<TE_9>, f: RunnableObservableLike<TF_7>, g: RunnableObservableLike<TG_5>, h: RunnableObservableLike<TH_3>, i: RunnableObservableLike<TI_1>): RunnableObservableLike<readonly [
+            TA_17,
+            TB_17,
+            TC_13,
+            TD_11,
+            TE_9,
+            TF_7,
+            TG_5,
+            TH_3,
+            TI_1
         ]>;
     };
-    zipWithLatestFrom: <TA_10, TB_10, T_38>(other: RunnableObservableLike<TB_10>, selector: Function2<TA_10, TB_10, T_38>) => ContainerOperator<RunnableObservableLike<unknown>, TA_10, T_38>;
+    zipWithLatestFrom: <TA_18, TB_18, T_38>(other: RunnableObservableLike<TB_18>, selector: Function2<TA_18, TB_18, T_38>) => ContainerOperator<RunnableObservableLike<unknown>, TA_18, T_38>;
 };
 export { buffer, catchError, combineLatest, concat, concatAll, decodeWithCharset, RunnableObservable as default, defer, distinctUntilChanged, empty, everySatisfy, exhaust, forEach, fromEnumerable, fromIterable, fromReadonlyArray, fromSequence, generate, keep, map, merge, mergeAll, pairwise, reduce, retry, scan, scanAsync, skipFirst, someSatisfy, switchAll, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, toFlowable, toObservable, toReadonlyArray, toRunnable, withLatestFrom, zip, zipLatest, zipWithLatestFrom };

@@ -43,6 +43,8 @@
 
 ▸ **repeat**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
+Returns a ContainerLike that mirrors the source, repeating it whenever the predicate returns true.
+
 #### Type parameters
 
 | Name |
@@ -62,6 +64,8 @@
 
 ▸ **repeat**<`T`\>(`count`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
+Returns a ContainerLike that mirrors the source, repeating it `count` times.
+
 #### Type parameters
 
 | Name |
@@ -80,6 +84,8 @@
 [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
 ▸ **repeat**<`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
+
+Returns a ContainerLike that mirrors the source, continually repeating it.
 
 #### Type parameters
 

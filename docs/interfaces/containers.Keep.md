@@ -43,6 +43,9 @@
 
 ▸ **keep**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
+Returns a ContainerOperator that only emits items produced by the
+source that satisfy the specified predicate.
+
 #### Type parameters
 
 | Name |

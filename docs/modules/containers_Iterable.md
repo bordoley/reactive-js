@@ -211,6 +211,8 @@ ___
 
 ▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
 
+Converts the ContainerLike to a `IterableLike`.
+
 #### Type parameters
 
 | Name |
@@ -256,6 +258,8 @@ ___
 ### toReadonlyArray
 
 ▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+Converts the ContainerLike to a `ReadonlyArrayLike`.
 
 #### Type parameters
 

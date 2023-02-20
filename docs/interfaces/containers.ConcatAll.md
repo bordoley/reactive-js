@@ -37,6 +37,9 @@
 
 ▸ <`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
 
+Converts a higher-order ContainerLike into a first-order
+ContainerLike by concatenating the inner sources in order.
+
 ##### Type parameters
 
 | Name |

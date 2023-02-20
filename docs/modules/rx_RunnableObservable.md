@@ -66,6 +66,9 @@
 
 ▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<readonly [`TA`, `TB`]\>
 
+Combines multiple sources to create a ContainerLike whose values are calculated from the values,
+in order, of each of its input sources.
+
 #### Type parameters
 
 | Name |
@@ -449,6 +452,10 @@ ___
 
 ▸ **catchError**<`T`\>(`onError`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
+Returns a StatefulContainerLike which catches errors produced by the source and either continues with
+the StatefulContainerLike returned from the `onError` callback or swallows the error if
+void is returned.
+
 #### Type parameters
 
 | Name |
@@ -457,10 +464,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\> |
-| `options?` | `undefined` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>\> | a function that takes source error and either returns a StatefulContainerLike to continue with or void if the error should be propagated. |
+| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -471,6 +478,9 @@ ___
 ### concatAll
 
 ▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, `T`\>
+
+Converts a higher-order ContainerLike into a first-order
+ContainerLike by concatenating the inner sources in order.
 
 #### Type parameters
 
@@ -495,6 +505,9 @@ ___
 
 ▸ **exhaust**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, `T`\>
 
+Converts a higher-order ContainerLike into a first-order
+ContainerLike by concatenating the inner sources in order.
+
 #### Type parameters
 
 | Name |
@@ -518,7 +531,7 @@ ___
 ▸ **map**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `mapper` function to each
-value produced by the source.
+value emitted by the source.
 
 **`Typeparam`**
 
@@ -539,7 +552,7 @@ TB - The inner type of the mapped container
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value produced by the source |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
 | `options?` | `undefined` | - |
 
 #### Returns
@@ -551,6 +564,9 @@ ___
 ### mergeAll
 
 ▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, `T`\>
+
+Converts a higher-order ContainerLike into a first-order
+ContainerLike by concatenating the inner sources in order.
 
 #### Type parameters
 
@@ -639,6 +655,9 @@ ___
 ### switchAll
 
 ▸ **switchAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, `T`\>
+
+Converts a higher-order ContainerLike into a first-order
+ContainerLike by concatenating the inner sources in order.
 
 #### Type parameters
 

@@ -43,6 +43,9 @@
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
+Returns a ContainerOperator that emits all items emitted by the source that
+are distinct by comparison from the previous item.
+
 #### Type parameters
 
 | Name |

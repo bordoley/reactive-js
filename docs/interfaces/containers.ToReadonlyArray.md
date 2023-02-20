@@ -43,6 +43,8 @@
 
 ▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)<`T`\>\>
 
+Converts the ContainerLike to a `ReadonlyArrayLike`.
+
 #### Type parameters
 
 | Name |
