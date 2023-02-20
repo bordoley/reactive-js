@@ -22,7 +22,7 @@
 
 - [ContainerLike\_type](rx.Throttle.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [throttle](rx.Throttle.md#throttle)
 
@@ -36,7 +36,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### throttle
 

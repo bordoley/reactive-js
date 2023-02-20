@@ -22,7 +22,7 @@
 
 - [ContainerLike\_type](containers.ForkConcat.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [forkConcat](containers.ForkConcat.md#forkconcat)
 
@@ -36,7 +36,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### forkConcat
 

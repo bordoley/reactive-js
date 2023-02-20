@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Functions
+### Constructor Functions
 
 - [fromEnumerable](streaming_Flowable.md#fromenumerable)
 - [fromEnumerableObservable](streaming_Flowable.md#fromenumerableobservable)
@@ -12,9 +12,12 @@
 - [fromReadonlyArray](streaming_Flowable.md#fromreadonlyarray)
 - [fromRunnableObservable](streaming_Flowable.md#fromrunnableobservable)
 - [fromSequence](streaming_Flowable.md#fromsequence)
+
+### Converter Functions
+
 - [toObservable](streaming_Flowable.md#toobservable)
 
-## Functions
+## Constructor Functions
 
 ### fromEnumerable
 
@@ -147,6 +150,8 @@ ___
 [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
+
+## Converter Functions
 
 ### toObservable
 

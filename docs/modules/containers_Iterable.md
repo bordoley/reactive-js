@@ -4,12 +4,15 @@
 
 ## Table of contents
 
-### Functions
+### Constructor Functions
 
 - [fromEnumerable](containers_Iterable.md#fromenumerable)
 - [fromEnumerableObservable](containers_Iterable.md#fromenumerableobservable)
 - [fromReadonlyArray](containers_Iterable.md#fromreadonlyarray)
 - [fromSequence](containers_Iterable.md#fromsequence)
+
+### Converter Functions
+
 - [toAsyncEnumerable](containers_Iterable.md#toasyncenumerable)
 - [toEnumerable](containers_Iterable.md#toenumerable)
 - [toEnumerableObservable](containers_Iterable.md#toenumerableobservable)
@@ -20,7 +23,7 @@
 - [toRunnable](containers_Iterable.md#torunnable)
 - [toRunnableObservable](containers_Iterable.md#torunnableobservable)
 
-## Functions
+## Constructor Functions
 
 ### fromEnumerable
 
@@ -111,6 +114,8 @@ ___
 [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
 
 ___
+
+## Converter Functions
 
 ### toAsyncEnumerable
 

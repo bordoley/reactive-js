@@ -19,22 +19,15 @@
 
 ## Table of contents
 
-### Properties
+### Operator Properties
 
-- [ContainerLike\_type](containers.ConcatAll.md#containerlike_type)
 - [concatAll](containers.ConcatAll.md#concatall)
 
-## Properties
+### Other Properties
 
-### ContainerLike\_type
+- [ContainerLike\_type](containers.ConcatAll.md#containerlike_type)
 
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
-
-___
+## Operator Properties
 
 ### concatAll
 
@@ -59,3 +52,15 @@ ___
 ##### Returns
 
 [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
+
+___
+
+## Other Properties
+
+### ContainerLike\_type
+
+• `Optional` `Readonly` **ContainerLike\_type**: `C`
+
+#### Inherited from
+
+[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)

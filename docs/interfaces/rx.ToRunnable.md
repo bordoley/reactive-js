@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](rx.ToRunnable.md#containerlike_type)
 
-### Methods
+### Converter Methods
 
 - [toRunnable](rx.ToRunnable.md#torunnable)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Converter Methods
 
 ### toRunnable
 

@@ -22,7 +22,7 @@
 
 - [ContainerLike\_type](rx.Retry.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [retry](rx.Retry.md#retry)
 
@@ -36,7 +36,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### retry
 

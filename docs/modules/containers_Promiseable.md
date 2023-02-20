@@ -4,12 +4,15 @@
 
 ## Table of contents
 
-### Functions
+### Constructor Functions
 
 - [fromObservable](containers_Promiseable.md#fromobservable)
+
+### Converter Functions
+
 - [toObservable](containers_Promiseable.md#toobservable)
 
-## Functions
+## Constructor Functions
 
 ### fromObservable
 
@@ -44,6 +47,8 @@
 `PromiseLike`<`T`\>
 
 ___
+
+## Converter Functions
 
 ### toObservable
 

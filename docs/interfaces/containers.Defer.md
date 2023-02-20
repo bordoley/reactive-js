@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.Defer.md#containerlike_type)
 
-### Methods
+### Constructor Methods
 
 - [defer](containers.Defer.md#defer)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Constructor Methods
 
 ### defer
 

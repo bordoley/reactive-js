@@ -44,8 +44,6 @@
 
   ↳ [`FromReadonlyArray`](containers.FromReadonlyArray.md)
 
-  ↳ [`FromReadonlySet`](containers.FromReadonlySet.md)
-
   ↳ [`FromSequence`](containers.FromSequence.md)
 
   ↳ [`Generate`](containers.Generate.md)

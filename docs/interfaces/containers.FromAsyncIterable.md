@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.FromAsyncIterable.md#containerlike_type)
 
-### Methods
+### Constructor Methods
 
 - [fromAsyncIterable](containers.FromAsyncIterable.md#fromasynciterable)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Constructor Methods
 
 ### fromAsyncIterable
 

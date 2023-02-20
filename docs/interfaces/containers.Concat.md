@@ -22,7 +22,7 @@
 
 - [ContainerLike\_type](containers.Concat.md#containerlike_type)
 
-### Methods
+### Constructor Methods
 
 - [concat](containers.Concat.md#concat)
 
@@ -36,7 +36,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Constructor Methods
 
 ### concat
 

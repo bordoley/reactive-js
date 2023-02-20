@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.Map.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [map](containers.Map.md#map)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### map
 

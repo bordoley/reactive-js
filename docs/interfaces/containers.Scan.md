@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.Scan.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [scan](containers.Scan.md#scan)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### scan
 

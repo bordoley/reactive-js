@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](streaming.FromFlowable.md#containerlike_type)
 
-### Methods
+### Constructor Methods
 
 - [fromFlowable](streaming.FromFlowable.md#fromflowable)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Constructor Methods
 
 ### fromFlowable
 

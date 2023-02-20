@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.FromSequence.md#containerlike_type)
 
-### Methods
+### Constructor Methods
 
 - [fromSequence](containers.FromSequence.md#fromsequence)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Constructor Methods
 
 ### fromSequence
 

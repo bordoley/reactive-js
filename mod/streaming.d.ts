@@ -31,12 +31,18 @@ interface FlowableLike<T = unknown> extends StreamableLike<Updater<PauseableStat
  * @category TypeClass
  */
 interface FromFlowable<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * @category Constructor
+     */
     fromFlowable<T>(options?: O): Function1<FlowableLike<T>, ContainerOf<C, T>>;
 }
 /**
  * @category TypeClass
  */
 interface ToFlowable<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * @category Converter
+     */
     toFlowable<T>(options?: O): Function1<ContainerOf<C, T>, FlowableLike<T>>;
 }
 export { FlowableLike, FlowableStreamLike, FromFlowable, StreamLike, StreamableLike, StreamableLike_stream, ToFlowable };

@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.Generate.md#containerlike_type)
 
-### Methods
+### Constructor Methods
 
 - [generate](containers.Generate.md#generate)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Constructor Methods
 
 ### generate
 

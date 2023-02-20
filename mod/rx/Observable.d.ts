@@ -1,6 +1,6 @@
 import { FromEnumerable, EnumerableLike } from "../ix.js";
 import { ObservableLike, ObserverLike, EnumerableObservableLike, RunnableObservableLike, MulticastObservableLike, ScanAsync, Throttle, AsyncReducer, ThrottleMode } from "../rx.js";
-import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, Empty, EverySatisfy, ForEach, ForkZip, ForkConcat, FromIterable, PromiseableLike, FromReadonlyArray, FromSequence, Generate, Keep, Map, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, SequenceLike } from "../containers.js";
+import { ContainerOperator, CatchError, Zip, Concat, ConcatAll, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EverySatisfy, ForEach, ForkZip, ForkConcat, FromIterable, PromiseableLike, FromReadonlyArray, FromSequence, Generate, Keep, Map, Pairwise, Reduce, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, SequenceLike } from "../containers.js";
 import { StreamLike, StreamableLike, FromFlowable, FlowableLike } from "../streaming.js";
 import { Optional, Equality, Updater, Factory, Function1, SideEffect1, Predicate, Function2, Reducer, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
 import { SchedulerLike } from "../scheduling.js";
@@ -86,9 +86,7 @@ declare const concatAll: ConcatAll<ObservableLike, {
 declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
 declare const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"];
 declare const defer: Defer<ObservableLike>["defer"];
-declare const distinctUntilChanged: <T>(options?: {
-    readonly equality?: Equality<T> | undefined;
-} | undefined) => ContainerOperator<ObservableLike<unknown>, T, T>;
+declare const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"];
 declare const empty: Empty<ObservableLike, {
     delay?: number;
 }>["empty"];

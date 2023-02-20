@@ -19,22 +19,15 @@
 
 ## Table of contents
 
-### Properties
+### Operator Properties
 
-- [ContainerLike\_type](containers.Buffer.md#containerlike_type)
 - [buffer](containers.Buffer.md#buffer)
 
-## Properties
+### Other Properties
 
-### ContainerLike\_type
+- [ContainerLike\_type](containers.Buffer.md#containerlike_type)
 
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
-
-___
+## Operator Properties
 
 ### buffer
 
@@ -59,3 +52,15 @@ ___
 ##### Returns
 
 [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+___
+
+## Other Properties
+
+### ContainerLike\_type
+
+• `Optional` `Readonly` **ContainerLike\_type**: `C`
+
+#### Inherited from
+
+[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)

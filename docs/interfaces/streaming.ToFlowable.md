@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](streaming.ToFlowable.md#containerlike_type)
 
-### Methods
+### Converter Methods
 
 - [toFlowable](streaming.ToFlowable.md#toflowable)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Converter Methods
 
 ### toFlowable
 

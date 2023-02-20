@@ -2,6 +2,9 @@ import { Function1 } from "../functions.js";
 import { ObservableLike, ToObservable } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { PromiseableLike } from "../containers.js";
+/**
+ * @category Constructor
+ */
 declare const fromObservable: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<T>;
 declare const toObservable: ToObservable<PromiseableLike>["toObservable"];
 /** @ignore */

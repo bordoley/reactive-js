@@ -19,22 +19,15 @@
 
 ## Table of contents
 
-### Properties
+### Constructor Properties
 
-- [ContainerLike\_type](rx.FromEnumerableObservable.md#containerlike_type)
 - [fromEnumerableObservable](rx.FromEnumerableObservable.md#fromenumerableobservable)
 
-## Properties
+### Other Properties
 
-### ContainerLike\_type
+- [ContainerLike\_type](rx.FromEnumerableObservable.md#containerlike_type)
 
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
-
-___
+## Constructor Properties
 
 ### fromEnumerableObservable
 
@@ -59,3 +52,15 @@ ___
 ##### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EnumerableObservableLike`](rx.EnumerableObservableLike.md)<`T`\>, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\>
+
+___
+
+## Other Properties
+
+### ContainerLike\_type
+
+• `Optional` `Readonly` **ContainerLike\_type**: `C`
+
+#### Inherited from
+
+[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)

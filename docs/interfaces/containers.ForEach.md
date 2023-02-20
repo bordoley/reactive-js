@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.ForEach.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [forEach](containers.ForEach.md#foreach)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### forEach
 

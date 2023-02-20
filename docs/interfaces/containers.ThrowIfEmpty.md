@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.ThrowIfEmpty.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [throwIfEmpty](containers.ThrowIfEmpty.md#throwifempty)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### throwIfEmpty
 
