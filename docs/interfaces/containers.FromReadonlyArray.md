@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.FromReadonlyArray.md#containerlike_type)
 
-### Methods
+### Constructor Methods
 
 - [fromReadonlyArray](containers.FromReadonlyArray.md#fromreadonlyarray)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Constructor Methods
 
 ### fromReadonlyArray
 

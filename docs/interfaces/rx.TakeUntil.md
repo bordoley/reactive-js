@@ -22,7 +22,7 @@
 
 - [ContainerLike\_type](rx.TakeUntil.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [takeUntil](rx.TakeUntil.md#takeuntil)
 
@@ -36,7 +36,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### takeUntil
 

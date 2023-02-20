@@ -22,7 +22,7 @@
 
 - [ContainerLike\_type](rx.WithLatestFrom.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [withLatestFrom](rx.WithLatestFrom.md#withlatestfrom)
 
@@ -36,7 +36,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### withLatestFrom
 

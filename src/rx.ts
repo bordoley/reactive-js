@@ -158,6 +158,9 @@ export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
  */
 export interface FromEnumerableObservable<C extends ContainerLike, O = never>
   extends Container<C> {
+  /**
+   * @category Constructor
+   */
   fromEnumerableObservable: <T>(
     options?: O,
   ) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
@@ -168,6 +171,9 @@ export interface FromEnumerableObservable<C extends ContainerLike, O = never>
  */
 export interface FromRunnableObservable<C extends ContainerLike, O = never>
   extends Container<C> {
+  /**
+   * @category Constructor
+   */
   fromRunnableObservable: <T>(
     options?: O,
   ) => Function1<RunnableObservableLike<T>, ContainerOf<C, T>>;
@@ -180,6 +186,8 @@ export interface Retry<C extends ObservableLike> extends Container<C> {
   /**
    * Returns an `ObservableLike` that mirrors the source, re-subscribing
    * if the source completes with an error.
+   *
+   * @category Operator
    */
   retry<T>(): ContainerOperator<C, T, T>;
 
@@ -188,6 +196,8 @@ export interface Retry<C extends ObservableLike> extends Container<C> {
    * if the source completes with an error which satisfies the predicate function.
    *
    * @param predicate
+   *
+   * @category Operator
    */
   retry<T>(
     predicate: Function2<number, unknown, boolean>,
@@ -201,6 +211,9 @@ export interface ScanAsync<
   C extends ContainerLike,
   CInner extends ObservableLike,
 > extends Container<C> {
+  /**
+   * @category Operator
+   */
   scanAsync: <T, TAcc>(
     scanner: AsyncReducer<CInner, T, TAcc>,
     initialValue: Factory<TAcc>,
@@ -211,6 +224,9 @@ export interface ScanAsync<
  * @category TypeClass
  */
 export interface TakeUntil<C extends ObservableLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
   takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
 }
 
@@ -231,6 +247,8 @@ export interface Throttle<C extends ObservableLike> extends Container<C> {
    *
    * @param duration Function function that is used to determine the silence duration in between emitted values.
    * @param mode The throttle mode.
+   *
+   * @category Operator
    */
   throttle<T>(
     duration: Function1<T, C>,
@@ -244,6 +262,8 @@ export interface Throttle<C extends ObservableLike> extends Container<C> {
    * @param duration Time to wait before emitting another value after
    * emitting the last value, measured in milliseconds.
    * @param mode The throttle mode.
+   *
+   * @category Operator
    */
   throttle<T>(
     duration: number,
@@ -260,12 +280,16 @@ export interface Timeout<C extends ObservableLike> extends Container<C> {
    * does not emit a value in given time span.
    *
    * @param duration Time in ms within which the source must emit values.
+   *
+   * @category Operator
    */
   timeout<T>(duration: number): ContainerOperator<C, T, T>;
 
   /**
    *
    * @param duration
+   *
+   * @category Operator
    */
   timeout<T>(duration: C): ContainerOperator<C, T, T>;
 }
@@ -275,6 +299,9 @@ export interface Timeout<C extends ObservableLike> extends Container<C> {
  */
 export interface ToObservable<C extends ContainerLike, O = never>
   extends Container<C> {
+  /**
+   * @category Converter
+   */
   toObservable: <T>(
     options?: O,
   ) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
@@ -285,6 +312,9 @@ export interface ToObservable<C extends ContainerLike, O = never>
  */
 export interface ToRunnableObservable<C extends ContainerLike, O = never>
   extends Container<C> {
+  /**
+   * @category Converter
+   */
   toRunnableObservable: <T>(
     options?: O,
   ) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
@@ -295,6 +325,9 @@ export interface ToRunnableObservable<C extends ContainerLike, O = never>
  */
 export interface ToEnumerableObservable<C extends ContainerLike, O = never>
   extends Container<C> {
+  /**
+   * @category Converter
+   */
   toEnumerableObservable: <T>(
     options?: O,
   ) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
@@ -305,6 +338,9 @@ export interface ToEnumerableObservable<C extends ContainerLike, O = never>
  */
 export interface ToRunnable<C extends ContainerLike, O = never>
   extends Container<C> {
+  /**
+   * @category Converter
+   */
   toRunnable<T>(options?: O): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
@@ -312,6 +348,9 @@ export interface ToRunnable<C extends ContainerLike, O = never>
  * @category TypeClass
  */
 export interface WithLatestFrom<C extends ObservableLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
   withLatestFrom<TA, TB, T>(
     other: ContainerOf<C, TB>,
     selector: Function2<TA, TB, T>,
@@ -322,6 +361,9 @@ export interface WithLatestFrom<C extends ObservableLike> extends Container<C> {
  * @category TypeClass
  */
 export interface ZipLatest<C extends ObservableLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
   zipLatest: Zip<C>["zip"];
 }
 
@@ -330,6 +372,9 @@ export interface ZipLatest<C extends ObservableLike> extends Container<C> {
  */
 export interface ZipWithLatestFrom<C extends ObservableLike>
   extends Container<C> {
+  /**
+   * @category Operator
+   */
   zipWithLatestFrom<TA, TB, T>(
     other: ContainerOf<C, TB>,
     selector: Function2<TA, TB, T>,

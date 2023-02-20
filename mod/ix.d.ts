@@ -65,24 +65,36 @@ interface EnumerableAsyncEnumerableLike<T = unknown> extends RunnableAsyncEnumer
  * @category TypeClass
  */
 interface FromAsyncEnumerable<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * @category Constructor
+     */
     fromAsyncEnumerable<T>(options?: O): Function1<AsyncEnumerableLike<T>, ContainerOf<C, T>>;
 }
 /**
  * @category TypeClass
  */
 interface FromEnumerable<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * @category Constructor
+     */
     fromEnumerable<T>(options?: O): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
 }
 /**
  * @category TypeClass
  */
 interface ToAsyncEnumerable<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * @category Converter
+     */
     toAsyncEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;
 }
 /**
  * @category TypeClass
  */
 interface ToEnumerable<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * @category Converter
+     */
     toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
 export { AsyncEnumerableLike, AsyncEnumerableLike_isEnumerable, AsyncEnumerableLike_isRunnable, AsyncEnumeratorLike, EnumerableAsyncEnumerableLike, EnumerableLike, EnumeratorLike, EnumeratorLike_current, EnumeratorLike_hasCurrent, FromAsyncEnumerable, FromEnumerable, InteractiveContainerLike, InteractiveContainerLike_interact, RunnableAsyncEnumerableLike, SourceLike, SourceLike_move, ToAsyncEnumerable, ToEnumerable };

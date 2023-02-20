@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.Pairwise.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [pairwise](containers.Pairwise.md#pairwise)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### pairwise
 

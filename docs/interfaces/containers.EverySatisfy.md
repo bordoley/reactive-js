@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.EverySatisfy.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [everySatisfy](containers.EverySatisfy.md#everysatisfy)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### everySatisfy
 

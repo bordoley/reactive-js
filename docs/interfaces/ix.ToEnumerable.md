@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](ix.ToEnumerable.md#containerlike_type)
 
-### Methods
+### Converter Methods
 
 - [toEnumerable](ix.ToEnumerable.md#toenumerable)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Converter Methods
 
 ### toEnumerable
 

@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.Keep.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [keep](containers.Keep.md#keep)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### keep
 

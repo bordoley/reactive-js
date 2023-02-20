@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Functions
+### Constructor Functions
 
 - [fromEnumerable](ix_AsyncEnumerable.md#fromenumerable)
 - [fromEnumerableObservable](ix_AsyncEnumerable.md#fromenumerableobservable)
@@ -12,14 +12,20 @@
 - [fromReadonlyArray](ix_AsyncEnumerable.md#fromreadonlyarray)
 - [fromSequence](ix_AsyncEnumerable.md#fromsequence)
 - [generate](ix_AsyncEnumerable.md#generate)
+
+### Converter Functions
+
+- [toObservable](ix_AsyncEnumerable.md#toobservable)
+
+### Operator Functions
+
 - [keep](ix_AsyncEnumerable.md#keep)
 - [map](ix_AsyncEnumerable.md#map)
 - [scan](ix_AsyncEnumerable.md#scan)
 - [scanAsync](ix_AsyncEnumerable.md#scanasync)
 - [takeWhile](ix_AsyncEnumerable.md#takewhile)
-- [toObservable](ix_AsyncEnumerable.md#toobservable)
 
-## Functions
+## Constructor Functions
 
 ### fromEnumerable
 
@@ -158,6 +164,32 @@ ___
 
 ___
 
+## Converter Functions
+
+### toObservable
+
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+## Operator Functions
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `T`, `T`\>
@@ -286,25 +318,3 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>

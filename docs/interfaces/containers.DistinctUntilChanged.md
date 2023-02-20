@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.DistinctUntilChanged.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [distinctUntilChanged](containers.DistinctUntilChanged.md#distinctuntilchanged)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### distinctUntilChanged
 

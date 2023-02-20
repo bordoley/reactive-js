@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.Reduce.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [reduce](containers.Reduce.md#reduce)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### reduce
 

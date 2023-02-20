@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](ix.ToAsyncEnumerable.md#containerlike_type)
 
-### Methods
+### Converter Methods
 
 - [toAsyncEnumerable](ix.ToAsyncEnumerable.md#toasyncenumerable)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Converter Methods
 
 ### toAsyncEnumerable
 

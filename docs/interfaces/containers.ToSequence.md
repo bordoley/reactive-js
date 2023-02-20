@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.ToSequence.md#containerlike_type)
 
-### Methods
+### Converter Methods
 
 - [toSequence](containers.ToSequence.md#tosequence)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Converter Methods
 
 ### toSequence
 

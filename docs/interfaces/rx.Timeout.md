@@ -22,7 +22,7 @@
 
 - [ContainerLike\_type](rx.Timeout.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [timeout](rx.Timeout.md#timeout)
 
@@ -36,7 +36,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### timeout
 

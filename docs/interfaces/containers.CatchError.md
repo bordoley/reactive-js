@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.CatchError.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [catchError](containers.CatchError.md#catcherror)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### catchError
 

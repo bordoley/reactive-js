@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.TakeFirst.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [takeFirst](containers.TakeFirst.md#takefirst)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### takeFirst
 

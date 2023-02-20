@@ -5,6 +5,7 @@ import {
   ContainerOperator,
   DecodeWithCharset,
   Defer,
+  DistinctUntilChanged,
   Empty,
   EverySatisfy,
   ForEach,
@@ -283,7 +284,8 @@ export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCha
 
 export const defer: Defer<ObservableLike>["defer"] = Observable_defer;
 
-export const distinctUntilChanged = Observable_distinctUntilChanged;
+export const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
+  Observable_distinctUntilChanged;
 
 export const empty: Empty<ObservableLike, { delay?: number }>["empty"] =
   Observable_empty;

@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.ToIterable.md#containerlike_type)
 
-### Methods
+### Converter Methods
 
 - [toIterable](containers.ToIterable.md#toiterable)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Converter Methods
 
 ### toIterable
 

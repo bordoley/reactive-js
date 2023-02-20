@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.SomeSatisfy.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [someSatisfy](containers.SomeSatisfy.md#somesatisfy)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### someSatisfy
 

@@ -58,6 +58,9 @@ export interface FlowableLike<T = unknown>
  */
 export interface FromFlowable<C extends ContainerLike, O = never>
   extends Container<C> {
+  /**
+   * @category Constructor
+   */
   fromFlowable<T>(options?: O): Function1<FlowableLike<T>, ContainerOf<C, T>>;
 }
 
@@ -66,5 +69,8 @@ export interface FromFlowable<C extends ContainerLike, O = never>
  */
 export interface ToFlowable<C extends ContainerLike, O = never>
   extends Container<C> {
+  /**
+   * @category Converter
+   */
   toFlowable<T>(options?: O): Function1<ContainerOf<C, T>, FlowableLike<T>>;
 }

@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.Empty.md#containerlike_type)
 
-### Methods
+### Constructor Methods
 
 - [empty](containers.Empty.md#empty)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Constructor Methods
 
 ### empty
 

@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.Repeat.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [repeat](containers.Repeat.md#repeat)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### repeat
 

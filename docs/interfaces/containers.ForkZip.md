@@ -22,7 +22,7 @@
 
 - [ContainerLike\_type](containers.ForkZip.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [forkZip](containers.ForkZip.md#forkzip)
 
@@ -36,7 +36,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### forkZip
 

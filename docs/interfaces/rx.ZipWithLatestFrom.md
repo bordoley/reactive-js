@@ -22,7 +22,7 @@
 
 - [ContainerLike\_type](rx.ZipWithLatestFrom.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [zipWithLatestFrom](rx.ZipWithLatestFrom.md#zipwithlatestfrom)
 
@@ -36,7 +36,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### zipWithLatestFrom
 

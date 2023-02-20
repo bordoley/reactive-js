@@ -32,7 +32,6 @@
 - [FromAsyncIterable](../interfaces/containers.FromAsyncIterable.md)
 - [FromIterable](../interfaces/containers.FromIterable.md)
 - [FromReadonlyArray](../interfaces/containers.FromReadonlyArray.md)
-- [FromReadonlySet](../interfaces/containers.FromReadonlySet.md)
 - [FromSequence](../interfaces/containers.FromSequence.md)
 - [Generate](../interfaces/containers.Generate.md)
 - [Keep](../interfaces/containers.Keep.md)

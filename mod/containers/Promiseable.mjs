@@ -2,6 +2,9 @@
 import Observable_toPromise from '../rx/Observable/__internal__/Observable.toPromise.mjs';
 import Promiseable_toObservable from './Promiseable/__internal__/Promiseable.toObservable.mjs';
 
+/**
+ * @category Constructor
+ */
 const fromObservable = Observable_toPromise;
 const toObservable = Promiseable_toObservable;
 /** @ignore */

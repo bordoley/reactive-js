@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.DecodeWithCharset.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [decodeWithCharset](containers.DecodeWithCharset.md#decodewithcharset)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### decodeWithCharset
 

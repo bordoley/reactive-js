@@ -23,7 +23,7 @@
 
 - [ContainerLike\_type](containers.TakeWhile.md#containerlike_type)
 
-### Methods
+### Operator Methods
 
 - [takeWhile](containers.TakeWhile.md#takewhile)
 
@@ -37,7 +37,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Operator Methods
 
 ### takeWhile
 

@@ -22,7 +22,7 @@
 
 - [ContainerLike\_type](containers.Zip.md#containerlike_type)
 
-### Methods
+### Constructor Methods
 
 - [zip](containers.Zip.md#zip)
 
@@ -36,7 +36,7 @@
 
 [Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
-## Methods
+## Constructor Methods
 
 ### zip
 
