@@ -5,15 +5,15 @@ import {
   isSome,
   none,
   pipe,
-} from "../../../functions";
-import { MulticastObservableLike, ObservableLike } from "../../../rx";
-import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount";
-import { SchedulerLike } from "../../../scheduling";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
-import Observable_create from "./Observable.create";
-import Observable_multicast from "./Observable.multicast";
+} from "../../../functions.js";
+import { MulticastObservableLike, ObservableLike } from "../../../rx.js";
+import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observable_create from "./Observable.create.js";
+import Observable_multicast from "./Observable.multicast.js";
 
 const Observable_share =
   <T>(

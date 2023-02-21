@@ -1,7 +1,7 @@
-import { Function1, Optional, none, pipe } from "../../../functions";
-import { RunnableLike } from "../../../rx";
-import Runnable_forEach from "./Runnable.forEach";
-import Runnable_run from "./Runnable.run";
+import { Function1, Optional, none, pipe } from "../../../functions.js";
+import { RunnableLike } from "../../../rx.js";
+import Runnable_forEach from "./Runnable.forEach.js";
+import Runnable_run from "./Runnable.run.js";
 
 const Runnable_last =
   <T>(): Function1<RunnableLike<T>, Optional<T>> =>

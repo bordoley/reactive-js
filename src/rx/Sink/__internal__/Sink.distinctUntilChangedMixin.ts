@@ -7,10 +7,10 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Equality, none, returns } from "../../../functions";
-import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
+} from "../../../__internal__/mixins.js";
+import { Equality, none, returns } from "../../../functions.js";
+import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 const Sink_distinctUntilChangedMixin: <T>() => Mixin2<
   SinkLike<T>,

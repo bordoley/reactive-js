@@ -1,5 +1,5 @@
-import { SequenceLike } from "../../containers";
-import Sequence from "../../containers/Sequence";
+import { SequenceLike } from "../../containers.js";
+import Sequence from "../../containers/Sequence.js";
 import {
   concatAllTests,
   concatMapTests,
@@ -26,8 +26,8 @@ import {
   toRunnableObservableTests,
   zipTests,
   zipWithTests,
-} from "../operators";
-import { testModule } from "../testing";
+} from "../operators.js";
+import { testModule } from "../testing.js";
 
 testModule(
   "Sequence",

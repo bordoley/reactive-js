@@ -1,5 +1,5 @@
-import { ReadonlyArrayLike, ToReadonlyArray } from "../../../containers";
-import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
+import { ReadonlyArrayLike, ToReadonlyArray } from "../../../containers.js";
+import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
 const ReadonlyArray_toReadonlyArray: ToReadonlyArray<
   ReadonlyArrayLike,

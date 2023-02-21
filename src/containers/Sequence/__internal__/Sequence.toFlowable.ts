@@ -1,8 +1,8 @@
-import { SequenceLike } from "../../../containers";
-import { compose } from "../../../functions";
-import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable";
-import { ToFlowable } from "../../../streaming";
-import Sequence_toRunnableObservable from "./Sequence.toRunnableObservable";
+import { SequenceLike } from "../../../containers.js";
+import { compose } from "../../../functions.js";
+import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
+import { ToFlowable } from "../../../streaming.js";
+import Sequence_toRunnableObservable from "./Sequence.toRunnableObservable.js";
 
 const Sequence_toFlowable: ToFlowable<
   SequenceLike,

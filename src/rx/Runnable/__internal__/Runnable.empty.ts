@@ -1,8 +1,8 @@
-import { Empty } from "../../../containers";
-import { pipe } from "../../../functions";
-import { RunnableLike } from "../../../rx";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Runnable_create from "./Runnable.create";
+import { Empty } from "../../../containers.js";
+import { pipe } from "../../../functions.js";
+import { RunnableLike } from "../../../rx.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Runnable_create from "./Runnable.create.js";
 
 const Runnable_empty: Empty<RunnableLike>["empty"] = <T>() =>
   Runnable_create<T>(sink => {

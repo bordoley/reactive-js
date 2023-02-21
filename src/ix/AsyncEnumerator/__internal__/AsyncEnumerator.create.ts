@@ -3,15 +3,19 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { ContainerOperator } from "../../../containers";
-import { none, pipe } from "../../../functions";
-import { AsyncEnumeratorLike, SourceLike, SourceLike_move } from "../../../ix";
-import { ObservableLike } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
-import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch";
-import { StreamLike } from "../../../streaming";
-import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin";
+} from "../../../__internal__/mixins.js";
+import { ContainerOperator } from "../../../containers.js";
+import { none, pipe } from "../../../functions.js";
+import {
+  AsyncEnumeratorLike,
+  SourceLike,
+  SourceLike_move,
+} from "../../../ix.js";
+import { ObservableLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
+import { StreamLike } from "../../../streaming.js";
+import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin.js";
 
 const AsyncEnumerator_create = /*@__PURE__*/ (() => {
   const createAsyncEnumeratorInternal: <T>(

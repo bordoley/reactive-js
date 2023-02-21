@@ -3,8 +3,8 @@ import {
   SequenceLike_data,
   SequenceLike_next,
   TakeFirst,
-} from "../../../containers";
-import { isSome, none } from "../../../functions";
+} from "../../../containers.js";
+import { isSome, none } from "../../../functions.js";
 
 const Sequence_takeFirst: TakeFirst<SequenceLike>["takeFirst"] =
   /*@__PURE__*/ (() => {

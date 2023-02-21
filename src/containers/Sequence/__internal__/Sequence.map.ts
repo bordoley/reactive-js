@@ -3,8 +3,8 @@ import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { Function1, isSome, none } from "../../../functions";
+} from "../../../containers.js";
+import { Function1, isSome, none } from "../../../functions.js";
 
 const Sequence_map: Map<SequenceLike>["map"] = /*@__PURE__*/ (() => {
   const _map =

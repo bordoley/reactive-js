@@ -1,4 +1,4 @@
-import PriorityScheduler_toScheduler from "./PriorityScheduler/__internal__/PriorityScheduler.toScheduler";
+import PriorityScheduler_toScheduler from "./PriorityScheduler/__internal__/PriorityScheduler.toScheduler.js";
 
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.

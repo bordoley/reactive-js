@@ -3,16 +3,16 @@ import {
   createInstanceFactory,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { SideEffect1, error, none, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { SideEffect1, error, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
   ReactiveContainerLike_sinkInto,
-} from "../../../rx";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
+} from "../../../rx.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 
 const Observable_create: <T>(
   f: SideEffect1<ObserverLike>,

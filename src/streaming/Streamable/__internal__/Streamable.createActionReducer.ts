@@ -1,15 +1,21 @@
-import Container_concatWith from "../../../containers/Container/__internal__/Container.concatWith";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
-import { Equality, Factory, Reducer, pipe, returns } from "../../../functions";
-import { ObservableLike } from "../../../rx";
-import Observable_create from "../../../rx/Observable/__internal__/Observable.create";
-import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged";
-import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge";
-import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
-import { StreamableLike } from "../../../streaming";
+import Container_concatWith from "../../../containers/Container/__internal__/Container.concatWith.js";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import {
+  Equality,
+  Factory,
+  Reducer,
+  pipe,
+  returns,
+} from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
+import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
+import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
+import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
+import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import { StreamableLike } from "../../../streaming.js";
 
-import Streamable_createLifted from "./Streamable.createLifted";
+import Streamable_createLifted from "./Streamable.createLifted.js";
 
 const Streamable_createActionReducer = <TAction, T>(
   reducer: Reducer<TAction, T>,

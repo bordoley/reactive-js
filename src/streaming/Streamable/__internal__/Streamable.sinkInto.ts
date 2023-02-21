@@ -1,17 +1,17 @@
-import Container_ignoreElements from "../../../containers/Container/__internal__/Container.ignoreElements";
-import { pipe } from "../../../functions";
-import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach";
-import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep";
-import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge";
-import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe";
-import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe";
-import { DispatcherLike_scheduler } from "../../../scheduling";
-import Dispatcher_dispatchTo from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatchTo";
-import { StreamLike, StreamableLike } from "../../../streaming";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
+import Container_ignoreElements from "../../../containers/Container/__internal__/Container.ignoreElements.js";
+import { pipe } from "../../../functions.js";
+import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
+import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
+import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
+import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
+import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
+import { DispatcherLike_scheduler } from "../../../scheduling.js";
+import Dispatcher_dispatchTo from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatchTo.js";
+import { StreamLike, StreamableLike } from "../../../streaming.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
-import Streamable_stream from "./Streamable.stream";
+import Streamable_stream from "./Streamable.stream.js";
 
 const Streamable_sinkInto =
   <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) =>

@@ -1,8 +1,8 @@
-import { ReadonlyArrayLike } from "../../../containers";
-import { compose } from "../../../functions";
-import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable";
-import { ToFlowable } from "../../../streaming";
-import ReadonlyArray_toRunnableObservable from "./ReadonlyArray.toRunnableObservable";
+import { ReadonlyArrayLike } from "../../../containers.js";
+import { compose } from "../../../functions.js";
+import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
+import { ToFlowable } from "../../../streaming.js";
+import ReadonlyArray_toRunnableObservable from "./ReadonlyArray.toRunnableObservable.js";
 
 const ReadonlyArray_toFlowable: ToFlowable<
   ReadonlyArrayLike,

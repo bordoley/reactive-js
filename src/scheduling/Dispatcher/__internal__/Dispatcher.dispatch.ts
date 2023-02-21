@@ -1,5 +1,5 @@
-import { Updater } from "../../../functions";
-import { DispatcherLike_dispatch } from "../../../scheduling";
+import { Updater } from "../../../functions.js";
+import { DispatcherLike_dispatch } from "../../../scheduling.js";
 
 const Dispatcher_dispatch =
   <T, TDispatcher extends { [DispatcherLike_dispatch](v: T): void }>(

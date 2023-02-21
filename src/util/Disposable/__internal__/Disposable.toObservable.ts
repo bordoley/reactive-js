@@ -1,8 +1,8 @@
-import { Function1, compose } from "../../../functions";
-import { ObservableLike } from "../../../rx";
-import Observable_create from "../../../rx/Observable/__internal__/Observable.create";
-import { DisposableLike } from "../../../util";
-import addTo from "./Disposable.addTo";
+import { Function1, compose } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
+import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
+import { DisposableLike } from "../../../util.js";
+import addTo from "./Disposable.addTo.js";
 
 const Disposable_toObservable = <T>(): Function1<
   DisposableLike,

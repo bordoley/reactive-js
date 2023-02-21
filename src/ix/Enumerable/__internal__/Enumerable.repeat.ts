@@ -5,9 +5,9 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Repeat } from "../../../containers";
-import Container_repeat from "../../../containers/Container/__internal__/Container.repeat";
+} from "../../../__internal__/mixins.js";
+import { Repeat } from "../../../containers.js";
+import Container_repeat from "../../../containers/Container/__internal__/Container.repeat.js";
 import {
   Optional,
   Predicate,
@@ -18,21 +18,21 @@ import {
   pipe,
   raiseWithDebugMessage,
   unsafeCast,
-} from "../../../functions";
+} from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
-} from "../../../ix";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Enumerator_hasCurrent from "../../Enumerator/__internal__/Enumerator.hasCurrent";
-import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move";
-import Enumerable_create from "./Enumerable.create";
-import Enumerable_enumerate from "./Enumerable.enumerate";
+} from "../../../ix.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Enumerator_hasCurrent from "../../Enumerator/__internal__/Enumerator.hasCurrent.js";
+import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move.js";
+import Enumerable_create from "./Enumerable.create.js";
+import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
 const Enumerable_repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
   T,

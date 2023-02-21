@@ -1,12 +1,12 @@
-import { Function1, newInstance, pipeUnsafe } from "../../../functions";
+import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
   ReactiveContainerLike_sinkInto,
-} from "../../../rx";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
+} from "../../../rx.js";
+import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 
 const LiftedObservable_source = Symbol("LiftedObservable_source");
 const LiftedObservable_operators = Symbol("LiftedObservable_operators");

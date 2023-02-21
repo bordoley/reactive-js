@@ -7,23 +7,23 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Map } from "../../../containers";
-import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map";
-import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Function1, error, none, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Map } from "../../../containers.js";
+import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map.js";
+import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
+import { Function1, error, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
-} from "../../../ix";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin";
-import { MutableEnumeratorLike } from "../../__internal__/ix.internal";
-import Enumerable_liftT from "./Enumerable.liftT";
+} from "../../../ix.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import { MutableEnumeratorLike } from "../../__internal__/ix.internal.js";
+import Enumerable_liftT from "./Enumerable.liftT.js";
 
 const Enumerable_map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
   TA,

@@ -1,7 +1,7 @@
-import { IterableLike, ToReadonlyArray } from "../../../containers";
-import { compose, returns } from "../../../functions";
-import Enumerable_toReadonlyArray from "../../../ix/Enumerable/__internal__/Enumerable.toReadonlyArray";
-import Iterable_toEnumerable from "./Iterable.toEnumerable";
+import { IterableLike, ToReadonlyArray } from "../../../containers.js";
+import { compose, returns } from "../../../functions.js";
+import Enumerable_toReadonlyArray from "../../../ix/Enumerable/__internal__/Enumerable.toReadonlyArray.js";
+import Iterable_toEnumerable from "./Iterable.toEnumerable.js";
 
 const Iterable_toReadonlyArray: ToReadonlyArray<IterableLike>["toReadonlyArray"] =
   /*@__PURE__*/ returns(

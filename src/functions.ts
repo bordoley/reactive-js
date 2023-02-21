@@ -1,4 +1,4 @@
-import { __DEV__ } from "./constants";
+import { __DEV__ } from "./constants.js";
 
 export type Constructor<T> = new () => T;
 export type Constructor1<TA, T> = new (a: TA) => T;

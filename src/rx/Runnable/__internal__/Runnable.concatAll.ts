@@ -4,17 +4,17 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { ConcatAll } from "../../../containers";
-import { pipe, pipeLazy } from "../../../functions";
-import { RunnableLike, SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal";
-import Sink_createWithDelegate from "../../Sink/__internal__/Sink.createWithDelegate";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
-import Runnable_lift from "./Runnable.lift";
+} from "../../../__internal__/mixins.js";
+import { ConcatAll } from "../../../containers.js";
+import { pipe, pipeLazy } from "../../../functions.js";
+import { RunnableLike, SinkLike, SinkLike_notify } from "../../../rx.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal.js";
+import Sink_createWithDelegate from "../../Sink/__internal__/Sink.createWithDelegate.js";
+import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Runnable_lift from "./Runnable.lift.js";
 
 const Runnable_concatAll: ConcatAll<RunnableLike>["concatAll"] =
   /*@__PURE__*/ (<T>() =>

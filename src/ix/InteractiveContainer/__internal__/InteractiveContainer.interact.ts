@@ -1,8 +1,8 @@
 import {
   InteractiveContainerLike,
   InteractiveContainerLike_interact,
-} from "../../../ix";
-import { DisposableLike } from "../../../util";
+} from "../../../ix.js";
+import { DisposableLike } from "../../../util.js";
 
 const InteractiveContainer_interact =
   <

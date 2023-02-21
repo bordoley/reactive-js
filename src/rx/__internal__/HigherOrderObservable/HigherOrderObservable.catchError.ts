@@ -3,13 +3,13 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { CatchError, ContainerOperator } from "../../../containers";
-import { Function1, partial, pipe } from "../../../functions";
-import { ObservableLike, ObserverLike } from "../../../rx";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_catchErrorMixin from "../../Sink/__internal__/Sink.catchErrorMixin";
+} from "../../../__internal__/mixins.js";
+import { CatchError, ContainerOperator } from "../../../containers.js";
+import { Function1, partial, pipe } from "../../../functions.js";
+import { ObservableLike, ObserverLike } from "../../../rx.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_catchErrorMixin from "../../Sink/__internal__/Sink.catchErrorMixin.js";
 
 const HigherOrderObservable_catchError = <C extends ObservableLike>(
   lift: <T>(

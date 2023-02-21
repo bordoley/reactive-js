@@ -1,13 +1,19 @@
-import { StatefulContainerLike } from "../../../containers";
-import { Factory, Function3, Reducer, partial, pipe } from "../../../functions";
+import { StatefulContainerLike } from "../../../containers.js";
+import {
+  Factory,
+  Function3,
+  Reducer,
+  partial,
+  pipe,
+} from "../../../functions.js";
 import {
   Lift,
   StatefulContainerOperatorIn,
   StatefulContainerOperatorOut,
   TInteractive,
   TReactive,
-} from "../../__internal__/containers.internal";
-import StatefulContainer_lift from "./StatefulContainer.lift";
+} from "../../__internal__/containers.internal.js";
+import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_scan =
   <

@@ -1,25 +1,25 @@
-import { pipe } from "../../../functions";
-import { ObservableLike, RunnableObservableLike } from "../../../rx";
+import { pipe } from "../../../functions.js";
+import { ObservableLike, RunnableObservableLike } from "../../../rx.js";
 import {
   PauseableState,
   PauseableState_paused,
   PauseableState_running,
-} from "../../../scheduling";
-import Pauseable_pause from "../../../scheduling/Pauseable/__internal__/Pauseable.pause";
-import Pauseable_resume from "../../../scheduling/Pauseable/__internal__/Pauseable.resume";
-import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler";
-import { ToFlowable } from "../../../streaming";
-import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add";
-import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo";
-import Disposable_toObservable from "../../../util/Disposable/__internal__/Disposable.toObservable";
-import Observable_create from "../../Observable/__internal__/Observable.create";
-import Observable_forEach from "../../Observable/__internal__/Observable.forEach";
-import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe";
-import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn";
-import Observable_takeUntil from "../../Observable/__internal__/Observable.takeUntil";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
+} from "../../../scheduling.js";
+import Pauseable_pause from "../../../scheduling/Pauseable/__internal__/Pauseable.pause.js";
+import Pauseable_resume from "../../../scheduling/Pauseable/__internal__/Pauseable.resume.js";
+import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
+import { ToFlowable } from "../../../streaming.js";
+import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
+import Disposable_toObservable from "../../../util/Disposable/__internal__/Disposable.toObservable.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
+import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
+import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
+import Observable_takeUntil from "../../Observable/__internal__/Observable.takeUntil.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 
 const RunnableObservable_toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"] =
   () => observable =>

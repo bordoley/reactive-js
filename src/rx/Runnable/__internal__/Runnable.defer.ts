@@ -1,6 +1,6 @@
-import { Defer } from "../../../containers";
-import { ReactiveContainerLike_sinkInto, RunnableLike } from "../../../rx";
-import Runnable_create from "./Runnable.create";
+import { Defer } from "../../../containers.js";
+import { ReactiveContainerLike_sinkInto, RunnableLike } from "../../../rx.js";
+import Runnable_create from "./Runnable.create.js";
 
 const Runnable_defer: Defer<RunnableLike>["defer"] = f =>
   Runnable_create(sink => {

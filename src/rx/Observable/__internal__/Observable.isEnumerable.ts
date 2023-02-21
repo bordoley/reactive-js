@@ -2,7 +2,7 @@ import {
   EnumerableObservableLike,
   ObservableLike,
   ObservableLike_isEnumerable,
-} from "../../../rx";
+} from "../../../rx.js";
 
 const Observable_isEnumerable = (
   obs: ObservableLike,

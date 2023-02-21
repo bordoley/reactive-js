@@ -7,10 +7,10 @@ import {
   init,
   mix,
   props,
-} from "../__internal__/mixins";
-import { ignoreElements } from "../containers/Container";
-import { toObservable } from "../containers/Promiseable";
-import { keep } from "../containers/ReadonlyArray";
+} from "../__internal__/mixins.js";
+import { ignoreElements } from "../containers/Container.js";
+import { toObservable } from "../containers/Promiseable.js";
+import { keep } from "../containers/ReadonlyArray.js";
 import {
   Function1,
   Optional,
@@ -27,7 +27,7 @@ import {
   pipe,
   raiseWithDebugMessage,
   unsafeCast,
-} from "../functions";
+} from "../functions.js";
 import {
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
@@ -36,8 +36,8 @@ import {
   ObservableLike_isRunnable,
   ObserverLike,
   ReactiveContainerLike_sinkInto,
-} from "../rx";
-import { getObserverCount, getReplay } from "../rx/MulticastObservable";
+} from "../rx.js";
+import { getObserverCount, getReplay } from "../rx/MulticastObservable.js";
 import {
   create as createObservable,
   forEach as forEachObs,
@@ -47,24 +47,33 @@ import {
   subscribe,
   takeWhile,
   throttle,
-} from "../rx/Observable";
-import { getDispatcher } from "../rx/Observer";
-import { sinkInto } from "../rx/ReactiveContainer";
+} from "../rx/Observable.js";
+import { getDispatcher } from "../rx/Observer.js";
+import { sinkInto } from "../rx/ReactiveContainer.js";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
-} from "../scheduling";
-import { dispatch, dispatchTo, getScheduler } from "../scheduling/Dispatcher";
+} from "../scheduling.js";
+import {
+  dispatch,
+  dispatchTo,
+  getScheduler,
+} from "../scheduling/Dispatcher.js";
 import {
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
-} from "../streaming";
-import { createActionReducer, stream } from "../streaming/Streamable";
-import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create";
-import { addTo, dispose, onDisposed, toAbortSignal } from "../util/Disposable";
-import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin";
+} from "../streaming.js";
+import { createActionReducer, stream } from "../streaming/Streamable.js";
+import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
+import {
+  addTo,
+  dispose,
+  onDisposed,
+  toAbortSignal,
+} from "../util/Disposable.js";
+import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 /**
  * @noInheritDoc

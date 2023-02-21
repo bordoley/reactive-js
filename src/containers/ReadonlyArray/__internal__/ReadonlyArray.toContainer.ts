@@ -2,8 +2,8 @@ import {
   ContainerLike,
   ContainerOf,
   ReadonlyArrayLike,
-} from "../../../containers";
-import { Function1, getLength, isSome, max, min } from "../../../functions";
+} from "../../../containers.js";
+import { Function1, getLength, isSome, max, min } from "../../../functions.js";
 
 const ReadonlyArray_toContainer =
   <C extends ContainerLike, O extends unknown = unknown>(

@@ -7,10 +7,10 @@ import {
   ContainerOperator,
   StatefulContainerLike,
   StatefulContainerLike_state,
-} from "./containers";
-import { Factory, Function1, Function2 } from "./functions";
-import { DispatcherLike, SchedulerLike } from "./scheduling";
-import { DisposableLike } from "./util";
+} from "./containers.js";
+import { Factory, Function1, Function2 } from "./functions.js";
+import { DispatcherLike, SchedulerLike } from "./scheduling.js";
+import { DisposableLike } from "./util.js";
 
 /** @ignore */
 export const SinkLike_notify = Symbol("SinkLike_notify");

@@ -5,19 +5,23 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { ThrowIfEmpty } from "../../../containers";
-import StatefulContainer_throwIfEmpty from "../../../containers/StatefulContainer/__internal__/StatefulContainer.throwIfEmpty";
-import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Factory, Optional, error, none, pipe } from "../../../functions";
-import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin";
-import DelegatingEnumerator_move from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.move";
-import Enumerable_liftT from "./Enumerable.liftT";
+} from "../../../__internal__/mixins.js";
+import { ThrowIfEmpty } from "../../../containers.js";
+import StatefulContainer_throwIfEmpty from "../../../containers/StatefulContainer/__internal__/StatefulContainer.throwIfEmpty.js";
+import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
+import { Factory, Optional, error, none, pipe } from "../../../functions.js";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  SourceLike_move,
+} from "../../../ix.js";
+import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin.js";
+import DelegatingEnumerator_move from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.move.js";
+import Enumerable_liftT from "./Enumerable.liftT.js";
 
 const Enumerable_throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (<T>() => {

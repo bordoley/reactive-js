@@ -2,10 +2,10 @@ import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { Optional, none } from "../../../functions";
+} from "../../../containers.js";
+import { Optional, none } from "../../../functions.js";
 
-import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
+import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
 const _arraySequence = <T>(
   arr: readonly T[],

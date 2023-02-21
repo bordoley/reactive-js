@@ -3,15 +3,15 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { SomeSatisfy } from "../../../containers";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
-import { Predicate, partial, pipe } from "../../../functions";
-import { ObservableLike, ObserverLike, SinkLike } from "../../../rx";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_someSatisfyMixin from "../../Sink/__internal__/Sink.someSatisfyMixin";
-import Observable_lift from "./Observable.lift";
+} from "../../../__internal__/mixins.js";
+import { SomeSatisfy } from "../../../containers.js";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import { Predicate, partial, pipe } from "../../../functions.js";
+import { ObservableLike, ObserverLike, SinkLike } from "../../../rx.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_someSatisfyMixin from "../../Sink/__internal__/Sink.someSatisfyMixin.js";
+import Observable_lift from "./Observable.lift.js";
 
 const Observable_someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
   /*@__PURE__*/ (<T>() => {

@@ -1,6 +1,6 @@
-import { Optional, none, pipeLazy } from "../../functions";
-import { RunnableLike } from "../../rx";
-import Runnable from "../../rx/Runnable";
+import { Optional, none, pipeLazy } from "../../functions.js";
+import { RunnableLike } from "../../rx.js";
+import Runnable from "../../rx/Runnable.js";
 import {
   bufferTests,
   catchErrorTests,
@@ -23,8 +23,8 @@ import {
   takeLastTests,
   takeWhileTests,
   throwIfEmptyTests,
-} from "../operators";
-import { describe, expectEquals, test, testModule } from "../testing";
+} from "../operators.js";
+import { describe, expectEquals, test, testModule } from "../testing.js";
 
 testModule(
   "Runnable",

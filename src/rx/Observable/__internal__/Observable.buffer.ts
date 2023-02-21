@@ -8,10 +8,10 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { MAX_SAFE_INTEGER } from "../../../constants";
-import { ContainerOperator } from "../../../containers";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
+} from "../../../__internal__/mixins.js";
+import { MAX_SAFE_INTEGER } from "../../../constants.js";
+import { ContainerOperator } from "../../../containers.js";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import {
   Function1,
   getLength,
@@ -20,26 +20,26 @@ import {
   max,
   none,
   pipe,
-} from "../../../functions";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import DisposableRef_create from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.create";
+} from "../../../functions.js";
+import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import DisposableRef_create from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.create.js";
 import {
   DisposableRefLike,
   MutableRefLike_current,
-} from "../../../util/__internal__/util.internal";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
-import Observable_forEach from "./Observable.forEach";
-import Observable_lift from "./Observable.lift";
-import Observable_never from "./Observable.never";
-import Observable_subscribe from "./Observable.subscribe";
+} from "../../../util/__internal__/util.internal.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Observable_forEach from "./Observable.forEach.js";
+import Observable_lift from "./Observable.lift.js";
+import Observable_never from "./Observable.never.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_buffer: <T>(options?: {
   readonly duration?: number | Function1<T, ObservableLike>;

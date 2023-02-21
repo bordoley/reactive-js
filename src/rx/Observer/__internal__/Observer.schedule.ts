@@ -1,9 +1,9 @@
-import { Function1, SideEffect, pipe } from "../../../functions";
-import { ObserverLike } from "../../../rx";
-import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule";
-import { DisposableLike } from "../../../util";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import getScheduler from "./Observer.getScheduler";
+import { Function1, SideEffect, pipe } from "../../../functions.js";
+import { ObserverLike } from "../../../rx.js";
+import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import getScheduler from "./Observer.getScheduler.js";
 
 const Observer_schedule =
   (

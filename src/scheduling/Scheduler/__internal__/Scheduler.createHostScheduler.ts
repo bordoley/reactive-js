@@ -5,8 +5,8 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Optional, isFunction, pipe, unsafeCast } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Optional, isFunction, pipe, unsafeCast } from "../../../functions.js";
 import {
   ContinuationLike,
   SchedulerLike,
@@ -15,19 +15,19 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-} from "../../../scheduling";
-import { DisposableLike } from "../../../util";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed";
-import Continuation_run from "../../Continuation/__internal__/Continuation.run";
-import { getDelay } from "../../__internal__/Scheduler.options";
-import getCurrentTime from "./Scheduler.getCurrentTime";
-import isInContinuation from "./Scheduler.isInContinuation";
+} from "../../../scheduling.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import Continuation_run from "../../Continuation/__internal__/Continuation.run.js";
+import { getDelay } from "../../__internal__/Scheduler.options.js";
+import getCurrentTime from "./Scheduler.getCurrentTime.js";
+import isInContinuation from "./Scheduler.isInContinuation.js";
 
 declare const navigator: {
   scheduling: Optional<{

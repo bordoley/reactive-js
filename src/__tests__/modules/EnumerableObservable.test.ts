@@ -1,5 +1,5 @@
-import { EnumerableObservableLike } from "../../rx";
-import EnumerableObservable from "../../rx/EnumerableObservable";
+import { EnumerableObservableLike } from "../../rx.js";
+import EnumerableObservable from "../../rx/EnumerableObservable.js";
 import {
   bufferTests,
   catchErrorTests,
@@ -34,8 +34,8 @@ import {
   toRunnableObservableTests,
   zipTests,
   zipWithTests,
-} from "../operators";
-import { testModule } from "../testing";
+} from "../operators.js";
+import { testModule } from "../testing.js";
 
 testModule(
   "EnumerableObservable",

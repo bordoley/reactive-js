@@ -1,7 +1,7 @@
-import { MAX_SAFE_INTEGER } from "../../../constants";
-import { ConcatAll } from "../../../containers";
-import { ObservableLike } from "../../../rx";
-import Observable_mergeAll from "./Observable.mergeAll";
+import { MAX_SAFE_INTEGER } from "../../../constants.js";
+import { ConcatAll } from "../../../containers.js";
+import { ObservableLike } from "../../../rx.js";
+import Observable_mergeAll from "./Observable.mergeAll.js";
 
 const Observable_concatAll: ConcatAll<
   ObservableLike,

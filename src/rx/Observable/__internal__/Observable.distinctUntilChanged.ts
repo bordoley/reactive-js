@@ -3,19 +3,19 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { DistinctUntilChanged } from "../../../containers";
-import StatefulContainer_distinctUntilChanged from "../../../containers/StatefulContainer/__internal__/StatefulContainer.distinctUntilChanged";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { Equality, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { DistinctUntilChanged } from "../../../containers.js";
+import StatefulContainer_distinctUntilChanged from "../../../containers/StatefulContainer/__internal__/StatefulContainer.distinctUntilChanged.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { Equality, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_distinctUntilChangedMixin from "../../Sink/__internal__/Sink.distinctUntilChangedMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_distinctUntilChangedMixin from "../../Sink/__internal__/Sink.distinctUntilChangedMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {

@@ -3,11 +3,11 @@ import {
   SequenceLike_data,
   SequenceLike_next,
   Zip,
-} from "../../../containers";
-import { callWith, getLength, isSome, none, pipe } from "../../../functions";
-import Container_keepType from "../../Container/__internal__/Container.keepType";
-import ReadonlyArray_keep from "../../ReadonlyArray/__internal__/ReadonlyArray.keep";
-import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map";
+} from "../../../containers.js";
+import { callWith, getLength, isSome, none, pipe } from "../../../functions.js";
+import Container_keepType from "../../Container/__internal__/Container.keepType.js";
+import ReadonlyArray_keep from "../../ReadonlyArray/__internal__/ReadonlyArray.keep.js";
+import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 
 const Sequence_zip: Zip<SequenceLike>["zip"] = /*@__PURE__*/ (() => {
   const zip =

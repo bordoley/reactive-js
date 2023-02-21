@@ -3,8 +3,8 @@ import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { isSome, none } from "../../../functions";
+} from "../../../containers.js";
+import { isSome, none } from "../../../functions.js";
 
 const Sequence_pairwise: Pairwise<SequenceLike>["pairwise"] =
   /*@__PURE__*/ (() => {

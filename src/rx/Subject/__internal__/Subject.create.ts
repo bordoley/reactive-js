@@ -5,7 +5,7 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
+} from "../../../__internal__/mixins.js";
 import {
   getLength,
   max,
@@ -13,7 +13,7 @@ import {
   none,
   pipe,
   unsafeCast,
-} from "../../../functions";
+} from "../../../functions.js";
 import {
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
@@ -23,13 +23,13 @@ import {
   ReactiveContainerLike_sinkInto,
   SubjectLike,
   SubjectLike_publish,
-} from "../../../rx";
-import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed";
-import Observer_getDispatcher from "../../Observer/__internal__/Observer.getDispatcher";
+} from "../../../rx.js";
+import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
+import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import Observer_getDispatcher from "../../Observer/__internal__/Observer.getDispatcher.js";
 
 const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
   /*@__PURE__*/ (<T>() => {

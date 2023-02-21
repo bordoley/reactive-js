@@ -1,8 +1,8 @@
-import { IterableLike } from "../../../containers";
-import { compose, returns } from "../../../functions";
-import { ToAsyncEnumerable } from "../../../ix";
-import Enumerable_toAsyncEnumerable from "../../../ix/Enumerable/__internal__/Enumerable.toAsyncEnumerable";
-import Iterable_toEnumerable from "./Iterable.toEnumerable";
+import { IterableLike } from "../../../containers.js";
+import { compose, returns } from "../../../functions.js";
+import { ToAsyncEnumerable } from "../../../ix.js";
+import Enumerable_toAsyncEnumerable from "../../../ix/Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
+import Iterable_toEnumerable from "./Iterable.toEnumerable.js";
 
 const Iterable_toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"] =
   /*@__PURE__*/ returns(

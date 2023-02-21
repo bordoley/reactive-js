@@ -7,8 +7,8 @@ import {
   Reducer,
   SideEffect1,
   Updater,
-} from "./functions";
-import { DisposableLike } from "./util";
+} from "./functions.js";
+import { DisposableLike } from "./util.js";
 
 /**  @ignore */
 export const ContainerLike_T = Symbol("ContainerLike_T");

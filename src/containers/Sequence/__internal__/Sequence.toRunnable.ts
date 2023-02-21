@@ -2,10 +2,10 @@ import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { Function1, isSome } from "../../../functions";
-import { RunnableLike, SinkLike_notify } from "../../../rx";
-import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create";
+} from "../../../containers.js";
+import { Function1, isSome } from "../../../functions.js";
+import { RunnableLike, SinkLike_notify } from "../../../rx.js";
+import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 
 const Sequence_toRunnable =
   <T>(): Function1<SequenceLike<T>, RunnableLike<T>> =>

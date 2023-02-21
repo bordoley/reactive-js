@@ -1,4 +1,4 @@
-import { EnumeratorLike_hasCurrent } from "../../../ix";
+import { EnumeratorLike_hasCurrent } from "../../../ix.js";
 
 const Enumerator_hasCurrent = (enumerator: {
   [EnumeratorLike_hasCurrent]: boolean;

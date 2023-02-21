@@ -3,20 +3,20 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { Reduce } from "../../../containers";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
-import StatefulContainer_reduce from "../../../containers/StatefulContainer/__internal__/StatefulContainer.reduce";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { Factory, Reducer, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Reduce } from "../../../containers.js";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import StatefulContainer_reduce from "../../../containers/StatefulContainer/__internal__/StatefulContainer.reduce.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { Factory, Reducer, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   T,

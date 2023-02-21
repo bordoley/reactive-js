@@ -1,9 +1,9 @@
-import { none } from "../../../functions";
+import { none } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   InteractiveContainerLike_interact,
-} from "../../../ix";
+} from "../../../ix.js";
 
 const Enumerable_enumerate =
   <T>() =>

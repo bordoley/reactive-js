@@ -1,5 +1,5 @@
-import { SideEffect1 } from "../../../functions";
-import { DispatcherLike_dispatch } from "../../../scheduling";
+import { SideEffect1 } from "../../../functions.js";
+import { DispatcherLike_dispatch } from "../../../scheduling.js";
 
 const Dispatcher_dispatchTo =
   <T>(dispatcher: { [DispatcherLike_dispatch](v: T): void }): SideEffect1<T> =>

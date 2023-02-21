@@ -1,29 +1,29 @@
 import { Readable, Writable } from "stream";
-import Container from "../../containers/Container";
-import ReadonlyArray from "../../containers/ReadonlyArray";
-import { Updater, newInstance, pipe, returns } from "../../functions";
+import Container from "../../containers/Container.js";
+import ReadonlyArray from "../../containers/ReadonlyArray.js";
+import { Updater, newInstance, pipe, returns } from "../../functions.js";
 import {
   createReadableSource,
   createWritableSink,
   gunzip,
   gzip,
-} from "../../integrations/node";
-import { ObservableLike } from "../../rx";
-import Observable from "../../rx/Observable";
-import RunnableObservable from "../../rx/RunnableObservable";
-import { PauseableState, PauseableState_paused } from "../../scheduling";
-import Scheduler from "../../scheduling/Scheduler";
-import Flowable from "../../streaming/Flowable";
-import Stream from "../../streaming/Stream";
-import Streamable from "../../streaming/Streamable";
-import Disposable from "../../util/Disposable";
+} from "../../integrations/node.js";
+import { ObservableLike } from "../../rx.js";
+import Observable from "../../rx/Observable.js";
+import RunnableObservable from "../../rx/RunnableObservable.js";
+import { PauseableState, PauseableState_paused } from "../../scheduling.js";
+import Scheduler from "../../scheduling/Scheduler.js";
+import Flowable from "../../streaming/Flowable.js";
+import Stream from "../../streaming/Stream.js";
+import Streamable from "../../streaming/Streamable.js";
+import Disposable from "../../util/Disposable.js";
 import {
   describe,
   expectEquals,
   expectPromiseToThrow,
   testAsync,
   testModule,
-} from "../testing";
+} from "../testing.js";
 
 testModule(
   "node",

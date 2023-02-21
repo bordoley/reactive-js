@@ -3,10 +3,10 @@ import {
   ContainerLike,
   ContainerOperator,
   FromReadonlyArray,
-} from "../../../containers";
-import { pipe } from "../../../functions";
+} from "../../../containers.js";
+import { pipe } from "../../../functions.js";
 
-import Container_concatWith from "./Container.concatWith";
+import Container_concatWith from "./Container.concatWith.js";
 
 const Container_startWith: <C extends ContainerLike, T>(
   m: Concat<C> & FromReadonlyArray<C>,

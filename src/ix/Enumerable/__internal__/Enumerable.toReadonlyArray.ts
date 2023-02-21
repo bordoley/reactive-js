@@ -1,10 +1,10 @@
-import { ToReadonlyArray } from "../../../containers";
-import { isSome, pipe, raiseError } from "../../../functions";
-import { EnumerableLike } from "../../../ix";
-import Disposable_getError from "../../../util/Disposable/__internal__/Disposable.getError";
-import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent";
-import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move";
-import Enumerable_enumerate from "./Enumerable.enumerate";
+import { ToReadonlyArray } from "../../../containers.js";
+import { isSome, pipe, raiseError } from "../../../functions.js";
+import { EnumerableLike } from "../../../ix.js";
+import Disposable_getError from "../../../util/Disposable/__internal__/Disposable.getError.js";
+import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move.js";
+import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
 const Enumerable_toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
 

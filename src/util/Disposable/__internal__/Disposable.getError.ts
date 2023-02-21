@@ -1,5 +1,5 @@
-import { Optional } from "../../../functions";
-import { DisposableLike_error } from "../../../util";
+import { Optional } from "../../../functions.js";
+import { DisposableLike_error } from "../../../util.js";
 
 const Disposable_getError = (disposable: {
   [DisposableLike_error]: Optional<Error>;

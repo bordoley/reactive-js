@@ -1,9 +1,9 @@
-import { createInstanceFactory } from "../../../__internal__/mixins";
-import { CatchError } from "../../../containers";
-import { partial, pipe } from "../../../functions";
-import { RunnableLike, SinkLike } from "../../../rx";
-import Sink_catchErrorMixin from "../../Sink/__internal__/Sink.catchErrorMixin";
-import Runnable_lift from "./Runnable.lift";
+import { createInstanceFactory } from "../../../__internal__/mixins.js";
+import { CatchError } from "../../../containers.js";
+import { partial, pipe } from "../../../functions.js";
+import { RunnableLike, SinkLike } from "../../../rx.js";
+import Sink_catchErrorMixin from "../../Sink/__internal__/Sink.catchErrorMixin.js";
+import Runnable_lift from "./Runnable.lift.js";
 
 const Runnable_catchError: CatchError<RunnableLike>["catchError"] =
   /*@__PURE__*/ (() => {

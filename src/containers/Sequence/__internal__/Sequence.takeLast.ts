@@ -3,9 +3,9 @@ import {
   SequenceLike_data,
   SequenceLike_next,
   TakeLast,
-} from "../../../containers";
-import { callWith, getLength, isSome, pipe } from "../../../functions";
-import ReadonlyArray_toSequence from "../../ReadonlyArray/__internal__/ReadonlyArray.toSequence";
+} from "../../../containers.js";
+import { callWith, getLength, isSome, pipe } from "../../../functions.js";
+import ReadonlyArray_toSequence from "../../ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 
 const Sequence_takeLast: TakeLast<SequenceLike>["takeLast"] =
   /*@__PURE__*/ (() => {

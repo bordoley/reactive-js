@@ -1,11 +1,11 @@
-import { Generate } from "../../../containers";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
-import { Factory, Updater, pipe } from "../../../functions";
-import { AsyncEnumerableLike } from "../../../ix";
-import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan";
-import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync";
-import { getDelay } from "../../../scheduling/__internal__/Scheduler.options";
-import AsyncEnumerable_create from "./AsyncEnumerable.create";
+import { Generate } from "../../../containers.js";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import { Factory, Updater, pipe } from "../../../functions.js";
+import { AsyncEnumerableLike } from "../../../ix.js";
+import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
+import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
+import { getDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
+import AsyncEnumerable_create from "./AsyncEnumerable.create.js";
 
 const AsyncEnumerable_generate: Generate<
   AsyncEnumerableLike,

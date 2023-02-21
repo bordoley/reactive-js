@@ -1,5 +1,5 @@
-import { SideEffect1 } from "../../../functions";
-import { SubjectLike, SubjectLike_publish } from "../../../rx";
+import { SideEffect1 } from "../../../functions.js";
+import { SubjectLike, SubjectLike_publish } from "../../../rx.js";
 
 const Subject_publishTo =
   <T>(subject: SubjectLike<T>): SideEffect1<T> =>

@@ -1,5 +1,5 @@
-import { ContainerLike, ContainerOperator, Keep } from "../../../containers";
-import { alwaysFalse } from "../../../functions";
+import { ContainerLike, ContainerOperator, Keep } from "../../../containers.js";
+import { alwaysFalse } from "../../../functions.js";
 
 const Container_ignoreElements = <C extends ContainerLike, T>({
   keep,

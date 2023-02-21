@@ -1,5 +1,5 @@
-import { ContainerLike, ContainerOperator, Map } from "../../../containers";
-import { pipe, returns } from "../../../functions";
+import { ContainerLike, ContainerOperator, Map } from "../../../containers.js";
+import { pipe, returns } from "../../../functions.js";
 
 const Container_mapTo = <C extends ContainerLike, TA, TB>(
   { map }: Map<C>,

@@ -1,12 +1,12 @@
-import Container_repeat from "../../../containers/Container/__internal__/Container.repeat";
-import { pipe } from "../../../functions";
-import { RunnableLike } from "../../../rx";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Sink_createWithDelegate from "../../Sink/__internal__/Sink.createWithDelegate";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
-import Runnable_create from "./Runnable.create";
+import Container_repeat from "../../../containers/Container/__internal__/Container.repeat.js";
+import { pipe } from "../../../functions.js";
+import { RunnableLike } from "../../../rx.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Sink_createWithDelegate from "../../Sink/__internal__/Sink.createWithDelegate.js";
+import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Runnable_create from "./Runnable.create.js";
 
 const Runnable_repeat = /*@__PURE__*/ (<T>() => {
   return Container_repeat<RunnableLike, T>((delegate, predicate) =>

@@ -7,26 +7,26 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { ContainerOperator, Map } from "../../../containers";
-import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map";
-import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Function1, none, pipe, unsafeCast } from "../../../functions";
-import { AsyncEnumerableLike, AsyncEnumeratorLike } from "../../../ix";
+} from "../../../__internal__/mixins.js";
+import { ContainerOperator, Map } from "../../../containers.js";
+import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map.js";
+import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
+import { Function1, none, pipe, unsafeCast } from "../../../functions.js";
+import { AsyncEnumerableLike, AsyncEnumeratorLike } from "../../../ix.js";
 import {
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
   ObservableLike,
   ObserverLike,
   ReactiveContainerLike_sinkInto,
-} from "../../../rx";
-import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount";
-import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay";
-import Observable_map from "../../../rx/Observable/__internal__/Observable.map";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
-import DelegatingAsyncEnumerator_mixin from "../../__internal__/DelegatingAsyncEnumerator/DelegatingAsyncEnumerator.mixin";
-import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT";
+} from "../../../rx.js";
+import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
+import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
+import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
+import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingAsyncEnumerator_mixin from "../../__internal__/DelegatingAsyncEnumerator/DelegatingAsyncEnumerator.mixin.js";
+import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT.js";
 
 const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
   TA,

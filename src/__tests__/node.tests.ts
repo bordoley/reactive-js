@@ -1,1 +1,1 @@
-import "./modules/node.test";
+import "./modules/node.test.js";

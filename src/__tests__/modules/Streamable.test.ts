@@ -1,11 +1,11 @@
-import { pipe, returns } from "../../functions";
-import Observable from "../../rx/Observable";
-import Continuation from "../../scheduling/Continuation";
-import Dispatcher from "../../scheduling/Dispatcher";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
-import Streamable from "../../streaming/Streamable";
-import Disposable from "../../util/Disposable";
-import { describe, expectArrayEquals, test, testModule } from "../testing";
+import { pipe, returns } from "../../functions.js";
+import Observable from "../../rx/Observable.js";
+import Continuation from "../../scheduling/Continuation.js";
+import Dispatcher from "../../scheduling/Dispatcher.js";
+import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import Streamable from "../../streaming/Streamable.js";
+import Disposable from "../../util/Disposable.js";
+import { describe, expectArrayEquals, test, testModule } from "../testing.js";
 
 testModule(
   "Streamable",

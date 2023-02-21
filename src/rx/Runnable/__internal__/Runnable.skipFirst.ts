@@ -1,11 +1,11 @@
-import { createInstanceFactory } from "../../../__internal__/mixins";
-import { SkipFirst } from "../../../containers";
-import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.skipFirst";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { pipe } from "../../../functions";
-import { RunnableLike } from "../../../rx";
-import Sink_skipFirstMixin from "../../Sink/__internal__/Sink.skipFirstMixin";
-import Runnable_liftT from "./Runnable.liftT";
+import { createInstanceFactory } from "../../../__internal__/mixins.js";
+import { SkipFirst } from "../../../containers.js";
+import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.skipFirst.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { pipe } from "../../../functions.js";
+import { RunnableLike } from "../../../rx.js";
+import Sink_skipFirstMixin from "../../Sink/__internal__/Sink.skipFirstMixin.js";
+import Runnable_liftT from "./Runnable.liftT.js";
 
 const Runnable_skipFirst: SkipFirst<RunnableLike>["skipFirst"] =
   /*@__PURE__*/ (<T>() => {

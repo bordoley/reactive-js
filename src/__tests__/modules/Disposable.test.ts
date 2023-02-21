@@ -1,9 +1,16 @@
-import { Optional, error, none, pipe, pipeLazy, raise } from "../../functions";
-import Observable from "../../rx/Observable";
-import Continuation from "../../scheduling/Continuation";
-import Scheduler from "../../scheduling/Scheduler";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
-import Disposable from "../../util/Disposable";
+import {
+  Optional,
+  error,
+  none,
+  pipe,
+  pipeLazy,
+  raise,
+} from "../../functions.js";
+import Observable from "../../rx/Observable.js";
+import Continuation from "../../scheduling/Continuation.js";
+import Scheduler from "../../scheduling/Scheduler.js";
+import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import Disposable from "../../util/Disposable.js";
 import {
   expectArrayEquals,
   expectEquals,
@@ -13,7 +20,7 @@ import {
   mockFn,
   test,
   testModule,
-} from "../testing";
+} from "../testing.js";
 
 testModule(
   "Disposable",

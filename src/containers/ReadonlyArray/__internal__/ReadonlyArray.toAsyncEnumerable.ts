@@ -1,15 +1,21 @@
-import { ReadonlyArrayLike } from "../../../containers";
-import { abs, decrement, increment, pipe, returns } from "../../../functions";
-import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../ix";
-import AsyncEnumerable_create from "../../../ix/AsyncEnumerable/__internal__/AsyncEnumerable.create";
-import { ObservableLike } from "../../../rx";
-import Observable_concatAll from "../../../rx/Observable/__internal__/Observable.concatAll";
-import Observable_map from "../../../rx/Observable/__internal__/Observable.map";
-import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan";
-import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst";
-import Container_concatMap from "../../Container/__internal__/Container.concatMap";
-import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
-import ReadonlyArray_toRunnableObservable from "./ReadonlyArray.toRunnableObservable";
+import { ReadonlyArrayLike } from "../../../containers.js";
+import {
+  abs,
+  decrement,
+  increment,
+  pipe,
+  returns,
+} from "../../../functions.js";
+import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../ix.js";
+import AsyncEnumerable_create from "../../../ix/AsyncEnumerable/__internal__/AsyncEnumerable.create.js";
+import { ObservableLike } from "../../../rx.js";
+import Observable_concatAll from "../../../rx/Observable/__internal__/Observable.concatAll.js";
+import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
+import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
+import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
+import Container_concatMap from "../../Container/__internal__/Container.concatMap.js";
+import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
+import ReadonlyArray_toRunnableObservable from "./ReadonlyArray.toRunnableObservable.js";
 
 const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
   ReadonlyArrayLike,

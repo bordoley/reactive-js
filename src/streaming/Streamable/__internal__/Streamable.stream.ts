@@ -1,10 +1,10 @@
-import { Function1 } from "../../../functions";
-import { SchedulerLike } from "../../../scheduling";
+import { Function1 } from "../../../functions.js";
+import { SchedulerLike } from "../../../scheduling.js";
 import {
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
-} from "../../../streaming";
+} from "../../../streaming.js";
 
 const Streamable_stream =
   <TReq, T, TStream extends StreamLike<TReq, T>>(

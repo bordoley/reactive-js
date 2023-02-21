@@ -7,11 +7,11 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { ObserverLike, SinkLike_notify } from "../../../rx";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Observer_getScheduler from "./Observer.getScheduler";
-import Observer_mixin from "./Observer.mixin";
+} from "../../../__internal__/mixins.js";
+import { ObserverLike, SinkLike_notify } from "../../../rx.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Observer_getScheduler from "./Observer.getScheduler.js";
+import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
   /*@__PURE__*/ (<T>() =>

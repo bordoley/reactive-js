@@ -3,11 +3,11 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { ObserverLike, SinkLike_notify } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Observer_mixin from "./Observer.mixin";
+} from "../../../__internal__/mixins.js";
+import { ObserverLike, SinkLike_notify } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
   /*@__PURE__*/ (<T>() => {

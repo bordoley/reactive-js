@@ -1,14 +1,17 @@
-import { DecodeWithCharset, StatefulContainerLike } from "../../../containers";
+import {
+  DecodeWithCharset,
+  StatefulContainerLike,
+} from "../../../containers.js";
 import {
   Lift,
   StatefulContainerOperatorIn,
   StatefulContainerOperatorOut,
   TInteractive,
   TReactive,
-} from "../../../containers/__internal__/containers.internal";
-import { Function2, partial, pipe } from "../../../functions";
+} from "../../../containers/__internal__/containers.internal.js";
+import { Function2, partial, pipe } from "../../../functions.js";
 
-import StatefulContainer_lift from "./StatefulContainer.lift";
+import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_decodeWithCharset =
   <C extends StatefulContainerLike, TVar extends TInteractive | TReactive>(
@@ -22,7 +25,7 @@ const StatefulContainer_decodeWithCharset =
     >,
   ): DecodeWithCharset<C>["decodeWithCharset"] =>
   options => {
-    const charset = options?.charset ?? "utf-8";
+    const charset = options?.charset ?? "utf-8.js";
     return pipe(operator, partial(charset), StatefulContainer_lift(m));
   };
 

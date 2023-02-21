@@ -1,9 +1,9 @@
-import { DelegatingLike_delegate } from "../../../__internal__/mixins";
+import { DelegatingLike_delegate } from "../../../__internal__/mixins.js";
 import {
   EnumeratorLike,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
-} from "../../../ix";
+} from "../../../ix.js";
 
 const DelegatingEnumerator_move = (enumerator: {
   [DelegatingLike_delegate]: EnumeratorLike;

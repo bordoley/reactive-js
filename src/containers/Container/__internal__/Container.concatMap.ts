@@ -4,8 +4,8 @@ import {
   ContainerOf,
   ContainerOperator,
   Map,
-} from "../../../containers";
-import { Function1, compose } from "../../../functions";
+} from "../../../containers.js";
+import { Function1, compose } from "../../../functions.js";
 
 const Container_concatMap = <C extends ContainerLike, TA, TB>(
   m: Map<C> & ConcatAll<C>,

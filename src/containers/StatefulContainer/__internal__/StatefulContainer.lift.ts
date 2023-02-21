@@ -1,9 +1,9 @@
-import { StatefulContainerLike } from "../../../containers";
+import { StatefulContainerLike } from "../../../containers.js";
 import {
   Lift,
   TInteractive,
   TReactive,
-} from "../../__internal__/containers.internal";
+} from "../../__internal__/containers.internal.js";
 
 const StatefulContainer_lift = <
   C extends StatefulContainerLike,

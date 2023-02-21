@@ -5,8 +5,8 @@ import {
   init,
   mix,
   props,
-} from "../../__internal__/mixins";
-import { MAX_SAFE_INTEGER } from "../../constants";
+} from "../../__internal__/mixins.js";
+import { MAX_SAFE_INTEGER } from "../../constants.js";
 import {
   Function1,
   Optional,
@@ -18,17 +18,17 @@ import {
   none,
   pipe,
   unsafeCast,
-} from "../../functions";
+} from "../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   SourceLike_move,
-} from "../../ix";
-import Enumerator_getCurrent from "../../ix/Enumerator/__internal__/Enumerator.getCurrent";
-import Enumerator_hasCurrent from "../../ix/Enumerator/__internal__/Enumerator.hasCurrent";
-import Source_move from "../../ix/Source/__internal__/Source.move";
-import MutableEnumerator_mixin from "../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
-import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal";
+} from "../../ix.js";
+import Enumerator_getCurrent from "../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_hasCurrent from "../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
+import Source_move from "../../ix/Source/__internal__/Source.move.js";
+import MutableEnumerator_mixin from "../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal.js";
 import {
   ContinuationLike,
   DispatcherLike_dispatch,
@@ -43,29 +43,29 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-} from "../../scheduling";
-import { DisposableLike } from "../../util";
-import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors";
-import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed";
-import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin";
-import DisposableRef_mixin from "../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin";
-import Queue_create from "../../util/__internal__/Queue/Queue.create";
-import Queue_peek from "../../util/__internal__/Queue/Queue.peek";
-import Queue_pop from "../../util/__internal__/Queue/Queue.pop";
-import Queue_push from "../../util/__internal__/Queue/Queue.push";
+} from "../../scheduling.js";
+import { DisposableLike } from "../../util.js";
+import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
+import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
+import DisposableRef_mixin from "../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin.js";
+import Queue_create from "../../util/__internal__/Queue/Queue.create.js";
+import Queue_peek from "../../util/__internal__/Queue/Queue.peek.js";
+import Queue_pop from "../../util/__internal__/Queue/Queue.pop.js";
+import Queue_push from "../../util/__internal__/Queue/Queue.push.js";
 import {
   DisposableRefLike,
   MutableRefLike_current,
   QueueLike,
-} from "../../util/__internal__/util.internal";
-import { Continuation__yield } from "../Continuation/__internal__/Continuation.create";
-import Continuation_run from "../Continuation/__internal__/Continuation.run";
-import getCurrentTime from "../Scheduler/__internal__/Scheduler.getCurrentTime";
-import isInContinuation from "../Scheduler/__internal__/Scheduler.isInContinuation";
-import schedule from "../Scheduler/__internal__/Scheduler.schedule";
-import shouldYield from "../Scheduler/__internal__/Scheduler.shouldYield";
-import { getDelay } from "./Scheduler.options";
+} from "../../util/__internal__/util.internal.js";
+import { Continuation__yield } from "../Continuation/__internal__/Continuation.create.js";
+import Continuation_run from "../Continuation/__internal__/Continuation.run.js";
+import getCurrentTime from "../Scheduler/__internal__/Scheduler.getCurrentTime.js";
+import isInContinuation from "../Scheduler/__internal__/Scheduler.isInContinuation.js";
+import schedule from "../Scheduler/__internal__/Scheduler.schedule.js";
+import shouldYield from "../Scheduler/__internal__/Scheduler.shouldYield.js";
+import { getDelay } from "./Scheduler.options.js";
 
 export type QueueSchedulerOptions = {
   readonly priority?: number;

@@ -8,7 +8,7 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
+} from "../../../__internal__/mixins.js";
 import {
   Factory,
   Optional,
@@ -16,13 +16,13 @@ import {
   none,
   pipe,
   returns,
-} from "../../../functions";
-import { SinkLike, SinkLike_notify } from "../../../rx";
-import { DisposableLike } from "../../../util";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
+} from "../../../functions.js";
+import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 
 const Sink_throwIfEmptyMixin: <T>() => Mixin2<
   SinkLike<T>,

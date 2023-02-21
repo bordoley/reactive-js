@@ -3,8 +3,8 @@ import {
   ContainerOperator,
   Defer,
   Map,
-} from "../../../containers";
-import { newInstance, pipe } from "../../../functions";
+} from "../../../containers.js";
+import { newInstance, pipe } from "../../../functions.js";
 
 const Container_encodeUtf8 =
   <C extends ContainerLike>(

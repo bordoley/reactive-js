@@ -14,25 +14,25 @@ import {
   pipe,
   raiseError,
   raiseWithDebugMessage,
-} from "../../../functions";
-import { ObservableLike, ObserverLike } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
-import { StreamLike, StreamableLike } from "../../../streaming";
-import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore";
-import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream";
-import { DisposableLike } from "../../../util";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observer_schedule from "../../Observer/__internal__/Observer.schedule";
-import Sink_notify from "../../Sink/__internal__/Sink.notify";
-import Observable_create from "./Observable.create";
-import Observable_empty from "./Observable.empty";
-import Observable_forEach from "./Observable.forEach";
-import Observable_subscribe from "./Observable.subscribe";
+} from "../../../functions.js";
+import { ObservableLike, ObserverLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import { StreamLike, StreamableLike } from "../../../streaming.js";
+import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
+import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
+import Sink_notify from "../../Sink/__internal__/Sink.notify.js";
+import Observable_create from "./Observable.create.js";
+import Observable_empty from "./Observable.empty.js";
+import Observable_forEach from "./Observable.forEach.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 type EffectsMode = "batched" | "combine-latest";
 

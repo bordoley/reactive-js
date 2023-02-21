@@ -5,29 +5,29 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Zip } from "../../../containers";
-import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every";
-import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach";
-import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map";
-import { none, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Zip } from "../../../containers.js";
+import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
+import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import { none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   SourceLike_move,
-} from "../../../ix";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent";
-import Enumerator_hasCurrent from "../../Enumerator/__internal__/Enumerator.hasCurrent";
-import Source_move from "../../Source/__internal__/Source.move";
-import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin";
-import { MutableEnumeratorLike } from "../../__internal__/ix.internal";
-import Enumerable_create from "./Enumerable.create";
-import Enumerable_enumerate from "./Enumerable.enumerate";
+} from "../../../ix.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_hasCurrent from "../../Enumerator/__internal__/Enumerator.hasCurrent.js";
+import Source_move from "../../Source/__internal__/Source.move.js";
+import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import { MutableEnumeratorLike } from "../../__internal__/ix.internal.js";
+import Enumerable_create from "./Enumerable.create.js";
+import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
 const Enumerable_zip: Zip<EnumerableLike>["zip"] = /*@__PURE__*/ (() => {
   const moveAll = (enumerators: readonly EnumeratorLike[]) => {

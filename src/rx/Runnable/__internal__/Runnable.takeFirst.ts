@@ -1,11 +1,11 @@
-import { createInstanceFactory } from "../../../__internal__/mixins";
-import { TakeFirst } from "../../../containers";
-import StatefulContainer_takeFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeFirst";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { pipe } from "../../../functions";
-import { RunnableLike } from "../../../rx";
-import Sink_takeFirstMixin from "../../Sink/__internal__/Sink.takeFirstMixin";
-import Runnable_liftT from "./Runnable.liftT";
+import { createInstanceFactory } from "../../../__internal__/mixins.js";
+import { TakeFirst } from "../../../containers.js";
+import StatefulContainer_takeFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeFirst.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { pipe } from "../../../functions.js";
+import { RunnableLike } from "../../../rx.js";
+import Sink_takeFirstMixin from "../../Sink/__internal__/Sink.takeFirstMixin.js";
+import Runnable_liftT from "./Runnable.liftT.js";
 
 const Runnable_takeFirst: TakeFirst<RunnableLike>["takeFirst"] =
   /*@__PURE__*/ (<T>() => {

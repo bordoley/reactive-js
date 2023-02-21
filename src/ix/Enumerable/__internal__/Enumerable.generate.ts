@@ -5,21 +5,21 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Generate } from "../../../containers";
-import { Factory, Updater, error, none, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Generate } from "../../../containers.js";
+import { Factory, Updater, error, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   SourceLike_move,
-} from "../../../ix";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin";
-import { MutableEnumeratorLike } from "../../__internal__/ix.internal";
-import Enumerable_create from "./Enumerable.create";
+} from "../../../ix.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import { MutableEnumeratorLike } from "../../__internal__/ix.internal.js";
+import Enumerable_create from "./Enumerable.create.js";
 
 const Enumerable_generate: Generate<EnumerableLike>["generate"] =
   /*@__PURE__*/ (<T>() => {

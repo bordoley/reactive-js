@@ -3,8 +3,8 @@ import {
   ContainerOf,
   FromReadonlyArray,
   Map,
-} from "../../../containers";
-import { Factory, callWith, pipe } from "../../../functions";
+} from "../../../containers.js";
+import { Factory, callWith, pipe } from "../../../functions.js";
 
 const Container_compute = <C extends ContainerLike, T, O = unknown>(
   m: Map<C> & FromReadonlyArray<C, O>,

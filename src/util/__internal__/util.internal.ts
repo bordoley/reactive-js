@@ -1,6 +1,6 @@
-import { DelegatingLike } from "../../__internal__/mixins";
-import { Optional } from "../../functions";
-import { DisposableLike } from "../../util";
+import { DelegatingLike } from "../../__internal__/mixins.js";
+import { Optional } from "../../functions.js";
+import { DisposableLike } from "../../util.js";
 
 export const MutableRefLike_current = Symbol("MutableRefLike_current");
 

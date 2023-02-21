@@ -15,13 +15,13 @@ import {
   pipe,
   pipeLazy,
   raiseError,
-} from "../functions";
-import { ObservableLike, SubjectLike } from "../rx";
-import { distinctUntilChanged, forEach, subscribe } from "../rx/Observable";
-import { create as createSubject, publish } from "../rx/Subject";
-import { SchedulerLike } from "../scheduling";
-import { dispose, onError } from "../util/Disposable";
-import { createSchedulerWithNormalPriority } from "./scheduler";
+} from "../functions.js";
+import { ObservableLike, SubjectLike } from "../rx.js";
+import { distinctUntilChanged, forEach, subscribe } from "../rx/Observable.js";
+import { create as createSubject, publish } from "../rx/Subject.js";
+import { SchedulerLike } from "../scheduling.js";
+import { dispose, onError } from "../util/Disposable.js";
+import { createSchedulerWithNormalPriority } from "./scheduler.js";
 
 /**
  * Returns the current value, if defined, of `observable`.

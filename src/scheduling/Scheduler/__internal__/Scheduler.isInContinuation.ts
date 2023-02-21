@@ -1,4 +1,4 @@
-import { SchedulerLike_inContinuation } from "../../../scheduling";
+import { SchedulerLike_inContinuation } from "../../../scheduling.js";
 
 const Scheduler_isInContinuation = (scheduler: {
   readonly [SchedulerLike_inContinuation]: boolean;

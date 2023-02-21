@@ -1,5 +1,5 @@
-import { ObserverLike, ObserverLike_dispatcher } from "../../../rx";
-import { DispatcherLike } from "../../../scheduling";
+import { ObserverLike, ObserverLike_dispatcher } from "../../../rx.js";
+import { DispatcherLike } from "../../../scheduling.js";
 
 const Observer_getDispatcher = <T>(
   observer: ObserverLike<T>,

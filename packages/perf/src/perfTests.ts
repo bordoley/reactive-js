@@ -16,7 +16,7 @@ import {
   Scan,
   ToReadonlyArray,
 } from "@reactive-js/core/containers";
-import * as _x from "@reactive-js/core/__internal__/mixins"
+import * as _x from "@reactive-js/core/__internal__/mixins";
 
 import * as Enumerable from "@reactive-js/core/ix/Enumerable";
 import * as RunnableObservable from "@reactive-js/core/rx/RunnableObservable";
@@ -41,7 +41,12 @@ const createMapPerfTest = <C extends ContainerLike>(
   benchmarkTest(
     name,
     async (src: readonly number[]) =>
-      pipeLazy(src, m.fromReadonlyArray(), m.map(increment), m.toReadonlyArray()),
+      pipeLazy(
+        src,
+        m.fromReadonlyArray(),
+        m.map(increment),
+        m.toReadonlyArray(),
+      ),
     callWith(),
   );
 

@@ -29,11 +29,11 @@ import {
   TakeWhile,
   ThrowIfEmpty,
   Zip,
-} from "../containers";
-import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable";
-import Promiseable_toObservable from "../containers/Promiseable/__internal__/Promiseable.toObservable";
-import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
-import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable";
+} from "../containers.js";
+import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable.js";
+import Promiseable_toObservable from "../containers/Promiseable/__internal__/Promiseable.toObservable.js";
+import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable.js";
 import {
   Factory,
   Function1,
@@ -50,9 +50,9 @@ import {
   SideEffect5,
   SideEffect6,
   returns,
-} from "../functions";
-import { FromEnumerable } from "../ix";
-import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
+} from "../functions.js";
+import { FromEnumerable } from "../ix.js";
+import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -64,12 +64,12 @@ import {
   WithLatestFrom,
   ZipLatest,
   ZipWithLatestFrom,
-} from "../rx";
-import { SchedulerLike } from "../scheduling";
-import { FromFlowable } from "../streaming";
-import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable";
-import { DisposableLike, DisposableOrTeardown } from "../util";
-import Disposable_toObservable from "../util/Disposable/__internal__/Disposable.toObservable";
+} from "../rx.js";
+import { SchedulerLike } from "../scheduling.js";
+import { FromFlowable } from "../streaming.js";
+import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
+import { DisposableLike, DisposableOrTeardown } from "../util.js";
+import Disposable_toObservable from "../util/Disposable/__internal__/Disposable.toObservable.js";
 import {
   Observable_async,
   Observable_async__await,
@@ -80,57 +80,57 @@ import {
   Observable_async__state,
   Observable_async__stream,
   Observable_async__using,
-} from "./Observable/__internal__/Observable.async";
-import Observable_buffer from "./Observable/__internal__/Observable.buffer";
-import Observable_catchError from "./Observable/__internal__/Observable.catchError";
-import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest";
-import Observable_concat from "./Observable/__internal__/Observable.concat";
-import Observable_concatAll from "./Observable/__internal__/Observable.concatAll";
-import Observable_create from "./Observable/__internal__/Observable.create";
-import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset";
-import Observable_defer from "./Observable/__internal__/Observable.defer";
-import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged";
-import Observable_empty from "./Observable/__internal__/Observable.empty";
-import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy";
-import Observable_forEach from "./Observable/__internal__/Observable.forEach";
-import Observable_forkCombineLatest from "./Observable/__internal__/Observable.forkCombineLatest";
-import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge";
-import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest";
-import Observable_generate from "./Observable/__internal__/Observable.generate";
-import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable";
-import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable";
-import Observable_keep from "./Observable/__internal__/Observable.keep";
-import Observable_map from "./Observable/__internal__/Observable.map";
-import Observable_mapAsync from "./Observable/__internal__/Observable.mapAsync";
-import Observable_merge from "./Observable/__internal__/Observable.merge";
-import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll";
-import Observable_multicast from "./Observable/__internal__/Observable.multicast";
-import Observable_never from "./Observable/__internal__/Observable.never";
-import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe";
-import Observable_pairwise from "./Observable/__internal__/Observable.pairwise";
-import Observable_reduce from "./Observable/__internal__/Observable.reduce";
-import Observable_repeat from "./Observable/__internal__/Observable.repeat";
-import Observable_retry from "./Observable/__internal__/Observable.retry";
-import Observable_scan from "./Observable/__internal__/Observable.scan";
-import Observable_scanAsync from "./Observable/__internal__/Observable.scanAsync";
-import Observable_share from "./Observable/__internal__/Observable.share";
-import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst";
-import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy";
-import Observable_subscribe from "./Observable/__internal__/Observable.subscribe";
-import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn";
-import Observable_switchAll from "./Observable/__internal__/Observable.switchAll";
-import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst";
-import Observable_takeLast from "./Observable/__internal__/Observable.takeLast";
-import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil";
-import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile";
-import Observable_throttle from "./Observable/__internal__/Observable.throttle";
-import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty";
-import Observable_timeout from "./Observable/__internal__/Observable.timeout";
-import Observable_toPromise from "./Observable/__internal__/Observable.toPromise";
-import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom";
-import Observable_zip from "./Observable/__internal__/Observable.zip";
-import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest";
-import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom";
+} from "./Observable/__internal__/Observable.async.js";
+import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
+import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
+import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
+import Observable_concat from "./Observable/__internal__/Observable.concat.js";
+import Observable_concatAll from "./Observable/__internal__/Observable.concatAll.js";
+import Observable_create from "./Observable/__internal__/Observable.create.js";
+import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
+import Observable_defer from "./Observable/__internal__/Observable.defer.js";
+import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_empty from "./Observable/__internal__/Observable.empty.js";
+import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
+import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_forkCombineLatest from "./Observable/__internal__/Observable.forkCombineLatest.js";
+import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
+import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
+import Observable_generate from "./Observable/__internal__/Observable.generate.js";
+import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable.js";
+import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
+import Observable_keep from "./Observable/__internal__/Observable.keep.js";
+import Observable_map from "./Observable/__internal__/Observable.map.js";
+import Observable_mapAsync from "./Observable/__internal__/Observable.mapAsync.js";
+import Observable_merge from "./Observable/__internal__/Observable.merge.js";
+import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll.js";
+import Observable_multicast from "./Observable/__internal__/Observable.multicast.js";
+import Observable_never from "./Observable/__internal__/Observable.never.js";
+import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
+import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
+import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
+import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
+import Observable_retry from "./Observable/__internal__/Observable.retry.js";
+import Observable_scan from "./Observable/__internal__/Observable.scan.js";
+import Observable_scanAsync from "./Observable/__internal__/Observable.scanAsync.js";
+import Observable_share from "./Observable/__internal__/Observable.share.js";
+import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
+import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
+import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
+import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
+import Observable_switchAll from "./Observable/__internal__/Observable.switchAll.js";
+import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
+import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
+import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil.js";
+import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
+import Observable_throttle from "./Observable/__internal__/Observable.throttle.js";
+import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
+import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
+import Observable_toPromise from "./Observable/__internal__/Observable.toPromise.js";
+import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
+import Observable_zip from "./Observable/__internal__/Observable.zip.js";
+import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
+import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
 
 interface __Memo {
   <T>(fn: Factory<T>): T;

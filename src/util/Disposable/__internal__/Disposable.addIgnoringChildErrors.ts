@@ -1,5 +1,5 @@
-import { DisposableLike } from "../../../util";
-import addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown";
+import { DisposableLike } from "../../../util.js";
+import addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown.js";
 
 const Disposable_addIgnoringChildErrors =
   <T extends DisposableLike>(child: DisposableLike) =>

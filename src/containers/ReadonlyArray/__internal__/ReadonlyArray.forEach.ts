@@ -1,5 +1,5 @@
-import { ForEach, ReadonlyArrayLike } from "../../../containers";
-import { Function1, SideEffect1 } from "../../../functions";
+import { ForEach, ReadonlyArrayLike } from "../../../containers.js";
+import { Function1, SideEffect1 } from "../../../functions.js";
 
 const ReadonlyArray_forEach: ForEach<ReadonlyArrayLike>["forEach"] =
   <T>(effect: SideEffect1<T>): Function1<readonly T[], readonly T[]> =>

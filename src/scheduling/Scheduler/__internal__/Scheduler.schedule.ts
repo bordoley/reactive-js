@@ -1,7 +1,7 @@
-import { Function1, SideEffect } from "../../../functions";
-import { SchedulerLike, SchedulerLike_schedule } from "../../../scheduling";
-import { DisposableLike } from "../../../util";
-import Continuation_create from "../../Continuation/__internal__/Continuation.create";
+import { Function1, SideEffect } from "../../../functions.js";
+import { SchedulerLike, SchedulerLike_schedule } from "../../../scheduling.js";
+import { DisposableLike } from "../../../util.js";
+import Continuation_create from "../../Continuation/__internal__/Continuation.create.js";
 
 const Scheduler_schedule =
   (

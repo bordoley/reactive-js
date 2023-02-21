@@ -3,7 +3,7 @@ import {
   ContainerLike,
   ContainerOf,
   ContainerOperator,
-} from "../../../containers";
+} from "../../../containers.js";
 
 const Container_concatWith =
   <C extends ContainerLike, T>(

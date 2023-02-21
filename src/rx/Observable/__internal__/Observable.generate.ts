@@ -1,11 +1,11 @@
-import { Factory, Updater, none, pipe } from "../../../functions";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create";
-import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create";
-import Observer_schedule from "../../Observer/__internal__/Observer.schedule";
-import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create";
+import { Factory, Updater, none, pipe } from "../../../functions.js";
+import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
+import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create.js";
+import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
+import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create.js";
 
 const Observable_generate = <T>(
   generator: Updater<T>,

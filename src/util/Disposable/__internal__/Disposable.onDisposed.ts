@@ -1,6 +1,6 @@
-import { Optional, SideEffect1, Updater } from "../../../functions";
-import { DisposableLike } from "../../../util";
-import addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown";
+import { Optional, SideEffect1, Updater } from "../../../functions.js";
+import { DisposableLike } from "../../../util.js";
+import addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown.js";
 
 const Disposable_onDisposed =
   <T extends DisposableLike>(

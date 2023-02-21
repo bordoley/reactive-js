@@ -1,14 +1,14 @@
 import {
   Lift,
   TInteractive,
-} from "../../../containers/__internal__/containers.internal";
-import { Function1, newInstance, pipeUnsafe } from "../../../functions";
+} from "../../../containers/__internal__/containers.internal.js";
+import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   InteractiveContainerLike_interact,
-} from "../../../ix";
-import enumerate from "./Enumerable.enumerate";
+} from "../../../ix.js";
+import enumerate from "./Enumerable.enumerate.js";
 
 const LiftedEnumerable_src = Symbol("LiftedEnumerable_src");
 const LiftedEnumerable_operators = Symbol("LiftedEnumerable_src");

@@ -5,13 +5,13 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
+} from "../../../__internal__/mixins.js";
 import {
   ContainerOf,
   ContainerOperator,
   FromReadonlyArray,
-} from "../../../containers";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
+} from "../../../containers.js";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import {
   Function1,
   Optional,
@@ -20,7 +20,7 @@ import {
   none,
   partial,
   pipe,
-} from "../../../functions";
+} from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -29,25 +29,25 @@ import {
   ThrottleMode_first,
   ThrottleMode_interval,
   ThrottleMode_last,
-} from "../../../rx";
-import { DisposableLike_isDisposed } from "../../../util";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import DisposableRef_create from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.create";
-import MutableRef_set from "../../../util/__internal__/MutableRef/__internal__/MutableRef.set";
+} from "../../../rx.js";
+import { DisposableLike_isDisposed } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import DisposableRef_create from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.create.js";
+import MutableRef_set from "../../../util/__internal__/MutableRef/__internal__/MutableRef.set.js";
 import {
   DisposableRefLike,
   MutableRefLike_current,
-} from "../../../util/__internal__/util.internal";
-import Observable_forEach from "../../Observable/__internal__/Observable.forEach";
-import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
-import RunnableObservable_lift from "../../RunnableObservable/__internal__/RunnableObservable.lift";
+} from "../../../util/__internal__/util.internal.js";
+import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import RunnableObservable_lift from "../../RunnableObservable/__internal__/RunnableObservable.lift.js";
 
 const createThrottleObserver: <T>(
   delegate: ObserverLike<T>,

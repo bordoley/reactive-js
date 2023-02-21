@@ -5,10 +5,16 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { ContainerOperator } from "../../../containers";
-import { Factory, none, partial, pipe, unsafeCast } from "../../../functions";
-import { AsyncEnumerableLike, AsyncEnumeratorLike } from "../../../ix";
+} from "../../../__internal__/mixins.js";
+import { ContainerOperator } from "../../../containers.js";
+import {
+  Factory,
+  none,
+  partial,
+  pipe,
+  unsafeCast,
+} from "../../../functions.js";
+import { AsyncEnumerableLike, AsyncEnumeratorLike } from "../../../ix.js";
 import {
   AsyncReducer,
   MulticastObservableLike,
@@ -18,16 +24,16 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
   ScanAsync,
-} from "../../../rx";
-import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount";
-import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay";
-import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast";
-import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
-import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
-import DelegatingAsyncEnumerator_mixin from "../../__internal__/DelegatingAsyncEnumerator/DelegatingAsyncEnumerator.mixin";
-import AsyncEnumerable_lift from "./AsyncEnumerable.lift";
+} from "../../../rx.js";
+import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
+import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
+import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
+import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingAsyncEnumerator_mixin from "../../__internal__/DelegatingAsyncEnumerator/DelegatingAsyncEnumerator.mixin.js";
+import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 
 const AsyncEnumerable_scanAsync: ScanAsync<
   AsyncEnumerableLike,

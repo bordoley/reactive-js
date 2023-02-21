@@ -3,8 +3,8 @@ import {
   SequenceLike_data,
   SequenceLike_next,
   TakeWhile,
-} from "../../../containers";
-import { Predicate, isSome, none, returns } from "../../../functions";
+} from "../../../containers.js";
+import { Predicate, isSome, none, returns } from "../../../functions.js";
 
 const Sequence_takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
   /*@__PURE__*/ (() => {

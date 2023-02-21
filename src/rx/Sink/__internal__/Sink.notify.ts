@@ -1,5 +1,5 @@
-import { Function1 } from "../../../functions";
-import { SinkLike, SinkLike_notify } from "../../../rx";
+import { Function1 } from "../../../functions.js";
+import { SinkLike, SinkLike_notify } from "../../../rx.js";
 
 const Sink_notify =
   <TSink extends SinkLike<T>, T>(v: T): Function1<TSink, TSink> =>

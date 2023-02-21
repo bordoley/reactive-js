@@ -3,18 +3,18 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { SkipFirst } from "../../../containers";
-import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.skipFirst";
-import { pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { SkipFirst } from "../../../containers.js";
+import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.skipFirst.js";
+import { pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_skipFirstMixin from "../../Sink/__internal__/Sink.skipFirstMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_skipFirstMixin from "../../Sink/__internal__/Sink.skipFirstMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
   /*@__PURE__*/ (() => {

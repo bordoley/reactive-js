@@ -8,27 +8,31 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { ConcatAll, ContainerOf, ContainerOperator } from "../../../containers";
-import { Function1, none, pipe } from "../../../functions";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import { DisposableLike } from "../../../util";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import DisposableRef_create from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.create";
+} from "../../../__internal__/mixins.js";
+import {
+  ConcatAll,
+  ContainerOf,
+  ContainerOperator,
+} from "../../../containers.js";
+import { Function1, none, pipe } from "../../../functions.js";
+import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import DisposableRef_create from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.create.js";
 import {
   DisposableRefLike,
   MutableRefLike_current,
-} from "../../../util/__internal__/util.internal";
-import Observable_forEach from "../../Observable/__internal__/Observable.forEach";
-import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_notifySink from "../../Sink/__internal__/Sink.notifySink";
+} from "../../../util/__internal__/util.internal.js";
+import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_notifySink from "../../Sink/__internal__/Sink.notifySink.js";
 
 const HigherOrderObservable_currentRef = Symbol(
   "HigherOrderObservable_currentRef",

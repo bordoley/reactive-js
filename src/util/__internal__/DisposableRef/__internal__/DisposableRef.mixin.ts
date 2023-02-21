@@ -1,13 +1,18 @@
-import { Mixin1, Mutable, mix, props } from "../../../../__internal__/mixins";
-import { none, pipe, returns, unsafeCast } from "../../../../functions";
-import { DisposableLike } from "../../../../util";
-import Disposable_add from "../../../Disposable/__internal__/Disposable.add";
-import Disposable_dispose from "../../../Disposable/__internal__/Disposable.dispose";
+import {
+  Mixin1,
+  Mutable,
+  mix,
+  props,
+} from "../../../../__internal__/mixins.js";
+import { none, pipe, returns, unsafeCast } from "../../../../functions.js";
+import { DisposableLike } from "../../../../util.js";
+import Disposable_add from "../../../Disposable/__internal__/Disposable.add.js";
+import Disposable_dispose from "../../../Disposable/__internal__/Disposable.dispose.js";
 import {
   DisposableRefLike,
   MutableRefLike,
   MutableRefLike_current,
-} from "../../util.internal";
+} from "../../util.internal.js";
 
 const DisposableRef_mixin: <TDisposable extends DisposableLike>() => Mixin1<
   MutableRefLike<TDisposable>,

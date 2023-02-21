@@ -7,20 +7,20 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { none, pipe, returns, unsafeCast } from "../../../functions";
-import { AsyncEnumeratorLike, SourceLike_move } from "../../../ix";
+} from "../../../__internal__/mixins.js";
+import { none, pipe, returns, unsafeCast } from "../../../functions.js";
+import { AsyncEnumeratorLike, SourceLike_move } from "../../../ix.js";
 import {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
-} from "../../../rx";
+} from "../../../rx.js";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
-} from "../../../scheduling";
-import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch";
-import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler";
-import { StreamLike } from "../../../streaming";
+} from "../../../scheduling.js";
+import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
+import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
+import { StreamLike } from "../../../streaming.js";
 
 const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
   Pick<

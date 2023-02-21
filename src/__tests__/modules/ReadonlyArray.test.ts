@@ -1,5 +1,5 @@
-import { ReadonlyArrayLike } from "../../containers";
-import ReadonlyArray from "../../containers/ReadonlyArray";
+import { ReadonlyArrayLike } from "../../containers.js";
+import ReadonlyArray from "../../containers/ReadonlyArray.js";
 import {
   forEachTests,
   fromReadonlyArrayTests,
@@ -8,8 +8,8 @@ import {
   toEnumerableObservableTests,
   toEnumerableTests,
   toRunnableObservableTests,
-} from "../operators";
-import { testModule } from "../testing";
+} from "../operators.js";
+import { testModule } from "../testing.js";
 
 testModule(
   "ReadonlyArray",

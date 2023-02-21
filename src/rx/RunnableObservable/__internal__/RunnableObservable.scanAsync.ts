@@ -1,6 +1,6 @@
-import { RunnableObservableLike, ScanAsync } from "../../../rx";
-import HigherOrderObservable_scanAsync from "../../__internal__/HigherOrderObservable/HigherOrderObservable.scanAsync";
-import RunnableObservable_create from "./RunnableObservable.create";
+import { RunnableObservableLike, ScanAsync } from "../../../rx.js";
+import HigherOrderObservable_scanAsync from "../../__internal__/HigherOrderObservable/HigherOrderObservable.scanAsync.js";
+import RunnableObservable_create from "./RunnableObservable.create.js";
 
 const RunnableObservable_scanAsync: ScanAsync<
   RunnableObservableLike,

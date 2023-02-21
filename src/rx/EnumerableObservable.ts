@@ -1,4 +1,4 @@
-import { MAX_SAFE_INTEGER } from "../constants";
+import { MAX_SAFE_INTEGER } from "../constants.js";
 import {
   Buffer,
   CatchError,
@@ -28,14 +28,14 @@ import {
   ToIterable,
   ToReadonlyArray,
   Zip,
-} from "../containers";
-import Iterable_toEnumerableObservable from "../containers/Iterable/__internal__/Iterable.toEnumerableObservable";
-import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
-import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable";
-import { compose, returns } from "../functions";
-import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix";
-import Enumerable_toEnumerableObservable from "../ix/Enumerable/__internal__/Enumerable.toEnumerableObservable";
-import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
+} from "../containers.js";
+import Iterable_toEnumerableObservable from "../containers/Iterable/__internal__/Iterable.toEnumerableObservable.js";
+import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable.js";
+import { compose, returns } from "../functions.js";
+import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
+import Enumerable_toEnumerableObservable from "../ix/Enumerable/__internal__/Enumerable.toEnumerableObservable.js";
+import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
 import {
   EnumerableObservableLike,
   Retry,
@@ -43,41 +43,41 @@ import {
   ToObservable,
   ToRunnable,
   ToRunnableObservable,
-} from "../rx";
-import { ToFlowable } from "../streaming";
-import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError";
-import EnumerableObservable_defer from "./EnumerableObservable/__internal__/EnumerableObservable.defer";
-import EnumerableObservable_mergeAll from "./EnumerableObservable/__internal__/EnumerableObservable.mergeAll";
-import EnumerableObservable_scanAsync from "./EnumerableObservable/__internal__/EnumerableObservable.scanAsync";
-import EnumerableObservable_switchAll from "./EnumerableObservable/__internal__/EnumerableObservable.switchAll";
-import EnumerableObservable_toAsyncEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toAsyncEnumerable";
-import EnumerableObservable_toEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toEnumerable";
-import EnumerableObservable_toIterable from "./EnumerableObservable/__internal__/EnumerableObservable.toIterable";
-import Observable_buffer from "./Observable/__internal__/Observable.buffer";
-import Observable_concat from "./Observable/__internal__/Observable.concat";
-import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset";
-import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged";
-import Observable_empty from "./Observable/__internal__/Observable.empty";
-import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy";
-import Observable_forEach from "./Observable/__internal__/Observable.forEach";
-import Observable_generate from "./Observable/__internal__/Observable.generate";
-import Observable_keep from "./Observable/__internal__/Observable.keep";
-import Observable_map from "./Observable/__internal__/Observable.map";
-import Observable_merge from "./Observable/__internal__/Observable.merge";
-import Observable_pairwise from "./Observable/__internal__/Observable.pairwise";
-import Observable_reduce from "./Observable/__internal__/Observable.reduce";
-import Observable_retry from "./Observable/__internal__/Observable.retry";
-import Observable_scan from "./Observable/__internal__/Observable.scan";
-import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst";
-import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy";
-import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst";
-import Observable_takeLast from "./Observable/__internal__/Observable.takeLast";
-import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile";
-import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty";
-import Observable_zip from "./Observable/__internal__/Observable.zip";
-import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable";
-import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray";
-import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable";
+} from "../rx.js";
+import { ToFlowable } from "../streaming.js";
+import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError.js";
+import EnumerableObservable_defer from "./EnumerableObservable/__internal__/EnumerableObservable.defer.js";
+import EnumerableObservable_mergeAll from "./EnumerableObservable/__internal__/EnumerableObservable.mergeAll.js";
+import EnumerableObservable_scanAsync from "./EnumerableObservable/__internal__/EnumerableObservable.scanAsync.js";
+import EnumerableObservable_switchAll from "./EnumerableObservable/__internal__/EnumerableObservable.switchAll.js";
+import EnumerableObservable_toAsyncEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toAsyncEnumerable.js";
+import EnumerableObservable_toEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.js";
+import EnumerableObservable_toIterable from "./EnumerableObservable/__internal__/EnumerableObservable.toIterable.js";
+import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
+import Observable_concat from "./Observable/__internal__/Observable.concat.js";
+import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
+import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_empty from "./Observable/__internal__/Observable.empty.js";
+import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
+import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_generate from "./Observable/__internal__/Observable.generate.js";
+import Observable_keep from "./Observable/__internal__/Observable.keep.js";
+import Observable_map from "./Observable/__internal__/Observable.map.js";
+import Observable_merge from "./Observable/__internal__/Observable.merge.js";
+import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
+import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
+import Observable_retry from "./Observable/__internal__/Observable.retry.js";
+import Observable_scan from "./Observable/__internal__/Observable.scan.js";
+import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
+import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
+import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
+import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
+import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
+import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
+import Observable_zip from "./Observable/__internal__/Observable.zip.js";
+import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
+import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.js";
+import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable.js";
 
 export const buffer: Buffer<EnumerableObservableLike>["buffer"] =
   Observable_buffer as Buffer<EnumerableObservableLike>["buffer"];

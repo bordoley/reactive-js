@@ -2,8 +2,8 @@ import {
   ContainerOperator,
   SequenceLike,
   SequenceLike_next,
-} from "../../../containers";
-import { isSome } from "../../../functions";
+} from "../../../containers.js";
+import { isSome } from "../../../functions.js";
 
 const Sequence_seek =
   <T>(count: number): ContainerOperator<SequenceLike, T, T> =>

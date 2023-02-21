@@ -1,8 +1,8 @@
-import { ReadonlyArrayLike } from "../../../containers";
-import { RunnableLike, SinkLike_notify, ToRunnable } from "../../../rx";
-import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create";
-import { DisposableLike_isDisposed } from "../../../util";
-import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer";
+import { ReadonlyArrayLike } from "../../../containers.js";
+import { RunnableLike, SinkLike_notify, ToRunnable } from "../../../rx.js";
+import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
+import { DisposableLike_isDisposed } from "../../../util.js";
+import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
 const ReadonlyArray_toRunnable: ToRunnable<ReadonlyArrayLike>["toRunnable"] =
   /*@__PURE__*/ ReadonlyArray_toContainer<RunnableLike>(

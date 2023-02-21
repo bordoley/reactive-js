@@ -3,9 +3,9 @@ import {
   ContainerLike,
   ContainerOperator,
   FromReadonlyArray,
-} from "../../../containers";
+} from "../../../containers.js";
 
-import Container_concatWith from "./Container.concatWith";
+import Container_concatWith from "./Container.concatWith.js";
 
 const Container_endWith: <C extends ContainerLike, T>(
   m: Concat<C> & FromReadonlyArray<C>,

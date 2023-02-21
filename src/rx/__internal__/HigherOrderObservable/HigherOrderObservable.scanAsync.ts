@@ -1,21 +1,21 @@
-import { ContainerOf, ContainerOperator } from "../../../containers";
-import { Factory, SideEffect1, pipe } from "../../../functions";
+import { ContainerOf, ContainerOperator } from "../../../containers.js";
+import { Factory, SideEffect1, pipe } from "../../../functions.js";
 import {
   AsyncReducer,
   ObservableLike,
   ObserverLike,
   ScanAsync,
-} from "../../../rx";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Observable_forEach from "../../Observable/__internal__/Observable.forEach";
-import Observable_onSubscribe from "../../Observable/__internal__/Observable.onSubscribe";
-import Observable_switchAll from "../../Observable/__internal__/Observable.switchAll";
-import Observable_takeFirst from "../../Observable/__internal__/Observable.takeFirst";
-import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
-import Subject_create from "../../Subject/__internal__/Subject.create";
-import Subject_publish from "../../Subject/__internal__/Subject.publish";
-import Subject_publishTo from "../../Subject/__internal__/Subject.publishTo";
+} from "../../../rx.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import Observable_onSubscribe from "../../Observable/__internal__/Observable.onSubscribe.js";
+import Observable_switchAll from "../../Observable/__internal__/Observable.switchAll.js";
+import Observable_takeFirst from "../../Observable/__internal__/Observable.takeFirst.js";
+import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom.js";
+import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Subject_create from "../../Subject/__internal__/Subject.create.js";
+import Subject_publish from "../../Subject/__internal__/Subject.publish.js";
+import Subject_publishTo from "../../Subject/__internal__/Subject.publishTo.js";
 
 const HigherOrderObservable_scanAsync =
   <C extends ObservableLike, CInner extends ObservableLike>(

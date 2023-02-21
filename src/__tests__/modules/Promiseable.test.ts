@@ -1,15 +1,15 @@
-import Promiseable from "../../containers/Promiseable";
-import { newInstance, pipe } from "../../functions";
-import Observable from "../../rx/Observable";
-import Scheduler from "../../scheduling/Scheduler";
-import Disposable from "../../util/Disposable";
+import Promiseable from "../../containers/Promiseable.js";
+import { newInstance, pipe } from "../../functions.js";
+import Observable from "../../rx/Observable.js";
+import Scheduler from "../../scheduling/Scheduler.js";
+import Disposable from "../../util/Disposable.js";
 import {
   describe,
   expectEquals,
   expectPromiseToThrow,
   testAsync,
   testModule,
-} from "../testing";
+} from "../testing.js";
 
 testModule(
   "Promiseable",

@@ -3,20 +3,20 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { Scan } from "../../../containers";
-import StatefulContainer_scan from "../../../containers/StatefulContainer/__internal__/StatefulContainer.scan";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { Factory, Reducer, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Scan } from "../../../containers.js";
+import StatefulContainer_scan from "../../../containers/StatefulContainer/__internal__/StatefulContainer.scan.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { Factory, Reducer, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
+} from "../../../rx.js";
 
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_scanMixin from "../../Sink/__internal__/Sink.scanMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_scanMixin from "../../Sink/__internal__/Sink.scanMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
   T,

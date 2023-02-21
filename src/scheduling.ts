@@ -1,5 +1,5 @@
-import { Updater } from "./functions";
-import { DisposableLike } from "./util";
+import { Updater } from "./functions.js";
+import { DisposableLike } from "./util.js";
 
 /** @ignore */
 export const ContinuationLike_run = Symbol("ContinuationLike_run");

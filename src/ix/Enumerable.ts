@@ -21,44 +21,44 @@ import {
   ToIterable,
   ToReadonlyArray,
   Zip,
-} from "../containers";
-import Iterable_toEnumerable from "../containers/Iterable/__internal__/Iterable.toEnumerable";
-import ReadonlyArray_toEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toEnumerable";
-import { identity, returns } from "../functions";
-import { EnumerableLike, ToAsyncEnumerable, ToEnumerable } from "../ix";
+} from "../containers.js";
+import Iterable_toEnumerable from "../containers/Iterable/__internal__/Iterable.toEnumerable.js";
+import ReadonlyArray_toEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toEnumerable.js";
+import { identity, returns } from "../functions.js";
+import { EnumerableLike, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import {
   ToEnumerableObservable,
   ToObservable,
   ToRunnable,
   ToRunnableObservable,
-} from "../rx";
-import { ToFlowable } from "../streaming";
-import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer";
-import Enumerable_concat from "./Enumerable/__internal__/Enumerable.concat";
-import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll";
-import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerable.distinctUntilChanged";
-import Enumerable_empty from "./Enumerable/__internal__/Enumerable.empty";
-import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate";
-import Enumerable_forEach from "./Enumerable/__internal__/Enumerable.forEach";
-import Enumerable_generate from "./Enumerable/__internal__/Enumerable.generate";
-import Enumerable_keep from "./Enumerable/__internal__/Enumerable.keep";
-import Enumerable_map from "./Enumerable/__internal__/Enumerable.map";
-import Enumerable_pairwise from "./Enumerable/__internal__/Enumerable.pairwise";
-import Enumerable_repeat from "./Enumerable/__internal__/Enumerable.repeat";
-import Enumerable_scan from "./Enumerable/__internal__/Enumerable.scan";
-import Enumerable_skipFirst from "./Enumerable/__internal__/Enumerable.skipFirst";
-import Enumerable_takeFirst from "./Enumerable/__internal__/Enumerable.takeFirst";
-import Enumerable_takeLast from "./Enumerable/__internal__/Enumerable.takeLast";
-import Enumerable_takeWhile from "./Enumerable/__internal__/Enumerable.takeWhile";
-import Enumerable_throwIfEmpty from "./Enumerable/__internal__/Enumerable.throwIfEmpty";
-import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable";
-import Enumerable_toEnumerableObservable from "./Enumerable/__internal__/Enumerable.toEnumerableObservable";
-import Enumerable_toFlowable from "./Enumerable/__internal__/Enumerable.toFlowable";
-import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable";
-import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray";
-import Enumerable_toRunnable from "./Enumerable/__internal__/Enumerable.toRunnable";
-import Enumerable_toRunnableObservable from "./Enumerable/__internal__/Enumerable.toRunnableObservable";
-import Enumerable_zip from "./Enumerable/__internal__/Enumerable.zip";
+} from "../rx.js";
+import { ToFlowable } from "../streaming.js";
+import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer.js";
+import Enumerable_concat from "./Enumerable/__internal__/Enumerable.concat.js";
+import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
+import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerable.distinctUntilChanged.js";
+import Enumerable_empty from "./Enumerable/__internal__/Enumerable.empty.js";
+import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
+import Enumerable_forEach from "./Enumerable/__internal__/Enumerable.forEach.js";
+import Enumerable_generate from "./Enumerable/__internal__/Enumerable.generate.js";
+import Enumerable_keep from "./Enumerable/__internal__/Enumerable.keep.js";
+import Enumerable_map from "./Enumerable/__internal__/Enumerable.map.js";
+import Enumerable_pairwise from "./Enumerable/__internal__/Enumerable.pairwise.js";
+import Enumerable_repeat from "./Enumerable/__internal__/Enumerable.repeat.js";
+import Enumerable_scan from "./Enumerable/__internal__/Enumerable.scan.js";
+import Enumerable_skipFirst from "./Enumerable/__internal__/Enumerable.skipFirst.js";
+import Enumerable_takeFirst from "./Enumerable/__internal__/Enumerable.takeFirst.js";
+import Enumerable_takeLast from "./Enumerable/__internal__/Enumerable.takeLast.js";
+import Enumerable_takeWhile from "./Enumerable/__internal__/Enumerable.takeWhile.js";
+import Enumerable_throwIfEmpty from "./Enumerable/__internal__/Enumerable.throwIfEmpty.js";
+import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
+import Enumerable_toEnumerableObservable from "./Enumerable/__internal__/Enumerable.toEnumerableObservable.js";
+import Enumerable_toFlowable from "./Enumerable/__internal__/Enumerable.toFlowable.js";
+import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
+import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
+import Enumerable_toRunnable from "./Enumerable/__internal__/Enumerable.toRunnable.js";
+import Enumerable_toRunnableObservable from "./Enumerable/__internal__/Enumerable.toRunnableObservable.js";
+import Enumerable_zip from "./Enumerable/__internal__/Enumerable.zip.js";
 
 export const enumerate = Enumerable_enumerate;
 

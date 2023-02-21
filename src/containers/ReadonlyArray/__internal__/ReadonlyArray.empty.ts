@@ -1,5 +1,5 @@
-import { Empty, ReadonlyArrayLike } from "../../../containers";
-import { returns } from "../../../functions";
+import { Empty, ReadonlyArrayLike } from "../../../containers.js";
+import { returns } from "../../../functions.js";
 
 const ReadonlyArray_empty: Empty<ReadonlyArrayLike>["empty"] =
   /*@__PURE__*/ returns([]);

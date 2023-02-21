@@ -1,6 +1,7 @@
 {
   "name": "reactive-js",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "yarn lint && yarn format && yarn typecheck && yarn test && yarn clean && yarn build-types && rollup -c rollup.config.mjs && yarn pkg && yarn docs",
     "build-types": "tsc -p tsconfig.build-types.json",
@@ -16,7 +17,7 @@
     "test": "jest --verbose",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
-    "test-deno": "deno test -r ./mod/__tests__/isomorphic.tests.mjs",
+    "test-deno": "deno test -r ./src/__tests__/isomorphic.tests.ts",
     "test-prod": "NODE_ENV=production node ./node_modules/.bin/jest",
     "typecheck": "tsc -p tsconfig.typecheck.json"
   },

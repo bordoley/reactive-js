@@ -1,11 +1,11 @@
-import { createInstanceFactory } from "../../../__internal__/mixins";
-import { Keep } from "../../../containers";
-import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { pipe } from "../../../functions";
-import { RunnableLike } from "../../../rx";
-import Sink_keepMixin from "../../Sink/__internal__/Sink.keepMixin";
-import Runnable_liftT from "./Runnable.liftT";
+import { createInstanceFactory } from "../../../__internal__/mixins.js";
+import { Keep } from "../../../containers.js";
+import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { pipe } from "../../../functions.js";
+import { RunnableLike } from "../../../rx.js";
+import Sink_keepMixin from "../../Sink/__internal__/Sink.keepMixin.js";
+import Runnable_liftT from "./Runnable.liftT.js";
 
 const Runnable_keep: Keep<RunnableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedKeepSinkMixin = Sink_keepMixin<T>();

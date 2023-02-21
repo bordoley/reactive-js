@@ -1,13 +1,18 @@
-import ReadonlyArray from "../../containers/ReadonlyArray";
-import { pipe } from "../../functions";
-import MulticastObservable from "../../rx/MulticastObservable";
-import Observable from "../../rx/Observable";
-import Runnable from "../../rx/Runnable";
-import Subject from "../../rx/Subject";
-import Continuation from "../../scheduling/Continuation";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
-import Disposable from "../../util/Disposable";
-import { expectArrayEquals, expectEquals, test, testModule } from "../testing";
+import ReadonlyArray from "../../containers/ReadonlyArray.js";
+import { pipe } from "../../functions.js";
+import MulticastObservable from "../../rx/MulticastObservable.js";
+import Observable from "../../rx/Observable.js";
+import Runnable from "../../rx/Runnable.js";
+import Subject from "../../rx/Subject.js";
+import Continuation from "../../scheduling/Continuation.js";
+import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import Disposable from "../../util/Disposable.js";
+import {
+  expectArrayEquals,
+  expectEquals,
+  test,
+  testModule,
+} from "../testing.js";
 
 testModule(
   "Subject",

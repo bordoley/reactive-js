@@ -5,21 +5,21 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map";
-import { getLength, none, pipe } from "../../../functions";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
-import Observable_allAreEnumerable from "./Observable.allAreEnumerable";
-import Observable_allAreRunnable from "./Observable.allAreRunnable";
-import Observable_create from "./Observable.create";
+} from "../../../__internal__/mixins.js";
+import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import { getLength, none, pipe } from "../../../functions.js";
+import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
+import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
+import Observable_create from "./Observable.create.js";
 
 type LatestMode = 1 | 2;
 const zipMode = 2;

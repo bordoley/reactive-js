@@ -1,15 +1,15 @@
-import { getLength, pipe } from "../../../functions";
-import { ObservableLike, ObserverLike } from "../../../rx";
-import Observable_create from "../../../rx/Observable/__internal__/Observable.create";
-import Sink_sourceFrom from "../../../rx/Sink/__internal__/Sink.sourceFrom";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create";
-import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate";
-import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create";
-import Observable_allAreEnumerable from "./Observable.allAreEnumerable";
-import Observable_allAreRunnable from "./Observable.allAreRunnable";
+import { getLength, pipe } from "../../../functions.js";
+import { ObservableLike, ObserverLike } from "../../../rx.js";
+import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
+import Sink_sourceFrom from "../../../rx/Sink/__internal__/Sink.sourceFrom.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create.js";
+import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
+import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create.js";
+import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
+import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 
 const Observable_mergeObservables = /*@__PURE__*/ (() => {
   const MergeObserverCtx_completedCount = Symbol(

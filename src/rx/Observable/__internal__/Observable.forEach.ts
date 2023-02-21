@@ -3,19 +3,19 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { ForEach } from "../../../containers";
-import StatefulContainer_forEach from "../../../containers/StatefulContainer/__internal__/StatefulContainer.forEach";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { SideEffect1, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { ForEach } from "../../../containers.js";
+import StatefulContainer_forEach from "../../../containers/StatefulContainer/__internal__/StatefulContainer.forEach.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { SideEffect1, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_forEachMixin from "../../Sink/__internal__/Sink.forEachMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_forEachMixin from "../../Sink/__internal__/Sink.forEachMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
   T,

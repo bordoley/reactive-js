@@ -1,5 +1,11 @@
-import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins";
-import { Optional, isFunction, isSome, none, pipe } from "../../../functions";
+import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins.js";
+import {
+  Optional,
+  isFunction,
+  isSome,
+  none,
+  pipe,
+} from "../../../functions.js";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -7,10 +13,10 @@ import {
   DisposableLike_error,
   DisposableLike_isDisposed,
   DisposableOrTeardown,
-} from "../../../util";
-import dispose from "./Disposable.dispose";
-import getError from "./Disposable.getError";
-import isDisposed from "./Disposable.isDisposed";
+} from "../../../util.js";
+import dispose from "./Disposable.dispose.js";
+import getError from "./Disposable.getError.js";
+import isDisposed from "./Disposable.isDisposed.js";
 
 const doDispose = (
   instance: DisposableLike,

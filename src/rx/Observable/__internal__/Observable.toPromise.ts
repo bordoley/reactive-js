@@ -5,12 +5,12 @@ import {
   newInstance,
   none,
   pipe,
-} from "../../../functions";
-import { ObservableLike } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed";
-import Observable_forEach from "./Observable.forEach";
-import Observable_subscribe from "./Observable.subscribe";
+} from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import Observable_forEach from "./Observable.forEach.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_toPromise =
   <T>(scheduler: SchedulerLike) =>

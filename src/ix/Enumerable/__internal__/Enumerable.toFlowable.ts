@@ -1,8 +1,8 @@
-import { compose } from "../../../functions";
-import { EnumerableLike } from "../../../ix";
-import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable";
-import { ToFlowable } from "../../../streaming";
-import Enumerable_toRunnableObservable from "./Enumerable.toRunnableObservable";
+import { compose } from "../../../functions.js";
+import { EnumerableLike } from "../../../ix.js";
+import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
+import { ToFlowable } from "../../../streaming.js";
+import Enumerable_toRunnableObservable from "./Enumerable.toRunnableObservable.js";
 
 const Enumerable_toFlowable: ToFlowable<
   EnumerableLike,

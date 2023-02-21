@@ -1,11 +1,17 @@
-import { Equality, Factory, Function1, Reducer, Updater } from "../functions";
-import { SchedulerLike } from "../scheduling";
-import { StreamLike, StreamableLike } from "../streaming";
+import {
+  Equality,
+  Factory,
+  Function1,
+  Reducer,
+  Updater,
+} from "../functions.js";
+import { SchedulerLike } from "../scheduling.js";
+import { StreamLike, StreamableLike } from "../streaming.js";
 
-import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer";
-import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore";
-import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto";
-import Streamable_stream from "./Streamable/__internal__/Streamable.stream";
+import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer.js";
+import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
+import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
+import Streamable_stream from "./Streamable/__internal__/Streamable.stream.js";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function

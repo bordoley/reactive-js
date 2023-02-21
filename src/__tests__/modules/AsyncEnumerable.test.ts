@@ -1,10 +1,10 @@
-import { AsyncEnumerableLike } from "../../ix";
-import AsyncEnumerable from "../../ix/AsyncEnumerable";
-import { toObservableTests } from "../operators";
-import { testModule } from "../testing";
+import { AsyncEnumerableLike } from "../../ix.js";
+import AsyncEnumerable from "../../ix/AsyncEnumerable.js";
+import { toObservableTests } from "../operators.js";
+import { testModule } from "../testing.js";
 /*
-import { RunnableObservableLike } from "../../rx";
-import RunnableObservable from "../../rx/RunnableObservable";
+import { RunnableObservableLike } from "../../rx.js"
+import RunnableObservable from "../../rx/RunnableObservable.js"
 import {
   fromReadonlyArrayTests,
   keepTests,
@@ -12,7 +12,7 @@ import {
   scanAsyncTests,
   scanTests,
   takeWhileTests,
-} from "../operators";
+} from "../operators.js"
 
 */
 

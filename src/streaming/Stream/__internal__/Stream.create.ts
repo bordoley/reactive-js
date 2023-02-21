@@ -1,10 +1,10 @@
-import { createInstanceFactory } from "../../../__internal__/mixins";
-import { ContainerOperator } from "../../../containers";
-import { ObservableLike } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
-import { StreamLike } from "../../../streaming";
+import { createInstanceFactory } from "../../../__internal__/mixins.js";
+import { ContainerOperator } from "../../../containers.js";
+import { ObservableLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import { StreamLike } from "../../../streaming.js";
 
-import Stream_mixin from "./Stream.mixin";
+import Stream_mixin from "./Stream.mixin.js";
 
 const Stream_create = /*@__PURE__*/ (() => {
   const createStreamInternal: <TReq, T>(

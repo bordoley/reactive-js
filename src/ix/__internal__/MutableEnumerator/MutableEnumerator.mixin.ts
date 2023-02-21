@@ -1,20 +1,20 @@
-import { Mixin, mix, props } from "../../../__internal__/mixins";
+import { Mixin, mix, props } from "../../../__internal__/mixins.js";
 import {
   none,
   pipe,
   raiseWithDebugMessage,
   returns,
   unsafeCast,
-} from "../../../functions";
+} from "../../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
-} from "../../../ix";
-import { DisposableLike } from "../../../util";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import { MutableEnumeratorLike } from "../../__internal__/ix.internal";
+} from "../../../ix.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import { MutableEnumeratorLike } from "../../__internal__/ix.internal.js";
 
 type TEnumeratorMixinReturn<T> = Omit<
   MutableEnumeratorLike<T>,

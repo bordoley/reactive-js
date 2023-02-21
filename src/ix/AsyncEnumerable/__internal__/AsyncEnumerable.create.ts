@@ -3,21 +3,21 @@ import {
   createInstanceFactory,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { ContainerOperator } from "../../../containers";
-import { composeUnsafe, getLength, none, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { ContainerOperator } from "../../../containers.js";
+import { composeUnsafe, getLength, none, pipe } from "../../../functions.js";
 import {
   AsyncEnumerableLike,
   AsyncEnumerableLike_isEnumerable,
   AsyncEnumerableLike_isRunnable,
   AsyncEnumeratorLike,
   InteractiveContainerLike_interact,
-} from "../../../ix";
-import { ObservableLike } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
-import { StreamableLike_stream } from "../../../streaming";
-import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream";
-import AsyncEnumerator_create from "../../AsyncEnumerator/__internal__/AsyncEnumerator.create";
+} from "../../../ix.js";
+import { ObservableLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import { StreamableLike_stream } from "../../../streaming.js";
+import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
+import AsyncEnumerator_create from "../../AsyncEnumerator/__internal__/AsyncEnumerator.create.js";
 
 interface CreateAsyncEnumerable {
   <A>(op1: ContainerOperator<ObservableLike, void, A>): AsyncEnumerableLike<A>;
