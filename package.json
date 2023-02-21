@@ -3,16 +3,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "yarn lint && yarn format && yarn typecheck && yarn test && yarn clean && yarn build-types && rollup -c rollup.config.mjs && yarn pkg && yarn docs",
-    "build-types": "tsc -p tsconfig.build-types.json",
-    "clean": "rm -rf ./build-types ./mod ./docs ./packages/core/**/ ./packages/core/*.{js,mjs,ts,md}",
+    "build": "yarn lint && yarn format && yarn typecheck && yarn test && yarn clean && yarn build-package && yarn docs",
+    "build-package": "tsc -p tsconfig.build-package.json && cp README.md ./packages/core",
+    "clean": "rm -rf ./mod ./docs ./packages/core/**/ ./packages/core/*.{js,mjs,ts,md}",
     "docs": "typedoc",
     "bootstrap": "lerna bootstrap",
     "deno-install": "curl -fsSL https://deno.land/x/install/install.sh | sh",
     "format": "prettier '**' --write",
     "lint": "eslint . --fix -f stylish --ext .ts,.tsx,.js,.jsx",
     "perf": "yarn bootstrap && lerna run build --scope @reactive-js/perf && lerna run perf --scope @reactive-js/perf",
-    "pkg": "cp README.md ./packages/core",
     "release": "lerna publish --force-publish",
     "test": "jest --verbose",
     "test-coverage": "jest --coverage",
@@ -34,6 +33,7 @@
     "csstype": "3.1.1",
     "eslint": "8.31.0",
     "eslint-config-prettier": "8.6.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "2.26.0",
     "jest": "29.3.1",
     "lerna": "6.4.0",
@@ -49,12 +49,19 @@
     "typescript": "4.9.4"
   },
   "jest": {
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
     "preset": "ts-jest",
     "testRegex": "tests.ts",
     "transform": {
       "^.+\\.(ts|tsx)$": [
         "ts-jest",
         {
+          "useESM": true,
           "tsconfig": "./tsconfig.base.json"
         }
       ]

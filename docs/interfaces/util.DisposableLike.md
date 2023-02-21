@@ -12,17 +12,17 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`SourceLike`](ix.SourceLike.md)
 
-  ↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
-
   ↳ [`SinkLike`](rx.SinkLike.md)
 
+  ↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
+
   ↳ [`ContinuationLike`](scheduling.ContinuationLike.md)
+
+  ↳ [`SchedulerLike`](scheduling.SchedulerLike.md)
 
   ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)
 
   ↳ [`PrioritySchedulerLike`](scheduling.PrioritySchedulerLike.md)
-
-  ↳ [`SchedulerLike`](scheduling.SchedulerLike.md)
 
 ## Table of contents
 

@@ -25,7 +25,7 @@ const StatefulContainer_decodeWithCharset =
     >,
   ): DecodeWithCharset<C>["decodeWithCharset"] =>
   options => {
-    const charset = options?.charset ?? "utf-8.js";
+    const charset = options?.charset ?? "utf-8";
     return pipe(operator, partial(charset), StatefulContainer_lift(m));
   };
 
