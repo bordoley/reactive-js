@@ -1,6 +1,7 @@
 {
   "name": "@reactive-js/perf",
   "version": "0.11.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@most/core": "1.6.1 ",
