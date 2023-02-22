@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "perf": "yarn build && NODE_ENV=production node ./build/cjs/index.js",
-    "perf-debug": "yarn build && NODE_ENV=production node --inspect-brk ./build/cjs/index.js"
+    "perf": "NODE_ENV=production node ./build/cjs/index.js",
+    "perf-debug": "NODE_ENV=production node --inspect-brk ./build/cjs/index.js"
   }
 }
