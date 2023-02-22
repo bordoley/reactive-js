@@ -1,3 +1,3 @@
-import { ContainerLike, ContainerOperator, Defer, Map } from "../../../containers.js";
-declare const Container_encodeUtf8: <C extends ContainerLike>(m: Defer<C, never> & Map<C, never>) => ContainerOperator<C, string, Uint8Array>;
+import { ContainerLike, Defer, EncodeUtf8, Map } from "../../../containers.js";
+declare const Container_encodeUtf8: <C extends ContainerLike>(defer: <T>(factory: import("../../../functions.js").Factory<import("../../../containers.js").ContainerOf<C, T>>, options?: undefined) => import("../../../containers.js").ContainerOf<C, T>, map: <TA, TB>(mapper: import("../../../functions.js").Function1<TA, TB>, options?: undefined) => import("../../../containers.js").ContainerOperator<C, TA, TB>) => (options?: undefined) => import("../../../containers.js").ContainerOperator<C, string, Uint8Array>;
 export default Container_encodeUtf8;

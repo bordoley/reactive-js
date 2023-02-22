@@ -1,29 +1,41 @@
 import {
   Buffer,
   CatchError,
+  Compute,
   Concat,
   ConcatAll,
+  ConcatMap,
+  ConcatWith,
+  ConcatYieldMap,
+  Contains,
   DecodeWithCharset,
   Defer,
   DistinctUntilChanged,
   Empty,
+  EncodeUtf8,
+  EndWith,
   EverySatisfy,
   ForEach,
   FromIterable,
   FromReadonlyArray,
   Generate,
+  IgnoreElements,
   Keep,
+  KeepType,
   Map,
+  MapTo,
   Never,
   Pairwise,
   Reduce,
   Scan,
   SkipFirst,
   SomeSatisfy,
+  StartWith,
   TakeFirst,
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
+  Throws,
   ToReadonlyArray,
 } from "../containers.js";
 import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.toRunnable.js";
@@ -39,20 +51,30 @@ import {
 } from "../rx.js";
 import Runnable_buffer from "./Runnable/__internal__/Runnable.buffer.js";
 import Runnable_catchError from "./Runnable/__internal__/Runnable.catchError.js";
+import Runnable_compute from "./Runnable/__internal__/Runnable.compute.js";
 import Runnable_concat from "./Runnable/__internal__/Runnable.concat.js";
 import Runnable_concatAll from "./Runnable/__internal__/Runnable.concatAll.js";
+import Runnable_concatMap from "./Runnable/__internal__/Runnable.concatMap.js";
+import Runnable_concatWith from "./Runnable/__internal__/Runnable.concatWith.js";
+import Runnable_concatYieldMap from "./Runnable/__internal__/Runnable.concatYieldMap.js";
+import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
 import Runnable_create from "./Runnable/__internal__/Runnable.create.js";
 import Runnable_decodeWithCharset from "./Runnable/__internal__/Runnable.decodeWithCharset.js";
 import Runnable_defer from "./Runnable/__internal__/Runnable.defer.js";
 import Runnable_distinctUntilChanged from "./Runnable/__internal__/Runnable.distinctUntilChanged.js";
 import Runnable_empty from "./Runnable/__internal__/Runnable.empty.js";
+import Runnable_encodeUtf8 from "./Runnable/__internal__/Runnable.encodeUtf8.js";
+import Runnable_endWith from "./Runnable/__internal__/Runnable.endWith.js";
 import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_forEach from "./Runnable/__internal__/Runnable.forEach.js";
 import Runnable_generate from "./Runnable/__internal__/Runnable.generate.js";
+import Runnable_ignoreElements from "./Runnable/__internal__/Runnable.ignoreElements.js";
 import Runnable_keep from "./Runnable/__internal__/Runnable.keep.js";
+import Runnable_keepType from "./Runnable/__internal__/Runnable.keepType.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_map from "./Runnable/__internal__/Runnable.map.js";
+import Runnable_mapTo from "./Runnable/__internal__/Runnable.mapTo.js";
 import Runnable_never from "./Runnable/__internal__/Runnable.never.js";
 import Runnable_onRun from "./Runnable/__internal__/Runnable.onRun.js";
 import Runnable_pairwise from "./Runnable/__internal__/Runnable.pairwise.js";
@@ -62,10 +84,12 @@ import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_scan from "./Runnable/__internal__/Runnable.scan.js";
 import Runnable_skipFirst from "./Runnable/__internal__/Runnable.skipFirst.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
+import Runnable_startWith from "./Runnable/__internal__/Runnable.startWith.js";
 import Runnable_takeFirst from "./Runnable/__internal__/Runnable.takeFirst.js";
 import Runnable_takeLast from "./Runnable/__internal__/Runnable.takeLast.js";
 import Runnable_takeWhile from "./Runnable/__internal__/Runnable.takeWhile.js";
 import Runnable_throwIfEmpty from "./Runnable/__internal__/Runnable.throwIfEmpty.js";
+import Runnable_throws from "./Runnable/__internal__/Runnable.throws.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable.js";
 
@@ -74,10 +98,23 @@ export const buffer: Buffer<RunnableLike>["buffer"] = Runnable_buffer;
 export const catchError: CatchError<RunnableLike>["catchError"] =
   Runnable_catchError;
 
+export const compute: Compute<RunnableLike>["compute"] = Runnable_compute;
+
 export const concat: Concat<RunnableLike>["concat"] = Runnable_concat;
 
 export const concatAll: ConcatAll<RunnableLike>["concatAll"] =
   Runnable_concatAll;
+
+export const concatMap: ConcatMap<RunnableLike>["concatMap"] =
+  Runnable_concatMap;
+
+export const concatWith: ConcatWith<RunnableLike>["concatWith"] =
+  Runnable_concatWith;
+
+export const concatYieldMap: ConcatYieldMap<RunnableLike>["concatYieldMap"] =
+  Runnable_concatYieldMap;
+
+export const contains: Contains<RunnableLike>["contains"] = Runnable_contains;
 
 export const create = Runnable_create;
 
@@ -90,6 +127,11 @@ export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctU
   Runnable_distinctUntilChanged;
 
 export const empty: Empty<RunnableLike>["empty"] = Runnable_empty;
+
+export const encodeUtf8: EncodeUtf8<RunnableLike>["encodeUtf8"] =
+  Runnable_encodeUtf8;
+
+export const endWith: EndWith<RunnableLike>["endWith"] = Runnable_endWith;
 
 export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
   Runnable_everySatisfy;
@@ -115,11 +157,18 @@ export const fromRunnableObservable: FromRunnableObservable<RunnableLike>["fromR
 
 export const generate: Generate<RunnableLike>["generate"] = Runnable_generate;
 
+export const ignoreElements: IgnoreElements<RunnableLike>["ignoreElements"] =
+  Runnable_ignoreElements;
+
 export const keep: Keep<RunnableLike>["keep"] = Runnable_keep;
+
+export const keepType: KeepType<RunnableLike>["keepType"] = Runnable_keepType;
 
 export const last = Runnable_last;
 
 export const map: Map<RunnableLike>["map"] = Runnable_map;
+
+export const mapTo: MapTo<RunnableLike>["mapTo"] = Runnable_mapTo;
 
 export const never: Never<RunnableLike>["never"] = Runnable_never;
 
@@ -141,6 +190,9 @@ export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] =
 export const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"] =
   Runnable_someSatisfy;
 
+export const startWith: StartWith<RunnableLike>["startWith"] =
+  Runnable_startWith;
+
 export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] =
   Runnable_takeFirst;
 
@@ -152,6 +204,11 @@ export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] =
 export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
   Runnable_throwIfEmpty;
 
+export const throws: Throws<
+  RunnableLike,
+  { delay?: number; delayStart?: boolean }
+>["throws"] = Runnable_throws;
+
 export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
   Runnable_toReadonlyArray;
 
@@ -162,13 +219,20 @@ export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
 const Runnable = {
   buffer,
   catchError,
+  compute,
   concat,
   concatAll,
+  concatMap,
+  concatWith,
+  concatYieldMap,
+  contains,
   create,
   decodeWithCharset,
   defer,
   distinctUntilChanged,
   empty,
+  encodeUtf8,
+  endWith,
   everySatisfy,
   first,
   forEach,
@@ -178,9 +242,12 @@ const Runnable = {
   fromReadonlyArray,
   fromRunnableObservable,
   generate,
+  ignoreElements,
   keep,
+  keepType,
   last,
   map,
+  mapTo,
   never,
   onRun,
   pairwise,
@@ -190,10 +257,12 @@ const Runnable = {
   scan,
   skipFirst,
   someSatisfy,
+  startWith,
   takeFirst,
   takeLast,
   takeWhile,
   throwIfEmpty,
+  throws,
   toReadonlyArray,
   toRunnable,
 };

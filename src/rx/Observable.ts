@@ -1,12 +1,19 @@
 import {
   CatchError,
+  Compute,
   Concat,
   ConcatAll,
+  ConcatMap,
+  ConcatWith,
+  ConcatYieldMap,
   ContainerOperator,
+  Contains,
   DecodeWithCharset,
   Defer,
   DistinctUntilChanged,
   Empty,
+  EncodeUtf8,
+  EndWith,
   EverySatisfy,
   ForEach,
   ForkConcat,
@@ -15,8 +22,11 @@ import {
   FromReadonlyArray,
   FromSequence,
   Generate,
+  IgnoreElements,
   Keep,
+  KeepType,
   Map,
+  MapTo,
   Never,
   Pairwise,
   Reduce,
@@ -24,11 +34,14 @@ import {
   Scan,
   SkipFirst,
   SomeSatisfy,
+  StartWith,
   TakeFirst,
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
+  Throws,
   Zip,
+  ZipWith,
 } from "../containers.js";
 import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable.js";
 import Promiseable_toObservable from "../containers/Promiseable/__internal__/Promiseable.toObservable.js";
@@ -84,26 +97,37 @@ import {
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
+import Observable_compute from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatAll from "./Observable/__internal__/Observable.concatAll.js";
+import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
+import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
+import Observable_concatYieldMap from "./Observable/__internal__/Observable.concatYieldMap.js";
+import Observable_contains from "./Observable/__internal__/Observable.contains.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_defer from "./Observable/__internal__/Observable.defer.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
+import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
+import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkCombineLatest from "./Observable/__internal__/Observable.forkCombineLatest.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
+import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable.js";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
+import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapAsync from "./Observable/__internal__/Observable.mapAsync.js";
+import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll.js";
+import Observable_mergeWith from "./Observable/__internal__/Observable.mergeWith.js";
 import Observable_multicast from "./Observable/__internal__/Observable.multicast.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
@@ -116,20 +140,24 @@ import Observable_scanAsync from "./Observable/__internal__/Observable.scanAsync
 import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
+import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
 import Observable_switchAll from "./Observable/__internal__/Observable.switchAll.js";
+import Observable_switchMap from "./Observable/__internal__/Observable.switchMap.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
 import Observable_throttle from "./Observable/__internal__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
+import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toPromise from "./Observable/__internal__/Observable.toPromise.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
+import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
 
 interface __Memo {
@@ -282,6 +310,8 @@ export const catchError: CatchError<ObservableLike>["catchError"] =
 export const combineLatest: Zip<ObservableLike>["zip"] =
   Observable_combineLatest;
 
+export const compute: Compute<ObservableLike>["compute"] = Observable_compute;
+
 export const concat: Concat<ObservableLike>["concat"] = Observable_concat;
 
 export const concatAll: ConcatAll<
@@ -290,6 +320,18 @@ export const concatAll: ConcatAll<
     maxBufferSize?: number;
   }
 >["concatAll"] = Observable_concatAll;
+
+export const concatMap: ConcatMap<ObservableLike>["concatMap"] =
+  Observable_concatMap;
+
+export const concatWith: ConcatWith<ObservableLike>["concatWith"] =
+  Observable_concatWith;
+
+export const concatYieldMap: ConcatYieldMap<ObservableLike>["concatYieldMap"] =
+  Observable_concatYieldMap;
+
+export const contains: Contains<ObservableLike>["contains"] =
+  Observable_contains;
 
 export const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T> =
   Observable_create;
@@ -304,6 +346,11 @@ export const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinc
 
 export const empty: Empty<ObservableLike, { delay?: number }>["empty"] =
   Observable_empty;
+
+export const encodeUtf8: EncodeUtf8<ObservableLike>["encodeUtf8"] =
+  Observable_encodeUtf8;
+
+export const endWith: EndWith<ObservableLike>["endWith"] = Observable_endWith;
 
 export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   Observable_everySatisfy;
@@ -370,15 +417,23 @@ export const generate: Generate<
   { readonly delay?: number; readonly delayStart?: boolean }
 >["generate"] = Observable_generate;
 
+export const ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"] =
+  Observable_ignoreElements;
+
 export const isEnumerable = Observable_isEnumerable;
 
 export const isRunnable = Observable_isRunnable;
 
 export const keep: Keep<ObservableLike>["keep"] = Observable_keep;
 
+export const keepType: KeepType<ObservableLike>["keepType"] =
+  Observable_keepType;
+
 export const map: Map<ObservableLike>["map"] = Observable_map;
 
 export const mapAsync = Observable_mapAsync;
+
+export const mapTo: MapTo<ObservableLike>["mapTo"] = Observable_mapTo;
 
 export const merge: Concat<ObservableLike>["concat"] = Observable_merge;
 
@@ -389,6 +444,9 @@ export const mergeAll = Observable_mergeAll as ConcatAll<
     readonly maxConcurrency?: number;
   }
 >["concatAll"];
+
+// FIXME: Type
+export const mergeWith = Observable_mergeWith;
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -436,8 +494,14 @@ export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
 export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
   Observable_someSatisfy;
 
+export const startWith: StartWith<ObservableLike>["startWith"] =
+  Observable_startWith;
+
 export const switchAll: ConcatAll<ObservableLike>["concatAll"] =
   Observable_switchAll;
+
+// FIXME: Type
+export const switchMap = Observable_switchMap;
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,
@@ -463,6 +527,11 @@ export const throttle: Throttle<ObservableLike>["throttle"] =
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
+export const throws: Throws<
+  ObservableLike,
+  { delay?: number; delayStart?: boolean }
+>["throws"] = Observable_throws;
+
 export const timeout: Timeout<ObservableLike>["timeout"] = Observable_timeout;
 
 export const toPromise = Observable_toPromise;
@@ -475,6 +544,8 @@ export const zip: Zip<ObservableLike>["zip"] = Observable_zip;
 export const zipLatest: ZipLatest<ObservableLike>["zipLatest"] =
   Observable_zipLatest;
 
+const zipWith: ZipWith<ObservableLike>["zipWith"] = Observable_zipWith;
+
 export const zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"] =
   Observable_zipWithLatestFrom;
 
@@ -484,12 +555,19 @@ const Observable = {
   buffer,
   catchError,
   combineLatest,
+  compute,
   concat,
   concatAll,
+  concatMap,
+  concatWith,
+  concatYieldMap,
+  contains,
   decodeWithCharset,
   defer,
   distinctUntilChanged,
   empty,
+  encodeUtf8,
+  endWith,
   everySatisfy,
   forEach,
   fromEnumerable,
@@ -499,10 +577,15 @@ const Observable = {
   fromReadonlyArray,
   fromSequence,
   generate,
+  ignoreElements,
   isEnumerable,
   isRunnable,
   keep,
+  keepType,
   map,
+  mapTo,
+  merge,
+  mergeWith,
   never,
   onSubscribe,
   pairwise,
@@ -514,18 +597,23 @@ const Observable = {
   share,
   skipFirst,
   someSatisfy,
+  startWith,
   subscribe,
+  switchAll,
+  switchMap,
   takeFirst,
   takeLast,
   takeUntil,
   takeWhile,
   throttle,
   throwIfEmpty,
+  throws,
   timeout,
   toPromise,
   withLatestFrom,
   zip,
   zipLatest,
+  zipWith,
   zipWithLatestFrom,
 };
 

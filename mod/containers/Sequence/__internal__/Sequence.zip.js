@@ -2,12 +2,11 @@
 
 import { SequenceLike_data, SequenceLike_next, } from "../../../containers.js";
 import { callWith, getLength, isSome, none, pipe } from "../../../functions.js";
-import Container_keepType from "../../Container/__internal__/Container.keepType.js";
-import ReadonlyArray_keep from "../../ReadonlyArray/__internal__/ReadonlyArray.keep.js";
+import ReadonlyArray_keepType from "../../ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 const Sequence_zip = /*@__PURE__*/ (() => {
     const zip = (...sequences) => () => {
-        const nextResults = pipe(sequences, ReadonlyArray_map(callWith()), Container_keepType({ keep: ReadonlyArray_keep }, isSome));
+        const nextResults = pipe(sequences, ReadonlyArray_map(callWith()), ReadonlyArray_keepType(isSome));
         return getLength(nextResults) === getLength(sequences)
             ? {
                 [SequenceLike_data]: pipe(nextResults, ReadonlyArray_map(x => x[SequenceLike_data])),

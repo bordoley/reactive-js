@@ -6,6 +6,7 @@
 
 ### Constructor Functions
 
+- [compute](rx_RunnableObservable.md#compute)
 - [concat](rx_RunnableObservable.md#concat)
 - [defer](rx_RunnableObservable.md#defer)
 - [empty](rx_RunnableObservable.md#empty)
@@ -14,6 +15,7 @@
 - [fromReadonlyArray](rx_RunnableObservable.md#fromreadonlyarray)
 - [fromSequence](rx_RunnableObservable.md#fromsequence)
 - [generate](rx_RunnableObservable.md#generate)
+- [throws](rx_RunnableObservable.md#throws)
 - [zip](rx_RunnableObservable.md#zip)
 - [zipLatest](rx_RunnableObservable.md#ziplatest)
 
@@ -29,12 +31,21 @@
 - [buffer](rx_RunnableObservable.md#buffer)
 - [catchError](rx_RunnableObservable.md#catcherror)
 - [concatAll](rx_RunnableObservable.md#concatall)
+- [concatMap](rx_RunnableObservable.md#concatmap)
+- [concatWith](rx_RunnableObservable.md#concatwith)
+- [concatYieldMap](rx_RunnableObservable.md#concatyieldmap)
+- [contains](rx_RunnableObservable.md#contains)
 - [decodeWithCharset](rx_RunnableObservable.md#decodewithcharset)
 - [distinctUntilChanged](rx_RunnableObservable.md#distinctuntilchanged)
+- [encodeUtf8](rx_RunnableObservable.md#encodeutf8)
+- [endWith](rx_RunnableObservable.md#endwith)
 - [everySatisfy](rx_RunnableObservable.md#everysatisfy)
 - [forEach](rx_RunnableObservable.md#foreach)
+- [ignoreElements](rx_RunnableObservable.md#ignoreelements)
 - [keep](rx_RunnableObservable.md#keep)
+- [keepType](rx_RunnableObservable.md#keeptype)
 - [map](rx_RunnableObservable.md#map)
+- [mapTo](rx_RunnableObservable.md#mapto)
 - [pairwise](rx_RunnableObservable.md#pairwise)
 - [reduce](rx_RunnableObservable.md#reduce)
 - [retry](rx_RunnableObservable.md#retry)
@@ -42,6 +53,7 @@
 - [scanAsync](rx_RunnableObservable.md#scanasync)
 - [skipFirst](rx_RunnableObservable.md#skipfirst)
 - [someSatisfy](rx_RunnableObservable.md#somesatisfy)
+- [startWith](rx_RunnableObservable.md#startwith)
 - [switchAll](rx_RunnableObservable.md#switchall)
 - [takeFirst](rx_RunnableObservable.md#takefirst)
 - [takeLast](rx_RunnableObservable.md#takelast)
@@ -59,8 +71,33 @@
 - [exhaust](rx_RunnableObservable.md#exhaust)
 - [merge](rx_RunnableObservable.md#merge)
 - [mergeAll](rx_RunnableObservable.md#mergeall)
+- [mergeWith](rx_RunnableObservable.md#mergewith)
+- [switchMap](rx_RunnableObservable.md#switchmap)
 
 ## Constructor Functions
+
+### compute
+
+▸ **compute**<`T`\>(`factory`, `options?`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+___
 
 ### concat
 
@@ -250,6 +287,28 @@ that is applied to an accumulator value between emitted items.
 | `options?` | `Object` | - |
 | `options.delay?` | `number` | - |
 | `options.delayStart?` | `boolean` | - |
+
+#### Returns
+
+[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+___
+
+### throws
+
+▸ **throws**<`T`\>(`options?`): [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | { `delay?`: `number` ; `delayStart?`: `boolean`  } & { `raise?`: [`Factory`](functions.md#factory)<`unknown`\>  } |
 
 #### Returns
 
@@ -876,6 +935,101 @@ ContainerLike by concatenating the inner sources in order.
 
 ___
 
+### concatMap
+
+▸ **concatMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TB`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### concatWith
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### concatYieldMap
+
+▸ **concatYieldMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `any`, `any`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### contains
+
+▸ **contains**<`T`\>(`value`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+___
+
 ### decodeWithCharset
 
 ▸ **decodeWithCharset**(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
@@ -912,6 +1066,45 @@ are distinct by comparison from the previous item.
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### encodeUtf8
+
+▸ **encodeUtf8**(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `string`, `Uint8Array`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `string`, `Uint8Array`\>
+
+___
+
+### endWith
+
+▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
 
 #### Returns
 
@@ -968,6 +1161,28 @@ value emitted by the source.
 
 ___
 
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `unknown`, `T`\>
+
+___
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
@@ -991,6 +1206,30 @@ source that satisfy the specified predicate.
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### keepType
+
+▸ **keepType**<`TA`, `TB`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
@@ -1022,6 +1261,30 @@ TB - The inner type of the mapped container
 | :------ | :------ | :------ |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
 | `options?` | `undefined` | - |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### mapTo
+
+▸ **mapTo**<`TA`, `TB`\>(`value`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `TB` |
+| `options?` | `undefined` |
 
 #### Returns
 
@@ -1213,6 +1476,29 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+___
+
+### startWith
+
+▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -1797,3 +2083,50 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### mergeWith
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### switchMap
+
+▸ **switchMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`TB`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`unknown`\>, `TA`, `TB`\>

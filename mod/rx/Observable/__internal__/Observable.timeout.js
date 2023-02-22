@@ -1,8 +1,6 @@
 /// <reference types="./Observable.timeout.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import Container_throws from "../../../containers/Container/__internal__/Container.throws.js";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import { SinkLike_notify, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -16,8 +14,8 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_map from "./Observable.map.js";
 import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_throws from "./Observable.throws.js";
 const Observable_timeout = /*@__PURE__*/ (() => {
     const timeoutError = Symbol("Observable.timeout.error");
     const typedDisposableRefMixin = DisposableRef_mixin();
@@ -44,14 +42,8 @@ const Observable_timeout = /*@__PURE__*/ (() => {
     const raise = returns(timeoutError);
     return (duration) => {
         const durationObs = isNumber(duration)
-            ? Container_throws({
-                fromReadonlyArray: ReadonlyArray_toRunnableObservable,
-                map: Observable_map,
-            }, { delay: duration, delayStart: true, raise })
-            : Observable_concat(duration, Container_throws({
-                fromReadonlyArray: ReadonlyArray_toRunnableObservable,
-                map: Observable_map,
-            }, { raise }));
+            ? Observable_throws({ delay: duration, delayStart: true, raise })
+            : Observable_concat(duration, Observable_throws({ raise }));
         return pipe(createTimeoutObserver, partial(durationObs), Observable_lift(false, isNumber(duration) || Observable_isRunnable(duration)));
     };
 })();

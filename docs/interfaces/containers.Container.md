@@ -18,15 +18,29 @@
 
   ↳ [`CatchError`](containers.CatchError.md)
 
+  ↳ [`Compute`](containers.Compute.md)
+
   ↳ [`Concat`](containers.Concat.md)
 
   ↳ [`ConcatAll`](containers.ConcatAll.md)
+
+  ↳ [`ConcatMap`](containers.ConcatMap.md)
+
+  ↳ [`ConcatYieldMap`](containers.ConcatYieldMap.md)
+
+  ↳ [`ConcatWith`](containers.ConcatWith.md)
+
+  ↳ [`Contains`](containers.Contains.md)
 
   ↳ [`DecodeWithCharset`](containers.DecodeWithCharset.md)
 
   ↳ [`Defer`](containers.Defer.md)
 
   ↳ [`DistinctUntilChanged`](containers.DistinctUntilChanged.md)
+
+  ↳ [`EncodeUtf8`](containers.EncodeUtf8.md)
+
+  ↳ [`EndWith`](containers.EndWith.md)
 
   ↳ [`EverySatisfy`](containers.EverySatisfy.md)
 
@@ -44,15 +58,25 @@
 
   ↳ [`FromIterable`](containers.FromIterable.md)
 
+  ↳ [`FromOptional`](containers.FromOptional.md)
+
   ↳ [`FromSequence`](containers.FromSequence.md)
 
   ↳ [`Generate`](containers.Generate.md)
 
+  ↳ [`IgnoreElements`](containers.IgnoreElements.md)
+
   ↳ [`Keep`](containers.Keep.md)
+
+  ↳ [`KeepType`](containers.KeepType.md)
 
   ↳ [`Map`](containers.Map.md)
 
+  ↳ [`MapTo`](containers.MapTo.md)
+
   ↳ [`Never`](containers.Never.md)
+
+  ↳ [`NoneSatisfy`](containers.NoneSatisfy.md)
 
   ↳ [`Pairwise`](containers.Pairwise.md)
 
@@ -66,6 +90,8 @@
 
   ↳ [`SomeSatisfy`](containers.SomeSatisfy.md)
 
+  ↳ [`StartWith`](containers.StartWith.md)
+
   ↳ [`TakeFirst`](containers.TakeFirst.md)
 
   ↳ [`TakeLast`](containers.TakeLast.md)
@@ -73,6 +99,8 @@
   ↳ [`TakeWhile`](containers.TakeWhile.md)
 
   ↳ [`ThrowIfEmpty`](containers.ThrowIfEmpty.md)
+
+  ↳ [`Throws`](containers.Throws.md)
 
   ↳ [`ToAsyncIterable`](containers.ToAsyncIterable.md)
 
@@ -83,6 +111,8 @@
   ↳ [`ToSequence`](containers.ToSequence.md)
 
   ↳ [`Zip`](containers.Zip.md)
+
+  ↳ [`ZipWith`](containers.ZipWith.md)
 
   ↳ [`FromAsyncEnumerable`](ix.FromAsyncEnumerable.md)
 

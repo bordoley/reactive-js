@@ -8,7 +8,6 @@ import {
   mix,
   props,
 } from "../__internal__/mixins.js";
-import { ignoreElements } from "../containers/Container.js";
 import { toObservable } from "../containers/Promiseable.js";
 import { keep } from "../containers/ReadonlyArray.js";
 import {
@@ -42,6 +41,7 @@ import {
   create as createObservable,
   forEach as forEachObs,
   forkCombineLatest,
+  ignoreElements,
   keep as keepObs,
   map,
   subscribe,
@@ -469,7 +469,7 @@ export const windowLocation: WindowLocationStreamableLike =
               windowLocationStream[WindowLocationStream_historyCounter]++;
               windowHistoryReplaceState(windowLocationStream, title, uri);
             }),
-            ignoreElements({ keep: keepObs }),
+            ignoreElements(),
           ),
           compose(
             keepObs(({ replace, title, uri }) => {
@@ -483,7 +483,7 @@ export const windowLocation: WindowLocationStreamableLike =
               document.title = title;
               windowHistoryReplaceState(windowLocationStream, title, uri);
             }),
-            ignoreElements({ keep: keepObs }),
+            ignoreElements(),
           ),
           compose(
             keepObs(({ replace, uri }) => {
@@ -495,7 +495,7 @@ export const windowLocation: WindowLocationStreamableLike =
               document.title = title;
               windowHistoryPushState(windowLocationStream, title, uri);
             }),
-            ignoreElements({ keep: keepObs }),
+            ignoreElements(),
           ),
         ),
         subscribe(scheduler),

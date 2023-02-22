@@ -1,18 +1,14 @@
-import Container_ignoreElements from "../../../containers/Container/__internal__/Container.ignoreElements.js";
-import Container_startWith from "../../../containers/Container/__internal__/Container.startWith.js";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
-import { Updater, compose, pipe, returns } from "../../../functions.js";
+import { compose, pipe, returns } from "../../../functions.js";
 import {
-  ObservableLike,
   ObserverLike_dispatcher,
   ObserverLike_scheduler,
   ToObservable,
 } from "../../../rx.js";
-import Observable_concat from "../../../rx/Observable/__internal__/Observable.concat.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
+import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
+import Observable_startWith from "../../../rx/Observable/__internal__/Observable.startWith.js";
 import {
   PauseableState,
   PauseableState_paused,
@@ -34,12 +30,8 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
 
       const op = compose(
         Observable_forEach(Dispatcher_dispatchTo(dispatcher)),
-        Container_ignoreElements({ keep: Observable_keep }),
-        Container_startWith<ObservableLike, Updater<PauseableState>>(
-          {
-            fromReadonlyArray: ReadonlyArray_toRunnableObservable,
-            concat: Observable_concat,
-          },
+        Observable_ignoreElements(),
+        Observable_startWith(
           returns<PauseableState>(PauseableState_paused),
           returns(PauseableState_running),
         ),

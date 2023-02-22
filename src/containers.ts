@@ -6,6 +6,7 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  TypePredicate,
   Updater,
 } from "./functions.js";
 import { DisposableLike } from "./util.js";
@@ -170,6 +171,18 @@ export interface CatchError<C extends StatefulContainerLike, O = never>
  * @noInheritDoc
  * @category TypeClass
  */
+export interface Compute<C extends StatefulContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Constructor
+   */
+  compute<T>(factory: Factory<T>, options?: O): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface Concat<C extends ContainerLike> extends Container<C> {
   /**
    * Returns a ContainerLike which emits all values from each source sequentially.
@@ -196,6 +209,67 @@ export interface ConcatAll<C extends ContainerLike, O = never>
    * @category Operator
    */
   concatAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ConcatMap<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  concatMap: <TA, TB>(
+    mapper: Function1<TA, ContainerOf<C, TB>>,
+    options?: O,
+  ) => ContainerOperator<C, TA, TB>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ConcatYieldMap<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  concatYieldMap: <TA, TB>(
+    mapper: Function1<TA, Generator<TB, any, any>>,
+    options?: O,
+  ) => ContainerOperator<C, TA, TB>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ConcatWith<C extends ContainerLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
+  concatWith: <T>(
+    snd: ContainerOf<C, T>,
+    ...tail: readonly ContainerOf<C, T>[]
+  ) => ContainerOperator<C, T, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Contains<C extends ContainerLike, O = unknown>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  contains: <T>(
+    value: T,
+    options?: O & {
+      readonly equality?: Equality<T> | undefined;
+    },
+  ) => ContainerOperator<C, T, boolean>;
 }
 
 /**
@@ -233,7 +307,7 @@ export interface Defer<C extends ContainerLike, O = never>
 export interface DistinctUntilChanged<C extends ContainerLike, O = unknown>
   extends Container<C> {
   /**
-   *  Returns a ContainerOperator that emits all items emitted by the source that
+   * Returns a ContainerOperator that emits all items emitted by the source that
    * are distinct by comparison from the previous item.
    *
    * @category Operator
@@ -243,6 +317,29 @@ export interface DistinctUntilChanged<C extends ContainerLike, O = unknown>
       readonly equality?: Equality<T>;
     },
   ): ContainerOperator<C, T, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface EncodeUtf8<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  encodeUtf8(options?: O): ContainerOperator<C, string, Uint8Array>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface EndWith<C extends ContainerLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
+  endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 }
 
 /**
@@ -421,6 +518,18 @@ export interface FromIterable<C extends ContainerLike, O = never>
  * @noInheritDoc
  * @category TypeClass
  */
+export interface FromOptional<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Constructor
+   */
+  fromOptional<T>(options?: O): Function1<Optional<T>, ContainerOf<C, T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface FromSequence<C extends ContainerLike, O = never>
   extends Container<C> {
   /**
@@ -455,6 +564,18 @@ export interface Generate<C extends ContainerLike, O = never>
  * @noInheritDoc
  * @category TypeClass
  */
+export interface IgnoreElements<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  ignoreElements<T>(options?: O): ContainerOperator<C, unknown, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface Keep<C extends ContainerLike, O = never> extends Container<C> {
   /**
    * Returns a ContainerOperator that only emits items produced by the
@@ -463,6 +584,22 @@ export interface Keep<C extends ContainerLike, O = never> extends Container<C> {
    * @category Operator
    */
   keep<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface KeepType<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   *
+   * @category Operator
+   */
+  keepType<TA, TB extends TA>(
+    predicate: TypePredicate<TA, TB>,
+    options?: O,
+  ): ContainerOperator<C, TA, TB>;
 }
 
 /**
@@ -490,6 +627,18 @@ export interface Map<C extends ContainerLike, O = never> extends Container<C> {
  * @noInheritDoc
  * @category TypeClass
  */
+export interface MapTo<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  mapTo<TA, TB>(value: TB, options?: O): ContainerOperator<C, TA, TB>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface Never<C extends StatefulContainerLike, O = never>
   extends Container<C> {
   /**
@@ -498,6 +647,21 @@ export interface Never<C extends StatefulContainerLike, O = never>
    * @category Constructor
    */
   never<T>(options?: O): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface NoneSatisfy<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  noneSatisfy<T>(
+    predicate: Predicate<T>,
+    options?: O,
+  ): ContainerOperator<C, T, boolean>;
 }
 
 /**
@@ -620,6 +784,17 @@ export interface SomeSatisfy<C extends ContainerLike, O = never>
  * @noInheritDoc
  * @category TypeClass
  */
+export interface StartWith<C extends ContainerLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
+  startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface TakeFirst<C extends ContainerLike, O = unknown>
   extends Container<C> {
   /**
@@ -690,6 +865,22 @@ export interface ThrowIfEmpty<C extends StatefulContainerLike, O = never>
     factory: Factory<unknown>,
     options?: O,
   ): ContainerOperator<C, T, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Throws<C extends StatefulContainerLike, O = unknown>
+  extends Container<C> {
+  /**
+   * @category Constructor
+   */
+  throws<T>(
+    options?: O & {
+      raise?: Factory<unknown>;
+    },
+  ): ContainerOf<C, T>;
 }
 
 /**
@@ -823,4 +1014,62 @@ export interface Zip<C extends ContainerLike> extends Container<C> {
     h: ContainerOf<C, TH>,
     i: ContainerOf<C, TI>,
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+
+export interface ZipWith<C extends ContainerLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
+  zipWith<TA, TB>(
+    b: ContainerOf<C, TB>,
+  ): ContainerOperator<C, TA, readonly [TA, TB]>;
+  zipWith<TA, TB, TC>(
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC]>;
+  zipWith<TA, TB, TC, TD>(
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD]>;
+  zipWith<TA, TB, TC, TD, TE>(
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE]>;
+  zipWith<TA, TB, TC, TD, TE, TF>(
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF]>;
+  zipWith<TA, TB, TC, TD, TE, TF, TG>(
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+    h: ContainerOf<C, TH>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+    h: ContainerOf<C, TH>,
+    i: ContainerOf<C, TI>,
+  ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }

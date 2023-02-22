@@ -3,30 +3,37 @@ import {
   CatchError,
   Concat,
   ConcatAll,
+  ConcatMap,
+  ConcatWith,
+  ConcatYieldMap,
   ContainerLike,
+  Contains,
   DecodeWithCharset,
-  Defer,
   DistinctUntilChanged,
+  EncodeUtf8,
+  EndWith,
   EverySatisfy,
   ForEach,
-  FromIterable,
   FromReadonlyArray,
+  IgnoreElements,
   Keep,
   Map,
+  MapTo,
   Pairwise,
   Reduce,
   Repeat,
   Scan,
   SkipFirst,
-  SomeSatisfy,
+  StartWith,
   TakeFirst,
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
+  Throws,
   ToReadonlyArray,
   Zip,
+  ZipWith,
 } from "../containers.js";
-import Container from "../containers/Container.js";
 import ReadonlyArray from "../containers/ReadonlyArray.js";
 import {
   alwaysFalse,
@@ -107,14 +114,14 @@ export const bufferTests = <C extends ContainerLike>(
   );
 
 export const catchErrorTests = <C extends ContainerLike>(
-  m: CatchError<C> & Map<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: CatchError<C> & Throws<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
     "catchError",
     test("when source throws", () => {
       const e = {};
       pipe(
-        Container.throws<C, number>(m, { raise: returns(e) }),
+        m.throws<number>({ raise: returns(e) }),
         m.catchError(_ => pipe([1, 2, 3], m.fromReadonlyArray())),
         m.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
@@ -174,7 +181,7 @@ export const concatAllTests = <C extends ContainerLike>(
   );
 
 export const concatMapTests = <C extends ContainerLike>(
-  m: ConcatAll<C> & FromReadonlyArray<C> & Map<C> & ToReadonlyArray<C>,
+  m: ConcatMap<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
     "concatMap",
@@ -183,10 +190,7 @@ export const concatMapTests = <C extends ContainerLike>(
       pipeLazy(
         [0, 1],
         m.fromReadonlyArray(),
-        Container.concatMap<C, number, number>(
-          m,
-          pipeLazy([1, 2, 3], m.fromReadonlyArray()),
-        ),
+        m.concatMap(pipeLazy([1, 2, 3], m.fromReadonlyArray())),
         m.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
@@ -194,7 +198,7 @@ export const concatMapTests = <C extends ContainerLike>(
   );
 
 export const concatWithTests = <C extends ContainerLike>(
-  m: Concat<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: ConcatWith<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
     "concatWith",
@@ -203,10 +207,7 @@ export const concatWithTests = <C extends ContainerLike>(
       pipeLazy(
         [0, 1],
         m.fromReadonlyArray(),
-        Container.concatWith<C, number>(
-          m,
-          pipe([2, 3, 4], m.fromReadonlyArray()),
-        ),
+        m.concatWith(pipe([2, 3, 4], m.fromReadonlyArray())),
         m.toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
@@ -215,9 +216,8 @@ export const concatWithTests = <C extends ContainerLike>(
 
 export const decodeWithCharsetTests = <C extends ContainerLike>(
   m: DecodeWithCharset<C> &
-    Defer<C> &
+    EncodeUtf8<C> &
     FromReadonlyArray<C> &
-    Map<C> &
     ToReadonlyArray<C>,
 ) =>
   describe(
@@ -228,7 +228,7 @@ export const decodeWithCharsetTests = <C extends ContainerLike>(
       pipe(
         [str],
         m.fromReadonlyArray(),
-        Container.encodeUtf8(m),
+        m.encodeUtf8(),
         m.decodeWithCharset(),
         m.toReadonlyArray(),
         x => x.join(),
@@ -240,7 +240,7 @@ export const decodeWithCharsetTests = <C extends ContainerLike>(
       pipe(
         [str],
         m.fromReadonlyArray(),
-        Container.encodeUtf8(m),
+        m.encodeUtf8(),
         m.decodeWithCharset(),
         m.toReadonlyArray(),
         x => x.join(),
@@ -293,7 +293,7 @@ export const distinctUntilChangedTests = <C extends ContainerLike>(
   );
 
 export const endWithTests = <C extends ContainerLike>(
-  m: Concat<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: EndWith<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
     "endWith",
@@ -302,7 +302,7 @@ export const endWithTests = <C extends ContainerLike>(
       pipeLazy(
         [0, 1],
         m.fromReadonlyArray(),
-        Container.endWith<C, number>(m, 2, 3, 4),
+        m.endWith(2, 3, 4),
         m.toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
@@ -437,21 +437,17 @@ export const fromReadonlyArrayTests = <C extends ContainerLike>(
     }),
   );
 
-export const genMapTests = <C extends ContainerLike>(
-  m: ConcatAll<C> &
-    FromReadonlyArray<C> &
-    FromIterable<C> &
-    Map<C> &
-    ToReadonlyArray<C>,
+export const concatYieldMapTests = <C extends ContainerLike>(
+  m: ConcatYieldMap<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
-    "genMap",
+    "concatYieldMap",
     test(
       "maps the incoming value with the inline generator function",
       pipeLazy(
         [none, none],
         m.fromReadonlyArray(),
-        Container.genMap(m, function* (_) {
+        m.concatYieldMap(function* (_) {
           yield 1;
           yield 2;
           yield 3;
@@ -463,7 +459,7 @@ export const genMapTests = <C extends ContainerLike>(
   );
 
 export const ignoreElementsTests = <C extends ContainerLike>(
-  m: Keep<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: IgnoreElements<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
     "ignoreElements",
@@ -472,7 +468,7 @@ export const ignoreElementsTests = <C extends ContainerLike>(
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray(),
-        Container.ignoreElements<C, number>(m),
+        m.ignoreElements<number>(),
         m.toReadonlyArray(),
         expectArrayEquals(ReadonlyArray.empty()),
       ),
@@ -546,7 +542,7 @@ export const mapTests = <C extends ContainerLike>(
   );
 
 export const mapToTests = <C extends ContainerLike>(
-  m: Map<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: MapTo<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
     "mapTo",
@@ -555,7 +551,7 @@ export const mapToTests = <C extends ContainerLike>(
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray(),
-        Container.mapTo(m, 2),
+        m.mapTo(2),
         m.toReadonlyArray(),
         expectArrayEquals([2, 2, 2]),
       ),
@@ -676,7 +672,7 @@ export const retryTests = <C extends ObservableLike>(
   m: Concat<C> &
     Retry<C> &
     FromReadonlyArray<C> &
-    Map<C> &
+    Throws<C> &
     TakeFirst<C> &
     ToReadonlyArray<C>,
 ) =>
@@ -685,7 +681,7 @@ export const retryTests = <C extends ObservableLike>(
     test(
       "retrys the container on an exception",
       pipeLazy(
-        m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), Container.throws(m)),
+        m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), m.throws()),
         m.retry(),
         m.takeFirst({ count: 6 }),
         m.toReadonlyArray(),
@@ -852,17 +848,17 @@ export const skipFirstTests = <C extends ContainerLike>(
     ),
   );
 
-export const someSatisfyTests = <C extends ContainerLike>(
-  m: SomeSatisfy<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+export const containsTests = <C extends ContainerLike>(
+  m: Contains<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
-    "someSatisfy",
+    "contains",
     test(
       "source is empty",
       pipeLazy(
         [],
         m.fromReadonlyArray(),
-        Container.contains<C, number>(m, 1),
+        m.contains(1),
         m.toReadonlyArray(),
         expectArrayEquals([false]),
       ),
@@ -872,7 +868,7 @@ export const someSatisfyTests = <C extends ContainerLike>(
       pipeLazy(
         [0, 1, 2],
         m.fromReadonlyArray(),
-        Container.contains(m, 1),
+        m.contains(1),
         m.toReadonlyArray(),
         expectArrayEquals([true]),
       ),
@@ -882,7 +878,7 @@ export const someSatisfyTests = <C extends ContainerLike>(
       pipeLazy(
         [2, 3, 4],
         m.fromReadonlyArray(),
-        Container.contains(m, 1),
+        m.contains(1),
         m.toReadonlyArray(),
         expectArrayEquals([false]),
       ),
@@ -890,7 +886,7 @@ export const someSatisfyTests = <C extends ContainerLike>(
   );
 
 export const startWithTests = <C extends ContainerLike>(
-  m: Concat<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: StartWith<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
     "startWith",
@@ -899,7 +895,7 @@ export const startWithTests = <C extends ContainerLike>(
       pipeLazy(
         [0, 1],
         m.fromReadonlyArray(),
-        Container.startWith(m, 2, 3, 4),
+        m.startWith(2, 3, 4),
         m.toReadonlyArray(),
         expectArrayEquals([2, 3, 4, 0, 1]),
       ),
@@ -1239,7 +1235,7 @@ export const zipTests = <C extends ContainerLike>(
   );
 
 export const zipWithTests = <C extends ContainerLike>(
-  m: Zip<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: ZipWith<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
     "zipWith",
@@ -1248,10 +1244,7 @@ export const zipWithTests = <C extends ContainerLike>(
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray(),
-        Container.zipWith<C, number, number>(
-          m,
-          pipe([1, 2, 3, 4], m.fromReadonlyArray()),
-        ),
+        m.zipWith(pipe([1, 2, 3, 4], m.fromReadonlyArray())),
         m.toReadonlyArray(),
         expectArrayEquals<readonly [number, number]>(
           [

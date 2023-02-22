@@ -1,13 +1,12 @@
 import { ContainerLike, ContainerOf, ContainerOperator, Zip } from "../../../containers.js";
-export interface ZipWith {
-    <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, b: ContainerOf<C, TB>): ContainerOperator<C, TA, readonly [TA, TB]>;
-    <C extends ContainerLike, TA, TB, TC>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>): ContainerOperator<C, TA, readonly [TA, TB, TC]>;
-    <C extends ContainerLike, TA, TB, TC, TD>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD]>;
-    <C extends ContainerLike, TA, TB, TC, TD, TE>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE]>;
-    <C extends ContainerLike, TA, TB, TC, TD, TE, TF>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF]>;
-    <C extends ContainerLike, TA, TB, TC, TD, TE, TF, TG>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG]>;
-    <C extends ContainerLike, TA, TB, TC, TD, TE, TF, TG, TH>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
-    <C extends ContainerLike, TA, TB, TC, TD, TE, TF, TG, TH, TI>({ zip }: Zip<C>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-}
-declare const Container_zipWith: ZipWith;
+declare const Container_zipWith: <C extends ContainerLike>(zip: {
+    <TA, TB>(a: ContainerOf<C, TA>, b: ContainerOf<C, TB>): ContainerOf<C, readonly [TA, TB]>;
+    <TA_1, TB_1, TC>(a: ContainerOf<C, TA_1>, b: ContainerOf<C, TB_1>, c: ContainerOf<C, TC>): ContainerOf<C, readonly [TA_1, TB_1, TC]>;
+    <TA_2, TB_2, TC_1, TD>(a: ContainerOf<C, TA_2>, b: ContainerOf<C, TB_2>, c: ContainerOf<C, TC_1>, d: ContainerOf<C, TD>): ContainerOf<C, readonly [TA_2, TB_2, TC_1, TD]>;
+    <TA_3, TB_3, TC_2, TD_1, TE>(a: ContainerOf<C, TA_3>, b: ContainerOf<C, TB_3>, c: ContainerOf<C, TC_2>, d: ContainerOf<C, TD_1>, e: ContainerOf<C, TE>): ContainerOf<C, readonly [TA_3, TB_3, TC_2, TD_1, TE]>;
+    <TA_4, TB_4, TC_3, TD_2, TE_1, TF>(a: ContainerOf<C, TA_4>, b: ContainerOf<C, TB_4>, c: ContainerOf<C, TC_3>, d: ContainerOf<C, TD_2>, e: ContainerOf<C, TE_1>, f: ContainerOf<C, TF>): ContainerOf<C, readonly [TA_4, TB_4, TC_3, TD_2, TE_1, TF]>;
+    <TA_5, TB_5, TC_4, TD_3, TE_2, TF_1, TG>(a: ContainerOf<C, TA_5>, b: ContainerOf<C, TB_5>, c: ContainerOf<C, TC_4>, d: ContainerOf<C, TD_3>, e: ContainerOf<C, TE_2>, f: ContainerOf<C, TF_1>, g: ContainerOf<C, TG>): ContainerOf<C, readonly [TA_5, TB_5, TC_4, TD_3, TE_2, TF_1, TG]>;
+    <TA_6, TB_6, TC_5, TD_4, TE_3, TF_2, TG_1, TH>(a: ContainerOf<C, TA_6>, b: ContainerOf<C, TB_6>, c: ContainerOf<C, TC_5>, d: ContainerOf<C, TD_4>, e: ContainerOf<C, TE_3>, f: ContainerOf<C, TF_2>, g: ContainerOf<C, TG_1>, h: ContainerOf<C, TH>): ContainerOf<C, readonly [TA_6, TB_6, TC_5, TD_4, TE_3, TF_2, TG_1, TH]>;
+    <TA_7, TB_7, TC_6, TD_5, TE_4, TF_3, TG_2, TH_1, TI>(a: ContainerOf<C, TA_7>, b: ContainerOf<C, TB_7>, c: ContainerOf<C, TC_6>, d: ContainerOf<C, TD_5>, e: ContainerOf<C, TE_4>, f: ContainerOf<C, TF_3>, g: ContainerOf<C, TG_2>, h: ContainerOf<C, TH_1>, i: ContainerOf<C, TI>): ContainerOf<C, readonly [TA_7, TB_7, TC_6, TD_5, TE_4, TF_3, TG_2, TH_1, TI]>;
+}) => (snd: ContainerOf<C, any>, ...tail: readonly ContainerOf<C, any>[]) => ContainerOperator<C, any, any>;
 export default Container_zipWith;

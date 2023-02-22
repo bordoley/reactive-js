@@ -6,13 +6,11 @@ import {
   testAsync,
   testModule,
 } from "../../__tests__/testing.js";
-import Container from "../../containers/Container.js";
 import ReadonlyArray from "../../containers/ReadonlyArray.js";
-import { Updater, newInstance, pipe, returns } from "../../functions.js";
-import { ObservableLike } from "../../rx.js";
+import { newInstance, pipe, returns } from "../../functions.js";
 import Observable from "../../rx/Observable.js";
 import RunnableObservable from "../../rx/RunnableObservable.js";
-import { PauseableState, PauseableState_paused } from "../../scheduling.js";
+import { PauseableState_paused } from "../../scheduling.js";
 import Scheduler from "../../scheduling/Scheduler.js";
 import Flowable from "../../streaming/Flowable.js";
 import Stream from "../../streaming/Stream.js";
@@ -59,10 +57,7 @@ testModule(
 
         await pipe(
           dest,
-          Container.endWith<ObservableLike, Updater<PauseableState>>(
-            RunnableObservable,
-            returns(PauseableState_paused),
-          ),
+          Observable.endWith(returns(PauseableState_paused)),
           Observable.toPromise(scheduler),
         );
 
@@ -103,8 +98,8 @@ testModule(
 
         const promise = pipe(
           dest,
-          Container.ignoreElements(Observable),
-          Container.endWith<ObservableLike, number>(Observable, 0),
+          Observable.ignoreElements(),
+          Observable.endWith(0),
           Observable.toPromise(scheduler),
         );
         await expectPromiseToThrow(promise);
@@ -162,7 +157,7 @@ testModule(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
-          Container.endWith<ObservableLike, string>(Observable, ""),
+          Observable.endWith(""),
           Observable.toPromise(scheduler),
           expectPromiseToThrow,
         );

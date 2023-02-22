@@ -7,6 +7,7 @@ import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empt
 import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.js";
+import ReadonlyArray_keepType from "./ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "./ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
@@ -27,6 +28,7 @@ export const fromReadonlyArray = ReadonlyArray_toReadonlyArray;
 export const fromRunnableObservable = RunnableObservable_toReadonlyArray;
 export const fromSequence = Sequence_toReadonlyArray;
 export const keep = ReadonlyArray_keep;
+export const keepType = ReadonlyArray_keepType;
 export const map = ReadonlyArray_map;
 export const some = ReadonlyArray_some;
 export const toAsyncEnumerable = ReadonlyArray_toAsyncEnumerable;
@@ -50,6 +52,7 @@ const ReadonlyArray = {
     fromReadonlyArray,
     fromSequence,
     keep,
+    keepType,
     map,
     some,
     toAsyncEnumerable,

@@ -1,13 +1,12 @@
 /// <reference types="./web.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
-import { ignoreElements } from "../containers/Container.js";
 import { toObservable } from "../containers/Promiseable.js";
 import { keep } from "../containers/ReadonlyArray.js";
 import { compose, error, getLength, isEmpty, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, } from "../rx.js";
 import { getObserverCount, getReplay } from "../rx/MulticastObservable.js";
-import { create as createObservable, forEach as forEachObs, forkCombineLatest, keep as keepObs, map, subscribe, takeWhile, throttle, } from "../rx/Observable.js";
+import { create as createObservable, forEach as forEachObs, forkCombineLatest, ignoreElements, keep as keepObs, map, subscribe, takeWhile, throttle, } from "../rx/Observable.js";
 import { getDispatcher } from "../rx/Observer.js";
 import { sinkInto } from "../rx/ReactiveContainer.js";
 import { DispatcherLike_dispatch, DispatcherLike_scheduler, } from "../scheduling.js";
@@ -180,20 +179,20 @@ export const windowLocation =
             // Initialize the history state on page load
             windowLocationStream[WindowLocationStream_historyCounter]++;
             windowHistoryReplaceState(windowLocationStream, title, uri);
-        }), ignoreElements({ keep: keepObs })), compose(keepObs(({ replace, title, uri }) => {
+        }), ignoreElements()), compose(keepObs(({ replace, title, uri }) => {
             const titleChanged = document.title !== title;
             const uriChanged = uri !== location.href;
             return replace || (titleChanged && !uriChanged);
         }), throttle(100), forEachObs(({ title, uri }) => {
             document.title = title;
             windowHistoryReplaceState(windowLocationStream, title, uri);
-        }), ignoreElements({ keep: keepObs })), compose(keepObs(({ replace, uri }) => {
+        }), ignoreElements()), compose(keepObs(({ replace, uri }) => {
             const uriChanged = uri !== location.href;
             return !replace && uriChanged;
         }), throttle(100), forEachObs(({ title, uri }) => {
             document.title = title;
             windowHistoryPushState(windowLocationStream, title, uri);
-        }), ignoreElements({ keep: keepObs }))), subscribe(scheduler), addTo(windowLocationStream));
+        }), ignoreElements())), subscribe(scheduler), addTo(windowLocationStream));
         pipe(window, addEventListener("popstate", (e) => {
             const { counter, title } = e.state;
             const uri = {

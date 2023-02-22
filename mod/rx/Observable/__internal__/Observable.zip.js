@@ -1,10 +1,9 @@
 /// <reference types="./Observable.zip.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import Container_keepType from "../../../containers/Container/__internal__/Container.keepType.js";
 import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_keep from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keep.js";
+import ReadonlyArray_keepType from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import { compose, getLength, isSome, isTrue, none, pipe, } from "../../../functions.js";
@@ -125,7 +124,7 @@ const Observable_zip = /*@__PURE__*/ (() => {
         const isEnumerable = Observable_allAreEnumerable(observables);
         const isRunnable = Observable_allAreRunnable(observables);
         return isEnumerable
-            ? pipe(observables, ReadonlyArray_map(EnumerableObservable_toEnumerable()), Container_keepType({ keep: ReadonlyArray_keep }, isSome), enumerables => Enumerable_zip(...enumerables), Enumerable_toRunnableObservable())
+            ? pipe(observables, ReadonlyArray_map(EnumerableObservable_toEnumerable()), ReadonlyArray_keepType(isSome), enumerables => Enumerable_zip(...enumerables), Enumerable_toRunnableObservable())
             : isRunnable
                 ? RunnableObservable_create(onSink(observables))
                 : Observable_create(onSink(observables));

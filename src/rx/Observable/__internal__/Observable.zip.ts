@@ -10,10 +10,9 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Zip } from "../../../containers.js";
-import Container_keepType from "../../../containers/Container/__internal__/Container.keepType.js";
 import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_keep from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keep.js";
+import ReadonlyArray_keepType from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import {
@@ -259,7 +258,7 @@ const Observable_zip: Zip<ObservableLike>["zip"] = /*@__PURE__*/ (() => {
       ? pipe(
           observables,
           ReadonlyArray_map(EnumerableObservable_toEnumerable()),
-          Container_keepType({ keep: ReadonlyArray_keep }, isSome),
+          ReadonlyArray_keepType(isSome),
           enumerables =>
             (
               Enumerable_zip as unknown as (

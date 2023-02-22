@@ -1,10 +1,9 @@
 import { ContainerOperator } from "../../../containers.js";
-import Container_concatWith from "../../../containers/Container/__internal__/Container.concatWith.js";
 import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import { Updater, composeUnsafe, pipe, returns } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
-import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
+import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import { PauseableState, PauseableState_paused } from "../../../scheduling.js";
 import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
@@ -128,8 +127,7 @@ const Flowable_createLifted: CreateLiftedFlowable = <T>(
       updateReducer,
       returns(PauseableState_paused),
     ),
-    Container_concatWith<ObservableLike, PauseableState>(
-      { concat: Observable_merge },
+    Observable_mergeWith<PauseableState>(
       pipe([PauseableState_paused], ReadonlyArray_toRunnableObservable()),
     ),
     Observable_distinctUntilChanged<T>(),

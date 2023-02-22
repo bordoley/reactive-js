@@ -1,21 +1,18 @@
-import {
-  ContainerLike,
-  ContainerOperator,
-  Defer,
-  Map,
-} from "../../../containers.js";
+import { ContainerLike, Defer, EncodeUtf8, Map } from "../../../containers.js";
 import { newInstance, pipe } from "../../../functions.js";
 
 const Container_encodeUtf8 =
   <C extends ContainerLike>(
-    m: Defer<C> & Map<C>,
-  ): ContainerOperator<C, string, Uint8Array> =>
-  obs =>
-    m.defer(() => {
+    defer: Defer<C>["defer"],
+    map: Map<C>["map"],
+  ): EncodeUtf8<C>["encodeUtf8"] =>
+  _ =>
+  container =>
+    defer(() => {
       const textEncoder = newInstance(TextEncoder);
       return pipe(
-        obs,
-        m.map(s => textEncoder.encode(s)),
+        container,
+        map(s => textEncoder.encode(s)),
       );
     });
 

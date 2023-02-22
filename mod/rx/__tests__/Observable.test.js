@@ -1,7 +1,6 @@
 /// <reference types="./Observable.test.d.ts" />
 
 import { describe, expectArrayEquals, expectEquals, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__tests__/testing.js";
-import Container from "../../containers/Container.js";
 import ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import Continuation from "../../scheduling/Continuation.js";
@@ -69,7 +68,7 @@ const asyncTests = describe("async", test("batch mode", () => {
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
-    }, { mode: "combine-latest" }), Container.keepType(Observable, isSome), Observable.forEach(v => {
+    }, { mode: "combine-latest" }), Observable.keepType(isSome), Observable.forEach(v => {
         result.push(v);
     }), Observable.subscribe(scheduler));
     Continuation.run(scheduler);

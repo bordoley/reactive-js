@@ -10,7 +10,6 @@ import {
   testAsync,
   testModule,
 } from "../../__tests__/testing.js";
-import Container from "../../containers/Container.js";
 import ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import { ObservableLike } from "../../rx.js";
@@ -153,7 +152,7 @@ const asyncTests = describe(
         },
         { mode: "combine-latest" },
       ),
-      Container.keepType(Observable, isSome),
+      Observable.keepType(isSome),
       Observable.forEach<number>(v => {
         result.push(v);
       }),

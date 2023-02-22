@@ -5,8 +5,7 @@ import {
   Zip,
 } from "../../../containers.js";
 import { callWith, getLength, isSome, none, pipe } from "../../../functions.js";
-import Container_keepType from "../../Container/__internal__/Container.keepType.js";
-import ReadonlyArray_keep from "../../ReadonlyArray/__internal__/ReadonlyArray.keep.js";
+import ReadonlyArray_keepType from "../../ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 
 const Sequence_zip: Zip<SequenceLike>["zip"] = /*@__PURE__*/ (() => {
@@ -16,7 +15,7 @@ const Sequence_zip: Zip<SequenceLike>["zip"] = /*@__PURE__*/ (() => {
       const nextResults = pipe(
         sequences,
         ReadonlyArray_map(callWith()),
-        Container_keepType({ keep: ReadonlyArray_keep }, isSome),
+        ReadonlyArray_keepType(isSome),
       );
 
       return getLength(nextResults) === getLength(sequences)

@@ -5,6 +5,7 @@ import {
   concatMapTests,
   concatTests,
   concatWithTests,
+  containsTests,
   decodeWithCharsetTests,
   distinctUntilChangedTests,
   endWithTests,
@@ -21,7 +22,6 @@ import {
   scanAsyncTests,
   scanTests,
   skipFirstTests,
-  someSatisfyTests,
   startWithTests,
   takeFirstTests,
   takeLastTests,
@@ -42,7 +42,6 @@ import {
   test,
   testModule,
 } from "../../__tests__/testing.js";
-import Container from "../../containers/Container.js";
 import ReadonlyArray from "../../containers/ReadonlyArray.js";
 import {
   arrayEquality,
@@ -137,7 +136,7 @@ const mergeTests = describe(
       pipeLazy(
         RunnableObservable.merge(
           pipe([1, 4, 7], ReadonlyArray.toRunnableObservable({ delay: 2 })),
-          Container.throws(RunnableObservable, { delay: 5 }),
+          RunnableObservable.throws({ delay: 5 }),
         ),
         RunnableObservable.toReadonlyArray(),
       ),
@@ -161,7 +160,7 @@ const switchAllTests = describe(
     "when source throw",
     pipeLazy(
       pipeLazy(
-        Container.throws(RunnableObservable),
+        RunnableObservable.throws(),
         RunnableObservable.switchAll(),
         RunnableObservable.toReadonlyArray(),
       ),
@@ -174,12 +173,8 @@ const switchAllTests = describe(
     pipeLazy(
       [1, 2, 3],
       ReadonlyArray.toRunnableObservable({ delay: 1 }),
-      Container.concatMap<RunnableObservableLike, number, number>(
-        {
-          concatAll: RunnableObservable.switchAll,
-          map: RunnableObservable.map,
-        },
-        _ => pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 0 })),
+      RunnableObservable.switchMap(_ =>
+        pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 0 })),
       ),
       RunnableObservable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
@@ -190,12 +185,8 @@ const switchAllTests = describe(
     pipeLazy(
       [1, 2, 3],
       ReadonlyArray.toRunnableObservable({ delay: 4 }),
-      Container.concatMap<RunnableObservableLike, number, number>(
-        {
-          concatAll: RunnableObservable.switchAll,
-          map: RunnableObservable.map,
-        },
-        _ => pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 2 })),
+      RunnableObservable.switchMap(_ =>
+        pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 2 })),
       ),
       RunnableObservable.toReadonlyArray(),
       expectArrayEquals([1, 2, 1, 2, 1, 2, 3]),
@@ -408,7 +399,7 @@ const withLatestFromTest = describe(
         [0],
         ReadonlyArray.toRunnableObservable({ delay: 1 }),
         RunnableObservable.withLatestFrom(
-          Container.throws(RunnableObservable, { raise: returns(error) }),
+          RunnableObservable.throws({ raise: returns(error) }),
           sum,
         ),
         RunnableObservable.toReadonlyArray(),
@@ -456,7 +447,7 @@ const zipTests = describe(
     pipeLazy(
       pipeLazy(
         RunnableObservable.zip(
-          Container.throws(RunnableObservable),
+          RunnableObservable.throws(),
           pipe([1, 2, 3], ReadonlyArray.toRunnableObservable()),
         ),
         RunnableObservable.map<readonly [unknown, number], number>(
@@ -497,7 +488,7 @@ const zipWithLatestTests = describe(
     "when source throws",
     pipeLazy(
       pipeLazy(
-        Container.throws(RunnableObservable),
+        RunnableObservable.throws(),
         RunnableObservable.zipWithLatestFrom(
           pipe([1], ReadonlyArray.toRunnableObservable()),
           (_, b) => b,
@@ -515,7 +506,7 @@ const zipWithLatestTests = describe(
         [1, 2, 3],
         ReadonlyArray.toRunnableObservable({ delay: 1 }),
         RunnableObservable.zipWithLatestFrom(
-          Container.throws(RunnableObservable),
+          RunnableObservable.throws(),
           (_, b) => b,
         ),
         RunnableObservable.toReadonlyArray(),
@@ -562,6 +553,7 @@ testModule(
   concatAllTests<RunnableObservableLike>(RunnableObservable),
   concatMapTests(RunnableObservable),
   concatWithTests<RunnableObservableLike>(RunnableObservable),
+  containsTests(RunnableObservable),
   decodeWithCharsetTests(RunnableObservable),
   distinctUntilChangedTests(RunnableObservable),
   endWithTests<RunnableObservableLike>(RunnableObservable),
@@ -583,7 +575,6 @@ testModule(
     RunnableObservable,
   ),
   skipFirstTests(RunnableObservable),
-  someSatisfyTests(RunnableObservable),
   startWithTests<RunnableObservableLike>(RunnableObservable),
   switchAllTests,
   takeFirstTests(RunnableObservable),

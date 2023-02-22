@@ -1,7 +1,6 @@
-import Container_ignoreElements from "../../../containers/Container/__internal__/Container.ignoreElements.js";
 import { pipe } from "../../../functions.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
+import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
@@ -24,16 +23,16 @@ const Streamable_sinkInto =
         pipe(
           srcStream,
           Observable_forEach(Dispatcher_dispatchTo(dest)),
-          Container_ignoreElements({ keep: Observable_keep }),
+          Observable_ignoreElements(),
           Observable_onSubscribe(() => dest),
         ),
         pipe(
           dest,
           Observable_forEach<TReq>(Dispatcher_dispatchTo(srcStream)),
-          Container_ignoreElements({ keep: Observable_keep }),
+          Observable_ignoreElements(),
         ),
       ),
-      Container_ignoreElements({ keep: Observable_keep }),
+      Observable_ignoreElements(),
       Observable_subscribe(scheduler),
       Disposable_addTo(dest),
       Disposable_add(srcStream),

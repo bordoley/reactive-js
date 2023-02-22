@@ -1,4 +1,4 @@
-import { Empty, ForEach, FromIterable, FromReadonlyArray, FromSequence, Keep, Map, ReadonlyArrayLike, ToIterable, ToReadonlyArray, ToSequence } from "../containers.js";
+import { Empty, ForEach, FromIterable, FromReadonlyArray, FromSequence, Keep, KeepType, Map, ReadonlyArrayLike, ToIterable, ToReadonlyArray, ToSequence } from "../containers.js";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import { FromEnumerableObservable, FromRunnableObservable, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
@@ -12,6 +12,7 @@ export declare const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayLike>["fr
 export declare const fromRunnableObservable: FromRunnableObservable<ReadonlyArrayLike>["fromRunnableObservable"];
 export declare const fromSequence: FromSequence<ReadonlyArrayLike>["fromSequence"];
 export declare const keep: Keep<ReadonlyArrayLike>["keep"];
+export declare const keepType: KeepType<ReadonlyArrayLike>["keepType"];
 export declare const map: Map<ReadonlyArrayLike>["map"];
 export declare const some: <T>(predicate: import("../functions.js").Predicate<T>) => import("../functions.js").Function1<ReadonlyArrayLike<T>, boolean>;
 export declare const toAsyncEnumerable: ToAsyncEnumerable<ReadonlyArrayLike, {
@@ -74,7 +75,8 @@ declare const ReadonlyArray: {
     } | undefined) => import("../functions.js").Function1<readonly T_6[], ReadonlyArrayLike<T_6>>;
     fromSequence: <T_7>(options?: undefined) => import("../functions.js").Function1<import("../containers.js").SequenceLike<T_7>, ReadonlyArrayLike<T_7>>;
     keep: <T_8>(predicate: import("../functions.js").Predicate<T_8>, options?: undefined) => import("../containers.js").ContainerOperator<ReadonlyArrayLike<unknown>, T_8, T_8>;
-    map: <TA, TB>(mapper: import("../functions.js").Function1<TA, TB>, options?: undefined) => import("../containers.js").ContainerOperator<ReadonlyArrayLike<unknown>, TA, TB>;
+    keepType: <TA, TB extends TA>(predicate: import("../functions.js").TypePredicate<TA, TB>, options?: undefined) => import("../containers.js").ContainerOperator<ReadonlyArrayLike<unknown>, TA, TB>;
+    map: <TA_1, TB_1>(mapper: import("../functions.js").Function1<TA_1, TB_1>, options?: undefined) => import("../containers.js").ContainerOperator<ReadonlyArrayLike<unknown>, TA_1, TB_1>;
     some: <T_9>(predicate: import("../functions.js").Predicate<T_9>) => import("../functions.js").Function1<ReadonlyArrayLike<T_9>, boolean>;
     toAsyncEnumerable: <T_10>(options?: {
         readonly delay?: number | undefined;

@@ -8,7 +8,6 @@ Reactive-JS
 
 - [constants](modules/constants.md)
 - [containers](modules/containers.md)
-- [containers/Container](modules/containers_Container.md)
 - [containers/Iterable](modules/containers_Iterable.md)
 - [containers/Promiseable](modules/containers_Promiseable.md)
 - [containers/ReadonlyArray](modules/containers_ReadonlyArray.md)
