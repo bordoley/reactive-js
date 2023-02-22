@@ -1,5 +1,5 @@
-import { Keep, ReadonlyArrayLike } from "../../../containers";
-import { Predicate } from "../../../functions";
+import { Keep, ReadonlyArrayLike } from "../../../containers.js";
+import { Predicate } from "../../../functions.js";
 
 const ReadonlyArray_keep: Keep<ReadonlyArrayLike>["keep"] =
   <T>(predicate: Predicate<T>) =>

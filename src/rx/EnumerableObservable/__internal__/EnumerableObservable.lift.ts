@@ -1,16 +1,16 @@
 import {
   Lift,
   TReactive,
-} from "../../../containers/__internal__/containers.internal";
-import { Function1, newInstance, pipeUnsafe } from "../../../functions";
+} from "../../../containers/__internal__/containers.internal.js";
+import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
   EnumerableObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
   ReactiveContainerLike_sinkInto,
-} from "../../../rx";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
+} from "../../../rx.js";
+import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 
 const LiftedEnumerableObservable_source = Symbol(
   "LiftedEnumerableObservable_source",

@@ -3,19 +3,19 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { Map } from "../../../containers";
-import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { Function1, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Map } from "../../../containers.js";
+import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { Function1, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_mapMixin from "../../Sink/__internal__/Sink.mapMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_mapMixin from "../../Sink/__internal__/Sink.mapMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
   TA,

@@ -7,10 +7,10 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Function1, none, returns } from "../../../functions";
-import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
+} from "../../../__internal__/mixins.js";
+import { Function1, none, returns } from "../../../functions.js";
+import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 export const Sink_mapMixin: <TA, TB>() => Mixin2<
   SinkLike<TA>,

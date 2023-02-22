@@ -1,26 +1,26 @@
-import { Optional } from "../functions";
+import { Optional } from "../functions.js";
 import {
   DisposableLike,
   DisposableLike_error,
   DisposableLike_isDisposed,
-} from "../util";
+} from "../util.js";
 
-import Disposable_add from "./Disposable/__internal__/Disposable.add";
-import Disposable_addIgnoringChildErrors from "./Disposable/__internal__/Disposable.addIgnoringChildErrors";
-import Disposable_addTo from "./Disposable/__internal__/Disposable.addTo";
-import Disposable_addToIgnoringChildErrors from "./Disposable/__internal__/Disposable.addToIgnoringChildErrors";
-import Disposable_bindTo from "./Disposable/__internal__/Disposable.bindTo";
-import Disposable_create from "./Disposable/__internal__/Disposable.create";
-import Disposable_dispose from "./Disposable/__internal__/Disposable.dispose";
-import Disposable_disposed from "./Disposable/__internal__/Disposable.disposed";
-import Disposable_getError from "./Disposable/__internal__/Disposable.getError";
-import Disposable_isDisposed from "./Disposable/__internal__/Disposable.isDisposed";
-import Disposable_onComplete from "./Disposable/__internal__/Disposable.onComplete";
-import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDisposed";
-import Disposable_onError from "./Disposable/__internal__/Disposable.onError";
-import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbortSignal";
-import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler";
-import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObservable";
+import Disposable_add from "./Disposable/__internal__/Disposable.add.js";
+import Disposable_addIgnoringChildErrors from "./Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_addTo from "./Disposable/__internal__/Disposable.addTo.js";
+import Disposable_addToIgnoringChildErrors from "./Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
+import Disposable_bindTo from "./Disposable/__internal__/Disposable.bindTo.js";
+import Disposable_create from "./Disposable/__internal__/Disposable.create.js";
+import Disposable_dispose from "./Disposable/__internal__/Disposable.dispose.js";
+import Disposable_disposed from "./Disposable/__internal__/Disposable.disposed.js";
+import Disposable_getError from "./Disposable/__internal__/Disposable.getError.js";
+import Disposable_isDisposed from "./Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_onComplete from "./Disposable/__internal__/Disposable.onComplete.js";
+import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDisposed.js";
+import Disposable_onError from "./Disposable/__internal__/Disposable.onError.js";
+import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbortSignal.js";
+import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
+import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObservable.js";
 
 export const add = Disposable_add;
 

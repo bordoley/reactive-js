@@ -5,4 +5,4 @@ import { SchedulerLike } from "../../../scheduling.js";
 declare const AsyncEnumerator_create: <T>(op: ContainerOperator<ObservableLike<unknown>, void, T>, scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => AsyncEnumeratorLike<T>;
-export { AsyncEnumerator_create as default };
+export default AsyncEnumerator_create;

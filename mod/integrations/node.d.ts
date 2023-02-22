@@ -1,8 +1,8 @@
-import fs from 'fs';
-import { Readable, Writable, Transform } from 'stream';
-import { BrotliOptions, ZlibOptions } from 'zlib';
+import fs from "fs";
+import { Readable, Transform, Writable } from "stream";
+import { BrotliOptions, ZlibOptions } from "zlib";
 import { ContainerOperator } from "../containers.js";
-import { Factory, Updater, SideEffect1, SideEffect2, Function1, SideEffect3, Function2, SideEffect4, Function3, SideEffect5, Function4, SideEffect6, Function5 } from "../functions.js";
+import { Factory, Function1, Function2, Function3, Function4, Function5, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater } from "../functions.js";
 import { ObservableLike } from "../rx.js";
 import { PauseableState } from "../scheduling.js";
 import { FlowableLike, StreamableLike } from "../streaming.js";
@@ -20,21 +20,21 @@ interface BindNodeCallback {
     <A1, A2, A3, A4, A5, T>(callbackFunc: SideEffect6<A1, A2, A3, A4, A5, SideEffect2<unknown, T>>): Function5<A1, A2, A3, A4, A5, ObservableLike<T>>;
     <A1, A2, A3, A4, A5>(callbackFunc: SideEffect6<A1, A2, A3, A4, A5, SideEffect1<unknown>>): Function5<A1, A2, A3, A4, A5, ObservableLike<void>>;
 }
-declare const bindNodeCallback: BindNodeCallback;
-declare const createReadableSource: (factory: Factory<Readable> | Readable) => FlowableLike<Uint8Array>;
-declare const readFile: (path: fs.PathLike, options?: {
+export declare const bindNodeCallback: BindNodeCallback;
+export declare const createReadableSource: (factory: Factory<Readable> | Readable) => FlowableLike<Uint8Array>;
+export declare const readFile: (path: fs.PathLike, options?: {
     readonly flags?: string;
     readonly mode?: number;
     readonly start?: number;
     readonly end?: number;
     readonly highWaterMark?: number;
 }) => FlowableLike<Uint8Array>;
-declare const createWritableSink: (factory: Factory<Writable> | Writable) => StreamableLike<Uint8Array, Updater<PauseableState>>;
-declare const transform: (factory: Factory<Transform>) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
-declare const brotliDecompress: (options?: BrotliOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
-declare const gunzip: (options?: ZlibOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
-declare const inflate: (options?: ZlibOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
-declare const brotliCompress: (options?: BrotliOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
-declare const gzip: (options?: ZlibOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
-declare const deflate: (options?: ZlibOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
-export { bindNodeCallback, brotliCompress, brotliDecompress, createReadableSource, createWritableSink, deflate, gunzip, gzip, inflate, readFile, transform };
+export declare const createWritableSink: (factory: Factory<Writable> | Writable) => StreamableLike<Uint8Array, Updater<PauseableState>>;
+export declare const transform: (factory: Factory<Transform>) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
+export declare const brotliDecompress: (options?: BrotliOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
+export declare const gunzip: (options?: ZlibOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
+export declare const inflate: (options?: ZlibOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
+export declare const brotliCompress: (options?: BrotliOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
+export declare const gzip: (options?: ZlibOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
+export declare const deflate: (options?: ZlibOptions) => ContainerOperator<FlowableLike, Uint8Array, Uint8Array>;
+export {};

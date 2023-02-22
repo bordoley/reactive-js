@@ -7,7 +7,7 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
+} from "../../../__internal__/mixins.js";
 import {
   Function1,
   error,
@@ -15,14 +15,18 @@ import {
   none,
   pipe,
   returns,
-} from "../../../functions";
-import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
+} from "../../../functions.js";
+import {
+  ReactiveContainerLike,
+  SinkLike,
+  SinkLike_notify,
+} from "../../../rx.js";
+import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
+import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 
 const Sink_catchErrorMixin: <
   C extends ReactiveContainerLike<TSink>,

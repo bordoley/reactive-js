@@ -3,7 +3,7 @@ import {
   ContainerOf,
   ContainerOperator,
   Zip,
-} from "../../../containers";
+} from "../../../containers.js";
 
 export interface ZipWith {
   <C extends ContainerLike, TA, TB>(

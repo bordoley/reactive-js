@@ -1,3 +1,3 @@
-import { TakeUntil, ObservableLike } from "../../../rx.js";
+import { ObservableLike, TakeUntil } from "../../../rx.js";
 declare const Observable_takeUntil: TakeUntil<ObservableLike>["takeUntil"];
-export { Observable_takeUntil as default };
+export default Observable_takeUntil;

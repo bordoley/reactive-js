@@ -3,8 +3,8 @@ import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { Factory, Reducer, isSome, none } from "../../../functions";
+} from "../../../containers.js";
+import { Factory, Reducer, isSome, none } from "../../../functions.js";
 
 const Sequence_scan: Scan<SequenceLike>["scan"] = /*@__PURE__*/ (() => {
   const _scan =

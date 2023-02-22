@@ -1,4 +1,4 @@
-import { Optional, Factory, Function1, Function2, Function3, Function4 } from "../functions.js";
+import { Factory, Function1, Function2, Function3, Function4, Optional } from "../functions.js";
 declare const Object_init: unique symbol;
 declare const Object_properties: unique symbol;
 declare const Object_prototype: unique symbol;
@@ -6,29 +6,29 @@ declare const Object_private_initializedProperties: unique symbol;
 type OptionalProperties<T> = T extends object ? {
     [P in keyof T]: Optional<T[P]>;
 } : T;
-type Mutable<Type> = {
+export type Mutable<Type> = {
     -readonly [Key in keyof Type]: Type[Key];
 };
-type PartialMixin = {
+export type PartialMixin = {
     [Object_properties]: object;
     [Object_prototype]: object;
 };
-interface MixinAny<TReturn> extends PartialMixin {
+export interface MixinAny<TReturn> extends PartialMixin {
     [Object_init]: (instance: unknown, ...args: readonly any[]) => TReturn;
 }
-interface Mixin<TReturn> extends PartialMixin {
+export interface Mixin<TReturn> extends PartialMixin {
     [Object_init](instance: unknown): TReturn;
 }
-interface Mixin1<TReturn, TA> extends PartialMixin {
+export interface Mixin1<TReturn, TA> extends PartialMixin {
     [Object_init](instance: unknown, a: TA): TReturn;
 }
-interface Mixin2<TReturn, TA, TB> extends PartialMixin {
+export interface Mixin2<TReturn, TA, TB> extends PartialMixin {
     [Object_init](instance: unknown, a: TA, b: TB): TReturn;
 }
-interface Mixin3<TReturn, TA, TB, TC> extends PartialMixin {
+export interface Mixin3<TReturn, TA, TB, TC> extends PartialMixin {
     [Object_init](instance: unknown, a: TA, b: TB, c: TC): TReturn;
 }
-interface Mixin4<TReturn, TA, TB, TC, TD> extends PartialMixin {
+export interface Mixin4<TReturn, TA, TB, TC, TD> extends PartialMixin {
     [Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD): TReturn;
 }
 interface Init {
@@ -37,8 +37,8 @@ interface Init {
     <TReturn, TA, TB>(mixin: Mixin2<TReturn, TA, TB>, instance: unknown, a: TA, b: TB): asserts instance is TReturn;
     <TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>, instance: unknown, a: TA, b: TB, c: TC): asserts instance is TReturn;
 }
-declare const init: Init;
-declare const include: (m0: PartialMixin, ...tail: readonly PartialMixin[]) => PartialMixin;
+export declare const init: Init;
+export declare const include: (m0: PartialMixin, ...tail: readonly PartialMixin[]) => PartialMixin;
 interface CreateMixin {
     <TInit extends (instance: TPrototype & Mutable<TProperties>, ...args: readonly any[]) => unknown, TProperties extends {
         [Object_private_initializedProperties]?: true;
@@ -54,7 +54,7 @@ interface CreateMixin {
         [Object_init]: TInit;
     };
 }
-declare const mix: CreateMixin;
+export declare const mix: CreateMixin;
 interface CreateInstanceFactory {
     <TReturn>(mixin: Mixin<TReturn>): Factory<TReturn>;
     <TReturn, TA>(mixin: Mixin1<TReturn, TA>): Function1<TA, TReturn>;
@@ -62,13 +62,13 @@ interface CreateInstanceFactory {
     <TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>): Function3<TA, TB, TC, TReturn>;
     <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>): Function4<TA, TB, TC, TD, TReturn>;
 }
-declare const createInstanceFactory: CreateInstanceFactory;
-declare const props: <TProperties>(o: OptionalProperties<TProperties>) => TProperties & {
+export declare const createInstanceFactory: CreateInstanceFactory;
+export declare const props: <TProperties>(o: OptionalProperties<TProperties>) => TProperties & {
     [Object_private_initializedProperties]?: true | undefined;
 };
-declare const DelegatingLike_delegate: unique symbol;
-interface DelegatingLike<T> {
+export declare const DelegatingLike_delegate: unique symbol;
+export interface DelegatingLike<T> {
     readonly [DelegatingLike_delegate]: T;
 }
-declare const delegatingMixin: <TDelegate>() => Mixin1<DelegatingLike<TDelegate>, TDelegate>;
-export { DelegatingLike, DelegatingLike_delegate, Mixin, Mixin1, Mixin2, Mixin3, Mixin4, MixinAny, Mutable, PartialMixin, createInstanceFactory, delegatingMixin, include, init, mix, props };
+export declare const delegatingMixin: <TDelegate>() => Mixin1<DelegatingLike<TDelegate>, TDelegate>;
+export {};

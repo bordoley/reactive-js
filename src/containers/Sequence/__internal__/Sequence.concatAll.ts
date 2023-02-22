@@ -3,8 +3,8 @@ import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { Optional, isSome, none } from "../../../functions";
+} from "../../../containers.js";
+import { Optional, isSome, none } from "../../../functions.js";
 
 const Sequence_concatAll: ConcatAll<SequenceLike>["concatAll"] =
   <T>() =>

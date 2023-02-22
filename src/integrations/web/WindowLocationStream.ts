@@ -1,11 +1,11 @@
-import { Function1, Updater } from "../../functions";
-import { DispatcherLike_dispatch } from "../../scheduling";
+import { Function1, Updater } from "../../functions.js";
+import { DispatcherLike_dispatch } from "../../scheduling.js";
 import {
   WindowLocationStreamLike,
   WindowLocationStreamLike_canGoBack,
   WindowLocationStreamLike_goBack,
   WindowLocationURI,
-} from "../web";
+} from "../web.js";
 
 export const canGoBack = (stream: WindowLocationStreamLike): boolean =>
   stream[WindowLocationStreamLike_canGoBack];

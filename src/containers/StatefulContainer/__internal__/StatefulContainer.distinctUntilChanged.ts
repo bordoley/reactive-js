@@ -1,19 +1,19 @@
-import { StatefulContainerLike } from "../../../containers";
+import { StatefulContainerLike } from "../../../containers.js";
 import {
   Equality,
   Function2,
   partial,
   pipe,
   strictEquality,
-} from "../../../functions";
+} from "../../../functions.js";
 import {
   Lift,
   StatefulContainerOperatorIn,
   StatefulContainerOperatorOut,
   TInteractive,
   TReactive,
-} from "../../__internal__/containers.internal";
-import StatefulContainer_lift from "./StatefulContainer.lift";
+} from "../../__internal__/containers.internal.js";
+import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_distinctUntilChanged =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(

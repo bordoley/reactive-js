@@ -1,9 +1,9 @@
-import { pipe, pipeLazy } from "../../../functions";
-import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create";
-import Observer_schedule from "../../Observer/__internal__/Observer.schedule";
-import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create";
+import { pipe, pipeLazy } from "../../../functions.js";
+import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create.js";
+import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
+import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create.js";
 
 const Observable_empty = <T>(options?: { delay: number }) =>
   hasDelay(options)

@@ -1,4 +1,4 @@
-import { Optional, SideEffect1 } from "./functions";
+import { Optional, SideEffect1 } from "./functions.js";
 /** @ignore */
 export const DisposableLike_add = Symbol("DisposableLike_add");
 

@@ -1,14 +1,14 @@
-import { none, pipe } from "../../../functions";
-import { AsyncEnumerableLike } from "../../../ix";
-import { ToObservable } from "../../../rx";
-import Observable_create from "../../../rx/Observable/__internal__/Observable.create";
-import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach";
-import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe";
-import Observer_getScheduler from "../../../rx/Observer/__internal__/Observer.getScheduler";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
-import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch";
-import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
+import { none, pipe } from "../../../functions.js";
+import { AsyncEnumerableLike } from "../../../ix.js";
+import { ToObservable } from "../../../rx.js";
+import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
+import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
+import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
+import Observer_getScheduler from "../../../rx/Observer/__internal__/Observer.getScheduler.js";
+import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
+import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
   () => enumerable =>

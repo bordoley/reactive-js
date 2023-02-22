@@ -1,11 +1,11 @@
-import { IterableLike } from "../../containers";
-import Iterable from "../../containers/Iterable";
+import { IterableLike } from "../../containers.js";
+import Iterable from "../../containers/Iterable.js";
 import {
   toEnumerableObservableTests,
   toEnumerableTests,
   toRunnableObservableTests,
-} from "../operators";
-import { testModule } from "../testing";
+} from "../operators.js";
+import { testModule } from "../testing.js";
 
 testModule(
   "Iterable",

@@ -1,3 +1,3 @@
-import { ScanAsync, EnumerableObservableLike } from "../../../rx.js";
+import { EnumerableObservableLike, ScanAsync } from "../../../rx.js";
 declare const EnumerableObservable_scanAsync: ScanAsync<EnumerableObservableLike, EnumerableObservableLike>["scanAsync"];
-export { EnumerableObservable_scanAsync as default };
+export default EnumerableObservable_scanAsync;

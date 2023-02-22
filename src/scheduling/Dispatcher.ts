@@ -1,13 +1,13 @@
-import { SideEffect1, Updater } from "../functions";
+import { SideEffect1, Updater } from "../functions.js";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
-} from "../scheduling";
+} from "../scheduling.js";
 
-import Dispatcher_dispatch from "./Dispatcher/__internal__/Dispatcher.dispatch";
-import Dispatcher_dispatchTo from "./Dispatcher/__internal__/Dispatcher.dispatchTo";
-import Dispatcher_getScheduler from "./Dispatcher/__internal__/Dispatcher.getScheduler";
+import Dispatcher_dispatch from "./Dispatcher/__internal__/Dispatcher.dispatch.js";
+import Dispatcher_dispatchTo from "./Dispatcher/__internal__/Dispatcher.dispatchTo.js";
+import Dispatcher_getScheduler from "./Dispatcher/__internal__/Dispatcher.getScheduler.js";
 
 export const dispatch: <
   T,

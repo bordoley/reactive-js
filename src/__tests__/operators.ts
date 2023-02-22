@@ -25,9 +25,9 @@ import {
   ThrowIfEmpty,
   ToReadonlyArray,
   Zip,
-} from "../containers";
-import Container from "../containers/Container";
-import ReadonlyArray from "../containers/ReadonlyArray";
+} from "../containers.js";
+import Container from "../containers/Container.js";
+import ReadonlyArray from "../containers/ReadonlyArray.js";
 import {
   alwaysFalse,
   alwaysTrue,
@@ -38,9 +38,9 @@ import {
   pipeLazy,
   returns,
   sum,
-} from "../functions";
-import { ToEnumerable } from "../ix";
-import Enumerable from "../ix/Enumerable";
+} from "../functions.js";
+import { ToEnumerable } from "../ix.js";
+import Enumerable from "../ix/Enumerable.js";
 import {
   ObservableLike,
   Retry,
@@ -48,13 +48,13 @@ import {
   ToEnumerableObservable,
   ToObservable,
   ToRunnableObservable,
-} from "../rx";
-import EnumerableObservable from "../rx/EnumerableObservable";
-import Observable from "../rx/Observable";
-import RunnableObservable from "../rx/RunnableObservable";
-import { __now } from "../scheduling/Continuation";
-import Scheduler from "../scheduling/Scheduler";
-import Disposable from "../util/Disposable";
+} from "../rx.js";
+import EnumerableObservable from "../rx/EnumerableObservable.js";
+import Observable from "../rx/Observable.js";
+import RunnableObservable from "../rx/RunnableObservable.js";
+import { __now } from "../scheduling/Continuation.js";
+import Scheduler from "../scheduling/Scheduler.js";
+import Disposable from "../util/Disposable.js";
 import {
   describe,
   expectArrayEquals,
@@ -62,7 +62,7 @@ import {
   expectToThrowError,
   test,
   testAsync,
-} from "./testing";
+} from "./testing.js";
 
 export const bufferTests = <C extends ContainerLike>(
   m: Buffer<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,

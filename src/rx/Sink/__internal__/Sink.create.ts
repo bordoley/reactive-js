@@ -3,10 +3,10 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { SinkLike, SinkLike_notify } from "../../../rx";
+} from "../../../__internal__/mixins.js";
+import { SinkLike, SinkLike_notify } from "../../../rx.js";
 
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
 const Sink_create: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(

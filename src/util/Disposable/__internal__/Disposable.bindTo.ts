@@ -1,6 +1,6 @@
-import { Updater } from "../../../functions";
-import { DisposableLike } from "../../../util";
-import addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown";
+import { Updater } from "../../../functions.js";
+import { DisposableLike } from "../../../util.js";
+import addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown.js";
 
 const Disposable_bindTo =
   <T extends DisposableLike>(child: DisposableLike): Updater<T> =>

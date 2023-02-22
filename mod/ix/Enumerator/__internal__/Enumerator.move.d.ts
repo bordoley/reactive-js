@@ -4,4 +4,4 @@ declare const Enumerator_move: <T>(enumerator: {
     [EnumeratorLike_hasCurrent]: boolean;
     [SourceLike_move]: () => void;
 }) => boolean;
-export { Enumerator_move as default };
+export default Enumerator_move;

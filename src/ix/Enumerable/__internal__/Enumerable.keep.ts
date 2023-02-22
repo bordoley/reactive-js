@@ -7,22 +7,22 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Keep } from "../../../containers";
-import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep";
-import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { Predicate, error, none, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Keep } from "../../../containers.js";
+import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
+import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
+import { Predicate, error, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
-} from "../../../ix";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin";
-import Enumerable_liftT from "./Enumerable.liftT";
+} from "../../../ix.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin.js";
+import Enumerable_liftT from "./Enumerable.liftT.js";
 
 const Enumerable_keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();

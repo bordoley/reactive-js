@@ -8,14 +8,18 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { isEmpty, newInstance, none, pipe } from "../../../functions";
-import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
+} from "../../../__internal__/mixins.js";
+import { isEmpty, newInstance, none, pipe } from "../../../functions.js";
+import {
+  ReactiveContainerLike,
+  SinkLike,
+  SinkLike_notify,
+} from "../../../rx.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 
 const Sink_decodeWithCharsetMixin: <
   C extends ReactiveContainerLike<TSink>,

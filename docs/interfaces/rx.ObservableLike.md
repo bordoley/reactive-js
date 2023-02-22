@@ -18,9 +18,9 @@ The source of notifications which notifies a `ObserverLike` instance.
 
   ↳ **`ObservableLike`**
 
-  ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
-
   ↳↳ [`RunnableObservableLike`](rx.RunnableObservableLike.md)
+
+  ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
 ## Table of contents
 
@@ -39,7 +39,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 #### Overrides
 
-ReactiveContainerLike.\_\_@ContainerLike\_type@23198
+ReactiveContainerLike.\_\_@ContainerLike\_type@23102
 
 ___
 
@@ -61,4 +61,4 @@ ___
 
 #### Overrides
 
-ReactiveContainerLike.\_\_@StatefulContainerLike\_state@23222
+ReactiveContainerLike.\_\_@StatefulContainerLike\_state@23126

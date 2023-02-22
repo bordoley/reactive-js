@@ -6,11 +6,11 @@ import {
   ContainerOf,
   StatefulContainerLike,
   StatefulContainerLike_state,
-} from "./containers";
-import { Function1 } from "./functions";
-import { SchedulerLike } from "./scheduling";
-import { StreamLike, StreamableLike } from "./streaming";
-import { DisposableLike } from "./util";
+} from "./containers.js";
+import { Function1 } from "./functions.js";
+import { SchedulerLike } from "./scheduling.js";
+import { StreamLike, StreamableLike } from "./streaming.js";
+import { DisposableLike } from "./util.js";
 
 /** @ignore */
 export const SourceLike_move = Symbol("SourceLike_move");

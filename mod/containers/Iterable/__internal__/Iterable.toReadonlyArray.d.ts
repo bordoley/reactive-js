@@ -1,3 +1,3 @@
-import { ToReadonlyArray, IterableLike } from "../../../containers.js";
+import { IterableLike, ToReadonlyArray } from "../../../containers.js";
 declare const Iterable_toReadonlyArray: ToReadonlyArray<IterableLike>["toReadonlyArray"];
-export { Iterable_toReadonlyArray as default };
+export default Iterable_toReadonlyArray;

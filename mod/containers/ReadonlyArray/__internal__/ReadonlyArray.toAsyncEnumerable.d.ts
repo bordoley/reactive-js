@@ -6,4 +6,4 @@ declare const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<ReadonlyArrayLi
     readonly start?: number;
     readonly count?: number;
 }>["toAsyncEnumerable"];
-export { ReadonlyArray_toAsyncEnumerable as default };
+export default ReadonlyArray_toAsyncEnumerable;

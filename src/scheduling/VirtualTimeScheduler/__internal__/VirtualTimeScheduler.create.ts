@@ -5,18 +5,18 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { MAX_SAFE_INTEGER } from "../../../constants";
-import { isSome, none, pipe, unsafeCast } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { MAX_SAFE_INTEGER } from "../../../constants.js";
+import { isSome, none, pipe, unsafeCast } from "../../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   SourceLike_move,
-} from "../../../ix";
-import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent";
-import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move";
-import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
-import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
+} from "../../../ix.js";
+import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
+import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal.js";
 import {
   ContinuationLike,
   ContinuationLike_run,
@@ -26,18 +26,18 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   VirtualTimeSchedulerLike,
-} from "../../../scheduling";
-import { DisposableLike } from "../../../util";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Queue_create from "../../../util/__internal__/Queue/Queue.create";
-import Queue_pop from "../../../util/__internal__/Queue/Queue.pop";
-import Queue_push from "../../../util/__internal__/Queue/Queue.push";
-import { QueueLike } from "../../../util/__internal__/util.internal";
-import getCurrentTime from "../../Scheduler/__internal__/Scheduler.getCurrentTime";
-import { getDelay } from "../../__internal__/Scheduler.options";
+} from "../../../scheduling.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Queue_create from "../../../util/__internal__/Queue/Queue.create.js";
+import Queue_pop from "../../../util/__internal__/Queue/Queue.pop.js";
+import Queue_push from "../../../util/__internal__/Queue/Queue.push.js";
+import { QueueLike } from "../../../util/__internal__/util.internal.js";
+import getCurrentTime from "../../Scheduler/__internal__/Scheduler.getCurrentTime.js";
+import { getDelay } from "../../__internal__/Scheduler.options.js";
 
 const VirtualTask_continuation = Symbol("VirtualTask_continuation");
 const VirtualTask_dueTime = Symbol("VirtualTask_dueTime");

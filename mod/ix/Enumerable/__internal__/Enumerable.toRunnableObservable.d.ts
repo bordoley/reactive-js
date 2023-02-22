@@ -4,4 +4,4 @@ declare const Enumerable_toRunnableObservable: ToRunnableObservable<EnumerableLi
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["toRunnableObservable"];
-export { Enumerable_toRunnableObservable as default };
+export default Enumerable_toRunnableObservable;

@@ -1,8 +1,8 @@
-import { Factory } from "../../../functions";
-import { RunnableLike } from "../../../rx";
-import { DisposableOrTeardown } from "../../../util";
-import ReactiveContainer_onSink from "../../ReactiveContainer/__internal__/ReactiveContainer.onSink";
-import Runnable_create from "./Runnable.create";
+import { Factory } from "../../../functions.js";
+import { RunnableLike } from "../../../rx.js";
+import { DisposableOrTeardown } from "../../../util.js";
+import ReactiveContainer_onSink from "../../ReactiveContainer/__internal__/ReactiveContainer.onSink.js";
+import Runnable_create from "./Runnable.create.js";
 
 const Runnable_onRun =
   <T>(f: Factory<DisposableOrTeardown | void>) =>

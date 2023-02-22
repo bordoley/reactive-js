@@ -7,26 +7,26 @@ import {
   Map,
   Scan,
   TakeWhile,
-} from "../containers";
-import Iterable_toAsyncEnumerable from "../containers/Iterable/__internal__/Iterable.toAsyncEnumerable";
-import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable";
-import Sequence_toAsyncEnumerable from "../containers/Sequence/__internal__/Sequence.toAsyncEnumerable";
-import { AsyncEnumerableLike, FromEnumerable } from "../ix";
+} from "../containers.js";
+import Iterable_toAsyncEnumerable from "../containers/Iterable/__internal__/Iterable.toAsyncEnumerable.js";
+import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
+import Sequence_toAsyncEnumerable from "../containers/Sequence/__internal__/Sequence.toAsyncEnumerable.js";
+import { AsyncEnumerableLike, FromEnumerable } from "../ix.js";
 import {
   FromEnumerableObservable,
   ObservableLike,
   ScanAsync,
   ToObservable,
-} from "../rx";
-import EnumerableObservable_toAsyncEnumerable from "../rx/EnumerableObservable/__internal__/EnumerableObservable.toAsyncEnumerable";
-import AsyncEnumerable_generate from "./AsyncEnumerable/__internal__/AsyncEnumerable.generate";
-import AsyncEnumerable_keep from "./AsyncEnumerable/__internal__/AsyncEnumerable.keep";
-import AsyncEnumerable_map from "./AsyncEnumerable/__internal__/AsyncEnumerable.map";
-import AsyncEnumerable_scan from "./AsyncEnumerable/__internal__/AsyncEnumerable.scan";
-import AsyncEnumerable_scanAsync from "./AsyncEnumerable/__internal__/AsyncEnumerable.scanAsync";
-import AsyncEnumerable_takeWhile from "./AsyncEnumerable/__internal__/AsyncEnumerable.takeWhile";
-import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toObservable";
-import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable";
+} from "../rx.js";
+import EnumerableObservable_toAsyncEnumerable from "../rx/EnumerableObservable/__internal__/EnumerableObservable.toAsyncEnumerable.js";
+import AsyncEnumerable_generate from "./AsyncEnumerable/__internal__/AsyncEnumerable.generate.js";
+import AsyncEnumerable_keep from "./AsyncEnumerable/__internal__/AsyncEnumerable.keep.js";
+import AsyncEnumerable_map from "./AsyncEnumerable/__internal__/AsyncEnumerable.map.js";
+import AsyncEnumerable_scan from "./AsyncEnumerable/__internal__/AsyncEnumerable.scan.js";
+import AsyncEnumerable_scanAsync from "./AsyncEnumerable/__internal__/AsyncEnumerable.scanAsync.js";
+import AsyncEnumerable_takeWhile from "./AsyncEnumerable/__internal__/AsyncEnumerable.takeWhile.js";
+import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
+import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 
 export const fromEnumerable: FromEnumerable<AsyncEnumerableLike>["fromEnumerable"] =
   Enumerable_toAsyncEnumerable;

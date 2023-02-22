@@ -1,16 +1,14 @@
-import { Function1, SideEffect1 } from "../functions.js";
-import { SubjectLike } from "../rx.js";
-declare const create: <T>(options?: {
+export declare const create: <T>(options?: {
     replay?: number | undefined;
-} | undefined) => SubjectLike<T>;
-declare const publish: <T>(v: T) => Function1<SubjectLike<T>, SubjectLike<T>>;
-declare const publishTo: <T>(subject: SubjectLike<T>) => SideEffect1<T>;
+} | undefined) => import("../rx.js").SubjectLike<T>;
+export declare const publish: <T>(v: T) => import("../functions.js").Function1<import("../rx.js").SubjectLike<T>, import("../rx.js").SubjectLike<T>>;
+export declare const publishTo: <T>(subject: import("../rx.js").SubjectLike<T>) => import("../functions.js").SideEffect1<T>;
 /** @ignore */
 declare const Subject: {
     create: <T>(options?: {
         replay?: number | undefined;
-    } | undefined) => SubjectLike<T>;
-    publish: <T_1>(v: T_1) => Function1<SubjectLike<T_1>, SubjectLike<T_1>>;
-    publishTo: <T_2>(subject: SubjectLike<T_2>) => SideEffect1<T_2>;
+    } | undefined) => import("../rx.js").SubjectLike<T>;
+    publish: <T_1>(v: T_1) => import("../functions.js").Function1<import("../rx.js").SubjectLike<T_1>, import("../rx.js").SubjectLike<T_1>>;
+    publishTo: <T_2>(subject: import("../rx.js").SubjectLike<T_2>) => import("../functions.js").SideEffect1<T_2>;
 };
-export { create, Subject as default, publish, publishTo };
+export default Subject;

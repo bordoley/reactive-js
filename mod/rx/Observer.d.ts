@@ -1,18 +1,14 @@
-import { DisposableLike } from "../util.js";
-import { SideEffect, Function1 } from "../functions.js";
-import { DispatcherLike, SchedulerLike } from "../scheduling.js";
-import { ObserverLike } from "../rx.js";
-declare const getDispatcher: <T>(observer: ObserverLike<T>) => DispatcherLike<T>;
-declare const getScheduler: <T>(observer: ObserverLike<T>) => SchedulerLike;
-declare const schedule: (f: SideEffect, options?: {
+export declare const getDispatcher: <T>(observer: import("../rx.js").ObserverLike<T>) => import("../scheduling.js").DispatcherLike<T>;
+export declare const getScheduler: <T>(observer: import("../rx.js").ObserverLike<T>) => import("../scheduling.js").SchedulerLike;
+export declare const schedule: (f: import("../functions.js").SideEffect, options?: {
     readonly delay?: number | undefined;
-} | undefined) => Function1<ObserverLike<unknown>, DisposableLike>;
+} | undefined) => import("../functions.js").Function1<import("../rx.js").ObserverLike<unknown>, import("../util.js").DisposableLike>;
 /** @ignore */
 declare const Observer: {
-    getDispatcher: <T>(observer: ObserverLike<T>) => DispatcherLike<T>;
-    getScheduler: <T_1>(observer: ObserverLike<T_1>) => SchedulerLike;
-    schedule: (f: SideEffect, options?: {
+    getDispatcher: <T>(observer: import("../rx.js").ObserverLike<T>) => import("../scheduling.js").DispatcherLike<T>;
+    getScheduler: <T_1>(observer: import("../rx.js").ObserverLike<T_1>) => import("../scheduling.js").SchedulerLike;
+    schedule: (f: import("../functions.js").SideEffect, options?: {
         readonly delay?: number | undefined;
-    } | undefined) => Function1<ObserverLike<unknown>, DisposableLike>;
+    } | undefined) => import("../functions.js").Function1<import("../rx.js").ObserverLike<unknown>, import("../util.js").DisposableLike>;
 };
-export { Observer as default, getDispatcher, getScheduler, schedule };
+export default Observer;

@@ -1,3 +1,3 @@
-import { ContainerLike, Concat, FromReadonlyArray, ContainerOperator } from "../../../containers.js";
+import { Concat, ContainerLike, ContainerOperator, FromReadonlyArray } from "../../../containers.js";
 declare const Container_startWith: <C extends ContainerLike, T>(m: Concat<C> & FromReadonlyArray<C>, value: T, ...values: readonly T[]) => ContainerOperator<C, T, T>;
-export { Container_startWith as default };
+export default Container_startWith;

@@ -4,4 +4,4 @@ declare const ReadonlyArray_toContainer: <C extends ContainerLike, O extends unk
     readonly start?: number | undefined;
     readonly count?: number | undefined;
 }) | undefined) => Function1<ReadonlyArrayLike<T_1>, ContainerOf<C, T_1>>;
-export { ReadonlyArray_toContainer as default };
+export default ReadonlyArray_toContainer;

@@ -1,17 +1,17 @@
-import { ContainerOperator } from "../../../containers";
-import Container_concatWith from "../../../containers/Container/__internal__/Container.concatWith";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
-import { Updater, composeUnsafe, pipe, returns } from "../../../functions";
-import { ObservableLike } from "../../../rx";
-import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged";
-import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge";
-import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan";
-import { PauseableState, PauseableState_paused } from "../../../scheduling";
-import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch";
-import { FlowableLike, FlowableStreamLike } from "../../../streaming";
+import { ContainerOperator } from "../../../containers.js";
+import Container_concatWith from "../../../containers/Container/__internal__/Container.concatWith.js";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import { Updater, composeUnsafe, pipe, returns } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
+import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
+import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
+import { PauseableState, PauseableState_paused } from "../../../scheduling.js";
+import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
+import { FlowableLike, FlowableStreamLike } from "../../../streaming.js";
 
-import Stream_create from "../../Stream/__internal__/Stream.create";
-import Streamable_create from "../../Streamable/__internal__/Streamable.create";
+import Stream_create from "../../Stream/__internal__/Stream.create.js";
+import Streamable_create from "../../Streamable/__internal__/Streamable.create.js";
 
 interface CreateLiftedFlowable {
   <A>(

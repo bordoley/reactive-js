@@ -3,10 +3,10 @@ import {
   ContainerOf,
   FromReadonlyArray,
   Map,
-} from "../../../containers";
-import { Factory, error, raise } from "../../../functions";
+} from "../../../containers.js";
+import { Factory, error, raise } from "../../../functions.js";
 
-import Container_compute from "./Container.compute";
+import Container_compute from "./Container.compute.js";
 
 const Container_throws = <C extends ContainerLike, T, O = unknown>(
   m: Map<C> & FromReadonlyArray<C, O>,

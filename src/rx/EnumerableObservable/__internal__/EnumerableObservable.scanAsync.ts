@@ -1,6 +1,6 @@
-import { EnumerableObservableLike, ScanAsync } from "../../../rx";
-import HigherOrderObservable_scanAsync from "../../__internal__/HigherOrderObservable/HigherOrderObservable.scanAsync";
-import EnumerableObservable_create from "./EnumerableObservable.create";
+import { EnumerableObservableLike, ScanAsync } from "../../../rx.js";
+import HigherOrderObservable_scanAsync from "../../__internal__/HigherOrderObservable/HigherOrderObservable.scanAsync.js";
+import EnumerableObservable_create from "./EnumerableObservable.create.js";
 
 const EnumerableObservable_scanAsync: ScanAsync<
   EnumerableObservableLike,

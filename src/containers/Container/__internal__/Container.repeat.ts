@@ -1,5 +1,5 @@
-import { ContainerLike, ContainerOf } from "../../../containers";
-import { Predicate, alwaysTrue, isNone, isNumber } from "../../../functions";
+import { ContainerLike, ContainerOf } from "../../../containers.js";
+import { Predicate, alwaysTrue, isNone, isNumber } from "../../../functions.js";
 
 const Container_repeat =
   <C extends ContainerLike, T>(

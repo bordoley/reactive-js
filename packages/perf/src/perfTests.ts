@@ -1,4 +1,4 @@
-import { benchmarkTest, benchmarkGroup } from "./benchmark";
+import { benchmarkTest, benchmarkGroup } from "./benchmark.js";
 import {
   pipeLazy,
   isEven,
@@ -16,8 +16,6 @@ import {
   Scan,
   ToReadonlyArray,
 } from "@reactive-js/core/containers";
-import * as _x from "@reactive-js/core/__internal__/mixins"
-
 import * as Enumerable from "@reactive-js/core/ix/Enumerable";
 import * as RunnableObservable from "@reactive-js/core/rx/RunnableObservable";
 import * as ReadonlyArray from "@reactive-js/core/containers/ReadonlyArray";
@@ -41,7 +39,12 @@ const createMapPerfTest = <C extends ContainerLike>(
   benchmarkTest(
     name,
     async (src: readonly number[]) =>
-      pipeLazy(src, m.fromReadonlyArray(), m.map(increment), m.toReadonlyArray()),
+      pipeLazy(
+        src,
+        m.fromReadonlyArray(),
+        m.map(increment),
+        m.toReadonlyArray(),
+      ),
     callWith(),
   );
 
@@ -151,8 +154,8 @@ export const filterMapReduce = (n: number) =>
       "most",
       async src => {
         const { map, filter } = await import("@most/core");
-        const { reduce } = await import("./most/reduce");
-        const { fromArray } = await import("./most/fromArray");
+        const { reduce } = await import("./most/reduce.js");
+        const { fromArray } = await import("./most/fromArray.js");
 
         return () =>
           reduce(sum, 0, map(increment, filter(isEven, fromArray(src))));
@@ -191,8 +194,8 @@ export const scanReduce = (n: number) =>
       "most",
       async src => {
         const { scan } = await import("@most/core");
-        const { reduce } = await import("./most/reduce");
-        const { fromArray } = await import("./most/fromArray");
+        const { reduce } = await import("./most/reduce.js");
+        const { fromArray } = await import("./most/fromArray.js");
 
         return () =>
           reduce<number, number>(passthrough, 0, scan(sum, 0, fromArray(src)));

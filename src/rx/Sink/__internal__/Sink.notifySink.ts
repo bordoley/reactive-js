@@ -1,5 +1,5 @@
-import { SideEffect1 } from "../../../functions";
-import { SinkLike, SinkLike_notify } from "../../../rx";
+import { SideEffect1 } from "../../../functions.js";
+import { SinkLike, SinkLike_notify } from "../../../rx.js";
 
 const Sink_notifySink =
   <TSink extends SinkLike<T>, T>(sink: TSink): SideEffect1<T> =>

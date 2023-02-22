@@ -1,5 +1,5 @@
-import * as Benchmark from "benchmark";
-import { BenchmarkGroup } from "./benchmark";
+import Benchmark from "benchmark";
+import { BenchmarkGroup } from "./benchmark.js";
 
 const padl = (n: number, s: string) => {
   while (s.length < n) {

@@ -25,49 +25,49 @@ import {
   TakeWhile,
   ThrowIfEmpty,
   ToReadonlyArray,
-} from "../containers";
-import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.toRunnable";
-import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable";
-import { identity, returns } from "../functions";
-import { FromEnumerable } from "../ix";
-import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable";
+} from "../containers.js";
+import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.toRunnable.js";
+import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import { identity, returns } from "../functions.js";
+import { FromEnumerable } from "../ix.js";
+import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
 import {
   FromEnumerableObservable,
   FromRunnableObservable,
   RunnableLike,
   ToRunnable,
-} from "../rx";
-import Runnable_buffer from "./Runnable/__internal__/Runnable.buffer";
-import Runnable_catchError from "./Runnable/__internal__/Runnable.catchError";
-import Runnable_concat from "./Runnable/__internal__/Runnable.concat";
-import Runnable_concatAll from "./Runnable/__internal__/Runnable.concatAll";
-import Runnable_create from "./Runnable/__internal__/Runnable.create";
-import Runnable_decodeWithCharset from "./Runnable/__internal__/Runnable.decodeWithCharset";
-import Runnable_defer from "./Runnable/__internal__/Runnable.defer";
-import Runnable_distinctUntilChanged from "./Runnable/__internal__/Runnable.distinctUntilChanged";
-import Runnable_empty from "./Runnable/__internal__/Runnable.empty";
-import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy";
-import Runnable_first from "./Runnable/__internal__/Runnable.first";
-import Runnable_forEach from "./Runnable/__internal__/Runnable.forEach";
-import Runnable_generate from "./Runnable/__internal__/Runnable.generate";
-import Runnable_keep from "./Runnable/__internal__/Runnable.keep";
-import Runnable_last from "./Runnable/__internal__/Runnable.last";
-import Runnable_map from "./Runnable/__internal__/Runnable.map";
-import Runnable_never from "./Runnable/__internal__/Runnable.never";
-import Runnable_onRun from "./Runnable/__internal__/Runnable.onRun";
-import Runnable_pairwise from "./Runnable/__internal__/Runnable.pairwise";
-import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce";
-import Runnable_repeat from "./Runnable/__internal__/Runnable.repeat";
-import Runnable_run from "./Runnable/__internal__/Runnable.run";
-import Runnable_scan from "./Runnable/__internal__/Runnable.scan";
-import Runnable_skipFirst from "./Runnable/__internal__/Runnable.skipFirst";
-import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy";
-import Runnable_takeFirst from "./Runnable/__internal__/Runnable.takeFirst";
-import Runnable_takeLast from "./Runnable/__internal__/Runnable.takeLast";
-import Runnable_takeWhile from "./Runnable/__internal__/Runnable.takeWhile";
-import Runnable_throwIfEmpty from "./Runnable/__internal__/Runnable.throwIfEmpty";
-import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray";
-import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable";
+} from "../rx.js";
+import Runnable_buffer from "./Runnable/__internal__/Runnable.buffer.js";
+import Runnable_catchError from "./Runnable/__internal__/Runnable.catchError.js";
+import Runnable_concat from "./Runnable/__internal__/Runnable.concat.js";
+import Runnable_concatAll from "./Runnable/__internal__/Runnable.concatAll.js";
+import Runnable_create from "./Runnable/__internal__/Runnable.create.js";
+import Runnable_decodeWithCharset from "./Runnable/__internal__/Runnable.decodeWithCharset.js";
+import Runnable_defer from "./Runnable/__internal__/Runnable.defer.js";
+import Runnable_distinctUntilChanged from "./Runnable/__internal__/Runnable.distinctUntilChanged.js";
+import Runnable_empty from "./Runnable/__internal__/Runnable.empty.js";
+import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
+import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
+import Runnable_forEach from "./Runnable/__internal__/Runnable.forEach.js";
+import Runnable_generate from "./Runnable/__internal__/Runnable.generate.js";
+import Runnable_keep from "./Runnable/__internal__/Runnable.keep.js";
+import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
+import Runnable_map from "./Runnable/__internal__/Runnable.map.js";
+import Runnable_never from "./Runnable/__internal__/Runnable.never.js";
+import Runnable_onRun from "./Runnable/__internal__/Runnable.onRun.js";
+import Runnable_pairwise from "./Runnable/__internal__/Runnable.pairwise.js";
+import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
+import Runnable_repeat from "./Runnable/__internal__/Runnable.repeat.js";
+import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
+import Runnable_scan from "./Runnable/__internal__/Runnable.scan.js";
+import Runnable_skipFirst from "./Runnable/__internal__/Runnable.skipFirst.js";
+import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
+import Runnable_takeFirst from "./Runnable/__internal__/Runnable.takeFirst.js";
+import Runnable_takeLast from "./Runnable/__internal__/Runnable.takeLast.js";
+import Runnable_takeWhile from "./Runnable/__internal__/Runnable.takeWhile.js";
+import Runnable_throwIfEmpty from "./Runnable/__internal__/Runnable.throwIfEmpty.js";
+import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
+import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable.js";
 
 export const buffer: Buffer<RunnableLike>["buffer"] = Runnable_buffer;
 

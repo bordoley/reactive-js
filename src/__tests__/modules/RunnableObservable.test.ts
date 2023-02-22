@@ -1,5 +1,5 @@
-import Container from "../../containers/Container";
-import ReadonlyArray from "../../containers/ReadonlyArray";
+import Container from "../../containers/Container.js";
+import ReadonlyArray from "../../containers/ReadonlyArray.js";
 import {
   arrayEquality,
   identity,
@@ -10,21 +10,21 @@ import {
   pipeLazy,
   returns,
   sum,
-} from "../../functions";
+} from "../../functions.js";
 import {
   RunnableObservableLike,
   ThrottleMode_first,
   ThrottleMode_interval,
   ThrottleMode_last,
-} from "../../rx";
-import Observable from "../../rx/Observable";
-import RunnableObservable from "../../rx/RunnableObservable";
-import Continuation from "../../scheduling/Continuation";
-import Pauseable from "../../scheduling/Pauseable";
-import Scheduler from "../../scheduling/Scheduler";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
-import Streamable from "../../streaming/Streamable";
-import Disposable from "../../util/Disposable";
+} from "../../rx.js";
+import Observable from "../../rx/Observable.js";
+import RunnableObservable from "../../rx/RunnableObservable.js";
+import Continuation from "../../scheduling/Continuation.js";
+import Pauseable from "../../scheduling/Pauseable.js";
+import Scheduler from "../../scheduling/Scheduler.js";
+import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import Streamable from "../../streaming/Streamable.js";
+import Disposable from "../../util/Disposable.js";
 import {
   bufferTests,
   catchErrorTests,
@@ -56,7 +56,7 @@ import {
   throwIfEmptyTests,
   zipTests as zipOperatorTests,
   zipWithTests,
-} from "../operators";
+} from "../operators.js";
 import {
   describe,
   expectArrayEquals,
@@ -68,7 +68,7 @@ import {
   mockFn,
   test,
   testModule,
-} from "../testing";
+} from "../testing.js";
 
 const combineLatestTests = describe(
   "combineLatest",

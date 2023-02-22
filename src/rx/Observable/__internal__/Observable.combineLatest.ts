@@ -1,6 +1,6 @@
-import { Zip } from "../../../containers";
-import { ObservableLike } from "../../../rx";
-import Observable_latest from "./Observable.latest";
+import { Zip } from "../../../containers.js";
+import { ObservableLike } from "../../../rx.js";
+import Observable_latest from "./Observable.latest.js";
 
 const Observable_combineLatest: Zip<ObservableLike>["zip"] = (
   ...observables: readonly ObservableLike<any>[]

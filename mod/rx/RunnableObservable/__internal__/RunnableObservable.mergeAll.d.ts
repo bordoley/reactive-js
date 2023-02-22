@@ -4,4 +4,4 @@ declare const RunnableObservable_mergeAll: ConcatAll<RunnableObservableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
 }>["concatAll"];
-export { RunnableObservable_mergeAll as default };
+export default RunnableObservable_mergeAll;

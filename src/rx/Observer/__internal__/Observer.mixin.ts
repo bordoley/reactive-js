@@ -5,7 +5,7 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
+} from "../../../__internal__/mixins.js";
 import {
   Optional,
   SideEffect,
@@ -16,29 +16,29 @@ import {
   pipe,
   returns,
   unsafeCast,
-} from "../../../functions";
+} from "../../../functions.js";
 import {
   ObserverLike,
   ObserverLike_dispatcher,
   ObserverLike_scheduler,
   SinkLike_notify,
-} from "../../../rx";
+} from "../../../rx.js";
 import {
   DispatcherLike,
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
-} from "../../../scheduling";
-import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create";
-import { DisposableLike, DisposableLike_error } from "../../../util";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed";
-import Observer_getsScheduler from "./Observer.getScheduler";
-import Observer_schedule from "./Observer.schedule";
+} from "../../../scheduling.js";
+import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
+import { DisposableLike, DisposableLike_error } from "../../../util.js";
+import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import Observer_getsScheduler from "./Observer.getScheduler.js";
+import Observer_schedule from "./Observer.schedule.js";
 
 const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
   const scheduleDrainQueue = (dispatcher: TProperties) => {

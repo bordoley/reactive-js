@@ -1,3 +1,3 @@
-import { Zip, SequenceLike } from "../../../containers.js";
+import { SequenceLike, Zip } from "../../../containers.js";
 declare const Sequence_zip: Zip<SequenceLike>["zip"];
-export { Sequence_zip as default };
+export default Sequence_zip;

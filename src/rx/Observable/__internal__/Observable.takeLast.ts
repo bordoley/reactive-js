@@ -3,19 +3,19 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { TakeLast } from "../../../containers";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
-import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeLast";
-import { pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { TakeLast } from "../../../containers.js";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeLast.js";
+import { pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_takeLastMixin from "../../Sink/__internal__/Sink.takeLastMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_takeLastMixin from "../../Sink/__internal__/Sink.takeLastMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_takeLast: TakeLast<ObservableLike>["takeLast"] =
   /*@__PURE__*/ (() => {

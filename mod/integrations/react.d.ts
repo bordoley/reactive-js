@@ -1,4 +1,4 @@
-import { ReactElement, ComponentType } from 'react';
+import { ComponentType, ReactElement } from "react";
 import { Factory, Optional } from "../functions.js";
 import { ObservableLike } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
@@ -9,10 +9,9 @@ import { SchedulerLike } from "../scheduling.js";
  * @param scheduler An optional scheduler used when subscribing to `observable`. The default
  * is React's normal priority scheduler.
  */
-declare const useObservable: <T>(observable: ObservableLike<T>, options?: {
+export declare const useObservable: <T>(observable: ObservableLike<T>, options?: {
     readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
 }) => Optional<T>;
-declare const createComponent: <TProps>(fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>, options?: {
+export declare const createComponent: <TProps>(fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>, options?: {
     readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
 }) => ComponentType<TProps>;
-export { createComponent, useObservable };

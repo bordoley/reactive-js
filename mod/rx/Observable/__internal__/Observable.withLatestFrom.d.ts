@@ -1,3 +1,3 @@
-import { WithLatestFrom, ObservableLike } from "../../../rx.js";
+import { ObservableLike, WithLatestFrom } from "../../../rx.js";
 declare const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"];
-export { Observable_withLatestFrom as default };
+export default Observable_withLatestFrom;

@@ -1,5 +1,5 @@
-import { Function1 } from "../../../functions";
-import { SubjectLike, SubjectLike_publish } from "../../../rx";
+import { Function1 } from "../../../functions.js";
+import { SubjectLike, SubjectLike_publish } from "../../../rx.js";
 
 const Subject_publish =
   <T>(v: T): Function1<SubjectLike<T>, SubjectLike<T>> =>

@@ -1,5 +1,5 @@
-import { ObserverLike, ObserverLike_scheduler } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
+import { ObserverLike, ObserverLike_scheduler } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
 
 const Observer_getScheduler = <T>(observer: ObserverLike<T>): SchedulerLike =>
   observer[ObserverLike_scheduler];

@@ -1,3 +1,3 @@
-import { Throttle, RunnableObservableLike } from "../../../rx.js";
+import { RunnableObservableLike, Throttle } from "../../../rx.js";
 declare const RunnableObservable_throttle: Throttle<RunnableObservableLike>["throttle"];
-export { RunnableObservable_throttle as default };
+export default RunnableObservable_throttle;

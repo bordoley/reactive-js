@@ -17,38 +17,38 @@ import {
   ToIterable,
   ToReadonlyArray,
   Zip,
-} from "../containers";
-import { ToAsyncEnumerable, ToEnumerable } from "../ix";
+} from "../containers.js";
+import { ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import {
   ToEnumerableObservable,
   ToObservable,
   ToRunnable,
   ToRunnableObservable,
-} from "../rx";
-import { ToFlowable } from "../streaming";
-import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence";
-import Sequence_concat from "./Sequence/__internal__/Sequence.concat";
-import Sequence_concatAll from "./Sequence/__internal__/Sequence.concatAll";
-import Sequence_distinctUntilChanged from "./Sequence/__internal__/Sequence.distinctUntilChanged";
-import Sequence_generate from "./Sequence/__internal__/Sequence.generate";
-import Sequence_keep from "./Sequence/__internal__/Sequence.keep";
-import Sequence_map from "./Sequence/__internal__/Sequence.map";
-import Sequence_pairwise from "./Sequence/__internal__/Sequence.pairwise";
-import Sequence_repeat from "./Sequence/__internal__/Sequence.repeat";
-import Sequence_scan from "./Sequence/__internal__/Sequence.scan";
-import Sequence_seek from "./Sequence/__internal__/Sequence.seek";
-import Sequence_skipFirst from "./Sequence/__internal__/Sequence.skipFirst";
-import Sequence_takeFirst from "./Sequence/__internal__/Sequence.takeFirst";
-import Sequence_takeLast from "./Sequence/__internal__/Sequence.takeLast";
-import Sequence_takeWhile from "./Sequence/__internal__/Sequence.takeWhile";
-import Sequence_toAsyncEnumerable from "./Sequence/__internal__/Sequence.toAsyncEnumerable";
-import Sequence_toEnumerable from "./Sequence/__internal__/Sequence.toEnumerable";
-import Sequence_toFlowable from "./Sequence/__internal__/Sequence.toFlowable";
-import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable";
-import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray";
-import Sequence_toRunnable from "./Sequence/__internal__/Sequence.toRunnable";
-import Sequence_toRunnableObservable from "./Sequence/__internal__/Sequence.toRunnableObservable";
-import Sequence_zip from "./Sequence/__internal__/Sequence.zip";
+} from "../rx.js";
+import { ToFlowable } from "../streaming.js";
+import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
+import Sequence_concat from "./Sequence/__internal__/Sequence.concat.js";
+import Sequence_concatAll from "./Sequence/__internal__/Sequence.concatAll.js";
+import Sequence_distinctUntilChanged from "./Sequence/__internal__/Sequence.distinctUntilChanged.js";
+import Sequence_generate from "./Sequence/__internal__/Sequence.generate.js";
+import Sequence_keep from "./Sequence/__internal__/Sequence.keep.js";
+import Sequence_map from "./Sequence/__internal__/Sequence.map.js";
+import Sequence_pairwise from "./Sequence/__internal__/Sequence.pairwise.js";
+import Sequence_repeat from "./Sequence/__internal__/Sequence.repeat.js";
+import Sequence_scan from "./Sequence/__internal__/Sequence.scan.js";
+import Sequence_seek from "./Sequence/__internal__/Sequence.seek.js";
+import Sequence_skipFirst from "./Sequence/__internal__/Sequence.skipFirst.js";
+import Sequence_takeFirst from "./Sequence/__internal__/Sequence.takeFirst.js";
+import Sequence_takeLast from "./Sequence/__internal__/Sequence.takeLast.js";
+import Sequence_takeWhile from "./Sequence/__internal__/Sequence.takeWhile.js";
+import Sequence_toAsyncEnumerable from "./Sequence/__internal__/Sequence.toAsyncEnumerable.js";
+import Sequence_toEnumerable from "./Sequence/__internal__/Sequence.toEnumerable.js";
+import Sequence_toFlowable from "./Sequence/__internal__/Sequence.toFlowable.js";
+import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable.js";
+import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
+import Sequence_toRunnable from "./Sequence/__internal__/Sequence.toRunnable.js";
+import Sequence_toRunnableObservable from "./Sequence/__internal__/Sequence.toRunnableObservable.js";
+import Sequence_zip from "./Sequence/__internal__/Sequence.zip.js";
 
 export const concat: Concat<SequenceLike>["concat"] = Sequence_concat;
 

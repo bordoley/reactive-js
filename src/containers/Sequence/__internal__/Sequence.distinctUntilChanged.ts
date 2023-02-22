@@ -3,8 +3,8 @@ import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { Equality, isSome, none, strictEquality } from "../../../functions";
+} from "../../../containers.js";
+import { Equality, isSome, none, strictEquality } from "../../../functions.js";
 
 const Sequence_distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (() => {

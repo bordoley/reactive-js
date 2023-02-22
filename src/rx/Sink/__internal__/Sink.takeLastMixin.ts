@@ -5,14 +5,18 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { getLength, none, pipe } from "../../../functions";
-import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import { DisposableLike } from "../../../util";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
+} from "../../../__internal__/mixins.js";
+import { getLength, none, pipe } from "../../../functions.js";
+import {
+  ReactiveContainerLike,
+  SinkLike,
+  SinkLike_notify,
+} from "../../../rx.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 
 const Sink_takeLastMixin: <
   C extends ReactiveContainerLike<TSink>,

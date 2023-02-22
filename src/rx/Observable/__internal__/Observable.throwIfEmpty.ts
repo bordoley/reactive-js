@@ -3,18 +3,18 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { ThrowIfEmpty } from "../../../containers";
-import StatefulContainer_throwIfEmpty from "../../../containers/StatefulContainer/__internal__/StatefulContainer.throwIfEmpty";
-import { Factory, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { ThrowIfEmpty } from "../../../containers.js";
+import StatefulContainer_throwIfEmpty from "../../../containers/StatefulContainer/__internal__/StatefulContainer.throwIfEmpty.js";
+import { Factory, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_throwIfEmptyMixin from "../../Sink/__internal__/Sink.throwIfEmptyMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_throwIfEmptyMixin from "../../Sink/__internal__/Sink.throwIfEmptyMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (() => {

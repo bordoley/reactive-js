@@ -1,3 +1,3 @@
-import { ScanAsync, RunnableObservableLike } from "../../../rx.js";
+import { RunnableObservableLike, ScanAsync } from "../../../rx.js";
 declare const RunnableObservable_scanAsync: ScanAsync<RunnableObservableLike, RunnableObservableLike>["scanAsync"];
-export { RunnableObservable_scanAsync as default };
+export default RunnableObservable_scanAsync;

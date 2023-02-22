@@ -4,4 +4,4 @@ import { StreamLike, StreamableLike } from "../../../streaming.js";
 declare const Streamable_stream: <TReq, T, TStream extends StreamLike<TReq, T>>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => Function1<StreamableLike<TReq, T, TStream>, TStream>;
-export { Streamable_stream as default };
+export default Streamable_stream;

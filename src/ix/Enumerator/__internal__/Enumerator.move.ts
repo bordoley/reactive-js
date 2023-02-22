@@ -2,9 +2,9 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
-} from "../../../ix";
-import Source_move from "../../Source/__internal__/Source.move";
-import Enumerator_hasCurrent from "./Enumerator.hasCurrent";
+} from "../../../ix.js";
+import Source_move from "../../Source/__internal__/Source.move.js";
+import Enumerator_hasCurrent from "./Enumerator.hasCurrent.js";
 
 const Enumerator_move = <T>(enumerator: {
   [EnumeratorLike_current]: T;

@@ -1,3 +1,3 @@
-import { SkipFirst, SequenceLike } from "../../../containers.js";
+import { SequenceLike, SkipFirst } from "../../../containers.js";
 declare const Sequence_skipFirst: SkipFirst<SequenceLike>["skipFirst"];
-export { Sequence_skipFirst as default };
+export default Sequence_skipFirst;

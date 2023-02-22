@@ -1,16 +1,14 @@
-import { Updater } from "../functions.js";
-import { ContinuationLike } from "../scheduling.js";
 /**
  * @category ContinuationEffect
  */
-declare const __now: () => number;
+export declare const __now: () => number;
 /**
  * @category ContinuationEffect
  */
-declare const __yield: (delay?: number) => void;
-declare const run: Updater<ContinuationLike>;
+export declare const __yield: (delay?: number) => void;
+export declare const run: import("../functions.js").Updater<import("../scheduling.js").ContinuationLike>;
 /** @ignore */
 declare const Continuation: {
-    run: Updater<ContinuationLike>;
+    run: import("../functions.js").Updater<import("../scheduling.js").ContinuationLike>;
 };
-export { __now, __yield, Continuation as default, run };
+export default Continuation;

@@ -1,12 +1,12 @@
-import Container from "../../containers/Container";
-import ReadonlyArray from "../../containers/ReadonlyArray";
-import { increment, isSome, pipe, raise, returns } from "../../functions";
-import { ObservableLike } from "../../rx";
-import Observable, { __await, __memo } from "../../rx/Observable";
-import Continuation from "../../scheduling/Continuation";
-import Scheduler from "../../scheduling/Scheduler";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler";
-import Disposable from "../../util/Disposable";
+import Container from "../../containers/Container.js";
+import ReadonlyArray from "../../containers/ReadonlyArray.js";
+import { increment, isSome, pipe, raise, returns } from "../../functions.js";
+import { ObservableLike } from "../../rx.js";
+import Observable, { __await, __memo } from "../../rx/Observable.js";
+import Continuation from "../../scheduling/Continuation.js";
+import Scheduler from "../../scheduling/Scheduler.js";
+import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import Disposable from "../../util/Disposable.js";
 import {
   describe,
   expectArrayEquals,
@@ -18,7 +18,7 @@ import {
   test,
   testAsync,
   testModule,
-} from "../testing";
+} from "../testing.js";
 
 const onSubscribeTests = describe(
   "onSubscribe",

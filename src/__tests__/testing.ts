@@ -12,7 +12,7 @@ import {
   none,
   raiseWithDebugMessage,
   strictEquality,
-} from "../functions";
+} from "../functions.js";
 
 export const DescribeType = 1;
 export const TestType = 2;

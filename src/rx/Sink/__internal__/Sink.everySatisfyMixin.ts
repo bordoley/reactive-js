@@ -1,8 +1,8 @@
-import { Mixin2, include, init, mix } from "../../../__internal__/mixins";
-import { Predicate, compose, negate } from "../../../functions";
-import { ReactiveContainerLike, SinkLike } from "../../../rx";
+import { Mixin2, include, init, mix } from "../../../__internal__/mixins.js";
+import { Predicate, compose, negate } from "../../../functions.js";
+import { ReactiveContainerLike, SinkLike } from "../../../rx.js";
 
-import Sink_satisfyMixin from "./Sink.satisfyMixin";
+import Sink_satisfyMixin from "./Sink.satisfyMixin.js";
 
 const Sink_everySatisfyMixin: <
   C extends ReactiveContainerLike<TSink>,

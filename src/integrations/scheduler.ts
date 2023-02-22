@@ -17,8 +17,8 @@ import {
   init,
   mix,
   props,
-} from "../__internal__/mixins";
-import { Factory, none, pipe, pipeLazy, unsafeCast } from "../functions";
+} from "../__internal__/mixins.js";
+import { Factory, none, pipe, pipeLazy, unsafeCast } from "../functions.js";
 import {
   ContinuationLike,
   PrioritySchedulerLike,
@@ -28,12 +28,12 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-} from "../scheduling";
-import { run } from "../scheduling/Continuation";
-import { toScheduler } from "../scheduling/PriorityScheduler";
-import { isInContinuation } from "../scheduling/Scheduler";
-import { getDelay } from "../scheduling/__internal__/Scheduler.options";
-import { DisposableLike } from "../util";
+} from "../scheduling.js";
+import { run } from "../scheduling/Continuation.js";
+import { toScheduler } from "../scheduling/PriorityScheduler.js";
+import { isInContinuation } from "../scheduling/Scheduler.js";
+import { getDelay } from "../scheduling/__internal__/Scheduler.options.js";
+import { DisposableLike } from "../util.js";
 import {
   addIgnoringChildErrors,
   addTo,
@@ -41,8 +41,8 @@ import {
   dispose,
   isDisposed,
   onDisposed,
-} from "../util/Disposable";
-import Disposable_mixin from "../util/Disposable/__internal__/Disposable.mixin";
+} from "../util/Disposable.js";
+import Disposable_mixin from "../util/Disposable/__internal__/Disposable.mixin.js";
 
 const createPriorityScheduler = /*@__PURE__*/ (() => {
   type TProperties = {

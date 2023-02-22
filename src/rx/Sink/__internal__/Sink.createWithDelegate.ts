@@ -7,9 +7,9 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
+} from "../../../__internal__/mixins.js";
+import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
 const Sink_createWithDelegate: <T>(delegate: SinkLike<T>) => SinkLike<T> =
   /*@__PURE__*/ (<T>() =>

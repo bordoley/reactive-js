@@ -1,4 +1,4 @@
-import { SchedulerLike_now } from "../../../scheduling";
+import { SchedulerLike_now } from "../../../scheduling.js";
 
 const Scheduler_getCurrentTime = (scheduler: {
   readonly [SchedulerLike_now]: number;

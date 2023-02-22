@@ -4,4 +4,4 @@ declare const Sequence_toRunnableObservable: ToRunnableObservable<SequenceLike, 
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["toRunnableObservable"];
-export { Sequence_toRunnableObservable as default };
+export default Sequence_toRunnableObservable;

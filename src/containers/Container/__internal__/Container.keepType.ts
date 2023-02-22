@@ -1,5 +1,5 @@
-import { ContainerLike, ContainerOperator, Keep } from "../../../containers";
-import { TypePredicate } from "../../../functions";
+import { ContainerLike, ContainerOperator, Keep } from "../../../containers.js";
+import { TypePredicate } from "../../../functions.js";
 
 const Container_keepType = <C extends ContainerLike, TA, TB extends TA>(
   { keep }: Keep<C>,

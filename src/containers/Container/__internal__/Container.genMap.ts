@@ -4,8 +4,8 @@ import {
   ContainerOperator,
   FromIterable,
   Map,
-} from "../../../containers";
-import { Function1, compose, pipe } from "../../../functions";
+} from "../../../containers.js";
+import { Function1, compose, pipe } from "../../../functions.js";
 
 const Container_genMap = <C extends ContainerLike, TA, TB, O = never>(
   m: ConcatAll<C, never> & Map<C> & FromIterable<C, O>,

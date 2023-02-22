@@ -6,22 +6,26 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { TakeLast } from "../../../containers";
-import ReadonlyArray_toEnumerable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toEnumerable";
-import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeLast";
-import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { getLength, pipe } from "../../../functions";
-import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add";
-import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent";
-import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin";
-import DelegatingEnumerator_move from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.move";
-import Enumerable_enumerate from "./Enumerable.enumerate";
-import Enumerable_liftT from "./Enumerable.liftT";
+} from "../../../__internal__/mixins.js";
+import { TakeLast } from "../../../containers.js";
+import ReadonlyArray_toEnumerable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toEnumerable.js";
+import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeLast.js";
+import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
+import { getLength, pipe } from "../../../functions.js";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  SourceLike_move,
+} from "../../../ix.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
+import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin.js";
+import DelegatingEnumerator_move from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.move.js";
+import Enumerable_enumerate from "./Enumerable.enumerate.js";
+import Enumerable_liftT from "./Enumerable.liftT.js";
 
 const Enumerable_takeLast: TakeLast<EnumerableLike>["takeLast"] =
   /*@__PURE__*/ (<T>() => {

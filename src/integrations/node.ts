@@ -10,7 +10,7 @@ import {
   createGzip,
   createInflate,
 } from "zlib";
-import { ContainerOperator } from "../containers";
+import { ContainerOperator } from "../containers.js";
 import {
   Factory,
   Function1,
@@ -31,39 +31,39 @@ import {
   pipe,
   pipeLazy,
   returns,
-} from "../functions";
-import { ObservableLike, ObserverLike_dispatcher } from "../rx";
+} from "../functions.js";
+import { ObservableLike, ObserverLike_dispatcher } from "../rx.js";
 import {
   create as createObservable,
   forEach,
   map,
   subscribe,
-} from "../rx/Observable";
-import { getDispatcher, getScheduler } from "../rx/Observer";
-import { sinkInto } from "../rx/ReactiveContainer";
+} from "../rx/Observable.js";
+import { getDispatcher, getScheduler } from "../rx/Observer.js";
+import { sinkInto } from "../rx/ReactiveContainer.js";
 import {
   PauseableState,
   PauseableState_paused,
   PauseableState_running,
-} from "../scheduling";
+} from "../scheduling.js";
 import {
   dispatch,
   dispatchTo,
   getScheduler as dispatcherGetScheduler,
-} from "../scheduling/Dispatcher";
-import { FlowableLike, StreamableLike } from "../streaming";
-import Flowable_createLifted from "../streaming/Flowable/__internal__/Flowable.createLifted";
-import { sourceFrom } from "../streaming/Stream";
-import { stream } from "../streaming/Streamable";
-import Streamable_createLifted from "../streaming/Streamable/__internal__/Streamable.createLifted";
-import { DisposableLike } from "../util";
+} from "../scheduling/Dispatcher.js";
+import { FlowableLike, StreamableLike } from "../streaming.js";
+import Flowable_createLifted from "../streaming/Flowable/__internal__/Flowable.createLifted.js";
+import { sourceFrom } from "../streaming/Stream.js";
+import { stream } from "../streaming/Streamable.js";
+import Streamable_createLifted from "../streaming/Streamable/__internal__/Streamable.createLifted.js";
+import { DisposableLike } from "../util.js";
 import {
   dispose,
   onComplete,
   onDisposed,
   onError,
   toErrorHandler,
-} from "../util/Disposable";
+} from "../util/Disposable.js";
 
 interface BindNodeCallback {
   <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<

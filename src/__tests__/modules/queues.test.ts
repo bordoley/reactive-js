@@ -1,9 +1,9 @@
-import { floor, newInstance, pipe } from "../../functions";
-import Queue_count from "../../util/__internal__/Queue/Queue.count";
-import Queue_create from "../../util/__internal__/Queue/Queue.create";
-import Queue_pop from "../../util/__internal__/Queue/Queue.pop";
-import Queue_push from "../../util/__internal__/Queue/Queue.push";
-import { expectArrayEquals, test, testModule } from "../testing";
+import { floor, newInstance, pipe } from "../../functions.js";
+import Queue_count from "../../util/__internal__/Queue/Queue.count.js";
+import Queue_create from "../../util/__internal__/Queue/Queue.create.js";
+import Queue_pop from "../../util/__internal__/Queue/Queue.pop.js";
+import Queue_push from "../../util/__internal__/Queue/Queue.push.js";
+import { expectArrayEquals, test, testModule } from "../testing.js";
 
 const compare = (a: number, b: number): number => a - b;
 

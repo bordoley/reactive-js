@@ -2,7 +2,7 @@ import {
   DisposableLike,
   DisposableLike_add,
   DisposableOrTeardown,
-} from "../../../util";
+} from "../../../util.js";
 
 const Disposable_addDisposableOrTeardown = (
   parent: DisposableLike,

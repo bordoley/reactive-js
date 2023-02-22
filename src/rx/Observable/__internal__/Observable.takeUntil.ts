@@ -1,13 +1,13 @@
-import { pipe } from "../../../functions";
-import { ObservableLike, ObserverLike, TakeUntil } from "../../../rx";
-import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo";
-import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observable_isEnumerable from "./Observable.isEnumerable";
-import Observable_isRunnable from "./Observable.isRunnable";
-import Observable_lift from "./Observable.lift";
-import Observable_subscribe from "./Observable.subscribe";
-import Observable_takeFirst from "./Observable.takeFirst";
+import { pipe } from "../../../functions.js";
+import { ObservableLike, ObserverLike, TakeUntil } from "../../../rx.js";
+import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
+import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observable_isEnumerable from "./Observable.isEnumerable.js";
+import Observable_isRunnable from "./Observable.isRunnable.js";
+import Observable_lift from "./Observable.lift.js";
+import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_takeFirst from "./Observable.takeFirst.js";
 
 const Observable_takeUntil: TakeUntil<ObservableLike>["takeUntil"] = <T>(
   notifier: ObservableLike,

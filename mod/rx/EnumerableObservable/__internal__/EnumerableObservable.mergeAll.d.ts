@@ -4,4 +4,4 @@ declare const EnumerableObservable_mergeAll: ConcatAll<EnumerableObservableLike,
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
 }>["concatAll"];
-export { EnumerableObservable_mergeAll as default };
+export default EnumerableObservable_mergeAll;

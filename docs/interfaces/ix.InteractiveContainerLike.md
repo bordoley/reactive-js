@@ -17,9 +17,9 @@
 
   ↳ **`InteractiveContainerLike`**
 
-  ↳↳ [`AsyncEnumerableLike`](ix.AsyncEnumerableLike.md)
-
   ↳↳ [`EnumerableLike`](ix.EnumerableLike.md)
+
+  ↳↳ [`AsyncEnumerableLike`](ix.AsyncEnumerableLike.md)
 
 ## Table of contents
 

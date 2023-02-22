@@ -1,5 +1,5 @@
-import { ReadonlyArrayLike } from "../../../containers";
-import { Function1, Predicate } from "../../../functions";
+import { ReadonlyArrayLike } from "../../../containers.js";
+import { Function1, Predicate } from "../../../functions.js";
 
 const ReadonlyArray_some =
   <T>(predicate: Predicate<T>): Function1<ReadonlyArrayLike<T>, boolean> =>

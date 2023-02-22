@@ -3,8 +3,8 @@ import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { Predicate, isSome } from "../../../functions";
+} from "../../../containers.js";
+import { Predicate, isSome } from "../../../functions.js";
 
 const Sequence_keep: Keep<SequenceLike>["keep"] = /*@__PURE__*/ (() => {
   const _keep =

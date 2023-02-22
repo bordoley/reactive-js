@@ -1,11 +1,11 @@
-import { ReadonlyArrayLike, ToReadonlyArray } from "../../../containers";
-import { Function1, isSome, pipe, raiseError } from "../../../functions";
-import { RunnableObservableLike } from "../../../rx";
-import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run";
-import VirtualTimeScheduler_create from "../../../scheduling/VirtualTimeScheduler/__internal__/VirtualTimeScheduler.create";
-import Disposable_getError from "../../../util/Disposable/__internal__/Disposable.getError";
-import Observable_forEach from "../../Observable/__internal__/Observable.forEach";
-import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe";
+import { ReadonlyArrayLike, ToReadonlyArray } from "../../../containers.js";
+import { Function1, isSome, pipe, raiseError } from "../../../functions.js";
+import { RunnableObservableLike } from "../../../rx.js";
+import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run.js";
+import VirtualTimeScheduler_create from "../../../scheduling/VirtualTimeScheduler/__internal__/VirtualTimeScheduler.create.js";
+import Disposable_getError from "../../../util/Disposable/__internal__/Disposable.getError.js";
+import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 
 const RunnableObservable_toReadonlyArray: ToReadonlyArray<RunnableObservableLike>["toReadonlyArray"] =
 

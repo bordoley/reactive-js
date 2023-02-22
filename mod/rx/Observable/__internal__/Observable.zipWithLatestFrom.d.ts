@@ -1,3 +1,3 @@
-import { ZipWithLatestFrom, ObservableLike } from "../../../rx.js";
+import { ObservableLike, ZipWithLatestFrom } from "../../../rx.js";
 declare const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"];
-export { Observable_zipWithLatestFrom as default };
+export default Observable_zipWithLatestFrom;

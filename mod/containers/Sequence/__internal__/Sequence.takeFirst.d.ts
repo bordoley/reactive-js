@@ -1,3 +1,3 @@
-import { TakeFirst, SequenceLike } from "../../../containers.js";
+import { SequenceLike, TakeFirst } from "../../../containers.js";
 declare const Sequence_takeFirst: TakeFirst<SequenceLike>["takeFirst"];
-export { Sequence_takeFirst as default };
+export default Sequence_takeFirst;

@@ -1,8 +1,8 @@
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay } from "../rx.js";
-declare const getObserverCount: (obs: {
+export declare const getObserverCount: (obs: {
     [MulticastObservableLike_observerCount]: number;
 }) => number;
-declare const getReplay: (obs: {
+export declare const getReplay: (obs: {
     [MulticastObservableLike_replay]: number;
 }) => number;
 declare const MulticastObservable: {
@@ -13,4 +13,4 @@ declare const MulticastObservable: {
         [MulticastObservableLike_replay]: number;
     }) => number;
 };
-export { MulticastObservable as default, getObserverCount, getReplay };
+export default MulticastObservable;

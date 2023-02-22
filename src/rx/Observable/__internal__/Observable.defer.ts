@@ -1,6 +1,6 @@
-import { Factory } from "../../../functions";
-import { ObservableLike, ReactiveContainerLike_sinkInto } from "../../../rx";
-import Observable_create from "./Observable.create";
+import { Factory } from "../../../functions.js";
+import { ObservableLike, ReactiveContainerLike_sinkInto } from "../../../rx.js";
+import Observable_create from "./Observable.create.js";
 
 const Observable_defer = <T>(
   factory: Factory<ObservableLike<T>>,

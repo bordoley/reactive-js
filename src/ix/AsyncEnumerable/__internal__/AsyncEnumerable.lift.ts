@@ -1,15 +1,20 @@
-import { ContainerOperator } from "../../../containers";
-import { Function1, newInstance, pipe, pipeUnsafe } from "../../../functions";
+import { ContainerOperator } from "../../../containers.js";
+import {
+  Function1,
+  newInstance,
+  pipe,
+  pipeUnsafe,
+} from "../../../functions.js";
 import {
   AsyncEnumerableLike,
   AsyncEnumerableLike_isEnumerable,
   AsyncEnumerableLike_isRunnable,
   AsyncEnumeratorLike,
   InteractiveContainerLike_interact,
-} from "../../../ix";
-import { SchedulerLike } from "../../../scheduling";
-import { StreamableLike_stream } from "../../../streaming";
-import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream";
+} from "../../../ix.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import { StreamableLike_stream } from "../../../streaming.js";
+import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 
 const LiftedAsyncEnumerable_src = Symbol("LiftedAsyncEnumerable_src");
 const LiftedAsyncEnumerable_operators = Symbol(

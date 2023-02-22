@@ -1,6 +1,6 @@
-import { Defer } from "../../../containers";
-import { EnumerableObservableLike } from "../../../rx";
-import Observable_defer from "../../Observable/__internal__/Observable.defer";
+import { Defer } from "../../../containers.js";
+import { EnumerableObservableLike } from "../../../rx.js";
+import Observable_defer from "../../Observable/__internal__/Observable.defer.js";
 
 const EnumerableObservable_defer: Defer<EnumerableObservableLike>["defer"] =
   (f =>

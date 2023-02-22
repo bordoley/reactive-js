@@ -4,25 +4,25 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
+} from "../../../__internal__/mixins.js";
 import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { isSome, none, pipe } from "../../../functions";
+} from "../../../containers.js";
+import { isSome, none, pipe } from "../../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   SourceLike_move,
   ToEnumerable,
-} from "../../../ix";
-import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create";
-import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
-import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
+} from "../../../ix.js";
+import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
+import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
 const Sequence_toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {

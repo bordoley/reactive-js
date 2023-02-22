@@ -8,8 +8,8 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { ContainerOperator } from "../../../containers";
+} from "../../../__internal__/mixins.js";
+import { ContainerOperator } from "../../../containers.js";
 import {
   Function2,
   Optional,
@@ -18,26 +18,26 @@ import {
   none,
   partial,
   pipe,
-} from "../../../functions";
+} from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   SinkLike_notify,
   ZipWithLatestFrom,
-} from "../../../rx";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_notify from "../../Sink/__internal__/Sink.notify";
-import Observable_forEach from "./Observable.forEach";
-import Observable_isEnumerable from "./Observable.isEnumerable";
-import Observable_isRunnable from "./Observable.isRunnable";
-import Observable_lift from "./Observable.lift";
-import Observable_subscribe from "./Observable.subscribe";
+} from "../../../rx.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_notify from "../../Sink/__internal__/Sink.notify.js";
+import Observable_forEach from "./Observable.forEach.js";
+import Observable_isEnumerable from "./Observable.isEnumerable.js";
+import Observable_isRunnable from "./Observable.isRunnable.js";
+import Observable_lift from "./Observable.lift.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"] =
   /*@__PURE__*/ (() => {

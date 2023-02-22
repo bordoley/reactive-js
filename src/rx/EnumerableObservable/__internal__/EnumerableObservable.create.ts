@@ -1,6 +1,6 @@
-import { SideEffect1 } from "../../../functions";
-import { EnumerableObservableLike, ObserverLike } from "../../../rx";
-import Observable_create from "../../Observable/__internal__/Observable.create";
+import { SideEffect1 } from "../../../functions.js";
+import { EnumerableObservableLike, ObserverLike } from "../../../rx.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 
 const EnumerableObservable_create = <T>(
   f: SideEffect1<ObserverLike<T>>,

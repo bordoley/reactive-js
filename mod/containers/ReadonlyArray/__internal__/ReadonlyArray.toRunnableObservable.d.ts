@@ -1,5 +1,3 @@
-import { Function1 } from "../../../functions.js";
-import { ReadonlyArrayLike } from "../../../containers.js";
 import { RunnableObservableLike } from "../../../rx.js";
 declare const ReadonlyArray_toRunnableObservable: <T>(options?: ({
     delay?: number | undefined;
@@ -7,5 +5,5 @@ declare const ReadonlyArray_toRunnableObservable: <T>(options?: ({
 } & {
     readonly start?: number | undefined;
     readonly count?: number | undefined;
-}) | undefined) => Function1<ReadonlyArrayLike<T>, RunnableObservableLike<T>>;
-export { ReadonlyArray_toRunnableObservable as default };
+}) | undefined) => import("../../../functions.js").Function1<import("../../../containers.js").ReadonlyArrayLike<T>, RunnableObservableLike<T>>;
+export default ReadonlyArray_toRunnableObservable;

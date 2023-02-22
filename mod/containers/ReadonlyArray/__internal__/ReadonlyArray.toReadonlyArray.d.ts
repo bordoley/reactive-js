@@ -1,6 +1,6 @@
-import { ToReadonlyArray, ReadonlyArrayLike } from "../../../containers.js";
+import { ReadonlyArrayLike, ToReadonlyArray } from "../../../containers.js";
 declare const ReadonlyArray_toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike, {
     readonly start?: number;
     readonly count?: number;
 }>["toReadonlyArray"];
-export { ReadonlyArray_toReadonlyArray as default };
+export default ReadonlyArray_toReadonlyArray;

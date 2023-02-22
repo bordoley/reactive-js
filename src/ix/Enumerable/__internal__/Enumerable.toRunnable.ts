@@ -1,15 +1,15 @@
-import { Factory, pipe } from "../../../functions";
+import { Factory, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   InteractiveContainerLike_interact,
-} from "../../../ix";
-import { RunnableLike, SinkLike, ToRunnable } from "../../../rx";
-import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create";
-import Sink_notifySink from "../../../rx/Sink/__internal__/Sink.notifySink";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Enumerator_forEach from "../../Enumerator/__internal__/Enumerator.forEach";
+} from "../../../ix.js";
+import { RunnableLike, SinkLike, ToRunnable } from "../../../rx.js";
+import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
+import Sink_notifySink from "../../../rx/Sink/__internal__/Sink.notifySink.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Enumerator_forEach from "../../Enumerator/__internal__/Enumerator.forEach.js";
 
 const Enumerable_toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
   /*@__PURE__*/ (() => {

@@ -3,9 +3,9 @@ import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { Predicate, isSome, none } from "../../../functions";
-import Container_repeat from "../../Container/__internal__/Container.repeat";
+} from "../../../containers.js";
+import { Predicate, isSome, none } from "../../../functions.js";
+import Container_repeat from "../../Container/__internal__/Container.repeat.js";
 
 const Sequence_repeat: Repeat<SequenceLike>["repeat"] = /*@__PURE__*/ (<
   T,

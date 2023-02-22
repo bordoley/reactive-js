@@ -1,5 +1,5 @@
-import { SourceLike_move, SourceLike } from "../ix.js";
-declare const move: <TSource extends {
+import { SourceLike, SourceLike_move } from "../ix.js";
+export declare const move: <TSource extends {
     [SourceLike_move](): void;
 } = SourceLike>(source: TSource) => TSource;
 /** @ignore */
@@ -8,4 +8,4 @@ declare const Source: {
         [SourceLike_move](): void;
     } = SourceLike>(source: TSource) => TSource;
 };
-export { Source as default, move };
+export default Source;

@@ -1,13 +1,16 @@
-import { ContainerOperator, StatefulContainerLike } from "../../../containers";
+import {
+  ContainerOperator,
+  StatefulContainerLike,
+} from "../../../containers.js";
 import {
   Lift,
   StatefulContainerOperatorIn,
   StatefulContainerOperatorOut,
   TInteractive,
   TReactive,
-} from "../../../containers/__internal__/containers.internal";
-import { Function2, partial, pipe } from "../../../functions";
-import StatefulContainer_lift from "./StatefulContainer.lift";
+} from "../../../containers/__internal__/containers.internal.js";
+import { Function2, partial, pipe } from "../../../functions.js";
+import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_skipFirst =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(

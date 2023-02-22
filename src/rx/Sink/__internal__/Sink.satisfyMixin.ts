@@ -8,16 +8,20 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Predicate, none, pipe } from "../../../functions";
-import { ReactiveContainerLike, SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
-import Sink_notify from "./Sink.notify";
+} from "../../../__internal__/mixins.js";
+import { Predicate, none, pipe } from "../../../functions.js";
+import {
+  ReactiveContainerLike,
+  SinkLike,
+  SinkLike_notify,
+} from "../../../rx.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Sink_notify from "./Sink.notify.js";
 
 const Sink_satisfyMixin: <
   C extends ReactiveContainerLike<TSink>,

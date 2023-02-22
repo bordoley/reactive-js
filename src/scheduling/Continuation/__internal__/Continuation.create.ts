@@ -5,7 +5,7 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
+} from "../../../__internal__/mixins.js";
 import {
   Function2,
   Optional,
@@ -17,7 +17,7 @@ import {
   none,
   pipe,
   raiseWithDebugMessage,
-} from "../../../functions";
+} from "../../../functions.js";
 import {
   ContinuationLike,
   ContinuationLike_run,
@@ -25,10 +25,10 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-} from "../../../scheduling";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
+} from "../../../scheduling.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
 class YieldError {
   constructor(readonly delay: number) {}

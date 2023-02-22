@@ -3,17 +3,17 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { Pairwise } from "../../../containers";
-import { pipe, returns } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Pairwise } from "../../../containers.js";
+import { pipe, returns } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_pairwiseMixin from "../../Sink/__internal__/Sink.pairwiseMixin";
-import Observable_lift from "./Observable.lift";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_pairwiseMixin from "../../Sink/__internal__/Sink.pairwiseMixin.js";
+import Observable_lift from "./Observable.lift.js";
 
 const Observable_pairwise: Pairwise<ObservableLike>["pairwise"] =
   /*@__PURE__*/ (() => {

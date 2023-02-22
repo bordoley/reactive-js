@@ -3,4 +3,4 @@ import { EnumeratorLike } from "../../../ix.js";
 declare const DelegatingEnumerator_move: (enumerator: {
     [DelegatingLike_delegate]: EnumeratorLike;
 }) => boolean;
-export { DelegatingEnumerator_move as default };
+export default DelegatingEnumerator_move;

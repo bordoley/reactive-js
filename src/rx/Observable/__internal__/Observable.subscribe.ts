@@ -1,10 +1,10 @@
-import { Function1, pipe } from "../../../functions";
-import { ObservableLike } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
-import { DisposableLike } from "../../../util";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors";
-import Observer_create from "../../Observer/__internal__/Observer.create";
-import sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
+import { Function1, pipe } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
+import Observer_create from "../../Observer/__internal__/Observer.create.js";
+import sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 
 const Observable_subscribe: <T>(
   scheduler: SchedulerLike,

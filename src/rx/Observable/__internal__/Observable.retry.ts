@@ -1,6 +1,6 @@
-import { isNone, isSome } from "../../../functions";
-import { ObservableLike, Retry } from "../../../rx";
-import Observable_repeatOrRetry from "./Observable.repeatOrRetry";
+import { isNone, isSome } from "../../../functions.js";
+import { ObservableLike, Retry } from "../../../rx.js";
+import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
 
 const Observable_retry: Retry<ObservableLike>["retry"] = /*@__PURE__*/ (() => {
   const defaultRetryPredicate = (_: number, error?: Error): boolean =>

@@ -1,13 +1,13 @@
-import { StatefulContainerLike } from "../../../containers";
-import { Function2, SideEffect1, partial, pipe } from "../../../functions";
+import { StatefulContainerLike } from "../../../containers.js";
+import { Function2, SideEffect1, partial, pipe } from "../../../functions.js";
 import {
   Lift,
   StatefulContainerOperatorIn,
   StatefulContainerOperatorOut,
   TInteractive,
   TReactive,
-} from "../../__internal__/containers.internal";
-import StatefulContainer_lift from "./StatefulContainer.lift";
+} from "../../__internal__/containers.internal.js";
+import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_forEach =
   <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(

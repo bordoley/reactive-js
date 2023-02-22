@@ -3,8 +3,8 @@ import {
   SequenceLike_data,
   SequenceLike_next,
   ToReadonlyArray,
-} from "../../../containers";
-import { isSome } from "../../../functions";
+} from "../../../containers.js";
+import { isSome } from "../../../functions.js";
 
 const Sequence_toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
 

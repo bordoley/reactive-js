@@ -10,7 +10,7 @@ import {
   none,
   pipe,
   returns,
-} from "../functions";
+} from "../functions.js";
 
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");

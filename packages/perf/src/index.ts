@@ -1,11 +1,11 @@
-import { run } from "./benchmarkRunner";
+import { run } from "./benchmarkRunner.js";
 import {
   map,
   filterMapFusion,
   filterMapReduce,
   scanReduce,
   every,
-} from "./perfTests";
+} from "./perfTests.js";
 
 const doRun = async () => {
   await run(map(10000));

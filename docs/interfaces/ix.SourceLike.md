@@ -10,9 +10,9 @@
 
   ↳ **`SourceLike`**
 
-  ↳↳ [`AsyncEnumeratorLike`](ix.AsyncEnumeratorLike.md)
-
   ↳↳ [`EnumeratorLike`](ix.EnumeratorLike.md)
+
+  ↳↳ [`AsyncEnumeratorLike`](ix.AsyncEnumeratorLike.md)
 
 ## Table of contents
 

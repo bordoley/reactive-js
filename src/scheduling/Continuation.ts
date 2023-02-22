@@ -1,8 +1,8 @@
-import Continuation_run from "../scheduling/Continuation/__internal__/Continuation.run";
+import Continuation_run from "../scheduling/Continuation/__internal__/Continuation.run.js";
 import {
   Continuation__now,
   Continuation__yield,
-} from "./Continuation/__internal__/Continuation.create";
+} from "./Continuation/__internal__/Continuation.create.js";
 
 /**
  * @category ContinuationEffect

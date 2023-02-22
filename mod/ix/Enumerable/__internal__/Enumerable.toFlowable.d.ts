@@ -4,4 +4,4 @@ declare const Enumerable_toFlowable: ToFlowable<EnumerableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["toFlowable"];
-export { Enumerable_toFlowable as default };
+export default Enumerable_toFlowable;

@@ -3,15 +3,15 @@ import {
   createInstanceFactory,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Factory, error, none, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Factory, error, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   InteractiveContainerLike_interact,
-} from "../../../ix";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Enumerator_empty from "../../Enumerator/__internal__/Enumerator.empty";
+} from "../../../ix.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Enumerator_empty from "../../Enumerator/__internal__/Enumerator.empty.js";
 
 const Enumerable_create: <T>(
   f: Factory<EnumeratorLike<T>>,

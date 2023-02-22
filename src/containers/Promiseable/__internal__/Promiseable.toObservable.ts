@@ -1,12 +1,12 @@
-import { PromiseableLike } from "../../../containers";
-import { pipe } from "../../../functions";
-import { ObservableLike, ToObservable } from "../../../rx";
-import Observable_create from "../../../rx/Observable/__internal__/Observable.create";
-import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher";
-import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_toErrorHandler from "../../../util/Disposable/__internal__/Disposable.toErrorHandler";
+import { PromiseableLike } from "../../../containers.js";
+import { pipe } from "../../../functions.js";
+import { ObservableLike, ToObservable } from "../../../rx.js";
+import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
+import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
+import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_toErrorHandler from "../../../util/Disposable/__internal__/Disposable.toErrorHandler.js";
 
 const Promiseable_toObservable: ToObservable<PromiseableLike>["toObservable"] =
   <T>() =>

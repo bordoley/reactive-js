@@ -3,8 +3,8 @@ import {
   SequenceLike,
   SequenceLike_data,
   SequenceLike_next,
-} from "../../../containers";
-import { Factory, Updater } from "../../../functions";
+} from "../../../containers.js";
+import { Factory, Updater } from "../../../functions.js";
 
 const Sequence_generate: Generate<SequenceLike>["generate"] =
   /*@__PURE__*/ (() => {

@@ -1,14 +1,12 @@
-import { Function1 } from "../functions.js";
-import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.js";
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
  *
  * @param priorityScheduler The underlying scheduler upon which to scheduler work.
  * @param priority The priority to schedule work at.
  */
-declare const toScheduler: (priority: number) => Function1<PrioritySchedulerLike, SchedulerLike>;
+export declare const toScheduler: (priority: number) => import("../functions.js").Function1<import("../scheduling.js").PrioritySchedulerLike, import("../scheduling.js").SchedulerLike>;
 /** @ignore */
 declare const PriorityScheduler: {
-    toScheduler: (priority: number) => Function1<PrioritySchedulerLike, SchedulerLike>;
+    toScheduler: (priority: number) => import("../functions.js").Function1<import("../scheduling.js").PrioritySchedulerLike, import("../scheduling.js").SchedulerLike>;
 };
-export { PriorityScheduler as default, toScheduler };
+export default PriorityScheduler;

@@ -7,30 +7,30 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { ConcatAll } from "../../../containers";
-import { pipe, returns } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { ConcatAll } from "../../../containers.js";
+import { pipe, returns } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   SourceLike_move,
-} from "../../../ix";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import DisposableRef_mixin from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin";
-import MutableRef_get from "../../../util/__internal__/MutableRef/__internal__/MutableRef.get";
-import MutableRef_set from "../../../util/__internal__/MutableRef/__internal__/MutableRef.set";
-import { MutableRefLike } from "../../../util/__internal__/util.internal";
-import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent";
-import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move";
-import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin";
-import { MutableEnumeratorLike } from "../../__internal__/ix.internal";
-import Enumerable_enumerate from "./Enumerable.enumerate";
-import Enumerable_lift from "./Enumerable.lift";
+} from "../../../ix.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import DisposableRef_mixin from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin.js";
+import MutableRef_get from "../../../util/__internal__/MutableRef/__internal__/MutableRef.get.js";
+import MutableRef_set from "../../../util/__internal__/MutableRef/__internal__/MutableRef.set.js";
+import { MutableRefLike } from "../../../util/__internal__/util.internal.js";
+import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move.js";
+import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import { MutableEnumeratorLike } from "../../__internal__/ix.internal.js";
+import Enumerable_enumerate from "./Enumerable.enumerate.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_concatAll: ConcatAll<EnumerableLike>["concatAll"] =
   /*@__PURE__*/ (<T>() => {

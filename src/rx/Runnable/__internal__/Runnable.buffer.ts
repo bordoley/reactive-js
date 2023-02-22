@@ -1,12 +1,12 @@
-import { createInstanceFactory } from "../../../__internal__/mixins";
-import { Buffer } from "../../../containers";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable";
-import StatefulContainer_buffer from "../../../containers/StatefulContainer/__internal__/StatefulContainer.buffer";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { pipe } from "../../../functions";
-import { RunnableLike, SinkLike } from "../../../rx";
-import Sink_bufferMixin from "../../Sink/__internal__/Sink.bufferMixin";
-import Runnable_liftT from "./Runnable.liftT";
+import { createInstanceFactory } from "../../../__internal__/mixins.js";
+import { Buffer } from "../../../containers.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import StatefulContainer_buffer from "../../../containers/StatefulContainer/__internal__/StatefulContainer.buffer.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { pipe } from "../../../functions.js";
+import { RunnableLike, SinkLike } from "../../../rx.js";
+import Sink_bufferMixin from "../../Sink/__internal__/Sink.bufferMixin.js";
+import Runnable_liftT from "./Runnable.liftT.js";
 
 const Runnable_buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<
   T,

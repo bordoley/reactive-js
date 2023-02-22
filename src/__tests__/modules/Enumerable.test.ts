@@ -1,5 +1,5 @@
-import { EnumerableLike } from "../../ix";
-import Enumerable from "../../ix/Enumerable";
+import { EnumerableLike } from "../../ix.js";
+import Enumerable from "../../ix/Enumerable.js";
 import {
   bufferTests,
   concatAllTests,
@@ -30,8 +30,8 @@ import {
   toRunnableObservableTests,
   zipTests,
   zipWithTests,
-} from "../operators";
-import { testModule } from "../testing";
+} from "../operators.js";
+import { testModule } from "../testing.js";
 
 testModule(
   "Enumerable",

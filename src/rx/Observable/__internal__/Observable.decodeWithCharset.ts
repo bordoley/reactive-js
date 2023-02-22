@@ -3,20 +3,20 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { DecodeWithCharset } from "../../../containers";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
-import StatefulContainer_decodeWithCharset from "../../../containers/StatefulContainer/__internal__/StatefulContainer.decodeWithCharset";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { DecodeWithCharset } from "../../../containers.js";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import StatefulContainer_decodeWithCharset from "../../../containers/StatefulContainer/__internal__/StatefulContainer.decodeWithCharset.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_decodeWithCharsetMixin from "../../Sink/__internal__/Sink.decodeWithCharsetMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_decodeWithCharsetMixin from "../../Sink/__internal__/Sink.decodeWithCharsetMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {

@@ -4,4 +4,4 @@ import { SchedulerLike } from "../../../scheduling.js";
 import { DisposableLike } from "../../../util.js";
 type TObserverMixinReturn<T> = Omit<ObserverLike<T>, keyof DisposableLike | typeof SinkLike_notify>;
 declare const Observer_mixin: <T>() => Mixin1<TObserverMixinReturn<T>, SchedulerLike>;
-export { Observer_mixin as default };
+export default Observer_mixin;

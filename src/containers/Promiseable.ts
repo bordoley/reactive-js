@@ -1,7 +1,7 @@
-import { PromiseableLike } from "../containers";
-import { ToObservable } from "../rx";
-import Observable_toPromise from "../rx/Observable/__internal__/Observable.toPromise";
-import Promiseable_toObservable from "./Promiseable/__internal__/Promiseable.toObservable";
+import { PromiseableLike } from "../containers.js";
+import { ToObservable } from "../rx.js";
+import Observable_toPromise from "../rx/Observable/__internal__/Observable.toPromise.js";
+import Promiseable_toObservable from "./Promiseable/__internal__/Promiseable.toObservable.js";
 
 /**
  * @category Constructor

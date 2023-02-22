@@ -1,19 +1,19 @@
-import { SideEffect1, Optional } from "./functions.js";
+import { Optional, SideEffect1 } from "./functions.js";
 /** @ignore */
-declare const DisposableLike_add: unique symbol;
+export declare const DisposableLike_add: unique symbol;
 /** @ignore */
-declare const DisposableLike_dispose: unique symbol;
+export declare const DisposableLike_dispose: unique symbol;
 /** @ignore */
-declare const DisposableLike_error: unique symbol;
+export declare const DisposableLike_error: unique symbol;
 /** @ignore */
-declare const DisposableLike_isDisposed: unique symbol;
-type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
+export declare const DisposableLike_isDisposed: unique symbol;
+export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
  *
  * @noInheritDoc
  */
-interface DisposableLike {
+export interface DisposableLike {
     /**
      * The error the `Disposable` was disposed with if disposed.
      */
@@ -36,4 +36,3 @@ interface DisposableLike {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
-export { DisposableLike, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, DisposableOrTeardown };

@@ -1,7 +1,7 @@
-import { SequenceLike } from "../../../containers";
-import { pipe } from "../../../functions";
-import ReadonlyArray_toSequence from "../../ReadonlyArray/__internal__/ReadonlyArray.toSequence";
-import ReadonlyArray_concatAll from "./Sequence.concatAll";
+import { SequenceLike } from "../../../containers.js";
+import { pipe } from "../../../functions.js";
+import ReadonlyArray_toSequence from "../../ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
+import ReadonlyArray_concatAll from "./Sequence.concatAll.js";
 
 const Sequence_concat = <T>(
   ...sequences: readonly SequenceLike<T>[]

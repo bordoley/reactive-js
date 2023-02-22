@@ -1,7 +1,7 @@
-import { Repeat } from "../../../containers";
-import { Predicate, isNone, isNumber } from "../../../functions";
-import { ObservableLike } from "../../../rx";
-import Observable_repeatOrRetry from "./Observable.repeatOrRetry";
+import { Repeat } from "../../../containers.js";
+import { Predicate, isNone, isNumber } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
+import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
 
 const Observable_repeat: Repeat<ObservableLike>["repeat"] =
   /*@__PURE__*/ (() => {

@@ -3,14 +3,14 @@ import {
   createInstanceFactory,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { SideEffect1, error, none, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { SideEffect1, error, none, pipe } from "../../../functions.js";
 import {
   ReactiveContainerLike_sinkInto,
   RunnableLike,
   SinkLike,
-} from "../../../rx";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
+} from "../../../rx.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 
 const Runnable_create: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T> =
   /*@__PURE__*/ (<T>() => {

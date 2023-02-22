@@ -1,5 +1,5 @@
-import { Updater } from "../../../functions";
-import { DisposableLike, DisposableLike_dispose } from "../../../util";
+import { Updater } from "../../../functions.js";
+import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 
 const Disposable_dispose =
   <T extends DisposableLike>(e?: Error): Updater<T> =>

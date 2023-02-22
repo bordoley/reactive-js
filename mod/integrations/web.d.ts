@@ -1,25 +1,25 @@
-import { Updater, Function1 } from "../functions.js";
+import { Function1, Updater } from "../functions.js";
 import { ObservableLike } from "../rx.js";
 import { DispatcherLike_dispatch, SchedulerLike } from "../scheduling.js";
 import { StreamLike, StreamableLike, StreamableLike_stream } from "../streaming.js";
 /**
  * @noInheritDoc
  */
-interface WindowLocationURI {
+export interface WindowLocationURI {
     readonly title: string;
     readonly path: string;
     readonly query: string;
     readonly fragment: string;
 }
 /** @ignore */
-declare const WindowLocationStreamLike_goBack: unique symbol;
+export declare const WindowLocationStreamLike_goBack: unique symbol;
 /** @ignore */
-declare const WindowLocationStreamLike_canGoBack: unique symbol;
+export declare const WindowLocationStreamLike_canGoBack: unique symbol;
 /**
  * @noInheritDoc
  * @category Container
  */
-interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
+export interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
     [DispatcherLike_dispatch](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
         readonly replace?: boolean;
     }): void;
@@ -29,7 +29,7 @@ interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI>
 /**
  * @noInheritDoc
  */
-interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike> {
+export interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike> {
     [StreamableLike_stream](scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): WindowLocationStreamLike;
@@ -37,17 +37,16 @@ interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLoca
 /**
  * @noInheritDoc
  */
-interface FetchRequest extends RequestInit {
+export interface FetchRequest extends RequestInit {
     readonly uri: string;
 }
-declare const createEventSource: (url: string | URL, options?: EventSourceInit & {
+export declare const createEventSource: (url: string | URL, options?: EventSourceInit & {
     readonly events?: readonly string[];
 }) => ObservableLike<{
     readonly id: string;
     readonly type: string;
     readonly data: string;
 }>;
-declare const fetch: <T>(onResponse: Function1<Response, Promise<T> | ObservableLike<T>>) => Function1<FetchRequest | string, ObservableLike<T>>;
-declare const addEventListener: <T>(eventName: string, selector: Function1<Event, T>) => Function1<EventTarget, ObservableLike<T>>;
-declare const windowLocation: WindowLocationStreamableLike;
-export { FetchRequest, WindowLocationStreamLike, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamableLike, WindowLocationURI, addEventListener, createEventSource, fetch, windowLocation };
+export declare const fetch: <T>(onResponse: Function1<Response, Promise<T> | ObservableLike<T>>) => Function1<FetchRequest | string, ObservableLike<T>>;
+export declare const addEventListener: <T>(eventName: string, selector: Function1<Event, T>) => Function1<EventTarget, ObservableLike<T>>;
+export declare const windowLocation: WindowLocationStreamableLike;

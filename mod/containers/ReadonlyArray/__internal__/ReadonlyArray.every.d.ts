@@ -1,3 +1,3 @@
-import { Predicate, Function1 } from "../../../functions.js";
+import { Function1, Predicate } from "../../../functions.js";
 declare const ReadonlyArray_every: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
-export { ReadonlyArray_every as default };
+export default ReadonlyArray_every;

@@ -5,7 +5,7 @@ import {
   isSome,
   newInstance,
   none,
-} from "../../../functions";
+} from "../../../functions.js";
 import {
   QueueLike,
   QueueLike_clear,
@@ -13,7 +13,7 @@ import {
   QueueLike_peek,
   QueueLike_pop,
   QueueLike_push,
-} from "../util.internal";
+} from "../util.internal.js";
 
 const computeParentIndex = (index: number) => floor((index - 1) / 2);
 

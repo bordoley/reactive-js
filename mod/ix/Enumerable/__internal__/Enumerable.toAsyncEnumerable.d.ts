@@ -1,3 +1,3 @@
-import { ToAsyncEnumerable, EnumerableLike } from "../../../ix.js";
+import { EnumerableLike, ToAsyncEnumerable } from "../../../ix.js";
 declare const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<EnumerableLike>["toAsyncEnumerable"];
-export { Enumerable_toAsyncEnumerable as default };
+export default Enumerable_toAsyncEnumerable;

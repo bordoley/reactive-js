@@ -4,4 +4,4 @@ declare const Observable_mergeAll: ConcatAll<ObservableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
 }>["concatAll"];
-export { Observable_mergeAll as default };
+export default Observable_mergeAll;

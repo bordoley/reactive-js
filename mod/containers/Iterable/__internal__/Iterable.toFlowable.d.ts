@@ -4,4 +4,4 @@ declare const Iterable_toFlowable: ToFlowable<IterableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["toFlowable"];
-export { Iterable_toFlowable as default };
+export default Iterable_toFlowable;

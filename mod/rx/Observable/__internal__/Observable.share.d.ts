@@ -4,4 +4,4 @@ import { SchedulerLike } from "../../../scheduling.js";
 declare const Observable_share: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => Function1<ObservableLike<T>, ObservableLike<T>>;
-export { Observable_share as default };
+export default Observable_share;

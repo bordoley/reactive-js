@@ -1,6 +1,6 @@
-import { Function1, pipe } from "../../../functions";
-import { StreamLike, StreamableLike } from "../../../streaming";
-import Streamable_sinkInto from "../../Streamable/__internal__/Streamable.sinkInto";
+import { Function1, pipe } from "../../../functions.js";
+import { StreamLike, StreamableLike } from "../../../streaming.js";
+import Streamable_sinkInto from "../../Streamable/__internal__/Streamable.sinkInto.js";
 
 const Stream_sourceFrom =
   <TReq, T, TSinkStream extends StreamLike<T, TReq>>(

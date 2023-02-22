@@ -1,1 +1,1 @@
-export {};
+import "./modules/node.test.js";

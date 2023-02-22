@@ -7,15 +7,15 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { returns, unsafeCast } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { returns, unsafeCast } from "../../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
-} from "../../../ix";
-import { DisposableLike } from "../../../util";
+} from "../../../ix.js";
+import { DisposableLike } from "../../../util.js";
 
 type TDelegatingEnumeratorMixinReturn<T> = Omit<
   EnumeratorLike<T>,

@@ -1,6 +1,6 @@
-import { pipe, returns } from "../../../functions";
-import { PauseableLike, PauseableState_paused } from "../../../scheduling";
-import Dispatcher_dispatch from "../../Dispatcher/__internal__/Dispatcher.dispatch";
+import { pipe, returns } from "../../../functions.js";
+import { PauseableLike, PauseableState_paused } from "../../../scheduling.js";
+import Dispatcher_dispatch from "../../Dispatcher/__internal__/Dispatcher.dispatch.js";
 
 const Pauseable_pause = <TPauseable extends PauseableLike>(
   pauseable: TPauseable,

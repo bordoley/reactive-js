@@ -1,11 +1,11 @@
-import { createInstanceFactory } from "../../../__internal__/mixins";
-import { Scan } from "../../../containers";
-import StatefulContainer_scan from "../../../containers/StatefulContainer/__internal__/StatefulContainer.scan";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { pipe } from "../../../functions";
-import { RunnableLike } from "../../../rx";
-import Sink_scanMixin from "../../Sink/__internal__/Sink.scanMixin";
-import Runnable_liftT from "./Runnable.liftT";
+import { createInstanceFactory } from "../../../__internal__/mixins.js";
+import { Scan } from "../../../containers.js";
+import StatefulContainer_scan from "../../../containers/StatefulContainer/__internal__/StatefulContainer.scan.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { pipe } from "../../../functions.js";
+import { RunnableLike } from "../../../rx.js";
+import Sink_scanMixin from "../../Sink/__internal__/Sink.scanMixin.js";
+import Runnable_liftT from "./Runnable.liftT.js";
 
 const Runnable_scan: Scan<RunnableLike>["scan"] = /*@__PURE__*/ (<
   T,

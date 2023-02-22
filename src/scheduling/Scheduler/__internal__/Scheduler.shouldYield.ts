@@ -1,4 +1,4 @@
-import { SchedulerLike_shouldYield } from "../../../scheduling";
+import { SchedulerLike_shouldYield } from "../../../scheduling.js";
 
 const Scheduler_shouldYield = (scheduler: {
   [SchedulerLike_shouldYield]: boolean;

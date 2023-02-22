@@ -5,23 +5,23 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { isSome, none, pipe, unsafeCast } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { isSome, none, pipe, unsafeCast } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike_current,
   SourceLike,
   SourceLike_move,
   ToEnumerable,
-} from "../../../ix";
-import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create";
-import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin";
-import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal";
+} from "../../../ix.js";
+import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
+import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal.js";
 import {
   EnumerableObservableLike,
   ObserverLike,
   SinkLike_notify,
-} from "../../../rx";
+} from "../../../rx.js";
 import {
   ContinuationLike,
   SchedulerLike,
@@ -30,17 +30,17 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-} from "../../../scheduling";
-import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run";
-import Scheduler_isInContinuation from "../../../scheduling/Scheduler/__internal__/Scheduler.isInContinuation";
-import { DisposableLike } from "../../../util";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
+} from "../../../scheduling.js";
+import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run.js";
+import Scheduler_isInContinuation from "../../../scheduling/Scheduler/__internal__/Scheduler.isInContinuation.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 
 const EnumerableObservable_toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {

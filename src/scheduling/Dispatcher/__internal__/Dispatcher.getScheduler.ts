@@ -1,4 +1,7 @@
-import { DispatcherLike_scheduler, SchedulerLike } from "../../../scheduling";
+import {
+  DispatcherLike_scheduler,
+  SchedulerLike,
+} from "../../../scheduling.js";
 
 const Dispatcher_getScheduler = (dispatcher: {
   [DispatcherLike_scheduler]: SchedulerLike;

@@ -1,7 +1,7 @@
-import { InteractiveContainerLike } from "../ix";
-import { DisposableLike } from "../util";
+import { InteractiveContainerLike } from "../ix.js";
+import { DisposableLike } from "../util.js";
 
-import InteractiveContainer_interact from "./InteractiveContainer/__internal__/InteractiveContainer.interact";
+import InteractiveContainer_interact from "./InteractiveContainer/__internal__/InteractiveContainer.interact.js";
 
 export const interact: <
   C extends InteractiveContainerLike<TSource, TCtx>,

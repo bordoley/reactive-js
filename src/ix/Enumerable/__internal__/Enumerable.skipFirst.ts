@@ -6,16 +6,20 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { SkipFirst } from "../../../containers";
-import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.skipFirst";
-import { TInteractive } from "../../../containers/__internal__/containers.internal";
-import { pipe } from "../../../functions";
-import { EnumerableLike, EnumeratorLike, SourceLike_move } from "../../../ix";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
-import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin";
-import DelegatingEnumerator_move from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.move";
-import Enumerable_liftT from "./Enumerable.liftT";
+} from "../../../__internal__/mixins.js";
+import { SkipFirst } from "../../../containers.js";
+import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.skipFirst.js";
+import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
+import { pipe } from "../../../functions.js";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  SourceLike_move,
+} from "../../../ix.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin.js";
+import DelegatingEnumerator_move from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.move.js";
+import Enumerable_liftT from "./Enumerable.liftT.js";
 
 const Enumerable_skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
   /*@__PURE__*/ (<T>() => {

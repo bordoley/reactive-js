@@ -1,3 +1,3 @@
-import { ContainerLike, Keep, ContainerOperator } from "../../../containers.js";
+import { ContainerLike, ContainerOperator, Keep } from "../../../containers.js";
 declare const Container_ignoreElements: <C extends ContainerLike, T>({ keep, }: Keep<C, never>) => ContainerOperator<C, unknown, T>;
-export { Container_ignoreElements as default };
+export default Container_ignoreElements;

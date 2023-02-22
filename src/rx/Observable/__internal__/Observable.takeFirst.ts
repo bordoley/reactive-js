@@ -3,18 +3,18 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { TakeFirst } from "../../../containers";
-import StatefulContainer_takeFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeFirst";
-import { pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { TakeFirst } from "../../../containers.js";
+import StatefulContainer_takeFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeFirst.js";
+import { pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import SinkLike_takeFirstMixin from "../../Sink/__internal__/Sink.takeFirstMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import SinkLike_takeFirstMixin from "../../Sink/__internal__/Sink.takeFirstMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
   /*@__PURE__*/ (() => {

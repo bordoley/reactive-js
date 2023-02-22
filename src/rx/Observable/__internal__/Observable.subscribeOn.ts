@@ -1,11 +1,11 @@
-import { pipe } from "../../../functions";
-import { ObservableLike, ObserverLike_dispatcher } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
-import Dispatcher_dispatchTo from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatchTo";
-import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo";
-import Observable_create from "./Observable.create";
-import Observable_forEach from "./Observable.forEach";
-import Observable_subscribe from "./Observable.subscribe";
+import { pipe } from "../../../functions.js";
+import { ObservableLike, ObserverLike_dispatcher } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import Dispatcher_dispatchTo from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatchTo.js";
+import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
+import Observable_create from "./Observable.create.js";
+import Observable_forEach from "./Observable.forEach.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_subscribeOn =
   <T>(scheduler: SchedulerLike) =>

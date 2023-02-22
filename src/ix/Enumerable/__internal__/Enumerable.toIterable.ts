@@ -1,9 +1,9 @@
-import { ToIterable } from "../../../containers";
-import { newInstance, pipe } from "../../../functions";
-import { EnumerableLike } from "../../../ix";
-import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent";
-import Enumerable_move from "../../Source/__internal__/Source.move";
-import Enumerable_enumerate from "./Enumerable.enumerate";
+import { ToIterable } from "../../../containers.js";
+import { newInstance, pipe } from "../../../functions.js";
+import { EnumerableLike } from "../../../ix.js";
+import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerable_move from "../../Source/__internal__/Source.move.js";
+import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
 const EnumerableIterable_enumerable = Symbol("EnumerableIterable_enumerable");
 class EnumerableIterable<T = unknown> implements Iterable<T> {

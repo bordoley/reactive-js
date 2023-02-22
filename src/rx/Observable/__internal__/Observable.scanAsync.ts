@@ -1,6 +1,6 @@
-import { ObservableLike, ScanAsync } from "../../../rx";
-import HigherOrderObservable_scanAsync from "../../__internal__/HigherOrderObservable/HigherOrderObservable.scanAsync";
-import Observable_create from "./Observable.create";
+import { ObservableLike, ScanAsync } from "../../../rx.js";
+import HigherOrderObservable_scanAsync from "../../__internal__/HigherOrderObservable/HigherOrderObservable.scanAsync.js";
+import Observable_create from "./Observable.create.js";
 
 const Observable_scanAsync: ScanAsync<
   ObservableLike,

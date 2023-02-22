@@ -1,3 +1,3 @@
-import { TakeWhile, SequenceLike } from "../../../containers.js";
+import { SequenceLike, TakeWhile } from "../../../containers.js";
 declare const Sequence_takeWhile: TakeWhile<SequenceLike>["takeWhile"];
-export { Sequence_takeWhile as default };
+export default Sequence_takeWhile;

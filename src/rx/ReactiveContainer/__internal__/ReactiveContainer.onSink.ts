@@ -5,12 +5,12 @@ import {
   isSome,
   none,
   pipe,
-} from "../../../functions";
-import { ReactiveContainerLike, SinkLike } from "../../../rx";
-import { DisposableOrTeardown } from "../../../util";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed";
-import ReactiveContainer_sinkInto from "./ReactiveContainer.sinkInto";
+} from "../../../functions.js";
+import { ReactiveContainerLike, SinkLike } from "../../../rx.js";
+import { DisposableOrTeardown } from "../../../util.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import ReactiveContainer_sinkInto from "./ReactiveContainer.sinkInto.js";
 
 const ReactiveContainer_onSink = <
   C extends ReactiveContainerLike<TSink>,

@@ -1,8 +1,8 @@
-import { ToIterable } from "../../../containers";
-import { compose, returns } from "../../../functions";
-import Enumerable_toIterable from "../../../ix/Enumerable/__internal__/Enumerable.toIterable";
-import { EnumerableObservableLike } from "../../../rx";
-import EnumerableObservable_toEnumerable from "./EnumerableObservable.toEnumerable";
+import { ToIterable } from "../../../containers.js";
+import { compose, returns } from "../../../functions.js";
+import Enumerable_toIterable from "../../../ix/Enumerable/__internal__/Enumerable.toIterable.js";
+import { EnumerableObservableLike } from "../../../rx.js";
+import EnumerableObservable_toEnumerable from "./EnumerableObservable.toEnumerable.js";
 
 const EnumerableObservable_toIterable: ToIterable<EnumerableObservableLike>["toIterable"] =
   /*@__PURE__*/ returns(

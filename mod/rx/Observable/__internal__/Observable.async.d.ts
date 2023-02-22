@@ -1,4 +1,4 @@
-import { Factory, Optional, Equality, Updater } from "../../../functions.js";
+import { Equality, Factory, Optional, Updater } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike, StreamableLike } from "../../../streaming.js";
@@ -46,11 +46,11 @@ declare const AsyncContext_index: unique symbol;
 declare const AsyncContext_cleanup: unique symbol;
 declare const AsyncContext_effects: unique symbol;
 declare const AsyncContext_mode: unique symbol;
-declare const AsyncContext_observer: unique symbol;
+export declare const AsyncContext_observer: unique symbol;
 declare const AsyncContext_runComputation: unique symbol;
 declare const AsyncContext_scheduledComputationSubscription: unique symbol;
-declare const AsyncContext_awaitOrObserve: unique symbol;
-declare const AsyncContext_memoOrUse: unique symbol;
+export declare const AsyncContext_awaitOrObserve: unique symbol;
+export declare const AsyncContext_memoOrUse: unique symbol;
 declare class AsyncContext {
     [AsyncContext_index]: number;
     readonly [AsyncContext_effects]: AsyncEffect[];
@@ -64,21 +64,21 @@ declare class AsyncContext {
     [AsyncContext_memoOrUse]<T>(shouldUse: false, f: (...args: any[]) => T, ...args: unknown[]): T;
     [AsyncContext_memoOrUse]<T extends DisposableLike>(shouldUse: true, f: (...args: any[]) => T, ...args: unknown[]): T;
 }
-declare const assertCurrentContext: () => AsyncContext;
-declare const Observable_async: <T>(computation: Factory<T>, { mode }?: {
+export declare const assertCurrentContext: () => AsyncContext;
+export declare const Observable_async: <T>(computation: Factory<T>, { mode }?: {
     mode?: "batched" | "combine-latest" | undefined;
 }) => ObservableLike<T>;
-declare const Observable_async__memo: <T>(f: (...args: any[]) => T, ...args: unknown[]) => T;
-declare const Observable_async__await: <T>(observable: ObservableLike<T>) => T;
-declare const Observable_async__observe: <T>(observable: ObservableLike<T>) => Optional<T>;
-declare const Observable_async__do: (f: (...args: any[]) => void, ...args: unknown[]) => void;
-declare const Observable_async__using: <T extends DisposableLike>(f: (...args: any[]) => T, ...args: unknown[]) => T;
-declare function Observable_async__currentScheduler(): SchedulerLike;
-declare const Observable_async__stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
+export declare const Observable_async__memo: <T>(f: (...args: any[]) => T, ...args: unknown[]) => T;
+export declare const Observable_async__await: <T>(observable: ObservableLike<T>) => T;
+export declare const Observable_async__observe: <T>(observable: ObservableLike<T>) => Optional<T>;
+export declare const Observable_async__do: (f: (...args: any[]) => void, ...args: unknown[]) => void;
+export declare const Observable_async__using: <T extends DisposableLike>(f: (...args: any[]) => T, ...args: unknown[]) => T;
+export declare function Observable_async__currentScheduler(): SchedulerLike;
+export declare const Observable_async__stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
 }) => TStream;
-declare const Observable_async__state: <T>(initialState: () => T, options?: {
+export declare const Observable_async__state: <T>(initialState: () => T, options?: {
     readonly equality?: Optional<Equality<T>>;
 }) => StreamLike<Updater<T>, T>;
-export { AsyncContext_awaitOrObserve, AsyncContext_memoOrUse, AsyncContext_observer, Observable_async, Observable_async__await, Observable_async__currentScheduler, Observable_async__do, Observable_async__memo, Observable_async__observe, Observable_async__state, Observable_async__stream, Observable_async__using, assertCurrentContext };
+export {};

@@ -5,9 +5,9 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { ContainerOperator } from "../../../containers";
-import { none, pipe, returns, unsafeCast } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { ContainerOperator } from "../../../containers.js";
+import { none, pipe, returns, unsafeCast } from "../../../functions.js";
 import {
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
@@ -18,21 +18,21 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
   SubjectLike,
-} from "../../../rx";
-import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount";
-import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay";
-import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto";
-import Subject_create from "../../../rx/Subject/__internal__/Subject.create";
-import Subject_publish from "../../../rx/Subject/__internal__/Subject.publish";
+} from "../../../rx.js";
+import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
+import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
+import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Subject_create from "../../../rx/Subject/__internal__/Subject.create.js";
+import Subject_publish from "../../../rx/Subject/__internal__/Subject.publish.js";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
-} from "../../../scheduling";
-import { StreamLike } from "../../../streaming";
-import add from "../../../util/Disposable/__internal__/Disposable.add";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
+} from "../../../scheduling.js";
+import { StreamLike } from "../../../streaming.js";
+import add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 const Stream_mixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T>,

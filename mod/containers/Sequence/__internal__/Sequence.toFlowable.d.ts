@@ -4,4 +4,4 @@ declare const Sequence_toFlowable: ToFlowable<SequenceLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["toFlowable"];
-export { Sequence_toFlowable as default };
+export default Sequence_toFlowable;

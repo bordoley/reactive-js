@@ -1,6 +1,6 @@
-import { SequenceLike, SkipFirst } from "../../../containers";
+import { SequenceLike, SkipFirst } from "../../../containers.js";
 
-import Sequence_seek from "./Sequence.seek";
+import Sequence_seek from "./Sequence.seek.js";
 
 const Sequence_skipFirst: SkipFirst<SequenceLike>["skipFirst"] =
   <T>(options: { readonly count?: number } = {}) =>

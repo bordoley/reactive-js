@@ -28,9 +28,9 @@
 
   ↳ [`DistinctUntilChanged`](containers.DistinctUntilChanged.md)
 
-  ↳ [`Empty`](containers.Empty.md)
-
   ↳ [`EverySatisfy`](containers.EverySatisfy.md)
+
+  ↳ [`Empty`](containers.Empty.md)
 
   ↳ [`ForEach`](containers.ForEach.md)
 
@@ -38,11 +38,11 @@
 
   ↳ [`ForkZip`](containers.ForkZip.md)
 
+  ↳ [`FromReadonlyArray`](containers.FromReadonlyArray.md)
+
   ↳ [`FromAsyncIterable`](containers.FromAsyncIterable.md)
 
   ↳ [`FromIterable`](containers.FromIterable.md)
-
-  ↳ [`FromReadonlyArray`](containers.FromReadonlyArray.md)
 
   ↳ [`FromSequence`](containers.FromSequence.md)
 
@@ -106,13 +106,13 @@
 
   ↳ [`Timeout`](rx.Timeout.md)
 
-  ↳ [`ToEnumerableObservable`](rx.ToEnumerableObservable.md)
-
   ↳ [`ToObservable`](rx.ToObservable.md)
 
-  ↳ [`ToRunnable`](rx.ToRunnable.md)
-
   ↳ [`ToRunnableObservable`](rx.ToRunnableObservable.md)
+
+  ↳ [`ToEnumerableObservable`](rx.ToEnumerableObservable.md)
+
+  ↳ [`ToRunnable`](rx.ToRunnable.md)
 
   ↳ [`WithLatestFrom`](rx.WithLatestFrom.md)
 

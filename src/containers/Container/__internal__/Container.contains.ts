@@ -2,9 +2,9 @@ import {
   ContainerLike,
   ContainerOperator,
   SomeSatisfy,
-} from "../../../containers";
+} from "../../../containers.js";
 
-import { Equality, isEqualTo } from "../../../functions";
+import { Equality, isEqualTo } from "../../../functions.js";
 
 const Container_contains = <C extends ContainerLike, T>(
   { someSatisfy }: SomeSatisfy<C>,

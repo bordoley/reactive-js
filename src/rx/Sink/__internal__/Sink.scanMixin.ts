@@ -7,7 +7,7 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
+} from "../../../__internal__/mixins.js";
 import {
   Factory,
   Reducer,
@@ -15,10 +15,10 @@ import {
   none,
   pipe,
   returns,
-} from "../../../functions";
-import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
+} from "../../../functions.js";
+import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 
 const Sink_scanMixin: <T, TAcc>() => Mixin3<
   SinkLike<T>,

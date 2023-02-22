@@ -6,12 +6,12 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Predicate, none, pipe, returns } from "../../../functions";
-import { SinkLike, SinkLike_notify } from "../../../rx";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal";
+} from "../../../__internal__/mixins.js";
+import { Predicate, none, pipe, returns } from "../../../functions.js";
+import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal.js";
 
 const Sink_takeWhileMixin: <T>() => Mixin3<
   SinkLike<T>,

@@ -1,8 +1,8 @@
-import { compose, returns } from "../../../functions";
-import { ToAsyncEnumerable } from "../../../ix";
-import Enumerable_toAsyncEnumerable from "../../../ix/Enumerable/__internal__/Enumerable.toAsyncEnumerable";
-import { EnumerableObservableLike } from "../../../rx";
-import EnumerableObservable_toEnumerable from "./EnumerableObservable.toEnumerable";
+import { compose, returns } from "../../../functions.js";
+import { ToAsyncEnumerable } from "../../../ix.js";
+import Enumerable_toAsyncEnumerable from "../../../ix/Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
+import { EnumerableObservableLike } from "../../../rx.js";
+import EnumerableObservable_toEnumerable from "./EnumerableObservable.toEnumerable.js";
 
 const EnumerableObservable_toAsyncEnumerable: ToAsyncEnumerable<EnumerableObservableLike>["toAsyncEnumerable"] =
   /*@__PURE__*/ returns(

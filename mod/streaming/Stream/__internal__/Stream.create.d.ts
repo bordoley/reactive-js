@@ -5,4 +5,4 @@ import { StreamLike } from "../../../streaming.js";
 declare const Stream_create: <TReq, T>(op: ContainerOperator<ObservableLike<unknown>, TReq, T>, scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => StreamLike<TReq, T>;
-export { Stream_create as default };
+export default Stream_create;

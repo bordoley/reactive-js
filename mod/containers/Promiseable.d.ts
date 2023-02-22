@@ -1,15 +1,13 @@
-import { Function1 } from "../functions.js";
-import { ObservableLike, ToObservable } from "../rx.js";
-import { SchedulerLike } from "../scheduling.js";
 import { PromiseableLike } from "../containers.js";
+import { ToObservable } from "../rx.js";
 /**
  * @category Constructor
  */
-declare const fromObservable: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<T>;
-declare const toObservable: ToObservable<PromiseableLike>["toObservable"];
+export declare const fromObservable: <T>(scheduler: import("../scheduling.js").SchedulerLike) => (observable: import("../rx.js").ObservableLike<T>) => PromiseLike<T>;
+export declare const toObservable: ToObservable<PromiseableLike>["toObservable"];
 /** @ignore */
 declare const Promiseable: {
-    fromObservable: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<T>;
-    toObservable: <T_1>(options?: undefined) => Function1<PromiseableLike<T_1>, ObservableLike<T_1>>;
+    fromObservable: <T>(scheduler: import("../scheduling.js").SchedulerLike) => (observable: import("../rx.js").ObservableLike<T>) => PromiseLike<T>;
+    toObservable: <T_1>(options?: undefined) => import("../functions.js").Function1<PromiseableLike<T_1>, import("../rx.js").ObservableLike<T_1>>;
 };
-export { Promiseable as default, fromObservable, toObservable };
+export default Promiseable;

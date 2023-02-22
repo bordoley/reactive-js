@@ -1,0 +1,25 @@
+const appendReferenceTypes = async (path, name) => {
+  const data = await Deno.readTextFile(path);
+
+  const dataWithReferenceHeader = `/// <reference types="./${name.replace(
+    ".js",
+    ".d.ts",
+  )}" />\n\n${data}`;
+
+  await Deno.writeTextFile(path, dataWithReferenceHeader);
+};
+
+const findSrcFilesAndAppendReferenceTypes = async dir => {
+  for await (const dirEntry of Deno.readDir(dir)) {
+    const path = dir + "/" + dirEntry.name;
+
+    if (dirEntry.isFile && dirEntry.name.endsWith(".js")) {
+      await appendReferenceTypes(path, dirEntry.name);
+    } else if (dirEntry.isDirectory) {
+      await findSrcFilesAndAppendReferenceTypes(path);
+    }
+  }
+};
+
+const srcDir = "./mod";
+await findSrcFilesAndAppendReferenceTypes(srcDir);

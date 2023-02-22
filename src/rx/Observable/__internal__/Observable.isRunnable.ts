@@ -2,7 +2,7 @@ import {
   ObservableLike,
   ObservableLike_isRunnable,
   RunnableObservableLike,
-} from "../../../rx";
+} from "../../../rx.js";
 
 const Observable_isRunnable = (
   obs: ObservableLike,

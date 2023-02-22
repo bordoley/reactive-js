@@ -2,18 +2,18 @@
  * @jest-environment node
  */
 
-import "./modules/AsyncEnumerable.test";
-import "./modules/Disposable.test";
-import "./modules/Enumerable.test";
-import "./modules/EnumerableObservable.test";
-import "./modules/Flowable.test";
-import "./modules/Iterable.test";
-import "./modules/Observable.test";
-import "./modules/Promiseable.test";
-import "./modules/ReadonlyArray.test";
-import "./modules/Runnable.test";
-import "./modules/RunnableObservable.test";
-import "./modules/Sequence.test";
-import "./modules/Streamable.test";
-import "./modules/Subject.test";
-import "./modules/queues.test";
+import "./modules/AsyncEnumerable.test.js";
+import "./modules/Disposable.test.js";
+import "./modules/Enumerable.test.js";
+import "./modules/EnumerableObservable.test.js";
+import "./modules/Flowable.test.js";
+import "./modules/Iterable.test.js";
+import "./modules/Observable.test.js";
+import "./modules/Promiseable.test.js";
+import "./modules/ReadonlyArray.test.js";
+import "./modules/Runnable.test.js";
+import "./modules/RunnableObservable.test.js";
+import "./modules/Sequence.test.js";
+import "./modules/Streamable.test.js";
+import "./modules/Subject.test.js";
+import "./modules/queues.test.js";

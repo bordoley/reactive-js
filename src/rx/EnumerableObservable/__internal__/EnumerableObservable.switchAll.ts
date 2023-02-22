@@ -1,7 +1,7 @@
-import { ConcatAll } from "../../../containers";
-import { EnumerableObservableLike } from "../../../rx";
-import HigherOrderObservable_switchAll from "../../__internal__/HigherOrderObservable/HigherOrderObservable.switchAll";
-import EnumerableObservable_lift from "./EnumerableObservable.lift";
+import { ConcatAll } from "../../../containers.js";
+import { EnumerableObservableLike } from "../../../rx.js";
+import HigherOrderObservable_switchAll from "../../__internal__/HigherOrderObservable/HigherOrderObservable.switchAll.js";
+import EnumerableObservable_lift from "./EnumerableObservable.lift.js";
 
 const EnumerableObservable_switchAll: ConcatAll<EnumerableObservableLike>["concatAll"] =
   /*@__PURE__*/ HigherOrderObservable_switchAll<EnumerableObservableLike>(

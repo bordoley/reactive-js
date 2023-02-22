@@ -1,7 +1,7 @@
-import { ConcatAll } from "../../../containers";
-import { ObservableLike } from "../../../rx";
-import HigherOrderObservable_mergeAll from "../../__internal__/HigherOrderObservable/HigherOrderObservable.mergeAll";
-import Observable_lift from "./Observable.lift";
+import { ConcatAll } from "../../../containers.js";
+import { ObservableLike } from "../../../rx.js";
+import HigherOrderObservable_mergeAll from "../../__internal__/HigherOrderObservable/HigherOrderObservable.mergeAll.js";
+import Observable_lift from "./Observable.lift.js";
 
 const Observable_mergeAll: ConcatAll<
   ObservableLike,

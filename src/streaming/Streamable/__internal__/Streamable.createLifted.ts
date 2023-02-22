@@ -1,9 +1,9 @@
-import { ContainerOperator } from "../../../containers";
-import { composeUnsafe, getLength } from "../../../functions";
-import { ObservableLike } from "../../../rx";
-import { StreamableLike } from "../../../streaming";
-import Stream_create from "../../Stream/__internal__/Stream.create";
-import Streamable_create from "./Streamable.create";
+import { ContainerOperator } from "../../../containers.js";
+import { composeUnsafe, getLength } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
+import { StreamableLike } from "../../../streaming.js";
+import Stream_create from "../../Stream/__internal__/Stream.create.js";
+import Streamable_create from "./Streamable.create.js";
 
 interface CreateLiftedStreamable {
   <T, A>(op1: ContainerOperator<ObservableLike, T, A>): StreamableLike<T, A>;

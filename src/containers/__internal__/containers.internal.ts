@@ -4,9 +4,9 @@ import {
   ContainerOperator,
   StatefulContainerLike,
   StatefulContainerLike_state,
-} from "../../containers";
-import { Function1 } from "../../functions";
-import { DisposableLike } from "../../util";
+} from "../../containers.js";
+import { Function1 } from "../../functions.js";
+import { DisposableLike } from "../../util.js";
 
 export type StatefulContainerStateOf<
   C extends StatefulContainerLike,

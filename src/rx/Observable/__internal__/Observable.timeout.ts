@@ -7,33 +7,33 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import Container_throws from "../../../containers/Container/__internal__/Container.throws";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable";
-import { isNumber, none, partial, pipe, returns } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import Container_throws from "../../../containers/Container/__internal__/Container.throws.js";
+import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   SinkLike_notify,
   Timeout,
-} from "../../../rx";
-import { DisposableLike } from "../../../util";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed";
-import DisposableRef_mixin from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin";
-import MutableRef_get from "../../../util/__internal__/MutableRef/__internal__/MutableRef.get";
+} from "../../../rx.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
+import DisposableRef_mixin from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin.js";
+import MutableRef_get from "../../../util/__internal__/MutableRef/__internal__/MutableRef.get.js";
 import {
   MutableRefLike,
   MutableRefLike_current,
-} from "../../../util/__internal__/util.internal";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Observable_concat from "./Observable.concat";
-import Observable_isRunnable from "./Observable.isRunnable";
-import Observable_lift from "./Observable.lift";
-import Observable_map from "./Observable.map";
-import Observable_subscribe from "./Observable.subscribe";
+} from "../../../util/__internal__/util.internal.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observable_concat from "./Observable.concat.js";
+import Observable_isRunnable from "./Observable.isRunnable.js";
+import Observable_lift from "./Observable.lift.js";
+import Observable_map from "./Observable.map.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
   T,

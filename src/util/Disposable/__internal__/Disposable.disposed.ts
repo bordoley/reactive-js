@@ -1,7 +1,7 @@
-import { pipe } from "../../../functions";
-import { DisposableLike } from "../../../util";
-import create from "./Disposable.create";
-import dispose from "./Disposable.dispose";
+import { pipe } from "../../../functions.js";
+import { DisposableLike } from "../../../util.js";
+import create from "./Disposable.create.js";
+import dispose from "./Disposable.dispose.js";
 
 const Disposable_disposed: DisposableLike = /*@__PURE__*/ (() => {
   const instance = create();

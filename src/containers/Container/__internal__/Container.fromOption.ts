@@ -2,8 +2,8 @@ import {
   ContainerLike,
   ContainerOf,
   FromReadonlyArray,
-} from "../../../containers";
-import { Function1, Optional, isSome, pipe } from "../../../functions";
+} from "../../../containers.js";
+import { Function1, Optional, isSome, pipe } from "../../../functions.js";
 
 const Container_fromOption = <
   C extends ContainerLike,

@@ -1,7 +1,7 @@
-import { Equality, Factory, Updater } from "../../../functions";
-import { StreamableLike } from "../../../streaming";
+import { Equality, Factory, Updater } from "../../../functions.js";
+import { StreamableLike } from "../../../streaming.js";
 
-import Streamable_createActionReducer from "./Streamable.createActionReducer";
+import Streamable_createActionReducer from "./Streamable.createActionReducer.js";
 
 const updateReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);
 

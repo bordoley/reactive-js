@@ -1,11 +1,11 @@
-import { Function1, pipe } from "../../../functions";
-import { MulticastObservableLike, ObservableLike } from "../../../rx";
-import { SchedulerLike } from "../../../scheduling";
-import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo";
-import Subject_create from "../../Subject/__internal__/Subject.create";
-import Subject_publishTo from "../../Subject/__internal__/Subject.publishTo";
-import Observable_forEach from "./Observable.forEach";
-import Observable_subscribe from "./Observable.subscribe";
+import { Function1, pipe } from "../../../functions.js";
+import { MulticastObservableLike, ObservableLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
+import Subject_create from "../../Subject/__internal__/Subject.create.js";
+import Subject_publishTo from "../../Subject/__internal__/Subject.publishTo.js";
+import Observable_forEach from "./Observable.forEach.js";
+import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_multicast =
   <T>(

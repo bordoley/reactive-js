@@ -7,8 +7,8 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Optional, pipe, returns, unsafeCast } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { Optional, pipe, returns, unsafeCast } from "../../../functions.js";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -16,10 +16,10 @@ import {
   DisposableLike_error,
   DisposableLike_isDisposed,
   DisposableOrTeardown,
-} from "../../../util";
-import { DelegatingDisposableLike } from "../../__internal__/util.internal";
-import Disposable_dispose from "./Disposable.dispose";
-import Disposable_onDisposed from "./Disposable.onDisposed";
+} from "../../../util.js";
+import { DelegatingDisposableLike } from "../../__internal__/util.internal.js";
+import Disposable_dispose from "./Disposable.dispose.js";
+import Disposable_onDisposed from "./Disposable.onDisposed.js";
 
 const Disposable_delegatingMixin: <
   TDisposable extends DisposableLike = DisposableLike,

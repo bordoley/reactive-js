@@ -3,4 +3,4 @@ import { DispatcherLike_dispatch } from "../../../scheduling.js";
 declare const Dispatcher_dispatchTo: <T>(dispatcher: {
     [DispatcherLike_dispatch](v: T): void;
 }) => SideEffect1<T>;
-export { Dispatcher_dispatchTo as default };
+export default Dispatcher_dispatchTo;

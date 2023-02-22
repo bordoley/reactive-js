@@ -2,4 +2,4 @@ import { SchedulerLike_inContinuation } from "../../../scheduling.js";
 declare const Scheduler_isInContinuation: (scheduler: {
     readonly [SchedulerLike_inContinuation]: boolean;
 }) => boolean;
-export { Scheduler_isInContinuation as default };
+export default Scheduler_isInContinuation;

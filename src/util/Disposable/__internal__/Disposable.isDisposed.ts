@@ -1,4 +1,4 @@
-import { DisposableLike_isDisposed } from "../../../util";
+import { DisposableLike_isDisposed } from "../../../util.js";
 
 const Disposable_isDisposed = (disposable: {
   [DisposableLike_isDisposed]: boolean;

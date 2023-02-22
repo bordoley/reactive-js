@@ -3,19 +3,19 @@ import {
   include,
   init,
   mix,
-} from "../../../__internal__/mixins";
-import { TakeWhile } from "../../../containers";
-import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeWhile";
-import { TReactive } from "../../../containers/__internal__/containers.internal";
-import { Predicate, pipe } from "../../../functions";
+} from "../../../__internal__/mixins.js";
+import { TakeWhile } from "../../../containers.js";
+import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeWhile.js";
+import { TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { Predicate, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_scheduler,
-} from "../../../rx";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import Sink_takeWhileMixin from "../../Sink/__internal__/Sink.takeWhileMixin";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT";
+} from "../../../rx.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Sink_takeWhileMixin from "../../Sink/__internal__/Sink.takeWhileMixin.js";
+import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
 
 const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {

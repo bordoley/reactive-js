@@ -1,10 +1,10 @@
-import { newInstance } from "../../../functions";
-import { SchedulerLike } from "../../../scheduling";
+import { newInstance } from "../../../functions.js";
+import { SchedulerLike } from "../../../scheduling.js";
 import {
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
-} from "../../../streaming";
+} from "../../../streaming.js";
 
 const Streamable_stream = Symbol("Streamable_stream");
 

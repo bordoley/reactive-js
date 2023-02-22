@@ -1,9 +1,9 @@
-import { isSome, pipe, raiseError } from "../../../functions";
-import { RunnableLike } from "../../../rx";
-import { DisposableLike_error } from "../../../util";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Sink_create from "../../Sink/__internal__/Sink.create";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
+import { isSome, pipe, raiseError } from "../../../functions.js";
+import { RunnableLike } from "../../../rx.js";
+import { DisposableLike_error } from "../../../util.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Sink_create from "../../Sink/__internal__/Sink.create.js";
+import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 
 const Runnable_run =
   <T>() =>

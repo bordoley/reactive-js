@@ -4,4 +4,4 @@ declare const Iterable_toRunnableObservable: ToRunnableObservable<IterableLike, 
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["toRunnableObservable"];
-export { Iterable_toRunnableObservable as default };
+export default Iterable_toRunnableObservable;

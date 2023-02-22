@@ -13,7 +13,8 @@ jobs:
         with:
           node-version: "16.x"
       - run: yarn install --frozen-lockfile --non-interactive
-      - run: yarn run build
+      - run: yarn run lint
+      - run: yarn run typecheck
       - run: yarn run test-coverage
       - name: Coveralls
         uses: coverallsapp/github-action@master

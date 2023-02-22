@@ -8,14 +8,14 @@ import {
   init,
   mix,
   props,
-} from "../../../__internal__/mixins";
-import { Zip } from "../../../containers";
-import Container_keepType from "../../../containers/Container/__internal__/Container.keepType";
-import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every";
-import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach";
-import ReadonlyArray_keep from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keep";
-import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map";
-import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some";
+} from "../../../__internal__/mixins.js";
+import { Zip } from "../../../containers.js";
+import Container_keepType from "../../../containers/Container/__internal__/Container.keepType.js";
+import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
+import ReadonlyArray_keep from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keep.js";
+import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import {
   compose,
   getLength,
@@ -23,42 +23,42 @@ import {
   isTrue,
   none,
   pipe,
-} from "../../../functions";
+} from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   SourceLike_move,
-} from "../../../ix";
-import Enumerable_enumerate from "../../../ix/Enumerable/__internal__/Enumerable.enumerate";
-import Enumerable_toRunnableObservable from "../../../ix/Enumerable/__internal__/Enumerable.toRunnableObservable";
-import Enumerable_zip from "../../../ix/Enumerable/__internal__/Enumerable.zip";
-import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent";
-import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent";
-import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move";
+} from "../../../ix.js";
+import Enumerable_enumerate from "../../../ix/Enumerable/__internal__/Enumerable.enumerate.js";
+import Enumerable_toRunnableObservable from "../../../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
+import Enumerable_zip from "../../../ix/Enumerable/__internal__/Enumerable.zip.js";
+import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
+import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
 import {
   ObservableLike,
   ObserverLike,
   SinkLike,
   SinkLike_notify,
-} from "../../../rx";
-import { DisposableLike, DisposableLike_isDisposed } from "../../../util";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed";
-import EnumerableObservable_toEnumerable from "../../EnumerableObservable/__internal__/EnumerableObservable.toEnumerable";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin";
-import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom";
-import Observable_allAreEnumerable from "./Observable.allAreEnumerable";
-import Observable_allAreRunnable from "./Observable.allAreRunnable";
-import Observable_create from "./Observable.create";
-import Observable_isEnumerable from "./Observable.isEnumerable";
+} from "../../../rx.js";
+import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import EnumerableObservable_toEnumerable from "../../EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.js";
+import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create.js";
+import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
+import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
+import Observable_create from "./Observable.create.js";
+import Observable_isEnumerable from "./Observable.isEnumerable.js";
 
 export interface EnumeratorSinkLike<T> extends EnumeratorLike<T>, SinkLike<T> {}
 
