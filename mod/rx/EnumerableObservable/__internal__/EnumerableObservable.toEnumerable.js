@@ -4,7 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { isSome, none, pipe, unsafeCast } from "../../../functions.js";
 import { EnumeratorLike_current, SourceLike_move, } from "../../../ix.js";
 import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
-import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import MutableEnumerator_mixin from "../../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { SinkLike_notify, } from "../../../rx.js";
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run.js";

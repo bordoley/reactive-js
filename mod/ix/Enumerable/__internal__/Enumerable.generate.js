@@ -6,7 +6,7 @@ import { EnumeratorLike_current, SourceLike_move, } from "../../../ix.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import MutableEnumerator_mixin from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
 import Enumerable_create from "./Enumerable.create.js";
 const Enumerable_generate = 
 /*@__PURE__*/ (() => {

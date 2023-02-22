@@ -9,9 +9,9 @@ import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/DelegatingEnumerator.mixin.js";
+import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
-import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin.js";
-import DelegatingEnumerator_move from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.move.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 import Enumerable_liftT from "./Enumerable.liftT.js";
 const Enumerable_takeLast = 

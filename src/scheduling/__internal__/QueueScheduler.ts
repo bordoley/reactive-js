@@ -26,8 +26,8 @@ import {
 } from "../../ix.js";
 import Enumerator_getCurrent from "../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
+import MutableEnumerator_mixin from "../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import Source_move from "../../ix/Source/__internal__/Source.move.js";
-import MutableEnumerator_mixin from "../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
 import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal.js";
 import {
   ContinuationLike,
@@ -49,7 +49,7 @@ import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal_
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
-import DisposableRef_mixin from "../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin.js";
+import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
 import Queue_create from "../../util/__internal__/Queue/Queue.create.js";
 import Queue_peek from "../../util/__internal__/Queue/Queue.peek.js";
 import Queue_pop from "../../util/__internal__/Queue/Queue.pop.js";

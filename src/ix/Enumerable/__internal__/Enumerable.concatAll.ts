@@ -21,13 +21,13 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import DisposableRef_mixin from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.mixin.js";
-import MutableRef_get from "../../../util/__internal__/MutableRef/__internal__/MutableRef.get.js";
-import MutableRef_set from "../../../util/__internal__/MutableRef/__internal__/MutableRef.set.js";
+import DisposableRef_mixin from "../../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
+import MutableRef_get from "../../../util/MutableRef/__internal__/MutableRef.get.js";
+import MutableRef_set from "../../../util/MutableRef/__internal__/MutableRef.set.js";
 import { MutableRefLike } from "../../../util/__internal__/util.internal.js";
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move.js";
-import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import MutableEnumerator_mixin from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { MutableEnumeratorLike } from "../../__internal__/ix.internal.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 import Enumerable_lift from "./Enumerable.lift.js";

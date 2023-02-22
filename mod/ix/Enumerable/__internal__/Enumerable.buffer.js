@@ -9,7 +9,7 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move.js";
-import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import MutableEnumerator_mixin from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
 import Enumerable_liftT from "./Enumerable.liftT.js";
 const Enumerable_buffer = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();

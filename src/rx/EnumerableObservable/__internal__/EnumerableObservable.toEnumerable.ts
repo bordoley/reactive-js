@@ -15,7 +15,7 @@ import {
   ToEnumerable,
 } from "../../../ix.js";
 import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
-import MutableEnumerator_mixin from "../../../ix/__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import MutableEnumerator_mixin from "../../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal.js";
 import {
   EnumerableObservableLike,

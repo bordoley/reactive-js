@@ -12,7 +12,7 @@ import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import DelegatingAsyncEnumerator_mixin from "../../__internal__/DelegatingAsyncEnumerator/DelegatingAsyncEnumerator.mixin.js";
+import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
 import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT.js";
 const AsyncEnumerable_takeWhile = 
 /*@__PURE__*/ (() => {

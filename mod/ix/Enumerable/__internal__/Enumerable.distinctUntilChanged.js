@@ -6,10 +6,10 @@ import { error, none, pipe } from "../../../functions.js";
 import { SourceLike_move, } from "../../../ix.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/DelegatingEnumerator.mixin.js";
+import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../Enumerator/__internal__/Enumerator.hasCurrent.js";
-import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin.js";
-import DelegatingEnumerator_move from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.move.js";
 import Enumerable_liftT from "./Enumerable.liftT.js";
 const Enumerable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {

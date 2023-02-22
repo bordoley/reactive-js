@@ -5,8 +5,8 @@ import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/_
 import { pipe } from "../../../functions.js";
 import { SourceLike_move, } from "../../../ix.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import DelegatingEnumerator_mixin from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.mixin.js";
-import DelegatingEnumerator_move from "../../__internal__/DelegatingEnumerator/DelegatingEnumerator.move.js";
+import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/DelegatingEnumerator.mixin.js";
+import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
 import Enumerable_liftT from "./Enumerable.liftT.js";
 const Enumerable_skipFirst = 
 /*@__PURE__*/ (() => {

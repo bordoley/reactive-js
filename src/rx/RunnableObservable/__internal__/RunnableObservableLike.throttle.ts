@@ -1,6 +1,6 @@
 import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import { RunnableObservableLike, Throttle } from "../../../rx.js";
-import HigherOrderObservable_throttle from "../../__internal__/HigherOrderObservable/HigherOrderObservable.throttle.js";
+import HigherOrderObservable_throttle from "../../HigherOrderObservable/__internal__/HigherOrderObservable.throttle.js";
 import RunnableObservable_lift from "./RunnableObservable.lift.js";
 
 const RunnableObservable_throttle: Throttle<RunnableObservableLike>["throttle"] =

@@ -9,7 +9,7 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import DisposableRef_create from "../../../util/__internal__/DisposableRef/__internal__/DisposableRef.create.js";
+import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create.js";
 import { MutableRefLike_current, } from "../../../util/__internal__/util.internal.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";

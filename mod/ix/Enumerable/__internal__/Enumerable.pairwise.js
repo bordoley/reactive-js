@@ -8,7 +8,7 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../Enumerator/__internal__/Enumerator.hasCurrent.js";
 import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move.js";
-import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import MutableEnumerator_mixin from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_pairwise = 
 /*@__PURE__*/ (() => {

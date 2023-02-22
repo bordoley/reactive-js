@@ -5,7 +5,7 @@ import { pipe } from "../../../functions.js";
 import { SourceLike_move } from "../../../ix.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import MutableEnumerator_mixin from "../../__internal__/MutableEnumerator/MutableEnumerator.mixin.js";
+import MutableEnumerator_mixin from "./MutableEnumerator.mixin.js";
 const Enumerator_empty = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     return createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function EmptyEnumerator(instance) {

@@ -1,6 +1,6 @@
 import { ConcatAll } from "../../../containers.js";
 import { EnumerableObservableLike } from "../../../rx.js";
-import HigherOrderObservable_mergeAll from "../../__internal__/HigherOrderObservable/HigherOrderObservable.mergeAll.js";
+import HigherOrderObservable_mergeAll from "../../HigherOrderObservable/__internal__/HigherOrderObservable.mergeAll.js";
 import EnumerableObservable_lift from "./EnumerableObservable.lift.js";
 
 const EnumerableObservable_mergeAll: ConcatAll<

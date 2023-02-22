@@ -1,7 +1,7 @@
 import {
   MutableRefLike,
   MutableRefLike_current,
-} from "../../../__internal__/util.internal.js";
+} from "../../__internal__/util.internal.js";
 
 const MutableRef_set =
   <T>(v: T) =>

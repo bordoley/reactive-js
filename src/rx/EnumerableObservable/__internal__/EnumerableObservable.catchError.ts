@@ -1,6 +1,6 @@
 import { CatchError } from "../../../containers.js";
 import { EnumerableObservableLike } from "../../../rx.js";
-import HigherOrderObservable_catchError from "../../__internal__/HigherOrderObservable/HigherOrderObservable.catchError.js";
+import HigherOrderObservable_catchError from "../../HigherOrderObservable/__internal__/HigherOrderObservable.catchError.js";
 import EnumerableObservable_lift from "./EnumerableObservable.lift.js";
 
 const EnumerableObservable_catchError: CatchError<EnumerableObservableLike>["catchError"] =

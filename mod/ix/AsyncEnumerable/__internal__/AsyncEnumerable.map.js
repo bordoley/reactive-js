@@ -9,7 +9,7 @@ import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__int
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import DelegatingAsyncEnumerator_mixin from "../../__internal__/DelegatingAsyncEnumerator/DelegatingAsyncEnumerator.mixin.js";
+import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
 import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT.js";
 const AsyncEnumerable_map = /*@__PURE__*/ (() => {
     const MapAsyncEnumerator_op = Symbol("MapAsyncEnumerator_op");
