@@ -33,37 +33,22 @@ import {
   returns,
 } from "../functions.js";
 import { ObservableLike, ObserverLike_dispatcher } from "../rx.js";
-import {
-  create as createObservable,
-  forEach,
-  map,
-  subscribe,
-} from "../rx/Observable.js";
-import { getDispatcher, getScheduler } from "../rx/Observer.js";
-import { sinkInto } from "../rx/ReactiveContainer.js";
+import * as Observable from "../rx/Observable.js";
+import * as Observer from "../rx/Observer.js";
+import * as ReactiveContainer from "../rx/ReactiveContainer.js";
 import {
   PauseableState,
   PauseableState_paused,
   PauseableState_running,
 } from "../scheduling.js";
-import {
-  dispatch,
-  dispatchTo,
-  getScheduler as dispatcherGetScheduler,
-} from "../scheduling/Dispatcher.js";
+import * as Dispatcher from "../scheduling/Dispatcher.js";
 import { FlowableLike, StreamableLike } from "../streaming.js";
 import Flowable_createLifted from "../streaming/Flowable/__internal__/Flowable.createLifted.js";
-import { sourceFrom } from "../streaming/Stream.js";
-import { stream } from "../streaming/Streamable.js";
+import * as Stream from "../streaming/Stream.js";
+import * as Streamable from "../streaming/Streamable.js";
 import Streamable_createLifted from "../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import { DisposableLike } from "../util.js";
-import {
-  dispose,
-  onComplete,
-  onDisposed,
-  onError,
-  toErrorHandler,
-} from "../util/Disposable.js";
+import * as Disposable from "../util/Disposable.js";
 
 interface BindNodeCallback {
   <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<
@@ -116,12 +101,12 @@ export const bindNodeCallback: BindNodeCallback = <T>(
   callback: (...args: readonly any[]) => unknown,
 ): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
   function (this: unknown, ...args: readonly unknown[]) {
-    return createObservable(({ [ObserverLike_dispatcher]: dispatcher }) => {
+    return Observable.create(({ [ObserverLike_dispatcher]: dispatcher }) => {
       const handler = (err: unknown, arg: unknown) => {
         if (err) {
-          pipe(dispatcher, dispose(error(err)));
+          pipe(dispatcher, Disposable.dispose(error(err)));
         } else {
-          pipe(dispatcher, dispatch(arg), dispose());
+          pipe(dispatcher, Dispatcher.dispatch(arg), Disposable.dispose());
         }
       };
 
@@ -157,9 +142,9 @@ const addDisposable =
     disposable: DisposableLike,
   ): Function1<TNodeStream, TNodeStream> =>
   stream => {
-    stream.on("error", toErrorHandler(disposable));
-    stream.once("close", pipeLazy(disposable, dispose()));
-    pipe(disposable, onError(disposeStream(stream)));
+    stream.on("error", Disposable.toErrorHandler(disposable));
+    stream.once("close", pipeLazy(disposable, Disposable.dispose()));
+    pipe(disposable, Disposable.onError(disposeStream(stream)));
     return stream;
   };
 
@@ -168,8 +153,8 @@ const addToDisposable =
     disposable: DisposableLike,
   ): Function1<TNodeStream, TNodeStream> =>
   stream => {
-    pipe(disposable, onDisposed(disposeStream(stream)));
-    stream.on("error", toErrorHandler(disposable));
+    pipe(disposable, Disposable.onDisposed(disposeStream(stream)));
+    stream.on("error", Disposable.toErrorHandler(disposable));
     return stream;
   };
 
@@ -177,7 +162,7 @@ export const createReadableSource = (
   factory: Factory<Readable> | Readable,
 ): FlowableLike<Uint8Array> =>
   Flowable_createLifted(mode =>
-    createObservable(observer => {
+    Observable.create(observer => {
       const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
       const readable = isFunction(factory)
@@ -188,7 +173,7 @@ export const createReadableSource = (
 
       pipe(
         mode,
-        forEach(ev => {
+        Observable.forEach(ev => {
           switch (ev) {
             case PauseableState_paused:
               readable.pause();
@@ -198,13 +183,13 @@ export const createReadableSource = (
               break;
           }
         }),
-        subscribe(getScheduler(observer)),
+        Observable.subscribe(Observer.getScheduler(observer)),
         addToNodeStream(readable),
       );
 
-      const onData = dispatchTo(dispatcher);
+      const onData = Dispatcher.dispatchTo(dispatcher);
       const onEnd = () => {
-        pipe(dispatcher, dispose());
+        pipe(dispatcher, Disposable.dispose());
       };
 
       readable.on("data", onData);
@@ -229,7 +214,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
     factory: Factory<Writable> | Writable,
   ): StreamableLike<Uint8Array, Updater<PauseableState>> =>
     Streamable_createLifted(events =>
-      createObservable(observer => {
+      Observable.create(observer => {
         const { [ObserverLike_dispatcher]: dispatcher } = observer;
 
         const writable = isFunction(factory)
@@ -242,7 +227,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
 
         pipe(
           events,
-          forEach<Uint8Array>(ev => {
+          Observable.forEach<Uint8Array>(ev => {
             // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
             // node throws a type Error regarding expecting a Buffer, though the docs
             // say a UInt8Array should be accepted. Need to file a bug.
@@ -251,28 +236,28 @@ export const createWritableSink = /*@__PURE__*/ (() => {
               writable.emit(NODE_JS_PAUSE_EVENT);
             }
           }),
-          subscribe(dispatcherGetScheduler(dispatcher)),
+          Observable.subscribe(Dispatcher.getScheduler(dispatcher)),
           addToNodeStream(writable),
-          onComplete(() => {
+          Disposable.onComplete(() => {
             writable.end();
           }),
         );
 
         const onDrain = pipeLazy(
           dispatcher,
-          dispatch(returns(PauseableState_running)),
+          Dispatcher.dispatch(returns(PauseableState_running)),
         );
-        const onFinish = pipeLazy(dispatcher, dispose());
+        const onFinish = pipeLazy(dispatcher, Disposable.dispose());
         const onPause = pipeLazy(
           dispatcher,
-          dispatch(returns(PauseableState_paused)),
+          Dispatcher.dispatch(returns(PauseableState_paused)),
         );
 
         writable.on("drain", onDrain);
         writable.on("finish", onFinish);
         writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-        pipe(dispatcher, dispatch(returns(PauseableState_running)));
+        pipe(dispatcher, Dispatcher.dispatch(returns(PauseableState_running)));
       }),
     );
 })();
@@ -283,32 +268,32 @@ export const transform =
   ): ContainerOperator<FlowableLike, Uint8Array, Uint8Array> =>
   src =>
     Flowable_createLifted(modeObs =>
-      createObservable(observer => {
+      Observable.create(observer => {
         const transform = pipe(
           factory(),
           addToDisposable(observer),
-          addDisposable(getDispatcher(observer)),
+          addDisposable(Observer.getDispatcher(observer)),
         );
 
         pipe(
           createWritableSink(transform),
-          stream(getScheduler(observer)),
-          sourceFrom(src),
+          Streamable.stream(Observer.getScheduler(observer)),
+          Stream.sourceFrom(src),
           addToNodeStream(transform),
         );
 
         const transformReadableStream = pipe(
           createReadableSource(transform),
-          stream(getScheduler(observer)),
+          Streamable.stream(Observer.getScheduler(observer)),
           addToNodeStream(transform),
-          sinkInto(observer),
+          ReactiveContainer.sinkInto(observer),
         );
 
         pipe(
           modeObs,
-          map(returns),
-          forEach(dispatchTo(transformReadableStream)),
-          subscribe(getScheduler(observer)),
+          Observable.map(returns),
+          Observable.forEach(Dispatcher.dispatchTo(transformReadableStream)),
+          Observable.subscribe(Observer.getScheduler(observer)),
           addToNodeStream(transform),
         );
       }),

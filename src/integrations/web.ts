@@ -8,8 +8,8 @@ import {
   mix,
   props,
 } from "../__internal__/mixins.js";
-import { toObservable } from "../containers/Promiseable.js";
-import { keep } from "../containers/ReadonlyArray.js";
+import * as Promiseable from "../containers/Promiseable.js";
+import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import {
   Function1,
   Optional,
@@ -36,43 +36,24 @@ import {
   ObserverLike,
   ReactiveContainerLike_sinkInto,
 } from "../rx.js";
-import { getObserverCount, getReplay } from "../rx/MulticastObservable.js";
-import {
-  create as createObservable,
-  forEach as forEachObs,
-  forkCombineLatest,
-  ignoreElements,
-  keep as keepObs,
-  map,
-  subscribe,
-  takeWhile,
-  throttle,
-} from "../rx/Observable.js";
-import { getDispatcher } from "../rx/Observer.js";
-import { sinkInto } from "../rx/ReactiveContainer.js";
+import * as MulticastObservable from "../rx/MulticastObservable.js";
+import * as Observable from "../rx/Observable.js";
+import * as Observer from "../rx/Observer.js";
+import * as ReactiveContainer from "../rx/ReactiveContainer.js";
 import {
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
 } from "../scheduling.js";
-import {
-  dispatch,
-  dispatchTo,
-  getScheduler,
-} from "../scheduling/Dispatcher.js";
+import * as Dispatcher from "../scheduling/Dispatcher.js";
 import {
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
 } from "../streaming.js";
-import { createActionReducer, stream } from "../streaming/Streamable.js";
+import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
-import {
-  addTo,
-  dispose,
-  onDisposed,
-  toAbortSignal,
-} from "../util/Disposable.js";
+import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 /**
@@ -154,15 +135,15 @@ export const createEventSource = (
   const { events: eventsOption = ["message"] } = options;
   const events = pipe(
     eventsOption,
-    keep(x => !reservedEvents.includes(x)),
+    ReadonlyArray.keep(x => !reservedEvents.includes(x)),
   );
   const requestURL = url instanceof URL ? url.toString() : url;
 
-  return createObservable(observer => {
+  return Observable.create(observer => {
     const dispatcher = pipe(
       observer,
-      getDispatcher,
-      onDisposed(_ => {
+      Observer.getDispatcher,
+      Disposable.onDisposed(_ => {
         for (const ev of events) {
           eventSource.removeEventListener(ev, listener);
         }
@@ -174,7 +155,7 @@ export const createEventSource = (
     const listener = (ev: MessageEvent) => {
       pipe(
         dispatcher,
-        dispatch({
+        Dispatcher.dispatch({
           id: ev.lastEventId ?? "",
           type: ev.type ?? "",
           data: ev.data ?? "",
@@ -198,8 +179,8 @@ export const fetch: <T>(
         onResponse: Function1<Response, Promise<T> | ObservableLike<T>>,
       ): Function1<FetchRequest | string, ObservableLike<T>> =>
       fetchRequest =>
-        createObservable(async observer => {
-          const signal = toAbortSignal(observer);
+        Observable.create(async observer => {
+          const signal = Disposable.toAbortSignal(observer);
 
           let request: Optional<string | Request> = none;
           if (isString(fetchRequest)) {
@@ -216,12 +197,12 @@ export const fetch: <T>(
             const onResponseResult = onResponse(response);
             const resultObs =
               onResponseResult instanceof Promise
-                ? pipe(onResponseResult, toObservable())
+                ? pipe(onResponseResult, Promiseable.toObservable())
                 : onResponseResult;
 
-            pipe(resultObs, sinkInto(observer));
+            pipe(resultObs, ReactiveContainer.sinkInto(observer));
           } catch (e) {
-            pipe(observer, dispose(error(e)));
+            pipe(observer, Disposable.dispose(error(e)));
           }
         });
   })();
@@ -232,18 +213,18 @@ export const addEventListener =
     selector: Function1<Event, T>,
   ): Function1<EventTarget, ObservableLike<T>> =>
   target =>
-    createObservable(observer => {
+    Observable.create(observer => {
       const dispatcher = pipe(
         observer,
-        getDispatcher,
-        onDisposed(_ => {
+        Observer.getDispatcher,
+        Disposable.onDisposed(_ => {
           target.removeEventListener(eventName, listener);
         }),
       );
 
       const listener = (event: Event) => {
         const result = selector(event);
-        pipe(dispatcher, dispatch(result));
+        pipe(dispatcher, Dispatcher.dispatch(result));
       };
 
       target.addEventListener(eventName, listener, { passive: true });
@@ -362,17 +343,23 @@ export const windowLocation: WindowLocationStreamableLike =
         {
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return pipe(this[DelegatingLike_delegate], getObserverCount);
+            return pipe(
+              this[DelegatingLike_delegate],
+              MulticastObservable.getObserverCount,
+            );
           },
 
           get [MulticastObservableLike_replay](): number {
             unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return pipe(this[DelegatingLike_delegate], getReplay);
+            return pipe(
+              this[DelegatingLike_delegate],
+              MulticastObservable.getReplay,
+            );
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
             unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return pipe(this[DelegatingLike_delegate], getScheduler);
+            return pipe(this[DelegatingLike_delegate], Dispatcher.getScheduler);
           },
 
           get [WindowLocationStreamLike_canGoBack](): boolean {
@@ -390,7 +377,7 @@ export const windowLocation: WindowLocationStreamableLike =
           ): void {
             pipe(
               { stateOrUpdater, replace },
-              dispatchTo(this[DelegatingLike_delegate]),
+              Dispatcher.dispatchTo(this[DelegatingLike_delegate]),
             );
           },
 
@@ -412,8 +399,8 @@ export const windowLocation: WindowLocationStreamableLike =
           ): void {
             pipe(
               this[DelegatingLike_delegate],
-              map(({ uri }) => uri),
-              sinkInto(observer),
+              Observable.map(({ uri }) => uri),
+              ReactiveContainer.sinkInto(observer),
             );
           },
         },
@@ -432,7 +419,7 @@ export const windowLocation: WindowLocationStreamableLike =
       }
 
       const actionReducer = pipe(
-        createActionReducer(
+        Streamable.createActionReducer(
           ({ uri: stateURI }, { replace, stateOrUpdater }: TAction) => {
             const uri = isFunction(stateOrUpdater)
               ? stateOrUpdater(stateURI)
@@ -445,61 +432,61 @@ export const windowLocation: WindowLocationStreamableLike =
           }),
           { equality: areWindowLocationStatesEqual },
         ),
-        stream(scheduler, options),
+        Streamable.stream(scheduler, options),
       );
 
       const windowLocationStream = createWindowLocationStream(actionReducer);
 
       pipe(
         actionReducer,
-        map(({ uri, replace }) => ({
+        Observable.map(({ uri, replace }) => ({
           uri: windowLocationURIToString(uri),
           title: uri.title,
           replace,
         })),
-        forkCombineLatest(
+        Observable.forkCombineLatest(
           compose(
-            takeWhile(
+            Observable.takeWhile(
               _ =>
                 windowLocationStream[WindowLocationStream_historyCounter] ===
                 -1,
             ),
-            forEachObs(({ uri, title }) => {
+            Observable.forEach(({ uri, title }) => {
               // Initialize the history state on page load
               windowLocationStream[WindowLocationStream_historyCounter]++;
               windowHistoryReplaceState(windowLocationStream, title, uri);
             }),
-            ignoreElements(),
+            Observable.ignoreElements(),
           ),
           compose(
-            keepObs(({ replace, title, uri }) => {
+            Observable.keep(({ replace, title, uri }) => {
               const titleChanged = document.title !== title;
               const uriChanged = uri !== location.href;
 
               return replace || (titleChanged && !uriChanged);
             }),
-            throttle(100),
-            forEachObs(({ title, uri }) => {
+            Observable.throttle(100),
+            Observable.forEach(({ title, uri }) => {
               document.title = title;
               windowHistoryReplaceState(windowLocationStream, title, uri);
             }),
-            ignoreElements(),
+            Observable.ignoreElements(),
           ),
           compose(
-            keepObs(({ replace, uri }) => {
+            Observable.keep(({ replace, uri }) => {
               const uriChanged = uri !== location.href;
               return !replace && uriChanged;
             }),
-            throttle(100),
-            forEachObs(({ title, uri }) => {
+            Observable.throttle(100),
+            Observable.forEach(({ title, uri }) => {
               document.title = title;
               windowHistoryPushState(windowLocationStream, title, uri);
             }),
-            ignoreElements(),
+            Observable.ignoreElements(),
           ),
         ),
-        subscribe(scheduler),
-        addTo(windowLocationStream),
+        Observable.subscribe(scheduler),
+        Disposable.addTo(windowLocationStream),
       );
 
       pipe(
@@ -517,12 +504,12 @@ export const windowLocation: WindowLocationStreamableLike =
 
           return { counter, uri };
         }),
-        forEachObs(({ counter, uri }) => {
+        Observable.forEach(({ counter, uri }) => {
           windowLocationStream[WindowLocationStream_historyCounter] = counter;
           windowLocationStream[DispatcherLike_dispatch](uri, { replace: true });
         }),
-        subscribe(scheduler),
-        addTo(windowLocationStream),
+        Observable.subscribe(scheduler),
+        Disposable.addTo(windowLocationStream),
       );
 
       return windowLocationStream;

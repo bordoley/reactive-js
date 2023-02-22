@@ -6,11 +6,11 @@ unstable_requestPaint, unstable_scheduleCallback, unstable_shouldYield, } from "
 import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
 import { none, pipe, pipeLazy, unsafeCast } from "../functions.js";
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../scheduling.js";
-import { run } from "../scheduling/Continuation.js";
-import { toScheduler } from "../scheduling/PriorityScheduler.js";
-import { isInContinuation } from "../scheduling/Scheduler.js";
+import * as Continuation from "../scheduling/Continuation.js";
+import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
+import * as Scheduler from "../scheduling/Scheduler.js";
 import { getDelay } from "../scheduling/__internal__/Scheduler.options.js";
-import { addIgnoringChildErrors, addTo, create as createDisposable, dispose, isDisposed, onDisposed, } from "../util/Disposable.js";
+import * as Disposable from "../util/Disposable.js";
 import Disposable_mixin from "../util/Disposable/__internal__/Disposable.mixin.js";
 const createPriorityScheduler = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_mixin), function ReactPriorityScheduler(instance) {
@@ -24,7 +24,7 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
         },
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
-            return isInContinuation(this) && unstable_shouldYield();
+            return Scheduler.isInContinuation(this) && unstable_shouldYield();
         },
         [SchedulerLike_requestYield]() {
             unstable_requestPaint();
@@ -32,22 +32,22 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
         [SchedulerLike_schedule](continuation, options) {
             const delay = getDelay(options);
             const { priority } = options;
-            pipe(this, addIgnoringChildErrors(continuation));
-            if (isDisposed(continuation)) {
+            pipe(this, Disposable.addIgnoringChildErrors(continuation));
+            if (Disposable.isDisposed(continuation)) {
                 return;
             }
             const callback = () => {
-                pipe(callbackNodeDisposable, dispose());
+                pipe(callbackNodeDisposable, Disposable.dispose());
                 this[SchedulerLike_inContinuation] = true;
-                run(continuation);
+                Continuation.run(continuation);
                 this[SchedulerLike_inContinuation] = false;
             };
             const callbackNode = unstable_scheduleCallback(priority, callback, delay > 0 ? { delay } : none);
-            const callbackNodeDisposable = pipe(createDisposable(), onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), addTo(continuation));
+            const callbackNodeDisposable = pipe(Disposable.create(), Disposable.onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), Disposable.addTo(continuation));
         },
     }));
 })();
-const createSchedulerFactory = (priority) => () => pipe(createPriorityScheduler(), toScheduler(priority));
+const createSchedulerFactory = (priority) => () => pipe(createPriorityScheduler(), PriorityScheduler.toScheduler(priority));
 export const createSchedulerWithIdlePriority = 
 /*@__PURE__*/ createSchedulerFactory(unstable_IdlePriority);
 export const createSchedulerWithImmediatePriority = 

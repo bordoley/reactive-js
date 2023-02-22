@@ -48,7 +48,7 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
 const HostScheduler_startTime = Symbol("HostScheduler_startTime");
 const HostScheduler_yieldInterval = Symbol("HostScheduler_yieldInterval");
 const HostScheduler_yieldRequested = Symbol("HostScheduler_yieldRequested");
-const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(Disposable_mixin), function HostScheduler(instance, yieldInterval) {
+const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_mixin), function HostScheduler(instance, yieldInterval) {
     init(Disposable_mixin, instance);
     instance[HostScheduler_yieldInterval] = yieldInterval;
     return instance;
@@ -98,7 +98,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(incl
             scheduleImmediate(this, continuation);
         }
     },
-}));
+})))();
 const Scheduler_createHostScheduler = (options = {}) => {
     const { yieldInterval = 5 } = options;
     return createHostSchedulerInstance(yieldInterval);

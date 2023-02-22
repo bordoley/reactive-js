@@ -125,10 +125,10 @@ export const empty = Observable_empty;
 export const encodeUtf8 = Observable_encodeUtf8;
 export const endWith = Observable_endWith;
 export const everySatisfy = Observable_everySatisfy;
-export const exhaust = /*@__PURE__*/ returns(Observable_mergeAll({
+export const exhaust = /*@__PURE__*/ (() => returns(Observable_mergeAll({
     maxBufferSize: 1,
     maxConcurrency: 1,
-}));
+})))();
 export const forEach = Observable_forEach;
 export const forkCombineLatest = Observable_forkCombineLatest;
 export const forkMerge = Observable_forkMerge;

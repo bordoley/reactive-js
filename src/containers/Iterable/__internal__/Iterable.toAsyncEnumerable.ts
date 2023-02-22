@@ -5,8 +5,9 @@ import Enumerable_toAsyncEnumerable from "../../../ix/Enumerable/__internal__/En
 import Iterable_toEnumerable from "./Iterable.toEnumerable.js";
 
 const Iterable_toAsyncEnumerable: ToAsyncEnumerable<IterableLike>["toAsyncEnumerable"] =
-  /*@__PURE__*/ returns(
-    compose(Iterable_toEnumerable(), Enumerable_toAsyncEnumerable()),
-  );
+  /*@__PURE__*/ (() =>
+    returns(
+      compose(Iterable_toEnumerable(), Enumerable_toAsyncEnumerable()),
+    ))();
 
 export default Iterable_toAsyncEnumerable;

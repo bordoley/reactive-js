@@ -9,14 +9,15 @@ const Observable_mergeAll: ConcatAll<
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = /*@__PURE__*/ HigherOrderObservable_mergeAll<ObservableLike>(
-  Observable_lift(),
-) as ConcatAll<
-  ObservableLike,
-  {
-    readonly maxBufferSize?: number;
-    readonly maxConcurrency?: number;
-  }
->["concatAll"];
+>["concatAll"] = /*@__PURE__*/ (() =>
+  HigherOrderObservable_mergeAll<ObservableLike>(
+    Observable_lift(),
+  ) as ConcatAll<
+    ObservableLike,
+    {
+      readonly maxBufferSize?: number;
+      readonly maxConcurrency?: number;
+    }
+  >["concatAll"])();
 
 export default Observable_mergeAll;

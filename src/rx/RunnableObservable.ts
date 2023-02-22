@@ -172,12 +172,13 @@ export const endWith: EndWith<RunnableObservableLike>["endWith"] =
 export const everySatisfy: EverySatisfy<RunnableObservableLike>["everySatisfy"] =
   Observable_everySatisfy as EverySatisfy<RunnableObservableLike>["everySatisfy"];
 
-export const exhaust = /*@__PURE__*/ returns(
-  RunnableObservable_mergeAll({
-    maxBufferSize: 1,
-    maxConcurrency: 1,
-  }),
-) as ConcatAll<RunnableObservableLike>["concatAll"];
+export const exhaust = /*@__PURE__*/ (() =>
+  returns(
+    RunnableObservable_mergeAll({
+      maxBufferSize: 1,
+      maxConcurrency: 1,
+    }),
+  ) as ConcatAll<RunnableObservableLike>["concatAll"])();
 
 export const forEach: ForEach<RunnableObservableLike>["forEach"] =
   Observable_forEach as ForEach<RunnableObservableLike>["forEach"];

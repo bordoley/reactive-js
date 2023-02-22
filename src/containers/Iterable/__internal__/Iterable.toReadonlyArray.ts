@@ -4,8 +4,7 @@ import Enumerable_toReadonlyArray from "../../../ix/Enumerable/__internal__/Enum
 import Iterable_toEnumerable from "./Iterable.toEnumerable.js";
 
 const Iterable_toReadonlyArray: ToReadonlyArray<IterableLike>["toReadonlyArray"] =
-  /*@__PURE__*/ returns(
-    compose(Iterable_toEnumerable(), Enumerable_toReadonlyArray()),
-  );
+  /*@__PURE__*/ (() =>
+    returns(compose(Iterable_toEnumerable(), Enumerable_toReadonlyArray())))();
 
 export default Iterable_toReadonlyArray;

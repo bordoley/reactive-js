@@ -5,11 +5,12 @@ import { EnumerableObservableLike } from "../../../rx.js";
 import EnumerableObservable_toEnumerable from "./EnumerableObservable.toEnumerable.js";
 
 const EnumerableObservable_toAsyncEnumerable: ToAsyncEnumerable<EnumerableObservableLike>["toAsyncEnumerable"] =
-  /*@__PURE__*/ returns(
-    compose(
-      EnumerableObservable_toEnumerable(),
-      Enumerable_toAsyncEnumerable(),
-    ),
-  );
+  /*@__PURE__*/ (() =>
+    returns(
+      compose(
+        EnumerableObservable_toEnumerable(),
+        Enumerable_toAsyncEnumerable(),
+      ),
+    ))();
 
 export default EnumerableObservable_toAsyncEnumerable;

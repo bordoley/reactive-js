@@ -5,8 +5,9 @@ import { EnumerableObservableLike } from "../../../rx.js";
 import EnumerableObservable_toEnumerable from "./EnumerableObservable.toEnumerable.js";
 
 const EnumerableObservable_toIterable: ToIterable<EnumerableObservableLike>["toIterable"] =
-  /*@__PURE__*/ returns(
-    compose(EnumerableObservable_toEnumerable(), Enumerable_toIterable()),
-  );
+  /*@__PURE__*/ (() =>
+    returns(
+      compose(EnumerableObservable_toEnumerable(), Enumerable_toIterable()),
+    ))();
 
 export default EnumerableObservable_toIterable;

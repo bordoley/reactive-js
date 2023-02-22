@@ -355,12 +355,13 @@ export const endWith: EndWith<ObservableLike>["endWith"] = Observable_endWith;
 export const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   Observable_everySatisfy;
 
-export const exhaust = /*@__PURE__*/ returns(
-  Observable_mergeAll({
-    maxBufferSize: 1,
-    maxConcurrency: 1,
-  }),
-) as ConcatAll<ObservableLike>["concatAll"];
+export const exhaust = /*@__PURE__*/ (() =>
+  returns(
+    Observable_mergeAll({
+      maxBufferSize: 1,
+      maxConcurrency: 1,
+    }),
+  ) as ConcatAll<ObservableLike>["concatAll"])();
 
 export const forEach: ForEach<ObservableLike>["forEach"] = Observable_forEach;
 

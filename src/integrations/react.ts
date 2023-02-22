@@ -17,10 +17,10 @@ import {
   raiseError,
 } from "../functions.js";
 import { ObservableLike, SubjectLike } from "../rx.js";
-import { distinctUntilChanged, forEach, subscribe } from "../rx/Observable.js";
-import { create as createSubject, publish } from "../rx/Subject.js";
+import * as Observable from "../rx/Observable.js";
+import * as Subject from "../rx/Subject.js";
 import { SchedulerLike } from "../scheduling.js";
-import { dispose, onError } from "../util/Disposable.js";
+import * as Disposable from "../util/Disposable.js";
 import { createSchedulerWithNormalPriority } from "./scheduler.js";
 
 /**
@@ -46,9 +46,9 @@ export const useObservable = <T>(
 
     const subscription = pipe(
       observable,
-      forEach<T>(v => updateState(_ => v)),
-      subscribe(scheduler),
-      onError(updateError),
+      Observable.forEach<T>(v => updateState(_ => v)),
+      Observable.subscribe(scheduler),
+      Disposable.onError(updateError),
     );
 
     return pipeLazy(
@@ -56,7 +56,7 @@ export const useObservable = <T>(
       // which will also dispose all subscriptions. Otherwise
       // only dispose the subscription.
       scheduler === schedulerOption ? subscription : scheduler,
-      dispose(),
+      Disposable.dispose(),
       ignore,
     );
   }, [observable, updateState, updateError, options.scheduler]);
@@ -64,7 +64,7 @@ export const useObservable = <T>(
   return isSome(error) ? raiseError<T>(error) : state;
 };
 
-const createReplaySubject = <TProps>() => createSubject<TProps>({ replay: 1 });
+const createReplaySubject = <TProps>() => Subject.create<TProps>({ replay: 1 });
 
 export const createComponent = <TProps>(
   fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>,
@@ -75,10 +75,10 @@ export const createComponent = <TProps>(
       createReplaySubject,
     ]);
 
-    pipe(propsSubject, publish(props));
+    pipe(propsSubject, Subject.publish(props));
 
     const elementObservable = useMemo(
-      () => pipe(propsSubject, distinctUntilChanged<TProps>(), fn),
+      () => pipe(propsSubject, Observable.distinctUntilChanged<TProps>(), fn),
       [propsSubject],
     );
     return useObservable(elementObservable, options) ?? null;

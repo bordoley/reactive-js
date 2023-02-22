@@ -29,19 +29,12 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../scheduling.js";
-import { run } from "../scheduling/Continuation.js";
-import { toScheduler } from "../scheduling/PriorityScheduler.js";
-import { isInContinuation } from "../scheduling/Scheduler.js";
+import * as Continuation from "../scheduling/Continuation.js";
+import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
+import * as Scheduler from "../scheduling/Scheduler.js";
 import { getDelay } from "../scheduling/__internal__/Scheduler.options.js";
 import { DisposableLike } from "../util.js";
-import {
-  addIgnoringChildErrors,
-  addTo,
-  create as createDisposable,
-  dispose,
-  isDisposed,
-  onDisposed,
-} from "../util/Disposable.js";
+import * as Disposable from "../util/Disposable.js";
 import Disposable_mixin from "../util/Disposable/__internal__/Disposable.mixin.js";
 
 const createPriorityScheduler = /*@__PURE__*/ (() => {
@@ -72,7 +65,7 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
 
         get [SchedulerLike_shouldYield](): boolean {
           unsafeCast<TProperties>(this);
-          return isInContinuation(this) && unstable_shouldYield();
+          return Scheduler.isInContinuation(this) && unstable_shouldYield();
         },
 
         [SchedulerLike_requestYield]() {
@@ -93,17 +86,17 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
 
           const { priority } = options;
 
-          pipe(this, addIgnoringChildErrors(continuation));
+          pipe(this, Disposable.addIgnoringChildErrors(continuation));
 
-          if (isDisposed(continuation)) {
+          if (Disposable.isDisposed(continuation)) {
             return;
           }
 
           const callback = () => {
-            pipe(callbackNodeDisposable, dispose());
+            pipe(callbackNodeDisposable, Disposable.dispose());
 
             this[SchedulerLike_inContinuation] = true;
-            run(continuation);
+            Continuation.run(continuation);
             this[SchedulerLike_inContinuation] = false;
           };
 
@@ -114,9 +107,11 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
           );
 
           const callbackNodeDisposable = pipe(
-            createDisposable(),
-            onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)),
-            addTo(continuation),
+            Disposable.create(),
+            Disposable.onDisposed(
+              pipeLazy(callbackNode, unstable_cancelCallback),
+            ),
+            Disposable.addTo(continuation),
           );
         },
       },
@@ -127,7 +122,7 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
 const createSchedulerFactory =
   (priority: number): Factory<SchedulerLike> =>
   () =>
-    pipe(createPriorityScheduler(), toScheduler(priority));
+    pipe(createPriorityScheduler(), PriorityScheduler.toScheduler(priority));
 
 export const createSchedulerWithIdlePriority =
   /*@__PURE__*/ createSchedulerFactory(unstable_IdlePriority);

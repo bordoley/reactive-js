@@ -5,8 +5,7 @@ import { ToRunnable } from "../../../rx.js";
 import Iterable_toEnumerable from "./Iterable.toEnumerable.js";
 
 const Iterable_toRunnable: ToRunnable<IterableLike>["toRunnable"] =
-  /*@__PURE__*/ returns(
-    compose(Iterable_toEnumerable(), Enumerable_toRunnable()),
-  );
+  /*@__PURE__*/ (() =>
+    returns(compose(Iterable_toEnumerable(), Enumerable_toRunnable())))();
 
 export default Iterable_toRunnable;
