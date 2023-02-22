@@ -42,6 +42,7 @@ module.exports = {
         allowSeparatedGroups: false,
       },
     ],
+    "import/no-cycle": "error",
     "import/no-duplicates": "error",
     "import/order": [
       "error",
