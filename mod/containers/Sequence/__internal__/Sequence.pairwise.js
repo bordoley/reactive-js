@@ -1,0 +1,31 @@
+/// <reference types="./Sequence.pairwise.d.ts" />
+
+import { SequenceLike_data, SequenceLike_next, } from "../../../containers.js";
+import { isSome, none } from "../../../functions.js";
+const Sequence_pairwise = 
+/*@__PURE__*/ (() => {
+    const _pairwise = (prev, seq) => () => {
+        const result = seq();
+        if (isSome(result)) {
+            const { [SequenceLike_data]: data, [SequenceLike_next]: next } = result;
+            const v = [prev, data];
+            return {
+                [SequenceLike_data]: v,
+                [SequenceLike_next]: _pairwise(data, next),
+            };
+        }
+        else {
+            return none;
+        }
+    };
+    return () => (seq) => {
+        const first = seq();
+        if (isSome(first)) {
+            return _pairwise(first[SequenceLike_data], first[SequenceLike_next]);
+        }
+        else {
+            return () => none;
+        }
+    };
+})();
+export default Sequence_pairwise;

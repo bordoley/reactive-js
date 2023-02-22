@@ -12,17 +12,9 @@ yarn-error.log
 *.key
 *.tsbuildinfo
 
-build-types/
-
 packages/core/**/*.ts
 packages/core/**/*.js
 packages/core/**/*.mjs
 packages/core/README.md
 packages/example/build
 packages/perf/build/
-
-mod/*.js
-mod/http-node.*
-mod/node.*
-mod/react.*
-mod/svelte.*
