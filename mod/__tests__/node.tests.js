@@ -1,3 +1,3 @@
 /// <reference types="./node.tests.d.ts" />
 
-import "./modules/node.test.js";
+import "../integrations/__tests__/node.test.js";
