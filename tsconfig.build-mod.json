@@ -5,5 +5,6 @@
     "outDir": "./mod",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "exclude": ["./src/__tests__/node.tests.ts", "./src/integrations/node.ts"]
 }
