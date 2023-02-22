@@ -2,17 +2,17 @@
 
 import { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, containsTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, retryTests, scanAsyncTests, scanTests, skipFirstTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests as zipOperatorTests, zipWithTests, } from "../../__tests__/operators.js";
 import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, test, testModule, } from "../../__tests__/testing.js";
-import ReadonlyArray from "../../containers/ReadonlyArray.js";
+import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { arrayEquality, identity, increment, incrementBy, newInstance, pipe, pipeLazy, returns, sum, } from "../../functions.js";
 import { ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../rx.js";
-import Continuation from "../../scheduling/Continuation.js";
-import Pauseable from "../../scheduling/Pauseable.js";
-import Scheduler from "../../scheduling/Scheduler.js";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
-import Streamable from "../../streaming/Streamable.js";
-import Disposable from "../../util/Disposable.js";
-import Observable from "../Observable.js";
-import RunnableObservable from "../RunnableObservable.js";
+import * as Continuation from "../../scheduling/Continuation.js";
+import * as Pauseable from "../../scheduling/Pauseable.js";
+import * as Scheduler from "../../scheduling/Scheduler.js";
+import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import * as Streamable from "../../streaming/Streamable.js";
+import * as Disposable from "../../util/Disposable.js";
+import * as Observable from "../Observable.js";
+import * as RunnableObservable from "../RunnableObservable.js";
 const combineLatestTests = describe("combineLatest", test("combineLatest", pipeLazy(RunnableObservable.combineLatest(pipe(RunnableObservable.generate(incrementBy(2), returns(1), { delay: 2 }), RunnableObservable.takeFirst({ count: 3 })), pipe(RunnableObservable.generate(incrementBy(2), returns(0), { delay: 3 }), RunnableObservable.takeFirst({ count: 2 }))), RunnableObservable.toReadonlyArray(), expectArrayEquals([[3, 2], [5, 2], [5, 4], [7, 4]], arrayEquality()))));
 const exhaustTests = describe("exhaust", test("when the initial observable never disposes", pipeLazy([
     pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 3 })),

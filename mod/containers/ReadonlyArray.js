@@ -41,29 +41,3 @@ export const toReadonlyArray = ReadonlyArray_toReadonlyArray;
 export const toRunnable = ReadonlyArray_toRunnable;
 export const toRunnableObservable = ReadonlyArray_toRunnableObservable;
 export const toSequence = ReadonlyArray_toSequence;
-/** @ignore */
-const ReadonlyArray = {
-    empty,
-    every,
-    forEach,
-    fromEnumerable,
-    fromEnumerableObservable,
-    fromIterable,
-    fromReadonlyArray,
-    fromSequence,
-    keep,
-    keepType,
-    map,
-    some,
-    toAsyncEnumerable,
-    toEnumerable,
-    toEnumerableObservable,
-    toFlowable,
-    toIterable,
-    toObservable,
-    toReadonlyArray,
-    toRunnable,
-    toRunnableObservable,
-    toSequence,
-};
-export default ReadonlyArray;

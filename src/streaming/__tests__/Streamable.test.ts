@@ -5,12 +5,12 @@ import {
   testModule,
 } from "../../__tests__/testing.js";
 import { pipe, returns } from "../../functions.js";
-import Observable from "../../rx/Observable.js";
-import Continuation from "../../scheduling/Continuation.js";
-import Dispatcher from "../../scheduling/Dispatcher.js";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
-import Disposable from "../../util/Disposable.js";
-import Streamable from "../Streamable.js";
+import * as Observable from "../../rx/Observable.js";
+import * as Continuation from "../../scheduling/Continuation.js";
+import * as Dispatcher from "../../scheduling/Dispatcher.js";
+import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import * as Disposable from "../../util/Disposable.js";
+import * as Streamable from "../Streamable.js";
 
 testModule(
   "Streamable",

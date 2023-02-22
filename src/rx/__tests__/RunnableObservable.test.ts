@@ -42,7 +42,7 @@ import {
   test,
   testModule,
 } from "../../__tests__/testing.js";
-import ReadonlyArray from "../../containers/ReadonlyArray.js";
+import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import {
   arrayEquality,
   identity,
@@ -60,14 +60,14 @@ import {
   ThrottleMode_interval,
   ThrottleMode_last,
 } from "../../rx.js";
-import Continuation from "../../scheduling/Continuation.js";
-import Pauseable from "../../scheduling/Pauseable.js";
-import Scheduler from "../../scheduling/Scheduler.js";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
-import Streamable from "../../streaming/Streamable.js";
-import Disposable from "../../util/Disposable.js";
-import Observable from "../Observable.js";
-import RunnableObservable from "../RunnableObservable.js";
+import * as Continuation from "../../scheduling/Continuation.js";
+import * as Pauseable from "../../scheduling/Pauseable.js";
+import * as Scheduler from "../../scheduling/Scheduler.js";
+import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import * as Streamable from "../../streaming/Streamable.js";
+import * as Disposable from "../../util/Disposable.js";
+import * as Observable from "../Observable.js";
+import * as RunnableObservable from "../RunnableObservable.js";
 
 const combineLatestTests = describe(
   "combineLatest",

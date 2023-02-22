@@ -35,7 +35,7 @@ import {
 } from "../../__tests__/operators.js";
 import { testModule } from "../../__tests__/testing.js";
 import { EnumerableObservableLike } from "../../rx.js";
-import EnumerableObservable from "../EnumerableObservable.js";
+import * as EnumerableObservable from "../EnumerableObservable.js";
 
 testModule(
   "EnumerableObservable",

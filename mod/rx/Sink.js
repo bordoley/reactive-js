@@ -6,10 +6,3 @@ import Sink_sourceFrom from "./Sink/__internal__/Sink.sourceFrom.js";
 export const notify = Sink_notify;
 export const notifySink = Sink_notifySink;
 export const sourceFrom = Sink_sourceFrom;
-/** @ignore */
-const Sink = {
-    notify,
-    notifySink,
-    sourceFrom,
-};
-export default Sink;

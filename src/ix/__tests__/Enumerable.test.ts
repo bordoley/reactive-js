@@ -31,7 +31,7 @@ import {
 } from "../../__tests__/operators.js";
 import { testModule } from "../../__tests__/testing.js";
 import { EnumerableLike } from "../../ix.js";
-import Enumerable from "../Enumerable.js";
+import * as Enumerable from "../Enumerable.js";
 
 testModule(
   "Enumerable",

@@ -1,14 +1,14 @@
 /// <reference types="./operators.d.ts" />
 
-import ReadonlyArray from "../containers/ReadonlyArray.js";
+import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { alwaysFalse, alwaysTrue, arrayEquality, increment, none, pipe, pipeLazy, returns, sum, } from "../functions.js";
-import Enumerable from "../ix/Enumerable.js";
-import EnumerableObservable from "../rx/EnumerableObservable.js";
-import Observable from "../rx/Observable.js";
-import RunnableObservable from "../rx/RunnableObservable.js";
+import * as Enumerable from "../ix/Enumerable.js";
+import * as EnumerableObservable from "../rx/EnumerableObservable.js";
+import * as Observable from "../rx/Observable.js";
+import * as RunnableObservable from "../rx/RunnableObservable.js";
 import { __now } from "../scheduling/Continuation.js";
-import Scheduler from "../scheduling/Scheduler.js";
-import Disposable from "../util/Disposable.js";
+import * as Scheduler from "../scheduling/Scheduler.js";
+import * as Disposable from "../util/Disposable.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, testAsync, } from "./testing.js";
 export const bufferTests = (m) => describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ maxBufferSize: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],

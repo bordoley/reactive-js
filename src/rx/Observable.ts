@@ -544,77 +544,7 @@ export const zip: Zip<ObservableLike>["zip"] = Observable_zip;
 export const zipLatest: ZipLatest<ObservableLike>["zipLatest"] =
   Observable_zipLatest;
 
-const zipWith: ZipWith<ObservableLike>["zipWith"] = Observable_zipWith;
+export const zipWith: ZipWith<ObservableLike>["zipWith"] = Observable_zipWith;
 
 export const zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"] =
   Observable_zipWithLatestFrom;
-
-/** @ignore */
-const Observable = {
-  async,
-  buffer,
-  catchError,
-  combineLatest,
-  compute,
-  concat,
-  concatAll,
-  concatMap,
-  concatWith,
-  concatYieldMap,
-  contains,
-  decodeWithCharset,
-  defer,
-  distinctUntilChanged,
-  empty,
-  encodeUtf8,
-  endWith,
-  everySatisfy,
-  forEach,
-  fromEnumerable,
-  fromFlowable,
-  fromIterable,
-  fromPromise,
-  fromReadonlyArray,
-  fromSequence,
-  generate,
-  ignoreElements,
-  isEnumerable,
-  isRunnable,
-  keep,
-  keepType,
-  map,
-  mapTo,
-  merge,
-  mergeWith,
-  never,
-  onSubscribe,
-  pairwise,
-  reduce,
-  repeat,
-  retry,
-  scan,
-  scanAsync,
-  share,
-  skipFirst,
-  someSatisfy,
-  startWith,
-  subscribe,
-  switchAll,
-  switchMap,
-  takeFirst,
-  takeLast,
-  takeUntil,
-  takeWhile,
-  throttle,
-  throwIfEmpty,
-  throws,
-  timeout,
-  toPromise,
-  withLatestFrom,
-  zip,
-  zipLatest,
-  zipWith,
-  zipWithLatestFrom,
-};
-
-export default Observable;

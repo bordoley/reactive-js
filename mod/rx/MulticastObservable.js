@@ -5,8 +5,3 @@ import MulticastObservable_getObserverCount from "./MulticastObservable/__intern
 import MulticastObservable_getReplay from "./MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 export const getObserverCount = MulticastObservable_getObserverCount;
 export const getReplay = MulticastObservable_getReplay;
-const MulticastObservable = {
-    getObserverCount,
-    getReplay,
-};
-export default MulticastObservable;

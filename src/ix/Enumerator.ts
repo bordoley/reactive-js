@@ -30,13 +30,3 @@ export const move: <T>(enumerator: {
   [EnumeratorLike_hasCurrent]: boolean;
   [SourceLike_move]: () => void;
 }) => boolean = Enumerator_move;
-
-/** @ignore */
-const Enumerator = {
-  forEach,
-  getCurrent,
-  hasCurrent,
-  move,
-};
-
-export default Enumerator;

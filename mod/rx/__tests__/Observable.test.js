@@ -1,13 +1,14 @@
 /// <reference types="./Observable.test.d.ts" />
 
 import { describe, expectArrayEquals, expectEquals, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__tests__/testing.js";
-import ReadonlyArray from "../../containers/ReadonlyArray.js";
+import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { increment, isSome, pipe, raise, returns } from "../../functions.js";
-import Continuation from "../../scheduling/Continuation.js";
-import Scheduler from "../../scheduling/Scheduler.js";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
-import Disposable from "../../util/Disposable.js";
-import Observable, { __await, __memo } from "../Observable.js";
+import * as Continuation from "../../scheduling/Continuation.js";
+import * as Scheduler from "../../scheduling/Scheduler.js";
+import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import * as Disposable from "../../util/Disposable.js";
+import * as Observable from "../Observable.js";
+import { __await, __memo } from "../Observable.js";
 const onSubscribeTests = describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
     const scheduler = VirtualTimeScheduler.create();
     const disp = mockFn();

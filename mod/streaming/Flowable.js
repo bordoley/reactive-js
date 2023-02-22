@@ -13,14 +13,3 @@ export const fromReadonlyArray = ReadonlyArray_toFlowable;
 export const fromRunnableObservable = RunnableObservable_toFlowable;
 export const fromSequence = Sequence_toFlowable;
 export const toObservable = Flowable_toObservable;
-/** @ignore */
-const Flowable = {
-    fromEnumerable,
-    fromEnumerableObservable,
-    fromIterable,
-    fromReadonlyArray,
-    fromRunnableObservable,
-    fromSequence,
-    toObservable,
-};
-export default Flowable;

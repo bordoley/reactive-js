@@ -26,20 +26,3 @@ export const toObservable = Iterable_toRunnableObservable;
 export const toReadonlyArray = Iterable_toReadonlyArray;
 export const toRunnable = Iterable_toRunnable;
 export const toRunnableObservable = Iterable_toRunnableObservable;
-/** @ignore */
-const Iterable = {
-    fromEnumerable,
-    fromEnumerableObservable,
-    fromReadonlyArray,
-    fromSequence,
-    toAsyncEnumerable,
-    toEnumerable,
-    toEnumerableObservable,
-    toFlowable,
-    toIterable,
-    toObservable,
-    toReadonlyArray,
-    toRunnable,
-    toRunnableObservable,
-};
-export default Iterable;

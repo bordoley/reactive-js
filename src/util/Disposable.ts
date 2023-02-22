@@ -63,25 +63,3 @@ export const toAbortSignal = Disposable_toAbortSignal;
 export const toErrorHandler = Disposable_toErrorHandler;
 
 export const toObservable = Disposable_toObservable;
-
-/** @ignore */
-const Disposable = {
-  add,
-  addIgnoringChildErrors,
-  addTo,
-  addToIgnoringChildErrors,
-  bindTo,
-  create,
-  dispose,
-  disposed,
-  getError,
-  isDisposed,
-  onComplete,
-  onDisposed,
-  onError,
-  toAbortSignal,
-  toErrorHandler,
-  toObservable,
-};
-
-export default Disposable;

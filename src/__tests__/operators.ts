@@ -34,7 +34,7 @@ import {
   Zip,
   ZipWith,
 } from "../containers.js";
-import ReadonlyArray from "../containers/ReadonlyArray.js";
+import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import {
   alwaysFalse,
   alwaysTrue,
@@ -47,7 +47,7 @@ import {
   sum,
 } from "../functions.js";
 import { ToEnumerable } from "../ix.js";
-import Enumerable from "../ix/Enumerable.js";
+import * as Enumerable from "../ix/Enumerable.js";
 import {
   ObservableLike,
   Retry,
@@ -56,12 +56,12 @@ import {
   ToObservable,
   ToRunnableObservable,
 } from "../rx.js";
-import EnumerableObservable from "../rx/EnumerableObservable.js";
-import Observable from "../rx/Observable.js";
-import RunnableObservable from "../rx/RunnableObservable.js";
+import * as EnumerableObservable from "../rx/EnumerableObservable.js";
+import * as Observable from "../rx/Observable.js";
+import * as RunnableObservable from "../rx/RunnableObservable.js";
 import { __now } from "../scheduling/Continuation.js";
-import Scheduler from "../scheduling/Scheduler.js";
-import Disposable from "../util/Disposable.js";
+import * as Scheduler from "../scheduling/Scheduler.js";
+import * as Disposable from "../util/Disposable.js";
 import {
   describe,
   expectArrayEquals,

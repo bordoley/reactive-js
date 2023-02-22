@@ -81,22 +81,3 @@ export const toRunnableObservable: ToRunnableObservable<
     readonly delayStart?: boolean;
   }
 >["toRunnableObservable"] = Iterable_toRunnableObservable;
-
-/** @ignore */
-const Iterable = {
-  fromEnumerable,
-  fromEnumerableObservable,
-  fromReadonlyArray,
-  fromSequence,
-  toAsyncEnumerable,
-  toEnumerable,
-  toEnumerableObservable,
-  toFlowable,
-  toIterable,
-  toObservable,
-  toReadonlyArray,
-  toRunnable,
-  toRunnableObservable,
-};
-
-export default Iterable;

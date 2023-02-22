@@ -9,7 +9,7 @@ import {
 } from "../../__tests__/operators.js";
 import { testModule } from "../../__tests__/testing.js";
 import { ReadonlyArrayLike } from "../../containers.js";
-import ReadonlyArray from "../ReadonlyArray.js";
+import * as ReadonlyArray from "../ReadonlyArray.js";
 
 testModule(
   "ReadonlyArray",

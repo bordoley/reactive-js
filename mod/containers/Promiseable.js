@@ -7,9 +7,3 @@ import Promiseable_toObservable from "./Promiseable/__internal__/Promiseable.toO
  */
 export const fromObservable = Observable_toPromise;
 export const toObservable = Promiseable_toObservable;
-/** @ignore */
-const Promiseable = {
-    fromObservable,
-    toObservable,
-};
-export default Promiseable;

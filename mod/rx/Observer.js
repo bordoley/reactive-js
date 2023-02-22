@@ -6,10 +6,3 @@ import Observer_schedule from "./Observer/__internal__/Observer.schedule.js";
 export const getDispatcher = Observer_getDispatcher;
 export const getScheduler = Observer_getScheduler;
 export const schedule = Observer_schedule;
-/** @ignore */
-const Observer = {
-    getDispatcher,
-    getScheduler,
-    schedule,
-};
-export default Observer;

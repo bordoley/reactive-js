@@ -4,27 +4,10 @@
 
 ## Table of contents
 
-### Variables
-
-- [default](rx_MulticastObservable.md#default)
-
 ### Functions
 
 - [getObserverCount](rx_MulticastObservable.md#getobservercount)
 - [getReplay](rx_MulticastObservable.md#getreplay)
-
-## Variables
-
-### default
-
-• `Const` **default**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `getObserverCount` | (`obs`: { `[MulticastObservableLike_observerCount]`: `number`  }) => `number` |
-| `getReplay` | (`obs`: { `[MulticastObservableLike_replay]`: `number`  }) => `number` |
 
 ## Functions
 

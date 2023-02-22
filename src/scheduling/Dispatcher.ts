@@ -23,12 +23,3 @@ export const dispatchTo: <T>(dispatcher: {
 export const getScheduler: (dispatcher: {
   [DispatcherLike_scheduler]: SchedulerLike;
 }) => SchedulerLike = Dispatcher_getScheduler;
-
-/** @ignore */
-const Dispatcher = {
-  dispatch,
-  dispatchTo,
-  getScheduler,
-};
-
-export default Dispatcher;

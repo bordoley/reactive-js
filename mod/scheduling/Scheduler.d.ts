@@ -20,27 +20,3 @@ export declare const schedule: (f: import("../functions.js").SideEffect, options
 } | undefined) => Function1<SchedulerLike, import("../util.js").DisposableLike>;
 export declare const toPausableScheduler: Function1<SchedulerLike, import("../scheduling.js").PauseableSchedulerLike>;
 export declare const toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike>;
-/** @ignore */
-declare const Scheduler: {
-    createHostScheduler: (options?: {
-        readonly yieldInterval?: number | undefined;
-    }) => SchedulerLike;
-    getCurrentTime: (scheduler: {
-        readonly [SchedulerLike_now]: number;
-    }) => number;
-    isInContinuation: (scheduler: {
-        readonly [SchedulerLike_inContinuation]: boolean;
-    }) => boolean;
-    requestYield: (scheduler: {
-        [SchedulerLike_requestYield](): void;
-    }) => void;
-    shouldYield: (scheduler: {
-        [SchedulerLike_shouldYield]: boolean;
-    }) => boolean;
-    schedule: (f: import("../functions.js").SideEffect, options?: {
-        readonly delay?: number | undefined;
-    } | undefined) => Function1<SchedulerLike, import("../util.js").DisposableLike>;
-    toPausableScheduler: Function1<SchedulerLike, import("../scheduling.js").PauseableSchedulerLike>;
-    toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike>;
-};
-export default Scheduler;

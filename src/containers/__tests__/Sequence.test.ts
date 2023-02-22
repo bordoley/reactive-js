@@ -27,7 +27,7 @@ import {
 } from "../../__tests__/operators.js";
 import { testModule } from "../../__tests__/testing.js";
 import { SequenceLike } from "../../containers.js";
-import Sequence from "../Sequence.js";
+import * as Sequence from "../Sequence.js";
 
 testModule(
   "Sequence",

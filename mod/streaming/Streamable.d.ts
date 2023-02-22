@@ -29,17 +29,3 @@ export declare const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>
 export declare const stream: <TReq, T, TStream extends StreamLike<TReq, T>>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => Function1<StreamableLike<TReq, T, TStream>, TStream>;
-/** @ignore */
-declare const Streamable: {
-    createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
-        readonly equality?: Equality<T> | undefined;
-    } | undefined) => StreamableLike<TAction, T, StreamLike<TAction, T>>;
-    createStateStore: <T_1>(initialState: Factory<T_1>, options?: {
-        readonly equality?: Equality<T_1> | undefined;
-    } | undefined) => StreamableLike<Updater<T_1>, T_1, StreamLike<Updater<T_1>, T_1>>;
-    sinkInto: <TReq, T_2, TSinkStream extends StreamLike<T_2, TReq>>(dest: TSinkStream) => (src: StreamableLike<TReq, T_2, StreamLike<TReq, T_2>>) => StreamableLike<TReq, T_2, StreamLike<TReq, T_2>>;
-    stream: <TReq_1, T_3, TStream extends StreamLike<TReq_1, T_3>>(scheduler: SchedulerLike, options?: {
-        readonly replay?: number;
-    }) => Function1<StreamableLike<TReq_1, T_3, TStream>, TStream>;
-};
-export default Streamable;

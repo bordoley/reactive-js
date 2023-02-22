@@ -10,10 +10,3 @@ export const interact: <
 >(
   ctx: TCtx,
 ) => (enumerable: C) => TSource = InteractiveContainer_interact;
-
-/** @ignore */
-const InteractiveContainer = {
-  interact,
-};
-
-export default InteractiveContainer;

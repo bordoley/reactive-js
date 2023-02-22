@@ -64,21 +64,3 @@ export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
 
 export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
   AsyncEnumerable_toObservable;
-
-/** @ignore */
-const AsyncEnumerable = {
-  fromEnumerable,
-  fromEnumerableObservable,
-  fromIterable,
-  fromReadonlyArray,
-  fromSequence,
-  generate,
-  keep,
-  map,
-  scan,
-  scanAsync,
-  takeWhile,
-  toObservable,
-};
-
-export default AsyncEnumerable;

@@ -1,15 +1,15 @@
 /// <reference types="./Subject.test.d.ts" />
 
 import { expectArrayEquals, expectEquals, test, testModule, } from "../../__tests__/testing.js";
-import ReadonlyArray from "../../containers/ReadonlyArray.js";
+import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { pipe } from "../../functions.js";
-import Continuation from "../../scheduling/Continuation.js";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
-import Disposable from "../../util/Disposable.js";
-import MulticastObservable from "../MulticastObservable.js";
-import Observable from "../Observable.js";
-import Runnable from "../Runnable.js";
-import Subject from "../Subject.js";
+import * as Continuation from "../../scheduling/Continuation.js";
+import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import * as Disposable from "../../util/Disposable.js";
+import * as MulticastObservable from "../MulticastObservable.js";
+import * as Observable from "../Observable.js";
+import * as Runnable from "../Runnable.js";
+import * as Subject from "../Subject.js";
 testModule("Subject", test("with replay", () => {
     const scheduler = VirtualTimeScheduler.create();
     const subject = Subject.create({ replay: 2 });

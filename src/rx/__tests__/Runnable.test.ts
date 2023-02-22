@@ -29,7 +29,7 @@ import {
 } from "../../__tests__/testing.js";
 import { Optional, none, pipeLazy } from "../../functions.js";
 import { RunnableLike } from "../../rx.js";
-import Runnable from "../Runnable.js";
+import * as Runnable from "../Runnable.js";
 
 testModule(
   "Runnable",

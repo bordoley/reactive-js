@@ -42,16 +42,3 @@ export const fromSequence: FromSequence<FlowableLike>["fromSequence"] =
 
 export const toObservable: ToObservable<FlowableLike>["toObservable"] =
   Flowable_toObservable;
-
-/** @ignore */
-const Flowable = {
-  fromEnumerable,
-  fromEnumerableObservable,
-  fromIterable,
-  fromReadonlyArray,
-  fromRunnableObservable,
-  fromSequence,
-  toObservable,
-};
-
-export default Flowable;

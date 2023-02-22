@@ -16,11 +16,11 @@ import {
   pipeLazy,
   raise,
 } from "../../functions.js";
-import Observable from "../../rx/Observable.js";
-import Continuation from "../../scheduling/Continuation.js";
-import Scheduler from "../../scheduling/Scheduler.js";
-import VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
-import Disposable from "../Disposable.js";
+import * as Observable from "../../rx/Observable.js";
+import * as Continuation from "../../scheduling/Continuation.js";
+import * as Scheduler from "../../scheduling/Scheduler.js";
+import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import * as Disposable from "../Disposable.js";
 
 testModule(
   "Disposable",

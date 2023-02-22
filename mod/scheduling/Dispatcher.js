@@ -7,10 +7,3 @@ import Dispatcher_getScheduler from "./Dispatcher/__internal__/Dispatcher.getSch
 export const dispatch = Dispatcher_dispatch;
 export const dispatchTo = Dispatcher_dispatchTo;
 export const getScheduler = Dispatcher_getScheduler;
-/** @ignore */
-const Dispatcher = {
-    dispatch,
-    dispatchTo,
-    getScheduler,
-};
-export default Dispatcher;

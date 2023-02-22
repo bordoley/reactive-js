@@ -26,11 +26,3 @@ export const createActionReducer = Streamable_createActionReducer;
 export const createStateStore = Streamable_createStateStore;
 export const sinkInto = Streamable_sinkInto;
 export const stream = Streamable_stream;
-/** @ignore */
-const Streamable = {
-    createActionReducer,
-    createStateStore,
-    sinkInto,
-    stream,
-};
-export default Streamable;

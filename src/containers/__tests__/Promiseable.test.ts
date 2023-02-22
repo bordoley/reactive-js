@@ -6,10 +6,10 @@ import {
   testModule,
 } from "../../__tests__/testing.js";
 import { newInstance, pipe } from "../../functions.js";
-import Observable from "../../rx/Observable.js";
-import Scheduler from "../../scheduling/Scheduler.js";
-import Disposable from "../../util/Disposable.js";
-import Promiseable from "../Promiseable.js";
+import * as Observable from "../../rx/Observable.js";
+import * as Scheduler from "../../scheduling/Scheduler.js";
+import * as Disposable from "../../util/Disposable.js";
+import * as Promiseable from "../Promiseable.js";
 
 testModule(
   "Promiseable",

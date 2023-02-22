@@ -15,10 +15,3 @@ export const __now = Continuation__now;
 export const __yield = Continuation__yield;
 
 export const run = Continuation_run;
-
-/** @ignore */
-const Continuation = {
-  run,
-};
-
-export default Continuation;

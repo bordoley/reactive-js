@@ -167,31 +167,3 @@ export const toSequence: ToSequence<
     readonly start?: number;
   }
 >["toSequence"] = ReadonlyArray_toSequence;
-
-/** @ignore */
-const ReadonlyArray = {
-  empty,
-  every,
-  forEach,
-  fromEnumerable,
-  fromEnumerableObservable,
-  fromIterable,
-  fromReadonlyArray,
-  fromSequence,
-  keep,
-  keepType,
-  map,
-  some,
-  toAsyncEnumerable,
-  toEnumerable,
-  toEnumerableObservable,
-  toFlowable,
-  toIterable,
-  toObservable,
-  toReadonlyArray,
-  toRunnable,
-  toRunnableObservable,
-  toSequence,
-};
-
-export default ReadonlyArray;

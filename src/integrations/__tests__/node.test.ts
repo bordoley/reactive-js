@@ -6,16 +6,16 @@ import {
   testAsync,
   testModule,
 } from "../../__tests__/testing.js";
-import ReadonlyArray from "../../containers/ReadonlyArray.js";
+import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { newInstance, pipe, returns } from "../../functions.js";
-import Observable from "../../rx/Observable.js";
-import RunnableObservable from "../../rx/RunnableObservable.js";
+import * as Observable from "../../rx/Observable.js";
+import * as RunnableObservable from "../../rx/RunnableObservable.js";
 import { PauseableState_paused } from "../../scheduling.js";
-import Scheduler from "../../scheduling/Scheduler.js";
-import Flowable from "../../streaming/Flowable.js";
-import Stream from "../../streaming/Stream.js";
-import Streamable from "../../streaming/Streamable.js";
-import Disposable from "../../util/Disposable.js";
+import * as Scheduler from "../../scheduling/Scheduler.js";
+import * as Flowable from "../../streaming/Flowable.js";
+import * as Stream from "../../streaming/Stream.js";
+import * as Streamable from "../../streaming/Streamable.js";
+import * as Disposable from "../../util/Disposable.js";
 import {
   createReadableSource,
   createWritableSink,
