@@ -9,7 +9,7 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/DelegatingEnumerator.mixin.js";
 import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_forEach = /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
     const ForEachEnumerator_effect = Symbol("ForEachEnumerator_effect");
@@ -29,6 +29,6 @@ const Enumerable_forEach = /*@__PURE__*/ (() => {
                 }
             }
         },
-    })), StatefulContainer_forEach(Enumerable_liftT));
+    })), StatefulContainer_forEach(Enumerable_lift));
 })();
 export default Enumerable_forEach;

@@ -7,10 +7,8 @@ import {
 } from "../../../containers.js";
 import { Function2, partial, pipe } from "../../../functions.js";
 
-import StatefulContainer_lift from "./StatefulContainer.lift.js";
-
 const StatefulContainer_decodeWithCharset =
-  <C extends StatefulContainerLike>(m: Lift<C>) =>
+  <C extends StatefulContainerLike>(lift: Lift<C>["lift"]) =>
   (
     operator: Function2<
       LiftOperatorIn<C, ArrayBuffer, string>,
@@ -20,7 +18,7 @@ const StatefulContainer_decodeWithCharset =
   ): DecodeWithCharset<C>["decodeWithCharset"] =>
   options => {
     const charset = options?.charset ?? "utf-8";
-    return pipe(operator, partial(charset), StatefulContainer_lift(m));
+    return pipe(operator, partial(charset), lift);
   };
 
 export default StatefulContainer_decodeWithCharset;

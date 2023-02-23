@@ -6,10 +6,9 @@ import {
   StatefulContainerLike,
 } from "../../../containers.js";
 import { Function3, Predicate, partial, pipe } from "../../../functions.js";
-import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_takeWhile =
-  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
+  <C extends StatefulContainerLike, T>(lift: Lift<C>["lift"]) =>
   (
     operator: Function3<
       LiftOperatorIn<C, T, T>,
@@ -23,11 +22,7 @@ const StatefulContainer_takeWhile =
     options: { readonly inclusive?: boolean } = {},
   ): ContainerOperator<C, T, T> => {
     const { inclusive = false } = options;
-    return pipe(
-      operator,
-      partial(predicate, inclusive),
-      StatefulContainer_lift(m),
-    );
+    return pipe(operator, partial(predicate, inclusive), lift);
   };
 
 export default StatefulContainer_takeWhile;

@@ -7,7 +7,7 @@ import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_takeLastMixin from "../../Sink/__internal__/Sink.takeLastMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeLast = 
 /*@__PURE__*/ (() => {
     const typedTakeLastSinkMixin = Sink_takeLastMixin(ReadonlyArray_toRunnableObservable());
@@ -17,6 +17,6 @@ const Observable_takeLast =
         init(typedTakeLastSinkMixin, instance, delegate, takeCount);
         return instance;
     }));
-    return pipe(createTakeLastObserver, StatefulContainer_takeLast(Observable_liftEnumerableOperatorT));
+    return pipe(createTakeLastObserver, StatefulContainer_takeLast(Observable_liftEnumerableOperator));
 })();
 export default Observable_takeLast;

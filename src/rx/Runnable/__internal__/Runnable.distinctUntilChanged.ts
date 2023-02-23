@@ -4,7 +4,7 @@ import StatefulContainer_distinctUntilChanged from "../../../containers/Stateful
 import { pipe } from "../../../functions.js";
 import { RunnableLike } from "../../../rx.js";
 import Sink_distinctUntilChangedMixin from "../../Sink/__internal__/Sink.distinctUntilChangedMixin.js";
-import Runnable_liftT from "./Runnable.liftT.js";
+import Runnable_lift from "./Runnable.lift.js";
 
 const Runnable_distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
@@ -13,7 +13,7 @@ const Runnable_distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinc
 
     return pipe(
       createInstanceFactory(typedDistinctUntilChangedSinkMixin),
-      StatefulContainer_distinctUntilChanged<RunnableLike, T>(Runnable_liftT),
+      StatefulContainer_distinctUntilChanged<RunnableLike, T>(Runnable_lift),
     );
   })();
 

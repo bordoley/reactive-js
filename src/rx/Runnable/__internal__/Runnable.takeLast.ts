@@ -5,7 +5,7 @@ import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__
 import { pipe } from "../../../functions.js";
 import { RunnableLike, SinkLike } from "../../../rx.js";
 import Sink_takeLastMixin from "../../Sink/__internal__/Sink.takeLastMixin.js";
-import Runnable_liftT from "./Runnable.liftT.js";
+import Runnable_lift from "./Runnable.lift.js";
 
 const Runnable_takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
   T,
@@ -18,7 +18,7 @@ const Runnable_takeLast: TakeLast<RunnableLike>["takeLast"] = /*@__PURE__*/ (<
 
   return pipe(
     createInstanceFactory(typedTakeLastSinkMixin),
-    StatefulContainer_takeLast<RunnableLike, T>(Runnable_liftT),
+    StatefulContainer_takeLast<RunnableLike, T>(Runnable_lift),
   );
 })();
 

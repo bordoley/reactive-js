@@ -11,10 +11,9 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
-import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_reduce =
-  <C extends StatefulContainerLike, T, TAcc>(m: Lift<C>) =>
+  <C extends StatefulContainerLike, T, TAcc>(lift: Lift<C>["lift"]) =>
   (
     operator: Function3<
       LiftOperatorIn<C, T, TAcc>,
@@ -24,6 +23,6 @@ const StatefulContainer_reduce =
     >,
   ) =>
   (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-    pipe(operator, partial(reducer, initialValue), StatefulContainer_lift(m));
+    pipe(operator, partial(reducer, initialValue), lift);
 
 export default StatefulContainer_reduce;

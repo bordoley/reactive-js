@@ -14,7 +14,7 @@ import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/Delegating
 import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_takeLast = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
@@ -48,6 +48,6 @@ const Enumerable_takeLast =
             }
             DelegatingEnumerator_move(this);
         },
-    })), StatefulContainer_takeLast(Enumerable_liftT));
+    })), StatefulContainer_takeLast(Enumerable_lift));
 })();
 export default Enumerable_takeLast;

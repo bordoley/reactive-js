@@ -5,7 +5,7 @@ import StatefulContainer_reduce from "../../../containers/StatefulContainer/__in
 import { pipe } from "../../../functions.js";
 import { RunnableLike, SinkLike } from "../../../rx.js";
 import Sink_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
-import Runnable_liftT from "./Runnable.liftT.js";
+import Runnable_lift from "./Runnable.lift.js";
 
 const Runnable_reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
   T,
@@ -20,7 +20,7 @@ const Runnable_reduce: Reduce<RunnableLike>["reduce"] = /*@__PURE__*/ (<
 
   return pipe(
     createInstanceFactory(typedReduceSinkMixin),
-    StatefulContainer_reduce<RunnableLike, T, TAcc>(Runnable_liftT),
+    StatefulContainer_reduce<RunnableLike, T, TAcc>(Runnable_lift),
   );
 })();
 

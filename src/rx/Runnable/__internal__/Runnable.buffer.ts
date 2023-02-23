@@ -5,7 +5,7 @@ import StatefulContainer_buffer from "../../../containers/StatefulContainer/__in
 import { pipe } from "../../../functions.js";
 import { RunnableLike, SinkLike } from "../../../rx.js";
 import Sink_bufferMixin from "../../Sink/__internal__/Sink.bufferMixin.js";
-import Runnable_liftT from "./Runnable.liftT.js";
+import Runnable_lift from "./Runnable.lift.js";
 
 const Runnable_buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<
   T,
@@ -18,7 +18,7 @@ const Runnable_buffer: Buffer<RunnableLike>["buffer"] = /*@__PURE__*/ (<
 
   return pipe(
     createInstanceFactory(typedBufferSinkMixin),
-    StatefulContainer_buffer<RunnableLike, T>(Runnable_liftT),
+    StatefulContainer_buffer<RunnableLike, T>(Runnable_lift),
   );
 })();
 

@@ -31,7 +31,7 @@ import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
-import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT.js";
+import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 
 const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
   T,
@@ -98,7 +98,7 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
 
   return pipe(
     createScanAsyncEnumerator,
-    StatefulContainer_scan<AsyncEnumerableLike, T, TAcc>(AsyncEnumerable_liftT),
+    StatefulContainer_scan<AsyncEnumerableLike, T, TAcc>(AsyncEnumerable_lift),
   );
 })();
 

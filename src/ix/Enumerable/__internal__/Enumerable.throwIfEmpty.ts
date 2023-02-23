@@ -20,7 +20,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/DelegatingEnumerator.mixin.js";
 import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (<T>() => {
@@ -82,7 +82,7 @@ const Enumerable_throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
           },
         ),
       ),
-      StatefulContainer_throwIfEmpty<EnumerableLike, T>(Enumerable_liftT),
+      StatefulContainer_throwIfEmpty<EnumerableLike, T>(Enumerable_lift),
     );
   })();
 

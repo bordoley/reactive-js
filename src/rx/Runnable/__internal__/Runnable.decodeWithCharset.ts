@@ -5,7 +5,7 @@ import StatefulContainer_decodeWithCharset from "../../../containers/StatefulCon
 import { pipe } from "../../../functions.js";
 import { RunnableLike } from "../../../rx.js";
 import Sink_decodeWithCharsetMixin from "../../Sink/__internal__/Sink.decodeWithCharsetMixin.js";
-import Runnable_liftT from "./Runnable.liftT.js";
+import Runnable_lift from "./Runnable.lift.js";
 
 const Runnable_decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
@@ -15,7 +15,7 @@ const Runnable_decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCha
 
     return pipe(
       createInstanceFactory(typedDecodeWithCharsetMixin),
-      StatefulContainer_decodeWithCharset(Runnable_liftT),
+      StatefulContainer_decodeWithCharset(Runnable_lift),
     );
   })();
 

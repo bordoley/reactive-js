@@ -10,7 +10,7 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/DelegatingEnumerator.mixin.js";
 import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
 import getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_takeWhile = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
@@ -50,6 +50,6 @@ const Enumerable_takeWhile =
                 }
             }
         },
-    })), StatefulContainer_takeWhile(Enumerable_liftT));
+    })), StatefulContainer_takeWhile(Enumerable_lift));
 })();
 export default Enumerable_takeWhile;

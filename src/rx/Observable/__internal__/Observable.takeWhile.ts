@@ -14,8 +14,7 @@ import {
 } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_takeWhileMixin from "../../Sink/__internal__/Sink.takeWhileMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
-
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
     const createTakeWhileObserver: (
@@ -57,7 +56,7 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
     return pipe(
       createTakeWhileObserver,
       StatefulContainer_takeWhile<ObservableLike, T>(
-        Observable_liftEnumerableOperatorT,
+        Observable_liftEnumerableOperator,
       ),
     );
   })();

@@ -21,7 +21,7 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/DelegatingEnumerator.mixin.js";
 import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
 import getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
@@ -100,7 +100,7 @@ const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
           },
         ),
       ),
-      StatefulContainer_takeWhile<EnumerableLike, T>(Enumerable_liftT),
+      StatefulContainer_takeWhile<EnumerableLike, T>(Enumerable_lift),
     );
   })();
 

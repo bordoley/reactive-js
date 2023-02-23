@@ -5,9 +5,9 @@ import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__intern
 import StatefulContainer_buffer from "../../../containers/StatefulContainer/__internal__/StatefulContainer.buffer.js";
 import { pipe } from "../../../functions.js";
 import Sink_bufferMixin from "../../Sink/__internal__/Sink.bufferMixin.js";
-import Runnable_liftT from "./Runnable.liftT.js";
+import Runnable_lift from "./Runnable.lift.js";
 const Runnable_buffer = /*@__PURE__*/ (() => {
     const typedBufferSinkMixin = Sink_bufferMixin(ReadonlyArray_toRunnable());
-    return pipe(createInstanceFactory(typedBufferSinkMixin), StatefulContainer_buffer(Runnable_liftT));
+    return pipe(createInstanceFactory(typedBufferSinkMixin), StatefulContainer_buffer(Runnable_lift));
 })();
 export default Runnable_buffer;

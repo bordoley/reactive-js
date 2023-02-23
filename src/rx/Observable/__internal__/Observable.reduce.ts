@@ -15,8 +15,7 @@ import {
 } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
-
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   T,
   TAcc,
@@ -50,7 +49,7 @@ const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   return pipe(
     createReduceObserver,
     StatefulContainer_reduce<ObservableLike, T, TAcc>(
-      Observable_liftEnumerableOperatorT,
+      Observable_liftEnumerableOperator,
     ),
   );
 })();

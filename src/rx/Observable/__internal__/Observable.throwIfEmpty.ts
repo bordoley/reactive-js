@@ -14,8 +14,7 @@ import {
 } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_throwIfEmptyMixin from "../../Sink/__internal__/Sink.throwIfEmptyMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
-
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (<T>() => {
@@ -45,7 +44,7 @@ const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
 
     return pipe(
       createThrowIfEmptyObserver,
-      StatefulContainer_throwIfEmpty(Observable_liftEnumerableOperatorT),
+      StatefulContainer_throwIfEmpty(Observable_liftEnumerableOperator),
     );
   })();
 

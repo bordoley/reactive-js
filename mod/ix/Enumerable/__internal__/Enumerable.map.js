@@ -7,7 +7,7 @@ import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, } f
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import MutableEnumerator_mixin from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_map = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const MapEnumerator_mapper = Symbol("MapEnumerator_mapper");
@@ -32,6 +32,6 @@ const Enumerable_map = /*@__PURE__*/ (() => {
                 pipe(this, Disposable_dispose(error(e)));
             }
         },
-    })), StatefulContainer_map(Enumerable_liftT));
+    })), StatefulContainer_map(Enumerable_lift));
 })();
 export default Enumerable_map;

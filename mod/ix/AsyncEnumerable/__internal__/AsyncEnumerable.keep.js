@@ -14,7 +14,7 @@ import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dis
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
-import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT.js";
+import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
     const KeepAsyncEnumerator_obs = Symbol("KeepAsyncEnumerator_obs");
     const createKeepAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin(), DelegatingAsyncEnumerator_mixin()), function KeepAsyncEnumerator(instance, delegate, predicate) {
@@ -41,6 +41,6 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
             pipe(this[KeepAsyncEnumerator_obs], ReactiveContainer_sinkInto(observer));
         },
     }));
-    return pipe(createKeepAsyncEnumerator, StatefulContainer_keep(AsyncEnumerable_liftT));
+    return pipe(createKeepAsyncEnumerator, StatefulContainer_keep(AsyncEnumerable_lift));
 })();
 export default AsyncEnumerable_keep;

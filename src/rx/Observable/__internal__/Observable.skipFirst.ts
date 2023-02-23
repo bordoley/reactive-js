@@ -14,8 +14,7 @@ import {
 } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_skipFirstMixin from "../../Sink/__internal__/Sink.skipFirstMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
-
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
   /*@__PURE__*/ (() => {
     const createSkipFirstObserver: <T>(
@@ -48,7 +47,7 @@ const Observable_skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
 
     return pipe(
       createSkipFirstObserver,
-      StatefulContainer_skipFirst(Observable_liftEnumerableOperatorT),
+      StatefulContainer_skipFirst(Observable_liftEnumerableOperator),
     );
   })();
 

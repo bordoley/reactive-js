@@ -14,8 +14,7 @@ import {
 } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_distinctUntilChangedMixin from "../../Sink/__internal__/Sink.distinctUntilChangedMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
-
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
     const createDistinctUntilChangedObserver: <T>(
@@ -55,7 +54,7 @@ const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["dis
     return pipe(
       createDistinctUntilChangedObserver,
       StatefulContainer_distinctUntilChanged<ObservableLike, T>(
-        Observable_liftEnumerableOperatorT,
+        Observable_liftEnumerableOperator,
       ),
     );
   })();

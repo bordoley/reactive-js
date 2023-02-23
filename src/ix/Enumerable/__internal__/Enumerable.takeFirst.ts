@@ -19,7 +19,7 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/DelegatingEnumerator.mixin.js";
 import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
   /*@__PURE__*/ (<T>() => {
@@ -72,7 +72,7 @@ const Enumerable_takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
           },
         ),
       ),
-      StatefulContainer_takeFirst<EnumerableLike, T>(Enumerable_liftT),
+      StatefulContainer_takeFirst<EnumerableLike, T>(Enumerable_lift),
     );
   })();
 

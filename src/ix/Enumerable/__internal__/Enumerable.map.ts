@@ -22,7 +22,7 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import MutableEnumerator_mixin from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { MutableEnumeratorLike } from "../../__internal__/ix.internal.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
   TA,
@@ -81,7 +81,7 @@ const Enumerable_map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
         },
       ),
     ),
-    StatefulContainer_map<EnumerableLike, TA, TB>(Enumerable_liftT),
+    StatefulContainer_map<EnumerableLike, TA, TB>(Enumerable_lift),
   );
 })();
 

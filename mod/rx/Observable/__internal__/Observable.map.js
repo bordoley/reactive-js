@@ -6,7 +6,7 @@ import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_mapMixin from "../../Sink/__internal__/Sink.mapMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_map = /*@__PURE__*/ (() => {
     const createMapObserver = (() => {
         const typedMapSinkMixin = Sink_mapMixin();
@@ -17,6 +17,6 @@ const Observable_map = /*@__PURE__*/ (() => {
             return instance;
         }));
     })();
-    return pipe(createMapObserver, StatefulContainer_map(Observable_liftEnumerableOperatorT));
+    return pipe(createMapObserver, StatefulContainer_map(Observable_liftEnumerableOperator));
 })();
 export default Observable_map;

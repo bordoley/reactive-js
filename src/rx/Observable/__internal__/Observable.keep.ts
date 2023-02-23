@@ -14,8 +14,7 @@ import {
 } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_keepMixin from "../../Sink/__internal__/Sink.keepMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
-
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const createKeepObserver: <T>(
     delegate: ObserverLike<T>,
@@ -44,7 +43,7 @@ const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   return pipe(
     createKeepObserver,
     StatefulContainer_keep<ObservableLike, T>(
-      Observable_liftEnumerableOperatorT,
+      Observable_liftEnumerableOperator,
     ),
   );
 })();

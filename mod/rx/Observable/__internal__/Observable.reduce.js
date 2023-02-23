@@ -7,7 +7,7 @@ import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_reduce = /*@__PURE__*/ (() => {
     const typedReduceSinkMixin = Sink_reduceMixin(ReadonlyArray_toRunnableObservable());
     const typedObserverMixin = Observer_mixin();
@@ -16,6 +16,6 @@ const Observable_reduce = /*@__PURE__*/ (() => {
         init(typedReduceSinkMixin, instance, delegate, reducer, initialValue);
         return instance;
     }));
-    return pipe(createReduceObserver, StatefulContainer_reduce(Observable_liftEnumerableOperatorT));
+    return pipe(createReduceObserver, StatefulContainer_reduce(Observable_liftEnumerableOperator));
 })();
 export default Observable_reduce;

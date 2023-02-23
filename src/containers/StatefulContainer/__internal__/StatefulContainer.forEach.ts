@@ -5,10 +5,9 @@ import {
   StatefulContainerLike,
 } from "../../../containers.js";
 import { Function2, SideEffect1, partial, pipe } from "../../../functions.js";
-import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_forEach =
-  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
+  <C extends StatefulContainerLike, T>(lift: Lift<C>["lift"]) =>
   (
     operator: Function2<
       LiftOperatorIn<C, T, T>,
@@ -17,6 +16,6 @@ const StatefulContainer_forEach =
     >,
   ) =>
   (effect: SideEffect1<T>) =>
-    pipe(operator, partial(effect), StatefulContainer_lift(m));
+    pipe(operator, partial(effect), lift);
 
 export default StatefulContainer_forEach;

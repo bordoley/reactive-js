@@ -14,8 +14,7 @@ import {
 } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import SinkLike_takeFirstMixin from "../../Sink/__internal__/Sink.takeFirstMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
-
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
   /*@__PURE__*/ (() => {
     const createTakeFirstObserver: <T>(
@@ -48,7 +47,7 @@ const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
 
     return pipe(
       createTakeFirstObserver,
-      StatefulContainer_takeFirst(Observable_liftEnumerableOperatorT),
+      StatefulContainer_takeFirst(Observable_liftEnumerableOperator),
     );
   })();
 

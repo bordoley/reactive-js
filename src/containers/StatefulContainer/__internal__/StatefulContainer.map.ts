@@ -5,10 +5,9 @@ import {
   StatefulContainerLike,
 } from "../../../containers.js";
 import { Function1, Function2, partial, pipe } from "../../../functions.js";
-import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_map =
-  <C extends StatefulContainerLike, TA, TB>(m: Lift<C>) =>
+  <C extends StatefulContainerLike, TA, TB>(lift: Lift<C>["lift"]) =>
   (
     operator: Function2<
       LiftOperatorIn<C, TA, TB>,
@@ -17,6 +16,6 @@ const StatefulContainer_map =
     >,
   ) =>
   (mapper: Function1<TA, TB>) =>
-    pipe(operator, partial(mapper), StatefulContainer_lift(m));
+    pipe(operator, partial(mapper), lift);
 
 export default StatefulContainer_map;

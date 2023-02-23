@@ -4,7 +4,7 @@ import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/_
 import { pipe } from "../../../functions.js";
 import { RunnableLike } from "../../../rx.js";
 import Sink_takeWhileMixin from "../../Sink/__internal__/Sink.takeWhileMixin.js";
-import Runnable_liftT from "./Runnable.liftT.js";
+import Runnable_lift from "./Runnable.lift.js";
 
 const Runnable_takeWhile: TakeWhile<RunnableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
@@ -12,7 +12,7 @@ const Runnable_takeWhile: TakeWhile<RunnableLike>["takeWhile"] =
 
     return pipe(
       createInstanceFactory(typedTakeWhileSinkMixin),
-      StatefulContainer_takeWhile<RunnableLike, T>(Runnable_liftT),
+      StatefulContainer_takeWhile<RunnableLike, T>(Runnable_lift),
     );
   })();
 

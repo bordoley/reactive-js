@@ -25,7 +25,7 @@ import Observable_map from "../../../rx/Observable/__internal__/Observable.map.j
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
-import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT.js";
+import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 
 const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
   TA,
@@ -87,7 +87,7 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
 
   return pipe(
     createMapAsyncEnumerator,
-    StatefulContainer_map<AsyncEnumerableLike, TA, TB>(AsyncEnumerable_liftT),
+    StatefulContainer_map<AsyncEnumerableLike, TA, TB>(AsyncEnumerable_lift),
   );
 })();
 

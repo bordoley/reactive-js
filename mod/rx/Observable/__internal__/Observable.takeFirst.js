@@ -6,7 +6,7 @@ import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import SinkLike_takeFirstMixin from "../../Sink/__internal__/Sink.takeFirstMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeFirst = 
 /*@__PURE__*/ (() => {
     const createTakeFirstObserver = (() => {
@@ -18,6 +18,6 @@ const Observable_takeFirst =
             return instance;
         }));
     })();
-    return pipe(createTakeFirstObserver, StatefulContainer_takeFirst(Observable_liftEnumerableOperatorT));
+    return pipe(createTakeFirstObserver, StatefulContainer_takeFirst(Observable_liftEnumerableOperator));
 })();
 export default Observable_takeFirst;

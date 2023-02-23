@@ -6,10 +6,9 @@ import {
   StatefulContainerLike,
 } from "../../../containers.js";
 import { Function2, max, partial, pipe } from "../../../functions.js";
-import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_takeFirst =
-  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
+  <C extends StatefulContainerLike, T>(lift: Lift<C>["lift"]) =>
   (
     operator: Function2<
       LiftOperatorIn<C, T, T>,
@@ -19,11 +18,7 @@ const StatefulContainer_takeFirst =
   ) =>
   (options: { readonly count?: number } = {}): ContainerOperator<C, T, T> => {
     const { count = max(options.count ?? 1, 0) } = options;
-    const containerOperator = pipe(
-      operator,
-      partial(count),
-      StatefulContainer_lift(m),
-    );
+    const containerOperator = pipe(operator, partial(count), lift);
     return container => pipe(container, containerOperator);
   };
 export default StatefulContainer_takeFirst;

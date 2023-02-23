@@ -11,10 +11,9 @@ import {
   pipe,
   strictEquality,
 } from "../../../functions.js";
-import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_distinctUntilChanged =
-  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
+  <C extends StatefulContainerLike, T>(lift: Lift<C>["lift"]) =>
   (
     operator: Function2<
       LiftOperatorIn<C, T, T>,
@@ -24,7 +23,7 @@ const StatefulContainer_distinctUntilChanged =
   ) =>
   (options?: { readonly equality?: Equality<T> }) => {
     const { equality = strictEquality } = options ?? {};
-    return pipe(operator, partial(equality), StatefulContainer_lift(m));
+    return pipe(operator, partial(equality), lift);
   };
 
 export default StatefulContainer_distinctUntilChanged;

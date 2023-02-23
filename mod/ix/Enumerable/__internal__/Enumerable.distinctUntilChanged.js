@@ -10,7 +10,7 @@ import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/Delegating
 import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../Enumerator/__internal__/Enumerator.hasCurrent.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
@@ -40,6 +40,6 @@ const Enumerable_distinctUntilChanged =
                 pipe(this, Disposable_dispose(error(e)));
             }
         },
-    })), StatefulContainer_distinctUntilChanged(Enumerable_liftT));
+    })), StatefulContainer_distinctUntilChanged(Enumerable_lift));
 })();
 export default Enumerable_distinctUntilChanged;

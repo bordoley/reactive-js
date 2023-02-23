@@ -14,8 +14,7 @@ import {
 } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_forEachMixin from "../../Sink/__internal__/Sink.forEachMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
-
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
   T,
 >() => {
@@ -46,7 +45,7 @@ const Observable_forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
   return pipe(
     createForEachObserver,
     StatefulContainer_forEach<ObservableLike, T>(
-      Observable_liftEnumerableOperatorT,
+      Observable_liftEnumerableOperator,
     ),
   );
 })();

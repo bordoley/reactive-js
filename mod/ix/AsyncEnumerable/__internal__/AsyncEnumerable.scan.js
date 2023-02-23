@@ -10,7 +10,7 @@ import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
-import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT.js";
+import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 const AsyncEnumerable_scan = /*@__PURE__*/ (() => {
     const ScanAsyncEnumerator_op = Symbol("ScanAsyncEnumerator_op");
     const createScanAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin(), DelegatingAsyncEnumerator_mixin()), function ScanAsyncEnumerator(instance, delegate, reducer, acc) {
@@ -33,6 +33,6 @@ const AsyncEnumerable_scan = /*@__PURE__*/ (() => {
             pipe(this[DelegatingLike_delegate], this[ScanAsyncEnumerator_op], ReactiveContainer_sinkInto(observer));
         },
     }));
-    return pipe(createScanAsyncEnumerator, StatefulContainer_scan(AsyncEnumerable_liftT));
+    return pipe(createScanAsyncEnumerator, StatefulContainer_scan(AsyncEnumerable_lift));
 })();
 export default AsyncEnumerable_scan;

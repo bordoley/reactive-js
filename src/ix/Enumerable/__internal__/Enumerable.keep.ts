@@ -21,7 +21,7 @@ import {
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/DelegatingEnumerator.mixin.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin<T>();
@@ -71,7 +71,7 @@ const Enumerable_keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         },
       ),
     ),
-    StatefulContainer_keep<EnumerableLike, T>(Enumerable_liftT),
+    StatefulContainer_keep<EnumerableLike, T>(Enumerable_lift),
   );
 })();
 

@@ -4,7 +4,7 @@ import StatefulContainer_forEach from "../../../containers/StatefulContainer/__i
 import { pipe } from "../../../functions.js";
 import { RunnableLike } from "../../../rx.js";
 import Sink_forEachMixin from "../../Sink/__internal__/Sink.forEachMixin.js";
-import Runnable_liftT from "./Runnable.liftT.js";
+import Runnable_lift from "./Runnable.lift.js";
 
 const Runnable_forEach: ForEach<RunnableLike>["forEach"] = /*@__PURE__*/ (<
   T,
@@ -13,7 +13,7 @@ const Runnable_forEach: ForEach<RunnableLike>["forEach"] = /*@__PURE__*/ (<
 
   return pipe(
     createInstanceFactory(typedForEachSinkMixin),
-    StatefulContainer_forEach<RunnableLike, T>(Runnable_liftT),
+    StatefulContainer_forEach<RunnableLike, T>(Runnable_lift),
   );
 })();
 

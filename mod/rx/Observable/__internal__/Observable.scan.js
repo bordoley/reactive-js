@@ -6,7 +6,7 @@ import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_scanMixin from "../../Sink/__internal__/Sink.scanMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_scan = /*@__PURE__*/ (() => {
     const createScanObserver = (() => {
         const typedScanSinkMixin = Sink_scanMixin();
@@ -17,6 +17,6 @@ const Observable_scan = /*@__PURE__*/ (() => {
             return instance;
         }));
     })();
-    return pipe(createScanObserver, StatefulContainer_scan(Observable_liftEnumerableOperatorT));
+    return pipe(createScanObserver, StatefulContainer_scan(Observable_liftEnumerableOperator));
 })();
 export default Observable_scan;

@@ -6,7 +6,7 @@ import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_distinctUntilChangedMixin from "../../Sink/__internal__/Sink.distinctUntilChangedMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const createDistinctUntilChangedObserver = (() => {
@@ -18,6 +18,6 @@ const Observable_distinctUntilChanged =
             return instance;
         }));
     })();
-    return pipe(createDistinctUntilChangedObserver, StatefulContainer_distinctUntilChanged(Observable_liftEnumerableOperatorT));
+    return pipe(createDistinctUntilChangedObserver, StatefulContainer_distinctUntilChanged(Observable_liftEnumerableOperator));
 })();
 export default Observable_distinctUntilChanged;

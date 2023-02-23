@@ -5,10 +5,9 @@ import {
   StatefulContainerLike,
 } from "../../../containers.js";
 import { Factory, Function2, partial, pipe } from "../../../functions.js";
-import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_throwIfEmpty =
-  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
+  <C extends StatefulContainerLike, T>(lift: Lift<C>["lift"]) =>
   (
     operator: Function2<
       LiftOperatorIn<C, T, T>,
@@ -17,6 +16,6 @@ const StatefulContainer_throwIfEmpty =
     >,
   ) =>
   (factory: Factory<unknown>) =>
-    pipe(operator, partial(factory), StatefulContainer_lift(m));
+    pipe(operator, partial(factory), lift);
 
 export default StatefulContainer_throwIfEmpty;

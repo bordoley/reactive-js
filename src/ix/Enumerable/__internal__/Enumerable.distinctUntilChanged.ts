@@ -21,7 +21,7 @@ import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/Delegating
 import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../Enumerator/__internal__/Enumerator.hasCurrent.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"] =
   /*@__PURE__*/ (<T>() => {
@@ -86,7 +86,7 @@ const Enumerable_distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["dis
         ),
       ),
       StatefulContainer_distinctUntilChanged<EnumerableLike, T>(
-        Enumerable_liftT,
+        Enumerable_lift,
       ),
     );
   })();

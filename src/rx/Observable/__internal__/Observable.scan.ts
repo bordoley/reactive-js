@@ -15,8 +15,7 @@ import {
 
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_scanMixin from "../../Sink/__internal__/Sink.scanMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
-
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
   T,
   TAcc,
@@ -51,7 +50,7 @@ const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
   return pipe(
     createScanObserver,
     StatefulContainer_scan<ObservableLike, T, TAcc>(
-      Observable_liftEnumerableOperatorT,
+      Observable_liftEnumerableOperator,
     ),
   );
 })();

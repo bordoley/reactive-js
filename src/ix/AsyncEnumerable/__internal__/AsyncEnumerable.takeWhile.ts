@@ -26,7 +26,7 @@ import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
-import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT.js";
+import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 
 const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
@@ -96,9 +96,7 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
 
     return pipe(
       createTakeWhileAsyncEnumerator,
-      StatefulContainer_takeWhile<AsyncEnumerableLike, T>(
-        AsyncEnumerable_liftT,
-      ),
+      StatefulContainer_takeWhile<AsyncEnumerableLike, T>(AsyncEnumerable_lift),
     );
   })();
 

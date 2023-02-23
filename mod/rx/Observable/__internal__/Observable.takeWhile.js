@@ -6,7 +6,7 @@ import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_takeWhileMixin from "../../Sink/__internal__/Sink.takeWhileMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeWhile = 
 /*@__PURE__*/ (() => {
     const createTakeWhileObserver = (() => {
@@ -18,6 +18,6 @@ const Observable_takeWhile =
             return instance;
         }));
     })();
-    return pipe(createTakeWhileObserver, StatefulContainer_takeWhile(Observable_liftEnumerableOperatorT));
+    return pipe(createTakeWhileObserver, StatefulContainer_takeWhile(Observable_liftEnumerableOperator));
 })();
 export default Observable_takeWhile;

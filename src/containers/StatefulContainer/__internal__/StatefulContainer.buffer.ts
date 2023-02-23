@@ -6,10 +6,9 @@ import {
   StatefulContainerLike,
 } from "../../../containers.js";
 import { Function2, max, partial, pipe } from "../../../functions.js";
-import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_buffer =
-  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
+  <C extends StatefulContainerLike, T>(lift: Lift<C>["lift"]) =>
   (
     operator: Function2<
       LiftOperatorIn<C, T, readonly T[]>,
@@ -24,7 +23,7 @@ const StatefulContainer_buffer =
   ) => {
     const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
-    return pipe(operator, partial(maxBufferSize), StatefulContainer_lift(m));
+    return pipe(operator, partial(maxBufferSize), lift);
   };
 
 export default StatefulContainer_buffer;

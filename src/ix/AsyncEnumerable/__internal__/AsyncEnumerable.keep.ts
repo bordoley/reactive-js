@@ -27,7 +27,7 @@ import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dis
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
-import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT.js";
+import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 
 const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
   T,
@@ -96,7 +96,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
 
   return pipe(
     createKeepAsyncEnumerator,
-    StatefulContainer_keep<AsyncEnumerableLike, T>(AsyncEnumerable_liftT),
+    StatefulContainer_keep<AsyncEnumerableLike, T>(AsyncEnumerable_lift),
   );
 })();
 

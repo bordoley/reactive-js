@@ -5,10 +5,10 @@ import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__intern
 import StatefulContainer_decodeWithCharset from "../../../containers/StatefulContainer/__internal__/StatefulContainer.decodeWithCharset.js";
 import { pipe } from "../../../functions.js";
 import Sink_decodeWithCharsetMixin from "../../Sink/__internal__/Sink.decodeWithCharsetMixin.js";
-import Runnable_liftT from "./Runnable.liftT.js";
+import Runnable_lift from "./Runnable.lift.js";
 const Runnable_decodeWithCharset = 
 /*@__PURE__*/ (() => {
     const typedDecodeWithCharsetMixin = Sink_decodeWithCharsetMixin(ReadonlyArray_toRunnable());
-    return pipe(createInstanceFactory(typedDecodeWithCharsetMixin), StatefulContainer_decodeWithCharset(Runnable_liftT));
+    return pipe(createInstanceFactory(typedDecodeWithCharsetMixin), StatefulContainer_decodeWithCharset(Runnable_lift));
 })();
 export default Runnable_decodeWithCharset;

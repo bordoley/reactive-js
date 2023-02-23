@@ -5,9 +5,9 @@ import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__intern
 import StatefulContainer_reduce from "../../../containers/StatefulContainer/__internal__/StatefulContainer.reduce.js";
 import { pipe } from "../../../functions.js";
 import Sink_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
-import Runnable_liftT from "./Runnable.liftT.js";
+import Runnable_lift from "./Runnable.lift.js";
 const Runnable_reduce = /*@__PURE__*/ (() => {
     const typedReduceSinkMixin = Sink_reduceMixin(ReadonlyArray_toRunnable());
-    return pipe(createInstanceFactory(typedReduceSinkMixin), StatefulContainer_reduce(Runnable_liftT));
+    return pipe(createInstanceFactory(typedReduceSinkMixin), StatefulContainer_reduce(Runnable_lift));
 })();
 export default Runnable_reduce;

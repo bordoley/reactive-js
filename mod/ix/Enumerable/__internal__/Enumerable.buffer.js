@@ -11,7 +11,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_buffer = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const BufferEnumerator_maxBufferSize = Symbol("BufferEnumerator_maxBufferSize");
@@ -40,6 +40,6 @@ const Enumerable_buffer = /*@__PURE__*/ (() => {
                 pipe(this, Disposable_dispose());
             }
         },
-    })), StatefulContainer_buffer(Enumerable_liftT));
+    })), StatefulContainer_buffer(Enumerable_lift));
 })();
 export default Enumerable_buffer;

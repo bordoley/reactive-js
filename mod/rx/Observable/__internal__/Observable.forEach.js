@@ -6,7 +6,7 @@ import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_forEachMixin from "../../Sink/__internal__/Sink.forEachMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_forEach = /*@__PURE__*/ (() => {
     const createForEachObserver = (() => {
         const typedForEachSinkMixin = Sink_forEachMixin();
@@ -17,6 +17,6 @@ const Observable_forEach = /*@__PURE__*/ (() => {
             return instance;
         }));
     })();
-    return pipe(createForEachObserver, StatefulContainer_forEach(Observable_liftEnumerableOperatorT));
+    return pipe(createForEachObserver, StatefulContainer_forEach(Observable_liftEnumerableOperator));
 })();
 export default Observable_forEach;

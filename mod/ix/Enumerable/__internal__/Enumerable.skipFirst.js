@@ -7,7 +7,7 @@ import { SourceLike_move, } from "../../../ix.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingEnumerator_mixin from "../../Enumerator/__internal__/DelegatingEnumerator.mixin.js";
 import DelegatingEnumerator_move from "../../Enumerator/__internal__/DelegatingEnumerator.move.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_skipFirst = 
 /*@__PURE__*/ (() => {
     const typedDelegatingEnumeratorMixin = DelegatingEnumerator_mixin();
@@ -33,6 +33,6 @@ const Enumerable_skipFirst =
             this[SkipFirstEnumerator_count] = skipCount;
             DelegatingEnumerator_move(this);
         },
-    })), StatefulContainer_skipFirst(Enumerable_liftT));
+    })), StatefulContainer_skipFirst(Enumerable_lift));
 })();
 export default Enumerable_skipFirst;

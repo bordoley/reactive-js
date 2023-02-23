@@ -26,7 +26,7 @@ import Enumerator_getCurrent from "../../Enumerator/__internal__/Enumerator.getC
 import Enumerator_move from "../../Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { MutableEnumeratorLike } from "../../__internal__/ix.internal.js";
-import Enumerable_liftT from "./Enumerable.liftT.js";
+import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
   T,
@@ -98,7 +98,7 @@ const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
         },
       ),
     ),
-    StatefulContainer_buffer<EnumerableLike, T>(Enumerable_liftT),
+    StatefulContainer_buffer<EnumerableLike, T>(Enumerable_lift),
   );
 })();
 

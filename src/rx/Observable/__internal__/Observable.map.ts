@@ -14,8 +14,7 @@ import {
 } from "../../../rx.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_mapMixin from "../../Sink/__internal__/Sink.mapMixin.js";
-import Observable_liftEnumerableOperatorT from "./Observable.liftEnumerableOperatorT.js";
-
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
   TA,
   TB,
@@ -47,7 +46,7 @@ const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
   return pipe(
     createMapObserver,
     StatefulContainer_map<ObservableLike, TA, TB>(
-      Observable_liftEnumerableOperatorT,
+      Observable_liftEnumerableOperator,
     ),
   );
 })();

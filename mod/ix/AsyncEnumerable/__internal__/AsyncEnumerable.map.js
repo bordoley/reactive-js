@@ -10,7 +10,7 @@ import Observable_map from "../../../rx/Observable/__internal__/Observable.map.j
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
-import AsyncEnumerable_liftT from "./AsyncEnumerable.liftT.js";
+import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 const AsyncEnumerable_map = /*@__PURE__*/ (() => {
     const MapAsyncEnumerator_op = Symbol("MapAsyncEnumerator_op");
     const createMapAsyncEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin(), DelegatingAsyncEnumerator_mixin()), function MapAsyncEnumerator(instance, delegate, mapper) {
@@ -33,6 +33,6 @@ const AsyncEnumerable_map = /*@__PURE__*/ (() => {
             pipe(this[DelegatingLike_delegate], this[MapAsyncEnumerator_op], ReactiveContainer_sinkInto(observer));
         },
     }));
-    return pipe(createMapAsyncEnumerator, StatefulContainer_map(AsyncEnumerable_liftT));
+    return pipe(createMapAsyncEnumerator, StatefulContainer_map(AsyncEnumerable_lift));
 })();
 export default AsyncEnumerable_map;
