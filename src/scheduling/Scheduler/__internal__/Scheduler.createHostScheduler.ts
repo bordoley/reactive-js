@@ -35,18 +35,18 @@ declare const navigator: {
   }>;
 };
 
-const supportsPerformanceNow =
-  typeof performance === "object" && /*@__PURE__*/ isFunction(performance.now);
+const supportsPerformanceNow = /*@__PURE__*/ (() =>
+  typeof performance === "object" && isFunction(performance.now))();
 
 const supportsSetImmediate = typeof setImmediate === "function";
 
-const supportsProcessHRTime =
-  typeof process === "object" && /*@__PURE__*/ isFunction(process.hrtime);
+const supportsProcessHRTime = /*@__PURE__*/ (() =>
+  typeof process === "object" && isFunction(process.hrtime))();
 
-const supportsIsInputPending =
+const supportsIsInputPending = /*@__PURE__*/ (() =>
   typeof navigator === "object" &&
   navigator.scheduling !== undefined &&
-  navigator.scheduling.isInputPending !== undefined;
+  navigator.scheduling.isInputPending !== undefined)();
 
 const isInputPending = (): boolean =>
   supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);

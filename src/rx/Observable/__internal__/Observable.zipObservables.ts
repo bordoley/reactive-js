@@ -56,7 +56,9 @@ export interface EnumeratorSinkLike<T> extends EnumeratorLike<T>, SinkLike<T> {}
 
 const EnumeratorSink_buffer = Symbol("EnumeratorSink_buffer");
 
-const EnumeratorSink_create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
+const EnumeratorSink_create: <T>() => EnumeratorSinkLike<T> = /*@__PURE__*/ (<
+  T,
+>() => {
   type TProperties = {
     [EnumeratorLike_current]: T;
     [EnumeratorLike_hasCurrent]: boolean;

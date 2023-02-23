@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "yarn lint && yarn format && yarn typecheck && yarn test && yarn build-package && yarn docs && yarn build-mod && yarn test-deno",
+    "build": "yarn lint && yarn format && yarn typecheck && yarn test && yarn build-artifacts && yarn test-deno",
+    "build-artifacts": "yarn build-package && yarn docs && yarn build-mod",
     "build-package": "rm -rf ./packages/core/**/ ./packages/core/*.{js,mjs,ts,md} && tsc -p tsconfig.build-package.json && cp README.md ./packages/core",
     "build-mod": "rm -rf ./mod && tsc -p tsconfig.build-mod.json && deno run --allow-read --allow-write -r build-mod.deno",
     "docs": "rm -rf  ./docs && typedoc",

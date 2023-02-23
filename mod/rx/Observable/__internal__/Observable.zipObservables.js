@@ -33,7 +33,7 @@ import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 const EnumeratorSink_buffer = Symbol("EnumeratorSink_buffer");
-const EnumeratorSink_create = (() => {
+const EnumeratorSink_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_mixin), function EnumeratorSink(instance) {
         init(Disposable_mixin, instance);
         instance[EnumeratorSink_buffer] = [];

@@ -14,12 +14,12 @@ import Continuation_run from "../../Continuation/__internal__/Continuation.run.j
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 import getCurrentTime from "./Scheduler.getCurrentTime.js";
 import isInContinuation from "./Scheduler.isInContinuation.js";
-const supportsPerformanceNow = typeof performance === "object" && /*@__PURE__*/ isFunction(performance.now);
+const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "object" && isFunction(performance.now))();
 const supportsSetImmediate = typeof setImmediate === "function";
-const supportsProcessHRTime = typeof process === "object" && /*@__PURE__*/ isFunction(process.hrtime);
-const supportsIsInputPending = typeof navigator === "object" &&
+const supportsProcessHRTime = /*@__PURE__*/ (() => typeof process === "object" && isFunction(process.hrtime))();
+const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== undefined &&
-    navigator.scheduling.isInputPending !== undefined;
+    navigator.scheduling.isInputPending !== undefined)();
 const isInputPending = () => { var _a, _b; return supportsIsInputPending && ((_b = (_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending()) !== null && _b !== void 0 ? _b : false); };
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
     const disposable = pipe(Disposable_create(), Disposable_addTo(continuation), Disposable_onDisposed(() => clearImmediate(immmediate)));
