@@ -1,4 +1,4 @@
-import { Lift, TInteractive } from "../../../containers/__internal__/containers.internal.js";
+import { Lift } from "../../../containers.js";
 import { EnumerableLike } from "../../../ix.js";
-declare const Enumerable_liftT: Lift<EnumerableLike, TInteractive>;
+declare const Enumerable_liftT: Lift<EnumerableLike>;
 export default Enumerable_liftT;

@@ -10,7 +10,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Map } from "../../../containers.js";
 import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { Function1, error, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -82,9 +81,7 @@ const Enumerable_map: Map<EnumerableLike>["map"] = /*@__PURE__*/ (<
         },
       ),
     ),
-    StatefulContainer_map<EnumerableLike, TA, TB, TInteractive>(
-      Enumerable_liftT,
-    ),
+    StatefulContainer_map<EnumerableLike, TA, TB>(Enumerable_liftT),
   );
 })();
 

@@ -22,9 +22,23 @@
 
 ## Table of contents
 
+### Properties
+
+- [[StatefulContainerLike\_variance]](rx.ReactiveContainerLike.md#[statefulcontainerlike_variance])
+
 ### Methods
 
 - [[ReactiveContainerLike\_sinkInto]](rx.ReactiveContainerLike.md#[reactivecontainerlike_sinkinto])
+
+## Properties
+
+### [StatefulContainerLike\_variance]
+
+• `Optional` `Readonly` **[StatefulContainerLike\_variance]**: ``"reactive"``
+
+#### Overrides
+
+[StatefulContainerLike](containers.StatefulContainerLike.md).[[StatefulContainerLike_variance]](containers.StatefulContainerLike.md#[statefulcontainerlike_variance])
 
 ## Methods
 

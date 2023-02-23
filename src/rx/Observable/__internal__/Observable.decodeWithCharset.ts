@@ -7,7 +7,6 @@ import {
 import { DecodeWithCharset } from "../../../containers.js";
 import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import StatefulContainer_decodeWithCharset from "../../../containers/StatefulContainer/__internal__/StatefulContainer.decodeWithCharset.js";
-import { TReactive } from "../../../containers/__internal__/containers.internal.js";
 import { pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -43,7 +42,7 @@ const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWit
 
     return pipe(
       createDecodeWithCharsetObserver,
-      StatefulContainer_decodeWithCharset<ObservableLike, TReactive>(
+      StatefulContainer_decodeWithCharset<ObservableLike>(
         Observable_liftEnumerableOperatorT,
       ),
     );

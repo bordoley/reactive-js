@@ -1,7 +1,6 @@
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import { TakeFirst } from "../../../containers.js";
 import StatefulContainer_takeFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeFirst.js";
-import { TReactive } from "../../../containers/__internal__/containers.internal.js";
 import { pipe } from "../../../functions.js";
 import { RunnableLike } from "../../../rx.js";
 import Sink_takeFirstMixin from "../../Sink/__internal__/Sink.takeFirstMixin.js";
@@ -13,7 +12,7 @@ const Runnable_takeFirst: TakeFirst<RunnableLike>["takeFirst"] =
 
     return pipe(
       createInstanceFactory(typedTakeFirstSinkMixin),
-      StatefulContainer_takeFirst<RunnableLike, T, TReactive>(Runnable_liftT),
+      StatefulContainer_takeFirst<RunnableLike, T>(Runnable_liftT),
     );
   })();
 

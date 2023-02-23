@@ -71,6 +71,11 @@
 
 - [ContainerOf](containers.md#containerof)
 - [ContainerOperator](containers.md#containeroperator)
+- [StatefulContainerStateOf](containers.md#statefulcontainerstateof)
+
+### Variables
+
+- [StatefulContainerLike\_variance](containers.md#statefulcontainerlike_variance)
 
 ## Type Aliases
 
@@ -98,3 +103,22 @@ ___
 | `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
+
+___
+
+### StatefulContainerStateOf
+
+Ƭ **StatefulContainerStateOf**<`C`, `T`\>: `C` extends { `[StatefulContainerLike_state]?`: [`DisposableLike`](../interfaces/util.DisposableLike.md)  } ? `NonNullable`<`C` & { `[ContainerLike_T]`: `T`  }[typeof `StatefulContainerLike_state`]\> : { `_C`: `C` ; `_T`: () => `T`  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`StatefulContainerLike`](../interfaces/containers.StatefulContainerLike.md) |
+| `T` | `T` |
+
+## Variables
+
+### StatefulContainerLike\_variance
+
+• `Const` **StatefulContainerLike\_variance**: unique `symbol`

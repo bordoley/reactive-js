@@ -7,7 +7,6 @@ import {
 import { Reduce } from "../../../containers.js";
 import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import StatefulContainer_reduce from "../../../containers/StatefulContainer/__internal__/StatefulContainer.reduce.js";
-import { TReactive } from "../../../containers/__internal__/containers.internal.js";
 import { Factory, Reducer, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -50,7 +49,7 @@ const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
 
   return pipe(
     createReduceObserver,
-    StatefulContainer_reduce<ObservableLike, T, TAcc, TReactive>(
+    StatefulContainer_reduce<ObservableLike, T, TAcc>(
       Observable_liftEnumerableOperatorT,
     ),
   );

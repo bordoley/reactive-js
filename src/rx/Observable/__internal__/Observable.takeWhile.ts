@@ -6,7 +6,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { TakeWhile } from "../../../containers.js";
 import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeWhile.js";
-import { TReactive } from "../../../containers/__internal__/containers.internal.js";
 import { Predicate, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -57,7 +56,7 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
 
     return pipe(
       createTakeWhileObserver,
-      StatefulContainer_takeWhile<ObservableLike, T, TReactive>(
+      StatefulContainer_takeWhile<ObservableLike, T>(
         Observable_liftEnumerableOperatorT,
       ),
     );

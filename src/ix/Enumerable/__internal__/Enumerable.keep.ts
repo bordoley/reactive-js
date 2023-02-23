@@ -10,7 +10,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Keep } from "../../../containers.js";
 import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { Predicate, error, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -72,7 +71,7 @@ const Enumerable_keep: Keep<EnumerableLike>["keep"] = /*@__PURE__*/ (<T>() => {
         },
       ),
     ),
-    StatefulContainer_keep<EnumerableLike, T, TInteractive>(Enumerable_liftT),
+    StatefulContainer_keep<EnumerableLike, T>(Enumerable_liftT),
   );
 })();
 

@@ -9,7 +9,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ForEach } from "../../../containers.js";
 import StatefulContainer_forEach from "../../../containers/StatefulContainer/__internal__/StatefulContainer.forEach.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { SideEffect1, error, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -69,9 +68,7 @@ const Enumerable_forEach: ForEach<EnumerableLike>["forEach"] = /*@__PURE__*/ (<
         },
       ),
     ),
-    StatefulContainer_forEach<EnumerableLike, T, TInteractive>(
-      Enumerable_liftT,
-    ),
+    StatefulContainer_forEach<EnumerableLike, T>(Enumerable_liftT),
   );
 })();
 

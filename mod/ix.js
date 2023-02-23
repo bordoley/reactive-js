@@ -1,6 +1,6 @@
 /// <reference types="./ix.d.ts" />
 
-import { ContainerLike_type, StatefulContainerLike_state, } from "./containers.js";
+import { ContainerLike_type, StatefulContainerLike_state, StatefulContainerLike_variance, } from "./containers.js";
 /** @ignore */
 export const SourceLike_move = Symbol("SourceLike_move");
 /** @ignore */

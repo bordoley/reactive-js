@@ -6,6 +6,7 @@ import {
   ContainerOf,
   StatefulContainerLike,
   StatefulContainerLike_state,
+  StatefulContainerLike_variance,
 } from "./containers.js";
 import { Function1 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
@@ -49,6 +50,8 @@ export interface InteractiveContainerLike<
   TSource extends DisposableLike,
   TCtx = void,
 > extends StatefulContainerLike {
+  readonly [StatefulContainerLike_variance]?: "interactive";
+
   [InteractiveContainerLike_interact](ctx: TCtx): TSource;
 }
 

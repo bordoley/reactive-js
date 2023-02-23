@@ -1,11 +1,8 @@
-import {
-  Lift,
-  TReactive,
-} from "../../../containers/__internal__/containers.internal.js";
+import { Lift } from "../../../containers.js";
 import { RunnableLike } from "../../../rx.js";
 import Runnable_lift from "./Runnable.lift.js";
 
-const Runnable_liftT: Lift<RunnableLike, TReactive> = {
+const Runnable_liftT: Lift<RunnableLike> = {
   lift: Runnable_lift,
 };
 

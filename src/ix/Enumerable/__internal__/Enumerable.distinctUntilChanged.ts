@@ -9,7 +9,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { DistinctUntilChanged } from "../../../containers.js";
 import StatefulContainer_distinctUntilChanged from "../../../containers/StatefulContainer/__internal__/StatefulContainer.distinctUntilChanged.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { Equality, error, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -86,7 +85,7 @@ const Enumerable_distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["dis
           },
         ),
       ),
-      StatefulContainer_distinctUntilChanged<EnumerableLike, T, TInteractive>(
+      StatefulContainer_distinctUntilChanged<EnumerableLike, T>(
         Enumerable_liftT,
       ),
     );

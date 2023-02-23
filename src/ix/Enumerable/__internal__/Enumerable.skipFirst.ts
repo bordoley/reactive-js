@@ -9,7 +9,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { SkipFirst } from "../../../containers.js";
 import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.skipFirst.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -81,9 +80,7 @@ const Enumerable_skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
           },
         ),
       ),
-      StatefulContainer_skipFirst<EnumerableLike, T, TInteractive>(
-        Enumerable_liftT,
-      ),
+      StatefulContainer_skipFirst<EnumerableLike, T>(Enumerable_liftT),
     );
   })();
 

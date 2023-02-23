@@ -14,8 +14,7 @@ class LiftedRunnable {
         pipeUnsafe(sink, ...this[LiftedRunnable_operators], Sink_sourceFrom(this[LiftedRunnable_src]));
     }
 }
-const Runnable_lift = 
-/*@__PURE__*/ (() => {
+const Runnable_lift = /*@__PURE__*/ (() => {
     return (operator) => (runnable) => {
         const src = runnable instanceof LiftedRunnable
             ? runnable[LiftedRunnable_src]

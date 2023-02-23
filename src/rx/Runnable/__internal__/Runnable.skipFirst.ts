@@ -1,7 +1,6 @@
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import { SkipFirst } from "../../../containers.js";
 import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.skipFirst.js";
-import { TReactive } from "../../../containers/__internal__/containers.internal.js";
 import { pipe } from "../../../functions.js";
 import { RunnableLike } from "../../../rx.js";
 import Sink_skipFirstMixin from "../../Sink/__internal__/Sink.skipFirstMixin.js";
@@ -13,7 +12,7 @@ const Runnable_skipFirst: SkipFirst<RunnableLike>["skipFirst"] =
 
     return pipe(
       createInstanceFactory(typedSkipFirstSinkMixin),
-      StatefulContainer_skipFirst<RunnableLike, T, TReactive>(Runnable_liftT),
+      StatefulContainer_skipFirst<RunnableLike, T>(Runnable_liftT),
     );
   })();
 

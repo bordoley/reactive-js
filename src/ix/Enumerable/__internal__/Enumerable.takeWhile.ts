@@ -9,7 +9,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { TakeWhile } from "../../../containers.js";
 import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeWhile.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { Predicate, error, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -101,9 +100,7 @@ const Enumerable_takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
           },
         ),
       ),
-      StatefulContainer_takeWhile<EnumerableLike, T, TInteractive>(
-        Enumerable_liftT,
-      ),
+      StatefulContainer_takeWhile<EnumerableLike, T>(Enumerable_liftT),
     );
   })();
 

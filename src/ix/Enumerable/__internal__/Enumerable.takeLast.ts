@@ -11,7 +11,6 @@ import { TakeLast } from "../../../containers.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_toEnumerable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toEnumerable.js";
 import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeLast.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -102,9 +101,7 @@ const Enumerable_takeLast: TakeLast<EnumerableLike>["takeLast"] =
           },
         ),
       ),
-      StatefulContainer_takeLast<EnumerableLike, T, TInteractive>(
-        Enumerable_liftT,
-      ),
+      StatefulContainer_takeLast<EnumerableLike, T>(Enumerable_liftT),
     );
   })();
 

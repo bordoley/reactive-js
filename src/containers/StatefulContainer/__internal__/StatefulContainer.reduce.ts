@@ -1,11 +1,9 @@
-import { StatefulContainerLike } from "../../../containers.js";
 import {
   Lift,
-  StatefulContainerOperatorIn,
-  StatefulContainerOperatorOut,
-  TInteractive,
-  TReactive,
-} from "../../../containers/__internal__/containers.internal.js";
+  LiftOperatorIn,
+  LiftOperatorOut,
+  StatefulContainerLike,
+} from "../../../containers.js";
 import {
   Factory,
   Function3,
@@ -16,20 +14,13 @@ import {
 import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_reduce =
-  <
-    C extends StatefulContainerLike,
-    T,
-    TAcc,
-    TVar extends TInteractive | TReactive,
-  >(
-    m: Lift<C, TVar>,
-  ) =>
+  <C extends StatefulContainerLike, T, TAcc>(m: Lift<C>) =>
   (
     operator: Function3<
-      StatefulContainerOperatorIn<C, T, TAcc, TVar>,
+      LiftOperatorIn<C, T, TAcc>,
       Reducer<T, TAcc>,
       Factory<TAcc>,
-      StatefulContainerOperatorOut<C, T, TAcc, TVar>
+      LiftOperatorOut<C, T, TAcc>
     >,
   ) =>
   (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>

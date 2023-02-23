@@ -6,7 +6,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Map } from "../../../containers.js";
 import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map.js";
-import { TReactive } from "../../../containers/__internal__/containers.internal.js";
 import { Function1, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -47,7 +46,7 @@ const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
 
   return pipe(
     createMapObserver,
-    StatefulContainer_map<ObservableLike, TA, TB, TReactive>(
+    StatefulContainer_map<ObservableLike, TA, TB>(
       Observable_liftEnumerableOperatorT,
     ),
   );

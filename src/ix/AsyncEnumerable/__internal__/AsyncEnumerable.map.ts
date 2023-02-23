@@ -10,7 +10,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator, Map } from "../../../containers.js";
 import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { Function1, none, pipe, unsafeCast } from "../../../functions.js";
 import { AsyncEnumerableLike, AsyncEnumeratorLike } from "../../../ix.js";
 import {
@@ -88,9 +87,7 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
 
   return pipe(
     createMapAsyncEnumerator,
-    StatefulContainer_map<AsyncEnumerableLike, TA, TB, TInteractive>(
-      AsyncEnumerable_liftT,
-    ),
+    StatefulContainer_map<AsyncEnumerableLike, TA, TB>(AsyncEnumerable_liftT),
   );
 })();
 

@@ -1,7 +1,4 @@
-import {
-  Lift,
-  TReactive,
-} from "../../../containers/__internal__/containers.internal.js";
+import { Lift } from "../../../containers.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
   ReactiveContainerLike_sinkInto,
@@ -38,22 +35,21 @@ class LiftedRunnable<TA, TB> implements RunnableLike<TB> {
   }
 }
 
-const Runnable_lift: Lift<RunnableLike, TReactive>["lift"] =
-  /*@__PURE__*/ (() => {
-    return <TA, TB>(operator: Function1<SinkLike<TB>, SinkLike<TA>>) =>
-      (runnable: RunnableLike<TA>): RunnableLike<TB> => {
-        const src =
-          runnable instanceof LiftedRunnable
-            ? runnable[LiftedRunnable_src]
-            : runnable;
+const Runnable_lift: Lift<RunnableLike>["lift"] = /*@__PURE__*/ (() => {
+  return <TA, TB>(operator: Function1<SinkLike<TB>, SinkLike<TA>>) =>
+    (runnable: RunnableLike<TA>): RunnableLike<TB> => {
+      const src =
+        runnable instanceof LiftedRunnable
+          ? runnable[LiftedRunnable_src]
+          : runnable;
 
-        const allFunctions =
-          runnable instanceof LiftedRunnable
-            ? [operator, ...runnable[LiftedRunnable_operators]]
-            : [operator];
+      const allFunctions =
+        runnable instanceof LiftedRunnable
+          ? [operator, ...runnable[LiftedRunnable_operators]]
+          : [operator];
 
-        return newInstance(LiftedRunnable, src, allFunctions);
-      };
-  })();
+      return newInstance(LiftedRunnable, src, allFunctions);
+    };
+})();
 
 export default Runnable_lift;

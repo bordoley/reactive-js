@@ -6,7 +6,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { DistinctUntilChanged } from "../../../containers.js";
 import StatefulContainer_distinctUntilChanged from "../../../containers/StatefulContainer/__internal__/StatefulContainer.distinctUntilChanged.js";
-import { TReactive } from "../../../containers/__internal__/containers.internal.js";
 import { Equality, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -55,7 +54,7 @@ const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["dis
 
     return pipe(
       createDistinctUntilChangedObserver,
-      StatefulContainer_distinctUntilChanged<ObservableLike, T, TReactive>(
+      StatefulContainer_distinctUntilChanged<ObservableLike, T>(
         Observable_liftEnumerableOperatorT,
       ),
     );

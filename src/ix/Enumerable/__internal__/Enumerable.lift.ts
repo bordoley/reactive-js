@@ -1,7 +1,4 @@
-import {
-  Lift,
-  TInteractive,
-} from "../../../containers/__internal__/containers.internal.js";
+import { Lift } from "../../../containers.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -36,7 +33,7 @@ class LiftedEnumerable<TA, TB> implements EnumerableLike<TB> {
   }
 }
 
-const Enumerable_lift: Lift<EnumerableLike, TInteractive>["lift"] =
+const Enumerable_lift: Lift<EnumerableLike>["lift"] =
   <TA, TB>(operator: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>) =>
   (enumerable: EnumerableLike<TA>): EnumerableLike<TB> => {
     const src =

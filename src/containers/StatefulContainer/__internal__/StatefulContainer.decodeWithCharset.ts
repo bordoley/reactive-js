@@ -1,27 +1,21 @@
 import {
   DecodeWithCharset,
+  Lift,
+  LiftOperatorIn,
+  LiftOperatorOut,
   StatefulContainerLike,
 } from "../../../containers.js";
-import {
-  Lift,
-  StatefulContainerOperatorIn,
-  StatefulContainerOperatorOut,
-  TInteractive,
-  TReactive,
-} from "../../../containers/__internal__/containers.internal.js";
 import { Function2, partial, pipe } from "../../../functions.js";
 
 import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_decodeWithCharset =
-  <C extends StatefulContainerLike, TVar extends TInteractive | TReactive>(
-    m: Lift<C, TVar>,
-  ) =>
+  <C extends StatefulContainerLike>(m: Lift<C>) =>
   (
     operator: Function2<
-      StatefulContainerOperatorIn<C, ArrayBuffer, string, TVar>,
+      LiftOperatorIn<C, ArrayBuffer, string>,
       string,
-      StatefulContainerOperatorOut<C, ArrayBuffer, string, TVar>
+      LiftOperatorOut<C, ArrayBuffer, string>
     >,
   ): DecodeWithCharset<C>["decodeWithCharset"] =>
   options => {

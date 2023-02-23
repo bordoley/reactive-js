@@ -19,9 +19,16 @@
 ### Properties
 
 - [[StatefulContainerLike\_state]](containers.StatefulContainerLike.md#[statefulcontainerlike_state])
+- [[StatefulContainerLike\_variance]](containers.StatefulContainerLike.md#[statefulcontainerlike_variance])
 
 ## Properties
 
 ### [StatefulContainerLike\_state]
 
 • `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`DisposableLike`](util.DisposableLike.md)
+
+___
+
+### [StatefulContainerLike\_variance]
+
+• `Optional` `Readonly` **[StatefulContainerLike\_variance]**: ``"interactive"`` \| ``"reactive"``

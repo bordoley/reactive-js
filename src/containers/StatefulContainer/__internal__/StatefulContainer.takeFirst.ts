@@ -1,26 +1,20 @@
 import {
   ContainerOperator,
+  Lift,
+  LiftOperatorIn,
+  LiftOperatorOut,
   StatefulContainerLike,
 } from "../../../containers.js";
 import { Function2, max, partial, pipe } from "../../../functions.js";
-import {
-  Lift,
-  StatefulContainerOperatorIn,
-  StatefulContainerOperatorOut,
-  TInteractive,
-  TReactive,
-} from "../../__internal__/containers.internal.js";
 import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_takeFirst =
-  <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
-    m: Lift<C, TVar>,
-  ) =>
+  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
   (
     operator: Function2<
-      StatefulContainerOperatorIn<C, T, T, TVar>,
+      LiftOperatorIn<C, T, T>,
       number,
-      StatefulContainerOperatorOut<C, T, T, TVar>
+      LiftOperatorOut<C, T, T>
     >,
   ) =>
   (options: { readonly count?: number } = {}): ContainerOperator<C, T, T> => {

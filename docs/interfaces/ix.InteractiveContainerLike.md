@@ -23,9 +23,23 @@
 
 ## Table of contents
 
+### Properties
+
+- [[StatefulContainerLike\_variance]](ix.InteractiveContainerLike.md#[statefulcontainerlike_variance])
+
 ### Methods
 
 - [[InteractiveContainerLike\_interact]](ix.InteractiveContainerLike.md#[interactivecontainerlike_interact])
+
+## Properties
+
+### [StatefulContainerLike\_variance]
+
+• `Optional` `Readonly` **[StatefulContainerLike\_variance]**: ``"interactive"``
+
+#### Overrides
+
+[StatefulContainerLike](containers.StatefulContainerLike.md).[[StatefulContainerLike_variance]](containers.StatefulContainerLike.md#[statefulcontainerlike_variance])
 
 ## Methods
 

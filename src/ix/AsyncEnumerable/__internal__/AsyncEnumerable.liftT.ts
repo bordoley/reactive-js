@@ -1,11 +1,8 @@
-import {
-  Lift,
-  TInteractive,
-} from "../../../containers/__internal__/containers.internal.js";
+import { Lift } from "../../../containers.js";
 import { AsyncEnumerableLike } from "../../../ix.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 
-const AsyncEnumerable_liftT: Lift<AsyncEnumerableLike, TInteractive> = {
+const AsyncEnumerable_liftT: Lift<AsyncEnumerableLike> = {
   lift: AsyncEnumerable_lift,
 };
 

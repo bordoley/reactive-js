@@ -7,6 +7,7 @@ import {
   ContainerOperator,
   StatefulContainerLike,
   StatefulContainerLike_state,
+  StatefulContainerLike_variance,
 } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { DispatcherLike, SchedulerLike } from "./scheduling.js";
@@ -56,6 +57,7 @@ export const ReactiveContainerLike_sinkInto = Symbol(
  */
 export interface ReactiveContainerLike<TSink extends DisposableLike>
   extends StatefulContainerLike {
+  readonly [StatefulContainerLike_variance]?: "reactive";
   [ReactiveContainerLike_sinkInto](sink: TSink): void;
 }
 

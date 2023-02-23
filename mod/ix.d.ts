@@ -1,4 +1,4 @@
-import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, StatefulContainerLike, StatefulContainerLike_state } from "./containers.js";
+import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, StatefulContainerLike, StatefulContainerLike_state, StatefulContainerLike_variance } from "./containers.js";
 import { Function1 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import { StreamLike, StreamableLike } from "./streaming.js";
@@ -29,6 +29,7 @@ export declare const InteractiveContainerLike_interact: unique symbol;
  * @category Container
  */
 export interface InteractiveContainerLike<TSource extends DisposableLike, TCtx = void> extends StatefulContainerLike {
+    readonly [StatefulContainerLike_variance]?: "interactive";
     [InteractiveContainerLike_interact](ctx: TCtx): TSource;
 }
 /**

@@ -80,12 +80,17 @@ export const StatefulContainerLike_state = Symbol(
   "StatefulContainerLike_state",
 );
 
+export const StatefulContainerLike_variance = Symbol(
+  "StatefulContainerLike_variance",
+);
+
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface StatefulContainerLike extends ContainerLike {
+export interface StatefulContainerLike<>extends ContainerLike {
   readonly [StatefulContainerLike_state]?: DisposableLike;
+  readonly [StatefulContainerLike_variance]?: "interactive" | "reactive";
 }
 
 export type ContainerOf<C extends ContainerLike, T> = C extends {
@@ -105,6 +110,22 @@ export type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<
   ContainerOf<C, TA>,
   ContainerOf<C, TB>
 >;
+
+export type StatefulContainerStateOf<
+  C extends StatefulContainerLike,
+  T,
+> = C extends {
+  readonly [StatefulContainerLike_state]?: DisposableLike;
+}
+  ? NonNullable<
+      (C & {
+        readonly [ContainerLike_T]: T;
+      })[typeof StatefulContainerLike_state]
+    >
+  : {
+      readonly _C: C;
+      readonly _T: () => T;
+    };
 
 /**
  * @noInheritDoc
@@ -593,6 +614,42 @@ export interface KeepType<C extends ContainerLike, O = never>
   keepType<TA, TB extends TA>(
     predicate: TypePredicate<TA, TB>,
     options?: O,
+  ): ContainerOperator<C, TA, TB>;
+}
+
+/** @ignore */
+export type LiftOperatorIn<
+  C extends StatefulContainerLike,
+  TA,
+  TB,
+> = C extends {
+  readonly [StatefulContainerLike_variance]?: "reactive";
+}
+  ? StatefulContainerStateOf<C, TB>
+  : StatefulContainerStateOf<C, TA>;
+
+/** @ignore */
+export type LiftOperatorOut<
+  C extends StatefulContainerLike,
+  TA,
+  TB,
+> = C extends {
+  readonly [StatefulContainerLike_variance]?: "reactive";
+}
+  ? StatefulContainerStateOf<C, TA>
+  : StatefulContainerStateOf<C, TB>;
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ * @ignore
+ */
+export interface Lift<C extends StatefulContainerLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
+  lift<TA, TB>(
+    operator: Function1<LiftOperatorIn<C, TA, TB>, LiftOperatorOut<C, TA, TB>>,
   ): ContainerOperator<C, TA, TB>;
 }
 

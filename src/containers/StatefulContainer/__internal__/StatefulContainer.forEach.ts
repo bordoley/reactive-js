@@ -1,23 +1,19 @@
-import { StatefulContainerLike } from "../../../containers.js";
-import { Function2, SideEffect1, partial, pipe } from "../../../functions.js";
 import {
   Lift,
-  StatefulContainerOperatorIn,
-  StatefulContainerOperatorOut,
-  TInteractive,
-  TReactive,
-} from "../../__internal__/containers.internal.js";
+  LiftOperatorIn,
+  LiftOperatorOut,
+  StatefulContainerLike,
+} from "../../../containers.js";
+import { Function2, SideEffect1, partial, pipe } from "../../../functions.js";
 import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_forEach =
-  <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
-    m: Lift<C, TVar>,
-  ) =>
+  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
   (
     operator: Function2<
-      StatefulContainerOperatorIn<C, T, T, TVar>,
+      LiftOperatorIn<C, T, T>,
       SideEffect1<T>,
-      StatefulContainerOperatorOut<C, T, T, TVar>
+      LiftOperatorOut<C, T, T>
     >,
   ) =>
   (effect: SideEffect1<T>) =>

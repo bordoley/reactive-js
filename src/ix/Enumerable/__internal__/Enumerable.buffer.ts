@@ -12,7 +12,6 @@ import {
 import { Buffer } from "../../../containers.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import StatefulContainer_buffer from "../../../containers/StatefulContainer/__internal__/StatefulContainer.buffer.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -99,7 +98,7 @@ const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
         },
       ),
     ),
-    StatefulContainer_buffer<EnumerableLike, T, TInteractive>(Enumerable_liftT),
+    StatefulContainer_buffer<EnumerableLike, T>(Enumerable_liftT),
   );
 })();
 

@@ -6,7 +6,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Keep } from "../../../containers.js";
 import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
-import { TReactive } from "../../../containers/__internal__/containers.internal.js";
 import { Predicate, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -44,7 +43,7 @@ const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
   return pipe(
     createKeepObserver,
-    StatefulContainer_keep<ObservableLike, T, TReactive>(
+    StatefulContainer_keep<ObservableLike, T>(
       Observable_liftEnumerableOperatorT,
     ),
   );

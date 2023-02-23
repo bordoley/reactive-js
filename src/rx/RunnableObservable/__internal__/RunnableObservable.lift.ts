@@ -1,7 +1,4 @@
-import {
-  Lift,
-  TReactive,
-} from "../../../containers/__internal__/containers.internal.js";
+import { Lift } from "../../../containers.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
   ObservableLike_isEnumerable,
@@ -47,10 +44,7 @@ class LiftedRunnableObservable<TIn, TOut>
   }
 }
 
-const RunnableObservable_lift: Lift<
-  RunnableObservableLike,
-  TReactive
->["lift"] =
+const RunnableObservable_lift: Lift<RunnableObservableLike>["lift"] =
   <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ): Function1<RunnableObservableLike<TA>, RunnableObservableLike<TB>> =>

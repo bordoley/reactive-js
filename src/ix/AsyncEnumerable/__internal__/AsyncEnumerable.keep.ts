@@ -8,7 +8,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Keep } from "../../../containers.js";
 import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { Predicate, none, pipe, unsafeCast } from "../../../functions.js";
 import { AsyncEnumerableLike, AsyncEnumeratorLike } from "../../../ix.js";
 import {
@@ -97,9 +96,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
 
   return pipe(
     createKeepAsyncEnumerator,
-    StatefulContainer_keep<AsyncEnumerableLike, T, TInteractive>(
-      AsyncEnumerable_liftT,
-    ),
+    StatefulContainer_keep<AsyncEnumerableLike, T>(AsyncEnumerable_liftT),
   );
 })();
 

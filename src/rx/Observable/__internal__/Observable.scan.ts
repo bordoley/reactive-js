@@ -6,7 +6,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Scan } from "../../../containers.js";
 import StatefulContainer_scan from "../../../containers/StatefulContainer/__internal__/StatefulContainer.scan.js";
-import { TReactive } from "../../../containers/__internal__/containers.internal.js";
 import { Factory, Reducer, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -51,7 +50,7 @@ const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
 
   return pipe(
     createScanObserver,
-    StatefulContainer_scan<ObservableLike, T, TAcc, TReactive>(
+    StatefulContainer_scan<ObservableLike, T, TAcc>(
       Observable_liftEnumerableOperatorT,
     ),
   );

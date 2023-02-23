@@ -1,4 +1,4 @@
-import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, StatefulContainerLike, StatefulContainerLike_state } from "./containers.js";
+import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, StatefulContainerLike, StatefulContainerLike_state, StatefulContainerLike_variance } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { DispatcherLike, SchedulerLike } from "./scheduling.js";
 import { DisposableLike } from "./util.js";
@@ -37,6 +37,7 @@ export declare const ReactiveContainerLike_sinkInto: unique symbol;
  * @category Container
  */
 export interface ReactiveContainerLike<TSink extends DisposableLike> extends StatefulContainerLike {
+    readonly [StatefulContainerLike_variance]?: "reactive";
     [ReactiveContainerLike_sinkInto](sink: TSink): void;
 }
 /**

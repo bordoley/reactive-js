@@ -11,7 +11,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Scan } from "../../../containers.js";
 import StatefulContainer_scan from "../../../containers/StatefulContainer/__internal__/StatefulContainer.scan.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { Factory, Reducer, error, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -107,9 +106,7 @@ const Enumerable_scan: Scan<EnumerableLike>["scan"] = /*@__PURE__*/ (<
         },
       ),
     ),
-    StatefulContainer_scan<EnumerableLike, T, TAcc, TInteractive>(
-      Enumerable_liftT,
-    ),
+    StatefulContainer_scan<EnumerableLike, T, TAcc>(Enumerable_liftT),
   );
 })();
 

@@ -1,4 +1,4 @@
-import { Lift, TReactive } from "../../../containers/__internal__/containers.internal.js";
+import { Lift } from "../../../containers.js";
 import { RunnableObservableLike } from "../../../rx.js";
-declare const RunnableObservable_lift: Lift<RunnableObservableLike, TReactive>["lift"];
+declare const RunnableObservable_lift: Lift<RunnableObservableLike>["lift"];
 export default RunnableObservable_lift;

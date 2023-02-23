@@ -6,7 +6,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ForEach } from "../../../containers.js";
 import StatefulContainer_forEach from "../../../containers/StatefulContainer/__internal__/StatefulContainer.forEach.js";
-import { TReactive } from "../../../containers/__internal__/containers.internal.js";
 import { SideEffect1, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -46,7 +45,7 @@ const Observable_forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
 
   return pipe(
     createForEachObserver,
-    StatefulContainer_forEach<ObservableLike, T, TReactive>(
+    StatefulContainer_forEach<ObservableLike, T>(
       Observable_liftEnumerableOperatorT,
     ),
   );

@@ -9,7 +9,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { TakeFirst } from "../../../containers.js";
 import StatefulContainer_takeFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeFirst.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -73,9 +72,7 @@ const Enumerable_takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
           },
         ),
       ),
-      StatefulContainer_takeFirst<EnumerableLike, T, TInteractive>(
-        Enumerable_liftT,
-      ),
+      StatefulContainer_takeFirst<EnumerableLike, T>(Enumerable_liftT),
     );
   })();
 

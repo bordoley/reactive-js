@@ -10,7 +10,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator, Scan } from "../../../containers.js";
 import StatefulContainer_scan from "../../../containers/StatefulContainer/__internal__/StatefulContainer.scan.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import {
   Factory,
   Reducer,
@@ -99,9 +98,7 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
 
   return pipe(
     createScanAsyncEnumerator,
-    StatefulContainer_scan<AsyncEnumerableLike, T, TAcc, TInteractive>(
-      AsyncEnumerable_liftT,
-    ),
+    StatefulContainer_scan<AsyncEnumerableLike, T, TAcc>(AsyncEnumerable_liftT),
   );
 })();
 

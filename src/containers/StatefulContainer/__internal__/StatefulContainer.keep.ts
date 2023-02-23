@@ -1,23 +1,19 @@
-import { StatefulContainerLike } from "../../../containers.js";
 import {
   Lift,
-  StatefulContainerOperatorIn,
-  StatefulContainerOperatorOut,
-  TInteractive,
-  TReactive,
-} from "../../../containers/__internal__/containers.internal.js";
+  LiftOperatorIn,
+  LiftOperatorOut,
+  StatefulContainerLike,
+} from "../../../containers.js";
 import { Function2, Predicate, partial, pipe } from "../../../functions.js";
 import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_keep =
-  <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
-    m: Lift<C, TVar>,
-  ) =>
+  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
   (
     operator: Function2<
-      StatefulContainerOperatorIn<C, T, T, TVar>,
+      LiftOperatorIn<C, T, T>,
       Predicate<T>,
-      StatefulContainerOperatorOut<C, T, T, TVar>
+      LiftOperatorOut<C, T, T>
     >,
   ) =>
   (predicate: Predicate<T>) =>

@@ -8,7 +8,6 @@ import {
 } from "../../../__internal__/mixins.js";
 import { TakeWhile } from "../../../containers.js";
 import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeWhile.js";
-import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
 import { Predicate, none, pipe, unsafeCast } from "../../../functions.js";
 import { AsyncEnumerableLike, AsyncEnumeratorLike } from "../../../ix.js";
 import {
@@ -97,7 +96,7 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
 
     return pipe(
       createTakeWhileAsyncEnumerator,
-      StatefulContainer_takeWhile<AsyncEnumerableLike, T, TInteractive>(
+      StatefulContainer_takeWhile<AsyncEnumerableLike, T>(
         AsyncEnumerable_liftT,
       ),
     );

@@ -1,27 +1,21 @@
 import {
   ContainerOperator,
+  Lift,
+  LiftOperatorIn,
+  LiftOperatorOut,
   StatefulContainerLike,
 } from "../../../containers.js";
 import { Function3, Predicate, partial, pipe } from "../../../functions.js";
-import {
-  Lift,
-  StatefulContainerOperatorIn,
-  StatefulContainerOperatorOut,
-  TInteractive,
-  TReactive,
-} from "../../__internal__/containers.internal.js";
 import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_takeWhile =
-  <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
-    m: Lift<C, TVar>,
-  ) =>
+  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
   (
     operator: Function3<
-      StatefulContainerOperatorIn<C, T, T, TVar>,
+      LiftOperatorIn<C, T, T>,
       Predicate<T>,
       boolean,
-      StatefulContainerOperatorOut<C, T, T, TVar>
+      LiftOperatorOut<C, T, T>
     >,
   ) =>
   (

@@ -1,24 +1,20 @@
 import { MAX_SAFE_INTEGER } from "../../../constants.js";
-import { StatefulContainerLike } from "../../../containers.js";
-import { Function2, max, partial, pipe } from "../../../functions.js";
 import {
   Lift,
-  StatefulContainerOperatorIn,
-  StatefulContainerOperatorOut,
-  TInteractive,
-  TReactive,
-} from "../../__internal__/containers.internal.js";
+  LiftOperatorIn,
+  LiftOperatorOut,
+  StatefulContainerLike,
+} from "../../../containers.js";
+import { Function2, max, partial, pipe } from "../../../functions.js";
 import StatefulContainer_lift from "./StatefulContainer.lift.js";
 
 const StatefulContainer_buffer =
-  <C extends StatefulContainerLike, T, TVar extends TInteractive | TReactive>(
-    m: Lift<C, TVar>,
-  ) =>
+  <C extends StatefulContainerLike, T>(m: Lift<C>) =>
   (
     operator: Function2<
-      StatefulContainerOperatorIn<C, T, readonly T[], TVar>,
+      LiftOperatorIn<C, T, readonly T[]>,
       number,
-      StatefulContainerOperatorOut<C, T, readonly T[], TVar>
+      LiftOperatorOut<C, T, readonly T[]>
     >,
   ) =>
   (
