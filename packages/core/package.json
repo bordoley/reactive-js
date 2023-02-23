@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/core",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "type": "module",
   "keywords": [
     "asynchronous",
@@ -44,7 +44,7 @@
     "access": "public"
   },
   "exports": {
-    "./constants" : "./constants.js",
+    "./constants": "./constants.js",
     "./containers": "./containers.js",
     "./containers/Iterable": "./containers/Iterable.js",
     "./containers/Promiseable": "./containers/Promiseable.js",
@@ -59,7 +59,7 @@
     "./ix": "./ix.js",
     "./ix/AsyncEnumerable": "./ix/AsyncEnumerable.js",
     "./ix/Enumerable": "./ix/Enumerable.js",
-    "./ix/Enumerator" :"./ix/Enumerator.js",
+    "./ix/Enumerator": "./ix/Enumerator.js",
     "./ix/InteractiveContainer": "./ix/InteractiveContainer.js",
     "./ix/Source": "./ix/Source.js",
     "./rx": "./rx.js",
@@ -85,5 +85,5 @@
     "./streaming/Streamable": "./streaming/Streamable.js",
     "./util": "./util.js",
     "./util/Disposable": "./util/Disposable.js"
-    }
+  }
 }
