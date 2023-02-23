@@ -9,6 +9,8 @@
   "exclude": [
     "./src/__tests__/node.tests.ts",
     "./src/integrations/__tests__/node.test.ts",
-    "./src/integrations/node.ts"
+    "./src/integrations/node.ts",
+    "./src/integrations/react.ts",
+    "./src/integrations/scheduler.ts"
   ]
 }
