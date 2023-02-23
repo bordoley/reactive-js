@@ -1,6 +1,6 @@
-import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ConcatYieldMap, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, ForEach, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ConcatYieldMap, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { FromEnumerable } from "../ix.js";
-import { Retry, RunnableObservableLike, ScanAsync, TakeUntil, Throttle, Timeout, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, MergeAll, MergeWith, Retry, RunnableObservableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<RunnableObservableLike>["buffer"];
 export declare const catchError: CatchError<RunnableObservableLike>["catchError"];
@@ -32,8 +32,13 @@ export declare const empty: Empty<RunnableObservableLike, {
 export declare const encodeUtf8: EncodeUtf8<RunnableObservableLike>["encodeUtf8"];
 export declare const endWith: EndWith<RunnableObservableLike>["endWith"];
 export declare const everySatisfy: EverySatisfy<RunnableObservableLike>["everySatisfy"];
-export declare const exhaust: <T>(options?: undefined) => import("../containers.js").ContainerOperator<RunnableObservableLike<unknown>, RunnableObservableLike<T>, T>;
+export declare const exhaust: Exhaust<RunnableObservableLike>["exhaust"];
+export declare const exhaustMap: ExhaustMap<RunnableObservableLike>["exhaustMap"];
 export declare const forEach: ForEach<RunnableObservableLike>["forEach"];
+export declare const forkConcat: ForkConcat<RunnableObservableLike>["forkConcat"];
+export declare const forkMerge: ForkMerge<RunnableObservableLike>["forkMerge"];
+export declare const forkZip: ForkZip<RunnableObservableLike>["forkZip"];
+export declare const forkZipLatest: ForkZipLatest<RunnableObservableLike>["forkZipLatest"];
 export declare const fromEnumerable: FromEnumerable<RunnableObservableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
@@ -57,11 +62,11 @@ export declare const keepType: KeepType<RunnableObservableLike>["keepType"];
 export declare const map: Map<RunnableObservableLike>["map"];
 export declare const mapTo: MapTo<RunnableObservableLike>["mapTo"];
 export declare const merge: <T>(fst: RunnableObservableLike<T>, snd: RunnableObservableLike<T>, ...tail: readonly RunnableObservableLike<T>[]) => RunnableObservableLike<T>;
-export declare const mergeAll: <T>(options?: {
-    readonly maxBufferSize?: number | undefined;
-    readonly maxConcurrency?: number | undefined;
-} | undefined) => import("../containers.js").ContainerOperator<RunnableObservableLike<unknown>, RunnableObservableLike<T>, T>;
-export declare const mergeWith: <T>(snd: RunnableObservableLike<T>, ...tail: readonly RunnableObservableLike<T>[]) => import("../containers.js").ContainerOperator<RunnableObservableLike<unknown>, T, T>;
+export declare const mergeAll: MergeAll<RunnableObservableLike, {
+    readonly maxBufferSize?: number;
+    readonly maxConcurrency?: number;
+}>["mergeAll"];
+export declare const mergeWith: MergeWith<RunnableObservableLike>["mergeWith"];
 export declare const pairwise: Pairwise<RunnableObservableLike>["pairwise"];
 export declare const reduce: Reduce<RunnableObservableLike>["reduce"];
 export declare const retry: Retry<RunnableObservableLike>["retry"];
@@ -70,8 +75,8 @@ export declare const scanAsync: ScanAsync<RunnableObservableLike, RunnableObserv
 export declare const skipFirst: SkipFirst<RunnableObservableLike>["skipFirst"];
 export declare const someSatisfy: SomeSatisfy<RunnableObservableLike>["someSatisfy"];
 export declare const startWith: StartWith<RunnableObservableLike>["startWith"];
-export declare const switchAll: ConcatAll<RunnableObservableLike>["concatAll"];
-export declare const switchMap: <TA, TB>(mapper: import("../functions.js").Function1<TA, RunnableObservableLike<TB>>, options?: undefined) => import("../containers.js").ContainerOperator<RunnableObservableLike<unknown>, TA, TB>;
+export declare const switchAll: SwitchAll<RunnableObservableLike>["switchAll"];
+export declare const switchMap: SwitchMap<RunnableObservableLike>["switchMap"];
 export declare const takeFirst: TakeFirst<RunnableObservableLike>["takeFirst"];
 export declare const takeLast: TakeLast<RunnableObservableLike>["takeLast"];
 export declare const takeUntil: TakeUntil<RunnableObservableLike>["takeUntil"];

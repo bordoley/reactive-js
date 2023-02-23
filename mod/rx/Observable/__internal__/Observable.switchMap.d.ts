@@ -1,4 +1,3 @@
-import { ConcatMap } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
-declare const Observable_switchMap: ConcatMap<ObservableLike>["concatMap"];
+import { ObservableLike, SwitchMap } from "../../../rx.js";
+declare const Observable_switchMap: SwitchMap<ObservableLike>["switchMap"];
 export default Observable_switchMap;

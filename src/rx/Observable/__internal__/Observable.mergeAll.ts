@@ -1,23 +1,20 @@
-import { ConcatAll } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
+import { MergeAll, ObservableLike } from "../../../rx.js";
 import HigherOrderObservable_mergeAll from "../../HigherOrderObservable/__internal__/HigherOrderObservable.mergeAll.js";
 import Observable_lift from "./Observable.lift.js";
 
-const Observable_mergeAll: ConcatAll<
+const Observable_mergeAll: MergeAll<
   ObservableLike,
   {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] = /*@__PURE__*/ (() =>
-  HigherOrderObservable_mergeAll<ObservableLike>(
-    Observable_lift(),
-  ) as ConcatAll<
+>["mergeAll"] = /*@__PURE__*/ (() =>
+  HigherOrderObservable_mergeAll<ObservableLike>(Observable_lift()) as MergeAll<
     ObservableLike,
     {
       readonly maxBufferSize?: number;
       readonly maxConcurrency?: number;
     }
-  >["concatAll"])();
+  >["mergeAll"])();
 
 export default Observable_mergeAll;

@@ -1,13 +1,10 @@
 /// <reference types="./Observable.d.ts" />
 
 import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable.js";
-import Promiseable_toObservable from "../containers/Promiseable/__internal__/Promiseable.toObservable.js";
 import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable.js";
-import { returns, } from "../functions.js";
 import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
-import Disposable_toObservable from "../util/Disposable/__internal__/Disposable.toObservable.js";
 import { Observable_async, Observable_async__await, Observable_async__currentScheduler, Observable_async__do, Observable_async__memo, Observable_async__observe, Observable_async__state, Observable_async__stream, Observable_async__using, } from "./Observable/__internal__/Observable.async.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
@@ -27,9 +24,13 @@ import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
+import Observable_exhaust from "./Observable/__internal__/Observable.exhaust.js";
+import Observable_exhaustMap from "./Observable/__internal__/Observable.exhaustMap.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkCombineLatest from "./Observable/__internal__/Observable.forkCombineLatest.js";
+import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
+import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -42,6 +43,7 @@ import Observable_mapAsync from "./Observable/__internal__/Observable.mapAsync.j
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll.js";
+import Observable_mergeMap from "./Observable/__internal__/Observable.mergeMap.js";
 import Observable_mergeWith from "./Observable/__internal__/Observable.mergeWith.js";
 import Observable_multicast from "./Observable/__internal__/Observable.multicast.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
@@ -125,19 +127,17 @@ export const empty = Observable_empty;
 export const encodeUtf8 = Observable_encodeUtf8;
 export const endWith = Observable_endWith;
 export const everySatisfy = Observable_everySatisfy;
-export const exhaust = /*@__PURE__*/ (() => returns(Observable_mergeAll({
-    maxBufferSize: 1,
-    maxConcurrency: 1,
-})))();
+export const exhaust = Observable_exhaust;
+export const exhaustMap = Observable_exhaustMap;
 export const forEach = Observable_forEach;
 export const forkCombineLatest = Observable_forkCombineLatest;
+export const forkConcat = Observable_forkConcat;
 export const forkMerge = Observable_forkMerge;
+export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
-export const fromDisposable = Disposable_toObservable;
 export const fromEnumerable = Enumerable_toRunnableObservable;
 export const fromIterable = Iterable_toRunnableObservable;
 export const fromFlowable = Flowable_toObservable;
-export const fromPromise = Promiseable_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toRunnableObservable;
 export const fromSequence = Sequence_toRunnableObservable;
 export const generate = Observable_generate;
@@ -147,11 +147,12 @@ export const isRunnable = Observable_isRunnable;
 export const keep = Observable_keep;
 export const keepType = Observable_keepType;
 export const map = Observable_map;
+// FIXME: genMap??
 export const mapAsync = Observable_mapAsync;
 export const mapTo = Observable_mapTo;
 export const merge = Observable_merge;
 export const mergeAll = Observable_mergeAll;
-// FIXME: Type
+export const mergeMap = Observable_mergeMap;
 export const mergeWith = Observable_mergeWith;
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.

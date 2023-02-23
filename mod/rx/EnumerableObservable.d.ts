@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ConcatYieldMap, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, ForEach, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ConcatYieldMap, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import { EnumerableObservableLike, Retry, ScanAsync, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
@@ -21,6 +21,8 @@ export declare const encodeUtf8: EncodeUtf8<EnumerableObservableLike>["encodeUtf
 export declare const endWith: EndWith<EnumerableObservableLike>["endWith"];
 export declare const everySatisfy: EverySatisfy<EnumerableObservableLike>["everySatisfy"];
 export declare const forEach: ForEach<EnumerableObservableLike>["forEach"];
+export declare const forkConcat: ForkConcat<EnumerableObservableLike>["forkConcat"];
+export declare const forkZip: ForkZip<EnumerableObservableLike>["forkZip"];
 export declare const fromEnumerable: FromEnumerable<EnumerableObservableLike>["fromEnumerable"];
 export declare const fromIterable: FromIterable<EnumerableObservableLike>["fromIterable"];
 export declare const fromReadonlyArray: FromReadonlyArray<EnumerableObservableLike>["fromReadonlyArray"];
@@ -48,15 +50,12 @@ export declare const toAsyncEnumerable: ToAsyncEnumerable<EnumerableObservableLi
 export declare const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"];
 export declare const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"];
 export declare const toIterable: ToIterable<EnumerableObservableLike>["toIterable"];
+export declare const toObservable: ToObservable<EnumerableObservableLike>["toObservable"];
 export declare const toReadonlyArray: ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"];
 export declare const toRunnable: ToRunnable<EnumerableObservableLike>["toRunnable"];
 export declare const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["toRunnableObservable"];
-export declare const toObservable: ToObservable<EnumerableObservableLike, {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-}>["toObservable"];
 export declare const zip: Zip<EnumerableObservableLike>["zip"];
 export declare const zipWith: ZipWith<EnumerableObservableLike>["zipWith"];

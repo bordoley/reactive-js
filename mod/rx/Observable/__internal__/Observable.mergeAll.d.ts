@@ -1,7 +1,6 @@
-import { ConcatAll } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
-declare const Observable_mergeAll: ConcatAll<ObservableLike, {
+import { MergeAll, ObservableLike } from "../../../rx.js";
+declare const Observable_mergeAll: MergeAll<ObservableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
-}>["concatAll"];
+}>["mergeAll"];
 export default Observable_mergeAll;

@@ -122,13 +122,37 @@
 
   ↳ [`ToEnumerable`](ix.ToEnumerable.md)
 
+  ↳ [`CombineLatest`](rx.CombineLatest.md)
+
+  ↳ [`Exhaust`](rx.Exhaust.md)
+
+  ↳ [`ExhaustMap`](rx.ExhaustMap.md)
+
+  ↳ [`ForkCombineLatest`](rx.ForkCombineLatest.md)
+
+  ↳ [`ForkMerge`](rx.ForkMerge.md)
+
+  ↳ [`ForkZipLatest`](rx.ForkZipLatest.md)
+
   ↳ [`FromEnumerableObservable`](rx.FromEnumerableObservable.md)
 
   ↳ [`FromRunnableObservable`](rx.FromRunnableObservable.md)
 
+  ↳ [`Merge`](rx.Merge.md)
+
+  ↳ [`MergeAll`](rx.MergeAll.md)
+
+  ↳ [`MergeMap`](rx.MergeMap.md)
+
+  ↳ [`MergeWith`](rx.MergeWith.md)
+
   ↳ [`Retry`](rx.Retry.md)
 
   ↳ [`ScanAsync`](rx.ScanAsync.md)
+
+  ↳ [`SwitchAll`](rx.SwitchAll.md)
+
+  ↳ [`SwitchMap`](rx.SwitchMap.md)
 
   ↳ [`TakeUntil`](rx.TakeUntil.md)
 

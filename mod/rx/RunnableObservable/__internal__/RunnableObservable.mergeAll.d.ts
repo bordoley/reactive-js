@@ -1,7 +1,6 @@
-import { ConcatAll } from "../../../containers.js";
-import { RunnableObservableLike } from "../../../rx.js";
-declare const RunnableObservable_mergeAll: ConcatAll<RunnableObservableLike, {
+import { MergeAll, RunnableObservableLike } from "../../../rx.js";
+declare const RunnableObservable_mergeAll: MergeAll<RunnableObservableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
-}>["concatAll"];
+}>["mergeAll"];
 export default RunnableObservable_mergeAll;

@@ -4,49 +4,9 @@
 
 ## Table of contents
 
-### Constructor Functions
-
-- [fromObservable](containers_Promiseable.md#fromobservable)
-
 ### Converter Functions
 
 - [toObservable](containers_Promiseable.md#toobservable)
-
-## Constructor Functions
-
-### fromObservable
-
-▸ **fromObservable**<`T`\>(`scheduler`): (`observable`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => `PromiseLike`<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-`fn`
-
-▸ (`observable`): `PromiseLike`<`T`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
-
-##### Returns
-
-`PromiseLike`<`T`\>
-
-___
 
 ## Converter Functions
 

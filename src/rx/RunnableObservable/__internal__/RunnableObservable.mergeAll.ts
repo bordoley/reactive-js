@@ -1,23 +1,22 @@
-import { ConcatAll } from "../../../containers.js";
-import { RunnableObservableLike } from "../../../rx.js";
+import { MergeAll, RunnableObservableLike } from "../../../rx.js";
 import HigherOrderObservable_mergeAll from "../../HigherOrderObservable/__internal__/HigherOrderObservable.mergeAll.js";
 import RunnableObservable_lift from "./RunnableObservable.lift.js";
 
-const RunnableObservable_mergeAll: ConcatAll<
+const RunnableObservable_mergeAll: MergeAll<
   RunnableObservableLike,
   {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"] =
+>["mergeAll"] =
   /*@__PURE__*/ HigherOrderObservable_mergeAll<RunnableObservableLike>(
     RunnableObservable_lift,
-  ) as ConcatAll<
+  ) as MergeAll<
     RunnableObservableLike,
     {
       readonly maxBufferSize?: number;
       readonly maxConcurrency?: number;
     }
-  >["concatAll"];
+  >["mergeAll"];
 
 export default RunnableObservable_mergeAll;

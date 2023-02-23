@@ -166,6 +166,260 @@ export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
  * @noInheritDoc
  * @category TypeClass
  */
+export interface CombineLatest<C extends ObservableLike> extends Container<C> {
+  /**
+   * @category Constructor
+   */
+  combineLatest<TA, TB>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+  ): ContainerOf<C, readonly [TA, TB]>;
+  combineLatest<TA, TB, TC>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+  ): ContainerOf<C, readonly [TA, TB, TC]>;
+  combineLatest<TA, TB, TC, TD>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD]>;
+  combineLatest<TA, TB, TC, TD, TE>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE]>;
+  combineLatest<TA, TB, TC, TD, TE, TF>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+    h: ContainerOf<C, TH>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: ContainerOf<C, TA>,
+    b: ContainerOf<C, TB>,
+    c: ContainerOf<C, TC>,
+    d: ContainerOf<C, TD>,
+    e: ContainerOf<C, TE>,
+    f: ContainerOf<C, TF>,
+    g: ContainerOf<C, TG>,
+    h: ContainerOf<C, TH>,
+    i: ContainerOf<C, TI>,
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Exhaust<C extends ObservableLike, O = never>
+  extends Container<C> {
+  /**
+   *
+   * @category Operator
+   */
+  exhaust: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ExhaustMap<C extends ObservableLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  exhaustMap: <TA, TB>(
+    mapper: Function1<TA, ContainerOf<C, TB>>,
+    options?: O,
+  ) => ContainerOperator<C, TA, TB>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ForkCombineLatest<C extends ObservableLike>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  forkCombineLatest<T, TA, TB>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+  ): ContainerOperator<C, T, readonly [TA, TB]>;
+  forkCombineLatest<T, TA, TB, TC>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC]>;
+  forkCombineLatest<T, TA, TB, TC, TD>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD]>;
+  forkCombineLatest<T, TA, TB, TC, TD, TE>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+    e: ContainerOperator<C, T, TE>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE]>;
+  forkCombineLatest<T, TA, TB, TC, TD, TE, TF>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+    e: ContainerOperator<C, T, TE>,
+    f: ContainerOperator<C, T, TF>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF]>;
+  forkCombineLatest<T, TA, TB, TC, TD, TE, TF, TG>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+    e: ContainerOperator<C, T, TE>,
+    f: ContainerOperator<C, T, TF>,
+    g: ContainerOperator<C, T, TG>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  forkCombineLatest<T, TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+    e: ContainerOperator<C, T, TE>,
+    f: ContainerOperator<C, T, TF>,
+    g: ContainerOperator<C, T, TG>,
+    h: ContainerOperator<C, T, TH>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  forkCombineLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+    e: ContainerOperator<C, T, TE>,
+    f: ContainerOperator<C, T, TF>,
+    g: ContainerOperator<C, T, TG>,
+    h: ContainerOperator<C, T, TH>,
+    i: ContainerOperator<C, T, TI>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ForkMerge<C extends ObservableLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
+  forkMerge<TIn, TOut>(
+    fst: ContainerOperator<C, TIn, TOut>,
+    snd: ContainerOperator<C, TIn, TOut>,
+    ...tail: readonly ContainerOperator<C, TIn, TOut>[]
+  ): ContainerOperator<C, TIn, TOut>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ForkZipLatest<C extends ObservableLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
+  forkZipLatest<T, TA, TB>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+  ): ContainerOperator<C, T, readonly [TA, TB]>;
+  forkZipLatest<T, TA, TB, TC>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC]>;
+  forkZipLatest<T, TA, TB, TC, TD>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD]>;
+  forkZipLatest<T, TA, TB, TC, TD, TE>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+    e: ContainerOperator<C, T, TE>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE]>;
+  forkZipLatest<T, TA, TB, TC, TD, TE, TF>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+    e: ContainerOperator<C, T, TE>,
+    f: ContainerOperator<C, T, TF>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF]>;
+  forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+    e: ContainerOperator<C, T, TE>,
+    f: ContainerOperator<C, T, TF>,
+    g: ContainerOperator<C, T, TG>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+    e: ContainerOperator<C, T, TE>,
+    f: ContainerOperator<C, T, TF>,
+    g: ContainerOperator<C, T, TG>,
+    h: ContainerOperator<C, T, TH>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: ContainerOperator<C, T, TA>,
+    b: ContainerOperator<C, T, TB>,
+    c: ContainerOperator<C, T, TC>,
+    d: ContainerOperator<C, T, TD>,
+    e: ContainerOperator<C, T, TE>,
+    f: ContainerOperator<C, T, TF>,
+    g: ContainerOperator<C, T, TG>,
+    h: ContainerOperator<C, T, TH>,
+    i: ContainerOperator<C, T, TI>,
+  ): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface FromEnumerableObservable<C extends ContainerLike, O = never>
   extends Container<C> {
   /**
@@ -188,6 +442,64 @@ export interface FromRunnableObservable<C extends ContainerLike, O = never>
   fromRunnableObservable: <T>(
     options?: O,
   ) => Function1<RunnableObservableLike<T>, ContainerOf<C, T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Merge<C extends ObservableLike> extends Container<C> {
+  /**
+   *
+   * @category Constructor
+   */
+  merge<T>(
+    fst: ContainerOf<C, T>,
+    snd: ContainerOf<C, T>,
+    ...tail: readonly ContainerOf<C, T>[]
+  ): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface MergeAll<C extends ObservableLike, O = never>
+  extends Container<C> {
+  /**
+   *
+   * @category Operator
+   */
+  mergeAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface MergeMap<C extends ObservableLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  mergeMap: <TA, TB>(
+    mapper: Function1<TA, ContainerOf<C, TB>>,
+    options?: O,
+  ) => ContainerOperator<C, TA, TB>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface MergeWith<C extends ObservableLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
+  mergeWith: <T>(
+    snd: ContainerOf<C, T>,
+    ...tail: readonly ContainerOf<C, T>[]
+  ) => ContainerOperator<C, T, T>;
 }
 
 /**
@@ -231,6 +543,34 @@ export interface ScanAsync<
     scanner: AsyncReducer<CInner, T, TAcc>,
     initialValue: Factory<TAcc>,
   ) => ContainerOperator<C, T, TAcc>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface SwitchAll<C extends ObservableLike, O = never>
+  extends Container<C> {
+  /**
+   *
+   * @category Operator
+   */
+  switchAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface SwitchMap<C extends ObservableLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  switchMap: <TA, TB>(
+    mapper: Function1<TA, ContainerOf<C, TB>>,
+    options?: O,
+  ) => ContainerOperator<C, TA, TB>;
 }
 
 /**

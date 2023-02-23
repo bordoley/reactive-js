@@ -1,8 +1,7 @@
-import { Concat } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
+import { Merge, ObservableLike } from "../../../rx.js";
 import Observable_mergeObservables from "./Observable.mergeObservables.js";
 
-const Observable_merge: Concat<ObservableLike>["concat"] = <T>(
+const Observable_merge: Merge<ObservableLike>["merge"] = <T>(
   ...observables: ObservableLike<T>[]
 ) => Observable_mergeObservables(observables);
 

@@ -1,7 +1,7 @@
 import { CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ConcatYieldMap, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
-import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
+import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, TypePredicate } from "../functions.js";
 import { FromEnumerable } from "../ix.js";
-import { ObservableLike, ObserverLike, Retry, ScanAsync, TakeUntil, Throttle, Timeout, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, EnumerableObservableLike, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, RunnableObservableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { FromFlowable } from "../streaming.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
@@ -78,7 +78,7 @@ export declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number;
 }) => ContainerOperator<ObservableLike, T, readonly T[]>;
 export declare const catchError: CatchError<ObservableLike>["catchError"];
-export declare const combineLatest: Zip<ObservableLike>["zip"];
+export declare const combineLatest: CombineLatest<ObservableLike>["combineLatest"];
 export declare const compute: Compute<ObservableLike>["compute"];
 export declare const concat: Concat<ObservableLike>["concat"];
 export declare const concatAll: ConcatAll<ObservableLike, {
@@ -98,12 +98,14 @@ export declare const empty: Empty<ObservableLike, {
 export declare const encodeUtf8: EncodeUtf8<ObservableLike>["encodeUtf8"];
 export declare const endWith: EndWith<ObservableLike>["endWith"];
 export declare const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"];
-export declare const exhaust: <T>(options?: undefined) => ContainerOperator<ObservableLike<unknown>, ObservableLike<T>, T>;
+export declare const exhaust: Exhaust<ObservableLike>["exhaust"];
+export declare const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"];
 export declare const forEach: ForEach<ObservableLike>["forEach"];
-export declare const forkCombineLatest: ForkZip<ObservableLike>["forkZip"];
-export declare const forkMerge: ForkConcat<ObservableLike>["forkConcat"];
-export declare const forkZipLatest: ForkZip<ObservableLike>["forkZip"];
-export declare const fromDisposable: <T>() => Function1<DisposableLike, ObservableLike<T>>;
+export declare const forkCombineLatest: ForkCombineLatest<ObservableLike>["forkCombineLatest"];
+export declare const forkConcat: ForkConcat<ObservableLike>["forkConcat"];
+export declare const forkMerge: ForkMerge<ObservableLike>["forkMerge"];
+export declare const forkZip: ForkZip<ObservableLike>["forkZip"];
+export declare const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"];
 export declare const fromEnumerable: FromEnumerable<ObservableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
@@ -113,7 +115,6 @@ export declare const fromIterable: FromIterable<ObservableLike, {
     readonly delayStart?: boolean;
 }>["fromIterable"];
 export declare const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"];
-export declare const fromPromise: <T>(options?: undefined) => Function1<import("../containers.js").PromiseableLike<T>, ObservableLike<T>>;
 export declare const fromReadonlyArray: FromReadonlyArray<ObservableLike, {
     delay?: number;
     delayStart?: boolean;
@@ -127,19 +128,20 @@ export declare const generate: Generate<ObservableLike, {
     readonly delayStart?: boolean;
 }>["generate"];
 export declare const ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"];
-export declare const isEnumerable: (obs: ObservableLike<unknown>) => obs is import("../rx.js").EnumerableObservableLike<unknown>;
-export declare const isRunnable: (obs: ObservableLike<unknown>) => obs is import("../rx.js").RunnableObservableLike<unknown>;
+export declare const isEnumerable: TypePredicate<ObservableLike, EnumerableObservableLike>;
+export declare const isRunnable: TypePredicate<ObservableLike, RunnableObservableLike>;
 export declare const keep: Keep<ObservableLike>["keep"];
 export declare const keepType: KeepType<ObservableLike>["keepType"];
 export declare const map: Map<ObservableLike>["map"];
 export declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
 export declare const mapTo: MapTo<ObservableLike>["mapTo"];
-export declare const merge: Concat<ObservableLike>["concat"];
-export declare const mergeAll: <T>(options?: {
-    readonly maxBufferSize?: number | undefined;
-    readonly maxConcurrency?: number | undefined;
-} | undefined) => ContainerOperator<ObservableLike<unknown>, ObservableLike<T>, T>;
-export declare const mergeWith: <T>(snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]) => ContainerOperator<ObservableLike<unknown>, T, T>;
+export declare const merge: Merge<ObservableLike>["merge"];
+export declare const mergeAll: MergeAll<ObservableLike, {
+    readonly maxBufferSize?: number;
+    readonly maxConcurrency?: number;
+}>["mergeAll"];
+export declare const mergeMap: MergeMap<ObservableLike>["mergeMap"];
+export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
@@ -173,8 +175,8 @@ export declare const share: <T>(scheduler: SchedulerLike, options?: {
 export declare const skipFirst: SkipFirst<ObservableLike>["skipFirst"];
 export declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];
 export declare const startWith: StartWith<ObservableLike>["startWith"];
-export declare const switchAll: ConcatAll<ObservableLike>["concatAll"];
-export declare const switchMap: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>, options?: undefined) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
+export declare const switchAll: SwitchAll<ObservableLike>["switchAll"];
+export declare const switchMap: SwitchMap<ObservableLike>["switchMap"];
 export declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, DisposableLike>;
 export declare const subscribeOn: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => ObservableLike<T>;
 export declare const takeFirst: TakeFirst<ObservableLike>["takeFirst"];

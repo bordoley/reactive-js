@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../constants.js";
 import {
   Buffer,
   CatchError,
@@ -8,7 +7,6 @@ import {
   ConcatMap,
   ConcatWith,
   ConcatYieldMap,
-  ContainerOperator,
   Contains,
   DecodeWithCharset,
   Defer,
@@ -18,6 +16,8 @@ import {
   EndWith,
   EverySatisfy,
   ForEach,
+  ForkConcat,
+  ForkZip,
   FromIterable,
   FromReadonlyArray,
   FromSequence,
@@ -46,7 +46,7 @@ import {
 import Iterable_toEnumerableObservable from "../containers/Iterable/__internal__/Iterable.toEnumerableObservable.js";
 import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable.js";
-import { compose } from "../functions.js";
+import { compose, identity, returns } from "../functions.js";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import Enumerable_toEnumerableObservable from "../ix/Enumerable/__internal__/Enumerable.toEnumerableObservable.js";
 import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
@@ -60,7 +60,11 @@ import {
 } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError.js";
+import EnumerableObservable_concatAll from "./EnumerableObservable/__internal__/EnumerableObservable.concatAll.js";
+import EnumerableObservable_concatMap from "./EnumerableObservable/__internal__/EnumerableObservable.concatMap.js";
+import EnumerableObservable_concatYieldMap from "./EnumerableObservable/__internal__/EnumerableObservable.concatYieldMap.js";
 import EnumerableObservable_defer from "./EnumerableObservable/__internal__/EnumerableObservable.defer.js";
+import EnumerableObservable_encodeUtf8 from "./EnumerableObservable/__internal__/EnumerableObservable.encodeUtf8.js";
 import EnumerableObservable_scanAsync from "./EnumerableObservable/__internal__/EnumerableObservable.scanAsync.js";
 import EnumerableObservable_toAsyncEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toAsyncEnumerable.js";
 import EnumerableObservable_toEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.js";
@@ -68,24 +72,22 @@ import EnumerableObservable_toIterable from "./EnumerableObservable/__internal__
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_compute from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
-import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
-import Observable_concatYieldMap from "./Observable/__internal__/Observable.concatYieldMap.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
-import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
+import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
-import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
@@ -121,26 +123,16 @@ export const concatAll: ConcatAll<
   {
     maxBufferSize?: number;
   }
->["concatAll"] = <T>(options: { readonly maxBufferSize?: number } = {}) => {
-  const { maxBufferSize = MAX_SAFE_INTEGER } = options;
-  return Observable_mergeAll({
-    maxBufferSize,
-    maxConcurrency: 1,
-  }) as ContainerOperator<
-    EnumerableObservableLike,
-    EnumerableObservableLike<T>,
-    T
-  >;
-};
+>["concatAll"] = EnumerableObservable_concatAll;
 
 export const concatMap: ConcatMap<EnumerableObservableLike>["concatMap"] =
-  Observable_concatMap as ConcatMap<EnumerableObservableLike>["concatMap"];
+  EnumerableObservable_concatMap;
 
 export const concatWith: ConcatWith<EnumerableObservableLike>["concatWith"] =
   Observable_concatWith as ConcatWith<EnumerableObservableLike>["concatWith"];
 
 export const concatYieldMap: ConcatYieldMap<EnumerableObservableLike>["concatYieldMap"] =
-  Observable_concatYieldMap as ConcatYieldMap<EnumerableObservableLike>["concatYieldMap"];
+  EnumerableObservable_concatYieldMap;
 
 export const contains: Contains<EnumerableObservableLike>["contains"] =
   Observable_contains as Contains<EnumerableObservableLike>["contains"];
@@ -158,7 +150,7 @@ export const empty: Empty<EnumerableObservableLike>["empty"] =
   Observable_empty as Empty<EnumerableObservableLike>["empty"];
 
 export const encodeUtf8: EncodeUtf8<EnumerableObservableLike>["encodeUtf8"] =
-  Observable_encodeUtf8 as EncodeUtf8<EnumerableObservableLike>["encodeUtf8"];
+  EnumerableObservable_encodeUtf8;
 
 export const endWith: EndWith<EnumerableObservableLike>["endWith"] =
   Observable_endWith as EndWith<EnumerableObservableLike>["endWith"];
@@ -168,6 +160,12 @@ export const everySatisfy: EverySatisfy<EnumerableObservableLike>["everySatisfy"
 
 export const forEach: ForEach<EnumerableObservableLike>["forEach"] =
   Observable_forEach as ForEach<EnumerableObservableLike>["forEach"];
+
+export const forkConcat: ForkConcat<EnumerableObservableLike>["forkConcat"] =
+  Observable_forkConcat as ForkConcat<EnumerableObservableLike>["forkConcat"];
+
+export const forkZip: ForkZip<EnumerableObservableLike>["forkZip"] =
+  Observable_forkZip as ForkZip<EnumerableObservableLike>["forkZip"];
 
 export const fromEnumerable: FromEnumerable<EnumerableObservableLike>["fromEnumerable"] =
   Enumerable_toEnumerableObservable;
@@ -252,6 +250,9 @@ export const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"] =
 export const toIterable: ToIterable<EnumerableObservableLike>["toIterable"] =
   EnumerableObservable_toIterable;
 
+export const toObservable: ToObservable<EnumerableObservableLike>["toObservable"] =
+  /*@__PURE__*/ returns(identity);
+
 export const toReadonlyArray: ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"] =
   RunnableObservable_toReadonlyArray as ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"];
 
@@ -266,14 +267,6 @@ export const toRunnableObservable: ToRunnableObservable<
   }
 >["toRunnableObservable"] = o =>
   compose(toEnumerable(), Enumerable_toRunnableObservable(o));
-
-export const toObservable: ToObservable<
-  EnumerableObservableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["toObservable"] = toRunnableObservable;
 
 export const zip: Zip<EnumerableObservableLike>["zip"] =
   Observable_zip as Zip<EnumerableObservableLike>["zip"];

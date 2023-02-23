@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../constants.js";
 import {
   Buffer,
   CatchError,
@@ -17,6 +16,8 @@ import {
   EndWith,
   EverySatisfy,
   ForEach,
+  ForkConcat,
+  ForkZip,
   FromIterable,
   FromReadonlyArray,
   FromSequence,
@@ -48,9 +49,18 @@ import { identity, returns } from "../functions.js";
 import { FromEnumerable } from "../ix.js";
 import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
 import {
+  CombineLatest,
+  Exhaust,
+  ExhaustMap,
+  ForkMerge,
+  ForkZipLatest,
+  MergeAll,
+  MergeWith,
   Retry,
   RunnableObservableLike,
   ScanAsync,
+  SwitchAll,
+  SwitchMap,
   TakeUntil,
   Throttle,
   Timeout,
@@ -65,17 +75,18 @@ import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
 import Observable_compute from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
-import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
-import Observable_concatYieldMap from "./Observable/__internal__/Observable.concatYieldMap.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
-import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
+import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
+import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
+import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
@@ -91,7 +102,6 @@ import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
-import Observable_switchMap from "./Observable/__internal__/Observable.switchMap.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil.js";
@@ -104,11 +114,18 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
+import RunnableObservable_exhaustMap from "./RunnableObservable/__internal__/Observable.exhaustMap.js";
 import RunnableObservable_catchError from "./RunnableObservable/__internal__/RunnableObservable.catchError.js";
+import RunnableObservable_concatAll from "./RunnableObservable/__internal__/RunnableObservable.concatAll.js";
+import RunnableObservable_concatMap from "./RunnableObservable/__internal__/RunnableObservable.concatMap.js";
+import RunnableObservable_concatYieldMap from "./RunnableObservable/__internal__/RunnableObservable.concatYieldMap.js";
 import RunnableObservable_defer from "./RunnableObservable/__internal__/RunnableObservable.defer.js";
+import RunnableObservable_encodeUtf8 from "./RunnableObservable/__internal__/RunnableObservable.encodeUtf8.js";
+import RunnableObservable_exhaust from "./RunnableObservable/__internal__/RunnableObservable.exhaust.js";
 import RunnableObservable_mergeAll from "./RunnableObservable/__internal__/RunnableObservable.mergeAll.js";
 import RunnableObservable_scanAsync from "./RunnableObservable/__internal__/RunnableObservable.scanAsync.js";
 import RunnableObservable_switchAll from "./RunnableObservable/__internal__/RunnableObservable.switchAll.js";
+import RunnableObservable_switchMap from "./RunnableObservable/__internal__/RunnableObservable.switchMap.js";
 import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
 import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.js";
 import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable.js";
@@ -121,7 +138,7 @@ export const catchError: CatchError<RunnableObservableLike>["catchError"] =
   RunnableObservable_catchError;
 
 export const combineLatest =
-  Observable_combineLatest as Zip<RunnableObservableLike>["zip"];
+  Observable_combineLatest as CombineLatest<RunnableObservableLike>["combineLatest"];
 
 export const compute: Compute<RunnableObservableLike>["compute"] =
   Observable_compute as Compute<RunnableObservableLike>["compute"];
@@ -134,19 +151,16 @@ export const concatAll: ConcatAll<
   {
     maxBufferSize?: number;
   }
->["concatAll"] = (options: { readonly maxBufferSize?: number } = {}) => {
-  const { maxBufferSize = MAX_SAFE_INTEGER } = options;
-  return mergeAll({ maxBufferSize, maxConcurrency: 1 });
-};
+>["concatAll"] = RunnableObservable_concatAll;
 
 export const concatMap: ConcatMap<RunnableObservableLike>["concatMap"] =
-  Observable_concatMap as ConcatMap<RunnableObservableLike>["concatMap"];
+  RunnableObservable_concatMap;
 
 export const concatWith: ConcatWith<RunnableObservableLike>["concatWith"] =
   Observable_concatWith as ConcatWith<RunnableObservableLike>["concatWith"];
 
 export const concatYieldMap: ConcatYieldMap<RunnableObservableLike>["concatYieldMap"] =
-  Observable_concatYieldMap as ConcatYieldMap<RunnableObservableLike>["concatYieldMap"];
+  RunnableObservable_concatYieldMap;
 
 export const contains: Contains<RunnableObservableLike>["contains"] =
   Observable_contains as Contains<RunnableObservableLike>["contains"];
@@ -164,7 +178,7 @@ export const empty: Empty<RunnableObservableLike, { delay: number }>["empty"] =
   Observable_empty as Empty<RunnableObservableLike, { delay: number }>["empty"];
 
 export const encodeUtf8: EncodeUtf8<RunnableObservableLike>["encodeUtf8"] =
-  Observable_encodeUtf8 as EncodeUtf8<RunnableObservableLike>["encodeUtf8"];
+  RunnableObservable_encodeUtf8;
 
 export const endWith: EndWith<RunnableObservableLike>["endWith"] =
   Observable_endWith as EndWith<RunnableObservableLike>["endWith"];
@@ -172,16 +186,26 @@ export const endWith: EndWith<RunnableObservableLike>["endWith"] =
 export const everySatisfy: EverySatisfy<RunnableObservableLike>["everySatisfy"] =
   Observable_everySatisfy as EverySatisfy<RunnableObservableLike>["everySatisfy"];
 
-export const exhaust = /*@__PURE__*/ (() =>
-  returns(
-    RunnableObservable_mergeAll({
-      maxBufferSize: 1,
-      maxConcurrency: 1,
-    }),
-  ) as ConcatAll<RunnableObservableLike>["concatAll"])();
+export const exhaust: Exhaust<RunnableObservableLike>["exhaust"] =
+  RunnableObservable_exhaust;
+
+export const exhaustMap: ExhaustMap<RunnableObservableLike>["exhaustMap"] =
+  RunnableObservable_exhaustMap;
 
 export const forEach: ForEach<RunnableObservableLike>["forEach"] =
   Observable_forEach as ForEach<RunnableObservableLike>["forEach"];
+
+export const forkConcat: ForkConcat<RunnableObservableLike>["forkConcat"] =
+  Observable_forkConcat as ForkConcat<RunnableObservableLike>["forkConcat"];
+
+export const forkMerge: ForkMerge<RunnableObservableLike>["forkMerge"] =
+  Observable_forkMerge as ForkMerge<RunnableObservableLike>["forkMerge"];
+
+export const forkZip: ForkZip<RunnableObservableLike>["forkZip"] =
+  Observable_forkZip as ForkZip<RunnableObservableLike>["forkZip"];
+
+export const forkZipLatest: ForkZipLatest<RunnableObservableLike>["forkZipLatest"] =
+  Observable_forkZipLatest as ForkZipLatest<RunnableObservableLike>["forkZipLatest"];
 
 export const fromEnumerable: FromEnumerable<
   RunnableObservableLike,
@@ -236,17 +260,16 @@ export const mapTo: MapTo<RunnableObservableLike>["mapTo"] =
 export const merge =
   Observable_merge as Concat<RunnableObservableLike>["concat"];
 
-export const mergeAll = RunnableObservable_mergeAll as ConcatAll<
+export const mergeAll: MergeAll<
   RunnableObservableLike,
   {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["concatAll"];
+>["mergeAll"] = RunnableObservable_mergeAll;
 
-// FIXME: Type
-export const mergeWith =
-  Observable_mergeWith as ConcatWith<RunnableObservableLike>["concatWith"];
+export const mergeWith: MergeWith<RunnableObservableLike>["mergeWith"] =
+  Observable_mergeWith as MergeWith<RunnableObservableLike>["mergeWith"];
 
 export const pairwise: Pairwise<RunnableObservableLike>["pairwise"] =
   Observable_pairwise as Pairwise<RunnableObservableLike>["pairwise"];
@@ -274,13 +297,11 @@ export const someSatisfy: SomeSatisfy<RunnableObservableLike>["someSatisfy"] =
 export const startWith: StartWith<RunnableObservableLike>["startWith"] =
   Observable_startWith as StartWith<RunnableObservableLike>["startWith"];
 
-// FIXME: type
-export const switchAll: ConcatAll<RunnableObservableLike>["concatAll"] =
+export const switchAll: SwitchAll<RunnableObservableLike>["switchAll"] =
   RunnableObservable_switchAll;
 
-// FIXME: type
-export const switchMap =
-  Observable_switchMap as ConcatMap<RunnableObservableLike>["concatMap"];
+export const switchMap: SwitchMap<RunnableObservableLike>["switchMap"] =
+  RunnableObservable_switchMap;
 
 export const takeFirst: TakeFirst<RunnableObservableLike>["takeFirst"] =
   Observable_takeFirst as TakeFirst<RunnableObservableLike>["takeFirst"];
