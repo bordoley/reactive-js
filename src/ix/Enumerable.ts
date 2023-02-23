@@ -5,10 +5,10 @@ import {
   ConcatAll,
   ConcatMap,
   ConcatWith,
-  ConcatYieldMap,
   DistinctUntilChanged,
   Empty,
   EndWith,
+  FlatMapIterable,
   ForEach,
   FromIterable,
   FromReadonlyArray,
@@ -50,11 +50,11 @@ import Enumerable_concat from "./Enumerable/__internal__/Enumerable.concat.js";
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_concatWith from "./Enumerable/__internal__/Enumerable.concatWith.js";
-import Enumerable_concatYieldMap from "./Enumerable/__internal__/Enumerable.concatYieldMap.js";
 import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerable.distinctUntilChanged.js";
 import Enumerable_empty from "./Enumerable/__internal__/Enumerable.empty.js";
 import Enumerable_endWith from "./Enumerable/__internal__/Enumerable.endWith.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
+import Enumerable_flatMapIterable from "./Enumerable/__internal__/Enumerable.flatMapIterable.js";
 import Enumerable_forEach from "./Enumerable/__internal__/Enumerable.forEach.js";
 import Enumerable_generate from "./Enumerable/__internal__/Enumerable.generate.js";
 import Enumerable_ignoreElements from "./Enumerable/__internal__/Enumerable.ignoreElements.js";
@@ -99,15 +99,15 @@ export const concatMap: ConcatMap<EnumerableLike>["concatMap"] =
 export const concatWith: ConcatWith<EnumerableLike>["concatWith"] =
   Enumerable_concatWith;
 
-export const concatYieldMap: ConcatYieldMap<EnumerableLike>["concatYieldMap"] =
-  Enumerable_concatYieldMap;
-
 export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"] =
   Enumerable_distinctUntilChanged;
 
 export const empty: Empty<EnumerableLike>["empty"] = Enumerable_empty;
 
 export const endWith: EndWith<EnumerableLike>["endWith"] = Enumerable_endWith;
+
+export const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"] =
+  Enumerable_flatMapIterable;
 
 export const forEach: ForEach<EnumerableLike>["forEach"] = Enumerable_forEach;
 

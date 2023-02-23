@@ -3,18 +3,19 @@ import {
   ContainerLike,
   ContainerOperator,
   FromIterable,
+  IterableLike,
   Map,
 } from "../../../containers.js";
 import { Function1, compose, pipe } from "../../../functions.js";
 
-const Container_concatYieldMap =
+const Container_flatMapIterable =
   <C extends ContainerLike, O = never>(
     concatAll: ConcatAll<C, never>["concatAll"],
     fromIterable: FromIterable<C, O>["fromIterable"],
     map: Map<C>["map"],
   ) =>
   <TA, TB>(
-    mapper: Function1<TA, Generator<TB, any, any>>,
+    mapper: Function1<TA, IterableLike<TB>>,
     options?: O,
   ): ContainerOperator<C, TA, TB> =>
     compose(
@@ -22,4 +23,4 @@ const Container_concatYieldMap =
       concatAll(),
     );
 
-export default Container_concatYieldMap;
+export default Container_flatMapIterable;

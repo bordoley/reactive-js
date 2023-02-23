@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ConcatYieldMap, ContainerLike, Contains, DecodeWithCharset, DistinctUntilChanged, EncodeUtf8, EndWith, EverySatisfy, ForEach, FromReadonlyArray, IgnoreElements, Keep, Map, MapTo, Pairwise, Reduce, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike, Contains, DecodeWithCharset, DistinctUntilChanged, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, FromReadonlyArray, IgnoreElements, Keep, Map, MapTo, Pairwise, Reduce, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { ToEnumerable } from "../ix.js";
 import { ObservableLike, Retry, ScanAsync, ToEnumerableObservable, ToObservable, ToRunnableObservable } from "../rx.js";
 export declare const bufferTests: <C extends ContainerLike>(m: Buffer<C, unknown> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;
@@ -13,7 +13,7 @@ export declare const endWithTests: <C extends ContainerLike>(m: EndWith<C> & Fro
 export declare const everySatisfyTests: <C extends ContainerLike>(m: EverySatisfy<C, never> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;
 export declare const forEachTests: <C extends ContainerLike>(m: ForEach<C, never> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;
 export declare const fromReadonlyArrayTests: <C extends ContainerLike>(m: FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;
-export declare const concatYieldMapTests: <C extends ContainerLike>(m: ConcatYieldMap<C, never> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;
+export declare const flatMapIterableTests: <C extends ContainerLike>(m: FlatMapIterable<C, never> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;
 export declare const ignoreElementsTests: <C extends ContainerLike>(m: IgnoreElements<C, never> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;
 export declare const keepTests: <C extends ContainerLike>(m: Keep<C, never> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;
 export declare const mapTests: <C extends ContainerLike>(m: Map<C, never> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;

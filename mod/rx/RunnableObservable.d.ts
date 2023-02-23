@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ConcatYieldMap, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { FromEnumerable } from "../ix.js";
 import { Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, MergeAll, MergeWith, Retry, RunnableObservableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
@@ -21,7 +21,6 @@ export declare const concatAll: ConcatAll<RunnableObservableLike, {
 }>["concatAll"];
 export declare const concatMap: ConcatMap<RunnableObservableLike>["concatMap"];
 export declare const concatWith: ConcatWith<RunnableObservableLike>["concatWith"];
-export declare const concatYieldMap: ConcatYieldMap<RunnableObservableLike>["concatYieldMap"];
 export declare const contains: Contains<RunnableObservableLike>["contains"];
 export declare const decodeWithCharset: DecodeWithCharset<RunnableObservableLike>["decodeWithCharset"];
 export declare const defer: Defer<RunnableObservableLike>["defer"];
@@ -34,6 +33,7 @@ export declare const endWith: EndWith<RunnableObservableLike>["endWith"];
 export declare const everySatisfy: EverySatisfy<RunnableObservableLike>["everySatisfy"];
 export declare const exhaust: Exhaust<RunnableObservableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<RunnableObservableLike>["exhaustMap"];
+export declare const flatMapIterable: FlatMapIterable<RunnableObservableLike>["flatMapIterable"];
 export declare const forEach: ForEach<RunnableObservableLike>["forEach"];
 export declare const forkConcat: ForkConcat<RunnableObservableLike>["forkConcat"];
 export declare const forkMerge: ForkMerge<RunnableObservableLike>["forkMerge"];

@@ -5,7 +5,6 @@ import {
   ConcatAll,
   ConcatMap,
   ConcatWith,
-  ConcatYieldMap,
   ContainerLike,
   Contains,
   DecodeWithCharset,
@@ -13,6 +12,7 @@ import {
   EncodeUtf8,
   EndWith,
   EverySatisfy,
+  FlatMapIterable,
   ForEach,
   FromReadonlyArray,
   IgnoreElements,
@@ -437,17 +437,17 @@ export const fromReadonlyArrayTests = <C extends ContainerLike>(
     }),
   );
 
-export const concatYieldMapTests = <C extends ContainerLike>(
-  m: ConcatYieldMap<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+export const flatMapIterableTests = <C extends ContainerLike>(
+  m: FlatMapIterable<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
 ) =>
   describe(
-    "concatYieldMap",
+    "flatMapIterable",
     test(
       "maps the incoming value with the inline generator function",
       pipeLazy(
         [none, none],
         m.fromReadonlyArray(),
-        m.concatYieldMap(function* (_) {
+        m.flatMapIterable(function* (_) {
           yield 1;
           yield 2;
           yield 3;

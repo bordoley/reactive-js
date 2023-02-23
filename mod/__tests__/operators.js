@@ -73,7 +73,7 @@ export const fromReadonlyArrayTests = (m) => describe("fromReadonlyArray", test(
 }), test("positive count without start index", () => {
     pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
 }));
-export const concatYieldMapTests = (m) => describe("concatYieldMap", test("maps the incoming value with the inline generator function", pipeLazy([none, none], m.fromReadonlyArray(), m.concatYieldMap(function* (_) {
+export const flatMapIterableTests = (m) => describe("flatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], m.fromReadonlyArray(), m.flatMapIterable(function* (_) {
     yield 1;
     yield 2;
     yield 3;

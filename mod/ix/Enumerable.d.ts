@@ -1,4 +1,4 @@
-import { Buffer, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ConcatYieldMap, DistinctUntilChanged, Empty, EndWith, ForEach, FromIterable, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, DistinctUntilChanged, Empty, EndWith, FlatMapIterable, ForEach, FromIterable, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { EnumerableLike, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
@@ -9,10 +9,10 @@ export declare const concat: Concat<EnumerableLike>["concat"];
 export declare const concatAll: ConcatAll<EnumerableLike>["concatAll"];
 export declare const concatMap: ConcatMap<EnumerableLike>["concatMap"];
 export declare const concatWith: ConcatWith<EnumerableLike>["concatWith"];
-export declare const concatYieldMap: ConcatYieldMap<EnumerableLike>["concatYieldMap"];
 export declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"];
 export declare const empty: Empty<EnumerableLike>["empty"];
 export declare const endWith: EndWith<EnumerableLike>["endWith"];
+export declare const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"];
 export declare const forEach: ForEach<EnumerableLike>["forEach"];
 export declare const fromReadonlyArray: FromReadonlyArray<EnumerableLike>["fromReadonlyArray"];
 export declare const fromIterable: FromIterable<EnumerableLike>["fromIterable"];

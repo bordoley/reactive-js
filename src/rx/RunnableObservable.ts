@@ -6,7 +6,6 @@ import {
   ConcatAll,
   ConcatMap,
   ConcatWith,
-  ConcatYieldMap,
   Contains,
   DecodeWithCharset,
   Defer,
@@ -15,6 +14,7 @@ import {
   EncodeUtf8,
   EndWith,
   EverySatisfy,
+  FlatMapIterable,
   ForEach,
   ForkConcat,
   ForkZip,
@@ -118,10 +118,10 @@ import RunnableObservable_exhaustMap from "./RunnableObservable/__internal__/Obs
 import RunnableObservable_catchError from "./RunnableObservable/__internal__/RunnableObservable.catchError.js";
 import RunnableObservable_concatAll from "./RunnableObservable/__internal__/RunnableObservable.concatAll.js";
 import RunnableObservable_concatMap from "./RunnableObservable/__internal__/RunnableObservable.concatMap.js";
-import RunnableObservable_concatYieldMap from "./RunnableObservable/__internal__/RunnableObservable.concatYieldMap.js";
 import RunnableObservable_defer from "./RunnableObservable/__internal__/RunnableObservable.defer.js";
 import RunnableObservable_encodeUtf8 from "./RunnableObservable/__internal__/RunnableObservable.encodeUtf8.js";
 import RunnableObservable_exhaust from "./RunnableObservable/__internal__/RunnableObservable.exhaust.js";
+import RunnableObservable_flatMapIterable from "./RunnableObservable/__internal__/RunnableObservable.flatMapIterable.js";
 import RunnableObservable_mergeAll from "./RunnableObservable/__internal__/RunnableObservable.mergeAll.js";
 import RunnableObservable_scanAsync from "./RunnableObservable/__internal__/RunnableObservable.scanAsync.js";
 import RunnableObservable_switchAll from "./RunnableObservable/__internal__/RunnableObservable.switchAll.js";
@@ -159,9 +159,6 @@ export const concatMap: ConcatMap<RunnableObservableLike>["concatMap"] =
 export const concatWith: ConcatWith<RunnableObservableLike>["concatWith"] =
   Observable_concatWith as ConcatWith<RunnableObservableLike>["concatWith"];
 
-export const concatYieldMap: ConcatYieldMap<RunnableObservableLike>["concatYieldMap"] =
-  RunnableObservable_concatYieldMap;
-
 export const contains: Contains<RunnableObservableLike>["contains"] =
   Observable_contains as Contains<RunnableObservableLike>["contains"];
 
@@ -191,6 +188,9 @@ export const exhaust: Exhaust<RunnableObservableLike>["exhaust"] =
 
 export const exhaustMap: ExhaustMap<RunnableObservableLike>["exhaustMap"] =
   RunnableObservable_exhaustMap;
+
+export const flatMapIterable: FlatMapIterable<RunnableObservableLike>["flatMapIterable"] =
+  RunnableObservable_flatMapIterable;
 
 export const forEach: ForEach<RunnableObservableLike>["forEach"] =
   Observable_forEach as ForEach<RunnableObservableLike>["forEach"];

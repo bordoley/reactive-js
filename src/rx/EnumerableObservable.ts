@@ -6,7 +6,6 @@ import {
   ConcatAll,
   ConcatMap,
   ConcatWith,
-  ConcatYieldMap,
   Contains,
   DecodeWithCharset,
   Defer,
@@ -15,6 +14,7 @@ import {
   EncodeUtf8,
   EndWith,
   EverySatisfy,
+  FlatMapIterable,
   ForEach,
   ForkConcat,
   ForkZip,
@@ -62,9 +62,9 @@ import { ToFlowable } from "../streaming.js";
 import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError.js";
 import EnumerableObservable_concatAll from "./EnumerableObservable/__internal__/EnumerableObservable.concatAll.js";
 import EnumerableObservable_concatMap from "./EnumerableObservable/__internal__/EnumerableObservable.concatMap.js";
-import EnumerableObservable_concatYieldMap from "./EnumerableObservable/__internal__/EnumerableObservable.concatYieldMap.js";
 import EnumerableObservable_defer from "./EnumerableObservable/__internal__/EnumerableObservable.defer.js";
 import EnumerableObservable_encodeUtf8 from "./EnumerableObservable/__internal__/EnumerableObservable.encodeUtf8.js";
+import EnumerableObservable_flatMapIterable from "./EnumerableObservable/__internal__/EnumerableObservable.flatMapIterable.js";
 import EnumerableObservable_scanAsync from "./EnumerableObservable/__internal__/EnumerableObservable.scanAsync.js";
 import EnumerableObservable_toAsyncEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toAsyncEnumerable.js";
 import EnumerableObservable_toEnumerable from "./EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.js";
@@ -131,9 +131,6 @@ export const concatMap: ConcatMap<EnumerableObservableLike>["concatMap"] =
 export const concatWith: ConcatWith<EnumerableObservableLike>["concatWith"] =
   Observable_concatWith as ConcatWith<EnumerableObservableLike>["concatWith"];
 
-export const concatYieldMap: ConcatYieldMap<EnumerableObservableLike>["concatYieldMap"] =
-  EnumerableObservable_concatYieldMap;
-
 export const contains: Contains<EnumerableObservableLike>["contains"] =
   Observable_contains as Contains<EnumerableObservableLike>["contains"];
 
@@ -157,6 +154,9 @@ export const endWith: EndWith<EnumerableObservableLike>["endWith"] =
 
 export const everySatisfy: EverySatisfy<EnumerableObservableLike>["everySatisfy"] =
   Observable_everySatisfy as EverySatisfy<EnumerableObservableLike>["everySatisfy"];
+
+export const flatMapIterable: FlatMapIterable<EnumerableObservableLike>["flatMapIterable"] =
+  EnumerableObservable_flatMapIterable;
 
 export const forEach: ForEach<EnumerableObservableLike>["forEach"] =
   Observable_forEach as ForEach<EnumerableObservableLike>["forEach"];

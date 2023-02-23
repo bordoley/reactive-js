@@ -6,7 +6,6 @@ import {
   ConcatAll,
   ConcatMap,
   ConcatWith,
-  ConcatYieldMap,
   Contains,
   DecodeWithCharset,
   Defer,
@@ -15,6 +14,7 @@ import {
   EncodeUtf8,
   EndWith,
   EverySatisfy,
+  FlatMapIterable,
   ForEach,
   FromIterable,
   FromReadonlyArray,
@@ -56,7 +56,6 @@ import Runnable_concat from "./Runnable/__internal__/Runnable.concat.js";
 import Runnable_concatAll from "./Runnable/__internal__/Runnable.concatAll.js";
 import Runnable_concatMap from "./Runnable/__internal__/Runnable.concatMap.js";
 import Runnable_concatWith from "./Runnable/__internal__/Runnable.concatWith.js";
-import Runnable_concatYieldMap from "./Runnable/__internal__/Runnable.concatYieldMap.js";
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
 import Runnable_create from "./Runnable/__internal__/Runnable.create.js";
 import Runnable_decodeWithCharset from "./Runnable/__internal__/Runnable.decodeWithCharset.js";
@@ -67,6 +66,7 @@ import Runnable_encodeUtf8 from "./Runnable/__internal__/Runnable.encodeUtf8.js"
 import Runnable_endWith from "./Runnable/__internal__/Runnable.endWith.js";
 import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
+import Runnable_flatMapIterable from "./Runnable/__internal__/Runnable.flatMapIterable.js";
 import Runnable_forEach from "./Runnable/__internal__/Runnable.forEach.js";
 import Runnable_generate from "./Runnable/__internal__/Runnable.generate.js";
 import Runnable_ignoreElements from "./Runnable/__internal__/Runnable.ignoreElements.js";
@@ -111,9 +111,6 @@ export const concatMap: ConcatMap<RunnableLike>["concatMap"] =
 export const concatWith: ConcatWith<RunnableLike>["concatWith"] =
   Runnable_concatWith;
 
-export const concatYieldMap: ConcatYieldMap<RunnableLike>["concatYieldMap"] =
-  Runnable_concatYieldMap;
-
 export const contains: Contains<RunnableLike>["contains"] = Runnable_contains;
 
 export const create = Runnable_create;
@@ -137,6 +134,9 @@ export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
   Runnable_everySatisfy;
 
 export const first = Runnable_first;
+
+export const flatMapIterable: FlatMapIterable<RunnableLike>["flatMapIterable"] =
+  Runnable_flatMapIterable;
 
 export const forEach: ForEach<RunnableLike>["forEach"] = Runnable_forEach;
 

@@ -40,7 +40,6 @@
 - [concatAll](rx_Observable.md#concatall)
 - [concatMap](rx_Observable.md#concatmap)
 - [concatWith](rx_Observable.md#concatwith)
-- [concatYieldMap](rx_Observable.md#concatyieldmap)
 - [contains](rx_Observable.md#contains)
 - [decodeWithCharset](rx_Observable.md#decodewithcharset)
 - [distinctUntilChanged](rx_Observable.md#distinctuntilchanged)
@@ -49,6 +48,7 @@
 - [everySatisfy](rx_Observable.md#everysatisfy)
 - [exhaust](rx_Observable.md#exhaust)
 - [exhaustMap](rx_Observable.md#exhaustmap)
+- [flatMapIterable](rx_Observable.md#flatmapiterable)
 - [forEach](rx_Observable.md#foreach)
 - [forkCombineLatest](rx_Observable.md#forkcombinelatest)
 - [forkConcat](rx_Observable.md#forkconcat)
@@ -1793,30 +1793,6 @@ ___
 
 ___
 
-### concatYieldMap
-
-▸ **concatYieldMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `any`, `any`\>\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-___
-
 ### contains
 
 ▸ **contains**<`T`\>(`value`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
@@ -1984,6 +1960,30 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`IterableLike`](../interfaces/containers.IterableLike.md)<`TB`\>\> |
 | `options?` | `undefined` |
 
 #### Returns

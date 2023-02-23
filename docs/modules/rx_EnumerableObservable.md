@@ -36,13 +36,13 @@
 - [concatAll](rx_EnumerableObservable.md#concatall)
 - [concatMap](rx_EnumerableObservable.md#concatmap)
 - [concatWith](rx_EnumerableObservable.md#concatwith)
-- [concatYieldMap](rx_EnumerableObservable.md#concatyieldmap)
 - [contains](rx_EnumerableObservable.md#contains)
 - [decodeWithCharset](rx_EnumerableObservable.md#decodewithcharset)
 - [distinctUntilChanged](rx_EnumerableObservable.md#distinctuntilchanged)
 - [encodeUtf8](rx_EnumerableObservable.md#encodeutf8)
 - [endWith](rx_EnumerableObservable.md#endwith)
 - [everySatisfy](rx_EnumerableObservable.md#everysatisfy)
+- [flatMapIterable](rx_EnumerableObservable.md#flatmapiterable)
 - [forEach](rx_EnumerableObservable.md#foreach)
 - [forkConcat](rx_EnumerableObservable.md#forkconcat)
 - [forkZip](rx_EnumerableObservable.md#forkzip)
@@ -838,30 +838,6 @@ ___
 
 ___
 
-### concatYieldMap
-
-▸ **concatYieldMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `any`, `any`\>\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-___
-
 ### contains
 
 ▸ **contains**<`T`\>(`value`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `boolean`\>
@@ -988,6 +964,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`IterableLike`](../interfaces/containers.IterableLike.md)<`TB`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 

@@ -26,8 +26,6 @@
 
   ↳ [`ConcatMap`](containers.ConcatMap.md)
 
-  ↳ [`ConcatYieldMap`](containers.ConcatYieldMap.md)
-
   ↳ [`ConcatWith`](containers.ConcatWith.md)
 
   ↳ [`Contains`](containers.Contains.md)
@@ -45,6 +43,8 @@
   ↳ [`EverySatisfy`](containers.EverySatisfy.md)
 
   ↳ [`Empty`](containers.Empty.md)
+
+  ↳ [`FlatMapIterable`](containers.FlatMapIterable.md)
 
   ↳ [`ForEach`](containers.ForEach.md)
 

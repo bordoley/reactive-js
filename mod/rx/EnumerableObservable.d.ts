@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ConcatYieldMap, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import { EnumerableObservableLike, Retry, ScanAsync, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
@@ -11,7 +11,6 @@ export declare const concatAll: ConcatAll<EnumerableObservableLike, {
 }>["concatAll"];
 export declare const concatMap: ConcatMap<EnumerableObservableLike>["concatMap"];
 export declare const concatWith: ConcatWith<EnumerableObservableLike>["concatWith"];
-export declare const concatYieldMap: ConcatYieldMap<EnumerableObservableLike>["concatYieldMap"];
 export declare const contains: Contains<EnumerableObservableLike>["contains"];
 export declare const decodeWithCharset: DecodeWithCharset<EnumerableObservableLike>["decodeWithCharset"];
 export declare const defer: Defer<EnumerableObservableLike>["defer"];
@@ -20,6 +19,7 @@ export declare const empty: Empty<EnumerableObservableLike>["empty"];
 export declare const encodeUtf8: EncodeUtf8<EnumerableObservableLike>["encodeUtf8"];
 export declare const endWith: EndWith<EnumerableObservableLike>["endWith"];
 export declare const everySatisfy: EverySatisfy<EnumerableObservableLike>["everySatisfy"];
+export declare const flatMapIterable: FlatMapIterable<EnumerableObservableLike>["flatMapIterable"];
 export declare const forEach: ForEach<EnumerableObservableLike>["forEach"];
 export declare const forkConcat: ForkConcat<EnumerableObservableLike>["forkConcat"];
 export declare const forkZip: ForkZip<EnumerableObservableLike>["forkZip"];

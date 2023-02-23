@@ -1,4 +1,4 @@
-import { CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ConcatYieldMap, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
+import { CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, TypePredicate } from "../functions.js";
 import { FromEnumerable } from "../ix.js";
 import { CombineLatest, EnumerableObservableLike, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, RunnableObservableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
@@ -86,7 +86,6 @@ export declare const concatAll: ConcatAll<ObservableLike, {
 }>["concatAll"];
 export declare const concatMap: ConcatMap<ObservableLike>["concatMap"];
 export declare const concatWith: ConcatWith<ObservableLike>["concatWith"];
-export declare const concatYieldMap: ConcatYieldMap<ObservableLike>["concatYieldMap"];
 export declare const contains: Contains<ObservableLike>["contains"];
 export declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
 export declare const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"];
@@ -100,6 +99,7 @@ export declare const endWith: EndWith<ObservableLike>["endWith"];
 export declare const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"];
 export declare const exhaust: Exhaust<ObservableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"];
+export declare const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"];
 export declare const forEach: ForEach<ObservableLike>["forEach"];
 export declare const forkCombineLatest: ForkCombineLatest<ObservableLike>["forkCombineLatest"];
 export declare const forkConcat: ForkConcat<ObservableLike>["forkConcat"];

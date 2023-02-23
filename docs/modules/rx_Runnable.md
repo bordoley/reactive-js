@@ -31,13 +31,13 @@
 - [concatAll](rx_Runnable.md#concatall)
 - [concatMap](rx_Runnable.md#concatmap)
 - [concatWith](rx_Runnable.md#concatwith)
-- [concatYieldMap](rx_Runnable.md#concatyieldmap)
 - [contains](rx_Runnable.md#contains)
 - [decodeWithCharset](rx_Runnable.md#decodewithcharset)
 - [distinctUntilChanged](rx_Runnable.md#distinctuntilchanged)
 - [encodeUtf8](rx_Runnable.md#encodeutf8)
 - [endWith](rx_Runnable.md#endwith)
 - [everySatisfy](rx_Runnable.md#everysatisfy)
+- [flatMapIterable](rx_Runnable.md#flatmapiterable)
 - [forEach](rx_Runnable.md#foreach)
 - [ignoreElements](rx_Runnable.md#ignoreelements)
 - [keep](rx_Runnable.md#keep)
@@ -522,30 +522,6 @@ ___
 
 ___
 
-### concatYieldMap
-
-▸ **concatYieldMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `any`, `any`\>\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-___
-
 ### contains
 
 ▸ **contains**<`T`\>(`value`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
@@ -672,6 +648,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`IterableLike`](../interfaces/containers.IterableLike.md)<`TB`\>\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 

@@ -230,21 +230,6 @@ export interface ConcatMap<C extends ContainerLike, O = never>
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ConcatYieldMap<C extends ContainerLike, O = never>
-  extends Container<C> {
-  /**
-   * @category Operator
-   */
-  concatYieldMap: <TA, TB>(
-    mapper: Function1<TA, Generator<TB, any, any>>,
-    options?: O,
-  ) => ContainerOperator<C, TA, TB>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface ConcatWith<C extends ContainerLike> extends Container<C> {
   /**
    * @category Operator
@@ -369,6 +354,21 @@ export interface Empty<C extends ContainerLike, O = never>
    * @category Constructor
    */
   empty<T>(options?: O): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface FlatMapIterable<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  flatMapIterable: <TA, TB>(
+    mapper: Function1<TA, IterableLike<TB>>,
+    options?: O,
+  ) => ContainerOperator<C, TA, TB>;
 }
 
 /**

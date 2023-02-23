@@ -5,7 +5,6 @@ import {
   ConcatAll,
   ConcatMap,
   ConcatWith,
-  ConcatYieldMap,
   ContainerOperator,
   Contains,
   DecodeWithCharset,
@@ -15,6 +14,7 @@ import {
   EncodeUtf8,
   EndWith,
   EverySatisfy,
+  FlatMapIterable,
   ForEach,
   ForkConcat,
   ForkZip,
@@ -114,7 +114,6 @@ import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatAll from "./Observable/__internal__/Observable.concatAll.js";
 import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
-import Observable_concatYieldMap from "./Observable/__internal__/Observable.concatYieldMap.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
@@ -126,6 +125,7 @@ import Observable_endWith from "./Observable/__internal__/Observable.endWith.js"
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
 import Observable_exhaust from "./Observable/__internal__/Observable.exhaust.js";
 import Observable_exhaustMap from "./Observable/__internal__/Observable.exhaustMap.js";
+import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkCombineLatest from "./Observable/__internal__/Observable.forkCombineLatest.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
@@ -344,9 +344,6 @@ export const concatMap: ConcatMap<ObservableLike>["concatMap"] =
 export const concatWith: ConcatWith<ObservableLike>["concatWith"] =
   Observable_concatWith;
 
-export const concatYieldMap: ConcatYieldMap<ObservableLike>["concatYieldMap"] =
-  Observable_concatYieldMap;
-
 export const contains: Contains<ObservableLike>["contains"] =
   Observable_contains;
 
@@ -376,6 +373,9 @@ export const exhaust: Exhaust<ObservableLike>["exhaust"] = Observable_exhaust;
 
 export const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"] =
   Observable_exhaustMap;
+
+export const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"] =
+  Observable_flatMapIterable;
 
 export const forEach: ForEach<ObservableLike>["forEach"] = Observable_forEach;
 
