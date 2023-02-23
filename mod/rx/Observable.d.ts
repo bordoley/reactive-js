@@ -100,6 +100,7 @@ export declare const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"];
 export declare const exhaust: Exhaust<ObservableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"];
 export declare const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"];
+export declare const flatMapPromise: <TA, TB>(f: Function1<TA, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
 export declare const forEach: ForEach<ObservableLike>["forEach"];
 export declare const forkCombineLatest: ForkCombineLatest<ObservableLike>["forkCombineLatest"];
 export declare const forkConcat: ForkConcat<ObservableLike>["forkConcat"];
@@ -133,7 +134,6 @@ export declare const isRunnable: TypePredicate<ObservableLike, RunnableObservabl
 export declare const keep: Keep<ObservableLike>["keep"];
 export declare const keepType: KeepType<ObservableLike>["keepType"];
 export declare const map: Map<ObservableLike>["map"];
-export declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
 export declare const mapTo: MapTo<ObservableLike>["mapTo"];
 export declare const merge: Merge<ObservableLike>["merge"];
 export declare const mergeAll: MergeAll<ObservableLike, {

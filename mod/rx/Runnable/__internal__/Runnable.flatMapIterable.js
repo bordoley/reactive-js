@@ -2,8 +2,7 @@
 
 import Container_flatMapIterable from "../../../containers/Container/__internal__/Container.flatMapIterable.js";
 import Iterable_toRunnable from "../../../containers/Iterable/__internal__/Iterable.toRunnable.js";
-import Runnable_concatAll from "./Runnable.concatAll.js";
-import Runnable_map from "./Runnable.map.js";
+import Runnable_concatMap from "./Runnable.concatMap.js";
 const Runnable_flatMapIterable = 
-/*@__PURE__*/ Container_flatMapIterable(Runnable_concatAll, Iterable_toRunnable, Runnable_map);
+/*@__PURE__*/ Container_flatMapIterable(Runnable_concatMap, Iterable_toRunnable);
 export default Runnable_flatMapIterable;

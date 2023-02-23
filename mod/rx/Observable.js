@@ -26,6 +26,7 @@ import Observable_everySatisfy from "./Observable/__internal__/Observable.everyS
 import Observable_exhaust from "./Observable/__internal__/Observable.exhaust.js";
 import Observable_exhaustMap from "./Observable/__internal__/Observable.exhaustMap.js";
 import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
+import Observable_flatMapPromise from "./Observable/__internal__/Observable.flatMapPromise.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkCombineLatest from "./Observable/__internal__/Observable.forkCombineLatest.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
@@ -39,7 +40,6 @@ import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnab
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
-import Observable_mapAsync from "./Observable/__internal__/Observable.mapAsync.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll.js";
@@ -129,6 +129,7 @@ export const everySatisfy = Observable_everySatisfy;
 export const exhaust = Observable_exhaust;
 export const exhaustMap = Observable_exhaustMap;
 export const flatMapIterable = Observable_flatMapIterable;
+export const flatMapPromise = Observable_flatMapPromise;
 export const forEach = Observable_forEach;
 export const forkCombineLatest = Observable_forkCombineLatest;
 export const forkConcat = Observable_forkConcat;
@@ -147,8 +148,6 @@ export const isRunnable = Observable_isRunnable;
 export const keep = Observable_keep;
 export const keepType = Observable_keepType;
 export const map = Observable_map;
-// FIXME: genMap??
-export const mapAsync = Observable_mapAsync;
 export const mapTo = Observable_mapTo;
 export const merge = Observable_merge;
 export const mergeAll = Observable_mergeAll;
@@ -184,7 +183,6 @@ export const skipFirst = Observable_skipFirst;
 export const someSatisfy = Observable_someSatisfy;
 export const startWith = Observable_startWith;
 export const switchAll = Observable_switchAll;
-// FIXME: Type
 export const switchMap = Observable_switchMap;
 export const subscribe = Observable_subscribe;
 export const subscribeOn = Observable_subscribeOn;

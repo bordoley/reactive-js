@@ -54,8 +54,6 @@
 
   ↳ [`FromReadonlyArray`](containers.FromReadonlyArray.md)
 
-  ↳ [`FromAsyncIterable`](containers.FromAsyncIterable.md)
-
   ↳ [`FromIterable`](containers.FromIterable.md)
 
   ↳ [`FromOptional`](containers.FromOptional.md)
@@ -101,8 +99,6 @@
   ↳ [`ThrowIfEmpty`](containers.ThrowIfEmpty.md)
 
   ↳ [`Throws`](containers.Throws.md)
-
-  ↳ [`ToAsyncIterable`](containers.ToAsyncIterable.md)
 
   ↳ [`ToIterable`](containers.ToIterable.md)
 

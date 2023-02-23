@@ -90,9 +90,9 @@
 - [async](rx_Observable.md#async)
 - [buffer](rx_Observable.md#buffer)
 - [create](rx_Observable.md#create)
+- [flatMapPromise](rx_Observable.md#flatmappromise)
 - [isEnumerable](rx_Observable.md#isenumerable)
 - [isRunnable](rx_Observable.md#isrunnable)
-- [mapAsync](rx_Observable.md#mapasync)
 - [multicast](rx_Observable.md#multicast)
 - [onSubscribe](rx_Observable.md#onsubscribe)
 - [share](rx_Observable.md#share)
@@ -3827,6 +3827,29 @@ ___
 
 ___
 
+### flatMapPromise
+
+▸ **flatMapPromise**<`TA`, `TB`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Function1`](functions.md#function1)<`TA`, `Promise`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
 ### isEnumerable
 
 ▸ **isEnumerable**(`v`): v is EnumerableObservableLike<unknown\>
@@ -3866,29 +3889,6 @@ guaranteeing `v` is of type `TB`.
 v is RunnableObservableLike<unknown\>
 
 `true` if v is an instance of type `TB`, otherwise false.
-
-___
-
-### mapAsync
-
-▸ **mapAsync**<`TA`, `TB`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`Function1`](functions.md#function1)<`TA`, `Promise`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 

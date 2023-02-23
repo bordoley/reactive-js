@@ -16,13 +16,6 @@ export interface ContainerLike {
  * @noInheritDoc
  * @category Container
  */
-export interface AsyncIterableLike<T = unknown> extends ContainerLike, AsyncIterable<T> {
-    readonly [ContainerLike_type]?: AsyncIterableLike<this[typeof ContainerLike_T]>;
-}
-/**
- * @noInheritDoc
- * @category Container
- */
 export interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
     readonly [ContainerLike_type]?: IterableLike<this[typeof ContainerLike_T]>;
 }
@@ -325,16 +318,6 @@ export interface FromReadonlyArray<C extends ContainerLike, O = unknown> extends
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromAsyncIterable<C extends ContainerLike, O = never> extends Container<C> {
-    /**
-     * @category Constructor
-     */
-    fromAsyncIterable<T>(options?: O): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface FromIterable<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * @category Constructor
@@ -629,18 +612,6 @@ export interface Throws<C extends StatefulContainerLike, O = unknown> extends Co
     throws<T>(options?: O & {
         raise?: Factory<unknown>;
     }): ContainerOf<C, T>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface ToAsyncIterable<C extends ContainerLike, O = never> extends Container<C> {
-    /**
-     * Converts the ContainerLike to a `AsyncIterableLike`.
-     *
-     * @category Converter
-     */
-    toAsyncIterable<T>(options?: O): Function1<ContainerOf<C, T>, AsyncIterableLike<T>>;
 }
 /**
  * @noInheritDoc
