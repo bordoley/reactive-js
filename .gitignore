@@ -16,5 +16,6 @@ packages/core/**/*.ts
 packages/core/**/*.js
 packages/core/**/*.mjs
 packages/core/README.md
-packages/example/build
+packages/example-react/build
+packages/example-node/build
 packages/perf/build/
