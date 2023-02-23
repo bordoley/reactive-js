@@ -1,7 +1,7 @@
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Comparator,
   floor,
-  getLength,
   isSome,
   newInstance,
   none,
@@ -22,7 +22,7 @@ const siftDown = <T>(queue: PriorityQueueImpl<T>, item: T) => {
     [PriorityQueueImpl_values]: values,
     [PriorityQueueImpl_comparator]: compare,
   } = queue;
-  const length = getLength(values);
+  const length = ReadonlyArray_getLength(values);
 
   for (let index = 0; index < length; ) {
     const leftIndex = (index + 1) * 2 - 1;
@@ -58,7 +58,7 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
   } = queue;
 
   for (
-    let index = getLength(values) - 1,
+    let index = ReadonlyArray_getLength(values) - 1,
       parentIndex = computeParentIndex(index),
       parent = values[parentIndex];
     isSome(parent) && compare(parent, item) > 0;
@@ -83,7 +83,7 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
   }
 
   get [QueueLike_count](): number {
-    return getLength(this[PriorityQueueImpl_values]);
+    return ReadonlyArray_getLength(this[PriorityQueueImpl_values]);
   }
 
   [QueueLike_clear]() {
@@ -96,7 +96,7 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
 
   [QueueLike_pop]() {
     const { [PriorityQueueImpl_values]: values } = this;
-    const length = getLength(values);
+    const length = ReadonlyArray_getLength(values);
     if (length === 0) {
       return none;
     } else if (length === 1) {

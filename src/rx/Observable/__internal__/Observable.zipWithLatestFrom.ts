@@ -10,11 +10,11 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import {
   Function2,
   Optional,
-  getLength,
-  isEmpty,
   none,
   partial,
   pipe,
@@ -74,7 +74,8 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
           DelegatingLike<ObserverLike<T>>,
       ) => {
         if (
-          getLength(observer[ZipWithLatestFromObserver_queue]) > 0 &&
+          ReadonlyArray_getLength(observer[ZipWithLatestFromObserver_queue]) >
+            0 &&
           observer[ZipWithLatestFromObserver_hasLatest]
         ) {
           observer[ZipWithLatestFromObserver_hasLatest] = false;
@@ -122,7 +123,9 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
 
                 if (
                   Disposable_isDisposed(instance) &&
-                  isEmpty(instance[ZipWithLatestFromObserver_queue])
+                  ReadonlyArray_isEmpty(
+                    instance[ZipWithLatestFromObserver_queue],
+                  )
                 ) {
                   pipe(instance[DelegatingLike_delegate], Disposable_dispose());
                 }

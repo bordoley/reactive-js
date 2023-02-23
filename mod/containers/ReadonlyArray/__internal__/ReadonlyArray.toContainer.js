@@ -1,8 +1,9 @@
 /// <reference types="./ReadonlyArray.toContainer.d.ts" />
 
-import { getLength, isSome, max, min } from "../../../functions.js";
+import { isSome, max, min } from "../../../functions.js";
+import ReadonlyArray_getLength from "./ReadonlyArray.getLength.js";
 const ReadonlyArray_toContainer = (factory) => (options) => values => {
-    const valuesLength = getLength(values);
+    const valuesLength = ReadonlyArray_getLength(values);
     const { start: startOption, count: countOption, ...tail } = options !== null && options !== void 0 ? options : {};
     const { start, count } = (() => {
         if (isSome(countOption) && countOption >= 0) {

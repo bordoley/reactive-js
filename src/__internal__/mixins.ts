@@ -1,3 +1,4 @@
+import ReadonlyArray_getLength from "../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Factory,
   Function1,
@@ -5,7 +6,6 @@ import {
   Function3,
   Function4,
   Optional,
-  getLength,
   isFunction,
   none,
   pipe,
@@ -107,7 +107,7 @@ export const include: (
   m0: PartialMixin,
   ...tail: readonly PartialMixin[]
 ) => PartialMixin = (...mixins: readonly PartialMixin[]) => {
-  const length = getLength(mixins);
+  const length = ReadonlyArray_getLength(mixins);
   if (length == 1) {
     return mixins[0];
   } else {

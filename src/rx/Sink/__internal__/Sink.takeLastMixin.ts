@@ -6,7 +6,8 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { getLength, none, pipe } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { none, pipe } from "../../../functions.js";
 import {
   ReactiveContainerLike,
   SinkLike,
@@ -78,7 +79,9 @@ const Sink_takeLastMixin: <
 
         last.push(next);
 
-        if (getLength(last) > this[TakeLastSinkMixin_takeLastCount]) {
+        if (
+          ReadonlyArray_getLength(last) > this[TakeLastSinkMixin_takeLastCount]
+        ) {
           last.shift();
         }
       },

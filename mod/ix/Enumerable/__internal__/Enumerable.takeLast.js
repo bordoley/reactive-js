@@ -1,9 +1,10 @@
 /// <reference types="./Enumerable.takeLast.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_toEnumerable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toEnumerable.js";
 import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeLast.js";
-import { getLength, pipe } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import { SourceLike_move, } from "../../../ix.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
@@ -37,7 +38,8 @@ const Enumerable_takeLast =
                 const last = [];
                 while (DelegatingEnumerator_move(this)) {
                     last.push(Enumerator_getCurrent(this));
-                    if (getLength(last) > this[TakeLastEnumerator_maxCount]) {
+                    if (ReadonlyArray_getLength(last) >
+                        this[TakeLastEnumerator_maxCount]) {
                         last.shift();
                     }
                 }

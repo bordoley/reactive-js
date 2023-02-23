@@ -1,4 +1,5 @@
 import { __DEV__ } from "./constants.js";
+import ReadonlyArray_getLength from "./containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 
 export type Constructor<T> = new () => T;
 export type Constructor1<TA, T> = new (a: TA) => T;
@@ -155,7 +156,8 @@ export const alwaysTrue = (..._args: unknown[]) => true;
 export const arrayEquality =
   <T>(valuesEquality: Equality<T> = strictEquality): Equality<readonly T[]> =>
   (a: readonly T[], b: readonly T[]) =>
-    getLength(a) === getLength(b) && a.every((v, i) => valuesEquality(b[i], v));
+    ReadonlyArray_getLength(a) === ReadonlyArray_getLength(b) &&
+    a.every((v, i) => valuesEquality(b[i], v));
 
 interface CallWith {
   <T>(): Function1<Factory<T>, T>;
@@ -300,9 +302,6 @@ export const decrementBy =
   (x: number) =>
     x - decr;
 
-export const getLength = (arr: readonly unknown[] | string): number =>
-  arr.length;
-
 /**
  * The identity function.
  *
@@ -348,9 +347,6 @@ export const isEqualTo = /*@__PURE__*/ (() => {
       : (a: T) => equality(a, b);
   };
 })();
-
-export const isEmpty = (arr: readonly unknown[] | string): boolean =>
-  getLength(arr) === 0;
 
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.
@@ -450,7 +446,7 @@ export const pipeUnsafe = (
   ...operators: Function1<any, any>[]
 ): unknown => {
   let acc = source;
-  const length = getLength(operators);
+  const length = ReadonlyArray_getLength(operators);
   for (let i = 0; i < length; i++) {
     acc = operators[i](acc);
   }
@@ -732,7 +728,7 @@ export const strictEquality = <T>(a: T, b: T) => a === b;
  */
 export const sum = (...args: number[]) => {
   let acc = 0;
-  const length = getLength(args);
+  const length = ReadonlyArray_getLength(args);
   for (let i = 0; i < length; i++) {
     acc += args[i];
   }

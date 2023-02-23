@@ -1,7 +1,8 @@
 /// <reference types="./Subject.create.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { getLength, max, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { max, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, SubjectLike_publish, } from "../../../rx.js";
 import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
@@ -36,7 +37,7 @@ const Subject_create =
                 const replay = this[MulticastObservableLike_replay];
                 if (replay > 0) {
                     replayed.push(next);
-                    if (getLength(replayed) > replay) {
+                    if (ReadonlyArray_getLength(replayed) > replay) {
                         replayed.shift();
                     }
                 }

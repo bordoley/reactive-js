@@ -11,6 +11,8 @@ export declare const fromIterable: FromIterable<ReadonlyArrayLike>["fromIterable
 export declare const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayLike>["fromReadonlyArray"];
 export declare const fromRunnableObservable: FromRunnableObservable<ReadonlyArrayLike>["fromRunnableObservable"];
 export declare const fromSequence: FromSequence<ReadonlyArrayLike>["fromSequence"];
+export declare const getLength: (arr: readonly unknown[]) => number;
+export declare const isEmpty: (arr: readonly unknown[]) => boolean;
 export declare const keep: Keep<ReadonlyArrayLike>["keep"];
 export declare const keepType: KeepType<ReadonlyArrayLike>["keepType"];
 export declare const map: Map<ReadonlyArrayLike>["map"];

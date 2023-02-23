@@ -1,3 +1,4 @@
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Equality,
   Factory,
@@ -5,7 +6,6 @@ import {
   Updater,
   arrayEquality,
   error,
-  getLength,
   ignore,
   isNone,
   isSome,
@@ -342,7 +342,7 @@ export const Observable_async = <T>(
 
       const { [AsyncContext_effects]: effects } = ctx;
 
-      if (getLength(effects) > ctx[AsyncContext_index]) {
+      if (ReadonlyArray_getLength(effects) > ctx[AsyncContext_index]) {
         const effectsLength = effects.length;
 
         for (let i = ctx[AsyncContext_index]; i < effectsLength; i++) {
@@ -363,7 +363,7 @@ export const Observable_async = <T>(
       currentCtx = none;
       ctx[AsyncContext_index] = 0;
 
-      const effectsLength = getLength(effects);
+      const effectsLength = ReadonlyArray_getLength(effects);
 
       // Inline this for perf
       let allObserveEffectsHaveValues = true;

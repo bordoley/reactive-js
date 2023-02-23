@@ -37,6 +37,8 @@
 ### Other Functions
 
 - [every](containers_ReadonlyArray.md#every)
+- [getLength](containers_ReadonlyArray.md#getlength)
+- [isEmpty](containers_ReadonlyArray.md#isempty)
 - [some](containers_ReadonlyArray.md#some)
 
 ## Constructor Functions
@@ -593,6 +595,38 @@ it returns false, or until the end of the Container.
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
+
+___
+
+### getLength
+
+▸ **getLength**(`arr`): `number`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `arr` | readonly `unknown`[] |
+
+#### Returns
+
+`number`
+
+___
+
+### isEmpty
+
+▸ **isEmpty**(`arr`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `arr` | readonly `unknown`[] |
+
+#### Returns
+
+`boolean`
 
 ___
 

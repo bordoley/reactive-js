@@ -1012,6 +1012,10 @@ export interface Zip<C extends ContainerLike> extends Container<C> {
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
 
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface ZipWith<C extends ContainerLike> extends Container<C> {
   /**
    * @category Operator

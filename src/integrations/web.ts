@@ -16,8 +16,6 @@ import {
   Updater,
   compose,
   error,
-  getLength,
-  isEmpty,
   isFunction,
   isSome,
   isString,
@@ -239,9 +237,10 @@ export const windowLocation: WindowLocationStreamableLike =
       query,
       fragment,
     }: WindowLocationURI): string => {
-      let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/_{path}` : path;
-      uri = getLength(query) > 0 ? `${uri}?${query}` : uri;
-      uri = getLength(fragment) > 0 ? `${uri}#${fragment}` : uri;
+      let uri =
+        path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;
+      uri = query.length > 0 ? `${uri}?${query}` : uri;
+      uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
       return newInstance(URL, uri, location.href).toString();
     };
 

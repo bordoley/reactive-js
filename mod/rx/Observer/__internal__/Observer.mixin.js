@@ -1,7 +1,9 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
 import { createInstanceFactory, init, mix, props, } from "../../../__internal__/mixins.js";
-import { getLength, isEmpty, isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
+import { isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_dispatcher, ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
 import { DispatcherLike_dispatch, DispatcherLike_scheduler, } from "../../../scheduling.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
@@ -16,7 +18,7 @@ import Observer_getsScheduler from "./Observer.getScheduler.js";
 import Observer_schedule from "./Observer.schedule.js";
 const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {
-        if (getLength(dispatcher[ObserverDispatcher_nextQueue]) === 1) {
+        if (ReadonlyArray_getLength(dispatcher[ObserverDispatcher_nextQueue]) === 1) {
             const { [ObserverDispatcher_observer]: observer } = dispatcher;
             pipe(observer, Observer_schedule(dispatcher[ObserverDispatcher_continuation]), Disposable_onComplete(dispatcher[ObserverDispatcher_onContinuationDispose]));
         }
@@ -31,7 +33,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         instance[ObserverDispatcher_nextQueue] = [];
         instance[ObserverDispatcher_continuation] = () => {
             const { [ObserverDispatcher_nextQueue]: nextQueue, [ObserverDispatcher_observer]: observer, } = instance;
-            while (getLength(nextQueue) > 0) {
+            while (ReadonlyArray_getLength(nextQueue) > 0) {
                 const next = nextQueue.shift();
                 observer[SinkLike_notify](next);
                 Continuation__yield();
@@ -43,7 +45,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             }
         };
         pipe(instance, Disposable_onDisposed(e => {
-            if (isEmpty(instance[ObserverDispatcher_nextQueue])) {
+            if (ReadonlyArray_isEmpty(instance[ObserverDispatcher_nextQueue])) {
                 pipe(observer, Disposable_dispose(e));
             }
         }));

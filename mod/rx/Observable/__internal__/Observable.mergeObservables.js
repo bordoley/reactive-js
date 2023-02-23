@@ -1,6 +1,7 @@
 /// <reference types="./Observable.mergeObservables.d.ts" />
 
-import { getLength, pipe } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { pipe } from "../../../functions.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Sink_sourceFrom from "../../../rx/Sink/__internal__/Sink.sourceFrom.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -21,7 +22,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
     }));
     return (observables) => {
         const onSink = (observer) => {
-            const count = getLength(observables);
+            const count = ReadonlyArray_getLength(observables);
             const ctx = { [MergeObserverCtx_completedCount]: 0 };
             for (const observable of observables) {
                 pipe(createMergeObserver(observer, count, ctx), Sink_sourceFrom(observable));

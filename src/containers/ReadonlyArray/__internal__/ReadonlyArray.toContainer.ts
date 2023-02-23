@@ -3,7 +3,8 @@ import {
   ContainerOf,
   ReadonlyArrayLike,
 } from "../../../containers.js";
-import { Function1, getLength, isSome, max, min } from "../../../functions.js";
+import { Function1, isSome, max, min } from "../../../functions.js";
+import ReadonlyArray_getLength from "./ReadonlyArray.getLength.js";
 
 const ReadonlyArray_toContainer =
   <C extends ContainerLike, O extends unknown = unknown>(
@@ -21,7 +22,7 @@ const ReadonlyArray_toContainer =
     },
   ): Function1<ReadonlyArrayLike<T>, ContainerOf<C, T>> =>
   values => {
-    const valuesLength = getLength(values);
+    const valuesLength = ReadonlyArray_getLength(values);
     const { start: startOption, count: countOption, ...tail } = options ?? {};
 
     const { start, count } = (() => {

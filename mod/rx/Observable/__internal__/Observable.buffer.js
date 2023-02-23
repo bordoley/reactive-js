@@ -2,8 +2,10 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { MAX_SAFE_INTEGER } from "../../../constants.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
-import { getLength, isEmpty, isNumber, max, none, pipe, } from "../../../functions.js";
+import { isNumber, max, none, pipe } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -38,7 +40,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         pipe(instance, Disposable_onComplete(() => {
             const { [BufferObserver_buffer]: buffer } = instance;
             instance[BufferObserver_buffer] = [];
-            if (isEmpty(buffer)) {
+            if (ReadonlyArray_isEmpty(buffer)) {
                 pipe(delegate, Disposable_dispose());
             }
             else {
@@ -62,7 +64,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                 this[BufferObserver_buffer] = [];
                 this[DelegatingLike_delegate][SinkLike_notify](buffer);
             };
-            if (getLength(buffer) === maxBufferSize) {
+            if (ReadonlyArray_getLength(buffer) === maxBufferSize) {
                 doOnNotify();
             }
             else if (Disposable_isDisposed(this[BufferObserver_durationSubscription][MutableRefLike_current])) {

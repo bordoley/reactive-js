@@ -8,10 +8,11 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { TakeLast } from "../../../containers.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_toEnumerable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toEnumerable.js";
 import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeLast.js";
 import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
-import { getLength, pipe } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -79,7 +80,10 @@ const Enumerable_takeLast: TakeLast<EnumerableLike>["takeLast"] =
                 while (DelegatingEnumerator_move(this)) {
                   last.push(Enumerator_getCurrent(this));
 
-                  if (getLength(last) > this[TakeLastEnumerator_maxCount]) {
+                  if (
+                    ReadonlyArray_getLength(last) >
+                    this[TakeLastEnumerator_maxCount]
+                  ) {
                     last.shift();
                   }
                 }

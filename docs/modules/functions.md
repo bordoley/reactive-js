@@ -54,12 +54,10 @@
 - [decrementBy](functions.md#decrementby)
 - [error](functions.md#error)
 - [floor](functions.md#floor)
-- [getLength](functions.md#getlength)
 - [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
 - [incrementBy](functions.md#incrementby)
-- [isEmpty](functions.md#isempty)
 - [isEqualTo](functions.md#isequalto)
 - [isEven](functions.md#iseven)
 - [isFalse](functions.md#isfalse)
@@ -1565,22 +1563,6 @@ ___
 
 ___
 
-### getLength
-
-▸ **getLength**(`arr`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `arr` | `string` \| readonly `unknown`[] |
-
-#### Returns
-
-`number`
-
-___
-
 ### identity
 
 ▸ **identity**<`T`\>(`v`): `T`
@@ -1658,22 +1640,6 @@ Returns a function that increments a number `x` by the value `incr`.
 #### Returns
 
 [`Updater`](functions.md#updater)<`number`\>
-
-___
-
-### isEmpty
-
-▸ **isEmpty**(`arr`): `boolean`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `arr` | `string` \| readonly `unknown`[] |
-
-#### Returns
-
-`boolean`
 
 ___
 

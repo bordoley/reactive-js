@@ -1,7 +1,7 @@
 /// <reference types="./Sink.decodeWithCharsetMixin.d.ts" />
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { isEmpty, newInstance, none, pipe } from "../../../functions.js";
+import { newInstance, none, pipe } from "../../../functions.js";
 import { SinkLike_notify, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -17,7 +17,7 @@ const Sink_decodeWithCharsetMixin = (fromReadonlyArray) => {
         instance[DecodeWithCharsetSinkMixin_textDecoder] = textDecoder;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             const data = textDecoder.decode();
-            if (!isEmpty(data)) {
+            if (data.length > 0) {
                 pipe([data], fromReadonlyArray, ReactiveContainer_sinkInto(delegate));
             }
             else {
@@ -32,7 +32,7 @@ const Sink_decodeWithCharsetMixin = (fromReadonlyArray) => {
             const data = this[DecodeWithCharsetSinkMixin_textDecoder].decode(next, {
                 stream: true,
             });
-            if (!isEmpty(data)) {
+            if (data.length > 0) {
                 this[DelegatingLike_delegate][SinkLike_notify](data);
             }
         },

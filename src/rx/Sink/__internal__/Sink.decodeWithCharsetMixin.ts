@@ -9,7 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { isEmpty, newInstance, none, pipe } from "../../../functions.js";
+import { newInstance, none, pipe } from "../../../functions.js";
 import {
   ReactiveContainerLike,
   SinkLike,
@@ -60,7 +60,7 @@ const Sink_decodeWithCharsetMixin: <
         Disposable_onComplete(() => {
           const data = textDecoder.decode();
 
-          if (!isEmpty(data)) {
+          if (data.length > 0) {
             pipe(
               [data],
               fromReadonlyArray,
@@ -85,7 +85,7 @@ const Sink_decodeWithCharsetMixin: <
         const data = this[DecodeWithCharsetSinkMixin_textDecoder].decode(next, {
           stream: true,
         });
-        if (!isEmpty(data)) {
+        if (data.length > 0) {
           this[DelegatingLike_delegate][SinkLike_notify](data);
         }
       },

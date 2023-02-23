@@ -13,10 +13,6 @@
 - [SequenceLike](../interfaces/containers.SequenceLike.md)
 - [StatefulContainerLike](../interfaces/containers.StatefulContainerLike.md)
 
-### Other Interfaces
-
-- [ZipWith](../interfaces/containers.ZipWith.md)
-
 ### TypeClass Interfaces
 
 - [Buffer](../interfaces/containers.Buffer.md)
@@ -69,6 +65,7 @@
 - [ToReadonlyArray](../interfaces/containers.ToReadonlyArray.md)
 - [ToSequence](../interfaces/containers.ToSequence.md)
 - [Zip](../interfaces/containers.Zip.md)
+- [ZipWith](../interfaces/containers.ZipWith.md)
 
 ### Type Aliases
 

@@ -1,4 +1,5 @@
-import { getLength, pipe } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { pipe } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Sink_sourceFrom from "../../../rx/Sink/__internal__/Sink.sourceFrom.js";
@@ -35,7 +36,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
 
   return <T>(observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
     const onSink = (observer: ObserverLike<T>) => {
-      const count = getLength(observables);
+      const count = ReadonlyArray_getLength(observables);
       const ctx = { [MergeObserverCtx_completedCount]: 0 };
 
       for (const observable of observables) {

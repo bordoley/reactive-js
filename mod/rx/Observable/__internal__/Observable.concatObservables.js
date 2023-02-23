@@ -1,6 +1,8 @@
 /// <reference types="./Observable.concatObservables.d.ts" />
 
-import { getLength, isEmpty, pipe } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
+import { pipe } from "../../../functions.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -11,7 +13,7 @@ import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
 const Observable_concatObservables = /*@__PURE__*/ (() => {
     const createConcatObserver = (delegate, observables, next) => pipe(Observer_createWithDelegate(delegate), Disposable_addTo(delegate), Disposable_onComplete(() => {
-        if (next < getLength(observables)) {
+        if (next < ReadonlyArray_getLength(observables)) {
             pipe(createConcatObserver(delegate, observables, next + 1), Sink_sourceFrom(observables[next]));
         }
         else {
@@ -20,7 +22,7 @@ const Observable_concatObservables = /*@__PURE__*/ (() => {
     }));
     return (observables) => {
         const onSink = (observer) => {
-            if (!isEmpty(observables)) {
+            if (!ReadonlyArray_isEmpty(observables)) {
                 pipe(createConcatObserver(observer, observables, 1), Sink_sourceFrom(observables[0]));
             }
             else {

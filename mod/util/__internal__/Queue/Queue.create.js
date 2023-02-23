@@ -1,12 +1,13 @@
 /// <reference types="./Queue.create.d.ts" />
 
 var _a;
-import { floor, getLength, isSome, newInstance, none, } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { floor, isSome, newInstance, none, } from "../../../functions.js";
 import { QueueLike_clear, QueueLike_count, QueueLike_peek, QueueLike_pop, QueueLike_push, } from "../util.internal.js";
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const siftDown = (queue, item) => {
     const { [PriorityQueueImpl_values]: values, [PriorityQueueImpl_comparator]: compare, } = queue;
-    const length = getLength(values);
+    const length = ReadonlyArray_getLength(values);
     for (let index = 0; index < length;) {
         const leftIndex = (index + 1) * 2 - 1;
         const rightIndex = leftIndex + 1;
@@ -36,7 +37,7 @@ const siftDown = (queue, item) => {
 };
 const siftUp = (queue, item) => {
     const { [PriorityQueueImpl_values]: values, [PriorityQueueImpl_comparator]: compare, } = queue;
-    for (let index = getLength(values) - 1, parentIndex = computeParentIndex(index), parent = values[parentIndex]; isSome(parent) && compare(parent, item) > 0; index = parentIndex,
+    for (let index = ReadonlyArray_getLength(values) - 1, parentIndex = computeParentIndex(index), parent = values[parentIndex]; isSome(parent) && compare(parent, item) > 0; index = parentIndex,
         parentIndex = computeParentIndex(index),
         parent = values[parentIndex]) {
         values[parentIndex] = item;
@@ -51,7 +52,7 @@ class PriorityQueueImpl {
         this[PriorityQueueImpl_comparator] = comparator;
     }
     get [(_a = PriorityQueueImpl_values, QueueLike_count)]() {
-        return getLength(this[PriorityQueueImpl_values]);
+        return ReadonlyArray_getLength(this[PriorityQueueImpl_values]);
     }
     [QueueLike_clear]() {
         this[PriorityQueueImpl_values].length = 0;
@@ -61,7 +62,7 @@ class PriorityQueueImpl {
     }
     [QueueLike_pop]() {
         const { [PriorityQueueImpl_values]: values } = this;
-        const length = getLength(values);
+        const length = ReadonlyArray_getLength(values);
         if (length === 0) {
             return none;
         }

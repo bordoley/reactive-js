@@ -1,6 +1,7 @@
 /// <reference types="./functions.d.ts" />
 
 import { __DEV__ } from "./constants.js";
+import ReadonlyArray_getLength from "./containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 /**
  * A function that always returns `false`.
  */
@@ -13,7 +14,8 @@ export const alwaysTrue = (..._args) => true;
  * Returns an equality function that compares two readonly arrays for equality,
  * comparing their values using `valuesEquality`.
  */
-export const arrayEquality = (valuesEquality = strictEquality) => (a, b) => getLength(a) === getLength(b) && a.every((v, i) => valuesEquality(b[i], v));
+export const arrayEquality = (valuesEquality = strictEquality) => (a, b) => ReadonlyArray_getLength(a) === ReadonlyArray_getLength(b) &&
+    a.every((v, i) => valuesEquality(b[i], v));
 /**
  * A function operator that invokes a function with a given list of arguments.
  *
@@ -34,7 +36,6 @@ export const decrement = (x) => x - 1;
  * Returns a function that decrements a number `x` by the value `decr`.
  */
 export const decrementBy = (decr) => (x) => x - decr;
-export const getLength = (arr) => arr.length;
 /**
  * The identity function.
  *
@@ -67,7 +68,6 @@ export const isEqualTo = /*@__PURE__*/ (() => {
             : (a) => equality(a, b);
     };
 })();
-export const isEmpty = (arr) => getLength(arr) === 0;
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.
  */
@@ -106,7 +106,7 @@ export const partial = (...args) => (f) => (arg0) => f(arg0, ...args);
  */
 export const pipeUnsafe = (source, ...operators) => {
     let acc = source;
-    const length = getLength(operators);
+    const length = ReadonlyArray_getLength(operators);
     for (let i = 0; i < length; i++) {
         acc = operators[i](acc);
     }
@@ -149,7 +149,7 @@ export const strictEquality = (a, b) => a === b;
  */
 export const sum = (...args) => {
     let acc = 0;
-    const length = getLength(args);
+    const length = ReadonlyArray_getLength(args);
     for (let i = 0; i < length; i++) {
         acc += args[i];
     }

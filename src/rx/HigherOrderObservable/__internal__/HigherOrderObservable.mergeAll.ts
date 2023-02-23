@@ -15,10 +15,10 @@ import {
   ContainerOf,
   ContainerOperator,
 } from "../../../containers.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Function1,
   SideEffect,
-  getLength,
   isSome,
   none,
   partial,
@@ -135,7 +135,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
               if (Disposable_isDisposed(delegate)) {
                 instance[MergeAllObserver_queue].length = 0;
               } else if (
-                getLength(instance[MergeAllObserver_queue]) +
+                ReadonlyArray_getLength(instance[MergeAllObserver_queue]) +
                   instance[MergeAllObserver_activeCount] ===
                 0
               ) {
@@ -166,7 +166,8 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
             // Drop old events if the maxBufferSize has been exceeded
             if (
-              getLength(queue) + this[MergeAllObserver_activeCount] >
+              ReadonlyArray_getLength(queue) +
+                this[MergeAllObserver_activeCount] >
               this[MergeAllObserver_maxBufferSize]
             ) {
               queue.shift();

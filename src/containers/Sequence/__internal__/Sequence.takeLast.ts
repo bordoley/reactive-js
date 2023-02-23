@@ -4,7 +4,8 @@ import {
   SequenceLike_next,
   TakeLast,
 } from "../../../containers.js";
-import { callWith, getLength, isSome, pipe } from "../../../functions.js";
+import { callWith, isSome, pipe } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_toSequence from "../../ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 
 const Sequence_takeLast: TakeLast<SequenceLike>["takeLast"] =
@@ -17,7 +18,7 @@ const Sequence_takeLast: TakeLast<SequenceLike>["takeLast"] =
         while (true) {
           if (isSome(result)) {
             last.push(result[SequenceLike_data]);
-            if (getLength(last) > maxCount) {
+            if (ReadonlyArray_getLength(last) > maxCount) {
               last.shift();
             }
             result = result[SequenceLike_next]();

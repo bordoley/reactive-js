@@ -9,7 +9,9 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { getLength, isEmpty, none, pipe } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
+import { none, pipe } from "../../../functions.js";
 import {
   ReactiveContainerLike,
   SinkLike,
@@ -63,7 +65,7 @@ const Sink_bufferMixin: <
           const { [BufferSinkMixin_buffer]: buffer } = instance;
           instance[BufferSinkMixin_buffer] = [];
 
-          if (isEmpty(buffer)) {
+          if (ReadonlyArray_isEmpty(buffer)) {
             pipe(instance[DelegatingLike_delegate], Disposable_dispose());
           } else {
             pipe(
@@ -92,7 +94,7 @@ const Sink_bufferMixin: <
 
         buffer.push(next);
 
-        if (getLength(buffer) === maxBufferSize) {
+        if (ReadonlyArray_getLength(buffer) === maxBufferSize) {
           const buffer = this[BufferSinkMixin_buffer];
           this[BufferSinkMixin_buffer] = [];
 

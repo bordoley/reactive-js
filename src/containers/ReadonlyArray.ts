@@ -30,6 +30,8 @@ import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonl
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
+import ReadonlyArray_getLength from "./ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_isEmpty from "./ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.js";
 import ReadonlyArray_keepType from "./ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
@@ -67,6 +69,10 @@ export const fromRunnableObservable: FromRunnableObservable<ReadonlyArrayLike>["
 
 export const fromSequence: FromSequence<ReadonlyArrayLike>["fromSequence"] =
   Sequence_toReadonlyArray;
+
+export const getLength = ReadonlyArray_getLength;
+
+export const isEmpty = ReadonlyArray_isEmpty;
 
 export const keep: Keep<ReadonlyArrayLike>["keep"] = ReadonlyArray_keep;
 

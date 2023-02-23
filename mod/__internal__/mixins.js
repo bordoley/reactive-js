@@ -1,6 +1,7 @@
 /// <reference types="./mixins.d.ts" />
 
-import { getLength, isFunction, none, pipe, returns, } from "../functions.js";
+import ReadonlyArray_getLength from "../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { isFunction, none, pipe, returns, } from "../functions.js";
 const Object_init = Symbol("Object_init");
 const Object_properties = Symbol("Object_properties");
 const Object_prototype = Symbol("Object_prototype");
@@ -12,7 +13,7 @@ function initUnsafe(mixin, instance, ...args) {
 }
 export const init = initUnsafe;
 export const include = (...mixins) => {
-    const length = getLength(mixins);
+    const length = ReadonlyArray_getLength(mixins);
     if (length == 1) {
         return mixins[0];
     }

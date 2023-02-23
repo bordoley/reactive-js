@@ -1,7 +1,8 @@
 /// <reference types="./Sink.takeLastMixin.d.ts" />
 
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { getLength, none, pipe } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { none, pipe } from "../../../functions.js";
 import { SinkLike_notify, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -25,7 +26,7 @@ const Sink_takeLastMixin = (fromReadonlyArray) => {
         [SinkLike_notify](next) {
             const { [TakeLastSinkMixin_last]: last } = this;
             last.push(next);
-            if (getLength(last) > this[TakeLastSinkMixin_takeLastCount]) {
+            if (ReadonlyArray_getLength(last) > this[TakeLastSinkMixin_takeLastCount]) {
                 last.shift();
             }
         },

@@ -5,7 +5,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
-import { composeUnsafe, getLength, none, pipe } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { composeUnsafe, none, pipe } from "../../../functions.js";
 import {
   AsyncEnumerableLike,
   AsyncEnumerableLike_isEnumerable,
@@ -179,7 +180,7 @@ const AsyncEnumerable_create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
     ...ops: readonly ContainerOperator<ObservableLike, unknown, unknown>[]
   ): AsyncEnumerableLike => {
     const op =
-      getLength(ops) > 1
+      ReadonlyArray_getLength(ops) > 1
         ? (composeUnsafe(...ops) as ContainerOperator<
             ObservableLike<unknown>,
             unknown,

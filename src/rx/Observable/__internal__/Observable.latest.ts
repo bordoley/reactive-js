@@ -6,8 +6,9 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import { getLength, none, pipe } from "../../../functions.js";
+import { none, pipe } from "../../../functions.js";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -70,7 +71,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
     if (
       instance[LatestCtx_completedCount] ===
-      getLength(instance[LatestCtx_observers])
+      ReadonlyArray_getLength(instance[LatestCtx_observers])
     ) {
       pipe(instance[LatestCtx_delegate], Disposable_dispose());
     }

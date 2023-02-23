@@ -10,9 +10,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Buffer } from "../../../containers.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import StatefulContainer_buffer from "../../../containers/StatefulContainer/__internal__/StatefulContainer.buffer.js";
 import { TInteractive } from "../../../containers/__internal__/containers.internal.js";
-import { getLength, pipe } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -82,13 +83,13 @@ const Enumerable_buffer: Buffer<EnumerableLike>["buffer"] = /*@__PURE__*/ (<
             } = this;
 
             while (
-              getLength(buffer) < maxBufferSize &&
+              ReadonlyArray_getLength(buffer) < maxBufferSize &&
               Enumerator_move(delegate)
             ) {
               buffer.push(Enumerator_getCurrent(delegate));
             }
 
-            const bufferLength = getLength(buffer);
+            const bufferLength = ReadonlyArray_getLength(buffer);
             if (bufferLength > 0) {
               this[EnumeratorLike_current] = buffer;
             } else if (bufferLength === 0) {

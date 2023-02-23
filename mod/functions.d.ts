@@ -113,7 +113,6 @@ export declare const decrement: (x: number) => number;
  * Returns a function that decrements a number `x` by the value `decr`.
  */
 export declare const decrementBy: (decr: number) => Updater<number>;
-export declare const getLength: (arr: readonly unknown[] | string) => number;
 /**
  * The identity function.
  *
@@ -139,7 +138,6 @@ export declare const incrementBy: (incr: number) => Updater<number>;
 export declare const isEqualTo: <T>(b: T, options?: {
     equality?: Equality<T> | undefined;
 }) => Predicate<T>;
-export declare const isEmpty: (arr: readonly unknown[] | string) => boolean;
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.
  */

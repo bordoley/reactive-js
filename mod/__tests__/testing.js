@@ -1,6 +1,7 @@
 /// <reference types="./testing.d.ts" />
 
-import { arrayEquality, getLength, ignore, isNone, isSome, none, raiseWithDebugMessage, strictEquality, } from "../functions.js";
+import ReadonlyArray_getLength from "../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { arrayEquality, ignore, isNone, isSome, none, raiseWithDebugMessage, strictEquality, } from "../functions.js";
 export const DescribeType = 1;
 export const TestType = 2;
 export const TestAsyncType = 3;
@@ -97,8 +98,8 @@ export const mockFn = (retval) => {
     return cb;
 };
 export const expectToHaveBeenCalledTimes = (times) => (fn) => {
-    if (getLength(fn.calls) !== times) {
-        raiseWithDebugMessage(`expected fn to be called ${times} times, but was only called ${getLength(fn.calls)} times.`);
+    if (ReadonlyArray_getLength(fn.calls) !== times) {
+        raiseWithDebugMessage(`expected fn to be called ${times} times, but was only called ${ReadonlyArray_getLength(fn.calls)} times.`);
     }
 };
 export const expectPromiseToThrow = async (promise) => {

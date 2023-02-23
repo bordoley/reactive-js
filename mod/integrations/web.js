@@ -3,7 +3,7 @@
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
 import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
-import { compose, error, getLength, isEmpty, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
+import { compose, error, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, } from "../rx.js";
 import * as MulticastObservable from "../rx/MulticastObservable.js";
 import * as Observable from "../rx/Observable.js";
@@ -87,9 +87,9 @@ export const windowLocation =
 /*@__PURE__*/ (() => {
     const { history, location } = window;
     const windowLocationURIToString = ({ path, query, fragment, }) => {
-        let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/_{path}` : path;
-        uri = getLength(query) > 0 ? `${uri}?${query}` : uri;
-        uri = getLength(fragment) > 0 ? `${uri}#${fragment}` : uri;
+        let uri = path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;
+        uri = query.length > 0 ? `${uri}?${query}` : uri;
+        uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
         return newInstance(URL, uri, location.href).toString();
     };
     const getCurrentWindowLocationURI = () => {

@@ -1,7 +1,9 @@
 /// <reference types="./Observable.zipWithLatestFrom.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { getLength, isEmpty, none, partial, pipe, } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
+import { none, partial, pipe, } from "../../../functions.js";
 import { SinkLike_notify, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -25,7 +27,8 @@ const Observable_zipWithLatestFrom =
         const ZipWithLatestFromObserver_queue = Symbol("ZipWithLatestFromObserver_queue");
         const ZipWithLatestFromObserver_selector = Symbol("ZipWithLatestFromObserver_selector");
         const notifyDelegate = (observer) => {
-            if (getLength(observer[ZipWithLatestFromObserver_queue]) > 0 &&
+            if (ReadonlyArray_getLength(observer[ZipWithLatestFromObserver_queue]) >
+                0 &&
                 observer[ZipWithLatestFromObserver_hasLatest]) {
                 observer[ZipWithLatestFromObserver_hasLatest] = false;
                 const next = observer[ZipWithLatestFromObserver_queue].shift();
@@ -50,7 +53,7 @@ const Observable_zipWithLatestFrom =
                 instance[ZipWithLatestFromObserver_otherLatest] = otherLatest;
                 notifyDelegate(instance);
                 if (Disposable_isDisposed(instance) &&
-                    isEmpty(instance[ZipWithLatestFromObserver_queue])) {
+                    ReadonlyArray_isEmpty(instance[ZipWithLatestFromObserver_queue])) {
                     pipe(instance[DelegatingLike_delegate], Disposable_dispose());
                 }
             }), Observable_subscribe(Observer_getScheduler(delegate)), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));

@@ -6,8 +6,8 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
-  getLength,
   max,
   newInstance,
   none,
@@ -87,7 +87,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
 
               if (replay > 0) {
                 replayed.push(next);
-                if (getLength(replayed) > replay) {
+                if (ReadonlyArray_getLength(replayed) > replay) {
                   replayed.shift();
                 }
               }

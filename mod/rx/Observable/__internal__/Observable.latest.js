@@ -1,8 +1,9 @@
 /// <reference types="./Observable.latest.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import { getLength, none, pipe } from "../../../functions.js";
+import { none, pipe } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -41,7 +42,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const onCompleted = (instance) => {
         instance[LatestCtx_completedCount]++;
         if (instance[LatestCtx_completedCount] ===
-            getLength(instance[LatestCtx_observers])) {
+            ReadonlyArray_getLength(instance[LatestCtx_observers])) {
             pipe(instance[LatestCtx_delegate], Disposable_dispose());
         }
     };

@@ -1,3 +1,4 @@
+import ReadonlyArray_getLength from "../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Equality,
   Factory,
@@ -5,7 +6,6 @@ import {
   Optional,
   SideEffect,
   arrayEquality,
-  getLength,
   ignore,
   isNone,
   isSome,
@@ -166,9 +166,9 @@ export const mockFn = (retval?: unknown): MockFunction => {
 
 export const expectToHaveBeenCalledTimes =
   (times: number) => (fn: MockFunction) => {
-    if (getLength(fn.calls) !== times) {
+    if (ReadonlyArray_getLength(fn.calls) !== times) {
       raiseWithDebugMessage(
-        `expected fn to be called ${times} times, but was only called ${getLength(
+        `expected fn to be called ${times} times, but was only called ${ReadonlyArray_getLength(
           fn.calls,
         )} times.`,
       );

@@ -11,17 +11,11 @@ import {
 } from "../../../__internal__/mixins.js";
 import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_keepType from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
-import {
-  compose,
-  getLength,
-  isSome,
-  isTrue,
-  none,
-  pipe,
-} from "../../../functions.js";
+import { compose, isSome, isTrue, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -108,7 +102,10 @@ const EnumeratorSink_create: <T>() => EnumeratorSinkLike<T> = (<T>() => {
         [SourceLike_move](this: DisposableLike & TProperties) {
           const { [EnumeratorSink_buffer]: buffer } = this;
 
-          if (!Disposable_isDisposed(this) && getLength(buffer) > 0) {
+          if (
+            !Disposable_isDisposed(this) &&
+            ReadonlyArray_getLength(buffer) > 0
+          ) {
             const next = buffer.shift() as T;
             this[EnumeratorLike_current] = next;
             this[EnumeratorLike_hasCurrent] = true;

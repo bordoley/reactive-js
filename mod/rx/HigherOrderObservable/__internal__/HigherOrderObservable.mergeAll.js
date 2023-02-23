@@ -2,7 +2,8 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { MAX_SAFE_INTEGER } from "../../../constants.js";
-import { getLength, isSome, none, partial, pipe, } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { isSome, none, partial, pipe, } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -51,7 +52,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 if (Disposable_isDisposed(delegate)) {
                     instance[MergeAllObserver_queue].length = 0;
                 }
-                else if (getLength(instance[MergeAllObserver_queue]) +
+                else if (ReadonlyArray_getLength(instance[MergeAllObserver_queue]) +
                     instance[MergeAllObserver_activeCount] ===
                     0) {
                     pipe(delegate, Disposable_dispose());
@@ -69,7 +70,8 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 const { [MergeAllObserver_queue]: queue } = this;
                 queue.push(next);
                 // Drop old events if the maxBufferSize has been exceeded
-                if (getLength(queue) + this[MergeAllObserver_activeCount] >
+                if (ReadonlyArray_getLength(queue) +
+                    this[MergeAllObserver_activeCount] >
                     this[MergeAllObserver_maxBufferSize]) {
                     queue.shift();
                 }

@@ -1,8 +1,9 @@
 /// <reference types="./Enumerable.buffer.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import StatefulContainer_buffer from "../../../containers/StatefulContainer/__internal__/StatefulContainer.buffer.js";
-import { getLength, pipe } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import { EnumeratorLike_current, SourceLike_move, } from "../../../ix.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -27,11 +28,11 @@ const Enumerable_buffer = /*@__PURE__*/ (() => {
         [SourceLike_move]() {
             const buffer = [];
             const { [DelegatingLike_delegate]: delegate, [BufferEnumerator_maxBufferSize]: maxBufferSize, } = this;
-            while (getLength(buffer) < maxBufferSize &&
+            while (ReadonlyArray_getLength(buffer) < maxBufferSize &&
                 Enumerator_move(delegate)) {
                 buffer.push(Enumerator_getCurrent(delegate));
             }
-            const bufferLength = getLength(buffer);
+            const bufferLength = ReadonlyArray_getLength(buffer);
             if (bufferLength > 0) {
                 this[EnumeratorLike_current] = buffer;
             }

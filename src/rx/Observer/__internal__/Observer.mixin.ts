@@ -6,11 +6,11 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import {
   Optional,
   SideEffect,
-  getLength,
-  isEmpty,
   isNone,
   none,
   pipe,
@@ -42,7 +42,9 @@ import Observer_schedule from "./Observer.schedule.js";
 
 const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
   const scheduleDrainQueue = (dispatcher: TProperties) => {
-    if (getLength(dispatcher[ObserverDispatcher_nextQueue]) === 1) {
+    if (
+      ReadonlyArray_getLength(dispatcher[ObserverDispatcher_nextQueue]) === 1
+    ) {
       const { [ObserverDispatcher_observer]: observer } = dispatcher;
       pipe(
         observer,
@@ -92,7 +94,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
             [ObserverDispatcher_observer]: observer,
           } = instance;
 
-          while (getLength(nextQueue) > 0) {
+          while (ReadonlyArray_getLength(nextQueue) > 0) {
             const next = nextQueue.shift() as T;
             observer[SinkLike_notify](next);
             Continuation__yield();
@@ -108,7 +110,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         pipe(
           instance,
           Disposable_onDisposed(e => {
-            if (isEmpty(instance[ObserverDispatcher_nextQueue])) {
+            if (ReadonlyArray_isEmpty(instance[ObserverDispatcher_nextQueue])) {
               pipe(observer, Disposable_dispose(e));
             }
           }),

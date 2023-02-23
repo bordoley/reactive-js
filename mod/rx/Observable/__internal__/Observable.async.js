@@ -1,7 +1,8 @@
 /// <reference types="./Observable.async.d.ts" />
 
 var _a, _b, _c, _d;
-import { arrayEquality, error, getLength, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -178,7 +179,7 @@ export const Observable_async = (computation, { mode = "batched" } = {}) => Obse
             }
         }
         const { [AsyncContext_effects]: effects } = ctx;
-        if (getLength(effects) > ctx[AsyncContext_index]) {
+        if (ReadonlyArray_getLength(effects) > ctx[AsyncContext_index]) {
             const effectsLength = effects.length;
             for (let i = ctx[AsyncContext_index]; i < effectsLength; i++) {
                 const effect = ctx[AsyncContext_effects][i];
@@ -191,7 +192,7 @@ export const Observable_async = (computation, { mode = "batched" } = {}) => Obse
         ctx[AsyncContext_effects].length = ctx[AsyncContext_index];
         currentCtx = none;
         ctx[AsyncContext_index] = 0;
-        const effectsLength = getLength(effects);
+        const effectsLength = ReadonlyArray_getLength(effects);
         // Inline this for perf
         let allObserveEffectsHaveValues = true;
         let hasOutstandingEffects = false;

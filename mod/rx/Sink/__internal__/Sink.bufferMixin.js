@@ -1,7 +1,9 @@
 /// <reference types="./Sink.bufferMixin.d.ts" />
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { getLength, isEmpty, none, pipe } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
+import { none, pipe } from "../../../functions.js";
 import { SinkLike_notify, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -19,7 +21,7 @@ const Sink_bufferMixin = (fromReadonlyArray) => {
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             const { [BufferSinkMixin_buffer]: buffer } = instance;
             instance[BufferSinkMixin_buffer] = [];
-            if (isEmpty(buffer)) {
+            if (ReadonlyArray_isEmpty(buffer)) {
                 pipe(instance[DelegatingLike_delegate], Disposable_dispose());
             }
             else {
@@ -34,7 +36,7 @@ const Sink_bufferMixin = (fromReadonlyArray) => {
         [SinkLike_notify](next) {
             const { [BufferSinkMixin_buffer]: buffer, [BufferSinkMixin_maxBufferSize]: maxBufferSize, } = this;
             buffer.push(next);
-            if (getLength(buffer) === maxBufferSize) {
+            if (ReadonlyArray_getLength(buffer) === maxBufferSize) {
                 const buffer = this[BufferSinkMixin_buffer];
                 this[BufferSinkMixin_buffer] = [];
                 this[DelegatingLike_delegate][SinkLike_notify](buffer);

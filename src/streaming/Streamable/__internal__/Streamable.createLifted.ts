@@ -1,5 +1,6 @@
 import { ContainerOperator } from "../../../containers.js";
-import { composeUnsafe, getLength } from "../../../functions.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import { composeUnsafe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import { StreamableLike } from "../../../streaming.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
@@ -111,7 +112,7 @@ const Streamable_createLifted: CreateLiftedStreamable = (
   ...ops: readonly ContainerOperator<ObservableLike<any>, any, any>[]
 ) => {
   const op =
-    getLength(ops) > 1
+    ReadonlyArray_getLength(ops) > 1
       ? (composeUnsafe(...ops) as ContainerOperator<
           ObservableLike,
           unknown,
