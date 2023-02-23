@@ -52,7 +52,6 @@ import Sequence_mapTo from "./Sequence/__internal__/Sequence.mapTo.js";
 import Sequence_pairwise from "./Sequence/__internal__/Sequence.pairwise.js";
 import Sequence_repeat from "./Sequence/__internal__/Sequence.repeat.js";
 import Sequence_scan from "./Sequence/__internal__/Sequence.scan.js";
-import Sequence_seek from "./Sequence/__internal__/Sequence.seek.js";
 import Sequence_skipFirst from "./Sequence/__internal__/Sequence.skipFirst.js";
 import Sequence_startWith from "./Sequence/__internal__/Sequence.startWith.js";
 import Sequence_takeFirst from "./Sequence/__internal__/Sequence.takeFirst.js";
@@ -107,8 +106,6 @@ export const pairwise: Pairwise<SequenceLike>["pairwise"] = Sequence_pairwise;
 export const repeat: Repeat<SequenceLike>["repeat"] = Sequence_repeat;
 
 export const scan: Scan<SequenceLike>["scan"] = Sequence_scan;
-
-export const seek = Sequence_seek;
 
 export const skipFirst: SkipFirst<SequenceLike>["skipFirst"] =
   Sequence_skipFirst;

@@ -233,6 +233,21 @@ export interface EndWith<C extends ContainerLike> extends Container<C> {
  * @noInheritDoc
  * @category TypeClass
  */
+export interface Every<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * /**
+     * Determines whether all the members of an Container satisfy the predicate.
+     * The predicate function is invoked for each element in the Container until the
+     * it returns false, or until the end of the Container.
+     *
+     * @param predicate
+     */
+    every<T>(predicate: Predicate<T>, options?: O): Function1<ContainerOf<C, T>, boolean>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface EverySatisfy<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * @category Operator
@@ -520,6 +535,20 @@ export interface SkipFirst<C extends ContainerLike, O = unknown> extends Contain
     skipFirst<T>(options?: O & {
         readonly count?: number;
     }): ContainerOperator<C, T, T>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Some<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * Determines whether the specified predicate returns true for any
+     * element of a Container. The predicate function is invoked for each element
+     * in the Container until it returns true, or until the end of the Container.
+     *
+     * @param predicate
+     */
+    some<T>(predicate: Predicate<T>, options?: O): Function1<ContainerOf<C, T>, boolean>;
 }
 /**
  * @noInheritDoc

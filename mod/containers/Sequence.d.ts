@@ -19,7 +19,6 @@ export declare const mapTo: MapTo<SequenceLike>["mapTo"];
 export declare const pairwise: Pairwise<SequenceLike>["pairwise"];
 export declare const repeat: Repeat<SequenceLike>["repeat"];
 export declare const scan: Scan<SequenceLike>["scan"];
-export declare const seek: <T>(count: number) => import("../containers.js").ContainerOperator<SequenceLike<unknown>, T, T>;
 export declare const skipFirst: SkipFirst<SequenceLike>["skipFirst"];
 export declare const startWith: StartWith<SequenceLike>["startWith"];
 export declare const takeFirst: TakeFirst<SequenceLike>["takeFirst"];

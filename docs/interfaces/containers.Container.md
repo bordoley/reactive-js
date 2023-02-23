@@ -40,6 +40,8 @@
 
   ↳ [`EndWith`](containers.EndWith.md)
 
+  ↳ [`Every`](containers.Every.md)
+
   ↳ [`EverySatisfy`](containers.EverySatisfy.md)
 
   ↳ [`Empty`](containers.Empty.md)
@@ -85,6 +87,8 @@
   ↳ [`Scan`](containers.Scan.md)
 
   ↳ [`SkipFirst`](containers.SkipFirst.md)
+
+  ↳ [`Some`](containers.Some.md)
 
   ↳ [`SomeSatisfy`](containers.SomeSatisfy.md)
 

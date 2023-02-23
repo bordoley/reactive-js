@@ -1,5 +1,6 @@
 import {
   Empty,
+  Every,
   ForEach,
   FromIterable,
   FromReadonlyArray,
@@ -8,6 +9,7 @@ import {
   KeepType,
   Map,
   ReadonlyArrayLike,
+  Some,
   ToIterable,
   ToReadonlyArray,
   ToSequence,
@@ -43,7 +45,7 @@ import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonl
 
 export const empty: Empty<ReadonlyArrayLike>["empty"] = ReadonlyArray_empty;
 
-export const every = ReadonlyArray_every;
+export const every: Every<ReadonlyArrayLike>["every"] = ReadonlyArray_every;
 
 export const forEach: ForEach<ReadonlyArrayLike>["forEach"] =
   ReadonlyArray_forEach;
@@ -73,7 +75,7 @@ export const keepType: KeepType<ReadonlyArrayLike>["keepType"] =
 
 export const map: Map<ReadonlyArrayLike>["map"] = ReadonlyArray_map;
 
-export const some = ReadonlyArray_some;
+export const some: Some<ReadonlyArrayLike>["some"] = ReadonlyArray_some;
 
 export const toAsyncEnumerable: ToAsyncEnumerable<
   ReadonlyArrayLike,

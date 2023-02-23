@@ -1,9 +1,9 @@
-import { Empty, ForEach, FromIterable, FromReadonlyArray, FromSequence, Keep, KeepType, Map, ReadonlyArrayLike, ToIterable, ToReadonlyArray, ToSequence } from "../containers.js";
+import { Empty, Every, ForEach, FromIterable, FromReadonlyArray, FromSequence, Keep, KeepType, Map, ReadonlyArrayLike, Some, ToIterable, ToReadonlyArray, ToSequence } from "../containers.js";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import { FromEnumerableObservable, FromRunnableObservable, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const empty: Empty<ReadonlyArrayLike>["empty"];
-export declare const every: <T>(predicate: import("../functions.js").Predicate<T>) => import("../functions.js").Function1<readonly T[], boolean>;
+export declare const every: Every<ReadonlyArrayLike>["every"];
 export declare const forEach: ForEach<ReadonlyArrayLike>["forEach"];
 export declare const fromEnumerable: FromEnumerable<ReadonlyArrayLike>["fromEnumerable"];
 export declare const fromEnumerableObservable: FromEnumerableObservable<ReadonlyArrayLike>["fromEnumerableObservable"];
@@ -14,7 +14,7 @@ export declare const fromSequence: FromSequence<ReadonlyArrayLike>["fromSequence
 export declare const keep: Keep<ReadonlyArrayLike>["keep"];
 export declare const keepType: KeepType<ReadonlyArrayLike>["keepType"];
 export declare const map: Map<ReadonlyArrayLike>["map"];
-export declare const some: <T>(predicate: import("../functions.js").Predicate<T>) => import("../functions.js").Function1<ReadonlyArrayLike<T>, boolean>;
+export declare const some: Some<ReadonlyArrayLike>["some"];
 export declare const toAsyncEnumerable: ToAsyncEnumerable<ReadonlyArrayLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
