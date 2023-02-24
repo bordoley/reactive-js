@@ -1,13 +1,20 @@
+import { createInstanceFactory } from "../../__internal__/mixins.js";
 import {
   expectArrayEquals,
   test,
   testModule,
 } from "../../__tests__/testing.js";
-import { floor, newInstance, pipe } from "../../functions.js";
+import { Comparator, floor, newInstance, pipe } from "../../functions.js";
 import { QueueableLike_push } from "../../util.js";
-import Queue_create from "../../util/__internal__/Queue/Queue.create.js";
+import PullableQueue_priorityQueueMixin from "../PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import PullableQueue_pull from "../PullableQueue/__internal__/PullableQueue.pull.js";
 import Queueable_count from "../Queueable/__internal__/Queueable.count.js";
+import { PullableQueueLike } from "../__internal__/util.internal.js";
+
+const createPriorityQueue = /*@__PURE__*/ (() =>
+  createInstanceFactory(PullableQueue_priorityQueueMixin()) as <T>(
+    comparator: Comparator<T>,
+  ) => PullableQueueLike<T>)();
 
 const compare = (a: number, b: number): number => a - b;
 
@@ -36,7 +43,7 @@ const makeShuffledArray = (n: number) => {
 testModule(
   "priority queue",
   test("push", () => {
-    const queue = Queue_create(compare);
+    const queue = createPriorityQueue(compare);
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray.length; i++) {
       queue[QueueableLike_push](shuffledArray[i]);

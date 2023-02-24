@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { MAX_SAFE_INTEGER } from "../../../constants.js";
-import { isSome, none, pipe, unsafeCast } from "../../../functions.js";
+import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -32,8 +32,8 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import PullableQueue_pull from "../../../util/PullableQueue/__internal__/PullableQueue.pull.js";
-import Queue_create from "../../../util/__internal__/Queue/Queue.create.js";
 import { PullableQueueLike } from "../../../util/__internal__/util.internal.js";
 import getCurrentTime from "../../Scheduler/__internal__/Scheduler.getCurrentTime.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
@@ -68,7 +68,6 @@ const VirtualTimeScheduler_taskIDCount = Symbol(
 const VirtualTimeScheduler_yieldRequested = Symbol(
   "VirtualTimeScheduler_yieldRequested",
 );
-const VirtualTimeScheduler_taskQueue = Symbol("VirtualTimeScheduler_taskQueue");
 
 type TProperties = {
   [SchedulerLike_inContinuation]: boolean;
@@ -77,12 +76,15 @@ type TProperties = {
   [VirtualTimeScheduler_microTaskTicks]: number;
   [VirtualTimeScheduler_taskIDCount]: number;
   [VirtualTimeScheduler_yieldRequested]: boolean;
-  readonly [VirtualTimeScheduler_taskQueue]: PullableQueueLike<VirtualTask>;
 };
 
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   mix(
-    include(Disposable_mixin, typedMutableEnumeratorMixin),
+    include(
+      Disposable_mixin,
+      typedMutableEnumeratorMixin,
+      PullableQueue_priorityQueueMixin<VirtualTask>(),
+    ),
     function VirtualTimeScheduler(
       instance: Pick<
         VirtualTimeSchedulerLike,
@@ -96,9 +98,13 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     ): VirtualTimeSchedulerLike {
       init(Disposable_mixin, instance);
       init(typedMutableEnumeratorMixin, instance);
+      init(
+        PullableQueue_priorityQueueMixin<VirtualTask>(),
+        instance,
+        comparator,
+      );
 
       instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
-      instance[VirtualTimeScheduler_taskQueue] = Queue_create(comparator);
 
       return instance;
     },
@@ -109,7 +115,6 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       [VirtualTimeScheduler_microTaskTicks]: 0,
       [VirtualTimeScheduler_taskIDCount]: 0,
       [VirtualTimeScheduler_yieldRequested]: false,
-      [VirtualTimeScheduler_taskQueue]: none,
     }),
     {
       get [SchedulerLike_shouldYield]() {
@@ -151,7 +156,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         this[VirtualTimeScheduler_yieldRequested] = true;
       },
       [SchedulerLike_schedule](
-        this: TProperties & DisposableLike,
+        this: TProperties & DisposableLike & PullableQueueLike<VirtualTask>,
         continuation: ContinuationLike,
         options?: { readonly delay?: number },
       ) {
@@ -160,7 +165,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
         if (!Disposable_isDisposed(continuation)) {
-          this[VirtualTimeScheduler_taskQueue][QueueableLike_push]({
+          this[QueueableLike_push]({
             [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
             [VirtualTask_dueTime]: getCurrentTime(this) + delay,
             [VirtualTask_continuation]: continuation,
@@ -168,15 +173,15 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         }
       },
       [SourceLike_move](
-        this: TProperties & MutableEnumeratorLike<VirtualTask>,
+        this: TProperties &
+          MutableEnumeratorLike<VirtualTask> &
+          PullableQueueLike<VirtualTask>,
       ): void {
-        const taskQueue = this[VirtualTimeScheduler_taskQueue];
-
         if (Disposable_isDisposed(this)) {
           return;
         }
 
-        const task = PullableQueue_pull(taskQueue);
+        const task = PullableQueue_pull(this);
 
         if (isSome(task)) {
           this[EnumeratorLike_current] = task;

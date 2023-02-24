@@ -8,6 +8,7 @@ import {
 } from "../../__internal__/mixins.js";
 import { MAX_SAFE_INTEGER } from "../../constants.js";
 import {
+  Comparator,
   Function1,
   Optional,
   SideEffect,
@@ -54,8 +55,8 @@ import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
 import PullableQueue_peek from "../../util/PullableQueue/__internal__/PullableQueue.peek.js";
+import PullableQueue_priorityQueueMixin from "../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import PullableQueue_pull from "../../util/PullableQueue/__internal__/PullableQueue.pull.js";
-import Queue_create from "../../util/__internal__/Queue/Queue.create.js";
 import {
   DisposableRefLike,
   MutableRefLike_current,
@@ -73,6 +74,11 @@ export type QueueSchedulerOptions = {
   readonly priority?: number;
   readonly delay?: number;
 };
+
+const createPriorityQueue = /*@__PURE__*/ (() =>
+  createInstanceFactory(PullableQueue_priorityQueueMixin()) as <T>(
+    comparator: Comparator<T>,
+  ) => PullableQueueLike<T>)();
 
 export interface QueueSchedulerLike extends DisposableLike, PauseableLike {
   readonly [SchedulerLike_inContinuation]: boolean;
@@ -288,8 +294,9 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           init(typedMutableEnumeratorMixin, instance);
           init(typedDisposableRefMixin, instance, Disposable_disposed);
 
-          instance[QueueScheduler_delayed] = Queue_create(delayedComparator);
-          instance[QueueScheduler_queue] = Queue_create(taskComparator);
+          instance[QueueScheduler_delayed] =
+            createPriorityQueue(delayedComparator);
+          instance[QueueScheduler_queue] = createPriorityQueue(taskComparator);
           instance[DispatcherLike_scheduler] = host;
 
           return instance;

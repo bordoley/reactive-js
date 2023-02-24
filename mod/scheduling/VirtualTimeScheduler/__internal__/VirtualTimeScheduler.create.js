@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { MAX_SAFE_INTEGER } from "../../../constants.js";
-import { isSome, none, pipe, unsafeCast } from "../../../functions.js";
+import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import { EnumeratorLike_current, SourceLike_move, } from "../../../ix.js";
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
@@ -13,8 +13,8 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import PullableQueue_pull from "../../../util/PullableQueue/__internal__/PullableQueue.pull.js";
-import Queue_create from "../../../util/__internal__/Queue/Queue.create.js";
 import getCurrentTime from "../../Scheduler/__internal__/Scheduler.getCurrentTime.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 const VirtualTask_continuation = Symbol("VirtualTask_continuation");
@@ -30,12 +30,11 @@ const VirtualTimeScheduler_maxMicroTaskTicks = Symbol("VirtualTimeScheduler_maxM
 const VirtualTimeScheduler_microTaskTicks = Symbol("VirtualTimeScheduler_microTaskTicks");
 const VirtualTimeScheduler_taskIDCount = Symbol("VirtualTimeScheduler_taskIDCount");
 const VirtualTimeScheduler_yieldRequested = Symbol("VirtualTimeScheduler_yieldRequested");
-const VirtualTimeScheduler_taskQueue = Symbol("VirtualTimeScheduler_taskQueue");
-const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
+const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin, PullableQueue_priorityQueueMixin()), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(Disposable_mixin, instance);
     init(typedMutableEnumeratorMixin, instance);
+    init(PullableQueue_priorityQueueMixin(), instance, comparator);
     instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
-    instance[VirtualTimeScheduler_taskQueue] = Queue_create(comparator);
     return instance;
 }, props({
     [SchedulerLike_inContinuation]: false,
@@ -44,7 +43,6 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
     [VirtualTimeScheduler_microTaskTicks]: 0,
     [VirtualTimeScheduler_taskIDCount]: 0,
     [VirtualTimeScheduler_yieldRequested]: false,
-    [VirtualTimeScheduler_taskQueue]: none,
 }), {
     get [SchedulerLike_shouldYield]() {
         unsafeCast(this);
@@ -76,7 +74,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         const delay = getDelay(options);
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
         if (!Disposable_isDisposed(continuation)) {
-            this[VirtualTimeScheduler_taskQueue][QueueableLike_push]({
+            this[QueueableLike_push]({
                 [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
                 [VirtualTask_dueTime]: getCurrentTime(this) + delay,
                 [VirtualTask_continuation]: continuation,
@@ -84,11 +82,10 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         }
     },
     [SourceLike_move]() {
-        const taskQueue = this[VirtualTimeScheduler_taskQueue];
         if (Disposable_isDisposed(this)) {
             return;
         }
-        const task = PullableQueue_pull(taskQueue);
+        const task = PullableQueue_pull(this);
         if (isSome(task)) {
             this[EnumeratorLike_current] = task;
         }

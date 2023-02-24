@@ -15,4 +15,4 @@ import "../rx/__tests__/RunnableObservable.test.js";
 import "../containers/__tests__/Sequence.test.js";
 import "../streaming/__tests__/Streamable.test.js";
 import "../rx/__tests__/Subject.test.js";
-import "../util/__tests__/queues.test.js";
+import "../util/__tests__/PullableQueue_priorityQueueMixin.test.js";
