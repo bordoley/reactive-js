@@ -39,6 +39,8 @@ export interface SchedulerLike extends DisposableLike {
 export declare const DispatcherLike_dispatch: unique symbol;
 /** @ignore */
 export declare const DispatcherLike_scheduler: unique symbol;
+/** @ignore */
+export declare const DispatcherLike_count: unique symbol;
 /**
  * @noInheritDoc
  */
@@ -49,6 +51,10 @@ export interface DispatcherLike<T = unknown> extends DisposableLike {
      */
     [DispatcherLike_dispatch](req: T): void;
     readonly [DispatcherLike_scheduler]: SchedulerLike;
+    /**
+     * The number of queued up events on the dispatcher's dispatch queue.
+     */
+    readonly [DispatcherLike_count]: number;
 }
 export declare const PauseableState_running: unique symbol;
 export declare const PauseableState_paused: unique symbol;

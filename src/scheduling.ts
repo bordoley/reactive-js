@@ -55,6 +55,9 @@ export const DispatcherLike_dispatch = Symbol("DispatcherLike_dispatch");
 /** @ignore */
 export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
 
+/** @ignore */
+export const DispatcherLike_count = Symbol("DispatcherLike_count");
+
 /**
  * @noInheritDoc
  */
@@ -66,6 +69,11 @@ export interface DispatcherLike<T = unknown> extends DisposableLike {
   [DispatcherLike_dispatch](req: T): void;
 
   readonly [DispatcherLike_scheduler]: SchedulerLike;
+
+  /**
+   * The number of queued up events on the dispatcher's dispatch queue.
+   */
+  readonly [DispatcherLike_count]: number;
 }
 
 export const PauseableState_running = Symbol("PauseableState_running");

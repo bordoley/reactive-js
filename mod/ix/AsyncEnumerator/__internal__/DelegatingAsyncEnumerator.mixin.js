@@ -4,7 +4,7 @@ import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } 
 import { none, pipe, returns, unsafeCast } from "../../../functions.js";
 import { SourceLike_move } from "../../../ix.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../rx.js";
-import { DispatcherLike_dispatch, DispatcherLike_scheduler, } from "../../../scheduling.js";
+import { DispatcherLike_count, DispatcherLike_dispatch, DispatcherLike_scheduler, } from "../../../scheduling.js";
 import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 const DelegatingAsyncEnumerator_mixin = /*@__PURE__*/ (() => {
@@ -12,6 +12,10 @@ const DelegatingAsyncEnumerator_mixin = /*@__PURE__*/ (() => {
         init(delegatingMixin(), instance, delegate);
         return instance;
     }, props({}), {
+        get [DispatcherLike_count]() {
+            unsafeCast(this);
+            return this[DelegatingLike_delegate][DispatcherLike_count];
+        },
         [DispatcherLike_dispatch](_) {
             pipe(this[DelegatingLike_delegate], Dispatcher_dispatch(none));
         },

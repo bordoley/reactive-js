@@ -5,7 +5,7 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import { isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_dispatcher, ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
-import { DispatcherLike_dispatch, DispatcherLike_scheduler, } from "../../../scheduling.js";
+import { DispatcherLike_count, DispatcherLike_dispatch, DispatcherLike_scheduler, } from "../../../scheduling.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import { DisposableLike_error } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -56,6 +56,10 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         [ObserverDispatcher_observer]: none,
         [ObserverDispatcher_onContinuationDispose]: none,
     }), {
+        get [DispatcherLike_count]() {
+            unsafeCast(this);
+            return this[ObserverDispatcher_nextQueue].length;
+        },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
             return Observer_getsScheduler(this[ObserverDispatcher_observer]);

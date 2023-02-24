@@ -38,6 +38,18 @@ export interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
  * @noInheritDoc
  * @category Container
  */
+export interface AsyncIterableLike<T = unknown>
+  extends ContainerLike,
+    AsyncIterable<T> {
+  readonly [ContainerLike_type]?: AsyncIterableLike<
+    this[typeof ContainerLike_T]
+  >;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface PromiseableLike<T = unknown>
   extends ContainerLike,
     PromiseLike<T> {

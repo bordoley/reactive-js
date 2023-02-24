@@ -25,6 +25,7 @@ import {
 } from "../../../rx.js";
 import {
   DispatcherLike,
+  DispatcherLike_count,
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
@@ -78,7 +79,9 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
       function ObserverDispatcher(
         instance: Pick<
           DispatcherLike,
-          typeof DispatcherLike_scheduler | typeof DispatcherLike_dispatch
+          | typeof DispatcherLike_scheduler
+          | typeof DispatcherLike_dispatch
+          | typeof DispatcherLike_count
         > &
           Mutable<TProperties>,
         observer: ObserverLike<T>,
@@ -125,6 +128,10 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         [ObserverDispatcher_onContinuationDispose]: none,
       }),
       {
+        get [DispatcherLike_count]() {
+          unsafeCast<TProperties>(this);
+          return this[ObserverDispatcher_nextQueue].length;
+        },
         get [DispatcherLike_scheduler]() {
           unsafeCast<TProperties>(this);
           return Observer_getsScheduler(this[ObserverDispatcher_observer]);

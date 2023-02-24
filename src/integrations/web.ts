@@ -39,6 +39,7 @@ import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
 import * as ReactiveContainer from "../rx/ReactiveContainer.js";
 import {
+  DispatcherLike_count,
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
@@ -324,6 +325,7 @@ export const windowLocation: WindowLocationStreamableLike =
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof DispatcherLike_dispatch
+            | typeof DispatcherLike_count
             | typeof WindowLocationStreamLike_canGoBack
             | typeof WindowLocationStreamLike_goBack
             | typeof ReactiveContainerLike_sinkInto
@@ -354,6 +356,11 @@ export const windowLocation: WindowLocationStreamableLike =
               this[DelegatingLike_delegate],
               MulticastObservable.getReplay,
             );
+          },
+
+          get [DispatcherLike_count](): number {
+            unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
+            return this[DelegatingLike_delegate][DispatcherLike_count];
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {

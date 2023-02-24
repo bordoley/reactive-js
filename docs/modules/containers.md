@@ -6,6 +6,7 @@
 
 ### Container Interfaces
 
+- [AsyncIterableLike](../interfaces/containers.AsyncIterableLike.md)
 - [ContainerLike](../interfaces/containers.ContainerLike.md)
 - [IterableLike](../interfaces/containers.IterableLike.md)
 - [PromiseableLike](../interfaces/containers.PromiseableLike.md)

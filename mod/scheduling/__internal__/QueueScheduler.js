@@ -8,12 +8,13 @@ import Enumerator_getCurrent from "../../ix/Enumerator/__internal__/Enumerator.g
 import Enumerator_hasCurrent from "../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
 import MutableEnumerator_mixin from "../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import Source_move from "../../ix/Source/__internal__/Source.move.js";
-import { DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
+import { DispatcherLike_count, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
+import Queue_count from "../../util/__internal__/Queue/Queue.count.js";
 import Queue_create from "../../util/__internal__/Queue/Queue.create.js";
 import Queue_peek from "../../util/__internal__/Queue/Queue.peek.js";
 import Queue_pop from "../../util/__internal__/Queue/Queue.pop.js";
@@ -46,7 +47,7 @@ export const create =
     };
     const peek = (instance) => {
         const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue, } = instance;
-        const now = getCurrentTime(instance[QueueScheduler_host]);
+        const now = getCurrentTime(instance[DispatcherLike_scheduler]);
         while (true) {
             const task = Queue_peek(delayed);
             if (isNone(task)) {
@@ -78,7 +79,7 @@ export const create =
         const { [EnumeratorLike_current]: current } = instance;
         return (current !== next &&
             next[QueueTask_dueTime] <=
-                getCurrentTime(instance[QueueScheduler_host]) &&
+                getCurrentTime(instance[DispatcherLike_scheduler]) &&
             next[QueueTask_priority] > current[QueueTask_priority]);
     };
     const scheduleOnHost = (instance) => {
@@ -93,12 +94,12 @@ export const create =
             return;
         }
         const dueTime = task[QueueTask_dueTime];
-        const delay = max(dueTime - getCurrentTime(instance[QueueScheduler_host]), 0);
+        const delay = max(dueTime - getCurrentTime(instance[DispatcherLike_scheduler]), 0);
         instance[QueueScheduler_dueTime] = dueTime;
         const continuation = (_a = instance[QueueScheduler_hostContinuation]) !== null && _a !== void 0 ? _a : (() => {
             for (let task = peek(instance); isSome(task) && !Disposable_isDisposed(instance); task = peek(instance)) {
                 const { [QueueTask_continuation]: continuation, [QueueTask_dueTime]: dueTime, } = task;
-                const delay = max(dueTime - getCurrentTime(instance[QueueScheduler_host]), 0);
+                const delay = max(dueTime - getCurrentTime(instance[DispatcherLike_scheduler]), 0);
                 if (delay === 0) {
                     Source_move(instance);
                     instance[SchedulerLike_inContinuation] = true;
@@ -107,19 +108,18 @@ export const create =
                 }
                 else {
                     instance[QueueScheduler_dueTime] =
-                        getCurrentTime(instance[QueueScheduler_host]) + delay;
+                        getCurrentTime(instance[DispatcherLike_scheduler]) + delay;
                 }
                 Continuation__yield(delay);
             }
         });
         instance[QueueScheduler_hostContinuation] = continuation;
-        instance[MutableRefLike_current] = pipe(instance[QueueScheduler_host], schedule(continuation, { delay }));
+        instance[MutableRefLike_current] = pipe(instance[DispatcherLike_scheduler], schedule(continuation, { delay }));
     };
     const typedDisposableRefMixin = DisposableRef_mixin();
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const QueueScheduler_delayed = Symbol("QueueScheduler_delayed");
     const QueueScheduler_dueTime = Symbol("QueueScheduler_dueTime");
-    const QueueScheduler_host = Symbol("QueueScheduler_host");
     const QueueScheduler_hostContinuation = Symbol("QueueScheduler_hostContinuation");
     const QueueScheduler_isPaused = Symbol("QueueScheduler_isPaused");
     const QueueScheduler_queue = Symbol("QueueScheduler_queue");
@@ -131,13 +131,13 @@ export const create =
         init(typedDisposableRefMixin, instance, Disposable_disposed);
         instance[QueueScheduler_delayed] = Queue_create(delayedComparator);
         instance[QueueScheduler_queue] = Queue_create(taskComparator);
-        instance[QueueScheduler_host] = host;
+        instance[DispatcherLike_scheduler] = host;
         return instance;
     }, props({
         [SchedulerLike_inContinuation]: false,
         [QueueScheduler_delayed]: none,
         [QueueScheduler_dueTime]: 0,
-        [QueueScheduler_host]: none,
+        [DispatcherLike_scheduler]: none,
         [QueueScheduler_hostContinuation]: none,
         [QueueScheduler_isPaused]: false,
         [QueueScheduler_queue]: none,
@@ -146,7 +146,7 @@ export const create =
     }), {
         get [SchedulerLike_now]() {
             unsafeCast(this);
-            return getCurrentTime(this[QueueScheduler_host]);
+            return getCurrentTime(this[DispatcherLike_scheduler]);
         },
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
@@ -161,11 +161,11 @@ export const create =
                     !Enumerator_hasCurrent(this) ||
                     this[QueueScheduler_isPaused] ||
                     (isSome(next) ? priorityShouldYield(this, next) : false) ||
-                    shouldYield(this[QueueScheduler_host])));
+                    shouldYield(this[DispatcherLike_scheduler])));
         },
-        get [DispatcherLike_scheduler]() {
+        get [DispatcherLike_count]() {
             unsafeCast(this);
-            return this[QueueScheduler_host];
+            return Queue_count(this[QueueScheduler_queue]);
         },
         [DispatcherLike_dispatch](req) {
             const nextState = req(this[QueueScheduler_isPaused]
@@ -196,7 +196,7 @@ export const create =
             const { priority } = options !== null && options !== void 0 ? options : {};
             pipe(this, Disposable_addIgnoringChildErrors(continuation));
             if (!Disposable_isDisposed(continuation)) {
-                const now = getCurrentTime(this[QueueScheduler_host]);
+                const now = getCurrentTime(this[DispatcherLike_scheduler]);
                 const dueTime = max(now + delay, now);
                 const task = isInContinuation(this) &&
                     Enumerator_hasCurrent(this) &&

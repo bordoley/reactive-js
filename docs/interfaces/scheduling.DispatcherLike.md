@@ -24,6 +24,7 @@
 
 ### Properties
 
+- [[DispatcherLike\_count]](scheduling.DispatcherLike.md#[dispatcherlike_count])
 - [[DispatcherLike\_scheduler]](scheduling.DispatcherLike.md#[dispatcherlike_scheduler])
 
 ### Methods
@@ -31,6 +32,14 @@
 - [[DispatcherLike\_dispatch]](scheduling.DispatcherLike.md#[dispatcherlike_dispatch])
 
 ## Properties
+
+### [DispatcherLike\_count]
+
+• `Readonly` **[DispatcherLike\_count]**: `number`
+
+The number of queued up events on the dispatcher's dispatch queue.
+
+___
 
 ### [DispatcherLike\_scheduler]
 

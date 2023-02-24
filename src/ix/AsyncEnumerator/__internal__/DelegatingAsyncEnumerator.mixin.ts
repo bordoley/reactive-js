@@ -15,6 +15,7 @@ import {
   ObservableLike_isRunnable,
 } from "../../../rx.js";
 import {
+  DispatcherLike_count,
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
 } from "../../../scheduling.js";
@@ -25,6 +26,7 @@ import { StreamLike } from "../../../streaming.js";
 const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
   Pick<
     AsyncEnumeratorLike<T>,
+    | typeof DispatcherLike_count
     | typeof DispatcherLike_dispatch
     | typeof DispatcherLike_scheduler
     | typeof SourceLike_move
@@ -35,6 +37,7 @@ const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
 > = /*@__PURE__*/ (<T>() => {
   type TReturn = Pick<
     AsyncEnumeratorLike<T>,
+    | typeof DispatcherLike_count
     | typeof DispatcherLike_dispatch
     | typeof DispatcherLike_scheduler
     | typeof SourceLike_move
@@ -55,6 +58,11 @@ const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
       },
       props({}),
       {
+        get [DispatcherLike_count](): number {
+          unsafeCast<DelegatingLike<AsyncEnumeratorLike<T>>>(this);
+          return this[DelegatingLike_delegate][DispatcherLike_count];
+        },
+
         [DispatcherLike_dispatch](
           this: DelegatingLike<AsyncEnumeratorLike<T>>,
           _: void,

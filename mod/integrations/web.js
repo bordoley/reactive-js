@@ -9,7 +9,7 @@ import * as MulticastObservable from "../rx/MulticastObservable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
 import * as ReactiveContainer from "../rx/ReactiveContainer.js";
-import { DispatcherLike_dispatch, DispatcherLike_scheduler, } from "../scheduling.js";
+import { DispatcherLike_count, DispatcherLike_dispatch, DispatcherLike_scheduler, } from "../scheduling.js";
 import * as Dispatcher from "../scheduling/Dispatcher.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
@@ -130,6 +130,10 @@ export const windowLocation =
         get [MulticastObservableLike_replay]() {
             unsafeCast(this);
             return pipe(this[DelegatingLike_delegate], MulticastObservable.getReplay);
+        },
+        get [DispatcherLike_count]() {
+            unsafeCast(this);
+            return this[DelegatingLike_delegate][DispatcherLike_count];
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);

@@ -31,6 +31,7 @@ import Source_move from "../../ix/Source/__internal__/Source.move.js";
 import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal.js";
 import {
   ContinuationLike,
+  DispatcherLike_count,
   DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   PauseableLike,
@@ -50,6 +51,7 @@ import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.d
 import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
+import Queue_count from "../../util/__internal__/Queue/Queue.count.js";
 import Queue_create from "../../util/__internal__/Queue/Queue.create.js";
 import Queue_peek from "../../util/__internal__/Queue/Queue.peek.js";
 import Queue_pop from "../../util/__internal__/Queue/Queue.pop.js";
@@ -118,7 +120,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         [QueueScheduler_delayed]: delayed,
         [QueueScheduler_queue]: queue,
       } = instance;
-      const now = getCurrentTime(instance[QueueScheduler_host]);
+      const now = getCurrentTime(instance[DispatcherLike_scheduler]);
 
       while (true) {
         const task = Queue_peek(delayed);
@@ -168,7 +170,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       return (
         current !== next &&
         next[QueueTask_dueTime] <=
-          getCurrentTime(instance[QueueScheduler_host]) &&
+          getCurrentTime(instance[DispatcherLike_scheduler]) &&
         next[QueueTask_priority] > current[QueueTask_priority]
       );
     };
@@ -193,7 +195,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
 
       const dueTime = task[QueueTask_dueTime];
       const delay = max(
-        dueTime - getCurrentTime(instance[QueueScheduler_host]),
+        dueTime - getCurrentTime(instance[DispatcherLike_scheduler]),
         0,
       );
       instance[QueueScheduler_dueTime] = dueTime;
@@ -211,7 +213,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
               [QueueTask_dueTime]: dueTime,
             } = task;
             const delay = max(
-              dueTime - getCurrentTime(instance[QueueScheduler_host]),
+              dueTime - getCurrentTime(instance[DispatcherLike_scheduler]),
               0,
             );
 
@@ -222,7 +224,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
               instance[SchedulerLike_inContinuation] = false;
             } else {
               instance[QueueScheduler_dueTime] =
-                getCurrentTime(instance[QueueScheduler_host]) + delay;
+                getCurrentTime(instance[DispatcherLike_scheduler]) + delay;
             }
             Continuation__yield(delay);
           }
@@ -230,7 +232,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       instance[QueueScheduler_hostContinuation] = continuation;
 
       instance[MutableRefLike_current] = pipe(
-        instance[QueueScheduler_host],
+        instance[DispatcherLike_scheduler],
         schedule(continuation, { delay }),
       );
     };
@@ -240,7 +242,6 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
 
     const QueueScheduler_delayed = Symbol("QueueScheduler_delayed");
     const QueueScheduler_dueTime = Symbol("QueueScheduler_dueTime");
-    const QueueScheduler_host = Symbol("QueueScheduler_host");
     const QueueScheduler_hostContinuation = Symbol(
       "QueueScheduler_hostContinuation",
     );
@@ -255,7 +256,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       [SchedulerLike_inContinuation]: boolean;
       readonly [QueueScheduler_delayed]: QueueLike<QueueTask>;
       [QueueScheduler_dueTime]: number;
-      readonly [QueueScheduler_host]: SchedulerLike;
+      readonly [DispatcherLike_scheduler]: SchedulerLike;
       [QueueScheduler_hostContinuation]: Optional<SideEffect>;
       [QueueScheduler_isPaused]: boolean;
       readonly [QueueScheduler_queue]: QueueLike<QueueTask>;
@@ -278,7 +279,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             | typeof SchedulerLike_requestYield
             | typeof SchedulerLike_schedule
             | typeof DispatcherLike_dispatch
-            | typeof DispatcherLike_scheduler
+            | typeof DispatcherLike_count
           > &
             Mutable<TProperties>,
           host: SchedulerLike,
@@ -289,7 +290,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
 
           instance[QueueScheduler_delayed] = Queue_create(delayedComparator);
           instance[QueueScheduler_queue] = Queue_create(taskComparator);
-          instance[QueueScheduler_host] = host;
+          instance[DispatcherLike_scheduler] = host;
 
           return instance;
         },
@@ -297,7 +298,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           [SchedulerLike_inContinuation]: false,
           [QueueScheduler_delayed]: none,
           [QueueScheduler_dueTime]: 0,
-          [QueueScheduler_host]: none,
+          [DispatcherLike_scheduler]: none,
           [QueueScheduler_hostContinuation]: none,
           [QueueScheduler_isPaused]: false,
           [QueueScheduler_queue]: none,
@@ -307,7 +308,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         {
           get [SchedulerLike_now](): number {
             unsafeCast<TProperties>(this);
-            return getCurrentTime(this[QueueScheduler_host]);
+            return getCurrentTime(this[DispatcherLike_scheduler]);
           },
           get [SchedulerLike_shouldYield](): boolean {
             unsafeCast<TProperties & EnumeratorLike<QueueTask>>(this);
@@ -330,12 +331,12 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
                 !Enumerator_hasCurrent(this) ||
                 this[QueueScheduler_isPaused] ||
                 (isSome(next) ? priorityShouldYield(this, next) : false) ||
-                shouldYield(this[QueueScheduler_host]))
+                shouldYield(this[DispatcherLike_scheduler]))
             );
           },
-          get [DispatcherLike_scheduler](): SchedulerLike {
-            unsafeCast<TProperties & EnumeratorLike<QueueTask>>(this);
-            return this[QueueScheduler_host];
+          get [DispatcherLike_count](): number {
+            unsafeCast<TProperties>(this);
+            return Queue_count(this[QueueScheduler_queue]);
           },
           [DispatcherLike_dispatch](
             this: TProperties & DisposableRefLike & EnumeratorLike,
@@ -378,7 +379,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
             if (!Disposable_isDisposed(continuation)) {
-              const now = getCurrentTime(this[QueueScheduler_host]);
+              const now = getCurrentTime(this[DispatcherLike_scheduler]);
               const dueTime = max(now + delay, now);
 
               const task =
