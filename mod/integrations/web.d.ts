@@ -1,7 +1,8 @@
 import { Function1, Updater } from "../functions.js";
 import { ObservableLike } from "../rx.js";
-import { DispatcherLike_dispatch, SchedulerLike } from "../scheduling.js";
+import { SchedulerLike } from "../scheduling.js";
 import { StreamLike, StreamableLike, StreamableLike_stream } from "../streaming.js";
+import { QueueableLike_push } from "../util.js";
 /**
  * @noInheritDoc
  */
@@ -20,7 +21,7 @@ export declare const WindowLocationStreamLike_canGoBack: unique symbol;
  * @category Container
  */
 export interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
-    [DispatcherLike_dispatch](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
+    [QueueableLike_push](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
         readonly replace?: boolean;
     }): void;
     readonly [WindowLocationStreamLike_canGoBack]: boolean;

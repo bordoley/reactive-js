@@ -2,6 +2,6 @@
 
 import { pipe, returns } from "../../../functions.js";
 import { PauseableState_paused } from "../../../scheduling.js";
-import Dispatcher_dispatch from "../../Dispatcher/__internal__/Dispatcher.dispatch.js";
-const Pauseable_pause = (pauseable) => pipe(pauseable, Dispatcher_dispatch(returns(PauseableState_paused)));
+import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
+const Pauseable_pause = (pauseable) => pipe(pauseable, Queueable_push(returns(PauseableState_paused)));
 export default Pauseable_pause;

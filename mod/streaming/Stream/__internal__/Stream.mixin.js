@@ -8,7 +8,8 @@ import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__int
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
-import { DispatcherLike_count, DispatcherLike_dispatch, DispatcherLike_scheduler, } from "../../../scheduling.js";
+import { DispatcherLike_scheduler, } from "../../../scheduling.js";
+import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
 import add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -24,10 +25,10 @@ const DispatchedObservable_create =
     }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
-        get [DispatcherLike_count]() {
+        get [QueueableLike_count]() {
             var _a, _b;
             unsafeCast(this);
-            return ((_b = (_a = this[DispatchedObservable_dispatcher]) === null || _a === void 0 ? void 0 : _a[DispatcherLike_count]) !== null && _b !== void 0 ? _b : 0);
+            return ((_b = (_a = this[DispatchedObservable_dispatcher]) === null || _a === void 0 ? void 0 : _a[QueueableLike_count]) !== null && _b !== void 0 ? _b : 0);
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
@@ -36,10 +37,10 @@ const DispatchedObservable_create =
                 ? dispatcher[DispatcherLike_scheduler]
                 : raiseWithDebugMessage("DispatchedObservable has not been subscribed to");
         },
-        [DispatcherLike_dispatch](next) {
+        [QueueableLike_push](next) {
             var _a;
             unsafeCast(this);
-            (_a = this[DispatchedObservable_dispatcher]) === null || _a === void 0 ? void 0 : _a[DispatcherLike_dispatch](next);
+            (_a = this[DispatchedObservable_dispatcher]) === null || _a === void 0 ? void 0 : _a[QueueableLike_push](next);
         },
         [ReactiveContainerLike_sinkInto](observer) {
             if (isSome(this[DispatchedObservable_dispatcher])) {
@@ -71,14 +72,14 @@ const Stream_mixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return MulticastObservable_getReplay(this[StreamMixin_observable]);
         },
-        get [DispatcherLike_count]() {
+        get [QueueableLike_count]() {
             unsafeCast(this);
-            return this[DelegatingLike_delegate][DispatcherLike_count];
+            return this[DelegatingLike_delegate][QueueableLike_count];
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
-        [DispatcherLike_dispatch](req) {
-            this[DelegatingLike_delegate][DispatcherLike_dispatch](req);
+        [QueueableLike_push](req) {
+            this[DelegatingLike_delegate][QueueableLike_push](req);
         },
         [ReactiveContainerLike_sinkInto](observer) {
             pipe(this[StreamMixin_observable], ReactiveContainer_sinkInto(observer));

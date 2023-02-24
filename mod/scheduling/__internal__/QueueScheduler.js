@@ -8,17 +8,16 @@ import Enumerator_getCurrent from "../../ix/Enumerator/__internal__/Enumerator.g
 import Enumerator_hasCurrent from "../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
 import MutableEnumerator_mixin from "../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import Source_move from "../../ix/Source/__internal__/Source.move.js";
-import { DispatcherLike_count, DispatcherLike_dispatch, DispatcherLike_scheduler, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
+import { DispatcherLike_scheduler, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
+import { QueueableLike_count, QueueableLike_push, } from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
-import Queue_count from "../../util/__internal__/Queue/Queue.count.js";
+import PullableQueue_peek from "../../util/PullableQueue/__internal__/PullableQueue.peek.js";
+import PullableQueue_pull from "../../util/PullableQueue/__internal__/PullableQueue.pull.js";
 import Queue_create from "../../util/__internal__/Queue/Queue.create.js";
-import Queue_peek from "../../util/__internal__/Queue/Queue.peek.js";
-import Queue_pop from "../../util/__internal__/Queue/Queue.pop.js";
-import Queue_push from "../../util/__internal__/Queue/Queue.push.js";
 import { MutableRefLike_current, } from "../../util/__internal__/util.internal.js";
 import { Continuation__yield } from "../Continuation/__internal__/Continuation.create.js";
 import Continuation_run from "../Continuation/__internal__/Continuation.run.js";
@@ -49,7 +48,7 @@ export const create =
         const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue, } = instance;
         const now = getCurrentTime(instance[DispatcherLike_scheduler]);
         while (true) {
-            const task = Queue_peek(delayed);
+            const task = PullableQueue_peek(delayed);
             if (isNone(task)) {
                 break;
             }
@@ -57,23 +56,23 @@ export const create =
             if (task[QueueTask_dueTime] > now && !taskIsDispose) {
                 break;
             }
-            Queue_pop(delayed);
+            PullableQueue_pull(delayed);
             if (!taskIsDispose) {
-                Queue_push(queue, task);
+                queue[QueueableLike_push](task);
             }
         }
         let task = none;
         while (true) {
-            task = Queue_peek(queue);
+            task = PullableQueue_peek(queue);
             if (isNone(task)) {
                 break;
             }
             if (!Disposable_isDisposed(task[QueueTask_continuation])) {
                 break;
             }
-            Queue_pop(queue);
+            PullableQueue_pull(queue);
         }
-        return task !== null && task !== void 0 ? task : Queue_peek(delayed);
+        return task !== null && task !== void 0 ? task : PullableQueue_peek(delayed);
     };
     const priorityShouldYield = (instance, next) => {
         const { [EnumeratorLike_current]: current } = instance;
@@ -163,11 +162,16 @@ export const create =
                     (isSome(next) ? priorityShouldYield(this, next) : false) ||
                     shouldYield(this[DispatcherLike_scheduler])));
         },
-        get [DispatcherLike_count]() {
+        get [QueueableLike_count]() {
             unsafeCast(this);
-            return Queue_count(this[QueueScheduler_queue]);
+            // Intentional. This is a little wierd because though the QueueScheduler
+            // technically implements the QueuableLike interface, it doesn't ever
+            // actually queue up the actions. It's somewhat of a weird API glitch
+            // that enables a uniform Pausable interface between PausableScheduler
+            // and Flowable (which does queue and dispatch its pause events).
+            return 0;
         },
-        [DispatcherLike_dispatch](req) {
+        [QueueableLike_push](req) {
             const nextState = req(this[QueueScheduler_isPaused]
                 ? PauseableState_paused
                 : PauseableState_running);
@@ -183,7 +187,7 @@ export const create =
         [SourceLike_move]() {
             // First fast forward through disposed tasks.
             peek(this);
-            const task = Queue_pop(this[QueueScheduler_queue]);
+            const task = PullableQueue_pull(this[QueueScheduler_queue]);
             if (isSome(task)) {
                 this[EnumeratorLike_current] = task;
             }
@@ -214,7 +218,7 @@ export const create =
                     };
                 const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue, } = this;
                 const targetQueue = dueTime > now ? delayed : queue;
-                Queue_push(targetQueue, task);
+                targetQueue[QueueableLike_push](task);
                 scheduleOnHost(this);
             }
         },

@@ -1,4 +1,4 @@
 import { Comparator } from "../../../functions.js";
-import { QueueLike } from "../util.internal.js";
-declare const Queue_create: <T>(comparator: Comparator<T>) => QueueLike<T>;
+import { PullableQueueLike } from "../util.internal.js";
+declare const Queue_create: <T>(comparator: Comparator<T>) => PullableQueueLike<T>;
 export default Queue_create;

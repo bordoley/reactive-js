@@ -3,10 +3,10 @@ import { pipe } from "../../../functions.js";
 import { ObservableLike, ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
-import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_toErrorHandler from "../../../util/Disposable/__internal__/Disposable.toErrorHandler.js";
+import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
 
 const Promiseable_toObservable: ToObservable<PromiseableLike>["toObservable"] =
   <T>() =>
@@ -16,7 +16,7 @@ const Promiseable_toObservable: ToObservable<PromiseableLike>["toObservable"] =
 
       promise.then(next => {
         if (!Disposable_isDisposed(dispatcher)) {
-          pipe(dispatcher, Dispatcher_dispatch(next), Disposable_dispose());
+          pipe(dispatcher, Queueable_push(next), Disposable_dispose());
         }
       }, Disposable_toErrorHandler(dispatcher));
     });

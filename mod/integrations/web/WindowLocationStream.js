@@ -1,6 +1,6 @@
 /// <reference types="./WindowLocationStream.d.ts" />
 
-import { DispatcherLike_dispatch } from "../../scheduling.js";
+import { QueueableLike_push } from "../../util.js";
 import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, } from "../web.js";
 export const canGoBack = (stream) => stream[WindowLocationStreamLike_canGoBack];
 export const goBack = (stream) => {
@@ -8,6 +8,6 @@ export const goBack = (stream) => {
     return stream;
 };
 export const replace = (uri) => stream => {
-    stream[DispatcherLike_dispatch](uri, { replace: true });
+    stream[QueueableLike_push](uri, { replace: true });
     return stream;
 };

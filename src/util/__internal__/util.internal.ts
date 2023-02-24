@@ -1,6 +1,6 @@
 import { DelegatingLike } from "../../__internal__/mixins.js";
 import { Optional } from "../../functions.js";
-import { DisposableLike } from "../../util.js";
+import { DisposableLike, QueueableLike } from "../../util.js";
 
 export const MutableRefLike_current = Symbol("MutableRefLike_current");
 
@@ -19,17 +19,10 @@ export interface DelegatingDisposableLike<
 > extends DelegatingLike<TDisposable>,
     DisposableLike {}
 
-export const QueueLike_clear = Symbol("QueueLike_clear");
-export const QueueLike_count = Symbol("QueueLike_count");
-export const QueueLike_peek = Symbol("QueueLike_peek");
-export const QueueLike_pop = Symbol("QueueLike_pop");
-export const QueueLike_push = Symbol("QueueLike_push");
+export const PullableQueueLike_peek = Symbol("PullableQueueLike_peek");
+export const PullableQueueLike_pull = Symbol("PullableQueueLike_pull");
 
-export interface QueueLike<T> {
-  readonly [QueueLike_count]: number;
-
-  [QueueLike_clear](): void;
-  [QueueLike_peek](): Optional<T>;
-  [QueueLike_pop](): Optional<T>;
-  [QueueLike_push](item: T): void;
+export interface PullableQueueLike<T> extends QueueableLike<T> {
+  [PullableQueueLike_peek](): Optional<T>;
+  [PullableQueueLike_pull](): Optional<T>;
 }

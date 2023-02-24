@@ -4,11 +4,11 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { max, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, SubjectLike_publish, } from "../../../rx.js";
-import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
 import Observer_getDispatcher from "../../Observer/__internal__/Observer.getDispatcher.js";
 const Subject_create = 
 /*@__PURE__*/ (() => {
@@ -42,7 +42,7 @@ const Subject_create =
                     }
                 }
                 for (const observer of this[Subject_observers]) {
-                    pipe(observer, Observer_getDispatcher, Dispatcher_dispatch(next));
+                    pipe(observer, Observer_getDispatcher, Queueable_push(next));
                 }
             }
         },
@@ -59,7 +59,7 @@ const Subject_create =
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
             for (const next of this[Subject_replayed]) {
-                pipe(dispatcher, Dispatcher_dispatch(next));
+                pipe(dispatcher, Queueable_push(next));
             }
             pipe(this, Disposable_addIgnoringChildErrors(dispatcher));
         },

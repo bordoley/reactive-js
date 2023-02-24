@@ -7,9 +7,9 @@ import {
 import { pipe, returns } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Continuation from "../../scheduling/Continuation.js";
-import * as Dispatcher from "../../scheduling/Dispatcher.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import * as Disposable from "../../util/Disposable.js";
+import * as Queueable from "../../util/Queueable.js";
 import * as Streamable from "../Streamable.js";
 
 testModule(
@@ -25,8 +25,8 @@ testModule(
 
       pipe(
         stateStream,
-        Dispatcher.dispatch(returns(2)),
-        Dispatcher.dispatch(returns(3)),
+        Queueable.push(returns(2)),
+        Queueable.push(returns(3)),
         Disposable.dispose(),
       );
 

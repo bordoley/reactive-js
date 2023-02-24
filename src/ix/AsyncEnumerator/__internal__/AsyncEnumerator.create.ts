@@ -13,9 +13,9 @@ import {
 } from "../../../ix.js";
 import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
 import { StreamLike } from "../../../streaming.js";
 import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin.js";
+import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
 
 const AsyncEnumerator_create = /*@__PURE__*/ (() => {
   const createAsyncEnumeratorInternal: <T>(
@@ -40,7 +40,7 @@ const AsyncEnumerator_create = /*@__PURE__*/ (() => {
         {},
         {
           [SourceLike_move](this: StreamLike<void, T>) {
-            pipe(this, Dispatcher_dispatch(none));
+            pipe(this, Queueable_push(none));
           },
         },
       ),

@@ -3,7 +3,8 @@
 var _a;
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { floor, isSome, newInstance, none, } from "../../../functions.js";
-import { QueueLike_clear, QueueLike_count, QueueLike_peek, QueueLike_pop, QueueLike_push, } from "../util.internal.js";
+import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
+import { PullableQueueLike_peek, PullableQueueLike_pull, } from "../util.internal.js";
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const siftDown = (queue, item) => {
     const { [PriorityQueueImpl_values]: values, [PriorityQueueImpl_comparator]: compare, } = queue;
@@ -51,16 +52,13 @@ class PriorityQueueImpl {
         this[_a] = [];
         this[PriorityQueueImpl_comparator] = comparator;
     }
-    get [(_a = PriorityQueueImpl_values, QueueLike_count)]() {
+    get [(_a = PriorityQueueImpl_values, QueueableLike_count)]() {
         return ReadonlyArray_getLength(this[PriorityQueueImpl_values]);
     }
-    [QueueLike_clear]() {
-        this[PriorityQueueImpl_values].length = 0;
-    }
-    [QueueLike_peek]() {
+    [PullableQueueLike_peek]() {
         return this[PriorityQueueImpl_values][0];
     }
-    [QueueLike_pop]() {
+    [PullableQueueLike_pull]() {
         const { [PriorityQueueImpl_values]: values } = this;
         const length = ReadonlyArray_getLength(values);
         if (length === 0) {
@@ -77,7 +75,7 @@ class PriorityQueueImpl {
             return first;
         }
     }
-    [QueueLike_push](item) {
+    [QueueableLike_push](item) {
         this[PriorityQueueImpl_values].push(item);
         siftUp(this, item);
     }

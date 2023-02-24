@@ -9,13 +9,15 @@ import * as MulticastObservable from "../rx/MulticastObservable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
 import * as ReactiveContainer from "../rx/ReactiveContainer.js";
-import { DispatcherLike_count, DispatcherLike_dispatch, DispatcherLike_scheduler, } from "../scheduling.js";
+import { DispatcherLike_scheduler } from "../scheduling.js";
 import * as Dispatcher from "../scheduling/Dispatcher.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
+import { QueueableLike_count, QueueableLike_push } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import * as Queueable from "../util/Queueable.js";
 /** @ignore */
 export const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");
 /** @ignore */
@@ -35,7 +37,7 @@ export const createEventSource = (url, options = {}) => {
         const eventSource = newInstance(EventSource, requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;
-            pipe(dispatcher, Dispatcher.dispatch({
+            pipe(dispatcher, Queueable.push({
                 id: (_a = ev.lastEventId) !== null && _a !== void 0 ? _a : "",
                 type: (_b = ev.type) !== null && _b !== void 0 ? _b : "",
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
@@ -79,7 +81,7 @@ export const addEventListener = (eventName, selector) => target => Observable.cr
     }));
     const listener = (event) => {
         const result = selector(event);
-        pipe(dispatcher, Dispatcher.dispatch(result));
+        pipe(dispatcher, Queueable.push(result));
     };
     target.addEventListener(eventName, listener, { passive: true });
 });
@@ -131,9 +133,9 @@ export const windowLocation =
             unsafeCast(this);
             return pipe(this[DelegatingLike_delegate], MulticastObservable.getReplay);
         },
-        get [DispatcherLike_count]() {
+        get [QueueableLike_count]() {
             unsafeCast(this);
-            return this[DelegatingLike_delegate][DispatcherLike_count];
+            return this[DelegatingLike_delegate][QueueableLike_count];
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
@@ -145,8 +147,8 @@ export const windowLocation =
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
-        [DispatcherLike_dispatch](stateOrUpdater, { replace } = { replace: false }) {
-            pipe({ stateOrUpdater, replace }, Dispatcher.dispatchTo(this[DelegatingLike_delegate]));
+        [QueueableLike_push](stateOrUpdater, { replace } = { replace: false }) {
+            pipe({ stateOrUpdater, replace }, Queueable.pushTo(this[DelegatingLike_delegate]));
         },
         [WindowLocationStreamLike_goBack]() {
             const canGoBack = this[WindowLocationStreamLike_canGoBack];
@@ -206,7 +208,7 @@ export const windowLocation =
             return { counter, uri };
         }), Observable.forEach(({ counter, uri }) => {
             windowLocationStream[WindowLocationStream_historyCounter] = counter;
-            windowLocationStream[DispatcherLike_dispatch](uri, { replace: true });
+            windowLocationStream[QueueableLike_push](uri, { replace: true });
         }), Observable.subscribe(scheduler), Disposable.addTo(windowLocationStream));
         return windowLocationStream;
     });

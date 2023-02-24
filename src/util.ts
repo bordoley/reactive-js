@@ -49,3 +49,22 @@ export interface DisposableLike {
    */
   [DisposableLike_dispose](error?: Error): void;
 }
+
+/** @ignore */
+export const QueueableLike_count = Symbol("QueueableLike_count");
+
+/** @ignore */
+export const QueueableLike_push = Symbol("QueueableLike_push");
+
+export interface QueueableLike<T = unknown> {
+  /**
+   * The number of queued up items.
+   */
+  readonly [QueueableLike_count]: number;
+
+  /**
+   * Push an item onto the queue
+   * @param req
+   */
+  [QueueableLike_push](req: T): void;
+}

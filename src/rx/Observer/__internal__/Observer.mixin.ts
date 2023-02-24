@@ -25,13 +25,16 @@ import {
 } from "../../../rx.js";
 import {
   DispatcherLike,
-  DispatcherLike_count,
-  DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
 } from "../../../scheduling.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
-import { DisposableLike, DisposableLike_error } from "../../../util.js";
+import {
+  DisposableLike,
+  DisposableLike_error,
+  QueueableLike_count,
+  QueueableLike_push,
+} from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
@@ -80,8 +83,8 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         instance: Pick<
           DispatcherLike,
           | typeof DispatcherLike_scheduler
-          | typeof DispatcherLike_dispatch
-          | typeof DispatcherLike_count
+          | typeof QueueableLike_push
+          | typeof QueueableLike_count
         > &
           Mutable<TProperties>,
         observer: ObserverLike<T>,
@@ -128,7 +131,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         [ObserverDispatcher_onContinuationDispose]: none,
       }),
       {
-        get [DispatcherLike_count]() {
+        get [QueueableLike_count]() {
           unsafeCast<TProperties>(this);
           return this[ObserverDispatcher_nextQueue].length;
         },
@@ -136,7 +139,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           unsafeCast<TProperties>(this);
           return Observer_getsScheduler(this[ObserverDispatcher_observer]);
         },
-        [DispatcherLike_dispatch](this: TProperties & DisposableLike, next: T) {
+        [QueueableLike_push](this: TProperties & DisposableLike, next: T) {
           if (!Disposable_isDisposed(this)) {
             this[ObserverDispatcher_nextQueue].push(next);
             scheduleDrainQueue(this);

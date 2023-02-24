@@ -18,7 +18,7 @@
 
 ### Methods
 
-- [[DispatcherLike\_dispatch]](integrations_web.WindowLocationStreamLike.md#[dispatcherlike_dispatch])
+- [[QueueableLike\_push]](integrations_web.WindowLocationStreamLike.md#[queueablelike_push])
 - [[WindowLocationStreamLike\_goBack]](integrations_web.WindowLocationStreamLike.md#[windowlocationstreamlike_goback])
 
 ## Properties
@@ -29,9 +29,9 @@
 
 ## Methods
 
-### [DispatcherLike\_dispatch]
+### [QueueableLike\_push]
 
-▸ **[DispatcherLike_dispatch]**(`stateOrUpdater`, `options?`): `void`
+▸ **[QueueableLike_push]**(`stateOrUpdater`, `options?`): `void`
 
 #### Parameters
 
@@ -47,7 +47,7 @@
 
 #### Overrides
 
-StreamLike.\_\_@DispatcherLike\_dispatch@23826
+StreamLike.\_\_@QueueableLike\_push@23086
 
 ___
 

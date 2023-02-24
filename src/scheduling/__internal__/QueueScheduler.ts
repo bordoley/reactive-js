@@ -31,8 +31,6 @@ import Source_move from "../../ix/Source/__internal__/Source.move.js";
 import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal.js";
 import {
   ContinuationLike,
-  DispatcherLike_count,
-  DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   PauseableLike,
   PauseableState,
@@ -45,21 +43,23 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../scheduling.js";
-import { DisposableLike } from "../../util.js";
+import {
+  DisposableLike,
+  QueueableLike_count,
+  QueueableLike_push,
+} from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
-import Queue_count from "../../util/__internal__/Queue/Queue.count.js";
+import PullableQueue_peek from "../../util/PullableQueue/__internal__/PullableQueue.peek.js";
+import PullableQueue_pull from "../../util/PullableQueue/__internal__/PullableQueue.pull.js";
 import Queue_create from "../../util/__internal__/Queue/Queue.create.js";
-import Queue_peek from "../../util/__internal__/Queue/Queue.peek.js";
-import Queue_pop from "../../util/__internal__/Queue/Queue.pop.js";
-import Queue_push from "../../util/__internal__/Queue/Queue.push.js";
 import {
   DisposableRefLike,
   MutableRefLike_current,
-  QueueLike,
+  PullableQueueLike,
 } from "../../util/__internal__/util.internal.js";
 import { Continuation__yield } from "../Continuation/__internal__/Continuation.create.js";
 import Continuation_run from "../Continuation/__internal__/Continuation.run.js";
@@ -123,7 +123,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       const now = getCurrentTime(instance[DispatcherLike_scheduler]);
 
       while (true) {
-        const task = Queue_peek(delayed);
+        const task = PullableQueue_peek(delayed);
 
         if (isNone(task)) {
           break;
@@ -136,16 +136,16 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           break;
         }
 
-        Queue_pop(delayed);
+        PullableQueue_pull(delayed);
 
         if (!taskIsDispose) {
-          Queue_push(queue, task);
+          queue[QueueableLike_push](task);
         }
       }
 
       let task: Optional<QueueTask> = none;
       while (true) {
-        task = Queue_peek(queue);
+        task = PullableQueue_peek(queue);
 
         if (isNone(task)) {
           break;
@@ -155,10 +155,10 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           break;
         }
 
-        Queue_pop(queue);
+        PullableQueue_pull(queue);
       }
 
-      return task ?? Queue_peek(delayed);
+      return task ?? PullableQueue_peek(delayed);
     };
 
     const priorityShouldYield = (
@@ -254,12 +254,12 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
 
     type TProperties = {
       [SchedulerLike_inContinuation]: boolean;
-      readonly [QueueScheduler_delayed]: QueueLike<QueueTask>;
+      readonly [QueueScheduler_delayed]: PullableQueueLike<QueueTask>;
       [QueueScheduler_dueTime]: number;
       readonly [DispatcherLike_scheduler]: SchedulerLike;
       [QueueScheduler_hostContinuation]: Optional<SideEffect>;
       [QueueScheduler_isPaused]: boolean;
-      readonly [QueueScheduler_queue]: QueueLike<QueueTask>;
+      readonly [QueueScheduler_queue]: PullableQueueLike<QueueTask>;
       [QueueScheduler_taskIDCounter]: number;
       [QueueScheduler_yieldRequested]: boolean;
     };
@@ -278,8 +278,8 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             | typeof SchedulerLike_shouldYield
             | typeof SchedulerLike_requestYield
             | typeof SchedulerLike_schedule
-            | typeof DispatcherLike_dispatch
-            | typeof DispatcherLike_count
+            | typeof QueueableLike_push
+            | typeof QueueableLike_count
           > &
             Mutable<TProperties>,
           host: SchedulerLike,
@@ -334,11 +334,17 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
                 shouldYield(this[DispatcherLike_scheduler]))
             );
           },
-          get [DispatcherLike_count](): number {
+          get [QueueableLike_count](): number {
             unsafeCast<TProperties>(this);
-            return Queue_count(this[QueueScheduler_queue]);
+
+            // Intentional. This is a little wierd because though the QueueScheduler
+            // technically implements the QueuableLike interface, it doesn't ever
+            // actually queue up the actions. It's somewhat of a weird API glitch
+            // that enables a uniform Pausable interface between PausableScheduler
+            // and Flowable (which does queue and dispatch its pause events).
+            return 0;
           },
-          [DispatcherLike_dispatch](
+          [QueueableLike_push](
             this: TProperties & DisposableRefLike & EnumeratorLike,
             req: Updater<PauseableState>,
           ): void {
@@ -360,7 +366,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           ): void {
             // First fast forward through disposed tasks.
             peek(this);
-            const task = Queue_pop(this[QueueScheduler_queue]);
+            const task = PullableQueue_pull(this[QueueScheduler_queue]);
 
             if (isSome(task)) {
               this[EnumeratorLike_current] = task;
@@ -403,7 +409,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
                 [QueueScheduler_queue]: queue,
               } = this;
               const targetQueue = dueTime > now ? delayed : queue;
-              Queue_push(targetQueue, task);
+              targetQueue[QueueableLike_push](task);
 
               scheduleOnHost(this);
             }

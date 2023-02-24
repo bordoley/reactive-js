@@ -84,6 +84,7 @@
     "./streaming/Stream": "./streaming/Stream.js",
     "./streaming/Streamable": "./streaming/Streamable.js",
     "./util": "./util.js",
-    "./util/Disposable": "./util/Disposable.js"
+    "./util/Disposable": "./util/Disposable.js",
+    "./util/Queueable": "./util/Queueable.js"
   }
 }

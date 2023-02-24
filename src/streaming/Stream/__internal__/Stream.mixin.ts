@@ -36,12 +36,11 @@ import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.g
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import {
   DispatcherLike,
-  DispatcherLike_count,
-  DispatcherLike_dispatch,
   DispatcherLike_scheduler,
   SchedulerLike,
 } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
+import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
 import add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -70,8 +69,8 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             | typeof ReactiveContainerLike_sinkInto
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
-            | typeof DispatcherLike_count
-            | typeof DispatcherLike_dispatch
+            | typeof QueueableLike_count
+            | typeof QueueableLike_push
             | typeof DispatcherLike_scheduler
           > &
             Mutable<TProperties>,
@@ -86,10 +85,10 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
 
-          get [DispatcherLike_count](): number {
+          get [QueueableLike_count](): number {
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
             return (
-              this[DispatchedObservable_dispatcher]?.[DispatcherLike_count] ?? 0
+              this[DispatchedObservable_dispatcher]?.[QueueableLike_count] ?? 0
             );
           },
 
@@ -103,14 +102,12 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
                 );
           },
 
-          [DispatcherLike_dispatch](
+          [QueueableLike_push](
             this: TProperties & DispatchedObservableLike<T>,
             next: T,
           ) {
             unsafeCast<DispatchedObservableLike<T>>(this);
-            this[DispatchedObservable_dispatcher]?.[DispatcherLike_dispatch](
-              next,
-            );
+            this[DispatchedObservable_dispatcher]?.[QueueableLike_push](next);
           },
 
           [ReactiveContainerLike_sinkInto](
@@ -154,8 +151,8 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           StreamLike<TReq, T>,
           | typeof MulticastObservableLike_observerCount
           | typeof MulticastObservableLike_replay
-          | typeof DispatcherLike_count
-          | typeof DispatcherLike_dispatch
+          | typeof QueueableLike_count
+          | typeof QueueableLike_push
           | typeof ReactiveContainerLike_sinkInto
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
@@ -201,20 +198,20 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           return MulticastObservable_getReplay(this[StreamMixin_observable]);
         },
 
-        get [DispatcherLike_count](): number {
+        get [QueueableLike_count](): number {
           unsafeCast<DelegatingLike<DispatchedObservableLike<TReq>>>(this);
-          return this[DelegatingLike_delegate][DispatcherLike_count];
+          return this[DelegatingLike_delegate][QueueableLike_count];
         },
 
         [ObservableLike_isEnumerable]: false,
 
         [ObservableLike_isRunnable]: false,
 
-        [DispatcherLike_dispatch](
+        [QueueableLike_push](
           this: DelegatingLike<DispatchedObservableLike<TReq>>,
           req: TReq,
         ) {
-          this[DelegatingLike_delegate][DispatcherLike_dispatch](req);
+          this[DelegatingLike_delegate][QueueableLike_push](req);
         },
 
         [ReactiveContainerLike_sinkInto](

@@ -70,10 +70,10 @@ const createActions = (
         mode === PauseableState_paused
           ? PauseableState_running
           : PauseableState_paused,
-      Dispatcher.dispatchTo(stateDispatcher),
+      Queueable.pushTo(stateDispatcher),
     ),
   setCounterMode: (mode: PauseableState) =>
-    pipe(counterDispatcher, Dispatcher.dispatch(returns(mode))),
+    pipe(counterDispatcher, Queueable.push(returns(mode))),
 });
 
 const initialFlowModeState = (): PauseableState => PauseableState_paused;
@@ -111,7 +111,7 @@ const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
 
   pipe(
     historyStream,
-    Dispatcher.dispatch((uri: WindowLocationURI) => ({
+    Queueable.push((uri: WindowLocationURI) => ({
       ...uri,
       path,
     })),

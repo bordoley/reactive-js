@@ -10,9 +10,9 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
-import Dispatcher_dispatch from "../../../scheduling/Dispatcher/__internal__/Dispatcher.dispatch.js";
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
@@ -22,7 +22,7 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
         init(DelegatingAsyncEnumerator_mixin(), instance, delegate);
         instance[KeepAsyncEnumerator_obs] = pipe(delegate, Observable_forEach(x => {
             if (!predicate(x)) {
-                pipe(delegate, Dispatcher_dispatch(none));
+                pipe(delegate, Queueable_push(none));
             }
         }), Observable_keep(predicate), Observable_multicast(Dispatcher_getScheduler(delegate)));
         return instance;

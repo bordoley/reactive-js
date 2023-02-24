@@ -1,5 +1,5 @@
 import { Updater } from "./functions.js";
-import { DisposableLike } from "./util.js";
+import { DisposableLike, QueueableLike } from "./util.js";
 /** @ignore */
 export declare const ContinuationLike_run: unique symbol;
 /**
@@ -36,25 +36,12 @@ export interface SchedulerLike extends DisposableLike {
     }): void;
 }
 /** @ignore */
-export declare const DispatcherLike_dispatch: unique symbol;
-/** @ignore */
 export declare const DispatcherLike_scheduler: unique symbol;
-/** @ignore */
-export declare const DispatcherLike_count: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown> extends DisposableLike {
-    /**
-     * Dispatches the next request
-     * @param req
-     */
-    [DispatcherLike_dispatch](req: T): void;
+export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableLike {
     readonly [DispatcherLike_scheduler]: SchedulerLike;
-    /**
-     * The number of queued up events on the dispatcher's dispatch queue.
-     */
-    readonly [DispatcherLike_count]: number;
 }
 export declare const PauseableState_running: unique symbol;
 export declare const PauseableState_paused: unique symbol;

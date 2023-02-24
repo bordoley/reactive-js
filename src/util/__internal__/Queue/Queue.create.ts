@@ -6,13 +6,11 @@ import {
   newInstance,
   none,
 } from "../../../functions.js";
+import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
 import {
-  QueueLike,
-  QueueLike_clear,
-  QueueLike_count,
-  QueueLike_peek,
-  QueueLike_pop,
-  QueueLike_push,
+  PullableQueueLike,
+  PullableQueueLike_peek,
+  PullableQueueLike_pull,
 } from "../util.internal.js";
 
 const computeParentIndex = (index: number) => floor((index - 1) / 2);
@@ -74,7 +72,7 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
 const PriorityQueueImpl_comparator = Symbol("PriorityQueueImpl_comparator");
 const PriorityQueueImpl_values = Symbol("PriorityQueueImpl_values");
 
-class PriorityQueueImpl<T> implements QueueLike<T> {
+class PriorityQueueImpl<T> implements PullableQueueLike<T> {
   readonly [PriorityQueueImpl_values]: T[] = [];
   readonly [PriorityQueueImpl_comparator]: Comparator<T>;
 
@@ -82,19 +80,15 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
     this[PriorityQueueImpl_comparator] = comparator;
   }
 
-  get [QueueLike_count](): number {
+  get [QueueableLike_count](): number {
     return ReadonlyArray_getLength(this[PriorityQueueImpl_values]);
   }
 
-  [QueueLike_clear]() {
-    this[PriorityQueueImpl_values].length = 0;
-  }
-
-  [QueueLike_peek]() {
+  [PullableQueueLike_peek]() {
     return this[PriorityQueueImpl_values][0];
   }
 
-  [QueueLike_pop]() {
+  [PullableQueueLike_pull]() {
     const { [PriorityQueueImpl_values]: values } = this;
     const length = ReadonlyArray_getLength(values);
     if (length === 0) {
@@ -112,13 +106,13 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
     }
   }
 
-  [QueueLike_push](item: T) {
+  [QueueableLike_push](item: T) {
     this[PriorityQueueImpl_values].push(item);
     siftUp(this, item);
   }
 }
 
-const Queue_create = <T>(comparator: Comparator<T>): QueueLike<T> =>
+const Queue_create = <T>(comparator: Comparator<T>): PullableQueueLike<T> =>
   newInstance(PriorityQueueImpl, comparator);
 
 export default Queue_create;

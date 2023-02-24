@@ -4,10 +4,10 @@ import {
   testModule,
 } from "../../__tests__/testing.js";
 import { floor, newInstance, pipe } from "../../functions.js";
-import Queue_count from "../../util/__internal__/Queue/Queue.count.js";
+import { QueueableLike_push } from "../../util.js";
 import Queue_create from "../../util/__internal__/Queue/Queue.create.js";
-import Queue_pop from "../../util/__internal__/Queue/Queue.pop.js";
-import Queue_push from "../../util/__internal__/Queue/Queue.push.js";
+import PullableQueue_pull from "../PullableQueue/__internal__/PullableQueue.pull.js";
+import Queueable_count from "../Queueable/__internal__/Queueable.count.js";
 
 const compare = (a: number, b: number): number => a - b;
 
@@ -39,12 +39,12 @@ testModule(
     const queue = Queue_create(compare);
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray.length; i++) {
-      Queue_push(queue, shuffledArray[i]);
+      queue[QueueableLike_push](shuffledArray[i]);
     }
 
     const acc: number[] = [];
-    while (Queue_count(queue) > 0) {
-      acc.push(Queue_pop(queue) as number);
+    while (Queueable_count(queue) > 0) {
+      acc.push(PullableQueue_pull(queue) as number);
     }
 
     pipe(acc, expectArrayEquals(makeSortedArray(100)));

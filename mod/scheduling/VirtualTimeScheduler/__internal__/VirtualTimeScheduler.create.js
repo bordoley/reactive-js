@@ -8,13 +8,13 @@ import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerato
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { ContinuationLike_run, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { QueueableLike_push } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import PullableQueue_pull from "../../../util/PullableQueue/__internal__/PullableQueue.pull.js";
 import Queue_create from "../../../util/__internal__/Queue/Queue.create.js";
-import Queue_pop from "../../../util/__internal__/Queue/Queue.pop.js";
-import Queue_push from "../../../util/__internal__/Queue/Queue.push.js";
 import getCurrentTime from "../../Scheduler/__internal__/Scheduler.getCurrentTime.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 const VirtualTask_continuation = Symbol("VirtualTask_continuation");
@@ -76,7 +76,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         const delay = getDelay(options);
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
         if (!Disposable_isDisposed(continuation)) {
-            Queue_push(this[VirtualTimeScheduler_taskQueue], {
+            this[VirtualTimeScheduler_taskQueue][QueueableLike_push]({
                 [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
                 [VirtualTask_dueTime]: getCurrentTime(this) + delay,
                 [VirtualTask_continuation]: continuation,
@@ -88,7 +88,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         if (Disposable_isDisposed(this)) {
             return;
         }
-        const task = Queue_pop(taskQueue);
+        const task = PullableQueue_pull(taskQueue);
         if (isSome(task)) {
             this[EnumeratorLike_current] = task;
         }
