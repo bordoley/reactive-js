@@ -34,7 +34,7 @@ import {
   PauseableState_running,
   PauseableLike,
 } from "@reactive-js/core/scheduling";
-import * as Dispatcher from "@reactive-js/core/scheduling/Dispatcher";
+import * as Queueable from "@reactive-js/core/util/Queueable";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 
 const normalPriorityScheduler = createSchedulerWithNormalPriority();
