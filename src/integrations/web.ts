@@ -47,10 +47,10 @@ import {
 } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
-import { QueueableLike_count, QueueableLike_push } from "../util.js";
+import { QueueLike_count, QueueLike_push } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import * as Queueable from "../util/Queueable.js";
+import * as Queue from "../util/Queue.js";
 
 /**
  * @noInheritDoc
@@ -84,7 +84,7 @@ export interface WindowLocationStreamLike
     Updater<WindowLocationURI> | WindowLocationURI,
     WindowLocationURI
   > {
-  [QueueableLike_push](
+  [QueueLike_push](
     stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI,
     options?: { readonly replace?: boolean },
   ): void;
@@ -151,7 +151,7 @@ export const createEventSource = (
     const listener = (ev: MessageEvent) => {
       pipe(
         dispatcher,
-        Queueable.push({
+        Queue.push({
           id: ev.lastEventId ?? "",
           type: ev.type ?? "",
           data: ev.data ?? "",
@@ -220,7 +220,7 @@ export const addEventListener =
 
       const listener = (event: Event) => {
         const result = selector(event);
-        pipe(dispatcher, Queueable.push(result));
+        pipe(dispatcher, Queue.push(result));
       };
 
       target.addEventListener(eventName, listener, { passive: true });
@@ -321,8 +321,8 @@ export const windowLocation: WindowLocationStreamableLike =
             | typeof DispatcherLike_scheduler
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
-            | typeof QueueableLike_push
-            | typeof QueueableLike_count
+            | typeof QueueLike_push
+            | typeof QueueLike_count
             | typeof WindowLocationStreamLike_canGoBack
             | typeof WindowLocationStreamLike_goBack
             | typeof ReactiveContainerLike_sinkInto
@@ -355,9 +355,9 @@ export const windowLocation: WindowLocationStreamableLike =
             );
           },
 
-          get [QueueableLike_count](): number {
+          get [QueueLike_count](): number {
             unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return this[DelegatingLike_delegate][QueueableLike_count];
+            return this[DelegatingLike_delegate][QueueLike_count];
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
@@ -373,14 +373,14 @@ export const windowLocation: WindowLocationStreamableLike =
           [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
 
-          [QueueableLike_push](
+          [QueueLike_push](
             this: DelegatingLike<StreamLike<TAction, TState>>,
             stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
             { replace }: { replace: boolean } = { replace: false },
           ): void {
             pipe(
               { stateOrUpdater, replace },
-              Queueable.pushTo(this[DelegatingLike_delegate]),
+              Queue.pushTo(this[DelegatingLike_delegate]),
             );
           },
 
@@ -509,7 +509,7 @@ export const windowLocation: WindowLocationStreamableLike =
         }),
         Observable.forEach(({ counter, uri }) => {
           windowLocationStream[WindowLocationStream_historyCounter] = counter;
-          windowLocationStream[QueueableLike_push](uri, { replace: true });
+          windowLocationStream[QueueLike_push](uri, { replace: true });
         }),
         Observable.subscribe(scheduler),
         Disposable.addTo(windowLocationStream),

@@ -15,7 +15,6 @@ import {
   ContainerOf,
   ContainerOperator,
 } from "../../../containers.js";
-import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Function1,
   SideEffect,
@@ -25,11 +24,17 @@ import {
   pipe,
 } from "../../../functions.js";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import {
+  PullableQueueLike,
+  PullableQueueLike_pull,
+} from "../../../util/__internal__/util.internal.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
@@ -62,26 +67,25 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
       "MergeAllObserver_maxConcurrency",
     );
     const MergeAllObserver_onDispose = Symbol("MergeAllObserver_onDispose");
-    const MergeAllObserver_queue = Symbol("MergeAllObserver_queue");
 
     type TProperties = {
       [MergeAllObserver_activeCount]: number;
       readonly [MergeAllObserver_maxBufferSize]: number;
       readonly [MergeAllObserver_maxConcurrency]: number;
       readonly [MergeAllObserver_onDispose]: SideEffect;
-      readonly [MergeAllObserver_queue]: ObservableLike<T>[];
     };
 
     const subscribeNext = (
       observer: TProperties &
         ObserverLike<ContainerOf<C, T>> &
-        DelegatingLike<ObserverLike<T>>,
+        DelegatingLike<ObserverLike<T>> &
+        PullableQueueLike<ObservableLike<T>>,
     ) => {
       if (
         observer[MergeAllObserver_activeCount] <
         observer[MergeAllObserver_maxConcurrency]
       ) {
-        const nextObs = observer[MergeAllObserver_queue].shift();
+        const nextObs = observer[PullableQueueLike_pull]();
 
         if (isSome(nextObs)) {
           observer[MergeAllObserver_activeCount]++;
@@ -103,7 +107,12 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
     return createInstanceFactory(
       mix(
-        include(Disposable_mixin, typedObserverMixin, delegatingMixin()),
+        include(
+          Disposable_mixin,
+          typedObserverMixin,
+          delegatingMixin(),
+          PullableQueue_fifoQueueMixin<ObservableLike<T>>(),
+        ),
         function MergeAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
@@ -117,6 +126,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, Observer_getScheduler(delegate));
           init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
+          init(PullableQueue_fifoQueueMixin<ObservableLike<T>>(), instance);
 
           instance[MergeAllObserver_maxBufferSize] = maxBufferSize;
           instance[MergeAllObserver_maxConcurrency] = maxConcurrency;
@@ -126,16 +136,15 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             instance[MergeAllObserver_activeCount]--;
             subscribeNext(instance);
           };
-          instance[MergeAllObserver_queue] = [];
 
           pipe(
             instance,
             Disposable_addTo(delegate),
             Disposable_onComplete(() => {
               if (Disposable_isDisposed(delegate)) {
-                instance[MergeAllObserver_queue].length = 0;
+                // FIXME: Clear the queue
               } else if (
-                ReadonlyArray_getLength(instance[MergeAllObserver_queue]) +
+                instance[QueueLike_count] +
                   instance[MergeAllObserver_activeCount] ===
                 0
               ) {
@@ -151,26 +160,23 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           [MergeAllObserver_maxBufferSize]: 0,
           [MergeAllObserver_maxConcurrency]: 0,
           [MergeAllObserver_onDispose]: none,
-          [MergeAllObserver_queue]: none,
         }),
         {
           [SinkLike_notify](
             this: TProperties &
               ObserverLike<ContainerOf<C, T>> &
-              DelegatingLike<ObserverLike<T>>,
+              DelegatingLike<ObserverLike<T>> &
+              PullableQueueLike<ContainerOf<C, T>>,
             next: ContainerOf<C, T>,
           ) {
-            const { [MergeAllObserver_queue]: queue } = this;
-
-            queue.push(next);
+            this[QueueLike_push](next);
 
             // Drop old events if the maxBufferSize has been exceeded
             if (
-              ReadonlyArray_getLength(queue) +
-                this[MergeAllObserver_activeCount] >
+              this[QueueLike_count] + this[MergeAllObserver_activeCount] >
               this[MergeAllObserver_maxBufferSize]
             ) {
-              queue.shift();
+              this[PullableQueueLike_pull]();
             }
             subscribeNext(this);
           },

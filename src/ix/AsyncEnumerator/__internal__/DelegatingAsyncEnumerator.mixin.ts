@@ -17,14 +17,14 @@ import {
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import { StreamLike } from "../../../streaming.js";
-import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
-import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
+import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 
 const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
   Pick<
     AsyncEnumeratorLike<T>,
-    | typeof QueueableLike_count
-    | typeof QueueableLike_push
+    | typeof QueueLike_count
+    | typeof QueueLike_push
     | typeof DispatcherLike_scheduler
     | typeof SourceLike_move
     | typeof ObservableLike_isEnumerable
@@ -34,8 +34,8 @@ const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
 > = /*@__PURE__*/ (<T>() => {
   type TReturn = Pick<
     AsyncEnumeratorLike<T>,
-    | typeof QueueableLike_count
-    | typeof QueueableLike_push
+    | typeof QueueLike_count
+    | typeof QueueLike_push
     | typeof DispatcherLike_scheduler
     | typeof SourceLike_move
     | typeof ObservableLike_isEnumerable
@@ -55,16 +55,16 @@ const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
       },
       props({}),
       {
-        get [QueueableLike_count](): number {
+        get [QueueLike_count](): number {
           unsafeCast<DelegatingLike<AsyncEnumeratorLike<T>>>(this);
-          return this[DelegatingLike_delegate][QueueableLike_count];
+          return this[DelegatingLike_delegate][QueueLike_count];
         },
 
-        [QueueableLike_push](
+        [QueueLike_push](
           this: DelegatingLike<AsyncEnumeratorLike<T>>,
           _: void,
         ) {
-          pipe(this[DelegatingLike_delegate], Queueable_push(none));
+          pipe(this[DelegatingLike_delegate], Queue_push(none));
         },
         get [DispatcherLike_scheduler]() {
           unsafeCast<DelegatingLike<AsyncEnumeratorLike<T>>>(this);
@@ -73,7 +73,7 @@ const DelegatingAsyncEnumerator_mixin: <T>() => Mixin1<
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [SourceLike_move](this: StreamLike<void, T>) {
-          pipe(this, Queueable_push(none));
+          pipe(this, Queue_push(none));
         },
       },
     ),

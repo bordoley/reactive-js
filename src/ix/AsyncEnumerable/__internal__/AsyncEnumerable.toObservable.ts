@@ -8,7 +8,7 @@ import Observer_getScheduler from "../../../rx/Observer/__internal__/Observer.ge
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
+import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 
 const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
   () => enumerable =>
@@ -22,10 +22,10 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
       pipe(
         enumerator,
         Observable_forEach(_ => {
-          pipe(enumerator, Queueable_push(none));
+          pipe(enumerator, Queue_push(none));
         }),
         Observable_onSubscribe(() => {
-          pipe(enumerator, Queueable_push(none));
+          pipe(enumerator, Queue_push(none));
         }),
         ReactiveContainer_sinkInto(observer),
       );

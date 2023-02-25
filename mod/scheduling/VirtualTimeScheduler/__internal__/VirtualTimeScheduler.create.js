@@ -8,7 +8,7 @@ import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerato
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { ContinuationLike_run, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import { QueueableLike_push } from "../../../util.js";
+import { QueueLike_push } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
@@ -74,7 +74,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         const delay = getDelay(options);
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
         if (!Disposable_isDisposed(continuation)) {
-            this[QueueableLike_push]({
+            this[QueueLike_push]({
                 [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
                 [VirtualTask_dueTime]: getCurrentTime(this) + delay,
                 [VirtualTask_continuation]: continuation,

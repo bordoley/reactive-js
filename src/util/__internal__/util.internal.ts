@@ -1,6 +1,6 @@
 import { DelegatingLike } from "../../__internal__/mixins.js";
 import { Optional } from "../../functions.js";
-import { DisposableLike, QueueableLike } from "../../util.js";
+import { DisposableLike, QueueLike } from "../../util.js";
 
 export const MutableRefLike_current = Symbol("MutableRefLike_current");
 
@@ -22,7 +22,7 @@ export interface DelegatingDisposableLike<
 export const PullableQueueLike_peek = Symbol("PullableQueueLike_peek");
 export const PullableQueueLike_pull = Symbol("PullableQueueLike_pull");
 
-export interface PullableQueueLike<T> extends QueueableLike<T> {
+export interface PullableQueueLike<T> extends QueueLike<T> {
   [PullableQueueLike_peek](): Optional<T>;
   [PullableQueueLike_pull](): Optional<T>;
 }

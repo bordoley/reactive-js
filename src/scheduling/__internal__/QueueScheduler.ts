@@ -8,7 +8,6 @@ import {
 } from "../../__internal__/mixins.js";
 import { MAX_SAFE_INTEGER } from "../../constants.js";
 import {
-  Comparator,
   Function1,
   Optional,
   SideEffect,
@@ -44,18 +43,14 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../scheduling.js";
-import {
-  DisposableLike,
-  QueueableLike_count,
-  QueueableLike_push,
-} from "../../util.js";
+import { DisposableLike, QueueLike_count, QueueLike_push } from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
+import PullableQueue_createPriorityQueue from "../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
 import PullableQueue_peek from "../../util/PullableQueue/__internal__/PullableQueue.peek.js";
-import PullableQueue_priorityQueueMixin from "../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import PullableQueue_pull from "../../util/PullableQueue/__internal__/PullableQueue.pull.js";
 import {
   DisposableRefLike,
@@ -74,11 +69,6 @@ export type QueueSchedulerOptions = {
   readonly priority?: number;
   readonly delay?: number;
 };
-
-const createPriorityQueue = /*@__PURE__*/ (() =>
-  createInstanceFactory(PullableQueue_priorityQueueMixin()) as <T>(
-    comparator: Comparator<T>,
-  ) => PullableQueueLike<T>)();
 
 export interface QueueSchedulerLike extends DisposableLike, PauseableLike {
   readonly [SchedulerLike_inContinuation]: boolean;
@@ -145,7 +135,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         PullableQueue_pull(delayed);
 
         if (!taskIsDispose) {
-          queue[QueueableLike_push](task);
+          queue[QueueLike_push](task);
         }
       }
 
@@ -284,8 +274,8 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             | typeof SchedulerLike_shouldYield
             | typeof SchedulerLike_requestYield
             | typeof SchedulerLike_schedule
-            | typeof QueueableLike_push
-            | typeof QueueableLike_count
+            | typeof QueueLike_push
+            | typeof QueueLike_count
           > &
             Mutable<TProperties>,
           host: SchedulerLike,
@@ -295,8 +285,9 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           init(typedDisposableRefMixin, instance, Disposable_disposed);
 
           instance[QueueScheduler_delayed] =
-            createPriorityQueue(delayedComparator);
-          instance[QueueScheduler_queue] = createPriorityQueue(taskComparator);
+            PullableQueue_createPriorityQueue(delayedComparator);
+          instance[QueueScheduler_queue] =
+            PullableQueue_createPriorityQueue(taskComparator);
           instance[DispatcherLike_scheduler] = host;
 
           return instance;
@@ -341,7 +332,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
                 shouldYield(this[DispatcherLike_scheduler]))
             );
           },
-          get [QueueableLike_count](): number {
+          get [QueueLike_count](): number {
             unsafeCast<TProperties>(this);
 
             // Intentional. This is a little wierd because though the QueueScheduler
@@ -351,7 +342,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             // and Flowable (which does queue and dispatch its pause events).
             return 0;
           },
-          [QueueableLike_push](
+          [QueueLike_push](
             this: TProperties & DisposableRefLike & EnumeratorLike,
             req: Updater<PauseableState>,
           ): void {
@@ -416,7 +407,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
                 [QueueScheduler_queue]: queue,
               } = this;
               const targetQueue = dueTime > now ? delayed : queue;
-              targetQueue[QueueableLike_push](task);
+              targetQueue[QueueLike_push](task);
 
               scheduleOnHost(this);
             }

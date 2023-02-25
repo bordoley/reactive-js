@@ -9,6 +9,6 @@ export const DisposableLike_error = Symbol("DisposableLike_error");
 /** @ignore */
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 /** @ignore */
-export const QueueableLike_count = Symbol("QueueableLike_count");
+export const QueueLike_count = Symbol("QueueLike_count");
 /** @ignore */
-export const QueueableLike_push = Symbol("QueueableLike_push");
+export const QueueLike_push = Symbol("QueueLike_push");

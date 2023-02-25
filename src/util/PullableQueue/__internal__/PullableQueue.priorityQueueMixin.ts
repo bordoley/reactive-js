@@ -9,7 +9,7 @@ import {
   returns,
   unsafeCast,
 } from "../../../functions.js";
-import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
+import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import {
   PullableQueueLike,
   PullableQueueLike_peek,
@@ -89,10 +89,10 @@ const PullableQueue_priorityQueueMixin: <T>() => Mixin1<
       function PriorityQueue(
         instance: Pick<
           PullableQueueLike<T>,
-          | typeof QueueableLike_count
+          | typeof QueueLike_count
           | typeof PullableQueueLike_peek
           | typeof PullableQueueLike_pull
-          | typeof QueueableLike_push
+          | typeof QueueLike_push
         > &
           Mutable<TProperties>,
         comparator: Comparator<T>,
@@ -106,7 +106,7 @@ const PullableQueue_priorityQueueMixin: <T>() => Mixin1<
         [PriorityQueueImpl_comparator]: none,
       }),
       {
-        get [QueueableLike_count](): number {
+        get [QueueLike_count](): number {
           unsafeCast<TProperties>(this);
           return ReadonlyArray_getLength(this[PriorityQueueImpl_values]);
         },
@@ -130,7 +130,7 @@ const PullableQueue_priorityQueueMixin: <T>() => Mixin1<
             return first;
           }
         },
-        [QueueableLike_push](this: TProperties, item: T) {
+        [QueueLike_push](this: TProperties, item: T) {
           this[PriorityQueueImpl_values].push(item);
           siftUp(this, item);
         },

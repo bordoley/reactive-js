@@ -1,5 +1,5 @@
 import { Updater } from "./functions.js";
-import { DisposableLike, QueueableLike } from "./util.js";
+import { DisposableLike, QueueLike } from "./util.js";
 
 /** @ignore */
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
@@ -56,7 +56,7 @@ export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
  * @noInheritDoc
  */
 export interface DispatcherLike<T = unknown>
-  extends QueueableLike<T>,
+  extends QueueLike<T>,
     DisposableLike {
   readonly [DispatcherLike_scheduler]: SchedulerLike;
 }

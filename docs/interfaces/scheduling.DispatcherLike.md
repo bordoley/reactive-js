@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`QueueableLike`](util.QueueableLike.md)<`T`\>
+- [`QueueLike`](util.QueueLike.md)<`T`\>
 
 - [`DisposableLike`](util.DisposableLike.md)
 

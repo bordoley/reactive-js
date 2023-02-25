@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / util/Queueable
+[Reactive-JS](../README.md) / util/Queue
 
-# Module: util/Queueable
+# Module: util/Queue
 
 ## Table of contents
 
 ### Functions
 
-- [count](util_Queueable.md#count)
-- [push](util_Queueable.md#push)
-- [pushTo](util_Queueable.md#pushto)
+- [count](util_Queue.md#count)
+- [push](util_Queue.md#push)
+- [pushTo](util_Queue.md#pushto)
 
 ## Functions
 
@@ -26,7 +26,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> |
+| `queue` | [`QueueLike`](../interfaces/util.QueueLike.md)<`T`\> |
 
 #### Returns
 
@@ -43,7 +43,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TDispatcher` | extends [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`, `TDispatcher`\> |
+| `TDispatcher` | extends [`QueueLike`](../interfaces/util.QueueLike.md)<`T`, `TDispatcher`\> |
 
 #### Parameters
 
@@ -71,7 +71,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> |
+| `queue` | [`QueueLike`](../interfaces/util.QueueLike.md)<`T`\> |
 
 #### Returns
 

@@ -3,7 +3,7 @@
 import { mix, props } from "../../../__internal__/mixins.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { floor, isSome, none, pipe, returns, unsafeCast, } from "../../../functions.js";
-import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
+import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import { PullableQueueLike_peek, PullableQueueLike_pull, } from "../../__internal__/util.internal.js";
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const PriorityQueueImpl_comparator = Symbol("PriorityQueueImpl_comparator");
@@ -56,7 +56,7 @@ const PullableQueue_priorityQueueMixin = /*@__PURE__*/ (() => {
         [PriorityQueueImpl_values]: none,
         [PriorityQueueImpl_comparator]: none,
     }), {
-        get [QueueableLike_count]() {
+        get [QueueLike_count]() {
             unsafeCast(this);
             return ReadonlyArray_getLength(this[PriorityQueueImpl_values]);
         },
@@ -80,7 +80,7 @@ const PullableQueue_priorityQueueMixin = /*@__PURE__*/ (() => {
                 return first;
             }
         },
-        [QueueableLike_push](item) {
+        [QueueLike_push](item) {
             this[PriorityQueueImpl_values].push(item);
             siftUp(this, item);
         },

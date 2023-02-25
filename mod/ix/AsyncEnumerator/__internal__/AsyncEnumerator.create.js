@@ -4,7 +4,7 @@ import { createInstanceFactory, include, init, mix, } from "../../../__internal_
 import { none, pipe } from "../../../functions.js";
 import { SourceLike_move, } from "../../../ix.js";
 import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin.js";
-import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
+import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 const AsyncEnumerator_create = /*@__PURE__*/ (() => {
     const createAsyncEnumeratorInternal = (() => {
         const typedStreamMixin = Stream_mixin();
@@ -13,7 +13,7 @@ const AsyncEnumerator_create = /*@__PURE__*/ (() => {
             return instance;
         }, {}, {
             [SourceLike_move]() {
-                pipe(this, Queueable_push(none));
+                pipe(this, Queue_push(none));
             },
         }));
     })();

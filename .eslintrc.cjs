@@ -32,6 +32,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "import"],
   root: true,
   rules: {
+    curly: ["error"],
     "sort-imports": [
       "error",
       {

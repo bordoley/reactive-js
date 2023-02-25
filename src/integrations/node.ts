@@ -49,7 +49,7 @@ import * as Streamable from "../streaming/Streamable.js";
 import Streamable_createLifted from "../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import { DisposableLike } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-import * as Queueable from "../util/Queueable.js";
+import * as Queue from "../util/Queue.js";
 
 interface BindNodeCallback {
   <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<
@@ -107,7 +107,7 @@ export const bindNodeCallback: BindNodeCallback = <T>(
         if (err) {
           pipe(dispatcher, Disposable.dispose(error(err)));
         } else {
-          pipe(dispatcher, Queueable.push(arg), Disposable.dispose());
+          pipe(dispatcher, Queue.push(arg), Disposable.dispose());
         }
       };
 
@@ -188,7 +188,7 @@ export const createReadableSource = (
         addToNodeStream(readable),
       );
 
-      const onData = Queueable.pushTo(dispatcher);
+      const onData = Queue.pushTo(dispatcher);
       const onEnd = () => {
         pipe(dispatcher, Disposable.dispose());
       };
@@ -246,19 +246,19 @@ export const createWritableSink = /*@__PURE__*/ (() => {
 
         const onDrain = pipeLazy(
           dispatcher,
-          Queueable.push(returns(PauseableState_running)),
+          Queue.push(returns(PauseableState_running)),
         );
         const onFinish = pipeLazy(dispatcher, Disposable.dispose());
         const onPause = pipeLazy(
           dispatcher,
-          Queueable.push(returns(PauseableState_paused)),
+          Queue.push(returns(PauseableState_paused)),
         );
 
         writable.on("drain", onDrain);
         writable.on("finish", onFinish);
         writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-        pipe(dispatcher, Queueable.push(returns(PauseableState_running)));
+        pipe(dispatcher, Queue.push(returns(PauseableState_running)));
       }),
     );
 })();
@@ -293,7 +293,7 @@ export const transform =
         pipe(
           modeObs,
           Observable.map(returns),
-          Observable.forEach(Queueable.pushTo(transformReadableStream)),
+          Observable.forEach(Queue.pushTo(transformReadableStream)),
           Observable.subscribe(Observer.getScheduler(observer)),
           addToNodeStream(transform),
         );

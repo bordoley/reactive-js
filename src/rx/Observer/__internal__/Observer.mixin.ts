@@ -2,12 +2,12 @@ import {
   Mixin1,
   Mutable,
   createInstanceFactory,
+  getPrototype,
+  include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import {
   Optional,
   SideEffect,
@@ -32,8 +32,8 @@ import { Continuation__yield } from "../../../scheduling/Continuation/__internal
 import {
   DisposableLike,
   DisposableLike_error,
-  QueueableLike_count,
-  QueueableLike_push,
+  QueueLike_count,
+  QueueLike_push,
 } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -41,14 +41,19 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import {
+  PullableQueueLike,
+  PullableQueueLike_pull,
+} from "../../../util/__internal__/util.internal.js";
 import Observer_getsScheduler from "./Observer.getScheduler.js";
 import Observer_schedule from "./Observer.schedule.js";
 
 const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
-  const scheduleDrainQueue = (dispatcher: TProperties) => {
-    if (
-      ReadonlyArray_getLength(dispatcher[ObserverDispatcher_nextQueue]) === 1
-    ) {
+  const scheduleDrainQueue = (
+    dispatcher: TProperties & PullableQueueLike<T>,
+  ) => {
+    if (dispatcher[QueueLike_count] === 1) {
       const { [ObserverDispatcher_observer]: observer } = dispatcher;
       pipe(
         observer,
@@ -63,7 +68,6 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
   const ObserverDispatcher_continuation = Symbol(
     "ObserverDispatcher_continuation",
   );
-  const ObserverDispatcher_nextQueue = Symbol("ObserverDispatcher_nextQueue");
   const ObserverDispatcher_observer = Symbol("ObserverDispatcher_observer");
   const ObserverDispatcher_onContinuationDispose = Symbol(
     "ObserverDispatcher_onContinuationDispose",
@@ -71,37 +75,30 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
 
   type TProperties = {
     readonly [ObserverDispatcher_continuation]: SideEffect;
-    readonly [ObserverDispatcher_nextQueue]: T[];
     readonly [ObserverDispatcher_observer]: ObserverLike<T>;
     readonly [ObserverDispatcher_onContinuationDispose]: SideEffect;
   };
 
+  const fifoQueueProtoype = getPrototype(PullableQueue_fifoQueueMixin<T>());
+
   return createInstanceFactory(
     mix(
-      Disposable_mixin,
+      include(Disposable_mixin, PullableQueue_fifoQueueMixin()),
       function ObserverDispatcher(
-        instance: Pick<
-          DispatcherLike,
-          | typeof DispatcherLike_scheduler
-          | typeof QueueableLike_push
-          | typeof QueueableLike_count
-        > &
+        instance: Pick<DispatcherLike, typeof DispatcherLike_scheduler> &
           Mutable<TProperties>,
         observer: ObserverLike<T>,
       ): DispatcherLike<T> {
         init(Disposable_mixin, instance);
+        init(PullableQueue_fifoQueueMixin<T>(), instance);
 
         instance[ObserverDispatcher_observer] = observer;
-        instance[ObserverDispatcher_nextQueue] = [];
 
         instance[ObserverDispatcher_continuation] = () => {
-          const {
-            [ObserverDispatcher_nextQueue]: nextQueue,
-            [ObserverDispatcher_observer]: observer,
-          } = instance;
+          const { [ObserverDispatcher_observer]: observer } = instance;
 
-          while (ReadonlyArray_getLength(nextQueue) > 0) {
-            const next = nextQueue.shift() as T;
+          while (instance[QueueLike_count] > 0) {
+            const next = instance[PullableQueueLike_pull]() as T;
             observer[SinkLike_notify](next);
             Continuation__yield();
           }
@@ -116,7 +113,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         pipe(
           instance,
           Disposable_onDisposed(e => {
-            if (ReadonlyArray_isEmpty(instance[ObserverDispatcher_nextQueue])) {
+            if (instance[QueueLike_count] === 0) {
               pipe(observer, Disposable_dispose(e));
             }
           }),
@@ -126,22 +123,20 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
       },
       props<TProperties>({
         [ObserverDispatcher_continuation]: none,
-        [ObserverDispatcher_nextQueue]: none,
         [ObserverDispatcher_observer]: none,
         [ObserverDispatcher_onContinuationDispose]: none,
       }),
       {
-        get [QueueableLike_count]() {
-          unsafeCast<TProperties>(this);
-          return this[ObserverDispatcher_nextQueue].length;
-        },
         get [DispatcherLike_scheduler]() {
           unsafeCast<TProperties>(this);
           return Observer_getsScheduler(this[ObserverDispatcher_observer]);
         },
-        [QueueableLike_push](this: TProperties & DisposableLike, next: T) {
+        [QueueLike_push](
+          this: TProperties & DisposableLike & PullableQueueLike<T>,
+          next: T,
+        ) {
           if (!Disposable_isDisposed(this)) {
-            this[ObserverDispatcher_nextQueue].push(next);
+            fifoQueueProtoype[QueueLike_push].call(this, next);
             scheduleDrainQueue(this);
           }
         },

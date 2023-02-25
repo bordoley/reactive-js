@@ -18,7 +18,7 @@
 
 ### Methods
 
-- [[QueueableLike\_push]](integrations_web.WindowLocationStreamLike.md#[queueablelike_push])
+- [[QueueLike\_push]](integrations_web.WindowLocationStreamLike.md#[queuelike_push])
 - [[WindowLocationStreamLike\_goBack]](integrations_web.WindowLocationStreamLike.md#[windowlocationstreamlike_goback])
 
 ## Properties
@@ -29,9 +29,9 @@
 
 ## Methods
 
-### [QueueableLike\_push]
+### [QueueLike\_push]
 
-▸ **[QueueableLike_push]**(`stateOrUpdater`, `options?`): `void`
+▸ **[QueueLike_push]**(`stateOrUpdater`, `options?`): `void`
 
 #### Parameters
 
@@ -47,7 +47,7 @@
 
 #### Overrides
 
-StreamLike.\_\_@QueueableLike\_push@23086
+StreamLike.\_\_@QueueLike\_push@23086
 
 ___
 

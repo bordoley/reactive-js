@@ -7,7 +7,7 @@ import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import { PauseableState, PauseableState_paused } from "../../../scheduling.js";
 import { FlowableLike, FlowableStreamLike } from "../../../streaming.js";
-import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
+import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import Streamable_create from "../../Streamable/__internal__/Streamable.create.js";
@@ -139,7 +139,7 @@ const Flowable_createLifted: CreateLiftedFlowable = <T>(
       scheduler,
       options,
     ) as FlowableStreamLike;
-    return pipe(stream, Queueable_push(returns(PauseableState_paused)));
+    return pipe(stream, Queue_push(returns(PauseableState_paused)));
   }) as FlowableLike<T>;
 };
 

@@ -1,5 +1,5 @@
 import { Function1, Updater } from "../../functions.js";
-import { QueueableLike_push } from "../../util.js";
+import { QueueLike_push } from "../../util.js";
 import {
   WindowLocationStreamLike,
   WindowLocationStreamLike_canGoBack,
@@ -22,6 +22,6 @@ export const replace =
     uri: Updater<WindowLocationURI> | WindowLocationURI,
   ): Function1<WindowLocationStreamLike, WindowLocationStreamLike> =>
   stream => {
-    stream[QueueableLike_push](uri, { replace: true });
+    stream[QueueLike_push](uri, { replace: true });
     return stream;
   };

@@ -8,7 +8,7 @@ import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { StreamLike, StreamableLike } from "../../../streaming.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Queueable_pushTo from "../../../util/Queueable/__internal__/Queueable.pushTo.js";
+import Queue_pushTo from "../../../util/Queue/__internal__/Queue.pushTo.js";
 
 import Streamable_stream from "./Streamable.stream.js";
 
@@ -22,13 +22,13 @@ const Streamable_sinkInto =
       Observable_merge(
         pipe(
           srcStream,
-          Observable_forEach(Queueable_pushTo(dest)),
+          Observable_forEach(Queue_pushTo(dest)),
           Observable_ignoreElements(),
           Observable_onSubscribe(() => dest),
         ),
         pipe(
           dest,
-          Observable_forEach<TReq>(Queueable_pushTo(srcStream)),
+          Observable_forEach<TReq>(Queue_pushTo(srcStream)),
           Observable_ignoreElements(),
         ),
       ),

@@ -34,7 +34,7 @@ import {
   PauseableState_running,
   PauseableLike,
 } from "@reactive-js/core/scheduling";
-import * as Queueable from "@reactive-js/core/util/Queueable";
+import * as Queue from "@reactive-js/core/util/Queue";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 
 const normalPriorityScheduler = createSchedulerWithNormalPriority();
@@ -70,10 +70,10 @@ const createActions = (
         mode === PauseableState_paused
           ? PauseableState_running
           : PauseableState_paused,
-      Queueable.pushTo(stateDispatcher),
+      Queue.pushTo(stateDispatcher),
     ),
   setCounterMode: (mode: PauseableState) =>
-    pipe(counterDispatcher, Queueable.push(returns(mode))),
+    pipe(counterDispatcher, Queue.push(returns(mode))),
 });
 
 const initialFlowModeState = (): PauseableState => PauseableState_paused;
@@ -111,7 +111,7 @@ const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
 
   pipe(
     historyStream,
-    Queueable.push((uri: WindowLocationURI) => ({
+    Queue.push((uri: WindowLocationURI) => ({
       ...uri,
       path,
     })),

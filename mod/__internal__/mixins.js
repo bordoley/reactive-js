@@ -86,3 +86,4 @@ export const delegatingMixin = /*@__PURE__*/ (() => {
         [DelegatingLike_delegate]: none,
     }), {}), returns);
 })();
+export const getPrototype = (mixin) => mixin[Object_prototype];

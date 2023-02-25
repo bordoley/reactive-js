@@ -6,19 +6,19 @@ import { SourceLike_move } from "../../../ix.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../rx.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
-import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
-import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
+import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 const DelegatingAsyncEnumerator_mixin = /*@__PURE__*/ (() => {
     return pipe(mix(include(delegatingMixin()), function DelegatingAsyncEnumeratorMixin(instance, delegate) {
         init(delegatingMixin(), instance, delegate);
         return instance;
     }, props({}), {
-        get [QueueableLike_count]() {
+        get [QueueLike_count]() {
             unsafeCast(this);
-            return this[DelegatingLike_delegate][QueueableLike_count];
+            return this[DelegatingLike_delegate][QueueLike_count];
         },
-        [QueueableLike_push](_) {
-            pipe(this[DelegatingLike_delegate], Queueable_push(none));
+        [QueueLike_push](_) {
+            pipe(this[DelegatingLike_delegate], Queue_push(none));
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
@@ -27,7 +27,7 @@ const DelegatingAsyncEnumerator_mixin = /*@__PURE__*/ (() => {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [SourceLike_move]() {
-            pipe(this, Queueable_push(none));
+            pipe(this, Queue_push(none));
         },
     }), returns);
 })();

@@ -4,7 +4,6 @@ import {
   Function1,
   Function2,
   Function3,
-  Function4,
   Optional,
   isFunction,
   none,
@@ -39,24 +38,28 @@ export interface MixinAny<TReturn> extends PartialMixin {
   [Object_init]: (instance: unknown, ...args: readonly any[]) => TReturn;
 }
 
-export interface Mixin<TReturn> extends PartialMixin {
+export interface Mixin<TReturn, TPrototype extends object = object>
+  extends PartialMixin {
   [Object_init](instance: unknown): TReturn;
+  [Object_prototype]: TPrototype;
 }
 
-export interface Mixin1<TReturn, TA> extends PartialMixin {
+export interface Mixin1<TReturn, TA, TPrototype extends object = object>
+  extends PartialMixin {
   [Object_init](instance: unknown, a: TA): TReturn;
+  [Object_prototype]: TPrototype;
 }
 
-export interface Mixin2<TReturn, TA, TB> extends PartialMixin {
+export interface Mixin2<TReturn, TA, TB, TPrototype extends object = object>
+  extends PartialMixin {
   [Object_init](instance: unknown, a: TA, b: TB): TReturn;
+  [Object_prototype]: TPrototype;
 }
 
-export interface Mixin3<TReturn, TA, TB, TC> extends PartialMixin {
+export interface Mixin3<TReturn, TA, TB, TC, TPrototype extends object = object>
+  extends PartialMixin {
   [Object_init](instance: unknown, a: TA, b: TB, c: TC): TReturn;
-}
-
-export interface Mixin4<TReturn, TA, TB, TC, TD> extends PartialMixin {
-  [Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD): TReturn;
+  [Object_prototype]: TPrototype;
 }
 
 const {
@@ -149,6 +152,7 @@ interface CreateMixin {
     prototype: TPrototype,
   ): PartialMixin & {
     [Object_init]: typeof init;
+    [Object_prototype]: TPrototype;
   };
 
   <
@@ -167,6 +171,7 @@ interface CreateMixin {
     prototype: TPrototype,
   ): PartialMixin & {
     [Object_init]: TInit;
+    [Object_prototype]: TPrototype;
   };
 
   <TInit extends (instance: unknown, ...args: readonly any[]) => unknown>(
@@ -211,14 +216,6 @@ interface CreateInstanceFactory {
     TA,
     TB,
     TC,
-    TReturn
-  >;
-
-  <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>): Function4<
-    TA,
-    TB,
-    TC,
-    TD,
     TReturn
   >;
 }
@@ -289,3 +286,7 @@ export const delegatingMixin: <TDelegate>() => Mixin1<
     returns,
   );
 })();
+
+export const getPrototype = <TPrototype>(mixin: {
+  [Object_prototype]: TPrototype;
+}): TPrototype => mixin[Object_prototype];

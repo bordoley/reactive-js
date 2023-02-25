@@ -3,7 +3,6 @@
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_keepType from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
@@ -16,13 +15,15 @@ import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerato
 import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
 import { SinkLike_notify, } from "../../../rx.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import EnumerableObservable_toEnumerable from "../../EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -32,18 +33,17 @@ import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
-const EnumeratorSink_buffer = Symbol("EnumeratorSink_buffer");
 const EnumeratorSink_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable_mixin), function EnumeratorSink(instance) {
+    return createInstanceFactory(mix(include(Disposable_mixin, PullableQueue_fifoQueueMixin()), function EnumeratorSink(instance) {
         init(Disposable_mixin, instance);
-        instance[EnumeratorSink_buffer] = [];
+        init(PullableQueue_fifoQueueMixin(), instance);
         pipe(instance, Disposable_onDisposed(() => {
-            instance[EnumeratorSink_buffer].length = 0;
+            // FIXME: Maybe should clear the queue here as well to early
+            // release references?
             instance[EnumeratorLike_hasCurrent] = false;
         }));
         return instance;
     }, props({
-        [EnumeratorSink_buffer]: none,
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
     }), {
@@ -51,13 +51,11 @@ const EnumeratorSink_create = /*@__PURE__*/ (() => {
             if (Disposable_isDisposed(this)) {
                 return;
             }
-            this[EnumeratorSink_buffer].push(next);
+            this[QueueLike_push](next);
         },
         [SourceLike_move]() {
-            const { [EnumeratorSink_buffer]: buffer } = this;
-            if (!Disposable_isDisposed(this) &&
-                ReadonlyArray_getLength(buffer) > 0) {
-                const next = buffer.shift();
+            if (!Disposable_isDisposed(this) && this[QueueLike_count] > 0) {
+                const next = this[PullableQueueLike_pull]();
                 this[EnumeratorLike_current] = next;
                 this[EnumeratorLike_hasCurrent] = true;
             }

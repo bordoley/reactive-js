@@ -1,40 +1,40 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
-import { createInstanceFactory, init, mix, props, } from "../../../__internal__/mixins.js";
-import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
+import { createInstanceFactory, getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_dispatcher, ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
 import { DispatcherLike_scheduler, } from "../../../scheduling.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
-import { DisposableLike_error, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_error, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import Observer_getsScheduler from "./Observer.getScheduler.js";
 import Observer_schedule from "./Observer.schedule.js";
 const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {
-        if (ReadonlyArray_getLength(dispatcher[ObserverDispatcher_nextQueue]) === 1) {
+        if (dispatcher[QueueLike_count] === 1) {
             const { [ObserverDispatcher_observer]: observer } = dispatcher;
             pipe(observer, Observer_schedule(dispatcher[ObserverDispatcher_continuation]), Disposable_onComplete(dispatcher[ObserverDispatcher_onContinuationDispose]));
         }
     };
     const ObserverDispatcher_continuation = Symbol("ObserverDispatcher_continuation");
-    const ObserverDispatcher_nextQueue = Symbol("ObserverDispatcher_nextQueue");
     const ObserverDispatcher_observer = Symbol("ObserverDispatcher_observer");
     const ObserverDispatcher_onContinuationDispose = Symbol("ObserverDispatcher_onContinuationDispose");
-    return createInstanceFactory(mix(Disposable_mixin, function ObserverDispatcher(instance, observer) {
+    const fifoQueueProtoype = getPrototype(PullableQueue_fifoQueueMixin());
+    return createInstanceFactory(mix(include(Disposable_mixin, PullableQueue_fifoQueueMixin()), function ObserverDispatcher(instance, observer) {
         init(Disposable_mixin, instance);
+        init(PullableQueue_fifoQueueMixin(), instance);
         instance[ObserverDispatcher_observer] = observer;
-        instance[ObserverDispatcher_nextQueue] = [];
         instance[ObserverDispatcher_continuation] = () => {
-            const { [ObserverDispatcher_nextQueue]: nextQueue, [ObserverDispatcher_observer]: observer, } = instance;
-            while (ReadonlyArray_getLength(nextQueue) > 0) {
-                const next = nextQueue.shift();
+            const { [ObserverDispatcher_observer]: observer } = instance;
+            while (instance[QueueLike_count] > 0) {
+                const next = instance[PullableQueueLike_pull]();
                 observer[SinkLike_notify](next);
                 Continuation__yield();
             }
@@ -45,28 +45,23 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             }
         };
         pipe(instance, Disposable_onDisposed(e => {
-            if (ReadonlyArray_isEmpty(instance[ObserverDispatcher_nextQueue])) {
+            if (instance[QueueLike_count] === 0) {
                 pipe(observer, Disposable_dispose(e));
             }
         }));
         return instance;
     }, props({
         [ObserverDispatcher_continuation]: none,
-        [ObserverDispatcher_nextQueue]: none,
         [ObserverDispatcher_observer]: none,
         [ObserverDispatcher_onContinuationDispose]: none,
     }), {
-        get [QueueableLike_count]() {
-            unsafeCast(this);
-            return this[ObserverDispatcher_nextQueue].length;
-        },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
             return Observer_getsScheduler(this[ObserverDispatcher_observer]);
         },
-        [QueueableLike_push](next) {
+        [QueueLike_push](next) {
             if (!Disposable_isDisposed(this)) {
-                this[ObserverDispatcher_nextQueue].push(next);
+                fifoQueueProtoype[QueueLike_push].call(this, next);
                 scheduleDrainQueue(this);
             }
         },

@@ -14,10 +14,10 @@ import * as Dispatcher from "../scheduling/Dispatcher.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
-import { QueueableLike_count, QueueableLike_push } from "../util.js";
+import { QueueLike_count, QueueLike_push } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import * as Queueable from "../util/Queueable.js";
+import * as Queue from "../util/Queue.js";
 /** @ignore */
 export const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");
 /** @ignore */
@@ -37,7 +37,7 @@ export const createEventSource = (url, options = {}) => {
         const eventSource = newInstance(EventSource, requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;
-            pipe(dispatcher, Queueable.push({
+            pipe(dispatcher, Queue.push({
                 id: (_a = ev.lastEventId) !== null && _a !== void 0 ? _a : "",
                 type: (_b = ev.type) !== null && _b !== void 0 ? _b : "",
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
@@ -81,7 +81,7 @@ export const addEventListener = (eventName, selector) => target => Observable.cr
     }));
     const listener = (event) => {
         const result = selector(event);
-        pipe(dispatcher, Queueable.push(result));
+        pipe(dispatcher, Queue.push(result));
     };
     target.addEventListener(eventName, listener, { passive: true });
 });
@@ -133,9 +133,9 @@ export const windowLocation =
             unsafeCast(this);
             return pipe(this[DelegatingLike_delegate], MulticastObservable.getReplay);
         },
-        get [QueueableLike_count]() {
+        get [QueueLike_count]() {
             unsafeCast(this);
-            return this[DelegatingLike_delegate][QueueableLike_count];
+            return this[DelegatingLike_delegate][QueueLike_count];
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
@@ -147,8 +147,8 @@ export const windowLocation =
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
-        [QueueableLike_push](stateOrUpdater, { replace } = { replace: false }) {
-            pipe({ stateOrUpdater, replace }, Queueable.pushTo(this[DelegatingLike_delegate]));
+        [QueueLike_push](stateOrUpdater, { replace } = { replace: false }) {
+            pipe({ stateOrUpdater, replace }, Queue.pushTo(this[DelegatingLike_delegate]));
         },
         [WindowLocationStreamLike_goBack]() {
             const canGoBack = this[WindowLocationStreamLike_canGoBack];
@@ -208,7 +208,7 @@ export const windowLocation =
             return { counter, uri };
         }), Observable.forEach(({ counter, uri }) => {
             windowLocationStream[WindowLocationStream_historyCounter] = counter;
-            windowLocationStream[QueueableLike_push](uri, { replace: true });
+            windowLocationStream[QueueLike_push](uri, { replace: true });
         }), Observable.subscribe(scheduler), Disposable.addTo(windowLocationStream));
         return windowLocationStream;
     });

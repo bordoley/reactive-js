@@ -28,7 +28,7 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import Queueable_push from "../../../util/Queueable/__internal__/Queueable.push.js";
+import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 import Observer_getDispatcher from "../../Observer/__internal__/Observer.getDispatcher.js";
 
 const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
@@ -93,7 +93,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               }
 
               for (const observer of this[Subject_observers]) {
-                pipe(observer, Observer_getDispatcher, Queueable_push(next));
+                pipe(observer, Observer_getDispatcher, Queue_push(next));
               }
             }
           },
@@ -120,7 +120,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
             for (const next of this[Subject_replayed]) {
-              pipe(dispatcher, Queueable_push(next));
+              pipe(dispatcher, Queue_push(next));
             }
 
             pipe(this, Disposable_addIgnoringChildErrors(dispatcher));
