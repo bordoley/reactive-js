@@ -28,15 +28,11 @@ import Enumerable_zip from "../../../ix/Enumerable/__internal__/Enumerable.zip.j
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
-import {
-  ObservableLike,
-  ObserverLike,
-  SinkLike,
-  SinkLike_notify,
-} from "../../../rx.js";
+import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
+  QueueLike,
   QueueLike_count,
   QueueLike_push,
 } from "../../../util.js";
@@ -62,69 +58,58 @@ import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 
-export interface EnumeratorSinkLike<T> extends EnumeratorLike<T>, SinkLike<T> {}
+export interface QueuedEnumeratorLike<T = unknown>
+  extends EnumeratorLike<T>,
+    QueueLike<T> {}
 
-const EnumeratorSink_create: <T>() => EnumeratorSinkLike<T> = /*@__PURE__*/ (<
-  T,
->() => {
-  type TProperties = {
-    [EnumeratorLike_current]: T;
-    [EnumeratorLike_hasCurrent]: boolean;
-  };
+const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
+  /*@__PURE__*/ (<T>() => {
+    type TProperties = {
+      [EnumeratorLike_current]: T;
+      [EnumeratorLike_hasCurrent]: boolean;
+    };
 
-  return createInstanceFactory(
-    mix(
-      include(Disposable_mixin, PullableQueue_fifoQueueMixin<T>()),
-      function EnumeratorSink(
-        instance: Pick<
-          SinkLike<T> & EnumeratorLike<T>,
-          typeof SinkLike_notify | typeof SourceLike_move
-        > &
-          Mutable<TProperties>,
-      ): EnumeratorLike<T> & SinkLike<T> {
-        init(Disposable_mixin, instance);
-        init(PullableQueue_fifoQueueMixin<T>(), instance);
+    return createInstanceFactory(
+      mix(
+        include(Disposable_mixin, PullableQueue_fifoQueueMixin<T>()),
+        function QueuedEnumerator(
+          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+            Mutable<TProperties>,
+        ): EnumeratorLike<T> & QueueLike<T> {
+          init(Disposable_mixin, instance);
+          init(PullableQueue_fifoQueueMixin<T>(), instance);
 
-        pipe(
-          instance,
-          Disposable_onDisposed(() => {
-            // FIXME: Maybe should clear the queue here as well to early
-            // release references?
-            instance[EnumeratorLike_hasCurrent] = false;
-          }),
-        );
+          pipe(
+            instance,
+            Disposable_onDisposed(() => {
+              // FIXME: Maybe should clear the queue here as well to early
+              // release references?
+              instance[EnumeratorLike_hasCurrent] = false;
+            }),
+          );
 
-        return instance;
-      },
-      props<TProperties>({
-        [EnumeratorLike_current]: none,
-        [EnumeratorLike_hasCurrent]: false,
-      }),
-      {
-        [SinkLike_notify](
-          this: DisposableLike & TProperties & PullableQueueLike<T>,
-          next: T,
-        ) {
-          if (Disposable_isDisposed(this)) {
-            return;
-          }
-          this[QueueLike_push](next);
+          return instance;
         },
-        [SourceLike_move](
-          this: DisposableLike & TProperties & PullableQueueLike<T>,
-        ) {
-          if (!Disposable_isDisposed(this) && this[QueueLike_count] > 0) {
-            const next = this[PullableQueueLike_pull]() as T;
-            this[EnumeratorLike_current] = next;
-            this[EnumeratorLike_hasCurrent] = true;
-          } else {
-            this[EnumeratorLike_hasCurrent] = false;
-          }
+        props<TProperties>({
+          [EnumeratorLike_current]: none,
+          [EnumeratorLike_hasCurrent]: false,
+        }),
+        {
+          [SourceLike_move](
+            this: DisposableLike & TProperties & PullableQueueLike<T>,
+          ) {
+            if (!Disposable_isDisposed(this) && this[QueueLike_count] > 0) {
+              const next = this[PullableQueueLike_pull]() as T;
+              this[EnumeratorLike_current] = next;
+              this[EnumeratorLike_hasCurrent] = true;
+            } else {
+              this[EnumeratorLike_hasCurrent] = false;
+            }
+          },
         },
-      },
-    ),
-  );
-})();
+      ),
+    );
+  })();
 
 const Observable_zipObservables = /*@__PURE__*/ (() => {
   const typedObserverMixin = Observer_mixin();
@@ -142,11 +127,11 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
   );
 
   const ZipObserver_enumerators = Symbol("ZipObserver_enumerators");
-  const ZipObserver_sinkEnumerator = Symbol("ZipObserver_sinkEnumerator");
+  const ZipObserver_queuedEnumerator = Symbol("ZipObserver_sinkEnumerator");
 
   type TProperties = {
     readonly [ZipObserver_enumerators]: readonly EnumeratorLike<any>[];
-    readonly [ZipObserver_sinkEnumerator]: EnumeratorLike & SinkLike;
+    readonly [ZipObserver_queuedEnumerator]: QueuedEnumeratorLike;
   };
 
   const createZipObserver = createInstanceFactory(
@@ -157,22 +142,22 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           Mutable<TProperties>,
         delegate: ObserverLike<readonly unknown[]>,
         enumerators: readonly EnumeratorLike<any>[],
-        sinkEnumerator: EnumeratorLike & SinkLike,
+        queuedEnumerator: QueuedEnumeratorLike,
       ): ObserverLike {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, Observer_getScheduler(delegate));
         init(delegatingMixin(), instance, delegate);
 
-        instance[ZipObserver_sinkEnumerator] = sinkEnumerator;
+        instance[ZipObserver_queuedEnumerator] = queuedEnumerator;
         instance[ZipObserver_enumerators] = enumerators;
 
         pipe(
           instance,
           Disposable_onComplete(() => {
             if (
-              Disposable_isDisposed(sinkEnumerator) ||
-              (!Enumerator_hasCurrent(sinkEnumerator) &&
-                !Enumerator_move(sinkEnumerator))
+              Disposable_isDisposed(queuedEnumerator) ||
+              (!Enumerator_hasCurrent(queuedEnumerator) &&
+                !Enumerator_move(queuedEnumerator))
             ) {
               pipe(delegate, Disposable_dispose());
             }
@@ -183,7 +168,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
       },
       props<TProperties>({
         [ZipObserver_enumerators]: none,
-        [ZipObserver_sinkEnumerator]: none,
+        [ZipObserver_queuedEnumerator]: none,
       }),
       {
         [SinkLike_notify](
@@ -195,14 +180,14 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           Observer_assertState(this);
 
           const {
-            [ZipObserver_sinkEnumerator]: sinkEnumerator,
+            [ZipObserver_queuedEnumerator]: queuedEnumerator,
             [ZipObserver_enumerators]: enumerators,
           } = this;
           if (this[DisposableLike_isDisposed]) {
             return;
           }
 
-          sinkEnumerator[SinkLike_notify](next);
+          queuedEnumerator[QueueLike_push](next);
 
           if (!shouldEmit(enumerators)) {
             return;
@@ -240,7 +225,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           enumerators.push(enumerator);
         } else {
           const enumerator = pipe(
-            EnumeratorSink_create(),
+            QueuedEnumerator_create(),
             Disposable_addTo(observer),
           );
           enumerators.push(enumerator);
