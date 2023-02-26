@@ -32,9 +32,10 @@ import {
   pipeLazy,
   returns,
 } from "../functions.js";
-import { ObservableLike, ObserverLike_dispatcher } from "../rx.js";
+import { ObservableLike } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
+import Observer_getDispatcher from "../rx/Observer/__internal__/Observer.getDispatcher.js";
 import * as ReactiveContainer from "../rx/ReactiveContainer.js";
 import {
   PauseableState,
@@ -102,7 +103,8 @@ export const bindNodeCallback: BindNodeCallback = <T>(
   callback: (...args: readonly any[]) => unknown,
 ): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
   function (this: unknown, ...args: readonly unknown[]) {
-    return Observable.create(({ [ObserverLike_dispatcher]: dispatcher }) => {
+    return Observable.create(observer => {
+      const dispatcher = Observer_getDispatcher(observer);
       const handler = (err: unknown, arg: unknown) => {
         if (err) {
           pipe(dispatcher, Disposable.dispose(error(err)));
@@ -164,7 +166,7 @@ export const createReadableSource = (
 ): FlowableLike<Uint8Array> =>
   Flowable_createLifted(mode =>
     Observable.create(observer => {
-      const { [ObserverLike_dispatcher]: dispatcher } = observer;
+      const dispatcher = Observer_getDispatcher(observer);
 
       const readable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(dispatcher))
@@ -216,7 +218,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
   ): StreamableLike<Uint8Array, Updater<PauseableState>> =>
     Streamable_createLifted(events =>
       Observable.create(observer => {
-        const { [ObserverLike_dispatcher]: dispatcher } = observer;
+        const dispatcher = Observer_getDispatcher(observer);
 
         const writable = isFunction(factory)
           ? pipe(

@@ -1,6 +1,5 @@
 /// <reference types="./Disposable.d.ts" />
 
-import { DisposableLike_error, DisposableLike_isDisposed, } from "../util.js";
 import Disposable_add from "./Disposable/__internal__/Disposable.add.js";
 import Disposable_addIgnoringChildErrors from "./Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "./Disposable/__internal__/Disposable.addTo.js";

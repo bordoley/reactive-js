@@ -210,8 +210,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `disposable` | `Object` |
-| `disposable.[DisposableLike_error]` | [`Optional`](functions.md#optional)<`Error`\> |
+| `disposable` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 
@@ -227,8 +226,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `disposable` | `Object` |
-| `disposable.[DisposableLike_isDisposed]` | `boolean` |
+| `disposable` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Returns
 

@@ -1,14 +1,12 @@
 import { compose, pipe, returns } from "../../../functions.js";
-import {
-  ObserverLike_dispatcher,
-  ObserverLike_scheduler,
-  ToObservable,
-} from "../../../rx.js";
+import { ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_startWith from "../../../rx/Observable/__internal__/Observable.startWith.js";
+import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
+import Observer_getScheduler from "../../../rx/Observer/__internal__/Observer.getScheduler.js";
 import {
   PauseableState,
   PauseableState_paused,
@@ -23,10 +21,8 @@ import Stream_sourceFrom from "../../Stream/__internal__/Stream.sourceFrom.js";
 const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
   () => src =>
     Observable_create(observer => {
-      const {
-        [ObserverLike_dispatcher]: dispatcher,
-        [ObserverLike_scheduler]: scheduler,
-      } = observer;
+      const dispatcher = Observer_getDispatcher(observer);
+      const scheduler = Observer_getScheduler(observer);
 
       const op = compose(
         Observable_forEach(Queue_pushTo(dispatcher)),

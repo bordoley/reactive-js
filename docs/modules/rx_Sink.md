@@ -37,20 +37,19 @@ ___
 
 ### notifySink
 
-▸ **notifySink**<`TSink`, `T`\>(`sink`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
+▸ **notifySink**<`T`\>(`sink`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSink` | extends [`SinkLike`](../interfaces/rx.SinkLike.md)<`T`, `TSink`\> |
-| `T` | `T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | `TSink` |
+| `sink` | [`SinkLike`](../interfaces/rx.SinkLike.md)<`T`\> |
 
 #### Returns
 

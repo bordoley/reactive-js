@@ -1,9 +1,4 @@
-import { Optional } from "../functions.js";
-import {
-  DisposableLike,
-  DisposableLike_error,
-  DisposableLike_isDisposed,
-} from "../util.js";
+import { DisposableLike } from "../util.js";
 
 import Disposable_add from "./Disposable/__internal__/Disposable.add.js";
 import Disposable_addIgnoringChildErrors from "./Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
@@ -41,13 +36,9 @@ export const dispose = Disposable_dispose;
 
 export const disposed: DisposableLike = Disposable_disposed;
 
-export const getError: (disposable: {
-  [DisposableLike_error]: Optional<Error>;
-}) => Optional<Error> = Disposable_getError;
+export const getError = Disposable_getError;
 
-export const isDisposed: (disposable: {
-  [DisposableLike_isDisposed]: boolean;
-}) => boolean = Disposable_isDisposed;
+export const isDisposed = Disposable_isDisposed;
 
 export const onComplete = Disposable_onComplete;
 

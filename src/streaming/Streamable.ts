@@ -42,8 +42,8 @@ export const createStateStore: <T>(
   options?: { readonly equality?: Equality<T> },
 ) => StreamableLike<Updater<T>, T> = Streamable_createStateStore;
 
-export const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(
-  dest: TSinkStream,
+export const sinkInto: <TReq, T>(
+  dest: StreamLike<T, TReq>,
 ) => (src: StreamableLike<TReq, T>) => StreamableLike<TReq, T> =
   Streamable_sinkInto;
 

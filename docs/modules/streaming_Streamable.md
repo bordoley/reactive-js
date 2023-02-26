@@ -72,21 +72,20 @@ ___
 
 ### sinkInto
 
-▸ **sinkInto**<`TReq`, `T`, `TSinkStream`\>(`dest`): (`src`: [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>) => [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
+▸ **sinkInto**<`TReq`, `T`\>(`dest`): (`src`: [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>) => [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TReq` | `TReq` |
-| `T` | `T` |
-| `TSinkStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `TReq`, `TSinkStream`\> |
+| Name |
+| :------ |
+| `TReq` |
+| `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `dest` | `TSinkStream` |
+| `dest` | [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `TReq`\> |
 
 #### Returns
 

@@ -13,7 +13,7 @@ import Queue_pushTo from "../../../util/Queue/__internal__/Queue.pushTo.js";
 import Streamable_stream from "./Streamable.stream.js";
 
 const Streamable_sinkInto =
-  <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) =>
+  <TReq, T>(dest: StreamLike<T, TReq>) =>
   (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
     const { [DispatcherLike_scheduler]: scheduler } = dest;
     const srcStream = pipe(src, Streamable_stream(scheduler));

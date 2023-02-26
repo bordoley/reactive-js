@@ -25,7 +25,7 @@ export declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction,
 export declare const createStateStore: <T>(initialState: Factory<T>, options?: {
     readonly equality?: Equality<T>;
 }) => StreamableLike<Updater<T>, T>;
-export declare const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) => (src: StreamableLike<TReq, T>) => StreamableLike<TReq, T>;
+export declare const sinkInto: <TReq, T>(dest: StreamLike<T, TReq>) => (src: StreamableLike<TReq, T>) => StreamableLike<TReq, T>;
 export declare const stream: <TReq, T, TStream extends StreamLike<TReq, T>>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => Function1<StreamableLike<TReq, T, TStream>, TStream>;
