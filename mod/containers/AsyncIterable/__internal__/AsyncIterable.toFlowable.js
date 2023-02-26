@@ -48,8 +48,9 @@ const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((mod
         }
     };
     pipe(modeObs, Observable_forEach((mode) => {
+        const wasPaused = isPaused;
         isPaused = mode === PauseableState_paused;
-        if (!isPaused) {
+        if (!isPaused && wasPaused) {
             pipe(dispatcher[DispatcherLike_scheduler], Scheduler_schedule(continuation), Disposable_addTo(observer));
         }
     }), Observable_subscribe(Observer_getScheduler(observer)), Disposable_bindTo(observer));
