@@ -20,15 +20,13 @@ testModule(
     testAsync("infinite immediately resolving iterable", async () => {
       const scheduler = Scheduler.createHostScheduler();
 
-      const src = async function* foo() {
-        let i = 0;
-        while (true) {
-          yield i++;
-        }
-      };
-
       const result = await pipe(
-        src(),
+        (async function* foo() {
+          let i = 0;
+          while (true) {
+            yield i++;
+          }
+        })(),
         AsyncIterable.toAsyncEnumerable(),
         AsyncEnumerable.toObservable(),
         Observable.takeFirst({ count: 10 }),
@@ -37,20 +35,17 @@ testModule(
       );
 
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-
       pipe(scheduler, Disposable.dispose());
     }),
     testAsync("iterable that completes", async () => {
       const scheduler = Scheduler.createHostScheduler();
 
-      const src = async function* foo() {
-        yield 1;
-        yield 2;
-        yield 3;
-      };
-
       const result = await pipe(
-        src(),
+        (async function* foo() {
+          yield 1;
+          yield 2;
+          yield 3;
+        })(),
         AsyncIterable.toAsyncEnumerable(),
         AsyncEnumerable.toObservable(),
         Observable.buffer(),
@@ -58,7 +53,6 @@ testModule(
       );
 
       pipe(result, expectArrayEquals([1, 2, 3]));
-
       pipe(scheduler, Disposable.dispose());
     }),
 
@@ -66,12 +60,10 @@ testModule(
       const scheduler = Scheduler.createHostScheduler();
       const e = error();
 
-      const src = async function* foo() {
-        throw e;
-      };
-
       const result = await pipe(
-        src(),
+        (async function* foo() {
+          throw e;
+        })(),
         AsyncIterable.toAsyncEnumerable(),
         AsyncEnumerable.toObservable(),
         Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
@@ -79,6 +71,7 @@ testModule(
       );
 
       pipe(result, expectEquals(e as unknown));
+      pipe(scheduler, Disposable.dispose());
     }),
   ),
   describe(
@@ -86,15 +79,13 @@ testModule(
     testAsync("infinite immediately resolving iterable", async () => {
       const scheduler = Scheduler.createHostScheduler();
 
-      const src = async function* foo() {
-        let i = 0;
-        while (true) {
-          yield i++;
-        }
-      };
-
       const result = await pipe(
-        src(),
+        (async function* foo() {
+          let i = 0;
+          while (true) {
+            yield i++;
+          }
+        })(),
         AsyncIterable.toFlowable({ maxBuffer: 5 }),
         Flowable.toObservable(),
         Observable.takeFirst({ count: 10 }),
@@ -103,20 +94,17 @@ testModule(
       );
 
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-
       pipe(scheduler, Disposable.dispose());
     }),
     testAsync("iterable that completes", async () => {
       const scheduler = Scheduler.createHostScheduler();
 
-      const src = async function* foo() {
-        yield 1;
-        yield 2;
-        yield 3;
-      };
-
       const result = await pipe(
-        src(),
+        (async function* foo() {
+          yield 1;
+          yield 2;
+          yield 3;
+        })(),
         AsyncIterable.toFlowable({ maxBuffer: 5 }),
         Flowable.toObservable(),
         Observable.buffer(),
@@ -124,7 +112,6 @@ testModule(
       );
 
       pipe(result, expectArrayEquals([1, 2, 3]));
-
       pipe(scheduler, Disposable.dispose());
     }),
 
@@ -132,12 +119,10 @@ testModule(
       const scheduler = Scheduler.createHostScheduler();
       const e = error();
 
-      const src = async function* foo() {
-        throw e;
-      };
-
       const result = await pipe(
-        src(),
+        (async function* foo() {
+          throw e;
+        })(),
         AsyncIterable.toFlowable({ maxBuffer: 5 }),
         Flowable.toObservable(),
         Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
@@ -145,6 +130,7 @@ testModule(
       );
 
       pipe(result, expectEquals(e as unknown));
+      pipe(scheduler, Disposable.dispose());
     }),
   ),
   describe(
@@ -152,15 +138,13 @@ testModule(
     testAsync("infinite immediately resolving iterable", async () => {
       const scheduler = Scheduler.createHostScheduler();
 
-      const src = async function* foo() {
-        let i = 0;
-        while (true) {
-          yield i++;
-        }
-      };
-
       const result = await pipe(
-        src(),
+        (async function* foo() {
+          let i = 0;
+          while (true) {
+            yield i++;
+          }
+        })(),
         AsyncIterable.toObservable({ maxBuffer: 5 }),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer(),
@@ -168,27 +152,23 @@ testModule(
       );
 
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-
       pipe(scheduler, Disposable.dispose());
     }),
     testAsync("iterable that completes", async () => {
       const scheduler = Scheduler.createHostScheduler();
 
-      const src = async function* foo() {
-        yield 1;
-        yield 2;
-        yield 3;
-      };
-
       const result = await pipe(
-        src(),
+        (async function* foo() {
+          yield 1;
+          yield 2;
+          yield 3;
+        })(),
         AsyncIterable.toObservable({ maxBuffer: 1 }),
         Observable.buffer(),
         Observable.toPromise(scheduler),
       );
 
       pipe(result, expectArrayEquals([1, 2, 3]));
-
       pipe(scheduler, Disposable.dispose());
     }),
 
@@ -196,18 +176,17 @@ testModule(
       const scheduler = Scheduler.createHostScheduler();
       const e = error();
 
-      const src = async function* foo() {
-        throw e;
-      };
-
       const result = await pipe(
-        src(),
+        (async function* foo() {
+          throw e;
+        })(),
         AsyncIterable.toObservable({ maxBuffer: 1 }),
         Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
         Observable.toPromise(scheduler),
       );
 
       pipe(result, expectEquals(e as unknown));
+      pipe(scheduler, Disposable.dispose());
     }),
   ),
 );
