@@ -3,6 +3,7 @@ import {
   include,
   init,
   mix,
+  props,
 } from "../../../__internal__/mixins.js";
 import { ForEach } from "../../../containers.js";
 import StatefulContainer_forEach from "../../../containers/StatefulContainer/__internal__/StatefulContainer.forEach.js";
@@ -12,6 +13,7 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_forEachMixin from "../../Sink/__internal__/Sink.forEachMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
@@ -38,6 +40,8 @@ const Observable_forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
 
           return instance;
         },
+        props<unknown>({}),
+        Observer_decorateNotifyForDev(typedForEachSinkMixin),
       ),
     );
   })();

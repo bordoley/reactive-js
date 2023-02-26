@@ -26,10 +26,12 @@ const Sink_decodeWithCharsetMixin: <
   TSink extends SinkLike<string>,
 >(
   fromReadonlyArray: (v: readonly string[]) => C,
-) => Mixin2<SinkLike<ArrayBuffer>, SinkLike<string>, string> = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<string>,
->(
+) => Mixin2<
+  SinkLike<ArrayBuffer>,
+  SinkLike<string>,
+  string,
+  Pick<SinkLike<ArrayBuffer>, typeof SinkLike_notify>
+> = <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<string>>(
   fromReadonlyArray: (v: readonly string[]) => C,
 ) => {
   const DecodeWithCharsetSinkMixin_textDecoder = Symbol(

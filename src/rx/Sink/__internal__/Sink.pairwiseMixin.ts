@@ -14,7 +14,8 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 
 const Sink_pairwiseMixin: <T>() => Mixin1<
   SinkLike<T>,
-  SinkLike<readonly [T, T]>
+  SinkLike<readonly [T, T]>,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   const PairwiseSinkMixin_prev = Symbol("PairwiseSinkMixin_prev");
   const PairwiseSinkMixin_hasPrev = Symbol("PairwiseSinkMixin_hasPrev");

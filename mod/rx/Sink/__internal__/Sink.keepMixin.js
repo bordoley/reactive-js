@@ -4,8 +4,7 @@ import { DelegatingLike_delegate, include, init, mix, props, } from "../../../__
 import { none, returns } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-const Sink_keepMixin = 
-/*@__PURE__*/ (() => {
+const Sink_keepMixin = /*@__PURE__*/ (() => {
     const KeepSinkMixin_predicate = Symbol("KeepSinkMixin_predicate");
     return returns(mix(include(Disposable_delegatingMixin()), function KeepSinkMixin(instance, delegate, predicate) {
         init(Disposable_delegatingMixin(), instance, delegate);

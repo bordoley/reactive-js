@@ -9,8 +9,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
 import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
-const Sink_catchErrorMixin = 
-/*@__PURE__*/ (() => {
+const Sink_catchErrorMixin = /*@__PURE__*/ (() => {
     return returns(mix(include(Disposable_mixin, delegatingMixin()), function CatchErrorSinkMixin(instance, delegate, errorHandler) {
         init(Disposable_mixin, instance);
         init(delegatingMixin(), instance, delegate);

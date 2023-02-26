@@ -25,7 +25,13 @@ const Sink_reduceMixin: <
   TAcc,
 >(
   fromReadonlyArray: (v: readonly TAcc[]) => C,
-) => Mixin3<SinkLike<T>, TSink, Reducer<T, TAcc>, Factory<TAcc>> = <
+) => Mixin3<
+  SinkLike<T>,
+  TSink,
+  Reducer<T, TAcc>,
+  Factory<TAcc>,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
+> = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<TAcc>,
   T,

@@ -15,7 +15,8 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 const Sink_distinctUntilChangedMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
-  Equality<T>
+  Equality<T>,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   const DistinctUntilChangedSinkMixin_equality = Symbol(
     "DistinctUntilChangedSinkMixin_equality",

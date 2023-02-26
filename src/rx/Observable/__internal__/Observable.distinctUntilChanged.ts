@@ -3,6 +3,7 @@ import {
   include,
   init,
   mix,
+  props,
 } from "../../../__internal__/mixins.js";
 import { DistinctUntilChanged } from "../../../containers.js";
 import StatefulContainer_distinctUntilChanged from "../../../containers/StatefulContainer/__internal__/StatefulContainer.distinctUntilChanged.js";
@@ -12,6 +13,7 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_distinctUntilChangedMixin from "../../Sink/__internal__/Sink.distinctUntilChangedMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
@@ -47,6 +49,8 @@ const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["dis
 
             return instance;
           },
+          props<unknown>({}),
+          Observer_decorateNotifyForDev(typedDistinctUntilChangedSinkMixin),
         ),
       );
     })();

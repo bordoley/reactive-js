@@ -32,53 +32,57 @@ const Sink_catchErrorMixin: <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<T>,
   T,
->() => Mixin2<SinkLike<T>, SinkLike<T>, Function1<unknown, C | void>> =
-  /*@__PURE__*/ (<
-    C extends ReactiveContainerLike<TSink>,
-    TSink extends SinkLike<T>,
-    T,
-  >() => {
-    return returns(
-      mix(
-        include(Disposable_mixin, delegatingMixin()),
-        function CatchErrorSinkMixin(
-          instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
-          delegate: SinkLike<T>,
-          errorHandler: Function1<unknown, C | void>,
-        ): SinkLike<T> {
-          init(Disposable_mixin, instance);
-          init(delegatingMixin(), instance, delegate);
+>() => Mixin2<
+  SinkLike<T>,
+  SinkLike<T>,
+  Function1<unknown, C | void>,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
+> = /*@__PURE__*/ (<
+  C extends ReactiveContainerLike<TSink>,
+  TSink extends SinkLike<T>,
+  T,
+>() => {
+  return returns(
+    mix(
+      include(Disposable_mixin, delegatingMixin()),
+      function CatchErrorSinkMixin(
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        delegate: SinkLike<T>,
+        errorHandler: Function1<unknown, C | void>,
+      ): SinkLike<T> {
+        init(Disposable_mixin, instance);
+        init(delegatingMixin(), instance, delegate);
 
-          pipe(
-            instance,
-            Disposable_addToIgnoringChildErrors(delegate),
-            Disposable_onComplete(() => {
-              pipe(delegate, Disposable_dispose());
-            }),
-            Disposable_onError((err: Error) => {
-              try {
-                const result = errorHandler(err) || none;
-                if (isSome(result)) {
-                  pipe(result, ReactiveContainer_sinkInto(delegate));
-                } else {
-                  pipe(delegate, Disposable_dispose());
-                }
-              } catch (e) {
-                pipe(delegate, Disposable_dispose(error([e, err])));
+        pipe(
+          instance,
+          Disposable_addToIgnoringChildErrors(delegate),
+          Disposable_onComplete(() => {
+            pipe(delegate, Disposable_dispose());
+          }),
+          Disposable_onError((err: Error) => {
+            try {
+              const result = errorHandler(err) || none;
+              if (isSome(result)) {
+                pipe(result, ReactiveContainer_sinkInto(delegate));
+              } else {
+                pipe(delegate, Disposable_dispose());
               }
-            }),
-          );
+            } catch (e) {
+              pipe(delegate, Disposable_dispose(error([e, err])));
+            }
+          }),
+        );
 
-          return instance;
+        return instance;
+      },
+      props({}),
+      {
+        [SinkLike_notify](this: DelegatingLike<SinkLike<T>>, next: T) {
+          this[DelegatingLike_delegate][SinkLike_notify](next);
         },
-        props({}),
-        {
-          [SinkLike_notify](this: DelegatingLike<SinkLike<T>>, next: T) {
-            this[DelegatingLike_delegate][SinkLike_notify](next);
-          },
-        },
-      ),
-    );
-  })();
+      },
+    ),
+  );
+})();
 
 export default Sink_catchErrorMixin;

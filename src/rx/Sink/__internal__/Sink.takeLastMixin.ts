@@ -25,11 +25,12 @@ const Sink_takeLastMixin: <
   T,
 >(
   fromReadonlyArray: (v: readonly T[]) => C,
-) => Mixin2<SinkLike<T>, TSink, number> = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
->(
+) => Mixin2<
+  SinkLike<T>,
+  TSink,
+  number,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
+> = <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
   fromReadonlyArray: (v: readonly T[]) => C,
 ) => {
   const TakeLastSinkMixin_last = Symbol("TakeLastSinkMixin_last");

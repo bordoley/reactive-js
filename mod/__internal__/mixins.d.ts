@@ -73,7 +73,8 @@ export interface DelegatingLike<T> {
     readonly [DelegatingLike_delegate]: T;
 }
 export declare const delegatingMixin: <TDelegate>() => Mixin1<DelegatingLike<TDelegate>, TDelegate>;
-export declare const getPrototype: <TPrototype>(mixin: {
+export type MixinPrototype<TPrototype> = {
     [Object_prototype]: TPrototype;
-}) => TPrototype;
+};
+export declare const getPrototype: <TPrototype>(mixin: MixinPrototype<TPrototype>) => TPrototype;
 export {};

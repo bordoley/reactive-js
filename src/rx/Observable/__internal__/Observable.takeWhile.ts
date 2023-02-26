@@ -3,6 +3,7 @@ import {
   include,
   init,
   mix,
+  props,
 } from "../../../__internal__/mixins.js";
 import { TakeWhile } from "../../../containers.js";
 import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeWhile.js";
@@ -12,6 +13,7 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_takeWhileMixin from "../../Sink/__internal__/Sink.takeWhileMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
@@ -49,6 +51,8 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
 
             return instance;
           },
+          props<unknown>({}),
+          Observer_decorateNotifyForDev(typedTakeWhileSinkMixin),
         ),
       );
     })();

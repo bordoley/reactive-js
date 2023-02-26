@@ -287,6 +287,10 @@ export const delegatingMixin: <TDelegate>() => Mixin1<
   );
 })();
 
-export const getPrototype = <TPrototype>(mixin: {
+export type MixinPrototype<TPrototype> = {
   [Object_prototype]: TPrototype;
-}): TPrototype => mixin[Object_prototype];
+};
+
+export const getPrototype = <TPrototype>(
+  mixin: MixinPrototype<TPrototype>,
+): TPrototype => mixin[Object_prototype];

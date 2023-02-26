@@ -3,6 +3,7 @@ import {
   include,
   init,
   mix,
+  props,
 } from "../../../__internal__/mixins.js";
 import { Reduce } from "../../../containers.js";
 import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
@@ -13,6 +14,7 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
@@ -43,6 +45,8 @@ const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
 
         return instance;
       },
+      props<unknown>({}),
+      Observer_decorateNotifyForDev(typedReduceSinkMixin),
     ),
   );
 

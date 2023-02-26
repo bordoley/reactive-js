@@ -5,8 +5,7 @@ import { pipe, returns } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-const Sink_takeFirstMixin = 
-/*@__PURE__*/ (() => {
+const Sink_takeFirstMixin = /*@__PURE__*/ (() => {
     const TakeFirstSinkMixin_takeCount = Symbol("TakeFirstSinkMixin_takeCount");
     const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
     return returns(mix(include(Disposable_delegatingMixin()), function TakeFirstSinkMixin(instance, delegate, takeCount) {
@@ -23,8 +22,7 @@ const Sink_takeFirstMixin =
         [SinkLike_notify](next) {
             this[TakeFirstSinkMixin_count]++;
             this[DelegatingLike_delegate][SinkLike_notify](next);
-            if (this[TakeFirstSinkMixin_count] >=
-                this[TakeFirstSinkMixin_takeCount]) {
+            if (this[TakeFirstSinkMixin_count] >= this[TakeFirstSinkMixin_takeCount]) {
                 pipe(this, Disposable_dispose());
             }
         },

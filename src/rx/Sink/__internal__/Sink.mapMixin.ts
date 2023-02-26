@@ -15,7 +15,8 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 export const Sink_mapMixin: <TA, TB>() => Mixin2<
   SinkLike<TA>,
   SinkLike<TB>,
-  Function1<TA, TB>
+  Function1<TA, TB>,
+  Pick<SinkLike<TA>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<TA, TB>() => {
   const MapSinkMixin_mapper = Symbol("MapSinkMixin_mapper");
 

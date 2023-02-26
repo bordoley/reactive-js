@@ -27,7 +27,8 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 const Sink_throwIfEmptyMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
-  Factory<unknown>
+  Factory<unknown>,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   const ThrowIfEmptySinkMixin_isEmpty = Symbol("ThrowIfEmptySinkMixin_isEmpty");
 

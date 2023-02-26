@@ -3,6 +3,7 @@ import {
   include,
   init,
   mix,
+  props,
 } from "../../../__internal__/mixins.js";
 import { Pairwise } from "../../../containers.js";
 import { pipe, returns } from "../../../functions.js";
@@ -11,6 +12,7 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_pairwiseMixin from "../../Sink/__internal__/Sink.pairwiseMixin.js";
 import Observable_lift from "./Observable.lift.js";
@@ -39,6 +41,8 @@ const Observable_pairwise: Pairwise<ObservableLike>["pairwise"] =
 
             return instance;
           },
+          props<unknown>({}),
+          Observer_decorateNotifyForDev(typedPairwiseSinkMixin),
         ),
       );
     })();

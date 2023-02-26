@@ -24,7 +24,8 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
   SinkLike<T>,
   SinkLike<TAcc>,
   Reducer<T, TAcc>,
-  Factory<TAcc>
+  Factory<TAcc>,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T, TAcc>() => {
   const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");
   const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");

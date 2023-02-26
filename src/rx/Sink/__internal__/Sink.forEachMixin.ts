@@ -15,7 +15,8 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 export const Sink_forEachMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
-  SideEffect1<T>
+  SideEffect1<T>,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   const ForEachSinkMixin_effect = Symbol("ForEachSinkMixin_effect");
 

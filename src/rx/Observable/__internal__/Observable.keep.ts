@@ -3,6 +3,7 @@ import {
   include,
   init,
   mix,
+  props,
 } from "../../../__internal__/mixins.js";
 import { Keep } from "../../../containers.js";
 import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
@@ -12,6 +13,7 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_keepMixin from "../../Sink/__internal__/Sink.keepMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
@@ -36,6 +38,8 @@ const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
 
           return instance;
         },
+        props<unknown>({}),
+        Observer_decorateNotifyForDev(typedKeepSinkMixin),
       ),
     );
   })();

@@ -3,10 +3,12 @@ import {
   include,
   init,
   mix,
+  props,
 } from "../../../__internal__/mixins.js";
 import { CatchError, ContainerOperator } from "../../../containers.js";
 import { Function1, partial, pipe } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
+import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_catchErrorMixin from "../../Sink/__internal__/Sink.catchErrorMixin.js";
@@ -33,6 +35,8 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
 
           return instance;
         },
+        props<unknown>({}),
+        Observer_decorateNotifyForDev(typedCatchErrorSink),
       ),
     );
   })();

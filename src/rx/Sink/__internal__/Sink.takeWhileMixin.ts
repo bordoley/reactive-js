@@ -17,7 +17,8 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
   SinkLike<T>,
   SinkLike<T>,
   Predicate<T>,
-  boolean
+  boolean,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   const TakeWhileSinkMixin_predicate = Symbol("TakeWhileSinkMixin_predicate");
   const TakeWhileSinkMixin_inclusive = Symbol("TakeWhileSinkMixin_inclusive");

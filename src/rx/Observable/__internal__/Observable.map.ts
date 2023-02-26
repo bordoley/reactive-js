@@ -3,6 +3,7 @@ import {
   include,
   init,
   mix,
+  props,
 } from "../../../__internal__/mixins.js";
 import { Map } from "../../../containers.js";
 import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map.js";
@@ -12,6 +13,7 @@ import {
   ObserverLike,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_mapMixin from "../../Sink/__internal__/Sink.mapMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
@@ -39,6 +41,8 @@ const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
 
           return instance;
         },
+        props<unknown>({}),
+        Observer_decorateNotifyForDev(typedMapSinkMixin),
       ),
     );
   })();
