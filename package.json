@@ -60,7 +60,7 @@
         "ts-jest",
         {
           "useESM": true,
-          "tsconfig": "./tsconfig.base.json"
+          "tsconfig": "./tsconfig.test.json"
         }
       ]
     }

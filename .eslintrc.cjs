@@ -33,6 +33,7 @@ module.exports = {
   root: true,
   rules: {
     curly: ["error"],
+    "no-debugger": ["error"],
     "sort-imports": [
       "error",
       {
