@@ -6,7 +6,13 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { Optional, isFunction, pipe, unsafeCast } from "../../../functions.js";
+import {
+  Optional,
+  isFunction,
+  none,
+  pipe,
+  unsafeCast,
+} from "../../../functions.js";
 import {
   ContinuationLike,
   SchedulerLike,
@@ -45,8 +51,8 @@ const supportsProcessHRTime = /*@__PURE__*/ (() =>
 
 const supportsIsInputPending = /*@__PURE__*/ (() =>
   typeof navigator === "object" &&
-  navigator.scheduling !== undefined &&
-  navigator.scheduling.isInputPending !== undefined)();
+  navigator.scheduling !== none &&
+  navigator.scheduling.isInputPending !== none)();
 
 const isInputPending = (): boolean =>
   supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);

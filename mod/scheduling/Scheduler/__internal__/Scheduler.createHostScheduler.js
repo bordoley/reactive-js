@@ -1,7 +1,7 @@
 /// <reference types="./Scheduler.createHostScheduler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { isFunction, pipe, unsafeCast } from "../../../functions.js";
+import { isFunction, none, pipe, unsafeCast, } from "../../../functions.js";
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -18,8 +18,8 @@ const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "obje
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsProcessHRTime = /*@__PURE__*/ (() => typeof process === "object" && isFunction(process.hrtime))();
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
-    navigator.scheduling !== undefined &&
-    navigator.scheduling.isInputPending !== undefined)();
+    navigator.scheduling !== none &&
+    navigator.scheduling.isInputPending !== none)();
 const isInputPending = () => { var _a, _b; return supportsIsInputPending && ((_b = (_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending()) !== null && _b !== void 0 ? _b : false); };
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
     const disposable = pipe(Disposable_create(), Disposable_addTo(continuation), Disposable_onDisposed(() => clearImmediate(immmediate)));

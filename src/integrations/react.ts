@@ -37,9 +37,9 @@ export const useObservable = <T>(
   const [state, updateState] = useState<Optional<T>>(none);
   const [error, updateError] = useState<Optional<Error>>(none);
 
-  useEffect(() => {
-    const { scheduler: schedulerOption } = options;
+  const { scheduler: schedulerOption } = options;
 
+  useEffect(() => {
     const scheduler = isFunction(schedulerOption)
       ? schedulerOption()
       : schedulerOption ?? createSchedulerWithNormalPriority();
@@ -59,7 +59,7 @@ export const useObservable = <T>(
       Disposable.dispose(),
       ignore,
     );
-  }, [observable, updateState, updateError, options.scheduler]);
+  }, [observable, updateState, updateError, schedulerOption]);
 
   return isSome(error) ? raiseError<T>(error) : state;
 };
