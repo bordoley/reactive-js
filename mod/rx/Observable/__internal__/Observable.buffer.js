@@ -15,6 +15,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create.js";
 import { MutableRefLike_current, } from "../../../util/__internal__/util.internal.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
@@ -55,6 +56,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         [BufferObserver_maxBufferSize]: 0,
     }), {
         [SinkLike_notify](next) {
+            Observer_assertState(this);
             const { [BufferObserver_buffer]: buffer, [BufferObserver_maxBufferSize]: maxBufferSize, } = this;
             buffer.push(next);
             const doOnNotify = () => {

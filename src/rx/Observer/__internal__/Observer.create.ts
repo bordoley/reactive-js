@@ -7,6 +7,7 @@ import {
 import { ObserverLike, SinkLike_notify } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
@@ -27,7 +28,9 @@ const Observer_create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
         },
         {},
         {
-          [SinkLike_notify](_: T) {},
+          [SinkLike_notify](this: ObserverLike, _: T) {
+            Observer_assertState(this);
+          },
         },
       ),
     );

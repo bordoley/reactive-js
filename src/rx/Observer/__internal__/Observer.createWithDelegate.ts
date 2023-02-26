@@ -10,6 +10,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike, SinkLike_notify } from "../../../rx.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Observer_assertState from "./Observer.assertState.js";
 import Observer_getScheduler from "./Observer.getScheduler.js";
 import Observer_mixin from "./Observer.mixin.js";
 
@@ -30,7 +31,11 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
         },
         props({}),
         {
-          [SinkLike_notify](this: DelegatingLike<ObserverLike<T>>, next: T) {
+          [SinkLike_notify](
+            this: DelegatingLike<ObserverLike<T>> & ObserverLike,
+            next: T,
+          ) {
+            Observer_assertState(this);
             this[DelegatingLike_delegate][SinkLike_notify](next);
           },
         },

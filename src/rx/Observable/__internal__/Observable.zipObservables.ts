@@ -52,6 +52,7 @@ import {
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
 import EnumerableObservable_toEnumerable from "../../EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create.js";
@@ -191,6 +192,8 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             DelegatingLike<ObserverLike<readonly unknown[]>>,
           next: unknown,
         ) {
+          Observer_assertState(this);
+
           const {
             [ZipObserver_sinkEnumerator]: sinkEnumerator,
             [ZipObserver_enumerators]: enumerators,

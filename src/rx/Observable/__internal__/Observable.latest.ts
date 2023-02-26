@@ -15,6 +15,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
@@ -109,7 +110,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
         [LatestObserver_ctx]: none,
       }),
       {
-        [SinkLike_notify](this: TProperties, next: unknown) {
+        [SinkLike_notify](this: TProperties & ObserverLike, next: unknown) {
+          Observer_assertState(this);
+
           const { [LatestObserver_ctx]: ctx } = this;
           this[LatestObserver_latest] = next;
           this[LatestObserver_ready] = true;

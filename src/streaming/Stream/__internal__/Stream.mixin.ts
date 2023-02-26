@@ -44,7 +44,11 @@ import {
   SchedulerLike_inContinuation,
 } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
-import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import {
+  DisposableLike_isDisposed,
+  QueueLike_count,
+  QueueLike_push,
+} from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -122,10 +126,11 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             const scheduler = observer[ObserverLike_scheduler];
             const inContinuation = scheduler[SchedulerLike_inContinuation];
             const dispatcherQueueIsEmpty = dispatcher[QueueLike_count] === 0;
+            const isDisposed = observer[DisposableLike_isDisposed];
 
-            if (inContinuation && dispatcherQueueIsEmpty) {
+            if (inContinuation && dispatcherQueueIsEmpty && !isDisposed) {
               observer[SinkLike_notify](next);
-            } else {
+            } else if (!isDisposed) {
               dispatcher[QueueLike_push](next);
             }
           },

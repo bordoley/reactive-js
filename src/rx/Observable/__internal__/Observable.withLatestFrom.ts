@@ -27,6 +27,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -104,6 +105,8 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
                 DelegatingLike<ObserverLike<T>>,
               next: TA,
             ) {
+              Observer_assertState(this);
+
               if (
                 !this[DisposableLike_isDisposed] &&
                 this[WithLatestFromObserver_hasLatest]

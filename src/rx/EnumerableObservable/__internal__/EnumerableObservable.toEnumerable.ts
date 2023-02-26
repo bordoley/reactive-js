@@ -44,6 +44,7 @@ import {
   PullableQueueLike,
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 
@@ -150,7 +151,11 @@ const EnumerableObservable_toEnumerable: ToEnumerable<EnumerableObservableLike>[
           enumerator: none,
         }),
         {
-          [SinkLike_notify](this: TEnumeratorObserverProperties, next: T) {
+          [SinkLike_notify](
+            this: TEnumeratorObserverProperties & ObserverLike,
+            next: T,
+          ) {
+            Observer_assertState(this);
             this.enumerator[EnumeratorLike_current] = next;
           },
         },

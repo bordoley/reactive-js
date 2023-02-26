@@ -25,6 +25,7 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import EnumerableObservable_toEnumerable from "../../EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create.js";
@@ -90,6 +91,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         [ZipObserver_sinkEnumerator]: none,
     }), {
         [SinkLike_notify](next) {
+            Observer_assertState(this);
             const { [ZipObserver_sinkEnumerator]: sinkEnumerator, [ZipObserver_enumerators]: enumerators, } = this;
             if (this[DisposableLike_isDisposed]) {
                 return;

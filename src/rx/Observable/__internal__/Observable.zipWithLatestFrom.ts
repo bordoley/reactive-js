@@ -34,6 +34,7 @@ import {
   PullableQueueLike,
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_notify from "../../Sink/__internal__/Sink.notify.js";
@@ -159,6 +160,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
                 PullableQueueLike<TA>,
               next: TA,
             ) {
+              Observer_assertState(this);
               this[QueueLike_push](next);
               notifyDelegate(this);
             },

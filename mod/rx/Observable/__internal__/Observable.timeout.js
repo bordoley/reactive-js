@@ -9,6 +9,7 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import DisposableRef_mixin from "../../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
 import MutableRef_get from "../../../util/MutableRef/__internal__/MutableRef.get.js";
 import { MutableRefLike_current, } from "../../../util/__internal__/util.internal.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
@@ -35,6 +36,7 @@ const Observable_timeout = /*@__PURE__*/ (() => {
         [TimeoutObserver_duration]: none,
     }), {
         [SinkLike_notify](next) {
+            Observer_assertState(this);
             pipe(this, MutableRef_get, Disposable_dispose());
             this[DelegatingLike_delegate][SinkLike_notify](next);
         },

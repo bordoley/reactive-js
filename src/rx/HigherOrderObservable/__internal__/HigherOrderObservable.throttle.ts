@@ -44,6 +44,7 @@ import {
 } from "../../../util/__internal__/util.internal.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
@@ -155,6 +156,8 @@ const createThrottleObserver: <T>(
       }),
       {
         [SinkLike_notify](this: ObserverLike<T> & TProperties, next: T) {
+          Observer_assertState(this);
+
           this[ThrottleObserver_value] = next;
           this[ThrottleObserver_hasValue] = true;
 

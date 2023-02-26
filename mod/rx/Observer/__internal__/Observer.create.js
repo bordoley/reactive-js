@@ -3,6 +3,7 @@
 import { createInstanceFactory, include, init, mix, } from "../../../__internal__/mixins.js";
 import { SinkLike_notify } from "../../../rx.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
 const Observer_create = 
 /*@__PURE__*/ (() => {
@@ -12,7 +13,9 @@ const Observer_create =
         init(typedObserverMixin, instance, scheduler);
         return instance;
     }, {}, {
-        [SinkLike_notify](_) { },
+        [SinkLike_notify](_) {
+            Observer_assertState(this);
+        },
     }));
 })();
 export default Observer_create;

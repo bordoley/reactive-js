@@ -37,6 +37,7 @@ import {
 } from "../../../util/__internal__/util.internal.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_notifySink from "../../Sink/__internal__/Sink.notifySink.js";
@@ -169,6 +170,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
               PullableQueueLike<ContainerOf<C, T>>,
             next: ContainerOf<C, T>,
           ) {
+            Observer_assertState(this);
             this[QueueLike_push](next);
 
             // Drop old events if the maxBufferSize has been exceeded

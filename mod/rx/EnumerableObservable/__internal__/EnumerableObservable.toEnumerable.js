@@ -17,6 +17,7 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 const EnumerableObservable_toEnumerable = 
@@ -68,6 +69,7 @@ const EnumerableObservable_toEnumerable =
         enumerator: none,
     }), {
         [SinkLike_notify](next) {
+            Observer_assertState(this);
             this.enumerator[EnumeratorLike_current] = next;
         },
     }));

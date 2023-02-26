@@ -27,6 +27,7 @@ import {
   DisposableRefLike,
   MutableRefLike_current,
 } from "../../../util/__internal__/util.internal.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
@@ -112,6 +113,8 @@ const Observable_buffer: <T>(options?: {
             DelegatingLike<ObserverLike<readonly T[]>>,
           next: T,
         ) {
+          Observer_assertState(this);
+
           const {
             [BufferObserver_buffer]: buffer,
             [BufferObserver_maxBufferSize]: maxBufferSize,

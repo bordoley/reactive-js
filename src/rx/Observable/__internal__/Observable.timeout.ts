@@ -25,6 +25,7 @@ import {
   MutableRefLike,
   MutableRefLike_current,
 } from "../../../util/__internal__/util.internal.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
@@ -89,9 +90,12 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
         [SinkLike_notify](
           this: TProperties &
             MutableRefLike<DisposableLike> &
-            DelegatingLike<ObserverLike<T>>,
+            DelegatingLike<ObserverLike<T>> &
+            ObserverLike,
           next: T,
         ) {
+          Observer_assertState(this);
+
           pipe(this, MutableRef_get, Disposable_dispose());
           this[DelegatingLike_delegate][SinkLike_notify](next);
         },
