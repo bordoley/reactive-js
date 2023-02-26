@@ -5,7 +5,6 @@ import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes,
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { arrayEquality, identity, increment, incrementBy, newInstance, pipe, pipeLazy, returns, sum, } from "../../functions.js";
 import { ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../rx.js";
-import * as Continuation from "../../scheduling/Continuation.js";
 import * as Pauseable from "../../scheduling/Pauseable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
@@ -54,7 +53,7 @@ const toFlowableTests = describe("toFlowable", test("flow a generating source", 
     const subscription = pipe(generateStream, Observable.forEach(x => {
         f(Scheduler.getCurrentTime(scheduler), x);
     }), Observable.subscribe(scheduler));
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
     pipe(f, expectToHaveBeenCalledTimes(3));
     pipe(f.calls[0][1], expectEquals(0));
     pipe(f.calls[1][1], expectEquals(1));

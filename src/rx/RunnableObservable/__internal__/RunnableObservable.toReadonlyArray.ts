@@ -1,8 +1,8 @@
 import { ReadonlyArrayLike, ToReadonlyArray } from "../../../containers.js";
 import { Function1, isSome, pipe, raiseError } from "../../../functions.js";
 import { RunnableObservableLike } from "../../../rx.js";
-import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run.js";
 import VirtualTimeScheduler_create from "../../../scheduling/VirtualTimeScheduler/__internal__/VirtualTimeScheduler.create.js";
+import VirtualTimeScheduler_run from "../../../scheduling/VirtualTimeScheduler/__internal__/VirtualTimeScheduler.run.js";
 import Disposable_getError from "../../../util/Disposable/__internal__/Disposable.getError.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
@@ -22,7 +22,7 @@ const RunnableObservable_toReadonlyArray: ToReadonlyArray<RunnableObservableLike
         Observable_subscribe(scheduler),
       );
 
-      Continuation_run(scheduler);
+      VirtualTimeScheduler_run(scheduler);
       const error = Disposable_getError(subscription);
 
       return isSome(error) ? raiseError<T[]>(error) : result;

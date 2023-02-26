@@ -7,6 +7,7 @@
 ### Functions
 
 - [create](scheduling_VirtualTimeScheduler.md#create)
+- [run](scheduling_VirtualTimeScheduler.md#run)
 
 ## Functions
 
@@ -20,6 +21,22 @@
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.maxMicroTaskTicks?` | `number` |
+
+#### Returns
+
+[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
+
+___
+
+### run
+
+▸ **run**(`a`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md) |
 
 #### Returns
 

@@ -7,7 +7,7 @@ import { EnumeratorLike_current, SourceLike_move, } from "../../../ix.js";
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { ContinuationLike_run, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { ContinuationLike_run, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, } from "../../../scheduling.js";
 import { QueueLike_push } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -56,7 +56,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
                 this[VirtualTimeScheduler_microTaskTicks] >=
                     this[VirtualTimeScheduler_maxMicroTaskTicks]));
     },
-    [ContinuationLike_run]() {
+    [VirtualTimeSchedulerLike_run]() {
         while (Enumerator_move(this)) {
             const task = Enumerator_getCurrent(this);
             const { [VirtualTask_dueTime]: dueTime, [VirtualTask_continuation]: continuation, } = task;

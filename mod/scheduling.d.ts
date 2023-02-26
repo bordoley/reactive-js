@@ -67,8 +67,11 @@ export interface PrioritySchedulerLike extends SchedulerLike {
         readonly delay?: number;
     }): void;
 }
+/** @ignore */
+export declare const VirtualTimeSchedulerLike_run: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface VirtualTimeSchedulerLike extends SchedulerLike, ContinuationLike {
+export interface VirtualTimeSchedulerLike extends SchedulerLike {
+    [VirtualTimeSchedulerLike_run](): void;
 }

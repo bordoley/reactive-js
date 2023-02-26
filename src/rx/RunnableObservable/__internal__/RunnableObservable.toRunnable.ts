@@ -1,7 +1,7 @@
 import { pipe } from "../../../functions.js";
 import { RunnableObservableLike, ToRunnable } from "../../../rx.js";
-import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run.js";
 import VirtualTimeScheduler_create from "../../../scheduling/VirtualTimeScheduler/__internal__/VirtualTimeScheduler.create.js";
+import VirtualTimeScheduler_run from "../../../scheduling/VirtualTimeScheduler/__internal__/VirtualTimeScheduler.run.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -24,7 +24,7 @@ const RunnableObservable_toRunnable: ToRunnable<RunnableObservableLike>["toRunna
       pipe(
         scheduler,
         Disposable_addTo(sink),
-        Continuation_run,
+        VirtualTimeScheduler_run,
         Disposable_dispose(),
       );
     });

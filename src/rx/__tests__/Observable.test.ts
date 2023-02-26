@@ -13,7 +13,6 @@ import {
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import { ObservableLike } from "../../rx.js";
-import * as Continuation from "../../scheduling/Continuation.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import * as Disposable from "../../util/Disposable.js";
@@ -38,7 +37,7 @@ const onSubscribeTests = describe(
     pipe(disp, expectToHaveBeenCalledTimes(0));
     pipe(f, expectToHaveBeenCalledTimes(1));
 
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
 
     pipe(disp, expectToHaveBeenCalledTimes(1));
     pipe(f, expectToHaveBeenCalledTimes(1));
@@ -77,7 +76,7 @@ const shareTests = describe(
       Observable.subscribe(scheduler),
     );
 
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
     pipe(result, expectArrayEquals([2, 4, 6]));
   }),
 );
@@ -128,7 +127,7 @@ const asyncTests = describe(
       Observable.subscribe(scheduler),
     );
 
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
 
     pipe(result, expectEquals(22));
   }),
@@ -160,7 +159,7 @@ const asyncTests = describe(
       Observable.subscribe(scheduler),
     );
 
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
 
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
   }),
@@ -194,7 +193,7 @@ const asyncTests = describe(
       Observable.subscribe(scheduler),
     );
 
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
 
     pipe(
       result,

@@ -17,7 +17,6 @@ import {
   raise,
 } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
-import * as Continuation from "../../scheduling/Continuation.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import * as Disposable from "../Disposable.js";
@@ -116,7 +115,7 @@ testModule(
       ),
     );
 
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
     pipe(disposedTime, expectEquals(2));
   }),
 );

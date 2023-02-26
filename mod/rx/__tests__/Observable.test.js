@@ -3,7 +3,6 @@
 import { describe, expectArrayEquals, expectEquals, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__tests__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { increment, isSome, pipe, raise, returns } from "../../functions.js";
-import * as Continuation from "../../scheduling/Continuation.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import * as Disposable from "../../util/Disposable.js";
@@ -16,7 +15,7 @@ const onSubscribeTests = describe("onSubscribe", test("when subscribe function r
     pipe([1], ReadonlyArray.toObservable(), Observable.onSubscribe(f), Observable.subscribe(scheduler));
     pipe(disp, expectToHaveBeenCalledTimes(0));
     pipe(f, expectToHaveBeenCalledTimes(1));
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
     pipe(disp, expectToHaveBeenCalledTimes(1));
     pipe(f, expectToHaveBeenCalledTimes(1));
 }), test("when callback function throws", () => {
@@ -31,7 +30,7 @@ const shareTests = describe("share", test("shared observable zipped with itself"
     pipe(Observable.zip(shared, shared), Observable.map(([a, b]) => a + b), Observable.forEach(x => {
         result.push(x);
     }), Observable.subscribe(scheduler));
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
     pipe(result, expectArrayEquals([2, 4, 6]));
 }));
 const toPromiseTests = describe("toPromise", testAsync("when observable completes without producing a value", async () => {
@@ -58,7 +57,7 @@ const asyncTests = describe("async", test("batch mode", () => {
     }), Observable.takeLast(), Observable.forEach(v => {
         result = v;
     }), Observable.subscribe(scheduler));
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
     pipe(result, expectEquals(22));
 }), test("combined-latest mode", () => {
     const scheduler = VirtualTimeScheduler.create();
@@ -72,7 +71,7 @@ const asyncTests = describe("async", test("batch mode", () => {
     }, { mode: "combine-latest" }), Observable.keepType(isSome), Observable.forEach(v => {
         result.push(v);
     }), Observable.subscribe(scheduler));
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), test("conditional hooks", () => {
     const scheduler = VirtualTimeScheduler.create();
@@ -92,7 +91,7 @@ const asyncTests = describe("async", test("batch mode", () => {
     }), Observable.forEach(v => {
         result.push(v);
     }), Observable.subscribe(scheduler));
-    Continuation.run(scheduler);
+    VirtualTimeScheduler.run(scheduler);
     pipe(result, expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]));
 }));
 testModule("Observable", asyncTests, onSubscribeTests, shareTests, toPromiseTests);

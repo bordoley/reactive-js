@@ -12,8 +12,6 @@ A unit of work to be executed by a scheduler.
 
   ↳ **`ContinuationLike`**
 
-  ↳↳ [`VirtualTimeSchedulerLike`](scheduling.VirtualTimeSchedulerLike.md)
-
 ## Table of contents
 
 ### Methods

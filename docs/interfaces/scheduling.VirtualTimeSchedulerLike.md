@@ -8,6 +8,20 @@
 
 - [`SchedulerLike`](scheduling.SchedulerLike.md)
 
-- [`ContinuationLike`](scheduling.ContinuationLike.md)
-
   ↳ **`VirtualTimeSchedulerLike`**
+
+## Table of contents
+
+### Methods
+
+- [[VirtualTimeSchedulerLike\_run]](scheduling.VirtualTimeSchedulerLike.md#[virtualtimeschedulerlike_run])
+
+## Methods
+
+### [VirtualTimeSchedulerLike\_run]
+
+▸ **[VirtualTimeSchedulerLike_run]**(): `void`
+
+#### Returns
+
+`void`

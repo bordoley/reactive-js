@@ -94,9 +94,14 @@ export interface PrioritySchedulerLike extends SchedulerLike {
   ): void;
 }
 
+/** @ignore */
+export const VirtualTimeSchedulerLike_run = Symbol(
+  "VirtualTimeSchedulerLike_run",
+);
+
 /**
  * @noInheritDoc
  */
-export interface VirtualTimeSchedulerLike
-  extends SchedulerLike,
-    ContinuationLike {}
+export interface VirtualTimeSchedulerLike extends SchedulerLike {
+  [VirtualTimeSchedulerLike_run](): void;
+}

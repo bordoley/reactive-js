@@ -16,3 +16,5 @@ export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
 export const PauseableState_running = Symbol("PauseableState_running");
 export const PauseableState_paused = Symbol("PauseableState_paused");
+/** @ignore */
+export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run");

@@ -6,7 +6,6 @@ import {
 } from "../../__tests__/testing.js";
 import { pipe, returns } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
-import * as Continuation from "../../scheduling/Continuation.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as Queue from "../../util/Queue.js";
@@ -40,7 +39,7 @@ testModule(
         Observable.subscribe(scheduler),
       );
 
-      Continuation.run(scheduler);
+      VirtualTimeScheduler.run(scheduler);
 
       pipe(result, expectArrayEquals([1, 2, 3]));
     }),

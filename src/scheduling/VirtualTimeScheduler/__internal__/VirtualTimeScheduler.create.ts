@@ -27,6 +27,7 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   VirtualTimeSchedulerLike,
+  VirtualTimeSchedulerLike_run,
 } from "../../../scheduling.js";
 import { DisposableLike, QueueLike_push } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
@@ -89,7 +90,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     function VirtualTimeScheduler(
       instance: Pick<
         VirtualTimeSchedulerLike,
-        | typeof ContinuationLike_run
+        | typeof VirtualTimeSchedulerLike_run
         | typeof SchedulerLike_shouldYield
         | typeof SchedulerLike_requestYield
         | typeof SchedulerLike_schedule
@@ -138,7 +139,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
               this[VirtualTimeScheduler_maxMicroTaskTicks])
         );
       },
-      [ContinuationLike_run](this: TProperties & EnumeratorLike<VirtualTask>) {
+      [VirtualTimeSchedulerLike_run](
+        this: TProperties & EnumeratorLike<VirtualTask>,
+      ) {
         while (Enumerator_move(this)) {
           const task = Enumerator_getCurrent(this);
           const {
