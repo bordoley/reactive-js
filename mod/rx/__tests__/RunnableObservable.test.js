@@ -47,7 +47,7 @@ const toFlowableTests = describe("toFlowable", test("flow a generating source", 
         delay: 4,
     }));
     pipe(scheduler, Scheduler.schedule(pipeLazy(generateStream, Disposable.dispose()), {
-        delay: 5,
+        delay: 6,
     }));
     const f = mockFn();
     const subscription = pipe(generateStream, Observable.forEach(x => {

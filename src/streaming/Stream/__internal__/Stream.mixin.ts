@@ -27,7 +27,10 @@ import {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
+  ObserverLike_dispatcher,
+  ObserverLike_scheduler,
   ReactiveContainerLike_sinkInto,
+  SinkLike_notify,
 } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
@@ -38,11 +41,12 @@ import {
   DispatcherLike,
   DispatcherLike_scheduler,
   SchedulerLike,
+  SchedulerLike_inContinuation,
 } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
-import add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
@@ -52,12 +56,12 @@ export interface DispatchedObservableLike<T>
 
 const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
   /*@__PURE__*/ (<T>() => {
-    const DispatchedObservable_dispatcher = Symbol(
-      "DispatchedObservable_dispatcher",
+    const DispatchedObservable_observer = Symbol(
+      "DispatchedObservable_observer",
     );
 
     type TProperties = {
-      [DispatchedObservable_dispatcher]: Optional<DispatcherLike<T>>;
+      [DispatchedObservable_observer]: Optional<ObserverLike<T>>;
     };
 
     return createInstanceFactory(
@@ -79,7 +83,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           return instance;
         },
         props<TProperties>({
-          [DispatchedObservable_dispatcher]: none,
+          [DispatchedObservable_observer]: none,
         }),
         {
           [ObservableLike_isEnumerable]: false,
@@ -87,19 +91,21 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
 
           get [QueueLike_count](): number {
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
-            return (
-              this[DispatchedObservable_dispatcher]?.[QueueLike_count] ?? 0
-            );
+            // Practically the observer can never be none.
+            const observer = this[
+              DispatchedObservable_observer
+            ] as ObserverLike<T>;
+            const dispatcher = observer[ObserverLike_dispatcher];
+            return dispatcher[QueueLike_count];
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
-            const dispatcher = this[DispatchedObservable_dispatcher];
-            return isSome(dispatcher)
-              ? dispatcher[DispatcherLike_scheduler]
-              : raiseWithDebugMessage<SchedulerLike>(
-                  "DispatchedObservable has not been subscribed to",
-                );
+            // Practically the observer can never be none.
+            const observer = this[
+              DispatchedObservable_observer
+            ] as ObserverLike<T>;
+            return observer[ObserverLike_scheduler];
           },
 
           [QueueLike_push](
@@ -107,23 +113,40 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             next: T,
           ) {
             unsafeCast<DispatchedObservableLike<T>>(this);
-            this[DispatchedObservable_dispatcher]?.[QueueLike_push](next);
+
+            // Practically the observer can never be none.
+            const observer = this[
+              DispatchedObservable_observer
+            ] as ObserverLike<T>;
+            const dispatcher = observer[ObserverLike_dispatcher];
+            const scheduler = observer[ObserverLike_scheduler];
+            const inContinuation = scheduler[SchedulerLike_inContinuation];
+            const dispatcherQueueIsEmpty = dispatcher[QueueLike_count] === 0;
+
+            if (inContinuation && dispatcherQueueIsEmpty) {
+              observer[SinkLike_notify](next);
+            } else {
+              dispatcher[QueueLike_push](next);
+            }
           },
 
           [ReactiveContainerLike_sinkInto](
             this: TProperties & DispatchedObservableLike<T>,
             observer: ObserverLike<T>,
           ) {
-            if (isSome(this[DispatchedObservable_dispatcher])) {
+            if (isSome(this[DispatchedObservable_observer])) {
               raiseWithDebugMessage(
                 "DispatchedObservable already subscribed to",
               );
             }
 
-            const dispatcher = Observer_getDispatcher(observer);
-            this[DispatchedObservable_dispatcher] = dispatcher;
+            this[DispatchedObservable_observer] = observer;
 
-            pipe(this, Disposable_addIgnoringChildErrors(dispatcher));
+            pipe(
+              observer,
+              Observer_getDispatcher,
+              Disposable_addToIgnoringChildErrors(this),
+            );
           },
         },
       ),
@@ -162,21 +185,21 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         scheduler: SchedulerLike,
         replay: number,
       ): StreamLike<TReq, T> {
-        const subject = DispatchedObservable_create<TReq>();
+        const dispatchedObservable = DispatchedObservable_create<TReq>();
 
         init(
           Disposable_delegatingMixin<DispatchedObservableLike<TReq>>(),
           instance,
-          subject,
+          dispatchedObservable,
         );
 
         instance[DispatcherLike_scheduler] = scheduler;
 
         instance[StreamMixin_observable] = pipe(
-          subject,
+          dispatchedObservable,
           op,
           Observable_multicast<T>(scheduler, { replay }),
-          add(instance),
+          Disposable_add(instance),
         );
 
         return instance;

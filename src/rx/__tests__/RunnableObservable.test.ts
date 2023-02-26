@@ -333,7 +333,7 @@ const toFlowableTests = describe(
     pipe(
       scheduler,
       Scheduler.schedule(pipeLazy(generateStream, Disposable.dispose()), {
-        delay: 5,
+        delay: 6,
       }),
     );
 

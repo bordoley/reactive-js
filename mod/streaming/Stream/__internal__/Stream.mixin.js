@@ -2,63 +2,73 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, } from "../../../rx.js";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike_sinkInto, SinkLike_notify, } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
-import { DispatcherLike_scheduler, } from "../../../scheduling.js";
+import { DispatcherLike_scheduler, SchedulerLike_inContinuation, } from "../../../scheduling.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
-import add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
-    const DispatchedObservable_dispatcher = Symbol("DispatchedObservable_dispatcher");
+    const DispatchedObservable_observer = Symbol("DispatchedObservable_observer");
     return createInstanceFactory(mix(include(Disposable_mixin), function DispatchedObservable(instance) {
         init(Disposable_mixin, instance);
         return instance;
     }, props({
-        [DispatchedObservable_dispatcher]: none,
+        [DispatchedObservable_observer]: none,
     }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         get [QueueLike_count]() {
-            var _a, _b;
             unsafeCast(this);
-            return ((_b = (_a = this[DispatchedObservable_dispatcher]) === null || _a === void 0 ? void 0 : _a[QueueLike_count]) !== null && _b !== void 0 ? _b : 0);
+            // Practically the observer can never be none.
+            const observer = this[DispatchedObservable_observer];
+            const dispatcher = observer[ObserverLike_dispatcher];
+            return dispatcher[QueueLike_count];
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
-            const dispatcher = this[DispatchedObservable_dispatcher];
-            return isSome(dispatcher)
-                ? dispatcher[DispatcherLike_scheduler]
-                : raiseWithDebugMessage("DispatchedObservable has not been subscribed to");
+            // Practically the observer can never be none.
+            const observer = this[DispatchedObservable_observer];
+            return observer[ObserverLike_scheduler];
         },
         [QueueLike_push](next) {
-            var _a;
             unsafeCast(this);
-            (_a = this[DispatchedObservable_dispatcher]) === null || _a === void 0 ? void 0 : _a[QueueLike_push](next);
+            // Practically the observer can never be none.
+            const observer = this[DispatchedObservable_observer];
+            const dispatcher = observer[ObserverLike_dispatcher];
+            const scheduler = observer[ObserverLike_scheduler];
+            const inContinuation = scheduler[SchedulerLike_inContinuation];
+            const dispatcherQueueIsEmpty = dispatcher[QueueLike_count] === 0;
+            if (inContinuation && dispatcherQueueIsEmpty) {
+                observer[SinkLike_notify](next);
+            }
+            else {
+                dispatcher[QueueLike_push](next);
+            }
         },
         [ReactiveContainerLike_sinkInto](observer) {
-            if (isSome(this[DispatchedObservable_dispatcher])) {
+            if (isSome(this[DispatchedObservable_observer])) {
                 raiseWithDebugMessage("DispatchedObservable already subscribed to");
             }
-            const dispatcher = Observer_getDispatcher(observer);
-            this[DispatchedObservable_dispatcher] = dispatcher;
-            pipe(this, Disposable_addIgnoringChildErrors(dispatcher));
+            this[DispatchedObservable_observer] = observer;
+            pipe(observer, Observer_getDispatcher, Disposable_addToIgnoringChildErrors(this));
         },
     }));
 })();
 const Stream_mixin = /*@__PURE__*/ (() => {
     const StreamMixin_observable = Symbol("StreamMixin_observable");
     return returns(mix(include(Disposable_delegatingMixin()), function StreamMixin(instance, op, scheduler, replay) {
-        const subject = DispatchedObservable_create();
-        init(Disposable_delegatingMixin(), instance, subject);
+        const dispatchedObservable = DispatchedObservable_create();
+        init(Disposable_delegatingMixin(), instance, dispatchedObservable);
         instance[DispatcherLike_scheduler] = scheduler;
-        instance[StreamMixin_observable] = pipe(subject, op, Observable_multicast(scheduler, { replay }), add(instance));
+        instance[StreamMixin_observable] = pipe(dispatchedObservable, op, Observable_multicast(scheduler, { replay }), Disposable_add(instance));
         return instance;
     }, props({
         [StreamMixin_observable]: none,
