@@ -9,7 +9,7 @@ const Object_private_initializedProperties = Symbol("Object_private_initializedP
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
 function initUnsafe(mixin, instance, ...args) {
     const f = mixin[Object_init];
-    f.call(undefined, instance, ...args);
+    f(instance, ...args);
 }
 export const init = initUnsafe;
 export const include = (...mixins) => {

@@ -1,4 +1,4 @@
-import { SideEffect1, Updater, isSome } from "../../../functions.js";
+import { SideEffect1, Updater, call, isSome } from "../../../functions.js";
 import { DisposableLike } from "../../../util.js";
 import addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown.js";
 
@@ -7,7 +7,7 @@ const Disposable_onError =
   disposable => {
     addDisposableOrTeardown(disposable, e => {
       if (isSome(e)) {
-        teardown.call(disposable, e);
+        call(teardown, disposable, e);
       }
     });
     return disposable;

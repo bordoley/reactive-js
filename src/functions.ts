@@ -159,6 +159,24 @@ export const arrayEquality =
     ReadonlyArray_getLength(a) === ReadonlyArray_getLength(b) &&
     a.every((v, i) => valuesEquality(b[i], v));
 
+interface Call {
+  <TInstance, T>(f: () => T, self: TInstance): T;
+
+  <TInstance, T, TA>(f: (a: TA) => T, self: TInstance, a: TA): T;
+
+  <TInstance, T, TA, TB>(
+    f: (a: TA, b: TB) => T,
+    self: TInstance,
+    a: TA,
+    b: TB,
+  ): T;
+}
+export const call: Call = <T>(
+  f: (...args: readonly unknown[]) => T,
+  self: unknown,
+  ...args: readonly any[]
+) => f.call(self, ...args);
+
 interface CallWith {
   <T>(): Function1<Factory<T>, T>;
   <TA, T>(a: TA): Function1<Function1<TA, T>, T>;

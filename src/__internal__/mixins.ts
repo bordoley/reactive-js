@@ -74,7 +74,7 @@ function initUnsafe<TReturn>(
   ...args: readonly unknown[]
 ): asserts instance is TReturn {
   const f = mixin[Object_init];
-  f.call(undefined, instance, ...args);
+  f(instance, ...args);
 }
 
 interface Init {

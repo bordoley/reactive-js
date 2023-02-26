@@ -87,6 +87,7 @@ testModule("PullableQueue", describe("fifoQueueMixin", test("push/pull/count", (
     for (let i = 0; i < shuffledArray.length; i++) {
         queue[QueueLike_push](shuffledArray[i]);
     }
+    debugger;
     const acc = [];
     while (Queue_count(queue) > 0) {
         acc.push(PullableQueue_pull(queue));

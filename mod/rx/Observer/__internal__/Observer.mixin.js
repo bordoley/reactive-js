@@ -1,7 +1,7 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
 import { createInstanceFactory, getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
+import { call, isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_dispatcher, ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
 import { DispatcherLike_scheduler, } from "../../../scheduling.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
@@ -61,7 +61,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         },
         [QueueLike_push](next) {
             if (!Disposable_isDisposed(this)) {
-                fifoQueueProtoype[QueueLike_push].call(this, next);
+                call(fifoQueueProtoype[QueueLike_push], this, next);
                 scheduleDrainQueue(this);
             }
         },

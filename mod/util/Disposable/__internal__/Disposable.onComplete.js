@@ -1,11 +1,11 @@
 /// <reference types="./Disposable.onComplete.d.ts" />
 
-import { isNone } from "../../../functions.js";
+import { call, isNone } from "../../../functions.js";
 import addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown.js";
 const Disposable_onComplete = (teardown) => disposable => {
     addDisposableOrTeardown(disposable, e => {
         if (isNone(e)) {
-            teardown.call(disposable);
+            call(teardown, disposable);
         }
     });
     return disposable;

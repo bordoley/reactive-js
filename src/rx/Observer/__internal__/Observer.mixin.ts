@@ -11,6 +11,7 @@ import {
 import {
   Optional,
   SideEffect,
+  call,
   isNone,
   none,
   pipe,
@@ -136,7 +137,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           next: T,
         ) {
           if (!Disposable_isDisposed(this)) {
-            fifoQueueProtoype[QueueLike_push].call(this, next);
+            call(fifoQueueProtoype[QueueLike_push], this, next);
             scheduleDrainQueue(this);
           }
         },

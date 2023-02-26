@@ -47,6 +47,7 @@
 - [alwaysFalse](functions.md#alwaysfalse)
 - [alwaysTrue](functions.md#alwaystrue)
 - [arrayEquality](functions.md#arrayequality)
+- [call](functions.md#call)
 - [callWith](functions.md#callwith)
 - [compose](functions.md#compose)
 - [composeUnsafe](functions.md#composeunsafe)
@@ -980,6 +981,76 @@ comparing their values using `valuesEquality`.
 #### Returns
 
 [`Equality`](functions.md#equality)<readonly `T`[]\>
+
+___
+
+### call
+
+▸ **call**<`TInstance`, `T`\>(`f`, `self`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TInstance` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | () => `T` |
+| `self` | `TInstance` |
+
+#### Returns
+
+`T`
+
+▸ **call**<`TInstance`, `T`, `TA`\>(`f`, `self`, `a`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TInstance` |
+| `T` |
+| `TA` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | (`a`: `TA`) => `T` |
+| `self` | `TInstance` |
+| `a` | `TA` |
+
+#### Returns
+
+`T`
+
+▸ **call**<`TInstance`, `T`, `TA`, `TB`\>(`f`, `self`, `a`, `b`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TInstance` |
+| `T` |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | (`a`: `TA`, `b`: `TB`) => `T` |
+| `self` | `TInstance` |
+| `a` | `TA` |
+| `b` | `TB` |
+
+#### Returns
+
+`T`
 
 ___
 
