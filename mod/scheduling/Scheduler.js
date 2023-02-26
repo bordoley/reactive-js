@@ -1,6 +1,5 @@
 /// <reference types="./Scheduler.d.ts" />
 
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, } from "../scheduling.js";
 import Scheduler_createHostScheduler from "./Scheduler/__internal__/Scheduler.createHostScheduler.js";
 import Scheduler_getCurrentTime from "./Scheduler/__internal__/Scheduler.getCurrentTime.js";
 import Scheduler_isInContinuation from "./Scheduler/__internal__/Scheduler.isInContinuation.js";

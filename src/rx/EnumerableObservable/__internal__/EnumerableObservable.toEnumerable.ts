@@ -88,7 +88,7 @@ const EnumerableObservable_toEnumerable: ToEnumerable<EnumerableObservableLike>[
         {
           [SchedulerLike_now]: 0,
           get [SchedulerLike_shouldYield](): boolean {
-            unsafeCast<TEnumeratorSchedulerProperties>(this);
+            unsafeCast<SchedulerLike>(this);
             return Scheduler_isInContinuation(this);
           },
           [SchedulerLike_requestYield](): void {

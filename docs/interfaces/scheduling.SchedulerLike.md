@@ -12,6 +12,8 @@
 
   ↳↳ [`PauseableSchedulerLike`](scheduling.PauseableSchedulerLike.md)
 
+  ↳↳ [`PrioritySchedulerLike`](scheduling.PrioritySchedulerLike.md)
+
   ↳↳ [`VirtualTimeSchedulerLike`](scheduling.VirtualTimeSchedulerLike.md)
 
 ## Table of contents

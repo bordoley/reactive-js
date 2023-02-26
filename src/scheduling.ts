@@ -84,20 +84,11 @@ export interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {}
  *
  * @noInheritDoc
  */
-export interface PrioritySchedulerLike extends DisposableLike {
-  readonly [SchedulerLike_inContinuation]: boolean;
-  readonly [SchedulerLike_now]: number;
-  readonly [SchedulerLike_shouldYield]: boolean;
-
-  /**
-   * Request the scheduler to yield.
-   */
-  [SchedulerLike_requestYield](): void;
-
+export interface PrioritySchedulerLike extends SchedulerLike {
   [SchedulerLike_schedule](
     continuation: ContinuationLike,
-    options: {
-      readonly priority: number;
+    options?: {
+      readonly priority?: number;
       readonly delay?: number;
     },
   ): void;

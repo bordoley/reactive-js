@@ -1,12 +1,5 @@
 import { Function1 } from "../functions.js";
-import {
-  PrioritySchedulerLike,
-  SchedulerLike,
-  SchedulerLike_inContinuation,
-  SchedulerLike_now,
-  SchedulerLike_requestYield,
-  SchedulerLike_shouldYield,
-} from "../scheduling.js";
+import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.js";
 
 import Scheduler_createHostScheduler from "./Scheduler/__internal__/Scheduler.createHostScheduler.js";
 import Scheduler_getCurrentTime from "./Scheduler/__internal__/Scheduler.getCurrentTime.js";
@@ -19,21 +12,13 @@ import { create as Scheduler_toPriorityScheduler } from "./__internal__/QueueSch
 
 export const createHostScheduler = Scheduler_createHostScheduler;
 
-export const getCurrentTime: (scheduler: {
-  readonly [SchedulerLike_now]: number;
-}) => number = Scheduler_getCurrentTime;
+export const getCurrentTime = Scheduler_getCurrentTime;
 
-export const isInContinuation: (scheduler: {
-  readonly [SchedulerLike_inContinuation]: boolean;
-}) => boolean = Scheduler_isInContinuation;
+export const isInContinuation = Scheduler_isInContinuation;
 
-export const requestYield: (scheduler: {
-  [SchedulerLike_requestYield](): void;
-}) => void = Scheduler_requestYield;
+export const requestYield = Scheduler_requestYield;
 
-export const shouldYield: (scheduler: {
-  [SchedulerLike_shouldYield]: boolean;
-}) => boolean = Scheduler_shouldYield;
+export const shouldYield = Scheduler_shouldYield;
 
 export const schedule = Scheduler_schedule;
 

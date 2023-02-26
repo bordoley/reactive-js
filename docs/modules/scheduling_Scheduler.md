@@ -42,8 +42,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | `Object` |
-| `scheduler.[SchedulerLike_now]` | `number` |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 
@@ -59,8 +58,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | `Object` |
-| `scheduler.[SchedulerLike_inContinuation]` | `boolean` |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 
@@ -76,8 +74,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | `Object` |
-| `scheduler.[SchedulerLike_requestYield]` | () => `void` |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 
@@ -111,8 +108,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | `Object` |
-| `scheduler.[SchedulerLike_shouldYield]` | `boolean` |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 

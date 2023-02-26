@@ -22,8 +22,6 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)
 
-  ↳ [`PrioritySchedulerLike`](scheduling.PrioritySchedulerLike.md)
-
 ## Table of contents
 
 ### Properties

@@ -20,6 +20,7 @@ import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal.js";
 import {
   ContinuationLike,
   ContinuationLike_run,
+  SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
   SchedulerLike_requestYield,
@@ -156,7 +157,10 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         this[VirtualTimeScheduler_yieldRequested] = true;
       },
       [SchedulerLike_schedule](
-        this: TProperties & DisposableLike & PullableQueueLike<VirtualTask>,
+        this: TProperties &
+          DisposableLike &
+          PullableQueueLike<VirtualTask> &
+          SchedulerLike,
         continuation: ContinuationLike,
         options?: { readonly delay?: number },
       ) {

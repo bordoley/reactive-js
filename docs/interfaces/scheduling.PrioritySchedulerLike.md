@@ -8,68 +8,35 @@ A scheduler which schedules work according to it's priority.
 
 ## Hierarchy
 
-- [`DisposableLike`](util.DisposableLike.md)
+- [`SchedulerLike`](scheduling.SchedulerLike.md)
 
   ↳ **`PrioritySchedulerLike`**
 
 ## Table of contents
 
-### Properties
-
-- [[SchedulerLike\_inContinuation]](scheduling.PrioritySchedulerLike.md#[schedulerlike_incontinuation])
-- [[SchedulerLike\_now]](scheduling.PrioritySchedulerLike.md#[schedulerlike_now])
-- [[SchedulerLike\_shouldYield]](scheduling.PrioritySchedulerLike.md#[schedulerlike_shouldyield])
-
 ### Methods
 
-- [[SchedulerLike\_requestYield]](scheduling.PrioritySchedulerLike.md#[schedulerlike_requestyield])
 - [[SchedulerLike\_schedule]](scheduling.PrioritySchedulerLike.md#[schedulerlike_schedule])
-
-## Properties
-
-### [SchedulerLike\_inContinuation]
-
-• `Readonly` **[SchedulerLike\_inContinuation]**: `boolean`
-
-___
-
-### [SchedulerLike\_now]
-
-• `Readonly` **[SchedulerLike\_now]**: `number`
-
-___
-
-### [SchedulerLike\_shouldYield]
-
-• `Readonly` **[SchedulerLike\_shouldYield]**: `boolean`
 
 ## Methods
 
-### [SchedulerLike\_requestYield]
-
-▸ **[SchedulerLike_requestYield]**(): `void`
-
-Request the scheduler to yield.
-
-#### Returns
-
-`void`
-
-___
-
 ### [SchedulerLike\_schedule]
 
-▸ **[SchedulerLike_schedule]**(`continuation`, `options`): `void`
+▸ **[SchedulerLike_schedule]**(`continuation`, `options?`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `continuation` | [`ContinuationLike`](scheduling.ContinuationLike.md) |
-| `options` | `Object` |
+| `options?` | `Object` |
 | `options.delay?` | `number` |
-| `options.priority` | `number` |
+| `options.priority?` | `number` |
 
 #### Returns
 
 `void`
+
+#### Overrides
+
+[SchedulerLike](scheduling.SchedulerLike.md).[[SchedulerLike_schedule]](scheduling.SchedulerLike.md#[schedulerlike_schedule])

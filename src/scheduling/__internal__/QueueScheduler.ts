@@ -374,7 +374,10 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             this[QueueScheduler_yieldRequested] = true;
           },
           [SchedulerLike_schedule](
-            this: TProperties & DisposableRefLike & EnumeratorLike<QueueTask>,
+            this: TProperties &
+              DisposableRefLike &
+              EnumeratorLike<QueueTask> &
+              SchedulerLike,
             continuation: ContinuationLike,
             options?: QueueSchedulerOptions,
           ) {

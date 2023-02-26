@@ -106,7 +106,7 @@ const scheduleImmediate = (
 };
 
 const runContinuation = (
-  scheduler: TProperties & { [SchedulerLike_now]: number },
+  scheduler: TProperties & SchedulerLike,
   continuation: ContinuationLike,
   immmediateOrTimerDisposable: DisposableLike,
 ) => {

@@ -64,7 +64,7 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
         },
 
         get [SchedulerLike_shouldYield](): boolean {
-          unsafeCast<TProperties>(this);
+          unsafeCast<TProperties & SchedulerLike>(this);
           return Scheduler.isInContinuation(this) && unstable_shouldYield();
         },
 
@@ -77,14 +77,14 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
             [SchedulerLike_inContinuation]: boolean;
           },
           continuation: ContinuationLike,
-          options: {
-            priority: number;
+          options?: {
+            priority?: number;
             delay?: number;
           },
         ) {
           const delay = getDelay(options);
 
-          const { priority } = options;
+          const { priority = unstable_NormalPriority } = options ?? {};
 
           pipe(this, Disposable.addIgnoringChildErrors(continuation));
 

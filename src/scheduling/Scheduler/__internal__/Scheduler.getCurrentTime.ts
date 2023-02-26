@@ -1,7 +1,6 @@
-import { SchedulerLike_now } from "../../../scheduling.js";
+import { SchedulerLike, SchedulerLike_now } from "../../../scheduling.js";
 
-const Scheduler_getCurrentTime = (scheduler: {
-  readonly [SchedulerLike_now]: number;
-}): number => scheduler[SchedulerLike_now];
+const Scheduler_getCurrentTime = (scheduler: SchedulerLike): number =>
+  scheduler[SchedulerLike_now];
 
 export default Scheduler_getCurrentTime;
