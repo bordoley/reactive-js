@@ -1,10 +1,10 @@
 {
   "name": "@reactive-js/example-node",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "type": "module",
   "private": true,
   "dependencies": {
-    "@reactive-js/core": "^0.13.0"
+    "@reactive-js/core": "^0.14.0"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json && node ./build/index.js",
