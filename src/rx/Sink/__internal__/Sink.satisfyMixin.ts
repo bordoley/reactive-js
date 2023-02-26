@@ -30,7 +30,12 @@ const Sink_satisfyMixin: <
 >(
   fromReadonlyArray: (v: readonly boolean[]) => C,
   defaultResult: boolean,
-) => Mixin2<SinkLike<T>, TSink, Predicate<T>> = <
+) => Mixin2<
+  SinkLike<T>,
+  TSink,
+  Predicate<T>,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
+> = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<boolean>,
   T,

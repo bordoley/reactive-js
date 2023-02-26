@@ -1,6 +1,17 @@
-import { Mixin2, include, init, mix } from "../../../__internal__/mixins.js";
+import {
+  Mixin2,
+  getPrototype,
+  include,
+  init,
+  mix,
+  props,
+} from "../../../__internal__/mixins.js";
 import { Predicate, compose, negate } from "../../../functions.js";
-import { ReactiveContainerLike, SinkLike } from "../../../rx.js";
+import {
+  ReactiveContainerLike,
+  SinkLike,
+  SinkLike_notify,
+} from "../../../rx.js";
 
 import Sink_satisfyMixin from "./Sink.satisfyMixin.js";
 
@@ -10,7 +21,12 @@ const Sink_everySatisfyMixin: <
   T,
 >(
   fromReadonlyArray: (v: readonly boolean[]) => C,
-) => Mixin2<SinkLike<T>, TSink, Predicate<T>> = <
+) => Mixin2<
+  SinkLike<T>,
+  TSink,
+  Predicate<T>,
+  Pick<SinkLike<T>, typeof SinkLike_notify>
+> = <
   C extends ReactiveContainerLike<TSink>,
   TSink extends SinkLike<boolean>,
   T,
@@ -37,6 +53,8 @@ const Sink_everySatisfyMixin: <
       );
       return instance;
     },
+    props<unknown>({}),
+    getPrototype(typedSatisfySinkMixin),
   );
 };
 

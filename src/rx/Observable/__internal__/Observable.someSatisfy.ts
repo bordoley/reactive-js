@@ -3,11 +3,13 @@ import {
   include,
   init,
   mix,
+  props,
 } from "../../../__internal__/mixins.js";
 import { SomeSatisfy } from "../../../containers.js";
 import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import { Predicate, partial, pipe } from "../../../functions.js";
 import { ObservableLike, ObserverLike, SinkLike } from "../../../rx.js";
+import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_someSatisfyMixin from "../../Sink/__internal__/Sink.someSatisfyMixin.js";
@@ -34,6 +36,8 @@ const Observable_someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
 
         return instance;
       },
+      props<unknown>({}),
+      Observer_decorateNotifyForDev(typedSomeSatisfySinkMixin),
     );
 
     return (predicate: Predicate<T>) =>
