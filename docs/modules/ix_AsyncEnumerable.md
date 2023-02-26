@@ -6,6 +6,7 @@
 
 ### Constructor Functions
 
+- [fromAsyncIterable](ix_AsyncEnumerable.md#fromasynciterable)
 - [fromEnumerable](ix_AsyncEnumerable.md#fromenumerable)
 - [fromEnumerableObservable](ix_AsyncEnumerable.md#fromenumerableobservable)
 - [fromIterable](ix_AsyncEnumerable.md#fromiterable)
@@ -26,6 +27,28 @@
 - [takeWhile](ix_AsyncEnumerable.md#takewhile)
 
 ## Constructor Functions
+
+### fromAsyncIterable
+
+▸ **fromAsyncIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
+
+___
 
 ### fromEnumerable
 

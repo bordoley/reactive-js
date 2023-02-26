@@ -195,8 +195,6 @@ testModule(
         queue[QueueLike_push](shuffledArray[i]);
       }
 
-      debugger;
-
       const acc: number[] = [];
       while (Queue_count(queue) > 0) {
         acc.push(PullableQueue_pull(queue) as number);

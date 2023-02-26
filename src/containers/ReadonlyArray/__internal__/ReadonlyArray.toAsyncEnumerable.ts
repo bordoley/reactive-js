@@ -9,6 +9,7 @@ import {
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../ix.js";
 import AsyncEnumerable_create from "../../../ix/AsyncEnumerable/__internal__/AsyncEnumerable.create.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
+import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
@@ -44,9 +45,11 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
         count >= 0
           ? Observable_scan(increment, returns(start - 1))
           : Observable_scan(decrement, returns(start + 1)),
-        Observable_concatMap((i: number) =>
-          pipe([array[i]], ReadonlyArray_toRunnableObservable(options)),
-        ),
+        options?.delay ?? 0 > 0
+          ? Observable_concatMap((i: number) =>
+              pipe([array[i]], ReadonlyArray_toRunnableObservable(options)),
+            )
+          : Observable_map((i: number) => array[i]),
         Observable_takeFirst({ count: abs(count) }),
       ),
   );

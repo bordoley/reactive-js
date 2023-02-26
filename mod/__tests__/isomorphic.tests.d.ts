@@ -2,6 +2,7 @@
  * @jest-environment node
  */
 import "../ix/__tests__/AsyncEnumerable.test.js";
+import "../containers/__tests__/AsyncIterable.test.js";
 import "../util/__tests__/Disposable.test.js";
 import "../ix/__tests__/Enumerable.test.js";
 import "../rx/__tests__/EnumerableObservable.test.js";

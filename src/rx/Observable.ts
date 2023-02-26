@@ -18,6 +18,7 @@ import {
   ForEach,
   ForkConcat,
   ForkZip,
+  FromAsyncIterable,
   FromIterable,
   FromReadonlyArray,
   FromSequence,
@@ -43,6 +44,7 @@ import {
   Zip,
   ZipWith,
 } from "../containers.js";
+import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
 import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable.js";
 import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable.js";
@@ -394,6 +396,11 @@ export const forkZip: ForkZip<ObservableLike>["forkZip"] = Observable_forkZip;
 
 export const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"] =
   Observable_forkZipLatest;
+
+export const fromAsyncIterable: FromAsyncIterable<
+  ObservableLike,
+  { maxBuffer?: number }
+>["fromAsyncIterable"] = AsyncIterable_toObservable;
 
 export const fromEnumerable: FromEnumerable<
   ObservableLike,

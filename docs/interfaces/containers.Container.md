@@ -54,11 +54,13 @@
 
   ↳ [`ForkZip`](containers.ForkZip.md)
 
-  ↳ [`FromReadonlyArray`](containers.FromReadonlyArray.md)
+  ↳ [`FromAsyncIterable`](containers.FromAsyncIterable.md)
 
   ↳ [`FromIterable`](containers.FromIterable.md)
 
   ↳ [`FromOptional`](containers.FromOptional.md)
+
+  ↳ [`FromReadonlyArray`](containers.FromReadonlyArray.md)
 
   ↳ [`FromSequence`](containers.FromSequence.md)
 

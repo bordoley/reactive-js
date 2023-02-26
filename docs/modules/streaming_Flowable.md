@@ -6,6 +6,7 @@
 
 ### Constructor Functions
 
+- [fromAsyncIterable](streaming_Flowable.md#fromasynciterable)
 - [fromEnumerable](streaming_Flowable.md#fromenumerable)
 - [fromEnumerableObservable](streaming_Flowable.md#fromenumerableobservable)
 - [fromIterable](streaming_Flowable.md#fromiterable)
@@ -18,6 +19,29 @@
 - [toObservable](streaming_Flowable.md#toobservable)
 
 ## Constructor Functions
+
+### fromAsyncIterable
+
+▸ **fromAsyncIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxBuffer?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+
+___
 
 ### fromEnumerable
 

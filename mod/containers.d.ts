@@ -337,14 +337,11 @@ export interface ForkZip<C extends ContainerLike> extends Container<C> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromReadonlyArray<C extends ContainerLike, O = unknown> extends Container<C> {
+export interface FromAsyncIterable<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * @category Constructor
      */
-    fromReadonlyArray<T>(options?: O & {
-        readonly start?: number;
-        readonly count?: number;
-    }): Function1<readonly T[], ContainerOf<C, T>>;
+    fromAsyncIterable<T>(options?: O): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
 }
 /**
  * @noInheritDoc
@@ -365,6 +362,19 @@ export interface FromOptional<C extends ContainerLike, O = never> extends Contai
      * @category Constructor
      */
     fromOptional<T>(options?: O): Function1<Optional<T>, ContainerOf<C, T>>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface FromReadonlyArray<C extends ContainerLike, O = unknown> extends Container<C> {
+    /**
+     * @category Constructor
+     */
+    fromReadonlyArray<T>(options?: O & {
+        readonly start?: number;
+        readonly count?: number;
+    }): Function1<readonly T[], ContainerOf<C, T>>;
 }
 /**
  * @noInheritDoc

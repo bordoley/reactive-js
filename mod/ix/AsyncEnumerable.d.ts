@@ -1,6 +1,7 @@
-import { FromIterable, FromReadonlyArray, FromSequence, Generate, Keep, Map, Scan, TakeWhile } from "../containers.js";
+import { FromAsyncIterable, FromIterable, FromReadonlyArray, FromSequence, Generate, Keep, Map, Scan, TakeWhile } from "../containers.js";
 import { AsyncEnumerableLike, FromEnumerable } from "../ix.js";
 import { FromEnumerableObservable, ObservableLike, ScanAsync, ToObservable } from "../rx.js";
+export declare const fromAsyncIterable: FromAsyncIterable<AsyncEnumerableLike>["fromAsyncIterable"];
 export declare const fromEnumerable: FromEnumerable<AsyncEnumerableLike>["fromEnumerable"];
 export declare const fromEnumerableObservable: FromEnumerableObservable<AsyncEnumerableLike>["fromEnumerableObservable"];
 export declare const fromIterable: FromIterable<AsyncEnumerableLike>["fromIterable"];

@@ -1,4 +1,4 @@
-import { CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
+import { CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, TypePredicate } from "../functions.js";
 import { FromEnumerable } from "../ix.js";
 import { CombineLatest, EnumerableObservableLike, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, RunnableObservableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
@@ -107,6 +107,9 @@ export declare const forkConcat: ForkConcat<ObservableLike>["forkConcat"];
 export declare const forkMerge: ForkMerge<ObservableLike>["forkMerge"];
 export declare const forkZip: ForkZip<ObservableLike>["forkZip"];
 export declare const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"];
+export declare const fromAsyncIterable: FromAsyncIterable<ObservableLike, {
+    maxBuffer?: number;
+}>["fromAsyncIterable"];
 export declare const fromEnumerable: FromEnumerable<ObservableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;

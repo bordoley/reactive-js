@@ -1,8 +1,10 @@
 import {
+  FromAsyncIterable,
   FromIterable,
   FromReadonlyArray,
   FromSequence,
 } from "../containers.js";
+import AsyncIterable_toFlowable from "../containers/AsyncIterable/__internal__/AsyncIterable.toFlowable.js";
 import Iterable_toFlowable from "../containers/Iterable/__internal__/Iterable.toFlowable.js";
 import ReadonlyArray_toFlowable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import Sequence_toFlowable from "../containers/Sequence/__internal__/Sequence.toFlowable.js";
@@ -16,6 +18,11 @@ import {
 import RunnableObservable_toFlowable from "../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
 import { FlowableLike } from "../streaming.js";
 import Flowable_toObservable from "./Flowable/__internal__/Flowable.toObservable.js";
+
+export const fromAsyncIterable: FromAsyncIterable<
+  FlowableLike,
+  { maxBuffer?: number }
+>["fromAsyncIterable"] = AsyncIterable_toFlowable;
 
 export const fromEnumerable: FromEnumerable<FlowableLike>["fromEnumerable"] =
   Enumerable_toFlowable;

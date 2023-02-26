@@ -37,6 +37,7 @@
 - [ForEach](../interfaces/containers.ForEach.md)
 - [ForkConcat](../interfaces/containers.ForkConcat.md)
 - [ForkZip](../interfaces/containers.ForkZip.md)
+- [FromAsyncIterable](../interfaces/containers.FromAsyncIterable.md)
 - [FromIterable](../interfaces/containers.FromIterable.md)
 - [FromOptional](../interfaces/containers.FromOptional.md)
 - [FromReadonlyArray](../interfaces/containers.FromReadonlyArray.md)

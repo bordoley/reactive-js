@@ -1,5 +1,6 @@
 /// <reference types="./Observable.d.ts" />
 
+import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
 import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable.js";
 import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable.js";
@@ -136,6 +137,7 @@ export const forkConcat = Observable_forkConcat;
 export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
+export const fromAsyncIterable = AsyncIterable_toObservable;
 export const fromEnumerable = Enumerable_toRunnableObservable;
 export const fromIterable = Iterable_toRunnableObservable;
 export const fromFlowable = Flowable_toObservable;

@@ -46,6 +46,7 @@
   "exports": {
     "./constants": "./constants.js",
     "./containers": "./containers.js",
+    "./containers/AsyncIterable": "./containers/AsyncIterable.js",
     "./containers/Iterable": "./containers/Iterable.js",
     "./containers/Promiseable": "./containers/Promiseable.js",
     "./containers/ReadonlyArray": "./containers/ReadonlyArray.js",
