@@ -1,8 +1,9 @@
 /// <reference types="./QueueScheduler.d.ts" />
 
+import { max } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { MAX_SAFE_INTEGER } from "../../constants.js";
-import { isNone, isSome, max, none, pipe, unsafeCast, } from "../../functions.js";
+import { isNone, isSome, none, pipe, unsafeCast, } from "../../functions.js";
 import { EnumeratorLike_current, SourceLike_move, } from "../../ix.js";
 import Enumerator_getCurrent from "../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";

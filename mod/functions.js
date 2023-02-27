@@ -144,17 +144,4 @@ export const returns = (v) => (..._args) => v;
  * The javascript strict equality function.
  */
 export const strictEquality = (a, b) => a === b;
-/**
- * A function that returns the result of summing
- * it's arguments.
- */
-export const sum = (...args) => {
-    let acc = 0;
-    const length = ReadonlyArray_getLength(args);
-    for (let i = 0; i < length; i++) {
-        acc += args[i];
-    }
-    return acc;
-};
 export function unsafeCast(_v) { }
-export const { abs, floor, max, min } = Math;

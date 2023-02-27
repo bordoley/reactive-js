@@ -29,38 +29,28 @@ const PullableQueue_fifoQueueMixin: <T>() => Mixin<
     [FifoQueue_values]: Optional<T>[];
   };
 
-  const copyArrayAndDoubleSize = (self: TProperties & QueueLike) => {
-    const src = self[FifoQueue_values];
+  const copyArray = (
+    src: ReadonlyArray<unknown>,
+    head: number,
+    tail: number,
+    size: number,
+  ) => {
     const capacity = src.length;
-    const count = self[QueueLike_count];
-    const size = (self[FifoQueue_values].length << 1) | count;
 
     const dest = new Array(size);
     let k = 0;
 
-    for (let i = self[FifoQueue_head]; i < capacity; i++) {
+    let bound = head >= tail ? capacity : tail;
+    for (let i = head; i < bound; i++) {
       dest[k++] = src[i];
     }
-    for (let i = 0; i < self[FifoQueue_tail]; i++) {
+
+    bound = head >= tail ? tail : 0;
+    for (let i = 0; i < bound; i++) {
       dest[k++] = src[i];
     }
 
     return dest;
-  };
-
-  const growArray = (self: TProperties & QueueLike) => {
-    if (self[FifoQueue_head] != 0) {
-      const newList = copyArrayAndDoubleSize(self);
-
-      self[FifoQueue_tail] = self[FifoQueue_values].length;
-      self[FifoQueue_head] = 0;
-      self[FifoQueue_values] = newList;
-    } else {
-      self[FifoQueue_tail] = self[FifoQueue_values].length;
-      self[FifoQueue_values].length <<= 1;
-    }
-
-    self[FifoQueue_capacityMask] = (self[FifoQueue_capacityMask] << 1) | 1;
   };
 
   return pipe(
@@ -98,37 +88,65 @@ const PullableQueue_fifoQueueMixin: <T>() => Mixin<
             ? none
             : this[FifoQueue_values][head];
         },
-        [PullableQueueLike_pull](this: TProperties) {
-          const head = this[FifoQueue_head];
+        [PullableQueueLike_pull](this: TProperties & QueueLike) {
+          const tail = this[FifoQueue_tail];
+          let head = this[FifoQueue_head];
 
-          if (head === this[FifoQueue_tail]) {
+          if (head === tail) {
             return none;
           } else {
-            const item = this[FifoQueue_values][head];
-            this[FifoQueue_values][head] = none;
-            this[FifoQueue_head] = (head + 1) & this[FifoQueue_capacityMask];
+            const values = this[FifoQueue_values];
+            const capacity = values.length;
 
-            if (
-              head < 2 &&
-              this[FifoQueue_tail] > 10000 &&
-              this[FifoQueue_tail] <= this[FifoQueue_values].length >>> 2
-            ) {
-              // shrinkArray
-              this[FifoQueue_values].length >>>= 1;
-              this[FifoQueue_capacityMask] >>>= 1;
+            const item = values[head];
+            values[head] = none;
+            head = (head + 1) & this[FifoQueue_capacityMask];
+            this[FifoQueue_head] = head;
+
+            const count = this[QueueLike_count];
+
+            if (count < capacity / 4 && capacity > 4) {
+              const newCapacity = capacity >> 1;
+              const newList = copyArray(values, head, tail, newCapacity);
+
+              this[FifoQueue_values] = newList;
+              this[FifoQueue_head] = 0;
+              this[FifoQueue_tail] = count;
+              this[FifoQueue_capacityMask] = newCapacity - 1;
             }
 
             return item;
           }
         },
         [QueueLike_push](this: TProperties & QueueLike, item: T) {
-          const tail = this[FifoQueue_tail];
-          this[FifoQueue_values][tail] = item;
+          const capacityMask = this[FifoQueue_capacityMask];
+          const head = this[FifoQueue_head];
+          const values = this[FifoQueue_values];
+          const capacity = values.length;
 
-          this[FifoQueue_tail] = (tail + 1) & this[FifoQueue_capacityMask];
+          let count = this[QueueLike_count];
+          let tail = this[FifoQueue_tail];
 
-          if (this[FifoQueue_tail] === this[FifoQueue_head]) {
-            growArray(this);
+          values[tail] = item;
+          count++;
+          tail = (tail + 1) & capacityMask;
+          this[FifoQueue_tail] = tail;
+
+          if (tail === head) {
+            // growArray
+            if (head !== 0) {
+              const newCapacity = capacity << 1;
+              const newList = copyArray(values, head, tail, newCapacity);
+
+              this[FifoQueue_values] = newList;
+              this[FifoQueue_head] = 0;
+            } else {
+              // double the queue length.
+              this[FifoQueue_values].length <<= 1;
+            }
+
+            this[FifoQueue_tail] = count;
+            this[FifoQueue_capacityMask] = (capacityMask << 1) | 1;
           }
         },
       },

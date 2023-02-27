@@ -43,7 +43,6 @@
 
 ### Functions
 
-- [abs](functions.md#abs)
 - [alwaysFalse](functions.md#alwaysfalse)
 - [alwaysTrue](functions.md#alwaystrue)
 - [arrayEquality](functions.md#arrayequality)
@@ -54,7 +53,6 @@
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
 - [error](functions.md#error)
-- [floor](functions.md#floor)
 - [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
@@ -70,8 +68,6 @@
 - [isSome](functions.md#issome)
 - [isString](functions.md#isstring)
 - [isTrue](functions.md#istrue)
-- [max](functions.md#max)
-- [min](functions.md#min)
 - [negate](functions.md#negate)
 - [newInstance](functions.md#newinstance)
 - [partial](functions.md#partial)
@@ -83,7 +79,6 @@
 - [raiseWithDebugMessage](functions.md#raisewithdebugmessage)
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
-- [sum](functions.md#sum)
 - [unsafeCast](functions.md#unsafecast)
 
 ## Type Aliases
@@ -907,22 +902,6 @@ An alias for undefined.
 
 ## Functions
 
-### abs
-
-▸ **abs**(`x`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `x` | `number` |
-
-#### Returns
-
-`number`
-
-___
-
 ### alwaysFalse
 
 ▸ **alwaysFalse**(`..._args`): `boolean`
@@ -1618,22 +1597,6 @@ ___
 
 ___
 
-### floor
-
-▸ **floor**(`x`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `x` | `number` |
-
-#### Returns
-
-`number`
-
-___
-
 ### identity
 
 ▸ **identity**<`T`\>(`v`): `T`
@@ -1918,38 +1881,6 @@ ___
 #### Returns
 
 v is true
-
-___
-
-### max
-
-▸ **max**(`...values`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...values` | `number`[] |
-
-#### Returns
-
-`number`
-
-___
-
-### min
-
-▸ **min**(`...values`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...values` | `number`[] |
-
-#### Returns
-
-`number`
 
 ___
 
@@ -3100,25 +3031,6 @@ The javascript strict equality function.
 #### Returns
 
 `boolean`
-
-___
-
-### sum
-
-▸ **sum**(`...args`): `number`
-
-A function that returns the result of summing
-it's arguments.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...args` | `number`[] |
-
-#### Returns
-
-`number`
 
 ___
 

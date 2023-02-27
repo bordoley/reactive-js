@@ -2,7 +2,6 @@ import { benchmarkTest, benchmarkGroup } from "./benchmark.js";
 import {
   pipeLazy,
   isEven,
-  sum,
   increment,
   isOdd,
   returns,
@@ -22,6 +21,19 @@ import * as ReadonlyArray from "@reactive-js/core/containers/ReadonlyArray";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import * as Sequence from "@reactive-js/core/containers/Sequence";
 import { ToRunnable } from "@reactive-js/core/rx";
+
+/**
+ * A function that returns the result of summing
+ * it's arguments.
+ */
+const sum = (...args: number[]) => {
+  let acc = 0;
+  const length = ReadonlyArray.getLength(args);
+  for (let i = 0; i < length; i++) {
+    acc += args[i];
+  }
+  return acc;
+};
 
 export const passthrough = <T>(_: T, x: T) => x;
 export const createArray = (n: number): ReadonlyArray<number> => {

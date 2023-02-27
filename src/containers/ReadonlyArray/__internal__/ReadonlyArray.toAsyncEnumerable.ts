@@ -1,11 +1,6 @@
+import { abs } from "../../../__internal__/math.js";
 import { ReadonlyArrayLike } from "../../../containers.js";
-import {
-  abs,
-  decrement,
-  increment,
-  pipe,
-  returns,
-} from "../../../functions.js";
+import { decrement, increment, pipe, returns } from "../../../functions.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../ix.js";
 import AsyncEnumerable_create from "../../../ix/AsyncEnumerable/__internal__/AsyncEnumerable.create.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";

@@ -1,6 +1,7 @@
 /// <reference types="./ReadonlyArray.toAsyncEnumerable.d.ts" />
 
-import { abs, decrement, increment, pipe, returns, } from "../../../functions.js";
+import { abs } from "../../../__internal__/math.js";
+import { decrement, increment, pipe, returns } from "../../../functions.js";
 import AsyncEnumerable_create from "../../../ix/AsyncEnumerable/__internal__/AsyncEnumerable.create.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";

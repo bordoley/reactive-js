@@ -1,3 +1,4 @@
+import { max } from "../../../__internal__/math.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -14,7 +15,7 @@ import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
-import { Function1, isNumber, max, none, pipe } from "../../../functions.js";
+import { Function1, isNumber, none, pipe } from "../../../functions.js";
 import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";

@@ -740,19 +740,4 @@ export const returns =
  */
 export const strictEquality = <T>(a: T, b: T) => a === b;
 
-/**
- * A function that returns the result of summing
- * it's arguments.
- */
-export const sum = (...args: number[]) => {
-  let acc = 0;
-  const length = ReadonlyArray_getLength(args);
-  for (let i = 0; i < length; i++) {
-    acc += args[i];
-  }
-  return acc;
-};
-
 export function unsafeCast<T>(_v: unknown): asserts _v is T {}
-
-export const { abs, floor, max, min } = Math;

@@ -243,11 +243,5 @@ export declare const returns: <T>(v: T) => (..._args: unknown[]) => T;
  * The javascript strict equality function.
  */
 export declare const strictEquality: <T>(a: T, b: T) => boolean;
-/**
- * A function that returns the result of summing
- * it's arguments.
- */
-export declare const sum: (...args: number[]) => number;
 export declare function unsafeCast<T>(_v: unknown): asserts _v is T;
-export declare const abs: (x: number) => number, floor: (x: number) => number, max: (...values: number[]) => number, min: (...values: number[]) => number;
 export {};

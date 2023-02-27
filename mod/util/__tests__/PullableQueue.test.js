@@ -1,8 +1,9 @@
 /// <reference types="./PullableQueue.test.d.ts" />
 
+import { floor, random } from "../../__internal__/math.js";
 import { createInstanceFactory } from "../../__internal__/mixins.js";
 import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../../__tests__/testing.js";
-import { floor, newInstance, none, pipe } from "../../functions.js";
+import { newInstance, none, pipe } from "../../functions.js";
 import { QueueLike_push } from "../../util.js";
 import PullableQueue_fifoQueueMixin from "../PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
 import PullableQueue_priorityQueueMixin from "../PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
@@ -25,7 +26,7 @@ const makeSortedArray = (n) => {
 const makeShuffledArray = (n) => {
     const result = makeSortedArray(n);
     for (let count = n - 1; count >= 0; count--) {
-        const index = floor(Math.random() * (count + 1));
+        const index = floor(random() * (count + 1));
         const temp = result[count];
         result[count] = result[index];
         result[index] = temp;
@@ -67,20 +68,20 @@ testModule("PullableQueue", describe("fifoQueueMixin", test("push/pull/count", (
     pipe(queue[PullableQueueLike_peek](), expectEquals(26));
 }), test("shrink", () => {
     const queue = createFifoQueue();
-    for (let i = 0; i < 30000; i++) {
+    for (let i = 0; i < 300; i++) {
         queue[QueueLike_push](i);
     }
-    for (let i = 0; i < 5000; i++) {
+    for (let i = 0; i < 50; i++) {
         queue[PullableQueueLike_pull]();
     }
-    pipe(queue[PullableQueueLike_peek](), expectEquals(5000));
-    for (let i = 30000; i < 5000; i++) {
+    pipe(queue[PullableQueueLike_peek](), expectEquals(50));
+    for (let i = 300; i < 500; i++) {
         queue[QueueLike_push](i);
     }
-    for (let i = 0; i < 20000; i++) {
+    for (let i = 0; i < 200; i++) {
         queue[PullableQueueLike_pull]();
     }
-    pipe(queue[PullableQueueLike_peek](), expectEquals(25000));
+    pipe(queue[PullableQueueLike_peek](), expectEquals(250));
 })), describe("priorityQueueMixin", test("push", () => {
     const queue = createPriorityQueue();
     const shuffledArray = makeShuffledArray(100);

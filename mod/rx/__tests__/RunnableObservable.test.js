@@ -3,7 +3,7 @@
 import { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, containsTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, retryTests, scanAsyncTests, scanTests, skipFirstTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests as zipOperatorTests, zipWithTests, } from "../../__tests__/operators.js";
 import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, test, testModule, } from "../../__tests__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
-import { arrayEquality, identity, increment, incrementBy, newInstance, pipe, pipeLazy, returns, sum, } from "../../functions.js";
+import { arrayEquality, identity, increment, incrementBy, newInstance, pipe, pipeLazy, returns, } from "../../functions.js";
 import { ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../rx.js";
 import * as Pauseable from "../../scheduling/Pauseable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
@@ -65,9 +65,9 @@ const withLatestFromTest = describe("withLatestFrom", test("when source and late
     [1, 0],
     [2, 1],
     [3, 1],
-], arrayEquality()))), test("when latest produces no values", pipeLazy([0], ReadonlyArray.toRunnableObservable({ delay: 1 }), RunnableObservable.withLatestFrom(RunnableObservable.empty(), sum), RunnableObservable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
+], arrayEquality()))), test("when latest produces no values", pipeLazy([0], ReadonlyArray.toRunnableObservable({ delay: 1 }), RunnableObservable.withLatestFrom(RunnableObservable.empty(), (a, b) => a + b), RunnableObservable.toReadonlyArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const error = newInstance(Error);
-    pipe(pipeLazy([0], ReadonlyArray.toRunnableObservable({ delay: 1 }), RunnableObservable.withLatestFrom(RunnableObservable.throws({ raise: returns(error) }), sum), RunnableObservable.toReadonlyArray(), expectArrayEquals([])), expectToThrowError(error));
+    pipe(pipeLazy([0], ReadonlyArray.toRunnableObservable({ delay: 1 }), RunnableObservable.withLatestFrom(RunnableObservable.throws({ raise: returns(error) }), (a, b) => a + b), RunnableObservable.toReadonlyArray(), expectArrayEquals([])), expectToThrowError(error));
 }));
 const zipTests = describe("zip", zipOperatorTests(RunnableObservable), test("with synchronous and non-synchronous sources", pipeLazy(RunnableObservable.zip(pipe([1, 2], ReadonlyArray.toRunnableObservable({ delay: 1 })), pipe([2, 3], ReadonlyArray.toRunnableObservable()), pipe([3, 4, 5], ReadonlyArray.toRunnableObservable({ delay: 1 }))), RunnableObservable.toReadonlyArray(), expectArrayEquals([[1, 2, 3], [2, 3, 4]], arrayEquality()))), test("fast with slow", pipeLazy(RunnableObservable.zip(pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 1 })), pipe([1, 2, 3], ReadonlyArray.toRunnableObservable({ delay: 5 }))), RunnableObservable.toReadonlyArray(), expectArrayEquals([[1, 1], [2, 2], [3, 3]], arrayEquality()))), test("when source throws", pipeLazy(pipeLazy(RunnableObservable.zip(RunnableObservable.throws(), pipe([1, 2, 3], ReadonlyArray.toRunnableObservable())), RunnableObservable.map(([, b]) => b), RunnableObservable.toReadonlyArray()), expectToThrow)));
 const zipLatestTests = describe("zipLatest", test("zipLatestWith", pipeLazy(RunnableObservable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], ReadonlyArray.toRunnableObservable({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], ReadonlyArray.toRunnableObservable({ delay: 2, delayStart: true }))), RunnableObservable.map(([a, b]) => a + b), RunnableObservable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))));

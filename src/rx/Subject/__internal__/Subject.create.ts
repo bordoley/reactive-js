@@ -1,3 +1,4 @@
+import { max } from "../../../__internal__/math.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -7,13 +8,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import {
-  max,
-  newInstance,
-  none,
-  pipe,
-  unsafeCast,
-} from "../../../functions.js";
+import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
 import {
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,

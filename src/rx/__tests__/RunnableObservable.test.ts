@@ -52,7 +52,6 @@ import {
   pipe,
   pipeLazy,
   returns,
-  sum,
 } from "../../functions.js";
 import {
   RunnableObservableLike,
@@ -385,7 +384,10 @@ const withLatestFromTest = describe(
     pipeLazy(
       [0],
       ReadonlyArray.toRunnableObservable({ delay: 1 }),
-      RunnableObservable.withLatestFrom(RunnableObservable.empty(), sum),
+      RunnableObservable.withLatestFrom(
+        RunnableObservable.empty<number>(),
+        (a, b) => a + b,
+      ),
       RunnableObservable.toReadonlyArray(),
       expectArrayEquals([] as number[]),
     ),
@@ -398,8 +400,8 @@ const withLatestFromTest = describe(
         [0],
         ReadonlyArray.toRunnableObservable({ delay: 1 }),
         RunnableObservable.withLatestFrom(
-          RunnableObservable.throws({ raise: returns(error) }),
-          sum,
+          RunnableObservable.throws<number>({ raise: returns(error) }),
+          (a, b) => a + b,
         ),
         RunnableObservable.toReadonlyArray(),
         expectArrayEquals([] as number[]),

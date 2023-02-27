@@ -1,3 +1,4 @@
+import { max } from "../../__internal__/math.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -14,7 +15,6 @@ import {
   Updater,
   isNone,
   isSome,
-  max,
   none,
   pipe,
   unsafeCast,

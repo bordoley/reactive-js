@@ -1,3 +1,4 @@
+import { max } from "../../../__internal__/math.js";
 import {
   ContainerOperator,
   Lift,
@@ -5,7 +6,7 @@ import {
   LiftOperatorOut,
   StatefulContainerLike,
 } from "../../../containers.js";
-import { Function2, max, partial, pipe } from "../../../functions.js";
+import { Function2, partial, pipe } from "../../../functions.js";
 
 const StatefulContainer_takeFirst =
   <C extends StatefulContainerLike, T>(lift: Lift<C>["lift"]) =>

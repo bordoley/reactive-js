@@ -44,7 +44,6 @@ import {
   pipe,
   pipeLazy,
   returns,
-  sum,
 } from "../functions.js";
 import { ToEnumerable } from "../ix.js";
 import * as Enumerable from "../ix/Enumerable.js";
@@ -700,7 +699,7 @@ export const scanTests = <C extends ContainerLike>(
       pipeLazy(
         [1, 1, 1],
         m.fromReadonlyArray(),
-        m.scan(sum, returns(0)),
+        m.scan<number, number>((a, b) => a + b, returns(0)),
         m.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       ),
@@ -731,7 +730,7 @@ export const scanTests = <C extends ContainerLike>(
         pipeLazy(
           [1, 1],
           m.fromReadonlyArray(),
-          m.scan(sum, initialValue),
+          m.scan((a, b) => a + b, initialValue),
           m.toReadonlyArray(),
         ),
         expectToThrowError(err),

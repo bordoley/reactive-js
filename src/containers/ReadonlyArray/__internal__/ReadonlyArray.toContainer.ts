@@ -1,9 +1,10 @@
+import { max, min } from "../../../__internal__/math.js";
 import {
   ContainerLike,
   ContainerOf,
   ReadonlyArrayLike,
 } from "../../../containers.js";
-import { Function1, isSome, max, min } from "../../../functions.js";
+import { Function1, isSome } from "../../../functions.js";
 import ReadonlyArray_getLength from "./ReadonlyArray.getLength.js";
 
 const ReadonlyArray_toContainer =

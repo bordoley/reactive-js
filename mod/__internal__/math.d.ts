@@ -1,0 +1,1 @@
+export declare const abs: (x: number) => number, floor: (x: number) => number, log: (x: number) => number, max: (...values: number[]) => number, min: (...values: number[]) => number, random: () => number;

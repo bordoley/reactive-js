@@ -1,8 +1,8 @@
+import { floor } from "../../../__internal__/math.js";
 import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Comparator,
-  floor,
   isSome,
   none,
   pipe,

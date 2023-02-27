@@ -1,6 +1,7 @@
 /// <reference types="./ReadonlyArray.toContainer.d.ts" />
 
-import { isSome, max, min } from "../../../functions.js";
+import { max, min } from "../../../__internal__/math.js";
+import { isSome } from "../../../functions.js";
 import ReadonlyArray_getLength from "./ReadonlyArray.getLength.js";
 const ReadonlyArray_toContainer = (factory) => (options) => values => {
     const valuesLength = ReadonlyArray_getLength(values);

@@ -1,7 +1,7 @@
 /// <reference types="./operators.d.ts" />
 
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
-import { alwaysFalse, alwaysTrue, arrayEquality, increment, none, pipe, pipeLazy, returns, sum, } from "../functions.js";
+import { alwaysFalse, alwaysTrue, arrayEquality, increment, none, pipe, pipeLazy, returns, } from "../functions.js";
 import * as Enumerable from "../ix/Enumerable.js";
 import * as EnumerableObservable from "../rx/EnumerableObservable.js";
 import * as Observable from "../rx/Observable.js";
@@ -113,7 +113,7 @@ export const repeatTests = (m) => describe("repeat", test("when always repeating
     }), m.toReadonlyArray()), expectToThrowError(err));
 }));
 export const retryTests = (m) => describe("retry", test("retrys the container on an exception", pipeLazy(m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), m.throws()), m.retry(), m.takeFirst({ count: 6 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
-export const scanTests = (m) => describe("scan", test("sums all the values in the array emitting intermediate values.", pipeLazy([1, 1, 1], m.fromReadonlyArray(), m.scan(sum, returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("throws when the scan function throws", () => {
+export const scanTests = (m) => describe("scan", test("sums all the values in the array emitting intermediate values.", pipeLazy([1, 1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("throws when the scan function throws", () => {
     const err = new Error();
     const scanner = (_acc, _next) => {
         throw err;
@@ -124,7 +124,7 @@ export const scanTests = (m) => describe("scan", test("sums all the values in th
     const initialValue = () => {
         throw err;
     };
-    pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.scan(sum, initialValue), m.toReadonlyArray()), expectToThrowError(err));
+    pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, initialValue), m.toReadonlyArray()), expectToThrowError(err));
 }));
 export const scanAsyncTests = (m, mInner) => describe("scanAsync", test("fast lib, slow acc", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.scanAsync((acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })), returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 3, 6]))), test("slow lib, fast acc", pipeLazy([1, 2, 3], m.fromReadonlyArray({ delay: 4 }), m.scanAsync((acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })), returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 3, 6]))), test("slow lib, slow acc", pipeLazy([1, 2, 3], m.fromReadonlyArray({ delay: 4 }), m.scanAsync((acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })), returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 3, 6]))), test("fast lib, fast acc", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.scanAsync((acc, x) => pipe([x + acc], mInner.fromReadonlyArray()), returns(0)), m.toReadonlyArray(), expectArrayEquals([1, 3, 6]))));
 export const skipFirstTests = (m) => describe("skipFirst", test("when skipped source has additional elements", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst({ count: 2 }), m.toReadonlyArray(), expectArrayEquals([3]))), test("when all elements are skipped", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.skipFirst({ count: 4 }), m.toReadonlyArray(), expectArrayEquals(ReadonlyArray.empty()))));
