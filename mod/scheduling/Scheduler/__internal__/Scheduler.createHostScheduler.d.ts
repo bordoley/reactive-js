@@ -1,5 +1,5 @@
 import { SchedulerLike } from "../../../scheduling.js";
 declare const Scheduler_createHostScheduler: (options?: {
-    readonly yieldInterval?: number;
+    readonly maxYieldInterval?: number;
 }) => SchedulerLike;
 export default Scheduler_createHostScheduler;

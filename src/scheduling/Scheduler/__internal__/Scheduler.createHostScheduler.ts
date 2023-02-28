@@ -119,13 +119,13 @@ const runContinuation = (
 };
 
 const HostScheduler_startTime = Symbol("HostScheduler_startTime");
-const HostScheduler_yieldInterval = Symbol("HostScheduler_yieldInterval");
+const HostScheduler_maxYieldInterval = Symbol("HostScheduler_maxYieldInterval");
 const HostScheduler_yieldRequested = Symbol("HostScheduler_yieldRequested");
 
 type TProperties = {
   [SchedulerLike_inContinuation]: boolean;
   [HostScheduler_startTime]: number;
-  readonly [HostScheduler_yieldInterval]: number;
+  readonly [HostScheduler_maxYieldInterval]: number;
   [HostScheduler_yieldRequested]: boolean;
 };
 
@@ -142,18 +142,18 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           | typeof SchedulerLike_schedule
         > &
           Mutable<TProperties>,
-        yieldInterval: number,
+        maxYieldInterval: number,
       ): SchedulerLike {
         init(Disposable_mixin, instance);
 
-        instance[HostScheduler_yieldInterval] = yieldInterval;
+        instance[HostScheduler_maxYieldInterval] = maxYieldInterval;
 
         return instance;
       },
       props<TProperties>({
         [SchedulerLike_inContinuation]: false,
         [HostScheduler_startTime]: 0,
-        [HostScheduler_yieldInterval]: 0,
+        [HostScheduler_maxYieldInterval]: 0,
         [HostScheduler_yieldRequested]: false,
       }),
       {
@@ -183,7 +183,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
             (yieldRequested ||
               getCurrentTime(this) >
                 this[HostScheduler_startTime] +
-                  this[HostScheduler_yieldInterval] ||
+                  this[HostScheduler_maxYieldInterval] ||
               isInputPending())
           );
         },
@@ -214,11 +214,11 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
 
 const Scheduler_createHostScheduler = (
   options: {
-    readonly yieldInterval?: number;
+    readonly maxYieldInterval?: number;
   } = {},
 ): SchedulerLike => {
-  const { yieldInterval = 5 } = options;
-  return createHostSchedulerInstance(yieldInterval);
+  const { maxYieldInterval = 300 } = options;
+  return createHostSchedulerInstance(maxYieldInterval);
 };
 
 export default Scheduler_createHostScheduler;

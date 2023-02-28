@@ -6,11 +6,11 @@ import Observable_create from "../../../rx/Observable/__internal__/Observable.cr
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
-import Observer_getScheduler from "../../../rx/Observer/__internal__/Observer.getScheduler.js";
 import {
   DispatcherLike_scheduler,
   PauseableState,
   PauseableState_paused,
+  SchedulerLike_now,
 } from "../../../scheduling.js";
 import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule.js";
 import { ToFlowable } from "../../../streaming.js";
@@ -25,18 +25,22 @@ const AsyncIterable_toFlowable: ToFlowable<
   AsyncIterableLike,
   { maxBuffer?: number }
 >["toFlowable"] =
-  <T>(o?: { maxBuffer?: number }) =>
+  <T>(o?: { maxBuffer?: number; maxYieldInterval?: number }) =>
   (iterable: AsyncIterableLike<T>) =>
     Flowable_createLifted((modeObs: ObservableLike<PauseableState>) =>
       Observable_create<T>((observer: ObserverLike<T>) => {
-        const { maxBuffer = MAX_SAFE_INTEGER } = o ?? {};
+        const { maxBuffer = MAX_SAFE_INTEGER, maxYieldInterval = 300 } =
+          o ?? {};
 
         const dispatcher = Observer_getDispatcher(observer);
         const iterator = iterable[Symbol.asyncIterator]();
+        const scheduler = dispatcher[DispatcherLike_scheduler];
 
         let isPaused = true;
 
         const continuation = async () => {
+          const startTime = scheduler[SchedulerLike_now];
+
           try {
             while (
               !Disposable_isDisposed(dispatcher) &&
@@ -46,8 +50,9 @@ const AsyncIterable_toFlowable: ToFlowable<
               //
               // Check the dispatcher's buffer size so we can avoid queueing forever
               // in this situation.
+              !isPaused &&
               dispatcher[QueueLike_count] < maxBuffer &&
-              !isPaused
+              scheduler[SchedulerLike_now] - startTime < maxYieldInterval
             ) {
               const next = await iterator.next();
 
@@ -63,7 +68,7 @@ const AsyncIterable_toFlowable: ToFlowable<
 
           if (!Disposable_isDisposed(dispatcher) && !isPaused) {
             pipe(
-              dispatcher[DispatcherLike_scheduler],
+              scheduler,
               Scheduler_schedule(continuation),
               Disposable_addTo(observer),
             );
@@ -78,13 +83,13 @@ const AsyncIterable_toFlowable: ToFlowable<
 
             if (!isPaused && wasPaused) {
               pipe(
-                dispatcher[DispatcherLike_scheduler],
+                scheduler,
                 Scheduler_schedule(continuation),
                 Disposable_addTo(observer),
               );
             }
           }),
-          Observable_subscribe(Observer_getScheduler(observer)),
+          Observable_subscribe(scheduler),
           Disposable_bindTo(observer),
         );
       }),

@@ -1,7 +1,7 @@
 import { Function1 } from "../functions.js";
 import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.js";
 export declare const createHostScheduler: (options?: {
-    readonly yieldInterval?: number | undefined;
+    readonly maxYieldInterval?: number | undefined;
 }) => SchedulerLike;
 export declare const getCurrentTime: (scheduler: SchedulerLike) => number;
 export declare const isInContinuation: (scheduler: SchedulerLike) => boolean;

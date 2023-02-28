@@ -4,7 +4,10 @@ import { error, pipe } from "../../../functions.js";
 import { ObserverLike, ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
-import { DispatcherLike_scheduler } from "../../../scheduling.js";
+import {
+  DispatcherLike_scheduler,
+  SchedulerLike_now,
+} from "../../../scheduling.js";
 import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -15,15 +18,18 @@ const AsyncIterable_toObservable: ToObservable<
   AsyncIterableLike,
   { maxBuffer?: number }
 >["toObservable"] =
-  <T>(o?: { maxBuffer?: number }) =>
+  <T>(o?: { maxBuffer?: number; maxYieldInterval?: number }) =>
   (iterable: AsyncIterableLike<T>) =>
     Observable_create<T>((observer: ObserverLike<T>) => {
-      const { maxBuffer = MAX_SAFE_INTEGER } = o ?? {};
+      const { maxBuffer = MAX_SAFE_INTEGER, maxYieldInterval = 300 } = o ?? {};
 
       const dispatcher = Observer_getDispatcher(observer);
       const iterator = iterable[Symbol.asyncIterator]();
+      const scheduler = dispatcher[DispatcherLike_scheduler];
 
       const continuation = async () => {
+        const startTime = scheduler[SchedulerLike_now];
+
         try {
           while (
             !Disposable_isDisposed(dispatcher) &&
@@ -33,7 +39,8 @@ const AsyncIterable_toObservable: ToObservable<
             //
             // Check the dispatcher's buffer size so we can avoid queueing forever
             // in this situation.
-            dispatcher[QueueLike_count] < maxBuffer
+            dispatcher[QueueLike_count] < maxBuffer &&
+            scheduler[SchedulerLike_now] - startTime < maxYieldInterval
           ) {
             const next = await iterator.next();
 
@@ -49,7 +56,7 @@ const AsyncIterable_toObservable: ToObservable<
 
         if (!Disposable_isDisposed(dispatcher)) {
           pipe(
-            dispatcher[DispatcherLike_scheduler],
+            scheduler,
             Scheduler_schedule(continuation),
             Disposable_addTo(observer),
           );
@@ -57,7 +64,7 @@ const AsyncIterable_toObservable: ToObservable<
       };
 
       pipe(
-        dispatcher[DispatcherLike_scheduler],
+        scheduler,
         Scheduler_schedule(continuation),
         Disposable_addTo(observer),
       );

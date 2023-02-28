@@ -26,7 +26,7 @@
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.yieldInterval?` | `number` |
+| `options.maxYieldInterval?` | `number` |
 
 #### Returns
 

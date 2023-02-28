@@ -46,16 +46,16 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
     scheduler[SchedulerLike_inContinuation] = false;
 };
 const HostScheduler_startTime = Symbol("HostScheduler_startTime");
-const HostScheduler_yieldInterval = Symbol("HostScheduler_yieldInterval");
+const HostScheduler_maxYieldInterval = Symbol("HostScheduler_maxYieldInterval");
 const HostScheduler_yieldRequested = Symbol("HostScheduler_yieldRequested");
-const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_mixin), function HostScheduler(instance, yieldInterval) {
+const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_mixin), function HostScheduler(instance, maxYieldInterval) {
     init(Disposable_mixin, instance);
-    instance[HostScheduler_yieldInterval] = yieldInterval;
+    instance[HostScheduler_maxYieldInterval] = maxYieldInterval;
     return instance;
 }, props({
     [SchedulerLike_inContinuation]: false,
     [HostScheduler_startTime]: 0,
-    [HostScheduler_yieldInterval]: 0,
+    [HostScheduler_maxYieldInterval]: 0,
     [HostScheduler_yieldRequested]: false,
 }), {
     get [SchedulerLike_now]() {
@@ -81,7 +81,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
             (yieldRequested ||
                 getCurrentTime(this) >
                     this[HostScheduler_startTime] +
-                        this[HostScheduler_yieldInterval] ||
+                        this[HostScheduler_maxYieldInterval] ||
                 isInputPending()));
     },
     [SchedulerLike_requestYield]() {
@@ -100,7 +100,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
     },
 })))();
 const Scheduler_createHostScheduler = (options = {}) => {
-    const { yieldInterval = 5 } = options;
-    return createHostSchedulerInstance(yieldInterval);
+    const { maxYieldInterval = 300 } = options;
+    return createHostSchedulerInstance(maxYieldInterval);
 };
 export default Scheduler_createHostScheduler;
