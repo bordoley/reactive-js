@@ -1,21 +1,24 @@
 import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
   Optional,
+  newInstance,
   none,
   pipe,
+  raiseWithDebugMessage,
   returns,
   unsafeCast,
 } from "../../../functions.js";
 import { QueueLike, QueueLike_count, QueueLike_push } from "../../../util.js";
 import {
-  PullableQueueLike,
+  IndexedQueueLike,
+  IndexedQueueLike_get,
   PullableQueueLike_peek,
   PullableQueueLike_pull,
 } from "../../__internal__/util.internal.js";
 
-const PullableQueue_fifoQueueMixin: <T>() => Mixin<
-  PullableQueueLike<T>,
-  PullableQueueLike<T>
+const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
+  IndexedQueueLike<T>,
+  IndexedQueueLike<T>
 > = /*@__PURE__*/ (<T>() => {
   const FifoQueue_head = Symbol("FifoQueue_head");
   const FifoQueue_tail = Symbol("FifoQueue_tail");
@@ -30,14 +33,14 @@ const PullableQueue_fifoQueueMixin: <T>() => Mixin<
   };
 
   const copyArray = (
-    src: ReadonlyArray<unknown>,
+    src: ReadonlyArray<Optional<T>>,
     head: number,
     tail: number,
     size: number,
   ) => {
     const capacity = src.length;
 
-    const dest = new Array(size);
+    const dest = newInstance<Array<Optional<T>>, number>(Array, size);
     let k = 0;
 
     let bound = head >= tail ? capacity : tail;
@@ -56,12 +59,15 @@ const PullableQueue_fifoQueueMixin: <T>() => Mixin<
   return pipe(
     mix(
       function FifoQueue(
-        instance: PullableQueueLike<T> & Mutable<TProperties>,
-      ): PullableQueueLike<T> {
+        instance: IndexedQueueLike<T> & Mutable<TProperties>,
+      ): IndexedQueueLike<T> {
         instance[FifoQueue_head] = 0;
         instance[FifoQueue_tail] = 0;
 
-        instance[FifoQueue_values] = new Array(4);
+        instance[FifoQueue_values] = newInstance<Array<Optional<T>>, number>(
+          Array,
+          4,
+        );
         instance[FifoQueue_capacityMask] = 0x3;
 
         return instance;
@@ -81,6 +87,24 @@ const PullableQueue_fifoQueueMixin: <T>() => Mixin<
 
           const count = tail - head;
           return count >= 0 ? count : capacityMask + 1 + count;
+        },
+        [IndexedQueueLike_get](
+          this: TProperties & QueueLike,
+          index: number,
+        ): T {
+          const count = this[QueueLike_count];
+          const capacity = this[FifoQueue_values].length;
+          const head = this[FifoQueue_head];
+          const values = this[FifoQueue_values];
+
+          const headOffsetIndex = index + head;
+          const tailOffsetIndex = headOffsetIndex - capacity;
+
+          return index < 0 || index >= count
+            ? raiseWithDebugMessage("index out of range")
+            : headOffsetIndex < capacity
+            ? (values[headOffsetIndex] as T)
+            : (values[tailOffsetIndex] as T);
         },
         [PullableQueueLike_peek](this: TProperties) {
           const head = this[FifoQueue_head];
@@ -155,4 +179,4 @@ const PullableQueue_fifoQueueMixin: <T>() => Mixin<
   );
 })();
 
-export default PullableQueue_fifoQueueMixin;
+export default IndexedQueue_fifoQueueMixin;

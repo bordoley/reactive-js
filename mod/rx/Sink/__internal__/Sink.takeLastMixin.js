@@ -1,33 +1,33 @@
 /// <reference types="./Sink.takeLastMixin.d.ts" />
 
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
-import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import { none, pipe } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import { SinkLike_notify, } from "../../../rx.js";
+import { QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_toReadonlyArray from "../../../util/PullableQueue/__internal__/IndexedQueue.toReadonlyArray.js";
+import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 const Sink_takeLastMixin = (fromReadonlyArray) => {
-    const TakeLastSinkMixin_last = Symbol("TakeLastSinkMixin_last");
     const TakeLastSinkMixin_takeLastCount = Symbol("TakeLastSinkMixin_takeLastCount");
-    return mix(include(Disposable_mixin), function TakeLastSinkMixin(instance, delegate, takeLastCount) {
+    return mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function TakeLastSinkMixin(instance, delegate, takeLastCount) {
         init(Disposable_mixin, instance);
+        init(IndexedQueue_fifoQueueMixin(), instance);
         instance[TakeLastSinkMixin_takeLastCount] = takeLastCount;
-        instance[TakeLastSinkMixin_last] = [];
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            pipe(instance[TakeLastSinkMixin_last], fromReadonlyArray, ReactiveContainer_sinkInto(delegate));
+            pipe(instance, IndexedQueue_toReadonlyArray(), fromReadonlyArray, ReactiveContainer_sinkInto(delegate));
         }));
         return instance;
     }, props({
         [TakeLastSinkMixin_takeLastCount]: 0,
-        [TakeLastSinkMixin_last]: none,
     }), {
         [SinkLike_notify](next) {
-            const { [TakeLastSinkMixin_last]: last } = this;
-            last.push(next);
-            if (ReadonlyArray_getLength(last) > this[TakeLastSinkMixin_takeLastCount]) {
-                last.shift();
+            this[QueueLike_push](next);
+            if (this[QueueLike_count] > this[TakeLastSinkMixin_takeLastCount]) {
+                this[PullableQueueLike_pull]();
             }
         },
     });

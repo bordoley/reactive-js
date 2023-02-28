@@ -9,7 +9,7 @@ import {
 } from "../../__tests__/testing.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
 import { QueueLike_push } from "../../util.js";
-import PullableQueue_fifoQueueMixin from "../PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import PullableQueue_priorityQueueMixin from "../PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import PullableQueue_pull from "../PullableQueue/__internal__/PullableQueue.pull.js";
 import Queue_count from "../Queue/__internal__/Queue.count.js";
@@ -28,7 +28,7 @@ const createPriorityQueue = /*@__PURE__*/ (() => {
 })();
 
 const createFifoQueue = /*@__PURE__*/ (() =>
-  createInstanceFactory(PullableQueue_fifoQueueMixin<number>()))();
+  createInstanceFactory(IndexedQueue_fifoQueueMixin<number>()))();
 
 const makeSortedArray = (n: number) => {
   const result = newInstance<Array<number>, number>(Array, n);

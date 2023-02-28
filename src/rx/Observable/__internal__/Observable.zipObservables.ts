@@ -42,7 +42,7 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import {
   PullableQueueLike,
   PullableQueueLike_pull,
@@ -71,13 +71,13 @@ const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
 
     return createInstanceFactory(
       mix(
-        include(Disposable_mixin, PullableQueue_fifoQueueMixin<T>()),
+        include(Disposable_mixin, IndexedQueue_fifoQueueMixin<T>()),
         function QueuedEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
             Mutable<TProperties>,
         ): EnumeratorLike<T> & QueueLike<T> {
           init(Disposable_mixin, instance);
-          init(PullableQueue_fifoQueueMixin<T>(), instance);
+          init(IndexedQueue_fifoQueueMixin<T>(), instance);
 
           pipe(
             instance,

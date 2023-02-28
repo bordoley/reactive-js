@@ -4,6 +4,7 @@ import {
   call,
   isFunction,
   isSome,
+  newInstance,
   none,
   pipe,
 } from "../../../functions.js";
@@ -53,7 +54,8 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
     > &
       Mutable<TProperties>,
   ): DisposableLike {
-    instance[DisposableMixin_disposables] = new Set();
+    instance[DisposableMixin_disposables] =
+      newInstance<Set<DisposableOrTeardown>>(Set);
 
     return instance;
   },

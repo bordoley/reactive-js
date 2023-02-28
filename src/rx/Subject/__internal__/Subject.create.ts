@@ -7,7 +7,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
 import {
   MulticastObservableLike_observerCount,
@@ -19,27 +18,33 @@ import {
   SubjectLike,
   SubjectLike_publish,
 } from "../../../rx.js";
+import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
+import {
+  IndexedQueueLike,
+  IndexedQueueLike_get,
+  PullableQueueLike,
+  PullableQueueLike_pull,
+} from "../../../util/__internal__/util.internal.js";
 import Observer_getDispatcher from "../../Observer/__internal__/Observer.getDispatcher.js";
 
 const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
   /*@__PURE__*/ (<T>() => {
     const Subject_observers = Symbol("Subject_observers");
-    const Subject_replayed = Symbol("Subject_replayed");
 
     type TProperties = {
       readonly [MulticastObservableLike_replay]: number;
       readonly [Subject_observers]: Set<ObserverLike<T>>;
-      readonly [Subject_replayed]: Array<T>;
     };
 
     const createSubjectInstance = createInstanceFactory(
       mix(
-        include(Disposable_mixin),
+        include(Disposable_mixin, IndexedQueue_fifoQueueMixin()),
         function Subject(
           instance: Pick<
             SubjectLike<T>,
@@ -53,17 +58,16 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
           replay: number,
         ): SubjectLike<T> {
           init(Disposable_mixin, instance);
+          init(IndexedQueue_fifoQueueMixin<T>(), instance);
 
           instance[MulticastObservableLike_replay] = replay;
           instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
-          instance[Subject_replayed] = [];
 
           return instance;
         },
         props<TProperties>({
           [MulticastObservableLike_replay]: 0,
           [Subject_observers]: none,
-          [Subject_replayed]: none,
         }),
         {
           [ObservableLike_isEnumerable]: false,
@@ -74,16 +78,17 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             return this[Subject_observers].size;
           },
 
-          [SubjectLike_publish](this: TProperties & SubjectLike<T>, next: T) {
+          [SubjectLike_publish](
+            this: TProperties & SubjectLike<T> & PullableQueueLike<T>,
+            next: T,
+          ) {
             if (!Disposable_isDisposed(this)) {
-              const { [Subject_replayed]: replayed } = this;
-
               const replay = this[MulticastObservableLike_replay];
 
               if (replay > 0) {
-                replayed.push(next);
-                if (ReadonlyArray_getLength(replayed) > replay) {
-                  replayed.shift();
+                this[QueueLike_push](next);
+                if (this[QueueLike_count] > replay) {
+                  this[PullableQueueLike_pull]();
                 }
               }
 
@@ -94,7 +99,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
           },
 
           [ReactiveContainerLike_sinkInto](
-            this: TProperties & SubjectLike,
+            this: TProperties & SubjectLike & IndexedQueueLike<T>,
             observer: ObserverLike<T>,
           ) {
             if (!Disposable_isDisposed(this)) {
@@ -114,7 +119,9 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
-            for (const next of this[Subject_replayed]) {
+            const count = this[QueueLike_count];
+            for (let i = 0; i < count; i++) {
+              const next = this[IndexedQueueLike_get](i);
               pipe(dispatcher, Queue_push(next));
             }
 

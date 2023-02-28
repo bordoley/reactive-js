@@ -29,7 +29,7 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import {
   PullableQueueLike,
   PullableQueueLike_pull,
@@ -95,7 +95,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             Disposable_mixin,
             typedObserverMixin,
             delegatingMixin(),
-            PullableQueue_fifoQueueMixin<TA>(),
+            IndexedQueue_fifoQueueMixin<TA>(),
           ),
           function ZipWithLatestFromObserver(
             instance: Pick<ObserverLike, typeof SinkLike_notify> &
@@ -107,7 +107,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             init(Disposable_mixin, instance);
             init(typedObserverMixin, instance, Observer_getScheduler(delegate));
             init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
-            init(PullableQueue_fifoQueueMixin<TA>(), instance);
+            init(IndexedQueue_fifoQueueMixin<TA>(), instance);
 
             instance[ZipWithLatestFromObserver_selector] = selector;
 

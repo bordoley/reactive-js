@@ -30,7 +30,7 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import {
   PullableQueueLike,
   PullableQueueLike_pull,
@@ -112,7 +112,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           Disposable_mixin,
           typedObserverMixin,
           delegatingMixin(),
-          PullableQueue_fifoQueueMixin<ObservableLike<T>>(),
+          IndexedQueue_fifoQueueMixin<ObservableLike<T>>(),
         ),
         function MergeAllObserver(
           instance: Pick<
@@ -127,7 +127,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           init(Disposable_mixin, instance);
           init(typedObserverMixin, instance, Observer_getScheduler(delegate));
           init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
-          init(PullableQueue_fifoQueueMixin<ObservableLike<T>>(), instance);
+          init(IndexedQueue_fifoQueueMixin<ObservableLike<T>>(), instance);
 
           instance[MergeAllObserver_maxBufferSize] = maxBufferSize;
           instance[MergeAllObserver_maxConcurrency] = maxConcurrency;

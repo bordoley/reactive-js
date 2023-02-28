@@ -16,3 +16,7 @@ export interface PullableQueueLike<T> extends QueueLike<T> {
     [PullableQueueLike_peek](): Optional<T>;
     [PullableQueueLike_pull](): Optional<T>;
 }
+export declare const IndexedQueueLike_get: unique symbol;
+export interface IndexedQueueLike<T> extends PullableQueueLike<T> {
+    [IndexedQueueLike_get](index: number): T;
+}

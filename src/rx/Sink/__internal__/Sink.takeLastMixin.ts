@@ -6,17 +6,26 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import { none, pipe } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import {
   ReactiveContainerLike,
   SinkLike,
   SinkLike_notify,
 } from "../../../rx.js";
-import { DisposableLike } from "../../../util.js";
+import {
+  DisposableLike,
+  QueueLike_count,
+  QueueLike_push,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_toReadonlyArray from "../../../util/PullableQueue/__internal__/IndexedQueue.toReadonlyArray.js";
+import {
+  PullableQueueLike,
+  PullableQueueLike_pull,
+} from "../../../util/__internal__/util.internal.js";
 import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 
 const Sink_takeLastMixin: <
@@ -33,18 +42,16 @@ const Sink_takeLastMixin: <
 > = <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
   fromReadonlyArray: (v: readonly T[]) => C,
 ) => {
-  const TakeLastSinkMixin_last = Symbol("TakeLastSinkMixin_last");
   const TakeLastSinkMixin_takeLastCount = Symbol(
     "TakeLastSinkMixin_takeLastCount",
   );
 
   type TProperties = {
     readonly [TakeLastSinkMixin_takeLastCount]: number;
-    readonly [TakeLastSinkMixin_last]: T[];
   };
 
   return mix(
-    include(Disposable_mixin),
+    include(Disposable_mixin, IndexedQueue_fifoQueueMixin()),
     function TakeLastSinkMixin(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
@@ -52,16 +59,17 @@ const Sink_takeLastMixin: <
       takeLastCount: number,
     ): SinkLike<T> {
       init(Disposable_mixin, instance);
+      init(IndexedQueue_fifoQueueMixin<T>(), instance);
 
       instance[TakeLastSinkMixin_takeLastCount] = takeLastCount;
-      instance[TakeLastSinkMixin_last] = [];
 
       pipe(
         instance,
         Disposable_addTo(delegate),
         Disposable_onComplete(() => {
           pipe(
-            instance[TakeLastSinkMixin_last],
+            instance,
+            IndexedQueue_toReadonlyArray<T>(),
             fromReadonlyArray,
             ReactiveContainer_sinkInto(delegate),
           );
@@ -72,18 +80,16 @@ const Sink_takeLastMixin: <
     },
     props<TProperties>({
       [TakeLastSinkMixin_takeLastCount]: 0,
-      [TakeLastSinkMixin_last]: none,
     }),
     {
-      [SinkLike_notify](this: TProperties & DisposableLike, next: T) {
-        const { [TakeLastSinkMixin_last]: last } = this;
+      [SinkLike_notify](
+        this: TProperties & DisposableLike & PullableQueueLike<T>,
+        next: T,
+      ) {
+        this[QueueLike_push](next);
 
-        last.push(next);
-
-        if (
-          ReadonlyArray_getLength(last) > this[TakeLastSinkMixin_takeLastCount]
-        ) {
-          last.shift();
+        if (this[QueueLike_count] > this[TakeLastSinkMixin_takeLastCount]) {
+          this[PullableQueueLike_pull]();
         }
       },
     },

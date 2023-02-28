@@ -1,7 +1,7 @@
 /// <reference types="./Disposable.mixin.d.ts" />
 
 import { mix, props } from "../../../__internal__/mixins.js";
-import { call, isFunction, isSome, none, pipe, } from "../../../functions.js";
+import { call, isFunction, isSome, newInstance, none, pipe, } from "../../../functions.js";
 import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../../util.js";
 import dispose from "./Disposable.dispose.js";
 import getError from "./Disposable.getError.js";
@@ -24,7 +24,8 @@ const doDispose = (instance, disposable) => {
 };
 const DisposableMixin_disposables = Symbol("DisposableMixin_disposables");
 const Disposable_mixin = /*@__PURE__*/ mix(function DisposableMixin(instance) {
-    instance[DisposableMixin_disposables] = new Set();
+    instance[DisposableMixin_disposables] =
+        newInstance(Set);
     return instance;
 }, props({
     [DisposableLike_error]: none,

@@ -22,7 +22,7 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import EnumerableObservable_toEnumerable from "../../EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -36,9 +36,9 @@ import Observable_create from "./Observable.create.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 const QueuedEnumerator_create = 
 /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable_mixin, PullableQueue_fifoQueueMixin()), function QueuedEnumerator(instance) {
+    return createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function QueuedEnumerator(instance) {
         init(Disposable_mixin, instance);
-        init(PullableQueue_fifoQueueMixin(), instance);
+        init(IndexedQueue_fifoQueueMixin(), instance);
         pipe(instance, Disposable_onDisposed(() => {
             // FIXME: Maybe should clear the queue here as well to early
             // release references?

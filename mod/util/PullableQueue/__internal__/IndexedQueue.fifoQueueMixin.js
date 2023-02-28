@@ -1,17 +1,17 @@
-/// <reference types="./PullableQueue.fifoQueueMixin.d.ts" />
+/// <reference types="./IndexedQueue.fifoQueueMixin.d.ts" />
 
 import { mix, props } from "../../../__internal__/mixins.js";
-import { none, pipe, returns, unsafeCast, } from "../../../functions.js";
+import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
-import { PullableQueueLike_peek, PullableQueueLike_pull, } from "../../__internal__/util.internal.js";
-const PullableQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
+import { IndexedQueueLike_get, PullableQueueLike_peek, PullableQueueLike_pull, } from "../../__internal__/util.internal.js";
+const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     const FifoQueue_head = Symbol("FifoQueue_head");
     const FifoQueue_tail = Symbol("FifoQueue_tail");
     const FifoQueue_capacityMask = Symbol("FifoQueue_capacityMask");
     const FifoQueue_values = Symbol("FifoQueue_values");
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;
-        const dest = new Array(size);
+        const dest = newInstance(Array, size);
         let k = 0;
         let bound = head >= tail ? capacity : tail;
         for (let i = head; i < bound; i++) {
@@ -26,7 +26,7 @@ const PullableQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     return pipe(mix(function FifoQueue(instance) {
         instance[FifoQueue_head] = 0;
         instance[FifoQueue_tail] = 0;
-        instance[FifoQueue_values] = new Array(4);
+        instance[FifoQueue_values] = newInstance(Array, 4);
         instance[FifoQueue_capacityMask] = 0x3;
         return instance;
     }, props({
@@ -42,6 +42,19 @@ const PullableQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             const capacityMask = this[FifoQueue_capacityMask];
             const count = tail - head;
             return count >= 0 ? count : capacityMask + 1 + count;
+        },
+        [IndexedQueueLike_get](index) {
+            const count = this[QueueLike_count];
+            const capacity = this[FifoQueue_values].length;
+            const head = this[FifoQueue_head];
+            const values = this[FifoQueue_values];
+            const headOffsetIndex = index + head;
+            const tailOffsetIndex = headOffsetIndex - capacity;
+            return index < 0 || index >= count
+                ? raiseWithDebugMessage("index out of range")
+                : headOffsetIndex < capacity
+                    ? values[headOffsetIndex]
+                    : values[tailOffsetIndex];
         },
         [PullableQueueLike_peek]() {
             const head = this[FifoQueue_head];
@@ -103,4 +116,4 @@ const PullableQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         },
     }), returns);
 })();
-export default PullableQueue_fifoQueueMixin;
+export default IndexedQueue_fifoQueueMixin;

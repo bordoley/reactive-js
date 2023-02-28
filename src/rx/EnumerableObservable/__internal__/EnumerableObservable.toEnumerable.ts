@@ -39,7 +39,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import {
   PullableQueueLike,
   PullableQueueLike_pull,
@@ -64,7 +64,7 @@ const EnumerableObservable_toEnumerable: ToEnumerable<EnumerableObservableLike>[
         include(
           Disposable_mixin,
           typedMutableEnumeratorMixin,
-          PullableQueue_fifoQueueMixin<ContinuationLike>(),
+          IndexedQueue_fifoQueueMixin<ContinuationLike>(),
         ),
         function EnumeratorScheduler(
           instance: Pick<
@@ -79,7 +79,7 @@ const EnumerableObservable_toEnumerable: ToEnumerable<EnumerableObservableLike>[
         ): EnumeratorScheduler {
           init(Disposable_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
-          init(PullableQueue_fifoQueueMixin<ContinuationLike>(), instance);
+          init(IndexedQueue_fifoQueueMixin<ContinuationLike>(), instance);
 
           return instance;
         },

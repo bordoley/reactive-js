@@ -42,7 +42,7 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import {
   PullableQueueLike,
   PullableQueueLike_pull,
@@ -80,18 +80,18 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
     readonly [ObserverDispatcher_onContinuationDispose]: SideEffect;
   };
 
-  const fifoQueueProtoype = getPrototype(PullableQueue_fifoQueueMixin<T>());
+  const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin<T>());
 
   return createInstanceFactory(
     mix(
-      include(Disposable_mixin, PullableQueue_fifoQueueMixin()),
+      include(Disposable_mixin, IndexedQueue_fifoQueueMixin()),
       function ObserverDispatcher(
         instance: Pick<DispatcherLike, typeof DispatcherLike_scheduler> &
           Mutable<TProperties>,
         observer: ObserverLike<T>,
       ): DispatcherLike<T> {
         init(Disposable_mixin, instance);
-        init(PullableQueue_fifoQueueMixin<T>(), instance);
+        init(IndexedQueue_fifoQueueMixin<T>(), instance);
 
         instance[ObserverDispatcher_observer] = observer;
 

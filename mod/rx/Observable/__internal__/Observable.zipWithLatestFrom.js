@@ -9,7 +9,7 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import PullableQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
@@ -36,11 +36,11 @@ const Observable_zipWithLatestFrom =
                 pipe(observer[DelegatingLike_delegate], Sink_notify(result));
             }
         };
-        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin(), PullableQueue_fifoQueueMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
+        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin(), IndexedQueue_fifoQueueMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
             init(Disposable_mixin, instance);
             init(typedObserverMixin, instance, Observer_getScheduler(delegate));
             init(delegatingMixin(), instance, delegate);
-            init(PullableQueue_fifoQueueMixin(), instance);
+            init(IndexedQueue_fifoQueueMixin(), instance);
             instance[ZipWithLatestFromObserver_selector] = selector;
             const disposeDelegate = () => {
                 if (Disposable_isDisposed(instance) &&
