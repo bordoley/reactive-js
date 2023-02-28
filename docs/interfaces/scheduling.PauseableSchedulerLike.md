@@ -11,3 +11,15 @@
 - [`SchedulerLike`](scheduling.SchedulerLike.md)
 
   ↳ **`PauseableSchedulerLike`**
+
+## Table of contents
+
+### Properties
+
+- [[PauseableSchedulerLike\_isPaused]](scheduling.PauseableSchedulerLike.md#[pauseableschedulerlike_ispaused])
+
+## Properties
+
+### [PauseableSchedulerLike\_isPaused]
+
+• `Readonly` **[PauseableSchedulerLike\_isPaused]**: `boolean`

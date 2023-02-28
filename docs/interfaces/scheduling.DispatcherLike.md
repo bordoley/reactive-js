@@ -18,8 +18,6 @@
 
   ↳ **`DispatcherLike`**
 
-  ↳↳ [`PauseableLike`](scheduling.PauseableLike.md)
-
   ↳↳ [`StreamLike`](streaming.StreamLike.md)
 
 ## Table of contents

@@ -43,18 +43,23 @@ export declare const DispatcherLike_scheduler: unique symbol;
 export interface DispatcherLike<T = unknown> extends QueueLike<T>, DisposableLike {
     readonly [DispatcherLike_scheduler]: SchedulerLike;
 }
+/** @ignore */
 export declare const PauseableState_running: unique symbol;
+/** @ignore */
 export declare const PauseableState_paused: unique symbol;
 export type PauseableState = typeof PauseableState_running | typeof PauseableState_paused;
 /**
  * @noInheritDoc
  */
-export interface PauseableLike extends DispatcherLike<Updater<PauseableState>> {
+export interface PauseableLike extends QueueLike<Updater<PauseableState>> {
 }
+/** @ignore */
+export declare const PauseableSchedulerLike_isPaused: unique symbol;
 /**
  * @noInheritDoc
  */
 export interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
+    readonly [PauseableSchedulerLike_isPaused]: boolean;
 }
 /**
  * A scheduler which schedules work according to it's priority.

@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`DispatcherLike`](scheduling.DispatcherLike.md)<[`Updater`](../modules/functions.md#updater)<[`PauseableState`](../modules/scheduling.md#pauseablestate)\>\>
+- [`QueueLike`](util.QueueLike.md)<[`Updater`](../modules/functions.md#updater)<[`PauseableState`](../modules/scheduling.md#pauseablestate)\>\>
 
   ↳ **`PauseableLike`**
 

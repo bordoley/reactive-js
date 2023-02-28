@@ -18,25 +18,8 @@
 
 - [PauseableState](scheduling.md#pauseablestate)
 
-### Variables
-
-- [PauseableState\_paused](scheduling.md#pauseablestate_paused)
-- [PauseableState\_running](scheduling.md#pauseablestate_running)
-
 ## Type Aliases
 
 ### PauseableState
 
-Ƭ **PauseableState**: typeof [`PauseableState_running`](scheduling.md#pauseablestate_running) \| typeof [`PauseableState_paused`](scheduling.md#pauseablestate_paused)
-
-## Variables
-
-### PauseableState\_paused
-
-• `Const` **PauseableState\_paused**: unique `symbol`
-
-___
-
-### PauseableState\_running
-
-• `Const` **PauseableState\_running**: unique `symbol`
+Ƭ **PauseableState**: typeof `PauseableState_running` \| typeof `PauseableState_paused`
