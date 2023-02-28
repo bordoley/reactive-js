@@ -114,33 +114,31 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
         },
         [PullableQueueLike_pull](this: TProperties & QueueLike) {
           const tail = this[FifoQueue_tail];
+          const values = this[FifoQueue_values];
+          const capacity = values.length;
+
           let head = this[FifoQueue_head];
 
-          if (head === tail) {
-            return none;
-          } else {
-            const values = this[FifoQueue_values];
-            const capacity = values.length;
+          const item = head === tail ? none : values[head];
 
-            const item = values[head];
+          if (head !== tail) {
             values[head] = none;
             head = (head + 1) & this[FifoQueue_capacityMask];
             this[FifoQueue_head] = head;
-
-            const count = this[QueueLike_count];
-
-            if (count < capacity / 4 && capacity > 4) {
-              const newCapacity = capacity >> 1;
-              const newList = copyArray(values, head, tail, newCapacity);
-
-              this[FifoQueue_values] = newList;
-              this[FifoQueue_head] = 0;
-              this[FifoQueue_tail] = count;
-              this[FifoQueue_capacityMask] = newCapacity - 1;
-            }
-
-            return item;
           }
+
+          const count = this[QueueLike_count];
+          if (count < capacity / 4 && capacity > 4) {
+            const newCapacity = capacity >> 1;
+            const newList = copyArray(values, head, tail, newCapacity);
+
+            this[FifoQueue_values] = newList;
+            this[FifoQueue_head] = 0;
+            this[FifoQueue_tail] = count;
+            this[FifoQueue_capacityMask] = newCapacity - 1;
+          }
+
+          return item;
         },
         [QueueLike_push](this: TProperties & QueueLike, item: T) {
           const capacityMask = this[FifoQueue_capacityMask];
