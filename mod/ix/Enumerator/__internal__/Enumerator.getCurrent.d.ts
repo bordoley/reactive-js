@@ -1,5 +1,3 @@
-import { EnumeratorLike_current } from "../../../ix.js";
-declare const Enumerator_getCurrent: <T>(enumerator: {
-    [EnumeratorLike_current]: T;
-}) => T;
+import { EnumeratorLike } from "../../../ix.js";
+declare const Enumerator_getCurrent: <T>(enumerator: EnumeratorLike<T>) => T;
 export default Enumerator_getCurrent;

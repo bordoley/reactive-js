@@ -1,5 +1,3 @@
-import { EnumeratorLike_hasCurrent } from "../../../ix.js";
-declare const Enumerator_hasCurrent: (enumerator: {
-    [EnumeratorLike_hasCurrent]: boolean;
-}) => boolean;
+import { EnumeratorLike } from "../../../ix.js";
+declare const Enumerator_hasCurrent: (enumerator: EnumeratorLike) => boolean;
 export default Enumerator_hasCurrent;

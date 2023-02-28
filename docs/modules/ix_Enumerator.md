@@ -6,35 +6,11 @@
 
 ### Functions
 
-- [forEach](ix_Enumerator.md#foreach)
 - [getCurrent](ix_Enumerator.md#getcurrent)
 - [hasCurrent](ix_Enumerator.md#hascurrent)
 - [move](ix_Enumerator.md#move)
 
 ## Functions
-
-### forEach
-
-▸ **forEach**<`T`, `TEnumerator`\>(`f`): [`Function1`](functions.md#function1)<`TEnumerator`, `TEnumerator`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TEnumerator` | extends [`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`, `TEnumerator`\> = [`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`TEnumerator`, `TEnumerator`\>
-
-___
 
 ### getCurrent
 
@@ -50,8 +26,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | `Object` |
-| `enumerator.[EnumeratorLike_current]` | `T` |
+| `enumerator` | [`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`\> |
 
 #### Returns
 
@@ -67,8 +42,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | `Object` |
-| `enumerator.[EnumeratorLike_hasCurrent]` | `boolean` |
+| `enumerator` | [`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`unknown`\> |
 
 #### Returns
 
@@ -90,10 +64,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | `Object` |
-| `enumerator.[EnumeratorLike_current]` | `T` |
-| `enumerator.[EnumeratorLike_hasCurrent]` | `boolean` |
-| `enumerator.[SourceLike_move]` | () => `void` |
+| `enumerator` | [`EnumeratorLike`](../interfaces/ix.EnumeratorLike.md)<`T`\> |
 
 #### Returns
 

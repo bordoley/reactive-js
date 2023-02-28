@@ -112,7 +112,7 @@ const Enumerable_repeat: Repeat<EnumerableLike>["repeat"] = /*@__PURE__*/ (<
           }
         },
         get [EnumeratorLike_current](): T {
-          unsafeCast<TProperties>(this);
+          unsafeCast<TProperties & EnumeratorLike>(this);
           return Enumerator_hasCurrent(this)
             ? (this[RepeatEnumerator_enumerator] as EnumeratorLike<T>)[
                 EnumeratorLike_current
