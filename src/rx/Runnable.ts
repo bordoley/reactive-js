@@ -132,14 +132,13 @@ import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
 import Runnable_toFlowable from "./Runnable/__internal__/Runnable.toFlowable.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 
-export const buffer: Buffer<RunnableLike>["buffer"] =
-  Observable_buffer as Buffer<RunnableLike>["buffer"];
+export const buffer: Buffer<RunnableLike>["buffer"] = Observable_buffer;
 
 export const catchError: CatchError<RunnableLike>["catchError"] =
   Runnable_catchError;
 
-export const combineLatest =
-  Observable_combineLatest as CombineLatest<RunnableLike>["combineLatest"];
+export const combineLatest: CombineLatest<RunnableLike>["combineLatest"] =
+  Observable_combineLatest;
 
 export const compute: Compute<RunnableLike>["compute"] =
   Observable_compute as Compute<RunnableLike>["compute"];
@@ -193,8 +192,7 @@ export const first = Runnable_first;
 export const flatMapIterable: FlatMapIterable<RunnableLike>["flatMapIterable"] =
   Runnable_flatMapIterable;
 
-export const forEach: ForEach<RunnableLike>["forEach"] =
-  Observable_forEach as ForEach<RunnableLike>["forEach"];
+export const forEach: ForEach<RunnableLike>["forEach"] = Observable_forEach;
 
 export const forkConcat: ForkConcat<RunnableLike>["forkConcat"] =
   Observable_forkConcat as ForkConcat<RunnableLike>["forkConcat"];

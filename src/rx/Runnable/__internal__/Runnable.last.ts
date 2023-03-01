@@ -1,4 +1,3 @@
-import { ForEach } from "../../../containers.js";
 import { Function1, Optional, none, pipe } from "../../../functions.js";
 import { RunnableLike } from "../../../rx.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -11,7 +10,7 @@ const Runnable_last =
 
     pipe(
       src,
-      (Observable_forEach as ForEach<RunnableLike>["forEach"])<T>(next => {
+      Observable_forEach<RunnableLike, T>(next => {
         result = next;
       }),
       Runnable_run(),

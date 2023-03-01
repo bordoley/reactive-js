@@ -8,7 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ForEach } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
 import { SideEffect1, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -21,9 +21,10 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
-const Observable_forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
-  T,
->() => {
+type ObservableForEach = <C extends ObservableLike, T = unknown>(
+  effect: SideEffect1<T>,
+) => ContainerOperator<C, T, T>;
+const Observable_forEach: ObservableForEach = /*@__PURE__*/ (<T>() => {
   const createForEachObserver: <T>(
     delegate: ObserverLike<T>,
     effect: SideEffect1<T>,
@@ -75,7 +76,7 @@ const Observable_forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
       createForEachObserver,
       partial(effect),
       Observable_liftEnumerableOperator,
-    )) as ForEach<ObservableLike>["forEach"];
+    )) as ObservableForEach;
 })();
 
 export default Observable_forEach;

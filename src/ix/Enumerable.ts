@@ -95,8 +95,7 @@ import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toRea
 import { ToFlowable } from "../streaming.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 
-export const buffer: Buffer<EnumerableLike>["buffer"] =
-  Observable_buffer as Buffer<EnumerableLike>["buffer"];
+export const buffer: Buffer<EnumerableLike>["buffer"] = Observable_buffer;
 
 export const catchError: CatchError<EnumerableLike>["catchError"] =
   Enumerable_catchError;
@@ -148,8 +147,7 @@ export const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"] =
 export const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"] =
   Enumerable_flatMapIterable;
 
-export const forEach: ForEach<EnumerableLike>["forEach"] =
-  Observable_forEach as ForEach<EnumerableLike>["forEach"];
+export const forEach: ForEach<EnumerableLike>["forEach"] = Observable_forEach;
 
 export const forkConcat: ForkConcat<EnumerableLike>["forkConcat"] =
   Observable_forkConcat as ForkConcat<EnumerableLike>["forkConcat"];

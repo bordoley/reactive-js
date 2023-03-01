@@ -15,7 +15,9 @@ const Observable_subscribeOn =
     Observable_create<T>(observer =>
       pipe(
         observable,
-        Observable_forEach<T>(Queue_pushTo(Observer_getDispatcher(observer))),
+        Observable_forEach<ObservableLike, T>(
+          Queue_pushTo(Observer_getDispatcher(observer)),
+        ),
         Observable_subscribe(scheduler),
         Disposable_bindTo(Observer_getDispatcher(observer)),
       ),

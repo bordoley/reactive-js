@@ -1,19 +1,10 @@
 import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { FromEnumerable } from "../ix.js";
-import { Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, MergeAll, MergeWith, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, MergeAll, MergeWith, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<RunnableLike>["buffer"];
 export declare const catchError: CatchError<RunnableLike>["catchError"];
-export declare const combineLatest: {
-    <TA, TB>(a: RunnableLike<TA>, b: RunnableLike<TB>): RunnableLike<readonly [TA, TB]>;
-    <TA_1, TB_1, TC>(a: RunnableLike<TA_1>, b: RunnableLike<TB_1>, c: RunnableLike<TC>): RunnableLike<readonly [TA_1, TB_1, TC]>;
-    <TA_2, TB_2, TC_1, TD>(a: RunnableLike<TA_2>, b: RunnableLike<TB_2>, c: RunnableLike<TC_1>, d: RunnableLike<TD>): RunnableLike<readonly [TA_2, TB_2, TC_1, TD]>;
-    <TA_3, TB_3, TC_2, TD_1, TE>(a: RunnableLike<TA_3>, b: RunnableLike<TB_3>, c: RunnableLike<TC_2>, d: RunnableLike<TD_1>, e: RunnableLike<TE>): RunnableLike<readonly [TA_3, TB_3, TC_2, TD_1, TE]>;
-    <TA_4, TB_4, TC_3, TD_2, TE_1, TF>(a: RunnableLike<TA_4>, b: RunnableLike<TB_4>, c: RunnableLike<TC_3>, d: RunnableLike<TD_2>, e: RunnableLike<TE_1>, f: RunnableLike<TF>): RunnableLike<readonly [TA_4, TB_4, TC_3, TD_2, TE_1, TF]>;
-    <TA_5, TB_5, TC_4, TD_3, TE_2, TF_1, TG>(a: RunnableLike<TA_5>, b: RunnableLike<TB_5>, c: RunnableLike<TC_4>, d: RunnableLike<TD_3>, e: RunnableLike<TE_2>, f: RunnableLike<TF_1>, g: RunnableLike<TG>): RunnableLike<readonly [TA_5, TB_5, TC_4, TD_3, TE_2, TF_1, TG]>;
-    <TA_6, TB_6, TC_5, TD_4, TE_3, TF_2, TG_1, TH>(a: RunnableLike<TA_6>, b: RunnableLike<TB_6>, c: RunnableLike<TC_5>, d: RunnableLike<TD_4>, e: RunnableLike<TE_3>, f: RunnableLike<TF_2>, g: RunnableLike<TG_1>, h: RunnableLike<TH>): RunnableLike<readonly [TA_6, TB_6, TC_5, TD_4, TE_3, TF_2, TG_1, TH]>;
-    <TA_7, TB_7, TC_6, TD_5, TE_4, TF_3, TG_2, TH_1, TI>(a: RunnableLike<TA_7>, b: RunnableLike<TB_7>, c: RunnableLike<TC_6>, d: RunnableLike<TD_5>, e: RunnableLike<TE_4>, f: RunnableLike<TF_3>, g: RunnableLike<TG_2>, h: RunnableLike<TH_1>, i: RunnableLike<TI>): RunnableLike<readonly [TA_7, TB_7, TC_6, TD_5, TE_4, TF_3, TG_2, TH_1, TI]>;
-};
+export declare const combineLatest: CombineLatest<RunnableLike>["combineLatest"];
 export declare const compute: Compute<RunnableLike>["compute"];
 export declare const concat: Concat<RunnableLike>["concat"];
 export declare const concatAll: ConcatAll<RunnableLike, {

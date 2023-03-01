@@ -6,6 +6,7 @@
 
 ### Constructor Functions
 
+- [combineLatest](rx_Runnable.md#combinelatest)
 - [compute](rx_Runnable.md#compute)
 - [concat](rx_Runnable.md#concat)
 - [defer](rx_Runnable.md#defer)
@@ -77,13 +78,232 @@
 
 ### Other Functions
 
-- [combineLatest](rx_Runnable.md#combinelatest)
 - [first](rx_Runnable.md#first)
 - [last](rx_Runnable.md#last)
 - [merge](rx_Runnable.md#merge)
 - [run](rx_Runnable.md#run)
 
 ## Constructor Functions
+
+### combineLatest
+
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
 
 ### compute
 
@@ -2636,226 +2856,6 @@ ___
 ___
 
 ## Other Functions
-
-### combineLatest
-
-▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA`\> |
-| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`]\>
-
-▸ **combineLatest**<`TA_1`, `TB_1`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_1`, `TB_1`, `TC`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA_1` |
-| `TB_1` |
-| `TC` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA_1`\> |
-| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB_1`\> |
-| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_1`, `TB_1`, `TC`]\>
-
-▸ **combineLatest**<`TA_2`, `TB_2`, `TC_1`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_2`, `TB_2`, `TC_1`, `TD`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA_2` |
-| `TB_2` |
-| `TC_1` |
-| `TD` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA_2`\> |
-| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB_2`\> |
-| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC_1`\> |
-| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_2`, `TB_2`, `TC_1`, `TD`]\>
-
-▸ **combineLatest**<`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA_3` |
-| `TB_3` |
-| `TC_2` |
-| `TD_1` |
-| `TE` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA_3`\> |
-| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB_3`\> |
-| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC_2`\> |
-| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD_1`\> |
-| `e` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TE`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_3`, `TB_3`, `TC_2`, `TD_1`, `TE`]\>
-
-▸ **combineLatest**<`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA_4` |
-| `TB_4` |
-| `TC_3` |
-| `TD_2` |
-| `TE_1` |
-| `TF` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA_4`\> |
-| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB_4`\> |
-| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC_3`\> |
-| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD_2`\> |
-| `e` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TE_1`\> |
-| `f` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TF`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_4`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`]\>
-
-▸ **combineLatest**<`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA_5` |
-| `TB_5` |
-| `TC_4` |
-| `TD_3` |
-| `TE_2` |
-| `TF_1` |
-| `TG` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA_5`\> |
-| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB_5`\> |
-| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC_4`\> |
-| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD_3`\> |
-| `e` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TE_2`\> |
-| `f` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TF_1`\> |
-| `g` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TG`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_5`, `TB_5`, `TC_4`, `TD_3`, `TE_2`, `TF_1`, `TG`]\>
-
-▸ **combineLatest**<`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA_6` |
-| `TB_6` |
-| `TC_5` |
-| `TD_4` |
-| `TE_3` |
-| `TF_2` |
-| `TG_1` |
-| `TH` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA_6`\> |
-| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB_6`\> |
-| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC_5`\> |
-| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD_4`\> |
-| `e` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TE_3`\> |
-| `f` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TF_2`\> |
-| `g` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TG_1`\> |
-| `h` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TH`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_6`, `TB_6`, `TC_5`, `TD_4`, `TE_3`, `TF_2`, `TG_1`, `TH`]\>
-
-▸ **combineLatest**<`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA_7` |
-| `TB_7` |
-| `TC_6` |
-| `TD_5` |
-| `TE_4` |
-| `TF_3` |
-| `TG_2` |
-| `TH_1` |
-| `TI` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TA_7`\> |
-| `b` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB_7`\> |
-| `c` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TC_6`\> |
-| `d` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TD_5`\> |
-| `e` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TE_4`\> |
-| `f` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TF_3`\> |
-| `g` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TG_2`\> |
-| `h` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TH_1`\> |
-| `i` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TI`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA_7`, `TB_7`, `TC_6`, `TD_5`, `TE_4`, `TF_3`, `TG_2`, `TH_1`, `TI`]\>
-
-___
 
 ### first
 

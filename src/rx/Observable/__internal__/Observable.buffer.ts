@@ -41,12 +41,12 @@ import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
-const Observable_buffer: <T>(options?: {
-  readonly duration?: number | Function1<T, ObservableLike>;
+type ObservableBuffer = <C extends ObservableLike, T>(options?: {
+  readonly duration?: number | Function1<T, C>;
   readonly maxBufferSize?: number;
-}) => ContainerOperator<ObservableLike, T, readonly T[]> = /*@__PURE__*/ (<
-  T,
->() => {
+}) => ContainerOperator<C, T, readonly T[]>;
+
+const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
   const typedObserverMixin = Observer_mixin<T>();
 
   const BufferObserver_buffer = Symbol("BufferObserver_buffer");
@@ -148,7 +148,7 @@ const Observable_buffer: <T>(options?: {
               pipe(
                 next,
                 this[BufferObserver_durationFunction],
-                Observable_forEach(doOnNotify),
+                Observable_forEach<ObservableLike>(doOnNotify),
                 Observable_subscribe(Observer_getScheduler(this)),
               );
           }
@@ -157,7 +157,7 @@ const Observable_buffer: <T>(options?: {
     ),
   );
 
-  return (
+  return ((
     options: {
       readonly duration?: Function1<T, ObservableLike> | number;
       readonly maxBufferSize?: number;
@@ -181,7 +181,7 @@ const Observable_buffer: <T>(options?: {
     };
 
     return pipe(operator, Observable_lift(durationOption === MAX_SAFE_INTEGER));
-  };
+  }) as ObservableBuffer;
 })();
 
 export default Observable_buffer;

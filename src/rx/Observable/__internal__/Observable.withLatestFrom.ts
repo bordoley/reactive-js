@@ -78,7 +78,7 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
 
             pipe(
               other,
-              Observable_forEach(next => {
+              Observable_forEach<ObservableLike, TB>(next => {
                 instance[WithLatestFromObserver_hasLatest] = true;
                 instance[WithLatestFromObserver_otherLatest] = next;
               }),

@@ -27,7 +27,7 @@ const Observable_toPromise =
 
       pipe(
         observable,
-        Observable_forEach<T>(next => {
+        Observable_forEach<ObservableLike, T>(next => {
           hasResult = true;
           result = next;
         }),

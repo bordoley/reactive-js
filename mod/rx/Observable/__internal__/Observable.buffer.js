@@ -76,7 +76,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
             }
         },
     }));
-    return (options = {}) => {
+    return ((options = {}) => {
         var _a, _b;
         const durationOption = (_a = options.duration) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER;
         const durationFunction = durationOption === MAX_SAFE_INTEGER
@@ -89,6 +89,6 @@ const Observable_buffer = /*@__PURE__*/ (() => {
             return pipe(createBufferObserver(delegate, durationFunction, maxBufferSize), Disposable_addTo(delegate));
         };
         return pipe(operator, Observable_lift(durationOption === MAX_SAFE_INTEGER));
-    };
+    });
 })();
 export default Observable_buffer;
