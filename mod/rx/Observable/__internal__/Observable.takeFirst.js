@@ -12,26 +12,26 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_takeFirst = 
 /*@__PURE__*/ (() => {
     const createTakeFirstObserver = (() => {
-        const TakeFirstSinkMixin_takeCount = Symbol("TakeFirstSinkMixin_takeCount");
-        const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function TakeFirstSinkMixin(instance, delegate, takeCount) {
+        const TakeFirstObserverMixin_takeCount = Symbol("TakeFirstObserverMixin_takeCount");
+        const TakeFirstObserverMixin_count = Symbol("TakeFirstObserverMixin_count");
+        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function TakeFirstObserverMixin(instance, delegate, takeCount) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
-            instance[TakeFirstSinkMixin_takeCount] = takeCount;
+            instance[TakeFirstObserverMixin_takeCount] = takeCount;
             if (takeCount === 0) {
                 pipe(instance, Disposable_dispose());
             }
             return instance;
         }, props({
-            [TakeFirstSinkMixin_count]: 0,
-            [TakeFirstSinkMixin_takeCount]: 0,
+            [TakeFirstObserverMixin_count]: 0,
+            [TakeFirstObserverMixin_takeCount]: 0,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[TakeFirstSinkMixin_count]++;
+                this[TakeFirstObserverMixin_count]++;
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
-                if (this[TakeFirstSinkMixin_count] >=
-                    this[TakeFirstSinkMixin_takeCount]) {
+                if (this[TakeFirstObserverMixin_count] >=
+                    this[TakeFirstObserverMixin_takeCount]) {
                     pipe(this, Disposable_dispose());
                 }
             },

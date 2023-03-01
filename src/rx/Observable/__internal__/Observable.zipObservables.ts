@@ -131,7 +131,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
   );
 
   const ZipObserver_enumerators = Symbol("ZipObserver_enumerators");
-  const ZipObserver_queuedEnumerator = Symbol("ZipObserver_sinkEnumerator");
+  const ZipObserver_queuedEnumerator = Symbol("ZipObserver_queuedEnumerator");
 
   type TProperties = {
     readonly [ZipObserver_enumerators]: readonly EnumeratorLike<any>[];

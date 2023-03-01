@@ -3,20 +3,44 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import StatefulContainer_reduce from "../../../containers/StatefulContainer/__internal__/StatefulContainer.reduce.js";
-import { pipe } from "../../../functions.js";
-import { ObserverLike_scheduler, } from "../../../rx.js";
-import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
+import { error, none, pipe } from "../../../functions.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
+import Observable_observeWith from "./Observable.observeWith.js";
 const Observable_reduce = /*@__PURE__*/ (() => {
-    const typedReduceSinkMixin = Observer_reduceMixin(ReadonlyArray_toRunnable());
-    const typedObserverMixin = Observer_mixin();
-    const createReduceObserver = createInstanceFactory(mix(include(typedObserverMixin, typedReduceSinkMixin), function ReduceObserver(instance, delegate, reducer, initialValue) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-        init(typedReduceSinkMixin, instance, delegate, reducer, initialValue);
+    const ReduceObserverMixin_reducer = Symbol("ReduceObserverMixin_reducer");
+    const ReduceObserverMixin_acc = Symbol("ReduceObserverMixin_acc");
+    const createReduceObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function ReduceObserverMixin(instance, delegate, reducer, initialValue) {
+        init(Disposable_mixin, instance);
+        init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
+        instance[ReduceObserverMixin_reducer] = reducer;
+        try {
+            const acc = initialValue();
+            instance[ReduceObserverMixin_acc] = acc;
+        }
+        catch (e) {
+            pipe(instance, Disposable_dispose(error(e)));
+        }
+        pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
+            pipe([instance[ReduceObserverMixin_acc]], ReadonlyArray_toRunnable(), Observable_observeWith(delegate));
+        }));
         return instance;
-    }, props({}), Observer_decorateNotifyForDev(typedReduceSinkMixin)));
+    }, props({
+        [ReduceObserverMixin_reducer]: none,
+        [ReduceObserverMixin_acc]: none,
+    }), {
+        [ObserverLike_notify](next) {
+            Observer_assertState(this);
+            const nextAcc = this[ReduceObserverMixin_reducer](this[ReduceObserverMixin_acc], next);
+            this[ReduceObserverMixin_acc] = nextAcc;
+        },
+    }));
     return pipe(createReduceObserver, StatefulContainer_reduce(Observable_liftEnumerableOperator));
 })();
 export default Observable_reduce;

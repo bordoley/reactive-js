@@ -9,9 +9,9 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import { Predicate, none, pipe } from "../../../functions.js";
 import {
-  ObservableLike,
   ObserverLike,
   ObserverLike_notify,
   ObserverLike_scheduler,
@@ -22,30 +22,29 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
+import Observer_assertState from "./Observer.assertState.js";
+import Observer_mixin from "./Observer.mixin.js";
+import Observer_notify from "./Observer.notify.js";
 
-const Observer_satisfyMixin: <C extends ObservableLike, T>(
-  fromReadonlyArray: (v: readonly boolean[]) => C,
+const Observer_satisfyMixin: <T>(
   defaultResult: boolean,
 ) => Mixin2<
   ObserverLike<T>,
   ObserverLike<boolean>,
   Predicate<T>,
   Pick<ObserverLike<T>, typeof ObserverLike_notify>
-> = <C extends ObservableLike, T>(
-  fromReadonlyArray: (v: readonly boolean[]) => C,
-  defaultResult: boolean,
-) => {
-  const SatisfySinkMixin_predicate = Symbol("SatisfySinkMixin_predicate");
+> = <T>(defaultResult: boolean) => {
+  const SatisfyObserverMixin_predicate = Symbol(
+    "SatisfyObserverMixin_predicate",
+  );
 
   type TProperties = {
-    readonly [SatisfySinkMixin_predicate]: Predicate<T>;
+    readonly [SatisfyObserverMixin_predicate]: Predicate<T>;
   };
 
   return mix(
     include(Disposable_mixin, delegatingMixin(), Observer_mixin<T>()),
-    function SatisfySinkMixin(
+    function SatisfyObserverMixin(
       instance: Mutable<TProperties> &
         Pick<ObserverLike<T>, typeof ObserverLike_notify>,
       delegate: ObserverLike<boolean>,
@@ -55,7 +54,7 @@ const Observer_satisfyMixin: <C extends ObservableLike, T>(
       init(delegatingMixin(), instance, delegate);
       init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
 
-      instance[SatisfySinkMixin_predicate] = predicate;
+      instance[SatisfyObserverMixin_predicate] = predicate;
 
       pipe(
         instance,
@@ -64,7 +63,7 @@ const Observer_satisfyMixin: <C extends ObservableLike, T>(
           if (!Disposable_isDisposed(delegate)) {
             pipe(
               [defaultResult],
-              fromReadonlyArray,
+              ReadonlyArray_toRunnable(),
               Observable_observeWith(delegate),
             );
           }
@@ -74,14 +73,18 @@ const Observer_satisfyMixin: <C extends ObservableLike, T>(
       return instance;
     },
     props<TProperties>({
-      [SatisfySinkMixin_predicate]: none,
+      [SatisfyObserverMixin_predicate]: none,
     }),
     {
       [ObserverLike_notify](
-        this: TProperties & DelegatingLike<ObserverLike<boolean>>,
+        this: TProperties &
+          DelegatingLike<ObserverLike<boolean>> &
+          ObserverLike<T>,
         next: T,
       ) {
-        if (this[SatisfySinkMixin_predicate](next)) {
+        Observer_assertState(this);
+
+        if (this[SatisfyObserverMixin_predicate](next)) {
           pipe(
             this[DelegatingLike_delegate],
             Observer_notify(!defaultResult),

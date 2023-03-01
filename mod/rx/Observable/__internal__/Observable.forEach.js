@@ -10,18 +10,18 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_forEach = /*@__PURE__*/ (() => {
     const createForEachObserver = (() => {
-        const ForEachSinkMixin_effect = Symbol("ForEachSinkMixin_effect");
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function ForEachSinkMixin(instance, delegate, effect) {
+        const ForEachObserverMixin_effect = Symbol("ForEachObserverMixin_effect");
+        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function ForEachObserverMixin(instance, delegate, effect) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
-            instance[ForEachSinkMixin_effect] = effect;
+            instance[ForEachObserverMixin_effect] = effect;
             return instance;
         }, props({
-            [ForEachSinkMixin_effect]: none,
+            [ForEachObserverMixin_effect]: none,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[ForEachSinkMixin_effect](next);
+                this[ForEachObserverMixin_effect](next);
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
             },
         }));

@@ -14,14 +14,14 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_throwIfEmpty = 
 /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (() => {
-        const ThrowIfEmptySinkMixin_isEmpty = Symbol("ThrowIfEmptySinkMixin_isEmpty");
-        return createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function ThrowIfEmptySinkMixin(instance, delegate, factory) {
+        const ThrowIfEmptyObserverMixin_isEmpty = Symbol("ThrowIfEmptyObserverMixin_isEmpty");
+        return createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function ThrowIfEmptyObserverMixin(instance, delegate, factory) {
             init(Disposable_mixin, instance);
             init(delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
                 let err = none;
-                if (instance[ThrowIfEmptySinkMixin_isEmpty]) {
+                if (instance[ThrowIfEmptyObserverMixin_isEmpty]) {
                     try {
                         err = error(factory());
                     }
@@ -33,11 +33,11 @@ const Observable_throwIfEmpty =
             }));
             return instance;
         }, props({
-            [ThrowIfEmptySinkMixin_isEmpty]: true,
+            [ThrowIfEmptyObserverMixin_isEmpty]: true,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[ThrowIfEmptySinkMixin_isEmpty] = false;
+                this[ThrowIfEmptyObserverMixin_isEmpty] = false;
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
             },
         }));

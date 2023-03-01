@@ -11,26 +11,26 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const createDistinctUntilChangedObserver = (() => {
-        const DistinctUntilChangedSinkMixin_equality = Symbol("DistinctUntilChangedSinkMixin_equality");
-        const DistinctUntilChangedSinkMixin_prev = Symbol("DistinctUntilChangedSinkMixin_prev");
-        const DistinctUntilChangedSinkMixin_hasValue = Symbol("DistinctUntilChangedSinkMixin_hasValue");
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function DistinctUntilChangedSinkMixin(instance, delegate, equality) {
+        const DistinctUntilChangedObserverMixin_equality = Symbol("DistinctUntilChangedObserverMixin_equality");
+        const DistinctUntilChangedObserverMixin_prev = Symbol("DistinctUntilChangedObserverMixin_prev");
+        const DistinctUntilChangedObserverMixin_hasValue = Symbol("DistinctUntilChangedObserverMixin_hasValue");
+        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function DistinctUntilChangedObserverMixin(instance, delegate, equality) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
-            instance[DistinctUntilChangedSinkMixin_equality] = equality;
+            instance[DistinctUntilChangedObserverMixin_equality] = equality;
             return instance;
         }, props({
-            [DistinctUntilChangedSinkMixin_equality]: none,
-            [DistinctUntilChangedSinkMixin_prev]: none,
-            [DistinctUntilChangedSinkMixin_hasValue]: false,
+            [DistinctUntilChangedObserverMixin_equality]: none,
+            [DistinctUntilChangedObserverMixin_prev]: none,
+            [DistinctUntilChangedObserverMixin_hasValue]: false,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                const shouldEmit = !this[DistinctUntilChangedSinkMixin_hasValue] ||
-                    !this[DistinctUntilChangedSinkMixin_equality](this[DistinctUntilChangedSinkMixin_prev], next);
+                const shouldEmit = !this[DistinctUntilChangedObserverMixin_hasValue] ||
+                    !this[DistinctUntilChangedObserverMixin_equality](this[DistinctUntilChangedObserverMixin_prev], next);
                 if (shouldEmit) {
-                    this[DistinctUntilChangedSinkMixin_prev] = next;
-                    this[DistinctUntilChangedSinkMixin_hasValue] = true;
+                    this[DistinctUntilChangedObserverMixin_prev] = next;
+                    this[DistinctUntilChangedObserverMixin_hasValue] = true;
                     this[DelegatingLike_delegate][ObserverLike_notify](next);
                 }
             },

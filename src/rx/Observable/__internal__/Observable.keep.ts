@@ -26,16 +26,16 @@ const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     delegate: ObserverLike<T>,
     predicate: Predicate<T>,
   ) => ObserverLike<T> = (<T>() => {
-    const KeepSinkMixin_predicate = Symbol("KeepSinkMixin_predicate");
+    const KeepObserverMixin_predicate = Symbol("KeepObserverMixin_predicate");
 
     type TProperties = {
-      readonly [KeepSinkMixin_predicate]: Predicate<T>;
+      readonly [KeepObserverMixin_predicate]: Predicate<T>;
     };
 
     return createInstanceFactory(
       mix(
         include(Disposable_delegatingMixin(), Observer_mixin<T>()),
-        function KeepSinkMixin(
+        function KeepObserverMixin(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -44,12 +44,12 @@ const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
           init(Disposable_delegatingMixin(), instance, delegate);
           init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
 
-          instance[KeepSinkMixin_predicate] = predicate;
+          instance[KeepObserverMixin_predicate] = predicate;
 
           return instance;
         },
         props<TProperties>({
-          [KeepSinkMixin_predicate]: none,
+          [KeepObserverMixin_predicate]: none,
         }),
         {
           [ObserverLike_notify](
@@ -60,7 +60,7 @@ const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
           ) {
             Observer_assertState(this);
 
-            if (this[KeepSinkMixin_predicate](next)) {
+            if (this[KeepObserverMixin_predicate](next)) {
               this[DelegatingLike_delegate][ObserverLike_notify](next);
             }
           },

@@ -28,26 +28,26 @@ const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["dis
       delegate: ObserverLike<T>,
       equality: Equality<T>,
     ) => ObserverLike<T> = (<T>() => {
-      const DistinctUntilChangedSinkMixin_equality = Symbol(
-        "DistinctUntilChangedSinkMixin_equality",
+      const DistinctUntilChangedObserverMixin_equality = Symbol(
+        "DistinctUntilChangedObserverMixin_equality",
       );
-      const DistinctUntilChangedSinkMixin_prev = Symbol(
-        "DistinctUntilChangedSinkMixin_prev",
+      const DistinctUntilChangedObserverMixin_prev = Symbol(
+        "DistinctUntilChangedObserverMixin_prev",
       );
-      const DistinctUntilChangedSinkMixin_hasValue = Symbol(
-        "DistinctUntilChangedSinkMixin_hasValue",
+      const DistinctUntilChangedObserverMixin_hasValue = Symbol(
+        "DistinctUntilChangedObserverMixin_hasValue",
       );
 
       type TProperties = {
-        readonly [DistinctUntilChangedSinkMixin_equality]: Equality<T>;
-        [DistinctUntilChangedSinkMixin_prev]: T;
-        [DistinctUntilChangedSinkMixin_hasValue]: boolean;
+        readonly [DistinctUntilChangedObserverMixin_equality]: Equality<T>;
+        [DistinctUntilChangedObserverMixin_prev]: T;
+        [DistinctUntilChangedObserverMixin_hasValue]: boolean;
       };
 
       return createInstanceFactory(
         mix(
           include(Disposable_delegatingMixin(), Observer_mixin()),
-          function DistinctUntilChangedSinkMixin(
+          function DistinctUntilChangedObserverMixin(
             instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
               Mutable<TProperties>,
             delegate: ObserverLike<T>,
@@ -56,14 +56,14 @@ const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["dis
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
 
-            instance[DistinctUntilChangedSinkMixin_equality] = equality;
+            instance[DistinctUntilChangedObserverMixin_equality] = equality;
 
             return instance;
           },
           props<TProperties>({
-            [DistinctUntilChangedSinkMixin_equality]: none,
-            [DistinctUntilChangedSinkMixin_prev]: none,
-            [DistinctUntilChangedSinkMixin_hasValue]: false,
+            [DistinctUntilChangedObserverMixin_equality]: none,
+            [DistinctUntilChangedObserverMixin_prev]: none,
+            [DistinctUntilChangedObserverMixin_hasValue]: false,
           }),
           {
             [ObserverLike_notify](
@@ -75,15 +75,15 @@ const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["dis
               Observer_assertState(this);
 
               const shouldEmit =
-                !this[DistinctUntilChangedSinkMixin_hasValue] ||
-                !this[DistinctUntilChangedSinkMixin_equality](
-                  this[DistinctUntilChangedSinkMixin_prev],
+                !this[DistinctUntilChangedObserverMixin_hasValue] ||
+                !this[DistinctUntilChangedObserverMixin_equality](
+                  this[DistinctUntilChangedObserverMixin_prev],
                   next,
                 );
 
               if (shouldEmit) {
-                this[DistinctUntilChangedSinkMixin_prev] = next;
-                this[DistinctUntilChangedSinkMixin_hasValue] = true;
+                this[DistinctUntilChangedObserverMixin_prev] = next;
+                this[DistinctUntilChangedObserverMixin_hasValue] = true;
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
               }
             },
