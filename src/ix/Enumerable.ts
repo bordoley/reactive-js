@@ -142,7 +142,7 @@ export const endWith: EndWith<EnumerableLike>["endWith"] =
 export const enumerate = Enumerable_enumerate;
 
 export const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"] =
-  Observable_everySatisfy as EverySatisfy<EnumerableLike>["everySatisfy"];
+  Observable_everySatisfy;
 
 export const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"] =
   Enumerable_flatMapIterable;
@@ -176,29 +176,26 @@ export const keep: Keep<EnumerableLike>["keep"] =
 export const keepType: KeepType<EnumerableLike>["keepType"] =
   Observable_keepType as KeepType<EnumerableLike>["keepType"];
 
-export const map: Map<EnumerableLike>["map"] =
-  Observable_map as Map<EnumerableLike>["map"];
+export const map: Map<EnumerableLike>["map"] = Observable_map;
 
 export const mapTo: MapTo<EnumerableLike>["mapTo"] =
   Observable_mapTo as MapTo<EnumerableLike>["mapTo"];
 
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
-  Observable_pairwise as Pairwise<EnumerableLike>["pairwise"];
+  Observable_pairwise;
 
-export const reduce: Reduce<EnumerableLike>["reduce"] =
-  Observable_reduce as Reduce<EnumerableLike>["reduce"];
+export const reduce: Reduce<EnumerableLike>["reduce"] = Observable_reduce;
 
 export const retry: Retry<EnumerableLike>["retry"] =
   Observable_retry as Retry<EnumerableLike>["retry"];
 
-export const scan: Scan<EnumerableLike>["scan"] =
-  Observable_scan as Scan<EnumerableLike>["scan"];
+export const scan: Scan<EnumerableLike>["scan"] = Observable_scan;
 
 export const scanAsync: ScanAsync<EnumerableLike, EnumerableLike>["scanAsync"] =
   Enumerable_scanAsync;
 
 export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
-  Observable_skipFirst as SkipFirst<EnumerableLike>["skipFirst"];
+  Observable_skipFirst;
 
 export const someSatisfy: SomeSatisfy<EnumerableLike>["someSatisfy"] =
   Observable_someSatisfy as SomeSatisfy<EnumerableLike>["someSatisfy"];
@@ -207,10 +204,10 @@ export const startWith: StartWith<EnumerableLike>["startWith"] =
   Observable_startWith as StartWith<EnumerableLike>["startWith"];
 
 export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
-  Observable_takeFirst as TakeFirst<EnumerableLike>["takeFirst"];
+  Observable_takeFirst;
 
 export const takeLast: TakeLast<EnumerableLike>["takeLast"] =
-  Observable_takeLast as TakeLast<EnumerableLike>["takeLast"];
+  Observable_takeLast;
 
 export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
   Observable_takeWhile as TakeWhile<EnumerableLike>["takeWhile"];

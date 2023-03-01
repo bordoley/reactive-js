@@ -9,8 +9,7 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-const Observable_takeFirst = 
-/*@__PURE__*/ (() => {
+const Observable_takeFirst = /*@__PURE__*/ (() => {
     const createTakeFirstObserver = (() => {
         const TakeFirstObserverMixin_takeCount = Symbol("TakeFirstObserverMixin_takeCount");
         const TakeFirstObserverMixin_count = Symbol("TakeFirstObserverMixin_count");

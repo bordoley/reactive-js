@@ -19,7 +19,7 @@ const Observable_takeUntil: TakeUntil<ObservableLike>["takeUntil"] = <T>(
       Disposable_bindTo(
         pipe(
           notifier,
-          Observable_takeFirst<T>(),
+          Observable_takeFirst<ObservableLike, T>(),
           Observable_subscribe(Observer_getScheduler(delegate)),
         ),
       ),

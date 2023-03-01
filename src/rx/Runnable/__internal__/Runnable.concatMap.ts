@@ -5,10 +5,9 @@ import { RunnableLike } from "../../../rx.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Runnable_concatAll from "./Runnable.concatAll.js";
 
+const map: Map<RunnableLike>["map"] = Observable_map;
+
 const Runnable_concatMap: ConcatMap<RunnableLike>["concatMap"] =
-  /*@__PURE__*/ Container_concatMap(
-    Observable_map as Map<RunnableLike>["map"],
-    Runnable_concatAll,
-  );
+  /*@__PURE__*/ Container_concatMap(map, Runnable_concatAll);
 
 export default Runnable_concatMap;

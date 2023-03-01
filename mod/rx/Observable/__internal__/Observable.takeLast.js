@@ -14,8 +14,7 @@ import { PullableQueueLike_pull, } from "../../../util/__internal__/util.interna
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 import Observable_observeWith from "./Observable.observeWith.js";
-const Observable_takeLast = 
-/*@__PURE__*/ (() => {
+const Observable_takeLast = /*@__PURE__*/ (() => {
     const TakeLastObserverMixin_takeLastCount = Symbol("TakeLastObserverMixin_takeLastCount");
     const createTakeLastObserver = createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin(), Observer_mixin()), function TakeLastObserverMixin(instance, delegate, takeLastCount) {
         init(Disposable_mixin, instance);
@@ -36,9 +35,9 @@ const Observable_takeLast =
             }
         },
     }));
-    return (options = {}) => {
+    return ((options = {}) => {
         const { count = 1 } = options;
         return pipe(createTakeLastObserver, partial(count), Observable_liftEnumerableOperator);
-    };
+    });
 })();
 export default Observable_takeLast;

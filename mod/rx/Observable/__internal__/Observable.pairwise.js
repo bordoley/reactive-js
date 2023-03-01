@@ -7,8 +7,7 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_lift from "./Observable.lift.js";
-const Observable_pairwise = 
-/*@__PURE__*/ (() => {
+const Observable_pairwise = /*@__PURE__*/ (() => {
     const createPairwiseObserver = (() => {
         const PairwiseObserverMixin_prev = Symbol("PairwiseObserverMixin_prev");
         const PairwiseObserverMixin_hasPrev = Symbol("PairwiseObserverMixin_hasPrev");
@@ -24,10 +23,7 @@ const Observable_pairwise =
                 Observer_assertState(this);
                 const prev = this[PairwiseObserverMixin_prev];
                 if (this[PairwiseObserverMixin_hasPrev]) {
-                    this[DelegatingLike_delegate][ObserverLike_notify]([
-                        prev,
-                        next,
-                    ]);
+                    this[DelegatingLike_delegate][ObserverLike_notify]([prev, next]);
                 }
                 this[PairwiseObserverMixin_hasPrev] = true;
                 this[PairwiseObserverMixin_prev] = next;
