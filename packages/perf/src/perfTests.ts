@@ -16,7 +16,6 @@ import {
   ToReadonlyArray,
 } from "@reactive-js/core/containers";
 import * as Enumerable from "@reactive-js/core/ix/Enumerable";
-import * as RunnableObservable from "@reactive-js/core/rx/RunnableObservable";
 import * as ReadonlyArray from "@reactive-js/core/containers/ReadonlyArray";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import * as Sequence from "@reactive-js/core/containers/Sequence";
@@ -65,7 +64,6 @@ export const map = (n: number) =>
     `map ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
     createMapPerfTest("Enumerable", Enumerable),
-    createMapPerfTest("Observable", RunnableObservable),
     createMapPerfTest("Runnable", Runnable),
     createMapPerfTest("Sequence", Sequence),
     createMapPerfTest("readonlyArray", ReadonlyArray),
@@ -105,7 +103,6 @@ export const filterMapFusion = (n: number) =>
     `filter -> map -> fusion with ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
     createFilterMapFusionPerfTest("Enumerable", Enumerable),
-    createFilterMapFusionPerfTest("Observable", RunnableObservable),
     createFilterMapFusionPerfTest("Runnable", Runnable),
     createFilterMapFusionPerfTest("Sequence", Sequence),
     benchmarkTest(
@@ -148,7 +145,6 @@ export const filterMapReduce = (n: number) =>
     `filter -> map -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
     createFilterMapReducePerfTest("Enumerable", Enumerable),
-    createFilterMapReducePerfTest("Observable", RunnableObservable),
     createFilterMapReducePerfTest("Runnable", Runnable),
     createFilterMapReducePerfTest("Sequence", Sequence),
     benchmarkTest(
@@ -199,7 +195,6 @@ export const scanReduce = (n: number) =>
     `scan -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
     createScanReducePerfTest("Enumerable", Enumerable),
-    createScanReducePerfTest("Observable", RunnableObservable),
     createScanReducePerfTest("Runnable", Runnable),
     createScanReducePerfTest("Sequence", Sequence),
     benchmarkTest(

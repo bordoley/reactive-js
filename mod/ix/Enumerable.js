@@ -90,10 +90,14 @@ export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
 export const throwIfEmpty = Observable_throwIfEmpty;
 export const throws = Observable_throws;
+export const toEnumerable = 
+/*@__PURE__*/ returns(identity);
 export const toFlowable = Runnable_toFlowable;
 export const toIterable = Enumerable_toIterable;
 export const toObservable = 
 /*@__PURE__*/ returns(identity);
 export const toReadonlyArray = Runnable_toReadonlyArray;
+export const toRunnable = 
+/*@__PURE__*/ returns(identity);
 export const zip = Observable_zip;
 export const zipWith = Observable_zipWith;

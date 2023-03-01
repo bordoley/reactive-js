@@ -9,7 +9,7 @@ import {
   __stream,
 } from "@reactive-js/core/rx/Observable";
 import * as Observable from "@reactive-js/core/rx/Observable";
-import * as RunnableObservable from "@reactive-js/core/rx/RunnableObservable";
+import * as Runnable from "@reactive-js/core/rx/Runnable";
 import {
   createComponent,
   useObservable,
@@ -48,8 +48,8 @@ const historyStream = pipe(
 );
 
 const counterFlowable = pipe(
-  RunnableObservable.generate(increment, returns(0), { delay: 100 }),
-  RunnableObservable.toFlowable(),
+  Runnable.generate(increment, returns(0), { delay: 100 }),
+  Runnable.toFlowable(),
 );
 
 const createActions = (

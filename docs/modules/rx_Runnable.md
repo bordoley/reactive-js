@@ -24,6 +24,7 @@
 - [toFlowable](rx_Runnable.md#toflowable)
 - [toObservable](rx_Runnable.md#toobservable)
 - [toReadonlyArray](rx_Runnable.md#toreadonlyarray)
+- [toRunnable](rx_Runnable.md#torunnable)
 
 ### Operator Functions
 
@@ -77,7 +78,10 @@
 ### Other Functions
 
 - [combineLatest](rx_Runnable.md#combinelatest)
+- [first](rx_Runnable.md#first)
+- [last](rx_Runnable.md#last)
 - [merge](rx_Runnable.md#merge)
+- [run](rx_Runnable.md#run)
 
 ## Constructor Functions
 
@@ -834,6 +838,28 @@ Converts the ContainerLike to a `ReadonlyArrayLike`.
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 
@@ -2831,6 +2857,38 @@ ___
 
 ___
 
+### first
+
+▸ **first**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
+### last
+
+▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
 ### merge
 
 ▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
@@ -2852,3 +2910,31 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
+### run
+
+▸ **run**<`T`\>(): (`observable`: [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>) => `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+`fn`
+
+▸ (`observable`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
+
+##### Returns
+
+`void`

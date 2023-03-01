@@ -64,6 +64,7 @@ import {
   Throttle,
   Timeout,
   ToObservable,
+  ToRunnable,
   WithLatestFrom,
   ZipLatest,
   ZipWithLatestFrom,
@@ -119,8 +120,11 @@ import Runnable_defer from "./Runnable/__internal__/Runnable.defer.js";
 import Runnable_encodeUtf8 from "./Runnable/__internal__/Runnable.encodeUtf8.js";
 import Runnable_exhaust from "./Runnable/__internal__/Runnable.exhaust.js";
 import Runnable_exhaustMap from "./Runnable/__internal__/Runnable.exhaustMap.js";
+import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_flatMapIterable from "./Runnable/__internal__/Runnable.flatMapIterable.js";
+import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_mergeAll from "./Runnable/__internal__/Runnable.mergeAll.js";
+import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_scanAsync from "./Runnable/__internal__/Runnable.scanAsync.js";
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
@@ -183,6 +187,8 @@ export const exhaust: Exhaust<RunnableLike>["exhaust"] = Runnable_exhaust;
 
 export const exhaustMap: ExhaustMap<RunnableLike>["exhaustMap"] =
   Runnable_exhaustMap;
+
+export const first = Runnable_first;
 
 export const flatMapIterable: FlatMapIterable<RunnableLike>["flatMapIterable"] =
   Runnable_flatMapIterable;
@@ -247,6 +253,8 @@ export const keep: Keep<RunnableLike>["keep"] =
 export const keepType: KeepType<RunnableLike>["keepType"] =
   Observable_keepType as KeepType<RunnableLike>["keepType"];
 
+export const last = Runnable_last;
+
 export const map: Map<RunnableLike>["map"] =
   Observable_map as Map<RunnableLike>["map"];
 
@@ -274,6 +282,8 @@ export const reduce: Reduce<RunnableLike>["reduce"] =
 
 export const retry: Retry<RunnableLike>["retry"] =
   Observable_retry as Retry<RunnableLike>["retry"];
+
+export const run = Runnable_run;
 
 export const scan: Scan<RunnableLike>["scan"] =
   Observable_scan as Scan<RunnableLike>["scan"];
@@ -332,6 +342,9 @@ export const toObservable: ToObservable<RunnableLike>["toObservable"] =
 
 export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
   Runnable_toReadonlyArray;
+
+export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
+  /*@__PURE__*/ returns(identity);
 
 export const withLatestFrom: WithLatestFrom<RunnableLike>["withLatestFrom"] =
   Observable_withLatestFrom as WithLatestFrom<RunnableLike>["withLatestFrom"];
