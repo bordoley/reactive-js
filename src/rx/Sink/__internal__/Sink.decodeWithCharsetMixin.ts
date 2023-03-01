@@ -23,7 +23,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-const Sink_decodeWithCharsetMixin: <C extends ObservableLike>(
+const Observer_decodeWithCharsetMixin: <C extends ObservableLike>(
   fromReadonlyArray: (v: readonly string[]) => C,
 ) => Mixin2<
   ObserverLike<ArrayBuffer>,
@@ -95,4 +95,4 @@ const Sink_decodeWithCharsetMixin: <C extends ObservableLike>(
   );
 };
 
-export default Sink_decodeWithCharsetMixin;
+export default Observer_decodeWithCharsetMixin;

@@ -7,10 +7,10 @@ import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
 import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
+import Observer_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_reduce = /*@__PURE__*/ (() => {
-    const typedReduceSinkMixin = Sink_reduceMixin(ReadonlyArray_toRunnable());
+    const typedReduceSinkMixin = Observer_reduceMixin(ReadonlyArray_toRunnable());
     const typedObserverMixin = Observer_mixin();
     const createReduceObserver = createInstanceFactory(mix(include(typedObserverMixin, typedReduceSinkMixin), function ReduceObserver(instance, delegate, reducer, initialValue) {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);

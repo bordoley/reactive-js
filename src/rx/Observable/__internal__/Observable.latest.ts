@@ -22,7 +22,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
@@ -150,7 +150,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
           createLatestObserver(scheduler, ctx),
           Disposable_addTo(delegate),
           Disposable_onComplete(onCompleteCb),
-          Sink_sourceFrom(observable),
+          Observer_sourceFrom(observable),
         );
 
         add(ctx, innerObserver);

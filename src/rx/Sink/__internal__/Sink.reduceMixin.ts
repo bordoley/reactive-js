@@ -20,7 +20,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-const Sink_reduceMixin: <C extends ObservableLike, T, TAcc>(
+const Observer_reduceMixin: <C extends ObservableLike, T, TAcc>(
   fromReadonlyArray: (v: readonly TAcc[]) => C,
 ) => Mixin3<
   ObserverLike<T>,
@@ -90,4 +90,4 @@ const Sink_reduceMixin: <C extends ObservableLike, T, TAcc>(
   );
 };
 
-export default Sink_reduceMixin;
+export default Observer_reduceMixin;

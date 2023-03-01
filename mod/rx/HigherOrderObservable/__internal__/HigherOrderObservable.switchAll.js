@@ -16,7 +16,7 @@ import Observable_subscribe from "../../Observable/__internal__/Observable.subsc
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_notifySink from "../../Sink/__internal__/Sink.notifySink.js";
+import Observer_notifySink from "../../Observer/__internal__/Observer.notifySink.js";
 const HigherOrderObservable_currentRef = Symbol("HigherOrderObservable_currentRef");
 const HigherOrderObservable_switchAll = (lift) => {
     const createSwitchAllObserver = (() => {
@@ -39,7 +39,7 @@ const HigherOrderObservable_switchAll = (lift) => {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
                 this[HigherOrderObservable_currentRef][MutableRefLike_current] =
-                    pipe(next, Observable_forEach(Sink_notifySink(this[DelegatingLike_delegate])), Observable_subscribe(Observer_getScheduler(this)), Disposable_onComplete(() => {
+                    pipe(next, Observable_forEach(Observer_notifySink(this[DelegatingLike_delegate])), Observable_subscribe(Observer_getScheduler(this)), Disposable_onComplete(() => {
                         if (Disposable_isDisposed(this)) {
                             pipe(this[DelegatingLike_delegate], Disposable_dispose());
                         }

@@ -6,7 +6,7 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../../../rx.js";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
 const LiftedObservable_source = Symbol("LiftedObservable_source");
 const LiftedObservable_operators = Symbol("LiftedObservable_operators");
@@ -36,7 +36,7 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
     pipeUnsafe(
       observer,
       ...this[LiftedObservable_operators],
-      Sink_sourceFrom(this[LiftedObservable_source]),
+      Observer_sourceFrom(this[LiftedObservable_source]),
     );
   }
 }

@@ -16,15 +16,17 @@ import {
 } from "../../../rx.js";
 import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
+import Observer_reduceMixin from "../../Sink/__internal__/Sink.reduceMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const typedReduceSinkMixin = Sink_reduceMixin<ObservableLike<TAcc>, T, TAcc>(
-    ReadonlyArray_toRunnable(),
-  );
+  const typedReduceSinkMixin = Observer_reduceMixin<
+    ObservableLike<TAcc>,
+    T,
+    TAcc
+  >(ReadonlyArray_toRunnable());
 
   const typedObserverMixin = Observer_mixin<T>();
 

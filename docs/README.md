@@ -33,7 +33,6 @@ Reactive-JS
 - [rx/Observable](modules/rx_Observable.md)
 - [rx/Observer](modules/rx_Observer.md)
 - [rx/Runnable](modules/rx_Runnable.md)
-- [rx/Sink](modules/rx_Sink.md)
 - [rx/Subject](modules/rx_Subject.md)
 - [scheduling](modules/scheduling.md)
 - [scheduling/Continuation](modules/scheduling_Continuation.md)

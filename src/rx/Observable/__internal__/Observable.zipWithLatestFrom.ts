@@ -37,7 +37,7 @@ import {
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_notify from "../../Sink/__internal__/Sink.notify.js";
+import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
@@ -85,7 +85,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             next,
             observer[ZipWithLatestFromObserver_otherLatest] as TB,
           );
-          pipe(observer[DelegatingLike_delegate], Sink_notify(result));
+          pipe(observer[DelegatingLike_delegate], Observer_notify(result));
         }
       };
 

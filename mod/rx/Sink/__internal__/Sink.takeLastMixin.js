@@ -12,7 +12,7 @@ import IndexedQueue_toReadonlyArray from "../../../util/PullableQueue/__internal
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-const Sink_takeLastMixin = (fromReadonlyArray) => {
+const Observer_takeLastMixin = (fromReadonlyArray) => {
     const TakeLastSinkMixin_takeLastCount = Symbol("TakeLastSinkMixin_takeLastCount");
     return mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin(), Observer_mixin()), function TakeLastSinkMixin(instance, delegate, takeLastCount) {
         init(Disposable_mixin, instance);
@@ -34,4 +34,4 @@ const Sink_takeLastMixin = (fromReadonlyArray) => {
         },
     });
 };
-export default Sink_takeLastMixin;
+export default Observer_takeLastMixin;

@@ -3,7 +3,7 @@
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { pipe } from "../../../functions.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
-import Sink_sourceFrom from "../../../rx/Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -25,7 +25,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
             const count = ReadonlyArray_getLength(observables);
             const ctx = { [MergeObserverCtx_completedCount]: 0 };
             for (const observable of observables) {
-                pipe(createMergeObserver(observer, count, ctx), Sink_sourceFrom(observable));
+                pipe(createMergeObserver(observer, count, ctx), Observer_sourceFrom(observable));
             }
         };
         const isEnumerable = Observable_allAreEnumerable(observables);

@@ -11,7 +11,7 @@ import MulticastObservable_getObserverCount from "../../../rx/MulticastObservabl
 import { SchedulerLike } from "../../../scheduling.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Observable_create from "./Observable.create.js";
 import Observable_multicast from "./Observable.multicast.js";
 
@@ -31,7 +31,7 @@ const Observable_share =
 
       pipe(
         observer,
-        Sink_sourceFrom(multicasted),
+        Observer_sourceFrom(multicasted),
         Disposable_onDisposed(() => {
           if (
             isSome(multicasted) &&

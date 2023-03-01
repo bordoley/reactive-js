@@ -12,13 +12,13 @@ import { ObservableLike, ObserverLike } from "../../../rx.js";
 import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_everySatisfyMixin from "../../Sink/__internal__/Sink.everySatisfyMixin.js";
+import Observer_everySatisfyMixin from "../../Sink/__internal__/Sink.everySatisfyMixin.js";
 import Observable_lift from "./Observable.lift.js";
 
 const Observable_everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   /*@__PURE__*/ (<T>() => {
     const typedObserverMixin = Observer_mixin();
-    const typedEverySatisfySinkMixin = Sink_everySatisfyMixin<
+    const typedEverySatisfySinkMixin = Observer_everySatisfyMixin<
       ObservableLike<boolean>,
       T
     >(ReadonlyArray_toRunnable());

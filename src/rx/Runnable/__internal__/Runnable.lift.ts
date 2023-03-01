@@ -7,7 +7,7 @@ import {
   ObserverLike,
   RunnableLike,
 } from "../../../rx.js";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
 const LiftedRunnable_source = Symbol("LiftedRunnable_source");
 const LiftedRunnable_operators = Symbol("LiftedRunnable_operators");
@@ -33,7 +33,7 @@ class LiftedRunnable<TIn, TOut> implements RunnableLike<TOut> {
     pipeUnsafe(
       observer,
       ...this[LiftedRunnable_operators],
-      Sink_sourceFrom(this[LiftedRunnable_source]),
+      Observer_sourceFrom(this[LiftedRunnable_source]),
     );
   }
 }

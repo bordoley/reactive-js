@@ -27,8 +27,8 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
+import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
-import Sink_notify from "../../Sink/__internal__/Sink.notify.js";
 import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -408,7 +408,7 @@ export const Observable_async = <T>(
       const shouldDispose = !hasOutstandingEffects || hasError;
 
       if (shouldNotify) {
-        pipe(observer, Sink_notify(result as T));
+        pipe(observer, Observer_notify(result as T));
       }
 
       if (shouldDispose) {
@@ -448,7 +448,7 @@ export const Observable_async__do = /*@__PURE__*/ (() => {
     Observable_create(observer => {
       const callback = () => {
         f(...args);
-        pipe(observer, Sink_notify(none), Disposable_dispose());
+        pipe(observer, Observer_notify(none), Disposable_dispose());
       };
 
       pipe(observer, Observer_schedule(callback));

@@ -9,7 +9,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-const Sink_reduceMixin = (fromReadonlyArray) => {
+const Observer_reduceMixin = (fromReadonlyArray) => {
     const ReduceSinkMixin_reducer = Symbol("ReduceSinkMixin_reducer");
     const ReduceSinkMixin_acc = Symbol("ReduceSinkMixin_acc");
     return mix(include(Disposable_mixin, Observer_mixin()), function ReduceSinkMixin(instance, delegate, reducer, initialValue) {
@@ -37,4 +37,4 @@ const Sink_reduceMixin = (fromReadonlyArray) => {
         },
     });
 };
-export default Sink_reduceMixin;
+export default Observer_reduceMixin;

@@ -28,8 +28,8 @@ import EnumerableObservable_toEnumerable from "../../EnumerableObservable/__inte
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
@@ -113,7 +113,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             else {
                 const enumerator = pipe(QueuedEnumerator_create(), Disposable_addTo(observer));
                 enumerators.push(enumerator);
-                pipe(createZipObserver(observer, enumerators, enumerator), Disposable_addTo(observer), Sink_sourceFrom(next));
+                pipe(createZipObserver(observer, enumerators, enumerator), Disposable_addTo(observer), Observer_sourceFrom(next));
             }
         }
     };
