@@ -12,7 +12,7 @@ import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 const Sequence_toRunnable = options => (seq) => {
     const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
-    const onSink = (observer) => {
+    const onSubscribe = (observer) => {
         let next = seq();
         const continuation = () => {
             while (!observer[DisposableLike_isDisposed] && isSome(next)) {
@@ -27,7 +27,7 @@ const Sequence_toRunnable = options => (seq) => {
         pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
     };
     return hasDelay(options)
-        ? Runnable_create(onSink)
-        : EnumerableObservable_create(onSink);
+        ? Runnable_create(onSubscribe)
+        : EnumerableObservable_create(onSubscribe);
 };
 export default Sequence_toRunnable;

@@ -26,7 +26,7 @@ const HigherOrderObservable_scanAsync =
     initialValue: Factory<TAcc>,
   ): ContainerOperator<C, T, TAcc> =>
   observable => {
-    const onSink = (observer: ObserverLike<TAcc>) => {
+    const onSubscribe = (observer: ObserverLike<TAcc>) => {
       const accFeedbackStream = pipe(
         Subject_create(),
         Disposable_addTo(observer),
@@ -46,7 +46,7 @@ const HigherOrderObservable_scanAsync =
       );
     };
 
-    return createObservable(onSink);
+    return createObservable(onSubscribe);
   };
 
 export default HigherOrderObservable_scanAsync;

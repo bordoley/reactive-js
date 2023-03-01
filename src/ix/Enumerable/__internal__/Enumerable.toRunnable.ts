@@ -34,7 +34,7 @@ const Enumerable_toRunnable: ToRunnable<
   enumerable => {
     const { delay = 0, delayStart = false } = options ?? {};
 
-    const onSink = (observer: ObserverLike<T>) => {
+    const onSubscribe = (observer: ObserverLike<T>) => {
       const enumerator = pipe(
         enumerable,
         enumerate(),
@@ -59,8 +59,8 @@ const Enumerable_toRunnable: ToRunnable<
       );
     };
     return hasDelay(options)
-      ? Runnable_create(onSink)
-      : EnumerableObservable_create(onSink);
+      ? Runnable_create(onSubscribe)
+      : EnumerableObservable_create(onSubscribe);
   };
 
 export default Enumerable_toRunnable;

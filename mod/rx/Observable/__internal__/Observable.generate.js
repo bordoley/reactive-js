@@ -10,7 +10,7 @@ import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js"
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 const Observable_generate = (generator, initialValue, options) => {
     const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
-    const onSink = (observer) => {
+    const onSubscribe = (observer) => {
         let acc = initialValue();
         const continuation = () => {
             while (!Disposable_isDisposed(observer)) {
@@ -22,7 +22,7 @@ const Observable_generate = (generator, initialValue, options) => {
         pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
     };
     return hasDelay(options)
-        ? Runnable_create(onSink)
-        : EnumerableObservable_create(onSink);
+        ? Runnable_create(onSubscribe)
+        : EnumerableObservable_create(onSubscribe);
 };
 export default Observable_generate;

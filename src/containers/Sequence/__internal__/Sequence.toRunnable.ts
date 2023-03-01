@@ -24,7 +24,7 @@ const Sequence_toRunnable: ToRunnable<
   <T>(seq: SequenceLike<T>) => {
     const { delay = 0, delayStart = false } = options ?? {};
 
-    const onSink = (observer: ObserverLike<T>) => {
+    const onSubscribe = (observer: ObserverLike<T>) => {
       let next = seq();
 
       const continuation = () => {
@@ -47,8 +47,8 @@ const Sequence_toRunnable: ToRunnable<
     };
 
     return hasDelay(options)
-      ? Runnable_create(onSink)
-      : EnumerableObservable_create(onSink);
+      ? Runnable_create(onSubscribe)
+      : EnumerableObservable_create(onSubscribe);
   };
 
 export default Sequence_toRunnable;

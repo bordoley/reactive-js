@@ -18,7 +18,7 @@ const Observable_generate = <T>(
 ): ObservableLike<T> => {
   const { delay = 0, delayStart = false } = options ?? {};
 
-  const onSink = (observer: ObserverLike<T>) => {
+  const onSubscribe = (observer: ObserverLike<T>) => {
     let acc = initialValue();
 
     const continuation = () => {
@@ -36,8 +36,8 @@ const Observable_generate = <T>(
   };
 
   return hasDelay(options)
-    ? Runnable_create(onSink)
-    : EnumerableObservable_create(onSink);
+    ? Runnable_create(onSubscribe)
+    : EnumerableObservable_create(onSubscribe);
 };
 
 export default Observable_generate;

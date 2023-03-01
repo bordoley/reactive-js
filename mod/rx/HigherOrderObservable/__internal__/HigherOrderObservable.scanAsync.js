@@ -12,10 +12,10 @@ import Subject_create from "../../Subject/__internal__/Subject.create.js";
 import Subject_publish from "../../Subject/__internal__/Subject.publish.js";
 import Subject_publishTo from "../../Subject/__internal__/Subject.publishTo.js";
 const HigherOrderObservable_scanAsync = (createObservable) => (scanner, initialValue) => observable => {
-    const onSink = (observer) => {
+    const onSubscribe = (observer) => {
         const accFeedbackStream = pipe(Subject_create(), Disposable_addTo(observer));
         pipe(observable, Observable_zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), Observable_takeFirst())), Observable_switchAll(), Observable_forEach(Subject_publishTo(accFeedbackStream)), Observable_onSubscribe(() => pipe(accFeedbackStream, Subject_publish(initialValue()))), Observable_observeWith(observer));
     };
-    return createObservable(onSink);
+    return createObservable(onSubscribe);
 };
 export default HigherOrderObservable_scanAsync;

@@ -14,7 +14,7 @@ const ReadonlyArray_toRunnable =
 /*@__PURE__*/
 ReadonlyArray_toContainer((values, startIndex, count, options) => {
     const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
-    const onSink = (observer) => {
+    const onSubscribe = (observer) => {
         let index = startIndex, cnt = count;
         const continuation = () => {
             while (!observer[DisposableLike_isDisposed] && cnt !== 0) {
@@ -37,7 +37,7 @@ ReadonlyArray_toContainer((values, startIndex, count, options) => {
         pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
     };
     return hasDelay(options)
-        ? Runnable_create(onSink)
-        : EnumerableObservable_create(onSink);
+        ? Runnable_create(onSubscribe)
+        : EnumerableObservable_create(onSubscribe);
 });
 export default ReadonlyArray_toRunnable;

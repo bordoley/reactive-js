@@ -102,7 +102,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             }
         },
     }));
-    const onSink = (observables) => (observer) => {
+    const onSubscribe = (observables) => (observer) => {
         const enumerators = [];
         for (const next of observables) {
             if (Observable_isEnumerable(next)) {
@@ -123,8 +123,8 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         return isEnumerable
             ? pipe(observables, ReadonlyArray_map(EnumerableObservable_toEnumerable()), ReadonlyArray_keepType(isSome), enumerables => Enumerable_zip(...enumerables), Enumerable_toRunnable())
             : isRunnable
-                ? Runnable_create(onSink(observables))
-                : Observable_create(onSink(observables));
+                ? Runnable_create(onSubscribe(observables))
+                : Observable_create(onSubscribe(observables));
     };
 })();
 export default Observable_zipObservables;

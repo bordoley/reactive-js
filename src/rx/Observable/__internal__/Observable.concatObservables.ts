@@ -33,7 +33,7 @@ const Observable_concatObservables = /*@__PURE__*/ (<T>() => {
     );
 
   return (observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
-    const onSink = (observer: ObserverLike<T>) => {
+    const onSubscribe = (observer: ObserverLike<T>) => {
       if (!ReadonlyArray_isEmpty(observables)) {
         pipe(
           createConcatObserver(observer, observables, 1),
@@ -47,7 +47,7 @@ const Observable_concatObservables = /*@__PURE__*/ (<T>() => {
     const isEnumerable = Observable_allAreEnumerable(observables);
     const isRunnable = Observable_allAreRunnable(observables);
 
-    return Observable_create(onSink, isEnumerable, isRunnable);
+    return Observable_create(onSubscribe, isEnumerable, isRunnable);
   };
 })();
 
