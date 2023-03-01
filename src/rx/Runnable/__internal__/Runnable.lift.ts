@@ -1,6 +1,6 @@
-import { Lift } from "../../../containers.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
+  Lift,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,

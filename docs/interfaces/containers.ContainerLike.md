@@ -18,7 +18,7 @@
 
   ↳ [`SequenceLike`](containers.SequenceLike.md)
 
-  ↳ [`StatefulContainerLike`](containers.StatefulContainerLike.md)
+  ↳ [`ObservableLike`](rx.ObservableLike.md)
 
   ↳ [`FlowableLike`](streaming.FlowableLike.md)
 

@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](containers.StatefulContainerLike.md) |
+| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 | `O` | `never` |
 
 ## Hierarchy
@@ -29,7 +29,7 @@
 
 ▸ **throwIfEmpty**<`T`\>(`factory`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
-Returns a StatefulContainerLike that emits an error if the source completes without emitting a value.
+Returns a ContainerLike that emits an error if the source completes without emitting a value.
 
 #### Type parameters
 

@@ -8,6 +8,3 @@ export const ContainerLike_type = Symbol("ContainerLike_type");
 export const SequenceLike_data = Symbol("SequenceLike_data");
 /**  @ignore */
 export const SequenceLike_next = Symbol("SequenceLike_next");
-/**  @ignore */
-export const StatefulContainerLike_state = Symbol("StatefulContainerLike_state");
-export const StatefulContainerLike_variance = Symbol("StatefulContainerLike_variance");
