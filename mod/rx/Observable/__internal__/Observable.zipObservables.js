@@ -6,13 +6,12 @@ import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal_
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import { compose, isTrue, none, pipe } from "../../../functions.js";
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, } from "../../../ix.js";
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../ix.js";
 import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../ix/Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
-import Source_move from "../../../ix/Source/__internal__/Source.move.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
@@ -50,7 +49,7 @@ const QueuedEnumerator_create =
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
     }), {
-        [SourceLike_move]() {
+        [EnumeratorLike_move]() {
             if (!Disposable_isDisposed(this) && this[QueueLike_count] > 0) {
                 const next = this[PullableQueueLike_pull]();
                 this[EnumeratorLike_current] = next;
@@ -105,7 +104,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     }));
     const moveAll = (enumerators) => {
         for (const enumerator of enumerators) {
-            Source_move(enumerator);
+            Enumerator_move(enumerator);
         }
     };
     const allHaveCurrent = (enumerators) => pipe(enumerators, ReadonlyArray_every(Enumerator_hasCurrent));

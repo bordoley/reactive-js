@@ -11,7 +11,7 @@ import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
-  SourceLike_move,
+  EnumeratorLike_move,
 } from "../../../ix.js";
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
@@ -179,7 +179,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
           });
         }
       },
-      [SourceLike_move](
+      [EnumeratorLike_move](
         this: TProperties &
           MutableEnumeratorLike<VirtualTask> &
           PullableQueueLike<VirtualTask>,

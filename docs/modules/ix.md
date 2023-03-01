@@ -12,7 +12,6 @@
 
 - [AsyncEnumeratorLike](../interfaces/ix.AsyncEnumeratorLike.md)
 - [EnumeratorLike](../interfaces/ix.EnumeratorLike.md)
-- [SourceLike](../interfaces/ix.SourceLike.md)
 
 ### TypeClass Interfaces
 

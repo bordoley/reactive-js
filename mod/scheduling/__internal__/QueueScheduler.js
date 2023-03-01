@@ -4,11 +4,11 @@ import { max } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { MAX_SAFE_INTEGER } from "../../constants.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../functions.js";
-import { EnumeratorLike_current, SourceLike_move, } from "../../ix.js";
+import { EnumeratorLike_current, EnumeratorLike_move, } from "../../ix.js";
 import Enumerator_getCurrent from "../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
+import Enumerator_move from "../../ix/Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import Source_move from "../../ix/Source/__internal__/Source.move.js";
 import { PauseableSchedulerLike_isPaused, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
 import { QueueLike_count, QueueLike_push } from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
@@ -101,7 +101,7 @@ export const create =
                 const { [QueueTask_continuation]: continuation, [QueueTask_dueTime]: dueTime, } = task;
                 const delay = max(dueTime - getCurrentTime(instance[QueueScheduler_hostScheduler]), 0);
                 if (delay === 0) {
-                    Source_move(instance);
+                    Enumerator_move(instance);
                     instance[SchedulerLike_inContinuation] = true;
                     Continuation_run(continuation);
                     instance[SchedulerLike_inContinuation] = false;
@@ -187,7 +187,7 @@ export const create =
                 scheduleOnHost(this);
             }
         },
-        [SourceLike_move]() {
+        [EnumeratorLike_move]() {
             // First fast forward through disposed tasks.
             peek(this);
             const task = PullableQueue_pull(this[QueueScheduler_queue]);

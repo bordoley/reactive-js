@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`SourceLike`](ix.SourceLike.md)
+- [`DisposableLike`](util.DisposableLike.md)
 
   ↳ **`EnumeratorLike`**
 
@@ -22,6 +22,10 @@
 
 - [[EnumeratorLike\_current]](ix.EnumeratorLike.md#[enumeratorlike_current])
 - [[EnumeratorLike\_hasCurrent]](ix.EnumeratorLike.md#[enumeratorlike_hascurrent])
+
+### Methods
+
+- [[EnumeratorLike\_move]](ix.EnumeratorLike.md#[enumeratorlike_move])
 
 ## Properties
 
@@ -34,3 +38,13 @@ ___
 ### [EnumeratorLike\_hasCurrent]
 
 • `Readonly` **[EnumeratorLike\_hasCurrent]**: `boolean`
+
+## Methods
+
+### [EnumeratorLike\_move]
+
+▸ **[EnumeratorLike_move]**(): `void`
+
+#### Returns
+
+`void`

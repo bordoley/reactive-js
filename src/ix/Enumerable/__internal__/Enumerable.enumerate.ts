@@ -11,8 +11,7 @@ import {
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
-  SourceLike,
-  SourceLike_move,
+  EnumeratorLike_move,
 } from "../../../ix.js";
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
@@ -65,12 +64,12 @@ const Enumerable_enumerate: <T>() => (
       ),
       function EnumeratorScheduler(
         instance: Pick<
-          SchedulerLike & SourceLike,
+          SchedulerLike & EnumeratorLike,
           | typeof SchedulerLike_now
           | typeof SchedulerLike_requestYield
           | typeof SchedulerLike_schedule
           | typeof SchedulerLike_shouldYield
-          | typeof SourceLike_move
+          | typeof EnumeratorLike_move
         > &
           Mutable<TEnumeratorSchedulerProperties>,
       ): EnumeratorScheduler {
@@ -92,7 +91,7 @@ const Enumerable_enumerate: <T>() => (
         [SchedulerLike_requestYield](): void {
           // No-Op: We yield whenever the continuation is running.
         },
-        [SourceLike_move](
+        [EnumeratorLike_move](
           this: TEnumeratorSchedulerProperties &
             MutableEnumeratorLike<T> &
             PullableQueueLike<ContinuationLike>,

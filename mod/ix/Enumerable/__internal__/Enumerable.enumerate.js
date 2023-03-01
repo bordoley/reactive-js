@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isSome, none, pipe, unsafeCast } from "../../../functions.js";
-import { EnumeratorLike_current, SourceLike_move, } from "../../../ix.js";
+import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../ix.js";
 import { ObserverLike_notify } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js";
@@ -39,7 +39,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
         [SchedulerLike_requestYield]() {
             // No-Op: We yield whenever the continuation is running.
         },
-        [SourceLike_move]() {
+        [EnumeratorLike_move]() {
             if (!Disposable_isDisposed(this)) {
                 const continuation = this[PullableQueueLike_pull]();
                 if (isSome(continuation)) {

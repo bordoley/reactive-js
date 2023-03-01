@@ -10,7 +10,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  SourceLike_move,
+  EnumeratorLike_move,
 } from "../../../ix.js";
 import { DisposableLike } from "../../../util.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
@@ -18,7 +18,7 @@ import { MutableEnumeratorLike } from "../../__internal__/ix.internal.js";
 
 type TEnumeratorMixinReturn<T> = Omit<
   MutableEnumeratorLike<T>,
-  keyof DisposableLike | typeof SourceLike_move
+  keyof DisposableLike | typeof EnumeratorLike_move
 >;
 
 const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =

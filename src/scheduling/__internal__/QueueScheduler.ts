@@ -22,12 +22,12 @@ import {
 import {
   EnumeratorLike,
   EnumeratorLike_current,
-  SourceLike_move,
+  EnumeratorLike_move,
 } from "../../ix.js";
 import Enumerator_getCurrent from "../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
+import Enumerator_move from "../../ix/Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import Source_move from "../../ix/Source/__internal__/Source.move.js";
 import { MutableEnumeratorLike } from "../../ix/__internal__/ix.internal.js";
 import {
   ContinuationLike,
@@ -216,7 +216,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             );
 
             if (delay === 0) {
-              Source_move(instance);
+              Enumerator_move(instance);
               instance[SchedulerLike_inContinuation] = true;
               Continuation_run(continuation);
               instance[SchedulerLike_inContinuation] = false;
@@ -361,7 +361,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
               scheduleOnHost(this);
             }
           },
-          [SourceLike_move](
+          [EnumeratorLike_move](
             this: TProperties & MutableEnumeratorLike<QueueTask>,
           ): void {
             // First fast forward through disposed tasks.

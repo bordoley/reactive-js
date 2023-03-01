@@ -10,7 +10,7 @@ Represents an unmanaged resource that can be disposed.
 
 - **`DisposableLike`**
 
-  ↳ [`SourceLike`](ix.SourceLike.md)
+  ↳ [`EnumeratorLike`](ix.EnumeratorLike.md)
 
   ↳ [`ObserverLike`](rx.ObserverLike.md)
 

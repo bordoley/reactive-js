@@ -12,8 +12,6 @@
 
 ## Hierarchy
 
-- [`SourceLike`](ix.SourceLike.md)
-
 - [`StreamLike`](streaming.StreamLike.md)<`void`, `T`\>
 
   ↳ **`AsyncEnumeratorLike`**

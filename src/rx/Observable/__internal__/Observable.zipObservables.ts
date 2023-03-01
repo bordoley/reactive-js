@@ -19,14 +19,13 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  SourceLike_move,
+  EnumeratorLike_move,
 } from "../../../ix.js";
 import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../ix/Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
-import Source_move from "../../../ix/Source/__internal__/Source.move.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -78,7 +77,7 @@ const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
       mix(
         include(Disposable_mixin, IndexedQueue_fifoQueueMixin<T>()),
         function QueuedEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof SourceLike_move> &
+          instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
             Mutable<TProperties>,
         ): EnumeratorLike<T> & QueueLike<T> {
           init(Disposable_mixin, instance);
@@ -100,7 +99,7 @@ const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
           [EnumeratorLike_hasCurrent]: false,
         }),
         {
-          [SourceLike_move](
+          [EnumeratorLike_move](
             this: DisposableLike & TProperties & PullableQueueLike<T>,
           ) {
             if (!Disposable_isDisposed(this) && this[QueueLike_count] > 0) {
@@ -215,7 +214,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
 
   const moveAll = (enumerators: readonly EnumeratorLike[]) => {
     for (const enumerator of enumerators) {
-      Source_move(enumerator);
+      Enumerator_move(enumerator);
     }
   };
 
