@@ -62,7 +62,6 @@ import RunnableObservable_switchAll from "./RunnableObservable/__internal__/Runn
 import RunnableObservable_switchMap from "./RunnableObservable/__internal__/RunnableObservable.switchMap.js";
 import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
 import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.js";
-import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable.js";
 import RunnableObservable_throttle from "./RunnableObservable/__internal__/RunnableObservableLike.throttle.js";
 export const buffer = Observable_buffer;
 export const catchError = RunnableObservable_catchError;
@@ -123,7 +122,6 @@ export const toFlowable = RunnableObservable_toFlowable;
 export const toObservable = 
 /*@__PURE__*/ returns(identity);
 export const toReadonlyArray = RunnableObservable_toReadonlyArray;
-export const toRunnable = RunnableObservable_toRunnable;
 export const withLatestFrom = Observable_withLatestFrom;
 export const zip = Observable_zip;
 export const zipLatest = Observable_zipLatest;

@@ -27,7 +27,6 @@ import {
   takeLastTests,
   takeWhileTests,
   throwIfEmptyTests,
-  toRunnableTests,
   zipTests as zipOperatorTests,
   zipWithTests,
 } from "../../__tests__/operators.js";
@@ -587,7 +586,6 @@ testModule(
   throwIfEmptyTests(RunnableObservable),
   timeoutTests,
   toFlowableTests,
-  toRunnableTests<RunnableObservableLike>(RunnableObservable),
   withLatestFromTest,
   zipWithTests<RunnableObservableLike>(RunnableObservable),
   zipTests,

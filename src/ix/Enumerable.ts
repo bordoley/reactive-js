@@ -40,7 +40,6 @@ import { EnumerableLike, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import {
   ToEnumerableObservable,
   ToObservable,
-  ToRunnable,
   ToRunnableObservable,
 } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
@@ -77,7 +76,6 @@ import Enumerable_toEnumerableObservable from "./Enumerable/__internal__/Enumera
 import Enumerable_toFlowable from "./Enumerable/__internal__/Enumerable.toFlowable.js";
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
-import Enumerable_toRunnable from "./Enumerable/__internal__/Enumerable.toRunnable.js";
 import Enumerable_toRunnableObservable from "./Enumerable/__internal__/Enumerable.toRunnableObservable.js";
 import Enumerable_zip from "./Enumerable/__internal__/Enumerable.zip.js";
 import Enumerable_zipWith from "./Enumerable/__internal__/Enumerable.zipWith.js";
@@ -191,9 +189,6 @@ export const toObservable: ToObservable<
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
   Enumerable_toReadonlyArray;
-
-export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
-  Enumerable_toRunnable;
 
 export const toRunnableObservable: ToRunnableObservable<
   EnumerableLike,

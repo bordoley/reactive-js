@@ -24,7 +24,6 @@
 - [toIterable](ix_Enumerable.md#toiterable)
 - [toObservable](ix_Enumerable.md#toobservable)
 - [toReadonlyArray](ix_Enumerable.md#toreadonlyarray)
-- [toRunnable](ix_Enumerable.md#torunnable)
 - [toRunnableObservable](ix_Enumerable.md#torunnableobservable)
 
 ### Operator Functions
@@ -612,28 +611,6 @@ Converts the ContainerLike to a `ReadonlyArrayLike`.
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
-
-___
-
-### toRunnable
-
-▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 

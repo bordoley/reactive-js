@@ -31,7 +31,6 @@ import { ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import {
   ToEnumerableObservable,
   ToObservable,
-  ToRunnable,
   ToRunnableObservable,
 } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
@@ -62,7 +61,6 @@ import Sequence_toEnumerable from "./Sequence/__internal__/Sequence.toEnumerable
 import Sequence_toFlowable from "./Sequence/__internal__/Sequence.toFlowable.js";
 import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable.js";
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
-import Sequence_toRunnable from "./Sequence/__internal__/Sequence.toRunnable.js";
 import Sequence_toRunnableObservable from "./Sequence/__internal__/Sequence.toRunnableObservable.js";
 import Sequence_zip from "./Sequence/__internal__/Sequence.zip.js";
 import Sequence_zipWith from "./Sequence/__internal__/Sequence.zipWith.js";
@@ -151,9 +149,6 @@ export const toObservable: ToObservable<
 
 export const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
   Sequence_toReadonlyArray;
-
-export const toRunnable: ToRunnable<SequenceLike>["toRunnable"] =
-  Sequence_toRunnable;
 
 export const toRunnableObservable: ToRunnableObservable<
   SequenceLike,

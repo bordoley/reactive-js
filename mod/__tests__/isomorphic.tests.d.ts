@@ -12,7 +12,6 @@ import "../containers/__tests__/Iterable.test.js";
 import "../rx/__tests__/Observable.test.js";
 import "../containers/__tests__/Promiseable.test.js";
 import "../containers/__tests__/ReadonlyArray.test.js";
-import "../rx/__tests__/Runnable.test.js";
 import "../ix/__tests__/RunnableAsyncEnumerable.test.js";
 import "../rx/__tests__/RunnableObservable.test.js";
 import "../containers/__tests__/Sequence.test.js";

@@ -16,8 +16,6 @@
 
   ↳ **`ReactiveContainerLike`**
 
-  ↳↳ [`RunnableLike`](rx.RunnableLike.md)
-
   ↳↳ [`ObservableLike`](rx.ObservableLike.md)
 
 ## Table of contents

@@ -24,7 +24,6 @@
 - [toFlowable](rx_RunnableObservable.md#toflowable)
 - [toObservable](rx_RunnableObservable.md#toobservable)
 - [toReadonlyArray](rx_RunnableObservable.md#toreadonlyarray)
-- [toRunnable](rx_RunnableObservable.md#torunnable)
 
 ### Operator Functions
 
@@ -835,28 +834,6 @@ Converts the ContainerLike to a `ReadonlyArrayLike`.
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
-
-___
-
-### toRunnable
-
-▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 

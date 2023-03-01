@@ -172,8 +172,6 @@
 
   ↳ [`ToEnumerableObservable`](rx.ToEnumerableObservable.md)
 
-  ↳ [`ToRunnable`](rx.ToRunnable.md)
-
   ↳ [`WithLatestFrom`](rx.WithLatestFrom.md)
 
   ↳ [`ZipLatest`](rx.ZipLatest.md)

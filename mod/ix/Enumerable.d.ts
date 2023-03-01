@@ -1,6 +1,6 @@
 import { Buffer, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, DistinctUntilChanged, Empty, EndWith, FlatMapIterable, ForEach, FromIterable, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { EnumerableLike, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
-import { ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
+import { ToEnumerableObservable, ToObservable, ToRunnableObservable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => import("../ix.js").EnumeratorLike<T>;
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
@@ -45,7 +45,6 @@ export declare const toObservable: ToObservable<EnumerableLike, {
     delayStart?: boolean;
 }>["toObservable"];
 export declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
-export declare const toRunnable: ToRunnable<EnumerableLike>["toRunnable"];
 export declare const toRunnableObservable: ToRunnableObservable<EnumerableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;

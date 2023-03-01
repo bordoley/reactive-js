@@ -1,6 +1,6 @@
 import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { FromEnumerable } from "../ix.js";
-import { Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, MergeAll, MergeWith, Retry, RunnableObservableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, MergeAll, MergeWith, Retry, RunnableObservableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToObservable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<RunnableObservableLike>["buffer"];
 export declare const catchError: CatchError<RunnableObservableLike>["catchError"];
@@ -91,7 +91,6 @@ export declare const timeout: Timeout<RunnableObservableLike>["timeout"];
 export declare const toFlowable: ToFlowable<RunnableObservableLike>["toFlowable"];
 export declare const toObservable: ToObservable<RunnableObservableLike>["toObservable"];
 export declare const toReadonlyArray: ToReadonlyArray<RunnableObservableLike>["toReadonlyArray"];
-export declare const toRunnable: ToRunnable<RunnableObservableLike>["toRunnable"];
 export declare const withLatestFrom: WithLatestFrom<RunnableObservableLike>["withLatestFrom"];
 export declare const zip: Zip<RunnableObservableLike>["zip"];
 export declare const zipLatest: ZipLatest<RunnableObservableLike>["zipLatest"];
