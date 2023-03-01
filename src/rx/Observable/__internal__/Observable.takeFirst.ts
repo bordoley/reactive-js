@@ -28,14 +28,16 @@ const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
       delegate: ObserverLike<T>,
       count: number,
     ) => ObserverLike<T> = (<T>() => {
-      const TakeFirstSinkMixin_takeCount = Symbol(
-        "TakeFirstSinkMixin_takeCount",
+      const TakeFirstObserverMixin_takeCount = Symbol(
+        "TakeFirstObserverMixin_takeCount",
       );
-      const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
+      const TakeFirstObserverMixin_count = Symbol(
+        "TakeFirstObserverMixin_count",
+      );
 
       type TProperties = {
-        readonly [TakeFirstSinkMixin_takeCount]: number;
-        [TakeFirstSinkMixin_count]: number;
+        readonly [TakeFirstObserverMixin_takeCount]: number;
+        [TakeFirstObserverMixin_count]: number;
       };
 
       return createInstanceFactory(
@@ -44,7 +46,7 @@ const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
             Disposable_delegatingMixin<ObserverLike<T>>(),
             Observer_mixin<T>(),
           ),
-          function TakeFirstSinkMixin(
+          function TakeFirstObserverMixin(
             instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
               Mutable<TProperties>,
             delegate: ObserverLike<T>,
@@ -61,7 +63,7 @@ const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
               delegate[ObserverLike_scheduler],
             );
 
-            instance[TakeFirstSinkMixin_takeCount] = takeCount;
+            instance[TakeFirstObserverMixin_takeCount] = takeCount;
 
             if (takeCount === 0) {
               pipe(instance, Disposable_dispose());
@@ -70,8 +72,8 @@ const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
             return instance;
           },
           props<TProperties>({
-            [TakeFirstSinkMixin_count]: 0,
-            [TakeFirstSinkMixin_takeCount]: 0,
+            [TakeFirstObserverMixin_count]: 0,
+            [TakeFirstObserverMixin_takeCount]: 0,
           }),
           {
             [ObserverLike_notify](
@@ -82,11 +84,11 @@ const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
             ) {
               Observer_assertState(this);
 
-              this[TakeFirstSinkMixin_count]++;
+              this[TakeFirstObserverMixin_count]++;
               this[DelegatingLike_delegate][ObserverLike_notify](next);
               if (
-                this[TakeFirstSinkMixin_count] >=
-                this[TakeFirstSinkMixin_takeCount]
+                this[TakeFirstObserverMixin_count] >=
+                this[TakeFirstObserverMixin_takeCount]
               ) {
                 pipe(this, Disposable_dispose());
               }

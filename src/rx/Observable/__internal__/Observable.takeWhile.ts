@@ -29,16 +29,16 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
       predicate: Predicate<T>,
       inclusive: boolean,
     ) => ObserverLike<T> = (<T>() => {
-      const TakeWhileSinkMixin_predicate = Symbol(
-        "TakeWhileSinkMixin_predicate",
+      const TakeWhileObserverMixin_predicate = Symbol(
+        "TakeWhileObserverMixin_predicate",
       );
-      const TakeWhileSinkMixin_inclusive = Symbol(
-        "TakeWhileSinkMixin_inclusive",
+      const TakeWhileObserverMixin_inclusive = Symbol(
+        "TakeWhileObserverMixin_inclusive",
       );
 
       type TProperties = {
-        readonly [TakeWhileSinkMixin_predicate]: Predicate<T>;
-        readonly [TakeWhileSinkMixin_inclusive]: boolean;
+        readonly [TakeWhileObserverMixin_predicate]: Predicate<T>;
+        readonly [TakeWhileObserverMixin_inclusive]: boolean;
       };
 
       return createInstanceFactory(
@@ -47,7 +47,7 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
             Disposable_delegatingMixin<ObserverLike<T>>(),
             Observer_mixin<T>(),
           ),
-          function TakeWhileSinkMixin(
+          function TakeWhileObserverMixin(
             instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
               Mutable<TProperties>,
             delegate: ObserverLike<T>,
@@ -65,14 +65,14 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
               delegate[ObserverLike_scheduler],
             );
 
-            instance[TakeWhileSinkMixin_predicate] = predicate;
-            instance[TakeWhileSinkMixin_inclusive] = inclusive;
+            instance[TakeWhileObserverMixin_predicate] = predicate;
+            instance[TakeWhileObserverMixin_inclusive] = inclusive;
 
             return instance;
           },
           props<TProperties>({
-            [TakeWhileSinkMixin_predicate]: none,
-            [TakeWhileSinkMixin_inclusive]: none,
+            [TakeWhileObserverMixin_predicate]: none,
+            [TakeWhileObserverMixin_inclusive]: none,
           }),
           {
             [ObserverLike_notify](
@@ -84,9 +84,12 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
               Observer_assertState(this);
 
               const satisfiesPredicate =
-                this[TakeWhileSinkMixin_predicate](next);
+                this[TakeWhileObserverMixin_predicate](next);
 
-              if (satisfiesPredicate || this[TakeWhileSinkMixin_inclusive]) {
+              if (
+                satisfiesPredicate ||
+                this[TakeWhileObserverMixin_inclusive]
+              ) {
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
               }
 

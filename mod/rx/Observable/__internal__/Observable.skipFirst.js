@@ -11,22 +11,22 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_skipFirst = 
 /*@__PURE__*/ (() => {
     const createSkipFirstObserver = (() => {
-        const SkipFirstSinkMixin_skipCount = Symbol("SkipFirstSinkMixin_skipCount");
-        const SkipFirstSinkMixin_count = Symbol("SkipFirstSinkMixin_count");
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function SkipFirstSinkMixin(instance, delegate, skipCount) {
+        const SkipFirstObserverMixin_skipCount = Symbol("SkipFirstObserverMixin_skipCount");
+        const SkipFirstObserverMixin_count = Symbol("SkipFirstObserverMixin_count");
+        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function SkipFirstObserverMixin(instance, delegate, skipCount) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
-            instance[SkipFirstSinkMixin_skipCount] = skipCount;
+            instance[SkipFirstObserverMixin_skipCount] = skipCount;
             return instance;
         }, props({
-            [SkipFirstSinkMixin_skipCount]: 0,
-            [SkipFirstSinkMixin_count]: 0,
+            [SkipFirstObserverMixin_skipCount]: 0,
+            [SkipFirstObserverMixin_count]: 0,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[SkipFirstSinkMixin_count]++;
-                if (this[SkipFirstSinkMixin_count] >
-                    this[SkipFirstSinkMixin_skipCount]) {
+                this[SkipFirstObserverMixin_count]++;
+                if (this[SkipFirstObserverMixin_count] >
+                    this[SkipFirstObserverMixin_skipCount]) {
                     this[DelegatingLike_delegate][ObserverLike_notify](next);
                 }
             },

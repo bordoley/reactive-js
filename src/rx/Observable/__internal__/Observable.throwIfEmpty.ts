@@ -29,18 +29,18 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (<T>() => {
-      const ThrowIfEmptySinkMixin_isEmpty = Symbol(
-        "ThrowIfEmptySinkMixin_isEmpty",
+      const ThrowIfEmptyObserverMixin_isEmpty = Symbol(
+        "ThrowIfEmptyObserverMixin_isEmpty",
       );
 
       type TProperties = {
-        [ThrowIfEmptySinkMixin_isEmpty]: boolean;
+        [ThrowIfEmptyObserverMixin_isEmpty]: boolean;
       };
 
       return createInstanceFactory(
         mix(
           include(Disposable_mixin, delegatingMixin(), Observer_mixin<T>()),
-          function ThrowIfEmptySinkMixin(
+          function ThrowIfEmptyObserverMixin(
             instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
               Mutable<TProperties>,
             delegate: ObserverLike<T>,
@@ -60,7 +60,7 @@ const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
               Disposable_onComplete(() => {
                 let err: Optional<Error> = none;
 
-                if (instance[ThrowIfEmptySinkMixin_isEmpty]) {
+                if (instance[ThrowIfEmptyObserverMixin_isEmpty]) {
                   try {
                     err = error(factory());
                   } catch (e) {
@@ -75,7 +75,7 @@ const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
             return instance;
           },
           props<TProperties>({
-            [ThrowIfEmptySinkMixin_isEmpty]: true,
+            [ThrowIfEmptyObserverMixin_isEmpty]: true,
           }),
           {
             [ObserverLike_notify](
@@ -87,7 +87,7 @@ const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
             ) {
               Observer_assertState(this);
 
-              this[ThrowIfEmptySinkMixin_isEmpty] = false;
+              this[ThrowIfEmptyObserverMixin_isEmpty] = false;
               this[DelegatingLike_delegate][ObserverLike_notify](next);
             },
           },

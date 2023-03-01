@@ -10,27 +10,27 @@ import Observable_lift from "./Observable.lift.js";
 const Observable_pairwise = 
 /*@__PURE__*/ (() => {
     const createPairwiseObserver = (() => {
-        const PairwiseSinkMixin_prev = Symbol("PairwiseSinkMixin_prev");
-        const PairwiseSinkMixin_hasPrev = Symbol("PairwiseSinkMixin_hasPrev");
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function PairwiseSinkMixin(instance, delegate) {
+        const PairwiseObserverMixin_prev = Symbol("PairwiseObserverMixin_prev");
+        const PairwiseObserverMixin_hasPrev = Symbol("PairwiseObserverMixin_hasPrev");
+        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function PairwiseObserverMixin(instance, delegate) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
             return instance;
         }, props({
-            [PairwiseSinkMixin_prev]: none,
-            [PairwiseSinkMixin_hasPrev]: false,
+            [PairwiseObserverMixin_prev]: none,
+            [PairwiseObserverMixin_hasPrev]: false,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                const prev = this[PairwiseSinkMixin_prev];
-                if (this[PairwiseSinkMixin_hasPrev]) {
+                const prev = this[PairwiseObserverMixin_prev];
+                if (this[PairwiseObserverMixin_hasPrev]) {
                     this[DelegatingLike_delegate][ObserverLike_notify]([
                         prev,
                         next,
                     ]);
                 }
-                this[PairwiseSinkMixin_hasPrev] = true;
-                this[PairwiseSinkMixin_prev] = next;
+                this[PairwiseObserverMixin_hasPrev] = true;
+                this[PairwiseObserverMixin_prev] = next;
             },
         }));
     })();

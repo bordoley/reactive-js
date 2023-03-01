@@ -3,40 +3,39 @@ import {
   include,
   init,
   mix,
-  props,
 } from "../../../__internal__/mixins.js";
 import { EverySatisfy } from "../../../containers.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
-import { Predicate, partial, pipe } from "../../../functions.js";
+import {
+  Predicate,
+  compose,
+  negate,
+  partial,
+  pipe,
+} from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
-import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_everySatisfyMixin from "../../Sink/__internal__/Sink.everySatisfyMixin.js";
+import Observer_satisfyMixin from "../../Observer/__internal__/Observer.satisfyMixin.js";
 import Observable_lift from "./Observable.lift.js";
 
 const Observable_everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
   /*@__PURE__*/ (<T>() => {
-    const typedObserverMixin = Observer_mixin();
-    const typedEverySatisfySinkMixin = Observer_everySatisfyMixin<
-      ObservableLike<boolean>,
-      T
-    >(ReadonlyArray_toRunnable());
+    const typedSatisfyObserverMixin = Observer_satisfyMixin<T>(true);
 
     const everySatisfyObserverMixin = mix(
-      include(typedEverySatisfySinkMixin, typedObserverMixin),
+      include(typedSatisfyObserverMixin),
       function EverySatisfyObserver(
         instance: unknown,
         delegate: ObserverLike<boolean>,
         predicate: Predicate<T>,
       ): ObserverLike<T> {
-        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
-        init(typedEverySatisfySinkMixin, instance, delegate, predicate);
+        init(
+          typedSatisfyObserverMixin,
+          instance,
+          delegate,
+          compose(predicate, negate),
+        );
 
         return instance;
       },
-      props<unknown>({}),
-      Observer_decorateNotifyForDev(typedEverySatisfySinkMixin),
     );
 
     return (predicate: Predicate<T>) =>

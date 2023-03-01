@@ -29,16 +29,16 @@ const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
     delegate: ObserverLike<TB>,
     predicate: Function1<TA, TB>,
   ) => ObserverLike<TA> = (<TA, TB>() => {
-    const MapSinkMixin_mapper = Symbol("MapSinkMixin_mapper");
+    const MapObserverMixin_mapper = Symbol("MapObserverMixin_mapper");
 
     type TProperties = {
-      readonly [MapSinkMixin_mapper]: Function1<TA, TB>;
+      readonly [MapObserverMixin_mapper]: Function1<TA, TB>;
     };
 
     return createInstanceFactory(
       mix(
         include(Disposable_delegatingMixin(), Observer_mixin<TA>()),
-        function MapSinkMixin(
+        function MapObserverMixin(
           instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<TB>,
@@ -50,12 +50,12 @@ const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
             instance,
             delegate[ObserverLike_scheduler],
           );
-          instance[MapSinkMixin_mapper] = mapper;
+          instance[MapObserverMixin_mapper] = mapper;
 
           return instance;
         },
         props<TProperties>({
-          [MapSinkMixin_mapper]: none,
+          [MapObserverMixin_mapper]: none,
         }),
         {
           [ObserverLike_notify](
@@ -66,7 +66,7 @@ const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
           ) {
             Observer_assertState(this);
 
-            const mapped = this[MapSinkMixin_mapper](next);
+            const mapped = this[MapObserverMixin_mapper](next);
             this[DelegatingLike_delegate][ObserverLike_notify](mapped);
           },
         },

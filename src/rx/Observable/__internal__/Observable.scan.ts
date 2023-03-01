@@ -32,12 +32,12 @@ const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ) => ObserverLike<T> = (() => {
-    const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");
-    const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
+    const ScanObserverMixin_reducer = Symbol("ScanObserverMixin_reducer");
+    const ScanObserverMixin_acc = Symbol("ScanObserverMixin_acc");
 
     type TProperties = {
-      readonly [ScanSinkMixin_reducer]: Reducer<T, TAcc>;
-      [ScanSinkMixin_acc]: TAcc;
+      readonly [ScanObserverMixin_reducer]: Reducer<T, TAcc>;
+      [ScanObserverMixin_acc]: TAcc;
     };
 
     return createInstanceFactory(
@@ -46,7 +46,7 @@ const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
           Disposable_delegatingMixin<ObserverLike<TAcc>>(),
           Observer_mixin<T>(),
         ),
-        function ScanSinkMixin(
+        function ScanObserverMixin(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<TAcc>,
@@ -60,11 +60,11 @@ const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
           );
           init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
 
-          instance[ScanSinkMixin_reducer] = reducer;
+          instance[ScanObserverMixin_reducer] = reducer;
 
           try {
             const acc = initialValue();
-            instance[ScanSinkMixin_acc] = acc;
+            instance[ScanObserverMixin_acc] = acc;
           } catch (e) {
             pipe(instance, Disposable_dispose(error(e)));
           }
@@ -72,8 +72,8 @@ const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
           return instance;
         },
         props<TProperties>({
-          [ScanSinkMixin_reducer]: none,
-          [ScanSinkMixin_acc]: none,
+          [ScanObserverMixin_reducer]: none,
+          [ScanObserverMixin_acc]: none,
         }),
         {
           [ObserverLike_notify](
@@ -84,11 +84,11 @@ const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
           ) {
             Observer_assertState(this);
 
-            const nextAcc = this[ScanSinkMixin_reducer](
-              this[ScanSinkMixin_acc],
+            const nextAcc = this[ScanObserverMixin_reducer](
+              this[ScanObserverMixin_acc],
               next,
             );
-            this[ScanSinkMixin_acc] = nextAcc;
+            this[ScanObserverMixin_acc] = nextAcc;
             this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
           },
         },

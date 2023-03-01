@@ -11,28 +11,28 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_scan = /*@__PURE__*/ (() => {
     const createScanObserver = (() => {
-        const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");
-        const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function ScanSinkMixin(instance, delegate, reducer, initialValue) {
+        const ScanObserverMixin_reducer = Symbol("ScanObserverMixin_reducer");
+        const ScanObserverMixin_acc = Symbol("ScanObserverMixin_acc");
+        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function ScanObserverMixin(instance, delegate, reducer, initialValue) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
-            instance[ScanSinkMixin_reducer] = reducer;
+            instance[ScanObserverMixin_reducer] = reducer;
             try {
                 const acc = initialValue();
-                instance[ScanSinkMixin_acc] = acc;
+                instance[ScanObserverMixin_acc] = acc;
             }
             catch (e) {
                 pipe(instance, Disposable_dispose(error(e)));
             }
             return instance;
         }, props({
-            [ScanSinkMixin_reducer]: none,
-            [ScanSinkMixin_acc]: none,
+            [ScanObserverMixin_reducer]: none,
+            [ScanObserverMixin_acc]: none,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                const nextAcc = this[ScanSinkMixin_reducer](this[ScanSinkMixin_acc], next);
-                this[ScanSinkMixin_acc] = nextAcc;
+                const nextAcc = this[ScanObserverMixin_reducer](this[ScanObserverMixin_acc], next);
+                this[ScanObserverMixin_acc] = nextAcc;
                 this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
             },
         }));

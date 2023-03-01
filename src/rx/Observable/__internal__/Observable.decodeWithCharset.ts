@@ -1,5 +1,9 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+  Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -9,39 +13,103 @@ import { __DEV__ } from "../../../constants.js";
 import { DecodeWithCharset } from "../../../containers.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import StatefulContainer_decodeWithCharset from "../../../containers/StatefulContainer/__internal__/StatefulContainer.decodeWithCharset.js";
-import { pipe } from "../../../functions.js";
+import { newInstance, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
-import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_decodeWithCharsetMixin from "../../Sink/__internal__/Sink.decodeWithCharsetMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
+import Observable_observeWith from "./Observable.observeWith.js";
 
 const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
-    const typedDecodeWithCharsetMixin = Observer_decodeWithCharsetMixin(
-      ReadonlyArray_toRunnable(),
+    const DecodeWithCharsetObserverMixin_textDecoder = Symbol(
+      "DecodeWithCharsetObserverMixin_textDecoder",
     );
-    const typedObserverMixin = Observer_mixin<ArrayBuffer>();
+
+    type TProperties = {
+      readonly [DecodeWithCharsetObserverMixin_textDecoder]: TextDecoder;
+    };
 
     const createDecodeWithCharsetObserver = createInstanceFactory(
       mix(
-        include(typedObserverMixin, typedDecodeWithCharsetMixin),
-        function DecodeWithCharsetObserver(
-          instance: unknown,
+        include(
+          Disposable_mixin,
+          delegatingMixin(),
+          Observer_mixin<ArrayBuffer>(),
+        ),
+        function DecodeWithCharsetObserverMixin(
+          instance: Pick<
+            ObserverLike<ArrayBuffer>,
+            typeof ObserverLike_notify
+          > &
+            Mutable<TProperties>,
           delegate: ObserverLike<string>,
           charset: string,
         ): ObserverLike<ArrayBuffer> {
-          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-          init(typedDecodeWithCharsetMixin, instance, delegate, charset);
+          init(Disposable_mixin, instance);
+          init(delegatingMixin(), instance, delegate);
+          init(
+            Observer_mixin<ArrayBuffer>(),
+            instance,
+            delegate[ObserverLike_scheduler],
+          );
+
+          const textDecoder = newInstance(TextDecoder, charset, {
+            fatal: true,
+          });
+          instance[DecodeWithCharsetObserverMixin_textDecoder] = textDecoder;
+
+          pipe(
+            instance,
+            Disposable_addTo(delegate),
+            Disposable_onComplete(() => {
+              const data = textDecoder.decode();
+
+              if (data.length > 0) {
+                pipe(
+                  [data],
+                  ReadonlyArray_toRunnable(),
+                  Observable_observeWith(delegate),
+                );
+              } else {
+                pipe(delegate, Disposable_dispose());
+              }
+            }),
+          );
 
           return instance;
         },
-        props<unknown>({}),
-        Observer_decorateNotifyForDev(typedDecodeWithCharsetMixin),
+        props<TProperties>({
+          [DecodeWithCharsetObserverMixin_textDecoder]: none,
+        }),
+        {
+          [ObserverLike_notify](
+            this: TProperties &
+              DelegatingLike<ObserverLike<string>> &
+              ObserverLike<ArrayBuffer>,
+            next: ArrayBuffer,
+          ) {
+            Observer_assertState(this);
+
+            const data = this[
+              DecodeWithCharsetObserverMixin_textDecoder
+            ].decode(next, {
+              stream: true,
+            });
+            if (data.length > 0) {
+              this[DelegatingLike_delegate][ObserverLike_notify](data);
+            }
+          },
+        },
       ),
     );
 

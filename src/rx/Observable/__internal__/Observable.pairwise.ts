@@ -26,18 +26,20 @@ const Observable_pairwise: Pairwise<ObservableLike>["pairwise"] =
     const createPairwiseObserver: <T>(
       delegate: ObserverLike<readonly [T, T]>,
     ) => ObserverLike<T> = (<T>() => {
-      const PairwiseSinkMixin_prev = Symbol("PairwiseSinkMixin_prev");
-      const PairwiseSinkMixin_hasPrev = Symbol("PairwiseSinkMixin_hasPrev");
+      const PairwiseObserverMixin_prev = Symbol("PairwiseObserverMixin_prev");
+      const PairwiseObserverMixin_hasPrev = Symbol(
+        "PairwiseObserverMixin_hasPrev",
+      );
 
       type TProperties = {
-        [PairwiseSinkMixin_prev]: T;
-        [PairwiseSinkMixin_hasPrev]: boolean;
+        [PairwiseObserverMixin_prev]: T;
+        [PairwiseObserverMixin_hasPrev]: boolean;
       };
 
       return createInstanceFactory(
         mix(
           include(Disposable_delegatingMixin(), Observer_mixin<T>()),
-          function PairwiseSinkMixin(
+          function PairwiseObserverMixin(
             instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
               Mutable<TProperties>,
             delegate: ObserverLike<readonly [T, T]>,
@@ -52,8 +54,8 @@ const Observable_pairwise: Pairwise<ObservableLike>["pairwise"] =
             return instance;
           },
           props<TProperties>({
-            [PairwiseSinkMixin_prev]: none,
-            [PairwiseSinkMixin_hasPrev]: false,
+            [PairwiseObserverMixin_prev]: none,
+            [PairwiseObserverMixin_hasPrev]: false,
           }),
           {
             [ObserverLike_notify](
@@ -64,17 +66,17 @@ const Observable_pairwise: Pairwise<ObservableLike>["pairwise"] =
             ) {
               Observer_assertState(this);
 
-              const prev = this[PairwiseSinkMixin_prev];
+              const prev = this[PairwiseObserverMixin_prev];
 
-              if (this[PairwiseSinkMixin_hasPrev]) {
+              if (this[PairwiseObserverMixin_hasPrev]) {
                 this[DelegatingLike_delegate][ObserverLike_notify]([
                   prev,
                   next,
                 ]);
               }
 
-              this[PairwiseSinkMixin_hasPrev] = true;
-              this[PairwiseSinkMixin_prev] = next;
+              this[PairwiseObserverMixin_hasPrev] = true;
+              this[PairwiseObserverMixin_prev] = next;
             },
           },
         ),

@@ -1,6 +1,7 @@
-/// <reference types="./Sink.satisfyMixin.d.ts" />
+/// <reference types="./Observer.satisfyMixin.d.ts" />
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -9,26 +10,28 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
-const Observer_satisfyMixin = (fromReadonlyArray, defaultResult) => {
-    const SatisfySinkMixin_predicate = Symbol("SatisfySinkMixin_predicate");
-    return mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function SatisfySinkMixin(instance, delegate, predicate) {
+import Observer_assertState from "./Observer.assertState.js";
+import Observer_mixin from "./Observer.mixin.js";
+import Observer_notify from "./Observer.notify.js";
+const Observer_satisfyMixin = (defaultResult) => {
+    const SatisfyObserverMixin_predicate = Symbol("SatisfyObserverMixin_predicate");
+    return mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function SatisfyObserverMixin(instance, delegate, predicate) {
         init(Disposable_mixin, instance);
         init(delegatingMixin(), instance, delegate);
         init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
-        instance[SatisfySinkMixin_predicate] = predicate;
+        instance[SatisfyObserverMixin_predicate] = predicate;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             if (!Disposable_isDisposed(delegate)) {
-                pipe([defaultResult], fromReadonlyArray, Observable_observeWith(delegate));
+                pipe([defaultResult], ReadonlyArray_toRunnable(), Observable_observeWith(delegate));
             }
         }));
         return instance;
     }, props({
-        [SatisfySinkMixin_predicate]: none,
+        [SatisfyObserverMixin_predicate]: none,
     }), {
         [ObserverLike_notify](next) {
-            if (this[SatisfySinkMixin_predicate](next)) {
+            Observer_assertState(this);
+            if (this[SatisfyObserverMixin_predicate](next)) {
                 pipe(this[DelegatingLike_delegate], Observer_notify(!defaultResult), Disposable_dispose());
             }
         },
