@@ -1,5 +1,4 @@
 import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1, TypePredicate, Updater } from "./functions.js";
-import { DisposableLike } from "./util.js";
 /**  @ignore */
 export declare const ContainerLike_T: unique symbol;
 /**  @ignore */
@@ -55,17 +54,6 @@ export interface SequenceLike<T = unknown> extends ContainerLike {
         readonly [SequenceLike_next]: SequenceLike<T>;
     }>;
 }
-/**  @ignore */
-export declare const StatefulContainerLike_state: unique symbol;
-export declare const StatefulContainerLike_variance: unique symbol;
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface StatefulContainerLike extends ContainerLike {
-    readonly [StatefulContainerLike_state]?: DisposableLike;
-    readonly [StatefulContainerLike_variance]?: "interactive" | "reactive";
-}
 export type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly [ContainerLike_type]?: unknown;
 } ? NonNullable<(C & {
@@ -75,14 +63,6 @@ export type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly _T: () => T;
 };
 export type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
-export type StatefulContainerStateOf<C extends StatefulContainerLike, T> = C extends {
-    readonly [StatefulContainerLike_state]?: DisposableLike;
-} ? NonNullable<(C & {
-    readonly [ContainerLike_T]: T;
-})[typeof StatefulContainerLike_state]> : {
-    readonly _C: C;
-    readonly _T: () => T;
-};
 /**
  * @noInheritDoc
  * @category TypeClass
@@ -109,13 +89,13 @@ export interface Buffer<C extends ContainerLike, O = unknown> extends Container<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface CatchError<C extends StatefulContainerLike, O = never> extends Container<C> {
+export interface CatchError<C extends ContainerLike, O = never> extends Container<C> {
     /**
-     * Returns a StatefulContainerLike which catches errors produced by the source and either continues with
-     * the StatefulContainerLike returned from the `onError` callback or swallows the error if
+     * Returns a ContainerLike which catches errors produced by the source and either continues with
+     * the ContainerLike returned from the `onError` callback or swallows the error if
      * void is returned.
      *
-     * @param onError a function that takes source error and either returns a StatefulContainerLike
+     * @param onError a function that takes source error and either returns a ContainerLike
      * to continue with or void if the error should be propagated.
      *
      * @category Operator
@@ -126,7 +106,7 @@ export interface CatchError<C extends StatefulContainerLike, O = never> extends 
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Compute<C extends StatefulContainerLike, O = never> extends Container<C> {
+export interface Compute<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * @category Constructor
      */
@@ -297,7 +277,7 @@ export interface FlatMapIterable<C extends ContainerLike, O = never> extends Con
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForEach<C extends StatefulContainerLike, O = never> extends Container<C> {
+export interface ForEach<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * Returns a ContainerOperator that applies the side effect function to each
      * value emitted by the source.
@@ -436,25 +416,6 @@ export interface KeepType<C extends ContainerLike, O = never> extends Container<
      */
     keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>, options?: O): ContainerOperator<C, TA, TB>;
 }
-/** @ignore */
-export type LiftOperatorIn<C extends StatefulContainerLike, TA, TB> = C extends {
-    readonly [StatefulContainerLike_variance]?: "reactive";
-} ? StatefulContainerStateOf<C, TB> : StatefulContainerStateOf<C, TA>;
-/** @ignore */
-export type LiftOperatorOut<C extends StatefulContainerLike, TA, TB> = C extends {
-    readonly [StatefulContainerLike_variance]?: "reactive";
-} ? StatefulContainerStateOf<C, TA> : StatefulContainerStateOf<C, TB>;
-/**
- * @noInheritDoc
- * @category TypeClass
- * @ignore
- */
-export interface Lift<C extends StatefulContainerLike> extends Container<C> {
-    /**
-     * @category Operator
-     */
-    lift<TA, TB>(operator: Function1<LiftOperatorIn<C, TA, TB>, LiftOperatorOut<C, TA, TB>>): ContainerOperator<C, TA, TB>;
-}
 /**
  * @noInheritDoc
  * @category TypeClass
@@ -486,9 +447,9 @@ export interface MapTo<C extends ContainerLike, O = never> extends Container<C> 
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Never<C extends StatefulContainerLike, O = never> extends Container<C> {
+export interface Never<C extends ContainerLike, O = never> extends Container<C> {
     /**
-     * Returns a StatefulContainerLike instance that emits no items and never disposes its state.
+     * Returns a ContainerLike instance that emits no items and never disposes its state.
      *
      * @category Constructor
      */
@@ -666,9 +627,9 @@ export interface TakeWhile<C extends ContainerLike, O = unknown> extends Contain
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ThrowIfEmpty<C extends StatefulContainerLike, O = never> extends Container<C> {
+export interface ThrowIfEmpty<C extends ContainerLike, O = never> extends Container<C> {
     /**
-     * Returns a StatefulContainerLike that emits an error if the source completes without emitting a value.
+     * Returns a ContainerLike that emits an error if the source completes without emitting a value.
      *
      * @param factory A factory function invoked to produce the error to be thrown.
      *
@@ -680,7 +641,7 @@ export interface ThrowIfEmpty<C extends StatefulContainerLike, O = never> extend
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Throws<C extends StatefulContainerLike, O = unknown> extends Container<C> {
+export interface Throws<C extends ContainerLike, O = unknown> extends Container<C> {
     /**
      * @category Constructor
      */

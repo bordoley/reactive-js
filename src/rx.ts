@@ -5,9 +5,6 @@ import {
   ContainerLike_type,
   ContainerOf,
   ContainerOperator,
-  StatefulContainerLike,
-  StatefulContainerLike_state,
-  StatefulContainerLike_variance,
 } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { DispatcherLike, SchedulerLike } from "./scheduling.js";
@@ -57,11 +54,7 @@ export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
  * @noInheritDoc
  * @category Container
  */
-export interface ObservableLike<T = unknown> extends StatefulContainerLike {
-  readonly [StatefulContainerLike_state]?: ObserverLike<
-    this[typeof ContainerLike_T]
-  >;
-  readonly [StatefulContainerLike_variance]?: "reactive";
+export interface ObservableLike<T = unknown> extends ContainerLike {
   readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
 
   readonly [ObservableLike_isEnumerable]: boolean;
@@ -387,6 +380,19 @@ export interface FromRunnable<C extends ContainerLike, O = never>
   fromRunnable: <T>(
     options?: O,
   ) => Function1<RunnableLike<T>, ContainerOf<C, T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Lift<C extends ObservableLike> extends Container<C> {
+  /**
+   * @category Operator
+   */
+  lift<TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ): ContainerOperator<C, TA, TB>;
 }
 
 /**

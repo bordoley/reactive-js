@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](containers.StatefulContainerLike.md) |
+| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 | `O` | `never` |
 
 ## Hierarchy
@@ -29,7 +29,7 @@
 
 ▸ **never**<`T`\>(`options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
-Returns a StatefulContainerLike instance that emits no items and never disposes its state.
+Returns a ContainerLike instance that emits no items and never disposes its state.
 
 #### Type parameters
 

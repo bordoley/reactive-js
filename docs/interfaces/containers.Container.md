@@ -134,6 +134,8 @@
 
   ↳ [`FromRunnable`](rx.FromRunnable.md)
 
+  ↳ [`Lift`](rx.Lift.md)
+
   ↳ [`Merge`](rx.Merge.md)
 
   ↳ [`MergeAll`](rx.MergeAll.md)

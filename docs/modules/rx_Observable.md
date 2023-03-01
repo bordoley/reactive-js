@@ -1203,7 +1203,7 @@ ___
 
 ▸ **never**<`T`\>(`options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
-Returns a StatefulContainerLike instance that emits no items and never disposes its state.
+Returns a ContainerLike instance that emits no items and never disposes its state.
 
 #### Type parameters
 
@@ -1697,8 +1697,8 @@ ___
 
 ▸ **catchError**<`T`\>(`onError`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
-Returns a StatefulContainerLike which catches errors produced by the source and either continues with
-the StatefulContainerLike returned from the `onError` callback or swallows the error if
+Returns a ContainerLike which catches errors produced by the source and either continues with
+the ContainerLike returned from the `onError` callback or swallows the error if
 void is returned.
 
 #### Type parameters
@@ -1711,7 +1711,7 @@ void is returned.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> | a function that takes source error and either returns a StatefulContainerLike to continue with or void if the error should be propagated. |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> | a function that takes source error and either returns a ContainerLike to continue with or void if the error should be propagated. |
 | `options?` | `undefined` | - |
 
 #### Returns
@@ -3429,7 +3429,7 @@ ___
 
 ▸ **throwIfEmpty**<`T`\>(`factory`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
-Returns a StatefulContainerLike that emits an error if the source completes without emitting a value.
+Returns a ContainerLike that emits an error if the source completes without emitting a value.
 
 #### Type parameters
 

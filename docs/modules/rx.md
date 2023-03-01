@@ -24,6 +24,7 @@
 - [ForkMerge](../interfaces/rx.ForkMerge.md)
 - [ForkZipLatest](../interfaces/rx.ForkZipLatest.md)
 - [FromRunnable](../interfaces/rx.FromRunnable.md)
+- [Lift](../interfaces/rx.Lift.md)
 - [Merge](../interfaces/rx.Merge.md)
 - [MergeAll](../interfaces/rx.MergeAll.md)
 - [MergeMap](../interfaces/rx.MergeMap.md)

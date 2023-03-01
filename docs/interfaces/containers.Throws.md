@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`StatefulContainerLike`](containers.StatefulContainerLike.md) |
+| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 | `O` | `unknown` |
 
 ## Hierarchy

@@ -1,6 +1,6 @@
 /// <reference types="./rx.d.ts" />
 
-import { ContainerLike_type, StatefulContainerLike_state, StatefulContainerLike_variance, } from "./containers.js";
+import { ContainerLike_type, } from "./containers.js";
 /** @ignore */
 export const ObserverLike_notify = Symbol("ObserverLike_notify");
 /** @ignore */
