@@ -27,7 +27,6 @@ import {
   FromRunnableObservable,
   ToEnumerableObservable,
   ToObservable,
-  ToRunnable,
   ToRunnableObservable,
 } from "../rx.js";
 import RunnableObservable_toReadonlyArray from "../rx/RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.js";
@@ -46,7 +45,6 @@ import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/Readon
 import ReadonlyArray_toEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toEnumerable.js";
 import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
-import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import ReadonlyArray_toRunnableObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
@@ -170,14 +168,6 @@ export const toReadonlyArray: ToReadonlyArray<
     readonly count?: number;
   }
 >["toReadonlyArray"] = ReadonlyArray_toReadonlyArray;
-
-export const toRunnable: ToRunnable<
-  ReadonlyArrayLike,
-  {
-    readonly count?: number;
-    readonly start?: number;
-  }
->["toRunnable"] = ReadonlyArray_toRunnable;
 
 export const toRunnableAsyncEnumerable: ToRunnableAsyncEnumerable<
   ReadonlyArrayLike,

@@ -26,7 +26,6 @@ import {
   toEnumerableTests,
   toObservableTests,
   toRunnableObservableTests,
-  toRunnableTests,
   zipTests,
   zipWithTests,
 } from "../../__tests__/operators.js";
@@ -61,7 +60,6 @@ testModule(
   throwIfEmptyTests(Enumerable),
   toEnumerableTests<EnumerableLike>(Enumerable),
   toEnumerableObservableTests<EnumerableLike>(Enumerable),
-  toRunnableTests<EnumerableLike>(Enumerable),
   toRunnableObservableTests<EnumerableLike>(Enumerable),
   toObservableTests<EnumerableLike>(Enumerable),
   zipTests<EnumerableLike>(Enumerable),

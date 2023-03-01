@@ -55,7 +55,6 @@ import {
   Retry,
   ScanAsync,
   ToObservable,
-  ToRunnable,
   ToRunnableObservable,
 } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
@@ -104,7 +103,6 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
 import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.js";
-import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable.js";
 
 export const buffer: Buffer<EnumerableObservableLike>["buffer"] =
   Observable_buffer as Buffer<EnumerableObservableLike>["buffer"];
@@ -255,9 +253,6 @@ export const toObservable: ToObservable<EnumerableObservableLike>["toObservable"
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"] =
   RunnableObservable_toReadonlyArray as ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"];
-
-export const toRunnable: ToRunnable<EnumerableObservableLike>["toRunnable"] =
-  RunnableObservable_toRunnable as ToRunnable<EnumerableObservableLike>["toRunnable"];
 
 export const toRunnableObservable: ToRunnableObservable<
   EnumerableObservableLike,

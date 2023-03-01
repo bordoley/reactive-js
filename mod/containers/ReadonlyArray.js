@@ -16,7 +16,6 @@ import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/Readon
 import ReadonlyArray_toEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toEnumerable.js";
 import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
-import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import ReadonlyArray_toRunnableObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
@@ -43,7 +42,6 @@ export const toFlowable = ReadonlyArray_toFlowable;
 export const toIterable = ReadonlyArray_toReadonlyArray;
 export const toObservable = ReadonlyArray_toRunnableObservable;
 export const toReadonlyArray = ReadonlyArray_toReadonlyArray;
-export const toRunnable = ReadonlyArray_toRunnable;
 export const toRunnableAsyncEnumerable = ReadonlyArray_toAsyncEnumerable;
 export const toRunnableObservable = ReadonlyArray_toRunnableObservable;
 export const toSequence = ReadonlyArray_toSequence;

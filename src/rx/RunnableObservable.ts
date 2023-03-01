@@ -65,7 +65,6 @@ import {
   Throttle,
   Timeout,
   ToObservable,
-  ToRunnable,
   WithLatestFrom,
   ZipLatest,
   ZipWithLatestFrom,
@@ -128,7 +127,6 @@ import RunnableObservable_switchAll from "./RunnableObservable/__internal__/Runn
 import RunnableObservable_switchMap from "./RunnableObservable/__internal__/RunnableObservable.switchMap.js";
 import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
 import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.js";
-import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable.js";
 import RunnableObservable_throttle from "./RunnableObservable/__internal__/RunnableObservableLike.throttle.js";
 
 export const buffer: Buffer<RunnableObservableLike>["buffer"] =
@@ -340,9 +338,6 @@ export const toObservable: ToObservable<RunnableObservableLike>["toObservable"] 
 
 export const toReadonlyArray: ToReadonlyArray<RunnableObservableLike>["toReadonlyArray"] =
   RunnableObservable_toReadonlyArray;
-
-export const toRunnable: ToRunnable<RunnableObservableLike>["toRunnable"] =
-  RunnableObservable_toRunnable;
 
 export const withLatestFrom: WithLatestFrom<RunnableObservableLike>["withLatestFrom"] =
   Observable_withLatestFrom as WithLatestFrom<RunnableObservableLike>["withLatestFrom"];

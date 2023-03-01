@@ -40,14 +40,6 @@ export interface ReactiveContainerLike<TSink extends DisposableLike> extends Sta
     readonly [StatefulContainerLike_variance]?: "reactive";
     [ReactiveContainerLike_sinkInto](sink: TSink): void;
 }
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface RunnableLike<T = unknown> extends ReactiveContainerLike<SinkLike<T>> {
-    readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
-    readonly [StatefulContainerLike_state]?: SinkLike<this[typeof ContainerLike_T]>;
-}
 /**  @ignore */
 export declare const ObservableLike_isEnumerable: unique symbol;
 /**  @ignore */
@@ -397,16 +389,6 @@ export interface ToEnumerableObservable<C extends ContainerLike, O = never> exte
      * @category Converter
      */
     toEnumerableObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface ToRunnable<C extends ContainerLike, O = never> extends Container<C> {
-    /**
-     * @category Converter
-     */
-    toRunnable<T>(options?: O): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 /**
  * @noInheritDoc

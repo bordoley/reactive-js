@@ -53,12 +53,10 @@ import {
   ScanAsync,
   ToEnumerableObservable,
   ToObservable,
-  ToRunnable,
   ToRunnableObservable,
 } from "../rx.js";
 import * as EnumerableObservable from "../rx/EnumerableObservable.js";
 import * as Observable from "../rx/Observable.js";
-import * as Runnable from "../rx/Runnable.js";
 import * as RunnableObservable from "../rx/RunnableObservable.js";
 import { __now } from "../scheduling/Continuation.js";
 import * as Scheduler from "../scheduling/Scheduler.js";
@@ -1153,22 +1151,6 @@ export const toObservableTests = <C extends ContainerLike>(
       pipe(scheduler, Disposable.dispose());
     }
   });
-
-export const toRunnableTests = <C extends ContainerLike>(
-  m: FromReadonlyArray<C> & ToRunnable<C>,
-) =>
-  describe(
-    "ToRunnable",
-    test("readonly array to runnable back to readonly array", () => {
-      pipe(
-        [1, 2, 3],
-        m.fromReadonlyArray(),
-        m.toRunnable(),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3]),
-      );
-    }),
-  );
 
 export const toRunnableObservableTests = <C extends ContainerLike>(
   m: FromReadonlyArray<C> &

@@ -36,7 +36,6 @@ import Enumerable_toEnumerableObservable from "./Enumerable/__internal__/Enumera
 import Enumerable_toFlowable from "./Enumerable/__internal__/Enumerable.toFlowable.js";
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
-import Enumerable_toRunnable from "./Enumerable/__internal__/Enumerable.toRunnable.js";
 import Enumerable_toRunnableObservable from "./Enumerable/__internal__/Enumerable.toRunnableObservable.js";
 import Enumerable_zip from "./Enumerable/__internal__/Enumerable.zip.js";
 import Enumerable_zipWith from "./Enumerable/__internal__/Enumerable.zipWith.js";
@@ -78,7 +77,6 @@ export const toFlowable = Enumerable_toFlowable;
 export const toIterable = Enumerable_toIterable;
 export const toObservable = Enumerable_toRunnableObservable;
 export const toReadonlyArray = Enumerable_toReadonlyArray;
-export const toRunnable = Enumerable_toRunnable;
 export const toRunnableObservable = Enumerable_toRunnableObservable;
 export const zip = Enumerable_zip;
 export const zipWith = Enumerable_zipWith;

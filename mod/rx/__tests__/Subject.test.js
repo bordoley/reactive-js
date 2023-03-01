@@ -7,12 +7,11 @@ import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js"
 import * as Disposable from "../../util/Disposable.js";
 import * as MulticastObservable from "../MulticastObservable.js";
 import * as Observable from "../Observable.js";
-import * as Runnable from "../Runnable.js";
 import * as Subject from "../Subject.js";
 testModule("Subject", test("with replay", () => {
     const scheduler = VirtualTimeScheduler.create();
     const subject = Subject.create({ replay: 2 });
-    pipe([1, 2, 3, 4], ReadonlyArray.toRunnable(), Runnable.forEach(Subject.publishTo(subject)), Runnable.run());
+    pipe([1, 2, 3, 4], ReadonlyArray.forEach(Subject.publishTo(subject)));
     pipe(subject, Disposable.dispose());
     const result = [];
     pipe(subject, Observable.forEach(x => {

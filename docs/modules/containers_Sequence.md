@@ -21,7 +21,6 @@
 - [toIterable](containers_Sequence.md#toiterable)
 - [toObservable](containers_Sequence.md#toobservable)
 - [toReadonlyArray](containers_Sequence.md#toreadonlyarray)
-- [toRunnable](containers_Sequence.md#torunnable)
 - [toRunnableObservable](containers_Sequence.md#torunnableobservable)
 
 ### Operator Functions
@@ -532,28 +531,6 @@ Converts the ContainerLike to a `ReadonlyArrayLike`.
 #### Returns
 
 [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
-
-___
-
-### toRunnable
-
-▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 

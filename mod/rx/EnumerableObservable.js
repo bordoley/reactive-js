@@ -51,7 +51,6 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
 import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.js";
-import RunnableObservable_toRunnable from "./RunnableObservable/__internal__/RunnableObservable.toRunnable.js";
 export const buffer = Observable_buffer;
 export const catchError = EnumerableObservable_catchError;
 export const compute = Observable_compute;
@@ -101,7 +100,6 @@ export const toIterable = EnumerableObservable_toIterable;
 export const toObservable = 
 /*@__PURE__*/ returns(identity);
 export const toReadonlyArray = RunnableObservable_toReadonlyArray;
-export const toRunnable = RunnableObservable_toRunnable;
 export const toRunnableObservable = o => compose(toEnumerable(), Enumerable_toRunnableObservable(o));
 export const zip = Observable_zip;
 export const zipWith = Observable_zipWith;

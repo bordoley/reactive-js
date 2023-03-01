@@ -6,7 +6,6 @@ import {
   toEnumerableObservableTests,
   toEnumerableTests,
   toRunnableObservableTests,
-  toRunnableTests,
 } from "../../__tests__/operators.js";
 import { testModule } from "../../__tests__/testing.js";
 import { ReadonlyArrayLike } from "../../containers.js";
@@ -20,6 +19,5 @@ testModule(
   mapTests(ReadonlyArray),
   toEnumerableTests<ReadonlyArrayLike>(ReadonlyArray),
   toEnumerableObservableTests<ReadonlyArrayLike>(ReadonlyArray),
-  toRunnableTests<ReadonlyArrayLike>(ReadonlyArray),
   toRunnableObservableTests<ReadonlyArrayLike>(ReadonlyArray),
 );

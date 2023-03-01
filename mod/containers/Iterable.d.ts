@@ -1,6 +1,6 @@
 import { FromReadonlyArray, FromSequence, IterableLike, ToIterable, ToReadonlyArray } from "../containers.js";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
-import { FromEnumerableObservable, ToEnumerableObservable, ToObservable, ToRunnable, ToRunnableObservable } from "../rx.js";
+import { FromEnumerableObservable, ToEnumerableObservable, ToObservable, ToRunnableObservable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const fromEnumerable: FromEnumerable<IterableLike>["fromEnumerable"];
 export declare const fromEnumerableObservable: FromEnumerableObservable<IterableLike>["fromEnumerableObservable"];
@@ -19,7 +19,6 @@ export declare const toObservable: ToObservable<IterableLike, {
     readonly delayStart?: boolean;
 }>["toObservable"];
 export declare const toReadonlyArray: ToReadonlyArray<IterableLike>["toReadonlyArray"];
-export declare const toRunnable: ToRunnable<IterableLike>["toRunnable"];
 export declare const toRunnableObservable: ToRunnableObservable<IterableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
