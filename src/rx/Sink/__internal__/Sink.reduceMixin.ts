@@ -10,8 +10,8 @@ import { Factory, Reducer, error, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
-  SinkLike_notify,
 } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -27,7 +27,7 @@ const Sink_reduceMixin: <C extends ObservableLike, T, TAcc>(
   ObserverLike<TAcc>,
   Reducer<T, TAcc>,
   Factory<TAcc>,
-  Pick<ObserverLike<T>, typeof SinkLike_notify>
+  Pick<ObserverLike<T>, typeof ObserverLike_notify>
 > = <C extends ObservableLike, T, TAcc>(
   fromReadonlyArray: (v: readonly TAcc[]) => C,
 ) => {
@@ -42,7 +42,7 @@ const Sink_reduceMixin: <C extends ObservableLike, T, TAcc>(
   return mix(
     include(Disposable_mixin, Observer_mixin<T>()),
     function ReduceSinkMixin(
-      instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<TAcc>,
       reducer: Reducer<T, TAcc>,
@@ -79,7 +79,7 @@ const Sink_reduceMixin: <C extends ObservableLike, T, TAcc>(
       [ReduceSinkMixin_acc]: none,
     }),
     {
-      [SinkLike_notify](this: TProperties, next: T) {
+      [ObserverLike_notify](this: TProperties, next: T) {
         const nextAcc = this[ReduceSinkMixin_reducer](
           this[ReduceSinkMixin_acc],
           next,

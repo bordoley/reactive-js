@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, pipe } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -36,7 +36,7 @@ const HigherOrderObservable_switchAll = (lift) => {
         }, props({
             [HigherOrderObservable_currentRef]: none,
         }), {
-            [SinkLike_notify](next) {
+            [ObserverLike_notify](next) {
                 Observer_assertState(this);
                 this[HigherOrderObservable_currentRef][MutableRefLike_current] =
                     pipe(next, Observable_forEach(Sink_notifySink(this[DelegatingLike_delegate])), Observable_subscribe(Observer_getScheduler(this)), Disposable_onComplete(() => {

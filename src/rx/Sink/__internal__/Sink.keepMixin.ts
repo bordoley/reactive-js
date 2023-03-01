@@ -9,14 +9,14 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Predicate, none, returns } from "../../../functions.js";
-import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, SinkLike } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 const Sink_keepMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
   Predicate<T>,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
+  Pick<SinkLike<T>, typeof ObserverLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   const KeepSinkMixin_predicate = Symbol("KeepSinkMixin_predicate");
 
@@ -28,7 +28,7 @@ const Sink_keepMixin: <T>() => Mixin2<
     mix(
       include(Disposable_delegatingMixin()),
       function KeepSinkMixin(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+        instance: Pick<SinkLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         predicate: Predicate<T>,
@@ -43,12 +43,12 @@ const Sink_keepMixin: <T>() => Mixin2<
         [KeepSinkMixin_predicate]: none,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: TProperties & DelegatingLike<SinkLike<T>>,
           next: T,
         ) {
           if (this[KeepSinkMixin_predicate](next)) {
-            this[DelegatingLike_delegate][SinkLike_notify](next);
+            this[DelegatingLike_delegate][ObserverLike_notify](next);
           }
         },
       },

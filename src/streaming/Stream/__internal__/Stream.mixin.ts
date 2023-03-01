@@ -29,8 +29,8 @@ import {
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_dispatcher,
+  ObserverLike_notify,
   ObserverLike_scheduler,
-  SinkLike_notify,
 } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
@@ -129,7 +129,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             const isDisposed = observer[DisposableLike_isDisposed];
 
             if (inContinuation && dispatcherQueueIsEmpty && !isDisposed) {
-              observer[SinkLike_notify](next);
+              observer[ObserverLike_notify](next);
             } else if (!isDisposed) {
               dispatcher[QueueLike_push](next);
             }

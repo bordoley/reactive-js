@@ -16,7 +16,7 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
-import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, SinkLike } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 
@@ -25,7 +25,7 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
   SinkLike<TAcc>,
   Reducer<T, TAcc>,
   Factory<TAcc>,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
+  Pick<SinkLike<T>, typeof ObserverLike_notify>
 > = /*@__PURE__*/ (<T, TAcc>() => {
   const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");
   const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
@@ -39,7 +39,7 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
     mix(
       include(Disposable_delegatingMixin<SinkLike<TAcc>>()),
       function ScanSinkMixin(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+        instance: Pick<SinkLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<TAcc>,
         reducer: Reducer<T, TAcc>,
@@ -63,7 +63,7 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
         [ScanSinkMixin_acc]: none,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: TProperties & DelegatingLike<SinkLike<TAcc>>,
           next: T,
         ) {
@@ -72,7 +72,7 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
             next,
           );
           this[ScanSinkMixin_acc] = nextAcc;
-          this[DelegatingLike_delegate][SinkLike_notify](nextAcc);
+          this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
         },
       },
     ),

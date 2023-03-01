@@ -9,14 +9,14 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Equality, none, returns } from "../../../functions.js";
-import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, SinkLike } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 const Sink_distinctUntilChangedMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
   Equality<T>,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
+  Pick<SinkLike<T>, typeof ObserverLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   const DistinctUntilChangedSinkMixin_equality = Symbol(
     "DistinctUntilChangedSinkMixin_equality",
@@ -38,7 +38,7 @@ const Sink_distinctUntilChangedMixin: <T>() => Mixin2<
     mix(
       include(Disposable_delegatingMixin()),
       function DistinctUntilChangedSinkMixin(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+        instance: Pick<SinkLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         equality: Equality<T>,
@@ -55,7 +55,7 @@ const Sink_distinctUntilChangedMixin: <T>() => Mixin2<
         [DistinctUntilChangedSinkMixin_hasValue]: false,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: TProperties & DelegatingLike<SinkLike<T>>,
           next: T,
         ) {
@@ -69,7 +69,7 @@ const Sink_distinctUntilChangedMixin: <T>() => Mixin2<
           if (shouldEmit) {
             this[DistinctUntilChangedSinkMixin_prev] = next;
             this[DistinctUntilChangedSinkMixin_hasValue] = true;
-            this[DelegatingLike_delegate][SinkLike_notify](next);
+            this[DelegatingLike_delegate][ObserverLike_notify](next);
           }
         },
       },

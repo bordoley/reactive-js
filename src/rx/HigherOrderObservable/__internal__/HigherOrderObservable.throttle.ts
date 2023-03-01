@@ -24,7 +24,7 @@ import {
 import {
   ObservableLike,
   ObserverLike,
-  SinkLike_notify,
+  ObserverLike_notify,
   ThrottleMode,
   ThrottleMode_first,
   ThrottleMode_interval,
@@ -97,7 +97,7 @@ const createThrottleObserver: <T>(
     mix(
       include(Disposable_mixin, typedObserverMixin),
       function ThrottleObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         durationFunction: Function1<T, ObservableLike>,
@@ -120,7 +120,7 @@ const createThrottleObserver: <T>(
             instance[ThrottleObserver_value] = none;
             instance[ThrottleObserver_hasValue] = false;
 
-            delegate[SinkLike_notify](value);
+            delegate[ObserverLike_notify](value);
 
             setupDurationSubscription(instance, value);
           }
@@ -155,7 +155,7 @@ const createThrottleObserver: <T>(
         [ThrottleObserver_onNotify]: none,
       }),
       {
-        [SinkLike_notify](this: ObserverLike<T> & TProperties, next: T) {
+        [ObserverLike_notify](this: ObserverLike<T> & TProperties, next: T) {
           Observer_assertState(this);
 
           this[ThrottleObserver_value] = next;

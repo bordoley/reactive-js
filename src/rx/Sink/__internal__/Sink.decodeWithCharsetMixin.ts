@@ -13,8 +13,8 @@ import { newInstance, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
-  SinkLike_notify,
 } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -29,7 +29,7 @@ const Sink_decodeWithCharsetMixin: <C extends ObservableLike>(
   ObserverLike<ArrayBuffer>,
   ObserverLike<string>,
   string,
-  Pick<ObserverLike<ArrayBuffer>, typeof SinkLike_notify>
+  Pick<ObserverLike<ArrayBuffer>, typeof ObserverLike_notify>
 > = <C extends ObservableLike>(
   fromReadonlyArray: (v: readonly string[]) => C,
 ) => {
@@ -44,7 +44,7 @@ const Sink_decodeWithCharsetMixin: <C extends ObservableLike>(
   return mix(
     include(Disposable_mixin, delegatingMixin(), Observer_mixin<ArrayBuffer>()),
     function DecodeWithCharsetSinkMixin(
-      instance: Pick<ObserverLike<ArrayBuffer>, typeof SinkLike_notify> &
+      instance: Pick<ObserverLike<ArrayBuffer>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<string>,
       charset: string,
@@ -80,7 +80,7 @@ const Sink_decodeWithCharsetMixin: <C extends ObservableLike>(
       [DecodeWithCharsetSinkMixin_textDecoder]: none,
     }),
     {
-      [SinkLike_notify](
+      [ObserverLike_notify](
         this: TProperties & DelegatingLike<ObserverLike<string>>,
         next: ArrayBuffer,
       ) {
@@ -88,7 +88,7 @@ const Sink_decodeWithCharsetMixin: <C extends ObservableLike>(
           stream: true,
         });
         if (data.length > 0) {
-          this[DelegatingLike_delegate][SinkLike_notify](data);
+          this[DelegatingLike_delegate][ObserverLike_notify](data);
         }
       },
     },

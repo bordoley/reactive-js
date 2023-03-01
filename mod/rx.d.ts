@@ -3,7 +3,7 @@ import { Factory, Function1, Function2 } from "./functions.js";
 import { DispatcherLike, SchedulerLike } from "./scheduling.js";
 import { DisposableLike } from "./util.js";
 /** @ignore */
-export declare const SinkLike_notify: unique symbol;
+export declare const ObserverLike_notify: unique symbol;
 /**
  * @noInheritDoc
  * @category Container
@@ -17,7 +17,7 @@ export interface SinkLike<T = unknown> extends DisposableLike {
      *
      * @param next The next notification value.
      */
-    [SinkLike_notify](next: T): void;
+    [ObserverLike_notify](next: T): void;
 }
 /** @ignore */
 export declare const ObserverLike_dispatcher: unique symbol;

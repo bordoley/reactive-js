@@ -8,7 +8,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Predicate, none, pipe, returns } from "../../../functions.js";
-import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, SinkLike } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal.js";
@@ -18,7 +18,7 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
   SinkLike<T>,
   Predicate<T>,
   boolean,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
+  Pick<SinkLike<T>, typeof ObserverLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   const TakeWhileSinkMixin_predicate = Symbol("TakeWhileSinkMixin_predicate");
   const TakeWhileSinkMixin_inclusive = Symbol("TakeWhileSinkMixin_inclusive");
@@ -32,7 +32,7 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
     mix(
       include(Disposable_delegatingMixin<SinkLike<T>>()),
       function TakeWhileSinkMixin(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+        instance: Pick<SinkLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         predicate: Predicate<T>,
@@ -50,14 +50,14 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
         [TakeWhileSinkMixin_inclusive]: none,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: TProperties & DelegatingDisposableLike<SinkLike<T>>,
           next: T,
         ) {
           const satisfiesPredicate = this[TakeWhileSinkMixin_predicate](next);
 
           if (satisfiesPredicate || this[TakeWhileSinkMixin_inclusive]) {
-            this[DelegatingLike_delegate][SinkLike_notify](next);
+            this[DelegatingLike_delegate][ObserverLike_notify](next);
           }
 
           if (!satisfiesPredicate) {

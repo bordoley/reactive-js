@@ -19,9 +19,9 @@ import {
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
   SinkLike,
-  SinkLike_notify,
 } from "../../../rx.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -35,13 +35,13 @@ const Sink_catchErrorMixin: <C extends ObservableLike, T>() => Mixin2<
   ObserverLike<T>,
   ObserverLike<T>,
   Function1<unknown, C | void>,
-  Pick<ObserverLike<T>, typeof SinkLike_notify>
+  Pick<ObserverLike<T>, typeof ObserverLike_notify>
 > = /*@__PURE__*/ (<C extends ObservableLike, T>() => {
   return returns(
     mix(
       include(Disposable_mixin, delegatingMixin(), Observer_mixin<T>()),
       function CatchErrorSinkMixin(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
+        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
         delegate: ObserverLike<T>,
         errorHandler: Function1<unknown, C | void>,
       ): ObserverLike<T> {
@@ -73,8 +73,8 @@ const Sink_catchErrorMixin: <C extends ObservableLike, T>() => Mixin2<
       },
       props({}),
       {
-        [SinkLike_notify](this: DelegatingLike<SinkLike<T>>, next: T) {
-          this[DelegatingLike_delegate][SinkLike_notify](next);
+        [ObserverLike_notify](this: DelegatingLike<SinkLike<T>>, next: T) {
+          this[DelegatingLike_delegate][ObserverLike_notify](next);
         },
       },
     ),

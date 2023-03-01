@@ -7,7 +7,11 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Predicate } from "../../../functions.js";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../rx.js";
 
 import Sink_satisfyMixin from "./Sink.satisfyMixin.js";
 
@@ -17,7 +21,7 @@ const Sink_someSatisfyMixin: <C extends ObservableLike, T>(
   ObserverLike<T>,
   ObserverLike<boolean>,
   Predicate<T>,
-  Pick<ObserverLike<T>, typeof SinkLike_notify>
+  Pick<ObserverLike<T>, typeof ObserverLike_notify>
 > = <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly boolean[]) => C,
 ) => {

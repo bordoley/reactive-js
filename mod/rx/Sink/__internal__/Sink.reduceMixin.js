@@ -2,7 +2,7 @@
 
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { error, none, pipe } from "../../../functions.js";
-import { ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -31,7 +31,7 @@ const Sink_reduceMixin = (fromReadonlyArray) => {
         [ReduceSinkMixin_reducer]: none,
         [ReduceSinkMixin_acc]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const nextAcc = this[ReduceSinkMixin_reducer](this[ReduceSinkMixin_acc], next);
             this[ReduceSinkMixin_acc] = nextAcc;
         },

@@ -7,8 +7,8 @@ import {
 } from "../../../ix.js";
 import {
   ObserverLike,
+  ObserverLike_notify,
   RunnableLike,
-  SinkLike_notify,
   ToRunnable,
 } from "../../../rx.js";
 import EnumerableObservable_create from "../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create.js";
@@ -50,7 +50,7 @@ const Enumerable_toRunnable: ToRunnable<
               (enumerator[SourceLike_move](),
               enumerator[EnumeratorLike_hasCurrent])
             ) {
-              observer[SinkLike_notify](enumerator[EnumeratorLike_current]);
+              observer[ObserverLike_notify](enumerator[EnumeratorLike_current]);
               Continuation__yield(delay);
             }
           },

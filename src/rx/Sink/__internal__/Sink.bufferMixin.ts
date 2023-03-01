@@ -15,8 +15,8 @@ import { none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   SinkLike,
-  SinkLike_notify,
 } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -43,7 +43,7 @@ const Sink_bufferMixin: <C extends ObservableLike, T>(
   return mix(
     include(Disposable_mixin, delegatingMixin()),
     function BufferSinkMixin(
-      instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+      instance: Pick<SinkLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T[]>,
       maxBufferSize: number,
@@ -82,7 +82,7 @@ const Sink_bufferMixin: <C extends ObservableLike, T>(
       [BufferSinkMixin_buffer]: none,
     }),
     {
-      [SinkLike_notify](
+      [ObserverLike_notify](
         this: TProperties & DelegatingLike<ObserverLike<T[]>>,
         next: T,
       ) {
@@ -97,7 +97,7 @@ const Sink_bufferMixin: <C extends ObservableLike, T>(
           const buffer = this[BufferSinkMixin_buffer];
           this[BufferSinkMixin_buffer] = [];
 
-          this[DelegatingLike_delegate][SinkLike_notify](buffer);
+          this[DelegatingLike_delegate][ObserverLike_notify](buffer);
         }
       },
     },

@@ -13,8 +13,8 @@ import { Predicate, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
-  SinkLike_notify,
 } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -32,7 +32,7 @@ const Sink_satisfyMixin: <C extends ObservableLike, T>(
   ObserverLike<T>,
   ObserverLike<boolean>,
   Predicate<T>,
-  Pick<ObserverLike<T>, typeof SinkLike_notify>
+  Pick<ObserverLike<T>, typeof ObserverLike_notify>
 > = <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly boolean[]) => C,
   defaultResult: boolean,
@@ -47,7 +47,7 @@ const Sink_satisfyMixin: <C extends ObservableLike, T>(
     include(Disposable_mixin, delegatingMixin(), Observer_mixin<T>()),
     function SatisfySinkMixin(
       instance: Mutable<TProperties> &
-        Pick<ObserverLike<T>, typeof SinkLike_notify>,
+        Pick<ObserverLike<T>, typeof ObserverLike_notify>,
       delegate: ObserverLike<boolean>,
       predicate: Predicate<T>,
     ): ObserverLike<T> {
@@ -77,7 +77,7 @@ const Sink_satisfyMixin: <C extends ObservableLike, T>(
       [SatisfySinkMixin_predicate]: none,
     }),
     {
-      [SinkLike_notify](
+      [ObserverLike_notify](
         this: TProperties & DelegatingLike<ObserverLike<boolean>>,
         next: T,
       ) {

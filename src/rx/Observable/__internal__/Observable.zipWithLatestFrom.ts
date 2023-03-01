@@ -20,7 +20,7 @@ import {
 import {
   ObservableLike,
   ObserverLike,
-  SinkLike_notify,
+  ObserverLike_notify,
   ZipWithLatestFrom,
 } from "../../../rx.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
@@ -98,7 +98,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             IndexedQueue_fifoQueueMixin<TA>(),
           ),
           function ZipWithLatestFromObserver(
-            instance: Pick<ObserverLike, typeof SinkLike_notify> &
+            instance: Pick<ObserverLike, typeof ObserverLike_notify> &
               Mutable<TProperties>,
             delegate: ObserverLike<T>,
             other: ObservableLike<TB>,
@@ -153,7 +153,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             [ZipWithLatestFromObserver_selector]: none,
           }),
           {
-            [SinkLike_notify](
+            [ObserverLike_notify](
               this: TProperties &
                 ObserverLike<TA> &
                 DelegatingLike<ObserverLike<T>> &

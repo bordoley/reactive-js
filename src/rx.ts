@@ -14,7 +14,7 @@ import { DispatcherLike, SchedulerLike } from "./scheduling.js";
 import { DisposableLike } from "./util.js";
 
 /** @ignore */
-export const SinkLike_notify = Symbol("SinkLike_notify");
+export const ObserverLike_notify = Symbol("ObserverLike_notify");
 
 /**
  * @noInheritDoc
@@ -29,7 +29,7 @@ export interface SinkLike<T = unknown> extends DisposableLike {
    *
    * @param next The next notification value.
    */
-  [SinkLike_notify](next: T): void;
+  [ObserverLike_notify](next: T): void;
 }
 
 /** @ignore */

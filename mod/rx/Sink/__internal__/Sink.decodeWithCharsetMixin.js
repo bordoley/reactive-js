@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { newInstance, none, pipe } from "../../../functions.js";
-import { ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -30,12 +30,12 @@ const Sink_decodeWithCharsetMixin = (fromReadonlyArray) => {
     }, props({
         [DecodeWithCharsetSinkMixin_textDecoder]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const data = this[DecodeWithCharsetSinkMixin_textDecoder].decode(next, {
                 stream: true,
             });
             if (data.length > 0) {
-                this[DelegatingLike_delegate][SinkLike_notify](data);
+                this[DelegatingLike_delegate][ObserverLike_notify](data);
             }
         },
     });

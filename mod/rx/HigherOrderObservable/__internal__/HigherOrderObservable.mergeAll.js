@@ -3,7 +3,7 @@
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { MAX_SAFE_INTEGER } from "../../../constants.js";
 import { isSome, none, partial, pipe, } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -67,7 +67,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
             [MergeAllObserver_maxConcurrency]: 0,
             [MergeAllObserver_onDispose]: none,
         }), {
-            [SinkLike_notify](next) {
+            [ObserverLike_notify](next) {
                 Observer_assertState(this);
                 this[QueueLike_push](next);
                 // Drop old events if the maxBufferSize has been exceeded

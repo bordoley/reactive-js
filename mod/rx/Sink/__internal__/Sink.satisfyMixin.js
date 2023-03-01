@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, pipe } from "../../../functions.js";
-import { ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
@@ -27,7 +27,7 @@ const Sink_satisfyMixin = (fromReadonlyArray, defaultResult) => {
     }, props({
         [SatisfySinkMixin_predicate]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             if (this[SatisfySinkMixin_predicate](next)) {
                 pipe(this[DelegatingLike_delegate], Sink_notify(!defaultResult), Disposable_dispose());
             }

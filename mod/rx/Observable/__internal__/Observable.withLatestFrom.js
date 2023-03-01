@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, } from "../../../functions.js";
-import { SinkLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -41,12 +41,12 @@ const Observable_withLatestFrom =
             [WithLatestFromObserver_otherLatest]: none,
             [WithLatestFromObserver_selector]: none,
         }), {
-            [SinkLike_notify](next) {
+            [ObserverLike_notify](next) {
                 Observer_assertState(this);
                 if (!this[DisposableLike_isDisposed] &&
                     this[WithLatestFromObserver_hasLatest]) {
                     const result = this[WithLatestFromObserver_selector](next, this[WithLatestFromObserver_otherLatest]);
-                    this[DelegatingLike_delegate][SinkLike_notify](result);
+                    this[DelegatingLike_delegate][ObserverLike_notify](result);
                 }
             },
         }));

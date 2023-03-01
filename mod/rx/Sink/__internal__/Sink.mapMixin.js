@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, returns } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 export const Sink_mapMixin = /*@__PURE__*/ (() => {
     const MapSinkMixin_mapper = Symbol("MapSinkMixin_mapper");
@@ -13,9 +13,9 @@ export const Sink_mapMixin = /*@__PURE__*/ (() => {
     }, props({
         [MapSinkMixin_mapper]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const mapped = this[MapSinkMixin_mapper](next);
-            this[DelegatingLike_delegate][SinkLike_notify](mapped);
+            this[DelegatingLike_delegate][ObserverLike_notify](mapped);
         },
     }));
 })();

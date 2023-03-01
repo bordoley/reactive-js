@@ -19,7 +19,7 @@ import {
 import {
   ObservableLike,
   ObserverLike,
-  SinkLike_notify,
+  ObserverLike_notify,
   WithLatestFrom,
 } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
@@ -65,7 +65,7 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
         mix(
           include(Disposable_delegatingMixin(), typedObserverMixin),
           function WithLatestFromObserver(
-            instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
+            instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
               Mutable<TProperties>,
             delegate: ObserverLike<T>,
             other: ObservableLike<TB>,
@@ -99,7 +99,7 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
             [WithLatestFromObserver_selector]: none,
           }),
           {
-            [SinkLike_notify](
+            [ObserverLike_notify](
               this: TProperties &
                 ObserverLike<TA> &
                 DelegatingLike<ObserverLike<T>>,
@@ -115,7 +115,7 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
                   next,
                   this[WithLatestFromObserver_otherLatest] as TB,
                 );
-                this[DelegatingLike_delegate][SinkLike_notify](result);
+                this[DelegatingLike_delegate][ObserverLike_notify](result);
               }
             },
           },

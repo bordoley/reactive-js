@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { returns } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const Sink_skipFirstMixin = /*@__PURE__*/ (() => {
     const SkipFirstSinkMixin_skipCount = Symbol("SkipFirstSinkMixin_skipCount");
@@ -15,10 +15,10 @@ const Sink_skipFirstMixin = /*@__PURE__*/ (() => {
         [SkipFirstSinkMixin_skipCount]: 0,
         [SkipFirstSinkMixin_count]: 0,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             this[SkipFirstSinkMixin_count]++;
             if (this[SkipFirstSinkMixin_count] > this[SkipFirstSinkMixin_skipCount]) {
-                this[DelegatingLike_delegate][SinkLike_notify](next);
+                this[DelegatingLike_delegate][ObserverLike_notify](next);
             }
         },
     }));

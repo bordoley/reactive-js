@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import { isNumber, none, partial, pipe, } from "../../../functions.js";
-import { SinkLike_notify, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../../rx.js";
+import { ObserverLike_notify, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -42,7 +42,7 @@ const createThrottleObserver = (() => {
                 const value = instance[ThrottleObserver_value];
                 instance[ThrottleObserver_value] = none;
                 instance[ThrottleObserver_hasValue] = false;
-                delegate[SinkLike_notify](value);
+                delegate[ObserverLike_notify](value);
                 setupDurationSubscription(instance, value);
             }
         };
@@ -62,7 +62,7 @@ const createThrottleObserver = (() => {
         [ThrottleObserver_mode]: ThrottleMode_interval,
         [ThrottleObserver_onNotify]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             Observer_assertState(this);
             this[ThrottleObserver_value] = next;
             this[ThrottleObserver_hasValue] = true;

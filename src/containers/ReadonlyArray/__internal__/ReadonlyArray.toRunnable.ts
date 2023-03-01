@@ -1,5 +1,9 @@
 import { none, pipe } from "../../../functions.js";
-import { ObserverLike, RunnableLike, SinkLike_notify } from "../../../rx.js";
+import {
+  ObserverLike,
+  ObserverLike_notify,
+  RunnableLike,
+} from "../../../rx.js";
 import EnumerableObservable_create from "../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
@@ -44,7 +48,7 @@ const ReadonlyArray_toRunnable =
               cnt++;
             }
 
-            observer[SinkLike_notify](value);
+            observer[ObserverLike_notify](value);
 
             if (cnt !== 0) {
               Continuation__yield(delay);

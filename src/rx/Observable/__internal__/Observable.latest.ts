@@ -9,7 +9,11 @@ import {
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { none, pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -56,7 +60,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         observers,
         ReadonlyArray_map(observer => observer[LatestObserver_latest]),
       );
-      instance[LatestCtx_delegate][SinkLike_notify](result);
+      instance[LatestCtx_delegate][ObserverLike_notify](result);
 
       if (mode === zipMode) {
         for (const sub of observers) {
@@ -92,7 +96,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
     mix(
       include(typedObserverMixin, Disposable_mixin),
       function LatestObserver(
-        instance: Pick<ObserverLike, typeof SinkLike_notify> &
+        instance: Pick<ObserverLike, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         scheduler: SchedulerLike,
         ctx: LatestCtx,
@@ -110,7 +114,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         [LatestObserver_ctx]: none,
       }),
       {
-        [SinkLike_notify](this: TProperties & ObserverLike, next: unknown) {
+        [ObserverLike_notify](this: TProperties & ObserverLike, next: unknown) {
           Observer_assertState(this);
 
           const { [LatestObserver_ctx]: ctx } = this;

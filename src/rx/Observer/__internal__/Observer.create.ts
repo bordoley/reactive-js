@@ -4,7 +4,7 @@ import {
   init,
   mix,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike, SinkLike_notify } from "../../../rx.js";
+import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
@@ -18,7 +18,7 @@ const Observer_create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
       mix(
         include(Disposable_mixin, typedObserverMixin),
         function Observer(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
           scheduler: SchedulerLike,
         ): ObserverLike<T> {
           init(Disposable_mixin, instance);
@@ -28,7 +28,7 @@ const Observer_create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
         },
         {},
         {
-          [SinkLike_notify](this: ObserverLike, _: T) {
+          [ObserverLike_notify](this: ObserverLike, _: T) {
             Observer_assertState(this);
           },
         },

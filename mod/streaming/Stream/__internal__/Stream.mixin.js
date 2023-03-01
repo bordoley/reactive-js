@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
@@ -48,7 +48,7 @@ const DispatchedObservable_create =
             const dispatcherQueueIsEmpty = dispatcher[QueueLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
             if (inContinuation && dispatcherQueueIsEmpty && !isDisposed) {
-                observer[SinkLike_notify](next);
+                observer[ObserverLike_notify](next);
             }
             else if (!isDisposed) {
                 dispatcher[QueueLike_push](next);

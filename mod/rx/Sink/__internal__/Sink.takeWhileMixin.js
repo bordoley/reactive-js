@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, pipe, returns } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 const Sink_takeWhileMixin = /*@__PURE__*/ (() => {
@@ -17,10 +17,10 @@ const Sink_takeWhileMixin = /*@__PURE__*/ (() => {
         [TakeWhileSinkMixin_predicate]: none,
         [TakeWhileSinkMixin_inclusive]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const satisfiesPredicate = this[TakeWhileSinkMixin_predicate](next);
             if (satisfiesPredicate || this[TakeWhileSinkMixin_inclusive]) {
-                this[DelegatingLike_delegate][SinkLike_notify](next);
+                this[DelegatingLike_delegate][ObserverLike_notify](next);
             }
             if (!satisfiesPredicate) {
                 pipe(this, Disposable_dispose());

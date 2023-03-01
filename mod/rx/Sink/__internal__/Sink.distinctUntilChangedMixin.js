@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, returns } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const Sink_distinctUntilChangedMixin = /*@__PURE__*/ (() => {
     const DistinctUntilChangedSinkMixin_equality = Symbol("DistinctUntilChangedSinkMixin_equality");
@@ -17,13 +17,13 @@ const Sink_distinctUntilChangedMixin = /*@__PURE__*/ (() => {
         [DistinctUntilChangedSinkMixin_prev]: none,
         [DistinctUntilChangedSinkMixin_hasValue]: false,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const shouldEmit = !this[DistinctUntilChangedSinkMixin_hasValue] ||
                 !this[DistinctUntilChangedSinkMixin_equality](this[DistinctUntilChangedSinkMixin_prev], next);
             if (shouldEmit) {
                 this[DistinctUntilChangedSinkMixin_prev] = next;
                 this[DistinctUntilChangedSinkMixin_hasValue] = true;
-                this[DelegatingLike_delegate][SinkLike_notify](next);
+                this[DelegatingLike_delegate][ObserverLike_notify](next);
             }
         },
     }));

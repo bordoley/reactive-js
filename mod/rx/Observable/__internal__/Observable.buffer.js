@@ -7,7 +7,7 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import { isNumber, none, pipe } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -56,7 +56,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         [BufferObserver_durationSubscription]: none,
         [BufferObserver_maxBufferSize]: 0,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             Observer_assertState(this);
             const { [BufferObserver_buffer]: buffer, [BufferObserver_maxBufferSize]: maxBufferSize, } = this;
             buffer.push(next);
@@ -65,7 +65,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                     Disposable_disposed;
                 const buffer = this[BufferObserver_buffer];
                 this[BufferObserver_buffer] = [];
-                this[DelegatingLike_delegate][SinkLike_notify](buffer);
+                this[DelegatingLike_delegate][ObserverLike_notify](buffer);
             };
             if (ReadonlyArray_getLength(buffer) === maxBufferSize) {
                 doOnNotify();

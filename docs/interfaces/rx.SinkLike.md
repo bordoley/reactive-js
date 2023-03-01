@@ -22,13 +22,13 @@
 
 ### Methods
 
-- [[SinkLike\_notify]](rx.SinkLike.md#[sinklike_notify])
+- [[ObserverLike\_notify]](rx.SinkLike.md#[observerlike_notify])
 
 ## Methods
 
-### [SinkLike\_notify]
+### [ObserverLike\_notify]
 
-▸ **[SinkLike_notify]**(`next`): `void`
+▸ **[ObserverLike_notify]**(`next`): `void`
 
 Notifies the the sink of the next notification produced by the observable source.
 

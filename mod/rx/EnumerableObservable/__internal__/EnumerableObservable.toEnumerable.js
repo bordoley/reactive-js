@@ -5,7 +5,7 @@ import { isSome, none, pipe, unsafeCast } from "../../../functions.js";
 import { EnumeratorLike_current, SourceLike_move, } from "../../../ix.js";
 import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import MutableEnumerator_mixin from "../../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { SinkLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run.js";
 import Scheduler_isInContinuation from "../../../scheduling/Scheduler/__internal__/Scheduler.isInContinuation.js";
@@ -68,7 +68,7 @@ const EnumerableObservable_toEnumerable =
     }, props({
         enumerator: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             Observer_assertState(this);
             this.enumerator[EnumeratorLike_current] = next;
         },

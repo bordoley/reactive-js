@@ -1,7 +1,7 @@
 /// <reference types="./Observer.createWithDelegate.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify } from "../../../rx.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_getScheduler from "./Observer.getScheduler.js";
@@ -13,9 +13,9 @@ const Observer_createWithDelegate =
     init(delegatingMixin(), instance, observer);
     return instance;
 }, props({}), {
-    [SinkLike_notify](next) {
+    [ObserverLike_notify](next) {
         Observer_assertState(this);
-        this[DelegatingLike_delegate][SinkLike_notify](next);
+        this[DelegatingLike_delegate][ObserverLike_notify](next);
     },
 })))();
 export default Observer_createWithDelegate;

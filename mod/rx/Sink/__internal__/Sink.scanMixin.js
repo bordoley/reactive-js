@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { error, none, pipe, returns, } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 const Sink_scanMixin = /*@__PURE__*/ (() => {
@@ -23,10 +23,10 @@ const Sink_scanMixin = /*@__PURE__*/ (() => {
         [ScanSinkMixin_reducer]: none,
         [ScanSinkMixin_acc]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const nextAcc = this[ScanSinkMixin_reducer](this[ScanSinkMixin_acc], next);
             this[ScanSinkMixin_acc] = nextAcc;
-            this[DelegatingLike_delegate][SinkLike_notify](nextAcc);
+            this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
         },
     }));
 })();

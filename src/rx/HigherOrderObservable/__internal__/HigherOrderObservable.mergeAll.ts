@@ -23,7 +23,11 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../rx.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -117,7 +121,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
         function MergeAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
-            typeof SinkLike_notify
+            typeof ObserverLike_notify
           > &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -163,7 +167,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           [MergeAllObserver_onDispose]: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties &
               ObserverLike<ContainerOf<C, T>> &
               DelegatingLike<ObserverLike<T>> &
