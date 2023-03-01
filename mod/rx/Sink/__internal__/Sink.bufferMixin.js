@@ -4,7 +4,7 @@ import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } 
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import { none, pipe } from "../../../functions.js";
-import { SinkLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -33,13 +33,13 @@ const Sink_bufferMixin = (fromReadonlyArray) => {
         [BufferSinkMixin_maxBufferSize]: 0,
         [BufferSinkMixin_buffer]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             const { [BufferSinkMixin_buffer]: buffer, [BufferSinkMixin_maxBufferSize]: maxBufferSize, } = this;
             buffer.push(next);
             if (ReadonlyArray_getLength(buffer) === maxBufferSize) {
                 const buffer = this[BufferSinkMixin_buffer];
                 this[BufferSinkMixin_buffer] = [];
-                this[DelegatingLike_delegate][SinkLike_notify](buffer);
+                this[DelegatingLike_delegate][ObserverLike_notify](buffer);
             }
         },
     });

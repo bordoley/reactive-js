@@ -10,9 +10,9 @@ import { pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
   SinkLike,
-  SinkLike_notify,
 } from "../../../rx.js";
 import {
   DisposableLike,
@@ -37,7 +37,7 @@ const Sink_takeLastMixin: <C extends ObservableLike, T>(
   ObserverLike<T>,
   ObserverLike<T>,
   number,
-  Pick<ObserverLike<T>, typeof SinkLike_notify>
+  Pick<ObserverLike<T>, typeof ObserverLike_notify>
 > = <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly T[]) => C,
 ) => {
@@ -56,7 +56,7 @@ const Sink_takeLastMixin: <C extends ObservableLike, T>(
       Observer_mixin<T>(),
     ),
     function TakeLastSinkMixin(
-      instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+      instance: Pick<SinkLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       takeLastCount: number,
@@ -86,7 +86,7 @@ const Sink_takeLastMixin: <C extends ObservableLike, T>(
       [TakeLastSinkMixin_takeLastCount]: 0,
     }),
     {
-      [SinkLike_notify](
+      [ObserverLike_notify](
         this: TProperties & DisposableLike & PullableQueueLike<T>,
         next: T,
       ) {

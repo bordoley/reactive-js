@@ -28,7 +28,11 @@ import Enumerable_zip from "../../../ix/Enumerable/__internal__/Enumerable.zip.j
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../rx.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
@@ -138,7 +142,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     mix(
       include(Disposable_mixin, typedObserverMixin, delegatingMixin()),
       function ZipObserver(
-        instance: Pick<ObserverLike, typeof SinkLike_notify> &
+        instance: Pick<ObserverLike, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<readonly unknown[]>,
         enumerators: readonly EnumeratorLike<any>[],
@@ -171,7 +175,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         [ZipObserver_queuedEnumerator]: none,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: ObserverLike &
             TProperties &
             DelegatingLike<ObserverLike<readonly unknown[]>>,
@@ -198,7 +202,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             ReadonlyArray_map(Enumerator_getCurrent),
           );
 
-          this[DelegatingLike_delegate][SinkLike_notify](zippedNext);
+          this[DelegatingLike_delegate][ObserverLike_notify](zippedNext);
 
           if (shouldComplete(enumerators)) {
             pipe(this, Disposable_dispose());

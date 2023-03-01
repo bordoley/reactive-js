@@ -17,7 +17,7 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
-import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, SinkLike } from "../../../rx.js";
 import { DisposableLike } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -28,7 +28,7 @@ const Sink_throwIfEmptyMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
   Factory<unknown>,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
+  Pick<SinkLike<T>, typeof ObserverLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   const ThrowIfEmptySinkMixin_isEmpty = Symbol("ThrowIfEmptySinkMixin_isEmpty");
 
@@ -40,7 +40,7 @@ const Sink_throwIfEmptyMixin: <T>() => Mixin2<
     mix(
       include(Disposable_mixin, delegatingMixin()),
       function ThrowIfEmptySinkMixin(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+        instance: Pick<SinkLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<T>,
         factory: Factory<unknown>,
@@ -72,12 +72,12 @@ const Sink_throwIfEmptyMixin: <T>() => Mixin2<
         [ThrowIfEmptySinkMixin_isEmpty]: true,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: TProperties & DisposableLike & DelegatingLike<SinkLike<T>>,
           next: T,
         ) {
           this[ThrowIfEmptySinkMixin_isEmpty] = false;
-          this[DelegatingLike_delegate][SinkLike_notify](next);
+          this[DelegatingLike_delegate][ObserverLike_notify](next);
         },
       },
     ),

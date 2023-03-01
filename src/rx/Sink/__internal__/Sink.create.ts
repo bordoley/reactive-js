@@ -4,7 +4,7 @@ import {
   init,
   mix,
 } from "../../../__internal__/mixins.js";
-import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, SinkLike } from "../../../rx.js";
 
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
@@ -13,7 +13,7 @@ const Sink_create: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
     mix(
       include(Disposable_mixin),
       function CreateSink(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+        instance: Pick<SinkLike<T>, typeof ObserverLike_notify>,
       ): SinkLike<T> {
         init(Disposable_mixin, instance);
 
@@ -21,7 +21,7 @@ const Sink_create: <T>() => SinkLike<T> = /*@__PURE__*/ (<T>() =>
       },
       {},
       {
-        [SinkLike_notify](_: T) {},
+        [ObserverLike_notify](_: T) {},
       },
     ),
   ))();

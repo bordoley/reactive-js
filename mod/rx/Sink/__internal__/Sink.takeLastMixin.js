@@ -2,7 +2,7 @@
 
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { pipe } from "../../../functions.js";
-import { ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -26,7 +26,7 @@ const Sink_takeLastMixin = (fromReadonlyArray) => {
     }, props({
         [TakeLastSinkMixin_takeLastCount]: 0,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             this[QueueLike_push](next);
             if (this[QueueLike_count] > this[TakeLastSinkMixin_takeLastCount]) {
                 this[PullableQueueLike_pull]();

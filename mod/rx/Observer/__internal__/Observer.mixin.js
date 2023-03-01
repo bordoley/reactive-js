@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { call, isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
-import { ObserverLike_dispatcher, ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
+import { ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { DispatcherLike_scheduler, } from "../../../scheduling.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import { DisposableLike_error, QueueLike_count, QueueLike_push, } from "../../../util.js";
@@ -35,7 +35,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             const { [ObserverDispatcher_observer]: observer } = instance;
             while (instance[QueueLike_count] > 0) {
                 const next = instance[PullableQueueLike_pull]();
-                observer[SinkLike_notify](next);
+                observer[ObserverLike_notify](next);
                 Continuation__yield();
             }
         };

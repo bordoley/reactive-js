@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { pipe, returns } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 const Sink_takeFirstMixin = /*@__PURE__*/ (() => {
@@ -19,9 +19,9 @@ const Sink_takeFirstMixin = /*@__PURE__*/ (() => {
         [TakeFirstSinkMixin_count]: 0,
         [TakeFirstSinkMixin_takeCount]: 0,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             this[TakeFirstSinkMixin_count]++;
-            this[DelegatingLike_delegate][SinkLike_notify](next);
+            this[DelegatingLike_delegate][ObserverLike_notify](next);
             if (this[TakeFirstSinkMixin_count] >= this[TakeFirstSinkMixin_takeCount]) {
                 pipe(this, Disposable_dispose());
             }

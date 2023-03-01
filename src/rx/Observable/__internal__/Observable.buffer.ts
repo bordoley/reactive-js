@@ -16,7 +16,11 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import { Function1, isNumber, none, pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -65,7 +69,7 @@ const Observable_buffer: <T>(options?: {
     mix(
       include(typedObserverMixin, Disposable_mixin, delegatingMixin()),
       function BufferObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<readonly T[]>,
         durationFunction: Function1<T, ObservableLike>,
@@ -108,7 +112,7 @@ const Observable_buffer: <T>(options?: {
         [BufferObserver_maxBufferSize]: 0,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: TProperties &
             ObserverLike<T> &
             DelegatingLike<ObserverLike<readonly T[]>>,
@@ -130,7 +134,7 @@ const Observable_buffer: <T>(options?: {
             const buffer = this[BufferObserver_buffer];
             this[BufferObserver_buffer] = [];
 
-            this[DelegatingLike_delegate][SinkLike_notify](buffer);
+            this[DelegatingLike_delegate][ObserverLike_notify](buffer);
           };
 
           if (ReadonlyArray_getLength(buffer) === maxBufferSize) {

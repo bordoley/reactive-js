@@ -9,14 +9,14 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Function1, none, returns } from "../../../functions.js";
-import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, SinkLike } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 export const Sink_mapMixin: <TA, TB>() => Mixin2<
   SinkLike<TA>,
   SinkLike<TB>,
   Function1<TA, TB>,
-  Pick<SinkLike<TA>, typeof SinkLike_notify>
+  Pick<SinkLike<TA>, typeof ObserverLike_notify>
 > = /*@__PURE__*/ (<TA, TB>() => {
   const MapSinkMixin_mapper = Symbol("MapSinkMixin_mapper");
 
@@ -28,7 +28,7 @@ export const Sink_mapMixin: <TA, TB>() => Mixin2<
     mix(
       include(Disposable_delegatingMixin()),
       function MapSinkMixin(
-        instance: Pick<SinkLike<TA>, typeof SinkLike_notify> &
+        instance: Pick<SinkLike<TA>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<TB>,
         mapper: Function1<TA, TB>,
@@ -42,12 +42,12 @@ export const Sink_mapMixin: <TA, TB>() => Mixin2<
         [MapSinkMixin_mapper]: none,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: TProperties & DelegatingLike<SinkLike<TB>>,
           next: TA,
         ) {
           const mapped = this[MapSinkMixin_mapper](next);
-          this[DelegatingLike_delegate][SinkLike_notify](mapped);
+          this[DelegatingLike_delegate][ObserverLike_notify](mapped);
         },
       },
     ),

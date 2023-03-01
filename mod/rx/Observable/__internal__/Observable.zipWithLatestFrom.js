@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, } from "../../../functions.js";
-import { SinkLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -64,7 +64,7 @@ const Observable_zipWithLatestFrom =
             [ZipWithLatestFromObserver_otherLatest]: none,
             [ZipWithLatestFromObserver_selector]: none,
         }), {
-            [SinkLike_notify](next) {
+            [ObserverLike_notify](next) {
                 Observer_assertState(this);
                 this[QueueLike_push](next);
                 notifyDelegate(this);

@@ -21,8 +21,8 @@ import {
 import {
   ObserverLike,
   ObserverLike_dispatcher,
+  ObserverLike_notify,
   ObserverLike_scheduler,
-  SinkLike_notify,
 } from "../../../rx.js";
 import {
   DispatcherLike,
@@ -100,7 +100,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
 
           while (instance[QueueLike_count] > 0) {
             const next = instance[PullableQueueLike_pull]() as T;
-            observer[SinkLike_notify](next);
+            observer[ObserverLike_notify](next);
             Continuation__yield();
           }
         };
@@ -148,7 +148,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
 
 type TObserverMixinReturn<T> = Omit<
   ObserverLike<T>,
-  keyof DisposableLike | typeof SinkLike_notify
+  keyof DisposableLike | typeof ObserverLike_notify
 >;
 
 const Observer_mixin: <T>() => Mixin1<TObserverMixinReturn<T>, SchedulerLike> =

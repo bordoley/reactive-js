@@ -12,7 +12,7 @@ import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
-  SinkLike_notify,
+  ObserverLike_notify,
   Timeout,
 } from "../../../rx.js";
 import { DisposableLike } from "../../../util.js";
@@ -68,7 +68,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
         typedDisposableRefMixin,
       ),
       function TimeoutObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         duration: ObservableLike<unknown>,
@@ -87,7 +87,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
         [TimeoutObserver_duration]: none,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: TProperties &
             MutableRefLike<DisposableLike> &
             DelegatingLike<ObserverLike<T>> &
@@ -97,7 +97,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
           Observer_assertState(this);
 
           pipe(this, MutableRef_get, Disposable_dispose());
-          this[DelegatingLike_delegate][SinkLike_notify](next);
+          this[DelegatingLike_delegate][ObserverLike_notify](next);
         },
       },
     ),

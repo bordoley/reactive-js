@@ -20,7 +20,7 @@ import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal.js";
 import {
   EnumerableObservableLike,
   ObserverLike,
-  SinkLike_notify,
+  ObserverLike_notify,
 } from "../../../rx.js";
 import {
   ContinuationLike,
@@ -136,7 +136,7 @@ const EnumerableObservable_toEnumerable: ToEnumerable<EnumerableObservableLike>[
       mix(
         include(Disposable_mixin, typedObserverMixin),
         function EnumeratorObserver(
-          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TEnumeratorObserverProperties>,
           enumerator: EnumeratorScheduler,
         ): ObserverLike<T> {
@@ -151,7 +151,7 @@ const EnumerableObservable_toEnumerable: ToEnumerable<EnumerableObservableLike>[
           enumerator: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TEnumeratorObserverProperties & ObserverLike,
             next: T,
           ) {

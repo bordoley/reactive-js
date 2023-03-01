@@ -2,7 +2,7 @@
 
 import { ContainerLike_type, StatefulContainerLike_state, StatefulContainerLike_variance, } from "./containers.js";
 /** @ignore */
-export const SinkLike_notify = Symbol("SinkLike_notify");
+export const ObserverLike_notify = Symbol("ObserverLike_notify");
 /** @ignore */
 export const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
 /** @ignore */

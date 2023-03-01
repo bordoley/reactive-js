@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArray.toRunnable.d.ts" />
 
 import { none, pipe } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import EnumerableObservable_create from "../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
@@ -27,7 +27,7 @@ ReadonlyArray_toContainer((values, startIndex, count, options) => {
                     index--;
                     cnt++;
                 }
-                observer[SinkLike_notify](value);
+                observer[ObserverLike_notify](value);
                 if (cnt !== 0) {
                     Continuation__yield(delay);
                 }

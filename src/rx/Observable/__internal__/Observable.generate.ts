@@ -1,5 +1,9 @@
 import { Factory, Updater, none, pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../rx.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
@@ -20,7 +24,7 @@ const Observable_generate = <T>(
     const continuation = () => {
       while (!Disposable_isDisposed(observer)) {
         acc = generator(acc);
-        observer[SinkLike_notify](acc);
+        observer[ObserverLike_notify](acc);
         Continuation__yield(delay);
       }
     };

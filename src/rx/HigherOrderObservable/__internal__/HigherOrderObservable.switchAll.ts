@@ -15,7 +15,11 @@ import {
   ContainerOperator,
 } from "../../../containers.js";
 import { Function1, none, pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_notify,
+} from "../../../rx.js";
 import { DisposableLike } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -71,7 +75,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
         function SwitchAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
-            typeof SinkLike_notify
+            typeof ObserverLike_notify
           > &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -97,7 +101,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
           [HigherOrderObservable_currentRef]: none,
         }),
         {
-          [SinkLike_notify](
+          [ObserverLike_notify](
             this: TProperties &
               ObserverLike<ContainerOf<C, T>> &
               DisposableRefLike &

@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, returns } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 export const Sink_forEachMixin = /*@__PURE__*/ (() => {
     const ForEachSinkMixin_effect = Symbol("ForEachSinkMixin_effect");
@@ -13,9 +13,9 @@ export const Sink_forEachMixin = /*@__PURE__*/ (() => {
     }, props({
         [ForEachSinkMixin_effect]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             this[ForEachSinkMixin_effect](next);
-            this[DelegatingLike_delegate][SinkLike_notify](next);
+            this[DelegatingLike_delegate][ObserverLike_notify](next);
         },
     }));
 })();

@@ -2,7 +2,7 @@
 
 import { none, pipe } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, } from "../../../ix.js";
-import { SinkLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import EnumerableObservable_create from "../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
@@ -19,7 +19,7 @@ const Enumerable_toRunnable = (options) => enumerable => {
             while (!observer[DisposableLike_isDisposed] &&
                 (enumerator[SourceLike_move](),
                     enumerator[EnumeratorLike_hasCurrent])) {
-                observer[SinkLike_notify](enumerator[EnumeratorLike_current]);
+                observer[ObserverLike_notify](enumerator[EnumeratorLike_current]);
                 Continuation__yield(delay);
             }
         }, delayStart ? options : none));

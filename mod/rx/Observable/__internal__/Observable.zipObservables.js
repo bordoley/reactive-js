@@ -14,7 +14,7 @@ import Enumerable_zip from "../../../ix/Enumerable/__internal__/Enumerable.zip.j
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
-import { SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -85,7 +85,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         [ZipObserver_enumerators]: none,
         [ZipObserver_queuedEnumerator]: none,
     }), {
-        [SinkLike_notify](next) {
+        [ObserverLike_notify](next) {
             Observer_assertState(this);
             const { [ZipObserver_queuedEnumerator]: queuedEnumerator, [ZipObserver_enumerators]: enumerators, } = this;
             if (this[DisposableLike_isDisposed]) {
@@ -96,7 +96,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
                 return;
             }
             const zippedNext = pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent));
-            this[DelegatingLike_delegate][SinkLike_notify](zippedNext);
+            this[DelegatingLike_delegate][ObserverLike_notify](zippedNext);
             if (shouldComplete(enumerators)) {
                 pipe(this, Disposable_dispose());
             }

@@ -9,13 +9,13 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { none, returns } from "../../../functions.js";
-import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, SinkLike } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 const Sink_pairwiseMixin: <T>() => Mixin1<
   SinkLike<T>,
   SinkLike<readonly [T, T]>,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
+  Pick<SinkLike<T>, typeof ObserverLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   const PairwiseSinkMixin_prev = Symbol("PairwiseSinkMixin_prev");
   const PairwiseSinkMixin_hasPrev = Symbol("PairwiseSinkMixin_hasPrev");
@@ -29,7 +29,7 @@ const Sink_pairwiseMixin: <T>() => Mixin1<
     mix(
       include(Disposable_delegatingMixin()),
       function PairwiseSinkMixin(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+        instance: Pick<SinkLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: SinkLike<readonly [T, T]>,
       ): SinkLike<T> {
@@ -41,14 +41,14 @@ const Sink_pairwiseMixin: <T>() => Mixin1<
         [PairwiseSinkMixin_hasPrev]: false,
       }),
       {
-        [SinkLike_notify](
+        [ObserverLike_notify](
           this: TProperties & DelegatingLike<SinkLike<readonly [T, T]>>,
           next: T,
         ) {
           const prev = this[PairwiseSinkMixin_prev];
 
           if (this[PairwiseSinkMixin_hasPrev]) {
-            this[DelegatingLike_delegate][SinkLike_notify]([prev, next]);
+            this[DelegatingLike_delegate][ObserverLike_notify]([prev, next]);
           }
 
           this[PairwiseSinkMixin_hasPrev] = true;

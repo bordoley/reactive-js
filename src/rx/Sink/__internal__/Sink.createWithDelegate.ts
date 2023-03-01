@@ -8,7 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { ObserverLike_notify, SinkLike } from "../../../rx.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
 const Sink_createWithDelegate: <T>(delegate: SinkLike<T>) => SinkLike<T> =
@@ -17,7 +17,7 @@ const Sink_createWithDelegate: <T>(delegate: SinkLike<T>) => SinkLike<T> =
       mix(
         include(Disposable_mixin, delegatingMixin()),
         function DelegatingSink(
-          instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
+          instance: Pick<SinkLike<T>, typeof ObserverLike_notify>,
           delegate: SinkLike<T>,
         ): SinkLike<T> {
           init(Disposable_mixin, instance);
@@ -27,8 +27,8 @@ const Sink_createWithDelegate: <T>(delegate: SinkLike<T>) => SinkLike<T> =
         },
         props({}),
         {
-          [SinkLike_notify](this: DelegatingLike<SinkLike<T>>, v: T) {
-            this[DelegatingLike_delegate][SinkLike_notify](v);
+          [ObserverLike_notify](this: DelegatingLike<SinkLike<T>>, v: T) {
+            this[DelegatingLike_delegate][ObserverLike_notify](v);
           },
         },
       ),
