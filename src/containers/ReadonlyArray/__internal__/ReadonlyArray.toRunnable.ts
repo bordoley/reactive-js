@@ -33,7 +33,7 @@ const ReadonlyArray_toRunnable =
     ) => {
       const { delay = 0, delayStart = false } = options ?? {};
 
-      const onSink = (observer: ObserverLike<T>) => {
+      const onSubscribe = (observer: ObserverLike<T>) => {
         let index = startIndex,
           cnt = count;
 
@@ -64,8 +64,8 @@ const ReadonlyArray_toRunnable =
       };
 
       return hasDelay(options)
-        ? Runnable_create(onSink)
-        : EnumerableObservable_create(onSink);
+        ? Runnable_create(onSubscribe)
+        : EnumerableObservable_create(onSubscribe);
     },
   );
 

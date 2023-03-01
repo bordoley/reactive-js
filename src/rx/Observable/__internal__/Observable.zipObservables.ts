@@ -212,7 +212,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     ),
   );
 
-  const onSink =
+  const onSubscribe =
     (observables: readonly ObservableLike[]) => (observer: ObserverLike) => {
       const enumerators: EnumeratorLike[] = [];
 
@@ -263,8 +263,8 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           Enumerable_toRunnable(),
         )
       : isRunnable
-      ? Runnable_create(onSink(observables))
-      : Observable_create(onSink(observables));
+      ? Runnable_create(onSubscribe(observables))
+      : Observable_create(onSubscribe(observables));
   };
 })();
 

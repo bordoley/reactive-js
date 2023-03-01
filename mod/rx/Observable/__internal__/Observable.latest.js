@@ -69,7 +69,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         },
     }));
     return (observables, mode) => {
-        const onSink = (delegate) => {
+        const onSubscribe = (delegate) => {
             const ctx = {
                 [LatestCtx_completedCount]: 0,
                 [LatestCtx_observers]: [],
@@ -87,7 +87,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         };
         const isEnumerable = Observable_allAreEnumerable(observables);
         const isRunnable = Observable_allAreRunnable(observables);
-        return Observable_create(onSink, isEnumerable, isRunnable);
+        return Observable_create(onSubscribe, isEnumerable, isRunnable);
     };
 })();
 export default Observable_latest;

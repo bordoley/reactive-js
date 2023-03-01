@@ -35,7 +35,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
     );
 
   return <T>(observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
-    const onSink = (observer: ObserverLike<T>) => {
+    const onSubscribe = (observer: ObserverLike<T>) => {
       const count = ReadonlyArray_getLength(observables);
       const ctx = { [MergeObserverCtx_completedCount]: 0 };
 
@@ -51,10 +51,10 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
     const isRunnable = Observable_allAreRunnable(observables);
 
     return isEnumerable
-      ? EnumerableObservable_create(onSink)
+      ? EnumerableObservable_create(onSubscribe)
       : isRunnable
-      ? Runnable_create(onSink)
-      : Observable_create(onSink);
+      ? Runnable_create(onSubscribe)
+      : Observable_create(onSubscribe);
   };
 })();
 

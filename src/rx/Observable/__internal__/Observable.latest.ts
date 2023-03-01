@@ -131,7 +131,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
     observables: readonly ObservableLike<any>[],
     mode: LatestMode,
   ): ObservableLike<readonly unknown[]> => {
-    const onSink = (delegate: ObserverLike<readonly unknown[]>) => {
+    const onSubscribe = (delegate: ObserverLike<readonly unknown[]>) => {
       const ctx: LatestCtx = {
         [LatestCtx_completedCount]: 0,
         [LatestCtx_observers]: [],
@@ -160,7 +160,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const isEnumerable = Observable_allAreEnumerable(observables);
     const isRunnable = Observable_allAreRunnable(observables);
 
-    return Observable_create(onSink, isEnumerable, isRunnable);
+    return Observable_create(onSubscribe, isEnumerable, isRunnable);
   };
 })();
 

@@ -13,7 +13,7 @@ import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.
 import enumerate from "./Enumerable.enumerate.js";
 const Enumerable_toRunnable = (options) => enumerable => {
     const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
-    const onSink = (observer) => {
+    const onSubscribe = (observer) => {
         const enumerator = pipe(enumerable, enumerate(), Disposable_bindTo(observer));
         pipe(observer, Observer_schedule(() => {
             while (!observer[DisposableLike_isDisposed] &&
@@ -25,7 +25,7 @@ const Enumerable_toRunnable = (options) => enumerable => {
         }, delayStart ? options : none));
     };
     return hasDelay(options)
-        ? Runnable_create(onSink)
-        : EnumerableObservable_create(onSink);
+        ? Runnable_create(onSubscribe)
+        : EnumerableObservable_create(onSubscribe);
 };
 export default Enumerable_toRunnable;
