@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { MAX_SAFE_INTEGER } from "../../../constants.js";
 import { isSome, pipe, unsafeCast } from "../../../functions.js";
-import { EnumeratorLike_current, SourceLike_move, } from "../../../ix.js";
+import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../ix.js";
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
@@ -81,7 +81,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
             });
         }
     },
-    [SourceLike_move]() {
+    [EnumeratorLike_move]() {
         if (Disposable_isDisposed(this)) {
             return;
         }

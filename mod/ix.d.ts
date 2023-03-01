@@ -4,13 +4,7 @@ import { ObservableLike_isEnumerable, RunnableLike } from "./rx.js";
 import { StreamLike } from "./streaming.js";
 import { DisposableLike } from "./util.js";
 /** @ignore */
-export declare const SourceLike_move: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface SourceLike extends DisposableLike {
-    [SourceLike_move](): void;
-}
+export declare const EnumeratorLike_move: unique symbol;
 /** @ignore */
 export declare const EnumeratorLike_current: unique symbol;
 /** @ignore */
@@ -18,9 +12,10 @@ export declare const EnumeratorLike_hasCurrent: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface EnumeratorLike<T = unknown> extends SourceLike {
+export interface EnumeratorLike<T = unknown> extends DisposableLike {
     readonly [EnumeratorLike_current]: T;
     readonly [EnumeratorLike_hasCurrent]: boolean;
+    [EnumeratorLike_move](): void;
 }
 /**
  * Interface for iterating a Container of items.
@@ -35,7 +30,7 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
 /**
  * @noInheritDoc
  */
-export interface AsyncEnumeratorLike<T = unknown> extends SourceLike, StreamLike<void, T> {
+export interface AsyncEnumeratorLike<T = unknown> extends StreamLike<void, T> {
 }
 /**
  * @noInheritDoc

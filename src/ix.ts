@@ -11,14 +11,7 @@ import { StreamLike } from "./streaming.js";
 import { DisposableLike } from "./util.js";
 
 /** @ignore */
-export const SourceLike_move = Symbol("SourceLike_move");
-
-/**
- * @noInheritDoc
- */
-export interface SourceLike extends DisposableLike {
-  [SourceLike_move](): void;
-}
+export const EnumeratorLike_move = Symbol("EnumeratorLike_move");
 
 /** @ignore */
 export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
@@ -29,9 +22,11 @@ export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
 /**
  * @noInheritDoc
  */
-export interface EnumeratorLike<T = unknown> extends SourceLike {
+export interface EnumeratorLike<T = unknown> extends DisposableLike {
   readonly [EnumeratorLike_current]: T;
   readonly [EnumeratorLike_hasCurrent]: boolean;
+
+  [EnumeratorLike_move](): void;
 }
 
 /**
@@ -49,9 +44,7 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
 /**
  * @noInheritDoc
  */
-export interface AsyncEnumeratorLike<T = unknown>
-  extends SourceLike,
-    StreamLike<void, T> {}
+export interface AsyncEnumeratorLike<T = unknown> extends StreamLike<void, T> {}
 
 /**
  * @noInheritDoc

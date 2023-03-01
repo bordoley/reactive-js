@@ -1,9 +1,8 @@
-import { EnumeratorLike } from "../../../ix.js";
-import Source_move from "../../Source/__internal__/Source.move.js";
+import { EnumeratorLike, EnumeratorLike_move } from "../../../ix.js";
 import Enumerator_hasCurrent from "./Enumerator.hasCurrent.js";
 
 const Enumerator_move = <T>(enumerator: EnumeratorLike<T>): boolean => {
-  Source_move(enumerator);
+  enumerator[EnumeratorLike_move]();
   return Enumerator_hasCurrent(enumerator);
 };
 

@@ -5,7 +5,7 @@ import {
   mix,
 } from "../../../__internal__/mixins.js";
 import { pipe } from "../../../functions.js";
-import { EnumeratorLike, SourceLike_move } from "../../../ix.js";
+import { EnumeratorLike, EnumeratorLike_move } from "../../../ix.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import { MutableEnumeratorLike } from "../../__internal__/ix.internal.js";
@@ -17,7 +17,7 @@ const Enumerator_empty: <T>() => EnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
     mix(
       include(Disposable_mixin, typedMutableEnumeratorMixin),
       function EmptyEnumerator(
-        instance: Pick<EnumeratorLike<T>, typeof SourceLike_move>,
+        instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move>,
       ): EnumeratorLike<T> {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
@@ -26,7 +26,7 @@ const Enumerator_empty: <T>() => EnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
       },
       {},
       {
-        [SourceLike_move](this: MutableEnumeratorLike) {
+        [EnumeratorLike_move](this: MutableEnumeratorLike) {
           pipe(this, Disposable_dispose());
         },
       },

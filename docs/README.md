@@ -22,7 +22,6 @@ Reactive-JS
 - [ix](modules/ix.md)
 - [ix/Enumerable](modules/ix_Enumerable.md)
 - [ix/Enumerator](modules/ix_Enumerator.md)
-- [ix/Source](modules/ix_Source.md)
 - [rx](modules/rx.md)
 - [rx/MulticastObservable](modules/rx_MulticastObservable.md)
 - [rx/Observable](modules/rx_Observable.md)

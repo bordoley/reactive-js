@@ -13,13 +13,13 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
-  SourceLike_move,
+  EnumeratorLike_move,
 } from "../../../ix.js";
 import { DisposableLike } from "../../../util.js";
 
 type TDelegatingEnumeratorMixinReturn<T> = Omit<
   EnumeratorLike<T>,
-  keyof DisposableLike | typeof SourceLike_move
+  keyof DisposableLike | typeof EnumeratorLike_move
 >;
 
 const DelegatingEnumerator_mixin: <T>() => Mixin1<
