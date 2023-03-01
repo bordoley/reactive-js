@@ -8,14 +8,7 @@ const Runnable_mergeAll: MergeAll<
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
   }
->["mergeAll"] = /*@__PURE__*/ HigherOrderObservable_mergeAll<RunnableLike>(
-  Runnable_lift,
-) as MergeAll<
-  RunnableLike,
-  {
-    readonly maxBufferSize?: number;
-    readonly maxConcurrency?: number;
-  }
->["mergeAll"];
+>["mergeAll"] =
+  /*@__PURE__*/ HigherOrderObservable_mergeAll<RunnableLike>(Runnable_lift);
 
 export default Runnable_mergeAll;
