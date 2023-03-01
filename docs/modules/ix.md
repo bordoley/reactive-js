@@ -24,3 +24,5 @@
 - [FromEnumerable](../interfaces/ix.FromEnumerable.md)
 - [ToAsyncEnumerable](../interfaces/ix.ToAsyncEnumerable.md)
 - [ToEnumerable](../interfaces/ix.ToEnumerable.md)
+- [ToEnumerableAsyncEnumerable](../interfaces/ix.ToEnumerableAsyncEnumerable.md)
+- [ToRunnableAsyncEnumerable](../interfaces/ix.ToRunnableAsyncEnumerable.md)

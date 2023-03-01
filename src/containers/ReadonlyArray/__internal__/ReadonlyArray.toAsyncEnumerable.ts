@@ -2,7 +2,8 @@ import { abs } from "../../../__internal__/math.js";
 import { ReadonlyArrayLike } from "../../../containers.js";
 import { decrement, increment, pipe, returns } from "../../../functions.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../ix.js";
-import AsyncEnumerable_create from "../../../ix/AsyncEnumerable/__internal__/AsyncEnumerable.create.js";
+import EnumerableAsyncEnumerable_create from "../../../ix/EnumerableAsyncEnumerable/__internal__/EnumerableAsyncEnumerable.create.js";
+import RunnableAsyncEnumerable_create from "../../../ix/RunnableAsyncEnumerable/__internal__/RunnableAsyncEnumerable.create.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
@@ -35,18 +36,27 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
         readonly delay?: number;
         readonly delayStart?: boolean;
       },
-    ) =>
-      AsyncEnumerable_create(
+    ) => {
+      const delay = options?.delay ?? 0 > 0;
+
+      const create =
+        delay > 0
+          ? RunnableAsyncEnumerable_create
+          : EnumerableAsyncEnumerable_create;
+
+      // FIXME: any cast is weak
+      return (create as any)(
         count >= 0
           ? Observable_scan(increment, returns(start - 1))
           : Observable_scan(decrement, returns(start + 1)),
-        options?.delay ?? 0 > 0
+        delay ?? 0 > 0
           ? Observable_concatMap((i: number) =>
               pipe([array[i]], ReadonlyArray_toRunnableObservable(options)),
             )
           : Observable_map((i: number) => array[i]),
         Observable_takeFirst({ count: abs(count) }),
-      ),
+      );
+    },
   );
 
 export default ReadonlyArray_toAsyncEnumerable;

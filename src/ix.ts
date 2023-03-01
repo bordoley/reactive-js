@@ -182,3 +182,31 @@ export interface ToEnumerable<C extends ContainerLike, O = never>
    */
   toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ToEnumerableAsyncEnumerable<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Converter
+   */
+  toEnumerableAsyncEnumerable<T>(
+    options?: O,
+  ): Function1<ContainerOf<C, T>, EnumerableAsyncEnumerableLike<T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ToRunnableAsyncEnumerable<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Converter
+   */
+  toRunnableAsyncEnumerable<T>(
+    options?: O,
+  ): Function1<ContainerOf<C, T>, RunnableAsyncEnumerableLike<T>>;
+}

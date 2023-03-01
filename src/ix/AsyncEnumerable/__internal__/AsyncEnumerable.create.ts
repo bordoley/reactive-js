@@ -1,24 +1,9 @@
-import {
-  Mutable,
-  createInstanceFactory,
-  mix,
-  props,
-} from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import { composeUnsafe, none, pipe } from "../../../functions.js";
-import {
-  AsyncEnumerableLike,
-  AsyncEnumerableLike_isEnumerable,
-  AsyncEnumerableLike_isRunnable,
-  AsyncEnumeratorLike,
-  InteractiveContainerLike_interact,
-} from "../../../ix.js";
+import { composeUnsafe } from "../../../functions.js";
+import { AsyncEnumerableLike } from "../../../ix.js";
 import { ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
-import { StreamableLike_stream } from "../../../streaming.js";
-import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
-import AsyncEnumerator_create from "../../AsyncEnumerator/__internal__/AsyncEnumerator.create.js";
+import AsyncEnumerable_createBase from "./AsyncEnumerable.createBase.js";
 
 interface CreateAsyncEnumerable {
   <A>(op1: ContainerOperator<ObservableLike, void, A>): AsyncEnumerableLike<A>;
@@ -122,73 +107,18 @@ interface CreateAsyncEnumerable {
     op12: ContainerOperator<ObservableLike, K, L>,
   ): AsyncEnumerableLike<L>;
 }
-const AsyncEnumerable_create: CreateAsyncEnumerable = /*@__PURE__*/ (<T>() => {
-  const AsyncEnumerable_op = Symbol("AsyncEnumerable_ops");
-
-  type TProperties = {
-    readonly [AsyncEnumerable_op]: ContainerOperator<
-      ObservableLike,
-      unknown,
-      unknown
-    >;
-    readonly [AsyncEnumerableLike_isEnumerable]: boolean;
-    readonly [AsyncEnumerableLike_isRunnable]: boolean;
-  };
-
-  const factory = createInstanceFactory(
-    mix(
-      function AsyncEnumerable(
-        instance: Pick<
-          AsyncEnumerableLike<T>,
-          | typeof StreamableLike_stream
-          | typeof InteractiveContainerLike_interact
-        > &
-          Mutable<TProperties>,
-        op: ContainerOperator<ObservableLike, unknown, unknown>,
-      ): AsyncEnumerableLike<T> {
-        instance[AsyncEnumerable_op] = op;
-
-        return instance;
-      },
-      props<TProperties>({
-        [AsyncEnumerable_op]: none,
-        [AsyncEnumerableLike_isEnumerable]: false,
-        [AsyncEnumerableLike_isRunnable]: false,
-      }),
-      {
-        [StreamableLike_stream](
-          this: TProperties,
-          scheduler: SchedulerLike,
-          options?: { readonly replay?: number },
-        ) {
-          return AsyncEnumerator_create(
-            this[AsyncEnumerable_op],
-            scheduler,
-            options,
-          );
-        },
-        [InteractiveContainerLike_interact](
-          ctx: SchedulerLike,
-        ): AsyncEnumeratorLike<T> {
-          return pipe(this, Streamable_stream(ctx));
-        },
-      },
-    ),
-  );
-
-  return (
-    ...ops: readonly ContainerOperator<ObservableLike, unknown, unknown>[]
-  ): AsyncEnumerableLike => {
-    const op =
-      ReadonlyArray_getLength(ops) > 1
-        ? (composeUnsafe(...ops) as ContainerOperator<
-            ObservableLike<unknown>,
-            unknown,
-            unknown
-          >)
-        : ops[0];
-    return factory(op);
-  };
-})();
+const AsyncEnumerable_create: CreateAsyncEnumerable = (
+  ...ops: readonly ContainerOperator<ObservableLike, unknown, unknown>[]
+): AsyncEnumerableLike => {
+  const op =
+    ReadonlyArray_getLength(ops) > 1
+      ? (composeUnsafe(...ops) as ContainerOperator<
+          ObservableLike<unknown>,
+          unknown,
+          unknown
+        >)
+      : ops[0];
+  return AsyncEnumerable_createBase(op, false, false);
+};
 
 export default AsyncEnumerable_create;

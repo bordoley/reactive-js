@@ -44,8 +44,15 @@ export const fromEnumerableObservable: FromEnumerableObservable<AsyncEnumerableL
 export const fromIterable: FromIterable<AsyncEnumerableLike>["fromIterable"] =
   Iterable_toAsyncEnumerable;
 
-export const fromReadonlyArray: FromReadonlyArray<AsyncEnumerableLike>["fromReadonlyArray"] =
-  ReadonlyArray_toAsyncEnumerable;
+export const fromReadonlyArray: FromReadonlyArray<
+  AsyncEnumerableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+    readonly count?: number;
+  }
+>["fromReadonlyArray"] = ReadonlyArray_toAsyncEnumerable;
 
 export const fromSequence: FromSequence<AsyncEnumerableLike>["fromSequence"] =
   Sequence_toAsyncEnumerable;

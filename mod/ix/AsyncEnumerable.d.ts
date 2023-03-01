@@ -5,7 +5,12 @@ export declare const fromAsyncIterable: FromAsyncIterable<AsyncEnumerableLike>["
 export declare const fromEnumerable: FromEnumerable<AsyncEnumerableLike>["fromEnumerable"];
 export declare const fromEnumerableObservable: FromEnumerableObservable<AsyncEnumerableLike>["fromEnumerableObservable"];
 export declare const fromIterable: FromIterable<AsyncEnumerableLike>["fromIterable"];
-export declare const fromReadonlyArray: FromReadonlyArray<AsyncEnumerableLike>["fromReadonlyArray"];
+export declare const fromReadonlyArray: FromReadonlyArray<AsyncEnumerableLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+    readonly count?: number;
+}>["fromReadonlyArray"];
 export declare const fromSequence: FromSequence<AsyncEnumerableLike>["fromSequence"];
 export declare const generate: Generate<AsyncEnumerableLike, {
     delay: number;

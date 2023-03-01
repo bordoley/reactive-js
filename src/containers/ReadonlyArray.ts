@@ -14,7 +14,13 @@ import {
   ToReadonlyArray,
   ToSequence,
 } from "../containers.js";
-import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
+import {
+  FromEnumerable,
+  ToAsyncEnumerable,
+  ToEnumerable,
+  ToEnumerableAsyncEnumerable,
+  ToRunnableAsyncEnumerable,
+} from "../ix.js";
 import Enumerable_toReadonlyArray from "../ix/Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import {
   FromEnumerableObservable,
@@ -101,6 +107,21 @@ export const toEnumerable: ToEnumerable<
   }
 >["toEnumerable"] = ReadonlyArray_toEnumerable;
 
+export const toEnumerableAsyncEnumerable: ToEnumerableAsyncEnumerable<
+  ReadonlyArrayLike,
+  {
+    readonly count?: number;
+    readonly start?: number;
+  }
+>["toEnumerableAsyncEnumerable"] =
+  ReadonlyArray_toAsyncEnumerable as ToEnumerableAsyncEnumerable<
+    ReadonlyArrayLike,
+    {
+      readonly count?: number;
+      readonly start?: number;
+    }
+  >["toEnumerableAsyncEnumerable"];
+
 export const toEnumerableObservable: ToEnumerableObservable<
   ReadonlyArrayLike,
   {
@@ -157,6 +178,25 @@ export const toRunnable: ToRunnable<
     readonly start?: number;
   }
 >["toRunnable"] = ReadonlyArray_toRunnable;
+
+export const toRunnableAsyncEnumerable: ToRunnableAsyncEnumerable<
+  ReadonlyArrayLike,
+  {
+    readonly count?: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+  }
+>["toRunnableAsyncEnumerable"] =
+  ReadonlyArray_toAsyncEnumerable as ToRunnableAsyncEnumerable<
+    ReadonlyArrayLike,
+    {
+      readonly count?: number;
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+      readonly start?: number;
+    }
+  >["toRunnableAsyncEnumerable"];
 
 export const toRunnableObservable: ToRunnableObservable<
   ReadonlyArrayLike,

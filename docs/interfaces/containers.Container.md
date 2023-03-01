@@ -124,6 +124,10 @@
 
   ↳ [`ToEnumerable`](ix.ToEnumerable.md)
 
+  ↳ [`ToEnumerableAsyncEnumerable`](ix.ToEnumerableAsyncEnumerable.md)
+
+  ↳ [`ToRunnableAsyncEnumerable`](ix.ToRunnableAsyncEnumerable.md)
+
   ↳ [`CombineLatest`](rx.CombineLatest.md)
 
   ↳ [`Exhaust`](rx.Exhaust.md)
