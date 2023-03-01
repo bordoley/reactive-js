@@ -80,18 +80,6 @@ export interface RunnableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
 }
 
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EnumerableObservableLike<T = unknown> extends RunnableLike<T> {
-  readonly [ContainerLike_type]?: EnumerableObservableLike<
-    this[typeof ContainerLike_T]
-  >;
-
-  readonly [ObservableLike_isEnumerable]: true;
-}
-
 /** @ignore */
 export const MulticastObservableLike_observerCount = Symbol(
   "MulticastObservableLike_observerCount",
@@ -391,20 +379,6 @@ export interface ForkZipLatest<C extends ObservableLike> extends Container<C> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromEnumerableObservable<C extends ContainerLike, O = never>
-  extends Container<C> {
-  /**
-   * @category Constructor
-   */
-  fromEnumerableObservable: <T>(
-    options?: O,
-  ) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface FromRunnable<C extends ContainerLike, O = never>
   extends Container<C> {
   /**
@@ -645,20 +619,6 @@ export interface ToRunnable<C extends ContainerLike, O = never>
    * @category Converter
    */
   toRunnable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableLike<T>>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface ToEnumerableObservable<C extends ContainerLike, O = never>
-  extends Container<C> {
-  /**
-   * @category Converter
-   */
-  toEnumerableObservable: <T>(
-    options?: O,
-  ) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
 }
 
 /**

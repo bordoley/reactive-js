@@ -1,4 +1,5 @@
-import { Factory } from "../../../functions.js";
-import { EnumerableLike, EnumeratorLike } from "../../../ix.js";
-declare const Enumerable_create: <T>(f: Factory<EnumeratorLike<T>>) => EnumerableLike<T>;
+import { SideEffect1 } from "../../../functions.js";
+import { EnumerableLike } from "../../../ix.js";
+import { ObserverLike } from "../../../rx.js";
+declare const Enumerable_create: <T>(f: SideEffect1<ObserverLike<T>>) => EnumerableLike<T>;
 export default Enumerable_create;

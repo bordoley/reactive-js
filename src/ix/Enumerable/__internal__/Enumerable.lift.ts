@@ -1,56 +1,59 @@
 import { Lift } from "../../../containers.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
+import { EnumerableLike } from "../../../ix.js";
 import {
-  EnumerableLike,
-  EnumeratorLike,
-  InteractiveContainerLike_interact,
-} from "../../../ix.js";
-import enumerate from "./Enumerable.enumerate.js";
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
+  ObservableLike_observe,
+  ObserverLike,
+} from "../../../rx.js";
+import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 
-const LiftedEnumerable_src = Symbol("LiftedEnumerable_src");
-const LiftedEnumerable_operators = Symbol("LiftedEnumerable_src");
-class LiftedEnumerable<TA, TB> implements EnumerableLike<TB> {
-  readonly [LiftedEnumerable_src]: EnumerableLike<TA>;
+const LiftedEnumerable_source = Symbol("LiftedEnumerable_source");
+const LiftedEnumerable_operators = Symbol("LiftedEnumerable_operators");
+
+class LiftedEnumerable<TIn, TOut> implements EnumerableLike<TOut> {
+  readonly [ObservableLike_isEnumerable] = true;
+  readonly [ObservableLike_isRunnable] = true;
+  readonly [LiftedEnumerable_source]: EnumerableLike<TIn>;
   readonly [LiftedEnumerable_operators]: readonly Function1<
-    EnumeratorLike<any>,
-    EnumeratorLike<any>
+    ObserverLike<any>,
+    ObserverLike<any>
   >[];
 
   constructor(
-    src: EnumerableLike<TA>,
-    operators: readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[],
+    source: EnumerableLike<TIn>,
+    operators: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
   ) {
-    this[LiftedEnumerable_src] = src;
+    this[LiftedEnumerable_source] = source;
     this[LiftedEnumerable_operators] = operators;
   }
 
-  [InteractiveContainerLike_interact](): EnumeratorLike<TB> {
-    return pipeUnsafe(
-      this[LiftedEnumerable_src],
-      enumerate(),
+  [ObservableLike_observe](observer: ObserverLike<TOut>) {
+    pipeUnsafe(
+      observer,
       ...this[LiftedEnumerable_operators],
-    ) as EnumeratorLike<TB>;
+      Observer_sourceFrom(this[LiftedEnumerable_source]),
+    );
   }
 }
 
 const Enumerable_lift: Lift<EnumerableLike>["lift"] =
-  <TA, TB>(operator: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>) =>
-  (enumerable: EnumerableLike<TA>): EnumerableLike<TB> => {
-    const src =
-      enumerable instanceof LiftedEnumerable
-        ? (enumerable[LiftedEnumerable_src] as EnumerableLike<TA>)
-        : enumerable;
+  <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ): Function1<EnumerableLike<TA>, EnumerableLike<TB>> =>
+  source => {
+    const sourceSource =
+      source instanceof LiftedEnumerable
+        ? source[LiftedEnumerable_source]
+        : source;
 
     const allFunctions =
-      enumerable instanceof LiftedEnumerable
-        ? [...enumerable[LiftedEnumerable_operators], operator]
+      source instanceof LiftedEnumerable
+        ? [operator, ...source[LiftedEnumerable_operators]]
         : [operator];
 
-    return newInstance<
-      EnumerableLike<TB>,
-      EnumerableLike<TA>,
-      readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[]
-    >(LiftedEnumerable, src, allFunctions);
+    return newInstance(LiftedEnumerable, sourceSource, allFunctions);
   };
 
 export default Enumerable_lift;

@@ -14,9 +14,7 @@
 
 ### Converter Functions
 
-- [toAsyncEnumerable](containers_Sequence.md#toasyncenumerable)
 - [toEnumerable](containers_Sequence.md#toenumerable)
-- [toEnumerableObservable](containers_Sequence.md#toenumerableobservable)
 - [toFlowable](containers_Sequence.md#toflowable)
 - [toIterable](containers_Sequence.md#toiterable)
 - [toObservable](containers_Sequence.md#toobservable)
@@ -372,28 +370,6 @@ ___
 
 ## Converter Functions
 
-### toAsyncEnumerable
-
-▸ **toAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`T`\>\>
-
-___
-
 ### toEnumerable
 
 ▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
@@ -413,28 +389,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
-
-___
-
-### toEnumerableObservable
-
-▸ **toEnumerableObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>\>
 
 ___
 

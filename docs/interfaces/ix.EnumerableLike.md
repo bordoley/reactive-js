@@ -14,7 +14,7 @@ Interface for iterating a Container of items.
 
 ## Hierarchy
 
-- [`InteractiveContainerLike`](ix.InteractiveContainerLike.md)<[`EnumeratorLike`](ix.EnumeratorLike.md)<`T`\>\>
+- [`RunnableLike`](rx.RunnableLike.md)<`T`\>
 
   ↳ **`EnumerableLike`**
 
@@ -23,7 +23,7 @@ Interface for iterating a Container of items.
 ### Properties
 
 - [[ContainerLike\_type]](ix.EnumerableLike.md#[containerlike_type])
-- [[StatefulContainerLike\_state]](ix.EnumerableLike.md#[statefulcontainerlike_state])
+- [[ObservableLike\_isEnumerable]](ix.EnumerableLike.md#[observablelike_isenumerable])
 
 ## Properties
 
@@ -33,14 +33,14 @@ Interface for iterating a Container of items.
 
 #### Overrides
 
-InteractiveContainerLike.\_\_@ContainerLike\_type@23116
+[RunnableLike](rx.RunnableLike.md).[[ContainerLike_type]](rx.RunnableLike.md#[containerlike_type])
 
 ___
 
-### [StatefulContainerLike\_state]
+### [ObservableLike\_isEnumerable]
 
-• `Optional` `Readonly` **[StatefulContainerLike\_state]**: [`EnumeratorLike`](ix.EnumeratorLike.md)<`unknown`\>
+• `Readonly` **[ObservableLike\_isEnumerable]**: ``true``
 
 #### Overrides
 
-InteractiveContainerLike.\_\_@StatefulContainerLike\_state@23140
+RunnableLike.\_\_@ObservableLike\_isEnumerable@23898

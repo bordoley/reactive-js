@@ -65,11 +65,9 @@ import {
   SideEffect6,
   TypePredicate,
 } from "../functions.js";
-import { FromEnumerable } from "../ix.js";
-import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
+import { EnumerableLike } from "../ix.js";
 import {
   CombineLatest,
-  EnumerableObservableLike,
   Exhaust,
   ExhaustMap,
   ForkCombineLatest,
@@ -403,14 +401,6 @@ export const fromAsyncIterable: FromAsyncIterable<
   { maxBuffer?: number }
 >["fromAsyncIterable"] = AsyncIterable_toObservable;
 
-export const fromEnumerable: FromEnumerable<
-  ObservableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["fromEnumerable"] = Enumerable_toRunnable;
-
 export const fromIterable: FromIterable<
   ObservableLike,
   {
@@ -446,10 +436,8 @@ export const generate: Generate<
 export const ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"] =
   Observable_ignoreElements;
 
-export const isEnumerable: TypePredicate<
-  ObservableLike,
-  EnumerableObservableLike
-> = Observable_isEnumerable;
+export const isEnumerable: TypePredicate<ObservableLike, EnumerableLike> =
+  Observable_isEnumerable;
 
 export const isRunnable: TypePredicate<ObservableLike, RunnableLike> =
   Observable_isRunnable;

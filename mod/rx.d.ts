@@ -52,14 +52,6 @@ export interface RunnableLike<T = unknown> extends ObservableLike<T> {
     readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isRunnable]: true;
 }
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EnumerableObservableLike<T = unknown> extends RunnableLike<T> {
-    readonly [ContainerLike_type]?: EnumerableObservableLike<this[typeof ContainerLike_T]>;
-    readonly [ObservableLike_isEnumerable]: true;
-}
 /** @ignore */
 export declare const MulticastObservableLike_observerCount: unique symbol;
 /** @ignore */
@@ -166,16 +158,6 @@ export interface ForkZipLatest<C extends ObservableLike> extends Container<C> {
     forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>, f: ContainerOperator<C, T, TF>, g: ContainerOperator<C, T, TG>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG]>;
     forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>, f: ContainerOperator<C, T, TF>, g: ContainerOperator<C, T, TG>, h: ContainerOperator<C, T, TH>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>, f: ContainerOperator<C, T, TF>, g: ContainerOperator<C, T, TG>, h: ContainerOperator<C, T, TH>, i: ContainerOperator<C, T, TI>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface FromEnumerableObservable<C extends ContainerLike, O = never> extends Container<C> {
-    /**
-     * @category Constructor
-     */
-    fromEnumerableObservable: <T>(options?: O) => Function1<EnumerableObservableLike<T>, ContainerOf<C, T>>;
 }
 /**
  * @noInheritDoc
@@ -367,16 +349,6 @@ export interface ToRunnable<C extends ContainerLike, O = never> extends Containe
      * @category Converter
      */
     toRunnable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableLike<T>>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface ToEnumerableObservable<C extends ContainerLike, O = never> extends Container<C> {
-    /**
-     * @category Converter
-     */
-    toEnumerableObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, EnumerableObservableLike<T>>;
 }
 /**
  * @noInheritDoc

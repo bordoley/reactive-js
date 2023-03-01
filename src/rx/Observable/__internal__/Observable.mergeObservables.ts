@@ -1,12 +1,12 @@
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { pipe } from "../../../functions.js";
+import Enumerablee_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
@@ -51,7 +51,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
     const isRunnable = Observable_allAreRunnable(observables);
 
     return isEnumerable
-      ? EnumerableObservable_create(onSubscribe)
+      ? Enumerablee_create(onSubscribe)
       : isRunnable
       ? Runnable_create(onSubscribe)
       : Observable_create(onSubscribe);

@@ -3,7 +3,6 @@
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { alwaysFalse, alwaysTrue, arrayEquality, increment, none, pipe, pipeLazy, returns, } from "../functions.js";
 import * as Enumerable from "../ix/Enumerable.js";
-import * as EnumerableObservable from "../rx/EnumerableObservable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
 import { __now } from "../scheduling/Continuation.js";
@@ -153,7 +152,6 @@ export const throwIfEmptyTests = (m) => describe("throwIfEmpty", test("when sour
     }), m.toReadonlyArray()), expectToThrowError(error));
 }), test("when source is not empty", pipeLazy([1], m.fromReadonlyArray(), m.throwIfEmpty(() => undefined), m.toReadonlyArray(), expectArrayEquals([1]))));
 export const toEnumerableTests = (m) => describe("toEnumerable", test("with an enumerable observable", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray(), m.toEnumerable(), Enumerable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))));
-export const toEnumerableObservableTests = (m) => describe("toEnumerableObservable", test("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toEnumerableObservable(), EnumerableObservable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))));
 export const toObservableTests = (m) => testAsync("toObservable", async () => {
     const scheduler = Scheduler.createHostScheduler();
     // FIXME: This should be a generic test

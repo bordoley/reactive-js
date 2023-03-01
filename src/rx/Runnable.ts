@@ -47,7 +47,6 @@ import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/R
 import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
 import { identity, returns } from "../functions.js";
 import { FromEnumerable } from "../ix.js";
-import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
 import {
   CombineLatest,
   Exhaust,
@@ -203,13 +202,14 @@ export const forkZip: ForkZip<RunnableLike>["forkZip"] =
 export const forkZipLatest: ForkZipLatest<RunnableLike>["forkZipLatest"] =
   Observable_forkZipLatest as ForkZipLatest<RunnableLike>["forkZipLatest"];
 
+// FIXME?
 export const fromEnumerable: FromEnumerable<
   RunnableLike,
   {
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["fromEnumerable"] = Enumerable_toRunnable;
+>["fromEnumerable"] = /*@__PURE__*/ returns(identity);
 
 export const fromIterable: FromIterable<
   RunnableLike,

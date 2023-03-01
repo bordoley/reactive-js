@@ -3,7 +3,6 @@ import {
   fromReadonlyArrayTests,
   keepTests,
   mapTests,
-  toEnumerableObservableTests,
   toEnumerableTests,
   toRunnableTests,
 } from "../../__tests__/operators.js";
@@ -18,6 +17,5 @@ testModule(
   keepTests(ReadonlyArray),
   mapTests(ReadonlyArray),
   toEnumerableTests<ReadonlyArrayLike>(ReadonlyArray),
-  toEnumerableObservableTests<ReadonlyArrayLike>(ReadonlyArray),
   toRunnableTests<ReadonlyArrayLike>(ReadonlyArray),
 );
