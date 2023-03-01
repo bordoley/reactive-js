@@ -1,8 +1,7 @@
 /// <reference types="./Observable.scan.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import StatefulContainer_scan from "../../../containers/StatefulContainer/__internal__/StatefulContainer.scan.js";
-import { error, none, pipe } from "../../../functions.js";
+import { error, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -37,6 +36,6 @@ const Observable_scan = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return pipe(createScanObserver, StatefulContainer_scan(Observable_liftEnumerableOperator));
+    return (reducer, initialValue) => pipe(createScanObserver, partial(reducer, initialValue), Observable_liftEnumerableOperator);
 })();
 export default Observable_scan;

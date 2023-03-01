@@ -10,8 +10,14 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ThrowIfEmpty } from "../../../containers.js";
-import StatefulContainer_throwIfEmpty from "../../../containers/StatefulContainer/__internal__/StatefulContainer.throwIfEmpty.js";
-import { Factory, Optional, error, none, pipe } from "../../../functions.js";
+import {
+  Factory,
+  Optional,
+  error,
+  none,
+  partial,
+  pipe,
+} from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -26,6 +32,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
+
 const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (<T>() => {
@@ -95,10 +102,12 @@ const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
       );
     })();
 
-    return pipe(
-      createThrowIfEmptyObserver,
-      StatefulContainer_throwIfEmpty(Observable_liftEnumerableOperator),
-    );
+    return ((factory: Factory<unknown>) =>
+      pipe(
+        createThrowIfEmptyObserver,
+        partial(factory),
+        Observable_liftEnumerableOperator,
+      )) as ThrowIfEmpty<ObservableLike>["throwIfEmpty"];
   })();
 
 export default Observable_throwIfEmpty;

@@ -8,8 +8,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { TakeLast } from "../../../containers.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
-import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeLast.js";
-import { pipe } from "../../../functions.js";
+import { partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -33,6 +32,7 @@ import {
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 import Observable_observeWith from "./Observable.observeWith.js";
+
 const Observable_takeLast: TakeLast<ObservableLike>["takeLast"] =
   /*@__PURE__*/ (<T>() => {
     const TakeLastObserverMixin_takeLastCount = Symbol(
@@ -97,11 +97,14 @@ const Observable_takeLast: TakeLast<ObservableLike>["takeLast"] =
       ),
     );
 
-    return pipe(
-      // FIXME: any cast
-      createTakeLastObserver as any,
-      StatefulContainer_takeLast(Observable_liftEnumerableOperator),
-    );
+    return (options: { readonly count?: number } = {}) => {
+      const { count = 1 } = options;
+      return pipe(
+        createTakeLastObserver,
+        partial(count),
+        Observable_liftEnumerableOperator,
+      );
+    };
   })();
 
 export default Observable_takeLast;

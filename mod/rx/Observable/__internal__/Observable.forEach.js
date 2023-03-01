@@ -1,8 +1,7 @@
 /// <reference types="./Observable.forEach.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import StatefulContainer_forEach from "../../../containers/StatefulContainer/__internal__/StatefulContainer.forEach.js";
-import { none, pipe } from "../../../functions.js";
+import { none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -26,6 +25,6 @@ const Observable_forEach = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return pipe(createForEachObserver, StatefulContainer_forEach(Observable_liftEnumerableOperator));
+    return ((effect) => pipe(createForEachObserver, partial(effect), Observable_liftEnumerableOperator));
 })();
 export default Observable_forEach;

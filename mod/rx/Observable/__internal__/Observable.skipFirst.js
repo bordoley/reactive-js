@@ -1,8 +1,7 @@
 /// <reference types="./Observable.skipFirst.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.skipFirst.js";
-import { pipe } from "../../../functions.js";
+import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -32,6 +31,10 @@ const Observable_skipFirst =
             },
         }));
     })();
-    return pipe(createSkipFirstObserver, StatefulContainer_skipFirst(Observable_liftEnumerableOperator));
+    return (options = {}) => {
+        const { count = 1 } = options;
+        const lifted = pipe(createSkipFirstObserver, partial(count), Observable_liftEnumerableOperator);
+        return obs => (count > 0 ? pipe(obs, lifted) : obs);
+    };
 })();
 export default Observable_skipFirst;

@@ -9,8 +9,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { SkipFirst } from "../../../containers.js";
-import StatefulContainer_skipFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.skipFirst.js";
-import { pipe } from "../../../functions.js";
+import { partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -85,10 +84,15 @@ const Observable_skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
       );
     })();
 
-    return pipe(
-      createSkipFirstObserver,
-      StatefulContainer_skipFirst(Observable_liftEnumerableOperator),
-    );
+    return (options: { readonly count?: number } = {}) => {
+      const { count = 1 } = options;
+      const lifted = pipe(
+        createSkipFirstObserver,
+        partial(count),
+        Observable_liftEnumerableOperator,
+      );
+      return obs => (count > 0 ? pipe(obs, lifted) : obs);
+    };
   })();
 
 export default Observable_skipFirst;

@@ -2,8 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
-import StatefulContainer_decodeWithCharset from "../../../containers/StatefulContainer/__internal__/StatefulContainer.decodeWithCharset.js";
-import { newInstance, none, pipe } from "../../../functions.js";
+import { newInstance, none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -47,6 +46,10 @@ const Observable_decodeWithCharset =
             }
         },
     }));
-    return pipe(createDecodeWithCharsetObserver, StatefulContainer_decodeWithCharset(Observable_liftEnumerableOperator));
+    return options => {
+        var _a;
+        const charset = (_a = options === null || options === void 0 ? void 0 : options.charset) !== null && _a !== void 0 ? _a : "utf-8";
+        return pipe(createDecodeWithCharsetObserver, partial(charset), Observable_liftEnumerableOperator);
+    };
 })();
 export default Observable_decodeWithCharset;

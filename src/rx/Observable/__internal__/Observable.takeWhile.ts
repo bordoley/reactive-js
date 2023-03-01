@@ -8,8 +8,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { TakeWhile } from "../../../containers.js";
-import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeWhile.js";
-import { Predicate, none, pipe } from "../../../functions.js";
+import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -22,6 +21,7 @@ import { DelegatingDisposableLike } from "../../../util/__internal__/util.intern
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
+
 const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
     const createTakeWhileObserver: (
@@ -102,12 +102,17 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
       );
     })();
 
-    return pipe(
-      createTakeWhileObserver,
-      StatefulContainer_takeWhile<ObservableLike, T>(
+    return (
+      predicate: Predicate<T>,
+      options: { readonly inclusive?: boolean } = {},
+    ) => {
+      const { inclusive = false } = options;
+      return pipe(
+        createTakeWhileObserver,
+        partial(predicate, inclusive),
         Observable_liftEnumerableOperator,
-      ),
-    );
+      );
+    };
   })();
 
 export default Observable_takeWhile;
