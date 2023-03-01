@@ -1,6 +1,6 @@
 /// <reference types="./Streamable.createActionReducer.d.ts" />
 
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import { pipe, returns, } from "../../../functions.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
@@ -10,6 +10,6 @@ import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal
 import Streamable_createLifted from "./Streamable.createLifted.js";
 const Streamable_createActionReducer = (reducer, initialState, options) => Streamable_createLifted(obs => Observable_create(observer => {
     const acc = initialState();
-    pipe(obs, Observable_scan(reducer, returns(acc)), Observable_mergeWith(pipe([acc], ReadonlyArray_toRunnableObservable())), Observable_distinctUntilChanged(options), ReactiveContainer_sinkInto(observer));
+    pipe(obs, Observable_scan(reducer, returns(acc)), Observable_mergeWith(pipe([acc], ReadonlyArray_toRunnable())), Observable_distinctUntilChanged(options), ReactiveContainer_sinkInto(observer));
 }));
 export default Streamable_createActionReducer;

@@ -9,7 +9,7 @@ import {
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { newInstance, pipe, returns } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
-import * as RunnableObservable from "../../rx/RunnableObservable.js";
+import * as Runnable from "../../rx/Runnable.js";
 import { PauseableState_paused } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as Flowable from "../../streaming/Flowable.js";
@@ -45,8 +45,8 @@ testModule(
 
         const src = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
-          ReadonlyArray.toRunnableObservable(),
-          RunnableObservable.toFlowable(),
+          ReadonlyArray.toRunnable(),
+          Runnable.toFlowable(),
         );
 
         const dest = pipe(
@@ -86,8 +86,8 @@ testModule(
 
         const src = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
-          ReadonlyArray.toRunnableObservable(),
-          RunnableObservable.toFlowable(),
+          ReadonlyArray.toRunnable(),
+          Runnable.toFlowable(),
         );
 
         const dest = pipe(
@@ -175,8 +175,8 @@ testModule(
 
       const acc = await pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
-        ReadonlyArray.toRunnableObservable(),
-        RunnableObservable.toFlowable(),
+        ReadonlyArray.toRunnable(),
+        Runnable.toFlowable(),
         gzip(),
         gunzip(),
         Flowable.toObservable(),

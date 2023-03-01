@@ -5,7 +5,7 @@ import { alwaysFalse, alwaysTrue, arrayEquality, increment, none, pipe, pipeLazy
 import * as Enumerable from "../ix/Enumerable.js";
 import * as EnumerableObservable from "../rx/EnumerableObservable.js";
 import * as Observable from "../rx/Observable.js";
-import * as RunnableObservable from "../rx/RunnableObservable.js";
+import * as Runnable from "../rx/Runnable.js";
 import { __now } from "../scheduling/Continuation.js";
 import * as Scheduler from "../scheduling/Scheduler.js";
 import * as Disposable from "../util/Disposable.js";
@@ -165,7 +165,7 @@ export const toObservableTests = (m) => testAsync("toObservable", async () => {
         pipe(scheduler, Disposable.dispose());
     }
 });
-export const toRunnableObservableTests = (m) => describe("toRunnableObservable", test("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toRunnableObservable(), RunnableObservable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("with delay", pipeLazy([9, 9, 9, 9], m.fromReadonlyArray(), m.toRunnableObservable({ delay: 1 }), RunnableObservable.map(_ => __now()), RunnableObservable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3]))));
+export const toRunnableTests = (m) => describe("toRunnable", test("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("with delay", pipeLazy([9, 9, 9, 9], m.fromReadonlyArray(), m.toRunnable({ delay: 1 }), Runnable.map(_ => __now()), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3]))));
 export const zipTests = (m) => describe("zip", test("when all inputs are the same length", pipeLazy(m.zip(pipe([1, 2, 3, 4, 5], m.fromReadonlyArray()), pipe([5, 4, 3, 2, 1], m.fromReadonlyArray())), m.toReadonlyArray(), expectArrayEquals([
     [1, 5],
     [2, 4],

@@ -44,18 +44,18 @@ import {
   ZipWith,
 } from "../containers.js";
 import Iterable_toEnumerableObservable from "../containers/Iterable/__internal__/Iterable.toEnumerableObservable.js";
-import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
-import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
 import { compose, identity, returns } from "../functions.js";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
 import Enumerable_toEnumerableObservable from "../ix/Enumerable/__internal__/Enumerable.toEnumerableObservable.js";
-import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
+import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
 import {
   EnumerableObservableLike,
   Retry,
   ScanAsync,
   ToObservable,
-  ToRunnableObservable,
+  ToRunnable,
 } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError.js";
@@ -101,8 +101,8 @@ import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwI
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
-import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
-import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.js";
+import Runnable_toFlowable from "./Runnable/__internal__/Runnable.toFlowable.js";
+import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 
 export const buffer: Buffer<EnumerableObservableLike>["buffer"] =
   Observable_buffer as Buffer<EnumerableObservableLike>["buffer"];
@@ -172,10 +172,10 @@ export const fromIterable: FromIterable<EnumerableObservableLike>["fromIterable"
   Iterable_toEnumerableObservable;
 
 export const fromReadonlyArray: FromReadonlyArray<EnumerableObservableLike>["fromReadonlyArray"] =
-  ReadonlyArray_toRunnableObservable as FromReadonlyArray<EnumerableObservableLike>["fromReadonlyArray"];
+  ReadonlyArray_toRunnable as FromReadonlyArray<EnumerableObservableLike>["fromReadonlyArray"];
 
 export const fromSequence: FromSequence<EnumerableObservableLike>["fromSequence"] =
-  Sequence_toRunnableObservable as FromSequence<EnumerableObservableLike>["fromSequence"];
+  Sequence_toRunnable as FromSequence<EnumerableObservableLike>["fromSequence"];
 
 export const generate: Generate<EnumerableObservableLike>["generate"] =
   Observable_generate as Generate<EnumerableObservableLike>["generate"];
@@ -243,7 +243,7 @@ export const toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"
   EnumerableObservable_toEnumerable;
 
 export const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowable"] =
-  RunnableObservable_toFlowable;
+  Runnable_toFlowable;
 
 export const toIterable: ToIterable<EnumerableObservableLike>["toIterable"] =
   EnumerableObservable_toIterable;
@@ -252,16 +252,15 @@ export const toObservable: ToObservable<EnumerableObservableLike>["toObservable"
   /*@__PURE__*/ returns(identity);
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"] =
-  RunnableObservable_toReadonlyArray as ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"];
+  Runnable_toReadonlyArray as ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"];
 
-export const toRunnableObservable: ToRunnableObservable<
+export const toRunnable: ToRunnable<
   EnumerableObservableLike,
   {
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["toRunnableObservable"] = o =>
-  compose(toEnumerable(), Enumerable_toRunnableObservable(o));
+>["toRunnable"] = o => compose(toEnumerable(), Enumerable_toRunnable(o));
 
 export const zip: Zip<EnumerableObservableLike>["zip"] =
   Observable_zip as Zip<EnumerableObservableLike>["zip"];

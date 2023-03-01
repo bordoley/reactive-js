@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArray.toFlowable.d.ts" />
 
 import { compose } from "../../../functions.js";
-import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
-import ReadonlyArray_toRunnableObservable from "./ReadonlyArray.toRunnableObservable.js";
-const ReadonlyArray_toFlowable = options => compose(ReadonlyArray_toRunnableObservable(options), RunnableObservable_toFlowable());
+import Runnable_toFlowable from "../../../rx/Runnable/__internal__/Runnable.toFlowable.js";
+import ReadonlyArray_toRunnable from "./ReadonlyArray.toRunnable.js";
+const ReadonlyArray_toFlowable = options => compose(ReadonlyArray_toRunnable(options), Runnable_toFlowable());
 export default ReadonlyArray_toFlowable;

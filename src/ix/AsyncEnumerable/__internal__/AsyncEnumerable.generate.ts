@@ -1,5 +1,5 @@
 import { Generate } from "../../../containers.js";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import { Factory, Updater, pipe } from "../../../functions.js";
 import { AsyncEnumerableLike } from "../../../ix.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
@@ -19,12 +19,7 @@ const AsyncEnumerable_generate: Generate<
   const asyncGeneratorScanner =
     <T>(generator: Updater<T>, options?: { readonly delay?: number }) =>
     (acc: T, _: unknown) =>
-      pipe(
-        acc,
-        generator,
-        x => [x],
-        ReadonlyArray_toRunnableObservable<T>(options),
-      );
+      pipe(acc, generator, x => [x], ReadonlyArray_toRunnable<T>(options));
 
   return <T>(
     generator: Updater<T>,

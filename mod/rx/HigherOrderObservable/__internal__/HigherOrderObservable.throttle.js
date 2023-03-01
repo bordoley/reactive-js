@@ -1,7 +1,7 @@
 /// <reference types="./HigherOrderObservable.throttle.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import { isNumber, none, partial, pipe, } from "../../../functions.js";
 import { SinkLike_notify, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
@@ -19,7 +19,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
-import RunnableObservable_lift from "../../RunnableObservable/__internal__/RunnableObservable.lift.js";
+import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 const createThrottleObserver = (() => {
     const typedObserverMixin = Observer_mixin();
     const ThrottleObserver_value = Symbol("ThrottleObserver_value");
@@ -50,7 +50,7 @@ const createThrottleObserver = (() => {
             if (instance[ThrottleObserver_mode] !== ThrottleMode_first &&
                 instance[ThrottleObserver_hasValue] &&
                 !Disposable_isDisposed(delegate)) {
-                pipe([instance[ThrottleObserver_value]], ReadonlyArray_toRunnableObservable(), ReactiveContainer_sinkInto(delegate));
+                pipe([instance[ThrottleObserver_value]], ReadonlyArray_toRunnable(), ReactiveContainer_sinkInto(delegate));
             }
         }));
         return instance;
@@ -91,7 +91,7 @@ const HigherOrderObservable_throttle = (fromReadonlyArray, lift) => (duration, o
     return throttleImpl(isNumber(duration)
         ? // Note: This is only safe because we can control all the callers and know
             // all the valid subtypes of ObservableLike
-            RunnableObservable_lift
+            Runnable_lift
         : lift, durationFunction, mode);
 };
 export default HigherOrderObservable_throttle;

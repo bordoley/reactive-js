@@ -9,7 +9,7 @@ import Observable_map from "../../../rx/Observable/__internal__/Observable.map.j
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
-import ReadonlyArray_toRunnableObservable from "./ReadonlyArray.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "./ReadonlyArray.toRunnable.js";
 const ReadonlyArray_toAsyncEnumerable = 
 /*@__PURE__*/
 ReadonlyArray_toContainer((array, start, count, options) => {
@@ -22,7 +22,7 @@ ReadonlyArray_toContainer((array, start, count, options) => {
     return create(count >= 0
         ? Observable_scan(increment, returns(start - 1))
         : Observable_scan(decrement, returns(start + 1)), (delay !== null && delay !== void 0 ? delay : 0 > 0)
-        ? Observable_concatMap((i) => pipe([array[i]], ReadonlyArray_toRunnableObservable(options)))
+        ? Observable_concatMap((i) => pipe([array[i]], ReadonlyArray_toRunnable(options)))
         : Observable_map((i) => array[i]), Observable_takeFirst({ count: abs(count) }));
 });
 export default ReadonlyArray_toAsyncEnumerable;

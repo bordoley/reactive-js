@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`RunnableObservableLike`](rx.RunnableObservableLike.md)<`T`\>
+- [`RunnableLike`](rx.RunnableLike.md)<`T`\>
 
   ↳ **`EnumerableObservableLike`**
 
@@ -31,7 +31,7 @@
 
 #### Overrides
 
-[RunnableObservableLike](rx.RunnableObservableLike.md).[[ContainerLike_type]](rx.RunnableObservableLike.md#[containerlike_type])
+[RunnableLike](rx.RunnableLike.md).[[ContainerLike_type]](rx.RunnableLike.md#[containerlike_type])
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 #### Overrides
 
-RunnableObservableLike.\_\_@ObservableLike\_isEnumerable@23905
+RunnableLike.\_\_@ObservableLike\_isEnumerable@23905

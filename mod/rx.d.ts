@@ -60,15 +60,15 @@ export interface ObservableLike<T = unknown> extends ReactiveContainerLike<Obser
  * @noInheritDoc
  * @category Container
  */
-export interface RunnableObservableLike<T = unknown> extends ObservableLike<T> {
-    readonly [ContainerLike_type]?: RunnableObservableLike<this[typeof ContainerLike_T]>;
+export interface RunnableLike<T = unknown> extends ObservableLike<T> {
+    readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isRunnable]: true;
 }
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface EnumerableObservableLike<T = unknown> extends RunnableObservableLike<T> {
+export interface EnumerableObservableLike<T = unknown> extends RunnableLike<T> {
     readonly [ContainerLike_type]?: EnumerableObservableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: true;
 }
@@ -193,11 +193,11 @@ export interface FromEnumerableObservable<C extends ContainerLike, O = never> ex
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromRunnableObservable<C extends ContainerLike, O = never> extends Container<C> {
+export interface FromRunnable<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * @category Constructor
      */
-    fromRunnableObservable: <T>(options?: O) => Function1<RunnableObservableLike<T>, ContainerOf<C, T>>;
+    fromRunnable: <T>(options?: O) => Function1<RunnableLike<T>, ContainerOf<C, T>>;
 }
 /**
  * @noInheritDoc
@@ -374,11 +374,11 @@ export interface ToObservable<C extends ContainerLike, O = never> extends Contai
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToRunnableObservable<C extends ContainerLike, O = never> extends Container<C> {
+export interface ToRunnable<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * @category Converter
      */
-    toRunnableObservable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableObservableLike<T>>;
+    toRunnable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 /**
  * @noInheritDoc

@@ -21,7 +21,7 @@ import {
   toEnumerableObservableTests,
   toEnumerableTests,
   toObservableTests,
-  toRunnableObservableTests,
+  toRunnableTests,
   zipTests,
   zipWithTests,
 } from "../../__tests__/operators.js";
@@ -52,7 +52,7 @@ testModule(
   toEnumerableTests<SequenceLike>(Sequence),
   toEnumerableObservableTests<SequenceLike>(Sequence),
   toObservableTests<SequenceLike>(Sequence),
-  toRunnableObservableTests<SequenceLike>(Sequence),
+  toRunnableTests<SequenceLike>(Sequence),
   takeWhileTests(Sequence),
   zipTests<SequenceLike>(Sequence),
   zipWithTests<SequenceLike>(Sequence),

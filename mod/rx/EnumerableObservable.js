@@ -1,11 +1,11 @@
 /// <reference types="./EnumerableObservable.d.ts" />
 
 import Iterable_toEnumerableObservable from "../containers/Iterable/__internal__/Iterable.toEnumerableObservable.js";
-import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
-import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
 import { compose, identity, returns } from "../functions.js";
 import Enumerable_toEnumerableObservable from "../ix/Enumerable/__internal__/Enumerable.toEnumerableObservable.js";
-import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
+import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
 import EnumerableObservable_catchError from "./EnumerableObservable/__internal__/EnumerableObservable.catchError.js";
 import EnumerableObservable_concatAll from "./EnumerableObservable/__internal__/EnumerableObservable.concatAll.js";
 import EnumerableObservable_concatMap from "./EnumerableObservable/__internal__/EnumerableObservable.concatMap.js";
@@ -49,8 +49,8 @@ import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwI
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
-import RunnableObservable_toFlowable from "./RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
-import RunnableObservable_toReadonlyArray from "./RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.js";
+import Runnable_toFlowable from "./Runnable/__internal__/Runnable.toFlowable.js";
+import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 export const buffer = Observable_buffer;
 export const catchError = EnumerableObservable_catchError;
 export const compute = Observable_compute;
@@ -72,8 +72,8 @@ export const forkConcat = Observable_forkConcat;
 export const forkZip = Observable_forkZip;
 export const fromEnumerable = Enumerable_toEnumerableObservable;
 export const fromIterable = Iterable_toEnumerableObservable;
-export const fromReadonlyArray = ReadonlyArray_toRunnableObservable;
-export const fromSequence = Sequence_toRunnableObservable;
+export const fromReadonlyArray = ReadonlyArray_toRunnable;
+export const fromSequence = Sequence_toRunnable;
 export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;
@@ -95,11 +95,11 @@ export const throwIfEmpty = Observable_throwIfEmpty;
 export const throws = Observable_throws;
 export const toAsyncEnumerable = EnumerableObservable_toAsyncEnumerable;
 export const toEnumerable = EnumerableObservable_toEnumerable;
-export const toFlowable = RunnableObservable_toFlowable;
+export const toFlowable = Runnable_toFlowable;
 export const toIterable = EnumerableObservable_toIterable;
 export const toObservable = 
 /*@__PURE__*/ returns(identity);
-export const toReadonlyArray = RunnableObservable_toReadonlyArray;
-export const toRunnableObservable = o => compose(toEnumerable(), Enumerable_toRunnableObservable(o));
+export const toReadonlyArray = Runnable_toReadonlyArray;
+export const toRunnable = o => compose(toEnumerable(), Enumerable_toRunnable(o));
 export const zip = Observable_zip;
 export const zipWith = Observable_zipWith;

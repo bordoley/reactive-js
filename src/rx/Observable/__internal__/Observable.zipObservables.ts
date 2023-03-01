@@ -23,7 +23,7 @@ import {
   SourceLike_move,
 } from "../../../ix.js";
 import Enumerable_enumerate from "../../../ix/Enumerable/__internal__/Enumerable.enumerate.js";
-import Enumerable_toRunnableObservable from "../../../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
+import Enumerable_toRunnable from "../../../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
 import Enumerable_zip from "../../../ix/Enumerable/__internal__/Enumerable.zip.js";
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
@@ -51,7 +51,7 @@ import EnumerableObservable_toEnumerable from "../../EnumerableObservable/__inte
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create.js";
+import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
@@ -256,10 +256,10 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
                 ...v: any[]
               ) => EnumerableLike<any[]>
             )(...enumerables),
-          Enumerable_toRunnableObservable(),
+          Enumerable_toRunnable(),
         )
       : isRunnable
-      ? RunnableObservable_create(onSink(observables))
+      ? Runnable_create(onSink(observables))
       : Observable_create(onSink(observables));
   };
 })();

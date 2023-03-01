@@ -37,11 +37,7 @@ import Iterable_toEnumerable from "../containers/Iterable/__internal__/Iterable.
 import ReadonlyArray_toEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toEnumerable.js";
 import { identity, returns } from "../functions.js";
 import { EnumerableLike, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
-import {
-  ToEnumerableObservable,
-  ToObservable,
-  ToRunnableObservable,
-} from "../rx.js";
+import { ToEnumerableObservable, ToObservable, ToRunnable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer.js";
 import Enumerable_compute from "./Enumerable/__internal__/Enumerable.compute.js";
@@ -76,7 +72,7 @@ import Enumerable_toEnumerableObservable from "./Enumerable/__internal__/Enumera
 import Enumerable_toFlowable from "./Enumerable/__internal__/Enumerable.toFlowable.js";
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
-import Enumerable_toRunnableObservable from "./Enumerable/__internal__/Enumerable.toRunnableObservable.js";
+import Enumerable_toRunnable from "./Enumerable/__internal__/Enumerable.toRunnable.js";
 import Enumerable_zip from "./Enumerable/__internal__/Enumerable.zip.js";
 import Enumerable_zipWith from "./Enumerable/__internal__/Enumerable.zipWith.js";
 
@@ -185,18 +181,18 @@ export const toObservable: ToObservable<
     delay?: number;
     delayStart?: boolean;
   }
->["toObservable"] = Enumerable_toRunnableObservable;
+>["toObservable"] = Enumerable_toRunnable;
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
   Enumerable_toReadonlyArray;
 
-export const toRunnableObservable: ToRunnableObservable<
+export const toRunnable: ToRunnable<
   EnumerableLike,
   {
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["toRunnableObservable"] = Enumerable_toRunnableObservable;
+>["toRunnable"] = Enumerable_toRunnable;
 
 export const zip: Zip<EnumerableLike>["zip"] = Enumerable_zip;
 

@@ -18,7 +18,7 @@ import {
 import {
   EnumerableObservableLike,
   ObservableLike,
-  RunnableObservableLike,
+  RunnableLike,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { StreamableLike_stream } from "../../../streaming.js";
@@ -32,7 +32,7 @@ interface AsyncEnumerable_CreateBase {
     isRunnable: false,
   ): AsyncEnumerableLike<A>;
   <A>(
-    op1: ContainerOperator<RunnableObservableLike, void, A>,
+    op1: ContainerOperator<RunnableLike, void, A>,
     isEnumerable: false,
     isRunnable: true,
   ): RunnableAsyncEnumerableLike<A>;

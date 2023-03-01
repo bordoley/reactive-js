@@ -12,7 +12,7 @@ import {
   FromEnumerableObservable,
   ToEnumerableObservable,
   ToObservable,
-  ToRunnableObservable,
+  ToRunnable,
 } from "../rx.js";
 import EnumerableObservable_toIterable from "../rx/EnumerableObservable/__internal__/EnumerableObservable.toIterable.js";
 import { ToFlowable } from "../streaming.js";
@@ -21,7 +21,7 @@ import Iterable_toEnumerable from "./Iterable/__internal__/Iterable.toEnumerable
 import Iterable_toEnumerableObservable from "./Iterable/__internal__/Iterable.toEnumerableObservable.js";
 import Iterable_toFlowable from "./Iterable/__internal__/Iterable.toFlowable.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
-import Iterable_toRunnableObservable from "./Iterable/__internal__/Iterable.toRunnableObservable.js";
+import Iterable_toRunnable from "./Iterable/__internal__/Iterable.toRunnable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable.js";
 
@@ -63,15 +63,15 @@ export const toObservable: ToObservable<
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["toObservable"] = Iterable_toRunnableObservable;
+>["toObservable"] = Iterable_toRunnable;
 
 export const toReadonlyArray: ToReadonlyArray<IterableLike>["toReadonlyArray"] =
   Iterable_toReadonlyArray;
 
-export const toRunnableObservable: ToRunnableObservable<
+export const toRunnable: ToRunnable<
   IterableLike,
   {
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["toRunnableObservable"] = Iterable_toRunnableObservable;
+>["toRunnable"] = Iterable_toRunnable;

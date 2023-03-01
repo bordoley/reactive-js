@@ -1,8 +1,8 @@
 import { IterableLike } from "../../../containers.js";
 import { compose } from "../../../functions.js";
-import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
+import Runnable_toFlowable from "../../../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import { ToFlowable } from "../../../streaming.js";
-import Iterable_toRunnableObservable from "./Iterable.toRunnableObservable.js";
+import Iterable_toRunnable from "./Iterable.toRunnable.js";
 
 const Iterable_toFlowable: ToFlowable<
   IterableLike,
@@ -11,9 +11,6 @@ const Iterable_toFlowable: ToFlowable<
     readonly delayStart?: boolean;
   }
 >["toFlowable"] = options =>
-  compose(
-    Iterable_toRunnableObservable(options),
-    RunnableObservable_toFlowable(),
-  );
+  compose(Iterable_toRunnable(options), Runnable_toFlowable());
 
 export default Iterable_toFlowable;

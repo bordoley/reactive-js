@@ -7,7 +7,7 @@ import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js"
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
-import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create.js";
+import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 const Observable_generate = (generator, initialValue, options) => {
     const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSink = (observer) => {
@@ -22,7 +22,7 @@ const Observable_generate = (generator, initialValue, options) => {
         pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
     };
     return hasDelay(options)
-        ? RunnableObservable_create(onSink)
+        ? Runnable_create(onSink)
         : EnumerableObservable_create(onSink);
 };
 export default Observable_generate;

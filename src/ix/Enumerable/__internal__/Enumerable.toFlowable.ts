@@ -1,8 +1,8 @@
 import { compose } from "../../../functions.js";
 import { EnumerableLike } from "../../../ix.js";
-import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
+import Runnable_toFlowable from "../../../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import { ToFlowable } from "../../../streaming.js";
-import Enumerable_toRunnableObservable from "./Enumerable.toRunnableObservable.js";
+import Enumerable_toRunnable from "./Enumerable.toRunnable.js";
 
 const Enumerable_toFlowable: ToFlowable<
   EnumerableLike,
@@ -11,9 +11,6 @@ const Enumerable_toFlowable: ToFlowable<
     readonly delayStart?: boolean;
   }
 >["toFlowable"] = options =>
-  compose(
-    Enumerable_toRunnableObservable(options),
-    RunnableObservable_toFlowable(),
-  );
+  compose(Enumerable_toRunnable(options), Runnable_toFlowable());
 
 export default Enumerable_toFlowable;

@@ -1,7 +1,7 @@
 /// <reference types="./Observable.decodeWithCharset.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import StatefulContainer_decodeWithCharset from "../../../containers/StatefulContainer/__internal__/StatefulContainer.decodeWithCharset.js";
 import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
@@ -11,7 +11,7 @@ import Sink_decodeWithCharsetMixin from "../../Sink/__internal__/Sink.decodeWith
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_decodeWithCharset = 
 /*@__PURE__*/ (() => {
-    const typedDecodeWithCharsetMixin = Sink_decodeWithCharsetMixin(ReadonlyArray_toRunnableObservable());
+    const typedDecodeWithCharsetMixin = Sink_decodeWithCharsetMixin(ReadonlyArray_toRunnable());
     const typedObserverMixin = Observer_mixin();
     const createDecodeWithCharsetObserver = createInstanceFactory(mix(include(typedObserverMixin, typedDecodeWithCharsetMixin), function DecodeWithCharsetObserver(instance, delegate, charset) {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
