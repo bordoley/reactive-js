@@ -6,11 +6,11 @@
 
 ### Container Interfaces
 
+- [AsyncEnumerableLike](../interfaces/ix.AsyncEnumerableLike.md)
 - [EnumerableLike](../interfaces/ix.EnumerableLike.md)
 
 ### Other Interfaces
 
-- [AsyncEnumeratorLike](../interfaces/ix.AsyncEnumeratorLike.md)
 - [EnumeratorLike](../interfaces/ix.EnumeratorLike.md)
 
 ### TypeClass Interfaces

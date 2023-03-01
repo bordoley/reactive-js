@@ -18,6 +18,8 @@ Interface for iterating a Container of items.
 
   ↳ **`EnumerableLike`**
 
+  ↳↳ [`AsyncEnumerableLike`](ix.AsyncEnumerableLike.md)
+
 ## Table of contents
 
 ### Properties

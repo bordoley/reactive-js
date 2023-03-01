@@ -20,6 +20,7 @@ Reactive-JS
 - [integrations/web](modules/integrations_web.md)
 - [integrations/web/WindowLocationStream](modules/integrations_web_WindowLocationStream.md)
 - [ix](modules/ix.md)
+- [ix/AsyncEnumerable](modules/ix_AsyncEnumerable.md)
 - [ix/Enumerable](modules/ix_Enumerable.md)
 - [ix/Enumerator](modules/ix_Enumerator.md)
 - [rx](modules/rx.md)
