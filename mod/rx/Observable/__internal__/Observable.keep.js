@@ -1,22 +1,31 @@
 /// <reference types="./Observable.keep.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
-import { pipe } from "../../../functions.js";
-import { ObserverLike_scheduler, } from "../../../rx.js";
-import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
+import { none, pipe } from "../../../functions.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_keepMixin from "../../Sink/__internal__/Sink.keepMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_keep = /*@__PURE__*/ (() => {
     const createKeepObserver = (() => {
-        const typedKeepSinkMixin = Sink_keepMixin();
-        const typedObserverMixin = Observer_mixin();
-        return createInstanceFactory(mix(include(typedObserverMixin, typedKeepSinkMixin), function KeepObserver(instance, delegate, predicate) {
-            init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-            init(typedKeepSinkMixin, instance, delegate, predicate);
+        const KeepSinkMixin_predicate = Symbol("KeepSinkMixin_predicate");
+        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function KeepSinkMixin(instance, delegate, predicate) {
+            init(Disposable_delegatingMixin(), instance, delegate);
+            init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
+            instance[KeepSinkMixin_predicate] = predicate;
             return instance;
-        }, props({}), Observer_decorateNotifyForDev(typedKeepSinkMixin)));
+        }, props({
+            [KeepSinkMixin_predicate]: none,
+        }), {
+            [ObserverLike_notify](next) {
+                Observer_assertState(this);
+                if (this[KeepSinkMixin_predicate](next)) {
+                    this[DelegatingLike_delegate][ObserverLike_notify](next);
+                }
+            },
+        }));
     })();
     return pipe(createKeepObserver, StatefulContainer_keep(Observable_liftEnumerableOperator));
 })();

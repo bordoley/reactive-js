@@ -82,13 +82,13 @@ ___
 
 ### [ObservableLike\_observe]
 
-▸ **[ObservableLike_observe]**(`sink`): `void`
+▸ **[ObservableLike_observe]**(`observer`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`ObserverLike`](rx.ObserverLike.md)<`T`\> |
+| `observer` | [`ObserverLike`](rx.ObserverLike.md)<`T`\> |
 
 #### Returns
 

@@ -1,4 +1,6 @@
 import {
+  DelegatingLike_delegate,
+  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -7,15 +9,18 @@ import {
 } from "../../../__internal__/mixins.js";
 import { TakeWhile } from "../../../containers.js";
 import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeWhile.js";
-import { Predicate, pipe } from "../../../functions.js";
+import { Predicate, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
-import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_takeWhileMixin from "../../Sink/__internal__/Sink.takeWhileMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
@@ -24,35 +29,72 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
       predicate: Predicate<T>,
       inclusive: boolean,
     ) => ObserverLike<T> = (<T>() => {
-      const typedTakeWhileSinkMixin = Sink_takeWhileMixin<T>();
-      const typedObserverMixin = Observer_mixin<T>();
+      const TakeWhileSinkMixin_predicate = Symbol(
+        "TakeWhileSinkMixin_predicate",
+      );
+      const TakeWhileSinkMixin_inclusive = Symbol(
+        "TakeWhileSinkMixin_inclusive",
+      );
+
+      type TProperties = {
+        readonly [TakeWhileSinkMixin_predicate]: Predicate<T>;
+        readonly [TakeWhileSinkMixin_inclusive]: boolean;
+      };
 
       return createInstanceFactory(
         mix(
-          include(typedObserverMixin, typedTakeWhileSinkMixin),
-          function TakeWhileObserver(
-            instance: unknown,
+          include(
+            Disposable_delegatingMixin<ObserverLike<T>>(),
+            Observer_mixin<T>(),
+          ),
+          function TakeWhileSinkMixin(
+            instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+              Mutable<TProperties>,
             delegate: ObserverLike<T>,
             predicate: Predicate<T>,
             inclusive: boolean,
           ): ObserverLike<T> {
             init(
-              typedObserverMixin,
+              Disposable_delegatingMixin<ObserverLike<T>>(),
+              instance,
+              delegate,
+            );
+            init(
+              Observer_mixin<T>(),
               instance,
               delegate[ObserverLike_scheduler],
             );
-            init(
-              typedTakeWhileSinkMixin,
-              instance,
-              delegate,
-              predicate,
-              inclusive,
-            );
+
+            instance[TakeWhileSinkMixin_predicate] = predicate;
+            instance[TakeWhileSinkMixin_inclusive] = inclusive;
 
             return instance;
           },
-          props<unknown>({}),
-          Observer_decorateNotifyForDev(typedTakeWhileSinkMixin),
+          props<TProperties>({
+            [TakeWhileSinkMixin_predicate]: none,
+            [TakeWhileSinkMixin_inclusive]: none,
+          }),
+          {
+            [ObserverLike_notify](
+              this: TProperties &
+                DelegatingDisposableLike<ObserverLike<T>> &
+                ObserverLike<T>,
+              next: T,
+            ) {
+              Observer_assertState(this);
+
+              const satisfiesPredicate =
+                this[TakeWhileSinkMixin_predicate](next);
+
+              if (satisfiesPredicate || this[TakeWhileSinkMixin_inclusive]) {
+                this[DelegatingLike_delegate][ObserverLike_notify](next);
+              }
+
+              if (!satisfiesPredicate) {
+                pipe(this, Disposable_dispose());
+              }
+            },
+          },
         ),
       );
     })();

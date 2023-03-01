@@ -20,7 +20,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TSink` | extends [`SinkLike`](../interfaces/rx.SinkLike.md)<`T`, `TSink`\> |
+| `TSink` | extends [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`, `TSink`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -49,7 +49,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`SinkLike`](../interfaces/rx.SinkLike.md)<`T`\> |
+| `sink` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
 
 #### Returns
 

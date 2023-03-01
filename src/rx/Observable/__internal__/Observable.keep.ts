@@ -1,4 +1,7 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -7,39 +10,61 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Keep } from "../../../containers.js";
 import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
-import { Predicate, pipe } from "../../../functions.js";
+import { Predicate, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
-import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_keepMixin from "../../Sink/__internal__/Sink.keepMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const createKeepObserver: <T>(
     delegate: ObserverLike<T>,
     predicate: Predicate<T>,
   ) => ObserverLike<T> = (<T>() => {
-    const typedKeepSinkMixin = Sink_keepMixin<T>();
-    const typedObserverMixin = Observer_mixin<T>();
+    const KeepSinkMixin_predicate = Symbol("KeepSinkMixin_predicate");
+
+    type TProperties = {
+      readonly [KeepSinkMixin_predicate]: Predicate<T>;
+    };
 
     return createInstanceFactory(
       mix(
-        include(typedObserverMixin, typedKeepSinkMixin),
-        function KeepObserver(
-          instance: unknown,
+        include(Disposable_delegatingMixin(), Observer_mixin<T>()),
+        function KeepSinkMixin(
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+            Mutable<TProperties>,
           delegate: ObserverLike<T>,
           predicate: Predicate<T>,
         ): ObserverLike<T> {
-          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-          init(typedKeepSinkMixin, instance, delegate, predicate);
+          init(Disposable_delegatingMixin(), instance, delegate);
+          init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
+
+          instance[KeepSinkMixin_predicate] = predicate;
 
           return instance;
         },
-        props<unknown>({}),
-        Observer_decorateNotifyForDev(typedKeepSinkMixin),
+        props<TProperties>({
+          [KeepSinkMixin_predicate]: none,
+        }),
+        {
+          [ObserverLike_notify](
+            this: TProperties &
+              DelegatingLike<ObserverLike<T>> &
+              ObserverLike<T>,
+            next: T,
+          ) {
+            Observer_assertState(this);
+
+            if (this[KeepSinkMixin_predicate](next)) {
+              this[DelegatingLike_delegate][ObserverLike_notify](next);
+            }
+          },
+        },
       ),
     );
   })();
