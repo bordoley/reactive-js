@@ -43,9 +43,9 @@ import {
   Zip,
   ZipWith,
 } from "../containers.js";
-import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.toRunnable.js";
-import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
-import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
+import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
+import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import { identity, returns } from "../functions.js";
 import { EnumerableLike, ToEnumerable } from "../ix.js";
 import Enumerable_catchError from "../ix/Enumerable/__internal__/Enumerable.catchError.js";
@@ -156,13 +156,13 @@ export const forkZip: ForkZip<EnumerableLike>["forkZip"] =
   Observable_forkZip as ForkZip<EnumerableLike>["forkZip"];
 
 export const fromIterable: FromIterable<EnumerableLike>["fromIterable"] =
-  Iterable_toRunnable as FromIterable<EnumerableLike>["fromIterable"];
+  Iterable_toObservable;
 
 export const fromReadonlyArray: FromReadonlyArray<EnumerableLike>["fromReadonlyArray"] =
-  ReadonlyArray_toRunnable as FromReadonlyArray<EnumerableLike>["fromReadonlyArray"];
+  ReadonlyArray_toObservable;
 
 export const fromSequence: FromSequence<EnumerableLike>["fromSequence"] =
-  Sequence_toRunnable as FromSequence<EnumerableLike>["fromSequence"];
+  Sequence_toObservable;
 
 export const generate: Generate<EnumerableLike>["generate"] =
   Observable_generate as Generate<EnumerableLike>["generate"];

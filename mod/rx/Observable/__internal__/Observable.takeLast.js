@@ -1,7 +1,7 @@
 /// <reference types="./Observable.takeLast.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { QueueLike_count, QueueLike_push, } from "../../../util.js";
@@ -23,7 +23,7 @@ const Observable_takeLast =
         init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
         instance[TakeLastObserverMixin_takeLastCount] = takeLastCount;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            pipe(instance, IndexedQueue_toReadonlyArray(), ReadonlyArray_toRunnable(), Observable_observeWith(delegate));
+            pipe(instance, IndexedQueue_toReadonlyArray(), ReadonlyArray_toObservable(), Observable_observeWith(delegate));
         }));
         return instance;
     }, props({

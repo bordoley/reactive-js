@@ -1,8 +1,8 @@
 /// <reference types="./Runnable.d.ts" />
 
-import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.toRunnable.js";
-import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
-import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
+import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
+import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import { identity, returns } from "../functions.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
@@ -92,9 +92,9 @@ export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
 // FIXME?
 export const fromEnumerable = /*@__PURE__*/ returns(identity);
-export const fromIterable = Iterable_toRunnable;
-export const fromReadonlyArray = ReadonlyArray_toRunnable;
-export const fromSequence = Sequence_toRunnable;
+export const fromIterable = Iterable_toObservable;
+export const fromReadonlyArray = ReadonlyArray_toObservable;
+export const fromSequence = Sequence_toObservable;
 export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;

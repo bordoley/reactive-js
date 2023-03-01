@@ -1,7 +1,7 @@
 /// <reference types="./Observable.reduce.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -27,7 +27,7 @@ const Observable_reduce = /*@__PURE__*/ (() => {
             pipe(instance, Disposable_dispose(error(e)));
         }
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            pipe([instance[ReduceObserverMixin_acc]], ReadonlyArray_toRunnable(), Observable_observeWith(delegate));
+            pipe([instance[ReduceObserverMixin_acc]], ReadonlyArray_toObservable(), Observable_observeWith(delegate));
         }));
         return instance;
     }, props({

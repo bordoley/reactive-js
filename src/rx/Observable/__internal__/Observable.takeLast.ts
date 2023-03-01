@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { TakeLast } from "../../../containers.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -69,7 +69,7 @@ const Observable_takeLast: TakeLast<ObservableLike>["takeLast"] =
               pipe(
                 instance,
                 IndexedQueue_toReadonlyArray<T>(),
-                ReadonlyArray_toRunnable(),
+                ReadonlyArray_toObservable(),
                 Observable_observeWith(delegate),
               );
             }),

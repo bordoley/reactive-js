@@ -9,7 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { Predicate, none, pipe } from "../../../functions.js";
 import {
   ObserverLike,
@@ -63,7 +63,7 @@ const Observer_satisfyMixin: <T>(
           if (!Disposable_isDisposed(delegate)) {
             pipe(
               [defaultResult],
-              ReadonlyArray_toRunnable(),
+              ReadonlyArray_toObservable(),
               Observable_observeWith(delegate),
             );
           }

@@ -45,9 +45,9 @@ import {
   ZipWith,
 } from "../containers.js";
 import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
-import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.toRunnable.js";
-import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
-import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
+import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
+import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import {
   Factory,
   Function1,
@@ -407,7 +407,7 @@ export const fromIterable: FromIterable<
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["fromIterable"] = Iterable_toRunnable;
+>["fromIterable"] = Iterable_toObservable;
 
 export const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"] =
   Flowable_toObservable;
@@ -418,7 +418,7 @@ export const fromReadonlyArray: FromReadonlyArray<
     delay?: number;
     delayStart?: boolean;
   }
->["fromReadonlyArray"] = ReadonlyArray_toRunnable;
+>["fromReadonlyArray"] = ReadonlyArray_toObservable;
 
 export const fromSequence: FromSequence<
   ObservableLike,
@@ -426,7 +426,7 @@ export const fromSequence: FromSequence<
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["fromSequence"] = Sequence_toRunnable;
+>["fromSequence"] = Sequence_toObservable;
 
 export const generate: Generate<
   ObservableLike,

@@ -5,7 +5,7 @@ import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, includ
 import { MAX_SAFE_INTEGER } from "../../../constants.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { isNumber, none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -46,7 +46,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                 pipe(delegate, Disposable_dispose());
             }
             else {
-                pipe([buffer], ReadonlyArray_toRunnable(), Observable_observeWith(delegate));
+                pipe([buffer], ReadonlyArray_toObservable(), Observable_observeWith(delegate));
             }
         }));
         return instance;
@@ -82,7 +82,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         const durationFunction = durationOption === MAX_SAFE_INTEGER
             ? (_) => Observable_never()
             : isNumber(durationOption)
-                ? (_) => pipe([none], ReadonlyArray_toRunnable())
+                ? (_) => pipe([none], ReadonlyArray_toObservable())
                 : durationOption;
         const maxBufferSize = max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER, 1);
         const operator = (delegate) => {

@@ -14,7 +14,7 @@ import { MAX_SAFE_INTEGER } from "../../../constants.js";
 import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { Function1, isNumber, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -96,7 +96,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
             } else {
               pipe(
                 [buffer],
-                ReadonlyArray_toRunnable(),
+                ReadonlyArray_toObservable(),
                 Observable_observeWith(delegate),
               );
             }
@@ -168,7 +168,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
       durationOption === MAX_SAFE_INTEGER
         ? (_: T) => Observable_never()
         : isNumber(durationOption)
-        ? (_: T) => pipe([none], ReadonlyArray_toRunnable())
+        ? (_: T) => pipe([none], ReadonlyArray_toObservable())
         : durationOption;
 
     const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);

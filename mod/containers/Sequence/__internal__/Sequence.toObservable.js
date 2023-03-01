@@ -1,6 +1,7 @@
-/// <reference types="./ReadonlyArray.toRunnable.d.ts" />
+/// <reference types="./Sequence.toObservable.d.ts" />
 
-import { none, pipe } from "../../../functions.js";
+import { SequenceLike_data, SequenceLike_next, } from "../../../containers.js";
+import { isSome, none, pipe } from "../../../functions.js";
 import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
@@ -9,26 +10,15 @@ import { Continuation__yield } from "../../../scheduling/Continuation/__internal
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
-const ReadonlyArray_toRunnable = 
-/*@__PURE__*/
-ReadonlyArray_toContainer((values, startIndex, count, options) => {
+const Sequence_toObservable = ((options) => (seq) => {
     const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSubscribe = (observer) => {
-        let index = startIndex, cnt = count;
+        let next = seq();
         const continuation = () => {
-            while (!observer[DisposableLike_isDisposed] && cnt !== 0) {
-                const value = values[index];
-                if (cnt > 0) {
-                    index++;
-                    cnt--;
-                }
-                else {
-                    index--;
-                    cnt++;
-                }
-                observer[ObserverLike_notify](value);
-                if (cnt !== 0) {
+            while (!observer[DisposableLike_isDisposed] && isSome(next)) {
+                observer[ObserverLike_notify](next[SequenceLike_data]);
+                next = next[SequenceLike_next]();
+                if (isSome(next)) {
                     Continuation__yield(delay);
                 }
             }
@@ -36,8 +26,9 @@ ReadonlyArray_toContainer((values, startIndex, count, options) => {
         };
         pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
     };
-    return hasDelay(options)
+    const retval = hasDelay(options)
         ? Runnable_create(onSubscribe)
         : Enumerable_create(onSubscribe);
+    return retval;
 });
-export default ReadonlyArray_toRunnable;
+export default Sequence_toObservable;

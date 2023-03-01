@@ -54,8 +54,8 @@ import Sequence_takeLast from "./Sequence/__internal__/Sequence.takeLast.js";
 import Sequence_takeWhile from "./Sequence/__internal__/Sequence.takeWhile.js";
 import Sequence_toFlowable from "./Sequence/__internal__/Sequence.toFlowable.js";
 import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable.js";
+import Sequence_toObservable from "./Sequence/__internal__/Sequence.toObservable.js";
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
-import Sequence_toRunnable from "./Sequence/__internal__/Sequence.toRunnable.js";
 import Sequence_zip from "./Sequence/__internal__/Sequence.zip.js";
 import Sequence_zipWith from "./Sequence/__internal__/Sequence.zipWith.js";
 
@@ -114,7 +114,7 @@ export const takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
   Sequence_takeWhile;
 
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
-  Sequence_toRunnable as ToEnumerable<SequenceLike>["toEnumerable"];
+  Sequence_toObservable;
 
 export const toFlowable: ToFlowable<
   SequenceLike,
@@ -133,7 +133,7 @@ export const toObservable: ToObservable<
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["toObservable"] = Sequence_toRunnable;
+>["toObservable"] = Sequence_toObservable;
 
 export const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
   Sequence_toReadonlyArray;
@@ -144,7 +144,7 @@ export const toRunnable: ToRunnable<
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["toRunnable"] = Sequence_toRunnable;
+>["toRunnable"] = Sequence_toObservable;
 
 export const zip: Zip<SequenceLike>["zip"] = Sequence_zip;
 

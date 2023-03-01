@@ -29,8 +29,8 @@ import ReadonlyArray_keepType from "./ReadonlyArray/__internal__/ReadonlyArray.k
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "./ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
+import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
-import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
 
@@ -75,13 +75,7 @@ export const toEnumerable: ToEnumerable<
     readonly start: number;
     readonly count: number;
   }
->["toEnumerable"] = ReadonlyArray_toRunnable as ToEnumerable<
-  ReadonlyArrayLike,
-  {
-    readonly start: number;
-    readonly count: number;
-  }
->["toEnumerable"];
+>["toEnumerable"] = ReadonlyArray_toObservable;
 
 export const toFlowable: ToFlowable<
   ReadonlyArrayLike,
@@ -107,7 +101,7 @@ export const toObservable: ToObservable<
     readonly delayStart?: boolean;
     readonly start?: number;
   }
->["toObservable"] = ReadonlyArray_toRunnable;
+>["toObservable"] = ReadonlyArray_toObservable;
 
 export const toReadonlyArray: ToReadonlyArray<
   ReadonlyArrayLike,
@@ -125,7 +119,7 @@ export const toRunnable: ToRunnable<
     readonly delayStart?: boolean;
     readonly start?: number;
   }
->["toRunnable"] = ReadonlyArray_toRunnable;
+>["toRunnable"] = ReadonlyArray_toObservable;
 
 export const toSequence: ToSequence<
   ReadonlyArrayLike,
