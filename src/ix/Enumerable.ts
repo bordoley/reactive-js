@@ -47,7 +47,7 @@ import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.to
 import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
 import { identity, returns } from "../functions.js";
-import { EnumerableLike } from "../ix.js";
+import { EnumerableLike, ToEnumerable } from "../ix.js";
 import Enumerable_catchError from "../ix/Enumerable/__internal__/Enumerable.catchError.js";
 import Enumerable_concatAll from "../ix/Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "../ix/Enumerable/__internal__/Enumerable.concatMap.js";
@@ -56,7 +56,7 @@ import Enumerable_encodeUtf8 from "../ix/Enumerable/__internal__/Enumerable.enco
 import Enumerable_flatMapIterable from "../ix/Enumerable/__internal__/Enumerable.flatMapIterable.js";
 import Enumerable_scanAsync from "../ix/Enumerable/__internal__/Enumerable.scanAsync.js";
 import Enumerable_toIterable from "../ix/Enumerable/__internal__/Enumerable.toIterable.js";
-import { Retry, ScanAsync, ToObservable } from "../rx.js";
+import { Retry, ScanAsync, ToObservable, ToRunnable } from "../rx.js";
 import Observable_buffer from "../rx/Observable/__internal__/Observable.buffer.js";
 import Observable_compute from "../rx/Observable/__internal__/Observable.compute.js";
 import Observable_concat from "../rx/Observable/__internal__/Observable.concat.js";
@@ -223,6 +223,9 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
 export const throws: Throws<EnumerableLike>["throws"] =
   Observable_throws as Throws<EnumerableLike>["throws"];
 
+export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
+  /*@__PURE__*/ returns(identity);
+
 export const toFlowable: ToFlowable<EnumerableLike>["toFlowable"] =
   Runnable_toFlowable;
 
@@ -234,6 +237,9 @@ export const toObservable: ToObservable<EnumerableLike>["toObservable"] =
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
   Runnable_toReadonlyArray as ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
+
+export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
+  /*@__PURE__*/ returns(identity);
 
 export const zip: Zip<EnumerableLike>["zip"] =
   Observable_zip as Zip<EnumerableLike>["zip"];
