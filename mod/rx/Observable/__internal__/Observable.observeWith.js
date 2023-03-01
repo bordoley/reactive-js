@@ -1,8 +1,8 @@
 /// <reference types="./Observable.observeWith.d.ts" />
 
 import { ObservableLike_observe, } from "../../../rx.js";
-const Observable_observeWith = (sink) => source => {
-    source[ObservableLike_observe](sink);
+const Observable_observeWith = (observer) => source => {
+    source[ObservableLike_observe](observer);
     return source;
 };
 export default Observable_observeWith;

@@ -45,10 +45,10 @@ ___
 
 ▸ **[ObserverLike_notify]**(`next`): `void`
 
-Notifies the the sink of the next notification produced by the observable source.
+Notifies the the observer of the next notification produced by the observable source.
 
 Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-scheduled using the sink's `schedule` method.
+scheduled using the observer's `schedule` method.
 
 #### Parameters
 

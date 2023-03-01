@@ -3945,7 +3945,7 @@ ___
 
 ### observeWith
 
-▸ **observeWith**<`C`, `T`\>(`sink`): [`Function1`](functions.md#function1)<`C`, `C`\>
+▸ **observeWith**<`C`, `T`\>(`observer`): [`Function1`](functions.md#function1)<`C`, `C`\>
 
 #### Type parameters
 
@@ -3958,7 +3958,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
+| `observer` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
 
 #### Returns
 
