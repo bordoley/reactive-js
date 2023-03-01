@@ -37,7 +37,9 @@ const Observable_repeatOrRetry: <T>(
 
         pipe(
           observable,
-          Observable_forEach(Observer_notifyObserver(delegate)),
+          Observable_forEach<ObservableLike, T>(
+            Observer_notifyObserver(delegate),
+          ),
           Observable_subscribe(Observer_getScheduler(delegate)),
           Disposable_addToIgnoringChildErrors(delegate),
           Disposable_onDisposed(doOnDispose),

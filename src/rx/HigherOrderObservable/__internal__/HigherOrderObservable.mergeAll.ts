@@ -97,7 +97,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
           pipe(
             nextObs,
-            Observable_forEach(
+            Observable_forEach<ObservableLike, T>(
               Observer_notifyObserver(observer[DelegatingLike_delegate]),
             ),
             Observable_subscribe(Observer_getScheduler(observer)),

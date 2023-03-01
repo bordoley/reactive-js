@@ -230,7 +230,7 @@ class AsyncContext {
 
       const subscription = pipe(
         observable,
-        Observable_forEach<T>(next => {
+        Observable_forEach<ObservableLike, T>(next => {
           effect[AwaitOrObserveEffect_value] = next;
           effect[AwaitOrObserveEffect_hasValue] = true;
 

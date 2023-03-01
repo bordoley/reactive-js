@@ -1,4 +1,5 @@
 import { pipe } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
@@ -22,13 +23,13 @@ const Streamable_sinkInto =
       Observable_merge(
         pipe(
           srcStream,
-          Observable_forEach(Queue_pushTo(dest)),
+          Observable_forEach<ObservableLike, T>(Queue_pushTo(dest)),
           Observable_ignoreElements(),
           Observable_onSubscribe(() => dest),
         ),
         pipe(
           dest,
-          Observable_forEach<TReq>(Queue_pushTo(srcStream)),
+          Observable_forEach<ObservableLike, TReq>(Queue_pushTo(srcStream)),
           Observable_ignoreElements(),
         ),
       ),

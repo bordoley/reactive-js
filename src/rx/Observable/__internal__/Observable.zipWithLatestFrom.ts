@@ -122,7 +122,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
 
             const otherSubscription = pipe(
               other,
-              Observable_forEach(otherLatest => {
+              Observable_forEach<ObservableLike, TB>(otherLatest => {
                 instance[ZipWithLatestFromObserver_hasLatest] = true;
                 instance[ZipWithLatestFromObserver_otherLatest] = otherLatest;
                 notifyDelegate(instance);

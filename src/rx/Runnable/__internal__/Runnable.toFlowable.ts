@@ -45,7 +45,7 @@ const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
           Disposable_add(
             pipe(
               modeObs,
-              Observable_forEach(mode => {
+              Observable_forEach<ObservableLike, PauseableState>(mode => {
                 switch (mode) {
                   case PauseableState_paused:
                     Pauseable_pause(pauseableScheduler);

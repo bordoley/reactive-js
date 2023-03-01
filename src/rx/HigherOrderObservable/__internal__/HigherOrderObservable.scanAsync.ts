@@ -38,7 +38,9 @@ const HigherOrderObservable_scanAsync =
           pipe(scanner(acc, next), Observable_takeFirst()),
         ),
         Observable_switchAll(),
-        Observable_forEach(Subject_publishTo(accFeedbackStream)),
+        Observable_forEach<ObservableLike, TAcc>(
+          Subject_publishTo(accFeedbackStream),
+        ),
         Observable_onSubscribe(() =>
           pipe(accFeedbackStream, Subject_publish(initialValue())),
         ),

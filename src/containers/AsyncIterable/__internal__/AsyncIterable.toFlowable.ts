@@ -77,18 +77,20 @@ const AsyncIterable_toFlowable: ToFlowable<
 
         pipe(
           modeObs,
-          Observable_forEach((mode: PauseableState) => {
-            const wasPaused = isPaused;
-            isPaused = mode === PauseableState_paused;
+          Observable_forEach<ObservableLike, PauseableState>(
+            (mode: PauseableState) => {
+              const wasPaused = isPaused;
+              isPaused = mode === PauseableState_paused;
 
-            if (!isPaused && wasPaused) {
-              pipe(
-                scheduler,
-                Scheduler_schedule(continuation),
-                Disposable_addTo(observer),
-              );
-            }
-          }),
+              if (!isPaused && wasPaused) {
+                pipe(
+                  scheduler,
+                  Scheduler_schedule(continuation),
+                  Disposable_addTo(observer),
+                );
+              }
+            },
+          ),
           Observable_subscribe(scheduler),
           Disposable_bindTo(observer),
         );

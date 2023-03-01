@@ -17,7 +17,7 @@ const Observable_multicast =
     const subject = Subject_create({ replay });
     pipe(
       observable,
-      Observable_forEach<T>(Subject_publishTo(subject)),
+      Observable_forEach<ObservableLike, T>(Subject_publishTo(subject)),
       Observable_subscribe(scheduler),
       Disposable_bindTo(subject),
     );

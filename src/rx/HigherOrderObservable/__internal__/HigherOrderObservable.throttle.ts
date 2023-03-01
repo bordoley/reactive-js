@@ -86,7 +86,9 @@ const createThrottleObserver: <T>(
       MutableRef_set(
         pipe(
           observer[ThrottleObserver_durationFunction](next),
-          Observable_forEach(observer[ThrottleObserver_onNotify]),
+          Observable_forEach<ObservableLike>(
+            observer[ThrottleObserver_onNotify],
+          ),
           Observable_subscribe(Observer_getScheduler(observer)),
         ),
       ),
