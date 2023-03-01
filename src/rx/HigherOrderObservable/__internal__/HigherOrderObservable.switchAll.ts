@@ -37,7 +37,7 @@ import Observable_subscribe from "../../Observable/__internal__/Observable.subsc
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_notifySink from "../../Observer/__internal__/Observer.notifySink.js";
+import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 
 const HigherOrderObservable_currentRef = Symbol(
   "HigherOrderObservable_currentRef",
@@ -113,7 +113,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
               pipe(
                 next,
                 Observable_forEach(
-                  Observer_notifySink(this[DelegatingLike_delegate]),
+                  Observer_notifyObserver(this[DelegatingLike_delegate]),
                 ),
                 Observable_subscribe(Observer_getScheduler(this)),
                 Disposable_onComplete(() => {

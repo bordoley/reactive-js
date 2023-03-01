@@ -17,7 +17,7 @@ import Observable_subscribe from "../../Observable/__internal__/Observable.subsc
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_notifySink from "../../Observer/__internal__/Observer.notifySink.js";
+import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 const HigherOrderObservable_mergeAll = (lift) => {
     const createMergeAllObserver = (() => {
         const typedObserverMixin = Observer_mixin();
@@ -31,7 +31,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 const nextObs = observer[PullableQueueLike_pull]();
                 if (isSome(nextObs)) {
                     observer[MergeAllObserver_activeCount]++;
-                    pipe(nextObs, Observable_forEach(Observer_notifySink(observer[DelegatingLike_delegate])), Observable_subscribe(Observer_getScheduler(observer)), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
+                    pipe(nextObs, Observable_forEach(Observer_notifyObserver(observer[DelegatingLike_delegate])), Observable_subscribe(Observer_getScheduler(observer)), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
                 }
                 else if (Disposable_isDisposed(observer)) {
                     pipe(observer[DelegatingLike_delegate], Disposable_dispose());
