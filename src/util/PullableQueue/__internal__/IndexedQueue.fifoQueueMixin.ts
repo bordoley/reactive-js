@@ -6,7 +6,6 @@ import {
   pipe,
   raiseWithDebugMessage,
   returns,
-  unsafeCast,
 } from "../../../functions.js";
 import { QueueLike, QueueLike_count, QueueLike_push } from "../../../util.js";
 import {
@@ -18,7 +17,7 @@ import {
 
 const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
   IndexedQueueLike<T>,
-  IndexedQueueLike<T>
+  Omit<IndexedQueueLike<T>, typeof QueueLike_count>
 > = /*@__PURE__*/ (<T>() => {
   const FifoQueue_head = Symbol("FifoQueue_head");
   const FifoQueue_tail = Symbol("FifoQueue_tail");
@@ -26,6 +25,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
   const FifoQueue_values = Symbol("FifoQueue_values");
 
   type TProperties = {
+    [QueueLike_count]: number;
     [FifoQueue_head]: number;
     [FifoQueue_tail]: number;
     [FifoQueue_capacityMask]: number;
@@ -59,35 +59,28 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
   return pipe(
     mix(
       function FifoQueue(
-        instance: IndexedQueueLike<T> & Mutable<TProperties>,
+        instance: Omit<IndexedQueueLike<T>, typeof QueueLike_count> &
+          Mutable<TProperties>,
       ): IndexedQueueLike<T> {
         instance[FifoQueue_head] = 0;
         instance[FifoQueue_tail] = 0;
-
+        instance[QueueLike_count] = 0;
+        instance[FifoQueue_capacityMask] = 0x3;
         instance[FifoQueue_values] = newInstance<Array<Optional<T>>, number>(
           Array,
           4,
         );
-        instance[FifoQueue_capacityMask] = 0x3;
 
         return instance;
       },
       props<TProperties>({
+        [QueueLike_count]: 0,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
         [FifoQueue_capacityMask]: 0,
         [FifoQueue_values]: none,
       }),
       {
-        get [QueueLike_count](): number {
-          unsafeCast<TProperties>(this);
-          const head = this[FifoQueue_head];
-          const tail = this[FifoQueue_tail];
-          const capacityMask = this[FifoQueue_capacityMask];
-
-          const count = tail - head;
-          return count >= 0 ? count : capacityMask + 1 + count;
-        },
         [IndexedQueueLike_get](
           this: TProperties & QueueLike,
           index: number,
@@ -125,6 +118,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
             values[head] = none;
             head = (head + 1) & this[FifoQueue_capacityMask];
             this[FifoQueue_head] = head;
+            this[QueueLike_count]--;
           }
 
           const count = this[QueueLike_count];
@@ -151,6 +145,8 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
 
           values[tail] = item;
           count++;
+          this[QueueLike_count] = count;
+
           tail = (tail + 1) & capacityMask;
           this[FifoQueue_tail] = tail;
 

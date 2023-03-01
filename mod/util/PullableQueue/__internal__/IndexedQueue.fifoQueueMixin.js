@@ -1,7 +1,7 @@
 /// <reference types="./IndexedQueue.fifoQueueMixin.d.ts" />
 
 import { mix, props } from "../../../__internal__/mixins.js";
-import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
+import { newInstance, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import { IndexedQueueLike_get, PullableQueueLike_peek, PullableQueueLike_pull, } from "../../__internal__/util.internal.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
@@ -26,23 +26,17 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     return pipe(mix(function FifoQueue(instance) {
         instance[FifoQueue_head] = 0;
         instance[FifoQueue_tail] = 0;
-        instance[FifoQueue_values] = newInstance(Array, 4);
+        instance[QueueLike_count] = 0;
         instance[FifoQueue_capacityMask] = 0x3;
+        instance[FifoQueue_values] = newInstance(Array, 4);
         return instance;
     }, props({
+        [QueueLike_count]: 0,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
         [FifoQueue_capacityMask]: 0,
         [FifoQueue_values]: none,
     }), {
-        get [QueueLike_count]() {
-            unsafeCast(this);
-            const head = this[FifoQueue_head];
-            const tail = this[FifoQueue_tail];
-            const capacityMask = this[FifoQueue_capacityMask];
-            const count = tail - head;
-            return count >= 0 ? count : capacityMask + 1 + count;
-        },
         [IndexedQueueLike_get](index) {
             const count = this[QueueLike_count];
             const capacity = this[FifoQueue_values].length;
@@ -72,6 +66,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                 values[head] = none;
                 head = (head + 1) & this[FifoQueue_capacityMask];
                 this[FifoQueue_head] = head;
+                this[QueueLike_count]--;
             }
             const count = this[QueueLike_count];
             if (count < capacity / 4 && capacity > 4) {
@@ -93,6 +88,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             let tail = this[FifoQueue_tail];
             values[tail] = item;
             count++;
+            this[QueueLike_count] = count;
             tail = (tail + 1) & capacityMask;
             this[FifoQueue_tail] = tail;
             if (tail === head) {
