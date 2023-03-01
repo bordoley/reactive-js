@@ -38,7 +38,7 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
     return createInstanceFactory(
       mix(
         include(Disposable_mixin, delegatingMixin(), Observer_mixin<T>()),
-        function CatchErrorSinkMixin(
+        function CatchErrorObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
           delegate: ObserverLike<T>,
           errorHandler: Function1<unknown, ContainerOf<C, T> | void>,

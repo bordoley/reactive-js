@@ -13,7 +13,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 const HigherOrderObservable_catchError = (lift) => {
     const createCatchErrorObserver = (() => {
-        return createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function CatchErrorSinkMixin(instance, delegate, errorHandler) {
+        return createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function CatchErrorObserver(instance, delegate, errorHandler) {
             init(Disposable_mixin, instance);
             init(delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
