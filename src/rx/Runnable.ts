@@ -53,6 +53,7 @@ import {
   ExhaustMap,
   ForkMerge,
   ForkZipLatest,
+  Merge,
   MergeAll,
   MergeWith,
   Retry,
@@ -180,7 +181,7 @@ export const endWith: EndWith<RunnableLike>["endWith"] =
   Observable_endWith as EndWith<RunnableLike>["endWith"];
 
 export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
-  Observable_everySatisfy as EverySatisfy<RunnableLike>["everySatisfy"];
+  Observable_everySatisfy;
 
 export const exhaust: Exhaust<RunnableLike>["exhaust"] = Runnable_exhaust;
 
@@ -253,13 +254,12 @@ export const keepType: KeepType<RunnableLike>["keepType"] =
 
 export const last = Runnable_last;
 
-export const map: Map<RunnableLike>["map"] =
-  Observable_map as Map<RunnableLike>["map"];
+export const map: Map<RunnableLike>["map"] = Observable_map;
 
 export const mapTo: MapTo<RunnableLike>["mapTo"] =
   Observable_mapTo as MapTo<RunnableLike>["mapTo"];
 
-export const merge = Observable_merge as Concat<RunnableLike>["concat"];
+export const merge = Observable_merge as Merge<RunnableLike>["merge"];
 
 export const mergeAll: MergeAll<
   RunnableLike,
@@ -272,25 +272,22 @@ export const mergeAll: MergeAll<
 export const mergeWith: MergeWith<RunnableLike>["mergeWith"] =
   Observable_mergeWith as MergeWith<RunnableLike>["mergeWith"];
 
-export const pairwise: Pairwise<RunnableLike>["pairwise"] =
-  Observable_pairwise as Pairwise<RunnableLike>["pairwise"];
+export const pairwise: Pairwise<RunnableLike>["pairwise"] = Observable_pairwise;
 
-export const reduce: Reduce<RunnableLike>["reduce"] =
-  Observable_reduce as Reduce<RunnableLike>["reduce"];
+export const reduce: Reduce<RunnableLike>["reduce"] = Observable_reduce;
 
 export const retry: Retry<RunnableLike>["retry"] =
   Observable_retry as Retry<RunnableLike>["retry"];
 
 export const run = Runnable_run;
 
-export const scan: Scan<RunnableLike>["scan"] =
-  Observable_scan as Scan<RunnableLike>["scan"];
+export const scan: Scan<RunnableLike>["scan"] = Observable_scan;
 
 export const scanAsync: ScanAsync<RunnableLike, RunnableLike>["scanAsync"] =
   Runnable_scanAsync;
 
 export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] =
-  Observable_skipFirst as SkipFirst<RunnableLike>["skipFirst"];
+  Observable_skipFirst;
 
 export const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"] =
   Observable_someSatisfy as SomeSatisfy<RunnableLike>["someSatisfy"];
@@ -305,10 +302,9 @@ export const switchMap: SwitchMap<RunnableLike>["switchMap"] =
   Runnable_switchMap;
 
 export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] =
-  Observable_takeFirst as TakeFirst<RunnableLike>["takeFirst"];
+  Observable_takeFirst;
 
-export const takeLast: TakeLast<RunnableLike>["takeLast"] =
-  Observable_takeLast as TakeLast<RunnableLike>["takeLast"];
+export const takeLast: TakeLast<RunnableLike>["takeLast"] = Observable_takeLast;
 
 export const takeUntil: TakeUntil<RunnableLike>["takeUntil"] =
   Observable_takeUntil as TakeUntil<RunnableLike>["takeUntil"];

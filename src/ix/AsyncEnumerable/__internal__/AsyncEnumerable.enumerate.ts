@@ -24,8 +24,8 @@ const AsyncEnumerable_enumerate =
 
         return Enumerator_hasCurrent(enumerator)
           ? pipe(
-              Enumerator_getCurrent<ObservableLike>(enumerator),
-              Observable_takeFirst(),
+              Enumerator_getCurrent<ObservableLike<T>>(enumerator),
+              Observable_takeFirst<ObservableLike, T>(),
             )
           : Observable_empty();
       }),

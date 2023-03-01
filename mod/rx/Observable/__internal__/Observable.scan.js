@@ -36,6 +36,6 @@ const Observable_scan = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return (reducer, initialValue) => pipe(createScanObserver, partial(reducer, initialValue), Observable_liftEnumerableOperator);
+    return ((reducer, initialValue) => pipe(createScanObserver, partial(reducer, initialValue), Observable_liftEnumerableOperator));
 })();
 export default Observable_scan;

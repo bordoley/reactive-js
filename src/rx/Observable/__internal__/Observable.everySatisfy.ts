@@ -4,7 +4,7 @@ import {
   init,
   mix,
 } from "../../../__internal__/mixins.js";
-import { EverySatisfy } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
 import {
   Predicate,
   compose,
@@ -16,34 +16,38 @@ import { ObservableLike, ObserverLike } from "../../../rx.js";
 import Observer_satisfyMixin from "../../Observer/__internal__/Observer.satisfyMixin.js";
 import Observable_lift from "./Observable.lift.js";
 
-const Observable_everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
-  /*@__PURE__*/ (<T>() => {
-    const typedSatisfyObserverMixin = Observer_satisfyMixin<T>(true);
+type ObservableEverySatisfy = <C extends ObservableLike, T>(
+  predicate: Predicate<T>,
+) => ContainerOperator<C, T, boolean>;
+const Observable_everySatisfy: ObservableEverySatisfy = /*@__PURE__*/ (<
+  T,
+>() => {
+  const typedSatisfyObserverMixin = Observer_satisfyMixin<T>(true);
 
-    const everySatisfyObserverMixin = mix(
-      include(typedSatisfyObserverMixin),
-      function EverySatisfyObserver(
-        instance: unknown,
-        delegate: ObserverLike<boolean>,
-        predicate: Predicate<T>,
-      ): ObserverLike<T> {
-        init(
-          typedSatisfyObserverMixin,
-          instance,
-          delegate,
-          compose(predicate, negate),
-        );
-
-        return instance;
-      },
-    );
-
-    return (predicate: Predicate<T>) =>
-      pipe(
-        createInstanceFactory(everySatisfyObserverMixin),
-        partial(predicate),
-        Observable_lift(true, true),
+  const everySatisfyObserverMixin = mix(
+    include(typedSatisfyObserverMixin),
+    function EverySatisfyObserver(
+      instance: unknown,
+      delegate: ObserverLike<boolean>,
+      predicate: Predicate<T>,
+    ): ObserverLike<T> {
+      init(
+        typedSatisfyObserverMixin,
+        instance,
+        delegate,
+        compose(predicate, negate),
       );
-  })();
+
+      return instance;
+    },
+  );
+
+  return ((predicate: Predicate<T>) =>
+    pipe(
+      createInstanceFactory(everySatisfyObserverMixin),
+      partial(predicate),
+      Observable_lift(true, true),
+    )) as ObservableEverySatisfy;
+})();
 
 export default Observable_everySatisfy;

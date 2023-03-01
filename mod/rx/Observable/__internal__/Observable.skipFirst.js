@@ -7,8 +7,7 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-const Observable_skipFirst = 
-/*@__PURE__*/ (() => {
+const Observable_skipFirst = /*@__PURE__*/ (() => {
     const createSkipFirstObserver = (() => {
         const SkipFirstObserverMixin_skipCount = Symbol("SkipFirstObserverMixin_skipCount");
         const SkipFirstObserverMixin_count = Symbol("SkipFirstObserverMixin_count");
@@ -31,10 +30,10 @@ const Observable_skipFirst =
             },
         }));
     })();
-    return (options = {}) => {
+    return ((options = {}) => {
         const { count = 1 } = options;
         const lifted = pipe(createSkipFirstObserver, partial(count), Observable_liftEnumerableOperator);
         return obs => (count > 0 ? pipe(obs, lifted) : obs);
-    };
+    });
 })();
 export default Observable_skipFirst;

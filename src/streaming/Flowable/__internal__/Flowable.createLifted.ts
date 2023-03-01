@@ -123,7 +123,7 @@ const Flowable_createLifted: CreateLiftedFlowable = <T>(
   ...ops: readonly ContainerOperator<ObservableLike, any, any>[]
 ) => {
   const op = composeUnsafe(
-    Observable_scan<Updater<PauseableState>, PauseableState>(
+    Observable_scan<ObservableLike, Updater<PauseableState>, PauseableState>(
       updateReducer,
       returns(PauseableState_paused),
     ),

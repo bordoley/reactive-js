@@ -8,7 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { Map } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -21,10 +21,10 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
-const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
-  TA,
-  TB,
->() => {
+type ObservableMap = <C extends ObservableLike, TA, TB>(
+  mapper: Function1<TA, TB>,
+) => ContainerOperator<C, TA, TB>;
+const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
   const createMapObserver: <TA, TB>(
     delegate: ObserverLike<TB>,
     predicate: Function1<TA, TB>,
@@ -79,7 +79,7 @@ const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
       createMapObserver,
       partial(mapper),
       Observable_liftEnumerableOperator,
-    )) as Map<ObservableLike>["map"];
+    )) as ObservableMap;
 })();
 
 export default Observable_map;

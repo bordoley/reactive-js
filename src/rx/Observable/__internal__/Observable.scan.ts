@@ -8,7 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { Scan } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
 import {
   Factory,
   Reducer,
@@ -30,10 +30,11 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
-const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
-  T,
-  TAcc,
->() => {
+type ObservableScan = <C extends ObservableLike, T, TAcc>(
+  scanner: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
+) => ContainerOperator<C, T, TAcc>;
+const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
   const createScanObserver: (
     delegate: ObserverLike<TAcc>,
     reducer: Reducer<T, TAcc>,
@@ -103,12 +104,12 @@ const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
     );
   })();
 
-  return (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+  return ((reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
     pipe(
       createScanObserver,
       partial(reducer, initialValue),
       Observable_liftEnumerableOperator,
-    );
+    )) as ObservableScan;
 })();
 
 export default Observable_scan;

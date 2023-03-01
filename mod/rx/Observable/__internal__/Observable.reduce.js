@@ -40,6 +40,6 @@ const Observable_reduce = /*@__PURE__*/ (() => {
             this[ReduceObserverMixin_acc] = nextAcc;
         },
     }));
-    return (reducer, initialValue) => pipe(createReduceObserver, partial(reducer, initialValue), Observable_liftEnumerableOperator);
+    return ((reducer, initialValue) => pipe(createReduceObserver, partial(reducer, initialValue), Observable_liftEnumerableOperator));
 })();
 export default Observable_reduce;
