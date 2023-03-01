@@ -12,7 +12,7 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`SourceLike`](ix.SourceLike.md)
 
-  ↳ [`SinkLike`](rx.SinkLike.md)
+  ↳ [`ObserverLike`](rx.ObserverLike.md)
 
   ↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 

@@ -1,4 +1,7 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -7,16 +10,18 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Scan } from "../../../containers.js";
 import StatefulContainer_scan from "../../../containers/StatefulContainer/__internal__/StatefulContainer.scan.js";
-import { Factory, Reducer, pipe } from "../../../functions.js";
+import { Factory, Reducer, error, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
 
-import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_scanMixin from "../../Sink/__internal__/Sink.scanMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
   T,
@@ -27,26 +32,66 @@ const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ) => ObserverLike<T> = (() => {
-    const typedScanSinkMixin = Sink_scanMixin<T, TAcc>();
+    const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");
+    const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
 
-    const typedObserverMixin = Observer_mixin<T>();
+    type TProperties = {
+      readonly [ScanSinkMixin_reducer]: Reducer<T, TAcc>;
+      [ScanSinkMixin_acc]: TAcc;
+    };
 
     return createInstanceFactory(
       mix(
-        include(typedObserverMixin, typedScanSinkMixin),
-        function ScanObserver(
-          instance: unknown,
+        include(
+          Disposable_delegatingMixin<ObserverLike<TAcc>>(),
+          Observer_mixin<T>(),
+        ),
+        function ScanSinkMixin(
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+            Mutable<TProperties>,
           delegate: ObserverLike<TAcc>,
           reducer: Reducer<T, TAcc>,
           initialValue: Factory<TAcc>,
         ): ObserverLike<T> {
-          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-          init(typedScanSinkMixin, instance, delegate, reducer, initialValue);
+          init(
+            Disposable_delegatingMixin<ObserverLike<TAcc>>(),
+            instance,
+            delegate,
+          );
+          init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
+
+          instance[ScanSinkMixin_reducer] = reducer;
+
+          try {
+            const acc = initialValue();
+            instance[ScanSinkMixin_acc] = acc;
+          } catch (e) {
+            pipe(instance, Disposable_dispose(error(e)));
+          }
 
           return instance;
         },
-        props<unknown>({}),
-        Observer_decorateNotifyForDev(typedScanSinkMixin),
+        props<TProperties>({
+          [ScanSinkMixin_reducer]: none,
+          [ScanSinkMixin_acc]: none,
+        }),
+        {
+          [ObserverLike_notify](
+            this: TProperties &
+              DelegatingLike<ObserverLike<TAcc>> &
+              ObserverLike<T>,
+            next: T,
+          ) {
+            Observer_assertState(this);
+
+            const nextAcc = this[ScanSinkMixin_reducer](
+              this[ScanSinkMixin_acc],
+              next,
+            );
+            this[ScanSinkMixin_acc] = nextAcc;
+            this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
+          },
+        },
       ),
     );
   })();

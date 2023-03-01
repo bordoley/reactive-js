@@ -1,4 +1,7 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -7,15 +10,16 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ForEach } from "../../../containers.js";
 import StatefulContainer_forEach from "../../../containers/StatefulContainer/__internal__/StatefulContainer.forEach.js";
-import { SideEffect1, pipe } from "../../../functions.js";
+import { SideEffect1, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
-import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_forEachMixin from "../../Sink/__internal__/Sink.forEachMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
   T,
@@ -24,24 +28,44 @@ const Observable_forEach: ForEach<ObservableLike>["forEach"] = /*@__PURE__*/ (<
     delegate: ObserverLike<T>,
     effect: SideEffect1<T>,
   ) => ObserverLike<T> = (<T>() => {
-    const typedForEachSinkMixin = Sink_forEachMixin<T>();
-    const typedObserverMixin = Observer_mixin<T>();
+    const ForEachSinkMixin_effect = Symbol("ForEachSinkMixin_effect");
+
+    type TProperties = {
+      readonly [ForEachSinkMixin_effect]: SideEffect1<T>;
+    };
 
     return createInstanceFactory(
       mix(
-        include(typedObserverMixin, typedForEachSinkMixin),
-        function ForEachObserver(
-          instance: unknown,
+        include(Disposable_delegatingMixin(), Observer_mixin<T>()),
+        function ForEachSinkMixin(
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+            Mutable<TProperties>,
           delegate: ObserverLike<T>,
           effect: SideEffect1<T>,
         ): ObserverLike<T> {
-          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
-          init(typedForEachSinkMixin, instance, delegate, effect);
+          init(Disposable_delegatingMixin(), instance, delegate);
+          init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
+
+          instance[ForEachSinkMixin_effect] = effect;
 
           return instance;
         },
-        props<unknown>({}),
-        Observer_decorateNotifyForDev(typedForEachSinkMixin),
+        props<TProperties>({
+          [ForEachSinkMixin_effect]: none,
+        }),
+        {
+          [ObserverLike_notify](
+            this: TProperties &
+              DelegatingLike<ObserverLike<T>> &
+              ObserverLike<T>,
+            next: T,
+          ) {
+            Observer_assertState(this);
+
+            this[ForEachSinkMixin_effect](next);
+            this[DelegatingLike_delegate][ObserverLike_notify](next);
+          },
+        },
       ),
     );
   })();

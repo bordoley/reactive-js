@@ -4,11 +4,16 @@ import { DispatcherLike, SchedulerLike } from "./scheduling.js";
 import { DisposableLike } from "./util.js";
 /** @ignore */
 export declare const ObserverLike_notify: unique symbol;
+/** @ignore */
+export declare const ObserverLike_dispatcher: unique symbol;
+/** @ignore */
+export declare const ObserverLike_scheduler: unique symbol;
 /**
  * @noInheritDoc
- * @category Container
  */
-export interface SinkLike<T = unknown> extends DisposableLike {
+export interface ObserverLike<T = unknown> extends DisposableLike {
+    readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
+    readonly [ObserverLike_scheduler]: SchedulerLike;
     /**
      * Notifies the the sink of the next notification produced by the observable source.
      *
@@ -18,17 +23,6 @@ export interface SinkLike<T = unknown> extends DisposableLike {
      * @param next The next notification value.
      */
     [ObserverLike_notify](next: T): void;
-}
-/** @ignore */
-export declare const ObserverLike_dispatcher: unique symbol;
-/** @ignore */
-export declare const ObserverLike_scheduler: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface ObserverLike<T = unknown> extends SinkLike<T> {
-    readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
-    readonly [ObserverLike_scheduler]: SchedulerLike;
 }
 /** @ignore */
 export declare const ObservableLike_observe: unique symbol;
@@ -48,7 +42,7 @@ export interface ObservableLike<T = unknown> extends StatefulContainerLike {
     readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
-    [ObservableLike_observe](sink: ObserverLike<T>): void;
+    [ObservableLike_observe](observer: ObserverLike<T>): void;
 }
 /**
  * @noInheritDoc

@@ -10,7 +10,6 @@
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
-- [SinkLike](../interfaces/rx.SinkLike.md)
 - [SubjectLike](../interfaces/rx.SubjectLike.md)
 
 ### Other Interfaces

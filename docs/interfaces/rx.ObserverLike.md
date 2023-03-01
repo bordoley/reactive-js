@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`SinkLike`](rx.SinkLike.md)<`T`\>
+- [`DisposableLike`](util.DisposableLike.md)
 
   ↳ **`ObserverLike`**
 
@@ -22,6 +22,10 @@
 
 - [[ObserverLike\_dispatcher]](rx.ObserverLike.md#[observerlike_dispatcher])
 - [[ObserverLike\_scheduler]](rx.ObserverLike.md#[observerlike_scheduler])
+
+### Methods
+
+- [[ObserverLike\_notify]](rx.ObserverLike.md#[observerlike_notify])
 
 ## Properties
 
@@ -34,3 +38,24 @@ ___
 ### [ObserverLike\_scheduler]
 
 • `Readonly` **[ObserverLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)
+
+## Methods
+
+### [ObserverLike\_notify]
+
+▸ **[ObserverLike_notify]**(`next`): `void`
+
+Notifies the the sink of the next notification produced by the observable source.
+
+Note: The `notify` method must be called from within a `SchedulerContinuationLike`
+scheduled using the sink's `schedule` method.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `next` | `T` | The next notification value. |
+
+#### Returns
+
+`void`

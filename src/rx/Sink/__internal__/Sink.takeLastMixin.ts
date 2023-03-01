@@ -12,7 +12,6 @@ import {
   ObserverLike,
   ObserverLike_notify,
   ObserverLike_scheduler,
-  SinkLike,
 } from "../../../rx.js";
 import {
   DisposableLike,
@@ -56,7 +55,7 @@ const Sink_takeLastMixin: <C extends ObservableLike, T>(
       Observer_mixin<T>(),
     ),
     function TakeLastSinkMixin(
-      instance: Pick<SinkLike<T>, typeof ObserverLike_notify> &
+      instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
         Mutable<TProperties>,
       delegate: ObserverLike<T>,
       takeLastCount: number,
