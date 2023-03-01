@@ -17,7 +17,9 @@ import {
   returns,
 } from "../../../functions.js";
 import {
-  ReactiveContainerLike,
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_scheduler,
   SinkLike,
   SinkLike_notify,
 } from "../../../rx.js";
@@ -26,32 +28,26 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-const Sink_catchErrorMixin: <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
->() => Mixin2<
-  SinkLike<T>,
-  SinkLike<T>,
+const Sink_catchErrorMixin: <C extends ObservableLike, T>() => Mixin2<
+  ObserverLike<T>,
+  ObserverLike<T>,
   Function1<unknown, C | void>,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
-> = /*@__PURE__*/ (<
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
->() => {
+  Pick<ObserverLike<T>, typeof SinkLike_notify>
+> = /*@__PURE__*/ (<C extends ObservableLike, T>() => {
   return returns(
     mix(
-      include(Disposable_mixin, delegatingMixin()),
+      include(Disposable_mixin, delegatingMixin(), Observer_mixin<T>()),
       function CatchErrorSinkMixin(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify>,
-        delegate: SinkLike<T>,
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
+        delegate: ObserverLike<T>,
         errorHandler: Function1<unknown, C | void>,
-      ): SinkLike<T> {
+      ): ObserverLike<T> {
         init(Disposable_mixin, instance);
         init(delegatingMixin(), instance, delegate);
+        init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
 
         pipe(
           instance,
@@ -63,7 +59,7 @@ const Sink_catchErrorMixin: <
             try {
               const result = errorHandler(err) || none;
               if (isSome(result)) {
-                pipe(result, ReactiveContainer_sinkInto(delegate));
+                pipe(result, Observable_observeWith(delegate));
               } else {
                 pipe(delegate, Disposable_dispose());
               }

@@ -36,7 +36,6 @@ import { ObservableLike } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
 import Observer_getDispatcher from "../rx/Observer/__internal__/Observer.getDispatcher.js";
-import * as ReactiveContainer from "../rx/ReactiveContainer.js";
 import {
   PauseableState,
   PauseableState_paused,
@@ -289,7 +288,7 @@ export const transform =
           createReadableSource(transform),
           Streamable.stream(Observer.getScheduler(observer)),
           addToNodeStream(transform),
-          ReactiveContainer.sinkInto(observer),
+          Observable.observeWith(observer),
         );
 
         pipe(

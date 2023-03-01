@@ -3,7 +3,7 @@
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, SubjectLike_publish, } from "../../../rx.js";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_publish, } from "../../../rx.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
@@ -46,7 +46,7 @@ const Subject_create =
                 }
             }
         },
-        [ReactiveContainerLike_sinkInto](observer) {
+        [ObservableLike_observe](observer) {
             if (!Disposable_isDisposed(this)) {
                 const { [Subject_observers]: observers } = this;
                 observers.add(observer);

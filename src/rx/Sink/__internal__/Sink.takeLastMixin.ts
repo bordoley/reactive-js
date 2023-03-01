@@ -8,7 +8,9 @@ import {
 } from "../../../__internal__/mixins.js";
 import { pipe } from "../../../functions.js";
 import {
-  ReactiveContainerLike,
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_scheduler,
   SinkLike,
   SinkLike_notify,
 } from "../../../rx.js";
@@ -26,20 +28,17 @@ import {
   PullableQueueLike,
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-const Sink_takeLastMixin: <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
->(
+const Sink_takeLastMixin: <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly T[]) => C,
 ) => Mixin2<
-  SinkLike<T>,
-  TSink,
+  ObserverLike<T>,
+  ObserverLike<T>,
   number,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
-> = <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
+  Pick<ObserverLike<T>, typeof SinkLike_notify>
+> = <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly T[]) => C,
 ) => {
   const TakeLastSinkMixin_takeLastCount = Symbol(
@@ -51,15 +50,20 @@ const Sink_takeLastMixin: <
   };
 
   return mix(
-    include(Disposable_mixin, IndexedQueue_fifoQueueMixin()),
+    include(
+      Disposable_mixin,
+      IndexedQueue_fifoQueueMixin(),
+      Observer_mixin<T>(),
+    ),
     function TakeLastSinkMixin(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
-      delegate: TSink,
+      delegate: ObserverLike<T>,
       takeLastCount: number,
-    ): SinkLike<T> {
+    ): ObserverLike<T> {
       init(Disposable_mixin, instance);
       init(IndexedQueue_fifoQueueMixin<T>(), instance);
+      init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
 
       instance[TakeLastSinkMixin_takeLastCount] = takeLastCount;
 
@@ -71,7 +75,7 @@ const Sink_takeLastMixin: <
             instance,
             IndexedQueue_toReadonlyArray<T>(),
             fromReadonlyArray,
-            ReactiveContainer_sinkInto(delegate),
+            Observable_observeWith(delegate),
           );
         }),
       );

@@ -4,11 +4,10 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { compose, error, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, } from "../rx.js";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
 import * as MulticastObservable from "../rx/MulticastObservable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
-import * as ReactiveContainer from "../rx/ReactiveContainer.js";
 import { DispatcherLike_scheduler } from "../scheduling.js";
 import * as Dispatcher from "../scheduling/Dispatcher.js";
 import { StreamableLike_stream, } from "../streaming.js";
@@ -68,7 +67,7 @@ export const fetch =
             const resultObs = onResponseResult instanceof Promise
                 ? pipe(onResponseResult, Promiseable.toObservable())
                 : onResponseResult;
-            pipe(resultObs, ReactiveContainer.sinkInto(observer));
+            pipe(resultObs, Observable.observeWith(observer));
         }
         catch (e) {
             pipe(observer, Disposable.dispose(error(e)));
@@ -157,8 +156,8 @@ export const windowLocation =
             }
             return canGoBack;
         },
-        [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this[DelegatingLike_delegate], Observable.map(({ uri }) => uri), ReactiveContainer.sinkInto(observer));
+        [ObservableLike_observe](observer) {
+            pipe(this[DelegatingLike_delegate], Observable.map(({ uri }) => uri), Observable.observeWith(observer));
         },
     }));
     let currentWindowLocationStream = none;

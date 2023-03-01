@@ -28,10 +28,10 @@ import {
   DisposableRefLike,
   MutableRefLike_current,
 } from "../../../util/__internal__/util.internal.js";
+import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
@@ -93,7 +93,7 @@ const Observable_buffer: <T>(options?: {
               pipe(
                 [buffer],
                 ReadonlyArray_toRunnable(),
-                ReactiveContainer_sinkInto(delegate),
+                Observable_observeWith(delegate),
               );
             }
           }),

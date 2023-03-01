@@ -12,7 +12,7 @@
 
   ↳↳ [`InteractiveContainerLike`](ix.InteractiveContainerLike.md)
 
-  ↳↳ [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)
+  ↳↳ [`ObservableLike`](rx.ObservableLike.md)
 
 ## Table of contents
 

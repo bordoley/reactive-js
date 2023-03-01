@@ -26,17 +26,17 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObservableLike_observe,
   ObserverLike,
   ObserverLike_dispatcher,
   ObserverLike_scheduler,
-  ReactiveContainerLike_sinkInto,
   SinkLike_notify,
 } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import {
   DispatcherLike,
   DispatcherLike_scheduler,
@@ -74,7 +74,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
         function DispatchedObservable(
           instance: Pick<
             DispatchedObservableLike<T>,
-            | typeof ReactiveContainerLike_sinkInto
+            | typeof ObservableLike_observe
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof QueueLike_count
@@ -135,7 +135,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             }
           },
 
-          [ReactiveContainerLike_sinkInto](
+          [ObservableLike_observe](
             this: TProperties & DispatchedObservableLike<T>,
             observer: ObserverLike<T>,
           ) {
@@ -181,7 +181,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           | typeof MulticastObservableLike_replay
           | typeof QueueLike_count
           | typeof QueueLike_push
-          | typeof ReactiveContainerLike_sinkInto
+          | typeof ObservableLike_observe
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
         > &
@@ -242,14 +242,8 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           this[DelegatingLike_delegate][QueueLike_push](req);
         },
 
-        [ReactiveContainerLike_sinkInto](
-          this: TProperties,
-          observer: ObserverLike<T>,
-        ) {
-          pipe(
-            this[StreamMixin_observable],
-            ReactiveContainer_sinkInto(observer),
-          );
+        [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
+          pipe(this[StreamMixin_observable], Observable_observeWith(observer));
         },
       },
     ),

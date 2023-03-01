@@ -21,15 +21,15 @@ import {
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
   ObservableLike,
+  ObservableLike_observe,
   ObserverLike,
-  ReactiveContainerLike_sinkInto,
   ScanAsync,
 } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
@@ -51,7 +51,7 @@ const AsyncEnumerable_scanAsync: ScanAsync<
       function ScanAsyncAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TAcc>,
-          | typeof ReactiveContainerLike_sinkInto
+          | typeof ObservableLike_observe
           | typeof MulticastObservableLike_observerCount
           | typeof MulticastObservableLike_replay
         > &
@@ -86,13 +86,13 @@ const AsyncEnumerable_scanAsync: ScanAsync<
             this[ScanAsyncAsyncEnumerator_obs],
           );
         },
-        [ReactiveContainerLike_sinkInto](
+        [ObservableLike_observe](
           this: TProperties,
           observer: ObserverLike<TAcc>,
         ): void {
           pipe(
             this[ScanAsyncAsyncEnumerator_obs],
-            ReactiveContainer_sinkInto(observer),
+            Observable_observeWith(observer),
           );
         },
       },

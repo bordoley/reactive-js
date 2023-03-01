@@ -22,12 +22,9 @@ const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const typedReduceSinkMixin = Sink_reduceMixin<
-    ObservableLike<TAcc>,
-    ObserverLike<TAcc>,
-    T,
-    TAcc
-  >(ReadonlyArray_toRunnable());
+  const typedReduceSinkMixin = Sink_reduceMixin<ObservableLike<TAcc>, T, TAcc>(
+    ReadonlyArray_toRunnable(),
+  );
 
   const typedObserverMixin = Observer_mixin<T>();
 

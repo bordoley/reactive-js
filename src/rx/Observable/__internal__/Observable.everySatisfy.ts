@@ -8,7 +8,7 @@ import {
 import { EverySatisfy } from "../../../containers.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import { Predicate, partial, pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike, SinkLike } from "../../../rx.js";
+import { ObservableLike, ObserverLike } from "../../../rx.js";
 import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -20,7 +20,6 @@ const Observable_everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"] =
     const typedObserverMixin = Observer_mixin();
     const typedEverySatisfySinkMixin = Sink_everySatisfyMixin<
       ObservableLike<boolean>,
-      SinkLike<boolean>,
       T
     >(ReadonlyArray_toRunnable());
 

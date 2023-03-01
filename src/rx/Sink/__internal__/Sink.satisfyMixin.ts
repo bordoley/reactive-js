@@ -11,8 +11,9 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Predicate, none, pipe } from "../../../functions.js";
 import {
-  ReactiveContainerLike,
-  SinkLike,
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_scheduler,
   SinkLike_notify,
 } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -20,26 +21,19 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Sink_notify from "./Sink.notify.js";
 
-const Sink_satisfyMixin: <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<boolean>,
-  T,
->(
+const Sink_satisfyMixin: <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly boolean[]) => C,
   defaultResult: boolean,
 ) => Mixin2<
-  SinkLike<T>,
-  TSink,
+  ObserverLike<T>,
+  ObserverLike<boolean>,
   Predicate<T>,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
-> = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<boolean>,
-  T,
->(
+  Pick<ObserverLike<T>, typeof SinkLike_notify>
+> = <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly boolean[]) => C,
   defaultResult: boolean,
 ) => {
@@ -50,15 +44,16 @@ const Sink_satisfyMixin: <
   };
 
   return mix(
-    include(Disposable_mixin, delegatingMixin()),
+    include(Disposable_mixin, delegatingMixin(), Observer_mixin<T>()),
     function SatisfySinkMixin(
       instance: Mutable<TProperties> &
-        Pick<SinkLike<T>, typeof SinkLike_notify>,
-      delegate: TSink,
+        Pick<ObserverLike<T>, typeof SinkLike_notify>,
+      delegate: ObserverLike<boolean>,
       predicate: Predicate<T>,
-    ): SinkLike<T> {
+    ): ObserverLike<T> {
       init(Disposable_mixin, instance);
       init(delegatingMixin(), instance, delegate);
+      init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
 
       instance[SatisfySinkMixin_predicate] = predicate;
 
@@ -70,7 +65,7 @@ const Sink_satisfyMixin: <
             pipe(
               [defaultResult],
               fromReadonlyArray,
-              ReactiveContainer_sinkInto(delegate),
+              Observable_observeWith(delegate),
             );
           }
         }),
@@ -82,7 +77,10 @@ const Sink_satisfyMixin: <
       [SatisfySinkMixin_predicate]: none,
     }),
     {
-      [SinkLike_notify](this: TProperties & DelegatingLike<TSink>, next: T) {
+      [SinkLike_notify](
+        this: TProperties & DelegatingLike<ObserverLike<boolean>>,
+        next: T,
+      ) {
         if (this[SatisfySinkMixin_predicate](next)) {
           pipe(
             this[DelegatingLike_delegate],

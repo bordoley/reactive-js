@@ -175,6 +175,7 @@ export declare const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanA
 export declare const share: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 } | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
+export declare const observeWith: <C extends ObservableLike<unknown>, T>(sink: ObserverLike<T>) => Function1<C, C>;
 export declare const skipFirst: SkipFirst<ObservableLike>["skipFirst"];
 export declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];
 export declare const startWith: StartWith<ObservableLike>["startWith"];

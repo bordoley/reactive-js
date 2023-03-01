@@ -32,7 +32,6 @@ Reactive-JS
 - [rx/MulticastObservable](modules/rx_MulticastObservable.md)
 - [rx/Observable](modules/rx_Observable.md)
 - [rx/Observer](modules/rx_Observer.md)
-- [rx/ReactiveContainer](modules/rx_ReactiveContainer.md)
 - [rx/Runnable](modules/rx_Runnable.md)
 - [rx/Sink](modules/rx_Sink.md)
 - [rx/Subject](modules/rx_Subject.md)

@@ -8,7 +8,7 @@ export const ObserverLike_dispatcher = Symbol("ObserverLike_dispatcher");
 /** @ignore */
 export const ObserverLike_scheduler = Symbol("ObserverLike_scheduler");
 /** @ignore */
-export const ReactiveContainerLike_sinkInto = Symbol("ReactiveContainerLike_sinkInto");
+export const ObservableLike_observe = Symbol(" ObservableLike_observe");
 /**  @ignore */
 export const ObservableLike_isEnumerable = Symbol("ObservableLike_isEnumerable");
 /**  @ignore */

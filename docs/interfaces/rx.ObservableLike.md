@@ -14,7 +14,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ## Hierarchy
 
-- [`ReactiveContainerLike`](rx.ReactiveContainerLike.md)<[`ObserverLike`](rx.ObserverLike.md)<`T`\>\>
+- [`StatefulContainerLike`](containers.StatefulContainerLike.md)
 
   ↳ **`ObservableLike`**
 
@@ -30,6 +30,11 @@ The source of notifications which notifies a `ObserverLike` instance.
 - [[ObservableLike\_isEnumerable]](rx.ObservableLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.ObservableLike.md#[observablelike_isrunnable])
 - [[StatefulContainerLike\_state]](rx.ObservableLike.md#[statefulcontainerlike_state])
+- [[StatefulContainerLike\_variance]](rx.ObservableLike.md#[statefulcontainerlike_variance])
+
+### Methods
+
+- [[ObservableLike\_observe]](rx.ObservableLike.md#[observablelike_observe])
 
 ## Properties
 
@@ -39,7 +44,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 #### Overrides
 
-ReactiveContainerLike.\_\_@ContainerLike\_type@23116
+StatefulContainerLike.\_\_@ContainerLike\_type@23116
 
 ___
 
@@ -61,4 +66,30 @@ ___
 
 #### Overrides
 
-ReactiveContainerLike.\_\_@StatefulContainerLike\_state@23140
+[StatefulContainerLike](containers.StatefulContainerLike.md).[[StatefulContainerLike_state]](containers.StatefulContainerLike.md#[statefulcontainerlike_state])
+
+___
+
+### [StatefulContainerLike\_variance]
+
+• `Optional` `Readonly` **[StatefulContainerLike\_variance]**: ``"reactive"``
+
+#### Overrides
+
+[StatefulContainerLike](containers.StatefulContainerLike.md).[[StatefulContainerLike_variance]](containers.StatefulContainerLike.md#[statefulcontainerlike_variance])
+
+## Methods
+
+### [ObservableLike\_observe]
+
+▸ **[ObservableLike_observe]**(`sink`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `sink` | [`ObserverLike`](rx.ObserverLike.md)<`T`\> |
+
+#### Returns
+
+`void`

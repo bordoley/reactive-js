@@ -4,9 +4,9 @@ import { none, pipe } from "../../../functions.js";
 import EnumerableObservable_create from "../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observer_getScheduler from "../../../rx/Observer/__internal__/Observer.getScheduler.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -25,7 +25,7 @@ const AsyncEnumerable_toObservable = () => enumerable => {
             pipe(enumerator, Queue_push(none));
         }), Observable_onSubscribe(() => {
             pipe(enumerator, Queue_push(none));
-        }), ReactiveContainer_sinkInto(observer));
+        }), Observable_observeWith(observer));
     });
 };
 export default AsyncEnumerable_toObservable;

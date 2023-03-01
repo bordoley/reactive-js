@@ -95,6 +95,7 @@
 - [isEnumerable](rx_Observable.md#isenumerable)
 - [isRunnable](rx_Observable.md#isrunnable)
 - [multicast](rx_Observable.md#multicast)
+- [observeWith](rx_Observable.md#observewith)
 - [onSubscribe](rx_Observable.md#onsubscribe)
 - [share](rx_Observable.md#share)
 - [subscribe](rx_Observable.md#subscribe)
@@ -3939,6 +3940,29 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### observeWith
+
+▸ **observeWith**<`C`, `T`\>(`sink`): [`Function1`](functions.md#function1)<`C`, `C`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`, `C`\> |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `sink` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`C`, `C`\>
 
 ___
 

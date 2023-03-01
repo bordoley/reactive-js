@@ -14,11 +14,11 @@ import DisposableRef_create from "../../../util/DisposableRef/__internal__/Dispo
 import MutableRef_set from "../../../util/MutableRef/__internal__/MutableRef.set.js";
 import { MutableRefLike_current, } from "../../../util/__internal__/util.internal.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 const createThrottleObserver = (() => {
     const typedObserverMixin = Observer_mixin();
@@ -50,7 +50,7 @@ const createThrottleObserver = (() => {
             if (instance[ThrottleObserver_mode] !== ThrottleMode_first &&
                 instance[ThrottleObserver_hasValue] &&
                 !Disposable_isDisposed(delegate)) {
-                pipe([instance[ThrottleObserver_value]], ReadonlyArray_toRunnable(), ReactiveContainer_sinkInto(delegate));
+                pipe([instance[ThrottleObserver_value]], ReadonlyArray_toRunnable(), Observable_observeWith(delegate));
             }
         }));
         return instance;

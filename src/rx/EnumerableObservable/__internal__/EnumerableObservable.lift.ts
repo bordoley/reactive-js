@@ -4,8 +4,8 @@ import {
   EnumerableObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObservableLike_observe,
   ObserverLike,
-  ReactiveContainerLike_sinkInto,
 } from "../../../rx.js";
 import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 
@@ -35,7 +35,7 @@ class LiftedEnumerableObservable<TIn, TOut>
     this[LiftedEnumerableObservable_operators] = operators;
   }
 
-  [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
+  [ObservableLike_observe](observer: ObserverLike<TOut>) {
     pipeUnsafe(
       observer,
       ...this[LiftedEnumerableObservable_operators],

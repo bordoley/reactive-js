@@ -2,12 +2,12 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_dispatcher, ObserverLike_scheduler, ReactiveContainerLike_sinkInto, SinkLike_notify, } from "../../../rx.js";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_scheduler, SinkLike_notify, } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import { DispatcherLike_scheduler, SchedulerLike_inContinuation, } from "../../../scheduling.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
@@ -54,7 +54,7 @@ const DispatchedObservable_create =
                 dispatcher[QueueLike_push](next);
             }
         },
-        [ReactiveContainerLike_sinkInto](observer) {
+        [ObservableLike_observe](observer) {
             if (isSome(this[DispatchedObservable_observer])) {
                 raiseWithDebugMessage("DispatchedObservable already subscribed to");
             }
@@ -92,8 +92,8 @@ const Stream_mixin = /*@__PURE__*/ (() => {
         [QueueLike_push](req) {
             this[DelegatingLike_delegate][QueueLike_push](req);
         },
-        [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this[StreamMixin_observable], ReactiveContainer_sinkInto(observer));
+        [ObservableLike_observe](observer) {
+            pipe(this[StreamMixin_observable], Observable_observeWith(observer));
         },
     }));
 })();

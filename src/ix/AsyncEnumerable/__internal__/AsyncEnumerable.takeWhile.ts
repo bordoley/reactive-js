@@ -14,14 +14,14 @@ import {
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
+  ObservableLike_observe,
   ObserverLike,
-  ReactiveContainerLike_sinkInto,
 } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -45,7 +45,7 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
         function TakeWhileAsyncEnumerator(
           instance: Pick<
             AsyncEnumeratorLike<T>,
-            | typeof ReactiveContainerLike_sinkInto
+            | typeof ObservableLike_observe
             | typeof MulticastObservableLike_observerCount
             | typeof MulticastObservableLike_replay
           > &
@@ -81,13 +81,13 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
               this[TakeWhileAsyncEnumerator_obs],
             );
           },
-          [ReactiveContainerLike_sinkInto](
+          [ObservableLike_observe](
             this: TProperties,
             observer: ObserverLike<T>,
           ): void {
             pipe(
               this[TakeWhileAsyncEnumerator_obs],
-              ReactiveContainer_sinkInto(observer),
+              Observable_observeWith(observer),
             );
           },
         },

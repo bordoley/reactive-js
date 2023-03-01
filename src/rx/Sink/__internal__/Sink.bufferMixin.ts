@@ -13,7 +13,8 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import { none, pipe } from "../../../functions.js";
 import {
-  ReactiveContainerLike,
+  ObservableLike,
+  ObserverLike,
   SinkLike,
   SinkLike_notify,
 } from "../../../rx.js";
@@ -21,17 +22,12 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 
-const Sink_bufferMixin: <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<readonly T[]>,
-  T,
->(
+const Sink_bufferMixin: <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly T[][]) => C,
-) => Mixin2<SinkLike<T>, TSink, number> = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<readonly T[]>,
+) => Mixin2<SinkLike<T>, ObserverLike<T[]>, number> = <
+  C extends ObservableLike,
   T,
 >(
   fromReadonlyArray: (v: readonly T[][]) => C,
@@ -49,11 +45,11 @@ const Sink_bufferMixin: <
     function BufferSinkMixin(
       instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
-      delegate: TSink,
+      delegate: ObserverLike<T[]>,
       maxBufferSize: number,
     ): SinkLike<T> {
       init(Disposable_mixin, instance);
-      init(delegatingMixin<TSink>(), instance, delegate);
+      init(delegatingMixin<ObserverLike<T[]>>(), instance, delegate);
 
       instance[BufferSinkMixin_maxBufferSize] = maxBufferSize;
       instance[BufferSinkMixin_buffer] = [];
@@ -71,7 +67,7 @@ const Sink_bufferMixin: <
             pipe(
               [buffer],
               fromReadonlyArray,
-              ReactiveContainer_sinkInto<C, TSink, readonly T[]>(
+              Observable_observeWith<C, readonly T[]>(
                 instance[DelegatingLike_delegate],
               ),
             );
@@ -86,7 +82,10 @@ const Sink_bufferMixin: <
       [BufferSinkMixin_buffer]: none,
     }),
     {
-      [SinkLike_notify](this: TProperties & DelegatingLike<TSink>, next: T) {
+      [SinkLike_notify](
+        this: TProperties & DelegatingLike<ObserverLike<T[]>>,
+        next: T,
+      ) {
         const {
           [BufferSinkMixin_buffer]: buffer,
           [BufferSinkMixin_maxBufferSize]: maxBufferSize,

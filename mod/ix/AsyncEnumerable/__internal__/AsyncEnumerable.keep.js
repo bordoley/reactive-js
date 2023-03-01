@@ -3,13 +3,13 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
 import { none, pipe, unsafeCast } from "../../../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, } from "../../../rx.js";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
@@ -37,8 +37,8 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return MulticastObservable_getReplay(this[KeepAsyncEnumerator_obs]);
         },
-        [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this[KeepAsyncEnumerator_obs], ReactiveContainer_sinkInto(observer));
+        [ObservableLike_observe](observer) {
+            pipe(this[KeepAsyncEnumerator_obs], Observable_observeWith(observer));
         },
     }));
     return pipe(createKeepAsyncEnumerator, StatefulContainer_keep(AsyncEnumerable_lift(true, true)));

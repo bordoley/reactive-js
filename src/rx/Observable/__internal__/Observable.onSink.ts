@@ -6,23 +6,19 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
-import { ReactiveContainerLike, SinkLike } from "../../../rx.js";
+import { ObservableLike, ObserverLike } from "../../../rx.js";
 import { DisposableOrTeardown } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import ReactiveContainer_sinkInto from "./ReactiveContainer.sinkInto.js";
+import Observable_observeWith from "./Observable.observeWith.js";
 
-const ReactiveContainer_onSink = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<T>,
-  T,
->(
-  createReactiveContainer: (f: (onSink: TSink) => void) => C,
+const Observable_onSink = <C extends ObservableLike>(
+  createObservable: (f: (onSink: ObserverLike) => void) => C,
   src: C,
   f: Factory<DisposableOrTeardown | void>,
 ): C =>
-  createReactiveContainer(sink => {
-    pipe(src, ReactiveContainer_sinkInto(sink));
+  createObservable(sink => {
+    pipe(src, Observable_observeWith(sink));
 
     const disposable = f() || none;
     pipe(
@@ -35,4 +31,4 @@ const ReactiveContainer_onSink = <
     );
   });
 
-export default ReactiveContainer_onSink;
+export default Observable_onSink;

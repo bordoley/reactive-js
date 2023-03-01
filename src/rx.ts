@@ -47,19 +47,7 @@ export interface ObserverLike<T = unknown> extends SinkLike<T> {
 }
 
 /** @ignore */
-export const ReactiveContainerLike_sinkInto = Symbol(
-  "ReactiveContainerLike_sinkInto",
-);
-
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface ReactiveContainerLike<TSink extends DisposableLike>
-  extends StatefulContainerLike {
-  readonly [StatefulContainerLike_variance]?: "reactive";
-  [ReactiveContainerLike_sinkInto](sink: TSink): void;
-}
+export const ObservableLike_observe = Symbol(" ObservableLike_observe");
 
 /**  @ignore */
 export const ObservableLike_isEnumerable = Symbol(
@@ -75,15 +63,17 @@ export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
  * @noInheritDoc
  * @category Container
  */
-export interface ObservableLike<T = unknown>
-  extends ReactiveContainerLike<ObserverLike<T>> {
+export interface ObservableLike<T = unknown> extends StatefulContainerLike {
   readonly [StatefulContainerLike_state]?: ObserverLike<
     this[typeof ContainerLike_T]
   >;
+  readonly [StatefulContainerLike_variance]?: "reactive";
   readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
 
   readonly [ObservableLike_isEnumerable]: boolean;
   readonly [ObservableLike_isRunnable]: boolean;
+
+  [ObservableLike_observe](sink: ObserverLike<T>): void;
 }
 
 /**

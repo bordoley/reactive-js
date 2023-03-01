@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, mix, props, } from "../../../__internal__/mixins.js";
 import { error, none, pipe } from "../../../functions.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, } from "../../../rx.js";
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 const Observable_create = /*@__PURE__*/ (() => {
     const CreateObservable_effect = Symbol("CreateObservable_effect");
@@ -16,7 +16,7 @@ const Observable_create = /*@__PURE__*/ (() => {
         [ObservableLike_isRunnable]: false,
         [ObservableLike_isEnumerable]: false,
     }), {
-        [ReactiveContainerLike_sinkInto](observer) {
+        [ObservableLike_observe](observer) {
             try {
                 this[CreateObservable_effect](observer);
             }

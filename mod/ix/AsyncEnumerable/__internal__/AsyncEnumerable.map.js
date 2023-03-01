@@ -3,11 +3,11 @@
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map.js";
 import { none, pipe, unsafeCast } from "../../../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, } from "../../../rx.js";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
@@ -29,8 +29,8 @@ const AsyncEnumerable_map = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return MulticastObservable_getReplay(this[DelegatingLike_delegate]);
         },
-        [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this[DelegatingLike_delegate], this[MapAsyncEnumerator_op], ReactiveContainer_sinkInto(observer));
+        [ObservableLike_observe](observer) {
+            pipe(this[DelegatingLike_delegate], this[MapAsyncEnumerator_op], Observable_observeWith(observer));
         },
     }));
     return pipe(createMapAsyncEnumerator, StatefulContainer_map(AsyncEnumerable_lift(true, true)));

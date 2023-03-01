@@ -1,16 +1,16 @@
 import { Function1 } from "../../../functions.js";
 import {
-  ReactiveContainerLike,
-  ReactiveContainerLike_sinkInto,
-  SinkLike,
+  ObservableLike,
+  ObservableLike_observe,
+  ObserverLike,
 } from "../../../rx.js";
 
 const Sink_sourceFrom =
-  <C extends ReactiveContainerLike<TSink>, TSink extends SinkLike<T>, T>(
+  <C extends ObservableLike, TSink extends ObserverLike<T>, T>(
     source: C,
   ): Function1<TSink, TSink> =>
   sink => {
-    source[ReactiveContainerLike_sinkInto](sink);
+    source[ObservableLike_observe](sink);
     return sink;
   };
 
