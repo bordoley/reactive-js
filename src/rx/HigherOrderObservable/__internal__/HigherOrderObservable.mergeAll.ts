@@ -44,7 +44,7 @@ import Observable_subscribe from "../../Observable/__internal__/Observable.subsc
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_notifySink from "../../Sink/__internal__/Sink.notifySink.js";
+import Observer_notifySink from "../../Observer/__internal__/Observer.notifySink.js";
 
 const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
   lift: <T>(
@@ -98,7 +98,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           pipe(
             nextObs,
             Observable_forEach(
-              Sink_notifySink(observer[DelegatingLike_delegate]),
+              Observer_notifySink(observer[DelegatingLike_delegate]),
             ),
             Observable_subscribe(Observer_getScheduler(observer)),
             Disposable_addTo(observer[DelegatingLike_delegate]),

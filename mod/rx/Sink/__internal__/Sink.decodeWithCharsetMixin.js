@@ -9,7 +9,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-const Sink_decodeWithCharsetMixin = (fromReadonlyArray) => {
+const Observer_decodeWithCharsetMixin = (fromReadonlyArray) => {
     const DecodeWithCharsetSinkMixin_textDecoder = Symbol("DecodeWithCharsetSinkMixin_textDecoder");
     return mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function DecodeWithCharsetSinkMixin(instance, delegate, charset) {
         init(Disposable_mixin, instance);
@@ -40,4 +40,4 @@ const Sink_decodeWithCharsetMixin = (fromReadonlyArray) => {
         },
     });
 };
-export default Sink_decodeWithCharsetMixin;
+export default Observer_decodeWithCharsetMixin;

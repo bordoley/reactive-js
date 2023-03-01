@@ -6,7 +6,7 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
-import Sink_notifySink from "../../Sink/__internal__/Sink.notifySink.js";
+import Observer_notifySink from "../../Observer/__internal__/Observer.notifySink.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
@@ -37,7 +37,7 @@ const Observable_repeatOrRetry: <T>(
 
         pipe(
           observable,
-          Observable_forEach(Sink_notifySink(delegate)),
+          Observable_forEach(Observer_notifySink(delegate)),
           Observable_subscribe(Observer_getScheduler(delegate)),
           Disposable_addToIgnoringChildErrors(delegate),
           Disposable_onDisposed(doOnDispose),

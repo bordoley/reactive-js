@@ -5,13 +5,13 @@ import {
   ObserverLike,
 } from "../../../rx.js";
 
-const Sink_sourceFrom =
-  <C extends ObservableLike, TSink extends ObserverLike<T>, T>(
+const Observer_sourceFrom =
+  <C extends ObservableLike, TObserver extends ObserverLike<T>, T>(
     source: C,
-  ): Function1<TSink, TSink> =>
+  ): Function1<TObserver, TObserver> =>
   sink => {
     source[ObservableLike_observe](sink);
     return sink;
   };
 
-export default Sink_sourceFrom;
+export default Observer_sourceFrom;

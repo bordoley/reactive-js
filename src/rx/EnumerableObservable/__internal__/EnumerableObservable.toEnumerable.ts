@@ -46,7 +46,7 @@ import {
 } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
 const EnumerableObservable_toEnumerable: ToEnumerable<EnumerableObservableLike>["toEnumerable"] =
   /*@__PURE__*/ (<T>() => {
@@ -170,7 +170,7 @@ const EnumerableObservable_toEnumerable: ToEnumerable<EnumerableObservableLike>[
           pipe(
             createEnumeratorObserver(scheduler),
             Disposable_addTo(scheduler),
-            Sink_sourceFrom(obs),
+            Observer_sourceFrom(obs),
           );
 
           return scheduler;

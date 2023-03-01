@@ -30,7 +30,7 @@ import {
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-const Sink_takeLastMixin: <C extends ObservableLike, T>(
+const Observer_takeLastMixin: <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly T[]) => C,
 ) => Mixin2<
   ObserverLike<T>,
@@ -99,4 +99,4 @@ const Sink_takeLastMixin: <C extends ObservableLike, T>(
   );
 };
 
-export default Sink_takeLastMixin;
+export default Observer_takeLastMixin;

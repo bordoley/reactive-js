@@ -12,9 +12,9 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import Sink_satisfyMixin from "./Sink.satisfyMixin.js";
+import Observer_satisfyMixin from "./Sink.satisfyMixin.js";
 
-const Sink_everySatisfyMixin: <C extends ObservableLike, T>(
+const Observer_everySatisfyMixin: <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly boolean[]) => C,
 ) => Mixin2<
   ObserverLike<T>,
@@ -24,7 +24,7 @@ const Sink_everySatisfyMixin: <C extends ObservableLike, T>(
 > = <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly boolean[]) => C,
 ) => {
-  const typedSatisfySinkMixin = Sink_satisfyMixin<C, T>(
+  const typedSatisfySinkMixin = Observer_satisfyMixin<C, T>(
     fromReadonlyArray,
     true,
   );
@@ -50,4 +50,4 @@ const Sink_everySatisfyMixin: <C extends ObservableLike, T>(
   );
 };
 
-export default Sink_everySatisfyMixin;
+export default Observer_everySatisfyMixin;

@@ -15,10 +15,10 @@ import Observable_subscribe from "../../Observable/__internal__/Observable.subsc
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
 import Observable_takeUntil from "../../Observable/__internal__/Observable.takeUntil.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 const Runnable_toFlowable = () => observable => Flowable_createLifted((modeObs) => Observable_create(observer => {
     const pauseableScheduler = pipe(observer, Observer_getScheduler, Scheduler_toPausableScheduler);
-    pipe(observer, Sink_sourceFrom(pipe(observable, Observable_subscribeOn(pauseableScheduler), Observable_takeUntil(pipe(pauseableScheduler, Disposable_toObservable())))), Disposable_add(pipe(modeObs, Observable_forEach(mode => {
+    pipe(observer, Observer_sourceFrom(pipe(observable, Observable_subscribeOn(pauseableScheduler), Observable_takeUntil(pipe(pauseableScheduler, Disposable_toObservable())))), Disposable_add(pipe(modeObs, Observable_forEach(mode => {
         switch (mode) {
             case PauseableState_paused:
                 Pauseable_pause(pauseableScheduler);

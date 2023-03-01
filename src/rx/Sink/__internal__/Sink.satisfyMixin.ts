@@ -23,9 +23,9 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_notify from "./Sink.notify.js";
+import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
 
-const Sink_satisfyMixin: <C extends ObservableLike, T>(
+const Observer_satisfyMixin: <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly boolean[]) => C,
   defaultResult: boolean,
 ) => Mixin2<
@@ -84,7 +84,7 @@ const Sink_satisfyMixin: <C extends ObservableLike, T>(
         if (this[SatisfySinkMixin_predicate](next)) {
           pipe(
             this[DelegatingLike_delegate],
-            Sink_notify(!defaultResult),
+            Observer_notify(!defaultResult),
             Disposable_dispose(),
           );
         }
@@ -93,4 +93,4 @@ const Sink_satisfyMixin: <C extends ObservableLike, T>(
   );
 };
 
-export default Sink_satisfyMixin;
+export default Observer_satisfyMixin;

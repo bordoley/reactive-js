@@ -19,7 +19,7 @@ import Observable_subscribe from "../../Observable/__internal__/Observable.subsc
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
 import Observable_takeUntil from "../../Observable/__internal__/Observable.takeUntil.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
 const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
   () => observable =>
@@ -33,7 +33,7 @@ const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
 
         pipe(
           observer,
-          Sink_sourceFrom(
+          Observer_sourceFrom(
             pipe(
               observable,
               Observable_subscribeOn(pauseableScheduler),

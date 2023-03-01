@@ -2,7 +2,7 @@
 
 import { newInstance, pipeUnsafe } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 const LiftedObservable_source = Symbol("LiftedObservable_source");
 const LiftedObservable_operators = Symbol("LiftedObservable_operators");
 class LiftedObservable {
@@ -13,7 +13,7 @@ class LiftedObservable {
         this[ObservableLike_isRunnable] = isRunnable;
     }
     [ObservableLike_observe](observer) {
-        pipeUnsafe(observer, ...this[LiftedObservable_operators], Sink_sourceFrom(this[LiftedObservable_source]));
+        pipeUnsafe(observer, ...this[LiftedObservable_operators], Observer_sourceFrom(this[LiftedObservable_source]));
     }
 }
 const Observable_lift = (isEnumerable = false, isRunnable = false) => (operator) => source => {

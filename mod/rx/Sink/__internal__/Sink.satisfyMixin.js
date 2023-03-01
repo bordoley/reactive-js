@@ -10,8 +10,8 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_notify from "./Sink.notify.js";
-const Sink_satisfyMixin = (fromReadonlyArray, defaultResult) => {
+import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
+const Observer_satisfyMixin = (fromReadonlyArray, defaultResult) => {
     const SatisfySinkMixin_predicate = Symbol("SatisfySinkMixin_predicate");
     return mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function SatisfySinkMixin(instance, delegate, predicate) {
         init(Disposable_mixin, instance);
@@ -29,9 +29,9 @@ const Sink_satisfyMixin = (fromReadonlyArray, defaultResult) => {
     }), {
         [ObserverLike_notify](next) {
             if (this[SatisfySinkMixin_predicate](next)) {
-                pipe(this[DelegatingLike_delegate], Sink_notify(!defaultResult), Disposable_dispose());
+                pipe(this[DelegatingLike_delegate], Observer_notify(!defaultResult), Disposable_dispose());
             }
         },
     });
 };
-export default Sink_satisfyMixin;
+export default Observer_satisfyMixin;

@@ -16,11 +16,11 @@ import {
 } from "../../../rx.js";
 import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_takeLastMixin from "../../Sink/__internal__/Sink.takeLastMixin.js";
+import Observer_takeLastMixin from "../../Sink/__internal__/Sink.takeLastMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeLast: TakeLast<ObservableLike>["takeLast"] =
   /*@__PURE__*/ (() => {
-    const typedTakeLastSinkMixin = Sink_takeLastMixin(
+    const typedTakeLastSinkMixin = Observer_takeLastMixin(
       ReadonlyArray_toRunnable(),
     );
     const typedObserverMixin = Observer_mixin();

@@ -19,7 +19,7 @@ import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal_
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 const EnumerableObservable_toEnumerable = 
 /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
@@ -75,7 +75,7 @@ const EnumerableObservable_toEnumerable =
     }));
     return () => (obs) => Enumerable_create(() => {
         const scheduler = createEnumeratorScheduler();
-        pipe(createEnumeratorObserver(scheduler), Disposable_addTo(scheduler), Sink_sourceFrom(obs));
+        pipe(createEnumeratorObserver(scheduler), Disposable_addTo(scheduler), Observer_sourceFrom(obs));
         return scheduler;
     });
 })();

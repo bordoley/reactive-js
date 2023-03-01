@@ -2,7 +2,7 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import { pipe } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
-import Sink_sourceFrom from "../../../rx/Sink/__internal__/Sink.sourceFrom.js";
+import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -42,7 +42,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
       for (const observable of observables) {
         pipe(
           createMergeObserver(observer, count, ctx),
-          Sink_sourceFrom(observable),
+          Observer_sourceFrom(observable),
         );
       }
     };

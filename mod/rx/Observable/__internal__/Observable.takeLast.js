@@ -7,11 +7,11 @@ import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
 import Observer_decorateNotifyForDev from "../../Observer/__internal__/Observer.decorateNotifyForDev.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Sink_takeLastMixin from "../../Sink/__internal__/Sink.takeLastMixin.js";
+import Observer_takeLastMixin from "../../Sink/__internal__/Sink.takeLastMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeLast = 
 /*@__PURE__*/ (() => {
-    const typedTakeLastSinkMixin = Sink_takeLastMixin(ReadonlyArray_toRunnable());
+    const typedTakeLastSinkMixin = Observer_takeLastMixin(ReadonlyArray_toRunnable());
     const typedObserverMixin = Observer_mixin();
     const createTakeLastObserver = createInstanceFactory(mix(include(typedObserverMixin, typedTakeLastSinkMixin), function TakeLastObserver(instance, delegate, takeCount) {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
