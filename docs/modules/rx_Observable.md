@@ -3897,7 +3897,7 @@ ___
 
 ### isRunnable
 
-▸ **isRunnable**(`v`): v is RunnableObservableLike<unknown\>
+▸ **isRunnable**(`v`): v is RunnableLike<unknown\>
 
 A type guard function that performs a runtime check
 guaranteeing `v` is of type `TB`.
@@ -3910,7 +3910,7 @@ guaranteeing `v` is of type `TB`.
 
 #### Returns
 
-v is RunnableObservableLike<unknown\>
+v is RunnableLike<unknown\>
 
 `true` if v is an instance of type `TB`, otherwise false.
 

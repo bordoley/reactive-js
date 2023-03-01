@@ -142,7 +142,7 @@
 
   ↳ [`FromEnumerableObservable`](rx.FromEnumerableObservable.md)
 
-  ↳ [`FromRunnableObservable`](rx.FromRunnableObservable.md)
+  ↳ [`FromRunnable`](rx.FromRunnable.md)
 
   ↳ [`Merge`](rx.Merge.md)
 
@@ -168,7 +168,7 @@
 
   ↳ [`ToObservable`](rx.ToObservable.md)
 
-  ↳ [`ToRunnableObservable`](rx.ToRunnableObservable.md)
+  ↳ [`ToRunnable`](rx.ToRunnable.md)
 
   ↳ [`ToEnumerableObservable`](rx.ToEnumerableObservable.md)
 

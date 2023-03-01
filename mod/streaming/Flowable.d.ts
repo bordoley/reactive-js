@@ -1,6 +1,6 @@
 import { FromAsyncIterable, FromIterable, FromReadonlyArray, FromSequence } from "../containers.js";
 import { FromEnumerable } from "../ix.js";
-import { FromEnumerableObservable, FromRunnableObservable, ToObservable } from "../rx.js";
+import { FromEnumerableObservable, FromRunnable, ToObservable } from "../rx.js";
 import { FlowableLike } from "../streaming.js";
 export declare const fromAsyncIterable: FromAsyncIterable<FlowableLike, {
     maxBuffer?: number;
@@ -12,6 +12,6 @@ export declare const fromReadonlyArray: FromReadonlyArray<FlowableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["fromReadonlyArray"];
-export declare const fromRunnableObservable: FromRunnableObservable<FlowableLike>["fromRunnableObservable"];
+export declare const fromRunnable: FromRunnable<FlowableLike>["fromRunnable"];
 export declare const fromSequence: FromSequence<FlowableLike>["fromSequence"];
 export declare const toObservable: ToObservable<FlowableLike>["toObservable"];

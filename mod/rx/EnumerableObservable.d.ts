@@ -1,6 +1,6 @@
 import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable } from "../ix.js";
-import { EnumerableObservableLike, Retry, ScanAsync, ToObservable, ToRunnableObservable } from "../rx.js";
+import { EnumerableObservableLike, Retry, ScanAsync, ToObservable, ToRunnable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<EnumerableObservableLike>["buffer"];
 export declare const catchError: CatchError<EnumerableObservableLike>["catchError"];
@@ -52,9 +52,9 @@ export declare const toFlowable: ToFlowable<EnumerableObservableLike>["toFlowabl
 export declare const toIterable: ToIterable<EnumerableObservableLike>["toIterable"];
 export declare const toObservable: ToObservable<EnumerableObservableLike>["toObservable"];
 export declare const toReadonlyArray: ToReadonlyArray<EnumerableObservableLike>["toReadonlyArray"];
-export declare const toRunnableObservable: ToRunnableObservable<EnumerableObservableLike, {
+export declare const toRunnable: ToRunnable<EnumerableObservableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
-}>["toRunnableObservable"];
+}>["toRunnable"];
 export declare const zip: Zip<EnumerableObservableLike>["zip"];
 export declare const zipWith: ZipWith<EnumerableObservableLike>["zipWith"];

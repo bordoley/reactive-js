@@ -11,7 +11,7 @@ import {
   ContainerOperator,
   FromReadonlyArray,
 } from "../../../containers.js";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import {
   Function1,
   Optional,
@@ -48,7 +48,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
-import RunnableObservable_lift from "../../RunnableObservable/__internal__/RunnableObservable.lift.js";
+import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 
 const createThrottleObserver: <T>(
   delegate: ObserverLike<T>,
@@ -137,7 +137,7 @@ const createThrottleObserver: <T>(
             ) {
               pipe(
                 [instance[ThrottleObserver_value]],
-                ReadonlyArray_toRunnableObservable(),
+                ReadonlyArray_toRunnable(),
                 ReactiveContainer_sinkInto(delegate),
               );
             }
@@ -230,7 +230,7 @@ const HigherOrderObservable_throttle =
       isNumber(duration)
         ? // Note: This is only safe because we can control all the callers and know
           // all the valid subtypes of ObservableLike
-          (RunnableObservable_lift as unknown as <T>(
+          (Runnable_lift as unknown as <T>(
             f: Function1<ObserverLike<T>, ObserverLike<T>>,
           ) => ContainerOperator<C, T, T>)
         : lift,

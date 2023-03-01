@@ -11,7 +11,7 @@
 - [fromEnumerableObservable](streaming_Flowable.md#fromenumerableobservable)
 - [fromIterable](streaming_Flowable.md#fromiterable)
 - [fromReadonlyArray](streaming_Flowable.md#fromreadonlyarray)
-- [fromRunnableObservable](streaming_Flowable.md#fromrunnableobservable)
+- [fromRunnable](streaming_Flowable.md#fromrunnable)
 - [fromSequence](streaming_Flowable.md#fromsequence)
 
 ### Converter Functions
@@ -131,9 +131,9 @@ ___
 
 ___
 
-### fromRunnableObservable
+### fromRunnable
 
-▸ **fromRunnableObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+▸ **fromRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -149,7 +149,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableObservableLike`](../interfaces/rx.RunnableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 

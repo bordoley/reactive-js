@@ -45,9 +45,9 @@ import {
   ZipWith,
 } from "../containers.js";
 import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
-import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable.js";
-import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
-import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable.js";
+import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.toRunnable.js";
+import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
 import {
   Factory,
   Function1,
@@ -66,7 +66,7 @@ import {
   TypePredicate,
 } from "../functions.js";
 import { FromEnumerable } from "../ix.js";
-import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
+import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
 import {
   CombineLatest,
   EnumerableObservableLike,
@@ -82,7 +82,7 @@ import {
   ObservableLike,
   ObserverLike,
   Retry,
-  RunnableObservableLike,
+  RunnableLike,
   ScanAsync,
   SwitchAll,
   SwitchMap,
@@ -408,7 +408,7 @@ export const fromEnumerable: FromEnumerable<
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["fromEnumerable"] = Enumerable_toRunnableObservable;
+>["fromEnumerable"] = Enumerable_toRunnable;
 
 export const fromIterable: FromIterable<
   ObservableLike,
@@ -416,7 +416,7 @@ export const fromIterable: FromIterable<
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["fromIterable"] = Iterable_toRunnableObservable;
+>["fromIterable"] = Iterable_toRunnable;
 
 export const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"] =
   Flowable_toObservable;
@@ -427,7 +427,7 @@ export const fromReadonlyArray: FromReadonlyArray<
     delay?: number;
     delayStart?: boolean;
   }
->["fromReadonlyArray"] = ReadonlyArray_toRunnableObservable;
+>["fromReadonlyArray"] = ReadonlyArray_toRunnable;
 
 export const fromSequence: FromSequence<
   ObservableLike,
@@ -435,7 +435,7 @@ export const fromSequence: FromSequence<
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["fromSequence"] = Sequence_toRunnableObservable;
+>["fromSequence"] = Sequence_toRunnable;
 
 export const generate: Generate<
   ObservableLike,
@@ -450,7 +450,7 @@ export const isEnumerable: TypePredicate<
   EnumerableObservableLike
 > = Observable_isEnumerable;
 
-export const isRunnable: TypePredicate<ObservableLike, RunnableObservableLike> =
+export const isRunnable: TypePredicate<ObservableLike, RunnableLike> =
   Observable_isRunnable;
 
 export const keep: Keep<ObservableLike>["keep"] = Observable_keep;

@@ -28,11 +28,7 @@ import {
   ZipWith,
 } from "../containers.js";
 import { ToAsyncEnumerable, ToEnumerable } from "../ix.js";
-import {
-  ToEnumerableObservable,
-  ToObservable,
-  ToRunnableObservable,
-} from "../rx.js";
+import { ToEnumerableObservable, ToObservable, ToRunnable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 import Sequence_compute from "./Sequence/__internal__/Sequence.compute.js";
@@ -61,7 +57,7 @@ import Sequence_toEnumerable from "./Sequence/__internal__/Sequence.toEnumerable
 import Sequence_toFlowable from "./Sequence/__internal__/Sequence.toFlowable.js";
 import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable.js";
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
-import Sequence_toRunnableObservable from "./Sequence/__internal__/Sequence.toRunnableObservable.js";
+import Sequence_toRunnable from "./Sequence/__internal__/Sequence.toRunnable.js";
 import Sequence_zip from "./Sequence/__internal__/Sequence.zip.js";
 import Sequence_zipWith from "./Sequence/__internal__/Sequence.zipWith.js";
 
@@ -126,7 +122,7 @@ export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   Sequence_toEnumerable;
 
 export const toEnumerableObservable: ToEnumerableObservable<SequenceLike>["toEnumerableObservable"] =
-  Sequence_toRunnableObservable as ToEnumerableObservable<SequenceLike>["toEnumerableObservable"];
+  Sequence_toRunnable as ToEnumerableObservable<SequenceLike>["toEnumerableObservable"];
 
 export const toFlowable: ToFlowable<
   SequenceLike,
@@ -145,18 +141,18 @@ export const toObservable: ToObservable<
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["toObservable"] = Sequence_toRunnableObservable;
+>["toObservable"] = Sequence_toRunnable;
 
 export const toReadonlyArray: ToReadonlyArray<SequenceLike>["toReadonlyArray"] =
   Sequence_toReadonlyArray;
 
-export const toRunnableObservable: ToRunnableObservable<
+export const toRunnable: ToRunnable<
   SequenceLike,
   {
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["toRunnableObservable"] = Sequence_toRunnableObservable;
+>["toRunnable"] = Sequence_toRunnable;
 
 export const zip: Zip<SequenceLike>["zip"] = Sequence_zip;
 

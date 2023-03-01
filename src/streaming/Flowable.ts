@@ -10,12 +10,8 @@ import ReadonlyArray_toFlowable from "../containers/ReadonlyArray/__internal__/R
 import Sequence_toFlowable from "../containers/Sequence/__internal__/Sequence.toFlowable.js";
 import { FromEnumerable } from "../ix.js";
 import Enumerable_toFlowable from "../ix/Enumerable/__internal__/Enumerable.toFlowable.js";
-import {
-  FromEnumerableObservable,
-  FromRunnableObservable,
-  ToObservable,
-} from "../rx.js";
-import RunnableObservable_toFlowable from "../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
+import { FromEnumerableObservable, FromRunnable, ToObservable } from "../rx.js";
+import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import { FlowableLike } from "../streaming.js";
 import Flowable_toObservable from "./Flowable/__internal__/Flowable.toObservable.js";
 
@@ -28,7 +24,7 @@ export const fromEnumerable: FromEnumerable<FlowableLike>["fromEnumerable"] =
   Enumerable_toFlowable;
 
 export const fromEnumerableObservable: FromEnumerableObservable<FlowableLike>["fromEnumerableObservable"] =
-  RunnableObservable_toFlowable;
+  Runnable_toFlowable;
 
 export const fromIterable: FromIterable<FlowableLike>["fromIterable"] =
   Iterable_toFlowable;
@@ -41,8 +37,8 @@ export const fromReadonlyArray: FromReadonlyArray<
   }
 >["fromReadonlyArray"] = ReadonlyArray_toFlowable;
 
-export const fromRunnableObservable: FromRunnableObservable<FlowableLike>["fromRunnableObservable"] =
-  RunnableObservable_toFlowable;
+export const fromRunnable: FromRunnable<FlowableLike>["fromRunnable"] =
+  Runnable_toFlowable;
 
 export const fromSequence: FromSequence<FlowableLike>["fromSequence"] =
   Sequence_toFlowable;

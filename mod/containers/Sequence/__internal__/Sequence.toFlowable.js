@@ -1,7 +1,7 @@
 /// <reference types="./Sequence.toFlowable.d.ts" />
 
 import { compose } from "../../../functions.js";
-import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
-import Sequence_toRunnableObservable from "./Sequence.toRunnableObservable.js";
-const Sequence_toFlowable = options => compose(Sequence_toRunnableObservable(options), RunnableObservable_toFlowable());
+import Runnable_toFlowable from "../../../rx/Runnable/__internal__/Runnable.toFlowable.js";
+import Sequence_toRunnable from "./Sequence.toRunnable.js";
+const Sequence_toFlowable = options => compose(Sequence_toRunnable(options), Runnable_toFlowable());
 export default Sequence_toFlowable;

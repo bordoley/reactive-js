@@ -1,8 +1,8 @@
 import { SequenceLike } from "../../../containers.js";
 import { compose } from "../../../functions.js";
-import RunnableObservable_toFlowable from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toFlowable.js";
+import Runnable_toFlowable from "../../../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import { ToFlowable } from "../../../streaming.js";
-import Sequence_toRunnableObservable from "./Sequence.toRunnableObservable.js";
+import Sequence_toRunnable from "./Sequence.toRunnable.js";
 
 const Sequence_toFlowable: ToFlowable<
   SequenceLike,
@@ -11,9 +11,6 @@ const Sequence_toFlowable: ToFlowable<
     readonly delayStart?: boolean;
   }
 >["toFlowable"] = options =>
-  compose(
-    Sequence_toRunnableObservable(options),
-    RunnableObservable_toFlowable(),
-  );
+  compose(Sequence_toRunnable(options), Runnable_toFlowable());
 
 export default Sequence_toFlowable;

@@ -1,6 +1,6 @@
 /// <reference types="./AsyncEnumerable.generate.d.ts" />
 
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import { pipe } from "../../../functions.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
@@ -8,7 +8,7 @@ import { getDelay } from "../../../scheduling/__internal__/Scheduler.options.js"
 import AsyncEnumerable_create from "./AsyncEnumerable.create.js";
 const AsyncEnumerable_generate = /*@__PURE__*/ (() => {
     const generateScanner = (generator) => (acc, _) => generator(acc);
-    const asyncGeneratorScanner = (generator, options) => (acc, _) => pipe(acc, generator, x => [x], ReadonlyArray_toRunnableObservable(options));
+    const asyncGeneratorScanner = (generator, options) => (acc, _) => pipe(acc, generator, x => [x], ReadonlyArray_toRunnable(options));
     return (generator, initialValue, options) => {
         const delay = getDelay(options);
         return AsyncEnumerable_create(delay > 0

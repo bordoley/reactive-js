@@ -1,4 +1,4 @@
 declare const Observable_empty: <T>(options?: {
     delay: number;
-}) => import("../../../rx.js").RunnableObservableLike<T>;
+}) => import("../../../rx.js").RunnableLike<T>;
 export default Observable_empty;

@@ -1,11 +1,10 @@
 import {
   ObservableLike,
   ObservableLike_isRunnable,
-  RunnableObservableLike,
+  RunnableLike,
 } from "../../../rx.js";
 
-const Observable_isRunnable = (
-  obs: ObservableLike,
-): obs is RunnableObservableLike => obs[ObservableLike_isRunnable];
+const Observable_isRunnable = (obs: ObservableLike): obs is RunnableLike =>
+  obs[ObservableLike_isRunnable];
 
 export default Observable_isRunnable;

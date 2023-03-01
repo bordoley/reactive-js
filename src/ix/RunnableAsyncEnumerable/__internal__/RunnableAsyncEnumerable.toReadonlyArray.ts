@@ -4,8 +4,8 @@ import {
   AsyncEnumerableLike,
   RunnableAsyncEnumerableLike,
 } from "../../../ix.js";
-import { RunnableObservableLike } from "../../../rx.js";
-import RunnableObservable_toReadonlyArray from "../../../rx/RunnableObservable/__internal__/RunnableObservable.toReadonlyArray.js";
+import { RunnableLike } from "../../../rx.js";
+import Runnable_toReadonlyArray from "../../../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
 import AsyncEnumerable_toObservable from "../../AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
 
 const RunnableAsyncEnumerable_toReadonlyArray: ToReadonlyArray<RunnableAsyncEnumerableLike>["toReadonlyArray"] =
@@ -13,9 +13,9 @@ const RunnableAsyncEnumerable_toReadonlyArray: ToReadonlyArray<RunnableAsyncEnum
     compose(
       AsyncEnumerable_toObservable() as Function1<
         AsyncEnumerableLike<T>,
-        RunnableObservableLike<T>
+        RunnableLike<T>
       >,
-      RunnableObservable_toReadonlyArray(),
+      Runnable_toReadonlyArray(),
     );
 
 export default RunnableAsyncEnumerable_toReadonlyArray;

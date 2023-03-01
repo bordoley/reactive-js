@@ -53,11 +53,11 @@ import {
   ScanAsync,
   ToEnumerableObservable,
   ToObservable,
-  ToRunnableObservable,
+  ToRunnable,
 } from "../rx.js";
 import * as EnumerableObservable from "../rx/EnumerableObservable.js";
 import * as Observable from "../rx/Observable.js";
-import * as RunnableObservable from "../rx/RunnableObservable.js";
+import * as Runnable from "../rx/Runnable.js";
 import { __now } from "../scheduling/Continuation.js";
 import * as Scheduler from "../scheduling/Scheduler.js";
 import * as Disposable from "../util/Disposable.js";
@@ -1152,9 +1152,9 @@ export const toObservableTests = <C extends ContainerLike>(
     }
   });
 
-export const toRunnableObservableTests = <C extends ContainerLike>(
+export const toRunnableTests = <C extends ContainerLike>(
   m: FromReadonlyArray<C> &
-    ToRunnableObservable<
+    ToRunnable<
       C,
       {
         readonly delay?: number;
@@ -1163,14 +1163,14 @@ export const toRunnableObservableTests = <C extends ContainerLike>(
     >,
 ) =>
   describe(
-    "toRunnableObservable",
+    "toRunnable",
     test(
       "without delay",
       pipeLazy(
         [1, 2, 3, 4, 5],
         m.fromReadonlyArray(),
-        m.toRunnableObservable(),
-        RunnableObservable.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5]),
       ),
     ),
@@ -1179,9 +1179,9 @@ export const toRunnableObservableTests = <C extends ContainerLike>(
       pipeLazy(
         [9, 9, 9, 9],
         m.fromReadonlyArray(),
-        m.toRunnableObservable({ delay: 1 }),
-        RunnableObservable.map(_ => __now()),
-        RunnableObservable.toReadonlyArray(),
+        m.toRunnable({ delay: 1 }),
+        Runnable.map(_ => __now()),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3]),
       ),
     ),

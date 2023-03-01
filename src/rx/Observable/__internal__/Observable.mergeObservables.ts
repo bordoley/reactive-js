@@ -8,7 +8,7 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
-import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create.js";
+import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 
@@ -53,7 +53,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
     return isEnumerable
       ? EnumerableObservable_create(onSink)
       : isRunnable
-      ? RunnableObservable_create(onSink)
+      ? Runnable_create(onSink)
       : Observable_create(onSink);
   };
 })();

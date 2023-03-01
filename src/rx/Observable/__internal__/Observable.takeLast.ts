@@ -6,7 +6,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { TakeLast } from "../../../containers.js";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeLast.js";
 import { pipe } from "../../../functions.js";
 import {
@@ -21,7 +21,7 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_takeLast: TakeLast<ObservableLike>["takeLast"] =
   /*@__PURE__*/ (() => {
     const typedTakeLastSinkMixin = Sink_takeLastMixin(
-      ReadonlyArray_toRunnableObservable(),
+      ReadonlyArray_toRunnable(),
     );
     const typedObserverMixin = Observer_mixin();
 

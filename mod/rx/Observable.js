@@ -1,10 +1,10 @@
 /// <reference types="./Observable.d.ts" />
 
 import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
-import Iterable_toRunnableObservable from "../containers/Iterable/__internal__/Iterable.toRunnableObservable.js";
-import ReadonlyArray_toRunnableObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
-import Sequence_toRunnableObservable from "../containers/Sequence/__internal__/Sequence.toRunnableObservable.js";
-import Enumerable_toRunnableObservable from "../ix/Enumerable/__internal__/Enumerable.toRunnableObservable.js";
+import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.toRunnable.js";
+import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
+import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
 import { Observable_async, Observable_async__await, Observable_async__currentScheduler, Observable_async__do, Observable_async__memo, Observable_async__observe, Observable_async__state, Observable_async__stream, Observable_async__using, } from "./Observable/__internal__/Observable.async.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -138,11 +138,11 @@ export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
 export const fromAsyncIterable = AsyncIterable_toObservable;
-export const fromEnumerable = Enumerable_toRunnableObservable;
-export const fromIterable = Iterable_toRunnableObservable;
+export const fromEnumerable = Enumerable_toRunnable;
+export const fromIterable = Iterable_toRunnable;
 export const fromFlowable = Flowable_toObservable;
-export const fromReadonlyArray = ReadonlyArray_toRunnableObservable;
-export const fromSequence = Sequence_toRunnableObservable;
+export const fromReadonlyArray = ReadonlyArray_toRunnable;
+export const fromSequence = Sequence_toRunnable;
 export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const isEnumerable = Observable_isEnumerable;

@@ -5,7 +5,7 @@ import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js"
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
-import RunnableObservable_create from "../../RunnableObservable/__internal__/RunnableObservable.create.js";
+import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 
 const Observable_generate = <T>(
   generator: Updater<T>,
@@ -32,7 +32,7 @@ const Observable_generate = <T>(
   };
 
   return hasDelay(options)
-    ? RunnableObservable_create(onSink)
+    ? Runnable_create(onSink)
     : EnumerableObservable_create(onSink);
 };
 

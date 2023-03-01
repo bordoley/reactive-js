@@ -1,4 +1,4 @@
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import {
   Equality,
   Factory,
@@ -25,9 +25,7 @@ const Streamable_createActionReducer = <TAction, T>(
       pipe(
         obs,
         Observable_scan<TAction, T>(reducer, returns(acc)),
-        Observable_mergeWith<T>(
-          pipe([acc], ReadonlyArray_toRunnableObservable()),
-        ),
+        Observable_mergeWith<T>(pipe([acc], ReadonlyArray_toRunnable())),
         Observable_distinctUntilChanged<T>(options),
         ReactiveContainer_sinkInto(observer),
       );

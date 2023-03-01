@@ -7,7 +7,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { __DEV__ } from "../../../constants.js";
 import { DecodeWithCharset } from "../../../containers.js";
-import ReadonlyArray_toRunnableObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnableObservable.js";
+import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import StatefulContainer_decodeWithCharset from "../../../containers/StatefulContainer/__internal__/StatefulContainer.decodeWithCharset.js";
 import { pipe } from "../../../functions.js";
 import {
@@ -23,7 +23,7 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
     const typedDecodeWithCharsetMixin = Sink_decodeWithCharsetMixin(
-      ReadonlyArray_toRunnableObservable(),
+      ReadonlyArray_toRunnable(),
     );
     const typedObserverMixin = Observer_mixin<ArrayBuffer>();
 

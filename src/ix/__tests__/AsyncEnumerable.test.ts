@@ -3,8 +3,8 @@ import { testModule } from "../../__tests__/testing.js";
 import { AsyncEnumerableLike } from "../../ix.js";
 import * as AsyncEnumerable from "../AsyncEnumerable.js";
 /*
-import { RunnableObservableLike } from "../../rx.js"
-import RunnableObservable from "../../rx/RunnableObservable.js"
+import { RunnableLike } from "../../rx.js"
+import Runnable from "../../rx/Runnable.js"
 import {
   fromReadonlyArrayTests,
   keepTests,
@@ -24,9 +24,9 @@ testModule(
   keepTests(AsyncEnumerable),
   mapTests(AsyncEnumerable),
   scanTests(AsyncEnumerable),
-  scanAsyncTests<AsyncEnumerableLike, RunnableObservableLike>(
+  scanAsyncTests<AsyncEnumerableLike, RunnableLike>(
     AsyncEnumerable,
-    RunnableObservable,
+    Runnable,
   ),
   takeWhileTests(AsyncEnumerable),*/
 );

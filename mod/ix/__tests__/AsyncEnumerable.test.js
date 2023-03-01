@@ -4,8 +4,8 @@ import { toObservableTests } from "../../__tests__/operators.js";
 import { testModule } from "../../__tests__/testing.js";
 import * as AsyncEnumerable from "../AsyncEnumerable.js";
 /*
-import { RunnableObservableLike } from "../../rx.js"
-import RunnableObservable from "../../rx/RunnableObservable.js"
+import { RunnableLike } from "../../rx.js"
+import Runnable from "../../rx/Runnable.js"
 import {
   fromReadonlyArrayTests,
   keepTests,

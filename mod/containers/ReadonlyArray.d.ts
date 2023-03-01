@@ -1,6 +1,6 @@
 import { Empty, Every, ForEach, FromIterable, FromReadonlyArray, FromSequence, Keep, KeepType, Map, ReadonlyArrayLike, Some, ToIterable, ToReadonlyArray, ToSequence } from "../containers.js";
 import { FromEnumerable, ToAsyncEnumerable, ToEnumerable, ToEnumerableAsyncEnumerable, ToRunnableAsyncEnumerable } from "../ix.js";
-import { FromEnumerableObservable, FromRunnableObservable, ToEnumerableObservable, ToObservable, ToRunnableObservable } from "../rx.js";
+import { FromEnumerableObservable, FromRunnable, ToEnumerableObservable, ToObservable, ToRunnable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const empty: Empty<ReadonlyArrayLike>["empty"];
 export declare const every: Every<ReadonlyArrayLike>["every"];
@@ -9,7 +9,7 @@ export declare const fromEnumerable: FromEnumerable<ReadonlyArrayLike>["fromEnum
 export declare const fromEnumerableObservable: FromEnumerableObservable<ReadonlyArrayLike>["fromEnumerableObservable"];
 export declare const fromIterable: FromIterable<ReadonlyArrayLike>["fromIterable"];
 export declare const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayLike>["fromReadonlyArray"];
-export declare const fromRunnableObservable: FromRunnableObservable<ReadonlyArrayLike>["fromRunnableObservable"];
+export declare const fromRunnable: FromRunnable<ReadonlyArrayLike>["fromRunnable"];
 export declare const fromSequence: FromSequence<ReadonlyArrayLike>["fromSequence"];
 export declare const getLength: (arr: readonly unknown[]) => number;
 export declare const isEmpty: (arr: readonly unknown[]) => boolean;
@@ -59,12 +59,12 @@ export declare const toRunnableAsyncEnumerable: ToRunnableAsyncEnumerable<Readon
     readonly delayStart?: boolean;
     readonly start?: number;
 }>["toRunnableAsyncEnumerable"];
-export declare const toRunnableObservable: ToRunnableObservable<ReadonlyArrayLike, {
+export declare const toRunnable: ToRunnable<ReadonlyArrayLike, {
     readonly count?: number;
     readonly delay?: number;
     readonly delayStart?: boolean;
     readonly start?: number;
-}>["toRunnableObservable"];
+}>["toRunnable"];
 export declare const toSequence: ToSequence<ReadonlyArrayLike, {
     readonly count?: number;
     readonly start?: number;

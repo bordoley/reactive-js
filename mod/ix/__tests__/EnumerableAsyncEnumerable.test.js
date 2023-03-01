@@ -7,8 +7,8 @@ testModule("EnumerableAsyncEnumerable",
 //toObservableTests<EnumerableAsyncEnumerableLike>(EnumerableAsyncEnumerable),
 fromReadonlyArrayTests(EnumerableAsyncEnumerable), keepTests(EnumerableAsyncEnumerable), mapTests(EnumerableAsyncEnumerable), scanTests(EnumerableAsyncEnumerable), 
 /*
-scanAsyncTests<AsyncEnumerableLike, RunnableObservableLike>(
+scanAsyncTests<AsyncEnumerableLike, RunnableLike>(
   AsyncEnumerable,
-  RunnableObservable,
+  Runnable,
 ),*/
 takeWhileTests(EnumerableAsyncEnumerable));
