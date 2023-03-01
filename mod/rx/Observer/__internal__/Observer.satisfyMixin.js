@@ -1,7 +1,7 @@
 /// <reference types="./Observer.satisfyMixin.d.ts" />
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -22,7 +22,7 @@ const Observer_satisfyMixin = (defaultResult) => {
         instance[SatisfyObserverMixin_predicate] = predicate;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             if (!Disposable_isDisposed(delegate)) {
-                pipe([defaultResult], ReadonlyArray_toRunnable(), Observable_observeWith(delegate));
+                pipe([defaultResult], ReadonlyArray_toObservable(), Observable_observeWith(delegate));
             }
         }));
         return instance;

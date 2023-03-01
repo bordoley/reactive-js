@@ -7,7 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Reduce } from "../../../containers.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   Factory,
   Reducer,
@@ -71,7 +71,7 @@ const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
           Disposable_onComplete(() => {
             pipe(
               [instance[ReduceObserverMixin_acc]],
-              ReadonlyArray_toRunnable(),
+              ReadonlyArray_toObservable(),
               Observable_observeWith(delegate),
             );
           }),

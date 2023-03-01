@@ -3,9 +3,15 @@ import {
   SequenceLike_data,
   SequenceLike_next,
 } from "../../../containers.js";
-import { isSome, none, pipe } from "../../../functions.js";
+import { Function1, isSome, none, pipe } from "../../../functions.js";
+import { EnumerableLike } from "../../../ix.js";
 import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
-import { ObserverLike, ObserverLike_notify, ToRunnable } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_notify,
+  RunnableLike,
+} from "../../../rx.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
@@ -13,14 +19,18 @@ import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js"
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 
-const Sequence_toRunnable: ToRunnable<
-  SequenceLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["toRunnable"] =
-  options =>
+interface SequenceToObservable {
+  <T>(): Function1<SequenceLike<T>, EnumerableLike<T>>;
+  <T>(options: unknown): Function1<SequenceLike<T>, RunnableLike<T>>;
+  <T>(options: { delay: number; delayStart?: boolean }): Function1<
+    SequenceLike<T>,
+    RunnableLike<T>
+  >;
+}
+const Sequence_toObservable: SequenceToObservable = ((options?: {
+    delay?: number;
+    delayStart?: boolean;
+  }) =>
   <T>(seq: SequenceLike<T>) => {
     const { delay = 0, delayStart = false } = options ?? {};
 
@@ -46,9 +56,11 @@ const Sequence_toRunnable: ToRunnable<
       );
     };
 
-    return hasDelay(options)
+    const retval: ObservableLike<T> = hasDelay(options)
       ? Runnable_create(onSubscribe)
       : Enumerable_create(onSubscribe);
-  };
 
-export default Sequence_toRunnable;
+    return retval;
+  }) as SequenceToObservable;
+
+export default Sequence_toObservable;

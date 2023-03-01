@@ -1,5 +1,5 @@
 import { ContainerOperator } from "../../../containers.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { Updater, composeUnsafe, pipe, returns } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
@@ -128,7 +128,7 @@ const Flowable_createLifted: CreateLiftedFlowable = <T>(
       returns(PauseableState_paused),
     ),
     Observable_mergeWith<PauseableState>(
-      pipe([PauseableState_paused], ReadonlyArray_toRunnable()),
+      pipe([PauseableState_paused], ReadonlyArray_toObservable()),
     ),
     Observable_distinctUntilChanged<T>(),
     ...ops,

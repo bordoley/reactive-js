@@ -11,7 +11,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { __DEV__ } from "../../../constants.js";
 import { DecodeWithCharset } from "../../../containers.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -76,7 +76,7 @@ const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWit
               if (data.length > 0) {
                 pipe(
                   [data],
-                  ReadonlyArray_toRunnable(),
+                  ReadonlyArray_toObservable(),
                   Observable_observeWith(delegate),
                 );
               } else {

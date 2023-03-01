@@ -11,7 +11,7 @@ import {
   ContainerOperator,
   FromReadonlyArray,
 } from "../../../containers.js";
-import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   Function1,
   Optional,
@@ -139,7 +139,7 @@ const createThrottleObserver: <T>(
             ) {
               pipe(
                 [instance[ThrottleObserver_value]],
-                ReadonlyArray_toRunnable(),
+                ReadonlyArray_toObservable(),
                 Observable_observeWith(delegate),
               );
             }
