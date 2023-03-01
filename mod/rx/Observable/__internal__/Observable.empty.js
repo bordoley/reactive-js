@@ -10,7 +10,7 @@ const Observable_empty = (options) => hasDelay(options)
     ? Runnable_create(observer => {
         pipe(observer, Observer_schedule(pipeLazy(observer, Disposable_dispose()), options));
     })
-    : EnumerableObservable_create(sink => {
-        pipe(sink, Disposable_dispose());
+    : EnumerableObservable_create(observer => {
+        pipe(observer, Disposable_dispose());
     });
 export default Observable_empty;

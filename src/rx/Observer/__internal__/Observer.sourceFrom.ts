@@ -9,9 +9,9 @@ const Observer_sourceFrom =
   <C extends ObservableLike, TObserver extends ObserverLike<T>, T>(
     source: C,
   ): Function1<TObserver, TObserver> =>
-  sink => {
-    source[ObservableLike_observe](sink);
-    return sink;
+  observer => {
+    source[ObservableLike_observe](observer);
+    return observer;
   };
 
 export default Observer_sourceFrom;

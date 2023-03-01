@@ -5,9 +5,9 @@ const Observer_notify =
   <TObserver extends ObserverLike<T>, T>(
     v: T,
   ): Function1<TObserver, TObserver> =>
-  (sink: TObserver) => {
-    sink[ObserverLike_notify](v);
-    return sink;
+  (observer: TObserver) => {
+    observer[ObserverLike_notify](v);
+    return observer;
   };
 
 export default Observer_notify;

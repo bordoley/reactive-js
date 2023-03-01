@@ -84,7 +84,7 @@ ___
 
 ### notifyObserver
 
-▸ **notifyObserver**<`T`\>(`sink`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
+▸ **notifyObserver**<`T`\>(`observer`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
 
 #### Type parameters
 
@@ -96,7 +96,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
+| `observer` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
 
 #### Returns
 

@@ -17,12 +17,12 @@ const Observable_onSink = <C extends ObservableLike>(
   src: C,
   f: Factory<DisposableOrTeardown | void>,
 ): C =>
-  createObservable(sink => {
-    pipe(src, Observable_observeWith(sink));
+  createObservable(observer => {
+    pipe(src, Observable_observeWith(observer));
 
     const disposable = f() || none;
     pipe(
-      sink,
+      observer,
       isFunction(disposable)
         ? Disposable_onDisposed(disposable)
         : isSome(disposable)

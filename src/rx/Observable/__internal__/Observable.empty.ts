@@ -13,8 +13,8 @@ const Observable_empty = <T>(options?: { delay: number }) =>
           Observer_schedule(pipeLazy(observer, Disposable_dispose()), options),
         );
       })
-    : EnumerableObservable_create<T>(sink => {
-        pipe(sink, Disposable_dispose());
+    : EnumerableObservable_create<T>(observer => {
+        pipe(observer, Disposable_dispose());
       });
 
 export default Observable_empty;
