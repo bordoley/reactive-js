@@ -33,6 +33,6 @@ const AsyncEnumerable_map = /*@__PURE__*/ (() => {
             pipe(this[DelegatingLike_delegate], this[MapAsyncEnumerator_op], ReactiveContainer_sinkInto(observer));
         },
     }));
-    return pipe(createMapAsyncEnumerator, StatefulContainer_map(AsyncEnumerable_lift));
+    return pipe(createMapAsyncEnumerator, StatefulContainer_map(AsyncEnumerable_lift(true, true)));
 })();
 export default AsyncEnumerable_map;

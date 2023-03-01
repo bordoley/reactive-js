@@ -96,7 +96,9 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
 
     return pipe(
       createTakeWhileAsyncEnumerator,
-      StatefulContainer_takeWhile<AsyncEnumerableLike, T>(AsyncEnumerable_lift),
+      StatefulContainer_takeWhile<AsyncEnumerableLike, T>(
+        AsyncEnumerable_lift(true, true),
+      ),
     );
   })();
 

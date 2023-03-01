@@ -96,7 +96,9 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
 
   return pipe(
     createKeepAsyncEnumerator,
-    StatefulContainer_keep<AsyncEnumerableLike, T>(AsyncEnumerable_lift),
+    StatefulContainer_keep<AsyncEnumerableLike, T>(
+      AsyncEnumerable_lift(true, true),
+    ),
   );
 })();
 

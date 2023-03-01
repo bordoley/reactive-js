@@ -41,6 +41,6 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
             pipe(this[KeepAsyncEnumerator_obs], ReactiveContainer_sinkInto(observer));
         },
     }));
-    return pipe(createKeepAsyncEnumerator, StatefulContainer_keep(AsyncEnumerable_lift));
+    return pipe(createKeepAsyncEnumerator, StatefulContainer_keep(AsyncEnumerable_lift(true, true)));
 })();
 export default AsyncEnumerable_keep;

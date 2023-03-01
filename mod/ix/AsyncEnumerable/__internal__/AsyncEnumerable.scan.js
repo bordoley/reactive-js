@@ -33,6 +33,6 @@ const AsyncEnumerable_scan = /*@__PURE__*/ (() => {
             pipe(this[DelegatingLike_delegate], this[ScanAsyncEnumerator_op], ReactiveContainer_sinkInto(observer));
         },
     }));
-    return pipe(createScanAsyncEnumerator, StatefulContainer_scan(AsyncEnumerable_lift));
+    return pipe(createScanAsyncEnumerator, StatefulContainer_scan(AsyncEnumerable_lift(true, true)));
 })();
 export default AsyncEnumerable_scan;

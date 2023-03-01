@@ -98,7 +98,9 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
 
   return pipe(
     createScanAsyncEnumerator,
-    StatefulContainer_scan<AsyncEnumerableLike, T, TAcc>(AsyncEnumerable_lift),
+    StatefulContainer_scan<AsyncEnumerableLike, T, TAcc>(
+      AsyncEnumerable_lift(true, true),
+    ),
   );
 })();
 

@@ -28,8 +28,8 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
     AsyncEnumeratorLike<any>
   >[];
 
-  readonly [AsyncEnumerableLike_isEnumerable] = false;
-  readonly [AsyncEnumerableLike_isRunnable] = false;
+  readonly [AsyncEnumerableLike_isEnumerable]: boolean;
+  readonly [AsyncEnumerableLike_isRunnable]: boolean;
 
   constructor(
     src: AsyncEnumerableLike<any>,
@@ -37,9 +37,14 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
       AsyncEnumeratorLike<any>,
       AsyncEnumeratorLike<any>
     >[],
+    isEnumerable: boolean,
+    isRunnable: boolean,
   ) {
     this[LiftedAsyncEnumerable_src] = src;
     this[LiftedAsyncEnumerable_operators] = operators;
+
+    this[AsyncEnumerableLike_isEnumerable] = isEnumerable;
+    this[AsyncEnumerableLike_isRunnable] = isRunnable;
   }
 
   [InteractiveContainerLike_interact](scheduler: SchedulerLike) {
@@ -62,6 +67,7 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
 }
 
 const AsyncEnumerable_lift =
+  (isEnumerable = false, isRunnable = false) =>
   <TA, TB>(
     operator: Function1<AsyncEnumeratorLike<TA>, AsyncEnumeratorLike<TB>>,
   ): ContainerOperator<AsyncEnumerableLike, TA, TB> =>
@@ -76,11 +82,24 @@ const AsyncEnumerable_lift =
         ? [...enumerable[LiftedAsyncEnumerable_operators], operator]
         : [operator];
 
+    const isLiftedEnumerable =
+      isEnumerable && src[AsyncEnumerableLike_isEnumerable];
+    const isLiftedRunnable =
+      (isEnumerable || isRunnable) && src[AsyncEnumerableLike_isRunnable];
+
     return newInstance<
       LiftedAsyncEnumerable<TB>,
       AsyncEnumerableLike<any>,
-      readonly Function1<AsyncEnumeratorLike<any>, AsyncEnumeratorLike<any>>[]
-    >(LiftedAsyncEnumerable, src, allFunctions);
+      readonly Function1<AsyncEnumeratorLike<any>, AsyncEnumeratorLike<any>>[],
+      boolean,
+      boolean
+    >(
+      LiftedAsyncEnumerable,
+      src,
+      allFunctions,
+      isLiftedEnumerable,
+      isLiftedRunnable,
+    );
   };
 
 export default AsyncEnumerable_lift;

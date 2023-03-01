@@ -87,7 +87,9 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
 
   return pipe(
     createMapAsyncEnumerator,
-    StatefulContainer_map<AsyncEnumerableLike, TA, TB>(AsyncEnumerable_lift),
+    StatefulContainer_map<AsyncEnumerableLike, TA, TB>(
+      AsyncEnumerable_lift(true, true),
+    ),
   );
 })();
 

@@ -34,6 +34,9 @@ const AsyncEnumerable_scanAsync = /*@__PURE__*/ (() => {
             pipe(this[ScanAsyncAsyncEnumerator_obs], ReactiveContainer_sinkInto(observer));
         },
     }));
-    return (reducer, initialValue) => pipe(creatScanAsyncAsyncEnumerator, partial(reducer, initialValue), AsyncEnumerable_lift);
+    return (reducer, initialValue) => pipe(creatScanAsyncAsyncEnumerator, partial(reducer, initialValue), 
+    // FIXME: Implement as higherOrder so that we can
+    // add special cases for Runnable/EnumerableObservable
+    AsyncEnumerable_lift(false, false));
 })();
 export default AsyncEnumerable_scanAsync;

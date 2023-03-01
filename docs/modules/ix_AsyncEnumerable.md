@@ -26,6 +26,11 @@
 - [scanAsync](ix_AsyncEnumerable.md#scanasync)
 - [takeWhile](ix_AsyncEnumerable.md#takewhile)
 
+### Other Functions
+
+- [isEnumerable](ix_AsyncEnumerable.md#isenumerable)
+- [isRunnable](ix_AsyncEnumerable.md#isrunnable)
+
 ## Constructor Functions
 
 ### fromAsyncIterable
@@ -354,3 +359,47 @@ this predicate is not satisfied.
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+## Other Functions
+
+### isEnumerable
+
+▸ **isEnumerable**(`v`): v is EnumerableAsyncEnumerableLike<unknown\>
+
+A type guard function that performs a runtime check
+guaranteeing `v` is of type `TB`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\> |
+
+#### Returns
+
+v is EnumerableAsyncEnumerableLike<unknown\>
+
+`true` if v is an instance of type `TB`, otherwise false.
+
+___
+
+### isRunnable
+
+▸ **isRunnable**(`v`): v is RunnableAsyncEnumerableLike<unknown\>
+
+A type guard function that performs a runtime check
+guaranteeing `v` is of type `TB`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<`unknown`\> |
+
+#### Returns
+
+v is RunnableAsyncEnumerableLike<unknown\>
+
+`true` if v is an instance of type `TB`, otherwise false.

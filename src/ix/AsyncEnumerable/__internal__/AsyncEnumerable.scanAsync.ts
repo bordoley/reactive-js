@@ -106,7 +106,9 @@ const AsyncEnumerable_scanAsync: ScanAsync<
     pipe(
       creatScanAsyncAsyncEnumerator,
       partial(reducer, initialValue),
-      AsyncEnumerable_lift,
+      // FIXME: Implement as higherOrder so that we can
+      // add special cases for Runnable/EnumerableObservable
+      AsyncEnumerable_lift(false, false),
     );
 })();
 

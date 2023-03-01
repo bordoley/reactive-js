@@ -6,6 +6,8 @@ import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__inter
 import Sequence_toAsyncEnumerable from "../containers/Sequence/__internal__/Sequence.toAsyncEnumerable.js";
 import EnumerableObservable_toAsyncEnumerable from "../rx/EnumerableObservable/__internal__/EnumerableObservable.toAsyncEnumerable.js";
 import AsyncEnumerable_generate from "./AsyncEnumerable/__internal__/AsyncEnumerable.generate.js";
+import AsyncEnumerable_isEnumerable from "./AsyncEnumerable/__internal__/AsyncEnumerable.isEnumerable.js";
+import AsyncEnumerable_isRunnable from "./AsyncEnumerable/__internal__/AsyncEnumerable.isRunnable.js";
 import AsyncEnumerable_keep from "./AsyncEnumerable/__internal__/AsyncEnumerable.keep.js";
 import AsyncEnumerable_map from "./AsyncEnumerable/__internal__/AsyncEnumerable.map.js";
 import AsyncEnumerable_scan from "./AsyncEnumerable/__internal__/AsyncEnumerable.scan.js";
@@ -20,6 +22,8 @@ export const fromIterable = Iterable_toAsyncEnumerable;
 export const fromReadonlyArray = ReadonlyArray_toAsyncEnumerable;
 export const fromSequence = Sequence_toAsyncEnumerable;
 export const generate = AsyncEnumerable_generate;
+export const isEnumerable = AsyncEnumerable_isEnumerable;
+export const isRunnable = AsyncEnumerable_isRunnable;
 export const keep = AsyncEnumerable_keep;
 export const map = AsyncEnumerable_map;
 export const scan = AsyncEnumerable_scan;

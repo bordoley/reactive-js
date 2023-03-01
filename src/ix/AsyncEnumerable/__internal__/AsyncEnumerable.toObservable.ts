@@ -1,18 +1,28 @@
 import { none, pipe } from "../../../functions.js";
 import { AsyncEnumerableLike } from "../../../ix.js";
 import { ToObservable } from "../../../rx.js";
+import EnumerableObservable_create from "../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observer_getScheduler from "../../../rx/Observer/__internal__/Observer.getScheduler.js";
 import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import RunnableObservable_create from "../../../rx/RunnableObservable/__internal__/RunnableObservable.create.js";
 import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
+import AsyncEnumerable_isEnumerable from "./AsyncEnumerable.isEnumerable.js";
+import AsyncEnumerable_isRunnable from "./AsyncEnumerable.isRunnable.js";
 
 const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
-  () => enumerable =>
-    Observable_create(observer => {
+  () => enumerable => {
+    const create = AsyncEnumerable_isEnumerable(enumerable)
+      ? EnumerableObservable_create
+      : AsyncEnumerable_isRunnable(enumerable)
+      ? RunnableObservable_create
+      : Observable_create;
+
+    return create(observer => {
       const enumerator = pipe(
         enumerable,
         Streamable_stream(Observer_getScheduler(observer)),
@@ -30,5 +40,6 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
         ReactiveContainer_sinkInto(observer),
       );
     });
+  };
 
 export default AsyncEnumerable_toObservable;

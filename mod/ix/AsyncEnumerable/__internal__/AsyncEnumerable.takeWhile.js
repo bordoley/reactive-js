@@ -37,6 +37,6 @@ const AsyncEnumerable_takeWhile =
             pipe(this[TakeWhileAsyncEnumerator_obs], ReactiveContainer_sinkInto(observer));
         },
     }));
-    return pipe(createTakeWhileAsyncEnumerator, StatefulContainer_takeWhile(AsyncEnumerable_lift));
+    return pipe(createTakeWhileAsyncEnumerator, StatefulContainer_takeWhile(AsyncEnumerable_lift(true, true)));
 })();
 export default AsyncEnumerable_takeWhile;
