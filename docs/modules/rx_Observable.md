@@ -23,7 +23,6 @@
 - [defer](rx_Observable.md#defer)
 - [empty](rx_Observable.md#empty)
 - [fromAsyncIterable](rx_Observable.md#fromasynciterable)
-- [fromEnumerable](rx_Observable.md#fromenumerable)
 - [fromFlowable](rx_Observable.md#fromflowable)
 - [fromIterable](rx_Observable.md#fromiterable)
 - [fromReadonlyArray](rx_Observable.md#fromreadonlyarray)
@@ -1052,30 +1051,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-___
-
-### fromEnumerable
-
-▸ **fromEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-| `options.delayStart?` | `boolean` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 
@@ -3877,7 +3852,7 @@ ___
 
 ### isEnumerable
 
-▸ **isEnumerable**(`v`): v is EnumerableObservableLike<unknown\>
+▸ **isEnumerable**(`v`): v is EnumerableLike<unknown\>
 
 A type guard function that performs a runtime check
 guaranteeing `v` is of type `TB`.
@@ -3890,7 +3865,7 @@ guaranteeing `v` is of type `TB`.
 
 #### Returns
 
-v is EnumerableObservableLike<unknown\>
+v is EnumerableLike<unknown\>
 
 `true` if v is an instance of type `TB`, otherwise false.
 

@@ -4,12 +4,10 @@ import AsyncIterable_toFlowable from "../containers/AsyncIterable/__internal__/A
 import Iterable_toFlowable from "../containers/Iterable/__internal__/Iterable.toFlowable.js";
 import ReadonlyArray_toFlowable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import Sequence_toFlowable from "../containers/Sequence/__internal__/Sequence.toFlowable.js";
-import Enumerable_toFlowable from "../ix/Enumerable/__internal__/Enumerable.toFlowable.js";
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import Flowable_toObservable from "./Flowable/__internal__/Flowable.toObservable.js";
 export const fromAsyncIterable = AsyncIterable_toFlowable;
-export const fromEnumerable = Enumerable_toFlowable;
-export const fromEnumerableObservable = Runnable_toFlowable;
+export const fromEnumerable = Runnable_toFlowable;
 export const fromIterable = Iterable_toFlowable;
 export const fromReadonlyArray = ReadonlyArray_toFlowable;
 export const fromRunnable = Runnable_toFlowable;

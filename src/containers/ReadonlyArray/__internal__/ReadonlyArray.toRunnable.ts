@@ -1,10 +1,10 @@
 import { none, pipe } from "../../../functions.js";
+import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import {
   ObserverLike,
   ObserverLike_notify,
   RunnableLike,
 } from "../../../rx.js";
-import EnumerableObservable_create from "../../../rx/EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
@@ -65,7 +65,7 @@ const ReadonlyArray_toRunnable =
 
       return hasDelay(options)
         ? Runnable_create(onSubscribe)
-        : EnumerableObservable_create(onSubscribe);
+        : Enumerable_create(onSubscribe);
     },
   );
 

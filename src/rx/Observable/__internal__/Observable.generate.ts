@@ -1,4 +1,5 @@
 import { Factory, Updater, none, pipe } from "../../../functions.js";
+import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -7,7 +8,6 @@ import {
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
-import EnumerableObservable_create from "../../EnumerableObservable/__internal__/EnumerableObservable.create.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 
@@ -37,7 +37,7 @@ const Observable_generate = <T>(
 
   return hasDelay(options)
     ? Runnable_create(onSubscribe)
-    : EnumerableObservable_create(onSubscribe);
+    : Enumerable_create(onSubscribe);
 };
 
 export default Observable_generate;

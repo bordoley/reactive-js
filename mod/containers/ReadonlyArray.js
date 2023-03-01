@@ -1,6 +1,5 @@
 /// <reference types="./ReadonlyArray.d.ts" />
 
-import Enumerable_toReadonlyArray from "../ix/Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
@@ -12,8 +11,6 @@ import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.
 import ReadonlyArray_keepType from "./ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "./ReadonlyArray/__internal__/ReadonlyArray.some.js";
-import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
-import ReadonlyArray_toEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toEnumerable.js";
 import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
@@ -22,8 +19,7 @@ import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonl
 export const empty = ReadonlyArray_empty;
 export const every = ReadonlyArray_every;
 export const forEach = ReadonlyArray_forEach;
-export const fromEnumerable = Enumerable_toReadonlyArray;
-export const fromEnumerableObservable = Runnable_toReadonlyArray;
+export const fromEnumerable = Runnable_toReadonlyArray;
 export const fromIterable = Iterable_toReadonlyArray;
 export const fromReadonlyArray = ReadonlyArray_toReadonlyArray;
 export const fromRunnable = Runnable_toReadonlyArray;
@@ -34,14 +30,10 @@ export const keep = ReadonlyArray_keep;
 export const keepType = ReadonlyArray_keepType;
 export const map = ReadonlyArray_map;
 export const some = ReadonlyArray_some;
-export const toAsyncEnumerable = ReadonlyArray_toAsyncEnumerable;
-export const toEnumerable = ReadonlyArray_toEnumerable;
-export const toEnumerableAsyncEnumerable = ReadonlyArray_toAsyncEnumerable;
-export const toEnumerableObservable = ReadonlyArray_toRunnable;
+export const toEnumerable = ReadonlyArray_toRunnable;
 export const toFlowable = ReadonlyArray_toFlowable;
 export const toIterable = ReadonlyArray_toReadonlyArray;
 export const toObservable = ReadonlyArray_toRunnable;
 export const toReadonlyArray = ReadonlyArray_toReadonlyArray;
-export const toRunnableAsyncEnumerable = ReadonlyArray_toAsyncEnumerable;
 export const toRunnable = ReadonlyArray_toRunnable;
 export const toSequence = ReadonlyArray_toSequence;

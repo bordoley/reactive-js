@@ -4,7 +4,6 @@ import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__
 import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.toRunnable.js";
 import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
-import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
 import { Observable_async, Observable_async__await, Observable_async__currentScheduler, Observable_async__do, Observable_async__memo, Observable_async__observe, Observable_async__state, Observable_async__stream, Observable_async__using, } from "./Observable/__internal__/Observable.async.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -139,7 +138,6 @@ export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
 export const fromAsyncIterable = AsyncIterable_toObservable;
-export const fromEnumerable = Enumerable_toRunnable;
 export const fromIterable = Iterable_toRunnable;
 export const fromFlowable = Flowable_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toRunnable;

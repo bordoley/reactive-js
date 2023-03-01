@@ -1,5 +1,4 @@
 import {
-  toEnumerableObservableTests,
   toEnumerableTests,
   toRunnableTests,
 } from "../../__tests__/operators.js";
@@ -10,6 +9,5 @@ import * as Iterable from "../Iterable.js";
 testModule(
   "Iterable",
   toEnumerableTests<IterableLike>(Iterable),
-  toEnumerableObservableTests<IterableLike>(Iterable),
   toRunnableTests<IterableLike>(Iterable),
 );

@@ -3,18 +3,18 @@
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_keepType from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
-import { compose, isSome, isTrue, none, pipe } from "../../../functions.js";
+import { compose, isTrue, none, pipe } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, SourceLike_move, } from "../../../ix.js";
+import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../ix/Enumerable/__internal__/Enumerable.enumerate.js";
-import Enumerable_toRunnable from "../../../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
-import Enumerable_zip from "../../../ix/Enumerable/__internal__/Enumerable.zip.js";
 import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
 import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
 import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
+import Source_move from "../../../ix/Source/__internal__/Source.move.js";
 import { ObserverLike_notify, } from "../../../rx.js";
+import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -24,10 +24,11 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
-import EnumerableObservable_toEnumerable from "../../EnumerableObservable/__internal__/EnumerableObservable.toEnumerable.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
+import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
@@ -102,11 +103,28 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             }
         },
     }));
+    const moveAll = (enumerators) => {
+        for (const enumerator of enumerators) {
+            Source_move(enumerator);
+        }
+    };
+    const allHaveCurrent = (enumerators) => pipe(enumerators, ReadonlyArray_every(Enumerator_hasCurrent));
+    const enumerableOnSubscribe = (observables) => (observer) => {
+        const enumerators = pipe(observables, ReadonlyArray_map(Enumerable_enumerate()), ReadonlyArray_forEach(Disposable_addTo(observer)));
+        const continuation = () => {
+            while ((moveAll(enumerators), allHaveCurrent(enumerators))) {
+                pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent), Observer_notifyObserver(observer));
+                Continuation__yield();
+            }
+            pipe(observer, Disposable_dispose());
+        };
+        pipe(observer, Observer_schedule(continuation));
+    };
     const onSubscribe = (observables) => (observer) => {
         const enumerators = [];
         for (const next of observables) {
             if (Observable_isEnumerable(next)) {
-                const enumerator = pipe(next, EnumerableObservable_toEnumerable(), Enumerable_enumerate(), Disposable_addTo(observer));
+                const enumerator = pipe(next, Enumerable_enumerate(), Disposable_addTo(observer));
                 Enumerator_move(enumerator);
                 enumerators.push(enumerator);
             }
@@ -121,7 +139,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         const isEnumerable = Observable_allAreEnumerable(observables);
         const isRunnable = Observable_allAreRunnable(observables);
         return isEnumerable
-            ? pipe(observables, ReadonlyArray_map(EnumerableObservable_toEnumerable()), ReadonlyArray_keepType(isSome), enumerables => Enumerable_zip(...enumerables), Enumerable_toRunnable())
+            ? Enumerable_create(enumerableOnSubscribe(observables))
             : isRunnable
                 ? Runnable_create(onSubscribe(observables))
                 : Observable_create(onSubscribe(observables));

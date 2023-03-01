@@ -8,7 +8,6 @@
 
 - [fromAsyncIterable](streaming_Flowable.md#fromasynciterable)
 - [fromEnumerable](streaming_Flowable.md#fromenumerable)
-- [fromEnumerableObservable](streaming_Flowable.md#fromenumerableobservable)
 - [fromIterable](streaming_Flowable.md#fromiterable)
 - [fromReadonlyArray](streaming_Flowable.md#fromreadonlyarray)
 - [fromRunnable](streaming_Flowable.md#fromrunnable)
@@ -62,28 +61,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-___
-
-### fromEnumerableObservable
-
-▸ **fromEnumerableObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableObservableLike`](../interfaces/rx.EnumerableObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 

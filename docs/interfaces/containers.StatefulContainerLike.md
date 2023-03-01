@@ -10,8 +10,6 @@
 
   ↳ **`StatefulContainerLike`**
 
-  ↳↳ [`InteractiveContainerLike`](ix.InteractiveContainerLike.md)
-
   ↳↳ [`ObservableLike`](rx.ObservableLike.md)
 
 ## Table of contents

@@ -4,7 +4,6 @@ import Iterable_toRunnable from "../containers/Iterable/__internal__/Iterable.to
 import ReadonlyArray_toRunnable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import Sequence_toRunnable from "../containers/Sequence/__internal__/Sequence.toRunnable.js";
 import { identity, returns } from "../functions.js";
-import Enumerable_toRunnable from "../ix/Enumerable/__internal__/Enumerable.toRunnable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
 import Observable_compute from "./Observable/__internal__/Observable.compute.js";
@@ -87,7 +86,8 @@ export const forkConcat = Observable_forkConcat;
 export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
-export const fromEnumerable = Enumerable_toRunnable;
+// FIXME?
+export const fromEnumerable = /*@__PURE__*/ returns(identity);
 export const fromIterable = Iterable_toRunnable;
 export const fromReadonlyArray = ReadonlyArray_toRunnable;
 export const fromSequence = Sequence_toRunnable;

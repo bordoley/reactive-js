@@ -116,17 +116,9 @@
 
   ↳ [`ZipWith`](containers.ZipWith.md)
 
-  ↳ [`FromAsyncEnumerable`](ix.FromAsyncEnumerable.md)
-
   ↳ [`FromEnumerable`](ix.FromEnumerable.md)
 
-  ↳ [`ToAsyncEnumerable`](ix.ToAsyncEnumerable.md)
-
   ↳ [`ToEnumerable`](ix.ToEnumerable.md)
-
-  ↳ [`ToEnumerableAsyncEnumerable`](ix.ToEnumerableAsyncEnumerable.md)
-
-  ↳ [`ToRunnableAsyncEnumerable`](ix.ToRunnableAsyncEnumerable.md)
 
   ↳ [`CombineLatest`](rx.CombineLatest.md)
 
@@ -139,8 +131,6 @@
   ↳ [`ForkMerge`](rx.ForkMerge.md)
 
   ↳ [`ForkZipLatest`](rx.ForkZipLatest.md)
-
-  ↳ [`FromEnumerableObservable`](rx.FromEnumerableObservable.md)
 
   ↳ [`FromRunnable`](rx.FromRunnable.md)
 
@@ -169,8 +159,6 @@
   ↳ [`ToObservable`](rx.ToObservable.md)
 
   ↳ [`ToRunnable`](rx.ToRunnable.md)
-
-  ↳ [`ToEnumerableObservable`](rx.ToEnumerableObservable.md)
 
   ↳ [`WithLatestFrom`](rx.WithLatestFrom.md)
 

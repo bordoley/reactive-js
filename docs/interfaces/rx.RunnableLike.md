@@ -16,7 +16,7 @@
 
   ↳ **`RunnableLike`**
 
-  ↳↳ [`EnumerableObservableLike`](rx.EnumerableObservableLike.md)
+  ↳↳ [`EnumerableLike`](ix.EnumerableLike.md)
 
 ## Table of contents
 
