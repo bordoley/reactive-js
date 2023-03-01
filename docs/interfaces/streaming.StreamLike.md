@@ -23,6 +23,4 @@ Represents a duplex stream
 
   ↳↳ [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
 
-  ↳↳ [`AsyncEnumeratorLike`](ix.AsyncEnumeratorLike.md)
-
   ↳↳ [`FlowableStreamLike`](streaming.FlowableStreamLike.md)

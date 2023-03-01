@@ -6,8 +6,11 @@ import {
   ContainerOf,
 } from "./containers.js";
 import { Function1 } from "./functions.js";
-import { ObservableLike_isEnumerable, RunnableLike } from "./rx.js";
-import { StreamLike } from "./streaming.js";
+import {
+  ObservableLike,
+  ObservableLike_isEnumerable,
+  RunnableLike,
+} from "./rx.js";
 import { DisposableLike } from "./util.js";
 
 /** @ignore */
@@ -42,9 +45,12 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
 }
 
 /**
+ *
  * @noInheritDoc
+ * @category Container
  */
-export interface AsyncEnumeratorLike<T = unknown> extends StreamLike<void, T> {}
+export interface AsyncEnumerableLike<CInner extends ObservableLike, T = unknown>
+  extends EnumerableLike<ContainerOf<CInner, T>> {}
 
 /**
  * @noInheritDoc
