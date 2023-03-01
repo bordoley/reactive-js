@@ -9,8 +9,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Map } from "../../../containers.js";
-import StatefulContainer_map from "../../../containers/StatefulContainer/__internal__/StatefulContainer.map.js";
-import { Function1, none, pipe } from "../../../functions.js";
+import { Function1, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -21,6 +20,7 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
+
 const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
   TA,
   TB,
@@ -74,12 +74,12 @@ const Observable_map: Map<ObservableLike>["map"] = /*@__PURE__*/ (<
     );
   })();
 
-  return pipe(
-    createMapObserver,
-    StatefulContainer_map<ObservableLike, TA, TB>(
+  return ((mapper: Function1<TA, TB>) =>
+    pipe(
+      createMapObserver,
+      partial(mapper),
       Observable_liftEnumerableOperator,
-    ),
-  );
+    )) as Map<ObservableLike>["map"];
 })();
 
 export default Observable_map;

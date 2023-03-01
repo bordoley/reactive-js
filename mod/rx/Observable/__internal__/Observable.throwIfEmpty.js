@@ -1,8 +1,7 @@
 /// <reference types="./Observable.throwIfEmpty.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import StatefulContainer_throwIfEmpty from "../../../containers/StatefulContainer/__internal__/StatefulContainer.throwIfEmpty.js";
-import { error, none, pipe } from "../../../functions.js";
+import { error, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -42,6 +41,6 @@ const Observable_throwIfEmpty =
             },
         }));
     })();
-    return pipe(createThrowIfEmptyObserver, StatefulContainer_throwIfEmpty(Observable_liftEnumerableOperator));
+    return ((factory) => pipe(createThrowIfEmptyObserver, partial(factory), Observable_liftEnumerableOperator));
 })();
 export default Observable_throwIfEmpty;

@@ -1,8 +1,7 @@
 /// <reference types="./Observable.distinctUntilChanged.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import StatefulContainer_distinctUntilChanged from "../../../containers/StatefulContainer/__internal__/StatefulContainer.distinctUntilChanged.js";
-import { none, pipe } from "../../../functions.js";
+import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -36,6 +35,9 @@ const Observable_distinctUntilChanged =
             },
         }));
     })();
-    return pipe(createDistinctUntilChangedObserver, StatefulContainer_distinctUntilChanged(Observable_liftEnumerableOperator));
+    return ((options) => {
+        const { equality = strictEquality } = options !== null && options !== void 0 ? options : {};
+        return pipe(createDistinctUntilChangedObserver, partial(equality), Observable_liftEnumerableOperator);
+    });
 })();
 export default Observable_distinctUntilChanged;

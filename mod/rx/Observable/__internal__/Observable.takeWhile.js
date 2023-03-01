@@ -1,8 +1,7 @@
 /// <reference types="./Observable.takeWhile.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeWhile.js";
-import { none, pipe } from "../../../functions.js";
+import { none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -37,6 +36,9 @@ const Observable_takeWhile =
             },
         }));
     })();
-    return pipe(createTakeWhileObserver, StatefulContainer_takeWhile(Observable_liftEnumerableOperator));
+    return (predicate, options = {}) => {
+        const { inclusive = false } = options;
+        return pipe(createTakeWhileObserver, partial(predicate, inclusive), Observable_liftEnumerableOperator);
+    };
 })();
 export default Observable_takeWhile;

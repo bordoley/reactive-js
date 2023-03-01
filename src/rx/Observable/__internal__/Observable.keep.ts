@@ -9,8 +9,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Keep } from "../../../containers.js";
-import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
-import { Predicate, none, pipe } from "../../../functions.js";
+import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -21,6 +20,7 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
+
 const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const createKeepObserver: <T>(
     delegate: ObserverLike<T>,
@@ -69,12 +69,12 @@ const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     );
   })();
 
-  return pipe(
-    createKeepObserver,
-    StatefulContainer_keep<ObservableLike, T>(
+  return ((predicate: Predicate<T>) =>
+    pipe(
+      createKeepObserver,
+      partial(predicate),
       Observable_liftEnumerableOperator,
-    ),
-  );
+    )) as Keep<ObservableLike>["keep"];
 })();
 
 export default Observable_keep;

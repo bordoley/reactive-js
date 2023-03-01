@@ -2,8 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
-import StatefulContainer_takeLast from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeLast.js";
-import { pipe } from "../../../functions.js";
+import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -37,8 +36,9 @@ const Observable_takeLast =
             }
         },
     }));
-    return pipe(
-    // FIXME: any cast
-    createTakeLastObserver, StatefulContainer_takeLast(Observable_liftEnumerableOperator));
+    return (options = {}) => {
+        const { count = 1 } = options;
+        return pipe(createTakeLastObserver, partial(count), Observable_liftEnumerableOperator);
+    };
 })();
 export default Observable_takeLast;

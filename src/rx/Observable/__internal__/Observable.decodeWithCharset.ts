@@ -12,8 +12,7 @@ import {
 import { __DEV__ } from "../../../constants.js";
 import { DecodeWithCharset } from "../../../containers.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
-import StatefulContainer_decodeWithCharset from "../../../containers/StatefulContainer/__internal__/StatefulContainer.decodeWithCharset.js";
-import { newInstance, none, pipe } from "../../../functions.js";
+import { newInstance, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -113,12 +112,14 @@ const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWit
       ),
     );
 
-    return pipe(
-      createDecodeWithCharsetObserver,
-      StatefulContainer_decodeWithCharset<ObservableLike>(
+    return options => {
+      const charset = options?.charset ?? "utf-8";
+      return pipe(
+        createDecodeWithCharsetObserver,
+        partial(charset),
         Observable_liftEnumerableOperator,
-      ),
-    );
+      );
+    };
   })();
 
 export default Observable_decodeWithCharset;

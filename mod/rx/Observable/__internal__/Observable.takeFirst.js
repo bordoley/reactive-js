@@ -1,8 +1,8 @@
 /// <reference types="./Observable.takeFirst.d.ts" />
 
+import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import StatefulContainer_takeFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeFirst.js";
-import { pipe } from "../../../functions.js";
+import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -37,6 +37,10 @@ const Observable_takeFirst =
             },
         }));
     })();
-    return pipe(createTakeFirstObserver, StatefulContainer_takeFirst(Observable_liftEnumerableOperator));
+    return ((options = {}) => {
+        var _a;
+        const { count = max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
+        return pipe(createTakeFirstObserver, partial(count), Observable_liftEnumerableOperator);
+    });
 })();
 export default Observable_takeFirst;

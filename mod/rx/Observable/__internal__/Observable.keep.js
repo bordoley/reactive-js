@@ -1,8 +1,7 @@
 /// <reference types="./Observable.keep.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import StatefulContainer_keep from "../../../containers/StatefulContainer/__internal__/StatefulContainer.keep.js";
-import { none, pipe } from "../../../functions.js";
+import { none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -27,6 +26,6 @@ const Observable_keep = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return pipe(createKeepObserver, StatefulContainer_keep(Observable_liftEnumerableOperator));
+    return ((predicate) => pipe(createKeepObserver, partial(predicate), Observable_liftEnumerableOperator));
 })();
 export default Observable_keep;

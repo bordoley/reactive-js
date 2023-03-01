@@ -2,8 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
-import StatefulContainer_reduce from "../../../containers/StatefulContainer/__internal__/StatefulContainer.reduce.js";
-import { error, none, pipe } from "../../../functions.js";
+import { error, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -41,6 +40,6 @@ const Observable_reduce = /*@__PURE__*/ (() => {
             this[ReduceObserverMixin_acc] = nextAcc;
         },
     }));
-    return pipe(createReduceObserver, StatefulContainer_reduce(Observable_liftEnumerableOperator));
+    return (reducer, initialValue) => pipe(createReduceObserver, partial(reducer, initialValue), Observable_liftEnumerableOperator);
 })();
 export default Observable_reduce;

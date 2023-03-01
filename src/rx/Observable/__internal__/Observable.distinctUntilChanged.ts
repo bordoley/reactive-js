@@ -9,8 +9,13 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { DistinctUntilChanged } from "../../../containers.js";
-import StatefulContainer_distinctUntilChanged from "../../../containers/StatefulContainer/__internal__/StatefulContainer.distinctUntilChanged.js";
-import { Equality, none, pipe } from "../../../functions.js";
+import {
+  Equality,
+  none,
+  partial,
+  pipe,
+  strictEquality,
+} from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -92,12 +97,14 @@ const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["dis
       );
     })();
 
-    return pipe(
-      createDistinctUntilChangedObserver,
-      StatefulContainer_distinctUntilChanged<ObservableLike, T>(
+    return ((options?: { readonly equality?: Equality<T> }) => {
+      const { equality = strictEquality } = options ?? {};
+      return pipe(
+        createDistinctUntilChangedObserver,
+        partial(equality),
         Observable_liftEnumerableOperator,
-      ),
-    );
+      );
+    }) as DistinctUntilChanged<ObservableLike>["distinctUntilChanged"];
   })();
 
 export default Observable_distinctUntilChanged;

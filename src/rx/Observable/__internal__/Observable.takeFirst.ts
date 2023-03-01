@@ -1,3 +1,4 @@
+import { max } from "../../../__internal__/math.js";
 import {
   DelegatingLike_delegate,
   Mutable,
@@ -8,8 +9,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { TakeFirst } from "../../../containers.js";
-import StatefulContainer_takeFirst from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeFirst.js";
-import { pipe } from "../../../functions.js";
+import { partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -22,6 +22,7 @@ import { DelegatingDisposableLike } from "../../../util/__internal__/util.intern
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
+
 const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
   /*@__PURE__*/ (() => {
     const createTakeFirstObserver: <T>(
@@ -98,10 +99,14 @@ const Observable_takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
       );
     })();
 
-    return pipe(
-      createTakeFirstObserver,
-      StatefulContainer_takeFirst(Observable_liftEnumerableOperator),
-    );
+    return ((options: { readonly count?: number } = {}) => {
+      const { count = max(options.count ?? 1, 0) } = options;
+      return pipe(
+        createTakeFirstObserver,
+        partial(count),
+        Observable_liftEnumerableOperator,
+      );
+    }) as TakeFirst<ObservableLike>["takeFirst"];
   })();
 
 export default Observable_takeFirst;

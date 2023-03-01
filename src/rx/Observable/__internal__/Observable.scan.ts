@@ -9,8 +9,14 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Scan } from "../../../containers.js";
-import StatefulContainer_scan from "../../../containers/StatefulContainer/__internal__/StatefulContainer.scan.js";
-import { Factory, Reducer, error, none, pipe } from "../../../functions.js";
+import {
+  Factory,
+  Reducer,
+  error,
+  none,
+  partial,
+  pipe,
+} from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -23,6 +29,7 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
+
 const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
   T,
   TAcc,
@@ -96,12 +103,12 @@ const Observable_scan: Scan<ObservableLike>["scan"] = /*@__PURE__*/ (<
     );
   })();
 
-  return pipe(
-    createScanObserver,
-    StatefulContainer_scan<ObservableLike, T, TAcc>(
+  return (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+    pipe(
+      createScanObserver,
+      partial(reducer, initialValue),
       Observable_liftEnumerableOperator,
-    ),
-  );
+    );
 })();
 
 export default Observable_scan;

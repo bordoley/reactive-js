@@ -8,8 +8,14 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Reduce } from "../../../containers.js";
 import ReadonlyArray_toRunnable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
-import StatefulContainer_reduce from "../../../containers/StatefulContainer/__internal__/StatefulContainer.reduce.js";
-import { Factory, Reducer, error, none, pipe } from "../../../functions.js";
+import {
+  Factory,
+  Reducer,
+  error,
+  none,
+  partial,
+  pipe,
+} from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -24,6 +30,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 import Observable_observeWith from "./Observable.observeWith.js";
+
 const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
   T,
   TAcc,
@@ -90,12 +97,12 @@ const Observable_reduce: Reduce<ObservableLike>["reduce"] = /*@__PURE__*/ (<
     ),
   );
 
-  return pipe(
-    createReduceObserver,
-    StatefulContainer_reduce<ObservableLike, T, TAcc>(
+  return (reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+    pipe(
+      createReduceObserver,
+      partial(reducer, initialValue),
       Observable_liftEnumerableOperator,
-    ),
-  );
+    );
 })();
 
 export default Observable_reduce;
