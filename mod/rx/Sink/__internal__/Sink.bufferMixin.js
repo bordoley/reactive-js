@@ -9,7 +9,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 const Sink_bufferMixin = (fromReadonlyArray) => {
     const BufferSinkMixin_maxBufferSize = Symbol("BufferSinkMixin_maxBufferSize");
     const BufferSinkMixin_buffer = Symbol("BufferSinkMixin_buffer");
@@ -25,7 +25,7 @@ const Sink_bufferMixin = (fromReadonlyArray) => {
                 pipe(instance[DelegatingLike_delegate], Disposable_dispose());
             }
             else {
-                pipe([buffer], fromReadonlyArray, ReactiveContainer_sinkInto(instance[DelegatingLike_delegate]));
+                pipe([buffer], fromReadonlyArray, Observable_observeWith(instance[DelegatingLike_delegate]));
             }
         }));
         return instance;

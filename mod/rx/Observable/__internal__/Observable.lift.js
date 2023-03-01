@@ -1,7 +1,7 @@
 /// <reference types="./Observable.lift.d.ts" />
 
 import { newInstance, pipeUnsafe } from "../../../functions.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ReactiveContainerLike_sinkInto, } from "../../../rx.js";
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
 import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
 const LiftedObservable_source = Symbol("LiftedObservable_source");
 const LiftedObservable_operators = Symbol("LiftedObservable_operators");
@@ -12,7 +12,7 @@ class LiftedObservable {
         this[ObservableLike_isEnumerable] = isEnumerable;
         this[ObservableLike_isRunnable] = isRunnable;
     }
-    [ReactiveContainerLike_sinkInto](observer) {
+    [ObservableLike_observe](observer) {
         pipeUnsafe(observer, ...this[LiftedObservable_operators], Sink_sourceFrom(this[LiftedObservable_source]));
     }
 }

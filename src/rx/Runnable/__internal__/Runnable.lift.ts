@@ -3,8 +3,8 @@ import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObservableLike_observe,
   ObserverLike,
-  ReactiveContainerLike_sinkInto,
   RunnableLike,
 } from "../../../rx.js";
 import Sink_sourceFrom from "../../Sink/__internal__/Sink.sourceFrom.js";
@@ -29,7 +29,7 @@ class LiftedRunnable<TIn, TOut> implements RunnableLike<TOut> {
     this[LiftedRunnable_operators] = operators;
   }
 
-  [ReactiveContainerLike_sinkInto](observer: ObserverLike<TOut>) {
+  [ObservableLike_observe](observer: ObserverLike<TOut>) {
     pipeUnsafe(
       observer,
       ...this[LiftedRunnable_operators],

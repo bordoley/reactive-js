@@ -22,13 +22,13 @@ import {
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
   ObservableLike,
+  ObservableLike_observe,
   ObserverLike,
-  ReactiveContainerLike_sinkInto,
 } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import DelegatingAsyncEnumerator_mixin from "../../AsyncEnumerator/__internal__/DelegatingAsyncEnumerator.mixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
@@ -53,7 +53,7 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
       function ScanAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<TAcc>,
-          | typeof ReactiveContainerLike_sinkInto
+          | typeof ObservableLike_observe
           | typeof MulticastObservableLike_observerCount
           | typeof MulticastObservableLike_replay
         > &
@@ -82,14 +82,14 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
           unsafeCast<DelegatingLike<AsyncEnumeratorLike<T>>>(this);
           return MulticastObservable_getReplay(this[DelegatingLike_delegate]);
         },
-        [ReactiveContainerLike_sinkInto](
+        [ObservableLike_observe](
           this: TProperties & DelegatingLike<AsyncEnumeratorLike<T>>,
           observer: ObserverLike<TAcc>,
         ): void {
           pipe(
             this[DelegatingLike_delegate],
             this[ScanAsyncEnumerator_op],
-            ReactiveContainer_sinkInto(observer),
+            Observable_observeWith(observer),
           );
         },
       },

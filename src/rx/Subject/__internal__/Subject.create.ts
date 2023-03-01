@@ -13,8 +13,8 @@ import {
   MulticastObservableLike_replay,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObservableLike_observe,
   ObserverLike,
-  ReactiveContainerLike_sinkInto,
   SubjectLike,
   SubjectLike_publish,
 } from "../../../rx.js";
@@ -48,7 +48,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
         function Subject(
           instance: Pick<
             SubjectLike<T>,
-            | typeof ReactiveContainerLike_sinkInto
+            | typeof ObservableLike_observe
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof MulticastObservableLike_observerCount
@@ -98,7 +98,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             }
           },
 
-          [ReactiveContainerLike_sinkInto](
+          [ObservableLike_observe](
             this: TProperties & SubjectLike & IndexedQueueLike<T>,
             observer: ObserverLike<T>,
           ) {

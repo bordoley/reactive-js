@@ -3,12 +3,12 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import StatefulContainer_takeWhile from "../../../containers/StatefulContainer/__internal__/StatefulContainer.takeWhile.js";
 import { none, pipe, unsafeCast } from "../../../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ReactiveContainerLike_sinkInto, } from "../../../rx.js";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -33,8 +33,8 @@ const AsyncEnumerable_takeWhile =
             unsafeCast(this);
             return MulticastObservable_getReplay(this[TakeWhileAsyncEnumerator_obs]);
         },
-        [ReactiveContainerLike_sinkInto](observer) {
-            pipe(this[TakeWhileAsyncEnumerator_obs], ReactiveContainer_sinkInto(observer));
+        [ObservableLike_observe](observer) {
+            pipe(this[TakeWhileAsyncEnumerator_obs], Observable_observeWith(observer));
         },
     }));
     return pipe(createTakeWhileAsyncEnumerator, StatefulContainer_takeWhile(AsyncEnumerable_lift(true, true)));

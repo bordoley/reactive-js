@@ -65,8 +65,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveContainerLike`](../interfaces/rx.ReactiveContainerLike.md)<`TSink`, `C`\> |
-| `TSink` | extends [`SinkLike`](../interfaces/rx.SinkLike.md)<`T`, `TSink`\> |
+| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`, `C`\> |
+| `TSink` | extends [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`, `TSink`\> |
 | `T` | `T` |
 
 #### Parameters

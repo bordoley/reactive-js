@@ -9,8 +9,8 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObservableLike_observe,
   ObserverLike,
-  ReactiveContainerLike_sinkInto,
 } from "../../../rx.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 
@@ -30,7 +30,7 @@ const Observable_create: <T>(
   return createInstanceFactory(
     mix(
       function CreateObservable(
-        instance: Pick<ObservableLike, typeof ReactiveContainerLike_sinkInto> &
+        instance: Pick<ObservableLike, typeof ObservableLike_observe> &
           Mutable<TProperties>,
         effect: SideEffect1<ObserverLike>,
         isEnumerable = false,
@@ -48,10 +48,7 @@ const Observable_create: <T>(
         [ObservableLike_isEnumerable]: false,
       }),
       {
-        [ReactiveContainerLike_sinkInto](
-          this: TProperties,
-          observer: ObserverLike,
-        ) {
+        [ObservableLike_observe](this: TProperties, observer: ObserverLike) {
           try {
             this[CreateObservable_effect](observer);
           } catch (e) {

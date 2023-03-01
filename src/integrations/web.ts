@@ -31,13 +31,12 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObservableLike_observe,
   ObserverLike,
-  ReactiveContainerLike_sinkInto,
 } from "../rx.js";
 import * as MulticastObservable from "../rx/MulticastObservable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
-import * as ReactiveContainer from "../rx/ReactiveContainer.js";
 import { DispatcherLike_scheduler, SchedulerLike } from "../scheduling.js";
 import * as Dispatcher from "../scheduling/Dispatcher.js";
 import {
@@ -196,7 +195,7 @@ export const fetch: <T>(
                 ? pipe(onResponseResult, Promiseable.toObservable())
                 : onResponseResult;
 
-            pipe(resultObs, ReactiveContainer.sinkInto(observer));
+            pipe(resultObs, Observable.observeWith(observer));
           } catch (e) {
             pipe(observer, Disposable.dispose(error(e)));
           }
@@ -325,7 +324,7 @@ export const windowLocation: WindowLocationStreamableLike =
             | typeof QueueLike_count
             | typeof WindowLocationStreamLike_canGoBack
             | typeof WindowLocationStreamLike_goBack
-            | typeof ReactiveContainerLike_sinkInto
+            | typeof ObservableLike_observe
           > &
             Mutable<TProperties>,
           delegate: StreamLike<TAction, TState>,
@@ -396,14 +395,14 @@ export const windowLocation: WindowLocationStreamableLike =
             return canGoBack;
           },
 
-          [ReactiveContainerLike_sinkInto](
+          [ObservableLike_observe](
             this: DelegatingLike<StreamLike<TAction, TState>>,
             observer: ObserverLike<WindowLocationURI>,
           ): void {
             pipe(
               this[DelegatingLike_delegate],
               Observable.map(({ uri }) => uri),
-              ReactiveContainer.sinkInto(observer),
+              Observable.observeWith(observer),
             );
           },
         },

@@ -7,33 +7,21 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { Predicate } from "../../../functions.js";
-import {
-  ReactiveContainerLike,
-  SinkLike,
-  SinkLike_notify,
-} from "../../../rx.js";
+import { ObservableLike, ObserverLike, SinkLike_notify } from "../../../rx.js";
 
 import Sink_satisfyMixin from "./Sink.satisfyMixin.js";
 
-const Sink_someSatisfyMixin: <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<boolean>,
-  T,
->(
+const Sink_someSatisfyMixin: <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly boolean[]) => C,
 ) => Mixin2<
-  SinkLike<T>,
-  TSink,
+  ObserverLike<T>,
+  ObserverLike<boolean>,
   Predicate<T>,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
-> = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<boolean>,
-  T,
->(
+  Pick<ObserverLike<T>, typeof SinkLike_notify>
+> = <C extends ObservableLike, T>(
   fromReadonlyArray: (v: readonly boolean[]) => C,
 ) => {
-  const typedSatisfySinkMixin = Sink_satisfyMixin<C, TSink, T>(
+  const typedSatisfySinkMixin = Sink_satisfyMixin<C, T>(
     fromReadonlyArray,
     false,
   );
@@ -42,9 +30,9 @@ const Sink_someSatisfyMixin: <
     include(typedSatisfySinkMixin),
     function EverySatisfySink(
       instance: unknown,
-      delegate: TSink,
+      delegate: ObserverLike<boolean>,
       predicate: Predicate<T>,
-    ): SinkLike<T> {
+    ): ObserverLike<T> {
       init(typedSatisfySinkMixin, instance, delegate, predicate);
       return instance;
     },

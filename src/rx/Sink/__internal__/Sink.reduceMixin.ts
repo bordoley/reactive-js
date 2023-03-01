@@ -8,35 +8,27 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Factory, Reducer, error, none, pipe } from "../../../functions.js";
 import {
-  ReactiveContainerLike,
-  SinkLike,
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_scheduler,
   SinkLike_notify,
 } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import ReactiveContainer_sinkInto from "../../ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-const Sink_reduceMixin: <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<TAcc>,
-  T,
-  TAcc,
->(
+const Sink_reduceMixin: <C extends ObservableLike, T, TAcc>(
   fromReadonlyArray: (v: readonly TAcc[]) => C,
 ) => Mixin3<
-  SinkLike<T>,
-  TSink,
+  ObserverLike<T>,
+  ObserverLike<TAcc>,
   Reducer<T, TAcc>,
   Factory<TAcc>,
-  Pick<SinkLike<T>, typeof SinkLike_notify>
-> = <
-  C extends ReactiveContainerLike<TSink>,
-  TSink extends SinkLike<TAcc>,
-  T,
-  TAcc,
->(
+  Pick<ObserverLike<T>, typeof SinkLike_notify>
+> = <C extends ObservableLike, T, TAcc>(
   fromReadonlyArray: (v: readonly TAcc[]) => C,
 ) => {
   const ReduceSinkMixin_reducer = Symbol("ReduceSinkMixin_reducer");
@@ -48,15 +40,16 @@ const Sink_reduceMixin: <
   };
 
   return mix(
-    include(Disposable_mixin),
+    include(Disposable_mixin, Observer_mixin<T>()),
     function ReduceSinkMixin(
-      instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
+      instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
         Mutable<TProperties>,
-      delegate: TSink,
+      delegate: ObserverLike<TAcc>,
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
-    ): SinkLike<T> {
+    ): ObserverLike<T> {
       init(Disposable_mixin, instance);
+      init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
 
       instance[ReduceSinkMixin_reducer] = reducer;
 
@@ -74,7 +67,7 @@ const Sink_reduceMixin: <
           pipe(
             [instance[ReduceSinkMixin_acc]],
             fromReadonlyArray,
-            ReactiveContainer_sinkInto<C, TSink, TAcc>(delegate),
+            Observable_observeWith<C, TAcc>(delegate),
           );
         }),
       );

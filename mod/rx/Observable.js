@@ -48,6 +48,7 @@ import Observable_mergeMap from "./Observable/__internal__/Observable.mergeMap.j
 import Observable_mergeWith from "./Observable/__internal__/Observable.mergeWith.js";
 import Observable_multicast from "./Observable/__internal__/Observable.multicast.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
+import Observable_observeWith from "./Observable/__internal__/Observable.observeWith.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
@@ -181,6 +182,7 @@ export const scanAsync = Observable_scanAsync;
  * is subscribed to.
  */
 export const share = Observable_share;
+export const observeWith = Observable_observeWith;
 export const skipFirst = Observable_skipFirst;
 export const someSatisfy = Observable_someSatisfy;
 export const startWith = Observable_startWith;

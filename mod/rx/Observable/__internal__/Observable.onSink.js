@@ -1,11 +1,11 @@
-/// <reference types="./ReactiveContainer.onSink.d.ts" />
+/// <reference types="./Observable.onSink.d.ts" />
 
 import { identity, isFunction, isSome, none, pipe, } from "../../../functions.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import ReactiveContainer_sinkInto from "./ReactiveContainer.sinkInto.js";
-const ReactiveContainer_onSink = (createReactiveContainer, src, f) => createReactiveContainer(sink => {
-    pipe(src, ReactiveContainer_sinkInto(sink));
+import Observable_observeWith from "./Observable.observeWith.js";
+const Observable_onSink = (createObservable, src, f) => createObservable(sink => {
+    pipe(src, Observable_observeWith(sink));
     const disposable = f() || none;
     pipe(sink, isFunction(disposable)
         ? Disposable_onDisposed(disposable)
@@ -13,4 +13,4 @@ const ReactiveContainer_onSink = (createReactiveContainer, src, f) => createReac
             ? Disposable_add(disposable)
             : identity);
 });
-export default ReactiveContainer_onSink;
+export default Observable_onSink;

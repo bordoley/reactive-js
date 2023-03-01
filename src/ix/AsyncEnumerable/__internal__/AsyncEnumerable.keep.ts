@@ -14,15 +14,15 @@ import {
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
+  ObservableLike_observe,
   ObserverLike,
-  ReactiveContainerLike_sinkInto,
 } from "../../../rx.js";
 import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
 import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
@@ -44,7 +44,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
       function KeepAsyncEnumerator(
         instance: Pick<
           AsyncEnumeratorLike<T>,
-          | typeof ReactiveContainerLike_sinkInto
+          | typeof ObservableLike_observe
           | typeof MulticastObservableLike_observerCount
           | typeof MulticastObservableLike_replay
         > &
@@ -81,14 +81,11 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
           unsafeCast<TProperties>(this);
           return MulticastObservable_getReplay(this[KeepAsyncEnumerator_obs]);
         },
-        [ReactiveContainerLike_sinkInto](
+        [ObservableLike_observe](
           this: TProperties,
           observer: ObserverLike<T>,
         ): void {
-          pipe(
-            this[KeepAsyncEnumerator_obs],
-            ReactiveContainer_sinkInto(observer),
-          );
+          pipe(this[KeepAsyncEnumerator_obs], Observable_observeWith(observer));
         },
       },
     ),

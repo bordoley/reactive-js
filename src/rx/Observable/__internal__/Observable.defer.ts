@@ -1,5 +1,5 @@
 import { Factory } from "../../../functions.js";
-import { ObservableLike, ReactiveContainerLike_sinkInto } from "../../../rx.js";
+import { ObservableLike, ObservableLike_observe } from "../../../rx.js";
 import Observable_create from "./Observable.create.js";
 
 const Observable_defer = <T>(
@@ -9,7 +9,7 @@ const Observable_defer = <T>(
 ): ObservableLike<T> =>
   Observable_create(
     observer => {
-      factory()[ReactiveContainerLike_sinkInto](observer);
+      factory()[ObservableLike_observe](observer);
     },
     isEnumerable,
     isRunnable,

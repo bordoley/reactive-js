@@ -9,8 +9,8 @@ import {
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
-import ReactiveContainer_sinkInto from "../../../rx/ReactiveContainer/__internal__/ReactiveContainer.sinkInto.js";
 import { StreamableLike } from "../../../streaming.js";
 import Streamable_createLifted from "./Streamable.createLifted.js";
 
@@ -27,7 +27,7 @@ const Streamable_createActionReducer = <TAction, T>(
         Observable_scan<TAction, T>(reducer, returns(acc)),
         Observable_mergeWith<T>(pipe([acc], ReadonlyArray_toRunnable())),
         Observable_distinctUntilChanged<T>(options),
-        ReactiveContainer_sinkInto(observer),
+        Observable_observeWith(observer),
       );
     }),
   );

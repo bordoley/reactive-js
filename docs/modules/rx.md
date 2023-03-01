@@ -9,7 +9,6 @@
 - [EnumerableObservableLike](../interfaces/rx.EnumerableObservableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
-- [ReactiveContainerLike](../interfaces/rx.ReactiveContainerLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
 - [SinkLike](../interfaces/rx.SinkLike.md)
 - [SubjectLike](../interfaces/rx.SubjectLike.md)
