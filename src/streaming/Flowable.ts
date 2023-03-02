@@ -8,8 +8,7 @@ import AsyncIterable_toFlowable from "../containers/AsyncIterable/__internal__/A
 import Iterable_toFlowable from "../containers/Iterable/__internal__/Iterable.toFlowable.js";
 import ReadonlyArray_toFlowable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import Sequence_toFlowable from "../containers/Sequence/__internal__/Sequence.toFlowable.js";
-import { FromEnumerable } from "../ix.js";
-import { FromRunnable, ToObservable } from "../rx.js";
+import { FromEnumerable, FromRunnable, ToObservable } from "../rx.js";
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import { FlowableLike } from "../streaming.js";
 import Flowable_toObservable from "./Flowable/__internal__/Flowable.toObservable.js";

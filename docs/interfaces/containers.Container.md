@@ -116,10 +116,6 @@
 
   ↳ [`ZipWith`](containers.ZipWith.md)
 
-  ↳ [`FromEnumerable`](ix.FromEnumerable.md)
-
-  ↳ [`ToEnumerable`](ix.ToEnumerable.md)
-
   ↳ [`CombineLatest`](rx.CombineLatest.md)
 
   ↳ [`Exhaust`](rx.Exhaust.md)
@@ -131,6 +127,8 @@
   ↳ [`ForkMerge`](rx.ForkMerge.md)
 
   ↳ [`ForkZipLatest`](rx.ForkZipLatest.md)
+
+  ↳ [`FromEnumerable`](rx.FromEnumerable.md)
 
   ↳ [`FromRunnable`](rx.FromRunnable.md)
 
@@ -157,6 +155,8 @@
   ↳ [`Throttle`](rx.Throttle.md)
 
   ↳ [`Timeout`](rx.Timeout.md)
+
+  ↳ [`ToEnumerable`](rx.ToEnumerable.md)
 
   ↳ [`ToObservable`](rx.ToObservable.md)
 

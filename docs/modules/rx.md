@@ -6,6 +6,8 @@
 
 ### Container Interfaces
 
+- [AsyncEnumerableLike](../interfaces/rx.AsyncEnumerableLike.md)
+- [EnumerableLike](../interfaces/rx.EnumerableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
@@ -13,6 +15,7 @@
 
 ### Other Interfaces
 
+- [EnumeratorLike](../interfaces/rx.EnumeratorLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 
 ### TypeClass Interfaces
@@ -23,6 +26,7 @@
 - [ForkCombineLatest](../interfaces/rx.ForkCombineLatest.md)
 - [ForkMerge](../interfaces/rx.ForkMerge.md)
 - [ForkZipLatest](../interfaces/rx.ForkZipLatest.md)
+- [FromEnumerable](../interfaces/rx.FromEnumerable.md)
 - [FromRunnable](../interfaces/rx.FromRunnable.md)
 - [Lift](../interfaces/rx.Lift.md)
 - [Merge](../interfaces/rx.Merge.md)
@@ -36,6 +40,7 @@
 - [TakeUntil](../interfaces/rx.TakeUntil.md)
 - [Throttle](../interfaces/rx.Throttle.md)
 - [Timeout](../interfaces/rx.Timeout.md)
+- [ToEnumerable](../interfaces/rx.ToEnumerable.md)
 - [ToObservable](../interfaces/rx.ToObservable.md)
 - [ToRunnable](../interfaces/rx.ToRunnable.md)
 - [WithLatestFrom](../interfaces/rx.WithLatestFrom.md)

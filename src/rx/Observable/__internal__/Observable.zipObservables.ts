@@ -20,17 +20,15 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
-} from "../../../ix.js";
-import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
-import Enumerable_enumerate from "../../../ix/Enumerable/__internal__/Enumerable.enumerate.js";
-import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_hasCurrent from "../../../ix/Enumerator/__internal__/Enumerator.hasCurrent.js";
-import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
-import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
+import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
+import Enumerator_getCurrent from "../../../rx/Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_hasCurrent from "../../../rx/Enumerator/__internal__/Enumerator.hasCurrent.js";
+import Enumerator_move from "../../../rx/Enumerator/__internal__/Enumerator.move.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import {
   DisposableLike,

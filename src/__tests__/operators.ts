@@ -45,15 +45,15 @@ import {
   pipeLazy,
   returns,
 } from "../functions.js";
-import { ToEnumerable } from "../ix.js";
-import * as Enumerable from "../ix/Enumerable.js";
 import {
   ObservableLike,
   Retry,
   ScanAsync,
+  ToEnumerable,
   ToObservable,
   ToRunnable,
 } from "../rx.js";
+import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
 import { __now } from "../scheduling/Continuation.js";

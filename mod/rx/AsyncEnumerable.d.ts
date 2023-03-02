@@ -1,0 +1,1 @@
+export declare const toStreamable: <T>() => (enumerable: import("../rx.js").AsyncEnumerableLike<import("../rx.js").ObservableLike<unknown>, T>) => import("../streaming.js").StreamableLike<unknown, unknown, import("../streaming.js").StreamLike<unknown, unknown>>;

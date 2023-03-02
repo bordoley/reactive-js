@@ -1,10 +1,10 @@
 import { Factory, Updater, none, pipe } from "../../../functions.js";
-import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
+import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";

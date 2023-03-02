@@ -1,7 +1,7 @@
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { pipe } from "../../../functions.js";
-import Enumerablee_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
+import Enumerablee_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";

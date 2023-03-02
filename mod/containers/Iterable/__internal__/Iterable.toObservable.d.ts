@@ -1,7 +1,6 @@
 import { IterableLike } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
-import { EnumerableLike } from "../../../ix.js";
-import { RunnableLike } from "../../../rx.js";
+import { EnumerableLike, RunnableLike } from "../../../rx.js";
 interface IterableToObservable {
     <T>(): Function1<IterableLike<T>, EnumerableLike<T>>;
     <T>(options: unknown): Function1<IterableLike<T>, RunnableLike<T>>;

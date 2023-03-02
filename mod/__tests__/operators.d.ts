@@ -1,6 +1,5 @@
 import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike, Contains, DecodeWithCharset, DistinctUntilChanged, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, FromReadonlyArray, IgnoreElements, Keep, Map, MapTo, Pairwise, Reduce, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { ToEnumerable } from "../ix.js";
-import { ObservableLike, Retry, ScanAsync, ToObservable, ToRunnable } from "../rx.js";
+import { ObservableLike, Retry, ScanAsync, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 export declare const bufferTests: <C extends ContainerLike>(m: Buffer<C, unknown> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;
 export declare const catchErrorTests: <C extends ContainerLike>(m: CatchError<C, never> & Throws<C, unknown> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;
 export declare const concatTests: <C extends ContainerLike>(m: Concat<C> & FromReadonlyArray<C, unknown> & ToReadonlyArray<C, never>) => import("./testing.js").Describe;

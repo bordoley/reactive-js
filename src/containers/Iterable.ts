@@ -6,9 +6,13 @@ import {
   ToReadonlyArray,
 } from "../containers.js";
 import { identity, returns } from "../functions.js";
-import { FromEnumerable, ToEnumerable } from "../ix.js";
-import Enumerable_toIterable from "../ix/Enumerable/__internal__/Enumerable.toIterable.js";
-import { ToObservable, ToRunnable } from "../rx.js";
+import {
+  FromEnumerable,
+  ToEnumerable,
+  ToObservable,
+  ToRunnable,
+} from "../rx.js";
+import Enumerable_toIterable from "../rx/Enumerable/__internal__/Enumerable.toIterable.js";
 import { ToFlowable } from "../streaming.js";
 import Iterable_toFlowable from "./Iterable/__internal__/Iterable.toFlowable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";

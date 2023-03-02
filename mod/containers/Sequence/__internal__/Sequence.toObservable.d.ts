@@ -1,7 +1,6 @@
 import { SequenceLike } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
-import { EnumerableLike } from "../../../ix.js";
-import { RunnableLike } from "../../../rx.js";
+import { EnumerableLike, RunnableLike } from "../../../rx.js";
 interface SequenceToObservable {
     <T>(): Function1<SequenceLike<T>, EnumerableLike<T>>;
     <T>(options: unknown): Function1<SequenceLike<T>, RunnableLike<T>>;

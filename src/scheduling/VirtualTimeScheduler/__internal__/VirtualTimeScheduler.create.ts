@@ -12,11 +12,11 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
-} from "../../../ix.js";
-import Enumerator_getCurrent from "../../../ix/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_move from "../../../ix/Enumerator/__internal__/Enumerator.move.js";
-import MutableEnumerator_mixin from "../../../ix/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { MutableEnumeratorLike } from "../../../ix/__internal__/ix.internal.js";
+} from "../../../rx.js";
+import Enumerator_getCurrent from "../../../rx/Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_move from "../../../rx/Enumerator/__internal__/Enumerator.move.js";
+import MutableEnumerator_mixin from "../../../rx/Enumerator/__internal__/MutableEnumerator.mixin.js";
+import { MutableEnumeratorLike } from "../../../rx/__internal__/rx.internal.js";
 import {
   ContinuationLike,
   ContinuationLike_run,

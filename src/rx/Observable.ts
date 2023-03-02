@@ -65,9 +65,9 @@ import {
   SideEffect6,
   TypePredicate,
 } from "../functions.js";
-import { EnumerableLike } from "../ix.js";
 import {
   CombineLatest,
+  EnumerableLike,
   Exhaust,
   ExhaustMap,
   ForkCombineLatest,

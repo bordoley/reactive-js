@@ -1,7 +1,6 @@
 import { ReadonlyArrayLike } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
-import { EnumerableLike } from "../../../ix.js";
-import { RunnableLike } from "../../../rx.js";
+import { EnumerableLike, RunnableLike } from "../../../rx.js";
 interface ReadonlyArrayToObservable {
     <T>(): Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
     <T>(options: unknown): Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
