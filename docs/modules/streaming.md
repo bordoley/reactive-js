@@ -11,6 +11,7 @@
 
 ### Other Interfaces
 
+- [AsyncEnumerableLike](../interfaces/streaming.AsyncEnumerableLike.md)
 - [FlowableStreamLike](../interfaces/streaming.FlowableStreamLike.md)
 - [StreamLike](../interfaces/streaming.StreamLike.md)
 

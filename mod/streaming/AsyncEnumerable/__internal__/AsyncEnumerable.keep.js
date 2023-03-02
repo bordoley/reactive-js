@@ -1,0 +1,45 @@
+/// <reference types="./AsyncEnumerable.keep.d.ts" />
+
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
+import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
+import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
+import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
+import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
+import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
+import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
+import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
+import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
+const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
+    const KeepStream_obs = Symbol("KeepStream_obs");
+    const createKeepStream = createInstanceFactory(mix(include(Disposable_delegatingMixin(), Stream_delegatingMixin()), function KeepStream(instance, delegate, predicate) {
+        init(Disposable_delegatingMixin(), instance, delegate);
+        init(Stream_delegatingMixin(), instance, delegate);
+        instance[KeepStream_obs] = pipe(delegate, Observable_forEach(x => {
+            if (!predicate(x)) {
+                pipe(delegate, Queue_push(none));
+            }
+        }), Observable_keep(predicate), Observable_multicast(Dispatcher_getScheduler(delegate)));
+        return instance;
+    }, props({
+        [KeepStream_obs]: none,
+    }), {
+        get [MulticastObservableLike_observerCount]() {
+            unsafeCast(this);
+            return MulticastObservable_getObserverCount(this[KeepStream_obs]);
+        },
+        get [MulticastObservableLike_replay]() {
+            unsafeCast(this);
+            return MulticastObservable_getReplay(this[KeepStream_obs]);
+        },
+        [ObservableLike_observe](observer) {
+            pipe(this[KeepStream_obs], Observable_observeWith(observer));
+        },
+    }));
+    return ((predicate) => pipe(createKeepStream, partial(predicate), AsyncEnumerable_lift));
+})();
+export default AsyncEnumerable_keep;
