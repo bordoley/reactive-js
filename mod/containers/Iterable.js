@@ -1,7 +1,7 @@
 /// <reference types="./Iterable.d.ts" />
 
 import { identity, returns } from "../functions.js";
-import Enumerable_toIterable from "../ix/Enumerable/__internal__/Enumerable.toIterable.js";
+import Enumerable_toIterable from "../rx/Enumerable/__internal__/Enumerable.toIterable.js";
 import Iterable_toFlowable from "./Iterable/__internal__/Iterable.toFlowable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";

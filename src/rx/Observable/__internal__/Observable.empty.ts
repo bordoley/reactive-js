@@ -1,5 +1,5 @@
 import { pipe, pipeLazy } from "../../../functions.js";
-import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";

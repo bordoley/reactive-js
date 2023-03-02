@@ -1,13 +1,13 @@
 import { IterableLike } from "../../../containers.js";
 import { Function1, none, pipe } from "../../../functions.js";
-import { EnumerableLike } from "../../../ix.js";
-import Enumerable_create from "../../../ix/Enumerable/__internal__/Enumerable.create.js";
 import {
+  EnumerableLike,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
   RunnableLike,
 } from "../../../rx.js";
+import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";

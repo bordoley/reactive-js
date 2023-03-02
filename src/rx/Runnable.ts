@@ -46,13 +46,13 @@ import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import { identity, returns } from "../functions.js";
-import { FromEnumerable } from "../ix.js";
 import {
   CombineLatest,
   Exhaust,
   ExhaustMap,
   ForkMerge,
   ForkZipLatest,
+  FromEnumerable,
   Merge,
   MergeAll,
   MergeWith,

@@ -2,7 +2,7 @@
 
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { alwaysFalse, alwaysTrue, arrayEquality, increment, none, pipe, pipeLazy, returns, } from "../functions.js";
-import * as Enumerable from "../ix/Enumerable.js";
+import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
 import { __now } from "../scheduling/Continuation.js";

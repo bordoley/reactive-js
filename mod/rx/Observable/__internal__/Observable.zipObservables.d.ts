@@ -1,5 +1,4 @@
-import { EnumeratorLike } from "../../../ix.js";
-import { ObservableLike } from "../../../rx.js";
+import { EnumeratorLike, ObservableLike } from "../../../rx.js";
 import { QueueLike } from "../../../util.js";
 export interface QueuedEnumeratorLike<T = unknown> extends EnumeratorLike<T>, QueueLike<T> {
 }

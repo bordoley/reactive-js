@@ -73,6 +73,28 @@ export interface RunnableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
 }
 
+/**
+ * Interface for iterating a Container of items.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
+  readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
+
+  readonly [ObservableLike_isEnumerable]: true;
+}
+
+/**
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface AsyncEnumerableLike<
+  CInner extends ObservableLike = ObservableLike,
+  T = unknown,
+> extends EnumerableLike<ContainerOf<CInner, T>> {}
+
 /** @ignore */
 export const MulticastObservableLike_observerCount = Symbol(
   "MulticastObservableLike_observerCount",
@@ -106,6 +128,25 @@ export const SubjectLike_publish = Symbol("SubjectLike_publish");
  */
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
   [SubjectLike_publish](next: T): void;
+}
+
+/** @ignore */
+export const EnumeratorLike_move = Symbol("EnumeratorLike_move");
+
+/** @ignore */
+export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
+
+/** @ignore */
+export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
+
+/**
+ * @noInheritDoc
+ */
+export interface EnumeratorLike<T = unknown> extends DisposableLike {
+  readonly [EnumeratorLike_current]: T;
+  readonly [EnumeratorLike_hasCurrent]: boolean;
+
+  [EnumeratorLike_move](): void;
 }
 
 export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
@@ -372,6 +413,20 @@ export interface ForkZipLatest<C extends ObservableLike> extends Container<C> {
  * @noInheritDoc
  * @category TypeClass
  */
+export interface FromEnumerable<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Constructor
+   */
+  fromEnumerable<T>(
+    options?: O,
+  ): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface FromRunnable<C extends ContainerLike, O = never>
   extends Container<C> {
   /**
@@ -599,6 +654,18 @@ export interface Timeout<C extends ObservableLike> extends Container<C> {
    * @category Operator
    */
   timeout<T>(duration: C): ContainerOperator<C, T, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ToEnumerable<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Converter
+   */
+  toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
 
 /**

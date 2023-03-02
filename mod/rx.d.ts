@@ -50,6 +50,23 @@ export interface RunnableLike<T = unknown> extends ObservableLike<T> {
     readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isRunnable]: true;
 }
+/**
+ * Interface for iterating a Container of items.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
+    readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
+    readonly [ObservableLike_isEnumerable]: true;
+}
+/**
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface AsyncEnumerableLike<CInner extends ObservableLike = ObservableLike, T = unknown> extends EnumerableLike<ContainerOf<CInner, T>> {
+}
 /** @ignore */
 export declare const MulticastObservableLike_observerCount: unique symbol;
 /** @ignore */
@@ -73,6 +90,20 @@ export declare const SubjectLike_publish: unique symbol;
  */
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     [SubjectLike_publish](next: T): void;
+}
+/** @ignore */
+export declare const EnumeratorLike_move: unique symbol;
+/** @ignore */
+export declare const EnumeratorLike_current: unique symbol;
+/** @ignore */
+export declare const EnumeratorLike_hasCurrent: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface EnumeratorLike<T = unknown> extends DisposableLike {
+    readonly [EnumeratorLike_current]: T;
+    readonly [EnumeratorLike_hasCurrent]: boolean;
+    [EnumeratorLike_move](): void;
 }
 export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<TAcc, T, ContainerOf<C, TAcc>>;
 /**
@@ -156,6 +187,16 @@ export interface ForkZipLatest<C extends ObservableLike> extends Container<C> {
     forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>, f: ContainerOperator<C, T, TF>, g: ContainerOperator<C, T, TG>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG]>;
     forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>, f: ContainerOperator<C, T, TF>, g: ContainerOperator<C, T, TG>, h: ContainerOperator<C, T, TH>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>, f: ContainerOperator<C, T, TF>, g: ContainerOperator<C, T, TG>, h: ContainerOperator<C, T, TH>, i: ContainerOperator<C, T, TI>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface FromEnumerable<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * @category Constructor
+     */
+    fromEnumerable<T>(options?: O): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
 }
 /**
  * @noInheritDoc
@@ -337,6 +378,16 @@ export interface Timeout<C extends ObservableLike> extends Container<C> {
      * @category Operator
      */
     timeout<T>(duration: C): ContainerOperator<C, T, T>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ToEnumerable<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * @category Converter
+     */
+    toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
 /**
  * @noInheritDoc

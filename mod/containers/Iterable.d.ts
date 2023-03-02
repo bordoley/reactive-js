@@ -1,6 +1,5 @@
 import { FromReadonlyArray, FromSequence, IterableLike, ToIterable, ToReadonlyArray } from "../containers.js";
-import { FromEnumerable, ToEnumerable } from "../ix.js";
-import { ToObservable, ToRunnable } from "../rx.js";
+import { FromEnumerable, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const fromEnumerable: FromEnumerable<IterableLike>["fromEnumerable"];
 export declare const fromReadonlyArray: FromReadonlyArray<IterableLike>["fromReadonlyArray"];

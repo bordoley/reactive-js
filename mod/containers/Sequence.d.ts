@@ -1,6 +1,5 @@
 import { Compute, Concat, ConcatAll, ConcatMap, ConcatWith, DistinctUntilChanged, EndWith, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Repeat, Scan, SequenceLike, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { ToEnumerable } from "../ix.js";
-import { ToObservable, ToRunnable } from "../rx.js";
+import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const compute: Compute<SequenceLike>["compute"];
 export declare const concat: Concat<SequenceLike>["concat"];
