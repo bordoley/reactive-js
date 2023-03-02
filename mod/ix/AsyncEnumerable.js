@@ -1,4 +1,4 @@
 /// <reference types="./AsyncEnumerable.d.ts" />
 
-import AsyncEnumerable_enumerate from "./AsyncEnumerable/__internal__/AsyncEnumerable.enumerate.js";
-export const enumerate = AsyncEnumerable_enumerate;
+import AsyncEnumerable_toStreamable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toStreamable.js";
+export const toStreamable = AsyncEnumerable_toStreamable;

@@ -6,13 +6,13 @@
 
 ### Functions
 
-- [enumerate](ix_AsyncEnumerable.md#enumerate)
+- [toStreamable](ix_AsyncEnumerable.md#tostreamable)
 
 ## Functions
 
-### enumerate
+### toStreamable
 
-▸ **enumerate**<`T`\>(`scheduler`, `options?`): (`enumerable`: [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`\>) => [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `T`\>
+▸ **toStreamable**<`T`\>(): (`enumerable`: [`AsyncEnumerableLike`](../interfaces/ix.AsyncEnumerableLike.md)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`\>) => [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`unknown`, `unknown`\>\>
 
 #### Type parameters
 
@@ -20,19 +20,11 @@
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
-
 #### Returns
 
 `fn`
 
-▸ (`enumerable`): [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `T`\>
+▸ (`enumerable`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`unknown`, `unknown`\>\>
 
 ##### Parameters
 
@@ -42,4 +34,4 @@
 
 ##### Returns
 
-[`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `T`\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`unknown`, `unknown`\>\>

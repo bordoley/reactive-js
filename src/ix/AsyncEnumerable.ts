@@ -1,3 +1,3 @@
-import AsyncEnumerable_enumerate from "./AsyncEnumerable/__internal__/AsyncEnumerable.enumerate.js";
+import AsyncEnumerable_toStreamable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toStreamable.js";
 
-export const enumerate = AsyncEnumerable_enumerate;
+export const toStreamable = AsyncEnumerable_toStreamable;
