@@ -1,3 +1,1 @@
-export declare const enumerate: <T>(scheduler: import("../scheduling.js").SchedulerLike, options?: {
-    readonly replay?: number | undefined;
-} | undefined) => (enumerable: import("../ix.js").AsyncEnumerableLike<import("../rx.js").ObservableLike<unknown>, T>) => import("../streaming.js").StreamLike<void, T>;
+export declare const toStreamable: <T>() => (enumerable: import("../ix.js").AsyncEnumerableLike<import("../rx.js").ObservableLike<unknown>, T>) => import("../streaming.js").StreamableLike<unknown, unknown, import("../streaming.js").StreamLike<unknown, unknown>>;
