@@ -60,13 +60,6 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
     readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: true;
 }
-/**
- *
- * @noInheritDoc
- * @category Container
- */
-export interface AsyncEnumerableLike<CInner extends ObservableLike = ObservableLike, T = unknown> extends EnumerableLike<ContainerOf<CInner, T>> {
-}
 /** @ignore */
 export declare const MulticastObservableLike_observerCount: unique symbol;
 /** @ignore */

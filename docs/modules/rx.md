@@ -6,7 +6,6 @@
 
 ### Container Interfaces
 
-- [AsyncEnumerableLike](../interfaces/rx.AsyncEnumerableLike.md)
 - [EnumerableLike](../interfaces/rx.EnumerableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)

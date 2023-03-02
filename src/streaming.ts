@@ -57,6 +57,14 @@ export interface FlowableLike<T = unknown>
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 
+export interface AsyncEnumerableLike<T = unknown>
+  extends StreamableLike<void, T>,
+    ContainerLike {
+  readonly [ContainerLike_type]?: AsyncEnumerableLike<
+    this[typeof ContainerLike_T]
+  >;
+}
+
 /**
  * @noInheritDoc
  * @category TypeClass
