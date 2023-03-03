@@ -11,6 +11,8 @@ export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObse
 }
 /** @ignore */
 export declare const StreamableLike_stream: unique symbol;
+export declare const StreamableLike_isEnumerable: unique symbol;
+export declare const StreamableLike_isRunnable: unique symbol;
 /**
  * @noInheritDoc
  * @category Container

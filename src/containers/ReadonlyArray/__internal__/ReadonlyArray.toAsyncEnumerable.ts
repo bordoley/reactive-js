@@ -13,7 +13,7 @@ import Observable_map from "../../../rx/Observable/__internal__/Observable.map.j
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
-import AsyncEnumerable_create from "../../../streaming/AsyncEnumerable/__internal__/AsyncEnumerable.create.js";
+import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray.toObservable.js";
 
@@ -42,7 +42,7 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
     ) => {
       const delay = options?.delay ?? 0 > 0;
 
-      return AsyncEnumerable_create<T>(
+      return Streamable_createLifted<void, T>(
         compose(
           count >= 0
             ? Observable_scan<ObservableLike, void, number>(
