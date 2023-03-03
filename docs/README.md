@@ -21,7 +21,6 @@ Reactive-JS
 - [integrations/web/WindowLocationStream](modules/integrations_web_WindowLocationStream.md)
 - [rx](modules/rx.md)
 - [rx/Enumerable](modules/rx_Enumerable.md)
-- [rx/Enumerator](modules/rx_Enumerator.md)
 - [rx/MulticastObservable](modules/rx_MulticastObservable.md)
 - [rx/Observable](modules/rx_Observable.md)
 - [rx/Observer](modules/rx_Observer.md)
@@ -41,4 +40,5 @@ Reactive-JS
 - [streaming/Streamable](modules/streaming_Streamable.md)
 - [util](modules/util.md)
 - [util/Disposable](modules/util_Disposable.md)
+- [util/Enumerator](modules/util_Enumerator.md)
 - [util/Queue](modules/util_Queue.md)

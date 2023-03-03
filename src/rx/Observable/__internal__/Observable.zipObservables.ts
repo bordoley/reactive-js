@@ -16,23 +16,20 @@ import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/R
 import { compose, isTrue, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
-  EnumeratorLike_move,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
-import Enumerator_getCurrent from "../../../rx/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_hasCurrent from "../../../rx/Enumerator/__internal__/Enumerator.hasCurrent.js";
-import Enumerator_move from "../../../rx/Enumerator/__internal__/Enumerator.move.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  EnumeratorLike_move,
   QueueLike,
   QueueLike_count,
   QueueLike_push,
@@ -43,6 +40,9 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import Enumerator_getCurrent from "../../../util/Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_hasCurrent from "../../../util/Enumerator/__internal__/Enumerator.hasCurrent.js";
+import Enumerator_move from "../../../util/Enumerator/__internal__/Enumerator.move.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import {
   PullableQueueLike,

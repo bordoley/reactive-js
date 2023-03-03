@@ -1,6 +1,6 @@
 import { DelegatingLike } from "../../__internal__/mixins.js";
 import { Optional } from "../../functions.js";
-import { DisposableLike, QueueLike } from "../../util.js";
+import { DisposableLike, EnumeratorLike, EnumeratorLike_current, QueueLike } from "../../util.js";
 export declare const MutableRefLike_current: unique symbol;
 export interface MutableRefLike<T = unknown> {
     get [MutableRefLike_current](): T;
@@ -19,4 +19,7 @@ export interface PullableQueueLike<T> extends QueueLike<T> {
 export declare const IndexedQueueLike_get: unique symbol;
 export interface IndexedQueueLike<T> extends PullableQueueLike<T> {
     [IndexedQueueLike_get](index: number): T;
+}
+export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
+    [EnumeratorLike_current]: T;
 }

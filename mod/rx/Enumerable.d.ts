@@ -17,7 +17,7 @@ export declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>[
 export declare const empty: Empty<EnumerableLike>["empty"];
 export declare const encodeUtf8: EncodeUtf8<EnumerableLike>["encodeUtf8"];
 export declare const endWith: EndWith<EnumerableLike>["endWith"];
-export declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => import("../rx.js").EnumeratorLike<T>;
+export declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => import("../util.js").EnumeratorLike<T>;
 export declare const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"];
 export declare const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"];
 export declare const forEach: ForEach<EnumerableLike>["forEach"];

@@ -20,16 +20,6 @@ import {
   unsafeCast,
 } from "../../functions.js";
 import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_move,
-} from "../../rx.js";
-import Enumerator_getCurrent from "../../rx/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_hasCurrent from "../../rx/Enumerator/__internal__/Enumerator.hasCurrent.js";
-import Enumerator_move from "../../rx/Enumerator/__internal__/Enumerator.move.js";
-import MutableEnumerator_mixin from "../../rx/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { MutableEnumeratorLike } from "../../rx/__internal__/rx.internal.js";
-import {
   ContinuationLike,
   PauseableSchedulerLike,
   PauseableSchedulerLike_isPaused,
@@ -43,17 +33,29 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../scheduling.js";
-import { DisposableLike, QueueLike_count, QueueLike_push } from "../../util.js";
+import {
+  DisposableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_move,
+  QueueLike_count,
+  QueueLike_push,
+} from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
+import Enumerator_getCurrent from "../../util/Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_hasCurrent from "../../util/Enumerator/__internal__/Enumerator.hasCurrent.js";
+import Enumerator_move from "../../util/Enumerator/__internal__/Enumerator.move.js";
+import MutableEnumerator_mixin from "../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_createPriorityQueue from "../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
 import PullableQueue_peek from "../../util/PullableQueue/__internal__/PullableQueue.peek.js";
 import PullableQueue_pull from "../../util/PullableQueue/__internal__/PullableQueue.pull.js";
 import {
   DisposableRefLike,
+  MutableEnumeratorLike,
   MutableRefLike_current,
   PullableQueueLike,
 } from "../../util/__internal__/util.internal.js";
