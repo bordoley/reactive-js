@@ -1,6 +1,6 @@
 import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { EnumerableLike, Retry, ScanAsync, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
-import { ToFlowable } from "../streaming.js";
+import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
 export declare const catchError: CatchError<EnumerableLike>["catchError"];
 export declare const compute: Compute<EnumerableLike>["compute"];
@@ -45,6 +45,9 @@ export declare const takeLast: TakeLast<EnumerableLike>["takeLast"];
 export declare const takeWhile: TakeWhile<EnumerableLike>["takeWhile"];
 export declare const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
 export declare const throws: Throws<EnumerableLike>["throws"];
+export declare const toAsyncEnumerable: ToAsyncEnumerable<EnumerableLike, {
+    delay?: number;
+}>["toAsyncEnumerable"];
 export declare const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"];
 export declare const toFlowable: ToFlowable<EnumerableLike>["toFlowable"];
 export declare const toIterable: ToIterable<EnumerableLike>["toIterable"];

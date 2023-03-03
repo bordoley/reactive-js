@@ -28,7 +28,7 @@ import {
   ZipWith,
 } from "../containers.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
-import { ToFlowable } from "../streaming.js";
+import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 import Sequence_compute from "./Sequence/__internal__/Sequence.compute.js";
 import Sequence_concat from "./Sequence/__internal__/Sequence.concat.js";
@@ -51,6 +51,7 @@ import Sequence_startWith from "./Sequence/__internal__/Sequence.startWith.js";
 import Sequence_takeFirst from "./Sequence/__internal__/Sequence.takeFirst.js";
 import Sequence_takeLast from "./Sequence/__internal__/Sequence.takeLast.js";
 import Sequence_takeWhile from "./Sequence/__internal__/Sequence.takeWhile.js";
+import Sequence_toAsyncEnumerable from "./Sequence/__internal__/Sequence.toAsyncEnumerable.js";
 import Sequence_toFlowable from "./Sequence/__internal__/Sequence.toFlowable.js";
 import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable.js";
 import Sequence_toObservable from "./Sequence/__internal__/Sequence.toObservable.js";
@@ -111,6 +112,11 @@ export const takeLast: TakeLast<SequenceLike>["takeLast"] = Sequence_takeLast;
 
 export const takeWhile: TakeWhile<SequenceLike>["takeWhile"] =
   Sequence_takeWhile;
+
+export const toAsyncEnumerable: ToAsyncEnumerable<
+  SequenceLike,
+  { delay?: number }
+>["toAsyncEnumerable"] = Sequence_toAsyncEnumerable;
 
 export const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"] =
   Sequence_toObservable;

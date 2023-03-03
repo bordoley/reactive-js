@@ -98,8 +98,9 @@ import Observable_zip from "../rx/Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith.js";
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { ToFlowable } from "../streaming.js";
+import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
+import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 
 export const buffer: Buffer<EnumerableLike>["buffer"] = Observable_buffer;
 
@@ -223,6 +224,11 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
 
 export const throws: Throws<EnumerableLike>["throws"] =
   Observable_throws as Throws<EnumerableLike>["throws"];
+
+export const toAsyncEnumerable: ToAsyncEnumerable<
+  EnumerableLike,
+  { delay?: number }
+>["toAsyncEnumerable"] = Enumerable_toAsyncEnumerable;
 
 export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
   /*@__PURE__*/ returns(identity);
