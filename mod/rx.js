@@ -19,12 +19,6 @@ export const MulticastObservableLike_observerCount = Symbol("MulticastObservable
 export const MulticastObservableLike_replay = Symbol("MulticastObservableLike_replay");
 /** @ignore */
 export const SubjectLike_publish = Symbol("SubjectLike_publish");
-/** @ignore */
-export const EnumeratorLike_move = Symbol("EnumeratorLike_move");
-/** @ignore */
-export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
-/** @ignore */
-export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
 export const ThrottleMode_first = Symbol("ThrottleMode_first");
 export const ThrottleMode_last = Symbol("ThrottleMode_last");
 export const ThrottleMode_interval = Symbol("ThrottleMode_interval");

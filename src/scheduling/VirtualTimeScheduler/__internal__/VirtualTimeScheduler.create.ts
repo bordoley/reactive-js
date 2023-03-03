@@ -9,15 +9,6 @@ import {
 import { MAX_SAFE_INTEGER } from "../../../constants.js";
 import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_move,
-} from "../../../rx.js";
-import Enumerator_getCurrent from "../../../rx/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_move from "../../../rx/Enumerator/__internal__/Enumerator.move.js";
-import MutableEnumerator_mixin from "../../../rx/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { MutableEnumeratorLike } from "../../../rx/__internal__/rx.internal.js";
-import {
   ContinuationLike,
   ContinuationLike_run,
   SchedulerLike,
@@ -29,14 +20,26 @@ import {
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../../../scheduling.js";
-import { DisposableLike, QueueLike_push } from "../../../util.js";
+import {
+  DisposableLike,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_move,
+  QueueLike_push,
+} from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Enumerator_getCurrent from "../../../util/Enumerator/__internal__/Enumerator.getCurrent.js";
+import Enumerator_move from "../../../util/Enumerator/__internal__/Enumerator.move.js";
+import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import PullableQueue_pull from "../../../util/PullableQueue/__internal__/PullableQueue.pull.js";
-import { PullableQueueLike } from "../../../util/__internal__/util.internal.js";
+import {
+  MutableEnumeratorLike,
+  PullableQueueLike,
+} from "../../../util/__internal__/util.internal.js";
 import getCurrentTime from "../../Scheduler/__internal__/Scheduler.getCurrentTime.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 

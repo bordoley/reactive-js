@@ -14,7 +14,6 @@
 
 ### Other Interfaces
 
-- [EnumeratorLike](../interfaces/rx.EnumeratorLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 
 ### TypeClass Interfaces

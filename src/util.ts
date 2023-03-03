@@ -68,3 +68,22 @@ export interface QueueLike<T = unknown> {
    */
   [QueueLike_push](req: T): void;
 }
+
+/** @ignore */
+export const EnumeratorLike_move = Symbol("EnumeratorLike_move");
+
+/** @ignore */
+export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
+
+/** @ignore */
+export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
+
+/**
+ * @noInheritDoc
+ */
+export interface EnumeratorLike<T = unknown> extends DisposableLike {
+  readonly [EnumeratorLike_current]: T;
+  readonly [EnumeratorLike_hasCurrent]: boolean;
+
+  [EnumeratorLike_move](): void;
+}

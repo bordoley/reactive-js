@@ -84,20 +84,6 @@ export declare const SubjectLike_publish: unique symbol;
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     [SubjectLike_publish](next: T): void;
 }
-/** @ignore */
-export declare const EnumeratorLike_move: unique symbol;
-/** @ignore */
-export declare const EnumeratorLike_current: unique symbol;
-/** @ignore */
-export declare const EnumeratorLike_hasCurrent: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface EnumeratorLike<T = unknown> extends DisposableLike {
-    readonly [EnumeratorLike_current]: T;
-    readonly [EnumeratorLike_hasCurrent]: boolean;
-    [EnumeratorLike_move](): void;
-}
 export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<TAcc, T, ContainerOf<C, TAcc>>;
 /**
  * @noInheritDoc
