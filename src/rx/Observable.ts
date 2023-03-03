@@ -87,6 +87,8 @@ import {
   TakeUntil,
   Throttle,
   Timeout,
+  ToEnumerable,
+  ToRunnable,
   WithLatestFrom,
   ZipLatest,
   ZipWithLatestFrom,
@@ -172,7 +174,9 @@ import Observable_throttle from "./Observable/__internal__/Observable.throttle.j
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
+import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
 import Observable_toPromise from "./Observable/__internal__/Observable.toPromise.js";
+import Observable_toRunnable from "./Observable/__internal__/Observable.toRunnable.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
@@ -329,7 +333,8 @@ export const catchError: CatchError<ObservableLike>["catchError"] =
 export const combineLatest: CombineLatest<ObservableLike>["combineLatest"] =
   Observable_combineLatest;
 
-export const compute: Compute<ObservableLike>["compute"] = Observable_compute;
+export const compute: Compute<ObservableLike, { delay: number }>["compute"] =
+  Observable_compute;
 
 export const concat: Concat<ObservableLike>["concat"] = Observable_concat;
 
@@ -552,12 +557,16 @@ export const throttle: Throttle<ObservableLike>["throttle"] =
 export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-export const throws: Throws<
-  ObservableLike,
-  { delay?: number; delayStart?: boolean }
->["throws"] = Observable_throws;
+export const throws: Throws<ObservableLike, { delay?: number }>["throws"] =
+  Observable_throws;
 
 export const timeout: Timeout<ObservableLike>["timeout"] = Observable_timeout;
+
+export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
+  Observable_toEnumerable;
+
+export const toRunnable: ToRunnable<ObservableLike>["toRunnable"] =
+  Observable_toRunnable;
 
 export const toPromise = Observable_toPromise;
 

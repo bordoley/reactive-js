@@ -14,6 +14,8 @@
 
 - [`StreamableLike`](streaming.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<[`PauseableState`](../modules/scheduling.md#pauseablestate)\>, `T`, [`FlowableStreamLike`](streaming.FlowableStreamLike.md)<`T`\>\>
 
+- [`ObservableLike`](rx.ObservableLike.md)<`T`\>
+
 - [`ContainerLike`](containers.ContainerLike.md)
 
   ↳ **`FlowableLike`**

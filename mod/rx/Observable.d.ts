@@ -1,6 +1,6 @@
 import { CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, TypePredicate } from "../functions.js";
-import { CombineLatest, EnumerableLike, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, EnumerableLike, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
@@ -78,7 +78,9 @@ export declare const buffer: <T>(options?: {
 }) => ContainerOperator<ObservableLike, T, readonly T[]>;
 export declare const catchError: CatchError<ObservableLike>["catchError"];
 export declare const combineLatest: CombineLatest<ObservableLike>["combineLatest"];
-export declare const compute: Compute<ObservableLike>["compute"];
+export declare const compute: Compute<ObservableLike, {
+    delay: number;
+}>["compute"];
 export declare const concat: Concat<ObservableLike>["concat"];
 export declare const concatAll: ConcatAll<ObservableLike, {
     maxBufferSize?: number;
@@ -187,9 +189,10 @@ export declare const throttle: Throttle<ObservableLike>["throttle"];
 export declare const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"];
 export declare const throws: Throws<ObservableLike, {
     delay?: number;
-    delayStart?: boolean;
 }>["throws"];
 export declare const timeout: Timeout<ObservableLike>["timeout"];
+export declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
+export declare const toRunnable: ToRunnable<ObservableLike>["toRunnable"];
 export declare const toPromise: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<T>;
 export declare const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"];
 export declare const zip: Zip<ObservableLike>["zip"];

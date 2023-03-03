@@ -44,7 +44,7 @@ const Observable_timeout = /*@__PURE__*/ (() => {
     const raise = returns(timeoutError);
     return (duration) => {
         const durationObs = isNumber(duration)
-            ? Observable_throws({ delay: duration, delayStart: true, raise })
+            ? Observable_throws({ delay: duration, raise })
             : Observable_concat(duration, Observable_throws({ raise }));
         return pipe(createTimeoutObserver, partial(durationObs), Observable_lift(false, isNumber(duration) || Observable_isRunnable(duration)));
     };

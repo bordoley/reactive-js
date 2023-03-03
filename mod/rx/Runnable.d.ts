@@ -1,10 +1,12 @@
 import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { CombineLatest, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, FromEnumerable, MergeAll, MergeWith, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, FromEnumerable, MergeAll, MergeWith, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<RunnableLike>["buffer"];
 export declare const catchError: CatchError<RunnableLike>["catchError"];
 export declare const combineLatest: CombineLatest<RunnableLike>["combineLatest"];
-export declare const compute: Compute<RunnableLike>["compute"];
+export declare const compute: Compute<RunnableLike, {
+    delay: number;
+}>["compute"];
 export declare const concat: Concat<RunnableLike>["concat"];
 export declare const concatAll: ConcatAll<RunnableLike, {
     maxBufferSize?: number;
@@ -78,9 +80,9 @@ export declare const throttle: Throttle<RunnableLike>["throttle"];
 export declare const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"];
 export declare const throws: Throws<RunnableLike, {
     delay?: number;
-    delayStart?: boolean;
 }>["throws"];
 export declare const timeout: Timeout<RunnableLike>["timeout"];
+export declare const toEnumerable: ToEnumerable<RunnableLike>["toEnumerable"];
 export declare const toFlowable: ToFlowable<RunnableLike>["toFlowable"];
 export declare const toObservable: ToObservable<RunnableLike>["toObservable"];
 export declare const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"];

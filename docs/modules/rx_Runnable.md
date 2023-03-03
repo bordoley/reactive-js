@@ -22,6 +22,7 @@
 
 ### Converter Functions
 
+- [toEnumerable](rx_Runnable.md#toenumerable)
 - [toFlowable](rx_Runnable.md#toflowable)
 - [toObservable](rx_Runnable.md#toobservable)
 - [toReadonlyArray](rx_Runnable.md#toreadonlyarray)
@@ -320,7 +321,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `undefined` |
+| `options?` | `Object` |
+| `options.delay` | `number` |
 
 #### Returns
 
@@ -537,7 +539,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | { `delay?`: `number` ; `delayStart?`: `boolean`  } & { `raise?`: [`Factory`](functions.md#factory)<`unknown`\>  } |
+| `options?` | { `delay?`: `number`  } & { `raise?`: [`Factory`](functions.md#factory)<`unknown`\>  } |
 
 #### Returns
 
@@ -992,6 +994,28 @@ multiple sources.
 ___
 
 ## Converter Functions
+
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+
+___
 
 ### toFlowable
 

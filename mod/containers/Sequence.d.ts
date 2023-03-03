@@ -1,4 +1,4 @@
-import { Compute, Concat, ConcatAll, ConcatMap, ConcatWith, DistinctUntilChanged, EndWith, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Repeat, Scan, SequenceLike, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Compute, Concat, ConcatAll, ConcatMap, ConcatWith, DistinctUntilChanged, EndWith, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Repeat, Scan, SequenceLike, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ToIterable, ToReadonlyArray, ToSequence, Zip, ZipWith } from "../containers.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 export declare const compute: Compute<SequenceLike>["compute"];
@@ -41,5 +41,6 @@ export declare const toRunnable: ToRunnable<SequenceLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["toRunnable"];
+export declare const toSequence: ToSequence<SequenceLike>["toSequence"];
 export declare const zip: Zip<SequenceLike>["zip"];
 export declare const zipWith: ZipWith<SequenceLike>["zipWith"];
