@@ -22,6 +22,7 @@
 - [concat](rx_Observable.md#concat)
 - [defer](rx_Observable.md#defer)
 - [empty](rx_Observable.md#empty)
+- [fromAsyncEnumerable](rx_Observable.md#fromasyncenumerable)
 - [fromAsyncIterable](rx_Observable.md#fromasynciterable)
 - [fromFlowable](rx_Observable.md#fromflowable)
 - [fromIterable](rx_Observable.md#fromiterable)
@@ -1028,6 +1029,28 @@ Return an ContainerLike that emits no items.
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
+### fromAsyncEnumerable
+
+▸ **fromAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 

@@ -22,6 +22,7 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
 >["toAsyncEnumerable"] =
   /*@__PURE__*/
 
+
     <T>(options?: { delay?: number }) =>
     (enumerable: EnumerableLike): AsyncEnumerableLike =>
       AsyncEnumerable_create(observable =>
