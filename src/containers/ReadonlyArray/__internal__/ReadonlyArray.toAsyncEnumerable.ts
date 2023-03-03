@@ -21,7 +21,6 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
   ReadonlyArrayLike,
   {
     readonly delay?: number;
-    readonly delayStart?: boolean;
     readonly start?: number;
     readonly count?: number;
   }
@@ -31,7 +30,6 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
     AsyncEnumerableLike,
     {
       readonly delay?: number;
-      readonly delayStart?: boolean;
     }
   >(
     <T>(
@@ -40,7 +38,6 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
       count: number,
       options?: {
         readonly delay?: number;
-        readonly delayStart?: boolean;
       },
     ) => {
       const delay = options?.delay ?? 0 > 0;
