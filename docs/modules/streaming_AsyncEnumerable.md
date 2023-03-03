@@ -6,6 +6,7 @@
 
 ### Constructor Functions
 
+- [fromReadonlyArray](streaming_AsyncEnumerable.md#fromreadonlyarray)
 - [generate](streaming_AsyncEnumerable.md#generate)
 
 ### Converter Functions
@@ -21,6 +22,28 @@
 - [takeWhile](streaming_AsyncEnumerable.md#takewhile)
 
 ## Constructor Functions
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | { `count?`: `number` ; `delay?`: `number` ; `delayStart?`: `boolean` ; `start?`: `number`  } & { `count?`: `number` ; `start?`: `number`  } |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
+
+___
 
 ### generate
 

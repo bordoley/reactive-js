@@ -168,7 +168,11 @@
 
   ↳ [`ZipWithLatestFrom`](rx.ZipWithLatestFrom.md)
 
+  ↳ [`FromAsyncEnumerable`](streaming.FromAsyncEnumerable.md)
+
   ↳ [`FromFlowable`](streaming.FromFlowable.md)
+
+  ↳ [`ToAsyncEnumerable`](streaming.ToAsyncEnumerable.md)
 
   ↳ [`ToFlowable`](streaming.ToFlowable.md)
 

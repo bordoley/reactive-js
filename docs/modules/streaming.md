@@ -17,5 +17,7 @@
 
 ### TypeClass Interfaces
 
+- [FromAsyncEnumerable](../interfaces/streaming.FromAsyncEnumerable.md)
 - [FromFlowable](../interfaces/streaming.FromFlowable.md)
+- [ToAsyncEnumerable](../interfaces/streaming.ToAsyncEnumerable.md)
 - [ToFlowable](../interfaces/streaming.ToFlowable.md)

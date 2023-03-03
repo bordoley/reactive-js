@@ -1,6 +1,12 @@
-import { Generate, Keep, Map, Scan, TakeWhile } from "../containers.js";
+import { FromReadonlyArray, Generate, Keep, Map, Scan, TakeWhile } from "../containers.js";
 import { ObservableLike, ScanAsync, ToObservable } from "../rx.js";
 import { AsyncEnumerableLike } from "../streaming.js";
+export declare const fromReadonlyArray: FromReadonlyArray<AsyncEnumerableLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+    readonly count?: number;
+}>["fromReadonlyArray"];
 export declare const generate: Generate<AsyncEnumerableLike, {
     delay: number;
 }>["generate"];

@@ -20,9 +20,9 @@
 
   ↳ [`ObservableLike`](rx.ObservableLike.md)
 
-  ↳ [`FlowableLike`](streaming.FlowableLike.md)
-
   ↳ [`AsyncEnumerableLike`](streaming.AsyncEnumerableLike.md)
+
+  ↳ [`FlowableLike`](streaming.FlowableLike.md)
 
 ## Table of contents
 

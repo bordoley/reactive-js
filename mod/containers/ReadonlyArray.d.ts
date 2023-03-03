@@ -1,6 +1,6 @@
 import { Empty, Every, ForEach, FromIterable, FromReadonlyArray, FromSequence, Keep, KeepType, Map, ReadonlyArrayLike, Some, ToIterable, ToReadonlyArray, ToSequence } from "../containers.js";
 import { FromEnumerable, FromRunnable, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
-import { ToFlowable } from "../streaming.js";
+import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 export declare const empty: Empty<ReadonlyArrayLike>["empty"];
 export declare const every: Every<ReadonlyArrayLike>["every"];
 export declare const forEach: ForEach<ReadonlyArrayLike>["forEach"];
@@ -15,6 +15,12 @@ export declare const keep: Keep<ReadonlyArrayLike>["keep"];
 export declare const keepType: KeepType<ReadonlyArrayLike>["keepType"];
 export declare const map: Map<ReadonlyArrayLike>["map"];
 export declare const some: Some<ReadonlyArrayLike>["some"];
+export declare const toAsyncEnumerable: ToAsyncEnumerable<ReadonlyArrayLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+    readonly count?: number;
+}>["toAsyncEnumerable"];
 export declare const toEnumerable: ToEnumerable<ReadonlyArrayLike, {
     readonly start: number;
     readonly count: number;

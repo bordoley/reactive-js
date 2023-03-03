@@ -15,6 +15,7 @@
 
 ### Converter Functions
 
+- [toAsyncEnumerable](containers_ReadonlyArray.md#toasyncenumerable)
 - [toEnumerable](containers_ReadonlyArray.md#toenumerable)
 - [toFlowable](containers_ReadonlyArray.md#toflowable)
 - [toIterable](containers_ReadonlyArray.md#toiterable)
@@ -176,6 +177,32 @@ ___
 ___
 
 ## Converter Functions
+
+### toAsyncEnumerable
+
+▸ **toAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
+
+___
 
 ### toEnumerable
 

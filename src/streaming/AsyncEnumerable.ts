@@ -1,7 +1,7 @@
 import {
   //FromAsyncIterable,
   //FromIterable,
-  //FromReadonlyArray,
+  FromReadonlyArray,
   //FromSequence,
   Generate,
   Keep,
@@ -11,7 +11,7 @@ import {
 } from "../containers.js";
 //import AsyncIterable_toAsyncEnumerable from "../containers/AsyncIterable/__internal__/AsyncIterable.toAsyncEnumerable.js";
 //import Iterable_toAsyncEnumerable from "../containers/Iterable/__internal__/Iterable.toAsyncEnumerable.js";
-//import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
+import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 //import Sequence_toAsyncEnumerable from "../containers/Sequence/__internal__/Sequence.toAsyncEnumerable.js";
 import {
   //FromEnumerable,
@@ -43,6 +43,7 @@ export const fromEnumerableObservable: FromEnumerableObservable<AsyncEnumerableL
 
 export const fromIterable: FromIterable<AsyncEnumerableLike>["fromIterable"] =
   Iterable_toAsyncEnumerable;
+*/
 
 export const fromReadonlyArray: FromReadonlyArray<
   AsyncEnumerableLike,
@@ -54,6 +55,7 @@ export const fromReadonlyArray: FromReadonlyArray<
   }
 >["fromReadonlyArray"] = ReadonlyArray_toAsyncEnumerable;
 
+/*
 export const fromSequence: FromSequence<AsyncEnumerableLike>["fromSequence"] =
   Sequence_toAsyncEnumerable;*/
 
