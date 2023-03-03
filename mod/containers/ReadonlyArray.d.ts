@@ -17,7 +17,6 @@ export declare const map: Map<ReadonlyArrayLike>["map"];
 export declare const some: Some<ReadonlyArrayLike>["some"];
 export declare const toAsyncEnumerable: ToAsyncEnumerable<ReadonlyArrayLike, {
     readonly delay?: number;
-    readonly delayStart?: boolean;
     readonly start?: number;
     readonly count?: number;
 }>["toAsyncEnumerable"];
