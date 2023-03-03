@@ -92,7 +92,8 @@ import {
   ZipWithLatestFrom,
 } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
-import { FromFlowable } from "../streaming.js";
+import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
+import AsyncEnumerable_toObservable from "../streaming/AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
 import {
@@ -395,6 +396,9 @@ export const forkZip: ForkZip<ObservableLike>["forkZip"] = Observable_forkZip;
 
 export const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"] =
   Observable_forkZipLatest;
+
+export const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsyncEnumerable"] =
+  AsyncEnumerable_toObservable;
 
 export const fromAsyncIterable: FromAsyncIterable<
   ObservableLike,

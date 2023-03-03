@@ -2,7 +2,7 @@ import { CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Containe
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, TypePredicate } from "../functions.js";
 import { CombineLatest, EnumerableLike, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
-import { FromFlowable } from "../streaming.js";
+import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
 import { Observable_async__currentScheduler } from "./Observable/__internal__/Observable.async.js";
 interface __Memo {
@@ -106,6 +106,7 @@ export declare const forkConcat: ForkConcat<ObservableLike>["forkConcat"];
 export declare const forkMerge: ForkMerge<ObservableLike>["forkMerge"];
 export declare const forkZip: ForkZip<ObservableLike>["forkZip"];
 export declare const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"];
+export declare const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsyncEnumerable"];
 export declare const fromAsyncIterable: FromAsyncIterable<ObservableLike, {
     maxBuffer?: number;
 }>["fromAsyncIterable"];
