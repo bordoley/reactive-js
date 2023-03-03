@@ -21,3 +21,20 @@
 - [FromFlowable](../interfaces/streaming.FromFlowable.md)
 - [ToAsyncEnumerable](../interfaces/streaming.ToAsyncEnumerable.md)
 - [ToFlowable](../interfaces/streaming.ToFlowable.md)
+
+### Variables
+
+- [StreamableLike\_isEnumerable](streaming.md#streamablelike_isenumerable)
+- [StreamableLike\_isRunnable](streaming.md#streamablelike_isrunnable)
+
+## Variables
+
+### StreamableLike\_isEnumerable
+
+• `Const` **StreamableLike\_isEnumerable**: unique `symbol`
+
+___
+
+### StreamableLike\_isRunnable
+
+• `Const` **StreamableLike\_isRunnable**: unique `symbol`

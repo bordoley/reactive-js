@@ -26,6 +26,11 @@ export interface StreamLike<TReq, T>
 /** @ignore */
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
+export const StreamableLike_isEnumerable = Symbol(
+  "StreamableLike_isEnumerable",
+);
+export const StreamableLike_isRunnable = Symbol("StreamableLike_isRunnable");
+
 /**
  * @noInheritDoc
  * @category Container
@@ -35,6 +40,9 @@ export interface StreamableLike<
   T,
   TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
 > {
+  //readonly [StreamableLike_isEnumerable]: boolean;
+  //readonly [StreamableLike_isRunnable]: boolean;
+
   [StreamableLike_stream](
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
