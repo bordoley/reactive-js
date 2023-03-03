@@ -40,6 +40,15 @@ export interface StreamableLike<
     options?: { readonly replay?: number },
   ): TStream;
 }
+
+export interface AsyncEnumerableLike<T = unknown>
+  extends StreamableLike<void, T>,
+    ContainerLike {
+  readonly [ContainerLike_type]?: AsyncEnumerableLike<
+    this[typeof ContainerLike_T]
+  >;
+}
+
 /**
  * @noInheritDoc
  */
@@ -57,12 +66,18 @@ export interface FlowableLike<T = unknown>
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 
-export interface AsyncEnumerableLike<T = unknown>
-  extends StreamableLike<void, T>,
-    ContainerLike {
-  readonly [ContainerLike_type]?: AsyncEnumerableLike<
-    this[typeof ContainerLike_T]
-  >;
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface FromAsyncEnumerable<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Constructor
+   */
+  fromAsyncEnumerable<T>(
+    options?: O,
+  ): Function1<AsyncEnumerableLike<T>, ContainerOf<C, T>>;
 }
 
 /**
@@ -75,6 +90,20 @@ export interface FromFlowable<C extends ContainerLike, O = never>
    * @category Constructor
    */
   fromFlowable<T>(options?: O): Function1<FlowableLike<T>, ContainerOf<C, T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ToAsyncEnumerable<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Converter
+   */
+  toAsyncEnumerable<T>(
+    options?: O,
+  ): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;
 }
 
 /**

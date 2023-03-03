@@ -15,7 +15,7 @@ import {
   Scan,
   ToReadonlyArray,
 } from "@reactive-js/core/containers";
-import * as Enumerable from "@reactive-js/core/ix/Enumerable";
+import * as Enumerable from "@reactive-js/core/rx/Enumerable";
 import * as ReadonlyArray from "@reactive-js/core/containers/ReadonlyArray";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import * as Sequence from "@reactive-js/core/containers/Sequence";

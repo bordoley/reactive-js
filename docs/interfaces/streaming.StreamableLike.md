@@ -18,9 +18,9 @@
 
   ↳ [`WindowLocationStreamableLike`](integrations_web.WindowLocationStreamableLike.md)
 
-  ↳ [`FlowableLike`](streaming.FlowableLike.md)
-
   ↳ [`AsyncEnumerableLike`](streaming.AsyncEnumerableLike.md)
+
+  ↳ [`FlowableLike`](streaming.FlowableLike.md)
 
 ## Table of contents
 

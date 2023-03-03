@@ -22,7 +22,7 @@ import {
   ToRunnable,
 } from "../rx.js";
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { ToFlowable } from "../streaming.js";
+import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every.js";
@@ -33,6 +33,7 @@ import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.
 import ReadonlyArray_keepType from "./ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "./ReadonlyArray/__internal__/ReadonlyArray.some.js";
+import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
@@ -73,6 +74,16 @@ export const keepType: KeepType<ReadonlyArrayLike>["keepType"] =
 export const map: Map<ReadonlyArrayLike>["map"] = ReadonlyArray_map;
 
 export const some: Some<ReadonlyArrayLike>["some"] = ReadonlyArray_some;
+
+export const toAsyncEnumerable: ToAsyncEnumerable<
+  ReadonlyArrayLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+    readonly count?: number;
+  }
+>["toAsyncEnumerable"] = ReadonlyArray_toAsyncEnumerable;
 
 export const toEnumerable: ToEnumerable<
   ReadonlyArrayLike,

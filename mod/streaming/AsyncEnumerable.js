@@ -1,5 +1,8 @@
 /// <reference types="./AsyncEnumerable.d.ts" />
 
+//import AsyncIterable_toAsyncEnumerable from "../containers/AsyncIterable/__internal__/AsyncIterable.toAsyncEnumerable.js";
+//import Iterable_toAsyncEnumerable from "../containers/Iterable/__internal__/Iterable.toAsyncEnumerable.js";
+import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 //import EnumerableObservable_toAsyncEnumerable from "../rx/EnumerableObservable/__internal__/EnumerableObservable.toAsyncEnumerable.js";
 import AsyncEnumerable_generate from "./AsyncEnumerable/__internal__/AsyncEnumerable.generate.js";
 //import AsyncEnumerable_isEnumerable from "./AsyncEnumerable/__internal__/AsyncEnumerable.isEnumerable.js";
@@ -23,17 +26,9 @@ export const fromEnumerableObservable: FromEnumerableObservable<AsyncEnumerableL
 
 export const fromIterable: FromIterable<AsyncEnumerableLike>["fromIterable"] =
   Iterable_toAsyncEnumerable;
-
-export const fromReadonlyArray: FromReadonlyArray<
-  AsyncEnumerableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-    readonly start?: number;
-    readonly count?: number;
-  }
->["fromReadonlyArray"] = ReadonlyArray_toAsyncEnumerable;
-
+*/
+export const fromReadonlyArray = ReadonlyArray_toAsyncEnumerable;
+/*
 export const fromSequence: FromSequence<AsyncEnumerableLike>["fromSequence"] =
   Sequence_toAsyncEnumerable;*/
 export const generate = AsyncEnumerable_generate;

@@ -57,18 +57,12 @@
     "./integrations/scheduler": "./integrations/scheduler.js",
     "./integrations/web": "./integrations/web.js",
     "./integrations/web/WindowLocationStream": "./integrations/web/WindowLocationStream.js",
-    "./ix": "./ix.js",
-    "./ix/Enumerable": "./ix/Enumerable.js",
-    "./ix/Enumerator": "./ix/Enumerator.js",
     "./rx": "./rx.js",
-    "./rx/EnumerableObservable": "./rx/EnumerableObservable.js",
+    "./rx/Enumerable": "./rx/Enumerable.js",
     "./rx/MulticastObservable": "./rx/MulticastObservable.js",
     "./rx/Observable": "./rx/Observable.js",
     "./rx/Observer": "./rx/Observer.js",
-    "./rx/ReactiveContainer": "./rx/ReactiveContainer.js",
     "./rx/Runnable": "./rx/Runnable.js",
-    "./rx/RunnableObservable": "./rx/RunnableObservable.js",
-    "./rx/Sink": "./rx/Sink.js",
     "./rx/Subject": "./rx/Subject.js",
     "./scheduling": "./scheduling.js",
     "./scheduling/Continuation": "./scheduling/Continuation.js",
@@ -83,6 +77,7 @@
     "./streaming/Streamable": "./streaming/Streamable.js",
     "./util": "./util.js",
     "./util/Disposable": "./util/Disposable.js",
+    "./util/Enumerator": "./ix/Enumerator.js",
     "./util/Queue": "./util/Queue.js"
   }
 }
