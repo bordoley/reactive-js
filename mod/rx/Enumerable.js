@@ -89,8 +89,8 @@ export const startWith = Observable_startWith;
 export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
-export const throwIfEmpty = Observable_throwIfEmpty;
 export const throws = Observable_throws;
+export const throwIfEmpty = Observable_throwIfEmpty;
 export const toAsyncEnumerable = Enumerable_toAsyncEnumerable;
 export const toEnumerable = 
 /*@__PURE__*/ returns(identity);

@@ -24,9 +24,11 @@ import {
   TakeWhile,
   ToIterable,
   ToReadonlyArray,
+  ToSequence,
   Zip,
   ZipWith,
 } from "../containers.js";
+import { identity, returns } from "../functions.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
@@ -150,6 +152,9 @@ export const toRunnable: ToRunnable<
     readonly delayStart?: boolean;
   }
 >["toRunnable"] = Sequence_toObservable;
+
+export const toSequence: ToSequence<SequenceLike>["toSequence"] =
+  /*@__PURE__*/ returns(identity) as ToSequence<SequenceLike>["toSequence"];
 
 export const zip: Zip<SequenceLike>["zip"] = Sequence_zip;
 

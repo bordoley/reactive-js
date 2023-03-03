@@ -6,7 +6,7 @@ import {
   ContainerOf,
 } from "./containers.js";
 import { Function1, Updater } from "./functions.js";
-import { MulticastObservableLike } from "./rx.js";
+import { MulticastObservableLike, ObservableLike } from "./rx.js";
 import {
   DispatcherLike,
   PauseableLike,
@@ -62,6 +62,7 @@ export interface FlowableStreamLike<T = unknown>
  */
 export interface FlowableLike<T = unknown>
   extends StreamableLike<Updater<PauseableState>, T, FlowableStreamLike<T>>,
+    ObservableLike<T>,
     ContainerLike {
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }

@@ -219,11 +219,10 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] =
 export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
   Observable_takeWhile as TakeWhile<EnumerableLike>["takeWhile"];
 
+export const throws: Throws<EnumerableLike>["throws"] = Observable_throws;
+
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty as ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
-
-export const throws: Throws<EnumerableLike>["throws"] =
-  Observable_throws as Throws<EnumerableLike>["throws"];
 
 export const toAsyncEnumerable: ToAsyncEnumerable<
   EnumerableLike,

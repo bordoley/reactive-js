@@ -43,8 +43,8 @@ export declare const startWith: StartWith<EnumerableLike>["startWith"];
 export declare const takeFirst: TakeFirst<EnumerableLike>["takeFirst"];
 export declare const takeLast: TakeLast<EnumerableLike>["takeLast"];
 export declare const takeWhile: TakeWhile<EnumerableLike>["takeWhile"];
-export declare const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
 export declare const throws: Throws<EnumerableLike>["throws"];
+export declare const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
 export declare const toAsyncEnumerable: ToAsyncEnumerable<EnumerableLike, {
     delay?: number;
 }>["toAsyncEnumerable"];

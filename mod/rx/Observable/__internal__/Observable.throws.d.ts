@@ -1,7 +1,13 @@
-import { Throws } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
-declare const Observable_throws: Throws<ObservableLike, {
-    delay?: number;
-    delayStart?: boolean;
-}>["throws"];
+import { Factory } from "../../../functions.js";
+import { EnumerableLike, RunnableLike } from "../../../rx.js";
+interface ObservableThrows {
+    <T>(options: {
+        delay: number;
+        raise?: Factory<unknown>;
+    }): RunnableLike<T>;
+    <T>(options?: {
+        raise?: Factory<unknown>;
+    }): EnumerableLike<T>;
+}
+declare const Observable_throws: ObservableThrows;
 export default Observable_throws;

@@ -22,6 +22,8 @@ The source of notifications which notifies a `ObserverLike` instance.
 
   ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
+  ↳↳ [`FlowableLike`](streaming.FlowableLike.md)
+
 ## Table of contents
 
 ### Properties

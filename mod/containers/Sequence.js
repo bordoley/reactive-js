@@ -1,5 +1,6 @@
 /// <reference types="./Sequence.d.ts" />
 
+import { identity, returns } from "../functions.js";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 import Sequence_compute from "./Sequence/__internal__/Sequence.compute.js";
 import Sequence_concat from "./Sequence/__internal__/Sequence.concat.js";
@@ -58,5 +59,7 @@ export const toIterable = Sequence_toIterable;
 export const toObservable = Sequence_toObservable;
 export const toReadonlyArray = Sequence_toReadonlyArray;
 export const toRunnable = Sequence_toObservable;
+export const toSequence = 
+/*@__PURE__*/ returns(identity);
 export const zip = Sequence_zip;
 export const zipWith = Sequence_zipWith;

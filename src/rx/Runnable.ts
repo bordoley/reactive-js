@@ -64,6 +64,7 @@ import {
   TakeUntil,
   Throttle,
   Timeout,
+  ToEnumerable,
   ToObservable,
   ToRunnable,
   WithLatestFrom,
@@ -109,6 +110,7 @@ import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
+import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
@@ -141,7 +143,7 @@ export const catchError: CatchError<RunnableLike>["catchError"] =
 export const combineLatest: CombineLatest<RunnableLike>["combineLatest"] =
   Observable_combineLatest;
 
-export const compute: Compute<RunnableLike>["compute"] =
+export const compute: Compute<RunnableLike, { delay: number }>["compute"] =
   Observable_compute as Compute<RunnableLike>["compute"];
 
 export const concat: Concat<RunnableLike>["concat"] =
@@ -317,16 +319,14 @@ export const throttle: Throttle<RunnableLike>["throttle"] = Runnable_throttle;
 export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty as ThrowIfEmpty<RunnableLike>["throwIfEmpty"];
 
-export const throws: Throws<
-  RunnableLike,
-  { delay?: number; delayStart?: boolean }
->["throws"] = Observable_throws as Throws<
-  RunnableLike,
-  { delay?: number; delayStart?: boolean }
->["throws"];
+export const throws: Throws<RunnableLike, { delay?: number }>["throws"] =
+  Observable_throws;
 
 export const timeout: Timeout<RunnableLike>["timeout"] =
   Observable_timeout as Timeout<RunnableLike>["timeout"];
+
+export const toEnumerable: ToEnumerable<RunnableLike>["toEnumerable"] =
+  Observable_toEnumerable;
 
 export const toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
   Runnable_toFlowable;

@@ -35,6 +35,11 @@
 - [zip](rx_Observable.md#zip)
 - [zipLatest](rx_Observable.md#ziplatest)
 
+### Converter Functions
+
+- [toEnumerable](rx_Observable.md#toenumerable)
+- [toRunnable](rx_Observable.md#torunnable)
+
 ### Operator Functions
 
 - [catchError](rx_Observable.md#catcherror)
@@ -950,7 +955,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `undefined` |
+| `options?` | `Object` |
+| `options.delay` | `number` |
 
 #### Returns
 
@@ -1260,7 +1266,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | { `delay?`: `number` ; `delayStart?`: `boolean`  } & { `raise?`: [`Factory`](functions.md#factory)<`unknown`\>  } |
+| `options?` | { `delay?`: `number`  } & { `raise?`: [`Factory`](functions.md#factory)<`unknown`\>  } |
 
 #### Returns
 
@@ -1711,6 +1717,52 @@ multiple sources.
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+## Converter Functions
+
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 
