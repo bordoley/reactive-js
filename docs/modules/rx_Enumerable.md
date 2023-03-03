@@ -19,6 +19,7 @@
 
 ### Converter Functions
 
+- [toAsyncEnumerable](rx_Enumerable.md#toasyncenumerable)
 - [toEnumerable](rx_Enumerable.md#toenumerable)
 - [toFlowable](rx_Enumerable.md#toflowable)
 - [toIterable](rx_Enumerable.md#toiterable)
@@ -506,6 +507,29 @@ in order, of each of its input sources.
 ___
 
 ## Converter Functions
+
+### toAsyncEnumerable
+
+▸ **toAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
+
+___
 
 ### toEnumerable
 

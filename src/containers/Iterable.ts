@@ -13,7 +13,8 @@ import {
   ToRunnable,
 } from "../rx.js";
 import Enumerable_toIterable from "../rx/Enumerable/__internal__/Enumerable.toIterable.js";
-import { ToFlowable } from "../streaming.js";
+import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import Iterable_toAsyncEnumerable from "./Iterable/__internal__/Iterable.toAsyncEnumerable.js";
 import Iterable_toFlowable from "./Iterable/__internal__/Iterable.toFlowable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
@@ -28,6 +29,11 @@ export const fromReadonlyArray: FromReadonlyArray<IterableLike>["fromReadonlyArr
 
 export const fromSequence: FromSequence<IterableLike>["fromSequence"] =
   Sequence_toIterable;
+
+export const toAsyncEnumerable: ToAsyncEnumerable<
+  IterableLike,
+  { delay?: number }
+>["toAsyncEnumerable"] = Iterable_toAsyncEnumerable;
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   Iterable_toObservable;

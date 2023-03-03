@@ -1,6 +1,6 @@
 import { Compute, Concat, ConcatAll, ConcatMap, ConcatWith, DistinctUntilChanged, EndWith, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Repeat, Scan, SequenceLike, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
-import { ToFlowable } from "../streaming.js";
+import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 export declare const compute: Compute<SequenceLike>["compute"];
 export declare const concat: Concat<SequenceLike>["concat"];
 export declare const concatAll: ConcatAll<SequenceLike>["concatAll"];
@@ -23,6 +23,9 @@ export declare const startWith: StartWith<SequenceLike>["startWith"];
 export declare const takeFirst: TakeFirst<SequenceLike>["takeFirst"];
 export declare const takeLast: TakeLast<SequenceLike>["takeLast"];
 export declare const takeWhile: TakeWhile<SequenceLike>["takeWhile"];
+export declare const toAsyncEnumerable: ToAsyncEnumerable<SequenceLike, {
+    delay?: number;
+}>["toAsyncEnumerable"];
 export declare const toEnumerable: ToEnumerable<SequenceLike>["toEnumerable"];
 export declare const toFlowable: ToFlowable<SequenceLike, {
     readonly delay?: number;

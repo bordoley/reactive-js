@@ -1,6 +1,7 @@
 import { AsyncIterableLike } from "../containers.js";
 import { ToObservable } from "../rx.js";
-import { ToFlowable } from "../streaming.js";
+import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+export declare const toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnumerable"];
 export declare const toFlowable: ToFlowable<AsyncIterableLike, {
     maxBuffer?: number;
 }>["toFlowable"];

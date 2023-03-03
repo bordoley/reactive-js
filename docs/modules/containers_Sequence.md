@@ -14,6 +14,7 @@
 
 ### Converter Functions
 
+- [toAsyncEnumerable](containers_Sequence.md#toasyncenumerable)
 - [toEnumerable](containers_Sequence.md#toenumerable)
 - [toFlowable](containers_Sequence.md#toflowable)
 - [toIterable](containers_Sequence.md#toiterable)
@@ -369,6 +370,29 @@ in order, of each of its input sources.
 ___
 
 ## Converter Functions
+
+### toAsyncEnumerable
+
+▸ **toAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
+
+___
 
 ### toEnumerable
 

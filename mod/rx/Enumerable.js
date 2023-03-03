@@ -48,6 +48,7 @@ import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
+import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 export const buffer = Observable_buffer;
 export const catchError = Enumerable_catchError;
 export const compute = Observable_compute;
@@ -90,6 +91,7 @@ export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
 export const throwIfEmpty = Observable_throwIfEmpty;
 export const throws = Observable_throws;
+export const toAsyncEnumerable = Enumerable_toAsyncEnumerable;
 export const toEnumerable = 
 /*@__PURE__*/ returns(identity);
 export const toFlowable = Runnable_toFlowable;
