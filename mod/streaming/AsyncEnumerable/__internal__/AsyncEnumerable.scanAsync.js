@@ -6,7 +6,7 @@ import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, 
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
-import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
+import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
@@ -15,7 +15,7 @@ const AsyncEnumerable_scanAsync = /*@__PURE__*/ (() => {
     const createScanAsyncStream = createInstanceFactory(mix(include(Disposable_delegatingMixin(), Stream_delegatingMixin()), function ScanAsyncStream(instance, delegate, reducer, initialValue) {
         init(Disposable_delegatingMixin(), instance, delegate);
         init(Stream_delegatingMixin(), instance, delegate);
-        instance[ScanAsyncStream_obs] = pipe(delegate, Observable_scanAsync(reducer, initialValue), Observable_multicast(Dispatcher_getScheduler(delegate)));
+        instance[ScanAsyncStream_obs] = pipe(delegate, Observable_scanAsync(reducer, initialValue), Observable_multicast(delegate[DispatcherLike_scheduler]));
         return instance;
     }, props({
         [ScanAsyncStream_obs]: none,

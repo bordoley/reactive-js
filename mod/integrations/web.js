@@ -8,7 +8,6 @@ import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, 
 import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
 import { DispatcherLike_scheduler } from "../scheduling.js";
-import * as Dispatcher from "../scheduling/Dispatcher.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
@@ -137,7 +136,7 @@ export const windowLocation =
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
-            return pipe(this[DelegatingLike_delegate], Dispatcher.getScheduler);
+            return this[DelegatingLike_delegate][DispatcherLike_scheduler];
         },
         get [WindowLocationStreamLike_canGoBack]() {
             unsafeCast(this);

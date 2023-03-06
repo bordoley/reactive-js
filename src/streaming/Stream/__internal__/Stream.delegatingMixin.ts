@@ -14,7 +14,6 @@ import {
   ObservableLike_isRunnable,
 } from "../../../rx.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
-import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
 import { StreamLike } from "../../../streaming.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
@@ -65,7 +64,7 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
         },
         get [DispatcherLike_scheduler]() {
           unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);
-          return Dispatcher_getScheduler(this[DelegatingLike_delegate]);
+          return this[DelegatingLike_delegate][DispatcherLike_scheduler];
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

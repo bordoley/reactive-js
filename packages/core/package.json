@@ -65,7 +65,6 @@
     "./rx/Subject": "./rx/Subject.js",
     "./scheduling": "./scheduling.js",
     "./scheduling/Continuation": "./scheduling/Continuation.js",
-    "./scheduling/Dispatcher": "./scheduling/Dispatcher.js",
     "./scheduling/Pauseable": "./scheduling/Pauseable.js",
     "./scheduling/PriorityScheduler": "./scheduling/PriorityScheduler.js",
     "./scheduling/Scheduler": "./scheduling/Scheduler.js",
