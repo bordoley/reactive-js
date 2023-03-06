@@ -37,6 +37,7 @@ import {
   DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
   QueueLike_count,
   QueueLike_push,
@@ -46,9 +47,6 @@ import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.d
 import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
-import Enumerator_getCurrent from "../../util/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_hasCurrent from "../../util/Enumerator/__internal__/Enumerator.hasCurrent.js";
-import Enumerator_move from "../../util/Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_createPriorityQueue from "../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
 import PullableQueue_peek from "../../util/PullableQueue/__internal__/PullableQueue.peek.js";
@@ -218,7 +216,8 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             );
 
             if (delay === 0) {
-              Enumerator_move(instance);
+              instance[EnumeratorLike_move]();
+
               instance[SchedulerLike_inContinuation] = true;
               Continuation_run(continuation);
               instance[SchedulerLike_inContinuation] = false;
@@ -330,7 +329,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
               inContinuation &&
               (yieldRequested ||
                 Disposable_isDisposed(this) ||
-                !Enumerator_hasCurrent(this) ||
+                !this[EnumeratorLike_hasCurrent] ||
                 this[PauseableSchedulerLike_isPaused] ||
                 (isSome(next) ? priorityShouldYield(this, next) : false) ||
                 shouldYield(this[QueueScheduler_hostScheduler]))
@@ -365,7 +364,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           },
           [EnumeratorLike_move](
             this: TProperties & MutableEnumeratorLike<QueueTask>,
-          ): void {
+          ): boolean {
             // First fast forward through disposed tasks.
             peek(this);
             const task = PullableQueue_pull(this[QueueScheduler_queue]);
@@ -373,6 +372,8 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             if (isSome(task)) {
               this[EnumeratorLike_current] = task;
             }
+
+            return this[EnumeratorLike_hasCurrent];
           },
           [SchedulerLike_requestYield](this: TProperties): void {
             this[QueueScheduler_yieldRequested] = true;
@@ -395,11 +396,11 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
 
               const task =
                 isInContinuation(this) &&
-                Enumerator_hasCurrent(this) &&
-                Enumerator_getCurrent(this)[QueueTask_continuation] ===
+                this[EnumeratorLike_hasCurrent] &&
+                this[EnumeratorLike_current][QueueTask_continuation] ===
                   continuation &&
                 delay <= 0
-                  ? Enumerator_getCurrent(this)
+                  ? this[EnumeratorLike_current]
                   : {
                       [QueueTask_taskID]: this[QueueScheduler_taskIDCounter]++,
                       [QueueTask_continuation]: continuation,

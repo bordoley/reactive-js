@@ -30,6 +30,7 @@ import {
   DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
   QueueLike_push,
 } from "../../../util.js";
@@ -110,6 +111,8 @@ const Enumerable_enumerate: <T>() => (
               pipe(this, Disposable_dispose());
             }
           }
+
+          return this[EnumeratorLike_hasCurrent];
         },
         [SchedulerLike_schedule](
           this: TEnumeratorSchedulerProperties &

@@ -5,15 +5,12 @@ import { max } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../functions.js";
 import { PauseableSchedulerLike_isPaused, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
-import { EnumeratorLike_current, EnumeratorLike_move, QueueLike_count, QueueLike_push, } from "../../util.js";
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, QueueLike_count, QueueLike_push, } from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
-import Enumerator_getCurrent from "../../util/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_hasCurrent from "../../util/Enumerator/__internal__/Enumerator.hasCurrent.js";
-import Enumerator_move from "../../util/Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_createPriorityQueue from "../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
 import PullableQueue_peek from "../../util/PullableQueue/__internal__/PullableQueue.peek.js";
@@ -100,7 +97,7 @@ export const create =
                 const { [QueueTask_continuation]: continuation, [QueueTask_dueTime]: dueTime, } = task;
                 const delay = max(dueTime - getCurrentTime(instance[QueueScheduler_hostScheduler]), 0);
                 if (delay === 0) {
-                    Enumerator_move(instance);
+                    instance[EnumeratorLike_move]();
                     instance[SchedulerLike_inContinuation] = true;
                     Continuation_run(continuation);
                     instance[SchedulerLike_inContinuation] = false;
@@ -159,7 +156,7 @@ export const create =
             return (inContinuation &&
                 (yieldRequested ||
                     Disposable_isDisposed(this) ||
-                    !Enumerator_hasCurrent(this) ||
+                    !this[EnumeratorLike_hasCurrent] ||
                     this[PauseableSchedulerLike_isPaused] ||
                     (isSome(next) ? priorityShouldYield(this, next) : false) ||
                     shouldYield(this[QueueScheduler_hostScheduler])));
@@ -193,6 +190,7 @@ export const create =
             if (isSome(task)) {
                 this[EnumeratorLike_current] = task;
             }
+            return this[EnumeratorLike_hasCurrent];
         },
         [SchedulerLike_requestYield]() {
             this[QueueScheduler_yieldRequested] = true;
@@ -205,11 +203,11 @@ export const create =
                 const now = getCurrentTime(this[QueueScheduler_hostScheduler]);
                 const dueTime = max(now + delay, now);
                 const task = isInContinuation(this) &&
-                    Enumerator_hasCurrent(this) &&
-                    Enumerator_getCurrent(this)[QueueTask_continuation] ===
+                    this[EnumeratorLike_hasCurrent] &&
+                    this[EnumeratorLike_current][QueueTask_continuation] ===
                         continuation &&
                     delay <= 0
-                    ? Enumerator_getCurrent(this)
+                    ? this[EnumeratorLike_current]
                     : {
                         [QueueTask_taskID]: this[QueueScheduler_taskIDCounter]++,
                         [QueueTask_continuation]: continuation,

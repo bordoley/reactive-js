@@ -4,13 +4,11 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import { ContinuationLike_run, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, } from "../../../scheduling.js";
-import { EnumeratorLike_current, EnumeratorLike_move, QueueLike_push, } from "../../../util.js";
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, QueueLike_push, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import Enumerator_getCurrent from "../../../util/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_move from "../../../util/Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import PullableQueue_pull from "../../../util/PullableQueue/__internal__/PullableQueue.pull.js";
@@ -56,8 +54,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
                     this[VirtualTimeScheduler_maxMicroTaskTicks]));
     },
     [VirtualTimeSchedulerLike_run]() {
-        while (Enumerator_move(this)) {
-            const task = Enumerator_getCurrent(this);
+        while (this[EnumeratorLike_move]()) {
+            const task = this[EnumeratorLike_current];
             const { [VirtualTask_dueTime]: dueTime, [VirtualTask_continuation]: continuation, } = task;
             this[VirtualTimeScheduler_microTaskTicks] = 0;
             this[SchedulerLike_now] = dueTime;
@@ -82,7 +80,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
     },
     [EnumeratorLike_move]() {
         if (Disposable_isDisposed(this)) {
-            return;
+            return false;
         }
         const task = PullableQueue_pull(this);
         if (isSome(task)) {
@@ -91,6 +89,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         else {
             pipe(this, Disposable_dispose());
         }
+        return this[EnumeratorLike_hasCurrent];
     },
 }));
 const VirtualTimeScheduler_create = (options = {}) => {
