@@ -21,8 +21,6 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../../../rx.js";
-import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
-import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
@@ -73,13 +71,13 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
         {
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<TProperties>(this);
-            return MulticastObservable_getObserverCount(
-              this[TakeWhileStream_obs],
-            );
+            return this[TakeWhileStream_obs][
+              MulticastObservableLike_observerCount
+            ];
           },
           get [MulticastObservableLike_replay]() {
             unsafeCast<TProperties>(this);
-            return MulticastObservable_getReplay(this[TakeWhileStream_obs]);
+            return this[TakeWhileStream_obs][MulticastObservableLike_replay];
           },
           [ObservableLike_observe](
             this: TProperties,

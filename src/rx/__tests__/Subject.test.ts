@@ -6,9 +6,9 @@ import {
 } from "../../__tests__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { pipe } from "../../functions.js";
+import { MulticastObservableLike_observerCount } from "../../rx.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import * as Disposable from "../../util/Disposable.js";
-import * as MulticastObservable from "../MulticastObservable.js";
 import * as Observable from "../Observable.js";
 import * as Subject from "../Subject.js";
 
@@ -38,14 +38,14 @@ testModule(
     const scheduler = VirtualTimeScheduler.create();
 
     const subject = Subject.create();
-    pipe(subject, MulticastObservable.getObserverCount, expectEquals(0));
+    pipe(subject[MulticastObservableLike_observerCount], expectEquals(0));
     const sub1 = pipe(subject, Observable.subscribe(scheduler));
-    pipe(subject, MulticastObservable.getObserverCount, expectEquals(1));
+    pipe(subject[MulticastObservableLike_observerCount], expectEquals(1));
     const sub2 = pipe(subject, Observable.subscribe(scheduler));
-    pipe(subject, MulticastObservable.getObserverCount, expectEquals(2));
+    pipe(subject[MulticastObservableLike_observerCount], expectEquals(2));
     pipe(sub1, Disposable.dispose());
-    pipe(subject, MulticastObservable.getObserverCount, expectEquals(1));
+    pipe(subject[MulticastObservableLike_observerCount], expectEquals(1));
     pipe(sub2, Disposable.dispose());
-    pipe(subject, MulticastObservable.getObserverCount, expectEquals(0));
+    pipe(subject[MulticastObservableLike_observerCount], expectEquals(0));
   }),
 );

@@ -23,8 +23,6 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../../../rx.js";
-import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
-import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
@@ -68,13 +66,13 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<DelegatingLike<StreamLike<void, TA>>>(this);
-          return MulticastObservable_getObserverCount(
-            this[DelegatingLike_delegate],
-          );
+          return this[DelegatingLike_delegate][
+            MulticastObservableLike_observerCount
+          ];
         },
         get [MulticastObservableLike_replay]() {
           unsafeCast<DelegatingLike<StreamLike<void, TA>>>(this);
-          return MulticastObservable_getReplay(this[DelegatingLike_delegate]);
+          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](
           this: TProperties & DelegatingLike<StreamLike<void, TA>>,

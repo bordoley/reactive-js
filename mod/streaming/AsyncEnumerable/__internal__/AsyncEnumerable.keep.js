@@ -3,8 +3,6 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
-import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
-import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
@@ -30,11 +28,11 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
     }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return MulticastObservable_getObserverCount(this[KeepStream_obs]);
+            return this[KeepStream_obs][MulticastObservableLike_observerCount];
         },
         get [MulticastObservableLike_replay]() {
             unsafeCast(this);
-            return MulticastObservable_getReplay(this[KeepStream_obs]);
+            return this[KeepStream_obs][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](observer) {
             pipe(this[KeepStream_obs], Observable_observeWith(observer));

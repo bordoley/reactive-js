@@ -6,8 +6,11 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
-import { MulticastObservableLike, ObservableLike } from "../../../rx.js";
-import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
+import {
+  MulticastObservableLike,
+  MulticastObservableLike_observerCount,
+  ObservableLike,
+} from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -35,7 +38,7 @@ const Observable_share =
         Disposable_onDisposed(() => {
           if (
             isSome(multicasted) &&
-            MulticastObservable_getObserverCount(multicasted) === 0
+            multicasted[MulticastObservableLike_observerCount] === 0
           ) {
             pipe(multicasted, Disposable_dispose());
             multicasted = none;

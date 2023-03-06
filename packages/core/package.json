@@ -59,7 +59,6 @@
     "./integrations/web/WindowLocationStream": "./integrations/web/WindowLocationStream.js",
     "./rx": "./rx.js",
     "./rx/Enumerable": "./rx/Enumerable.js",
-    "./rx/MulticastObservable": "./rx/MulticastObservable.js",
     "./rx/Observable": "./rx/Observable.js",
     "./rx/Observer": "./rx/Observer.js",
     "./rx/Runnable": "./rx/Runnable.js",
@@ -77,7 +76,6 @@
     "./streaming/Streamable": "./streaming/Streamable.js",
     "./util": "./util.js",
     "./util/Disposable": "./util/Disposable.js",
-    "./util/Enumerator": "./ix/Enumerator.js",
     "./util/Queue": "./util/Queue.js"
   }
 }

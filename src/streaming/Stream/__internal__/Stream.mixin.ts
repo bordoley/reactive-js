@@ -32,8 +32,6 @@ import {
   ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
-import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
-import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
@@ -216,14 +214,14 @@ const Stream_mixin: <TReq, T>() => Mixin3<
       {
         get [MulticastObservableLike_observerCount](): number {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getObserverCount(
-            this[StreamMixin_observable],
-          );
+          return this[StreamMixin_observable][
+            MulticastObservableLike_observerCount
+          ];
         },
 
         get [MulticastObservableLike_replay](): number {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getReplay(this[StreamMixin_observable]);
+          return this[StreamMixin_observable][MulticastObservableLike_replay];
         },
 
         get [QueueLike_count](): number {

@@ -24,8 +24,6 @@ import {
   ObserverLike,
   ScanAsync,
 } from "../../../rx.js";
-import MulticastObservable_getObserverCount from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getObserverCount.js";
-import MulticastObservable_getReplay from "../../../rx/MulticastObservable/__internal__/MulticastObservable.getReplay.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
@@ -76,13 +74,13 @@ const AsyncEnumerable_scanAsync: ScanAsync<
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getObserverCount(
-            this[ScanAsyncStream_obs],
-          );
+          return this[ScanAsyncStream_obs][
+            MulticastObservableLike_observerCount
+          ];
         },
         get [MulticastObservableLike_replay]() {
           unsafeCast<TProperties>(this);
-          return MulticastObservable_getReplay(this[ScanAsyncStream_obs]);
+          return this[ScanAsyncStream_obs][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](
           this: TProperties,
