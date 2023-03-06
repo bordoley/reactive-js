@@ -59,10 +59,7 @@ import {
 } from "../../util/__internal__/util.internal.js";
 import { Continuation__yield } from "../Continuation/__internal__/Continuation.create.js";
 import Continuation_run from "../Continuation/__internal__/Continuation.run.js";
-import getCurrentTime from "../Scheduler/__internal__/Scheduler.getCurrentTime.js";
-import isInContinuation from "../Scheduler/__internal__/Scheduler.isInContinuation.js";
 import schedule from "../Scheduler/__internal__/Scheduler.schedule.js";
-import shouldYield from "../Scheduler/__internal__/Scheduler.shouldYield.js";
 import { getDelay } from "./Scheduler.options.js";
 
 export type QueueSchedulerOptions = {
@@ -118,7 +115,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         [QueueScheduler_delayed]: delayed,
         [QueueScheduler_queue]: queue,
       } = instance;
-      const now = getCurrentTime(instance[QueueScheduler_hostScheduler]);
+      const now = instance[QueueScheduler_hostScheduler][SchedulerLike_now];
 
       while (true) {
         const task = PullableQueue_peek(delayed);
@@ -167,7 +164,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       return (
         current !== next &&
         next[QueueTask_dueTime] <=
-          getCurrentTime(instance[QueueScheduler_hostScheduler]) &&
+          instance[QueueScheduler_hostScheduler][SchedulerLike_now] &&
         next[QueueTask_priority] > current[QueueTask_priority]
       );
     };
@@ -192,7 +189,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
 
       const dueTime = task[QueueTask_dueTime];
       const delay = max(
-        dueTime - getCurrentTime(instance[QueueScheduler_hostScheduler]),
+        dueTime - instance[QueueScheduler_hostScheduler][SchedulerLike_now],
         0,
       );
       instance[QueueScheduler_dueTime] = dueTime;
@@ -210,7 +207,8 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
               [QueueTask_dueTime]: dueTime,
             } = task;
             const delay = max(
-              dueTime - getCurrentTime(instance[QueueScheduler_hostScheduler]),
+              dueTime -
+                instance[QueueScheduler_hostScheduler][SchedulerLike_now],
               0,
             );
 
@@ -222,7 +220,8 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
               instance[SchedulerLike_inContinuation] = false;
             } else {
               instance[QueueScheduler_dueTime] =
-                getCurrentTime(instance[QueueScheduler_hostScheduler]) + delay;
+                instance[QueueScheduler_hostScheduler][SchedulerLike_now] +
+                delay;
             }
             Continuation__yield(delay);
           }
@@ -308,7 +307,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         {
           get [SchedulerLike_now](): number {
             unsafeCast<TProperties>(this);
-            return getCurrentTime(this[QueueScheduler_hostScheduler]);
+            return this[QueueScheduler_hostScheduler][SchedulerLike_now];
           },
           get [SchedulerLike_shouldYield](): boolean {
             unsafeCast<TProperties & EnumeratorLike<QueueTask>>(this);
@@ -331,7 +330,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
                 !this[EnumeratorLike_hasCurrent] ||
                 this[PauseableSchedulerLike_isPaused] ||
                 (isSome(next) ? priorityShouldYield(this, next) : false) ||
-                shouldYield(this[QueueScheduler_hostScheduler]))
+                this[QueueScheduler_hostScheduler][SchedulerLike_shouldYield])
             );
           },
           get [QueueLike_count](): number {
@@ -390,11 +389,11 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
             if (!continuation[DisposableLike_isDisposed]) {
-              const now = getCurrentTime(this[QueueScheduler_hostScheduler]);
+              const now = this[QueueScheduler_hostScheduler][SchedulerLike_now];
               const dueTime = max(now + delay, now);
 
               const task =
-                isInContinuation(this) &&
+                this[SchedulerLike_inContinuation] &&
                 this[EnumeratorLike_hasCurrent] &&
                 this[EnumeratorLike_current][QueueTask_continuation] ===
                   continuation &&

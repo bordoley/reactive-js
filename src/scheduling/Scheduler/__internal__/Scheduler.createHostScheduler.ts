@@ -31,8 +31,6 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Continuation_run from "../../Continuation/__internal__/Continuation.run.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
-import getCurrentTime from "./Scheduler.getCurrentTime.js";
-import isInContinuation from "./Scheduler.isInContinuation.js";
 
 declare const navigator: {
   scheduling: Optional<{
@@ -111,7 +109,7 @@ const runContinuation = (
 ) => {
   // clear the immediateOrTimer disposable
   pipe(immmediateOrTimerDisposable, Disposable_dispose());
-  scheduler[HostScheduler_startTime] = getCurrentTime(scheduler);
+  scheduler[HostScheduler_startTime] = scheduler[SchedulerLike_now];
   scheduler[SchedulerLike_inContinuation] = true;
   Continuation_run(continuation);
   scheduler[SchedulerLike_inContinuation] = false;
@@ -170,7 +168,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
         get [SchedulerLike_shouldYield](): boolean {
           unsafeCast<TProperties & SchedulerLike>(this);
 
-          const inContinuation = isInContinuation(this);
+          const inContinuation = this[SchedulerLike_inContinuation];
           const { [HostScheduler_yieldRequested]: yieldRequested } = this;
 
           if (inContinuation) {
@@ -180,7 +178,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           return (
             inContinuation &&
             (yieldRequested ||
-              getCurrentTime(this) >
+              this[SchedulerLike_now] >
                 this[HostScheduler_startTime] +
                   this[HostScheduler_maxYieldInterval] ||
               isInputPending())

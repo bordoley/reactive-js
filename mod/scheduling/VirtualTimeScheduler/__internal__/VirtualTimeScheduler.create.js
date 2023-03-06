@@ -11,7 +11,6 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import PullableQueue_pull from "../../../util/PullableQueue/__internal__/PullableQueue.pull.js";
-import getCurrentTime from "../../Scheduler/__internal__/Scheduler.getCurrentTime.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 const VirtualTask_continuation = Symbol("VirtualTask_continuation");
 const VirtualTask_dueTime = Symbol("VirtualTask_dueTime");
@@ -72,7 +71,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         if (!continuation[DisposableLike_isDisposed]) {
             this[QueueLike_push]({
                 [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
-                [VirtualTask_dueTime]: getCurrentTime(this) + delay,
+                [VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
                 [VirtualTask_continuation]: continuation,
             });
         }

@@ -31,7 +31,6 @@ import {
 } from "../scheduling.js";
 import * as Continuation from "../scheduling/Continuation.js";
 import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
-import * as Scheduler from "../scheduling/Scheduler.js";
 import { getDelay } from "../scheduling/__internal__/Scheduler.options.js";
 import { DisposableLike, DisposableLike_isDisposed } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
@@ -65,7 +64,7 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
 
         get [SchedulerLike_shouldYield](): boolean {
           unsafeCast<TProperties & SchedulerLike>(this);
-          return Scheduler.isInContinuation(this) && unstable_shouldYield();
+          return this[SchedulerLike_inContinuation] && unstable_shouldYield();
         },
 
         [SchedulerLike_requestYield]() {
