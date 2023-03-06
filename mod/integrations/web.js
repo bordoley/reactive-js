@@ -5,7 +5,6 @@ import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { compose, error, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
-import * as MulticastObservable from "../rx/MulticastObservable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
 import { DispatcherLike_scheduler } from "../scheduling.js";
@@ -126,11 +125,11 @@ export const windowLocation =
     }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return pipe(this[DelegatingLike_delegate], MulticastObservable.getObserverCount);
+            return this[DelegatingLike_delegate][MulticastObservableLike_observerCount];
         },
         get [MulticastObservableLike_replay]() {
             unsafeCast(this);
-            return pipe(this[DelegatingLike_delegate], MulticastObservable.getReplay);
+            return this[DelegatingLike_delegate][MulticastObservableLike_replay];
         },
         get [QueueLike_count]() {
             unsafeCast(this);

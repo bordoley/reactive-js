@@ -20,7 +20,6 @@ Reactive-JS
 - [integrations/web/WindowLocationStream](modules/integrations_web_WindowLocationStream.md)
 - [rx](modules/rx.md)
 - [rx/Enumerable](modules/rx_Enumerable.md)
-- [rx/MulticastObservable](modules/rx_MulticastObservable.md)
 - [rx/Observable](modules/rx_Observable.md)
 - [rx/Observer](modules/rx_Observer.md)
 - [rx/Runnable](modules/rx_Runnable.md)

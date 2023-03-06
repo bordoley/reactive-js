@@ -34,7 +34,6 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../rx.js";
-import * as MulticastObservable from "../rx/MulticastObservable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
 import { DispatcherLike_scheduler, SchedulerLike } from "../scheduling.js";
@@ -340,18 +339,16 @@ export const windowLocation: WindowLocationStreamableLike =
         {
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return pipe(
-              this[DelegatingLike_delegate],
-              MulticastObservable.getObserverCount,
-            );
+            return this[DelegatingLike_delegate][
+              MulticastObservableLike_observerCount
+            ];
           },
 
           get [MulticastObservableLike_replay](): number {
             unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return pipe(
-              this[DelegatingLike_delegate],
-              MulticastObservable.getReplay,
-            );
+            return this[DelegatingLike_delegate][
+              MulticastObservableLike_replay
+            ];
           },
 
           get [QueueLike_count](): number {
