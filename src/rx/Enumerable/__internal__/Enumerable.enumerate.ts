@@ -25,7 +25,6 @@ import {
   SchedulerLike_shouldYield,
 } from "../../../scheduling.js";
 import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run.js";
-import Scheduler_isInContinuation from "../../../scheduling/Scheduler/__internal__/Scheduler.isInContinuation.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
@@ -91,7 +90,7 @@ const Enumerable_enumerate: <T>() => (
         [SchedulerLike_now]: 0,
         get [SchedulerLike_shouldYield](): boolean {
           unsafeCast<SchedulerLike>(this);
-          return Scheduler_isInContinuation(this);
+          return this[SchedulerLike_inContinuation];
         },
         [SchedulerLike_requestYield](): void {
           // No-Op: We yield whenever the continuation is running.

@@ -26,10 +26,6 @@ import {
 import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import Scheduler_getCurrentTime from "../../Scheduler/__internal__/Scheduler.getCurrentTime.js";
-import Scheduler_isInContinuation from "../../Scheduler/__internal__/Scheduler.isInContinuation.js";
-import Scheduler_requestYield from "../../Scheduler/__internal__/Scheduler.requestYield.js";
-import Scheduler_shouldYield from "../../Scheduler/__internal__/Scheduler.shouldYield.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 
 const PrioritySchedulerDelegatingScheduler_priorityScheduler = Symbol(
@@ -75,26 +71,26 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     {
       get [SchedulerLike_inContinuation]() {
         unsafeCast<TProperties>(this);
-        return Scheduler_isInContinuation(
-          this[PrioritySchedulerDelegatingScheduler_priorityScheduler],
-        );
+        return this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
+          SchedulerLike_inContinuation
+        ];
       },
       get [SchedulerLike_now]() {
         unsafeCast<TProperties>(this);
-        return Scheduler_getCurrentTime(
-          this[PrioritySchedulerDelegatingScheduler_priorityScheduler],
-        );
+        return this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
+          SchedulerLike_now
+        ];
       },
       get [SchedulerLike_shouldYield]() {
         unsafeCast<TProperties>(this);
-        return Scheduler_shouldYield(
-          this[PrioritySchedulerDelegatingScheduler_priorityScheduler],
-        );
+        return this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
+          SchedulerLike_shouldYield
+        ];
       },
       [SchedulerLike_requestYield](this: TProperties): void {
-        Scheduler_requestYield(
-          this[PrioritySchedulerDelegatingScheduler_priorityScheduler],
-        );
+        this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
+          SchedulerLike_requestYield
+        ]();
       },
       [SchedulerLike_schedule](
         this: TProperties & DisposableLike,

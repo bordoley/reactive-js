@@ -39,7 +39,6 @@ import {
   MutableEnumeratorLike,
   PullableQueueLike,
 } from "../../../util/__internal__/util.internal.js";
-import getCurrentTime from "../../Scheduler/__internal__/Scheduler.getCurrentTime.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 
 const VirtualTask_continuation = Symbol("VirtualTask_continuation");
@@ -176,7 +175,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         if (!continuation[DisposableLike_isDisposed]) {
           this[QueueLike_push]({
             [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
-            [VirtualTask_dueTime]: getCurrentTime(this) + delay,
+            [VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
             [VirtualTask_continuation]: continuation,
           });
         }

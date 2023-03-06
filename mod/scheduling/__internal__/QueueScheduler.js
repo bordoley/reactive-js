@@ -17,10 +17,7 @@ import PullableQueue_pull from "../../util/PullableQueue/__internal__/PullableQu
 import { MutableRefLike_current, } from "../../util/__internal__/util.internal.js";
 import { Continuation__yield } from "../Continuation/__internal__/Continuation.create.js";
 import Continuation_run from "../Continuation/__internal__/Continuation.run.js";
-import getCurrentTime from "../Scheduler/__internal__/Scheduler.getCurrentTime.js";
-import isInContinuation from "../Scheduler/__internal__/Scheduler.isInContinuation.js";
 import schedule from "../Scheduler/__internal__/Scheduler.schedule.js";
-import shouldYield from "../Scheduler/__internal__/Scheduler.shouldYield.js";
 import { getDelay } from "./Scheduler.options.js";
 export const create = 
 /*@__PURE__*/ (() => {
@@ -42,7 +39,7 @@ export const create =
     };
     const peek = (instance) => {
         const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue, } = instance;
-        const now = getCurrentTime(instance[QueueScheduler_hostScheduler]);
+        const now = instance[QueueScheduler_hostScheduler][SchedulerLike_now];
         while (true) {
             const task = PullableQueue_peek(delayed);
             if (isNone(task)) {
@@ -74,7 +71,7 @@ export const create =
         const { [EnumeratorLike_current]: current } = instance;
         return (current !== next &&
             next[QueueTask_dueTime] <=
-                getCurrentTime(instance[QueueScheduler_hostScheduler]) &&
+                instance[QueueScheduler_hostScheduler][SchedulerLike_now] &&
             next[QueueTask_priority] > current[QueueTask_priority]);
     };
     const scheduleOnHost = (instance) => {
@@ -89,12 +86,13 @@ export const create =
             return;
         }
         const dueTime = task[QueueTask_dueTime];
-        const delay = max(dueTime - getCurrentTime(instance[QueueScheduler_hostScheduler]), 0);
+        const delay = max(dueTime - instance[QueueScheduler_hostScheduler][SchedulerLike_now], 0);
         instance[QueueScheduler_dueTime] = dueTime;
         const continuation = (_a = instance[QueueScheduler_hostContinuation]) !== null && _a !== void 0 ? _a : (() => {
             for (let task = peek(instance); isSome(task) && !instance[DisposableLike_isDisposed]; task = peek(instance)) {
                 const { [QueueTask_continuation]: continuation, [QueueTask_dueTime]: dueTime, } = task;
-                const delay = max(dueTime - getCurrentTime(instance[QueueScheduler_hostScheduler]), 0);
+                const delay = max(dueTime -
+                    instance[QueueScheduler_hostScheduler][SchedulerLike_now], 0);
                 if (delay === 0) {
                     instance[EnumeratorLike_move]();
                     instance[SchedulerLike_inContinuation] = true;
@@ -103,7 +101,8 @@ export const create =
                 }
                 else {
                     instance[QueueScheduler_dueTime] =
-                        getCurrentTime(instance[QueueScheduler_hostScheduler]) + delay;
+                        instance[QueueScheduler_hostScheduler][SchedulerLike_now] +
+                            delay;
                 }
                 Continuation__yield(delay);
             }
@@ -143,7 +142,7 @@ export const create =
     }), {
         get [SchedulerLike_now]() {
             unsafeCast(this);
-            return getCurrentTime(this[QueueScheduler_hostScheduler]);
+            return this[QueueScheduler_hostScheduler][SchedulerLike_now];
         },
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
@@ -158,7 +157,7 @@ export const create =
                     !this[EnumeratorLike_hasCurrent] ||
                     this[PauseableSchedulerLike_isPaused] ||
                     (isSome(next) ? priorityShouldYield(this, next) : false) ||
-                    shouldYield(this[QueueScheduler_hostScheduler])));
+                    this[QueueScheduler_hostScheduler][SchedulerLike_shouldYield]));
         },
         get [QueueLike_count]() {
             unsafeCast(this);
@@ -199,9 +198,9 @@ export const create =
             const { priority } = options !== null && options !== void 0 ? options : {};
             pipe(this, Disposable_addIgnoringChildErrors(continuation));
             if (!continuation[DisposableLike_isDisposed]) {
-                const now = getCurrentTime(this[QueueScheduler_hostScheduler]);
+                const now = this[QueueScheduler_hostScheduler][SchedulerLike_now];
                 const dueTime = max(now + delay, now);
-                const task = isInContinuation(this) &&
+                const task = this[SchedulerLike_inContinuation] &&
                     this[EnumeratorLike_hasCurrent] &&
                     this[EnumeratorLike_current][QueueTask_continuation] ===
                         continuation &&

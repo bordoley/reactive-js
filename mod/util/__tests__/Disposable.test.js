@@ -3,6 +3,7 @@
 import { expectArrayEquals, expectEquals, expectIsNone, expectToHaveBeenCalledTimes, expectTrue, mockFn, test, testModule, } from "../../__tests__/testing.js";
 import { error, none, pipe, pipeLazy, raise, } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
+import { SchedulerLike_now } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import { DisposableLike_error, DisposableLike_isDisposed } from "../../util.js";
@@ -46,7 +47,7 @@ testModule("Disposable", test("disposes child disposable when disposed", () => {
     const scheduler = VirtualTimeScheduler.create();
     let disposedTime = 0;
     pipe(disposable, Disposable.toObservable(), Observable.subscribe(scheduler), Disposable.onDisposed(_ => {
-        disposedTime = Scheduler.getCurrentTime(scheduler);
+        disposedTime = scheduler[SchedulerLike_now];
     }));
     pipe(scheduler, Scheduler.schedule(() => {
         pipe(disposable, Disposable.dispose());

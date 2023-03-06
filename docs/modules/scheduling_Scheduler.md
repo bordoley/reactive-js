@@ -7,11 +7,7 @@
 ### Functions
 
 - [createHostScheduler](scheduling_Scheduler.md#createhostscheduler)
-- [getCurrentTime](scheduling_Scheduler.md#getcurrenttime)
-- [isInContinuation](scheduling_Scheduler.md#isincontinuation)
-- [requestYield](scheduling_Scheduler.md#requestyield)
 - [schedule](scheduling_Scheduler.md#schedule)
-- [shouldYield](scheduling_Scheduler.md#shouldyield)
 - [toPausableScheduler](scheduling_Scheduler.md#topausablescheduler)
 - [toPriorityScheduler](scheduling_Scheduler.md#topriorityscheduler)
 
@@ -34,54 +30,6 @@
 
 ___
 
-### getCurrentTime
-
-▸ **getCurrentTime**(`scheduler`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-`number`
-
-___
-
-### isInContinuation
-
-▸ **isInContinuation**(`scheduler`): `boolean`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-`boolean`
-
-___
-
-### requestYield
-
-▸ **requestYield**(`scheduler`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-`void`
-
-___
-
 ### schedule
 
 ▸ **schedule**(`f`, `options?`): [`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md), [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
@@ -97,22 +45,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md), [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-___
-
-### shouldYield
-
-▸ **shouldYield**(`scheduler`): `boolean`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-`boolean`
 
 ___
 
