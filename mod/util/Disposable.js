@@ -8,8 +8,6 @@ import Disposable_bindTo from "./Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_create from "./Disposable/__internal__/Disposable.create.js";
 import Disposable_dispose from "./Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "./Disposable/__internal__/Disposable.disposed.js";
-import Disposable_getError from "./Disposable/__internal__/Disposable.getError.js";
-import Disposable_isDisposed from "./Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_onComplete from "./Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDisposed.js";
 import Disposable_onError from "./Disposable/__internal__/Disposable.onError.js";
@@ -27,8 +25,6 @@ export const create = Disposable_create;
  */
 export const dispose = Disposable_dispose;
 export const disposed = Disposable_disposed;
-export const getError = Disposable_getError;
-export const isDisposed = Disposable_isDisposed;
 export const onComplete = Disposable_onComplete;
 export const onDisposed = Disposable_onDisposed;
 export const onError = Disposable_onError;

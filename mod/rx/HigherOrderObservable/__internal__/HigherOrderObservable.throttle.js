@@ -7,7 +7,6 @@ import { ObserverLike_notify, ThrottleMode_first, ThrottleMode_interval, Throttl
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create.js";
@@ -49,7 +48,7 @@ const createThrottleObserver = (() => {
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             if (instance[ThrottleObserver_mode] !== ThrottleMode_first &&
                 instance[ThrottleObserver_hasValue] &&
-                !Disposable_isDisposed(delegate)) {
+                !delegate[DisposableLike_isDisposed]) {
                 pipe([instance[ThrottleObserver_value]], ReadonlyArray_toObservable(), Observable_observeWith(delegate));
             }
         }));

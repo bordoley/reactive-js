@@ -3,10 +3,9 @@
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
-import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -43,8 +42,8 @@ const Observable_zipWithLatestFrom =
             init(IndexedQueue_fifoQueueMixin(), instance);
             instance[ZipWithLatestFromObserver_selector] = selector;
             const disposeDelegate = () => {
-                if (Disposable_isDisposed(instance) &&
-                    Disposable_isDisposed(otherSubscription)) {
+                if (instance[DisposableLike_isDisposed] &&
+                    otherSubscription[DisposableLike_isDisposed]) {
                     pipe(delegate, Disposable_dispose());
                 }
             };
@@ -52,7 +51,7 @@ const Observable_zipWithLatestFrom =
                 instance[ZipWithLatestFromObserver_hasLatest] = true;
                 instance[ZipWithLatestFromObserver_otherLatest] = otherLatest;
                 notifyDelegate(instance);
-                if (Disposable_isDisposed(instance) &&
+                if (instance[DisposableLike_isDisposed] &&
                     instance[QueueLike_count] === 0) {
                     pipe(instance[DelegatingLike_delegate], Disposable_dispose());
                 }

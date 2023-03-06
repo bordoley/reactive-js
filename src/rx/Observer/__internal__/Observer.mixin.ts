@@ -33,12 +33,12 @@ import { Continuation__yield } from "../../../scheduling/Continuation/__internal
 import {
   DisposableLike,
   DisposableLike_error,
+  DisposableLike_isDisposed,
   QueueLike_count,
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -106,7 +106,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         };
 
         instance[ObserverDispatcher_onContinuationDispose] = () => {
-          if (Disposable_isDisposed(instance)) {
+          if (instance[DisposableLike_isDisposed]) {
             pipe(observer, Disposable_dispose(instance[DisposableLike_error]));
           }
         };
@@ -136,7 +136,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           this: TProperties & DisposableLike & PullableQueueLike<T>,
           next: T,
         ) {
-          if (!Disposable_isDisposed(this)) {
+          if (!this[DisposableLike_isDisposed]) {
             call(fifoQueueProtoype[QueueLike_push], this, next);
             scheduleDrainQueue(this);
           }

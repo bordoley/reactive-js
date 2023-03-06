@@ -4,9 +4,9 @@ import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } 
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
@@ -21,7 +21,7 @@ const Observer_satisfyMixin = (defaultResult) => {
         init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
         instance[SatisfyObserverMixin_predicate] = predicate;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            if (!Disposable_isDisposed(delegate)) {
+            if (!delegate[DisposableLike_isDisposed]) {
                 pipe([defaultResult], ReadonlyArray_toObservable(), Observable_observeWith(delegate));
             }
         }));

@@ -17,14 +17,12 @@ import {
   DisposableOrTeardown,
 } from "../../../util.js";
 import dispose from "./Disposable.dispose.js";
-import getError from "./Disposable.getError.js";
-import isDisposed from "./Disposable.isDisposed.js";
 
 const doDispose = (
   instance: DisposableLike,
   disposable: DisposableOrTeardown,
 ) => {
-  const error = getError(instance);
+  const error = instance[DisposableLike_error];
   if (isFunction(disposable)) {
     try {
       call(disposable, instance, error);
@@ -69,7 +67,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
       this: TProperties & DisposableLike,
       error?: Error,
     ) {
-      if (!isDisposed(this)) {
+      if (!this[DisposableLike_isDisposed]) {
         this[DisposableLike_error] = error;
         this[DisposableLike_isDisposed] = true;
 
@@ -90,7 +88,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
 
       if ((this as unknown) === disposable) {
         return;
-      } else if (isDisposed(this)) {
+      } else if (this[DisposableLike_isDisposed]) {
         doDispose(this, disposable);
       } else if (!disposables.has(disposable)) {
         disposables.add(disposable);

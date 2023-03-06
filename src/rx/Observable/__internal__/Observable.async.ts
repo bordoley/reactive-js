@@ -20,11 +20,10 @@ import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike, StreamableLike } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
-import { DisposableLike } from "../../../util.js";
+import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
@@ -188,12 +187,14 @@ class AsyncContext {
         effect =>
           (effect[AsyncEffect_type] === Await ||
             effect[AsyncEffect_type] === Observe) &&
-          !Disposable_isDisposed(effect[AwaitOrObserveEffect_subscription]),
+          !effect[AwaitOrObserveEffect_subscription][DisposableLike_isDisposed],
       ) >= 0;
 
     if (
       !hasOutstandingEffects &&
-      Disposable_isDisposed(this[AsyncContext_scheduledComputationSubscription])
+      this[AsyncContext_scheduledComputationSubscription][
+        DisposableLike_isDisposed
+      ]
     ) {
       pipe(this[AsyncContext_observer], Disposable_dispose());
     }
@@ -243,7 +244,7 @@ class AsyncContext {
             } = this;
 
             this[AsyncContext_scheduledComputationSubscription] =
-              Disposable_isDisposed(scheduledComputationSubscription)
+              scheduledComputationSubscription[DisposableLike_isDisposed]
                 ? pipe(observer, Observer_schedule(runComputation))
                 : scheduledComputationSubscription;
           }
@@ -381,9 +382,9 @@ export const Observable_async = <T>(
 
         if (
           (type === Await || type === Observe) &&
-          !Disposable_isDisposed(
-            (effect as ObserveEffect)[AwaitOrObserveEffect_subscription],
-          )
+          !(effect as ObserveEffect)[AwaitOrObserveEffect_subscription][
+            DisposableLike_isDisposed
+          ]
         ) {
           hasOutstandingEffects = true;
         }

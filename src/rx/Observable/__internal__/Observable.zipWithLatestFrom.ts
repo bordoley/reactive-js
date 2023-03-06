@@ -23,10 +23,13 @@ import {
   ObserverLike_notify,
   ZipWithLatestFrom,
 } from "../../../rx.js";
-import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import {
+  DisposableLike_isDisposed,
+  QueueLike_count,
+  QueueLike_push,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -113,8 +116,8 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
 
             const disposeDelegate = () => {
               if (
-                Disposable_isDisposed(instance) &&
-                Disposable_isDisposed(otherSubscription)
+                instance[DisposableLike_isDisposed] &&
+                otherSubscription[DisposableLike_isDisposed]
               ) {
                 pipe(delegate, Disposable_dispose());
               }
@@ -128,7 +131,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
                 notifyDelegate(instance);
 
                 if (
-                  Disposable_isDisposed(instance) &&
+                  instance[DisposableLike_isDisposed] &&
                   instance[QueueLike_count] === 0
                 ) {
                   pipe(instance[DelegatingLike_delegate], Disposable_dispose());

@@ -36,7 +36,6 @@ import {
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -97,7 +96,7 @@ const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
           [EnumeratorLike_move](
             this: DisposableLike & TProperties & PullableQueueLike<T>,
           ) {
-            if (!Disposable_isDisposed(this) && this[QueueLike_count] > 0) {
+            if (!this[DisposableLike_isDisposed] && this[QueueLike_count] > 0) {
               const next = this[PullableQueueLike_pull]() as T;
               this[EnumeratorLike_current] = next;
               this[EnumeratorLike_hasCurrent] = true;
@@ -136,7 +135,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
 
   const shouldComplete = compose(
     ReadonlyArray_forEach<EnumeratorLike>(Enumerator_move),
-    ReadonlyArray_some(Disposable_isDisposed),
+    ReadonlyArray_some(x => x[DisposableLike_isDisposed]),
   );
 
   const ZipObserver_enumerators = Symbol("ZipObserver_enumerators");
@@ -168,7 +167,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           instance,
           Disposable_onComplete(() => {
             if (
-              Disposable_isDisposed(queuedEnumerator) ||
+              queuedEnumerator[DisposableLike_isDisposed] ||
               (!queuedEnumerator[EnumeratorLike_hasCurrent] &&
                 !queuedEnumerator[EnumeratorLike_move]())
             ) {

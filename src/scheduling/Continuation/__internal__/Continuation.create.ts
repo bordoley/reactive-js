@@ -26,8 +26,8 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling.js";
+import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
 class YieldError {
@@ -95,7 +95,7 @@ const Continuation_create: Function2<
       }),
       {
         [ContinuationLike_run](this: TProperties & ContinuationLike) {
-          if (!Disposable_isDisposed(this)) {
+          if (!this[DisposableLike_isDisposed]) {
             let err: Optional<Error> = none;
             let yieldError: Optional<YieldError> = none;
 

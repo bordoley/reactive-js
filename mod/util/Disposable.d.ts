@@ -10,8 +10,6 @@ export declare const create: import("../functions.js").Factory<DisposableLike>;
  */
 export declare const dispose: <T extends DisposableLike>(e?: Error | undefined) => import("../functions.js").Updater<T>;
 export declare const disposed: DisposableLike;
-export declare const getError: (disposable: DisposableLike) => import("../functions.js").Optional<Error>;
-export declare const isDisposed: (disposable: DisposableLike) => boolean;
 export declare const onComplete: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect) => import("../functions.js").Updater<T>;
 export declare const onDisposed: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect1<import("../functions.js").Optional<Error>>) => import("../functions.js").Updater<T>;
 export declare const onError: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect1<Error>) => import("../functions.js").Updater<T>;

@@ -2,8 +2,7 @@
 
 import { mix, props } from "../../../__internal__/mixins.js";
 import { none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent, } from "../../../util.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
+import { DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, } from "../../../util.js";
 const MutableEnumerator_mixin = 
 /*@__PURE__*/ (() => {
     const Enumerator_private_current = Symbol("Enumerator_private_current");
@@ -23,14 +22,14 @@ const MutableEnumerator_mixin =
         },
         set [EnumeratorLike_current](v) {
             unsafeCast(this);
-            if (!Disposable_isDisposed(this)) {
+            if (!this[DisposableLike_isDisposed]) {
                 this[Enumerator_private_current] = v;
                 this[Enumerator_private_hasCurrent] = true;
             }
         },
         get [EnumeratorLike_hasCurrent]() {
             unsafeCast(this);
-            return (!Disposable_isDisposed(this) &&
+            return (!this[DisposableLike_isDisposed] &&
                 this[Enumerator_private_hasCurrent]);
         },
     }), returns);

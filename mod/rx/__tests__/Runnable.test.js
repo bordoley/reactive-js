@@ -9,6 +9,7 @@ import * as Pauseable from "../../scheduling/Pauseable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import * as Streamable from "../../streaming/Streamable.js";
+import { DisposableLike_isDisposed } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
@@ -58,7 +59,7 @@ const toFlowableTests = describe("toFlowable", test("flow a generating source", 
     pipe(f.calls[0][1], expectEquals(0));
     pipe(f.calls[1][1], expectEquals(1));
     pipe(f.calls[2][1], expectEquals(2));
-    pipe(subscription, Disposable.isDisposed, expectTrue);
+    pipe(subscription[DisposableLike_isDisposed], expectTrue);
 }));
 const withLatestFromTest = describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], ReadonlyArray.toRunnable({ delay: 1 }), Runnable.withLatestFrom(pipe([0, 1, 2, 3], ReadonlyArray.toRunnable({ delay: 2 })), (a, b) => [a, b]), Runnable.toReadonlyArray(), expectArrayEquals([
     [0, 0],

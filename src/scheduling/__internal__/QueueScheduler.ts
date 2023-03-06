@@ -35,6 +35,7 @@ import {
 } from "../../scheduling.js";
 import {
   DisposableLike,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -44,7 +45,6 @@ import {
 } from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
-import Disposable_isDisposed from "../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
 import MutableEnumerator_mixin from "../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
@@ -127,9 +127,8 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           break;
         }
 
-        const taskIsDispose = Disposable_isDisposed(
-          task[QueueTask_continuation],
-        );
+        const taskIsDispose =
+          task[QueueTask_continuation][DisposableLike_isDisposed];
         if (task[QueueTask_dueTime] > now && !taskIsDispose) {
           break;
         }
@@ -149,7 +148,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           break;
         }
 
-        if (!Disposable_isDisposed(task[QueueTask_continuation])) {
+        if (!task[QueueTask_continuation][DisposableLike_isDisposed]) {
           break;
         }
 
@@ -179,7 +178,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       const task = peek(instance);
 
       const continuationActive =
-        !Disposable_isDisposed(instance[MutableRefLike_current]) &&
+        !instance[MutableRefLike_current][DisposableLike_isDisposed] &&
         isSome(task) &&
         instance[QueueScheduler_dueTime] <= task[QueueTask_dueTime];
 
@@ -203,7 +202,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         (() => {
           for (
             let task = peek(instance);
-            isSome(task) && !Disposable_isDisposed(instance);
+            isSome(task) && !instance[DisposableLike_isDisposed];
             task = peek(instance)
           ) {
             const {
@@ -328,7 +327,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             return (
               inContinuation &&
               (yieldRequested ||
-                Disposable_isDisposed(this) ||
+                this[DisposableLike_isDisposed] ||
                 !this[EnumeratorLike_hasCurrent] ||
                 this[PauseableSchedulerLike_isPaused] ||
                 (isSome(next) ? priorityShouldYield(this, next) : false) ||
@@ -390,7 +389,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             const { priority } = options ?? {};
             pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
-            if (!Disposable_isDisposed(continuation)) {
+            if (!continuation[DisposableLike_isDisposed]) {
               const now = getCurrentTime(this[QueueScheduler_hostScheduler]);
               const dueTime = max(now + delay, now);
 

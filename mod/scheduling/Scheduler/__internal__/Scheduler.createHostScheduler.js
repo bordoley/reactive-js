@@ -3,11 +3,11 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isFunction, none, pipe, unsafeCast, } from "../../../functions.js";
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Continuation_run from "../../Continuation/__internal__/Continuation.run.js";
@@ -90,7 +90,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
     [SchedulerLike_schedule](continuation, options) {
         const delay = getDelay(options);
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
-        const continuationIsDisposed = Disposable_isDisposed(continuation);
+        const continuationIsDisposed = continuation[DisposableLike_isDisposed];
         if (!continuationIsDisposed && delay > 0) {
             scheduleDelayed(this, continuation, delay);
         }

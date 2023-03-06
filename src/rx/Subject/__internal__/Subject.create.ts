@@ -18,9 +18,12 @@ import {
   SubjectLike,
   SubjectLike_publish,
 } from "../../../rx.js";
-import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import {
+  DisposableLike_isDisposed,
+  QueueLike_count,
+  QueueLike_push,
+} from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -82,7 +85,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             this: TProperties & SubjectLike<T> & PullableQueueLike<T>,
             next: T,
           ) {
-            if (!Disposable_isDisposed(this)) {
+            if (!this[DisposableLike_isDisposed]) {
               const replay = this[MulticastObservableLike_replay];
 
               if (replay > 0) {
@@ -102,7 +105,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             this: TProperties & SubjectLike & IndexedQueueLike<T>,
             observer: ObserverLike<T>,
           ) {
-            if (!Disposable_isDisposed(this)) {
+            if (!this[DisposableLike_isDisposed]) {
               const { [Subject_observers]: observers } = this;
               observers.add(observer);
 

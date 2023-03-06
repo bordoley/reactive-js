@@ -13,7 +13,6 @@ import { Continuation__yield } from "../../../scheduling/Continuation/__internal
 import { DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -46,7 +45,7 @@ const QueuedEnumerator_create =
         [EnumeratorLike_hasCurrent]: false,
     }), {
         [EnumeratorLike_move]() {
-            if (!Disposable_isDisposed(this) && this[QueueLike_count] > 0) {
+            if (!this[DisposableLike_isDisposed] && this[QueueLike_count] > 0) {
                 const next = this[PullableQueueLike_pull]();
                 this[EnumeratorLike_current] = next;
                 this[EnumeratorLike_hasCurrent] = true;
@@ -67,7 +66,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         enumerator[EnumeratorLike_move]();
         return enumerator[EnumeratorLike_hasCurrent];
     };
-    const shouldComplete = compose(ReadonlyArray_forEach(Enumerator_move), ReadonlyArray_some(Disposable_isDisposed));
+    const shouldComplete = compose(ReadonlyArray_forEach(Enumerator_move), ReadonlyArray_some(x => x[DisposableLike_isDisposed]));
     const ZipObserver_enumerators = Symbol("ZipObserver_enumerators");
     const ZipObserver_queuedEnumerator = Symbol("ZipObserver_queuedEnumerator");
     const createZipObserver = createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function ZipObserver(instance, delegate, enumerators, queuedEnumerator) {
@@ -77,7 +76,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         instance[ZipObserver_queuedEnumerator] = queuedEnumerator;
         instance[ZipObserver_enumerators] = enumerators;
         pipe(instance, Disposable_onComplete(() => {
-            if (Disposable_isDisposed(queuedEnumerator) ||
+            if (queuedEnumerator[DisposableLike_isDisposed] ||
                 (!queuedEnumerator[EnumeratorLike_hasCurrent] &&
                     !queuedEnumerator[EnumeratorLike_move]())) {
                 pipe(delegate, Disposable_dispose());

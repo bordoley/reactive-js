@@ -28,6 +28,7 @@ import Continuation_run from "../../../scheduling/Continuation/__internal__/Cont
 import Scheduler_isInContinuation from "../../../scheduling/Scheduler/__internal__/Scheduler.isInContinuation.js";
 import {
   DisposableLike,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -37,7 +38,6 @@ import {
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -101,7 +101,7 @@ const Enumerable_enumerate: <T>() => (
             MutableEnumeratorLike<T> &
             PullableQueueLike<ContinuationLike>,
         ) {
-          if (!Disposable_isDisposed(this)) {
+          if (!this[DisposableLike_isDisposed]) {
             const continuation = this[PullableQueueLike_pull]();
             if (isSome(continuation)) {
               this[SchedulerLike_inContinuation] = true;
@@ -123,7 +123,7 @@ const Enumerable_enumerate: <T>() => (
         ): void {
           pipe(this, Disposable_add(continuation));
 
-          if (!Disposable_isDisposed(continuation)) {
+          if (!continuation[DisposableLike_isDisposed]) {
             this[QueueLike_push](continuation);
           }
         },
