@@ -25,38 +25,42 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
 
     <T>(options?: { delay?: number }) =>
     (enumerable: EnumerableLike): AsyncEnumerableLike =>
-      Streamable_createLifted(observable =>
-        Observable_create(observer => {
-          const { delay = 0 } = options ?? {};
+      Streamable_createLifted<T>(
+        observable =>
+          Observable_create(observer => {
+            const { delay = 0 } = options ?? {};
 
-          const enumerator = pipe(
-            enumerable,
-            Enumerable_enumerate<T>(),
-            Disposable_addTo(observer),
-          );
+            const enumerator = pipe(
+              enumerable,
+              Enumerable_enumerate<T>(),
+              Disposable_addTo(observer),
+            );
 
-          pipe(
-            observable,
-            Observable_forEach<ObservableLike, void>(_ => {
-              Enumerator_move(enumerator);
-            }),
-            Observable_takeWhile(_ => Enumerator_hasCurrent(enumerator)),
-            delay > 0
-              ? Observable_concatMap(_ =>
-                  pipe(
-                    [Enumerator_getCurrent(enumerator)],
-                    ReadonlyArray_toObservable({
-                      delay,
-                      delayStart: true,
-                    }),
+            pipe(
+              observable,
+              Observable_forEach<ObservableLike, void>(_ => {
+                Enumerator_move(enumerator);
+              }),
+              Observable_takeWhile(_ => Enumerator_hasCurrent(enumerator)),
+              delay > 0
+                ? Observable_concatMap(_ =>
+                    pipe(
+                      [Enumerator_getCurrent(enumerator)],
+                      ReadonlyArray_toObservable({
+                        delay,
+                        delayStart: true,
+                      }),
+                    ),
+                  )
+                : Observable_map<ObservableLike, void, T>(_ =>
+                    Enumerator_getCurrent(enumerator),
                   ),
-                )
-              : Observable_map<ObservableLike, void, T>(_ =>
-                  Enumerator_getCurrent(enumerator),
-                ),
-            Observable_observeWith(observer),
-          );
-        }),
+              Observable_observeWith(observer),
+            );
+          }),
+        true,
+        false,
+        false,
       );
 
 export default Enumerable_toAsyncEnumerable;

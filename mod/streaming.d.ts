@@ -11,24 +11,33 @@ export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObse
 }
 /** @ignore */
 export declare const StreamableLike_stream: unique symbol;
+/** @ignore */
 export declare const StreamableLike_isEnumerable: unique symbol;
+/** @ignore */
+export declare const StreamableLike_isInteractive: unique symbol;
+/** @ignore */
 export declare const StreamableLike_isRunnable: unique symbol;
 /**
  * @noInheritDoc
  * @category Container
  */
 export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {
+    readonly [StreamableLike_isEnumerable]: boolean;
+    readonly [StreamableLike_isInteractive]: boolean;
+    readonly [StreamableLike_isRunnable]: boolean;
     [StreamableLike_stream](scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): TStream;
 }
 export interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T>, ContainerLike {
     readonly [ContainerLike_type]?: AsyncEnumerableLike<this[typeof ContainerLike_T]>;
+    readonly [StreamableLike_isInteractive]: true;
 }
 /**
  * @noInheritDoc
  */
 export interface FlowableStreamLike<T = unknown> extends StreamLike<Updater<PauseableState>, T>, PauseableLike {
+    readonly [StreamableLike_isInteractive]: false;
 }
 /**
  * @noInheritDoc

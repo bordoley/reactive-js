@@ -26,9 +26,17 @@ export interface StreamLike<TReq, T>
 /** @ignore */
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
+/** @ignore */
 export const StreamableLike_isEnumerable = Symbol(
   "StreamableLike_isEnumerable",
 );
+
+/** @ignore */
+export const StreamableLike_isInteractive = Symbol(
+  "StreamableLike_isInteractive",
+);
+
+/** @ignore */
 export const StreamableLike_isRunnable = Symbol("StreamableLike_isRunnable");
 
 /**
@@ -40,8 +48,9 @@ export interface StreamableLike<
   T,
   TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
 > {
-  //readonly [StreamableLike_isEnumerable]: boolean;
-  //readonly [StreamableLike_isRunnable]: boolean;
+  readonly [StreamableLike_isEnumerable]: boolean;
+  readonly [StreamableLike_isInteractive]: boolean;
+  readonly [StreamableLike_isRunnable]: boolean;
 
   [StreamableLike_stream](
     scheduler: SchedulerLike,
@@ -55,6 +64,8 @@ export interface AsyncEnumerableLike<T = unknown>
   readonly [ContainerLike_type]?: AsyncEnumerableLike<
     this[typeof ContainerLike_T]
   >;
+
+  readonly [StreamableLike_isInteractive]: true;
 }
 
 /**
@@ -62,7 +73,9 @@ export interface AsyncEnumerableLike<T = unknown>
  */
 export interface FlowableStreamLike<T = unknown>
   extends StreamLike<Updater<PauseableState>, T>,
-    PauseableLike {}
+    PauseableLike {
+  readonly [StreamableLike_isInteractive]: false;
+}
 
 /**
  * @noInheritDoc

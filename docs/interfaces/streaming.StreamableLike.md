@@ -24,9 +24,33 @@
 
 ## Table of contents
 
+### Properties
+
+- [[StreamableLike\_isEnumerable]](streaming.StreamableLike.md#[streamablelike_isenumerable])
+- [[StreamableLike\_isInteractive]](streaming.StreamableLike.md#[streamablelike_isinteractive])
+- [[StreamableLike\_isRunnable]](streaming.StreamableLike.md#[streamablelike_isrunnable])
+
 ### Methods
 
 - [[StreamableLike\_stream]](streaming.StreamableLike.md#[streamablelike_stream])
+
+## Properties
+
+### [StreamableLike\_isEnumerable]
+
+• `Readonly` **[StreamableLike\_isEnumerable]**: `boolean`
+
+___
+
+### [StreamableLike\_isInteractive]
+
+• `Readonly` **[StreamableLike\_isInteractive]**: `boolean`
+
+___
+
+### [StreamableLike\_isRunnable]
+
+• `Readonly` **[StreamableLike\_isRunnable]**: `boolean`
 
 ## Methods
 

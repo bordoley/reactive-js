@@ -17,3 +17,15 @@
 - [`PauseableLike`](scheduling.PauseableLike.md)
 
   ↳ **`FlowableStreamLike`**
+
+## Table of contents
+
+### Properties
+
+- [[StreamableLike\_isInteractive]](streaming.FlowableStreamLike.md#[streamablelike_isinteractive])
+
+## Properties
+
+### [StreamableLike\_isInteractive]
+
+• `Readonly` **[StreamableLike\_isInteractive]**: ``false``

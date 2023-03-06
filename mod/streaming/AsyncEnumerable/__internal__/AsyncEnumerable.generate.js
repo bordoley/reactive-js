@@ -13,7 +13,7 @@ const AsyncEnumerable_generate = /*@__PURE__*/ (() => {
         const delay = getDelay(options);
         return Streamable_createLifted(delay > 0
             ? Observable_scanAsync(asyncGeneratorScanner(generator, options), initialValue)
-            : Observable_scan(generateScanner(generator), initialValue));
+            : Observable_scan(generateScanner(generator), initialValue), true, false, false);
     };
 })();
 export default AsyncEnumerable_generate;

@@ -24,6 +24,9 @@
 
 - [[ContainerLike\_T]](streaming.AsyncEnumerableLike.md#[containerlike_t])
 - [[ContainerLike\_type]](streaming.AsyncEnumerableLike.md#[containerlike_type])
+- [[StreamableLike\_isEnumerable]](streaming.AsyncEnumerableLike.md#[streamablelike_isenumerable])
+- [[StreamableLike\_isInteractive]](streaming.AsyncEnumerableLike.md#[streamablelike_isinteractive])
+- [[StreamableLike\_isRunnable]](streaming.AsyncEnumerableLike.md#[streamablelike_isrunnable])
 
 ### Methods
 
@@ -48,6 +51,36 @@ ___
 #### Overrides
 
 [ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
+
+___
+
+### [StreamableLike\_isEnumerable]
+
+• `Readonly` **[StreamableLike\_isEnumerable]**: `boolean`
+
+#### Inherited from
+
+[StreamableLike](streaming.StreamableLike.md).[[StreamableLike_isEnumerable]](streaming.StreamableLike.md#[streamablelike_isenumerable])
+
+___
+
+### [StreamableLike\_isInteractive]
+
+• `Readonly` **[StreamableLike\_isInteractive]**: ``true``
+
+#### Overrides
+
+[StreamableLike](streaming.StreamableLike.md).[[StreamableLike_isInteractive]](streaming.StreamableLike.md#[streamablelike_isinteractive])
+
+___
+
+### [StreamableLike\_isRunnable]
+
+• `Readonly` **[StreamableLike\_isRunnable]**: `boolean`
+
+#### Inherited from
+
+[StreamableLike](streaming.StreamableLike.md).[[StreamableLike_isRunnable]](streaming.StreamableLike.md#[streamablelike_isrunnable])
 
 ## Methods
 

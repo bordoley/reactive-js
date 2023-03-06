@@ -210,5 +210,5 @@ export const windowLocation =
             windowLocationStream[QueueLike_push](uri, { replace: true });
         }), Observable.subscribe(scheduler), Disposable.addTo(windowLocationStream));
         return windowLocationStream;
-    });
+    }, false, false, false);
 })();

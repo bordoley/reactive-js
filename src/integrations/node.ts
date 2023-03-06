@@ -215,52 +215,56 @@ export const createWritableSink = /*@__PURE__*/ (() => {
   return (
     factory: Factory<Writable> | Writable,
   ): StreamableLike<Uint8Array, Updater<PauseableState>> =>
-    Streamable_createLifted(events =>
-      Observable.create(observer => {
-        const dispatcher = Observer_getDispatcher(observer);
+    Streamable_createLifted<Uint8Array, Updater<PauseableState>>(
+      events =>
+        Observable.create(observer => {
+          const dispatcher = Observer_getDispatcher(observer);
 
-        const writable = isFunction(factory)
-          ? pipe(
-              factory(),
-              addToDisposable(observer),
-              addDisposable(dispatcher),
-            )
-          : pipe(factory, addDisposable(dispatcher));
+          const writable = isFunction(factory)
+            ? pipe(
+                factory(),
+                addToDisposable(observer),
+                addDisposable(dispatcher),
+              )
+            : pipe(factory, addDisposable(dispatcher));
 
-        pipe(
-          events,
-          Observable.forEach<Uint8Array>(ev => {
-            // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
-            // node throws a type Error regarding expecting a Buffer, though the docs
-            // say a UInt8Array should be accepted. Need to file a bug.
-            if (!writable.write(Buffer.from(ev))) {
-              // Hack in a custom event here for pause request
-              writable.emit(NODE_JS_PAUSE_EVENT);
-            }
-          }),
-          Observable.subscribe(Dispatcher.getScheduler(dispatcher)),
-          addToNodeStream(writable),
-          Disposable.onComplete(() => {
-            writable.end();
-          }),
-        );
+          pipe(
+            events,
+            Observable.forEach<Uint8Array>(ev => {
+              // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
+              // node throws a type Error regarding expecting a Buffer, though the docs
+              // say a UInt8Array should be accepted. Need to file a bug.
+              if (!writable.write(Buffer.from(ev))) {
+                // Hack in a custom event here for pause request
+                writable.emit(NODE_JS_PAUSE_EVENT);
+              }
+            }),
+            Observable.subscribe(Dispatcher.getScheduler(dispatcher)),
+            addToNodeStream(writable),
+            Disposable.onComplete(() => {
+              writable.end();
+            }),
+          );
 
-        const onDrain = pipeLazy(
-          dispatcher,
-          Queue.push(returns(PauseableState_running)),
-        );
-        const onFinish = pipeLazy(dispatcher, Disposable.dispose());
-        const onPause = pipeLazy(
-          dispatcher,
-          Queue.push(returns(PauseableState_paused)),
-        );
+          const onDrain = pipeLazy(
+            dispatcher,
+            Queue.push(returns(PauseableState_running)),
+          );
+          const onFinish = pipeLazy(dispatcher, Disposable.dispose());
+          const onPause = pipeLazy(
+            dispatcher,
+            Queue.push(returns(PauseableState_paused)),
+          );
 
-        writable.on("drain", onDrain);
-        writable.on("finish", onFinish);
-        writable.on(NODE_JS_PAUSE_EVENT, onPause);
+          writable.on("drain", onDrain);
+          writable.on("finish", onFinish);
+          writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-        pipe(dispatcher, Queue.push(returns(PauseableState_running)));
-      }),
+          pipe(dispatcher, Queue.push(returns(PauseableState_running)));
+        }),
+      false,
+      false,
+      false,
     );
 })();
 

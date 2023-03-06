@@ -16,35 +16,39 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnumerable"] =
   /*@__PURE__*/ returns(
     (iterable: AsyncIterableLike): AsyncEnumerableLike =>
-      Streamable_createLifted(observable =>
-        Observable_create(observer => {
-          const dispatcher = Observer_getDispatcher(observer);
-          const iterator = iterable[Symbol.asyncIterator]();
+      Streamable_createLifted(
+        observable =>
+          Observable_create(observer => {
+            const dispatcher = Observer_getDispatcher(observer);
+            const iterator = iterable[Symbol.asyncIterator]();
 
-          pipe(
-            observable,
-            Observable_forEach<ObservableLike, void>(async _ => {
-              try {
-                // Note: In theory a caller could dispatch multiple move requests
-                // without waiting for the responses. In this case, we don't guarantee
-                // the order in which they will be produced by the enumerator stream.
-                // they could very well be out of order depending on when the promises
-                // resolve.
-                const next = await iterator.next();
+            pipe(
+              observable,
+              Observable_forEach<ObservableLike, void>(async _ => {
+                try {
+                  // Note: In theory a caller could dispatch multiple move requests
+                  // without waiting for the responses. In this case, we don't guarantee
+                  // the order in which they will be produced by the enumerator stream.
+                  // they could very well be out of order depending on when the promises
+                  // resolve.
+                  const next = await iterator.next();
 
-                if (!next.done && !Disposable_isDisposed(dispatcher)) {
-                  dispatcher[QueueLike_push](next.value);
-                } else {
-                  pipe(dispatcher, Disposable_dispose());
+                  if (!next.done && !Disposable_isDisposed(dispatcher)) {
+                    dispatcher[QueueLike_push](next.value);
+                  } else {
+                    pipe(dispatcher, Disposable_dispose());
+                  }
+                } catch (e) {
+                  pipe(dispatcher, Disposable_dispose(error(e)));
                 }
-              } catch (e) {
-                pipe(dispatcher, Disposable_dispose(error(e)));
-              }
-            }),
-            Observable_subscribe(Observer_getScheduler(observer)),
-            Disposable_bindTo(observer),
-          );
-        }),
+              }),
+              Observable_subscribe(Observer_getScheduler(observer)),
+              Disposable_bindTo(observer),
+            );
+          }),
+        true,
+        false,
+        false,
       ),
   );
 
