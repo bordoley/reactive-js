@@ -56,10 +56,6 @@ export const generate: Generate<
   { delay: number }
 >["generate"] = AsyncEnumerable_generate;
 
-//export const isEnumerable = AsyncEnumerable_isEnumerable;
-
-//export const isRunnable = AsyncEnumerable_isRunnable;
-
 export const keep: Keep<AsyncEnumerableLike>["keep"] = AsyncEnumerable_keep;
 
 export const map: Map<AsyncEnumerableLike>["map"] = AsyncEnumerable_map;

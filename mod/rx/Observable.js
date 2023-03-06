@@ -36,8 +36,6 @@ import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js"
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
-import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable.js";
-import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
@@ -148,8 +146,6 @@ export const fromReadonlyArray = ReadonlyArray_toObservable;
 export const fromSequence = Sequence_toObservable;
 export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
-export const isEnumerable = Observable_isEnumerable;
-export const isRunnable = Observable_isRunnable;
 export const keep = Observable_keep;
 export const keepType = Observable_keepType;
 export const map = Observable_map;

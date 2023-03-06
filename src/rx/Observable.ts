@@ -63,11 +63,9 @@ import {
   SideEffect4,
   SideEffect5,
   SideEffect6,
-  TypePredicate,
 } from "../functions.js";
 import {
   CombineLatest,
-  EnumerableLike,
   Exhaust,
   ExhaustMap,
   ForkCombineLatest,
@@ -80,7 +78,6 @@ import {
   ObservableLike,
   ObserverLike,
   Retry,
-  RunnableLike,
   ScanAsync,
   SwitchAll,
   SwitchMap,
@@ -138,8 +135,6 @@ import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js"
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
-import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable.js";
-import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
@@ -444,12 +439,6 @@ export const generate: Generate<
 
 export const ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"] =
   Observable_ignoreElements;
-
-export const isEnumerable: TypePredicate<ObservableLike, EnumerableLike> =
-  Observable_isEnumerable;
-
-export const isRunnable: TypePredicate<ObservableLike, RunnableLike> =
-  Observable_isRunnable;
 
 export const keep: Keep<ObservableLike>["keep"] = Observable_keep;
 
