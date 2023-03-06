@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, } from "../../../functions.js";
-import { ObserverLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -11,7 +11,6 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -37,7 +36,7 @@ const Observable_zipWithLatestFrom =
         };
         return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin(), IndexedQueue_fifoQueueMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
             init(Disposable_mixin, instance);
-            init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+            init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
             init(delegatingMixin(), instance, delegate);
             init(IndexedQueue_fifoQueueMixin(), instance);
             instance[ZipWithLatestFromObserver_selector] = selector;
@@ -55,7 +54,7 @@ const Observable_zipWithLatestFrom =
                     instance[QueueLike_count] === 0) {
                     pipe(instance[DelegatingLike_delegate], Disposable_dispose());
                 }
-            }), Observable_subscribe(Observer_getScheduler(delegate)), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
+            }), Observable_subscribe(delegate[ObserverLike_scheduler]), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({

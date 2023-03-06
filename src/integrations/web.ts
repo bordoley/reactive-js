@@ -33,9 +33,9 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
+  ObserverLike_dispatcher,
 } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import * as Observer from "../rx/Observer.js";
 import { DispatcherLike_scheduler, SchedulerLike } from "../scheduling.js";
 import {
   StreamLike,
@@ -134,8 +134,7 @@ export const createEventSource = (
 
   return Observable.create(observer => {
     const dispatcher = pipe(
-      observer,
-      Observer.getDispatcher,
+      observer[ObserverLike_dispatcher],
       Disposable.onDisposed(_ => {
         for (const ev of events) {
           eventSource.removeEventListener(ev, listener);
@@ -208,8 +207,7 @@ export const addEventListener =
   target =>
     Observable.create(observer => {
       const dispatcher = pipe(
-        observer,
-        Observer.getDispatcher,
+        observer[ObserverLike_dispatcher],
         Disposable.onDisposed(_ => {
           target.removeEventListener(eventName, listener);
         }),

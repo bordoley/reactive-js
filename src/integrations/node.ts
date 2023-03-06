@@ -32,10 +32,12 @@ import {
   pipeLazy,
   returns,
 } from "../functions.js";
-import { ObservableLike } from "../rx.js";
+import {
+  ObservableLike,
+  ObserverLike_dispatcher,
+  ObserverLike_scheduler,
+} from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import * as Observer from "../rx/Observer.js";
-import Observer_getDispatcher from "../rx/Observer/__internal__/Observer.getDispatcher.js";
 import {
   DispatcherLike_scheduler,
   PauseableState,
@@ -103,7 +105,7 @@ export const bindNodeCallback: BindNodeCallback = <T>(
 ): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
   function (this: unknown, ...args: readonly unknown[]) {
     return Observable.create(observer => {
-      const dispatcher = Observer_getDispatcher(observer);
+      const dispatcher = observer[ObserverLike_dispatcher];
       const handler = (err: unknown, arg: unknown) => {
         if (err) {
           pipe(dispatcher, Disposable.dispose(error(err)));
@@ -165,7 +167,7 @@ export const createReadableSource = (
 ): FlowableLike<Uint8Array> =>
   Flowable_createLifted(mode =>
     Observable.create(observer => {
-      const dispatcher = Observer_getDispatcher(observer);
+      const dispatcher = observer[ObserverLike_dispatcher];
 
       const readable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(dispatcher))
@@ -185,7 +187,7 @@ export const createReadableSource = (
               break;
           }
         }),
-        Observable.subscribe(Observer.getScheduler(observer)),
+        Observable.subscribe(observer[ObserverLike_scheduler]),
         addToNodeStream(readable),
       );
 
@@ -218,7 +220,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
     Streamable_createLifted<Uint8Array, Updater<PauseableState>>(
       events =>
         Observable.create(observer => {
-          const dispatcher = Observer_getDispatcher(observer);
+          const dispatcher = observer[ObserverLike_dispatcher];
 
           const writable = isFunction(factory)
             ? pipe(
@@ -278,19 +280,19 @@ export const transform =
         const transform = pipe(
           factory(),
           addToDisposable(observer),
-          addDisposable(Observer.getDispatcher(observer)),
+          addDisposable(observer[ObserverLike_dispatcher]),
         );
 
         pipe(
           createWritableSink(transform),
-          Streamable.stream(Observer.getScheduler(observer)),
+          Streamable.stream(observer[ObserverLike_scheduler]),
           Stream.sourceFrom(src),
           addToNodeStream(transform),
         );
 
         const transformReadableStream = pipe(
           createReadableSource(transform),
-          Streamable.stream(Observer.getScheduler(observer)),
+          Streamable.stream(observer[ObserverLike_scheduler]),
           addToNodeStream(transform),
           Observable.observeWith(observer),
         );
@@ -299,7 +301,7 @@ export const transform =
           modeObs,
           Observable.map(returns),
           Observable.forEach(Queue.pushTo(transformReadableStream)),
-          Observable.subscribe(Observer.getScheduler(observer)),
+          Observable.subscribe(observer[ObserverLike_scheduler]),
           addToNodeStream(transform),
         );
       }),

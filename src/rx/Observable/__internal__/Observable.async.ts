@@ -15,7 +15,11 @@ import {
   raiseError,
   raiseWithDebugMessage,
 } from "../../../functions.js";
-import { ObservableLike, ObserverLike } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_scheduler,
+} from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike, StreamableLike } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
@@ -25,7 +29,6 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Observable_create from "./Observable.create.js";
@@ -227,7 +230,7 @@ class AsyncContext {
         [AsyncContext_observer]: observer,
         [AsyncContext_runComputation]: runComputation,
       } = this;
-      const scheduler = Observer_getScheduler(observer);
+      const scheduler = observer[ObserverLike_scheduler];
 
       const subscription = pipe(
         observable,
@@ -458,7 +461,7 @@ export const Observable_async__do = /*@__PURE__*/ (() => {
   return (f: (...args: any[]) => void, ...args: unknown[]): void => {
     const ctx = assertCurrentContext();
 
-    const scheduler = Observer_getScheduler(ctx[AsyncContext_observer]);
+    const scheduler = ctx[AsyncContext_observer][ObserverLike_scheduler];
     const observable = ctx[AsyncContext_memoOrUse](
       false,
       deferSideEffect,
@@ -484,7 +487,7 @@ export const Observable_async__using = <T extends DisposableLike>(
 
 export function Observable_async__currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();
-  return Observer_getScheduler(ctx[AsyncContext_observer]);
+  return ctx[AsyncContext_observer][ObserverLike_scheduler];
 }
 
 export const Observable_async__stream = /*@__PURE__*/ (() => {

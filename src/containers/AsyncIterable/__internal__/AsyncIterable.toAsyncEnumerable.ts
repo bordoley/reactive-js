@@ -1,11 +1,13 @@
 import { AsyncIterableLike } from "../../../containers.js";
 import { error, pipe, returns } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike_dispatcher,
+  ObserverLike_scheduler,
+} from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
-import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
-import Observer_getScheduler from "../../../rx/Observer/__internal__/Observer.getScheduler.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import { DisposableLike_isDisposed, QueueLike_push } from "../../../util.js";
@@ -18,7 +20,7 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
       Streamable_createLifted(
         observable =>
           Observable_create(observer => {
-            const dispatcher = Observer_getDispatcher(observer);
+            const dispatcher = observer[ObserverLike_dispatcher];
             const iterator = iterable[Symbol.asyncIterator]();
 
             pipe(
@@ -41,7 +43,7 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
                   pipe(dispatcher, Disposable_dispose(error(e)));
                 }
               }),
-              Observable_subscribe(Observer_getScheduler(observer)),
+              Observable_subscribe(observer[ObserverLike_scheduler]),
               Disposable_bindTo(observer),
             );
           }),

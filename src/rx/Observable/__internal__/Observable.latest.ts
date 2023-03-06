@@ -13,6 +13,7 @@ import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
+  ObserverLike_scheduler,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -20,7 +21,6 @@ import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
@@ -143,7 +143,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         onCompleted(ctx);
       };
 
-      const scheduler = Observer_getScheduler(delegate);
+      const scheduler = delegate[ObserverLike_scheduler];
 
       for (const observable of observables) {
         const innerObserver = pipe(

@@ -6,58 +6,12 @@
 
 ### Functions
 
-- [getDispatcher](rx_Observer.md#getdispatcher)
-- [getScheduler](rx_Observer.md#getscheduler)
 - [notify](rx_Observer.md#notify)
 - [notifyObserver](rx_Observer.md#notifyobserver)
 - [schedule](rx_Observer.md#schedule)
 - [sourceFrom](rx_Observer.md#sourcefrom)
 
 ## Functions
-
-### getDispatcher
-
-▸ **getDispatcher**<`T`\>(`observer`): [`DispatcherLike`](../interfaces/scheduling.DispatcherLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observer` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
-
-#### Returns
-
-[`DispatcherLike`](../interfaces/scheduling.DispatcherLike.md)<`T`\>
-
-___
-
-### getScheduler
-
-▸ **getScheduler**<`T`\>(`observer`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observer` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
-
-#### Returns
-
-[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
-
-___
 
 ### notify
 

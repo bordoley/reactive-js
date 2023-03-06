@@ -34,7 +34,6 @@ import {
 } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
-import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
 import {
   DispatcherLike,
   DispatcherLike_scheduler,
@@ -146,8 +145,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             this[DispatchedObservable_observer] = observer;
 
             pipe(
-              observer,
-              Observer_getDispatcher,
+              observer[ObserverLike_dispatcher],
               Disposable_addToIgnoringChildErrors(this),
             );
           },

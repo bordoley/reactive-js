@@ -1,11 +1,14 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { AsyncIterableLike } from "../../../containers.js";
 import { error, pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_dispatcher,
+} from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
-import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
 import {
   DispatcherLike_scheduler,
   PauseableState,
@@ -35,7 +38,7 @@ const AsyncIterable_toFlowable: ToFlowable<
         const { maxBuffer = MAX_SAFE_INTEGER, maxYieldInterval = 300 } =
           o ?? {};
 
-        const dispatcher = Observer_getDispatcher(observer);
+        const dispatcher = observer[ObserverLike_dispatcher];
         const iterator = iterable[Symbol.asyncIterator]();
         const scheduler = dispatcher[DispatcherLike_scheduler];
 

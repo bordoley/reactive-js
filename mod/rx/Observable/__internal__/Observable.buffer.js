@@ -7,7 +7,7 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { isNumber, none, pipe } from "../../../functions.js";
-import { ObserverLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -18,7 +18,6 @@ import DisposableRef_create from "../../../util/DisposableRef/__internal__/Dispo
 import { MutableRefLike_current, } from "../../../util/__internal__/util.internal.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
@@ -32,7 +31,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
     const BufferObserver_maxBufferSize = Symbol("BufferObserver_maxBufferSize");
     const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin, delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(delegatingMixin(), instance, delegate);
         instance[BufferObserver_buffer] = [];
         instance[BufferObserver_durationFunction] = durationFunction;
@@ -72,7 +71,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
             }
             else if (this[BufferObserver_durationSubscription][MutableRefLike_current][DisposableLike_isDisposed]) {
                 this[BufferObserver_durationSubscription][MutableRefLike_current] =
-                    pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribe(Observer_getScheduler(this)));
+                    pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribe(this[ObserverLike_scheduler]));
             }
         },
     }));

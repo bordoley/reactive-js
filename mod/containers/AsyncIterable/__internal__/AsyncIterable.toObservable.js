@@ -2,8 +2,8 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { error, pipe } from "../../../functions.js";
+import { ObserverLike_dispatcher, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
-import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
 import { DispatcherLike_scheduler, SchedulerLike_now, } from "../../../scheduling.js";
 import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
@@ -11,7 +11,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 const AsyncIterable_toObservable = (o) => (iterable) => Observable_create((observer) => {
     const { maxBuffer = MAX_SAFE_INTEGER, maxYieldInterval = 300 } = o !== null && o !== void 0 ? o : {};
-    const dispatcher = Observer_getDispatcher(observer);
+    const dispatcher = observer[ObserverLike_dispatcher];
     const iterator = iterable[Symbol.asyncIterator]();
     const scheduler = dispatcher[DispatcherLike_scheduler];
     const continuation = async () => {

@@ -20,6 +20,7 @@ import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
+  ObserverLike_scheduler,
   WithLatestFrom,
 } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
@@ -28,7 +29,6 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
@@ -72,7 +72,11 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
             selector: Function2<TA, TB, T>,
           ): ObserverLike<TA> {
             init(Disposable_delegatingMixin(), instance, delegate);
-            init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+            init(
+              typedObserverMixin,
+              instance,
+              delegate[ObserverLike_scheduler],
+            );
 
             instance[WithLatestFromObserver_selector] = selector;
 
@@ -82,7 +86,7 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
                 instance[WithLatestFromObserver_hasLatest] = true;
                 instance[WithLatestFromObserver_otherLatest] = next;
               }),
-              Observable_subscribe(Observer_getScheduler(delegate)),
+              Observable_subscribe(delegate[ObserverLike_scheduler]),
               Disposable_addTo(instance),
               Disposable_onComplete(() => {
                 if (!instance[WithLatestFromObserver_hasLatest]) {
