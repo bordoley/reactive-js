@@ -6,10 +6,12 @@ import Observable_map from "../../../rx/Observable/__internal__/Observable.map.j
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
+import {
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  EnumeratorLike_move,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Enumerator_getCurrent from "../../../util/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_hasCurrent from "../../../util/Enumerator/__internal__/Enumerator.hasCurrent.js";
-import Enumerator_move from "../../../util/Enumerator/__internal__/Enumerator.move.js";
 import Observable_concatMap from "../../Observable/__internal__/Observable.concatMap.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
@@ -39,21 +41,21 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
             pipe(
               observable,
               Observable_forEach<ObservableLike, void>(_ => {
-                Enumerator_move(enumerator);
+                enumerator[EnumeratorLike_move]();
               }),
-              Observable_takeWhile(_ => Enumerator_hasCurrent(enumerator)),
+              Observable_takeWhile(_ => enumerator[EnumeratorLike_hasCurrent]),
               delay > 0
                 ? Observable_concatMap(_ =>
                     pipe(
-                      [Enumerator_getCurrent(enumerator)],
+                      [enumerator[EnumeratorLike_current]],
                       ReadonlyArray_toObservable({
                         delay,
                         delayStart: true,
                       }),
                     ),
                   )
-                : Observable_map<ObservableLike, void, T>(_ =>
-                    Enumerator_getCurrent(enumerator),
+                : Observable_map<ObservableLike, void, T>(
+                    _ => enumerator[EnumeratorLike_current],
                   ),
               Observable_observeWith(observer),
             );

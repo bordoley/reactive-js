@@ -24,6 +24,7 @@ import {
   DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
   QueueLike_push,
 } from "../../../util.js";
@@ -31,8 +32,6 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import Enumerator_getCurrent from "../../../util/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_move from "../../../util/Enumerator/__internal__/Enumerator.move.js";
 import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import PullableQueue_pull from "../../../util/PullableQueue/__internal__/PullableQueue.pull.js";
@@ -145,8 +144,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       [VirtualTimeSchedulerLike_run](
         this: TProperties & EnumeratorLike<VirtualTask>,
       ) {
-        while (Enumerator_move(this)) {
-          const task = Enumerator_getCurrent(this);
+        while (this[EnumeratorLike_move]()) {
+          const task = this[EnumeratorLike_current];
           const {
             [VirtualTask_dueTime]: dueTime,
             [VirtualTask_continuation]: continuation,
@@ -186,9 +185,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         this: TProperties &
           MutableEnumeratorLike<VirtualTask> &
           PullableQueueLike<VirtualTask>,
-      ): void {
+      ): boolean {
         if (Disposable_isDisposed(this)) {
-          return;
+          return false;
         }
 
         const task = PullableQueue_pull(this);
@@ -198,6 +197,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         } else {
           pipe(this, Disposable_dispose());
         }
+
+        return this[EnumeratorLike_hasCurrent];
       },
     },
   ),

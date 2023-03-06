@@ -39,5 +39,4 @@ Reactive-JS
 - [streaming/Streamable](modules/streaming_Streamable.md)
 - [util](modules/util.md)
 - [util/Disposable](modules/util_Disposable.md)
-- [util/Enumerator](modules/util_Enumerator.md)
 - [util/Queue](modules/util_Queue.md)

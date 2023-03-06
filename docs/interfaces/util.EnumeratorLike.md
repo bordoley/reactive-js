@@ -43,8 +43,8 @@ ___
 
 ### [EnumeratorLike\_move]
 
-▸ **[EnumeratorLike_move]**(): `void`
+▸ **[EnumeratorLike_move]**(): `boolean`
 
 #### Returns
 
-`void`
+`boolean`

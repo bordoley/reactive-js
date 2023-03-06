@@ -85,5 +85,5 @@ export interface EnumeratorLike<T = unknown> extends DisposableLike {
   readonly [EnumeratorLike_current]: T;
   readonly [EnumeratorLike_hasCurrent]: boolean;
 
-  [EnumeratorLike_move](): void;
+  [EnumeratorLike_move](): boolean;
 }

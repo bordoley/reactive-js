@@ -17,9 +17,6 @@ import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposa
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import Enumerator_getCurrent from "../../../util/Enumerator/__internal__/Enumerator.getCurrent.js";
-import Enumerator_hasCurrent from "../../../util/Enumerator/__internal__/Enumerator.hasCurrent.js";
-import Enumerator_move from "../../../util/Enumerator/__internal__/Enumerator.move.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -57,12 +54,19 @@ const QueuedEnumerator_create =
             else {
                 this[EnumeratorLike_hasCurrent] = false;
             }
+            return this[EnumeratorLike_hasCurrent];
         },
     }));
 })();
 const Observable_zipObservables = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
-    const shouldEmit = compose(ReadonlyArray_map((x) => Enumerator_hasCurrent(x) || Enumerator_move(x)), ReadonlyArray_every(isTrue));
+    const shouldEmit = compose(ReadonlyArray_map((x) => x[EnumeratorLike_hasCurrent] || x[EnumeratorLike_move]()), ReadonlyArray_every(isTrue));
+    const Enumerator_getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
+    const Enumerator_hasCurrent = (enumerator) => enumerator[EnumeratorLike_hasCurrent];
+    const Enumerator_move = (enumerator) => {
+        enumerator[EnumeratorLike_move]();
+        return enumerator[EnumeratorLike_hasCurrent];
+    };
     const shouldComplete = compose(ReadonlyArray_forEach(Enumerator_move), ReadonlyArray_some(Disposable_isDisposed));
     const ZipObserver_enumerators = Symbol("ZipObserver_enumerators");
     const ZipObserver_queuedEnumerator = Symbol("ZipObserver_queuedEnumerator");
@@ -74,8 +78,8 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         instance[ZipObserver_enumerators] = enumerators;
         pipe(instance, Disposable_onComplete(() => {
             if (Disposable_isDisposed(queuedEnumerator) ||
-                (!Enumerator_hasCurrent(queuedEnumerator) &&
-                    !Enumerator_move(queuedEnumerator))) {
+                (!queuedEnumerator[EnumeratorLike_hasCurrent] &&
+                    !queuedEnumerator[EnumeratorLike_move]())) {
                 pipe(delegate, Disposable_dispose());
             }
         }));
@@ -103,7 +107,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     }));
     const moveAll = (enumerators) => {
         for (const enumerator of enumerators) {
-            Enumerator_move(enumerator);
+            enumerator[EnumeratorLike_move]();
         }
     };
     const allHaveCurrent = (enumerators) => pipe(enumerators, ReadonlyArray_every(Enumerator_hasCurrent));
@@ -123,7 +127,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         for (const next of observables) {
             if (Observable_isEnumerable(next)) {
                 const enumerator = pipe(next, Enumerable_enumerate(), Disposable_addTo(observer));
-                Enumerator_move(enumerator);
+                enumerator[EnumeratorLike_move]();
                 enumerators.push(enumerator);
             }
             else {
