@@ -1,7 +1,7 @@
 /// <reference types="./VirtualTimeScheduler.create.d.ts" />
 
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { MAX_SAFE_INTEGER } from "../../../constants.js";
 import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import { ContinuationLike_run, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, } from "../../../scheduling.js";
 import { EnumeratorLike_current, EnumeratorLike_move, QueueLike_push, } from "../../../util.js";

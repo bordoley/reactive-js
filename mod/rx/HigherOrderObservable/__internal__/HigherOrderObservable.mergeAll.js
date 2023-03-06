@@ -1,7 +1,7 @@
 /// <reference types="./HigherOrderObservable.mergeAll.d.ts" />
 
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { MAX_SAFE_INTEGER } from "../../../constants.js";
 import { isSome, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";

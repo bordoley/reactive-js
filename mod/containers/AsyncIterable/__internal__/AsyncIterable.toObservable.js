@@ -1,6 +1,6 @@
 /// <reference types="./AsyncIterable.toObservable.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../../../constants.js";
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { error, pipe } from "../../../functions.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";

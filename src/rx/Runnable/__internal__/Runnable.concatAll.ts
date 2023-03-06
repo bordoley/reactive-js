@@ -1,4 +1,4 @@
-import { MAX_SAFE_INTEGER } from "../../../constants.js";
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { ConcatAll } from "../../../containers.js";
 import { RunnableLike } from "../../../rx.js";
 import Runnable_mergeAll from "./Runnable.mergeAll.js";

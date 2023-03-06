@@ -1,6 +1,6 @@
 /// <reference types="./functions.d.ts" />
 
-import { __DEV__ } from "./constants.js";
+import { __DEV__ } from "./__internal__/constants.js";
 import ReadonlyArray_getLength from "./containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 /**
  * A function that always returns `false`.

@@ -1,7 +1,7 @@
 /// <reference types="./Observer.decorateNotifyForDev.d.ts" />
 
+import { __DEV__ } from "../../../__internal__/constants.js";
 import { getPrototype } from "../../../__internal__/mixins.js";
-import { __DEV__ } from "../../../constants.js";
 import { call } from "../../../functions.js";
 import { ObserverLike_notify } from "../../../rx.js";
 import Observer_assertState from "./Observer.assertState.js";

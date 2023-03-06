@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { max } from "../../__internal__/math.js";
 import {
   Mutable,
@@ -7,7 +8,6 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { MAX_SAFE_INTEGER } from "../../constants.js";
 import {
   Function1,
   Optional,
