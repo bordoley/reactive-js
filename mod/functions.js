@@ -121,13 +121,20 @@ export const pipe = pipeUnsafe;
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
 export const pipeLazy = (source, ...operators) => () => pipeUnsafe(source, ...operators);
-export const error = (message) => message instanceof Error
-    ? message
-    : __DEV__ && isString(message)
-        ? newInstance(Error, message)
-        : __DEV__ && isSome(message)
-            ? newInstance(Error, "", { cause: message })
-            : newInstance(Error);
+export const error = (message) => {
+    const messageIsString = isString(message);
+    const messageIsError = message instanceof Error;
+    const errorMessage = messageIsString ? message : "";
+    const errorCause = messageIsString && !messageIsError && isSome(message)
+        ? {
+            cause: message,
+        }
+        : none;
+    return messageIsError
+        ? message
+        : newInstance(Error, errorMessage, errorCause);
+};
+export const errorWithWithDebugMessage = (message) => error(__DEV__ ? message : none);
 export const raiseError = (e) => {
     throw e;
 };

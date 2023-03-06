@@ -229,6 +229,7 @@ interface PipeLazy {
  */
 export declare const pipeLazy: PipeLazy;
 export declare const error: (message?: unknown) => Error;
+export declare const errorWithWithDebugMessage: (message: string) => Error;
 export declare const raiseError: <T>(e: Error) => T;
 /**
  * Throws a javascript error using the provided message.

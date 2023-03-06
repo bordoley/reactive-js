@@ -53,6 +53,7 @@
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
 - [error](functions.md#error)
+- [errorWithWithDebugMessage](functions.md#errorwithwithdebugmessage)
 - [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
@@ -1590,6 +1591,22 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `message?` | `unknown` |
+
+#### Returns
+
+`Error`
+
+___
+
+### errorWithWithDebugMessage
+
+▸ **errorWithWithDebugMessage**(`message`): `Error`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `string` |
 
 #### Returns
 

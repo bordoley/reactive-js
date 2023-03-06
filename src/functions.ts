@@ -706,14 +706,24 @@ export const pipeLazy: PipeLazy =
   () =>
     pipeUnsafe(source, ...operators);
 
-export const error = (message?: unknown): Error =>
-  message instanceof Error
+export const error = (message?: unknown): Error => {
+  const messageIsString = isString(message);
+  const messageIsError = message instanceof Error;
+  const errorMessage = messageIsString ? message : "";
+  const errorCause =
+    messageIsString && !messageIsError && isSome(message)
+      ? {
+          cause: message,
+        }
+      : none;
+
+  return messageIsError
     ? message
-    : __DEV__ && isString(message)
-    ? newInstance(Error, message)
-    : __DEV__ && isSome(message)
-    ? newInstance(Error, "", { cause: message })
-    : newInstance(Error);
+    : newInstance(Error, errorMessage, errorCause);
+};
+
+export const errorWithWithDebugMessage = (message: string): Error =>
+  error(__DEV__ ? message : none);
 
 export const raiseError = <T>(e: Error): T => {
   throw e;
