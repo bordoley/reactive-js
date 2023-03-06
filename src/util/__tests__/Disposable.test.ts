@@ -19,6 +19,7 @@ import {
 import * as Observable from "../../rx/Observable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import { DisposableLike_error, DisposableLike_isDisposed } from "../../util.js";
 import * as Disposable from "../Disposable.js";
 
 testModule(
@@ -30,7 +31,7 @@ testModule(
       Disposable.addIgnoringChildErrors(child),
       Disposable.dispose(),
     );
-    pipe(child, Disposable.isDisposed, expectTrue);
+    pipe(child[DisposableLike_isDisposed], expectTrue);
   }),
   test("adding to disposed disposable disposes the child", () => {
     const child = Disposable.create();
@@ -39,7 +40,7 @@ testModule(
       Disposable.dispose(),
       Disposable.addIgnoringChildErrors(child),
     );
-    pipe(child, Disposable.isDisposed, expectTrue);
+    pipe(child[DisposableLike_isDisposed], expectTrue);
   }),
   test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();
@@ -59,7 +60,7 @@ testModule(
       Disposable.onDisposed(teardown),
       Disposable.dispose(),
     );
-    pipe(disposable, Disposable.getError, expectIsNone);
+    pipe(disposable[DisposableLike_error], expectIsNone);
   }),
   test("propogates errors when disposed with an Error", () => {
     const err: Optional<Error> = error(null);
@@ -72,7 +73,7 @@ testModule(
 
     pipe(disposable, Disposable.dispose(err));
 
-    pipe(disposable, Disposable.getError, expectEquals<Optional<Error>>(err));
+    pipe(disposable[DisposableLike_error], expectEquals<Optional<Error>>(err));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
     pipe(childTeardown.calls[0], expectArrayEquals([err]));
   }),
@@ -89,7 +90,7 @@ testModule(
     const e = new Error();
     pipe(child, Disposable.dispose(e));
 
-    pipe(parent, Disposable.getError, expectEquals<Optional<Error>>(e));
+    pipe(parent[DisposableLike_error], expectEquals<Optional<Error>>(e));
   }),
   test("toObservable", () => {
     const disposable = Disposable.create();

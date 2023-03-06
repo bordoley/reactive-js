@@ -20,11 +20,10 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import { DisposableLike } from "../../../util.js";
+import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create.js";
@@ -61,9 +60,9 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
       this: TProperties & DisposableLike & DelegatingLike<ObserverLike<T>>,
     ) {
       if (
-        Disposable_isDisposed(
-          this[HigherOrderObservable_currentRef][MutableRefLike_current],
-        )
+        this[HigherOrderObservable_currentRef][MutableRefLike_current][
+          DisposableLike_isDisposed
+        ]
       ) {
         pipe(this[DelegatingLike_delegate], Disposable_dispose());
       }
@@ -117,7 +116,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
                 ),
                 Observable_subscribe(Observer_getScheduler(this)),
                 Disposable_onComplete(() => {
-                  if (Disposable_isDisposed(this)) {
+                  if (this[DisposableLike_isDisposed]) {
                     pipe(this[DelegatingLike_delegate], Disposable_dispose());
                   }
                 }),

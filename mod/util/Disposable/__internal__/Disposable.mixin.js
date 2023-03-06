@@ -4,10 +4,8 @@ import { mix, props } from "../../../__internal__/mixins.js";
 import { call, isFunction, isSome, newInstance, none, pipe, } from "../../../functions.js";
 import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../../util.js";
 import dispose from "./Disposable.dispose.js";
-import getError from "./Disposable.getError.js";
-import isDisposed from "./Disposable.isDisposed.js";
 const doDispose = (instance, disposable) => {
-    const error = getError(instance);
+    const error = instance[DisposableLike_error];
     if (isFunction(disposable)) {
         try {
             call(disposable, instance, error);
@@ -33,7 +31,7 @@ const Disposable_mixin = /*@__PURE__*/ mix(function DisposableMixin(instance) {
     [DisposableMixin_disposables]: none,
 }), {
     [DisposableLike_dispose](error) {
-        if (!isDisposed(this)) {
+        if (!this[DisposableLike_isDisposed]) {
             this[DisposableLike_error] = error;
             this[DisposableLike_isDisposed] = true;
             const disposables = this[DisposableMixin_disposables];
@@ -48,7 +46,7 @@ const Disposable_mixin = /*@__PURE__*/ mix(function DisposableMixin(instance) {
         if (this === disposable) {
             return;
         }
-        else if (isDisposed(this)) {
+        else if (this[DisposableLike_isDisposed]) {
             doDispose(this, disposable);
         }
         else if (!disposables.has(disposable)) {

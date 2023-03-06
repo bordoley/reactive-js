@@ -17,8 +17,6 @@
 - [bindTo](util_Disposable.md#bindto)
 - [create](util_Disposable.md#create)
 - [dispose](util_Disposable.md#dispose)
-- [getError](util_Disposable.md#geterror)
-- [isDisposed](util_Disposable.md#isdisposed)
 - [onComplete](util_Disposable.md#oncomplete)
 - [onDisposed](util_Disposable.md#ondisposed)
 - [onError](util_Disposable.md#onerror)
@@ -199,38 +197,6 @@ Dispose `disposable` with an optional error.
 #### Returns
 
 [`Updater`](functions.md#updater)<`T`\>
-
-___
-
-### getError
-
-▸ **getError**(`disposable`): [`Optional`](functions.md#optional)<`Error`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `disposable` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-
-#### Returns
-
-[`Optional`](functions.md#optional)<`Error`\>
-
-___
-
-### isDisposed
-
-▸ **isDisposed**(`disposable`): `boolean`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `disposable` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-
-#### Returns
-
-`boolean`
 
 ___
 

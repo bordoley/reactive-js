@@ -21,10 +21,10 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
+import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create.js";
@@ -140,9 +140,9 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
           if (ReadonlyArray_getLength(buffer) === maxBufferSize) {
             doOnNotify();
           } else if (
-            Disposable_isDisposed(
-              this[BufferObserver_durationSubscription][MutableRefLike_current],
-            )
+            this[BufferObserver_durationSubscription][MutableRefLike_current][
+              DisposableLike_isDisposed
+            ]
           ) {
             this[BufferObserver_durationSubscription][MutableRefLike_current] =
               pipe(

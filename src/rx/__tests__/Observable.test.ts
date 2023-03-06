@@ -15,6 +15,7 @@ import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import { ObservableLike } from "../../rx.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import { DisposableLike_error } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as Observable from "../Observable.js";
 import { __await, __memo } from "../Observable.js";
@@ -52,7 +53,7 @@ const onSubscribeTests = describe(
       Observable.subscribe(scheduler),
     );
 
-    pipe(subscription, Disposable.getError, expectIsSome);
+    pipe(subscription[DisposableLike_error], expectIsSome);
   }),
 );
 

@@ -9,10 +9,13 @@ import {
   SchedulerLike_now,
 } from "../../../scheduling.js";
 import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule.js";
-import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import {
+  DisposableLike_isDisposed,
+  QueueLike_count,
+  QueueLike_push,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 
 const AsyncIterable_toObservable: ToObservable<
   AsyncIterableLike,
@@ -32,7 +35,7 @@ const AsyncIterable_toObservable: ToObservable<
 
         try {
           while (
-            !Disposable_isDisposed(dispatcher) &&
+            !dispatcher[DisposableLike_isDisposed] &&
             // An async iterable can produce resolved promises which are immediately
             // scheduled on the microtask queue. This prevents the observer's scheduler
             // from running and draining dispatched events.
@@ -44,7 +47,7 @@ const AsyncIterable_toObservable: ToObservable<
           ) {
             const next = await iterator.next();
 
-            if (!next.done && !Disposable_isDisposed(dispatcher)) {
+            if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
               dispatcher[QueueLike_push](next.value);
             } else {
               pipe(dispatcher, Disposable_dispose());
@@ -54,7 +57,7 @@ const AsyncIterable_toObservable: ToObservable<
           pipe(dispatcher, Disposable_dispose(error(e)));
         }
 
-        if (!Disposable_isDisposed(dispatcher)) {
+        if (!dispatcher[DisposableLike_isDisposed]) {
           pipe(
             scheduler,
             Scheduler_schedule(continuation),

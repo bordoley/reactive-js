@@ -4,10 +4,9 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isSome, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
-import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -33,7 +32,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                     observer[MergeAllObserver_activeCount]++;
                     pipe(nextObs, Observable_forEach(Observer_notifyObserver(observer[DelegatingLike_delegate])), Observable_subscribe(Observer_getScheduler(observer)), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
                 }
-                else if (Disposable_isDisposed(observer)) {
+                else if (observer[DisposableLike_isDisposed]) {
                     pipe(observer[DelegatingLike_delegate], Disposable_dispose());
                 }
             }
@@ -51,7 +50,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 subscribeNext(instance);
             };
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-                if (Disposable_isDisposed(delegate)) {
+                if (delegate[DisposableLike_isDisposed]) {
                     // FIXME: Clear the queue
                 }
                 else if (instance[QueueLike_count] +

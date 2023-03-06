@@ -23,9 +23,8 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling.js";
-import { DisposableLike } from "../../../util.js";
+import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Scheduler_getCurrentTime from "../../Scheduler/__internal__/Scheduler.getCurrentTime.js";
 import Scheduler_isInContinuation from "../../Scheduler/__internal__/Scheduler.isInContinuation.js";
@@ -106,7 +105,7 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
 
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
-        if (!Disposable_isDisposed(continuation)) {
+        if (!continuation[DisposableLike_isDisposed]) {
           this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
             SchedulerLike_schedule
           ](continuation, {

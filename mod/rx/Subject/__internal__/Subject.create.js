@@ -4,9 +4,8 @@ import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_publish, } from "../../../rx.js";
-import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -33,7 +32,7 @@ const Subject_create =
             return this[Subject_observers].size;
         },
         [SubjectLike_publish](next) {
-            if (!Disposable_isDisposed(this)) {
+            if (!this[DisposableLike_isDisposed]) {
                 const replay = this[MulticastObservableLike_replay];
                 if (replay > 0) {
                     this[QueueLike_push](next);
@@ -47,7 +46,7 @@ const Subject_create =
             }
         },
         [ObservableLike_observe](observer) {
-            if (!Disposable_isDisposed(this)) {
+            if (!this[DisposableLike_isDisposed]) {
                 const { [Subject_observers]: observers } = this;
                 observers.add(observer);
                 pipe(observer, Disposable_onDisposed(_ => {

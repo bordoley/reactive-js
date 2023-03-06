@@ -22,6 +22,7 @@ import {
 } from "../../../scheduling.js";
 import {
   DisposableLike,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -30,7 +31,6 @@ import {
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
@@ -173,7 +173,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
 
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
-        if (!Disposable_isDisposed(continuation)) {
+        if (!continuation[DisposableLike_isDisposed]) {
           this[QueueLike_push]({
             [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
             [VirtualTask_dueTime]: getCurrentTime(this) + delay,
@@ -186,7 +186,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
           MutableEnumeratorLike<VirtualTask> &
           PullableQueueLike<VirtualTask>,
       ): boolean {
-        if (Disposable_isDisposed(this)) {
+        if (this[DisposableLike_isDisposed]) {
           return false;
         }
 

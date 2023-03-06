@@ -5,6 +5,7 @@ import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import { DisposableLike_error } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as Observable from "../Observable.js";
 import { __await, __memo } from "../Observable.js";
@@ -21,7 +22,7 @@ const onSubscribeTests = describe("onSubscribe", test("when subscribe function r
 }), test("when callback function throws", () => {
     const scheduler = VirtualTimeScheduler.create();
     const subscription = pipe([1], ReadonlyArray.toObservable(), Observable.onSubscribe(raise), Observable.subscribe(scheduler));
-    pipe(subscription, Disposable.getError, expectIsSome);
+    pipe(subscription[DisposableLike_error], expectIsSome);
 }));
 const shareTests = describe("share", test("shared observable zipped with itself", () => {
     const scheduler = VirtualTimeScheduler.create();

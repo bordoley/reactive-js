@@ -8,10 +8,9 @@ import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.g
 import Observer_getScheduler from "../../../rx/Observer/__internal__/Observer.getScheduler.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
-import { QueueLike_push } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueLike_push } from "../../../util.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 
 const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnumerable"] =
   /*@__PURE__*/ returns(
@@ -33,7 +32,7 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
                   // resolve.
                   const next = await iterator.next();
 
-                  if (!next.done && !Disposable_isDisposed(dispatcher)) {
+                  if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
                     dispatcher[QueueLike_push](next.value);
                   } else {
                     pipe(dispatcher, Disposable_dispose());

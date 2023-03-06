@@ -8,12 +8,12 @@ import {
 } from "../../../functions.js";
 import {
   DisposableLike,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
 } from "../../../util.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import { MutableEnumeratorLike } from "../../__internal__/util.internal.js";
 
 type TEnumeratorMixinReturn<T> = Omit<
@@ -59,7 +59,7 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           },
           set [EnumeratorLike_current](v: T) {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
-            if (!Disposable_isDisposed(this)) {
+            if (!this[DisposableLike_isDisposed]) {
               this[Enumerator_private_current] = v;
               this[Enumerator_private_hasCurrent] = true;
             }
@@ -67,7 +67,7 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           get [EnumeratorLike_hasCurrent](): boolean {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
             return (
-              !Disposable_isDisposed(this) &&
+              !this[DisposableLike_isDisposed] &&
               this[Enumerator_private_hasCurrent]
             );
           },

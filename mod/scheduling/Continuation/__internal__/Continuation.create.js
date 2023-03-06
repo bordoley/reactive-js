@@ -3,8 +3,8 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { error, isNone, isSome, newInstance, none, pipe, raiseWithDebugMessage, } from "../../../functions.js";
 import { ContinuationLike_run, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
-import Disposable_isDisposed from "../../../util/Disposable/__internal__/Disposable.isDisposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 class YieldError {
     constructor(delay) {
@@ -39,7 +39,7 @@ const Continuation_create = /*@__PURE__*/ (() => createInstanceFactory(mix(inclu
     [Continuation_effect]: none,
 }), {
     [ContinuationLike_run]() {
-        if (!Disposable_isDisposed(this)) {
+        if (!this[DisposableLike_isDisposed]) {
             let err = none;
             let yieldError = none;
             const oldContinuation = currentContinuation;
