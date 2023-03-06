@@ -415,105 +415,110 @@ export const windowLocation: WindowLocationStreamableLike =
       Updater<WindowLocationURI> | WindowLocationURI,
       WindowLocationURI,
       WindowLocationStreamLike
-    >((scheduler, options): WindowLocationStreamLike => {
-      if (isSome(currentWindowLocationStream)) {
-        raiseWithDebugMessage("Cannot stream more than once");
-      }
+    >(
+      (scheduler, options): WindowLocationStreamLike => {
+        if (isSome(currentWindowLocationStream)) {
+          raiseWithDebugMessage("Cannot stream more than once");
+        }
 
-      const actionReducer = pipe(
-        Streamable.createActionReducer(
-          ({ uri: stateURI }, { replace, stateOrUpdater }: TAction) => {
-            const uri = isFunction(stateOrUpdater)
-              ? stateOrUpdater(stateURI)
-              : stateOrUpdater;
-            return { uri, replace };
-          },
-          () => ({
-            replace: true,
-            uri: getCurrentWindowLocationURI(),
-          }),
-          { equality: areWindowLocationStatesEqual },
-        ),
-        Streamable.stream(scheduler, options),
-      );
+        const actionReducer = pipe(
+          Streamable.createActionReducer(
+            ({ uri: stateURI }, { replace, stateOrUpdater }: TAction) => {
+              const uri = isFunction(stateOrUpdater)
+                ? stateOrUpdater(stateURI)
+                : stateOrUpdater;
+              return { uri, replace };
+            },
+            () => ({
+              replace: true,
+              uri: getCurrentWindowLocationURI(),
+            }),
+            { equality: areWindowLocationStatesEqual },
+          ),
+          Streamable.stream(scheduler, options),
+        );
 
-      const windowLocationStream = createWindowLocationStream(actionReducer);
+        const windowLocationStream = createWindowLocationStream(actionReducer);
 
-      pipe(
-        actionReducer,
-        Observable.map(({ uri, replace }) => ({
-          uri: windowLocationURIToString(uri),
-          title: uri.title,
-          replace,
-        })),
-        Observable.forkCombineLatest(
-          compose(
-            Observable.takeWhile(
-              _ =>
-                windowLocationStream[WindowLocationStream_historyCounter] ===
-                -1,
+        pipe(
+          actionReducer,
+          Observable.map(({ uri, replace }) => ({
+            uri: windowLocationURIToString(uri),
+            title: uri.title,
+            replace,
+          })),
+          Observable.forkCombineLatest(
+            compose(
+              Observable.takeWhile(
+                _ =>
+                  windowLocationStream[WindowLocationStream_historyCounter] ===
+                  -1,
+              ),
+              Observable.forEach(({ uri, title }) => {
+                // Initialize the history state on page load
+                windowLocationStream[WindowLocationStream_historyCounter]++;
+                windowHistoryReplaceState(windowLocationStream, title, uri);
+              }),
+              Observable.ignoreElements(),
             ),
-            Observable.forEach(({ uri, title }) => {
-              // Initialize the history state on page load
-              windowLocationStream[WindowLocationStream_historyCounter]++;
-              windowHistoryReplaceState(windowLocationStream, title, uri);
-            }),
-            Observable.ignoreElements(),
+            compose(
+              Observable.keep(({ replace, title, uri }) => {
+                const titleChanged = document.title !== title;
+                const uriChanged = uri !== location.href;
+
+                return replace || (titleChanged && !uriChanged);
+              }),
+              Observable.throttle(100),
+              Observable.forEach(({ title, uri }) => {
+                document.title = title;
+                windowHistoryReplaceState(windowLocationStream, title, uri);
+              }),
+              Observable.ignoreElements(),
+            ),
+            compose(
+              Observable.keep(({ replace, uri }) => {
+                const uriChanged = uri !== location.href;
+                return !replace && uriChanged;
+              }),
+              Observable.throttle(100),
+              Observable.forEach(({ title, uri }) => {
+                document.title = title;
+                windowHistoryPushState(windowLocationStream, title, uri);
+              }),
+              Observable.ignoreElements(),
+            ),
           ),
-          compose(
-            Observable.keep(({ replace, title, uri }) => {
-              const titleChanged = document.title !== title;
-              const uriChanged = uri !== location.href;
+          Observable.subscribe(scheduler),
+          Disposable.addTo(windowLocationStream),
+        );
 
-              return replace || (titleChanged && !uriChanged);
-            }),
-            Observable.throttle(100),
-            Observable.forEach(({ title, uri }) => {
-              document.title = title;
-              windowHistoryReplaceState(windowLocationStream, title, uri);
-            }),
-            Observable.ignoreElements(),
-          ),
-          compose(
-            Observable.keep(({ replace, uri }) => {
-              const uriChanged = uri !== location.href;
-              return !replace && uriChanged;
-            }),
-            Observable.throttle(100),
-            Observable.forEach(({ title, uri }) => {
-              document.title = title;
-              windowHistoryPushState(windowLocationStream, title, uri);
-            }),
-            Observable.ignoreElements(),
-          ),
-        ),
-        Observable.subscribe(scheduler),
-        Disposable.addTo(windowLocationStream),
-      );
+        pipe(
+          window,
+          addEventListener("popstate", (e: Event) => {
+            const { counter, title } = (e as any).state as {
+              counter: number;
+              title: string;
+            };
 
-      pipe(
-        window,
-        addEventListener("popstate", (e: Event) => {
-          const { counter, title } = (e as any).state as {
-            counter: number;
-            title: string;
-          };
+            const uri = {
+              ...getCurrentWindowLocationURI(),
+              title,
+            };
 
-          const uri = {
-            ...getCurrentWindowLocationURI(),
-            title,
-          };
+            return { counter, uri };
+          }),
+          Observable.forEach(({ counter, uri }) => {
+            windowLocationStream[WindowLocationStream_historyCounter] = counter;
+            windowLocationStream[QueueLike_push](uri, { replace: true });
+          }),
+          Observable.subscribe(scheduler),
+          Disposable.addTo(windowLocationStream),
+        );
 
-          return { counter, uri };
-        }),
-        Observable.forEach(({ counter, uri }) => {
-          windowLocationStream[WindowLocationStream_historyCounter] = counter;
-          windowLocationStream[QueueLike_push](uri, { replace: true });
-        }),
-        Observable.subscribe(scheduler),
-        Disposable.addTo(windowLocationStream),
-      );
-
-      return windowLocationStream;
-    });
+        return windowLocationStream;
+      },
+      false,
+      false,
+      false,
+    );
   })();

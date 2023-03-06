@@ -11,5 +11,5 @@ import Streamable_createLifted from "./Streamable.createLifted.js";
 const Streamable_createActionReducer = (reducer, initialState, options) => Streamable_createLifted(obs => Observable_create(observer => {
     const acc = initialState();
     pipe(obs, Observable_scan(reducer, returns(acc)), Observable_mergeWith(pipe([acc], ReadonlyArray_toObservable())), Observable_distinctUntilChanged(options), Observable_observeWith(observer));
-}));
+}), true, false, false);
 export default Streamable_createActionReducer;

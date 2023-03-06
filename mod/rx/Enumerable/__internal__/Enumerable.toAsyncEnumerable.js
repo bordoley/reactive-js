@@ -28,5 +28,5 @@ const Enumerable_toAsyncEnumerable =
             delayStart: true,
         })))
         : Observable_map(_ => Enumerator_getCurrent(enumerator)), Observable_observeWith(observer));
-}));
+}), true, false, false);
 export default Enumerable_toAsyncEnumerable;

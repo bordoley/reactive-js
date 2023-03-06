@@ -6,5 +6,5 @@ import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan
 import { PauseableState_paused } from "../../../scheduling.js";
 import Streamable_createLifted from "../../Streamable/__internal__/Streamable.createLifted.js";
 const updateReducer = (acc, updater) => updater(acc);
-const Flowable_createLifted = (op) => Streamable_createLifted(compose(Observable_scan(updateReducer, returns(PauseableState_paused)), Observable_distinctUntilChanged(), op));
+const Flowable_createLifted = (op) => Streamable_createLifted(compose(Observable_scan(updateReducer, returns(PauseableState_paused)), Observable_distinctUntilChanged(), op), false, false, false);
 export default Flowable_createLifted;

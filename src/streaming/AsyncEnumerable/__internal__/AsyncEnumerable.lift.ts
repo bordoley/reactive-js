@@ -9,6 +9,9 @@ import { SchedulerLike } from "../../../scheduling.js";
 import {
   AsyncEnumerableLike,
   StreamLike,
+  StreamableLike_isEnumerable,
+  StreamableLike_isInteractive,
+  StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../../../streaming.js";
 import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
@@ -24,6 +27,10 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
     StreamLike<void, any>,
     StreamLike<void, any>
   >[];
+
+  readonly [StreamableLike_isEnumerable] = false;
+  readonly [StreamableLike_isInteractive] = true;
+  readonly [StreamableLike_isRunnable] = false;
 
   constructor(
     src: AsyncEnumerableLike<any>,

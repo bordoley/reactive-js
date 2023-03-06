@@ -34,5 +34,5 @@ const AsyncIterable_toAsyncEnumerable =
             pipe(dispatcher, Disposable_dispose(error(e)));
         }
     }), Observable_subscribe(Observer_getScheduler(observer)), Disposable_bindTo(observer));
-})));
+}), true, false, false));
 export default AsyncIterable_toAsyncEnumerable;

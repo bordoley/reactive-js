@@ -28,13 +28,16 @@ const AsyncEnumerable_generate: Generate<
   ): AsyncEnumerableLike<T> => {
     const delay = getDelay(options);
 
-    return Streamable_createLifted(
+    return Streamable_createLifted<T>(
       delay > 0
         ? Observable_scanAsync<void, T>(
             asyncGeneratorScanner(generator, options),
             initialValue,
           )
         : Observable_scan(generateScanner(generator), initialValue),
+      true,
+      false,
+      false,
     );
   };
 })();

@@ -42,7 +42,7 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
     ) => {
       const delay = options?.delay ?? 0 > 0;
 
-      return Streamable_createLifted<void, T>(
+      return Streamable_createLifted<T>(
         compose(
           count >= 0
             ? Observable_scan<ObservableLike, void, number>(
@@ -62,6 +62,9 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
               ),
           Observable_takeFirst<ObservableLike, T>({ count: abs(count) }),
         ),
+        true,
+        false,
+        false,
       );
     },
   );
