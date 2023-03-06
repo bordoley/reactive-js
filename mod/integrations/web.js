@@ -4,9 +4,8 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { compose, error, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
+import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import * as Observer from "../rx/Observer.js";
 import { DispatcherLike_scheduler } from "../scheduling.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
@@ -25,7 +24,7 @@ export const createEventSource = (url, options = {}) => {
     const events = pipe(eventsOption, ReadonlyArray.keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
     return Observable.create(observer => {
-        const dispatcher = pipe(observer, Observer.getDispatcher, Disposable.onDisposed(_ => {
+        const dispatcher = pipe(observer[ObserverLike_dispatcher], Disposable.onDisposed(_ => {
             for (const ev of events) {
                 eventSource.removeEventListener(ev, listener);
             }
@@ -73,7 +72,7 @@ export const fetch =
     });
 })();
 export const addEventListener = (eventName, selector) => target => Observable.create(observer => {
-    const dispatcher = pipe(observer, Observer.getDispatcher, Disposable.onDisposed(_ => {
+    const dispatcher = pipe(observer[ObserverLike_dispatcher], Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));
     const listener = (event) => {

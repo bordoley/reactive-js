@@ -25,6 +25,7 @@ import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
+  ObserverLike_scheduler,
   ThrottleMode,
   ThrottleMode_first,
   ThrottleMode_interval,
@@ -45,7 +46,6 @@ import Observable_forEach from "../../Observable/__internal__/Observable.forEach
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 
@@ -88,7 +88,7 @@ const createThrottleObserver: <T>(
           Observable_forEach<ObservableLike>(
             observer[ThrottleObserver_onNotify],
           ),
-          Observable_subscribe(Observer_getScheduler(observer)),
+          Observable_subscribe(observer[ObserverLike_scheduler]),
         ),
       ),
     );
@@ -105,7 +105,7 @@ const createThrottleObserver: <T>(
         mode: ThrottleMode,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
 
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;

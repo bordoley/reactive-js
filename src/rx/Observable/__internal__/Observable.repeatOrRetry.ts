@@ -1,11 +1,14 @@
 import { ContainerOperator } from "../../../containers.js";
 import { error, partial, pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_scheduler,
+} from "../../../rx.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
@@ -40,7 +43,7 @@ const Observable_repeatOrRetry: <T>(
           Observable_forEach<ObservableLike, T>(
             Observer_notifyObserver(delegate),
           ),
-          Observable_subscribe(Observer_getScheduler(delegate)),
+          Observable_subscribe(delegate[ObserverLike_scheduler]),
           Disposable_addToIgnoringChildErrors(delegate),
           Disposable_onDisposed(doOnDispose),
         );

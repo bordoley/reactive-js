@@ -3,6 +3,7 @@
 var _a, _b, _c, _d;
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
+import { ObserverLike_scheduler, } from "../../../rx.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
@@ -10,7 +11,6 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Observable_create from "./Observable.create.js";
@@ -114,7 +114,7 @@ class AsyncContext {
         else {
             pipe(effect[AwaitOrObserveEffect_subscription], Disposable_dispose());
             const { [AsyncContext_observer]: observer, [AsyncContext_runComputation]: runComputation, } = this;
-            const scheduler = Observer_getScheduler(observer);
+            const scheduler = observer[ObserverLike_scheduler];
             const subscription = pipe(observable, Observable_forEach(next => {
                 effect[AwaitOrObserveEffect_value] = next;
                 effect[AwaitOrObserveEffect_hasValue] = true;
@@ -251,7 +251,7 @@ export const Observable_async__do = /*@__PURE__*/ (() => {
     });
     return (f, ...args) => {
         const ctx = assertCurrentContext();
-        const scheduler = Observer_getScheduler(ctx[AsyncContext_observer]);
+        const scheduler = ctx[AsyncContext_observer][ObserverLike_scheduler];
         const observable = ctx[AsyncContext_memoOrUse](false, deferSideEffect, f, ...args);
         const subscribeOnScheduler = ctx[AsyncContext_memoOrUse](false, Observable_subscribe, scheduler);
         ctx[AsyncContext_memoOrUse](true, subscribeOnScheduler, observable);
@@ -263,7 +263,7 @@ export const Observable_async__using = (f, ...args) => {
 };
 export function Observable_async__currentScheduler() {
     const ctx = assertCurrentContext();
-    return Observer_getScheduler(ctx[AsyncContext_observer]);
+    return ctx[AsyncContext_observer][ObserverLike_scheduler];
 }
 export const Observable_async__stream = /*@__PURE__*/ (() => {
     const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, Streamable_stream(scheduler, { replay }));

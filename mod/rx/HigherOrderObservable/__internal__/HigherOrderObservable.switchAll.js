@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, pipe } from "../../../functions.js";
-import { ObserverLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
@@ -14,7 +14,6 @@ import { MutableRefLike_current, } from "../../../util/__internal__/util.interna
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 const HigherOrderObservable_currentRef = Symbol("HigherOrderObservable_currentRef");
@@ -28,7 +27,7 @@ const HigherOrderObservable_switchAll = (lift) => {
         }
         return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function SwitchAllObserver(instance, delegate) {
             init(Disposable_mixin, instance);
-            init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+            init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
             init(delegatingMixin(), instance, delegate);
             instance[HigherOrderObservable_currentRef] = pipe(DisposableRef_create(Disposable_disposed), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(onDispose));
@@ -39,7 +38,7 @@ const HigherOrderObservable_switchAll = (lift) => {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
                 this[HigherOrderObservable_currentRef][MutableRefLike_current] =
-                    pipe(next, Observable_forEach(Observer_notifyObserver(this[DelegatingLike_delegate])), Observable_subscribe(Observer_getScheduler(this)), Disposable_onComplete(() => {
+                    pipe(next, Observable_forEach(Observer_notifyObserver(this[DelegatingLike_delegate])), Observable_subscribe(this[ObserverLike_scheduler]), Disposable_onComplete(() => {
                         if (this[DisposableLike_isDisposed]) {
                             pipe(this[DelegatingLike_delegate], Disposable_dispose());
                         }

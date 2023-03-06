@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
-import { ObserverLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -10,7 +10,6 @@ import DisposableRef_mixin from "../../../util/DisposableRef/__internal__/Dispos
 import MutableRef_get from "../../../util/MutableRef/__internal__/MutableRef.get.js";
 import { MutableRefLike_current, } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
@@ -23,10 +22,10 @@ const Observable_timeout = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
     const TimeoutObserver_duration = Symbol("TimeoutObserver_duration");
     const setupDurationSubscription = (observer) => {
-        observer[MutableRefLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribe(Observer_getScheduler(observer[DelegatingLike_delegate])));
+        observer[MutableRefLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribe(observer[DelegatingLike_delegate][ObserverLike_scheduler]));
     };
     const createTimeoutObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_delegatingMixin(), typedDisposableRefMixin), function TimeoutObserver(instance, delegate, duration) {
-        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(Disposable_delegatingMixin(), instance, delegate);
         init(typedDisposableRefMixin, instance, Disposable_disposed);
         instance[TimeoutObserver_duration] = duration;

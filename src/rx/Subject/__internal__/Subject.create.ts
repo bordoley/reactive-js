@@ -15,6 +15,7 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
+  ObserverLike_dispatcher,
   SubjectLike,
   SubjectLike_publish,
 } from "../../../rx.js";
@@ -34,7 +35,6 @@ import {
   PullableQueueLike,
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
-import Observer_getDispatcher from "../../Observer/__internal__/Observer.getDispatcher.js";
 
 const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
   /*@__PURE__*/ (<T>() => {
@@ -96,7 +96,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               }
 
               for (const observer of this[Subject_observers]) {
-                pipe(observer, Observer_getDispatcher, Queue_push(next));
+                pipe(observer[ObserverLike_dispatcher], Queue_push(next));
               }
             }
           },
@@ -117,7 +117,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               );
             }
 
-            const dispatcher = Observer_getDispatcher(observer);
+            const dispatcher = observer[ObserverLike_dispatcher];
 
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.

@@ -1,5 +1,9 @@
 import { pipe } from "../../../functions.js";
-import { ObservableLike, RunnableLike } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike_scheduler,
+  RunnableLike,
+} from "../../../rx.js";
 import {
   PauseableState,
   PauseableState_paused,
@@ -18,17 +22,14 @@ import Observable_forEach from "../../Observable/__internal__/Observable.forEach
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
 import Observable_takeUntil from "../../Observable/__internal__/Observable.takeUntil.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
 const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
   () => observable =>
     Flowable_createLifted((modeObs: ObservableLike<PauseableState>) =>
       Observable_create(observer => {
-        const pauseableScheduler = pipe(
-          observer,
-          Observer_getScheduler,
-          Scheduler_toPausableScheduler,
+        const pauseableScheduler = Scheduler_toPausableScheduler(
+          observer[ObserverLike_scheduler],
         );
 
         pipe(
@@ -55,7 +56,7 @@ const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
                     break;
                 }
               }),
-              Observable_subscribe(Observer_getScheduler(observer)),
+              Observable_subscribe(observer[ObserverLike_scheduler]),
               Disposable_bindTo(pauseableScheduler),
             ),
           ),

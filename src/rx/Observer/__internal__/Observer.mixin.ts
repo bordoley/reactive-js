@@ -47,7 +47,6 @@ import {
   PullableQueueLike,
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
-import Observer_getsScheduler from "./Observer.getScheduler.js";
 import Observer_schedule from "./Observer.schedule.js";
 
 const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
@@ -130,7 +129,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
       {
         get [DispatcherLike_scheduler]() {
           unsafeCast<TProperties>(this);
-          return Observer_getsScheduler(this[ObserverDispatcher_observer]);
+          return this[ObserverDispatcher_observer][ObserverLike_scheduler];
         },
         [QueueLike_push](
           this: TProperties & DisposableLike & PullableQueueLike<T>,

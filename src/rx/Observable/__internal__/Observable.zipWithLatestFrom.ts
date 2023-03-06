@@ -21,6 +21,7 @@ import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
+  ObserverLike_scheduler,
   ZipWithLatestFrom,
 } from "../../../rx.js";
 import {
@@ -38,7 +39,6 @@ import {
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -108,7 +108,11 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             selector: Function2<TA, TB, T>,
           ): ObserverLike<TA> {
             init(Disposable_mixin, instance);
-            init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+            init(
+              typedObserverMixin,
+              instance,
+              delegate[ObserverLike_scheduler],
+            );
             init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
             init(IndexedQueue_fifoQueueMixin<TA>(), instance);
 
@@ -137,7 +141,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
                   pipe(instance[DelegatingLike_delegate], Disposable_dispose());
                 }
               }),
-              Observable_subscribe(Observer_getScheduler(delegate)),
+              Observable_subscribe(delegate[ObserverLike_scheduler]),
               Disposable_onComplete(disposeDelegate),
               Disposable_addTo(delegate),
             );

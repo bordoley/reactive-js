@@ -5,7 +5,6 @@ import { isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from 
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
-import Observer_getDispatcher from "../../../rx/Observer/__internal__/Observer.getDispatcher.js";
 import { DispatcherLike_scheduler, SchedulerLike_inContinuation, } from "../../../scheduling.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
@@ -57,7 +56,7 @@ const DispatchedObservable_create =
                 raiseWithDebugMessage("DispatchedObservable already subscribed to");
             }
             this[DispatchedObservable_observer] = observer;
-            pipe(observer, Observer_getDispatcher, Disposable_addToIgnoringChildErrors(this));
+            pipe(observer[ObserverLike_dispatcher], Disposable_addToIgnoringChildErrors(this));
         },
     }));
 })();

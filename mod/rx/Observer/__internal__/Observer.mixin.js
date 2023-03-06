@@ -13,7 +13,6 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
-import Observer_getsScheduler from "./Observer.getScheduler.js";
 import Observer_schedule from "./Observer.schedule.js";
 const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {
@@ -56,7 +55,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
     }), {
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
-            return Observer_getsScheduler(this[ObserverDispatcher_observer]);
+            return this[ObserverDispatcher_observer][ObserverLike_scheduler];
         },
         [QueueLike_push](next) {
             if (!this[DisposableLike_isDisposed]) {

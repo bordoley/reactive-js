@@ -19,6 +19,7 @@ import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
+  ObserverLike_scheduler,
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
@@ -45,7 +46,6 @@ import {
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
@@ -157,7 +157,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         queuedEnumerator: QueuedEnumeratorLike,
       ): ObserverLike {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(delegatingMixin(), instance, delegate);
 
         instance[ZipObserver_queuedEnumerator] = queuedEnumerator;

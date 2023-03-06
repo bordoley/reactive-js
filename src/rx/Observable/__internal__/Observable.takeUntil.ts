@@ -1,8 +1,12 @@
 import { pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike, TakeUntil } from "../../../rx.js";
+import {
+  ObservableLike,
+  ObserverLike,
+  ObserverLike_scheduler,
+  TakeUntil,
+} from "../../../rx.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
 import Observable_lift from "./Observable.lift.js";
@@ -20,7 +24,7 @@ const Observable_takeUntil: TakeUntil<ObservableLike>["takeUntil"] = <T>(
         pipe(
           notifier,
           Observable_takeFirst<ObservableLike, T>(),
-          Observable_subscribe(Observer_getScheduler(delegate)),
+          Observable_subscribe(delegate[ObserverLike_scheduler]),
         ),
       ),
     );

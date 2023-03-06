@@ -13,6 +13,7 @@ import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
+  ObserverLike_scheduler,
   Timeout,
 } from "../../../rx.js";
 import { DisposableLike } from "../../../util.js";
@@ -26,7 +27,6 @@ import {
   MutableRefLike_current,
 } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
@@ -55,7 +55,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
     observer[MutableRefLike_current] = pipe(
       observer[TimeoutObserver_duration],
       Observable_subscribe(
-        Observer_getScheduler(observer[DelegatingLike_delegate]),
+        observer[DelegatingLike_delegate][ObserverLike_scheduler],
       ),
     );
   };
@@ -73,7 +73,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
         delegate: ObserverLike<T>,
         duration: ObservableLike<unknown>,
       ): ObserverLike<T> {
-        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(Disposable_delegatingMixin<ObserverLike<T>>(), instance, delegate);
         init(typedDisposableRefMixin, instance, Disposable_disposed);
 

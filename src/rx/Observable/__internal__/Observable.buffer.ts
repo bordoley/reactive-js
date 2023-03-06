@@ -20,6 +20,7 @@ import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
+  ObserverLike_scheduler,
 } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -34,7 +35,6 @@ import {
 } from "../../../util/__internal__/util.internal.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
@@ -76,7 +76,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
         maxBufferSize: number,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(delegatingMixin(), instance, delegate);
 
         instance[BufferObserver_buffer] = [];
@@ -149,7 +149,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
                 next,
                 this[BufferObserver_durationFunction],
                 Observable_forEach<ObservableLike>(doOnNotify),
-                Observable_subscribe(Observer_getScheduler(this)),
+                Observable_subscribe(this[ObserverLike_scheduler]),
               );
           }
         },

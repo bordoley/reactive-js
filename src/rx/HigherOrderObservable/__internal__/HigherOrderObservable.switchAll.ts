@@ -19,6 +19,7 @@ import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
+  ObserverLike_scheduler,
 } from "../../../rx.js";
 import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -34,7 +35,6 @@ import {
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_getScheduler from "../../Observer/__internal__/Observer.getScheduler.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 
@@ -80,7 +80,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
           delegate: ObserverLike<T>,
         ): ObserverLike<ContainerOf<C, T>> {
           init(Disposable_mixin, instance);
-          init(typedObserverMixin, instance, Observer_getScheduler(delegate));
+          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
           init(delegatingMixin(), instance, delegate);
 
           instance[HigherOrderObservable_currentRef] = pipe(
@@ -114,7 +114,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
                 Observable_forEach(
                   Observer_notifyObserver(this[DelegatingLike_delegate]),
                 ),
-                Observable_subscribe(Observer_getScheduler(this)),
+                Observable_subscribe(this[ObserverLike_scheduler]),
                 Disposable_onComplete(() => {
                   if (this[DisposableLike_isDisposed]) {
                     pipe(this[DelegatingLike_delegate], Disposable_dispose());
