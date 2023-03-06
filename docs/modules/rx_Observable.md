@@ -97,8 +97,6 @@
 - [buffer](rx_Observable.md#buffer)
 - [create](rx_Observable.md#create)
 - [flatMapPromise](rx_Observable.md#flatmappromise)
-- [isEnumerable](rx_Observable.md#isenumerable)
-- [isRunnable](rx_Observable.md#isrunnable)
 - [multicast](rx_Observable.md#multicast)
 - [observeWith](rx_Observable.md#observewith)
 - [onSubscribe](rx_Observable.md#onsubscribe)
@@ -3922,48 +3920,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-___
-
-### isEnumerable
-
-▸ **isEnumerable**(`v`): v is EnumerableLike<unknown\>
-
-A type guard function that performs a runtime check
-guaranteeing `v` is of type `TB`.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\> |
-
-#### Returns
-
-v is EnumerableLike<unknown\>
-
-`true` if v is an instance of type `TB`, otherwise false.
-
-___
-
-### isRunnable
-
-▸ **isRunnable**(`v`): v is RunnableLike<unknown\>
-
-A type guard function that performs a runtime check
-guaranteeing `v` is of type `TB`.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\> |
-
-#### Returns
-
-v is RunnableLike<unknown\>
-
-`true` if v is an instance of type `TB`, otherwise false.
 
 ___
 
