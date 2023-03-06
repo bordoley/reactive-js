@@ -7,7 +7,7 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
-import Dispatcher_getScheduler from "../../../scheduling/Dispatcher/__internal__/Dispatcher.getScheduler.js";
+import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
@@ -21,7 +21,7 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
             if (!predicate(x)) {
                 pipe(delegate, Queue_push(none));
             }
-        }), Observable_keep(predicate), Observable_multicast(Dispatcher_getScheduler(delegate)));
+        }), Observable_keep(predicate), Observable_multicast(delegate[DispatcherLike_scheduler]));
         return instance;
     }, props({
         [KeepStream_obs]: none,

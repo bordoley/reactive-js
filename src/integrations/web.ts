@@ -37,7 +37,6 @@ import {
 import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
 import { DispatcherLike_scheduler, SchedulerLike } from "../scheduling.js";
-import * as Dispatcher from "../scheduling/Dispatcher.js";
 import {
   StreamLike,
   StreamableLike,
@@ -358,7 +357,7 @@ export const windowLocation: WindowLocationStreamableLike =
 
           get [DispatcherLike_scheduler](): SchedulerLike {
             unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return pipe(this[DelegatingLike_delegate], Dispatcher.getScheduler);
+            return this[DelegatingLike_delegate][DispatcherLike_scheduler];
           },
 
           get [WindowLocationStreamLike_canGoBack](): boolean {

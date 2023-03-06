@@ -37,11 +37,11 @@ import * as Observable from "../rx/Observable.js";
 import * as Observer from "../rx/Observer.js";
 import Observer_getDispatcher from "../rx/Observer/__internal__/Observer.getDispatcher.js";
 import {
+  DispatcherLike_scheduler,
   PauseableState,
   PauseableState_paused,
   PauseableState_running,
 } from "../scheduling.js";
-import * as Dispatcher from "../scheduling/Dispatcher.js";
 import { FlowableLike, StreamableLike } from "../streaming.js";
 import Flowable_createLifted from "../streaming/Flowable/__internal__/Flowable.createLifted.js";
 import * as Stream from "../streaming/Stream.js";
@@ -239,7 +239,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
                 writable.emit(NODE_JS_PAUSE_EVENT);
               }
             }),
-            Observable.subscribe(Dispatcher.getScheduler(dispatcher)),
+            Observable.subscribe(dispatcher[DispatcherLike_scheduler]),
             addToNodeStream(writable),
             Disposable.onComplete(() => {
               writable.end();
