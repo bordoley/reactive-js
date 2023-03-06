@@ -1,4 +1,4 @@
-import { __DEV__ } from "../../../constants.js";
+import { __DEV__ } from "../../../__internal__/constants.js";
 import { raiseWithDebugMessage } from "../../../functions.js";
 import { ObserverLike, ObserverLike_scheduler } from "../../../rx.js";
 import { SchedulerLike_inContinuation } from "../../../scheduling.js";

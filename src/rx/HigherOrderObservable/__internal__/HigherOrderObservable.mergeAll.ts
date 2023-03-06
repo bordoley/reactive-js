@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -9,7 +10,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { MAX_SAFE_INTEGER } from "../../../constants.js";
 import {
   ConcatAll,
   ContainerOf,

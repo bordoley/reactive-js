@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -6,7 +7,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { MAX_SAFE_INTEGER } from "../../../constants.js";
 import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import {
   ContinuationLike,

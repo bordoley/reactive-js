@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.concatAll.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../../../constants.js";
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import Enumerable_mergeAll from "./Enumerable.mergeAll.js";
 const Enumerable_concatAll = (options = {}) => {
     const { maxBufferSize = MAX_SAFE_INTEGER } = options;

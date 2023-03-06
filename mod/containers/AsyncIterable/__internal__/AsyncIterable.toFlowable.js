@@ -1,6 +1,6 @@
 /// <reference types="./AsyncIterable.toFlowable.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../../../constants.js";
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { error, pipe } from "../../../functions.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";

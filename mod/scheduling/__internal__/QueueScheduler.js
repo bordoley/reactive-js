@@ -1,8 +1,8 @@
 /// <reference types="./QueueScheduler.d.ts" />
 
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { max } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
-import { MAX_SAFE_INTEGER } from "../../constants.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../functions.js";
 import { PauseableSchedulerLike_isPaused, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
 import { EnumeratorLike_current, EnumeratorLike_move, QueueLike_count, QueueLike_push, } from "../../util.js";
