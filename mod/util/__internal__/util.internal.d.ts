@@ -20,6 +20,8 @@ export declare const IndexedQueueLike_get: unique symbol;
 export interface IndexedQueueLike<T> extends PullableQueueLike<T> {
     [IndexedQueueLike_get](index: number): T;
 }
+export declare const MutableEnumeratorLike_reset: unique symbol;
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
     [EnumeratorLike_current]: T;
+    [MutableEnumeratorLike_reset](): void;
 }

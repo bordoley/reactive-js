@@ -3,6 +3,7 @@
 import { mix, props } from "../../../__internal__/mixins.js";
 import { none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, } from "../../../util.js";
+import { MutableEnumeratorLike_reset, } from "../../__internal__/util.internal.js";
 const MutableEnumerator_mixin = 
 /*@__PURE__*/ (() => {
     const Enumerator_private_current = Symbol("Enumerator_private_current");
@@ -31,6 +32,10 @@ const MutableEnumerator_mixin =
             unsafeCast(this);
             return (!this[DisposableLike_isDisposed] &&
                 this[Enumerator_private_hasCurrent]);
+        },
+        [MutableEnumeratorLike_reset]() {
+            this[Enumerator_private_current] = none;
+            this[Enumerator_private_hasCurrent] = false;
         },
     }), returns);
 })();

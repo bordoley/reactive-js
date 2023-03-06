@@ -14,7 +14,10 @@ import {
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
 } from "../../../util.js";
-import { MutableEnumeratorLike } from "../../__internal__/util.internal.js";
+import {
+  MutableEnumeratorLike,
+  MutableEnumeratorLike_reset,
+} from "../../__internal__/util.internal.js";
 
 type TEnumeratorMixinReturn<T> = Omit<
   MutableEnumeratorLike<T>,
@@ -37,8 +40,10 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
       mix(
         function EnumeratorMixin(
           instance: Pick<
-            EnumeratorLike<T>,
-            typeof EnumeratorLike_current | typeof EnumeratorLike_hasCurrent
+            MutableEnumeratorLike<T>,
+            | typeof EnumeratorLike_current
+            | typeof EnumeratorLike_hasCurrent
+            | typeof MutableEnumeratorLike_reset
           > &
             TProperties,
         ): TEnumeratorMixinReturn<T> {
@@ -70,6 +75,10 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
               !this[DisposableLike_isDisposed] &&
               this[Enumerator_private_hasCurrent]
             );
+          },
+          [MutableEnumeratorLike_reset](this: TProperties) {
+            this[Enumerator_private_current] = none as T;
+            this[Enumerator_private_hasCurrent] = false;
           },
         },
       ),

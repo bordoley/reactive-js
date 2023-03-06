@@ -37,6 +37,11 @@ export interface IndexedQueueLike<T> extends PullableQueueLike<T> {
   [IndexedQueueLike_get](index: number): T;
 }
 
+export const MutableEnumeratorLike_reset = Symbol(
+  "MutableEnumeratorLike_reset",
+);
+
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
+  [MutableEnumeratorLike_reset](): void;
 }
