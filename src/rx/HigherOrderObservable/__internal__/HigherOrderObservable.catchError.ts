@@ -20,8 +20,8 @@ import {
   ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
@@ -51,7 +51,7 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
             instance,
             Disposable_addToIgnoringChildErrors(delegate),
             Disposable_onComplete(() => {
-              pipe(delegate, Disposable_dispose());
+              delegate[DisposableLike_dispose]();
             }),
             Disposable_onError((err: Error) => {
               try {
@@ -59,10 +59,10 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
                 if (isSome(result)) {
                   pipe(result, Observable_observeWith(delegate));
                 } else {
-                  pipe(delegate, Disposable_dispose());
+                  delegate[DisposableLike_dispose]();
                 }
               } catch (e) {
-                pipe(delegate, Disposable_dispose(error([e, err])));
+                delegate[DisposableLike_dispose](error([e, err]));
               }
             }),
           );

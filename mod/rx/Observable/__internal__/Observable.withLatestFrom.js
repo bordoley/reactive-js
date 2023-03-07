@@ -3,10 +3,9 @@
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -31,7 +30,7 @@ const Observable_withLatestFrom =
                 instance[WithLatestFromObserver_otherLatest] = next;
             }), Observable_subscribe(delegate[ObserverLike_scheduler]), Disposable_addTo(instance), Disposable_onComplete(() => {
                 if (!instance[WithLatestFromObserver_hasLatest]) {
-                    pipe(instance, Disposable_dispose());
+                    instance[DisposableLike_dispose]();
                 }
             }));
             return instance;

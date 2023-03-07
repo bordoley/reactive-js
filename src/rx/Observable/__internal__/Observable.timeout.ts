@@ -16,12 +16,10 @@ import {
   ObserverLike_scheduler,
   Timeout,
 } from "../../../rx.js";
-import { DisposableLike } from "../../../util.js";
+import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import DisposableRef_mixin from "../../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
-import MutableRef_get from "../../../util/MutableRef/__internal__/MutableRef.get.js";
 import {
   MutableRefLike,
   MutableRefLike_current,
@@ -96,7 +94,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
         ) {
           Observer_assertState(this);
 
-          pipe(this, MutableRef_get, Disposable_dispose());
+          this[MutableRefLike_current][DisposableLike_dispose]();
           this[DelegatingLike_delegate][ObserverLike_notify](next);
         },
       },

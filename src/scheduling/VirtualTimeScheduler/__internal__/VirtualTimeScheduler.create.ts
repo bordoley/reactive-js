@@ -22,6 +22,7 @@ import {
 } from "../../../scheduling.js";
 import {
   DisposableLike,
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
@@ -30,7 +31,6 @@ import {
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
@@ -194,7 +194,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         if (isSome(task)) {
           this[EnumeratorLike_current] = task;
         } else {
-          pipe(this, Disposable_dispose());
+          this[DisposableLike_dispose]();
         }
 
         return this[EnumeratorLike_hasCurrent];

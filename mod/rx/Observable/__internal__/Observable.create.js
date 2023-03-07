@@ -1,9 +1,9 @@
 /// <reference types="./Observable.create.d.ts" />
 
 import { createInstanceFactory, mix, props, } from "../../../__internal__/mixins.js";
-import { error, none, pipe } from "../../../functions.js";
+import { error, none } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import { DisposableLike_dispose } from "../../../util.js";
 const Observable_create = /*@__PURE__*/ (() => {
     const CreateObservable_effect = Symbol("CreateObservable_effect");
     return createInstanceFactory(mix(function CreateObservable(instance, effect, isEnumerable = false, isRunnable = false) {
@@ -21,7 +21,7 @@ const Observable_create = /*@__PURE__*/ (() => {
                 this[CreateObservable_effect](observer);
             }
             catch (e) {
-                pipe(observer, Disposable_dispose(error(e)));
+                observer[DisposableLike_dispose](error(e));
             }
         },
     }));

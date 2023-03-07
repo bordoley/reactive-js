@@ -3,8 +3,8 @@
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
@@ -21,7 +21,7 @@ const Observable_scan = /*@__PURE__*/ (() => {
                 instance[ScanObserverMixin_acc] = acc;
             }
             catch (e) {
-                pipe(instance, Disposable_dispose(error(e)));
+                instance[DisposableLike_dispose](error(e));
             }
             return instance;
         }, props({

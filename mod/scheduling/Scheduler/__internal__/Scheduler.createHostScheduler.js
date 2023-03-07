@@ -3,11 +3,10 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isFunction, none, pipe, unsafeCast, } from "../../../functions.js";
 import { ContinuationLike_run, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
@@ -36,7 +35,7 @@ const scheduleImmediate = (scheduler, continuation) => {
 };
 const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
-    pipe(immmediateOrTimerDisposable, Disposable_dispose());
+    immmediateOrTimerDisposable[DisposableLike_dispose]();
     scheduler[HostScheduler_startTime] = scheduler[SchedulerLike_now];
     scheduler[SchedulerLike_inContinuation] = true;
     continuation[ContinuationLike_run]();

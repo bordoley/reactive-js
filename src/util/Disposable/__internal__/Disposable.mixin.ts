@@ -6,7 +6,6 @@ import {
   isSome,
   newInstance,
   none,
-  pipe,
 } from "../../../functions.js";
 import {
   DisposableLike,
@@ -16,7 +15,6 @@ import {
   DisposableLike_isDisposed,
   DisposableOrTeardown,
 } from "../../../util.js";
-import dispose from "./Disposable.dispose.js";
 
 const doDispose = (
   instance: DisposableLike,
@@ -32,7 +30,7 @@ const doDispose = (
        */
     }
   } else {
-    pipe(disposable, dispose(error));
+    disposable[DisposableLike_dispose](error);
   }
 };
 

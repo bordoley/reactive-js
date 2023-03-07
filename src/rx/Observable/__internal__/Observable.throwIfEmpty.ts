@@ -24,9 +24,8 @@ import {
   ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
-import { DisposableLike } from "../../../util.js";
+import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -74,8 +73,7 @@ const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
                     err = error(e);
                   }
                 }
-
-                pipe(delegate, Disposable_dispose(err));
+                delegate[DisposableLike_dispose](err);
               }),
             );
 

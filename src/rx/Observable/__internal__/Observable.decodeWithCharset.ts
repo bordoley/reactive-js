@@ -18,8 +18,8 @@ import {
   ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -79,7 +79,7 @@ const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWit
                   Observable_observeWith(delegate),
                 );
               } else {
-                pipe(delegate, Disposable_dispose());
+                delegate[DisposableLike_dispose]();
               }
             }),
           );

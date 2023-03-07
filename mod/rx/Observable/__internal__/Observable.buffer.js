@@ -9,9 +9,8 @@ import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal_
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { isNumber, none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -43,7 +42,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
             const { [BufferObserver_buffer]: buffer } = instance;
             instance[BufferObserver_buffer] = [];
             if (ReadonlyArray_isEmpty(buffer)) {
-                pipe(delegate, Disposable_dispose());
+                delegate[DisposableLike_dispose]();
             }
             else {
                 pipe(buffer, Optional_toObservable(), Observable_observeWith(delegate));

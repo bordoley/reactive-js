@@ -30,12 +30,12 @@ import {
   ObserverLike_scheduler,
 } from "../../../rx.js";
 import {
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueLike_count,
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -108,7 +108,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             Disposable_onComplete(observer[MergeAllObserver_onDispose]),
           );
         } else if (observer[DisposableLike_isDisposed]) {
-          pipe(observer[DelegatingLike_delegate], Disposable_dispose());
+          observer[DelegatingLike_delegate][DisposableLike_dispose]();
         }
       }
     };
@@ -156,7 +156,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
                   instance[MergeAllObserver_activeCount] ===
                 0
               ) {
-                pipe(delegate, Disposable_dispose());
+                delegate[DisposableLike_dispose]();
               }
             }),
           );

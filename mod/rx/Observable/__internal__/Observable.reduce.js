@@ -4,8 +4,8 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -24,7 +24,7 @@ const Observable_reduce = /*@__PURE__*/ (() => {
             instance[ReduceObserverMixin_acc] = acc;
         }
         catch (e) {
-            pipe(instance, Disposable_dispose(error(e)));
+            instance[DisposableLike_dispose](error(e));
         }
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             pipe([instance[ReduceObserverMixin_acc]], ReadonlyArray_toObservable(), Observable_observeWith(delegate));

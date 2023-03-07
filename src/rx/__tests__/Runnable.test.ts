@@ -64,8 +64,10 @@ import * as Pauseable from "../../scheduling/Pauseable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import * as Streamable from "../../streaming/Streamable.js";
-import { DisposableLike_isDisposed } from "../../util.js";
-import * as Disposable from "../../util/Disposable.js";
+import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+} from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
 
@@ -330,7 +332,7 @@ const toFlowableTests = describe(
 
     pipe(
       scheduler,
-      Scheduler.schedule(pipeLazy(generateStream, Disposable.dispose()), {
+      Scheduler.schedule(() => generateStream[DisposableLike_dispose](), {
         delay: 6,
       }),
     );

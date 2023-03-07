@@ -1,9 +1,9 @@
-import { pipe, returns } from "../../../functions.js";
+import { returns } from "../../../functions.js";
 import { PauseableLike, PauseableState_paused } from "../../../scheduling.js";
-import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
+import { QueueLike_push } from "../../../util.js";
 
 const Pauseable_pause = <TPauseable extends PauseableLike>(
   pauseable: TPauseable,
-): TPauseable => pipe(pauseable, Queue_push(returns(PauseableState_paused)));
+): void => pauseable[QueueLike_push](returns(PauseableState_paused));
 
 export default Pauseable_pause;

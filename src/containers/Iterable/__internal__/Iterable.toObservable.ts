@@ -12,8 +12,10 @@ import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedu
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+} from "../../../util.js";
 
 interface IterableToObservable {
   <T>(): Function1<IterableLike<T>, EnumerableLike<T>>;
@@ -41,7 +43,7 @@ const Iterable_toObservable: IterableToObservable = (<T>(options?: {
             observer[ObserverLike_notify](next.value);
             Continuation__yield(delay);
           } else {
-            pipe(observer, Disposable_dispose());
+            observer[DisposableLike_dispose]();
           }
         }
       };

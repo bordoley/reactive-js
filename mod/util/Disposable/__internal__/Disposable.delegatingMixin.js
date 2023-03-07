@@ -3,7 +3,6 @@
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { pipe, returns, unsafeCast } from "../../../functions.js";
 import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../../util.js";
-import Disposable_dispose from "./Disposable.dispose.js";
 import Disposable_onDisposed from "./Disposable.onDisposed.js";
 const Disposable_delegatingMixin = 
 /*@__PURE__*/ (() => {
@@ -26,7 +25,7 @@ const Disposable_delegatingMixin =
             delegate[DisposableLike_add](disposable, ignoreChildErrors);
         },
         [DisposableLike_dispose](error) {
-            pipe(this[DelegatingLike_delegate], Disposable_dispose(error));
+            this[DelegatingLike_delegate][DisposableLike_dispose](error);
         },
     }), returns);
 })();

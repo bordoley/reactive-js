@@ -25,12 +25,12 @@ import {
   ZipWithLatestFrom,
 } from "../../../rx.js";
 import {
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueLike_count,
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -123,7 +123,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
                 instance[DisposableLike_isDisposed] &&
                 otherSubscription[DisposableLike_isDisposed]
               ) {
-                pipe(delegate, Disposable_dispose());
+                delegate[DisposableLike_dispose]();
               }
             };
 
@@ -138,7 +138,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
                   instance[DisposableLike_isDisposed] &&
                   instance[QueueLike_count] === 0
                 ) {
-                  pipe(instance[DelegatingLike_delegate], Disposable_dispose());
+                  instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
               }),
               Observable_subscribe(delegate[ObserverLike_scheduler]),

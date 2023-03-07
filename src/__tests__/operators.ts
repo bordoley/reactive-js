@@ -58,7 +58,7 @@ import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
 import { __now } from "../scheduling/Continuation.js";
 import * as Scheduler from "../scheduling/Scheduler.js";
-import * as Disposable from "../util/Disposable.js";
+import { DisposableLike_dispose } from "../util.js";
 import {
   describe,
   expectArrayEquals,
@@ -1129,7 +1129,7 @@ export const toObservableTests = <C extends ContainerLike>(
 
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
     } finally {
-      pipe(scheduler, Disposable.dispose());
+      scheduler[DisposableLike_dispose]();
     }
   });
 

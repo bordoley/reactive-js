@@ -4,7 +4,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { SideEffect1, error, none, pipe } from "../../../functions.js";
+import { SideEffect1, error, none } from "../../../functions.js";
 import {
   ObservableLike,
   ObservableLike_isEnumerable,
@@ -12,7 +12,7 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../../../rx.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import { DisposableLike_dispose } from "../../../util.js";
 
 const Observable_create: <T>(
   f: SideEffect1<ObserverLike>,
@@ -52,7 +52,7 @@ const Observable_create: <T>(
           try {
             this[CreateObservable_effect](observer);
           } catch (e) {
-            pipe(observer, Disposable_dispose(error(e)));
+            observer[DisposableLike_dispose](error(e));
           }
         },
       },

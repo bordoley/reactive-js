@@ -9,7 +9,7 @@ import { error, pipe } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as Flowable from "../../streaming/Flowable.js";
-import * as Disposable from "../../util/Disposable.js";
+import { DisposableLike_dispose } from "../../util.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 
 testModule(
@@ -34,7 +34,7 @@ testModule(
       );
 
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-      pipe(scheduler, Disposable.dispose());
+      scheduler[DisposableLike_dispose]();
     }),
     testAsync("iterable that completes", async () => {
       const scheduler = Scheduler.createHostScheduler();
@@ -52,7 +52,7 @@ testModule(
       );
 
       pipe(result, expectArrayEquals([1, 2, 3]));
-      pipe(scheduler, Disposable.dispose());
+      scheduler[DisposableLike_dispose]();
     }),
 
     testAsync("iterable that throws", async () => {
@@ -70,7 +70,7 @@ testModule(
       );
 
       pipe(result, expectEquals(e as unknown));
-      pipe(scheduler, Disposable.dispose());
+      scheduler[DisposableLike_dispose]();
     }),
   ),
   describe(
@@ -92,7 +92,7 @@ testModule(
       );
 
       pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-      pipe(scheduler, Disposable.dispose());
+      scheduler[DisposableLike_dispose]();
     }),
     testAsync("iterable that completes", async () => {
       const scheduler = Scheduler.createHostScheduler();
@@ -109,7 +109,7 @@ testModule(
       );
 
       pipe(result, expectArrayEquals([1, 2, 3]));
-      pipe(scheduler, Disposable.dispose());
+      scheduler[DisposableLike_dispose]();
     }),
 
     testAsync("iterable that throws", async () => {
@@ -126,7 +126,7 @@ testModule(
       );
 
       pipe(result, expectEquals(e as unknown));
-      pipe(scheduler, Disposable.dispose());
+      scheduler[DisposableLike_dispose]();
     }),
   ),
 );

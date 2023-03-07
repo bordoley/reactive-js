@@ -5,10 +5,6 @@ export declare const addTo: <T extends DisposableLike>(parent: DisposableLike) =
 export declare const addToIgnoringChildErrors: <T extends DisposableLike>(parent: DisposableLike) => import("../functions.js").Updater<T>;
 export declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => import("../functions.js").Updater<T>;
 export declare const create: import("../functions.js").Factory<DisposableLike>;
-/**
- * Dispose `disposable` with an optional error.
- */
-export declare const dispose: <T extends DisposableLike>(e?: Error | undefined) => import("../functions.js").Updater<T>;
 export declare const disposed: DisposableLike;
 export declare const onComplete: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect) => import("../functions.js").Updater<T>;
 export declare const onDisposed: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect1<import("../functions.js").Optional<Error>>) => import("../functions.js").Updater<T>;

@@ -44,7 +44,11 @@ import {
 } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
-import { QueueLike_count, QueueLike_push } from "../util.js";
+import {
+  DisposableLike_dispose,
+  QueueLike_count,
+  QueueLike_push,
+} from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import * as Queue from "../util/Queue.js";
@@ -145,14 +149,11 @@ export const createEventSource = (
 
     const eventSource = newInstance(EventSource, requestURL, options);
     const listener = (ev: MessageEvent) => {
-      pipe(
-        dispatcher,
-        Queue.push({
-          id: ev.lastEventId ?? "",
-          type: ev.type ?? "",
-          data: ev.data ?? "",
-        }),
-      );
+      dispatcher[QueueLike_push]({
+        id: ev.lastEventId ?? "",
+        type: ev.type ?? "",
+        data: ev.data ?? "",
+      });
     };
 
     for (const ev of events) {
@@ -194,7 +195,7 @@ export const fetch: <T>(
 
             pipe(resultObs, Observable.observeWith(observer));
           } catch (e) {
-            pipe(observer, Disposable.dispose(error(e)));
+            observer[DisposableLike_dispose](error(e));
           }
         });
   })();
@@ -215,7 +216,7 @@ export const addEventListener =
 
       const listener = (event: Event) => {
         const result = selector(event);
-        pipe(dispatcher, Queue.push(result));
+        dispatcher[QueueLike_push](result);
       };
 
       target.addEventListener(eventName, listener, { passive: true });

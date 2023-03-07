@@ -16,8 +16,8 @@ import {
   ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -63,7 +63,7 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
           instance[TakeFirstObserverMixin_takeCount] = takeCount;
 
           if (takeCount === 0) {
-            pipe(instance, Disposable_dispose());
+            instance[DisposableLike_dispose]();
           }
 
           return instance;
@@ -87,7 +87,7 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
               this[TakeFirstObserverMixin_count] >=
               this[TakeFirstObserverMixin_takeCount]
             ) {
-              pipe(this, Disposable_dispose());
+              this[DisposableLike_dispose]();
             }
           },
         },

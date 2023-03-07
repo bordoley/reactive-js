@@ -4,15 +4,13 @@ import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } 
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
-import Observer_notify from "./Observer.notify.js";
 const Observer_satisfyMixin = (defaultResult) => {
     const SatisfyObserverMixin_predicate = Symbol("SatisfyObserverMixin_predicate");
     return mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function SatisfyObserverMixin(instance, delegate, predicate) {
@@ -32,7 +30,8 @@ const Observer_satisfyMixin = (defaultResult) => {
         [ObserverLike_notify](next) {
             Observer_assertState(this);
             if (this[SatisfyObserverMixin_predicate](next)) {
-                pipe(this[DelegatingLike_delegate], Observer_notify(!defaultResult), Disposable_dispose());
+                this[DelegatingLike_delegate][ObserverLike_notify](!defaultResult);
+                this[DelegatingLike_delegate][DisposableLike_dispose]();
             }
         },
     });

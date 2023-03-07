@@ -15,7 +15,7 @@ import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as Flowable from "../../streaming/Flowable.js";
 import * as Stream from "../../streaming/Stream.js";
 import * as Streamable from "../../streaming/Streamable.js";
-import * as Disposable from "../../util/Disposable.js";
+import { DisposableLike_dispose } from "../../util.js";
 import {
   createReadableSource,
   createWritableSink,
@@ -64,7 +64,7 @@ testModule(
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
       } finally {
-        pipe(scheduler, Disposable.dispose());
+        scheduler[DisposableLike_dispose]();
       }
     }),
 
@@ -105,7 +105,7 @@ testModule(
         await expectPromiseToThrow(promise);
         pipe(writable.destroyed, expectEquals(true));
       } finally {
-        pipe(scheduler, Disposable.dispose());
+        scheduler[DisposableLike_dispose]();
       }
     }),
   ),
@@ -135,7 +135,7 @@ testModule(
         );
         pipe(acc, expectEquals("abcdefg"));
       } finally {
-        pipe(scheduler, Disposable.dispose());
+        scheduler[DisposableLike_dispose]();
       }
     }),
     testAsync("reading from readable that throws", async () => {
@@ -162,7 +162,7 @@ testModule(
           expectPromiseToThrow,
         );
       } finally {
-        pipe(scheduler, Disposable.dispose());
+        scheduler[DisposableLike_dispose]();
       }
     }),
   ),
@@ -190,7 +190,7 @@ testModule(
 
       pipe(acc, expectEquals("abcdefg"));
     } finally {
-      pipe(scheduler, Disposable.dispose());
+      scheduler[DisposableLike_dispose]();
     }
   }),
 );

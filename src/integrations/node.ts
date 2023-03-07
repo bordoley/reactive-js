@@ -44,12 +44,17 @@ import {
   PauseableState_paused,
   PauseableState_running,
 } from "../scheduling.js";
+import * as Pauseable from "../scheduling/Pauseable.js";
 import { FlowableLike, StreamableLike } from "../streaming.js";
 import Flowable_createLifted from "../streaming/Flowable/__internal__/Flowable.createLifted.js";
 import * as Stream from "../streaming/Stream.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_createLifted from "../streaming/Streamable/__internal__/Streamable.createLifted.js";
-import { DisposableLike } from "../util.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  QueueLike_push,
+} from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import * as Queue from "../util/Queue.js";
 
@@ -104,13 +109,14 @@ export const bindNodeCallback: BindNodeCallback = <T>(
   callback: (...args: readonly any[]) => unknown,
 ): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
   function (this: unknown, ...args: readonly unknown[]) {
-    return Observable.create(observer => {
+    return Observable.create<unknown>(observer => {
       const dispatcher = observer[ObserverLike_dispatcher];
       const handler = (err: unknown, arg: unknown) => {
         if (err) {
-          pipe(dispatcher, Disposable.dispose(error(err)));
+          dispatcher[DisposableLike_dispose](error(err));
         } else {
-          pipe(dispatcher, Queue.push(arg), Disposable.dispose());
+          dispatcher[QueueLike_push](arg);
+          dispatcher[DisposableLike_dispose]();
         }
       };
 
@@ -147,7 +153,7 @@ const addDisposable =
   ): Function1<TNodeStream, TNodeStream> =>
   stream => {
     stream.on("error", Disposable.toErrorHandler(disposable));
-    stream.once("close", pipeLazy(disposable, Disposable.dispose()));
+    stream.once("close", () => disposable[DisposableLike_dispose]());
     pipe(disposable, Disposable.onError(disposeStream(stream)));
     return stream;
   };
@@ -193,7 +199,7 @@ export const createReadableSource = (
 
       const onData = Queue.pushTo(dispatcher);
       const onEnd = () => {
-        pipe(dispatcher, Disposable.dispose());
+        dispatcher[DisposableLike_dispose]();
       };
 
       readable.on("data", onData);
@@ -248,21 +254,15 @@ export const createWritableSink = /*@__PURE__*/ (() => {
             }),
           );
 
-          const onDrain = pipeLazy(
-            dispatcher,
-            Queue.push(returns(PauseableState_running)),
-          );
-          const onFinish = pipeLazy(dispatcher, Disposable.dispose());
-          const onPause = pipeLazy(
-            dispatcher,
-            Queue.push(returns(PauseableState_paused)),
-          );
+          const onDrain = pipeLazy(dispatcher, Pauseable.resume);
+          const onFinish = () => dispatcher[DisposableLike_dispose]();
+          const onPause = pipeLazy(dispatcher, Pauseable.pause);
 
           writable.on("drain", onDrain);
           writable.on("finish", onFinish);
           writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-          pipe(dispatcher, Queue.push(returns(PauseableState_running)));
+          Pauseable.resume(dispatcher);
         }),
       false,
       false,

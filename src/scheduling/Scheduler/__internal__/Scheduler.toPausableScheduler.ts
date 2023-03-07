@@ -6,6 +6,9 @@ import { create as createQueueScheduler } from "../../__internal__/QueueSchedule
 const Scheduler_toPausableScheduler: Function1<
   SchedulerLike,
   PauseableSchedulerLike
-> = /*@__PURE__*/ compose(createQueueScheduler, Pauseable_pause);
+> = /*@__PURE__*/ compose(
+  createQueueScheduler,
+  scheduler => (Pauseable_pause(scheduler), scheduler),
+);
 
 export default Scheduler_toPausableScheduler;

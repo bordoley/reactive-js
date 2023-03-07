@@ -7,8 +7,7 @@ import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedu
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 const Iterable_toObservable = ((options) => (iterable) => {
     const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSubscribe = (observer) => {
@@ -21,7 +20,7 @@ const Iterable_toObservable = ((options) => (iterable) => {
                     Continuation__yield(delay);
                 }
                 else {
-                    pipe(observer, Disposable_dispose());
+                    observer[DisposableLike_dispose]();
                 }
             }
         };

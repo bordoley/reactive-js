@@ -27,6 +27,7 @@ import {
 } from "../../../scheduling.js";
 import {
   DisposableLike,
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
@@ -36,7 +37,6 @@ import {
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -107,7 +107,7 @@ const Enumerable_enumerate: <T>() => (
               continuation[ContinuationLike_run]();
               this[SchedulerLike_inContinuation] = false;
             } else {
-              pipe(this, Disposable_dispose());
+              this[DisposableLike_dispose]();
             }
           }
 

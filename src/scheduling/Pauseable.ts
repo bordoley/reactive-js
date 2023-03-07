@@ -4,8 +4,8 @@ import Pauseable_resume from "./Pauseable/__internal__/Pauseable.resume.js";
 
 export const pause: <TPauseable extends PauseableLike>(
   pauseable: TPauseable,
-) => TPauseable = Pauseable_pause;
+) => void = Pauseable_pause;
 
 export const resume: <TPauseable extends PauseableLike>(
   pauseable: TPauseable,
-) => TPauseable = Pauseable_resume;
+) => void = Pauseable_resume;

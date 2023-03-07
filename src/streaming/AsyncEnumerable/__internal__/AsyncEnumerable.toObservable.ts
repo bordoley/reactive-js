@@ -11,8 +11,8 @@ import Observable_observeWith from "../../../rx/Observable/__internal__/Observab
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
 import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
+import { QueueLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 
 const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
 
@@ -28,10 +28,10 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
         pipe(
           enumerator,
           Observable_forEach<ObservableLike, T>(_ => {
-            pipe(enumerator, Queue_push(none));
+            enumerator[QueueLike_push](none);
           }),
           Observable_onSubscribe(() => {
-            pipe(enumerator, Queue_push(none));
+            enumerator[QueueLike_push](none);
           }),
           Observable_observeWith(observer),
         );

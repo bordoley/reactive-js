@@ -5,8 +5,7 @@ import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
-import { DisposableLike_error } from "../../util.js";
-import * as Disposable from "../../util/Disposable.js";
+import { DisposableLike_dispose, DisposableLike_error } from "../../util.js";
 import * as Observable from "../Observable.js";
 import { __await, __memo } from "../Observable.js";
 const onSubscribeTests = describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
@@ -40,7 +39,7 @@ const toPromiseTests = describe("toPromise", testAsync("when observable complete
         await pipe(pipe(Observable.empty(), Observable.toPromise(scheduler)), expectPromiseToThrow);
     }
     finally {
-        pipe(scheduler, Disposable.dispose());
+        scheduler[DisposableLike_dispose]();
     }
 }));
 const asyncTests = describe("async", test("batch mode", () => {

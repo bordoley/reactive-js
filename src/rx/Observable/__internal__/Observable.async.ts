@@ -25,12 +25,14 @@ import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike, StreamableLike } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
-import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
@@ -119,7 +121,7 @@ const validateAsyncEffect: ValidateAsyncEffect = ((
       (effect[AsyncEffect_type] === Await ||
         effect[AsyncEffect_type] === Observe)
     ) {
-      pipe(effect[AwaitOrObserveEffect_subscription], Disposable_dispose());
+      effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
     }
 
     const newEffect: AsyncEffect =
@@ -200,7 +202,7 @@ class AsyncContext {
         DisposableLike_isDisposed
       ]
     ) {
-      pipe(this[AsyncContext_observer], Disposable_dispose());
+      this[AsyncContext_observer][DisposableLike_dispose]();
     }
   };
 
@@ -225,7 +227,7 @@ class AsyncContext {
     if (effect[AwaitOrObserveEffect_observable] === observable) {
       return effect[AwaitOrObserveEffect_value] as T;
     } else {
-      pipe(effect[AwaitOrObserveEffect_subscription], Disposable_dispose());
+      effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
 
       const {
         [AsyncContext_observer]: observer,
@@ -293,10 +295,9 @@ class AsyncContext {
       return effect[MemoOrUsingEffect_value] as T;
     } else {
       if (shouldUse) {
-        pipe(
-          effect[MemoOrUsingEffect_value] as DisposableLike,
-          Disposable_dispose(),
-        );
+        (effect[MemoOrUsingEffect_value] as DisposableLike)[
+          DisposableLike_dispose
+        ]();
       }
 
       const value = f(...args);
@@ -357,10 +358,7 @@ export const Observable_async = <T>(
             effect[AsyncEffect_type] === Await ||
             effect[AsyncEffect_type] === Observe
           ) {
-            pipe(
-              effect[AwaitOrObserveEffect_subscription],
-              Disposable_dispose(),
-            );
+            effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
           }
         }
       }
@@ -417,7 +415,7 @@ export const Observable_async = <T>(
       }
 
       if (shouldDispose) {
-        pipe(observer, Disposable_dispose(err));
+        observer[DisposableLike_dispose](err);
       }
     };
 
@@ -453,7 +451,8 @@ export const Observable_async__do = /*@__PURE__*/ (() => {
     Observable_create(observer => {
       const callback = () => {
         f(...args);
-        pipe(observer, Observer_notify(none), Disposable_dispose());
+        observer[ObserverLike_notify](none);
+        observer[DisposableLike_dispose]();
       };
 
       pipe(observer, Observer_schedule(callback));

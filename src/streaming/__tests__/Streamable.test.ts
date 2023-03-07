@@ -7,8 +7,7 @@ import {
 import { pipe, returns } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
-import * as Disposable from "../../util/Disposable.js";
-import * as Queue from "../../util/Queue.js";
+import { DisposableLike_dispose, QueueLike_push } from "../../util.js";
 import * as Streamable from "../Streamable.js";
 
 testModule(
@@ -22,12 +21,9 @@ testModule(
         Streamable.stream(scheduler),
       );
 
-      pipe(
-        stateStream,
-        Queue.push(returns(2)),
-        Queue.push(returns(3)),
-        Disposable.dispose(),
-      );
+      stateStream[QueueLike_push](returns(2));
+      stateStream[QueueLike_push](returns(3));
+      stateStream[DisposableLike_dispose]();
 
       let result: number[] = [];
 

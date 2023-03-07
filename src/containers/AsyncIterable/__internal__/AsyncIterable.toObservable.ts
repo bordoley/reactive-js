@@ -13,12 +13,12 @@ import {
 } from "../../../scheduling.js";
 import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule.js";
 import {
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueLike_count,
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 
 const AsyncIterable_toObservable: ToObservable<
   AsyncIterableLike,
@@ -53,11 +53,11 @@ const AsyncIterable_toObservable: ToObservable<
             if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
               dispatcher[QueueLike_push](next.value);
             } else {
-              pipe(dispatcher, Disposable_dispose());
+              dispatcher[DisposableLike_dispose]();
             }
           }
         } catch (e) {
-          pipe(dispatcher, Disposable_dispose(error(e)));
+          dispatcher[DisposableLike_dispose](error(e));
         }
 
         if (!dispatcher[DisposableLike_isDisposed]) {

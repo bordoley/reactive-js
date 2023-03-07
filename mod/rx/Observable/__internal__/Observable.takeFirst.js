@@ -4,8 +4,8 @@ import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
@@ -18,7 +18,7 @@ const Observable_takeFirst = /*@__PURE__*/ (() => {
             init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
             instance[TakeFirstObserverMixin_takeCount] = takeCount;
             if (takeCount === 0) {
-                pipe(instance, Disposable_dispose());
+                instance[DisposableLike_dispose]();
             }
             return instance;
         }, props({
@@ -31,7 +31,7 @@ const Observable_takeFirst = /*@__PURE__*/ (() => {
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
                 if (this[TakeFirstObserverMixin_count] >=
                     this[TakeFirstObserverMixin_takeCount]) {
-                    pipe(this, Disposable_dispose());
+                    this[DisposableLike_dispose]();
                 }
             },
         }));

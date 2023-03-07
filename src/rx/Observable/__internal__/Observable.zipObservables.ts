@@ -26,6 +26,7 @@ import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import {
   DisposableLike,
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
@@ -36,7 +37,6 @@ import {
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -171,7 +171,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
               (!queuedEnumerator[EnumeratorLike_hasCurrent] &&
                 !queuedEnumerator[EnumeratorLike_move]())
             ) {
-              pipe(delegate, Disposable_dispose());
+              delegate[DisposableLike_dispose]();
             }
           }),
         );
@@ -213,7 +213,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           this[DelegatingLike_delegate][ObserverLike_notify](zippedNext);
 
           if (shouldComplete(enumerators)) {
-            pipe(this, Disposable_dispose());
+            this[DisposableLike_dispose]();
           }
         },
       },
@@ -248,7 +248,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
 
           Continuation__yield();
         }
-        pipe(observer, Disposable_dispose());
+        observer[DisposableLike_dispose]();
       };
 
       pipe(observer, Observer_schedule(continuation));

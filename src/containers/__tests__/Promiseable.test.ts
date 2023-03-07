@@ -8,7 +8,7 @@ import {
 import { newInstance, pipe } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import * as Disposable from "../../util/Disposable.js";
+import { DisposableLike_dispose } from "../../util.js";
 import * as Promiseable from "../Promiseable.js";
 
 testModule(
@@ -28,7 +28,7 @@ testModule(
         );
         pipe(result, expectEquals(1));
       } finally {
-        pipe(scheduler, Disposable.dispose());
+        scheduler[DisposableLike_dispose]();
       }
     }),
     testAsync("when the promise reject", async () => {
@@ -47,7 +47,7 @@ testModule(
           expectPromiseToThrow,
         );
       } finally {
-        pipe(scheduler, Disposable.dispose());
+        scheduler[DisposableLike_dispose]();
       }
     }),
   ),

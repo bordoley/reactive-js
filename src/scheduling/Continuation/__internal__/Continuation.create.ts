@@ -15,7 +15,6 @@ import {
   isSome,
   newInstance,
   none,
-  pipe,
   raiseWithDebugMessage,
 } from "../../../functions.js";
 import {
@@ -26,8 +25,10 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+} from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
 class YieldError {
@@ -122,7 +123,7 @@ const Continuation_create: Function2<
                 yieldError,
               );
             } else {
-              pipe(this, Disposable_dispose(err));
+              this[DisposableLike_dispose](err);
             }
           }
         },

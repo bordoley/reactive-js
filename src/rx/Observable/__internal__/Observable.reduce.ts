@@ -22,8 +22,8 @@ import {
   ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -63,7 +63,7 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
           const acc = initialValue();
           instance[ReduceObserverMixin_acc] = acc;
         } catch (e) {
-          pipe(instance, Disposable_dispose(error(e)));
+          instance[DisposableLike_dispose](error(e));
         }
 
         pipe(

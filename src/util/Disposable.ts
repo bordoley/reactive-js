@@ -6,7 +6,6 @@ import Disposable_addTo from "./Disposable/__internal__/Disposable.addTo.js";
 import Disposable_addToIgnoringChildErrors from "./Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_bindTo from "./Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_create from "./Disposable/__internal__/Disposable.create.js";
-import Disposable_dispose from "./Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "./Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "./Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDisposed.js";
@@ -26,11 +25,6 @@ export const addToIgnoringChildErrors = Disposable_addToIgnoringChildErrors;
 export const bindTo = Disposable_bindTo;
 
 export const create = Disposable_create;
-
-/**
- * Dispose `disposable` with an optional error.
- */
-export const dispose = Disposable_dispose;
 
 export const disposed: DisposableLike = Disposable_disposed;
 

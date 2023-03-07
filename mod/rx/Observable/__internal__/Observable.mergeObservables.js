@@ -5,8 +5,8 @@ import { pipe } from "../../../functions.js";
 import Enumerablee_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
@@ -17,7 +17,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
     const createMergeObserver = (delegate, count, ctx) => pipe(Observer_createWithDelegate(delegate), Disposable_addTo(delegate), Disposable_onComplete(() => {
         ctx[MergeObserverCtx_completedCount]++;
         if (ctx[MergeObserverCtx_completedCount] >= count) {
-            pipe(delegate, Disposable_dispose());
+            delegate[DisposableLike_dispose]();
         }
     }));
     return (observables) => {

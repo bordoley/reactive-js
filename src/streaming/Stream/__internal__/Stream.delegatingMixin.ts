@@ -16,7 +16,6 @@ import {
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
-import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 
 const Stream_delegatingMixin: <TReq, T>() => Mixin1<
   Pick<
@@ -60,7 +59,7 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
           this: DelegatingLike<StreamLike<TReq, T>>,
           next: TReq,
         ) {
-          pipe(this[DelegatingLike_delegate], Queue_push(next));
+          this[DelegatingLike_delegate][QueueLike_push](next);
         },
         get [DispatcherLike_scheduler]() {
           unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);

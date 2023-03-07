@@ -8,18 +8,17 @@ import {
 import {
   Factory,
   Optional,
-  ignore,
   isFunction,
   isSome,
   none,
   pipe,
-  pipeLazy,
   raiseError,
 } from "../functions.js";
 import { ObservableLike, SubjectLike } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import * as Subject from "../rx/Subject.js";
 import { SchedulerLike } from "../scheduling.js";
+import { DisposableLike_dispose } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import { createSchedulerWithNormalPriority } from "./scheduler.js";
 
@@ -51,14 +50,11 @@ export const useObservable = <T>(
       Disposable.onError(updateError),
     );
 
-    return pipeLazy(
-      // If a scheduler is allocated, then dispose the new scheduler
-      // which will also dispose all subscriptions. Otherwise
-      // only dispose the subscription.
-      scheduler === schedulerOption ? subscription : scheduler,
-      Disposable.dispose(),
-      ignore,
-    );
+    const disposable = scheduler === schedulerOption ? subscription : scheduler;
+
+    return () => {
+      disposable[DisposableLike_dispose]();
+    };
   }, [observable, updateState, updateError, schedulerOption]);
 
   return isSome(error) ? raiseError<T>(error) : state;

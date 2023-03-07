@@ -5,14 +5,14 @@ import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { pipe } from "../../functions.js";
 import { MulticastObservableLike_observerCount } from "../../rx.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
-import * as Disposable from "../../util/Disposable.js";
+import { DisposableLike_dispose } from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Subject from "../Subject.js";
 testModule("Subject", test("with replay", () => {
     const scheduler = VirtualTimeScheduler.create();
     const subject = Subject.create({ replay: 2 });
     pipe([1, 2, 3, 4], ReadonlyArray.forEach(Subject.publishTo(subject)));
-    pipe(subject, Disposable.dispose());
+    subject[DisposableLike_dispose]();
     const result = [];
     pipe(subject, Observable.forEach(x => {
         result.push(x);
@@ -27,8 +27,8 @@ testModule("Subject", test("with replay", () => {
     pipe(subject[MulticastObservableLike_observerCount], expectEquals(1));
     const sub2 = pipe(subject, Observable.subscribe(scheduler));
     pipe(subject[MulticastObservableLike_observerCount], expectEquals(2));
-    pipe(sub1, Disposable.dispose());
+    sub1[DisposableLike_dispose]();
     pipe(subject[MulticastObservableLike_observerCount], expectEquals(1));
-    pipe(sub2, Disposable.dispose());
+    sub2[DisposableLike_dispose]();
     pipe(subject[MulticastObservableLike_observerCount], expectEquals(0));
 }));

@@ -5,8 +5,8 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -43,7 +43,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         instance[LatestCtx_completedCount]++;
         if (instance[LatestCtx_completedCount] ===
             ReadonlyArray_getLength(instance[LatestCtx_observers])) {
-            pipe(instance[LatestCtx_delegate], Disposable_dispose());
+            instance[LatestCtx_delegate][DisposableLike_dispose]();
         }
     };
     const LatestObserver_ready = Symbol("LatestObserver_ready");

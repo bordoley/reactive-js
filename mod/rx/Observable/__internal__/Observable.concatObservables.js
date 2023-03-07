@@ -3,8 +3,8 @@
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import { pipe } from "../../../functions.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
@@ -17,7 +17,7 @@ const Observable_concatObservables = /*@__PURE__*/ (() => {
             pipe(createConcatObserver(delegate, observables, next + 1), Observer_sourceFrom(observables[next]));
         }
         else {
-            pipe(delegate, Disposable_dispose());
+            delegate[DisposableLike_dispose]();
         }
     }));
     return (observables) => {
@@ -26,7 +26,7 @@ const Observable_concatObservables = /*@__PURE__*/ (() => {
                 pipe(createConcatObserver(observer, observables, 1), Observer_sourceFrom(observables[0]));
             }
             else {
-                pipe(observer, Disposable_dispose());
+                observer[DisposableLike_dispose]();
             }
         };
         const isEnumerable = Observable_allAreEnumerable(observables);

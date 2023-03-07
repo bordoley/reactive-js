@@ -18,7 +18,6 @@ import {
   DisposableOrTeardown,
 } from "../../../util.js";
 import { DelegatingDisposableLike } from "../../__internal__/util.internal.js";
-import Disposable_dispose from "./Disposable.dispose.js";
 import Disposable_onDisposed from "./Disposable.onDisposed.js";
 
 const Disposable_delegatingMixin: <
@@ -77,7 +76,7 @@ const Disposable_delegatingMixin: <
             this: TProperties & DelegatingDisposableLike<TDisposable>,
             error?: Error,
           ) {
-            pipe(this[DelegatingLike_delegate], Disposable_dispose(error));
+            this[DelegatingLike_delegate][DisposableLike_dispose](error);
           },
         },
       ),

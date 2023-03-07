@@ -15,8 +15,7 @@ import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import { ObservableLike } from "../../rx.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
-import { DisposableLike_error } from "../../util.js";
-import * as Disposable from "../../util/Disposable.js";
+import { DisposableLike_dispose, DisposableLike_error } from "../../util.js";
 import * as Observable from "../Observable.js";
 import { __await, __memo } from "../Observable.js";
 
@@ -92,7 +91,7 @@ const toPromiseTests = describe(
         expectPromiseToThrow,
       );
     } finally {
-      pipe(scheduler, Disposable.dispose());
+      scheduler[DisposableLike_dispose]();
     }
   }),
 );

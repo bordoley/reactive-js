@@ -10,9 +10,12 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
-import { DisposableLike_isDisposed, QueueLike_push } from "../../../util.js";
+import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+  QueueLike_push,
+} from "../../../util.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 
 const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnumerable"] =
   /*@__PURE__*/ returns(
@@ -37,10 +40,10 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
                   if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
                     dispatcher[QueueLike_push](next.value);
                   } else {
-                    pipe(dispatcher, Disposable_dispose());
+                    dispatcher[DisposableLike_dispose]();
                   }
                 } catch (e) {
-                  pipe(dispatcher, Disposable_dispose(error(e)));
+                  dispatcher[DisposableLike_dispose](error(e));
                 }
               }),
               Observable_subscribe(observer[ObserverLike_scheduler]),

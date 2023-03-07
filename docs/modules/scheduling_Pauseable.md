@@ -13,7 +13,7 @@
 
 ### pause
 
-▸ **pause**<`TPauseable`\>(`pauseable`): `TPauseable`
+▸ **pause**<`TPauseable`\>(`pauseable`): `void`
 
 #### Type parameters
 
@@ -29,13 +29,13 @@
 
 #### Returns
 
-`TPauseable`
+`void`
 
 ___
 
 ### resume
 
-▸ **resume**<`TPauseable`\>(`pauseable`): `TPauseable`
+▸ **resume**<`TPauseable`\>(`pauseable`): `void`
 
 #### Type parameters
 
@@ -51,4 +51,4 @@ ___
 
 #### Returns
 
-`TPauseable`
+`void`

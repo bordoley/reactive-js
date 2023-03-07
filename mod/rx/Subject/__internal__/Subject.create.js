@@ -9,7 +9,6 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
-import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 import { IndexedQueueLike_get, PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 const Subject_create = 
 /*@__PURE__*/ (() => {
@@ -40,7 +39,7 @@ const Subject_create =
                     }
                 }
                 for (const observer of this[Subject_observers]) {
-                    pipe(observer[ObserverLike_dispatcher], Queue_push(next));
+                    observer[ObserverLike_dispatcher][QueueLike_push](next);
                 }
             }
         },
@@ -59,7 +58,7 @@ const Subject_create =
             const count = this[QueueLike_count];
             for (let i = 0; i < count; i++) {
                 const next = this[IndexedQueueLike_get](i);
-                pipe(dispatcher, Queue_push(next));
+                dispatcher[QueueLike_push](next);
             }
             pipe(this, Disposable_addIgnoringChildErrors(dispatcher));
         },

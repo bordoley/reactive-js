@@ -15,8 +15,8 @@ import {
   ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -94,7 +94,7 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
               }
 
               if (!satisfiesPredicate) {
-                pipe(this, Disposable_dispose());
+                this[DisposableLike_dispose]();
               }
             },
           },

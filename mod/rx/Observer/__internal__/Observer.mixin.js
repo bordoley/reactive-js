@@ -5,9 +5,8 @@ import { call, isNone, none, pipe, returns, unsafeCast, } from "../../../functio
 import { ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { DispatcherLike_scheduler, } from "../../../scheduling.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
-import { DisposableLike_error, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -39,12 +38,12 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         };
         instance[ObserverDispatcher_onContinuationDispose] = () => {
             if (instance[DisposableLike_isDisposed]) {
-                pipe(observer, Disposable_dispose(instance[DisposableLike_error]));
+                observer[DisposableLike_dispose](instance[DisposableLike_error]);
             }
         };
         pipe(instance, Disposable_onDisposed(e => {
             if (instance[QueueLike_count] === 0) {
-                pipe(observer, Disposable_dispose(e));
+                observer[DisposableLike_dispose](e);
             }
         }));
         return instance;

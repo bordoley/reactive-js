@@ -6,33 +6,9 @@
 
 ### Functions
 
-- [push](util_Queue.md#push)
 - [pushTo](util_Queue.md#pushto)
 
 ## Functions
-
-### push
-
-▸ **push**<`T`, `TDispatcher`\>(`v`): [`Updater`](functions.md#updater)<`TDispatcher`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TDispatcher` | extends [`QueueLike`](../interfaces/util.QueueLike.md)<`T`, `TDispatcher`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | `T` |
-
-#### Returns
-
-[`Updater`](functions.md#updater)<`TDispatcher`\>
-
-___
 
 ### pushTo
 

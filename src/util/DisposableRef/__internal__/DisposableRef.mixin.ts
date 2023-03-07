@@ -1,8 +1,7 @@
 import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import { none, pipe, returns, unsafeCast } from "../../../functions.js";
-import { DisposableLike } from "../../../util.js";
+import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
-import Disposable_dispose from "../../Disposable/__internal__/Disposable.dispose.js";
 import {
   DisposableRefLike,
   MutableRefLike,
@@ -47,7 +46,7 @@ const DisposableRef_mixin: <TDisposable extends DisposableLike>() => Mixin1<
         set [MutableRefLike_current](v: TDisposable) {
           unsafeCast<TProperties & DisposableLike>(this);
           const oldValue = this[DisposableRefMixin_current];
-          pipe(oldValue, Disposable_dispose());
+          oldValue[DisposableLike_dispose]();
 
           this[DisposableRefMixin_current] = v;
           pipe(this, Disposable_add(v));

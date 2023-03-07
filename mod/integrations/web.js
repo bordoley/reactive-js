@@ -10,7 +10,7 @@ import { DispatcherLike_scheduler } from "../scheduling.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
-import { QueueLike_count, QueueLike_push } from "../util.js";
+import { DisposableLike_dispose, QueueLike_count, QueueLike_push, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import * as Queue from "../util/Queue.js";
@@ -33,11 +33,11 @@ export const createEventSource = (url, options = {}) => {
         const eventSource = newInstance(EventSource, requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;
-            pipe(dispatcher, Queue.push({
+            dispatcher[QueueLike_push]({
                 id: (_a = ev.lastEventId) !== null && _a !== void 0 ? _a : "",
                 type: (_b = ev.type) !== null && _b !== void 0 ? _b : "",
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
-            }));
+            });
         };
         for (const ev of events) {
             eventSource.addEventListener(ev, listener);
@@ -67,7 +67,7 @@ export const fetch =
             pipe(resultObs, Observable.observeWith(observer));
         }
         catch (e) {
-            pipe(observer, Disposable.dispose(error(e)));
+            observer[DisposableLike_dispose](error(e));
         }
     });
 })();
@@ -77,7 +77,7 @@ export const addEventListener = (eventName, selector) => target => Observable.cr
     }));
     const listener = (event) => {
         const result = selector(event);
-        pipe(dispatcher, Queue.push(result));
+        dispatcher[QueueLike_push](result);
     };
     target.addEventListener(eventName, listener, { passive: true });
 });

@@ -32,7 +32,11 @@ import {
 } from "../scheduling.js";
 import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
 import { getDelay } from "../scheduling/__internal__/Scheduler.options.js";
-import { DisposableLike, DisposableLike_isDisposed } from "../util.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+} from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_mixin from "../util/Disposable/__internal__/Disposable.mixin.js";
 
@@ -92,7 +96,7 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
           }
 
           const callback = () => {
-            pipe(callbackNodeDisposable, Disposable.dispose());
+            callbackNodeDisposable[DisposableLike_dispose]();
 
             this[SchedulerLike_inContinuation] = true;
             continuation[ContinuationLike_run]();

@@ -16,7 +16,6 @@
 - [addToIgnoringChildErrors](util_Disposable.md#addtoignoringchilderrors)
 - [bindTo](util_Disposable.md#bindto)
 - [create](util_Disposable.md#create)
-- [dispose](util_Disposable.md#dispose)
 - [onComplete](util_Disposable.md#oncomplete)
 - [onDisposed](util_Disposable.md#ondisposed)
 - [onError](util_Disposable.md#onerror)
@@ -173,30 +172,6 @@ ___
 #### Returns
 
 [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-___
-
-### dispose
-
-▸ **dispose**<`T`\>(`e?`): [`Updater`](functions.md#updater)<`T`\>
-
-Dispose `disposable` with an optional error.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `e?` | `Error` |
-
-#### Returns
-
-[`Updater`](functions.md#updater)<`T`\>
 
 ___
 

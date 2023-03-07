@@ -2,8 +2,8 @@
 
 import { error, partial, pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
@@ -23,7 +23,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
                 err = error([e, err]);
             }
             if (shouldComplete) {
-                pipe(delegate, Disposable_dispose(err));
+                delegate[DisposableLike_dispose](err);
             }
             else {
                 count++;

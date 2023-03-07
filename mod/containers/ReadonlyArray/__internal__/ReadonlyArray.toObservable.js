@@ -7,8 +7,7 @@ import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedu
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 const ReadonlyArray_toObservable = 
 /*@__PURE__*/
@@ -32,7 +31,7 @@ ReadonlyArray_toContainer((values, startIndex, count, options) => {
                     Continuation__yield(delay);
                 }
             }
-            pipe(observer, Disposable_dispose());
+            observer[DisposableLike_dispose]();
         };
         pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
     };

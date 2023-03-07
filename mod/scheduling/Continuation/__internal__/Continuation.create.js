@@ -1,10 +1,9 @@
 /// <reference types="./Continuation.create.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { error, isNone, isSome, newInstance, none, pipe, raiseWithDebugMessage, } from "../../../functions.js";
+import { error, isNone, isSome, newInstance, none, raiseWithDebugMessage, } from "../../../functions.js";
 import { ContinuationLike_run, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 class YieldError {
     constructor(delay) {
@@ -61,7 +60,7 @@ const Continuation_create = /*@__PURE__*/ (() => createInstanceFactory(mix(inclu
                 this[Continuation_scheduler][SchedulerLike_schedule](this, yieldError);
             }
             else {
-                pipe(this, Disposable_dispose(err));
+                this[DisposableLike_dispose](err);
             }
         }
     },

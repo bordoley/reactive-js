@@ -8,8 +8,8 @@ import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
+import { QueueLike_push } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Queue_push from "../../../util/Queue/__internal__/Queue.push.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
@@ -19,7 +19,7 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
         init(Stream_delegatingMixin(), instance, delegate);
         instance[KeepStream_obs] = pipe(delegate, Observable_forEach(x => {
             if (!predicate(x)) {
-                pipe(delegate, Queue_push(none));
+                delegate[QueueLike_push](none);
             }
         }), Observable_keep(predicate), Observable_multicast(delegate[DispatcherLike_scheduler]));
         return instance;

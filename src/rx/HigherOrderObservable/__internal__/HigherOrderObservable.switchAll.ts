@@ -21,9 +21,12 @@ import {
   ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
-import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -64,7 +67,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
           DisposableLike_isDisposed
         ]
       ) {
-        pipe(this[DelegatingLike_delegate], Disposable_dispose());
+        this[DelegatingLike_delegate][DisposableLike_dispose]();
       }
     }
 
@@ -117,7 +120,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
                 Observable_subscribe(this[ObserverLike_scheduler]),
                 Disposable_onComplete(() => {
                   if (this[DisposableLike_isDisposed]) {
-                    pipe(this[DelegatingLike_delegate], Disposable_dispose());
+                    this[DelegatingLike_delegate][DisposableLike_dispose]();
                   }
                 }),
               );
