@@ -4,6 +4,7 @@ import { expectArrayEquals, expectEquals, test, testModule, } from "../../__test
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { pipe } from "../../functions.js";
 import { MulticastObservableLike_observerCount } from "../../rx.js";
+import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import { DisposableLike_dispose } from "../../util.js";
 import * as Observable from "../Observable.js";
@@ -17,7 +18,7 @@ testModule("Subject", test("with replay", () => {
     pipe(subject, Observable.forEach(x => {
         result.push(x);
     }), Observable.subscribe(scheduler));
-    VirtualTimeScheduler.run(scheduler);
+    scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([3, 4]));
 }), test("with multiple observers", () => {
     const scheduler = VirtualTimeScheduler.create();

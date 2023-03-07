@@ -59,7 +59,10 @@ import {
   ThrottleMode_interval,
   ThrottleMode_last,
 } from "../../rx.js";
-import { SchedulerLike_now } from "../../scheduling.js";
+import {
+  SchedulerLike_now,
+  VirtualTimeSchedulerLike_run,
+} from "../../scheduling.js";
 import * as Pauseable from "../../scheduling/Pauseable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
@@ -346,7 +349,7 @@ const toFlowableTests = describe(
       Observable.subscribe(scheduler),
     );
 
-    VirtualTimeScheduler.run(scheduler);
+    scheduler[VirtualTimeSchedulerLike_run]();
 
     pipe(f, expectToHaveBeenCalledTimes(3));
     pipe(f.calls[0][1], expectEquals(0));

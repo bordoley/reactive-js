@@ -17,7 +17,10 @@ import {
   raise,
 } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
-import { SchedulerLike_now } from "../../scheduling.js";
+import {
+  SchedulerLike_now,
+  VirtualTimeSchedulerLike_run,
+} from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import {
@@ -122,7 +125,7 @@ testModule(
       ),
     );
 
-    VirtualTimeScheduler.run(scheduler);
+    scheduler[VirtualTimeSchedulerLike_run]();
     pipe(disposedTime, expectEquals(2));
   }),
 );

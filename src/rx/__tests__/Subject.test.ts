@@ -7,6 +7,7 @@ import {
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { pipe } from "../../functions.js";
 import { MulticastObservableLike_observerCount } from "../../rx.js";
+import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import { DisposableLike_dispose } from "../../util.js";
 import * as Observable from "../Observable.js";
@@ -29,7 +30,8 @@ testModule(
       }),
       Observable.subscribe(scheduler),
     );
-    VirtualTimeScheduler.run(scheduler);
+
+    scheduler[VirtualTimeSchedulerLike_run]();
 
     pipe(result, expectArrayEquals([3, 4]));
   }),
