@@ -1,6 +1,6 @@
-import { Function1, Optional, compose, none } from "../../functions.js";
-import { EnumerableLike, ObservableLike, RunnableLike } from "../../rx.js";
-import ReadonlyArray_toObservable from "../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import { Function1, Optional, compose, none } from "../../../functions.js";
+import { EnumerableLike, ObservableLike, RunnableLike } from "../../../rx.js";
+import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import Optional_toReadonlyArray from "./Optional_toReadonlyArray.js";
 
 interface OptionalToObservable {

@@ -1,7 +1,7 @@
 /// <reference types="./Observer.satisfyMixin.d.ts" />
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional_toObservable.js";
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";

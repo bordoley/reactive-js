@@ -11,7 +11,7 @@ import {
   ContainerOperator,
   FromReadonlyArray,
 } from "../../../containers.js";
-import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional_toObservable.js";
 import {
   Function1,
   Optional,

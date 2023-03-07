@@ -1,5 +1,5 @@
-import { Function1, Optional } from "../../functions.js";
-import { EnumerableLike, ObservableLike, RunnableLike } from "../../rx.js";
+import { Function1, Optional } from "../../../functions.js";
+import { EnumerableLike, ObservableLike, RunnableLike } from "../../../rx.js";
 interface OptionalToObservable {
     <T>(): Function1<Optional<T>, EnumerableLike<T>>;
     <T>(options: {

@@ -1,7 +1,7 @@
 /// <reference types="./HigherOrderObservable.throttle.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional_toObservable.js";
 import { isNumber, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";

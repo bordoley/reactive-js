@@ -47,7 +47,7 @@ import {
 } from "../containers.js";
 import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
-import Optional_toObservable from "../containers/Optional/Optional_toObservable.js";
+import Optional_toObservable from "../containers/Optional/__internal__/Optional_toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import {

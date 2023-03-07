@@ -1,4 +1,4 @@
-import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional_toObservable.js";
 import {
   Equality,
   Factory,

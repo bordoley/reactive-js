@@ -1,5 +1,5 @@
-import { ReadonlyArrayLike } from "../../containers.js";
-import { Optional, isSome } from "../../functions.js";
+import { ReadonlyArrayLike } from "../../../containers.js";
+import { Optional, isSome } from "../../../functions.js";
 
 const Optional_toReadonlyArray =
   <T>() =>

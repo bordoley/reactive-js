@@ -1,5 +1,5 @@
 import Container_compute from "../../../containers/Container/__internal__/Container.compute.js";
-import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional_toObservable.js";
 import { Factory } from "../../../functions.js";
 import { EnumerableLike, RunnableLike } from "../../../rx.js";
 import Observable_map from "./Observable.map.js";

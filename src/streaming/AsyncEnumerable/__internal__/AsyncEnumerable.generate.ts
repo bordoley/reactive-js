@@ -1,5 +1,5 @@
 import { Generate } from "../../../containers.js";
-import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional_toObservable.js";
 import { Factory, Updater, pipe } from "../../../functions.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
