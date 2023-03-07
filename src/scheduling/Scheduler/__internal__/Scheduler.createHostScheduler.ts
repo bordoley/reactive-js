@@ -15,6 +15,7 @@ import {
 } from "../../../functions.js";
 import {
   ContinuationLike,
+  ContinuationLike_run,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -29,7 +30,6 @@ import Disposable_create from "../../../util/Disposable/__internal__/Disposable.
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import Continuation_run from "../../Continuation/__internal__/Continuation.run.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 
 declare const navigator: {
@@ -111,7 +111,7 @@ const runContinuation = (
   pipe(immmediateOrTimerDisposable, Disposable_dispose());
   scheduler[HostScheduler_startTime] = scheduler[SchedulerLike_now];
   scheduler[SchedulerLike_inContinuation] = true;
-  Continuation_run(continuation);
+  continuation[ContinuationLike_run]();
   scheduler[SchedulerLike_inContinuation] = false;
 };
 

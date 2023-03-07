@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isFunction, none, pipe, unsafeCast, } from "../../../functions.js";
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { ContinuationLike_run, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -10,7 +10,6 @@ import Disposable_create from "../../../util/Disposable/__internal__/Disposable.
 import Disposable_dispose from "../../../util/Disposable/__internal__/Disposable.dispose.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import Continuation_run from "../../Continuation/__internal__/Continuation.run.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "object" && isFunction(performance.now))();
 const supportsSetImmediate = typeof setImmediate === "function";
@@ -40,7 +39,7 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
     pipe(immmediateOrTimerDisposable, Disposable_dispose());
     scheduler[HostScheduler_startTime] = scheduler[SchedulerLike_now];
     scheduler[SchedulerLike_inContinuation] = true;
-    Continuation_run(continuation);
+    continuation[ContinuationLike_run]();
     scheduler[SchedulerLike_inContinuation] = false;
 };
 const HostScheduler_startTime = Symbol("HostScheduler_startTime");

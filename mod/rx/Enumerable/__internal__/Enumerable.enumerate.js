@@ -6,8 +6,7 @@ import { ObserverLike_notify, } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run.js";
+import { ContinuationLike_run, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import { DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, QueueLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -41,7 +40,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
                 const continuation = this[PullableQueueLike_pull]();
                 if (isSome(continuation)) {
                     this[SchedulerLike_inContinuation] = true;
-                    Continuation_run(continuation);
+                    continuation[ContinuationLike_run]();
                     this[SchedulerLike_inContinuation] = false;
                 }
                 else {

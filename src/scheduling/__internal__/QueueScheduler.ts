@@ -21,6 +21,7 @@ import {
 } from "../../functions.js";
 import {
   ContinuationLike,
+  ContinuationLike_run,
   PauseableSchedulerLike,
   PauseableSchedulerLike_isPaused,
   PauseableState,
@@ -58,7 +59,6 @@ import {
   PullableQueueLike,
 } from "../../util/__internal__/util.internal.js";
 import { Continuation__yield } from "../Continuation/__internal__/Continuation.create.js";
-import Continuation_run from "../Continuation/__internal__/Continuation.run.js";
 import schedule from "../Scheduler/__internal__/Scheduler.schedule.js";
 import { getDelay } from "./Scheduler.options.js";
 
@@ -216,7 +216,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
               instance[EnumeratorLike_move]();
 
               instance[SchedulerLike_inContinuation] = true;
-              Continuation_run(continuation);
+              continuation[ContinuationLike_run]();
               instance[SchedulerLike_inContinuation] = false;
             } else {
               instance[QueueScheduler_dueTime] =

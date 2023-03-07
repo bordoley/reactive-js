@@ -17,6 +17,7 @@ import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js"
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import {
   ContinuationLike,
+  ContinuationLike_run,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -24,7 +25,6 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling.js";
-import Continuation_run from "../../../scheduling/Continuation/__internal__/Continuation.run.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
@@ -104,7 +104,7 @@ const Enumerable_enumerate: <T>() => (
             const continuation = this[PullableQueueLike_pull]();
             if (isSome(continuation)) {
               this[SchedulerLike_inContinuation] = true;
-              Continuation_run(continuation);
+              continuation[ContinuationLike_run]();
               this[SchedulerLike_inContinuation] = false;
             } else {
               pipe(this, Disposable_dispose());

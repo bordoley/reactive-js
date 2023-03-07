@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { max } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../functions.js";
-import { PauseableSchedulerLike_isPaused, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
+import { ContinuationLike_run, PauseableSchedulerLike_isPaused, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
 import { DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, QueueLike_count, QueueLike_push, } from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -16,7 +16,6 @@ import PullableQueue_peek from "../../util/PullableQueue/__internal__/PullableQu
 import PullableQueue_pull from "../../util/PullableQueue/__internal__/PullableQueue.pull.js";
 import { MutableRefLike_current, } from "../../util/__internal__/util.internal.js";
 import { Continuation__yield } from "../Continuation/__internal__/Continuation.create.js";
-import Continuation_run from "../Continuation/__internal__/Continuation.run.js";
 import schedule from "../Scheduler/__internal__/Scheduler.schedule.js";
 import { getDelay } from "./Scheduler.options.js";
 export const create = 
@@ -96,7 +95,7 @@ export const create =
                 if (delay === 0) {
                     instance[EnumeratorLike_move]();
                     instance[SchedulerLike_inContinuation] = true;
-                    Continuation_run(continuation);
+                    continuation[ContinuationLike_run]();
                     instance[SchedulerLike_inContinuation] = false;
                 }
                 else {

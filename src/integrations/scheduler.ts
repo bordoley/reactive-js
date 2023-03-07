@@ -21,6 +21,7 @@ import {
 import { Factory, none, pipe, pipeLazy, unsafeCast } from "../functions.js";
 import {
   ContinuationLike,
+  ContinuationLike_run,
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -29,7 +30,6 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../scheduling.js";
-import * as Continuation from "../scheduling/Continuation.js";
 import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
 import { getDelay } from "../scheduling/__internal__/Scheduler.options.js";
 import { DisposableLike, DisposableLike_isDisposed } from "../util.js";
@@ -95,7 +95,7 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
             pipe(callbackNodeDisposable, Disposable.dispose());
 
             this[SchedulerLike_inContinuation] = true;
-            Continuation.run(continuation);
+            continuation[ContinuationLike_run]();
             this[SchedulerLike_inContinuation] = false;
           };
 
