@@ -11,6 +11,7 @@ import {
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import {
   ObservableLike,
+  ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
   ObserverLike_scheduler,
@@ -27,7 +28,6 @@ import {
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
-import Observable_isRunnable from "./Observable.isRunnable.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 import Observable_throws from "./Observable.throws.js";
@@ -113,7 +113,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
       partial(durationObs),
       Observable_lift(
         false,
-        isNumber(duration) || Observable_isRunnable(duration),
+        isNumber(duration) || duration[ObservableLike_isRunnable],
       ),
     );
   };

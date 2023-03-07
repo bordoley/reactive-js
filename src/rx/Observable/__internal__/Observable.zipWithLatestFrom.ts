@@ -19,6 +19,8 @@ import {
 } from "../../../functions.js";
 import {
   ObservableLike,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
   ObserverLike_scheduler,
@@ -41,8 +43,6 @@ import {
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_isEnumerable from "./Observable.isEnumerable.js";
-import Observable_isRunnable from "./Observable.isRunnable.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
@@ -184,8 +184,8 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
         createZipWithLatestFromObserver,
         partial(other, selector),
         Observable_lift(
-          Observable_isEnumerable(other),
-          Observable_isRunnable(other),
+          other[ObservableLike_isEnumerable],
+          other[ObservableLike_isRunnable],
         ),
       ) as ContainerOperator<ObservableLike, TA, T>;
   })();

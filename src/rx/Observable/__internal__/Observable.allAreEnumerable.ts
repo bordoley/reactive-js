@@ -5,10 +5,11 @@ import { compose, isTrue } from "../../../functions.js";
 import { EnumerableLike, ObservableLike } from "../../../rx.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 
-const Observable_allAreEnumerable = compose(
-  ReadonlyArray_map(Observable_isEnumerable),
-  ReadonlyArray_every(isTrue),
-) as unknown as (
+const Observable_allAreEnumerable = /*@__PURE__*/ (() =>
+  compose(
+    ReadonlyArray_map(Observable_isEnumerable),
+    ReadonlyArray_every(isTrue),
+  ))() as unknown as (
   srcs: ReadonlyArrayLike<ObservableLike>,
 ) => srcs is ReadonlyArrayLike<EnumerableLike>;
 
