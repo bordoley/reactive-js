@@ -1,4 +1,4 @@
-import { pipe } from "../../../functions.js";
+import { errorWithWithDebugMessage, pipe } from "../../../functions.js";
 import { EnumerableLike, ToEnumerable } from "../../../rx.js";
 import Observable_throws from "../../../rx/Observable/__internal__/Observable.throws.js";
 import {
@@ -6,6 +6,10 @@ import {
   StreamableLike_isEnumerable,
 } from "../../../streaming.js";
 import AsyncEnumerable_toObservable from "./AsyncEnumerable.toObservable.js";
+
+const throwOptions = {
+  raise: () => errorWithWithDebugMessage("AsyncEnumerable is not Enumerable"),
+};
 
 const AsyncEnumerable_toEnumerable: ToEnumerable<AsyncEnumerableLike>["toEnumerable"] =
 
@@ -16,6 +20,6 @@ const AsyncEnumerable_toEnumerable: ToEnumerable<AsyncEnumerableLike>["toEnumera
             enumerable,
             AsyncEnumerable_toObservable<T>(),
           ) as EnumerableLike<T>)
-        : Observable_throws<T>();
+        : Observable_throws<T>(throwOptions);
 
 export default AsyncEnumerable_toEnumerable;

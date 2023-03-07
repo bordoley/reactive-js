@@ -36,7 +36,7 @@ const AsyncEnumerable_takeWhile =
     }));
     return (predicate, options = {}) => {
         const { inclusive = false } = options;
-        return pipe(createTakeWhileStream, partial(predicate, inclusive), AsyncEnumerable_lift);
+        return pipe(createTakeWhileStream, partial(predicate, inclusive), AsyncEnumerable_lift(true, true));
     };
 })();
 export default AsyncEnumerable_takeWhile;

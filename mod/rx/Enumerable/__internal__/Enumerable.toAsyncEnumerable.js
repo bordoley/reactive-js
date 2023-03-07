@@ -15,13 +15,15 @@ import Enumerable_enumerate from "./Enumerable.enumerate.js";
 // FIXME: Support delay argument, and expose it in Iterable_toAsyncEnumerable
 const Enumerable_toAsyncEnumerable = 
 /*@__PURE__*/
-(options) => (enumerable) => Streamable_createLifted(observable => Observable_create(observer => {
+(options) => (enumerable) => {
     const { delay = 0 } = options !== null && options !== void 0 ? options : {};
-    const enumerator = pipe(enumerable, Enumerable_enumerate(), Disposable_addTo(observer));
-    pipe(observable, Observable_forEach(_ => {
-        enumerator[EnumeratorLike_move]();
-    }), Observable_takeWhile(_ => enumerator[EnumeratorLike_hasCurrent]), delay > 0
-        ? Observable_concatMap(_ => pipe(enumerator[EnumeratorLike_current], Optional_toObservable({ delay })))
-        : Observable_map(_ => enumerator[EnumeratorLike_current]), Observable_observeWith(observer));
-}), true, false, false);
+    return Streamable_createLifted(observable => Observable_create(observer => {
+        const enumerator = pipe(enumerable, Enumerable_enumerate(), Disposable_addTo(observer));
+        pipe(observable, Observable_forEach(_ => {
+            enumerator[EnumeratorLike_move]();
+        }), Observable_takeWhile(_ => enumerator[EnumeratorLike_hasCurrent]), delay > 0
+            ? Observable_concatMap(_ => pipe(enumerator[EnumeratorLike_current], Optional_toObservable({ delay })))
+            : Observable_map(_ => enumerator[EnumeratorLike_current]), Observable_observeWith(observer));
+    }), true, delay === 0, true);
+};
 export default Enumerable_toAsyncEnumerable;

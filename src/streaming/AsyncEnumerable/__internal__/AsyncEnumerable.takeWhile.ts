@@ -97,7 +97,7 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
       return pipe(
         createTakeWhileStream,
         partial(predicate, inclusive),
-        AsyncEnumerable_lift,
+        AsyncEnumerable_lift(true, true),
       );
     };
   })();

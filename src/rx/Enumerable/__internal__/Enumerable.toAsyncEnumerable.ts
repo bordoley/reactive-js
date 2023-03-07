@@ -26,12 +26,12 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
 
 
     <T>(options?: { delay?: number }) =>
-    (enumerable: EnumerableLike): AsyncEnumerableLike =>
-      Streamable_createLifted<T>(
+    (enumerable: EnumerableLike): AsyncEnumerableLike => {
+      const { delay = 0 } = options ?? {};
+
+      return Streamable_createLifted<T>(
         observable =>
           Observable_create(observer => {
-            const { delay = 0 } = options ?? {};
-
             const enumerator = pipe(
               enumerable,
               Enumerable_enumerate<T>(),
@@ -58,8 +58,9 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
             );
           }),
         true,
-        false,
-        false,
+        delay === 0,
+        true,
       );
+    };
 
 export default Enumerable_toAsyncEnumerable;

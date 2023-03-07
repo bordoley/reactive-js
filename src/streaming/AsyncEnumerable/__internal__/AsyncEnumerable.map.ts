@@ -92,7 +92,7 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
     pipe(
       createMapStream,
       partial(mapper),
-      AsyncEnumerable_lift,
+      AsyncEnumerable_lift(true, true),
     )) as Map<AsyncEnumerableLike>["map"];
 })();
 

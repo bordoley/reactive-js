@@ -36,8 +36,8 @@ const AsyncEnumerable_generate: Generate<
       : Streamable_createLifted<T>(
           Observable_scan(generateScanner(generator), initialValue),
           true,
-          false,
-          false,
+          true,
+          true,
         );
   };
 })();

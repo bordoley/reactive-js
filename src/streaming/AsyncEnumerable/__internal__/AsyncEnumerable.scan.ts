@@ -98,7 +98,7 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
     pipe(
       createScanStream,
       partial(reducer, initialValue),
-      AsyncEnumerable_lift,
+      AsyncEnumerable_lift(true, true),
     )) as Scan<AsyncEnumerableLike>["scan"];
 })();
 

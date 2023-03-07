@@ -30,6 +30,6 @@ const AsyncEnumerable_map = /*@__PURE__*/ (() => {
             pipe(this[DelegatingLike_delegate], this[MapAsyncEnumerator_op], Observable_observeWith(observer));
         },
     }));
-    return ((mapper) => pipe(createMapStream, partial(mapper), AsyncEnumerable_lift));
+    return ((mapper) => pipe(createMapStream, partial(mapper), AsyncEnumerable_lift(true, true)));
 })();
 export default AsyncEnumerable_map;

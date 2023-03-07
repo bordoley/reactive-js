@@ -1,19 +1,12 @@
 /// <reference types="./AsyncEnumerable.test.d.ts" />
 
-import { toObservableTests } from "../../__tests__/operators.js";
+import { fromReadonlyArrayTests, keepTests, mapTests, scanTests, takeWhileTests, toObservableTests, } from "../../__tests__/operators.js";
 import { testModule } from "../../__tests__/testing.js";
 import * as AsyncEnumerable from "../AsyncEnumerable.js";
+testModule("AsyncEnumerable", toObservableTests(AsyncEnumerable), fromReadonlyArrayTests(AsyncEnumerable), keepTests(AsyncEnumerable), mapTests(AsyncEnumerable), scanTests(AsyncEnumerable), 
 /*
-import { RunnableObservableLike } from "../../rx.js"
-import RunnableObservable from "../../rx/RunnableObservable.js"
-import {
-  fromReadonlyArrayTests,
-  keepTests,
-  mapTests,
-  scanAsyncTests,
-  scanTests,
-  takeWhileTests,
-} from "../operators.js"
-
-*/
-testModule("AsyncEnumerable", toObservableTests(AsyncEnumerable));
+scanAsyncTests<AsyncEnumerableLike, RunnableLike>(
+  AsyncEnumerable,
+  Runnable,
+),*/
+takeWhileTests(AsyncEnumerable));

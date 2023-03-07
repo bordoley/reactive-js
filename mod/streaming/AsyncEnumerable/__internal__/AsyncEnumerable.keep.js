@@ -38,6 +38,6 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
             pipe(this[KeepStream_obs], Observable_observeWith(observer));
         },
     }));
-    return ((predicate) => pipe(createKeepStream, partial(predicate), AsyncEnumerable_lift));
+    return ((predicate) => pipe(createKeepStream, partial(predicate), AsyncEnumerable_lift(true, true)));
 })();
 export default AsyncEnumerable_keep;

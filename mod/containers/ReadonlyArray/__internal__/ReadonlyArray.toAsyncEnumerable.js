@@ -18,6 +18,6 @@ ReadonlyArray_toContainer((array, start, count, options) => {
         ? Observable_scan(increment, returns(start - 1))
         : Observable_scan(decrement, returns(start + 1)), (delay !== null && delay !== void 0 ? delay : 0 > 0)
         ? Observable_concatMap((i) => pipe(array[i], Optional_toObservable(options)))
-        : Observable_map((i) => array[i]), Observable_takeFirst({ count: abs(count) })), true, false, false);
+        : Observable_map((i) => array[i]), Observable_takeFirst({ count: abs(count) })), true, delay === 0, true);
 });
 export default ReadonlyArray_toAsyncEnumerable;

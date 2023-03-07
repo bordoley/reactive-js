@@ -99,7 +99,7 @@ const AsyncEnumerable_scanAsync: ScanAsync<
     pipe(
       createScanAsyncStream,
       partial(reducer, initialValue),
-      AsyncEnumerable_lift,
+      AsyncEnumerable_lift(false, false),
     );
 })();
 

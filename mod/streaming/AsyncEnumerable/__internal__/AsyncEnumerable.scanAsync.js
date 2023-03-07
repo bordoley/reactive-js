@@ -32,6 +32,6 @@ const AsyncEnumerable_scanAsync = /*@__PURE__*/ (() => {
             pipe(this[ScanAsyncStream_obs], Observable_observeWith(observer));
         },
     }));
-    return (reducer, initialValue) => pipe(createScanAsyncStream, partial(reducer, initialValue), AsyncEnumerable_lift);
+    return (reducer, initialValue) => pipe(createScanAsyncStream, partial(reducer, initialValue), AsyncEnumerable_lift(false, false));
 })();
 export default AsyncEnumerable_scanAsync;
