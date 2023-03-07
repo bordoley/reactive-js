@@ -711,7 +711,7 @@ export const error = (message?: unknown): Error => {
   const messageIsError = message instanceof Error;
   const errorMessage = messageIsString ? message : "";
   const errorCause =
-    messageIsString && !messageIsError && isSome(message)
+    !messageIsString && !messageIsError && isSome(message)
       ? {
           cause: message,
         }

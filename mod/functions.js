@@ -125,7 +125,7 @@ export const error = (message) => {
     const messageIsString = isString(message);
     const messageIsError = message instanceof Error;
     const errorMessage = messageIsString ? message : "";
-    const errorCause = messageIsString && !messageIsError && isSome(message)
+    const errorCause = !messageIsString && !messageIsError && isSome(message)
         ? {
             cause: message,
         }
