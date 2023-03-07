@@ -22,9 +22,16 @@
 
 ### Properties
 
+- [[StreamableLike\_isEnumerable]](streaming.FlowableStreamLike.md#[streamablelike_isenumerable])
 - [[StreamableLike\_isInteractive]](streaming.FlowableStreamLike.md#[streamablelike_isinteractive])
 
 ## Properties
+
+### [StreamableLike\_isEnumerable]
+
+• `Readonly` **[StreamableLike\_isEnumerable]**: ``false``
+
+___
 
 ### [StreamableLike\_isInteractive]
 

@@ -78,6 +78,7 @@ export interface AsyncEnumerableLike<T = unknown>
 export interface FlowableStreamLike<T = unknown>
   extends StreamLike<Updater<PauseableState>, T>,
     PauseableLike {
+  readonly [StreamableLike_isEnumerable]: false;
   readonly [StreamableLike_isInteractive]: false;
 }
 

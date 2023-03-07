@@ -9,20 +9,25 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_startWith from "../../../rx/Observable/__internal__/Observable.startWith.js";
+import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
   PauseableState,
   PauseableState_paused,
   PauseableState_running,
 } from "../../../scheduling.js";
-import { FlowableLike } from "../../../streaming.js";
+import { FlowableLike, StreamableLike_isRunnable } from "../../../streaming.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Queue_pushTo from "../../../util/Queue/__internal__/Queue.pushTo.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import Stream_sourceFrom from "../../Stream/__internal__/Stream.sourceFrom.js";
 
 const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
-  () => src =>
-    Observable_create(observer => {
+  () => src => {
+    const create = src[StreamableLike_isRunnable]
+      ? Runnable_create
+      : Observable_create;
+
+    return create(observer => {
       const dispatcher = observer[ObserverLike_dispatcher];
       const scheduler = observer[ObserverLike_scheduler];
 
@@ -42,5 +47,6 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
         Disposable_addTo(observer),
       );
     });
+  };
 
 export default Flowable_toObservable;
