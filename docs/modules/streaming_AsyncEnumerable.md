@@ -13,6 +13,7 @@
 - [fromReadonlyArray](streaming_AsyncEnumerable.md#fromreadonlyarray)
 - [fromSequence](streaming_AsyncEnumerable.md#fromsequence)
 - [generate](streaming_AsyncEnumerable.md#generate)
+- [generateAsync](streaming_AsyncEnumerable.md#generateasync)
 
 ### Converter Functions
 
@@ -182,6 +183,30 @@ that is applied to an accumulator value between emitted items.
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
 | `options?` | `Object` | - |
 | `options.delay` | `number` | - |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>
+
+___
+
+### generateAsync
+
+▸ **generateAsync**<`T`\>(`generator`, `initialValue`, `options?`): [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Function1`](functions.md#function1)<`T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `undefined` |
 
 #### Returns
 

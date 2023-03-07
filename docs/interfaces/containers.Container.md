@@ -132,6 +132,8 @@
 
   ↳ [`FromRunnable`](rx.FromRunnable.md)
 
+  ↳ [`GenerateAsync`](rx.GenerateAsync.md)
+
   ↳ [`Lift`](rx.Lift.md)
 
   ↳ [`Merge`](rx.Merge.md)
