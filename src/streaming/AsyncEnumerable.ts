@@ -20,7 +20,9 @@ import {
   GenerateAsync,
   ObservableLike,
   ScanAsync,
+  ToEnumerable,
   ToObservable,
+  ToRunnable,
 } from "../rx.js";
 import Enumerable_toAsyncEnumerable from "../rx/Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 import { AsyncEnumerableLike } from "../streaming.js";
@@ -31,7 +33,9 @@ import AsyncEnumerable_map from "./AsyncEnumerable/__internal__/AsyncEnumerable.
 import AsyncEnumerable_scan from "./AsyncEnumerable/__internal__/AsyncEnumerable.scan.js";
 import AsyncEnumerable_scanAsync from "./AsyncEnumerable/__internal__/AsyncEnumerable.scanAsync.js";
 import AsyncEnumerable_takeWhile from "./AsyncEnumerable/__internal__/AsyncEnumerable.takeWhile.js";
+import AsyncEnumerable_toEnumerable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toEnumerable.js";
 import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
+import AsyncEnumerable_toRunnable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toRunnable.js";
 
 export const fromIterable: FromIterable<AsyncEnumerableLike>["fromIterable"] =
   Iterable_toAsyncEnumerable;
@@ -84,5 +88,11 @@ export const scanAsync: ScanAsync<
 export const takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
   AsyncEnumerable_takeWhile;
 
+export const toEnumerable: ToEnumerable<AsyncEnumerableLike>["toEnumerable"] =
+  AsyncEnumerable_toEnumerable;
+
 export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
   AsyncEnumerable_toObservable;
+
+export const toRunnable: ToRunnable<AsyncEnumerableLike>["toRunnable"] =
+  AsyncEnumerable_toRunnable;

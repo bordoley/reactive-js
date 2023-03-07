@@ -17,7 +17,9 @@
 
 ### Converter Functions
 
+- [toEnumerable](streaming_AsyncEnumerable.md#toenumerable)
 - [toObservable](streaming_AsyncEnumerable.md#toobservable)
+- [toRunnable](streaming_AsyncEnumerable.md#torunnable)
 
 ### Operator Functions
 
@@ -216,6 +218,28 @@ ___
 
 ## Converter Functions
 
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+
+___
+
 ### toObservable
 
 ▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
@@ -235,6 +259,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 

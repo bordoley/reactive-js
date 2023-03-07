@@ -29,6 +29,10 @@ export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = S
         readonly replay?: number;
     }): TStream;
 }
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T>, ContainerLike {
     readonly [ContainerLike_type]?: AsyncEnumerableLike<this[typeof ContainerLike_T]>;
     readonly [StreamableLike_isInteractive]: true;

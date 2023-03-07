@@ -13,7 +13,9 @@ import AsyncEnumerable_map from "./AsyncEnumerable/__internal__/AsyncEnumerable.
 import AsyncEnumerable_scan from "./AsyncEnumerable/__internal__/AsyncEnumerable.scan.js";
 import AsyncEnumerable_scanAsync from "./AsyncEnumerable/__internal__/AsyncEnumerable.scanAsync.js";
 import AsyncEnumerable_takeWhile from "./AsyncEnumerable/__internal__/AsyncEnumerable.takeWhile.js";
+import AsyncEnumerable_toEnumerable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toEnumerable.js";
 import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
+import AsyncEnumerable_toRunnable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toRunnable.js";
 export const fromIterable = Iterable_toAsyncEnumerable;
 export const fromAsyncIterable = AsyncIterable_toAsyncEnumerable;
 export const fromEnumerable = Enumerable_toAsyncEnumerable;
@@ -27,4 +29,6 @@ export const map = AsyncEnumerable_map;
 export const scan = AsyncEnumerable_scan;
 export const scanAsync = AsyncEnumerable_scanAsync;
 export const takeWhile = AsyncEnumerable_takeWhile;
+export const toEnumerable = AsyncEnumerable_toEnumerable;
 export const toObservable = AsyncEnumerable_toObservable;
+export const toRunnable = AsyncEnumerable_toRunnable;

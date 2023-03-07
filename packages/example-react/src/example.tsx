@@ -74,7 +74,7 @@ const createActions = (
       Queue.pushTo(stateDispatcher),
     ),
   setCounterMode: (mode: PauseableState) =>
-  counterDispatcher[QueueLike_push](returns(mode)),
+    counterDispatcher[QueueLike_push](returns(mode)),
 });
 
 const initialFlowModeState = (): PauseableState => PauseableState_paused;
@@ -111,10 +111,9 @@ const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
   const { value: path } = ev.target;
 
   historyStream[QueueLike_push]((uri: WindowLocationURI) => ({
-      ...uri,
-      path,
-    }),
-  );
+    ...uri,
+    path,
+  }));
 };
 
 const onGoBack = pipeLazy(historyStream, WindowLocationStream.goBack);

@@ -58,6 +58,10 @@ export interface StreamableLike<
   ): TStream;
 }
 
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface AsyncEnumerableLike<T = unknown>
   extends StreamableLike<void, T>,
     ContainerLike {
