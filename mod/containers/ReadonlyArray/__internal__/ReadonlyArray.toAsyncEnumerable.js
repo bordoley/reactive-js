@@ -7,8 +7,8 @@ import Observable_map from "../../../rx/Observable/__internal__/Observable.map.j
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
+import Optional_toObservable from "../../Optional/Optional_toObservable.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
-import ReadonlyArray_toObservable from "./ReadonlyArray.toObservable.js";
 const ReadonlyArray_toAsyncEnumerable = 
 /*@__PURE__*/
 ReadonlyArray_toContainer((array, start, count, options) => {
@@ -17,7 +17,7 @@ ReadonlyArray_toContainer((array, start, count, options) => {
     return Streamable_createLifted(compose(count >= 0
         ? Observable_scan(increment, returns(start - 1))
         : Observable_scan(decrement, returns(start + 1)), (delay !== null && delay !== void 0 ? delay : 0 > 0)
-        ? Observable_concatMap((i) => pipe([array[i]], ReadonlyArray_toObservable(options)))
+        ? Observable_concatMap((i) => pipe(array[i], Optional_toObservable(options)))
         : Observable_map((i) => array[i]), Observable_takeFirst({ count: abs(count) })), true, false, false);
 });
 export default ReadonlyArray_toAsyncEnumerable;

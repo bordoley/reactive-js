@@ -14,8 +14,8 @@ import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
+import Optional_toObservable from "../../Optional/Optional_toObservable.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
-import ReadonlyArray_toObservable from "./ReadonlyArray.toObservable.js";
 
 const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
   ReadonlyArrayLike,
@@ -55,7 +55,7 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
               ),
           delay ?? 0 > 0
             ? Observable_concatMap((i: number) =>
-                pipe([array[i]], ReadonlyArray_toObservable(options)),
+                pipe(array[i], Optional_toObservable(options)),
               )
             : Observable_map<ObservableLike, number, T>(
                 (i: number) => array[i],

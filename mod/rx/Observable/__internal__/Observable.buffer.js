@@ -3,6 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -45,7 +46,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                 pipe(delegate, Disposable_dispose());
             }
             else {
-                pipe([buffer], ReadonlyArray_toObservable(), Observable_observeWith(delegate));
+                pipe(buffer, Optional_toObservable(), Observable_observeWith(delegate));
             }
         }));
         return instance;

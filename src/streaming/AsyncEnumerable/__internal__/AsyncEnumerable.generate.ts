@@ -1,5 +1,5 @@
 import { Generate } from "../../../containers.js";
-import ReadonlyArray_tobservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
 import { Factory, Updater, pipe } from "../../../functions.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
@@ -17,14 +17,14 @@ const AsyncEnumerable_generate: Generate<
       generator(acc);
 
   const asyncGeneratorScanner =
-    <T>(generator: Updater<T>, options?: { readonly delay?: number }) =>
+    <T>(generator: Updater<T>, options?: { delay?: number }) =>
     (acc: T, _: unknown) =>
-      pipe(acc, generator, x => [x], ReadonlyArray_tobservable<T>(options));
+      pipe(acc, generator, Optional_toObservable(options));
 
   return <T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
-    options?: { readonly delay?: number },
+    options?: { delay?: number },
   ): AsyncEnumerableLike<T> => {
     const delay = getDelay(options);
 

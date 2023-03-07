@@ -1,4 +1,4 @@
-import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
 import { pipe } from "../../../functions.js";
 import { EnumerableLike, ObservableLike } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
@@ -47,11 +47,8 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
               delay > 0
                 ? Observable_concatMap(_ =>
                     pipe(
-                      [enumerator[EnumeratorLike_current]],
-                      ReadonlyArray_toObservable({
-                        delay,
-                        delayStart: true,
-                      }),
+                      enumerator[EnumeratorLike_current],
+                      Optional_toObservable({ delay }),
                     ),
                   )
                 : Observable_map<ObservableLike, void, T>(

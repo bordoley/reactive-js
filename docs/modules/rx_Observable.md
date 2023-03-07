@@ -26,6 +26,7 @@
 - [fromAsyncIterable](rx_Observable.md#fromasynciterable)
 - [fromFlowable](rx_Observable.md#fromflowable)
 - [fromIterable](rx_Observable.md#fromiterable)
+- [fromOptional](rx_Observable.md#fromoptional)
 - [fromReadonlyArray](rx_Observable.md#fromreadonlyarray)
 - [fromSequence](rx_Observable.md#fromsequence)
 - [generate](rx_Observable.md#generate)
@@ -1124,6 +1125,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 

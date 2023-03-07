@@ -1,7 +1,6 @@
 /// <reference types="./Observable.decodeWithCharset.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -26,7 +25,7 @@ const Observable_decodeWithCharset =
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             const data = textDecoder.decode();
             if (data.length > 0) {
-                pipe([data], ReadonlyArray_toObservable(), Observable_observeWith(delegate));
+                pipe(data, Optional_toObservable(), Observable_observeWith(delegate));
             }
             else {
                 pipe(delegate, Disposable_dispose());
@@ -53,3 +52,6 @@ const Observable_decodeWithCharset =
     };
 })();
 export default Observable_decodeWithCharset;
+function Optional_toObservable() {
+    throw new Error("Function not implemented.");
+}

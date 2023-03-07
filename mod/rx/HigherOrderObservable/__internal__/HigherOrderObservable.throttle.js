@@ -1,7 +1,7 @@
 /// <reference types="./HigherOrderObservable.throttle.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
 import { isNumber, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
@@ -48,7 +48,7 @@ const createThrottleObserver = (() => {
             if (instance[ThrottleObserver_mode] !== ThrottleMode_first &&
                 instance[ThrottleObserver_hasValue] &&
                 !delegate[DisposableLike_isDisposed]) {
-                pipe([instance[ThrottleObserver_value]], ReadonlyArray_toObservable(), Observable_observeWith(delegate));
+                pipe(instance[ThrottleObserver_value], Optional_toObservable(), Observable_observeWith(delegate));
             }
         }));
         return instance;

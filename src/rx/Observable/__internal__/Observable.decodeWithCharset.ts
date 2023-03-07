@@ -11,7 +11,6 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { DecodeWithCharset } from "../../../containers.js";
-import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -75,8 +74,8 @@ const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWit
 
               if (data.length > 0) {
                 pipe(
-                  [data],
-                  ReadonlyArray_toObservable(),
+                  data,
+                  Optional_toObservable(),
                   Observable_observeWith(delegate),
                 );
               } else {
@@ -123,3 +122,9 @@ const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWit
   })();
 
 export default Observable_decodeWithCharset;
+function Optional_toObservable(): import("../../../functions.js").Function1<
+  string,
+  ObservableLike<unknown>
+> {
+  throw new Error("Function not implemented.");
+}

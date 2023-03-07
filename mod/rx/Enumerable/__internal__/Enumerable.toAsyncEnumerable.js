@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.toAsyncEnumerable.d.ts" />
 
-import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/Optional_toObservable.js";
 import { pipe } from "../../../functions.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
@@ -21,10 +21,7 @@ const Enumerable_toAsyncEnumerable =
     pipe(observable, Observable_forEach(_ => {
         enumerator[EnumeratorLike_move]();
     }), Observable_takeWhile(_ => enumerator[EnumeratorLike_hasCurrent]), delay > 0
-        ? Observable_concatMap(_ => pipe([enumerator[EnumeratorLike_current]], ReadonlyArray_toObservable({
-            delay,
-            delayStart: true,
-        })))
+        ? Observable_concatMap(_ => pipe(enumerator[EnumeratorLike_current], Optional_toObservable({ delay })))
         : Observable_map(_ => enumerator[EnumeratorLike_current]), Observable_observeWith(observer));
 }), true, false, false);
 export default Enumerable_toAsyncEnumerable;

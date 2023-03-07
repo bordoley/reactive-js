@@ -2,6 +2,7 @@
 
 import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
+import Optional_toObservable from "../containers/Optional/Optional_toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import AsyncEnumerable_toObservable from "../streaming/AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
@@ -142,6 +143,7 @@ export const fromAsyncEnumerable = AsyncEnumerable_toObservable;
 export const fromAsyncIterable = AsyncIterable_toObservable;
 export const fromIterable = Iterable_toObservable;
 export const fromFlowable = Flowable_toObservable;
+export const fromOptional = Optional_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toObservable;
 export const fromSequence = Sequence_toObservable;
 export const generate = Observable_generate;
