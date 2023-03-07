@@ -3,6 +3,7 @@ import {
   Every,
   ForEach,
   FromIterable,
+  FromOptional,
   FromReadonlyArray,
   FromSequence,
   Keep,
@@ -24,6 +25,7 @@ import {
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
+import Optional_toReadonlyArray from "./Optional/__internal__/Optional.toReadonlyArray.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
@@ -52,6 +54,9 @@ export const fromEnumerable: FromEnumerable<ReadonlyArrayLike>["fromEnumerable"]
 
 export const fromIterable: FromIterable<ReadonlyArrayLike>["fromIterable"] =
   Iterable_toReadonlyArray;
+
+export const fromOptional: FromOptional<ReadonlyArrayLike>["fromOptional"] =
+  Optional_toReadonlyArray;
 
 export const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayLike>["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;

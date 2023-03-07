@@ -1,6 +1,7 @@
 /// <reference types="./Enumerable.d.ts" />
 
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
+import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import { identity, returns } from "../functions.js";
@@ -70,6 +71,7 @@ export const forEach = Observable_forEach;
 export const forkConcat = Observable_forkConcat;
 export const forkZip = Observable_forkZip;
 export const fromIterable = Iterable_toObservable;
+export const fromOptional = Optional_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toObservable;
 export const fromSequence = Sequence_toObservable;
 export const generate = Observable_generate;

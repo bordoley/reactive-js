@@ -1,4 +1,4 @@
-import { Compute, Concat, ConcatAll, ConcatMap, ConcatWith, DistinctUntilChanged, EndWith, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Repeat, Scan, SequenceLike, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ToIterable, ToReadonlyArray, ToSequence, Zip, ZipWith } from "../containers.js";
+import { Compute, Concat, ConcatAll, ConcatMap, ConcatWith, DistinctUntilChanged, EndWith, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Repeat, Scan, SequenceLike, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ToIterable, ToReadonlyArray, ToSequence, Zip, ZipWith } from "../containers.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 export declare const compute: Compute<SequenceLike>["compute"];
@@ -8,6 +8,7 @@ export declare const concatMap: ConcatMap<SequenceLike>["concatMap"];
 export declare const concatWith: ConcatWith<SequenceLike>["concatWith"];
 export declare const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctUntilChanged"];
 export declare const endWith: EndWith<SequenceLike>["endWith"];
+export declare const fromOptional: FromOptional<SequenceLike>["fromOptional"];
 export declare const fromReadonlyArray: FromReadonlyArray<SequenceLike>["fromReadonlyArray"];
 export declare const generate: Generate<SequenceLike>["generate"];
 export declare const ignoreElements: IgnoreElements<SequenceLike>["ignoreElements"];

@@ -1,6 +1,7 @@
 /// <reference types="./Sequence.d.ts" />
 
 import { identity, returns } from "../functions.js";
+import Optional_toSequence from "./Optional/__internal__/Optional.toSequence.js";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 import Sequence_compute from "./Sequence/__internal__/Sequence.compute.js";
 import Sequence_concat from "./Sequence/__internal__/Sequence.concat.js";
@@ -37,6 +38,7 @@ export const concatMap = Sequence_concatMap;
 export const concatWith = Sequence_concatWith;
 export const distinctUntilChanged = Sequence_distinctUntilChanged;
 export const endWith = Sequence_endWith;
+export const fromOptional = Optional_toSequence;
 export const fromReadonlyArray = ReadonlyArray_toSequence;
 export const generate = Sequence_generate;
 export const ignoreElements = Sequence_ignoreElements;

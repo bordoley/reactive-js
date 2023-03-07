@@ -13,6 +13,7 @@
 - [empty](rx_Runnable.md#empty)
 - [fromEnumerable](rx_Runnable.md#fromenumerable)
 - [fromIterable](rx_Runnable.md#fromiterable)
+- [fromOptional](rx_Runnable.md#fromoptional)
 - [fromReadonlyArray](rx_Runnable.md#fromreadonlyarray)
 - [fromSequence](rx_Runnable.md#fromsequence)
 - [generate](rx_Runnable.md#generate)
@@ -449,6 +450,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 

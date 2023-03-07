@@ -1,6 +1,7 @@
 import {
   FromAsyncIterable,
   FromIterable,
+  FromOptional,
   FromReadonlyArray,
   FromSequence,
   Generate,
@@ -11,6 +12,7 @@ import {
 } from "../containers.js";
 import AsyncIterable_toAsyncEnumerable from "../containers/AsyncIterable/__internal__/AsyncIterable.toAsyncEnumerable.js";
 import Iterable_toAsyncEnumerable from "../containers/Iterable/__internal__/Iterable.toAsyncEnumerable.js";
+import Optional_toAsyncEnumerable from "../containers/Optional/__internal__/Optional.toAsyncEnumerable.js";
 import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 import Sequence_toAsyncEnumerable from "../containers/Sequence/__internal__/Sequence.toAsyncEnumerable.js";
 import {
@@ -37,6 +39,11 @@ export const fromAsyncIterable: FromAsyncIterable<AsyncEnumerableLike>["fromAsyn
 
 export const fromEnumerable: FromEnumerable<AsyncEnumerableLike>["fromEnumerable"] =
   Enumerable_toAsyncEnumerable;
+
+export const fromOptional: FromOptional<
+  AsyncEnumerableLike,
+  { delay?: number }
+>["fromOptional"] = Optional_toAsyncEnumerable;
 
 export const fromReadonlyArray: FromReadonlyArray<
   AsyncEnumerableLike,

@@ -19,6 +19,7 @@ import {
   ForkConcat,
   ForkZip,
   FromIterable,
+  FromOptional,
   FromReadonlyArray,
   FromSequence,
   Generate,
@@ -43,6 +44,7 @@ import {
   ZipWith,
 } from "../containers.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
+import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import { identity, returns } from "../functions.js";
@@ -225,6 +227,11 @@ export const fromIterable: FromIterable<
     readonly delayStart?: boolean;
   }
 >["fromIterable"] = Iterable_toObservable;
+
+export const fromOptional: FromOptional<
+  RunnableLike,
+  { delay?: number }
+>["fromOptional"] = Optional_toObservable;
 
 export const fromReadonlyArray: FromReadonlyArray<
   RunnableLike,

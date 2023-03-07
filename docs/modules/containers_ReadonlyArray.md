@@ -9,6 +9,7 @@
 - [empty](containers_ReadonlyArray.md#empty)
 - [fromEnumerable](containers_ReadonlyArray.md#fromenumerable)
 - [fromIterable](containers_ReadonlyArray.md#fromiterable)
+- [fromOptional](containers_ReadonlyArray.md#fromoptional)
 - [fromReadonlyArray](containers_ReadonlyArray.md#fromreadonlyarray)
 - [fromRunnable](containers_ReadonlyArray.md#fromrunnable)
 - [fromSequence](containers_ReadonlyArray.md#fromsequence)
@@ -105,6 +106,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
 
 ___
 

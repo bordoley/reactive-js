@@ -9,6 +9,7 @@
 - [fromAsyncIterable](streaming_Flowable.md#fromasynciterable)
 - [fromEnumerable](streaming_Flowable.md#fromenumerable)
 - [fromIterable](streaming_Flowable.md#fromiterable)
+- [fromOptional](streaming_Flowable.md#fromoptional)
 - [fromReadonlyArray](streaming_Flowable.md#fromreadonlyarray)
 - [fromRunnable](streaming_Flowable.md#fromrunnable)
 - [fromSequence](streaming_Flowable.md#fromsequence)
@@ -83,6 +84,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 

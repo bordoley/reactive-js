@@ -9,7 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import Optional_toObservable from "../../../containers/Optional/__internal__/Optional_toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { Predicate, none, pipe } from "../../../functions.js";
 import {
   ObserverLike,

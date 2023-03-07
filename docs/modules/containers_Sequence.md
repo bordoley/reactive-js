@@ -8,6 +8,7 @@
 
 - [compute](containers_Sequence.md#compute)
 - [concat](containers_Sequence.md#concat)
+- [fromOptional](containers_Sequence.md#fromoptional)
 - [fromReadonlyArray](containers_Sequence.md#fromreadonlyarray)
 - [generate](containers_Sequence.md#generate)
 - [zip](containers_Sequence.md#zip)
@@ -93,6 +94,28 @@ Returns a ContainerLike which emits all values from each source sequentially.
 #### Returns
 
 [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>
 
 ___
 

@@ -1,4 +1,4 @@
-import Optional_toObservable from "../../../containers/Optional/__internal__/Optional_toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { pipe } from "../../../functions.js";
 import { EnumerableLike, ObservableLike } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";

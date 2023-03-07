@@ -1,4 +1,4 @@
-/// <reference types="./Optional_toReadonlyArray.d.ts" />
+/// <reference types="./Optional.toReadonlyArray.d.ts" />
 
 import { isSome } from "../../../functions.js";
 const Optional_toReadonlyArray = () => (optional) => isSome(optional) ? [optional] : [];

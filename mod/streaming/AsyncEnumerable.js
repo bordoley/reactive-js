@@ -2,6 +2,7 @@
 
 import AsyncIterable_toAsyncEnumerable from "../containers/AsyncIterable/__internal__/AsyncIterable.toAsyncEnumerable.js";
 import Iterable_toAsyncEnumerable from "../containers/Iterable/__internal__/Iterable.toAsyncEnumerable.js";
+import Optional_toAsyncEnumerable from "../containers/Optional/__internal__/Optional.toAsyncEnumerable.js";
 import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 import Sequence_toAsyncEnumerable from "../containers/Sequence/__internal__/Sequence.toAsyncEnumerable.js";
 import Enumerable_toAsyncEnumerable from "../rx/Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
@@ -15,6 +16,7 @@ import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEn
 export const fromIterable = Iterable_toAsyncEnumerable;
 export const fromAsyncIterable = AsyncIterable_toAsyncEnumerable;
 export const fromEnumerable = Enumerable_toAsyncEnumerable;
+export const fromOptional = Optional_toAsyncEnumerable;
 export const fromReadonlyArray = ReadonlyArray_toAsyncEnumerable;
 export const fromSequence = Sequence_toAsyncEnumerable;
 export const generate = AsyncEnumerable_generate;

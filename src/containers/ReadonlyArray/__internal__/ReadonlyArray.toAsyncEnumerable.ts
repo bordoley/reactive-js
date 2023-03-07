@@ -14,7 +14,7 @@ import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
-import Optional_toObservable from "../../Optional/__internal__/Optional_toObservable.js";
+import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
 const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<

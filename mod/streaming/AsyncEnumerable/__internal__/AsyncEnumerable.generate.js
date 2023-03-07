@@ -1,6 +1,6 @@
 /// <reference types="./AsyncEnumerable.generate.d.ts" />
 
-import Optional_toObservable from "../../../containers/Optional/__internal__/Optional_toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { pipe } from "../../../functions.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";

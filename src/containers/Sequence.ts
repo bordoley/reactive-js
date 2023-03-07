@@ -6,6 +6,7 @@ import {
   ConcatWith,
   DistinctUntilChanged,
   EndWith,
+  FromOptional,
   FromReadonlyArray,
   Generate,
   IgnoreElements,
@@ -31,6 +32,7 @@ import {
 import { identity, returns } from "../functions.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import Optional_toSequence from "./Optional/__internal__/Optional.toSequence.js";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 import Sequence_compute from "./Sequence/__internal__/Sequence.compute.js";
 import Sequence_concat from "./Sequence/__internal__/Sequence.concat.js";
@@ -78,6 +80,9 @@ export const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctU
   Sequence_distinctUntilChanged;
 
 export const endWith: EndWith<SequenceLike>["endWith"] = Sequence_endWith;
+
+export const fromOptional: FromOptional<SequenceLike>["fromOptional"] =
+  Optional_toSequence;
 
 export const fromReadonlyArray: FromReadonlyArray<SequenceLike>["fromReadonlyArray"] =
   ReadonlyArray_toSequence;
