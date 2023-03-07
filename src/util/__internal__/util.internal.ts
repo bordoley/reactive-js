@@ -24,11 +24,12 @@ export interface DelegatingDisposableLike<
 > extends DelegatingLike<TDisposable>,
     DisposableLike {}
 
-export const PullableQueueLike_peek = Symbol("PullableQueueLike_peek");
+export const PullableQueueLike_head = Symbol("PullableQueueLike_head");
 export const PullableQueueLike_pull = Symbol("PullableQueueLike_pull");
 
 export interface PullableQueueLike<T> extends QueueLike<T> {
-  [PullableQueueLike_peek](): Optional<T>;
+  readonly [PullableQueueLike_head]: Optional<T>;
+
   [PullableQueueLike_pull](): Optional<T>;
 }
 

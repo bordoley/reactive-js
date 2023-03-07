@@ -34,10 +34,10 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
-import PullableQueue_pull from "../../../util/PullableQueue/__internal__/PullableQueue.pull.js";
 import {
   MutableEnumeratorLike,
   PullableQueueLike,
+  PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 
@@ -189,7 +189,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
           return false;
         }
 
-        const task = PullableQueue_pull(this);
+        const task = this[PullableQueueLike_pull]();
 
         if (isSome(task)) {
           this[EnumeratorLike_current] = task;

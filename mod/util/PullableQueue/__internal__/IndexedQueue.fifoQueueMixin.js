@@ -1,9 +1,9 @@
 /// <reference types="./IndexedQueue.fifoQueueMixin.d.ts" />
 
 import { mix, props } from "../../../__internal__/mixins.js";
-import { newInstance, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
+import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
-import { IndexedQueueLike_get, PullableQueueLike_peek, PullableQueueLike_pull, } from "../../__internal__/util.internal.js";
+import { IndexedQueueLike_get, PullableQueueLike_head, PullableQueueLike_pull, } from "../../__internal__/util.internal.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     const FifoQueue_head = Symbol("FifoQueue_head");
     const FifoQueue_tail = Symbol("FifoQueue_tail");
@@ -50,7 +50,8 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                     ? values[headOffsetIndex]
                     : values[tailOffsetIndex];
         },
-        [PullableQueueLike_peek]() {
+        get [PullableQueueLike_head]() {
+            unsafeCast(this);
             const head = this[FifoQueue_head];
             return head === this[FifoQueue_tail]
                 ? none

@@ -7,8 +7,7 @@ import { newInstance, none, pipe } from "../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../util.js";
 import IndexedQueue_fifoQueueMixin from "../PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import PullableQueue_priorityQueueMixin from "../PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
-import PullableQueue_pull from "../PullableQueue/__internal__/PullableQueue.pull.js";
-import { PullableQueueLike_peek, PullableQueueLike_pull, } from "../__internal__/util.internal.js";
+import { PullableQueueLike_head, PullableQueueLike_pull, } from "../__internal__/util.internal.js";
 const createPriorityQueue = /*@__PURE__*/ (() => {
     const compare = (a, b) => a - b;
     const createInstance = createInstanceFactory(PullableQueue_priorityQueueMixin());
@@ -34,37 +33,37 @@ const makeShuffledArray = (n) => {
 };
 testModule("PullableQueue", describe("fifoQueueMixin", test("push/pull/count", () => {
     const queue = createFifoQueue();
-    pipe(queue[PullableQueueLike_peek](), expectEquals(none));
+    pipe(queue[PullableQueueLike_head], expectEquals(none));
     pipe(queue[PullableQueueLike_pull](), expectEquals(none));
     for (let i = 0; i < 8; i++) {
         queue[QueueLike_push](i);
-        pipe(queue[PullableQueueLike_peek](), expectEquals(0));
+        pipe(queue[PullableQueueLike_head], expectEquals(0));
     }
     pipe(queue[QueueLike_count], expectEquals(8));
     pipe(queue[PullableQueueLike_pull](), expectEquals(0));
-    pipe(queue[PullableQueueLike_peek](), expectEquals(1));
+    pipe(queue[PullableQueueLike_head], expectEquals(1));
     pipe(queue[PullableQueueLike_pull](), expectEquals(1));
-    pipe(queue[PullableQueueLike_peek](), expectEquals(2));
+    pipe(queue[PullableQueueLike_head], expectEquals(2));
     pipe(queue[PullableQueueLike_pull](), expectEquals(2));
-    pipe(queue[PullableQueueLike_peek](), expectEquals(3));
+    pipe(queue[PullableQueueLike_head], expectEquals(3));
     for (let i = 8; i < 16; i++) {
         queue[QueueLike_push](i);
-        pipe(queue[PullableQueueLike_peek](), expectEquals(3));
+        pipe(queue[PullableQueueLike_head], expectEquals(3));
     }
     pipe(queue[PullableQueueLike_pull](), expectEquals(3));
-    pipe(queue[PullableQueueLike_peek](), expectEquals(4));
+    pipe(queue[PullableQueueLike_head], expectEquals(4));
     pipe(queue[PullableQueueLike_pull](), expectEquals(4));
-    pipe(queue[PullableQueueLike_peek](), expectEquals(5));
+    pipe(queue[PullableQueueLike_head], expectEquals(5));
     pipe(queue[PullableQueueLike_pull](), expectEquals(5));
-    pipe(queue[PullableQueueLike_peek](), expectEquals(6));
+    pipe(queue[PullableQueueLike_head], expectEquals(6));
     for (let i = 16; i < 32; i++) {
         queue[QueueLike_push](i);
-        pipe(queue[PullableQueueLike_peek](), expectEquals(6));
+        pipe(queue[PullableQueueLike_head], expectEquals(6));
     }
     for (let i = 0; i < 20; i++) {
         queue[PullableQueueLike_pull]();
     }
-    pipe(queue[PullableQueueLike_peek](), expectEquals(26));
+    pipe(queue[PullableQueueLike_head], expectEquals(26));
 }), test("shrink", () => {
     const queue = createFifoQueue();
     for (let i = 0; i < 300; i++) {
@@ -73,14 +72,14 @@ testModule("PullableQueue", describe("fifoQueueMixin", test("push/pull/count", (
     for (let i = 0; i < 50; i++) {
         queue[PullableQueueLike_pull]();
     }
-    pipe(queue[PullableQueueLike_peek](), expectEquals(50));
+    pipe(queue[PullableQueueLike_head], expectEquals(50));
     for (let i = 300; i < 500; i++) {
         queue[QueueLike_push](i);
     }
     for (let i = 0; i < 200; i++) {
         queue[PullableQueueLike_pull]();
     }
-    pipe(queue[PullableQueueLike_peek](), expectEquals(250));
+    pipe(queue[PullableQueueLike_head], expectEquals(250));
 })), describe("priorityQueueMixin", test("push", () => {
     const queue = createPriorityQueue();
     const shuffledArray = makeShuffledArray(100);
@@ -89,7 +88,7 @@ testModule("PullableQueue", describe("fifoQueueMixin", test("push/pull/count", (
     }
     const acc = [];
     while (queue[QueueLike_count] > 0) {
-        acc.push(PullableQueue_pull(queue));
+        acc.push(queue[PullableQueueLike_pull]());
     }
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
 })));

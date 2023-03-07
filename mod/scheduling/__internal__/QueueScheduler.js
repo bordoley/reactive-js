@@ -12,9 +12,7 @@ import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixi
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
 import MutableEnumerator_mixin from "../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_createPriorityQueue from "../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
-import PullableQueue_peek from "../../util/PullableQueue/__internal__/PullableQueue.peek.js";
-import PullableQueue_pull from "../../util/PullableQueue/__internal__/PullableQueue.pull.js";
-import { MutableRefLike_current, } from "../../util/__internal__/util.internal.js";
+import { MutableRefLike_current, PullableQueueLike_head, PullableQueueLike_pull, } from "../../util/__internal__/util.internal.js";
 import { Continuation__yield } from "../Continuation/__internal__/Continuation.create.js";
 import schedule from "../Scheduler/__internal__/Scheduler.schedule.js";
 import { getDelay } from "./Scheduler.options.js";
@@ -40,7 +38,7 @@ export const create =
         const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue, } = instance;
         const now = instance[QueueScheduler_hostScheduler][SchedulerLike_now];
         while (true) {
-            const task = PullableQueue_peek(delayed);
+            const task = delayed[PullableQueueLike_head];
             if (isNone(task)) {
                 break;
             }
@@ -48,23 +46,23 @@ export const create =
             if (task[QueueTask_dueTime] > now && !taskIsDispose) {
                 break;
             }
-            PullableQueue_pull(delayed);
+            delayed[PullableQueueLike_pull]();
             if (!taskIsDispose) {
                 queue[QueueLike_push](task);
             }
         }
         let task = none;
         while (true) {
-            task = PullableQueue_peek(queue);
+            task = queue[PullableQueueLike_head];
             if (isNone(task)) {
                 break;
             }
             if (!task[QueueTask_continuation][DisposableLike_isDisposed]) {
                 break;
             }
-            PullableQueue_pull(queue);
+            queue[PullableQueueLike_pull]();
         }
-        return task !== null && task !== void 0 ? task : PullableQueue_peek(delayed);
+        return task !== null && task !== void 0 ? task : delayed[PullableQueueLike_head];
     };
     const priorityShouldYield = (instance, next) => {
         const { [EnumeratorLike_current]: current } = instance;
@@ -183,7 +181,7 @@ export const create =
         [EnumeratorLike_move]() {
             // First fast forward through disposed tasks.
             peek(this);
-            const task = PullableQueue_pull(this[QueueScheduler_queue]);
+            const task = this[QueueScheduler_queue][PullableQueueLike_pull]();
             if (isSome(task)) {
                 this[EnumeratorLike_current] = task;
             }

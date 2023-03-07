@@ -11,9 +11,8 @@ import { Optional, newInstance, none, pipe } from "../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../util.js";
 import IndexedQueue_fifoQueueMixin from "../PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import PullableQueue_priorityQueueMixin from "../PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
-import PullableQueue_pull from "../PullableQueue/__internal__/PullableQueue.pull.js";
 import {
-  PullableQueueLike_peek,
+  PullableQueueLike_head,
   PullableQueueLike_pull,
 } from "../__internal__/util.internal.js";
 
@@ -59,7 +58,7 @@ testModule(
       const queue = createFifoQueue();
 
       pipe(
-        queue[PullableQueueLike_peek](),
+        queue[PullableQueueLike_head],
         expectEquals(none as Optional<number>),
       );
       pipe(
@@ -70,7 +69,7 @@ testModule(
       for (let i = 0; i < 8; i++) {
         queue[QueueLike_push](i);
         pipe(
-          queue[PullableQueueLike_peek](),
+          queue[PullableQueueLike_head],
           expectEquals(0 as Optional<number>),
         );
       }
@@ -81,33 +80,24 @@ testModule(
         queue[PullableQueueLike_pull](),
         expectEquals(0 as Optional<number>),
       );
-      pipe(
-        queue[PullableQueueLike_peek](),
-        expectEquals(1 as Optional<number>),
-      );
+      pipe(queue[PullableQueueLike_head], expectEquals(1 as Optional<number>));
 
       pipe(
         queue[PullableQueueLike_pull](),
         expectEquals(1 as Optional<number>),
       );
-      pipe(
-        queue[PullableQueueLike_peek](),
-        expectEquals(2 as Optional<number>),
-      );
+      pipe(queue[PullableQueueLike_head], expectEquals(2 as Optional<number>));
 
       pipe(
         queue[PullableQueueLike_pull](),
         expectEquals(2 as Optional<number>),
       );
-      pipe(
-        queue[PullableQueueLike_peek](),
-        expectEquals(3 as Optional<number>),
-      );
+      pipe(queue[PullableQueueLike_head], expectEquals(3 as Optional<number>));
 
       for (let i = 8; i < 16; i++) {
         queue[QueueLike_push](i);
         pipe(
-          queue[PullableQueueLike_peek](),
+          queue[PullableQueueLike_head],
           expectEquals(3 as Optional<number>),
         );
       }
@@ -116,33 +106,24 @@ testModule(
         queue[PullableQueueLike_pull](),
         expectEquals(3 as Optional<number>),
       );
-      pipe(
-        queue[PullableQueueLike_peek](),
-        expectEquals(4 as Optional<number>),
-      );
+      pipe(queue[PullableQueueLike_head], expectEquals(4 as Optional<number>));
 
       pipe(
         queue[PullableQueueLike_pull](),
         expectEquals(4 as Optional<number>),
       );
-      pipe(
-        queue[PullableQueueLike_peek](),
-        expectEquals(5 as Optional<number>),
-      );
+      pipe(queue[PullableQueueLike_head], expectEquals(5 as Optional<number>));
 
       pipe(
         queue[PullableQueueLike_pull](),
         expectEquals(5 as Optional<number>),
       );
-      pipe(
-        queue[PullableQueueLike_peek](),
-        expectEquals(6 as Optional<number>),
-      );
+      pipe(queue[PullableQueueLike_head], expectEquals(6 as Optional<number>));
 
       for (let i = 16; i < 32; i++) {
         queue[QueueLike_push](i);
         pipe(
-          queue[PullableQueueLike_peek](),
+          queue[PullableQueueLike_head],
           expectEquals(6 as Optional<number>),
         );
       }
@@ -151,10 +132,7 @@ testModule(
         queue[PullableQueueLike_pull]();
       }
 
-      pipe(
-        queue[PullableQueueLike_peek](),
-        expectEquals(26 as Optional<number>),
-      );
+      pipe(queue[PullableQueueLike_head], expectEquals(26 as Optional<number>));
     }),
     test("shrink", () => {
       const queue = createFifoQueue();
@@ -167,10 +145,7 @@ testModule(
         queue[PullableQueueLike_pull]();
       }
 
-      pipe(
-        queue[PullableQueueLike_peek](),
-        expectEquals(50 as Optional<number>),
-      );
+      pipe(queue[PullableQueueLike_head], expectEquals(50 as Optional<number>));
 
       for (let i = 300; i < 500; i++) {
         queue[QueueLike_push](i);
@@ -181,7 +156,7 @@ testModule(
       }
 
       pipe(
-        queue[PullableQueueLike_peek](),
+        queue[PullableQueueLike_head],
         expectEquals(250 as Optional<number>),
       );
     }),
@@ -197,7 +172,7 @@ testModule(
 
       const acc: number[] = [];
       while (queue[QueueLike_count] > 0) {
-        acc.push(PullableQueue_pull(queue) as number);
+        acc.push(queue[PullableQueueLike_pull]() as number);
       }
 
       pipe(acc, expectArrayEquals(makeSortedArray(100)));

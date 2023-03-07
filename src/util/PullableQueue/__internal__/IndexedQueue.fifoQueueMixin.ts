@@ -6,12 +6,13 @@ import {
   pipe,
   raiseWithDebugMessage,
   returns,
+  unsafeCast,
 } from "../../../functions.js";
 import { QueueLike, QueueLike_count, QueueLike_push } from "../../../util.js";
 import {
   IndexedQueueLike,
   IndexedQueueLike_get,
-  PullableQueueLike_peek,
+  PullableQueueLike_head,
   PullableQueueLike_pull,
 } from "../../__internal__/util.internal.js";
 
@@ -99,7 +100,8 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
             ? (values[headOffsetIndex] as T)
             : (values[tailOffsetIndex] as T);
         },
-        [PullableQueueLike_peek](this: TProperties) {
+        get [PullableQueueLike_head]() {
+          unsafeCast<TProperties>(this);
           const head = this[FifoQueue_head];
           return head === this[FifoQueue_tail]
             ? none

@@ -10,10 +10,10 @@ export interface DisposableRefLike<TDisposable extends DisposableLike = Disposab
 }
 export interface DelegatingDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DelegatingLike<TDisposable>, DisposableLike {
 }
-export declare const PullableQueueLike_peek: unique symbol;
+export declare const PullableQueueLike_head: unique symbol;
 export declare const PullableQueueLike_pull: unique symbol;
 export interface PullableQueueLike<T> extends QueueLike<T> {
-    [PullableQueueLike_peek](): Optional<T>;
+    readonly [PullableQueueLike_head]: Optional<T>;
     [PullableQueueLike_pull](): Optional<T>;
 }
 export declare const IndexedQueueLike_get: unique symbol;

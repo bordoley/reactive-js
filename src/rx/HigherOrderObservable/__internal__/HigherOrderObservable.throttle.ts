@@ -37,7 +37,6 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create.js";
-import MutableRef_set from "../../../util/MutableRef/__internal__/MutableRef.set.js";
 import {
   DisposableRefLike,
   MutableRefLike_current,
@@ -80,18 +79,12 @@ const createThrottleObserver: <T>(
     observer: ObserverLike<T> & TProperties,
     next: T,
   ) => {
-    pipe(
-      observer[ThrottleObserver_durationSubscription],
-      MutableRef_set(
-        pipe(
-          observer[ThrottleObserver_durationFunction](next),
-          Observable_forEach<ObservableLike>(
-            observer[ThrottleObserver_onNotify],
-          ),
-          Observable_subscribe(observer[ObserverLike_scheduler]),
-        ),
-      ),
-    );
+    observer[ThrottleObserver_durationSubscription][MutableRefLike_current] =
+      pipe(
+        observer[ThrottleObserver_durationFunction](next),
+        Observable_forEach<ObservableLike>(observer[ThrottleObserver_onNotify]),
+        Observable_subscribe(observer[ObserverLike_scheduler]),
+      );
   };
 
   return createInstanceFactory(

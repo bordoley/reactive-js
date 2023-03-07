@@ -12,7 +12,7 @@ import {
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import {
   PullableQueueLike,
-  PullableQueueLike_peek,
+  PullableQueueLike_head,
   PullableQueueLike_pull,
 } from "../../__internal__/util.internal.js";
 
@@ -90,7 +90,7 @@ const PullableQueue_priorityQueueMixin: <T>() => Mixin1<
         instance: Pick<
           PullableQueueLike<T>,
           | typeof QueueLike_count
-          | typeof PullableQueueLike_peek
+          | typeof PullableQueueLike_head
           | typeof PullableQueueLike_pull
           | typeof QueueLike_push
         > &
@@ -110,7 +110,8 @@ const PullableQueue_priorityQueueMixin: <T>() => Mixin1<
           unsafeCast<TProperties>(this);
           return ReadonlyArray_getLength(this[PriorityQueueImpl_values]);
         },
-        [PullableQueueLike_peek](this: TProperties) {
+        get [PullableQueueLike_head]() {
+          unsafeCast<TProperties>(this);
           return this[PriorityQueueImpl_values][0];
         },
         [PullableQueueLike_pull](this: TProperties) {
