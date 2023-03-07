@@ -30,7 +30,6 @@ import {
   TakeWhile,
   ThrowIfEmpty,
   Throws,
-  ToReadonlyArray,
   Zip,
   ZipWith,
 } from "../containers.js";
@@ -69,7 +68,7 @@ import {
 } from "./testing.js";
 
 export const bufferTests = <C extends ContainerLike>(
-  m: Buffer<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: Buffer<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "buffer",
@@ -79,7 +78,8 @@ export const bufferTests = <C extends ContainerLike>(
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
         m.fromReadonlyArray(),
         m.buffer({ maxBufferSize: 3 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals<readonly number[]>(
           [
             [1, 2, 3],
@@ -97,7 +97,8 @@ export const bufferTests = <C extends ContainerLike>(
         [1, 2, 3, 4, 5, 6, 7, 8],
         m.fromReadonlyArray(),
         m.buffer({ maxBufferSize: 3 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals<readonly number[]>(
           [
             [1, 2, 3],
@@ -111,7 +112,7 @@ export const bufferTests = <C extends ContainerLike>(
   );
 
 export const catchErrorTests = <C extends ContainerLike>(
-  m: CatchError<C> & Throws<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: CatchError<C> & Throws<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "catchError",
@@ -120,7 +121,8 @@ export const catchErrorTests = <C extends ContainerLike>(
       pipe(
         m.throws<number>({ raise: returns(e) }),
         m.catchError(_ => pipe([1, 2, 3], m.fromReadonlyArray())),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       );
     }),
@@ -130,14 +132,15 @@ export const catchErrorTests = <C extends ContainerLike>(
         [4, 5, 6],
         m.fromReadonlyArray(),
         m.catchError(_ => pipe([1, 2, 3], m.fromReadonlyArray())),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([4, 5, 6]),
       ),
     ),
   );
 
 export const concatTests = <C extends ContainerLike>(
-  m: Concat<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: Concat<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "concat",
@@ -148,14 +151,15 @@ export const concatTests = <C extends ContainerLike>(
           pipe([1, 2, 3], m.fromReadonlyArray()),
           pipe([4, 5, 6], m.fromReadonlyArray()),
         ),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
       ),
     ),
   );
 
 export const concatAllTests = <C extends ContainerLike>(
-  m: ConcatAll<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: ConcatAll<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "concatAll",
@@ -168,7 +172,8 @@ export const concatAllTests = <C extends ContainerLike>(
         ],
         m.fromReadonlyArray(),
         m.concatAll(),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
       ),
     ),
@@ -178,7 +183,7 @@ export const concatAllTests = <C extends ContainerLike>(
   );
 
 export const concatMapTests = <C extends ContainerLike>(
-  m: ConcatMap<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: ConcatMap<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "concatMap",
@@ -188,14 +193,15 @@ export const concatMapTests = <C extends ContainerLike>(
         [0, 1],
         m.fromReadonlyArray(),
         m.concatMap(pipeLazy([1, 2, 3], m.fromReadonlyArray())),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
   );
 
 export const concatWithTests = <C extends ContainerLike>(
-  m: ConcatWith<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: ConcatWith<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "concatWith",
@@ -205,7 +211,8 @@ export const concatWithTests = <C extends ContainerLike>(
         [0, 1],
         m.fromReadonlyArray(),
         m.concatWith(pipe([2, 3, 4], m.fromReadonlyArray())),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
     ),
@@ -215,7 +222,7 @@ export const decodeWithCharsetTests = <C extends ContainerLike>(
   m: DecodeWithCharset<C> &
     EncodeUtf8<C> &
     FromReadonlyArray<C> &
-    ToReadonlyArray<C>,
+    ToRunnable<C>,
 ) =>
   describe(
     "decodeWithCharset",
@@ -227,7 +234,8 @@ export const decodeWithCharsetTests = <C extends ContainerLike>(
         m.fromReadonlyArray(),
         m.encodeUtf8(),
         m.decodeWithCharset(),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         x => x.join(),
         expectEquals(str),
       );
@@ -239,7 +247,8 @@ export const decodeWithCharsetTests = <C extends ContainerLike>(
         m.fromReadonlyArray(),
         m.encodeUtf8(),
         m.decodeWithCharset(),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         x => x.join(),
         expectEquals(str),
       );
@@ -247,7 +256,7 @@ export const decodeWithCharsetTests = <C extends ContainerLike>(
   );
 
 export const distinctUntilChangedTests = <C extends ContainerLike>(
-  m: DistinctUntilChanged<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: DistinctUntilChanged<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "distinctUntilChanged",
@@ -257,7 +266,8 @@ export const distinctUntilChangedTests = <C extends ContainerLike>(
         [1, 2, 2, 2, 2, 3, 3, 3, 4],
         m.fromReadonlyArray(),
         m.distinctUntilChanged(),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4]),
       ),
     ),
@@ -267,7 +277,8 @@ export const distinctUntilChangedTests = <C extends ContainerLike>(
         [],
         m.fromReadonlyArray(),
         m.distinctUntilChanged(),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([]),
       ),
     ),
@@ -282,7 +293,8 @@ export const distinctUntilChangedTests = <C extends ContainerLike>(
           [1, 1],
           m.fromReadonlyArray(),
           m.distinctUntilChanged({ equality }),
-          m.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
         ),
         expectToThrowError(err),
       );
@@ -290,7 +302,7 @@ export const distinctUntilChangedTests = <C extends ContainerLike>(
   );
 
 export const endWithTests = <C extends ContainerLike>(
-  m: EndWith<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: EndWith<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "endWith",
@@ -300,14 +312,15 @@ export const endWithTests = <C extends ContainerLike>(
         [0, 1],
         m.fromReadonlyArray(),
         m.endWith(2, 3, 4),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
     ),
   );
 
 export const everySatisfyTests = <C extends ContainerLike>(
-  m: EverySatisfy<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: EverySatisfy<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "everySatisfy",
@@ -317,7 +330,8 @@ export const everySatisfyTests = <C extends ContainerLike>(
         [],
         m.fromReadonlyArray(),
         m.everySatisfy(alwaysFalse),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([true]),
       ),
     ),
@@ -327,7 +341,8 @@ export const everySatisfyTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.everySatisfy(alwaysTrue),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([true]),
       ),
     ),
@@ -337,14 +352,15 @@ export const everySatisfyTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.everySatisfy(alwaysFalse),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([false]),
       ),
     ),
   );
 
 export const forEachTests = <C extends ContainerLike>(
-  m: ForEach<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: ForEach<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "forEach",
@@ -356,7 +372,8 @@ export const forEachTests = <C extends ContainerLike>(
         m.forEach(x => {
           result.push(x + 10);
         }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       );
 
@@ -372,7 +389,8 @@ export const forEachTests = <C extends ContainerLike>(
           m.forEach(_ => {
             throw err;
           }),
-          m.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
         ),
         expectToThrowError(err),
       );
@@ -380,7 +398,7 @@ export const forEachTests = <C extends ContainerLike>(
   );
 
 export const fromReadonlyArrayTests = <C extends ContainerLike>(
-  m: FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "fromReadonlyArray",
@@ -388,7 +406,8 @@ export const fromReadonlyArrayTests = <C extends ContainerLike>(
       pipe(
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
         m.fromReadonlyArray({ count: -3, start: 4 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([5, 4, 3]),
       );
     }),
@@ -396,7 +415,8 @@ export const fromReadonlyArrayTests = <C extends ContainerLike>(
       pipe(
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
         m.fromReadonlyArray({ count: 3, start: 4 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([5, 6, 7]),
       );
     }),
@@ -404,7 +424,8 @@ export const fromReadonlyArrayTests = <C extends ContainerLike>(
       pipe(
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
         m.fromReadonlyArray({ count: -100, start: 3 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([4, 3, 2, 1]),
       );
     }),
@@ -412,7 +433,8 @@ export const fromReadonlyArrayTests = <C extends ContainerLike>(
       pipe(
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
         m.fromReadonlyArray({ count: 100, start: 7 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([8, 9]),
       );
     }),
@@ -420,7 +442,8 @@ export const fromReadonlyArrayTests = <C extends ContainerLike>(
       pipe(
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
         m.fromReadonlyArray({ count: -3 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([9, 8, 7]),
       );
     }),
@@ -428,14 +451,15 @@ export const fromReadonlyArrayTests = <C extends ContainerLike>(
       pipe(
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
         m.fromReadonlyArray({ count: 3 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       );
     }),
   );
 
 export const flatMapIterableTests = <C extends ContainerLike>(
-  m: FlatMapIterable<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: FlatMapIterable<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "flatMapIterable",
@@ -449,14 +473,15 @@ export const flatMapIterableTests = <C extends ContainerLike>(
           yield 2;
           yield 3;
         }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
   );
 
 export const ignoreElementsTests = <C extends ContainerLike>(
-  m: IgnoreElements<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: IgnoreElements<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "ignoreElements",
@@ -466,14 +491,15 @@ export const ignoreElementsTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.ignoreElements<number>(),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals(ReadonlyArray.empty()),
       ),
     ),
   );
 
 export const keepTests = <C extends ContainerLike>(
-  m: Keep<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: Keep<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "keep",
@@ -483,7 +509,8 @@ export const keepTests = <C extends ContainerLike>(
         [4, 8, 10, 7],
         m.fromReadonlyArray(),
         m.keep(x => x > 5),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([8, 10, 7]),
       ),
     ),
@@ -498,7 +525,8 @@ export const keepTests = <C extends ContainerLike>(
           [1, 1],
           m.fromReadonlyArray(),
           m.keep(predicate),
-          m.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
         ),
         expectToThrowError(err),
       );
@@ -506,7 +534,7 @@ export const keepTests = <C extends ContainerLike>(
   );
 
 export const mapTests = <C extends ContainerLike>(
-  m: Map<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: Map<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "map",
@@ -516,7 +544,8 @@ export const mapTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.map(increment),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([2, 3, 4]),
       ),
     ),
@@ -531,7 +560,8 @@ export const mapTests = <C extends ContainerLike>(
           [1, 1],
           m.fromReadonlyArray(),
           m.map(mapper),
-          m.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
         ),
         expectToThrowError(err),
       );
@@ -539,7 +569,7 @@ export const mapTests = <C extends ContainerLike>(
   );
 
 export const mapToTests = <C extends ContainerLike>(
-  m: MapTo<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: MapTo<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "mapTo",
@@ -549,14 +579,15 @@ export const mapToTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.mapTo(2),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([2, 2, 2]),
       ),
     ),
   );
 
 export const pairwiseTests = <C extends ContainerLike>(
-  m: Pairwise<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: Pairwise<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "pairwise",
@@ -566,7 +597,8 @@ export const pairwiseTests = <C extends ContainerLike>(
         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         m.fromReadonlyArray(),
         m.pairwise<number>(),
-        m.toReadonlyArray<readonly [number, number]>(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray<readonly [number, number]>(),
         expectArrayEquals<readonly [number, number]>(
           [
             [0, 1],
@@ -589,14 +621,15 @@ export const pairwiseTests = <C extends ContainerLike>(
         [0],
         m.fromReadonlyArray(),
         m.pairwise<number>(),
-        m.toReadonlyArray<readonly [number, number]>(),
+        m.toRunnable<readonly [number, number]>(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals<readonly [number, number]>([], arrayEquality()),
       ),
     ),
   );
 
 export const reduceTests = <C extends ContainerLike>(
-  m: Reduce<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: Reduce<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "reduce",
@@ -606,14 +639,15 @@ export const reduceTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.reduce<number, number>((acc, next) => acc + next, returns(0)),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([6]),
       ),
     ),
   );
 
 export const repeatTests = <C extends ContainerLike>(
-  m: Repeat<C> & FromReadonlyArray<C> & TakeFirst<C> & ToReadonlyArray<C>,
+  m: Repeat<C> & FromReadonlyArray<C> & TakeFirst<C> & ToRunnable<C>,
 ) =>
   describe(
     "repeat",
@@ -624,7 +658,8 @@ export const repeatTests = <C extends ContainerLike>(
         m.fromReadonlyArray(),
         m.repeat(),
         m.takeFirst({ count: 6 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
@@ -635,7 +670,8 @@ export const repeatTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.repeat(3),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),
     ),
@@ -645,7 +681,8 @@ export const repeatTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.repeat(x => x < 1),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       ),
     ),
@@ -658,7 +695,8 @@ export const repeatTests = <C extends ContainerLike>(
           m.repeat(_ => {
             throw err;
           }),
-          m.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
         ),
         expectToThrowError(err),
       );
@@ -671,7 +709,7 @@ export const retryTests = <C extends ObservableLike>(
     FromReadonlyArray<C> &
     Throws<C> &
     TakeFirst<C> &
-    ToReadonlyArray<C>,
+    ToRunnable<C>,
 ) =>
   describe(
     "retry",
@@ -681,14 +719,15 @@ export const retryTests = <C extends ObservableLike>(
         m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), m.throws()),
         m.retry(),
         m.takeFirst({ count: 6 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
   );
 
 export const scanTests = <C extends ContainerLike>(
-  m: Scan<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: Scan<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "scan",
@@ -698,7 +737,8 @@ export const scanTests = <C extends ContainerLike>(
         [1, 1, 1],
         m.fromReadonlyArray(),
         m.scan<number, number>((a, b) => a + b, returns(0)),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       ),
     ),
@@ -713,7 +753,8 @@ export const scanTests = <C extends ContainerLike>(
           [1, 1],
           m.fromReadonlyArray(),
           m.scan(scanner, returns(0)),
-          m.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
         ),
         expectToThrowError(err),
       );
@@ -729,7 +770,8 @@ export const scanTests = <C extends ContainerLike>(
           [1, 1],
           m.fromReadonlyArray(),
           m.scan((a, b) => a + b, initialValue),
-          m.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
         ),
         expectToThrowError(err),
       );
@@ -749,7 +791,7 @@ export const scanAsyncTests = <
         delay?: number;
       }
     > &
-    ToReadonlyArray<C>,
+    ToRunnable<C>,
   mInner: FromReadonlyArray<
     CInner,
     {
@@ -770,7 +812,8 @@ export const scanAsyncTests = <
           (acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })),
           returns(0),
         ),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 3, 6]),
       ),
     ),
@@ -784,7 +827,8 @@ export const scanAsyncTests = <
           (acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })),
           returns(0),
         ),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 3, 6]),
       ),
     ),
@@ -798,7 +842,8 @@ export const scanAsyncTests = <
           (acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })),
           returns(0),
         ),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 3, 6]),
       ),
     ),
@@ -812,14 +857,15 @@ export const scanAsyncTests = <
           (acc, x) => pipe([x + acc], mInner.fromReadonlyArray()),
           returns(0),
         ),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 3, 6]),
       ),
     ),
   );
 
 export const skipFirstTests = <C extends ContainerLike>(
-  m: SkipFirst<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: SkipFirst<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "skipFirst",
@@ -829,7 +875,8 @@ export const skipFirstTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.skipFirst({ count: 2 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([3]),
       ),
     ),
@@ -839,14 +886,15 @@ export const skipFirstTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.skipFirst({ count: 4 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals(ReadonlyArray.empty()),
       ),
     ),
   );
 
 export const containsTests = <C extends ContainerLike>(
-  m: Contains<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: Contains<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "contains",
@@ -856,7 +904,8 @@ export const containsTests = <C extends ContainerLike>(
         [],
         m.fromReadonlyArray(),
         m.contains(1),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([false]),
       ),
     ),
@@ -866,7 +915,8 @@ export const containsTests = <C extends ContainerLike>(
         [0, 1, 2],
         m.fromReadonlyArray(),
         m.contains(1),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([true]),
       ),
     ),
@@ -876,14 +926,15 @@ export const containsTests = <C extends ContainerLike>(
         [2, 3, 4],
         m.fromReadonlyArray(),
         m.contains(1),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([false]),
       ),
     ),
   );
 
 export const startWithTests = <C extends ContainerLike>(
-  m: StartWith<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: StartWith<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "startWith",
@@ -893,14 +944,15 @@ export const startWithTests = <C extends ContainerLike>(
         [0, 1],
         m.fromReadonlyArray(),
         m.startWith(2, 3, 4),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([2, 3, 4, 0, 1]),
       ),
     ),
   );
 
 export const takeFirstTests = <C extends ContainerLike>(
-  m: TakeFirst<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: TakeFirst<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "takeFirst",
@@ -910,7 +962,8 @@ export const takeFirstTests = <C extends ContainerLike>(
         [1, 2, 3, 4, 5],
         m.fromReadonlyArray(),
         m.takeFirst({ count: 3 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       ),
     ),
@@ -920,7 +973,8 @@ export const takeFirstTests = <C extends ContainerLike>(
         [1, 2],
         m.fromReadonlyArray(),
         m.takeFirst({ count: 3 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2]),
       ),
     ),
@@ -930,7 +984,8 @@ export const takeFirstTests = <C extends ContainerLike>(
         [],
         m.fromReadonlyArray(),
         m.takeFirst({ count: 3 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([]),
       ),
     ),
@@ -940,7 +995,8 @@ export const takeFirstTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.takeFirst(),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1]),
       ),
     ),
@@ -950,14 +1006,15 @@ export const takeFirstTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.takeFirst({ count: 0 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([] as number[]),
       ),
     ),
   );
 
 export const takeLastTests = <C extends ContainerLike>(
-  m: TakeLast<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: TakeLast<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "takeLast",
@@ -967,7 +1024,8 @@ export const takeLastTests = <C extends ContainerLike>(
         [1, 2, 3, 4, 5],
         m.fromReadonlyArray(),
         m.takeLast({ count: 3 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([3, 4, 5]),
       ),
     ),
@@ -977,7 +1035,8 @@ export const takeLastTests = <C extends ContainerLike>(
         [1, 2, 3, 4, 5],
         m.fromReadonlyArray(),
         m.takeLast({ count: 10 }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5]),
       ),
     ),
@@ -987,14 +1046,15 @@ export const takeLastTests = <C extends ContainerLike>(
         [1, 2, 3, 4, 5],
         m.fromReadonlyArray(),
         m.takeLast(),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([5]),
       ),
     ),
   );
 
 export const takeWhileTests = <C extends ContainerLike>(
-  m: FromReadonlyArray<C> & TakeWhile<C> & ToReadonlyArray<C>,
+  m: FromReadonlyArray<C> & TakeWhile<C> & ToRunnable<C>,
 ) =>
   describe(
     "takeWhile",
@@ -1003,21 +1063,24 @@ export const takeWhileTests = <C extends ContainerLike>(
         [1, 2, 3, 4, 5],
         m.fromReadonlyArray(),
         m.takeWhile(x => x < 4),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       );
       pipe(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.takeWhile<number>(alwaysTrue),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       );
       pipe(
         [],
         m.fromReadonlyArray(),
         m.takeWhile<number>(alwaysTrue),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals(ReadonlyArray.empty()),
       );
     }),
@@ -1027,7 +1090,8 @@ export const takeWhileTests = <C extends ContainerLike>(
         [1, 2, 3, 4, 5, 6],
         m.fromReadonlyArray(),
         m.takeWhile(x => x < 4, { inclusive: true }),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4]),
       ),
     ),
@@ -1042,7 +1106,8 @@ export const takeWhileTests = <C extends ContainerLike>(
           [1, 1],
           m.fromReadonlyArray(),
           m.takeWhile(predicate),
-          m.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
         ),
         expectToThrowError(err),
       );
@@ -1050,7 +1115,7 @@ export const takeWhileTests = <C extends ContainerLike>(
   );
 
 export const throwIfEmptyTests = <C extends ContainerLike>(
-  m: FromReadonlyArray<C> & ThrowIfEmpty<C> & ToReadonlyArray<C>,
+  m: FromReadonlyArray<C> & ThrowIfEmpty<C> & ToRunnable<C>,
 ) =>
   describe(
     "throwIfEmpty",
@@ -1061,7 +1126,8 @@ export const throwIfEmptyTests = <C extends ContainerLike>(
           [],
           m.fromReadonlyArray(),
           m.throwIfEmpty(() => error),
-          m.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
         ),
         expectToThrowError(error),
       );
@@ -1076,7 +1142,8 @@ export const throwIfEmptyTests = <C extends ContainerLike>(
           m.throwIfEmpty(() => {
             throw error;
           }),
-          m.toReadonlyArray(),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
         ),
         expectToThrowError(error),
       );
@@ -1088,7 +1155,8 @@ export const throwIfEmptyTests = <C extends ContainerLike>(
         [1],
         m.fromReadonlyArray(),
         m.throwIfEmpty(() => undefined),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals([1]),
       ),
     ),
@@ -1169,7 +1237,7 @@ export const toRunnableTests = <C extends ContainerLike>(
   );
 
 export const zipTests = <C extends ContainerLike>(
-  m: Zip<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: Zip<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "zip",
@@ -1180,7 +1248,8 @@ export const zipTests = <C extends ContainerLike>(
           pipe([1, 2, 3, 4, 5], m.fromReadonlyArray()),
           pipe([5, 4, 3, 2, 1], m.fromReadonlyArray()),
         ),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals<readonly [number, number]>(
           [
             [1, 5],
@@ -1201,7 +1270,8 @@ export const zipTests = <C extends ContainerLike>(
           pipe([5, 4, 3, 2, 1], m.fromReadonlyArray()),
           pipe([1, 2, 3, 4], m.fromReadonlyArray()),
         ),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals<readonly [number, number, number]>(
           [
             [1, 5, 1],
@@ -1215,7 +1285,7 @@ export const zipTests = <C extends ContainerLike>(
   );
 
 export const zipWithTests = <C extends ContainerLike>(
-  m: ZipWith<C> & FromReadonlyArray<C> & ToReadonlyArray<C>,
+  m: ZipWith<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
     "zipWith",
@@ -1225,7 +1295,8 @@ export const zipWithTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.zipWith(pipe([1, 2, 3, 4], m.fromReadonlyArray())),
-        m.toReadonlyArray(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
         expectArrayEquals<readonly [number, number]>(
           [
             [1, 1],
