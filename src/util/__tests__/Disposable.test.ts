@@ -22,7 +22,6 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
@@ -103,7 +102,7 @@ testModule(
   }),
   test("toObservable", () => {
     const disposable = Disposable.create();
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
 
     let disposedTime = 0;
     pipe(

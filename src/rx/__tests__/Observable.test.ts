@@ -15,7 +15,6 @@ import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import { ObservableLike } from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../util.js";
 import * as Observable from "../Observable.js";
 import { __await, __memo } from "../Observable.js";
@@ -23,7 +22,7 @@ import { __await, __memo } from "../Observable.js";
 const onSubscribeTests = describe(
   "onSubscribe",
   test("when subscribe function returns a teardown function", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
 
     const disp = mockFn();
     const f = mockFn(disp);
@@ -45,7 +44,7 @@ const onSubscribeTests = describe(
   }),
 
   test("when callback function throws", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
     const subscription = pipe(
       [1],
       ReadonlyArray.toObservable(),
@@ -60,7 +59,7 @@ const onSubscribeTests = describe(
 const shareTests = describe(
   "share",
   test("shared observable zipped with itself", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
     const shared = pipe(
       [1, 2, 3],
       ReadonlyArray.toObservable({ delay: 1 }),
@@ -100,7 +99,7 @@ const toPromiseTests = describe(
 const asyncTests = describe(
   "async",
   test("batch mode", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
 
     const fromValueWithDelay = (
       delay: number,
@@ -133,7 +132,7 @@ const asyncTests = describe(
     pipe(result, expectEquals(22));
   }),
   test("combined-latest mode", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
 
     const oneTwoThreeDelayed = pipe(
       [1, 2, 3],
@@ -165,7 +164,7 @@ const asyncTests = describe(
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
   }),
   test("conditional hooks", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
 
     const src = pipe(
       [0, 1, 2, 3, 4, 5],

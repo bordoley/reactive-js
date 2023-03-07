@@ -1,7 +1,7 @@
 import * as Observable from "@reactive-js/core/rx/Observable";
 import { pipe } from "@reactive-js/core/functions";
 import * as Scheduler from "@reactive-js/core/scheduling/Scheduler";
-import * as Disposable from "@reactive-js/core/util/Disposable";
+import { DisposableLike_dispose } from "@reactive-js/core/util";
 
 const scheduler = Scheduler.createHostScheduler();
 
@@ -21,7 +21,7 @@ pipe(
   scheduler,
   Scheduler.schedule(
     () => {
-      pipe(subscription, Disposable.dispose());
+      subscription[DisposableLike_dispose]();
     },
     { delay: 20000 },
   ),

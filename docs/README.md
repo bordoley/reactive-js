@@ -29,7 +29,6 @@ Reactive-JS
 - [scheduling/Pauseable](modules/scheduling_Pauseable.md)
 - [scheduling/PriorityScheduler](modules/scheduling_PriorityScheduler.md)
 - [scheduling/Scheduler](modules/scheduling_Scheduler.md)
-- [scheduling/VirtualTimeScheduler](modules/scheduling_VirtualTimeScheduler.md)
 - [streaming](modules/streaming.md)
 - [streaming/AsyncEnumerable](modules/streaming_AsyncEnumerable.md)
 - [streaming/Flowable](modules/streaming_Flowable.md)

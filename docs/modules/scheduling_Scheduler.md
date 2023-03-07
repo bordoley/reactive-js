@@ -7,6 +7,7 @@
 ### Functions
 
 - [createHostScheduler](scheduling_Scheduler.md#createhostscheduler)
+- [createVirtualTimeScheduler](scheduling_Scheduler.md#createvirtualtimescheduler)
 - [schedule](scheduling_Scheduler.md#schedule)
 - [toPausableScheduler](scheduling_Scheduler.md#topausablescheduler)
 - [toPriorityScheduler](scheduling_Scheduler.md#topriorityscheduler)
@@ -27,6 +28,23 @@
 #### Returns
 
 [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+___
+
+### createVirtualTimeScheduler
+
+▸ **createVirtualTimeScheduler**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxMicroTaskTicks?` | `number` |
+
+#### Returns
+
+[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
 
 ___
 

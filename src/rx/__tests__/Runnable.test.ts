@@ -65,7 +65,6 @@ import {
 } from "../../scheduling.js";
 import * as Pauseable from "../../scheduling/Pauseable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import * as Streamable from "../../streaming/Streamable.js";
 import {
   DisposableLike_dispose,
@@ -306,7 +305,7 @@ const timeoutTests = describe(
 const toFlowableTests = describe(
   "toFlowable",
   test("flow a generating source", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
 
     const generateStream = pipe(
       Runnable.generate(increment, returns(-1), {

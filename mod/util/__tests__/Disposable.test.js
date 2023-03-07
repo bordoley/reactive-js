@@ -5,7 +5,6 @@ import { error, none, pipe, pipeLazy, raise, } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../util.js";
 import * as Disposable from "../Disposable.js";
 testModule("Disposable", test("disposes child disposable when disposed", () => {
@@ -50,7 +49,7 @@ testModule("Disposable", test("disposes child disposable when disposed", () => {
     pipe(parent[DisposableLike_error], expectEquals(e));
 }), test("toObservable", () => {
     const disposable = Disposable.create();
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
     let disposedTime = 0;
     pipe(disposable, Disposable.toObservable(), Observable.subscribe(scheduler), Disposable.onDisposed(_ => {
         disposedTime = scheduler[SchedulerLike_now];

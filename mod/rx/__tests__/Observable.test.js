@@ -5,12 +5,11 @@ import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../util.js";
 import * as Observable from "../Observable.js";
 import { __await, __memo } from "../Observable.js";
 const onSubscribeTests = describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
     const disp = mockFn();
     const f = mockFn(disp);
     pipe([1], ReadonlyArray.toObservable(), Observable.onSubscribe(f), Observable.subscribe(scheduler));
@@ -20,12 +19,12 @@ const onSubscribeTests = describe("onSubscribe", test("when subscribe function r
     pipe(disp, expectToHaveBeenCalledTimes(1));
     pipe(f, expectToHaveBeenCalledTimes(1));
 }), test("when callback function throws", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
     const subscription = pipe([1], ReadonlyArray.toObservable(), Observable.onSubscribe(raise), Observable.subscribe(scheduler));
     pipe(subscription[DisposableLike_error], expectIsSome);
 }));
 const shareTests = describe("share", test("shared observable zipped with itself", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
     const shared = pipe([1, 2, 3], ReadonlyArray.toObservable({ delay: 1 }), Observable.share(scheduler, { replay: 1 }));
     let result = [];
     pipe(Observable.zip(shared, shared), Observable.map(([a, b]) => a + b), Observable.forEach(x => {
@@ -44,7 +43,7 @@ const toPromiseTests = describe("toPromise", testAsync("when observable complete
     }
 }));
 const asyncTests = describe("async", test("batch mode", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
     const fromValueWithDelay = (delay, value) => pipe([value], Observable.fromReadonlyArray({ delay }));
     let result = -1;
     pipe(Observable.async(() => {
@@ -61,7 +60,7 @@ const asyncTests = describe("async", test("batch mode", () => {
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectEquals(22));
 }), test("combined-latest mode", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
     const oneTwoThreeDelayed = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }));
     const createOneTwoThree = (_) => pipe([1, 2, 3], Observable.fromReadonlyArray());
     const result = [];
@@ -75,7 +74,7 @@ const asyncTests = describe("async", test("batch mode", () => {
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), test("conditional hooks", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
     const src = pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 }));
     const src2 = Observable.generate(increment, returns(100), {
         delay: 2,

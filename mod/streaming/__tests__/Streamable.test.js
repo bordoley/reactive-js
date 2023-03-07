@@ -4,11 +4,11 @@ import { describe, expectArrayEquals, test, testModule, } from "../../__tests__/
 import { pipe, returns } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
-import * as VirtualTimeScheduler from "../../scheduling/VirtualTimeScheduler.js";
+import * as Scheduler from "../../scheduling/Scheduler.js";
 import { DisposableLike_dispose, QueueLike_push } from "../../util.js";
 import * as Streamable from "../Streamable.js";
 testModule("Streamable", describe("stateStore", test("createStateStore", () => {
-    const scheduler = VirtualTimeScheduler.create();
+    const scheduler = Scheduler.createVirtualTimeScheduler();
     const stateStream = pipe(Streamable.createStateStore(returns(1)), Streamable.stream(scheduler));
     stateStream[QueueLike_push](returns(2));
     stateStream[QueueLike_push](returns(3));

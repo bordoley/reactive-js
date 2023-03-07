@@ -1,4 +1,4 @@
-/// <reference types="./VirtualTimeScheduler.create.d.ts" />
+/// <reference types="./Scheduler.createVirtualTimeScheduler.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
@@ -89,8 +89,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         return this[EnumeratorLike_hasCurrent];
     },
 }));
-const VirtualTimeScheduler_create = (options = {}) => {
+const Scheduler_createVirtualTimeScheduler = (options = {}) => {
     const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
     return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
 };
-export default VirtualTimeScheduler_create;
+export default Scheduler_createVirtualTimeScheduler;
