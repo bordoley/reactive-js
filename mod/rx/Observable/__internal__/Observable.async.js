@@ -3,7 +3,7 @@
 var _a, _b, _c, _d;
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
-import { ObserverLike_scheduler, } from "../../../rx.js";
+import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
@@ -220,7 +220,7 @@ export const Observable_async = (computation, { mode = "batched" } = {}) => Obse
             (combineLatestModeShouldNotify || mode === "batched");
         const shouldDispose = !hasOutstandingEffects || hasError;
         if (shouldNotify) {
-            pipe(observer, Observer_notify(result));
+            observer[ObserverLike_notify](result);
         }
         if (shouldDispose) {
             pipe(observer, Disposable_dispose(err));

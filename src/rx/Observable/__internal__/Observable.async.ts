@@ -18,6 +18,7 @@ import {
 import {
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
   ObserverLike_scheduler,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
@@ -412,7 +413,7 @@ export const Observable_async = <T>(
       const shouldDispose = !hasOutstandingEffects || hasError;
 
       if (shouldNotify) {
-        pipe(observer, Observer_notify(result as T));
+        observer[ObserverLike_notify](result as T);
       }
 
       if (shouldDispose) {

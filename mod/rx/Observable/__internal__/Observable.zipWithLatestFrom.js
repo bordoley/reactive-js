@@ -12,7 +12,6 @@ import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal_
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_notify from "../../Observer/__internal__/Observer.notify.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
@@ -31,7 +30,7 @@ const Observable_zipWithLatestFrom =
                 observer[ZipWithLatestFromObserver_hasLatest] = false;
                 const next = observer[PullableQueueLike_pull]();
                 const result = observer[ZipWithLatestFromObserver_selector](next, observer[ZipWithLatestFromObserver_otherLatest]);
-                pipe(observer[DelegatingLike_delegate], Observer_notify(result));
+                observer[DelegatingLike_delegate][ObserverLike_notify](result);
             }
         };
         return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin(), IndexedQueue_fifoQueueMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {

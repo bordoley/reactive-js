@@ -6,35 +6,11 @@
 
 ### Functions
 
-- [notify](rx_Observer.md#notify)
 - [notifyObserver](rx_Observer.md#notifyobserver)
 - [schedule](rx_Observer.md#schedule)
 - [sourceFrom](rx_Observer.md#sourcefrom)
 
 ## Functions
-
-### notify
-
-▸ **notify**<`TObserver`, `T`\>(`v`): [`Function1`](functions.md#function1)<`TObserver`, `TObserver`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObserver` | extends [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`, `TObserver`\> |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`TObserver`, `TObserver`\>
-
-___
 
 ### notifyObserver
 

@@ -1,4 +1,3 @@
-export declare const notify: <TObserver extends import("../rx.js").ObserverLike<T>, T>(v: T) => import("../functions.js").Function1<TObserver, TObserver>;
 export declare const notifyObserver: <T>(observer: import("../rx.js").ObserverLike<T>) => import("../functions.js").SideEffect1<T>;
 export declare const schedule: (f: import("../functions.js").SideEffect, options?: {
     readonly delay?: number | undefined;
