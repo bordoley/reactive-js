@@ -6,33 +6,10 @@
 
 ### Functions
 
-- [count](util_Queue.md#count)
 - [push](util_Queue.md#push)
 - [pushTo](util_Queue.md#pushto)
 
 ## Functions
-
-### count
-
-▸ **count**<`T`\>(`queue`): `number`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueLike`](../interfaces/util.QueueLike.md)<`T`\> |
-
-#### Returns
-
-`number`
-
-___
 
 ### push
 
