@@ -1,7 +1,6 @@
 /// <reference types="./Iterable.d.ts" />
 
 import { identity, returns } from "../functions.js";
-import Enumerable_toIterable from "../rx/Enumerable/__internal__/Enumerable.toIterable.js";
 import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
 import Iterable_toAsyncEnumerable from "./Iterable/__internal__/Iterable.toAsyncEnumerable.js";
 import Iterable_toFlowable from "./Iterable/__internal__/Iterable.toFlowable.js";
@@ -10,7 +9,6 @@ import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonl
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable.js";
 export const enumerate = Iterable_enumerate;
-export const fromEnumerable = Enumerable_toIterable;
 export const fromReadonlyArray = ReadonlyArray_toReadonlyArray;
 export const fromSequence = Sequence_toIterable;
 export const toAsyncEnumerable = Iterable_toAsyncEnumerable;

@@ -6,7 +6,6 @@
 
 ### Constructor Functions
 
-- [fromEnumerable](containers_Iterable.md#fromenumerable)
 - [fromReadonlyArray](containers_Iterable.md#fromreadonlyarray)
 - [fromSequence](containers_Iterable.md#fromsequence)
 
@@ -22,28 +21,6 @@
 - [toRunnable](containers_Iterable.md#torunnable)
 
 ## Constructor Functions
-
-### fromEnumerable
-
-▸ **fromEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
-
-___
 
 ### fromReadonlyArray
 

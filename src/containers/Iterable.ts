@@ -7,13 +7,7 @@ import {
   ToReadonlyArray,
 } from "../containers.js";
 import { identity, returns } from "../functions.js";
-import {
-  FromEnumerable,
-  ToEnumerable,
-  ToObservable,
-  ToRunnable,
-} from "../rx.js";
-import Enumerable_toIterable from "../rx/Enumerable/__internal__/Enumerable.toIterable.js";
+import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
 import Iterable_toAsyncEnumerable from "./Iterable/__internal__/Iterable.toAsyncEnumerable.js";
@@ -25,9 +19,6 @@ import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable.js"
 
 export const enumerate: Enumerate<IterableLike>["enumerate"] =
   Iterable_enumerate;
-
-export const fromEnumerable: FromEnumerable<IterableLike>["fromEnumerable"] =
-  Enumerable_toIterable;
 
 export const fromReadonlyArray: FromReadonlyArray<IterableLike>["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;

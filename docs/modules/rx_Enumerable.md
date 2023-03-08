@@ -60,7 +60,6 @@
 - [toAsyncEnumerable](rx_Enumerable.md#toasyncenumerable)
 - [toEnumerable](rx_Enumerable.md#toenumerable)
 - [toFlowable](rx_Enumerable.md#toflowable)
-- [toIterable](rx_Enumerable.md#toiterable)
 - [toObservable](rx_Enumerable.md#toobservable)
 - [toReadonlyArray](rx_Enumerable.md#toreadonlyarray)
 - [toRunnable](rx_Enumerable.md#torunnable)
@@ -1824,30 +1823,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-___
-
-### toIterable
-
-▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
-
-Converts the ContainerLike to a `IterableLike`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
 
 ___
 

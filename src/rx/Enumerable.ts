@@ -40,7 +40,6 @@ import {
   TakeWhile,
   ThrowIfEmpty,
   Throws,
-  ToIterable,
   ToReadonlyArray,
   Zip,
   ZipWith,
@@ -66,7 +65,6 @@ import Enumerable_defer from "../rx/Enumerable/__internal__/Enumerable.defer.js"
 import Enumerable_encodeUtf8 from "../rx/Enumerable/__internal__/Enumerable.encodeUtf8.js";
 import Enumerable_flatMapIterable from "../rx/Enumerable/__internal__/Enumerable.flatMapIterable.js";
 import Enumerable_scanAsync from "../rx/Enumerable/__internal__/Enumerable.scanAsync.js";
-import Enumerable_toIterable from "../rx/Enumerable/__internal__/Enumerable.toIterable.js";
 import Observable_buffer from "../rx/Observable/__internal__/Observable.buffer.js";
 import Observable_compute from "../rx/Observable/__internal__/Observable.compute.js";
 import Observable_concat from "../rx/Observable/__internal__/Observable.concat.js";
@@ -244,9 +242,6 @@ export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
 
 export const toFlowable: ToFlowable<EnumerableLike>["toFlowable"] =
   Runnable_toFlowable;
-
-export const toIterable: ToIterable<EnumerableLike>["toIterable"] =
-  Enumerable_toIterable;
 
 export const toObservable: ToObservable<EnumerableLike>["toObservable"] =
   /*@__PURE__*/ returns(identity);
