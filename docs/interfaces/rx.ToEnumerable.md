@@ -19,11 +19,11 @@
 
 ## Table of contents
 
-### Converter Methods
+### Transform Methods
 
 - [toEnumerable](rx.ToEnumerable.md#toenumerable)
 
-## Converter Methods
+## Transform Methods
 
 ### toEnumerable
 

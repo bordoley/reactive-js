@@ -14,7 +14,7 @@
 - [fromRunnable](streaming_Flowable.md#fromrunnable)
 - [fromSequence](streaming_Flowable.md#fromsequence)
 
-### Converter Functions
+### Transform Functions
 
 - [toObservable](streaming_Flowable.md#toobservable)
 - [toRunnable](streaming_Flowable.md#torunnable)
@@ -177,7 +177,7 @@ ___
 
 ___
 
-## Converter Functions
+## Transform Functions
 
 ### toObservable
 

@@ -916,7 +916,7 @@ export interface ToIterable<C extends ContainerLike, O = never>
   /**
    * Converts the ContainerLike to a `IterableLike`.
    *
-   * @category Converter
+   * @category Transform
    */
   toIterable<T>(options?: O): Function1<ContainerOf<C, T>, IterableLike<T>>;
 }
@@ -930,7 +930,7 @@ export interface ToReadonlyArray<C extends ContainerLike, O = never>
   /**
    * Converts the ContainerLike to a `ReadonlyArrayLike`.
    *
-   * @category Converter
+   * @category Transform
    */
   toReadonlyArray<T>(
     options?: O,
@@ -946,7 +946,7 @@ export interface ToSequence<C extends ContainerLike, O = never>
   /**
    * Converts the ContainerLike to a `SequenceLike`.
    *
-   * @category Converter
+   * @category Transform
    */
   toSequence<T>(options?: O): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 }

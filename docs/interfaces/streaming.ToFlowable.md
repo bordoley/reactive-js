@@ -19,11 +19,11 @@
 
 ## Table of contents
 
-### Converter Methods
+### Transform Methods
 
 - [toFlowable](streaming.ToFlowable.md#toflowable)
 
-## Converter Methods
+## Transform Methods
 
 ### toFlowable
 

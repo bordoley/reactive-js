@@ -125,7 +125,7 @@ export interface FromFlowable<C extends ContainerLike, O = never>
 export interface ToAsyncEnumerable<C extends ContainerLike, O = never>
   extends Container<C> {
   /**
-   * @category Converter
+   * @category Transform
    */
   toAsyncEnumerable<T>(
     options?: O,
@@ -139,7 +139,7 @@ export interface ToAsyncEnumerable<C extends ContainerLike, O = never>
 export interface ToFlowable<C extends ContainerLike, O = never>
   extends Container<C> {
   /**
-   * @category Converter
+   * @category Transform
    */
   toFlowable<T>(options?: O): Function1<ContainerOf<C, T>, FlowableLike<T>>;
 }

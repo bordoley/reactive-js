@@ -4,13 +4,13 @@
 
 ## Table of contents
 
-### Converter Functions
+### Transform Functions
 
 - [toAsyncEnumerable](containers_AsyncIterable.md#toasyncenumerable)
 - [toFlowable](containers_AsyncIterable.md#toflowable)
 - [toObservable](containers_AsyncIterable.md#toobservable)
 
-## Converter Functions
+## Transform Functions
 
 ### toAsyncEnumerable
 

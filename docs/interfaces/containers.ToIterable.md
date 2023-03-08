@@ -19,11 +19,11 @@
 
 ## Table of contents
 
-### Converter Methods
+### Transform Methods
 
 - [toIterable](containers.ToIterable.md#toiterable)
 
-## Converter Methods
+## Transform Methods
 
 ### toIterable
 

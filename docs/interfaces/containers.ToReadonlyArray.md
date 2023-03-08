@@ -19,11 +19,11 @@
 
 ## Table of contents
 
-### Converter Methods
+### Transform Methods
 
 - [toReadonlyArray](containers.ToReadonlyArray.md#toreadonlyarray)
 
-## Converter Methods
+## Transform Methods
 
 ### toReadonlyArray
 

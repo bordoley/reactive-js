@@ -4,11 +4,11 @@
 
 ## Table of contents
 
-### Converter Functions
+### Transform Functions
 
 - [toObservable](containers_Promiseable.md#toobservable)
 
-## Converter Functions
+## Transform Functions
 
 ### toObservable
 

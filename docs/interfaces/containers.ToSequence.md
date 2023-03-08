@@ -19,11 +19,11 @@
 
 ## Table of contents
 
-### Converter Methods
+### Transform Methods
 
 - [toSequence](containers.ToSequence.md#tosequence)
 
-## Converter Methods
+## Transform Methods
 
 ### toSequence
 

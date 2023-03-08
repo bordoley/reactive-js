@@ -19,11 +19,11 @@
 
 ## Table of contents
 
-### Converter Methods
+### Transform Methods
 
 - [toAsyncEnumerable](streaming.ToAsyncEnumerable.md#toasyncenumerable)
 
-## Converter Methods
+## Transform Methods
 
 ### toAsyncEnumerable
 

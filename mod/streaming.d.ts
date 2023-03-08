@@ -77,7 +77,7 @@ export interface FromFlowable<C extends ContainerLike, O = never> extends Contai
  */
 export interface ToAsyncEnumerable<C extends ContainerLike, O = never> extends Container<C> {
     /**
-     * @category Converter
+     * @category Transform
      */
     toAsyncEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;
 }
@@ -87,7 +87,7 @@ export interface ToAsyncEnumerable<C extends ContainerLike, O = never> extends C
  */
 export interface ToFlowable<C extends ContainerLike, O = never> extends Container<C> {
     /**
-     * @category Converter
+     * @category Transform
      */
     toFlowable<T>(options?: O): Function1<ContainerOf<C, T>, FlowableLike<T>>;
 }

@@ -10,7 +10,7 @@
 - [fromReadonlyArray](containers_Iterable.md#fromreadonlyarray)
 - [fromSequence](containers_Iterable.md#fromsequence)
 
-### Converter Functions
+### Transform Functions
 
 - [toAsyncEnumerable](containers_Iterable.md#toasyncenumerable)
 - [toEnumerable](containers_Iterable.md#toenumerable)
@@ -90,7 +90,7 @@ ___
 
 ___
 
-## Converter Functions
+## Transform Functions
 
 ### toAsyncEnumerable
 

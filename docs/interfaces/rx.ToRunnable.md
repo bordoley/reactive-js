@@ -19,11 +19,11 @@
 
 ## Table of contents
 
-### Converter Properties
+### Transform Properties
 
 - [toRunnable](rx.ToRunnable.md#torunnable)
 
-## Converter Properties
+## Transform Properties
 
 ### toRunnable
 

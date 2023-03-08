@@ -19,11 +19,11 @@
 
 ## Table of contents
 
-### Converter Properties
+### Transform Properties
 
 - [toObservable](rx.ToObservable.md#toobservable)
 
-## Converter Properties
+## Transform Properties
 
 ### toObservable
 

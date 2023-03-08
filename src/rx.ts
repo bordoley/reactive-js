@@ -653,7 +653,7 @@ export interface Timeout<C extends ObservableLike> extends Container<C> {
 export interface ToEnumerable<C extends ContainerLike, O = never>
   extends Container<C> {
   /**
-   * @category Converter
+   * @category Transform
    */
   toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
@@ -665,7 +665,7 @@ export interface ToEnumerable<C extends ContainerLike, O = never>
 export interface ToObservable<C extends ContainerLike, O = never>
   extends Container<C> {
   /**
-   * @category Converter
+   * @category Transform
    */
   toObservable: <T>(
     options?: O,
@@ -679,7 +679,7 @@ export interface ToObservable<C extends ContainerLike, O = never>
 export interface ToRunnable<C extends ContainerLike, O = never>
   extends Container<C> {
   /**
-   * @category Converter
+   * @category Transform
    */
   toRunnable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
