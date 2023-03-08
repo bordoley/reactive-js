@@ -1,21 +1,26 @@
 import { Mixin, mix, props } from "../../../__internal__/mixins.js";
 import {
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  EnumeratorLike_move,
+} from "../../../containers.js";
+import {
   none,
   pipe,
   raiseWithDebugMessage,
   returns,
   unsafeCast,
 } from "../../../functions.js";
-import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
-  EnumeratorLike_move,
-} from "../../../util.js";
-import {
-  MutableEnumeratorLike,
-  MutableEnumeratorLike_reset,
-} from "../../__internal__/util.internal.js";
+
+export const MutableEnumeratorLike_reset = Symbol(
+  "MutableEnumeratorLike_reset",
+);
+
+export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
+  [EnumeratorLike_current]: T;
+  [MutableEnumeratorLike_reset](): void;
+}
 
 type TEnumeratorMixinReturn<T> = Omit<
   MutableEnumeratorLike<T>,

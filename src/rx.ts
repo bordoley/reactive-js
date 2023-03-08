@@ -5,6 +5,7 @@ import {
   ContainerLike_type,
   ContainerOf,
   ContainerOperator,
+  EnumeratorLike,
 } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { DispatcherLike, SchedulerLike } from "./scheduling.js";
@@ -83,6 +84,17 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
   readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
 
   readonly [ObservableLike_isEnumerable]: true;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface EnumerableEnumeratorLike<T = unknown>
+  extends EnumeratorLike<T>,
+    DisposableLike {
+  readonly [ContainerLike_type]?: EnumerableEnumeratorLike<
+    this[typeof ContainerLike_T]
+  >;
 }
 
 /** @ignore */

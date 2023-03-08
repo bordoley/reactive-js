@@ -40,6 +40,8 @@
 
   ↳ [`EndWith`](containers.EndWith.md)
 
+  ↳ [`Enumerate`](containers.Enumerate.md)
+
   ↳ [`Every`](containers.Every.md)
 
   ↳ [`EverySatisfy`](containers.EverySatisfy.md)
@@ -177,8 +179,6 @@
   ↳ [`ToAsyncEnumerable`](streaming.ToAsyncEnumerable.md)
 
   ↳ [`ToFlowable`](streaming.ToFlowable.md)
-
-  ↳ [`Enumerate`](util.Enumerate.md)
 
 ## Table of contents
 

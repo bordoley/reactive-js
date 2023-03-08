@@ -1,5 +1,4 @@
-import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
-import { Function1, Optional, SideEffect1 } from "./functions.js";
+import { Optional, SideEffect1 } from "./functions.js";
 /** @ignore */
 export declare const DisposableLike_add: unique symbol;
 /** @ignore */
@@ -51,36 +50,4 @@ export interface QueueLike<T = unknown> {
      * @param req
      */
     [QueueLike_push](req: T): void;
-}
-/** @ignore */
-export declare const EnumeratorLike_move: unique symbol;
-/** @ignore */
-export declare const EnumeratorLike_current: unique symbol;
-/** @ignore */
-export declare const EnumeratorLike_hasCurrent: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface EnumeratorLike<T = unknown> extends ContainerLike {
-    readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]>;
-    readonly [EnumeratorLike_current]: T;
-    readonly [EnumeratorLike_hasCurrent]: boolean;
-    [EnumeratorLike_move](): boolean;
-}
-/**
- * @noInheritDoc
- */
-export interface DisposableEnumeratorLike<T = unknown> extends EnumeratorLike<T>, DisposableLike {
-    readonly [ContainerLike_type]?: DisposableEnumeratorLike<this[typeof ContainerLike_T]>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface Enumerate<C extends ContainerLike, CEnumerator extends EnumeratorLike> extends Container<C> {
-    /**
-     *
-     * @category Transform
-     */
-    enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
 }

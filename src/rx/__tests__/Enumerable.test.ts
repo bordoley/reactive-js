@@ -32,9 +32,12 @@ import {
   test,
   testModule,
 } from "../../__tests__/testing.js";
+import {
+  EnumeratorLike_current,
+  EnumeratorLike_move,
+} from "../../containers.js";
 import { pipe, returns } from "../../functions.js";
 import { EnumerableLike } from "../../rx.js";
-import { EnumeratorLike_current, EnumeratorLike_move } from "../../util.js";
 import * as Enumerable from "../Enumerable.js";
 
 testModule(

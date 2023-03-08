@@ -6,9 +6,21 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ContainerLike_T, ContainerLike_type } from "../../../containers.js";
+import {
+  ContainerLike_T,
+  ContainerLike_type,
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  EnumeratorLike_move,
+} from "../../../containers.js";
+import MutableEnumerator_mixin, {
+  MutableEnumeratorLike,
+  MutableEnumeratorLike_reset,
+} from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isSome, pipe, returns, unsafeCast } from "../../../functions.js";
 import {
+  EnumerableEnumeratorLike,
   EnumerableLike,
   ObserverLike,
   ObserverLike_notify,
@@ -29,31 +41,23 @@ import {
 } from "../../../scheduling.js";
 import { Continuation__getCurrentContinuation } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import {
-  DisposableEnumeratorLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
-  EnumeratorLike_move,
   QueueLike_count,
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import {
-  MutableEnumeratorLike,
-  MutableEnumeratorLike_reset,
   PullableQueueLike,
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
 
 const Enumerable_enumerate: <T>() => (
   enumerable: EnumerableLike<T>,
-) => DisposableEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
+) => EnumerableEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
   const typedObserverMixin = Observer_mixin<T>();
 
@@ -62,7 +66,7 @@ const Enumerable_enumerate: <T>() => (
   };
 
   interface EnumeratorScheduler<T>
-    extends DisposableEnumeratorLike<T>,
+    extends EnumerableEnumeratorLike<T>,
       SchedulerLike,
       ObserverLike<T> {
     readonly [ContainerLike_type]?: EnumeratorScheduler<
@@ -184,7 +188,7 @@ const Enumerable_enumerate: <T>() => (
   );
 
   return returns(
-    (enumerable: EnumerableLike<T>): DisposableEnumeratorLike<T> =>
+    (enumerable: EnumerableLike<T>): EnumerableEnumeratorLike<T> =>
       pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable)),
   );
 })();

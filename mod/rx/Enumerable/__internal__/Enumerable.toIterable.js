@@ -1,7 +1,7 @@
 /// <reference types="./Enumerable.toIterable.d.ts" />
 
+import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import { newInstance, pipe } from "../../../functions.js";
-import { EnumeratorLike_current, EnumeratorLike_move } from "../../../util.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 const EnumerableIterable_enumerable = Symbol("EnumerableIterable_enumerable");
 class EnumerableIterable {

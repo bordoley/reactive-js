@@ -18,13 +18,13 @@
 
   ↳ [`SequenceLike`](containers.SequenceLike.md)
 
+  ↳ [`EnumeratorLike`](containers.EnumeratorLike.md)
+
   ↳ [`ObservableLike`](rx.ObservableLike.md)
 
   ↳ [`AsyncEnumerableLike`](streaming.AsyncEnumerableLike.md)
 
   ↳ [`FlowableLike`](streaming.FlowableLike.md)
-
-  ↳ [`EnumeratorLike`](util.EnumeratorLike.md)
 
 ## Table of contents
 

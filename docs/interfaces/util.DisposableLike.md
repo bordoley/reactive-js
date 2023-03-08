@@ -12,6 +12,8 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`ObserverLike`](rx.ObserverLike.md)
 
+  ↳ [`EnumerableEnumeratorLike`](rx.EnumerableEnumeratorLike.md)
+
   ↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
   ↳ [`ContinuationLike`](scheduling.ContinuationLike.md)
@@ -19,8 +21,6 @@ Represents an unmanaged resource that can be disposed.
   ↳ [`SchedulerLike`](scheduling.SchedulerLike.md)
 
   ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)
-
-  ↳ [`DisposableEnumeratorLike`](util.DisposableEnumeratorLike.md)
 
 ## Table of contents
 

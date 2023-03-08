@@ -9,6 +9,15 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  EnumeratorLike_move,
+} from "../../containers.js";
+import MutableEnumerator_mixin, {
+  MutableEnumeratorLike,
+} from "../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
+import {
   Function1,
   Optional,
   SideEffect,
@@ -37,10 +46,6 @@ import {
 import {
   DisposableLike,
   DisposableLike_isDisposed,
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
-  EnumeratorLike_move,
   QueueLike_count,
   QueueLike_push,
 } from "../../util.js";
@@ -48,11 +53,9 @@ import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal_
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
-import MutableEnumerator_mixin from "../../util/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import PullableQueue_createPriorityQueue from "../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
 import {
   DisposableRefLike,
-  MutableEnumeratorLike,
   MutableRefLike_current,
   PullableQueueLike,
   PullableQueueLike_head,

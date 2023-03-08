@@ -1,4 +1,3 @@
-import { EnumerableLike } from "../../../rx.js";
-import { DisposableEnumeratorLike } from "../../../util.js";
-declare const Enumerable_enumerate: <T>() => (enumerable: EnumerableLike<T>) => DisposableEnumeratorLike<T>;
+import { EnumerableEnumeratorLike, EnumerableLike } from "../../../rx.js";
+declare const Enumerable_enumerate: <T>() => (enumerable: EnumerableLike<T>) => EnumerableEnumeratorLike<T>;
 export default Enumerable_enumerate;

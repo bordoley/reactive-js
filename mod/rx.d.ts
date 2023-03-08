@@ -1,4 +1,4 @@
-import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator } from "./containers.js";
+import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, EnumeratorLike } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { DispatcherLike, SchedulerLike } from "./scheduling.js";
 import { DisposableLike } from "./util.js";
@@ -59,6 +59,12 @@ export interface RunnableLike<T = unknown> extends ObservableLike<T> {
 export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
     readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: true;
+}
+/**
+ * @noInheritDoc
+ */
+export interface EnumerableEnumeratorLike<T = unknown> extends EnumeratorLike<T>, DisposableLike {
+    readonly [ContainerLike_type]?: EnumerableEnumeratorLike<this[typeof ContainerLike_T]>;
 }
 /** @ignore */
 export declare const MulticastObservableLike_observerCount: unique symbol;

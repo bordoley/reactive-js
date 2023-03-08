@@ -54,6 +54,22 @@ export interface SequenceLike<T = unknown> extends ContainerLike {
         readonly [SequenceLike_next]: SequenceLike<T>;
     }>;
 }
+/** @ignore */
+export declare const EnumeratorLike_move: unique symbol;
+/** @ignore */
+export declare const EnumeratorLike_current: unique symbol;
+/** @ignore */
+export declare const EnumeratorLike_hasCurrent: unique symbol;
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumeratorLike<T = unknown> extends ContainerLike {
+    readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]>;
+    readonly [EnumeratorLike_current]: T;
+    readonly [EnumeratorLike_hasCurrent]: boolean;
+    [EnumeratorLike_move](): boolean;
+}
 export type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly [ContainerLike_type]?: unknown;
 } ? NonNullable<(C & {
@@ -225,6 +241,17 @@ export interface EndWith<C extends ContainerLike> extends Container<C> {
      * @category Operator
      */
     endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Enumerate<C extends ContainerLike, CEnumerator extends EnumeratorLike> extends Container<C> {
+    /**
+     *
+     * @category Transform
+     */
+    enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
 }
 /**
  * @noInheritDoc

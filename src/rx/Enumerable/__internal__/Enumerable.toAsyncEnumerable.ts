@@ -1,3 +1,8 @@
+import {
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  EnumeratorLike_move,
+} from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { pipe } from "../../../functions.js";
 import { EnumerableLike, ObservableLike } from "../../../rx.js";
@@ -6,11 +11,6 @@ import Observable_map from "../../../rx/Observable/__internal__/Observable.map.j
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
-import {
-  EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
-  EnumeratorLike_move,
-} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Observable_concatMap from "../../Observable/__internal__/Observable.concatMap.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";

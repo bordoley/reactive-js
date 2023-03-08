@@ -1746,7 +1746,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`DisposableEnumeratorLike`](../interfaces/util.DisposableEnumeratorLike.md)<`T`\>\>
+▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`EnumerableEnumeratorLike`](../interfaces/rx.EnumerableEnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1756,7 +1756,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`DisposableEnumeratorLike`](../interfaces/util.DisposableEnumeratorLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`EnumerableEnumeratorLike`](../interfaces/rx.EnumerableEnumeratorLike.md)<`T`\>\>
 
 ___
 

@@ -1,7 +1,10 @@
-import { ToIterable } from "../../../containers.js";
+import {
+  EnumeratorLike_current,
+  EnumeratorLike_move,
+  ToIterable,
+} from "../../../containers.js";
 import { newInstance, pipe } from "../../../functions.js";
 import { EnumerableLike } from "../../../rx.js";
-import { EnumeratorLike_current, EnumeratorLike_move } from "../../../util.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
 const EnumerableIterable_enumerable = Symbol("EnumerableIterable_enumerable");

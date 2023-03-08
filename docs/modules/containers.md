@@ -8,6 +8,7 @@
 
 - [AsyncIterableLike](../interfaces/containers.AsyncIterableLike.md)
 - [ContainerLike](../interfaces/containers.ContainerLike.md)
+- [EnumeratorLike](../interfaces/containers.EnumeratorLike.md)
 - [IterableLike](../interfaces/containers.IterableLike.md)
 - [PromiseableLike](../interfaces/containers.PromiseableLike.md)
 - [ReadonlyArrayLike](../interfaces/containers.ReadonlyArrayLike.md)
@@ -30,6 +31,7 @@
 - [Empty](../interfaces/containers.Empty.md)
 - [EncodeUtf8](../interfaces/containers.EncodeUtf8.md)
 - [EndWith](../interfaces/containers.EndWith.md)
+- [Enumerate](../interfaces/containers.Enumerate.md)
 - [Every](../interfaces/containers.Every.md)
 - [EverySatisfy](../interfaces/containers.EverySatisfy.md)
 - [FlatMapIterable](../interfaces/containers.FlatMapIterable.md)
