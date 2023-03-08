@@ -17,6 +17,7 @@
 - [fromReadonlyArray](rx_Runnable.md#fromreadonlyarray)
 - [fromSequence](rx_Runnable.md#fromsequence)
 - [generate](rx_Runnable.md#generate)
+- [merge](rx_Runnable.md#merge)
 - [throws](rx_Runnable.md#throws)
 - [zip](rx_Runnable.md#zip)
 - [zipLatest](rx_Runnable.md#ziplatest)
@@ -72,7 +73,6 @@
 
 ### Other Functions
 
-- [merge](rx_Runnable.md#merge)
 - [run](rx_Runnable.md#run)
 
 ### Transform Functions
@@ -542,6 +542,30 @@ that is applied to an accumulator value between emitted items.
 | `options?` | `Object` | - |
 | `options.delay?` | `number` | - |
 | `options.delayStart?` | `boolean` | - |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
+| `snd` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>[] |
 
 #### Returns
 
@@ -2790,30 +2814,6 @@ ___
 ___
 
 ## Other Functions
-
-### merge
-
-▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fst` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
-| `snd` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
-| `...tail` | readonly [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>[] |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-___
 
 ### run
 

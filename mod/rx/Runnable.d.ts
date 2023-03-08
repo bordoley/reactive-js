@@ -1,5 +1,5 @@
 import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { CombineLatest, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, FromEnumerable, MergeAll, MergeWith, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, FromEnumerable, Merge, MergeAll, MergeWith, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<RunnableLike>["buffer"];
 export declare const catchError: CatchError<RunnableLike>["catchError"];
@@ -58,7 +58,7 @@ export declare const keepType: KeepType<RunnableLike>["keepType"];
 export declare const last: Last<RunnableLike>["last"];
 export declare const map: Map<RunnableLike>["map"];
 export declare const mapTo: MapTo<RunnableLike>["mapTo"];
-export declare const merge: <T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]) => RunnableLike<T>;
+export declare const merge: Merge<RunnableLike>["merge"];
 export declare const mergeAll: MergeAll<RunnableLike, {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
