@@ -127,6 +127,7 @@ import Observable_endWith from "./Observable/__internal__/Observable.endWith.js"
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
 import Observable_exhaust from "./Observable/__internal__/Observable.exhaust.js";
 import Observable_exhaustMap from "./Observable/__internal__/Observable.exhaustMap.js";
+import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
 import Observable_flatMapPromise from "./Observable/__internal__/Observable.flatMapPromise.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
@@ -139,6 +140,7 @@ import Observable_generate from "./Observable/__internal__/Observable.generate.j
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
+import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
@@ -172,7 +174,6 @@ import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwI
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
-import Observable_toPromise from "./Observable/__internal__/Observable.toPromise.js";
 import Observable_toRunnable from "./Observable/__internal__/Observable.toRunnable.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -378,6 +379,8 @@ export const exhaust: Exhaust<ObservableLike>["exhaust"] = Observable_exhaust;
 export const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"] =
   Observable_exhaustMap;
 
+export const firstAsync = Observable_firstAsync;
+
 export const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"] =
   Observable_flatMapIterable;
 
@@ -451,6 +454,8 @@ export const keep: Keep<ObservableLike>["keep"] = Observable_keep;
 
 export const keepType: KeepType<ObservableLike>["keepType"] =
   Observable_keepType;
+
+export const lastAsync = Observable_lastAsync;
 
 export const map: Map<ObservableLike>["map"] = Observable_map;
 
@@ -563,8 +568,6 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
 export const toRunnable: ToRunnable<ObservableLike>["toRunnable"] =
   Observable_toRunnable;
-
-export const toPromise = Observable_toPromise;
 
 export const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"] =
   Observable_withLatestFrom;

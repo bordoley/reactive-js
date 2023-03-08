@@ -1192,10 +1192,10 @@ export const toObservableTests = <C extends ContainerLike>(
         m.fromReadonlyArray(),
         m.toObservable<number>(),
         Observable.buffer(),
-        Observable.toPromise(scheduler),
+        Observable.lastAsync(scheduler),
       );
 
-      pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
+      pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4]));
     } finally {
       scheduler[DisposableLike_dispose]();
     }

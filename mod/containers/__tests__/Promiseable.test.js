@@ -10,7 +10,7 @@ testModule("Promiseable", describe("toObservable", testAsync("when the promise r
     const scheduler = Scheduler.createHostScheduler();
     const promise = Promise.resolve(1);
     try {
-        const result = await pipe(promise, Promiseable.toObservable(), Observable.toPromise(scheduler));
+        const result = await pipe(promise, Promiseable.toObservable(), Observable.lastAsync(scheduler));
         pipe(result, expectEquals(1));
     }
     finally {
@@ -21,7 +21,7 @@ testModule("Promiseable", describe("toObservable", testAsync("when the promise r
     const error = newInstance(Error);
     const promise = Promise.reject(error);
     try {
-        await pipe(pipe(promise, Promiseable.toObservable(), Observable.toPromise(scheduler)), expectPromiseToThrow);
+        await pipe(pipe(promise, Promiseable.toObservable(), Observable.lastAsync(scheduler)), expectPromiseToThrow);
     }
     finally {
         scheduler[DisposableLike_dispose]();

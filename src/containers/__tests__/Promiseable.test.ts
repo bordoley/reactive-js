@@ -5,7 +5,7 @@ import {
   testAsync,
   testModule,
 } from "../../__tests__/testing.js";
-import { newInstance, pipe } from "../../functions.js";
+import { Optional, newInstance, pipe } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { DisposableLike_dispose } from "../../util.js";
@@ -24,9 +24,9 @@ testModule(
         const result = await pipe(
           promise,
           Promiseable.toObservable(),
-          Observable.toPromise(scheduler),
+          Observable.lastAsync(scheduler),
         );
-        pipe(result, expectEquals(1));
+        pipe(result, expectEquals<Optional<number>>(1));
       } finally {
         scheduler[DisposableLike_dispose]();
       }
@@ -42,7 +42,7 @@ testModule(
           pipe(
             promise,
             Promiseable.toObservable(),
-            Observable.toPromise(scheduler),
+            Observable.lastAsync(scheduler),
           ),
           expectPromiseToThrow,
         );

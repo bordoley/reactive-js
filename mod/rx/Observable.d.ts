@@ -100,6 +100,7 @@ export declare const endWith: EndWith<ObservableLike>["endWith"];
 export declare const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"];
 export declare const exhaust: Exhaust<ObservableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"];
+export declare const firstAsync: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<import("../functions.js").Optional<T>>;
 export declare const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"];
 export declare const flatMapPromise: <TA, TB>(f: Function1<TA, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
 export declare const forEach: ForEach<ObservableLike>["forEach"];
@@ -135,6 +136,7 @@ export declare const generate: Generate<ObservableLike, {
 export declare const ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"];
 export declare const keep: Keep<ObservableLike>["keep"];
 export declare const keepType: KeepType<ObservableLike>["keepType"];
+export declare const lastAsync: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<import("../functions.js").Optional<T>>;
 export declare const map: Map<ObservableLike>["map"];
 export declare const mapTo: MapTo<ObservableLike>["mapTo"];
 export declare const merge: Merge<ObservableLike>["merge"];
@@ -194,7 +196,6 @@ export declare const throws: Throws<ObservableLike, {
 export declare const timeout: Timeout<ObservableLike>["timeout"];
 export declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
 export declare const toRunnable: ToRunnable<ObservableLike>["toRunnable"];
-export declare const toPromise: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => PromiseLike<T>;
 export declare const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"];
 export declare const zip: Zip<ObservableLike>["zip"];
 export declare const zipLatest: ZipLatest<ObservableLike>["zipLatest"];

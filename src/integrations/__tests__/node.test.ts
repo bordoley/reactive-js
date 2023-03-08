@@ -7,7 +7,7 @@ import {
   testModule,
 } from "../../__tests__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
-import { newInstance, pipe, returns } from "../../functions.js";
+import { Optional, newInstance, pipe, returns } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Runnable from "../../rx/Runnable.js";
 import { PauseableState_paused } from "../../scheduling.js";
@@ -58,7 +58,7 @@ testModule(
         await pipe(
           dest,
           Observable.endWith(returns(PauseableState_paused)),
-          Observable.toPromise(scheduler),
+          Observable.lastAsync(scheduler),
         );
 
         pipe(writable.destroyed, expectEquals(true));
@@ -100,7 +100,7 @@ testModule(
           dest,
           Observable.ignoreElements(),
           Observable.endWith(0),
-          Observable.toPromise(scheduler),
+          Observable.lastAsync(scheduler),
         );
         await expectPromiseToThrow(promise);
         pipe(writable.destroyed, expectEquals(true));
@@ -131,9 +131,9 @@ testModule(
             returns(""),
           ),
           Observable.takeFirst<string>({ count: 1 }),
-          Observable.toPromise(scheduler),
+          Observable.lastAsync(scheduler),
         );
-        pipe(acc, expectEquals("abcdefg"));
+        pipe(acc, expectEquals<Optional<string>>("abcdefg"));
       } finally {
         scheduler[DisposableLike_dispose]();
       }
@@ -158,7 +158,7 @@ testModule(
             returns(""),
           ),
           Observable.endWith(""),
-          Observable.toPromise(scheduler),
+          Observable.lastAsync(scheduler),
           expectPromiseToThrow,
         );
       } finally {
@@ -185,10 +185,10 @@ testModule(
           returns(""),
         ),
         Observable.takeFirst<string>({ count: 1 }),
-        Observable.toPromise(scheduler),
+        Observable.lastAsync(scheduler),
       );
 
-      pipe(acc, expectEquals("abcdefg"));
+      pipe(acc, expectEquals<Optional<string>>("abcdefg"));
     } finally {
       scheduler[DisposableLike_dispose]();
     }

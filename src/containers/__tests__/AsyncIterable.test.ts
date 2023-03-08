@@ -30,10 +30,10 @@ testModule(
         Flowable.toObservable(),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer(),
-        Observable.toPromise(scheduler),
+        Observable.lastAsync(scheduler),
       );
 
-      pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+      pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
       scheduler[DisposableLike_dispose]();
     }),
     testAsync("iterable that completes", async () => {
@@ -48,10 +48,10 @@ testModule(
         AsyncIterable.toFlowable({ maxBuffer: 5 }),
         Flowable.toObservable(),
         Observable.buffer(),
-        Observable.toPromise(scheduler),
+        Observable.lastAsync(scheduler),
       );
 
-      pipe(result, expectArrayEquals([1, 2, 3]));
+      pipe(result ?? [], expectArrayEquals([1, 2, 3]));
       scheduler[DisposableLike_dispose]();
     }),
 
@@ -66,7 +66,7 @@ testModule(
         AsyncIterable.toFlowable({ maxBuffer: 5 }),
         Flowable.toObservable(),
         Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
-        Observable.toPromise(scheduler),
+        Observable.lastAsync(scheduler),
       );
 
       pipe(result, expectEquals(e as unknown));
@@ -88,10 +88,10 @@ testModule(
         AsyncIterable.toObservable({ maxBuffer: 5 }),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer(),
-        Observable.toPromise(scheduler),
+        Observable.lastAsync(scheduler),
       );
 
-      pipe(result, expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+      pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
       scheduler[DisposableLike_dispose]();
     }),
     testAsync("iterable that completes", async () => {
@@ -105,10 +105,10 @@ testModule(
         })(),
         AsyncIterable.toObservable({ maxBuffer: 1 }),
         Observable.buffer(),
-        Observable.toPromise(scheduler),
+        Observable.lastAsync(scheduler),
       );
 
-      pipe(result, expectArrayEquals([1, 2, 3]));
+      pipe(result ?? [], expectArrayEquals([1, 2, 3]));
       scheduler[DisposableLike_dispose]();
     }),
 
@@ -122,7 +122,7 @@ testModule(
         })(),
         AsyncIterable.toObservable({ maxBuffer: 1 }),
         Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
-        Observable.toPromise(scheduler),
+        Observable.lastAsync(scheduler),
       );
 
       pipe(result, expectEquals(e as unknown));

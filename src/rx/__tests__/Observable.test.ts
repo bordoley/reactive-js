@@ -3,11 +3,9 @@ import {
   expectArrayEquals,
   expectEquals,
   expectIsSome,
-  expectPromiseToThrow,
   expectToHaveBeenCalledTimes,
   mockFn,
   test,
-  testAsync,
   testModule,
 } from "../../__tests__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
@@ -15,7 +13,7 @@ import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import { ObservableLike } from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { DisposableLike_dispose, DisposableLike_error } from "../../util.js";
+import { DisposableLike_error } from "../../util.js";
 import * as Observable from "../Observable.js";
 import { __await, __memo } from "../Observable.js";
 
@@ -78,21 +76,6 @@ const shareTests = describe(
 
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([2, 4, 6]));
-  }),
-);
-
-const toPromiseTests = describe(
-  "toPromise",
-  testAsync("when observable completes without producing a value", async () => {
-    const scheduler = Scheduler.createHostScheduler();
-    try {
-      await pipe(
-        pipe(Observable.empty(), Observable.toPromise(scheduler)),
-        expectPromiseToThrow,
-      );
-    } finally {
-      scheduler[DisposableLike_dispose]();
-    }
   }),
 );
 
@@ -202,10 +185,4 @@ const asyncTests = describe(
   }),
 );
 
-testModule(
-  "Observable",
-  asyncTests,
-  onSubscribeTests,
-  shareTests,
-  toPromiseTests,
-);
+testModule("Observable", asyncTests, onSubscribeTests, shareTests);

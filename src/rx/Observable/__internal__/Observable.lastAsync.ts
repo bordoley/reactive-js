@@ -1,6 +1,5 @@
 import {
   Optional,
-  errorWithDebugMessage,
   isSome,
   newInstance,
   none,
@@ -12,9 +11,9 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
-const Observable_toPromise =
+const Observable_lastAsync =
   <T>(scheduler: SchedulerLike) =>
-  (observable: ObservableLike<T>): PromiseLike<T> =>
+  (observable: ObservableLike<T>): PromiseLike<Optional<T>> =>
     newInstance<
       Promise<T>,
       (
@@ -23,24 +22,16 @@ const Observable_toPromise =
       ) => void
     >(Promise, (resolve, reject) => {
       let result: Optional<T> = none;
-      let hasResult = false;
 
       pipe(
         observable,
         Observable_forEach<ObservableLike, T>(next => {
-          hasResult = true;
           result = next;
         }),
         Observable_subscribe(scheduler),
         Disposable_onDisposed(err => {
           if (isSome(err)) {
             reject(err);
-          } else if (!hasResult) {
-            reject(
-              errorWithDebugMessage(
-                "Observable completed without producing a value",
-              ),
-            );
           } else {
             resolve(result as T);
           }
@@ -48,4 +39,4 @@ const Observable_toPromise =
       );
     });
 
-export default Observable_toPromise;
+export default Observable_lastAsync;

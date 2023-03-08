@@ -92,14 +92,15 @@
 - [async](rx_Observable.md#async)
 - [buffer](rx_Observable.md#buffer)
 - [create](rx_Observable.md#create)
+- [firstAsync](rx_Observable.md#firstasync)
 - [flatMapPromise](rx_Observable.md#flatmappromise)
+- [lastAsync](rx_Observable.md#lastasync)
 - [multicast](rx_Observable.md#multicast)
 - [observeWith](rx_Observable.md#observewith)
 - [onSubscribe](rx_Observable.md#onsubscribe)
 - [share](rx_Observable.md#share)
 - [subscribe](rx_Observable.md#subscribe)
 - [subscribeOn](rx_Observable.md#subscribeon)
-- [toPromise](rx_Observable.md#topromise)
 
 ### Transform Functions
 
@@ -3878,6 +3879,40 @@ ___
 
 ___
 
+### firstAsync
+
+▸ **firstAsync**<`T`\>(`scheduler`): (`observable`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+
+#### Returns
+
+`fn`
+
+▸ (`observable`): `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+
+##### Returns
+
+`PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
 ### flatMapPromise
 
 ▸ **flatMapPromise**<`TA`, `TB`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
@@ -3898,6 +3933,40 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### lastAsync
+
+▸ **lastAsync**<`T`\>(`scheduler`): (`observable`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+
+#### Returns
+
+`fn`
+
+▸ (`observable`): `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+
+##### Returns
+
+`PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>
 
 ___
 
@@ -4053,40 +4122,6 @@ ___
 ##### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-___
-
-### toPromise
-
-▸ **toPromise**<`T`\>(`scheduler`): (`observable`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => `PromiseLike`<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-`fn`
-
-▸ (`observable`): `PromiseLike`<`T`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
-
-##### Returns
-
-`PromiseLike`<`T`\>
 
 ___
 

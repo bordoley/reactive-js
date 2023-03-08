@@ -156,8 +156,8 @@ export const toObservableTests = (m) => testAsync("toObservable", async () => {
     const scheduler = Scheduler.createHostScheduler();
     // FIXME: This should be a generic test
     try {
-        const result = await pipe([0, 1, 2, 3, 4], m.fromReadonlyArray(), m.toObservable(), Observable.buffer(), Observable.toPromise(scheduler));
-        pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
+        const result = await pipe([0, 1, 2, 3, 4], m.fromReadonlyArray(), m.toObservable(), Observable.buffer(), Observable.lastAsync(scheduler));
+        pipe(result !== null && result !== void 0 ? result : [], expectArrayEquals([0, 1, 2, 3, 4]));
     }
     finally {
         scheduler[DisposableLike_dispose]();
