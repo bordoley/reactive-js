@@ -8,7 +8,7 @@ import { SomeSatisfy } from "../../../containers.js";
 import { Predicate, partial, pipe } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
 import Observer_satisfyMixin from "../../Observer/__internal__/Observer.satisfyMixin.js";
-import Observable_lift from "./Observable.lift.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 const Observable_someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
   /*@__PURE__*/ (<T>() => {
@@ -30,7 +30,7 @@ const Observable_someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
       pipe(
         createInstanceFactory(someSatisfyObserverMixin),
         partial(predicate),
-        Observable_lift(true, true),
+        Observable_liftEnumerableOperator,
       );
   })();
 

@@ -87,7 +87,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         const operator = (delegate) => {
             return pipe(createBufferObserver(delegate, durationFunction, maxBufferSize), Disposable_addTo(delegate));
         };
-        return pipe(operator, Observable_lift(durationOption === MAX_SAFE_INTEGER));
+        return pipe(operator, Observable_lift(durationOption === MAX_SAFE_INTEGER, isNumber(durationOption)));
     });
 })();
 export default Observable_buffer;

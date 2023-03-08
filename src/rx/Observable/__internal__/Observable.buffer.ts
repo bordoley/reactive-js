@@ -183,7 +183,13 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
       );
     };
 
-    return pipe(operator, Observable_lift(durationOption === MAX_SAFE_INTEGER));
+    return pipe(
+      operator,
+      Observable_lift(
+        durationOption === MAX_SAFE_INTEGER,
+        isNumber(durationOption),
+      ),
+    );
   }) as ObservableBuffer;
 })();
 

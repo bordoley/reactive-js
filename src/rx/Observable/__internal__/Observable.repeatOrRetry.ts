@@ -11,7 +11,7 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_lift from "./Observable.lift.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_repeatOrRetry: <T>(
@@ -63,7 +63,7 @@ const Observable_repeatOrRetry: <T>(
         createRepeatObserver,
         partial(observable, shouldRepeat),
       );
-      return pipe(observable, Observable_lift(true, true)(operator));
+      return pipe(observable, Observable_liftEnumerableOperator(operator));
     };
 })();
 

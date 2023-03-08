@@ -6,7 +6,7 @@ import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_lift from "./Observable.lift.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_pairwise = /*@__PURE__*/ (() => {
     const createPairwiseObserver = (() => {
         const PairwiseObserverMixin_prev = Symbol("PairwiseObserverMixin_prev");
@@ -30,6 +30,6 @@ const Observable_pairwise = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return pipe(createPairwiseObserver, Observable_lift(true), returns);
+    return pipe(createPairwiseObserver, Observable_liftEnumerableOperator, returns);
 })();
 export default Observable_pairwise;

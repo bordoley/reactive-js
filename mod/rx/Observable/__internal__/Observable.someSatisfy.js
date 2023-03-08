@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
 import Observer_satisfyMixin from "../../Observer/__internal__/Observer.satisfyMixin.js";
-import Observable_lift from "./Observable.lift.js";
+import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_someSatisfy = 
 /*@__PURE__*/ (() => {
     const typedSatisfyObserverMixin = Observer_satisfyMixin(false);
@@ -11,6 +11,6 @@ const Observable_someSatisfy =
         init(typedSatisfyObserverMixin, instance, delegate, predicate);
         return instance;
     });
-    return (predicate) => pipe(createInstanceFactory(someSatisfyObserverMixin), partial(predicate), Observable_lift(true, true));
+    return (predicate) => pipe(createInstanceFactory(someSatisfyObserverMixin), partial(predicate), Observable_liftEnumerableOperator);
 })();
 export default Observable_someSatisfy;
