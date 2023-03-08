@@ -38,6 +38,8 @@
 ### Transform Functions
 
 - [enumerate](containers_Sequence.md#enumerate)
+- [first](containers_Sequence.md#first)
+- [last](containers_Sequence.md#last)
 - [toAsyncEnumerable](containers_Sequence.md#toasyncenumerable)
 - [toEnumerable](containers_Sequence.md#toenumerable)
 - [toFlowable](containers_Sequence.md#toflowable)
@@ -1117,6 +1119,50 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+
+___
+
+### first
+
+▸ **first**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
+### last
+
+▸ **last**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
 
 ___
 

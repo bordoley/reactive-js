@@ -1,4 +1,4 @@
-import { Function1, Optional } from "../../../functions.js";
+import { First } from "../../../containers.js";
 import { RunnableLike } from "../../../rx.js";
-declare const Runnable_first: <T>() => Function1<RunnableLike<T>, Optional<T>>;
+declare const Runnable_first: First<RunnableLike>["first"];
 export default Runnable_first;

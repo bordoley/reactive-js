@@ -2,6 +2,7 @@ import {
   Empty,
   Enumerate,
   Every,
+  First,
   ForEach,
   FromIterable,
   FromOptional,
@@ -9,6 +10,7 @@ import {
   FromSequence,
   Keep,
   KeepType,
+  Last,
   Map,
   ReadonlyArrayLike,
   Some,
@@ -30,11 +32,13 @@ import Optional_toReadonlyArray from "./Optional/__internal__/Optional.toReadonl
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_first from "./ReadonlyArray/__internal__/ReadonlyArray.first.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_getLength from "./ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "./ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.js";
 import ReadonlyArray_keepType from "./ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
+import ReadonlyArray_last from "./ReadonlyArray/__internal__/ReadonlyArray.last.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "./ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
@@ -50,6 +54,8 @@ export const enumerate: Enumerate<ReadonlyArrayLike>["enumerate"] =
   ReadonlyArray_enumerate;
 
 export const every: Every<ReadonlyArrayLike>["every"] = ReadonlyArray_every;
+
+export const first: First<ReadonlyArrayLike>["first"] = ReadonlyArray_first;
 
 export const forEach: ForEach<ReadonlyArrayLike>["forEach"] =
   ReadonlyArray_forEach;
@@ -80,6 +86,8 @@ export const keep: Keep<ReadonlyArrayLike>["keep"] = ReadonlyArray_keep;
 
 export const keepType: KeepType<ReadonlyArrayLike>["keepType"] =
   ReadonlyArray_keepType;
+
+export const last: Last<ReadonlyArrayLike>["last"] = ReadonlyArray_last;
 
 export const map: Map<ReadonlyArrayLike>["map"] = ReadonlyArray_map;
 

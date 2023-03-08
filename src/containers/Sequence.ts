@@ -7,12 +7,14 @@ import {
   DistinctUntilChanged,
   EndWith,
   Enumerate,
+  First,
   FromOptional,
   FromReadonlyArray,
   Generate,
   IgnoreElements,
   Keep,
   KeepType,
+  Last,
   Map,
   MapTo,
   Pairwise,
@@ -43,10 +45,12 @@ import Sequence_concatWith from "./Sequence/__internal__/Sequence.concatWith.js"
 import Sequence_distinctUntilChanged from "./Sequence/__internal__/Sequence.distinctUntilChanged.js";
 import Sequence_endWith from "./Sequence/__internal__/Sequence.endWith.js";
 import Sequence_enumerate from "./Sequence/__internal__/Sequence.enumerate.js";
+import Sequence_first from "./Sequence/__internal__/Sequence.first.js";
 import Sequence_generate from "./Sequence/__internal__/Sequence.generate.js";
 import Sequence_ignoreElements from "./Sequence/__internal__/Sequence.ignoreElements.js";
 import Sequence_keep from "./Sequence/__internal__/Sequence.keep.js";
 import Sequence_keepType from "./Sequence/__internal__/Sequence.keepType.js";
+import Sequence_last from "./Sequence/__internal__/Sequence.last.js";
 import Sequence_map from "./Sequence/__internal__/Sequence.map.js";
 import Sequence_mapTo from "./Sequence/__internal__/Sequence.mapTo.js";
 import Sequence_pairwise from "./Sequence/__internal__/Sequence.pairwise.js";
@@ -86,6 +90,8 @@ export const endWith: EndWith<SequenceLike>["endWith"] = Sequence_endWith;
 export const enumerate: Enumerate<SequenceLike>["enumerate"] =
   Sequence_enumerate;
 
+export const first: First<SequenceLike>["first"] = Sequence_first;
+
 export const fromOptional: FromOptional<SequenceLike>["fromOptional"] =
   Optional_toSequence;
 
@@ -100,6 +106,8 @@ export const ignoreElements: IgnoreElements<SequenceLike>["ignoreElements"] =
 export const keep: Keep<SequenceLike>["keep"] = Sequence_keep;
 
 export const keepType: KeepType<SequenceLike>["keepType"] = Sequence_keepType;
+
+export const last: Last<SequenceLike>["last"] = Sequence_last;
 
 export const map: Map<SequenceLike>["map"] = Sequence_map;
 

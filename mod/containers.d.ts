@@ -294,6 +294,17 @@ export interface Empty<C extends ContainerLike, O = never> extends Container<C> 
  * @noInheritDoc
  * @category TypeClass
  */
+export interface First<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     *
+     * @category Transform
+     */
+    first<T>(options?: O): Function1<ContainerOf<C, T>, Optional<T>>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface FlatMapIterable<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * @category Operator
@@ -442,6 +453,17 @@ export interface KeepType<C extends ContainerLike, O = never> extends Container<
      * @category Operator
      */
     keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>, options?: O): ContainerOperator<C, TA, TB>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Last<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     *
+     * @category Transform
+     */
+    last<T>(options?: O): Function1<ContainerOf<C, T>, Optional<T>>;
 }
 /**
  * @noInheritDoc

@@ -48,6 +48,8 @@
 
   ↳ [`Empty`](containers.Empty.md)
 
+  ↳ [`First`](containers.First.md)
+
   ↳ [`FlatMapIterable`](containers.FlatMapIterable.md)
 
   ↳ [`ForEach`](containers.ForEach.md)
@@ -73,6 +75,8 @@
   ↳ [`Keep`](containers.Keep.md)
 
   ↳ [`KeepType`](containers.KeepType.md)
+
+  ↳ [`Last`](containers.Last.md)
 
   ↳ [`Map`](containers.Map.md)
 

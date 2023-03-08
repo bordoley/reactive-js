@@ -15,6 +15,7 @@ import {
   EndWith,
   Enumerate,
   EverySatisfy,
+  First,
   FlatMapIterable,
   ForEach,
   ForkConcat,
@@ -27,6 +28,7 @@ import {
   IgnoreElements,
   Keep,
   KeepType,
+  Last,
   Map,
   MapTo,
   Pairwise,
@@ -103,6 +105,8 @@ import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toRea
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
+import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
+import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 
 export const buffer: Buffer<EnumerableLike>["buffer"] = Observable_buffer;
 
@@ -156,6 +160,8 @@ export const enumerate: Enumerate<
 export const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"] =
   Observable_everySatisfy;
 
+export const first: First<EnumerableLike>["first"] = Runnable_first;
+
 export const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"] =
   Enumerable_flatMapIterable;
 
@@ -190,6 +196,8 @@ export const keep: Keep<EnumerableLike>["keep"] =
 
 export const keepType: KeepType<EnumerableLike>["keepType"] =
   Observable_keepType as KeepType<EnumerableLike>["keepType"];
+
+export const last: Last<EnumerableLike>["last"] = Runnable_last;
 
 export const map: Map<EnumerableLike>["map"] = Observable_map;
 

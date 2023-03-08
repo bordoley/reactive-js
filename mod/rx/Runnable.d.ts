@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { CombineLatest, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, FromEnumerable, MergeAll, MergeWith, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<RunnableLike>["buffer"];
@@ -25,7 +25,7 @@ export declare const endWith: EndWith<RunnableLike>["endWith"];
 export declare const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"];
 export declare const exhaust: Exhaust<RunnableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<RunnableLike>["exhaustMap"];
-export declare const first: <T>() => import("../functions.js").Function1<RunnableLike<T>, import("../functions.js").Optional<T>>;
+export declare const first: First<RunnableLike>["first"];
 export declare const flatMapIterable: FlatMapIterable<RunnableLike>["flatMapIterable"];
 export declare const forEach: ForEach<RunnableLike>["forEach"];
 export declare const forkConcat: ForkConcat<RunnableLike>["forkConcat"];
@@ -55,7 +55,7 @@ export declare const generate: Generate<RunnableLike, {
 export declare const ignoreElements: IgnoreElements<RunnableLike>["ignoreElements"];
 export declare const keep: Keep<RunnableLike>["keep"];
 export declare const keepType: KeepType<RunnableLike>["keepType"];
-export declare const last: <T>() => import("../functions.js").Function1<RunnableLike<T>, import("../functions.js").Optional<T>>;
+export declare const last: Last<RunnableLike>["last"];
 export declare const map: Map<RunnableLike>["map"];
 export declare const mapTo: MapTo<RunnableLike>["mapTo"];
 export declare const merge: <T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]) => RunnableLike<T>;

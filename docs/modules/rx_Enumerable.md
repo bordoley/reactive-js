@@ -57,6 +57,8 @@
 ### Transform Functions
 
 - [enumerate](rx_Enumerable.md#enumerate)
+- [first](rx_Enumerable.md#first)
+- [last](rx_Enumerable.md#last)
 - [toAsyncEnumerable](rx_Enumerable.md#toasyncenumerable)
 - [toEnumerable](rx_Enumerable.md#toenumerable)
 - [toFlowable](rx_Enumerable.md#toflowable)
@@ -1756,6 +1758,50 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`EnumerableEnumeratorLike`](../interfaces/rx.EnumerableEnumeratorLike.md)<`T`\>\>
+
+___
+
+### first
+
+▸ **first**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
+### last
+
+▸ **last**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
 
 ___
 

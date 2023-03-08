@@ -31,6 +31,8 @@
 ### Transform Functions
 
 - [enumerate](containers_ReadonlyArray.md#enumerate)
+- [first](containers_ReadonlyArray.md#first)
+- [last](containers_ReadonlyArray.md#last)
 - [toAsyncEnumerable](containers_ReadonlyArray.md#toasyncenumerable)
 - [toEnumerable](containers_ReadonlyArray.md#toenumerable)
 - [toFlowable](containers_ReadonlyArray.md#toflowable)
@@ -417,6 +419,50 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+
+___
+
+### first
+
+▸ **first**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
+### last
+
+▸ **last**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
 
 ___
 

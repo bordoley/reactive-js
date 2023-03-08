@@ -14,6 +14,7 @@ import {
   EncodeUtf8,
   EndWith,
   EverySatisfy,
+  First,
   FlatMapIterable,
   ForEach,
   ForkConcat,
@@ -26,6 +27,7 @@ import {
   IgnoreElements,
   Keep,
   KeepType,
+  Last,
   Map,
   MapTo,
   Pairwise,
@@ -192,7 +194,7 @@ export const exhaust: Exhaust<RunnableLike>["exhaust"] = Runnable_exhaust;
 export const exhaustMap: ExhaustMap<RunnableLike>["exhaustMap"] =
   Runnable_exhaustMap;
 
-export const first = Runnable_first;
+export const first: First<RunnableLike>["first"] = Runnable_first;
 
 export const flatMapIterable: FlatMapIterable<RunnableLike>["flatMapIterable"] =
   Runnable_flatMapIterable;
@@ -261,7 +263,7 @@ export const keep: Keep<RunnableLike>["keep"] =
 export const keepType: KeepType<RunnableLike>["keepType"] =
   Observable_keepType as KeepType<RunnableLike>["keepType"];
 
-export const last = Runnable_last;
+export const last: Last<RunnableLike>["last"] = Runnable_last;
 
 export const map: Map<RunnableLike>["map"] = Observable_map;
 
