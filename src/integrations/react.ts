@@ -14,7 +14,7 @@ import {
   pipe,
   raiseError,
 } from "../functions.js";
-import { ObservableLike, SubjectLike } from "../rx.js";
+import { ObservableLike, SubjectLike, SubjectLike_publish } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import * as Subject from "../rx/Subject.js";
 import { SchedulerLike } from "../scheduling.js";
@@ -71,7 +71,7 @@ export const createComponent = <TProps>(
       createReplaySubject,
     ]);
 
-    pipe(propsSubject, Subject.publish(props));
+    propsSubject[SubjectLike_publish](props);
 
     const elementObservable = useMemo(
       () => pipe(propsSubject, Observable.distinctUntilChanged<TProps>(), fn),

@@ -7,7 +7,6 @@
 ### Functions
 
 - [create](rx_Subject.md#create)
-- [publish](rx_Subject.md#publish)
 - [publishTo](rx_Subject.md#publishto)
 
 ## Functions
@@ -32,28 +31,6 @@
 #### Returns
 
 [`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>
-
-___
-
-### publish
-
-▸ **publish**<`T`\>(`v`): [`Function1`](functions.md#function1)<[`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>, [`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>, [`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>\>
 
 ___
 
