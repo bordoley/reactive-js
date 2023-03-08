@@ -178,6 +178,8 @@
 
   ↳ [`ToFlowable`](streaming.ToFlowable.md)
 
+  ↳ [`Enumerate`](util.Enumerate.md)
+
 ## Table of contents
 
 ### Properties

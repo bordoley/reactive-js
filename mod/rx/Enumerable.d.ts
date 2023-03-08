@@ -1,6 +1,7 @@
 import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToIterable, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { EnumerableLike, Retry, ScanAsync, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import { DisposableEnumeratorLike, Enumerate } from "../util.js";
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
 export declare const catchError: CatchError<EnumerableLike>["catchError"];
 export declare const compute: Compute<EnumerableLike>["compute"];
@@ -17,7 +18,7 @@ export declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>[
 export declare const empty: Empty<EnumerableLike>["empty"];
 export declare const encodeUtf8: EncodeUtf8<EnumerableLike>["encodeUtf8"];
 export declare const endWith: EndWith<EnumerableLike>["endWith"];
-export declare const enumerate: <T>() => (enumerable: EnumerableLike<T>) => import("../util.js").EnumeratorLike<T> & import("../util.js").DisposableLike;
+export declare const enumerate: Enumerate<EnumerableLike, DisposableEnumeratorLike>["enumerate"];
 export declare const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"];
 export declare const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"];
 export declare const forEach: ForEach<EnumerableLike>["forEach"];

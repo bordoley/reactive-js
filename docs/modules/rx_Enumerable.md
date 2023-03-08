@@ -54,12 +54,9 @@
 - [throwIfEmpty](rx_Enumerable.md#throwifempty)
 - [zipWith](rx_Enumerable.md#zipwith)
 
-### Other Functions
-
-- [enumerate](rx_Enumerable.md#enumerate)
-
 ### Transform Functions
 
+- [enumerate](rx_Enumerable.md#enumerate)
 - [toAsyncEnumerable](rx_Enumerable.md#toasyncenumerable)
 - [toEnumerable](rx_Enumerable.md#toenumerable)
 - [toFlowable](rx_Enumerable.md#toflowable)
@@ -1745,11 +1742,11 @@ ___
 
 ___
 
-## Other Functions
+## Transform Functions
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): (`enumerable`: [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>) => [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)
+▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`DisposableEnumeratorLike`](../interfaces/util.DisposableEnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1759,23 +1756,9 @@ ___
 
 #### Returns
 
-`fn`
-
-▸ (`enumerable`): [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `enumerable` | [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\> |
-
-##### Returns
-
-[`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`DisposableEnumeratorLike`](../interfaces/util.DisposableEnumeratorLike.md)<`T`\>\>
 
 ___
-
-## Transform Functions
 
 ### toAsyncEnumerable
 

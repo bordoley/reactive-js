@@ -1,7 +1,8 @@
 /// <reference types="./Enumerable.enumerate.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { isSome, pipe, unsafeCast } from "../../../functions.js";
+import { ContainerLike_type } from "../../../containers.js";
+import { isSome, pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js";
@@ -22,6 +23,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
         init(typedMutableEnumeratorMixin, instance);
         init(IndexedQueue_fifoQueueMixin(), instance);
         init(typedObserverMixin, instance, instance);
+        // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
         return instance;
     }, props({
         [SchedulerLike_inContinuation]: false,
@@ -78,6 +80,6 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             this[EnumeratorLike_current] = next;
         },
     }));
-    return () => (enumerable) => pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable));
+    return returns((enumerable) => pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable)));
 })();
 export default Enumerable_enumerate;

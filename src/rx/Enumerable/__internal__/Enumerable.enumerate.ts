@@ -6,7 +6,8 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { isSome, pipe, unsafeCast } from "../../../functions.js";
+import { ContainerLike_T, ContainerLike_type } from "../../../containers.js";
+import { isSome, pipe, returns, unsafeCast } from "../../../functions.js";
 import {
   EnumerableLike,
   ObserverLike,
@@ -28,6 +29,7 @@ import {
 } from "../../../scheduling.js";
 import { Continuation__getCurrentContinuation } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import {
+  DisposableEnumeratorLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -51,7 +53,7 @@ import {
 
 const Enumerable_enumerate: <T>() => (
   enumerable: EnumerableLike<T>,
-) => EnumeratorLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
+) => DisposableEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
   const typedObserverMixin = Observer_mixin<T>();
 
@@ -59,10 +61,14 @@ const Enumerable_enumerate: <T>() => (
     [SchedulerLike_inContinuation]: boolean;
   };
 
-  type EnumeratorScheduler = SchedulerLike &
-    MutableEnumeratorLike<T> &
-    ObserverLike<T> &
-    DisposableLike;
+  interface EnumeratorScheduler<T>
+    extends DisposableEnumeratorLike<T>,
+      SchedulerLike,
+      ObserverLike<T> {
+    readonly [ContainerLike_type]?: EnumeratorScheduler<
+      this[typeof ContainerLike_T]
+    >;
+  }
 
   const createEnumeratorScheduler = createInstanceFactory(
     mix(
@@ -74,7 +80,7 @@ const Enumerable_enumerate: <T>() => (
       ),
       function EnumeratorScheduler(
         instance: Pick<
-          EnumeratorScheduler,
+          EnumeratorScheduler<T>,
           | typeof SchedulerLike_now
           | typeof SchedulerLike_requestYield
           | typeof SchedulerLike_schedule
@@ -83,13 +89,14 @@ const Enumerable_enumerate: <T>() => (
           | typeof ObserverLike_notify
         > &
           Mutable<TEnumeratorSchedulerProperties>,
-      ): EnumeratorScheduler {
+      ): EnumeratorScheduler<T> {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         init(IndexedQueue_fifoQueueMixin<ContinuationLike>(), instance);
         init(typedObserverMixin, instance, instance);
 
-        return instance;
+        // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
+        return instance as EnumeratorScheduler<T>;
       },
       props<TEnumeratorSchedulerProperties>({
         [SchedulerLike_inContinuation]: false,
@@ -176,9 +183,10 @@ const Enumerable_enumerate: <T>() => (
     ),
   );
 
-  return () =>
-    (enumerable: EnumerableLike<T>): EnumeratorLike<T> & DisposableLike =>
-      pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable));
+  return returns(
+    (enumerable: EnumerableLike<T>): DisposableEnumeratorLike<T> =>
+      pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable)),
+  );
 })();
 
 export default Enumerable_enumerate;

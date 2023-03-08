@@ -1,4 +1,11 @@
-import { Optional, SideEffect1 } from "./functions.js";
+import {
+  Container,
+  ContainerLike,
+  ContainerLike_T,
+  ContainerLike_type,
+  ContainerOf,
+} from "./containers.js";
+import { Function1, Optional, SideEffect1 } from "./functions.js";
 /** @ignore */
 export const DisposableLike_add = Symbol("DisposableLike_add");
 
@@ -81,9 +88,37 @@ export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
 /**
  * @noInheritDoc
  */
-export interface EnumeratorLike<T = unknown> {
+export interface EnumeratorLike<T = unknown> extends ContainerLike {
+  readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]>;
+
   readonly [EnumeratorLike_current]: T;
   readonly [EnumeratorLike_hasCurrent]: boolean;
 
   [EnumeratorLike_move](): boolean;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface DisposableEnumeratorLike<T = unknown>
+  extends EnumeratorLike<T>,
+    DisposableLike {
+  readonly [ContainerLike_type]?: DisposableEnumeratorLike<
+    this[typeof ContainerLike_T]
+  >;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Enumerate<
+  C extends ContainerLike,
+  CEnumerator extends EnumeratorLike,
+> extends Container<C> {
+  /**
+   *
+   * @category Transform
+   */
+  enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
 }

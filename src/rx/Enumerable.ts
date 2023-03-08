@@ -101,6 +101,7 @@ import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import { DisposableEnumeratorLike, Enumerate } from "../util.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 
@@ -148,7 +149,10 @@ export const encodeUtf8: EncodeUtf8<EnumerableLike>["encodeUtf8"] =
 export const endWith: EndWith<EnumerableLike>["endWith"] =
   Observable_endWith as EndWith<EnumerableLike>["endWith"];
 
-export const enumerate = Enumerable_enumerate;
+export const enumerate: Enumerate<
+  EnumerableLike,
+  DisposableEnumeratorLike
+>["enumerate"] = Enumerable_enumerate;
 
 export const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"] =
   Observable_everySatisfy;

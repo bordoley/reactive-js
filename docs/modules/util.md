@@ -4,11 +4,16 @@
 
 ## Table of contents
 
-### Interfaces
+### Other Interfaces
 
+- [DisposableEnumeratorLike](../interfaces/util.DisposableEnumeratorLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
 - [EnumeratorLike](../interfaces/util.EnumeratorLike.md)
 - [QueueLike](../interfaces/util.QueueLike.md)
+
+### TypeClass Interfaces
+
+- [Enumerate](../interfaces/util.Enumerate.md)
 
 ### Type Aliases
 

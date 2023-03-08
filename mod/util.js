@@ -1,5 +1,6 @@
 /// <reference types="./util.d.ts" />
 
+import { ContainerLike_type, } from "./containers.js";
 /** @ignore */
 export const DisposableLike_add = Symbol("DisposableLike_add");
 /** @ignore */

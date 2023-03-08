@@ -24,6 +24,8 @@
 
   ↳ [`FlowableLike`](streaming.FlowableLike.md)
 
+  ↳ [`EnumeratorLike`](util.EnumeratorLike.md)
+
 ## Table of contents
 
 ### Properties
