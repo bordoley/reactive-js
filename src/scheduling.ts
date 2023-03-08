@@ -4,12 +4,19 @@ import { DisposableLike, QueueLike } from "./util.js";
 /** @ignore */
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
 
+/** @ignore */
+export const ContinuationLike_scheduler = Symbol("ContinuationLike_run");
+
 /**
  * A unit of work to be executed by a scheduler.
  *
  * @noInheritDoc
  */
-export interface ContinuationLike extends DisposableLike {
+export interface ContinuationLike
+  extends DisposableLike,
+    QueueLike<ContinuationLike> {
+  readonly [ContinuationLike_scheduler]: SchedulerLike;
+
   [ContinuationLike_run](): void;
 }
 

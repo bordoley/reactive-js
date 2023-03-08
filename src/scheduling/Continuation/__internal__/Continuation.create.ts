@@ -20,6 +20,7 @@ import {
 import {
   ContinuationLike,
   ContinuationLike_run,
+  ContinuationLike_scheduler,
   SchedulerLike,
   SchedulerLike_now,
   SchedulerLike_schedule,
@@ -30,20 +31,27 @@ import {
   DisposableLike_isDisposed,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import {
+  PullableQueueLike,
+  PullableQueueLike_pull,
+} from "../../../util/__internal__/util.internal.js";
 
 class YieldError {
   constructor(readonly delay: number) {}
 }
 
 const Continuation_effect = Symbol("Continuation_effect");
-const Continuation_scheduler = Symbol("Continuation_scheduler");
 
 type TProperties = {
-  readonly [Continuation_scheduler]: SchedulerLike;
+  readonly [ContinuationLike_scheduler]: SchedulerLike;
   readonly [Continuation_effect]: SideEffect;
 };
 
 let currentContinuation: Optional<ContinuationLike & TProperties> = none;
+
+export const Continuation__getCurrentContinuation: () => Optional<ContinuationLike> =
+  () => currentContinuation;
 
 export const Continuation__yield = (delay = 0) => {
   const continuation = isNone(currentContinuation)
@@ -54,7 +62,7 @@ export const Continuation__yield = (delay = 0) => {
 
   if (
     delay > 0 ||
-    continuation[Continuation_scheduler][SchedulerLike_shouldYield]
+    continuation[ContinuationLike_scheduler][SchedulerLike_shouldYield]
   ) {
     throw newInstance(YieldError, delay);
   }
@@ -66,7 +74,7 @@ export const Continuation__now = () => {
         "not in continuation",
       )
     : currentContinuation;
-  return continuation[Continuation_scheduler][SchedulerLike_now];
+  return continuation[ContinuationLike_scheduler][SchedulerLike_now];
 };
 
 const Continuation_create: Function2<
@@ -76,7 +84,10 @@ const Continuation_create: Function2<
 > = /*@__PURE__*/ (() =>
   createInstanceFactory(
     mix(
-      include(Disposable_mixin),
+      include(
+        Disposable_mixin,
+        IndexedQueue_fifoQueueMixin<ContinuationLike>(),
+      ),
       function Continuation(
         instance: Pick<ContinuationLike, typeof ContinuationLike_run> &
           Mutable<TProperties>,
@@ -84,26 +95,49 @@ const Continuation_create: Function2<
         effect: SideEffect,
       ): ContinuationLike {
         init(Disposable_mixin, instance);
+        init(IndexedQueue_fifoQueueMixin<ContinuationLike>(), instance);
 
-        instance[Continuation_scheduler] = scheduler;
+        instance[ContinuationLike_scheduler] = scheduler;
         instance[Continuation_effect] = effect;
 
         return instance;
       },
       props<TProperties>({
-        [Continuation_scheduler]: none,
+        [ContinuationLike_scheduler]: none,
         [Continuation_effect]: none,
       }),
       {
-        [ContinuationLike_run](this: TProperties & ContinuationLike) {
+        [ContinuationLike_run](
+          this: TProperties &
+            ContinuationLike &
+            PullableQueueLike<ContinuationLike>,
+        ) {
           if (!this[DisposableLike_isDisposed]) {
             let err: Optional<Error> = none;
             let yieldError: Optional<YieldError> = none;
+            let shouldYield = false;
 
             const oldContinuation = currentContinuation;
 
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             currentContinuation = this;
+
+            // Run any inner continuations first.
+            let head: Optional<ContinuationLike> = none;
+            while (((head = this[PullableQueueLike_pull]()), isSome(head))) {
+              if (!head[DisposableLike_isDisposed]) {
+                head[ContinuationLike_run]();
+              }
+
+              shouldYield =
+                this[ContinuationLike_scheduler][SchedulerLike_shouldYield];
+
+              if (shouldYield) {
+                currentContinuation = oldContinuation;
+                this[ContinuationLike_scheduler][SchedulerLike_schedule](this);
+                return;
+              }
+            }
 
             try {
               this[Continuation_effect]();
@@ -117,12 +151,23 @@ const Continuation_create: Function2<
 
             currentContinuation = oldContinuation;
 
+            if (isSome(yieldError) && yieldError.delay > 0) {
+              while (((head = this[PullableQueueLike_pull]()), isSome(head))) {
+                this[ContinuationLike_scheduler][SchedulerLike_schedule](head);
+              }
+            }
+
             if (isSome(yieldError)) {
-              this[Continuation_scheduler][SchedulerLike_schedule](
+              this[ContinuationLike_scheduler][SchedulerLike_schedule](
                 this,
                 yieldError,
               );
             } else {
+              let head: Optional<ContinuationLike> = none;
+              while (((head = this[PullableQueueLike_pull]()), isSome(head))) {
+                this[ContinuationLike_scheduler][SchedulerLike_schedule](head);
+              }
+
               this[DisposableLike_dispose](err);
             }
           }

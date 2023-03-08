@@ -49,6 +49,7 @@ import {
   increment,
   incrementBy,
   newInstance,
+  none,
   pipe,
   pipeLazy,
   returns,
@@ -187,7 +188,7 @@ const switchAllTests = describe(
   test(
     "overlapping notification",
     pipeLazy(
-      [1, 2, 3],
+      [none, none, none],
       ReadonlyArray.toRunnable({ delay: 4 }),
       Runnable.switchMap(_ =>
         pipe([1, 2, 3], ReadonlyArray.toRunnable({ delay: 2 })),
@@ -316,7 +317,10 @@ const toFlowableTests = describe(
       Streamable.stream(scheduler),
     );
 
-    Pauseable.resume(generateStream);
+    pipe(
+      scheduler,
+      Scheduler.schedule(pipeLazy(generateStream, Pauseable.resume)),
+    );
 
     pipe(
       scheduler,
@@ -540,6 +544,23 @@ const zipWithLatestTests = describe(
   ),
 );
 
+const runTests = describe(
+  "run",
+  test(
+    "with higher order observable and no delay",
+    pipeLazy(
+      Runnable.generate(
+        _ => pipe(1, Runnable.fromOptional()),
+        returns(Runnable.empty()),
+      ),
+      Runnable.concatAll(),
+      Runnable.takeFirst({ count: 10 }),
+      Runnable.toReadonlyArray<number>(),
+      expectArrayEquals([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]),
+    ),
+  ),
+);
+
 testModule(
   "Runnable",
   bufferTests(Runnable),
@@ -565,6 +586,7 @@ testModule(
   pairwiseTests(Runnable),
   reduceTests(Runnable),
   retryTests<RunnableLike>(Runnable),
+  runTests,
   scanTests(Runnable),
   scanAsyncTests<RunnableLike, RunnableLike>(Runnable, Runnable),
   skipFirstTests(Runnable),

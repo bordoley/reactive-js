@@ -18,6 +18,7 @@ import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sour
 import {
   ContinuationLike,
   ContinuationLike_run,
+  ContinuationLike_scheduler,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -25,6 +26,7 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling.js";
+import { Continuation__getCurrentContinuation } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -33,6 +35,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
+  QueueLike_count,
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
@@ -42,6 +45,7 @@ import MutableEnumerator_mixin from "../../../util/Enumerator/__internal__/Mutab
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import {
   MutableEnumeratorLike,
+  MutableEnumeratorLike_reset,
   PullableQueueLike,
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
@@ -89,8 +93,18 @@ const Enumerable_enumerate: <T>() => (
       {
         [SchedulerLike_now]: 0,
         get [SchedulerLike_shouldYield](): boolean {
-          unsafeCast<SchedulerLike>(this);
-          return this[SchedulerLike_inContinuation];
+          unsafeCast<SchedulerLike & EnumeratorLike>(this);
+
+          const currentContinuation = Continuation__getCurrentContinuation();
+
+          const currentContinuationHasChildren =
+            currentContinuation?.[ContinuationLike_scheduler] === this &&
+            (currentContinuation?.[QueueLike_count] ?? 0) > 0;
+
+          return (
+            this[SchedulerLike_inContinuation] &&
+            (this[EnumeratorLike_hasCurrent] || currentContinuationHasChildren)
+          );
         },
         [SchedulerLike_requestYield](): void {
           // No-Op: We yield whenever the continuation is running.
@@ -101,13 +115,18 @@ const Enumerable_enumerate: <T>() => (
             PullableQueueLike<ContinuationLike>,
         ) {
           if (!this[DisposableLike_isDisposed]) {
-            const continuation = this[PullableQueueLike_pull]();
-            if (isSome(continuation)) {
-              this[SchedulerLike_inContinuation] = true;
-              continuation[ContinuationLike_run]();
-              this[SchedulerLike_inContinuation] = false;
-            } else {
-              this[DisposableLike_dispose]();
+            this[MutableEnumeratorLike_reset]();
+
+            while (!this[EnumeratorLike_hasCurrent]) {
+              const continuation = this[PullableQueueLike_pull]();
+              if (isSome(continuation)) {
+                this[SchedulerLike_inContinuation] = true;
+                continuation[ContinuationLike_run]();
+                this[SchedulerLike_inContinuation] = false;
+              } else {
+                this[DisposableLike_dispose]();
+                break;
+              }
             }
           }
 
@@ -116,13 +135,30 @@ const Enumerable_enumerate: <T>() => (
         [SchedulerLike_schedule](
           this: TEnumeratorSchedulerProperties &
             DisposableLike &
-            PullableQueueLike<ContinuationLike>,
+            PullableQueueLike<ContinuationLike> &
+            SchedulerLike,
           continuation: ContinuationLike,
           _?: { readonly delay?: number },
         ): void {
           pipe(this, Disposable_add(continuation));
 
-          if (!continuation[DisposableLike_isDisposed]) {
+          if (continuation[DisposableLike_isDisposed]) {
+            return;
+          }
+
+          if (continuation[DisposableLike_isDisposed]) {
+            return;
+          }
+
+          const currentContinuation = Continuation__getCurrentContinuation();
+
+          if (
+            isSome(currentContinuation) &&
+            currentContinuation[ContinuationLike_scheduler] === this &&
+            !currentContinuation[DisposableLike_isDisposed]
+          ) {
+            currentContinuation[QueueLike_push](continuation);
+          } else {
             this[QueueLike_push](continuation);
           }
         },

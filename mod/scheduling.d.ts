@@ -2,12 +2,15 @@ import { Updater } from "./functions.js";
 import { DisposableLike, QueueLike } from "./util.js";
 /** @ignore */
 export declare const ContinuationLike_run: unique symbol;
+/** @ignore */
+export declare const ContinuationLike_scheduler: unique symbol;
 /**
  * A unit of work to be executed by a scheduler.
  *
  * @noInheritDoc
  */
-export interface ContinuationLike extends DisposableLike {
+export interface ContinuationLike extends DisposableLike, QueueLike<ContinuationLike> {
+    readonly [ContinuationLike_scheduler]: SchedulerLike;
     [ContinuationLike_run](): void;
 }
 /** @ignore */

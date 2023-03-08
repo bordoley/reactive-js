@@ -92,9 +92,11 @@ export const create =
                     instance[QueueScheduler_hostScheduler][SchedulerLike_now], 0);
                 if (delay === 0) {
                     instance[EnumeratorLike_move]();
+                    instance[QueueScheduler_yieldRequested] = false;
                     instance[SchedulerLike_inContinuation] = true;
                     continuation[ContinuationLike_run]();
                     instance[SchedulerLike_inContinuation] = false;
+                    instance[QueueScheduler_yieldRequested] = false;
                 }
                 else {
                     instance[QueueScheduler_dueTime] =
@@ -144,9 +146,6 @@ export const create =
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
             const { [SchedulerLike_inContinuation]: inContinuation, [QueueScheduler_yieldRequested]: yieldRequested, } = this;
-            if (inContinuation) {
-                this[QueueScheduler_yieldRequested] = false;
-            }
             const next = peek(this);
             return (inContinuation &&
                 (yieldRequested ||

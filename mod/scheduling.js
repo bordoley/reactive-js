@@ -3,6 +3,8 @@
 /** @ignore */
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
 /** @ignore */
+export const ContinuationLike_scheduler = Symbol("ContinuationLike_run");
+/** @ignore */
 export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
 /** @ignore */
 export const SchedulerLike_now = Symbol("SchedulerLike_now");

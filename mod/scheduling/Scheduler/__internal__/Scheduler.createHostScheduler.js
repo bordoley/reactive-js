@@ -37,9 +37,11 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
     // clear the immediateOrTimer disposable
     immmediateOrTimerDisposable[DisposableLike_dispose]();
     scheduler[HostScheduler_startTime] = scheduler[SchedulerLike_now];
+    scheduler[HostScheduler_yieldRequested] = false;
     scheduler[SchedulerLike_inContinuation] = true;
     continuation[ContinuationLike_run]();
     scheduler[SchedulerLike_inContinuation] = false;
+    scheduler[HostScheduler_yieldRequested] = false;
 };
 const HostScheduler_startTime = Symbol("HostScheduler_startTime");
 const HostScheduler_maxYieldInterval = Symbol("HostScheduler_maxYieldInterval");
@@ -70,9 +72,6 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
         unsafeCast(this);
         const inContinuation = this[SchedulerLike_inContinuation];
         const { [HostScheduler_yieldRequested]: yieldRequested } = this;
-        if (inContinuation) {
-            this[HostScheduler_yieldRequested] = false;
-        }
         return (inContinuation &&
             (yieldRequested ||
                 this[SchedulerLike_now] >

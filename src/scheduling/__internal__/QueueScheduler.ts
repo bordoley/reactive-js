@@ -215,9 +215,11 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             if (delay === 0) {
               instance[EnumeratorLike_move]();
 
+              instance[QueueScheduler_yieldRequested] = false;
               instance[SchedulerLike_inContinuation] = true;
               continuation[ContinuationLike_run]();
               instance[SchedulerLike_inContinuation] = false;
+              instance[QueueScheduler_yieldRequested] = false;
             } else {
               instance[QueueScheduler_dueTime] =
                 instance[QueueScheduler_hostScheduler][SchedulerLike_now] +
@@ -316,10 +318,6 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
               [SchedulerLike_inContinuation]: inContinuation,
               [QueueScheduler_yieldRequested]: yieldRequested,
             } = this;
-
-            if (inContinuation) {
-              this[QueueScheduler_yieldRequested] = false;
-            }
 
             const next = peek(this);
 

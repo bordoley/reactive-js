@@ -11,6 +11,7 @@ import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import {
   ContinuationLike,
   ContinuationLike_run,
+  ContinuationLike_scheduler,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -28,6 +29,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
+  QueueLike_count,
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
@@ -39,6 +41,7 @@ import {
   PullableQueueLike,
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
+import { Continuation__getCurrentContinuation } from "../../Continuation/__internal__/Continuation.create.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 
 const VirtualTask_continuation = Symbol("VirtualTask_continuation");
@@ -121,7 +124,12 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     }),
     {
       get [SchedulerLike_shouldYield]() {
-        unsafeCast<TProperties>(this);
+        unsafeCast<TProperties & SchedulerLike>(this);
+
+        const currentContinuation = Continuation__getCurrentContinuation();
+        const currentContinuationHasChildren =
+          currentContinuation?.[ContinuationLike_scheduler] === this &&
+          (currentContinuation?.[QueueLike_count] ?? 0) > 0;
 
         const {
           [VirtualTimeScheduler_yieldRequested]: yieldRequested,
@@ -130,14 +138,14 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
 
         if (inContinuation) {
           this[VirtualTimeScheduler_microTaskTicks]++;
-          this[VirtualTimeScheduler_yieldRequested] = false;
         }
 
         return (
           inContinuation &&
           (yieldRequested ||
             this[VirtualTimeScheduler_microTaskTicks] >=
-              this[VirtualTimeScheduler_maxMicroTaskTicks])
+              this[VirtualTimeScheduler_maxMicroTaskTicks] ||
+            currentContinuationHasChildren)
         );
       },
       [VirtualTimeSchedulerLike_run](
@@ -153,7 +161,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
           this[VirtualTimeScheduler_microTaskTicks] = 0;
           this[SchedulerLike_now] = dueTime;
           this[SchedulerLike_inContinuation] = true;
+          this[VirtualTimeScheduler_yieldRequested] = false;
           continuation[ContinuationLike_run]();
+          this[VirtualTimeScheduler_yieldRequested] = false;
           this[SchedulerLike_inContinuation] = false;
         }
       },
@@ -172,7 +182,20 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
 
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
-        if (!continuation[DisposableLike_isDisposed]) {
+        if (continuation[DisposableLike_isDisposed]) {
+          return;
+        }
+
+        const currentContinuation = Continuation__getCurrentContinuation();
+
+        if (
+          isSome(currentContinuation) &&
+          currentContinuation[ContinuationLike_scheduler] === this &&
+          !currentContinuation[DisposableLike_isDisposed] &&
+          delay === 0
+        ) {
+          currentContinuation[QueueLike_push](continuation);
+        } else {
           this[QueueLike_push]({
             [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
             [VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
