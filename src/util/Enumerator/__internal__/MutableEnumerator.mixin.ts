@@ -7,7 +7,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -20,7 +19,7 @@ import {
 
 type TEnumeratorMixinReturn<T> = Omit<
   MutableEnumeratorLike<T>,
-  keyof DisposableLike | typeof EnumeratorLike_move
+  typeof EnumeratorLike_move
 >;
 
 const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =

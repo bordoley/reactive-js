@@ -1749,7 +1749,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): (`enumerable`: [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>) => [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\>
+▸ **enumerate**<`T`\>(): (`enumerable`: [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>) => [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 #### Type parameters
 
@@ -1761,7 +1761,7 @@ ___
 
 `fn`
 
-▸ (`enumerable`): [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\>
+▸ (`enumerable`): [`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ##### Parameters
 
@@ -1771,7 +1771,7 @@ ___
 
 ##### Returns
 
-[`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\>
+[`EnumeratorLike`](../interfaces/util.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ___
 

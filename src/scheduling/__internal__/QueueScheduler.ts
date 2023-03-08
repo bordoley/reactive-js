@@ -312,7 +312,9 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
             return this[QueueScheduler_hostScheduler][SchedulerLike_now];
           },
           get [SchedulerLike_shouldYield](): boolean {
-            unsafeCast<TProperties & EnumeratorLike<QueueTask>>(this);
+            unsafeCast<
+              TProperties & EnumeratorLike<QueueTask> & DisposableLike
+            >(this);
 
             const {
               [SchedulerLike_inContinuation]: inContinuation,

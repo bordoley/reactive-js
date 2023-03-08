@@ -51,7 +51,7 @@ import {
 
 const Enumerable_enumerate: <T>() => (
   enumerable: EnumerableLike<T>,
-) => EnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
+) => EnumeratorLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
   const typedObserverMixin = Observer_mixin<T>();
 
@@ -61,7 +61,8 @@ const Enumerable_enumerate: <T>() => (
 
   type EnumeratorScheduler = SchedulerLike &
     MutableEnumeratorLike<T> &
-    ObserverLike<T>;
+    ObserverLike<T> &
+    DisposableLike;
 
   const createEnumeratorScheduler = createInstanceFactory(
     mix(
@@ -73,7 +74,7 @@ const Enumerable_enumerate: <T>() => (
       ),
       function EnumeratorScheduler(
         instance: Pick<
-          SchedulerLike & EnumeratorLike & ObserverLike,
+          EnumeratorScheduler,
           | typeof SchedulerLike_now
           | typeof SchedulerLike_requestYield
           | typeof SchedulerLike_schedule
@@ -115,7 +116,8 @@ const Enumerable_enumerate: <T>() => (
         [EnumeratorLike_move](
           this: TEnumeratorSchedulerProperties &
             MutableEnumeratorLike<T> &
-            PullableQueueLike<ContinuationLike>,
+            PullableQueueLike<ContinuationLike> &
+            DisposableLike,
         ) {
           this[MutableEnumeratorLike_reset]();
 
@@ -175,7 +177,7 @@ const Enumerable_enumerate: <T>() => (
   );
 
   return () =>
-    (enumerable: EnumerableLike<T>): EnumeratorLike<T> =>
+    (enumerable: EnumerableLike<T>): EnumeratorLike<T> & DisposableLike =>
       pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable));
 })();
 

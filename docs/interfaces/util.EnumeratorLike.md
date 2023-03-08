@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `T` | `unknown` |
 
-## Hierarchy
-
-- [`DisposableLike`](util.DisposableLike.md)
-
-  ↳ **`EnumeratorLike`**
-
 ## Table of contents
 
 ### Properties

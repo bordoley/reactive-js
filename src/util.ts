@@ -81,7 +81,7 @@ export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
 /**
  * @noInheritDoc
  */
-export interface EnumeratorLike<T = unknown> extends DisposableLike {
+export interface EnumeratorLike<T = unknown> {
   readonly [EnumeratorLike_current]: T;
   readonly [EnumeratorLike_hasCurrent]: boolean;
 

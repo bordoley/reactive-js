@@ -56,7 +56,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
                 currentContinuationHasChildren));
     },
     [VirtualTimeSchedulerLike_run]() {
-        while (this[EnumeratorLike_move]()) {
+        while (!this[DisposableLike_isDisposed] &&
+            this[EnumeratorLike_move]()) {
             const task = this[EnumeratorLike_current];
             const { [VirtualTask_dueTime]: dueTime, [VirtualTask_continuation]: continuation, } = task;
             this[VirtualTimeScheduler_microTaskTicks] = 0;
@@ -93,9 +94,6 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         }
     },
     [EnumeratorLike_move]() {
-        if (this[DisposableLike_isDisposed]) {
-            return false;
-        }
         const task = this[PullableQueueLike_pull]();
         if (isSome(task)) {
             this[EnumeratorLike_current] = task;

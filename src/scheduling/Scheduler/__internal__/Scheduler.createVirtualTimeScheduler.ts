@@ -149,9 +149,12 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         );
       },
       [VirtualTimeSchedulerLike_run](
-        this: TProperties & EnumeratorLike<VirtualTask>,
+        this: TProperties & EnumeratorLike<VirtualTask> & DisposableLike,
       ) {
-        while (this[EnumeratorLike_move]()) {
+        while (
+          !this[DisposableLike_isDisposed] &&
+          this[EnumeratorLike_move]()
+        ) {
           const task = this[EnumeratorLike_current];
           const {
             [VirtualTask_dueTime]: dueTime,
@@ -206,12 +209,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       [EnumeratorLike_move](
         this: TProperties &
           MutableEnumeratorLike<VirtualTask> &
-          PullableQueueLike<VirtualTask>,
+          PullableQueueLike<VirtualTask> &
+          DisposableLike,
       ): boolean {
-        if (this[DisposableLike_isDisposed]) {
-          return false;
-        }
-
         const task = this[PullableQueueLike_pull]();
 
         if (isSome(task)) {

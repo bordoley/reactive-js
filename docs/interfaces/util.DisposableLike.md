@@ -20,8 +20,6 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)
 
-  ↳ [`EnumeratorLike`](util.EnumeratorLike.md)
-
 ## Table of contents
 
 ### Properties
