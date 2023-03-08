@@ -1,4 +1,4 @@
-import { Factory, Function1, Function2, Function3, Optional } from "../functions.js";
+import { Factory, Function1, Function2, Function3, Function4, Optional } from "../functions.js";
 declare const Object_init: unique symbol;
 declare const Object_properties: unique symbol;
 declare const Object_prototype: unique symbol;
@@ -32,11 +32,16 @@ export interface Mixin3<TReturn, TA, TB, TC, TPrototype extends object = object>
     [Object_init](instance: unknown, a: TA, b: TB, c: TC): TReturn;
     [Object_prototype]: TPrototype;
 }
+export interface Mixin4<TReturn, TA, TB, TC, TD, TPrototype extends object = object> extends PartialMixin {
+    [Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD): TReturn;
+    [Object_prototype]: TPrototype;
+}
 interface Init {
     <TReturn>(mixin: Mixin<TReturn>, instance: unknown): asserts instance is TReturn;
     <TReturn, TA>(mixin: Mixin1<TReturn, TA>, instance: unknown, a: TA): asserts instance is TReturn;
     <TReturn, TA, TB>(mixin: Mixin2<TReturn, TA, TB>, instance: unknown, a: TA, b: TB): asserts instance is TReturn;
     <TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>, instance: unknown, a: TA, b: TB, c: TC): asserts instance is TReturn;
+    <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>, instance: unknown, a: TA, b: TB, c: TC, d: TD): asserts instance is TReturn;
 }
 export declare const init: Init;
 export declare const include: (m0: PartialMixin, ...tail: readonly PartialMixin[]) => PartialMixin;
@@ -63,6 +68,7 @@ interface CreateInstanceFactory {
     <TReturn, TA>(mixin: Mixin1<TReturn, TA>): Function1<TA, TReturn>;
     <TReturn, TA, TB>(mixin: Mixin2<TReturn, TA, TB>): Function2<TA, TB, TReturn>;
     <TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>): Function3<TA, TB, TC, TReturn>;
+    <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>): Function4<TA, TB, TC, TD, TReturn>;
 }
 export declare const createInstanceFactory: CreateInstanceFactory;
 export declare const props: <TProperties>(o: OptionalProperties<TProperties>) => TProperties & {

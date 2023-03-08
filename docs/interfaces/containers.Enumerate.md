@@ -9,7 +9,7 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `CEnumerator` | extends [`EnumeratorLike`](containers.EnumeratorLike.md) |
+| `CEnumerator` | extends [`EnumeratorLike`](containers.EnumeratorLike.md) = [`EnumeratorLike`](containers.EnumeratorLike.md) |
 
 ## Hierarchy
 

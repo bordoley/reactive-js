@@ -30,6 +30,7 @@
 
 ### Transform Functions
 
+- [enumerate](containers_ReadonlyArray.md#enumerate)
 - [toAsyncEnumerable](containers_ReadonlyArray.md#toasyncenumerable)
 - [toEnumerable](containers_ReadonlyArray.md#toenumerable)
 - [toFlowable](containers_ReadonlyArray.md#toflowable)
@@ -402,6 +403,22 @@ in the Container until it returns true, or until the end of the Container.
 ___
 
 ## Transform Functions
+
+### enumerate
+
+▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+
+___
 
 ### toAsyncEnumerable
 

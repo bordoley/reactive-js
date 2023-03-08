@@ -4,6 +4,7 @@ import {
   Function1,
   Function2,
   Function3,
+  Function4,
   Optional,
   isFunction,
   none,
@@ -62,6 +63,18 @@ export interface Mixin3<TReturn, TA, TB, TC, TPrototype extends object = object>
   [Object_prototype]: TPrototype;
 }
 
+export interface Mixin4<
+  TReturn,
+  TA,
+  TB,
+  TC,
+  TD,
+  TPrototype extends object = object,
+> extends PartialMixin {
+  [Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD): TReturn;
+  [Object_prototype]: TPrototype;
+}
+
 const {
   create: createObject,
   getOwnPropertyDescriptors,
@@ -102,6 +115,15 @@ interface Init {
     a: TA,
     b: TB,
     c: TC,
+  ): asserts instance is TReturn;
+
+  <TReturn, TA, TB, TC, TD>(
+    mixin: Mixin4<TReturn, TA, TB, TC, TD>,
+    instance: unknown,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
   ): asserts instance is TReturn;
 }
 export const init: Init = initUnsafe;
@@ -216,6 +238,14 @@ interface CreateInstanceFactory {
     TA,
     TB,
     TC,
+    TReturn
+  >;
+
+  <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>): Function4<
+    TA,
+    TB,
+    TC,
+    TD,
     TReturn
   >;
 }

@@ -1,5 +1,6 @@
 import {
   Empty,
+  Enumerate,
   Every,
   ForEach,
   FromIterable,
@@ -27,6 +28,7 @@ import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import Optional_toReadonlyArray from "./Optional/__internal__/Optional.toReadonlyArray.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
+import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_getLength from "./ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
@@ -43,6 +45,9 @@ import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
 
 export const empty: Empty<ReadonlyArrayLike>["empty"] = ReadonlyArray_empty;
+
+export const enumerate: Enumerate<ReadonlyArrayLike>["enumerate"] =
+  ReadonlyArray_enumerate;
 
 export const every: Every<ReadonlyArrayLike>["every"] = ReadonlyArray_every;
 

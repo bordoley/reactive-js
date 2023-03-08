@@ -4,6 +4,7 @@ import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toRea
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import Optional_toReadonlyArray from "./Optional/__internal__/Optional.toReadonlyArray.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
+import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_getLength from "./ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
@@ -19,6 +20,7 @@ import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/Readonly
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
 export const empty = ReadonlyArray_empty;
+export const enumerate = ReadonlyArray_enumerate;
 export const every = ReadonlyArray_every;
 export const forEach = ReadonlyArray_forEach;
 export const fromEnumerable = Runnable_toReadonlyArray;

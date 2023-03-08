@@ -1,4 +1,5 @@
 import {
+  Enumerate,
   FromReadonlyArray,
   FromSequence,
   IterableLike,
@@ -14,12 +15,16 @@ import {
 } from "../rx.js";
 import Enumerable_toIterable from "../rx/Enumerable/__internal__/Enumerable.toIterable.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
 import Iterable_toAsyncEnumerable from "./Iterable/__internal__/Iterable.toAsyncEnumerable.js";
 import Iterable_toFlowable from "./Iterable/__internal__/Iterable.toFlowable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable.js";
+
+export const enumerate: Enumerate<IterableLike>["enumerate"] =
+  Iterable_enumerate;
 
 export const fromEnumerable: FromEnumerable<IterableLike>["fromEnumerable"] =
   Enumerable_toIterable;

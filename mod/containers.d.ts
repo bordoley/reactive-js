@@ -246,7 +246,7 @@ export interface EndWith<C extends ContainerLike> extends Container<C> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Enumerate<C extends ContainerLike, CEnumerator extends EnumeratorLike> extends Container<C> {
+export interface Enumerate<C extends ContainerLike, CEnumerator extends EnumeratorLike = EnumeratorLike> extends Container<C> {
     /**
      *
      * @category Transform

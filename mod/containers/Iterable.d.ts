@@ -1,6 +1,7 @@
-import { FromReadonlyArray, FromSequence, IterableLike, ToIterable, ToReadonlyArray } from "../containers.js";
+import { Enumerate, FromReadonlyArray, FromSequence, IterableLike, ToIterable, ToReadonlyArray } from "../containers.js";
 import { FromEnumerable, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+export declare const enumerate: Enumerate<IterableLike>["enumerate"];
 export declare const fromEnumerable: FromEnumerable<IterableLike>["fromEnumerable"];
 export declare const fromReadonlyArray: FromReadonlyArray<IterableLike>["fromReadonlyArray"];
 export declare const fromSequence: FromSequence<IterableLike>["fromSequence"];

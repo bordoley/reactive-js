@@ -341,7 +341,7 @@ export interface EndWith<C extends ContainerLike> extends Container<C> {
  */
 export interface Enumerate<
   C extends ContainerLike,
-  CEnumerator extends EnumeratorLike,
+  CEnumerator extends EnumeratorLike = EnumeratorLike,
 > extends Container<C> {
   /**
    *

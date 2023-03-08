@@ -12,6 +12,7 @@
 
 ### Transform Functions
 
+- [enumerate](containers_Iterable.md#enumerate)
 - [toAsyncEnumerable](containers_Iterable.md#toasyncenumerable)
 - [toEnumerable](containers_Iterable.md#toenumerable)
 - [toFlowable](containers_Iterable.md#toflowable)
@@ -91,6 +92,22 @@ ___
 ___
 
 ## Transform Functions
+
+### enumerate
+
+▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+
+___
 
 ### toAsyncEnumerable
 
