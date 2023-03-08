@@ -96,7 +96,7 @@ const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
           [EnumeratorLike_move](
             this: DisposableLike & TProperties & PullableQueueLike<T>,
           ) {
-            if (!this[DisposableLike_isDisposed] && this[QueueLike_count] > 0) {
+            if (this[QueueLike_count] > 0) {
               const next = this[PullableQueueLike_pull]() as T;
               this[EnumeratorLike_current] = next;
               this[EnumeratorLike_hasCurrent] = true;

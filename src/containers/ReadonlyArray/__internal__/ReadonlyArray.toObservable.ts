@@ -75,10 +75,7 @@ const ReadonlyArray_toObservable: ReadonlyArrayToObservable =
             }
 
             observer[ObserverLike_notify](value);
-
-            if (cnt !== 0) {
-              Continuation__yield(delay);
-            }
+            Continuation__yield(delay);
           }
           observer[DisposableLike_dispose]();
         };

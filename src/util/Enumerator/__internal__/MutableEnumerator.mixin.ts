@@ -8,7 +8,6 @@ import {
 } from "../../../functions.js";
 import {
   DisposableLike,
-  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -27,13 +26,10 @@ type TEnumeratorMixinReturn<T> = Omit<
 const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
   /*@__PURE__*/ (<T>() => {
     const Enumerator_private_current = Symbol("Enumerator_private_current");
-    const Enumerator_private_hasCurrent = Symbol(
-      "Enumerator_private_hasCurrent",
-    );
 
     type TProperties = {
       [Enumerator_private_current]: T;
-      [Enumerator_private_hasCurrent]: boolean;
+      [EnumeratorLike_hasCurrent]: boolean;
     };
 
     return pipe(
@@ -47,13 +43,11 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           > &
             TProperties,
         ): TEnumeratorMixinReturn<T> {
-          instance[Enumerator_private_hasCurrent] = false;
-
           return instance;
         },
         props<TProperties>({
           [Enumerator_private_current]: none,
-          [Enumerator_private_hasCurrent]: false,
+          [EnumeratorLike_hasCurrent]: false,
         }),
         {
           get [EnumeratorLike_current](): T {
@@ -64,21 +58,12 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           },
           set [EnumeratorLike_current](v: T) {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
-            if (!this[DisposableLike_isDisposed]) {
-              this[Enumerator_private_current] = v;
-              this[Enumerator_private_hasCurrent] = true;
-            }
-          },
-          get [EnumeratorLike_hasCurrent](): boolean {
-            unsafeCast<TProperties & EnumeratorLike<T>>(this);
-            return (
-              !this[DisposableLike_isDisposed] &&
-              this[Enumerator_private_hasCurrent]
-            );
+            this[Enumerator_private_current] = v;
+            this[EnumeratorLike_hasCurrent] = true;
           },
           [MutableEnumeratorLike_reset](this: TProperties) {
             this[Enumerator_private_current] = none as T;
-            this[Enumerator_private_hasCurrent] = false;
+            this[EnumeratorLike_hasCurrent] = false;
           },
         },
       ),

@@ -27,9 +27,7 @@ ReadonlyArray_toContainer((values, startIndex, count, options) => {
                     cnt++;
                 }
                 observer[ObserverLike_notify](value);
-                if (cnt !== 0) {
-                    Continuation__yield(delay);
-                }
+                Continuation__yield(delay);
             }
             observer[DisposableLike_dispose]();
         };

@@ -43,7 +43,7 @@ const QueuedEnumerator_create =
         [EnumeratorLike_hasCurrent]: false,
     }), {
         [EnumeratorLike_move]() {
-            if (!this[DisposableLike_isDisposed] && this[QueueLike_count] > 0) {
+            if (this[QueueLike_count] > 0) {
                 const next = this[PullableQueueLike_pull]();
                 this[EnumeratorLike_current] = next;
                 this[EnumeratorLike_hasCurrent] = true;

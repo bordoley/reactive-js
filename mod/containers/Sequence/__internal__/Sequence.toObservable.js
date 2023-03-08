@@ -17,9 +17,7 @@ const Sequence_toObservable = ((options) => (seq) => {
             while (!observer[DisposableLike_isDisposed] && isSome(next)) {
                 observer[ObserverLike_notify](next[SequenceLike_data]);
                 next = next[SequenceLike_next]();
-                if (isSome(next)) {
-                    Continuation__yield(delay);
-                }
+                Continuation__yield(delay);
             }
             observer[DisposableLike_dispose]();
         };
