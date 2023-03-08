@@ -722,7 +722,7 @@ export const error = (message?: unknown): Error => {
     : newInstance(Error, errorMessage, errorCause);
 };
 
-export const errorWithWithDebugMessage = (message: string): Error =>
+export const errorWithDebugMessage = (message: string): Error =>
   error(__DEV__ ? message : none);
 
 export const raiseError = <T>(e: Error): T => {

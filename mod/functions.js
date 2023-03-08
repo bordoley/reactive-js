@@ -134,7 +134,7 @@ export const error = (message) => {
         ? message
         : newInstance(Error, errorMessage, errorCause);
 };
-export const errorWithWithDebugMessage = (message) => error(__DEV__ ? message : none);
+export const errorWithDebugMessage = (message) => error(__DEV__ ? message : none);
 export const raiseError = (e) => {
     throw e;
 };

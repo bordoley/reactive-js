@@ -1,6 +1,6 @@
 import {
   Optional,
-  errorWithWithDebugMessage,
+  errorWithDebugMessage,
   isSome,
   newInstance,
   none,
@@ -37,7 +37,7 @@ const Observable_toPromise =
             reject(err);
           } else if (!hasResult) {
             reject(
-              errorWithWithDebugMessage(
+              errorWithDebugMessage(
                 "Observable completed without producing a value",
               ),
             );

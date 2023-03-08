@@ -1,6 +1,6 @@
 /// <reference types="./Observable.toPromise.d.ts" />
 
-import { errorWithWithDebugMessage, isSome, newInstance, none, pipe, } from "../../../functions.js";
+import { errorWithDebugMessage, isSome, newInstance, none, pipe, } from "../../../functions.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
@@ -15,7 +15,7 @@ const Observable_toPromise = (scheduler) => (observable) => newInstance(Promise,
             reject(err);
         }
         else if (!hasResult) {
-            reject(errorWithWithDebugMessage("Observable completed without producing a value"));
+            reject(errorWithDebugMessage("Observable completed without producing a value"));
         }
         else {
             resolve(result);

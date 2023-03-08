@@ -1,10 +1,10 @@
-import { errorWithWithDebugMessage } from "../../../functions.js";
+import { errorWithDebugMessage } from "../../../functions.js";
 import { ObservableLike, ToRunnable } from "../../../rx.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
 import Observable_throws from "./Observable.throws.js";
 
 const throwOptions = {
-  raise: () => errorWithWithDebugMessage("Observable is not Runnable"),
+  raise: () => errorWithDebugMessage("Observable is not Runnable"),
 };
 
 const Observable_toRunnable: ToRunnable<ObservableLike>["toRunnable"] =
