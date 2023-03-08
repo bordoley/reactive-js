@@ -11,6 +11,7 @@ const updateReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);
 
 const Flowable_createLifted = <T>(
   op: ContainerOperator<ObservableLike, PauseableState, T>,
+  isRunnable: boolean,
 ): FlowableLike<T> =>
   Streamable_createLifted(
     compose(
@@ -23,7 +24,7 @@ const Flowable_createLifted = <T>(
     ),
     false,
     false,
-    false,
+    isRunnable,
   );
 
 export default Flowable_createLifted;

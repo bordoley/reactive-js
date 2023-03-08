@@ -1201,7 +1201,21 @@ export const toObservableTests = <C extends ContainerLike>(
     }
   });
 
-export const toRunnableTests = <C extends ContainerLike>(
+const toRunnableTest = <C extends ContainerLike>(
+  m: FromReadonlyArray<C> & ToRunnable<C>,
+) =>
+  test(
+    "without delay",
+    pipeLazy(
+      [1, 2, 3, 4, 5],
+      m.fromReadonlyArray(),
+      m.toRunnable(),
+      Runnable.toReadonlyArray(),
+      expectArrayEquals([1, 2, 3, 4, 5]),
+    ),
+  );
+
+export const toRunnableWithDelayTests = <C extends ContainerLike>(
   m: FromReadonlyArray<C> &
     ToRunnable<
       C,
@@ -1213,16 +1227,7 @@ export const toRunnableTests = <C extends ContainerLike>(
 ) =>
   describe(
     "toRunnable",
-    test(
-      "without delay",
-      pipeLazy(
-        [1, 2, 3, 4, 5],
-        m.fromReadonlyArray(),
-        m.toRunnable(),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3, 4, 5]),
-      ),
-    ),
+    toRunnableTest(m),
     test(
       "with delay",
       pipeLazy(
@@ -1235,6 +1240,10 @@ export const toRunnableTests = <C extends ContainerLike>(
       ),
     ),
   );
+
+export const toRunnableTests = <C extends ContainerLike>(
+  m: FromReadonlyArray<C> & ToRunnable<C>,
+) => describe("toRunnable", toRunnableTest(m));
 
 export const zipTests = <C extends ContainerLike>(
   m: Zip<C> & FromReadonlyArray<C> & ToRunnable<C>,

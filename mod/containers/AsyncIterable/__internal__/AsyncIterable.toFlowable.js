@@ -54,5 +54,5 @@ const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((mod
             pipe(scheduler, Scheduler_schedule(continuation), Disposable_addTo(observer));
         }
     }), Observable_subscribe(scheduler), Disposable_bindTo(observer));
-}));
+}), false);
 export default AsyncIterable_toFlowable;

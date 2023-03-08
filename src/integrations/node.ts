@@ -171,40 +171,46 @@ const addToDisposable =
 export const createReadableSource = (
   factory: Factory<Readable> | Readable,
 ): FlowableLike<Uint8Array> =>
-  Flowable_createLifted(mode =>
-    Observable.create(observer => {
-      const dispatcher = observer[ObserverLike_dispatcher];
+  Flowable_createLifted(
+    mode =>
+      Observable.create(observer => {
+        const dispatcher = observer[ObserverLike_dispatcher];
 
-      const readable = isFunction(factory)
-        ? pipe(factory(), addToDisposable(observer), addDisposable(dispatcher))
-        : pipe(factory, addDisposable(dispatcher));
+        const readable = isFunction(factory)
+          ? pipe(
+              factory(),
+              addToDisposable(observer),
+              addDisposable(dispatcher),
+            )
+          : pipe(factory, addDisposable(dispatcher));
 
-      readable.pause();
+        readable.pause();
 
-      pipe(
-        mode,
-        Observable.forEach(ev => {
-          switch (ev) {
-            case PauseableState_paused:
-              readable.pause();
-              break;
-            case PauseableState_running:
-              readable.resume();
-              break;
-          }
-        }),
-        Observable.subscribe(observer[ObserverLike_scheduler]),
-        addToNodeStream(readable),
-      );
+        pipe(
+          mode,
+          Observable.forEach(ev => {
+            switch (ev) {
+              case PauseableState_paused:
+                readable.pause();
+                break;
+              case PauseableState_running:
+                readable.resume();
+                break;
+            }
+          }),
+          Observable.subscribe(observer[ObserverLike_scheduler]),
+          addToNodeStream(readable),
+        );
 
-      const onData = Queue.pushTo(dispatcher);
-      const onEnd = () => {
-        dispatcher[DisposableLike_dispose]();
-      };
+        const onData = Queue.pushTo(dispatcher);
+        const onEnd = () => {
+          dispatcher[DisposableLike_dispose]();
+        };
 
-      readable.on("data", onData);
-      readable.on("end", onEnd);
-    }),
+        readable.on("data", onData);
+        readable.on("end", onEnd);
+      }),
+    false,
   );
 
 export const readFile = (
@@ -275,36 +281,38 @@ export const transform =
     factory: Factory<Transform>,
   ): ContainerOperator<FlowableLike, Uint8Array, Uint8Array> =>
   src =>
-    Flowable_createLifted(modeObs =>
-      Observable.create(observer => {
-        const transform = pipe(
-          factory(),
-          addToDisposable(observer),
-          addDisposable(observer[ObserverLike_dispatcher]),
-        );
+    Flowable_createLifted(
+      modeObs =>
+        Observable.create(observer => {
+          const transform = pipe(
+            factory(),
+            addToDisposable(observer),
+            addDisposable(observer[ObserverLike_dispatcher]),
+          );
 
-        pipe(
-          createWritableSink(transform),
-          Streamable.stream(observer[ObserverLike_scheduler]),
-          Stream.sourceFrom(src),
-          addToNodeStream(transform),
-        );
+          pipe(
+            createWritableSink(transform),
+            Streamable.stream(observer[ObserverLike_scheduler]),
+            Stream.sourceFrom(src),
+            addToNodeStream(transform),
+          );
 
-        const transformReadableStream = pipe(
-          createReadableSource(transform),
-          Streamable.stream(observer[ObserverLike_scheduler]),
-          addToNodeStream(transform),
-          Observable.observeWith(observer),
-        );
+          const transformReadableStream = pipe(
+            createReadableSource(transform),
+            Streamable.stream(observer[ObserverLike_scheduler]),
+            addToNodeStream(transform),
+            Observable.observeWith(observer),
+          );
 
-        pipe(
-          modeObs,
-          Observable.map(returns),
-          Observable.forEach(Queue.pushTo(transformReadableStream)),
-          Observable.subscribe(observer[ObserverLike_scheduler]),
-          addToNodeStream(transform),
-        );
-      }),
+          pipe(
+            modeObs,
+            Observable.map(returns),
+            Observable.forEach(Queue.pushTo(transformReadableStream)),
+            Observable.subscribe(observer[ObserverLike_scheduler]),
+            addToNodeStream(transform),
+          );
+        }),
+      false,
     );
 
 export const brotliDecompress = (

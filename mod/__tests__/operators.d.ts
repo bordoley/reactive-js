@@ -40,9 +40,10 @@ export declare const takeWhileTests: <C extends ContainerLike>(m: FromReadonlyAr
 export declare const throwIfEmptyTests: <C extends ContainerLike>(m: FromReadonlyArray<C, unknown> & ThrowIfEmpty<C, never> & ToRunnable<C, never>) => import("./testing.js").Describe;
 export declare const toEnumerableTests: <C extends ContainerLike>(m: FromReadonlyArray<C, unknown> & ToEnumerable<C, never>) => import("./testing.js").Describe;
 export declare const toObservableTests: <C extends ContainerLike>(m: FromReadonlyArray<C, unknown> & ToObservable<C, never>) => import("./testing.js").TestAsync;
-export declare const toRunnableTests: <C extends ContainerLike>(m: FromReadonlyArray<C, unknown> & ToRunnable<C, {
+export declare const toRunnableWithDelayTests: <C extends ContainerLike>(m: FromReadonlyArray<C, unknown> & ToRunnable<C, {
     readonly delay?: number | undefined;
     readonly delayStart?: boolean | undefined;
 }>) => import("./testing.js").Describe;
+export declare const toRunnableTests: <C extends ContainerLike>(m: FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("./testing.js").Describe;
 export declare const zipTests: <C extends ContainerLike>(m: Zip<C> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("./testing.js").Describe;
 export declare const zipWithTests: <C extends ContainerLike>(m: ZipWith<C> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("./testing.js").Describe;

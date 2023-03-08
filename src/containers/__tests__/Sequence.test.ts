@@ -20,7 +20,7 @@ import {
   takeWhileTests,
   toEnumerableTests,
   toObservableTests,
-  toRunnableTests,
+  toRunnableWithDelayTests,
   zipTests,
   zipWithTests,
 } from "../../__tests__/operators.js";
@@ -50,7 +50,7 @@ testModule(
   takeLastTests(Sequence),
   toEnumerableTests<SequenceLike>(Sequence),
   toObservableTests<SequenceLike>(Sequence),
-  toRunnableTests<SequenceLike>(Sequence),
+  toRunnableWithDelayTests<SequenceLike>(Sequence),
   takeWhileTests(Sequence),
   zipTests<SequenceLike>(Sequence),
   zipWithTests<SequenceLike>(Sequence),

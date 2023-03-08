@@ -28,5 +28,5 @@ const Runnable_toFlowable = () => observable => Flowable_createLifted((modeObs) 
                 break;
         }
     }), Observable_subscribe(observer[ObserverLike_scheduler]), Disposable_bindTo(pauseableScheduler))), Disposable_add(pauseableScheduler));
-}));
+}), true);
 export default Runnable_toFlowable;

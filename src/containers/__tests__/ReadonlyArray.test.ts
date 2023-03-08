@@ -4,7 +4,7 @@ import {
   keepTests,
   mapTests,
   toEnumerableTests,
-  toRunnableTests,
+  toRunnableWithDelayTests,
 } from "../../__tests__/operators.js";
 import { testModule } from "../../__tests__/testing.js";
 import { ReadonlyArrayLike } from "../../containers.js";
@@ -17,5 +17,5 @@ testModule(
   keepTests(ReadonlyArray),
   mapTests(ReadonlyArray),
   toEnumerableTests<ReadonlyArrayLike>(ReadonlyArray),
-  toRunnableTests<ReadonlyArrayLike>(ReadonlyArray),
+  toRunnableWithDelayTests<ReadonlyArrayLike>(ReadonlyArray),
 );
