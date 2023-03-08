@@ -44,7 +44,6 @@
     "access": "public"
   },
   "exports": {
-    "./constants": "./constants.js",
     "./containers": "./containers.js",
     "./containers/AsyncIterable": "./containers/AsyncIterable.js",
     "./containers/Iterable": "./containers/Iterable.js",
@@ -64,7 +63,6 @@
     "./rx/Runnable": "./rx/Runnable.js",
     "./rx/Subject": "./rx/Subject.js",
     "./scheduling": "./scheduling.js",
-    "./scheduling/Continuation": "./scheduling/Continuation.js",
     "./scheduling/Pauseable": "./scheduling/Pauseable.js",
     "./scheduling/PriorityScheduler": "./scheduling/PriorityScheduler.js",
     "./scheduling/Scheduler": "./scheduling/Scheduler.js",

@@ -1,5 +1,13 @@
 import { Function1 } from "../functions.js";
 import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.js";
+/**
+ * @category SchedulerEffect
+ */
+export declare const __now: () => number;
+/**
+ * @category SchedulerEffect
+ */
+export declare const __yield: (delay?: number) => void;
 export declare const createHostScheduler: (options?: {
     readonly maxYieldInterval?: number | undefined;
 }) => SchedulerLike;

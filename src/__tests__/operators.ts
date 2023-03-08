@@ -55,8 +55,8 @@ import {
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
-import { __now } from "../scheduling/Continuation.js";
 import * as Scheduler from "../scheduling/Scheduler.js";
+import { __now } from "../scheduling/Scheduler.js";
 import { DisposableLike_dispose } from "../util.js";
 import {
   describe,

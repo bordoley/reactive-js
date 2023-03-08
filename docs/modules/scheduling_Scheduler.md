@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Functions
+### Other Functions
 
 - [createHostScheduler](scheduling_Scheduler.md#createhostscheduler)
 - [createVirtualTimeScheduler](scheduling_Scheduler.md#createvirtualtimescheduler)
@@ -12,7 +12,12 @@
 - [toPausableScheduler](scheduling_Scheduler.md#topausablescheduler)
 - [toPriorityScheduler](scheduling_Scheduler.md#topriorityscheduler)
 
-## Functions
+### SchedulerEffect Functions
+
+- [\_\_now](scheduling_Scheduler.md#__now)
+- [\_\_yield](scheduling_Scheduler.md#__yield)
+
+## Other Functions
 
 ### createHostScheduler
 
@@ -95,3 +100,31 @@ ___
 #### Returns
 
 [`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md)
+
+___
+
+## SchedulerEffect Functions
+
+### \_\_now
+
+▸ **__now**(): `number`
+
+#### Returns
+
+`number`
+
+___
+
+### \_\_yield
+
+▸ **__yield**(`delay?`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `delay?` | `number` |
+
+#### Returns
+
+`void`

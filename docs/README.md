@@ -25,7 +25,6 @@ Reactive-JS
 - [rx/Runnable](modules/rx_Runnable.md)
 - [rx/Subject](modules/rx_Subject.md)
 - [scheduling](modules/scheduling.md)
-- [scheduling/Continuation](modules/scheduling_Continuation.md)
 - [scheduling/Pauseable](modules/scheduling_Pauseable.md)
 - [scheduling/PriorityScheduler](modules/scheduling_PriorityScheduler.md)
 - [scheduling/Scheduler](modules/scheduling_Scheduler.md)
