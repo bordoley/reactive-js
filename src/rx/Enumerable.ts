@@ -101,10 +101,10 @@ import Observable_throws from "../rx/Observable/__internal__/Observable.throws.j
 import Observable_zip from "../rx/Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith.js";
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
-import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
+import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 
@@ -255,7 +255,7 @@ export const toObservable: ToObservable<EnumerableLike>["toObservable"] =
   /*@__PURE__*/ returns(identity);
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
-  Runnable_toReadonlyArray as ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
+  Enumerable_toReadonlyArray;
 
 export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
   /*@__PURE__*/ returns(identity);

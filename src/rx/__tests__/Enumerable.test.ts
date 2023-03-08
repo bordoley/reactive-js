@@ -32,10 +32,6 @@ import {
   test,
   testModule,
 } from "../../__tests__/testing.js";
-import {
-  EnumeratorLike_current,
-  EnumeratorLike_move,
-} from "../../containers.js";
 import { pipe, returns } from "../../functions.js";
 import { EnumerableLike } from "../../rx.js";
 import * as Enumerable from "../Enumerable.js";
@@ -72,23 +68,16 @@ testModule(
   describe(
     "enumerate",
     test("with higher order observable and no delay", () => {
-      const enumerator = pipe(
+      pipe(
         Enumerable.generate(
           _ => pipe(1, Enumerable.fromOptional()),
           returns(Enumerable.empty()),
         ),
         Enumerable.concatAll(),
         Enumerable.takeFirst({ count: 10 }),
-        Enumerable.enumerate<number>(),
+        Enumerable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]),
       );
-
-      const result: number[] = [];
-
-      while (enumerator[EnumeratorLike_move]()) {
-        result.push(enumerator[EnumeratorLike_current]);
-      }
-
-      pipe(result, expectArrayEquals([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]));
     }),
   ),
 );
