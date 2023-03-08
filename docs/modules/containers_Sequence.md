@@ -37,6 +37,7 @@
 
 ### Transform Functions
 
+- [enumerate](containers_Sequence.md#enumerate)
 - [toAsyncEnumerable](containers_Sequence.md#toasyncenumerable)
 - [toEnumerable](containers_Sequence.md#toenumerable)
 - [toFlowable](containers_Sequence.md#toflowable)
@@ -1102,6 +1103,22 @@ ___
 ___
 
 ## Transform Functions
+
+### enumerate
+
+▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+
+___
 
 ### toAsyncEnumerable
 

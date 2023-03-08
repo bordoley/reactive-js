@@ -6,6 +6,7 @@ import {
   ConcatWith,
   DistinctUntilChanged,
   EndWith,
+  Enumerate,
   FromOptional,
   FromReadonlyArray,
   Generate,
@@ -41,6 +42,7 @@ import Sequence_concatMap from "./Sequence/__internal__/Sequence.concatMap.js";
 import Sequence_concatWith from "./Sequence/__internal__/Sequence.concatWith.js";
 import Sequence_distinctUntilChanged from "./Sequence/__internal__/Sequence.distinctUntilChanged.js";
 import Sequence_endWith from "./Sequence/__internal__/Sequence.endWith.js";
+import Sequence_enumerate from "./Sequence/__internal__/Sequence.enumerate.js";
 import Sequence_generate from "./Sequence/__internal__/Sequence.generate.js";
 import Sequence_ignoreElements from "./Sequence/__internal__/Sequence.ignoreElements.js";
 import Sequence_keep from "./Sequence/__internal__/Sequence.keep.js";
@@ -80,6 +82,9 @@ export const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["distinctU
   Sequence_distinctUntilChanged;
 
 export const endWith: EndWith<SequenceLike>["endWith"] = Sequence_endWith;
+
+export const enumerate: Enumerate<SequenceLike>["enumerate"] =
+  Sequence_enumerate;
 
 export const fromOptional: FromOptional<SequenceLike>["fromOptional"] =
   Optional_toSequence;
