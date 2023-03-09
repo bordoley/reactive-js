@@ -44,13 +44,10 @@ const subscription = pipe(
   Observable.subscribe(scheduler),
 );
 
-pipe(
-  scheduler,
-  Scheduler.schedule(
-    () => {
-      pipe(subscription, Disposable.dispose());
-    },
-    { delay: 20000 },
-  ),
+scheduler[SchedulerLike_schedule](
+  () => {
+    subscription[DisposableLike_dispose]();
+  },
+  { delay: 20000 },
 );
 ```
