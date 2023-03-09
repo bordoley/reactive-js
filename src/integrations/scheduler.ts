@@ -6,8 +6,6 @@ import {
   unstable_UserBlockingPriority,
   unstable_cancelCallback,
   unstable_now,
-  // @ts-ignore-next-line
-  unstable_requestPaint,
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
@@ -18,76 +16,63 @@ import {
   mix,
   props,
 } from "../__internal__/mixins.js";
-import { Factory, none, pipe, pipeLazy, unsafeCast } from "../functions.js";
+import { Factory, none, pipe, pipeLazy } from "../functions.js";
 import {
-  ContinuationLike,
-  ContinuationLike_run,
   PrioritySchedulerLike,
   SchedulerLike,
-  SchedulerLike_inContinuation,
   SchedulerLike_now,
-  SchedulerLike_requestYield,
-  SchedulerLike_schedule,
-  SchedulerLike_shouldYield,
 } from "../scheduling.js";
 import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
-import { getDelay } from "../scheduling/__internal__/Scheduler.options.js";
 import {
-  DisposableLike,
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
-} from "../util.js";
+  ContinuationLike,
+  ContinuationLike_continuationScheduler,
+  ContinuationLike_priority,
+  ContinuationSchedulerLike_schedule,
+  PrioritySchedulerImplementationLike,
+  PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_shouldYield,
+  PriorityScheduler_mixin,
+} from "../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { getDelay } from "../scheduling/__internal__/Scheduler.options.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-import Disposable_mixin from "../util/Disposable/__internal__/Disposable.mixin.js";
 
 const createPriorityScheduler = /*@__PURE__*/ (() => {
-  type TProperties = {
-    [SchedulerLike_inContinuation]: boolean;
-  };
+  type TProperties = unknown;
 
   return createInstanceFactory(
     mix(
-      include(Disposable_mixin),
+      include(PriorityScheduler_mixin),
       function ReactPriorityScheduler(
-        instance: Omit<
-          PrioritySchedulerLike,
-          typeof SchedulerLike_inContinuation | keyof DisposableLike
-        > &
-          TProperties,
+        instance: Pick<
+          PrioritySchedulerImplementationLike,
+          | typeof SchedulerLike_now
+          | typeof PrioritySchedulerImplementationLike_shouldYield
+          | typeof ContinuationSchedulerLike_schedule
+        >,
       ): PrioritySchedulerLike {
-        init(Disposable_mixin, instance);
+        init(PriorityScheduler_mixin, instance);
         return instance;
       },
-      props<TProperties>({
-        [SchedulerLike_inContinuation]: false,
-      }),
+      props<TProperties>({}),
       {
         get [SchedulerLike_now](): number {
           return unstable_now();
         },
 
-        get [SchedulerLike_shouldYield](): boolean {
-          unsafeCast<TProperties & SchedulerLike>(this);
-          return this[SchedulerLike_inContinuation] && unstable_shouldYield();
+        get [PrioritySchedulerImplementationLike_shouldYield](): boolean {
+          return unstable_shouldYield();
         },
 
-        [SchedulerLike_requestYield]() {
-          unstable_requestPaint();
-        },
-
-        [SchedulerLike_schedule](
-          this: DisposableLike & {
-            [SchedulerLike_inContinuation]: boolean;
-          },
+        [ContinuationSchedulerLike_schedule](
+          this: PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
           options?: {
-            priority?: number;
             delay?: number;
           },
         ) {
           const delay = getDelay(options);
-
-          const { priority = unstable_NormalPriority } = options ?? {};
+          const priority = continuation[ContinuationLike_priority];
 
           pipe(this, Disposable.addIgnoringChildErrors(continuation));
 
@@ -95,12 +80,13 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
             return;
           }
 
+          continuation[ContinuationLike_continuationScheduler] = this;
+
           const callback = () => {
             callbackNodeDisposable[DisposableLike_dispose]();
-
-            this[SchedulerLike_inContinuation] = true;
-            continuation[ContinuationLike_run]();
-            this[SchedulerLike_inContinuation] = false;
+            this[PrioritySchedulerImplementationLike_runContinuation](
+              continuation,
+            );
           };
 
           const callbackNode = unstable_scheduleCallback(

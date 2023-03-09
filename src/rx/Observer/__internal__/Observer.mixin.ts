@@ -29,7 +29,7 @@ import {
   DispatcherLike_scheduler,
   SchedulerLike,
 } from "../../../scheduling.js";
-import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
+import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -100,7 +100,10 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           while (instance[QueueLike_count] > 0) {
             const next = instance[PullableQueueLike_pull]() as T;
             observer[ObserverLike_notify](next);
-            Continuation__yield();
+
+            if (instance[QueueLike_count] > 0) {
+              Continuation__yield();
+            }
           }
         };
 

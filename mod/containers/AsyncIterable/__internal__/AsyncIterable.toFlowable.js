@@ -6,8 +6,7 @@ import { ObserverLike_dispatcher, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
-import { DispatcherLike_scheduler, PauseableState_paused, SchedulerLike_now, } from "../../../scheduling.js";
-import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule.js";
+import { DispatcherLike_scheduler, PauseableState_paused, SchedulerLike_now, SchedulerLike_schedule, } from "../../../scheduling.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -44,14 +43,14 @@ const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((mod
             dispatcher[DisposableLike_dispose](error(e));
         }
         if (!dispatcher[DisposableLike_isDisposed] && !isPaused) {
-            pipe(scheduler, Scheduler_schedule(continuation), Disposable_addTo(observer));
+            pipe(scheduler[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
         }
     };
     pipe(modeObs, Observable_forEach((mode) => {
         const wasPaused = isPaused;
         isPaused = mode === PauseableState_paused;
         if (!isPaused && wasPaused) {
-            pipe(scheduler, Scheduler_schedule(continuation), Disposable_addTo(observer));
+            pipe(scheduler[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
         }
     }), Observable_subscribe(scheduler), Disposable_bindTo(observer));
 }), false);

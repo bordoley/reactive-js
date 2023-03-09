@@ -287,7 +287,6 @@ export const transform =
           const transform = pipe(
             factory(),
             addToDisposable(observer),
-            addDisposable(observer[ObserverLike_dispatcher]),
           );
 
           pipe(

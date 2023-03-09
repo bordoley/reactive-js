@@ -6,7 +6,6 @@
 
 ### Interfaces
 
-- [ContinuationLike](../interfaces/scheduling.ContinuationLike.md)
 - [DispatcherLike](../interfaces/scheduling.DispatcherLike.md)
 - [PauseableLike](../interfaces/scheduling.PauseableLike.md)
 - [PauseableSchedulerLike](../interfaces/scheduling.PauseableSchedulerLike.md)

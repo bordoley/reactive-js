@@ -3,8 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 const PrioritySchedulerDelegatingScheduler_priorityScheduler = Symbol("PrioritySchedulerDelegatingScheduler_priorityScheduler");
@@ -34,15 +33,13 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(
     [SchedulerLike_requestYield]() {
         this[PrioritySchedulerDelegatingScheduler_priorityScheduler][SchedulerLike_requestYield]();
     },
-    [SchedulerLike_schedule](continuation, options) {
+    [SchedulerLike_schedule](effect, options) {
         const delay = getDelay(options);
-        pipe(this, Disposable_addIgnoringChildErrors(continuation));
-        if (!continuation[DisposableLike_isDisposed]) {
-            this[PrioritySchedulerDelegatingScheduler_priorityScheduler][SchedulerLike_schedule](continuation, {
-                priority: this[PrioritySchedulerDelegatingScheduler_priority],
-                delay,
-            });
-        }
+        const scheduler = this[PrioritySchedulerDelegatingScheduler_priorityScheduler];
+        return pipe(scheduler[SchedulerLike_schedule](effect, {
+            priority: this[PrioritySchedulerDelegatingScheduler_priority],
+            delay,
+        }), Disposable_addToIgnoringChildErrors(this));
     },
 }));
 const PriorityScheduler_toScheduler = (priority) => pipe(createSchedulerInstance, partial(priority));

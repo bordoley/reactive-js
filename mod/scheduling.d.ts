@@ -1,18 +1,5 @@
-import { Updater } from "./functions.js";
+import { SideEffect, Updater } from "./functions.js";
 import { DisposableLike, QueueLike } from "./util.js";
-/** @ignore */
-export declare const ContinuationLike_run: unique symbol;
-/** @ignore */
-export declare const ContinuationLike_scheduler: unique symbol;
-/**
- * A unit of work to be executed by a scheduler.
- *
- * @noInheritDoc
- */
-export interface ContinuationLike extends DisposableLike, QueueLike<ContinuationLike> {
-    readonly [ContinuationLike_scheduler]: SchedulerLike;
-    [ContinuationLike_run](): void;
-}
 /** @ignore */
 export declare const SchedulerLike_inContinuation: unique symbol;
 /** @ignore */
@@ -34,9 +21,9 @@ export interface SchedulerLike extends DisposableLike {
      * Request the scheduler to yield.
      */
     [SchedulerLike_requestYield](): void;
-    [SchedulerLike_schedule](continuation: ContinuationLike, options?: {
+    [SchedulerLike_schedule](continuation: SideEffect, options?: {
         readonly delay?: number;
-    }): void;
+    }): DisposableLike;
 }
 /** @ignore */
 export declare const DispatcherLike_scheduler: unique symbol;
@@ -64,16 +51,11 @@ export declare const PauseableSchedulerLike_isPaused: unique symbol;
 export interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
     readonly [PauseableSchedulerLike_isPaused]: boolean;
 }
-/**
- * A scheduler which schedules work according to it's priority.
- *
- * @noInheritDoc
- */
 export interface PrioritySchedulerLike extends SchedulerLike {
-    [SchedulerLike_schedule](continuation: ContinuationLike, options?: {
-        readonly priority?: number;
+    [SchedulerLike_schedule](continuation: SideEffect, options?: {
         readonly delay?: number;
-    }): void;
+        readonly priority?: number;
+    }): DisposableLike;
 }
 /** @ignore */
 export declare const VirtualTimeSchedulerLike_run: unique symbol;

@@ -6,16 +6,14 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../containers.js";
 import MutableEnumerator_mixin from "../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../functions.js";
-import { ContinuationLike_run, PauseableSchedulerLike_isPaused, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
+import { PauseableSchedulerLike_isPaused, PauseableState_paused, PauseableState_running, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
-import Disposable_mixin from "../../util/Disposable/__internal__/Disposable.mixin.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
 import PullableQueue_createPriorityQueue from "../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
 import { MutableRefLike_current, PullableQueueLike_head, PullableQueueLike_pull, } from "../../util/__internal__/util.internal.js";
-import { Continuation__yield } from "../Continuation/__internal__/Continuation.create.js";
-import schedule from "../Scheduler/__internal__/Scheduler.schedule.js";
+import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, Continuation__yield, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../Scheduler/__internal__/Scheduler.mixin.js";
 import { getDelay } from "./Scheduler.options.js";
 export const create = 
 /*@__PURE__*/ (() => {
@@ -93,11 +91,7 @@ export const create =
                     instance[QueueScheduler_hostScheduler][SchedulerLike_now], 0);
                 if (delay === 0) {
                     instance[EnumeratorLike_move]();
-                    instance[QueueScheduler_yieldRequested] = false;
-                    instance[SchedulerLike_inContinuation] = true;
-                    continuation[ContinuationLike_run]();
-                    instance[SchedulerLike_inContinuation] = false;
-                    instance[QueueScheduler_yieldRequested] = false;
+                    instance[PrioritySchedulerImplementationLike_runContinuation](continuation);
                 }
                 else {
                     instance[QueueScheduler_dueTime] =
@@ -108,7 +102,7 @@ export const create =
             }
         });
         instance[QueueScheduler_hostContinuation] = continuation;
-        instance[MutableRefLike_current] = pipe(instance[QueueScheduler_hostScheduler], schedule(continuation, { delay }));
+        instance[MutableRefLike_current] = instance[QueueScheduler_hostScheduler][SchedulerLike_schedule](continuation, { delay });
     };
     const typedDisposableRefMixin = DisposableRef_mixin();
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
@@ -118,9 +112,8 @@ export const create =
     const QueueScheduler_hostScheduler = Symbol("QueueScheduler_hostScheduler");
     const QueueScheduler_queue = Symbol("QueueScheduler_queue");
     const QueueScheduler_taskIDCounter = Symbol("QueueScheduler_taskIDCounter");
-    const QueueScheduler_yieldRequested = Symbol("QueueScheduler_yieldRequested");
-    return createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
-        init(Disposable_mixin, instance);
+    return createInstanceFactory(mix(include(PriorityScheduler_mixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
+        init(PriorityScheduler_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         init(typedDisposableRefMixin, instance, Disposable_disposed);
         instance[QueueScheduler_delayed] =
@@ -130,7 +123,6 @@ export const create =
         instance[QueueScheduler_hostScheduler] = host;
         return instance;
     }, props({
-        [SchedulerLike_inContinuation]: false,
         [QueueScheduler_delayed]: none,
         [QueueScheduler_dueTime]: 0,
         [QueueScheduler_hostScheduler]: none,
@@ -138,23 +130,19 @@ export const create =
         [PauseableSchedulerLike_isPaused]: false,
         [QueueScheduler_queue]: none,
         [QueueScheduler_taskIDCounter]: 0,
-        [QueueScheduler_yieldRequested]: false,
     }), {
         get [SchedulerLike_now]() {
             unsafeCast(this);
             return this[QueueScheduler_hostScheduler][SchedulerLike_now];
         },
-        get [SchedulerLike_shouldYield]() {
+        get [PrioritySchedulerImplementationLike_shouldYield]() {
             unsafeCast(this);
-            const { [SchedulerLike_inContinuation]: inContinuation, [QueueScheduler_yieldRequested]: yieldRequested, } = this;
             const next = peek(this);
-            return (inContinuation &&
-                (yieldRequested ||
-                    this[DisposableLike_isDisposed] ||
-                    !this[EnumeratorLike_hasCurrent] ||
-                    this[PauseableSchedulerLike_isPaused] ||
-                    (isSome(next) ? priorityShouldYield(this, next) : false) ||
-                    this[QueueScheduler_hostScheduler][SchedulerLike_shouldYield]));
+            return (this[DisposableLike_isDisposed] ||
+                !this[EnumeratorLike_hasCurrent] ||
+                this[PauseableSchedulerLike_isPaused] ||
+                (isSome(next) ? priorityShouldYield(this, next) : false) ||
+                this[QueueScheduler_hostScheduler][SchedulerLike_shouldYield]);
         },
         get [QueueLike_count]() {
             unsafeCast(this);
@@ -187,35 +175,34 @@ export const create =
             }
             return this[EnumeratorLike_hasCurrent];
         },
-        [SchedulerLike_requestYield]() {
-            this[QueueScheduler_yieldRequested] = true;
-        },
-        [SchedulerLike_schedule](continuation, options) {
+        [ContinuationSchedulerLike_schedule](continuation, options) {
             const delay = getDelay(options);
-            const { priority } = options !== null && options !== void 0 ? options : {};
+            const priority = continuation[ContinuationLike_priority];
             pipe(this, Disposable_addIgnoringChildErrors(continuation));
-            if (!continuation[DisposableLike_isDisposed]) {
-                const now = this[QueueScheduler_hostScheduler][SchedulerLike_now];
-                const dueTime = max(now + delay, now);
-                const task = this[SchedulerLike_inContinuation] &&
-                    this[EnumeratorLike_hasCurrent] &&
-                    this[EnumeratorLike_current][QueueTask_continuation] ===
-                        continuation &&
-                    delay <= 0
-                    ? this[EnumeratorLike_current]
-                    : {
-                        [QueueTask_taskID]: this[QueueScheduler_taskIDCounter]++,
-                        [QueueTask_continuation]: continuation,
-                        [QueueTask_dueTime]: dueTime,
-                        [QueueTask_priority]: isSome(priority)
-                            ? max(priority, 0)
-                            : MAX_SAFE_INTEGER,
-                    };
-                const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue, } = this;
-                const targetQueue = dueTime > now ? delayed : queue;
-                targetQueue[QueueLike_push](task);
-                scheduleOnHost(this);
+            if (continuation[DisposableLike_isDisposed]) {
+                return;
             }
+            continuation[ContinuationLike_continuationScheduler] = this;
+            const now = this[QueueScheduler_hostScheduler][SchedulerLike_now];
+            const dueTime = max(now + delay, now);
+            const task = this[SchedulerLike_inContinuation] &&
+                this[EnumeratorLike_hasCurrent] &&
+                this[EnumeratorLike_current][QueueTask_continuation] ===
+                    continuation &&
+                delay <= 0
+                ? this[EnumeratorLike_current]
+                : {
+                    [QueueTask_taskID]: this[QueueScheduler_taskIDCounter]++,
+                    [QueueTask_continuation]: continuation,
+                    [QueueTask_dueTime]: dueTime,
+                    [QueueTask_priority]: isSome(priority)
+                        ? max(priority, 0)
+                        : MAX_SAFE_INTEGER,
+                };
+            const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue, } = this;
+            const targetQueue = dueTime > now ? delayed : queue;
+            targetQueue[QueueLike_push](task);
+            scheduleOnHost(this);
         },
     }));
 })();

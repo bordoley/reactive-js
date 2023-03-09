@@ -62,6 +62,7 @@ import {
 } from "../../rx.js";
 import {
   SchedulerLike_now,
+  SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../scheduling.js";
 import * as Pauseable from "../../scheduling/Pauseable.js";
@@ -317,30 +318,28 @@ const toFlowableTests = describe(
       Streamable.stream(scheduler),
     );
 
-    pipe(
-      scheduler,
-      Scheduler.schedule(pipeLazy(generateStream, Pauseable.resume)),
-    );
+    scheduler[SchedulerLike_schedule](
+      pipeLazy(generateStream, Pauseable.resume),
+    ),
+      scheduler[SchedulerLike_schedule](
+        pipeLazy(generateStream, Pauseable.pause),
+        {
+          delay: 2,
+        },
+      );
 
-    pipe(
-      scheduler,
-      Scheduler.schedule(pipeLazy(generateStream, Pauseable.pause), {
-        delay: 2,
-      }),
-    );
-
-    pipe(
-      scheduler,
-      Scheduler.schedule(pipeLazy(generateStream, Pauseable.resume), {
+    scheduler[SchedulerLike_schedule](
+      pipeLazy(generateStream, Pauseable.resume),
+      {
         delay: 4,
-      }),
+      },
     );
 
-    pipe(
-      scheduler,
-      Scheduler.schedule(() => generateStream[DisposableLike_dispose](), {
+    scheduler[SchedulerLike_schedule](
+      () => generateStream[DisposableLike_dispose](),
+      {
         delay: 6,
-      }),
+      },
     );
 
     const f = mockFn();

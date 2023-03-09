@@ -1,7 +1,8 @@
 /// <reference types="./Stream.mixin.d.ts" />
 
+import { __DEV__ } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
+import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
@@ -36,9 +37,13 @@ const DispatchedObservable_create =
             return observer[ObserverLike_scheduler];
         },
         [QueueLike_push](next) {
-            unsafeCast(this);
-            // Practically the observer can never be none.
             const observer = this[DispatchedObservable_observer];
+            // Practically the observer can never be none,
+            // unless the stream operator uses lazy subscriptions
+            // eg. concat.
+            if (__DEV__ && isNone(observer)) {
+                raiseWithDebugMessage("DispatchedObservable has not been subscribed to yet");
+            }
             const dispatcher = observer[ObserverLike_dispatcher];
             const scheduler = observer[ObserverLike_scheduler];
             const inContinuation = scheduler[SchedulerLike_inContinuation];

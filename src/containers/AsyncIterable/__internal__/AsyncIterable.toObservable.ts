@@ -10,8 +10,8 @@ import Observable_create from "../../../rx/Observable/__internal__/Observable.cr
 import {
   DispatcherLike_scheduler,
   SchedulerLike_now,
+  SchedulerLike_schedule,
 } from "../../../scheduling.js";
-import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -62,16 +62,14 @@ const AsyncIterable_toObservable: ToObservable<
 
         if (!dispatcher[DisposableLike_isDisposed]) {
           pipe(
-            scheduler,
-            Scheduler_schedule(continuation),
+            scheduler[SchedulerLike_schedule](continuation),
             Disposable_addTo(observer),
           );
         }
       };
 
       pipe(
-        scheduler,
-        Scheduler_schedule(continuation),
+        scheduler[SchedulerLike_schedule](continuation),
         Disposable_addTo(observer),
       );
     });

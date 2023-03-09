@@ -8,7 +8,6 @@
 
 - [createHostScheduler](scheduling_Scheduler.md#createhostscheduler)
 - [createVirtualTimeScheduler](scheduling_Scheduler.md#createvirtualtimescheduler)
-- [schedule](scheduling_Scheduler.md#schedule)
 - [toPausableScheduler](scheduling_Scheduler.md#topausablescheduler)
 - [toPriorityScheduler](scheduling_Scheduler.md#topriorityscheduler)
 
@@ -50,24 +49,6 @@ ___
 #### Returns
 
 [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
-
-___
-
-### schedule
-
-▸ **schedule**(`f`, `options?`): [`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md), [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`SideEffect`](functions.md#sideeffect) |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md), [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 

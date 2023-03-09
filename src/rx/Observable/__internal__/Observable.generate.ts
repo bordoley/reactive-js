@@ -5,7 +5,7 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
-import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
+import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";

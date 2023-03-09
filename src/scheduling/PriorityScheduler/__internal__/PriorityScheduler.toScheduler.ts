@@ -8,13 +8,13 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   Function1,
+  SideEffect,
   none,
   partial,
   pipe,
   unsafeCast,
 } from "../../../functions.js";
 import {
-  ContinuationLike,
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -23,8 +23,8 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../scheduling.js";
-import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import { getDelay } from "../../__internal__/Scheduler.options.js";
 
@@ -94,21 +94,20 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       },
       [SchedulerLike_schedule](
         this: TProperties & DisposableLike,
-        continuation: ContinuationLike,
+        effect: SideEffect,
         options?: { readonly delay?: number },
-      ) {
+      ): DisposableLike {
         const delay = getDelay(options);
 
-        pipe(this, Disposable_addIgnoringChildErrors(continuation));
-
-        if (!continuation[DisposableLike_isDisposed]) {
-          this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
-            SchedulerLike_schedule
-          ](continuation, {
+        const scheduler =
+          this[PrioritySchedulerDelegatingScheduler_priorityScheduler];
+        return pipe(
+          scheduler[SchedulerLike_schedule](effect, {
             priority: this[PrioritySchedulerDelegatingScheduler_priority],
             delay,
-          });
-        }
+          }),
+          Disposable_addToIgnoringChildErrors(this),
+        );
       },
     },
   ),
