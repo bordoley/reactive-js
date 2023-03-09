@@ -63,16 +63,16 @@ ___
 
 ### [SchedulerLike\_schedule]
 
-▸ **[SchedulerLike_schedule]**(`continuation`, `options?`): `void`
+▸ **[SchedulerLike_schedule]**(`continuation`, `options?`): [`DisposableLike`](util.DisposableLike.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `continuation` | [`ContinuationLike`](scheduling.ContinuationLike.md) |
+| `continuation` | [`SideEffect`](../modules/functions.md#sideeffect) |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 
 #### Returns
 
-`void`
+[`DisposableLike`](util.DisposableLike.md)

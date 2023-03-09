@@ -19,6 +19,7 @@ import {
 import * as Observable from "../../rx/Observable.js";
 import {
   SchedulerLike_now,
+  SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
@@ -114,14 +115,11 @@ testModule(
       }),
     );
 
-    pipe(
-      scheduler,
-      Scheduler.schedule(
-        () => {
-          disposable[DisposableLike_dispose]();
-        },
-        { delay: 2 },
-      ),
+    scheduler[SchedulerLike_schedule](
+      () => {
+        disposable[DisposableLike_dispose]();
+      },
+      { delay: 2 },
     );
 
     scheduler[VirtualTimeSchedulerLike_run]();

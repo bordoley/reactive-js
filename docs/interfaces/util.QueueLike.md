@@ -14,8 +14,6 @@
 
 - **`QueueLike`**
 
-  ↳ [`ContinuationLike`](scheduling.ContinuationLike.md)
-
   ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)
 
   ↳ [`PauseableLike`](scheduling.PauseableLike.md)

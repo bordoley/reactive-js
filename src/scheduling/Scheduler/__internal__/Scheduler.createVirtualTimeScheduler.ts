@@ -18,14 +18,7 @@ import MutableEnumerator_mixin, {
 } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import {
-  ContinuationLike,
-  ContinuationLike_run,
-  ContinuationLike_scheduler,
-  SchedulerLike,
-  SchedulerLike_inContinuation,
   SchedulerLike_now,
-  SchedulerLike_requestYield,
-  SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
@@ -34,18 +27,22 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueLike_count,
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import {
   PullableQueueLike,
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
-import { Continuation__getCurrentContinuation } from "../../Continuation/__internal__/Continuation.create.js";
-import { getDelay } from "../../__internal__/Scheduler.options.js";
+import {
+  ContinuationLike,
+  ContinuationLike_continuationScheduler,
+  ContinuationSchedulerLike_schedule,
+  PrioritySchedulerImplementationLike,
+  PrioritySchedulerImplementationLike_runContinuation,
+  PriorityScheduler_mixin,
+} from "./Scheduler.mixin.js";
 
 const VirtualTask_continuation = Symbol("VirtualTask_continuation");
 const VirtualTask_dueTime = Symbol("VirtualTask_dueTime");
@@ -74,38 +71,30 @@ const VirtualTimeScheduler_microTaskTicks = Symbol(
 const VirtualTimeScheduler_taskIDCount = Symbol(
   "VirtualTimeScheduler_taskIDCount",
 );
-const VirtualTimeScheduler_yieldRequested = Symbol(
-  "VirtualTimeScheduler_yieldRequested",
-);
 
 type TProperties = {
-  [SchedulerLike_inContinuation]: boolean;
   [SchedulerLike_now]: number;
   readonly [VirtualTimeScheduler_maxMicroTaskTicks]: number;
   [VirtualTimeScheduler_microTaskTicks]: number;
   [VirtualTimeScheduler_taskIDCount]: number;
-  [VirtualTimeScheduler_yieldRequested]: boolean;
 };
 
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
   mix(
     include(
-      Disposable_mixin,
+      PriorityScheduler_mixin,
       typedMutableEnumeratorMixin,
       PullableQueue_priorityQueueMixin<VirtualTask>(),
     ),
     function VirtualTimeScheduler(
       instance: Pick<
         VirtualTimeSchedulerLike,
-        | typeof VirtualTimeSchedulerLike_run
-        | typeof SchedulerLike_shouldYield
-        | typeof SchedulerLike_requestYield
-        | typeof SchedulerLike_schedule
+        typeof VirtualTimeSchedulerLike_run
       > &
         Mutable<TProperties>,
       maxMicroTaskTicks: number,
     ): VirtualTimeSchedulerLike {
-      init(Disposable_mixin, instance);
+      init(PriorityScheduler_mixin, instance);
       init(typedMutableEnumeratorMixin, instance);
       init(
         PullableQueue_priorityQueueMixin<VirtualTask>(),
@@ -118,41 +107,26 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       return instance;
     },
     props<TProperties>({
-      [SchedulerLike_inContinuation]: false,
       [SchedulerLike_now]: 0,
       [VirtualTimeScheduler_maxMicroTaskTicks]: MAX_SAFE_INTEGER,
       [VirtualTimeScheduler_microTaskTicks]: 0,
       [VirtualTimeScheduler_taskIDCount]: 0,
-      [VirtualTimeScheduler_yieldRequested]: false,
     }),
     {
       get [SchedulerLike_shouldYield]() {
-        unsafeCast<TProperties & SchedulerLike>(this);
+        unsafeCast<TProperties>(this);
 
-        const currentContinuation = Continuation__getCurrentContinuation();
-        const currentContinuationHasChildren =
-          currentContinuation?.[ContinuationLike_scheduler] === this &&
-          (currentContinuation?.[QueueLike_count] ?? 0) > 0;
-
-        const {
-          [VirtualTimeScheduler_yieldRequested]: yieldRequested,
-          [SchedulerLike_inContinuation]: inContinuation,
-        } = this;
-
-        if (inContinuation) {
-          this[VirtualTimeScheduler_microTaskTicks]++;
-        }
+        this[VirtualTimeScheduler_microTaskTicks]++;
 
         return (
-          inContinuation &&
-          (yieldRequested ||
-            this[VirtualTimeScheduler_microTaskTicks] >=
-              this[VirtualTimeScheduler_maxMicroTaskTicks] ||
-            currentContinuationHasChildren)
+          this[VirtualTimeScheduler_microTaskTicks] >=
+          this[VirtualTimeScheduler_maxMicroTaskTicks]
         );
       },
       [VirtualTimeSchedulerLike_run](
-        this: TProperties & EnumeratorLike<VirtualTask> & DisposableLike,
+        this: TProperties &
+          EnumeratorLike<VirtualTask> &
+          PrioritySchedulerImplementationLike,
       ) {
         while (
           !this[DisposableLike_isDisposed] &&
@@ -166,42 +140,27 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
 
           this[VirtualTimeScheduler_microTaskTicks] = 0;
           this[SchedulerLike_now] = dueTime;
-          this[SchedulerLike_inContinuation] = true;
-          this[VirtualTimeScheduler_yieldRequested] = false;
-          continuation[ContinuationLike_run]();
-          this[VirtualTimeScheduler_yieldRequested] = false;
-          this[SchedulerLike_inContinuation] = false;
+
+          this[PrioritySchedulerImplementationLike_runContinuation](
+            continuation,
+          );
         }
       },
-      [SchedulerLike_requestYield](this: TProperties): void {
-        this[VirtualTimeScheduler_yieldRequested] = true;
-      },
-      [SchedulerLike_schedule](
+      [ContinuationSchedulerLike_schedule](
         this: TProperties &
           DisposableLike &
           PullableQueueLike<VirtualTask> &
-          SchedulerLike,
+          PrioritySchedulerImplementationLike,
         continuation: ContinuationLike,
         options?: { readonly delay?: number },
       ) {
-        const delay = getDelay(options);
+        const { delay = 0 } = options ?? {};
 
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
-        if (continuation[DisposableLike_isDisposed]) {
-          return;
-        }
+        if (!continuation[DisposableLike_isDisposed]) {
+          continuation[ContinuationLike_continuationScheduler] = this;
 
-        const currentContinuation = Continuation__getCurrentContinuation();
-
-        if (
-          isSome(currentContinuation) &&
-          currentContinuation[ContinuationLike_scheduler] === this &&
-          !currentContinuation[DisposableLike_isDisposed] &&
-          delay === 0
-        ) {
-          currentContinuation[QueueLike_push](continuation);
-        } else {
           this[QueueLike_push]({
             [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
             [VirtualTask_dueTime]: this[SchedulerLike_now] + delay,

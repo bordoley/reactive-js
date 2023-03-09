@@ -14,8 +14,8 @@ import {
   PauseableState,
   PauseableState_paused,
   SchedulerLike_now,
+  SchedulerLike_schedule,
 } from "../../../scheduling.js";
-import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule.js";
 import { ToFlowable } from "../../../streaming.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
 import {
@@ -75,8 +75,7 @@ const AsyncIterable_toFlowable: ToFlowable<
 
             if (!dispatcher[DisposableLike_isDisposed] && !isPaused) {
               pipe(
-                scheduler,
-                Scheduler_schedule(continuation),
+                scheduler[SchedulerLike_schedule](continuation),
                 Disposable_addTo(observer),
               );
             }
@@ -91,8 +90,7 @@ const AsyncIterable_toFlowable: ToFlowable<
 
                 if (!isPaused && wasPaused) {
                   pipe(
-                    scheduler,
-                    Scheduler_schedule(continuation),
+                    scheduler[SchedulerLike_schedule](continuation),
                     Disposable_addTo(observer),
                   );
                 }

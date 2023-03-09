@@ -1,15 +1,11 @@
-import { Function1 } from "../../functions.js";
-import { ContinuationLike, PauseableSchedulerLike, SchedulerLike, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield } from "../../scheduling.js";
+import { Function1, SideEffect } from "../../functions.js";
+import { PauseableSchedulerLike, PrioritySchedulerLike, SchedulerLike, SchedulerLike_schedule } from "../../scheduling.js";
 import { DisposableLike } from "../../util.js";
 export type QueueSchedulerOptions = {
     readonly priority?: number;
     readonly delay?: number;
 };
-export interface QueueSchedulerLike extends DisposableLike, PauseableSchedulerLike {
-    readonly [SchedulerLike_inContinuation]: boolean;
-    readonly [SchedulerLike_now]: number;
-    readonly [SchedulerLike_shouldYield]: boolean;
-    [SchedulerLike_requestYield](): void;
-    [SchedulerLike_schedule](continuation: ContinuationLike, options?: QueueSchedulerOptions): void;
+export interface QueueSchedulerLike extends DisposableLike, PauseableSchedulerLike, PrioritySchedulerLike {
+    [SchedulerLike_schedule](effect: SideEffect, options?: QueueSchedulerOptions): DisposableLike;
 }
 export declare const create: Function1<SchedulerLike, QueueSchedulerLike>;

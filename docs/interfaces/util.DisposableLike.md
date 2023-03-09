@@ -16,8 +16,6 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
-  ↳ [`ContinuationLike`](scheduling.ContinuationLike.md)
-
   ↳ [`SchedulerLike`](scheduling.SchedulerLike.md)
 
   ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)

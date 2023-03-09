@@ -4,8 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { error, pipe } from "../../../functions.js";
 import { ObserverLike_dispatcher, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
-import { DispatcherLike_scheduler, SchedulerLike_now, } from "../../../scheduling.js";
-import Scheduler_schedule from "../../../scheduling/Scheduler/__internal__/Scheduler.schedule.js";
+import { DispatcherLike_scheduler, SchedulerLike_now, SchedulerLike_schedule, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 const AsyncIterable_toObservable = (o) => (iterable) => Observable_create((observer) => {
@@ -38,9 +37,9 @@ const AsyncIterable_toObservable = (o) => (iterable) => Observable_create((obser
             dispatcher[DisposableLike_dispose](error(e));
         }
         if (!dispatcher[DisposableLike_isDisposed]) {
-            pipe(scheduler, Scheduler_schedule(continuation), Disposable_addTo(observer));
+            pipe(scheduler[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
         }
     };
-    pipe(scheduler, Scheduler_schedule(continuation), Disposable_addTo(observer));
+    pipe(scheduler[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
 });
 export default AsyncIterable_toObservable;

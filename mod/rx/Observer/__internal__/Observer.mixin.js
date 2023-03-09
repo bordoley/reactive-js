@@ -4,7 +4,7 @@ import { createInstanceFactory, getPrototype, include, init, mix, props, } from 
 import { call, isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { DispatcherLike_scheduler, } from "../../../scheduling.js";
-import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
+import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -33,7 +33,9 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             while (instance[QueueLike_count] > 0) {
                 const next = instance[PullableQueueLike_pull]();
                 observer[ObserverLike_notify](next);
-                Continuation__yield();
+                if (instance[QueueLike_count] > 0) {
+                    Continuation__yield();
+                }
             }
         };
         instance[ObserverDispatcher_onContinuationDispose] = () => {

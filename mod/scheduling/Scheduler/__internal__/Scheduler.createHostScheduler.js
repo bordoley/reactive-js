@@ -2,14 +2,13 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isFunction, none, pipe, unsafeCast, } from "../../../functions.js";
-import { ContinuationLike_run, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { SchedulerLike_now } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import { getDelay } from "../../__internal__/Scheduler.options.js";
+import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "object" && isFunction(performance.now))();
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsProcessHRTime = /*@__PURE__*/ (() => typeof process === "object" && isFunction(process.hrtime))();
@@ -37,24 +36,17 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
     // clear the immediateOrTimer disposable
     immmediateOrTimerDisposable[DisposableLike_dispose]();
     scheduler[HostScheduler_startTime] = scheduler[SchedulerLike_now];
-    scheduler[HostScheduler_yieldRequested] = false;
-    scheduler[SchedulerLike_inContinuation] = true;
-    continuation[ContinuationLike_run]();
-    scheduler[SchedulerLike_inContinuation] = false;
-    scheduler[HostScheduler_yieldRequested] = false;
+    scheduler[PrioritySchedulerImplementationLike_runContinuation](continuation);
 };
 const HostScheduler_startTime = Symbol("HostScheduler_startTime");
 const HostScheduler_maxYieldInterval = Symbol("HostScheduler_maxYieldInterval");
-const HostScheduler_yieldRequested = Symbol("HostScheduler_yieldRequested");
-const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_mixin), function HostScheduler(instance, maxYieldInterval) {
-    init(Disposable_mixin, instance);
+const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(PriorityScheduler_mixin), function HostScheduler(instance, maxYieldInterval) {
+    init(PriorityScheduler_mixin, instance);
     instance[HostScheduler_maxYieldInterval] = maxYieldInterval;
     return instance;
 }, props({
-    [SchedulerLike_inContinuation]: false,
     [HostScheduler_startTime]: 0,
     [HostScheduler_maxYieldInterval]: 0,
-    [HostScheduler_yieldRequested]: false,
 }), {
     get [SchedulerLike_now]() {
         if (supportsPerformanceNow) {
@@ -68,28 +60,23 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
             return Date.now();
         }
     },
-    get [SchedulerLike_shouldYield]() {
+    get [PrioritySchedulerImplementationLike_shouldYield]() {
         unsafeCast(this);
-        const inContinuation = this[SchedulerLike_inContinuation];
-        const { [HostScheduler_yieldRequested]: yieldRequested } = this;
-        return (inContinuation &&
-            (yieldRequested ||
-                this[SchedulerLike_now] >
-                    this[HostScheduler_startTime] +
-                        this[HostScheduler_maxYieldInterval] ||
-                isInputPending()));
+        return (this[SchedulerLike_now] >
+            this[HostScheduler_startTime] +
+                this[HostScheduler_maxYieldInterval] || isInputPending());
     },
-    [SchedulerLike_requestYield]() {
-        this[HostScheduler_yieldRequested] = true;
-    },
-    [SchedulerLike_schedule](continuation, options) {
-        const delay = getDelay(options);
+    [ContinuationSchedulerLike_schedule](continuation, options) {
+        const { delay = 0 } = options !== null && options !== void 0 ? options : {};
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
-        const continuationIsDisposed = continuation[DisposableLike_isDisposed];
-        if (!continuationIsDisposed && delay > 0) {
+        if (continuation[DisposableLike_isDisposed]) {
+            return;
+        }
+        continuation[ContinuationLike_continuationScheduler] = this;
+        if (delay > 0) {
             scheduleDelayed(this, continuation, delay);
         }
-        else if (!continuationIsDisposed) {
+        else {
             scheduleImmediate(this, continuation);
         }
     },

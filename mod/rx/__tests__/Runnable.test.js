@@ -5,7 +5,7 @@ import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes,
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { arrayEquality, identity, increment, incrementBy, newInstance, none, pipe, pipeLazy, returns, } from "../../functions.js";
 import { ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../rx.js";
-import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
+import { SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
 import * as Pauseable from "../../scheduling/Pauseable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as Streamable from "../../streaming/Streamable.js";
@@ -39,16 +39,16 @@ const toFlowableTests = describe("toFlowable", test("flow a generating source", 
         delay: 1,
         delayStart: true,
     }), Runnable.toFlowable(), Streamable.stream(scheduler));
-    pipe(scheduler, Scheduler.schedule(pipeLazy(generateStream, Pauseable.resume)));
-    pipe(scheduler, Scheduler.schedule(pipeLazy(generateStream, Pauseable.pause), {
-        delay: 2,
-    }));
-    pipe(scheduler, Scheduler.schedule(pipeLazy(generateStream, Pauseable.resume), {
+    scheduler[SchedulerLike_schedule](pipeLazy(generateStream, Pauseable.resume)),
+        scheduler[SchedulerLike_schedule](pipeLazy(generateStream, Pauseable.pause), {
+            delay: 2,
+        });
+    scheduler[SchedulerLike_schedule](pipeLazy(generateStream, Pauseable.resume), {
         delay: 4,
-    }));
-    pipe(scheduler, Scheduler.schedule(() => generateStream[DisposableLike_dispose](), {
+    });
+    scheduler[SchedulerLike_schedule](() => generateStream[DisposableLike_dispose](), {
         delay: 6,
-    }));
+    });
     const f = mockFn();
     const subscription = pipe(generateStream, Observable.forEach(x => {
         f(scheduler[SchedulerLike_now], x);

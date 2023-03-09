@@ -1,3 +1,4 @@
+import { __DEV__ } from "../../../__internal__/constants.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -12,6 +13,7 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import {
   Optional,
+  isNone,
   isSome,
   none,
   pipe,
@@ -113,12 +115,19 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             this: TProperties & DispatchedObservableLike<T>,
             next: T,
           ) {
-            unsafeCast<DispatchedObservableLike<T>>(this);
-
-            // Practically the observer can never be none.
             const observer = this[
               DispatchedObservable_observer
             ] as ObserverLike<T>;
+
+            // Practically the observer can never be none,
+            // unless the stream operator uses lazy subscriptions
+            // eg. concat.
+            if (__DEV__ && isNone(observer)) {
+              raiseWithDebugMessage(
+                "DispatchedObservable has not been subscribed to yet",
+              );
+            }
+
             const dispatcher = observer[ObserverLike_dispatcher];
             const scheduler = observer[ObserverLike_scheduler];
             const inContinuation = scheduler[SchedulerLike_inContinuation];

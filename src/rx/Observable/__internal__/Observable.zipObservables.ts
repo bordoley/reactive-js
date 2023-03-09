@@ -29,7 +29,7 @@ import {
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
-import { Continuation__yield } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
+import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import {
   DisposableLike,
   DisposableLike_dispose,

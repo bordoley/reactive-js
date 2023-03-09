@@ -1,3 +1,4 @@
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { compose, pipe, returns } from "../../../functions.js";
 import {
   ObserverLike_dispatcher,
@@ -7,8 +8,8 @@ import {
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
+import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
-import Observable_startWith from "../../../rx/Observable/__internal__/Observable.startWith.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
   PauseableState,
@@ -34,9 +35,18 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
       const op = compose(
         Observable_forEach(Queue_pushTo(dispatcher)),
         Observable_ignoreElements(),
-        Observable_startWith(
-          returns<PauseableState>(PauseableState_paused),
-          returns(PauseableState_running),
+        // Intentionally use mergeWith here. The stream dispatcher
+        // needs to be immediately subscribed to when created
+        // otherwise it will have no dispatcher to queue events onto.
+        // Observable.startWith uses concatenation.
+        Observable_mergeWith(
+          pipe(
+            [
+              returns<PauseableState>(PauseableState_paused),
+              returns(PauseableState_running),
+            ],
+            ReadonlyArray_toObservable(),
+          ),
         ),
         Observable_onSubscribe(() => dispatcher),
       );

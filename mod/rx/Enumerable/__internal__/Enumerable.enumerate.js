@@ -1,16 +1,16 @@
 /// <reference types="./Enumerable.enumerate.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ContainerLike_type, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isSome, pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
-import { ContinuationLike_run, ContinuationLike_scheduler, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import { Continuation__getCurrentContinuation } from "../../../scheduling/Continuation/__internal__/Continuation.create.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
+import { SchedulerLike_now } from "../../../scheduling.js";
+import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -18,37 +18,26 @@ import { PullableQueueLike_pull, } from "../../../util/__internal__/util.interna
 const Enumerable_enumerate = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const typedObserverMixin = Observer_mixin();
-    const createEnumeratorScheduler = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin, IndexedQueue_fifoQueueMixin(), typedObserverMixin), function EnumeratorScheduler(instance) {
+    const createEnumeratorScheduler = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin, IndexedQueue_fifoQueueMixin(), typedObserverMixin, PriorityScheduler_mixin), function EnumeratorScheduler(instance) {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         init(IndexedQueue_fifoQueueMixin(), instance);
+        init(PriorityScheduler_mixin, instance);
         init(typedObserverMixin, instance, instance);
         // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
         return instance;
-    }, props({
-        [SchedulerLike_inContinuation]: false,
-    }), {
+    }, props({}), {
         [SchedulerLike_now]: 0,
-        get [SchedulerLike_shouldYield]() {
-            var _a;
+        get [PrioritySchedulerImplementationLike_shouldYield]() {
             unsafeCast(this);
-            const currentContinuation = Continuation__getCurrentContinuation();
-            const currentContinuationHasChildren = (currentContinuation === null || currentContinuation === void 0 ? void 0 : currentContinuation[ContinuationLike_scheduler]) === this &&
-                ((_a = currentContinuation === null || currentContinuation === void 0 ? void 0 : currentContinuation[QueueLike_count]) !== null && _a !== void 0 ? _a : 0) > 0;
-            return (this[SchedulerLike_inContinuation] &&
-                (this[EnumeratorLike_hasCurrent] || currentContinuationHasChildren));
-        },
-        [SchedulerLike_requestYield]() {
-            // No-Op: We yield whenever the continuation is running.
+            return this[EnumeratorLike_hasCurrent];
         },
         [EnumeratorLike_move]() {
             this[MutableEnumeratorLike_reset]();
             while (!this[EnumeratorLike_hasCurrent]) {
                 const continuation = this[PullableQueueLike_pull]();
                 if (isSome(continuation)) {
-                    this[SchedulerLike_inContinuation] = true;
-                    continuation[ContinuationLike_run]();
-                    this[SchedulerLike_inContinuation] = false;
+                    this[PrioritySchedulerImplementationLike_runContinuation](continuation);
                 }
                 else {
                     this[DisposableLike_dispose]();
@@ -57,23 +46,13 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             }
             return this[EnumeratorLike_hasCurrent];
         },
-        [SchedulerLike_schedule](continuation, _) {
+        [ContinuationSchedulerLike_schedule](continuation, _) {
             pipe(this, Disposable_add(continuation));
             if (continuation[DisposableLike_isDisposed]) {
                 return;
             }
-            if (continuation[DisposableLike_isDisposed]) {
-                return;
-            }
-            const currentContinuation = Continuation__getCurrentContinuation();
-            if (isSome(currentContinuation) &&
-                currentContinuation[ContinuationLike_scheduler] === this &&
-                !currentContinuation[DisposableLike_isDisposed]) {
-                currentContinuation[QueueLike_push](continuation);
-            }
-            else {
-                this[QueueLike_push](continuation);
-            }
+            continuation[ContinuationLike_continuationScheduler] = this;
+            this[QueueLike_push](continuation);
         },
         [ObserverLike_notify](next) {
             Observer_assertState(this);
