@@ -14,6 +14,7 @@ import {
   EncodeUtf8,
   EndWith,
   EverySatisfy,
+  FirstAsync,
   FlatMapIterable,
   ForEach,
   ForkConcat,
@@ -27,6 +28,7 @@ import {
   IgnoreElements,
   Keep,
   KeepType,
+  LastAsync,
   Map,
   MapTo,
   Never,
@@ -379,7 +381,10 @@ export const exhaust: Exhaust<ObservableLike>["exhaust"] = Observable_exhaust;
 export const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"] =
   Observable_exhaustMap;
 
-export const firstAsync = Observable_firstAsync;
+export const firstAsync: FirstAsync<
+  ObservableLike,
+  { scheduler?: SchedulerLike }
+>["firstAsync"] = Observable_firstAsync;
 
 export const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"] =
   Observable_flatMapIterable;
@@ -455,7 +460,10 @@ export const keep: Keep<ObservableLike>["keep"] = Observable_keep;
 export const keepType: KeepType<ObservableLike>["keepType"] =
   Observable_keepType;
 
-export const lastAsync = Observable_lastAsync;
+export const lastAsync: LastAsync<
+  ObservableLike,
+  { scheduler?: SchedulerLike }
+>["lastAsync"] = Observable_lastAsync;
 
 export const map: Map<ObservableLike>["map"] = Observable_map;
 

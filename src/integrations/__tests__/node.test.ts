@@ -58,7 +58,7 @@ testModule(
         await pipe(
           dest,
           Observable.endWith(returns(PauseableState_paused)),
-          Observable.lastAsync(scheduler),
+          Observable.lastAsync(),
         );
 
         pipe(writable.destroyed, expectEquals(true));
@@ -100,7 +100,7 @@ testModule(
           dest,
           Observable.ignoreElements(),
           Observable.endWith(0),
-          Observable.lastAsync(scheduler),
+          Observable.lastAsync({ scheduler }),
         );
         await expectPromiseToThrow(promise);
         pipe(writable.destroyed, expectEquals(true));
@@ -113,84 +113,66 @@ testModule(
   describe(
     "createReadableIOSource",
     testAsync("reading from readable", async () => {
-      const scheduler = Scheduler.createHostScheduler();
-
-      try {
-        function* generate() {
-          yield Buffer.from("abc", "utf8");
-          yield Buffer.from("defg", "utf8");
-        }
-
-        const textDecoder = newInstance(TextDecoder);
-
-        const acc = await pipe(
-          createReadableSource(() => pipe(generate(), Readable.from)),
-          Flowable.toObservable(),
-          Observable.reduce<Uint8Array, string>(
-            (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-            returns(""),
-          ),
-          Observable.takeFirst<string>({ count: 1 }),
-          Observable.lastAsync(scheduler),
-        );
-        pipe(acc, expectEquals<Optional<string>>("abcdefg"));
-      } finally {
-        scheduler[DisposableLike_dispose]();
+      function* generate() {
+        yield Buffer.from("abc", "utf8");
+        yield Buffer.from("defg", "utf8");
       }
-    }),
-    testAsync("reading from readable that throws", async () => {
-      const scheduler = Scheduler.createHostScheduler();
 
-      try {
-        const err = newInstance(Error);
-
-        function* generate() {
-          yield Buffer.from("abc", "utf8");
-          throw err;
-        }
-
-        const textDecoder = newInstance(TextDecoder);
-        await pipe(
-          createReadableSource(() => pipe(generate(), Readable.from)),
-          Flowable.toObservable(),
-          Observable.reduce<Uint8Array, string>(
-            (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-            returns(""),
-          ),
-          Observable.endWith(""),
-          Observable.lastAsync(scheduler),
-          expectPromiseToThrow,
-        );
-      } finally {
-        scheduler[DisposableLike_dispose]();
-      }
-    }),
-  ),
-  testAsync("transform", async () => {
-    const scheduler = Scheduler.createHostScheduler();
-
-    try {
-      const encoder = newInstance(TextEncoder);
       const textDecoder = newInstance(TextDecoder);
 
       const acc = await pipe(
-        [encoder.encode("abc"), encoder.encode("defg")],
-        ReadonlyArray.toRunnable(),
-        Runnable.toFlowable(),
-        gzip(),
-        gunzip(),
+        createReadableSource(() => pipe(generate(), Readable.from)),
         Flowable.toObservable(),
         Observable.reduce<Uint8Array, string>(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
         ),
         Observable.takeFirst<string>({ count: 1 }),
-        Observable.lastAsync(scheduler),
+        Observable.lastAsync(),
       );
-
       pipe(acc, expectEquals<Optional<string>>("abcdefg"));
-    } finally {
-      scheduler[DisposableLike_dispose]();
-    }
+    }),
+    testAsync("reading from readable that throws", async () => {
+      const err = newInstance(Error);
+
+      function* generate() {
+        yield Buffer.from("abc", "utf8");
+        throw err;
+      }
+
+      const textDecoder = newInstance(TextDecoder);
+      await pipe(
+        createReadableSource(() => pipe(generate(), Readable.from)),
+        Flowable.toObservable(),
+        Observable.reduce<Uint8Array, string>(
+          (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+          returns(""),
+        ),
+        Observable.endWith(""),
+        Observable.lastAsync(),
+        expectPromiseToThrow,
+      );
+    }),
+  ),
+  testAsync("transform", async () => {
+    const encoder = newInstance(TextEncoder);
+    const textDecoder = newInstance(TextDecoder);
+
+    const acc = await pipe(
+      [encoder.encode("abc"), encoder.encode("defg")],
+      ReadonlyArray.toRunnable(),
+      Runnable.toFlowable(),
+      gzip(),
+      gunzip(),
+      Flowable.toObservable(),
+      Observable.reduce<Uint8Array, string>(
+        (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+        returns(""),
+      ),
+      Observable.takeFirst<string>({ count: 1 }),
+      Observable.lastAsync(),
+    );
+
+    pipe(acc, expectEquals<Optional<string>>("abcdefg"));
   }),
 );

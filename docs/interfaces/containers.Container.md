@@ -50,6 +50,8 @@
 
   ↳ [`First`](containers.First.md)
 
+  ↳ [`FirstAsync`](containers.FirstAsync.md)
+
   ↳ [`FlatMapIterable`](containers.FlatMapIterable.md)
 
   ↳ [`ForEach`](containers.ForEach.md)
@@ -77,6 +79,8 @@
   ↳ [`KeepType`](containers.KeepType.md)
 
   ↳ [`Last`](containers.Last.md)
+
+  ↳ [`LastAsync`](containers.LastAsync.md)
 
   ↳ [`Map`](containers.Map.md)
 

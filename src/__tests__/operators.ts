@@ -55,9 +55,7 @@ import {
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
-import * as Scheduler from "../scheduling/Scheduler.js";
 import { __now } from "../scheduling/Scheduler.js";
-import { DisposableLike_dispose } from "../util.js";
 import {
   describe,
   expectArrayEquals,
@@ -1183,22 +1181,15 @@ export const toObservableTests = <C extends ContainerLike>(
   m: FromReadonlyArray<C> & ToObservable<C>,
 ) =>
   testAsync("toObservable", async () => {
-    const scheduler = Scheduler.createHostScheduler();
+    const result = await pipe(
+      [0, 1, 2, 3, 4],
+      m.fromReadonlyArray(),
+      m.toObservable<number>(),
+      Observable.buffer(),
+      Observable.lastAsync(),
+    );
 
-    // FIXME: This should be a generic test
-    try {
-      const result = await pipe(
-        [0, 1, 2, 3, 4],
-        m.fromReadonlyArray(),
-        m.toObservable<number>(),
-        Observable.buffer(),
-        Observable.lastAsync(scheduler),
-      );
-
-      pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4]));
-    } finally {
-      scheduler[DisposableLike_dispose]();
-    }
+    pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4]));
   });
 
 const toRunnableTest = <C extends ContainerLike>(

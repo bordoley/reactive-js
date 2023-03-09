@@ -5,9 +5,7 @@ import { alwaysFalse, alwaysTrue, arrayEquality, increment, none, pipe, pipeLazy
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
-import * as Scheduler from "../scheduling/Scheduler.js";
 import { __now } from "../scheduling/Scheduler.js";
-import { DisposableLike_dispose } from "../util.js";
 import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, testAsync, } from "./testing.js";
 export const bufferTests = (m) => describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ maxBufferSize: 3 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
@@ -153,15 +151,8 @@ export const throwIfEmptyTests = (m) => describe("throwIfEmpty", test("when sour
 }), test("when source is not empty", pipeLazy([1], m.fromReadonlyArray(), m.throwIfEmpty(() => undefined), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1]))));
 export const toEnumerableTests = (m) => describe("toEnumerable", test("with an enumerable observable", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray(), m.toEnumerable(), Enumerable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))));
 export const toObservableTests = (m) => testAsync("toObservable", async () => {
-    const scheduler = Scheduler.createHostScheduler();
-    // FIXME: This should be a generic test
-    try {
-        const result = await pipe([0, 1, 2, 3, 4], m.fromReadonlyArray(), m.toObservable(), Observable.buffer(), Observable.lastAsync(scheduler));
-        pipe(result !== null && result !== void 0 ? result : [], expectArrayEquals([0, 1, 2, 3, 4]));
-    }
-    finally {
-        scheduler[DisposableLike_dispose]();
-    }
+    const result = await pipe([0, 1, 2, 3, 4], m.fromReadonlyArray(), m.toObservable(), Observable.buffer(), Observable.lastAsync());
+    pipe(result !== null && result !== void 0 ? result : [], expectArrayEquals([0, 1, 2, 3, 4]));
 });
 const toRunnableTest = (m) => test("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])));
 export const toRunnableWithDelayTests = (m) => describe("toRunnable", toRunnableTest(m), test("with delay", pipeLazy([9, 9, 9, 9], m.fromReadonlyArray(), m.toRunnable({ delay: 1 }), Runnable.map(_ => __now()), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3]))));

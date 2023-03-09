@@ -7,8 +7,6 @@ import {
 } from "../../__tests__/testing.js";
 import { Optional, newInstance, pipe } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
-import * as Scheduler from "../../scheduling/Scheduler.js";
-import { DisposableLike_dispose } from "../../util.js";
 import * as Promiseable from "../Promiseable.js";
 
 testModule(
@@ -16,39 +14,23 @@ testModule(
   describe(
     "toObservable",
     testAsync("when the promise resolves", async () => {
-      const scheduler = Scheduler.createHostScheduler();
-
       const promise = Promise.resolve(1);
 
-      try {
-        const result = await pipe(
-          promise,
-          Promiseable.toObservable(),
-          Observable.lastAsync(scheduler),
-        );
-        pipe(result, expectEquals<Optional<number>>(1));
-      } finally {
-        scheduler[DisposableLike_dispose]();
-      }
+      const result = await pipe(
+        promise,
+        Promiseable.toObservable(),
+        Observable.lastAsync(),
+      );
+      pipe(result, expectEquals<Optional<number>>(1));
     }),
     testAsync("when the promise reject", async () => {
-      const scheduler = Scheduler.createHostScheduler();
-
       const error = newInstance(Error);
       const promise = Promise.reject(error);
 
-      try {
-        await pipe(
-          pipe(
-            promise,
-            Promiseable.toObservable(),
-            Observable.lastAsync(scheduler),
-          ),
-          expectPromiseToThrow,
-        );
-      } finally {
-        scheduler[DisposableLike_dispose]();
-      }
+      await pipe(
+        pipe(promise, Promiseable.toObservable(), Observable.lastAsync()),
+        expectPromiseToThrow,
+      );
     }),
   ),
 );
