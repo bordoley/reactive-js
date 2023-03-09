@@ -130,7 +130,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
         [QueueLike_push](this: TProperties & QueueLike, item: T) {
           const values =
             this[FifoQueue_values] ??
-            ((this[FifoQueue_capacityMask] = 0x31),
+            ((this[FifoQueue_capacityMask] = 31),
             (this[FifoQueue_values] = newInstance<Array<Optional<T>>, number>(
               Array,
               32,

@@ -79,7 +79,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         },
         [QueueLike_push](item) {
             var _a;
-            const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : ((this[FifoQueue_capacityMask] = 0x31),
+            const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : ((this[FifoQueue_capacityMask] = 31),
                 (this[FifoQueue_values] = newInstance(Array, 32)),
                 this[FifoQueue_values]);
             const capacityMask = this[FifoQueue_capacityMask];
