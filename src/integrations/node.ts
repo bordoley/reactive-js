@@ -284,10 +284,7 @@ export const transform =
     Flowable_createLifted(
       modeObs =>
         Observable.create(observer => {
-          const transform = pipe(
-            factory(),
-            addToDisposable(observer),
-          );
+          const transform = pipe(factory(), addToDisposable(observer));
 
           pipe(
             createWritableSink(transform),
