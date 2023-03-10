@@ -4,7 +4,6 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -29,7 +28,7 @@ const AsyncEnumerable_scanAsync = /*@__PURE__*/ (() => {
             return this[ScanAsyncStream_obs][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](observer) {
-            pipe(this[ScanAsyncStream_obs], Observable_observeWith(observer));
+            this[ScanAsyncStream_obs][ObservableLike_observe](observer);
         },
     }));
     return (reducer, initialValue) => pipe(createScanAsyncStream, partial(reducer, initialValue), AsyncEnumerable_lift(false, false));

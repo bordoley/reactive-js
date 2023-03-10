@@ -5,7 +5,6 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import { DispatcherLike_scheduler, SchedulerLike_inContinuation, } from "../../../scheduling.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
@@ -95,7 +94,7 @@ const Stream_mixin = /*@__PURE__*/ (() => {
             this[DelegatingLike_delegate][QueueLike_push](req);
         },
         [ObservableLike_observe](observer) {
-            pipe(this[StreamMixin_observable], Observable_observeWith(observer));
+            this[StreamMixin_observable][ObservableLike_observe](observer);
         },
     }));
 })();

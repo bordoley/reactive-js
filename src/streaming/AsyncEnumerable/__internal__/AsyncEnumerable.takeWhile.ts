@@ -22,7 +22,6 @@ import {
   ObserverLike,
 } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
@@ -83,7 +82,7 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
             this: TProperties,
             observer: ObserverLike<T>,
           ): void {
-            pipe(this[TakeWhileStream_obs], Observable_observeWith(observer));
+            this[TakeWhileStream_obs][ObservableLike_observe](observer);
           },
         },
       ),

@@ -16,6 +16,7 @@ import {
 import { Function1, error, isSome, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
+  ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
   ObserverLike_scheduler,
@@ -25,7 +26,6 @@ import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__inte
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
-import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
@@ -57,7 +57,7 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
               try {
                 const result = errorHandler(err) as ContainerOf<C, T>;
                 if (isSome(result)) {
-                  pipe(result, Observable_observeWith(delegate));
+                  result[ObservableLike_observe](delegate);
                 } else {
                   delegate[DisposableLike_dispose]();
                 }

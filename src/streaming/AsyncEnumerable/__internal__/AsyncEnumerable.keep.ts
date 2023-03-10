@@ -25,7 +25,6 @@ import {
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
 import { QueueLike_push } from "../../../util.js";
@@ -87,7 +86,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
           this: TProperties,
           observer: ObserverLike<T>,
         ): void {
-          pipe(this[KeepStream_obs], Observable_observeWith(observer));
+          this[KeepStream_obs][ObservableLike_observe](observer);
         },
       },
     ),

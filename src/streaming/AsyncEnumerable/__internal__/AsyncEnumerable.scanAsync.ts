@@ -25,7 +25,6 @@ import {
   ScanAsync,
 } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
@@ -86,7 +85,7 @@ const AsyncEnumerable_scanAsync: ScanAsync<
           this: TProperties,
           observer: ObserverLike<TAcc>,
         ): void {
-          pipe(this[ScanAsyncStream_obs], Observable_observeWith(observer));
+          this[ScanAsyncStream_obs][ObservableLike_observe](observer);
         },
       },
     ),

@@ -6,7 +6,6 @@ import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, 
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { QueueLike_push } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -35,7 +34,7 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
             return this[KeepStream_obs][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](observer) {
-            pipe(this[KeepStream_obs], Observable_observeWith(observer));
+            this[KeepStream_obs][ObservableLike_observe](observer);
         },
     }));
     return ((predicate) => pipe(createKeepStream, partial(predicate), AsyncEnumerable_lift(true, true)));

@@ -4,7 +4,6 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
@@ -31,7 +30,7 @@ const AsyncEnumerable_takeWhile =
             return this[TakeWhileStream_obs][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](observer) {
-            pipe(this[TakeWhileStream_obs], Observable_observeWith(observer));
+            this[TakeWhileStream_obs][ObservableLike_observe](observer);
         },
     }));
     return (predicate, options = {}) => {

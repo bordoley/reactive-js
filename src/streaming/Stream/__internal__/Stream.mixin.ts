@@ -35,7 +35,6 @@ import {
   ObserverLike_scheduler,
 } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import {
   DispatcherLike,
   DispatcherLike_scheduler,
@@ -248,7 +247,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         },
 
         [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
-          pipe(this[StreamMixin_observable], Observable_observeWith(observer));
+          this[StreamMixin_observable][ObservableLike_observe](observer);
         },
       },
     ),
