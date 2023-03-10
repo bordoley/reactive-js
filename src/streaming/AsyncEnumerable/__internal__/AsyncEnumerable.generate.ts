@@ -5,7 +5,7 @@ import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan
 import { getDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import { AsyncEnumerableLike } from "../../../streaming.js";
 import Streamable_createLifted from "../../Streamable/__internal__/Streamable.createLifted.js";
-import AsyncEnumerable_generateAsync from "./AsyncEnumerable.generateAsync.js";
+import AsyncEnumerable_generateLast from "./AsyncEnumerable.generateLast.js";
 
 const AsyncEnumerable_generate: Generate<
   AsyncEnumerableLike,
@@ -29,7 +29,7 @@ const AsyncEnumerable_generate: Generate<
     const delay = getDelay(options);
 
     return delay > 0
-      ? AsyncEnumerable_generateAsync(
+      ? AsyncEnumerable_generateLast(
           asyncGeneratorScanner(generator, options),
           initialValue,
         )

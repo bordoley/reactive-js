@@ -17,7 +17,7 @@ import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__inter
 import Sequence_toAsyncEnumerable from "../containers/Sequence/__internal__/Sequence.toAsyncEnumerable.js";
 import {
   FromEnumerable,
-  GenerateAsync,
+  GenerateLast,
   ObservableLike,
   ScanLast,
   ToEnumerable,
@@ -27,7 +27,7 @@ import {
 import Enumerable_toAsyncEnumerable from "../rx/Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 import { AsyncEnumerableLike } from "../streaming.js";
 import AsyncEnumerable_generate from "./AsyncEnumerable/__internal__/AsyncEnumerable.generate.js";
-import AsyncEnumerable_generateAsync from "./AsyncEnumerable/__internal__/AsyncEnumerable.generateAsync.js";
+import AsyncEnumerable_generateLast from "./AsyncEnumerable/__internal__/AsyncEnumerable.generateLast.js";
 import AsyncEnumerable_keep from "./AsyncEnumerable/__internal__/AsyncEnumerable.keep.js";
 import AsyncEnumerable_map from "./AsyncEnumerable/__internal__/AsyncEnumerable.map.js";
 import AsyncEnumerable_scan from "./AsyncEnumerable/__internal__/AsyncEnumerable.scan.js";
@@ -69,10 +69,10 @@ export const generate: Generate<
   { delay: number }
 >["generate"] = AsyncEnumerable_generate;
 
-export const generateAsync: GenerateAsync<
+export const generateLast: GenerateLast<
   AsyncEnumerableLike,
   ObservableLike
->["generateAsync"] = AsyncEnumerable_generateAsync;
+>["generateLast"] = AsyncEnumerable_generateLast;
 
 export const keep: Keep<AsyncEnumerableLike>["keep"] = AsyncEnumerable_keep;
 

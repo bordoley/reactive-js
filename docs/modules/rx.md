@@ -27,7 +27,7 @@
 - [ForkZipLatest](../interfaces/rx.ForkZipLatest.md)
 - [FromEnumerable](../interfaces/rx.FromEnumerable.md)
 - [FromRunnable](../interfaces/rx.FromRunnable.md)
-- [GenerateAsync](../interfaces/rx.GenerateAsync.md)
+- [GenerateLast](../interfaces/rx.GenerateLast.md)
 - [Lift](../interfaces/rx.Lift.md)
 - [Merge](../interfaces/rx.Merge.md)
 - [MergeAll](../interfaces/rx.MergeAll.md)

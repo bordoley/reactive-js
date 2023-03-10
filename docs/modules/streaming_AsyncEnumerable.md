@@ -13,7 +13,7 @@
 - [fromReadonlyArray](streaming_AsyncEnumerable.md#fromreadonlyarray)
 - [fromSequence](streaming_AsyncEnumerable.md#fromsequence)
 - [generate](streaming_AsyncEnumerable.md#generate)
-- [generateAsync](streaming_AsyncEnumerable.md#generateasync)
+- [generateLast](streaming_AsyncEnumerable.md#generatelast)
 
 ### Operator Functions
 
@@ -192,9 +192,9 @@ that is applied to an accumulator value between emitted items.
 
 ___
 
-### generateAsync
+### generateLast
 
-▸ **generateAsync**<`T`\>(`generator`, `initialValue`, `options?`): [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>
+▸ **generateLast**<`T`\>(`generator`, `initialValue`, `options?`): [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>
 
 #### Type parameters
 

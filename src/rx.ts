@@ -418,7 +418,7 @@ export interface FromRunnable<C extends ContainerLike, O = never>
  * @noInheritDoc
  * @category TypeClass
  */
-export interface GenerateAsync<
+export interface GenerateLast<
   C extends ContainerLike,
   CInner extends ObservableLike,
   O = never,
@@ -426,7 +426,7 @@ export interface GenerateAsync<
   /**
    * @category Constructor
    */
-  generateAsync<T>(
+  generateLast<T>(
     generator: Function1<T, ContainerOf<CInner, T>>,
     initialValue: Factory<T>,
     options?: O,

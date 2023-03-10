@@ -142,7 +142,7 @@
 
   ↳ [`FromRunnable`](rx.FromRunnable.md)
 
-  ↳ [`GenerateAsync`](rx.GenerateAsync.md)
+  ↳ [`GenerateLast`](rx.GenerateLast.md)
 
   ↳ [`Lift`](rx.Lift.md)
 

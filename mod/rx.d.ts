@@ -196,11 +196,11 @@ export interface FromRunnable<C extends ContainerLike, O = never> extends Contai
  * @noInheritDoc
  * @category TypeClass
  */
-export interface GenerateAsync<C extends ContainerLike, CInner extends ObservableLike, O = never> extends Container<C> {
+export interface GenerateLast<C extends ContainerLike, CInner extends ObservableLike, O = never> extends Container<C> {
     /**
      * @category Constructor
      */
-    generateAsync<T>(generator: Function1<T, ContainerOf<CInner, T>>, initialValue: Factory<T>, options?: O): ContainerOf<C, T>;
+    generateLast<T>(generator: Function1<T, ContainerOf<CInner, T>>, initialValue: Factory<T>, options?: O): ContainerOf<C, T>;
 }
 /**
  * @noInheritDoc

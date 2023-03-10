@@ -1,13 +1,13 @@
 import { Factory, Function1 } from "../../../functions.js";
-import { GenerateAsync, ObservableLike } from "../../../rx.js";
+import { GenerateLast, ObservableLike } from "../../../rx.js";
 import Observable_scanLast from "../../../rx/Observable/__internal__/Observable.scanLast.js";
 import { AsyncEnumerableLike } from "../../../streaming.js";
 import Streamable_createLifted from "../../Streamable/__internal__/Streamable.createLifted.js";
 
-const AsyncEnumerable_generateAsync: GenerateAsync<
+const AsyncEnumerable_generateLast: GenerateLast<
   AsyncEnumerableLike,
   ObservableLike
->["generateAsync"] = <T>(
+>["generateLast"] = <T>(
   generator: Function1<T, ObservableLike<T>>,
   initialValue: Factory<T>,
 ): AsyncEnumerableLike<T> =>
@@ -18,4 +18,4 @@ const AsyncEnumerable_generateAsync: GenerateAsync<
     false,
   );
 
-export default AsyncEnumerable_generateAsync;
+export default AsyncEnumerable_generateLast;
