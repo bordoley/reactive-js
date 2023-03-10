@@ -35,10 +35,10 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const ScanAsyncEnumerator_op = Symbol("ScanAsyncEnumerator_op");
+  const ScanLastEnumerator_op = Symbol("ScanLastEnumerator_op");
 
   type TProperties = {
-    readonly [ScanAsyncEnumerator_op]: ContainerOperator<
+    readonly [ScanLastEnumerator_op]: ContainerOperator<
       ObservableLike,
       T,
       TAcc
@@ -63,11 +63,11 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
         init(Disposable_delegatingMixin(), instance, delegate);
         init(Stream_delegatingMixin(), instance, delegate);
 
-        instance[ScanAsyncEnumerator_op] = Observable_scan(reducer, acc);
+        instance[ScanLastEnumerator_op] = Observable_scan(reducer, acc);
         return instance;
       },
       props<TProperties>({
-        [ScanAsyncEnumerator_op]: none,
+        [ScanLastEnumerator_op]: none,
       }),
       {
         get [MulticastObservableLike_observerCount]() {
@@ -86,7 +86,7 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
         ): void {
           pipe(
             this[DelegatingLike_delegate],
-            this[ScanAsyncEnumerator_op],
+            this[ScanLastEnumerator_op],
             Observable_observeWith(observer),
           );
         },

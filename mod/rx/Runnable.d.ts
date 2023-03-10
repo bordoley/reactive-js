@@ -1,5 +1,5 @@
 import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { CombineLatest, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, FromEnumerable, Merge, MergeAll, MergeWith, Retry, RunnableLike, ScanAsync, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, FromEnumerable, Merge, MergeAll, MergeWith, Retry, RunnableLike, ScanLast, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<RunnableLike>["buffer"];
 export declare const catchError: CatchError<RunnableLike>["catchError"];
@@ -69,7 +69,7 @@ export declare const reduce: Reduce<RunnableLike>["reduce"];
 export declare const retry: Retry<RunnableLike>["retry"];
 export declare const run: <T>() => (observable: RunnableLike<T>) => void;
 export declare const scan: Scan<RunnableLike>["scan"];
-export declare const scanAsync: ScanAsync<RunnableLike, RunnableLike>["scanAsync"];
+export declare const scanLast: ScanLast<RunnableLike, RunnableLike>["scanLast"];
 export declare const skipFirst: SkipFirst<RunnableLike>["skipFirst"];
 export declare const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"];
 export declare const startWith: StartWith<RunnableLike>["startWith"];

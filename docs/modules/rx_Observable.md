@@ -70,7 +70,7 @@
 - [repeat](rx_Observable.md#repeat)
 - [retry](rx_Observable.md#retry)
 - [scan](rx_Observable.md#scan)
-- [scanAsync](rx_Observable.md#scanasync)
+- [scanLast](rx_Observable.md#scanlast)
 - [skipFirst](rx_Observable.md#skipfirst)
 - [someSatisfy](rx_Observable.md#somesatisfy)
 - [startWith](rx_Observable.md#startwith)
@@ -3187,9 +3187,9 @@ and emits each intermediate result.
 
 ___
 
-### scanAsync
+### scanLast
 
-▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -3202,7 +3202,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scanner` | [`AsyncReducer`](rx.md#asyncreducer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\> |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TAcc`\>\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns

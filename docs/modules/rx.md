@@ -34,7 +34,7 @@
 - [MergeMap](../interfaces/rx.MergeMap.md)
 - [MergeWith](../interfaces/rx.MergeWith.md)
 - [Retry](../interfaces/rx.Retry.md)
-- [ScanAsync](../interfaces/rx.ScanAsync.md)
+- [ScanLast](../interfaces/rx.ScanLast.md)
 - [SwitchAll](../interfaces/rx.SwitchAll.md)
 - [SwitchMap](../interfaces/rx.SwitchMap.md)
 - [TakeUntil](../interfaces/rx.TakeUntil.md)
@@ -49,7 +49,6 @@
 
 ### Type Aliases
 
-- [AsyncReducer](rx.md#asyncreducer)
 - [ThrottleMode](rx.md#throttlemode)
 
 ### Variables
@@ -59,20 +58,6 @@
 - [ThrottleMode\_last](rx.md#throttlemode_last)
 
 ## Type Aliases
-
-### AsyncReducer
-
-Ƭ **AsyncReducer**<`C`, `T`, `TAcc`\>: [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ContainerOf`](containers.md#containerof)<`C`, `TAcc`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md) |
-| `T` | `T` |
-| `TAcc` | `TAcc` |
-
-___
 
 ### ThrottleMode
 

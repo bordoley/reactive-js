@@ -132,12 +132,6 @@ export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
   [SubjectLike_publish](next: T): void;
 }
 
-export type AsyncReducer<C extends ObservableLike, T, TAcc> = Function2<
-  TAcc,
-  T,
-  ContainerOf<C, TAcc>
->;
-
 /**
  * @noInheritDoc
  * @category TypeClass
@@ -540,15 +534,15 @@ export interface Retry<C extends ObservableLike> extends Container<C> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ScanAsync<
+export interface ScanLast<
   C extends ContainerLike,
   CInner extends ObservableLike,
 > extends Container<C> {
   /**
    * @category Operator
    */
-  scanAsync: <T, TAcc>(
-    scanner: AsyncReducer<CInner, T, TAcc>,
+  scanLast: <T, TAcc>(
+    scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
     initialValue: Factory<TAcc>,
   ) => ContainerOperator<C, T, TAcc>;
 }

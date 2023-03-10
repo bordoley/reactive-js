@@ -9,14 +9,14 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 const AsyncEnumerable_scan = /*@__PURE__*/ (() => {
-    const ScanAsyncEnumerator_op = Symbol("ScanAsyncEnumerator_op");
+    const ScanLastEnumerator_op = Symbol("ScanLastEnumerator_op");
     const createScanStream = createInstanceFactory(mix(include(Disposable_delegatingMixin(), Stream_delegatingMixin()), function KeepStream(instance, delegate, reducer, acc) {
         init(Disposable_delegatingMixin(), instance, delegate);
         init(Stream_delegatingMixin(), instance, delegate);
-        instance[ScanAsyncEnumerator_op] = Observable_scan(reducer, acc);
+        instance[ScanLastEnumerator_op] = Observable_scan(reducer, acc);
         return instance;
     }, props({
-        [ScanAsyncEnumerator_op]: none,
+        [ScanLastEnumerator_op]: none,
     }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
@@ -27,7 +27,7 @@ const AsyncEnumerable_scan = /*@__PURE__*/ (() => {
             return this[DelegatingLike_delegate][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](observer) {
-            pipe(this[DelegatingLike_delegate], this[ScanAsyncEnumerator_op], Observable_observeWith(observer));
+            pipe(this[DelegatingLike_delegate], this[ScanLastEnumerator_op], Observable_observeWith(observer));
         },
     }));
     return ((reducer, initialValue) => pipe(createScanStream, partial(reducer, initialValue), AsyncEnumerable_lift(true, true)));

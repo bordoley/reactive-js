@@ -82,7 +82,7 @@ import {
   ObservableLike,
   ObserverLike,
   Retry,
-  ScanAsync,
+  ScanLast,
   SwitchAll,
   SwitchMap,
   TakeUntil,
@@ -158,7 +158,7 @@ import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
-import Observable_scanAsync from "./Observable/__internal__/Observable.scanAsync.js";
+import Observable_scanLast from "./Observable/__internal__/Observable.scanLast.js";
 import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
@@ -511,8 +511,8 @@ export const retry: Retry<ObservableLike>["retry"] = Observable_retry;
 
 export const scan: Scan<ObservableLike>["scan"] = Observable_scan;
 
-export const scanAsync: ScanAsync<ObservableLike, ObservableLike>["scanAsync"] =
-  Observable_scanAsync;
+export const scanLast: ScanLast<ObservableLike, ObservableLike>["scanLast"] =
+  Observable_scanLast;
 
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the

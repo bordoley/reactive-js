@@ -5,7 +5,7 @@ import { testModule } from "../../__tests__/testing.js";
 import * as AsyncEnumerable from "../AsyncEnumerable.js";
 testModule("AsyncEnumerable", toObservableTests(AsyncEnumerable), fromReadonlyArrayTests(AsyncEnumerable), keepTests(AsyncEnumerable), mapTests(AsyncEnumerable), scanTests(AsyncEnumerable), 
 /*
-scanAsyncTests<AsyncEnumerableLike, RunnableLike>(
+scanLastTests<AsyncEnumerableLike, RunnableLike>(
   AsyncEnumerable,
   Runnable,
 ),*/

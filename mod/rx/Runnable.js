@@ -61,7 +61,7 @@ import Runnable_flatMapIterable from "./Runnable/__internal__/Runnable.flatMapIt
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_mergeAll from "./Runnable/__internal__/Runnable.mergeAll.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
-import Runnable_scanAsync from "./Runnable/__internal__/Runnable.scanAsync.js";
+import Runnable_scanLast from "./Runnable/__internal__/Runnable.scanLast.js";
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
@@ -113,7 +113,7 @@ export const reduce = Observable_reduce;
 export const retry = Observable_retry;
 export const run = Runnable_run;
 export const scan = Observable_scan;
-export const scanAsync = Runnable_scanAsync;
+export const scanLast = Runnable_scanLast;
 export const skipFirst = Observable_skipFirst;
 export const someSatisfy = Observable_someSatisfy;
 export const startWith = Observable_startWith;

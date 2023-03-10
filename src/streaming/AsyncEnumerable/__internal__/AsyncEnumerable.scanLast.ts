@@ -9,43 +9,43 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import {
   Factory,
+  Function2,
   none,
   partial,
   pipe,
   unsafeCast,
 } from "../../../functions.js";
 import {
-  AsyncReducer,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
-  ScanAsync,
+  ScanLast,
 } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import Observable_scanAsync from "../../../rx/Observable/__internal__/Observable.scanAsync.js";
+import Observable_scanLast from "../../../rx/Observable/__internal__/Observable.scanLast.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 
-const AsyncEnumerable_scanAsync: ScanAsync<
+const AsyncEnumerable_scanLast: ScanLast<
   AsyncEnumerableLike,
   ObservableLike
->["scanAsync"] = /*@__PURE__*/ (<T, TAcc>() => {
-  const ScanAsyncStream_obs = Symbol("ScanAsyncStream_obs");
+>["scanLast"] = /*@__PURE__*/ (<T, TAcc>() => {
+  const ScanLastStream_obs = Symbol("ScanLastStream_obs");
 
   type TProperties = {
-    readonly [ScanAsyncStream_obs]: MulticastObservableLike<TAcc>;
+    readonly [ScanLastStream_obs]: MulticastObservableLike<TAcc>;
   };
 
-  const createScanAsyncStream = createInstanceFactory(
+  const createScanLastStream = createInstanceFactory(
     mix(
       include(Disposable_delegatingMixin(), Stream_delegatingMixin()),
-      function ScanAsyncStream(
+      function ScanLastStream(
         instance: Pick<
           StreamLike<void, TAcc>,
           | typeof ObservableLike_observe
@@ -54,52 +54,52 @@ const AsyncEnumerable_scanAsync: ScanAsync<
         > &
           Mutable<TProperties>,
         delegate: StreamLike<void, T>,
-        reducer: AsyncReducer<ObservableLike, T, TAcc>,
+        reducer: Function2<TAcc, T, ObservableLike<TAcc>>,
         initialValue: Factory<TAcc>,
       ): StreamLike<void, TAcc> {
         init(Disposable_delegatingMixin(), instance, delegate);
         init(Stream_delegatingMixin(), instance, delegate);
 
-        instance[ScanAsyncStream_obs] = pipe(
+        instance[ScanLastStream_obs] = pipe(
           delegate,
-          Observable_scanAsync(reducer, initialValue),
+          Observable_scanLast(reducer, initialValue),
           Observable_multicast(delegate[DispatcherLike_scheduler]),
         );
         return instance;
       },
       props<TProperties>({
-        [ScanAsyncStream_obs]: none,
+        [ScanLastStream_obs]: none,
       }),
       {
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
-          return this[ScanAsyncStream_obs][
+          return this[ScanLastStream_obs][
             MulticastObservableLike_observerCount
           ];
         },
         get [MulticastObservableLike_replay]() {
           unsafeCast<TProperties>(this);
-          return this[ScanAsyncStream_obs][MulticastObservableLike_replay];
+          return this[ScanLastStream_obs][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](
           this: TProperties,
           observer: ObserverLike<TAcc>,
         ): void {
-          this[ScanAsyncStream_obs][ObservableLike_observe](observer);
+          this[ScanLastStream_obs][ObservableLike_observe](observer);
         },
       },
     ),
   );
 
   return (
-    reducer: AsyncReducer<ObservableLike, T, TAcc>,
+    reducer: Function2<TAcc, T, ObservableLike<TAcc>>,
     initialValue: Factory<TAcc>,
   ): ContainerOperator<AsyncEnumerableLike, T, TAcc> =>
     pipe(
-      createScanAsyncStream,
+      createScanLastStream,
       partial(reducer, initialValue),
       AsyncEnumerable_lift(false, false),
     );
 })();
 
-export default AsyncEnumerable_scanAsync;
+export default AsyncEnumerable_scanLast;

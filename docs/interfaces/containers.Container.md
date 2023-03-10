@@ -156,7 +156,7 @@
 
   ↳ [`Retry`](rx.Retry.md)
 
-  ↳ [`ScanAsync`](rx.ScanAsync.md)
+  ↳ [`ScanLast`](rx.ScanLast.md)
 
   ↳ [`SwitchAll`](rx.SwitchAll.md)
 

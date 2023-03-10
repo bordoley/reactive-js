@@ -44,7 +44,7 @@
 - [reduce](rx_Enumerable.md#reduce)
 - [retry](rx_Enumerable.md#retry)
 - [scan](rx_Enumerable.md#scan)
-- [scanAsync](rx_Enumerable.md#scanasync)
+- [scanLast](rx_Enumerable.md#scanlast)
 - [skipFirst](rx_Enumerable.md#skipfirst)
 - [someSatisfy](rx_Enumerable.md#somesatisfy)
 - [startWith](rx_Enumerable.md#startwith)
@@ -1333,9 +1333,9 @@ and emits each intermediate result.
 
 ___
 
-### scanAsync
+### scanLast
 
-▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `TAcc`\>
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -1348,7 +1348,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scanner` | [`AsyncReducer`](rx.md#asyncreducer)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `TAcc`\> |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`TAcc`\>\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns

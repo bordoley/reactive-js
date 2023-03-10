@@ -18,7 +18,7 @@ testModule(
   mapTests(AsyncEnumerable),
   scanTests(AsyncEnumerable),
   /*
-  scanAsyncTests<AsyncEnumerableLike, RunnableLike>(
+  scanLastTests<AsyncEnumerableLike, RunnableLike>(
     AsyncEnumerable,
     Runnable,
   ),*/

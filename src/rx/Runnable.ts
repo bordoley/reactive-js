@@ -62,7 +62,7 @@ import {
   MergeWith,
   Retry,
   RunnableLike,
-  ScanAsync,
+  ScanLast,
   SwitchAll,
   SwitchMap,
   TakeUntil,
@@ -132,7 +132,7 @@ import Runnable_flatMapIterable from "./Runnable/__internal__/Runnable.flatMapIt
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_mergeAll from "./Runnable/__internal__/Runnable.mergeAll.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
-import Runnable_scanAsync from "./Runnable/__internal__/Runnable.scanAsync.js";
+import Runnable_scanLast from "./Runnable/__internal__/Runnable.scanLast.js";
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
@@ -295,8 +295,8 @@ export const run = Runnable_run;
 
 export const scan: Scan<RunnableLike>["scan"] = Observable_scan;
 
-export const scanAsync: ScanAsync<RunnableLike, RunnableLike>["scanAsync"] =
-  Runnable_scanAsync;
+export const scanLast: ScanLast<RunnableLike, RunnableLike>["scanLast"] =
+  Runnable_scanLast;
 
 export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] =
   Observable_skipFirst;

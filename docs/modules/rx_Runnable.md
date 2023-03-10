@@ -54,7 +54,7 @@
 - [reduce](rx_Runnable.md#reduce)
 - [retry](rx_Runnable.md#retry)
 - [scan](rx_Runnable.md#scan)
-- [scanAsync](rx_Runnable.md#scanasync)
+- [scanLast](rx_Runnable.md#scanlast)
 - [skipFirst](rx_Runnable.md#skipfirst)
 - [someSatisfy](rx_Runnable.md#somesatisfy)
 - [startWith](rx_Runnable.md#startwith)
@@ -2193,9 +2193,9 @@ and emits each intermediate result.
 
 ___
 
-### scanAsync
+### scanLast
 
-▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -2208,7 +2208,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scanner` | [`AsyncReducer`](rx.md#asyncreducer)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\> |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TAcc`\>\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns

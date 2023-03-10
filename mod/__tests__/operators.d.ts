@@ -1,5 +1,5 @@
 import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike, Contains, DecodeWithCharset, DistinctUntilChanged, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, FromReadonlyArray, IgnoreElements, Keep, Map, MapTo, Pairwise, Reduce, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
-import { ObservableLike, Retry, ScanAsync, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
+import { ObservableLike, Retry, ScanLast, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 export declare const bufferTests: <C extends ContainerLike>(m: Buffer<C, unknown> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("./testing.js").Describe;
 export declare const catchErrorTests: <C extends ContainerLike>(m: CatchError<C, never> & Throws<C, unknown> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("./testing.js").Describe;
 export declare const concatTests: <C extends ContainerLike>(m: Concat<C> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("./testing.js").Describe;
@@ -22,7 +22,7 @@ export declare const reduceTests: <C extends ContainerLike>(m: Reduce<C, never> 
 export declare const repeatTests: <C extends ContainerLike>(m: Repeat<C, never> & FromReadonlyArray<C, unknown> & TakeFirst<C, unknown> & ToRunnable<C, never>) => import("./testing.js").Describe;
 export declare const retryTests: <C extends ObservableLike<unknown>>(m: Concat<C> & Retry<C> & FromReadonlyArray<C, unknown> & Throws<C, unknown> & TakeFirst<C, unknown> & ToRunnable<C, never>) => import("./testing.js").Describe;
 export declare const scanTests: <C extends ContainerLike>(m: Scan<C, never> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("./testing.js").Describe;
-export declare const scanAsyncTests: <C extends ContainerLike, CInner extends ObservableLike<unknown>>(m: ScanAsync<C, CInner> & FromReadonlyArray<C, {
+export declare const scanLastTests: <C extends ContainerLike, CInner extends ObservableLike<unknown>>(m: ScanLast<C, CInner> & FromReadonlyArray<C, {
     readonly start?: number | undefined;
     readonly count?: number | undefined;
     delay?: number | undefined;

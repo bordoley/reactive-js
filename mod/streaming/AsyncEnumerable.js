@@ -11,7 +11,7 @@ import AsyncEnumerable_generateAsync from "./AsyncEnumerable/__internal__/AsyncE
 import AsyncEnumerable_keep from "./AsyncEnumerable/__internal__/AsyncEnumerable.keep.js";
 import AsyncEnumerable_map from "./AsyncEnumerable/__internal__/AsyncEnumerable.map.js";
 import AsyncEnumerable_scan from "./AsyncEnumerable/__internal__/AsyncEnumerable.scan.js";
-import AsyncEnumerable_scanAsync from "./AsyncEnumerable/__internal__/AsyncEnumerable.scanAsync.js";
+import AsyncEnumerable_scanLast from "./AsyncEnumerable/__internal__/AsyncEnumerable.scanLast.js";
 import AsyncEnumerable_takeWhile from "./AsyncEnumerable/__internal__/AsyncEnumerable.takeWhile.js";
 import AsyncEnumerable_toEnumerable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toEnumerable.js";
 import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
@@ -27,7 +27,7 @@ export const generateAsync = AsyncEnumerable_generateAsync;
 export const keep = AsyncEnumerable_keep;
 export const map = AsyncEnumerable_map;
 export const scan = AsyncEnumerable_scan;
-export const scanAsync = AsyncEnumerable_scanAsync;
+export const scanLast = AsyncEnumerable_scanLast;
 export const takeWhile = AsyncEnumerable_takeWhile;
 export const toEnumerable = AsyncEnumerable_toEnumerable;
 export const toObservable = AsyncEnumerable_toObservable;

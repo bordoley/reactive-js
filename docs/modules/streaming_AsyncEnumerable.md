@@ -20,7 +20,7 @@
 - [keep](streaming_AsyncEnumerable.md#keep)
 - [map](streaming_AsyncEnumerable.md#map)
 - [scan](streaming_AsyncEnumerable.md#scan)
-- [scanAsync](streaming_AsyncEnumerable.md#scanasync)
+- [scanLast](streaming_AsyncEnumerable.md#scanlast)
 - [takeWhile](streaming_AsyncEnumerable.md#takewhile)
 
 ### Transform Functions
@@ -307,9 +307,9 @@ and emits each intermediate result.
 
 ___
 
-### scanAsync
+### scanLast
 
-▸ **scanAsync**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`unknown`\>, `T`, `TAcc`\>
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -322,7 +322,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scanner` | [`AsyncReducer`](rx.md#asyncreducer)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\> |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TAcc`\>\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns

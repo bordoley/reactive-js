@@ -47,7 +47,7 @@ import {
 import {
   ObservableLike,
   Retry,
-  ScanAsync,
+  ScanLast,
   ToEnumerable,
   ToObservable,
   ToRunnable,
@@ -775,11 +775,11 @@ export const scanTests = <C extends ContainerLike>(
     }),
   );
 
-export const scanAsyncTests = <
+export const scanLastTests = <
   C extends ContainerLike,
   CInner extends ObservableLike,
 >(
-  m: ScanAsync<C, CInner> &
+  m: ScanLast<C, CInner> &
     FromReadonlyArray<
       C,
       {
@@ -799,13 +799,13 @@ export const scanAsyncTests = <
   >,
 ) =>
   describe(
-    "scanAsync",
+    "scanLast",
     test(
       "fast lib, slow acc",
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray(),
-        m.scanAsync<number, number>(
+        m.scanLast<number, number>(
           (acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })),
           returns(0),
         ),
@@ -820,7 +820,7 @@ export const scanAsyncTests = <
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray({ delay: 4 }),
-        m.scanAsync<number, number>(
+        m.scanLast<number, number>(
           (acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })),
           returns(0),
         ),
@@ -835,7 +835,7 @@ export const scanAsyncTests = <
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray({ delay: 4 }),
-        m.scanAsync<number, number>(
+        m.scanLast<number, number>(
           (acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })),
           returns(0),
         ),
@@ -850,7 +850,7 @@ export const scanAsyncTests = <
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray(),
-        m.scanAsync<number, number>(
+        m.scanLast<number, number>(
           (acc, x) => pipe([x + acc], mInner.fromReadonlyArray()),
           returns(0),
         ),

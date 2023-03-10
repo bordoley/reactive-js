@@ -56,7 +56,7 @@ import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
-import Observable_scanAsync from "./Observable/__internal__/Observable.scanAsync.js";
+import Observable_scanLast from "./Observable/__internal__/Observable.scanLast.js";
 import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
@@ -174,7 +174,7 @@ export const reduce = Observable_reduce;
 export const repeat = Observable_repeat;
 export const retry = Observable_retry;
 export const scan = Observable_scan;
-export const scanAsync = Observable_scanAsync;
+export const scanLast = Observable_scanLast;
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription

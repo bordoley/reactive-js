@@ -1,5 +1,5 @@
 import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, Enumerate, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { EnumerableEnumeratorLike, EnumerableLike, Retry, ScanAsync, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
+import { EnumerableEnumeratorLike, EnumerableLike, Retry, ScanLast, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
 export declare const catchError: CatchError<EnumerableLike>["catchError"];
@@ -39,7 +39,7 @@ export declare const pairwise: Pairwise<EnumerableLike>["pairwise"];
 export declare const reduce: Reduce<EnumerableLike>["reduce"];
 export declare const retry: Retry<EnumerableLike>["retry"];
 export declare const scan: Scan<EnumerableLike>["scan"];
-export declare const scanAsync: ScanAsync<EnumerableLike, EnumerableLike>["scanAsync"];
+export declare const scanLast: ScanLast<EnumerableLike, EnumerableLike>["scanLast"];
 export declare const skipFirst: SkipFirst<EnumerableLike>["skipFirst"];
 export declare const someSatisfy: SomeSatisfy<EnumerableLike>["someSatisfy"];
 export declare const startWith: StartWith<EnumerableLike>["startWith"];
