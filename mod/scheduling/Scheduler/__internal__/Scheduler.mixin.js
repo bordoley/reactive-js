@@ -1,8 +1,8 @@
 /// <reference types="./Scheduler.mixin.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { error, isNone, isSome, newInstance, none, raiseWithDebugMessage, unsafeCast, } from "../../../functions.js";
-import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { error, isNone, isSome, newInstance, none, unsafeCast, } from "../../../functions.js";
+import { ContinuationContextLike_now, ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -16,29 +16,11 @@ export const ContinuationLike_priority = Symbol("ContinuationLike_run");
 export const ContinuationLike_continuationScheduler = Symbol("ContinuationLike_continuationScheduler");
 export const PrioritySchedulerImplementationLike_runContinuation = Symbol("PrioritySchedulerImplementationLike_runContinuation");
 export const PrioritySchedulerImplementationLike_shouldYield = Symbol("PrioritySchedulerImplementationLike_shouldYield");
-let currentContinuation = none;
-const getContinuation = () => isNone(currentContinuation)
-    ? raiseWithDebugMessage("not in continuation")
-    : currentContinuation;
 class YieldError {
     constructor(delay) {
         this.delay = delay;
     }
 }
-export const Continuation__yield = (delay = 0) => {
-    // FIXME: clean the delay here.
-    const continuation = getContinuation();
-    const shouldYield = delay > 0 ||
-        continuation[QueueLike_count] > 0 ||
-        continuation[ContinuationLike_continuationScheduler][ContinuationSchedulerLike_shouldYield];
-    if (shouldYield) {
-        throw newInstance(YieldError, delay);
-    }
-};
-export const Continuation__now = () => {
-    const continuation = getContinuation();
-    return continuation[ContinuationLike_continuationScheduler][ContinuationSchedulerLike_now];
-};
 export const PriorityScheduler_mixin = 
 /*@__PURE__*/ (() => {
     const Continuation_childContinuation = Symbol("Continuation_childContinuation");
@@ -56,6 +38,10 @@ export const PriorityScheduler_mixin =
         [Continuation_childContinuation]: none,
         [Continuation_effect]: none,
     }), {
+        get [ContinuationContextLike_now]() {
+            unsafeCast(this);
+            return this[ContinuationSchedulerLike_now];
+        },
         get [ContinuationSchedulerLike_now]() {
             unsafeCast(this);
             return this[ContinuationLike_continuationScheduler][ContinuationSchedulerLike_now];
@@ -64,14 +50,19 @@ export const PriorityScheduler_mixin =
             unsafeCast(this);
             return this[ContinuationLike_continuationScheduler][ContinuationSchedulerLike_shouldYield];
         },
+        [ContinuationContextLike_yield](delay = 0) {
+            const shouldYield = delay > 0 ||
+                this[QueueLike_count] > 0 ||
+                this[ContinuationSchedulerLike_shouldYield];
+            if (shouldYield) {
+                throw newInstance(YieldError, delay);
+            }
+        },
         [ContinuationLike_run]() {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
             const scheduler = this[ContinuationLike_continuationScheduler];
-            const oldContinuation = currentContinuation;
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
-            currentContinuation = this;
             // Run any inner continuations first.
             let head = none;
             while (((head = this[PullableQueueLike_pull]()), isSome(head))) {
@@ -82,7 +73,6 @@ export const PriorityScheduler_mixin =
                 }
                 const shouldYield = scheduler[ContinuationSchedulerLike_shouldYield];
                 if (shouldYield && !this[DisposableLike_isDisposed]) {
-                    currentContinuation = oldContinuation;
                     scheduler[ContinuationSchedulerLike_schedule](this);
                     return;
                 }
@@ -90,7 +80,7 @@ export const PriorityScheduler_mixin =
             let err = none;
             let yieldError = none;
             try {
-                this[Continuation_effect]();
+                this[Continuation_effect](this);
             }
             catch (e) {
                 if (e instanceof YieldError) {
@@ -100,7 +90,6 @@ export const PriorityScheduler_mixin =
                     err = error(e);
                 }
             }
-            currentContinuation = oldContinuation;
             if (isSome(yieldError) && !this[DisposableLike_isDisposed]) {
                 scheduler[ContinuationSchedulerLike_schedule](this, yieldError);
             }

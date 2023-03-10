@@ -42,7 +42,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`SideEffect`](functions.md#sideeffect) |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ContinuationContextLike`](../interfaces/scheduling.ContinuationContextLike.md)\> |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 

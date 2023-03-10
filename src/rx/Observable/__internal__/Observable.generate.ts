@@ -5,7 +5,10 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
-import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
+} from "../../../scheduling.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
@@ -21,11 +24,11 @@ const Observable_generate = <T>(
   const onSubscribe = (observer: ObserverLike<T>) => {
     let acc = initialValue();
 
-    const continuation = () => {
+    const continuation = (ctx: ContinuationContextLike) => {
       while (!observer[DisposableLike_isDisposed]) {
         acc = generator(acc);
         observer[ObserverLike_notify](acc);
-        Continuation__yield(delay);
+        ctx[ContinuationContextLike_yield](delay);
       }
     };
 

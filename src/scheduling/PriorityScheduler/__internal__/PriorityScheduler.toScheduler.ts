@@ -8,13 +8,14 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   Function1,
-  SideEffect,
+  SideEffect1,
   none,
   partial,
   pipe,
   unsafeCast,
 } from "../../../functions.js";
 import {
+  ContinuationContextLike,
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -94,7 +95,7 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       },
       [SchedulerLike_schedule](
         this: TProperties & DisposableLike,
-        effect: SideEffect,
+        effect: SideEffect1<ContinuationContextLike>,
         options?: { readonly delay?: number },
       ): DisposableLike {
         const delay = getDelay(options);

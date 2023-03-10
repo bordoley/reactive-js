@@ -6,14 +6,14 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../containers.js";
 import MutableEnumerator_mixin from "../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../functions.js";
-import { PauseableSchedulerLike_isPaused, PauseableState_paused, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
+import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableState_paused, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../scheduling.js";
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
 import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
 import PullableQueue_createPriorityQueue from "../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
 import { MutableRefLike_current, PullableQueueLike_head, PullableQueueLike_pull, } from "../../util/__internal__/util.internal.js";
-import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, Continuation__yield, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../Scheduler/__internal__/Scheduler.mixin.js";
+import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../Scheduler/__internal__/Scheduler.mixin.js";
 import { getDelay } from "./Scheduler.options.js";
 export const create = 
 /*@__PURE__*/ (() => {
@@ -84,7 +84,7 @@ export const create =
         const dueTime = task[QueueTask_dueTime];
         const delay = max(dueTime - instance[QueueScheduler_hostScheduler][SchedulerLike_now], 0);
         instance[QueueScheduler_dueTime] = dueTime;
-        const continuation = (_a = instance[QueueScheduler_hostContinuation]) !== null && _a !== void 0 ? _a : (() => {
+        const continuation = (_a = instance[QueueScheduler_hostContinuation]) !== null && _a !== void 0 ? _a : ((ctx) => {
             for (let task = peek(instance); isSome(task) && !instance[DisposableLike_isDisposed]; task = peek(instance)) {
                 const { [QueueTask_continuation]: continuation, [QueueTask_dueTime]: dueTime, } = task;
                 const delay = max(dueTime -
@@ -98,7 +98,7 @@ export const create =
                         instance[QueueScheduler_hostScheduler][SchedulerLike_now] +
                             delay;
                 }
-                Continuation__yield(delay);
+                ctx[ContinuationContextLike_yield](delay);
             }
         });
         instance[QueueScheduler_hostContinuation] = continuation;

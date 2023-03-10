@@ -25,8 +25,6 @@ export interface PrioritySchedulerImplementationLike extends PrioritySchedulerLi
     readonly [PrioritySchedulerImplementationLike_shouldYield]: boolean;
     [PrioritySchedulerImplementationLike_runContinuation](continuation: ContinuationLike): void;
 }
-export declare const Continuation__yield: (delay?: number) => void;
-export declare const Continuation__now: () => number;
 type PrioritySchedulerMixin = Omit<PrioritySchedulerImplementationLike, typeof SchedulerLike_now | typeof ContinuationSchedulerLike_schedule | typeof PrioritySchedulerImplementationLike_shouldYield>;
 export declare const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin>;
 export {};

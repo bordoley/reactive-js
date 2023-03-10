@@ -1,4 +1,4 @@
-import { SideEffect } from "./functions.js";
+import { SideEffect1 } from "./functions.js";
 import { DisposableLike, QueueLike } from "./util.js";
 
 /** @ignore */
@@ -18,6 +18,19 @@ export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
 /** @ignore */
 export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 
+/** @ignore */
+export const ContinuationContextLike_now = Symbol(
+  "ContinuationContextLike_now",
+);
+/** @ignore */
+export const ContinuationContextLike_yield = Symbol(
+  "ContinuationContextLike_yield",
+);
+export interface ContinuationContextLike {
+  readonly [ContinuationContextLike_now]: number;
+  [ContinuationContextLike_yield](delay?: number): void;
+}
+
 /**
  * @noInheritDoc
  */
@@ -32,7 +45,7 @@ export interface SchedulerLike extends DisposableLike {
   [SchedulerLike_requestYield](): void;
 
   [SchedulerLike_schedule](
-    continuation: SideEffect,
+    continuation: SideEffect1<ContinuationContextLike>,
     options?: { readonly delay?: number },
   ): DisposableLike;
 }
@@ -77,7 +90,7 @@ export interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
 
 export interface PrioritySchedulerLike extends SchedulerLike {
   [SchedulerLike_schedule](
-    continuation: SideEffect,
+    continuation: SideEffect1<ContinuationContextLike>,
     options?: { readonly delay?: number; readonly priority?: number },
   ): DisposableLike;
 }

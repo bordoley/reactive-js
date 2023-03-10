@@ -14,7 +14,10 @@ import {
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
-import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
+} from "../../../scheduling.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import {
   DisposableLike_dispose,
@@ -39,11 +42,11 @@ const Sequence_toObservable: SequenceToObservable = ((options?: {
     const onSubscribe = (observer: ObserverLike<T>) => {
       let next = seq();
 
-      const continuation = () => {
+      const continuation = (ctx: ContinuationContextLike) => {
         while (!observer[DisposableLike_isDisposed] && isSome(next)) {
           observer[ObserverLike_notify](next[SequenceLike_data]);
           next = next[SequenceLike_next]();
-          Continuation__yield(delay);
+          ctx[ContinuationContextLike_yield](delay);
         }
         observer[DisposableLike_dispose]();
       };

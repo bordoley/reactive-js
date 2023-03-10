@@ -9,7 +9,10 @@ import {
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
-import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
+} from "../../../scheduling.js";
 import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import {
   DisposableLike_dispose,
@@ -63,7 +66,7 @@ const ReadonlyArray_toObservable: ReadonlyArrayToObservable =
         let index = startIndex,
           cnt = count;
 
-        const continuation = () => {
+        const continuation = (ctx: ContinuationContextLike) => {
           while (!observer[DisposableLike_isDisposed] && cnt !== 0) {
             const value = values[index];
             if (cnt > 0) {
@@ -75,7 +78,7 @@ const ReadonlyArray_toObservable: ReadonlyArrayToObservable =
             }
 
             observer[ObserverLike_notify](value);
-            Continuation__yield(delay);
+            ctx[ContinuationContextLike_yield](delay);
           }
           observer[DisposableLike_dispose]();
         };

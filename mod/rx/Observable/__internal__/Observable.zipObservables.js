@@ -10,7 +10,7 @@ import { compose, isTrue, none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
-import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { ContinuationContextLike_yield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -111,10 +111,10 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     const allHaveCurrent = (enumerators) => pipe(enumerators, ReadonlyArray_every(Enumerator_hasCurrent));
     const enumerableOnSubscribe = (observables) => (observer) => {
         const enumerators = pipe(observables, ReadonlyArray_map(Enumerable_enumerate()), ReadonlyArray_forEach(Disposable_addTo(observer)));
-        const continuation = () => {
+        const continuation = (ctx) => {
             while ((moveAll(enumerators), allHaveCurrent(enumerators))) {
                 pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent), Observer_notifyObserver(observer));
-                Continuation__yield();
+                ctx[ContinuationContextLike_yield]();
             }
             observer[DisposableLike_dispose]();
         };

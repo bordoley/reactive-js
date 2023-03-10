@@ -29,7 +29,10 @@ import {
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
-import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
+} from "../../../scheduling.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -245,7 +248,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         ReadonlyArray_forEach(Disposable_addTo(observer)),
       );
 
-      const continuation = () => {
+      const continuation = (ctx: ContinuationContextLike) => {
         while ((moveAll(enumerators), allHaveCurrent(enumerators))) {
           pipe(
             enumerators,
@@ -253,7 +256,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             Observer_notifyObserver(observer),
           );
 
-          Continuation__yield();
+          ctx[ContinuationContextLike_yield]();
         }
         observer[DisposableLike_dispose]();
       };

@@ -11,6 +11,7 @@ import {
 import {
   Optional,
   SideEffect,
+  SideEffect1,
   call,
   isNone,
   none,
@@ -25,11 +26,12 @@ import {
   ObserverLike_scheduler,
 } from "../../../rx.js";
 import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
   DispatcherLike,
   DispatcherLike_scheduler,
   SchedulerLike,
 } from "../../../scheduling.js";
-import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -74,7 +76,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
   );
 
   type TProperties = {
-    readonly [ObserverDispatcher_continuation]: SideEffect;
+    readonly [ObserverDispatcher_continuation]: SideEffect1<ContinuationContextLike>;
     readonly [ObserverDispatcher_observer]: ObserverLike<T>;
     readonly [ObserverDispatcher_onContinuationDispose]: SideEffect;
   };
@@ -94,7 +96,9 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
 
         instance[ObserverDispatcher_observer] = observer;
 
-        instance[ObserverDispatcher_continuation] = () => {
+        instance[ObserverDispatcher_continuation] = (
+          ctx: ContinuationContextLike,
+        ) => {
           const { [ObserverDispatcher_observer]: observer } = instance;
 
           while (instance[QueueLike_count] > 0) {
@@ -102,7 +106,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
             observer[ObserverLike_notify](next);
 
             if (instance[QueueLike_count] > 0) {
-              Continuation__yield();
+              ctx[ContinuationContextLike_yield]();
             }
           }
         };

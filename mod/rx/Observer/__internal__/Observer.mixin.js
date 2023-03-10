@@ -3,8 +3,7 @@
 import { createInstanceFactory, getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { call, isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
-import { DispatcherLike_scheduler, } from "../../../scheduling.js";
-import { Continuation__yield } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { ContinuationContextLike_yield, DispatcherLike_scheduler, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -28,13 +27,13 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         init(Disposable_mixin, instance);
         init(IndexedQueue_fifoQueueMixin(), instance);
         instance[ObserverDispatcher_observer] = observer;
-        instance[ObserverDispatcher_continuation] = () => {
+        instance[ObserverDispatcher_continuation] = (ctx) => {
             const { [ObserverDispatcher_observer]: observer } = instance;
             while (instance[QueueLike_count] > 0) {
                 const next = instance[PullableQueueLike_pull]();
                 observer[ObserverLike_notify](next);
                 if (instance[QueueLike_count] > 0) {
-                    Continuation__yield();
+                    ctx[ContinuationContextLike_yield]();
                 }
             }
         };

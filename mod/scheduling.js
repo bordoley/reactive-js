@@ -11,6 +11,10 @@ export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
 /** @ignore */
 export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 /** @ignore */
+export const ContinuationContextLike_now = Symbol("ContinuationContextLike_now");
+/** @ignore */
+export const ContinuationContextLike_yield = Symbol("ContinuationContextLike_yield");
+/** @ignore */
 export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
 /** @ignore */
 export const PauseableState_running = Symbol("PauseableState_running");

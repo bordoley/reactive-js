@@ -69,7 +69,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `continuation` | [`SideEffect`](../modules/functions.md#sideeffect) |
+| `continuation` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`ContinuationContextLike`](scheduling.ContinuationContextLike.md)\> |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 

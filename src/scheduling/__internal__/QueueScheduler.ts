@@ -20,7 +20,7 @@ import MutableEnumerator_mixin, {
 import {
   Function1,
   Optional,
-  SideEffect,
+  SideEffect1,
   isNone,
   isSome,
   none,
@@ -28,6 +28,8 @@ import {
   unsafeCast,
 } from "../../functions.js";
 import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
   PauseableSchedulerLike,
   PauseableSchedulerLike_isPaused,
   PauseableState,
@@ -61,7 +63,6 @@ import {
   ContinuationLike_continuationScheduler,
   ContinuationLike_priority,
   ContinuationSchedulerLike_schedule,
-  Continuation__yield,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
@@ -79,7 +80,7 @@ export interface QueueSchedulerLike
     PauseableSchedulerLike,
     PrioritySchedulerLike {
   [SchedulerLike_schedule](
-    effect: SideEffect,
+    effect: SideEffect1<ContinuationContextLike>,
     options?: QueueSchedulerOptions,
   ): DisposableLike;
 }
@@ -201,7 +202,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
 
       const continuation =
         instance[QueueScheduler_hostContinuation] ??
-        (() => {
+        ((ctx: ContinuationContextLike) => {
           for (
             let task = peek(instance);
             isSome(task) && !instance[DisposableLike_isDisposed];
@@ -228,7 +229,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
                 instance[QueueScheduler_hostScheduler][SchedulerLike_now] +
                 delay;
             }
-            Continuation__yield(delay);
+            ctx[ContinuationContextLike_yield](delay);
           }
         });
       instance[QueueScheduler_hostContinuation] = continuation;
@@ -254,7 +255,9 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
       readonly [QueueScheduler_delayed]: PullableQueueLike<QueueTask>;
       [QueueScheduler_dueTime]: number;
       readonly [QueueScheduler_hostScheduler]: SchedulerLike;
-      [QueueScheduler_hostContinuation]: Optional<SideEffect>;
+      [QueueScheduler_hostContinuation]: Optional<
+        SideEffect1<ContinuationContextLike>
+      >;
       [PauseableSchedulerLike_isPaused]: boolean;
       readonly [QueueScheduler_queue]: PullableQueueLike<QueueTask>;
       [QueueScheduler_taskIDCounter]: number;

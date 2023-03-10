@@ -9,16 +9,18 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   Optional,
-  SideEffect,
+  SideEffect1,
   error,
   isNone,
   isSome,
   newInstance,
   none,
-  raiseWithDebugMessage,
   unsafeCast,
 } from "../../../functions.js";
 import {
+  ContinuationContextLike,
+  ContinuationContextLike_now,
+  ContinuationContextLike_yield,
   PrioritySchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_now,
@@ -98,41 +100,9 @@ export interface PrioritySchedulerImplementationLike
   ): void;
 }
 
-let currentContinuation: Optional<ContinuationLike> = none;
-
-const getContinuation = (): ContinuationLike =>
-  isNone(currentContinuation)
-    ? raiseWithDebugMessage<ContinuationLike>("not in continuation")
-    : currentContinuation;
-
 class YieldError {
   constructor(readonly delay: number) {}
 }
-
-export const Continuation__yield = (delay = 0) => {
-  // FIXME: clean the delay here.
-
-  const continuation = getContinuation();
-
-  const shouldYield =
-    delay > 0 ||
-    continuation[QueueLike_count] > 0 ||
-    continuation[ContinuationLike_continuationScheduler][
-      ContinuationSchedulerLike_shouldYield
-    ];
-
-  if (shouldYield) {
-    throw newInstance(YieldError, delay);
-  }
-};
-
-export const Continuation__now = () => {
-  const continuation = getContinuation();
-
-  return continuation[ContinuationLike_continuationScheduler][
-    ContinuationSchedulerLike_now
-  ];
-};
 
 type PrioritySchedulerMixin = Omit<
   PrioritySchedulerImplementationLike,
@@ -152,7 +122,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
       [ContinuationLike_continuationScheduler]: ContinuationSchedulerLike;
       [ContinuationLike_priority]: number;
       [Continuation_childContinuation]: Optional<ContinuationLike>;
-      [Continuation_effect]: SideEffect;
+      [Continuation_effect]: SideEffect1<ContinuationContextLike>;
     };
 
     const createContinuation = createInstanceFactory(
@@ -163,17 +133,19 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
         ),
         function Continuation(
           instance: Pick<
-            ContinuationLike,
+            ContinuationLike & ContinuationContextLike,
             | typeof ContinuationLike_run
             | typeof ContinuationSchedulerLike_now
             | typeof ContinuationSchedulerLike_schedule
             | typeof ContinuationSchedulerLike_shouldYield
+            | typeof ContinuationContextLike_now
+            | typeof ContinuationContextLike_yield
           > &
             Mutable<TContinuationProperties>,
           scheduler: ContinuationSchedulerLike,
-          effect: SideEffect,
+          effect: SideEffect1<ContinuationContextLike>,
           priority: number,
-        ): ContinuationLike {
+        ): ContinuationLike & ContinuationContextLike {
           init(Disposable_mixin, instance);
           init(IndexedQueue_fifoQueueMixin<ContinuationLike>(), instance);
 
@@ -190,6 +162,10 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           [Continuation_effect]: none,
         }),
         {
+          get [ContinuationContextLike_now](): number {
+            unsafeCast<ContinuationLike>(this);
+            return this[ContinuationSchedulerLike_now];
+          },
           get [ContinuationSchedulerLike_now](): number {
             unsafeCast<TContinuationProperties>(this);
             return this[ContinuationLike_continuationScheduler][
@@ -202,20 +178,27 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
               ContinuationSchedulerLike_shouldYield
             ];
           },
+          [ContinuationContextLike_yield](this: ContinuationLike, delay = 0) {
+            const shouldYield =
+              delay > 0 ||
+              this[QueueLike_count] > 0 ||
+              this[ContinuationSchedulerLike_shouldYield];
+
+            if (shouldYield) {
+              throw newInstance(YieldError, delay);
+            }
+          },
           [ContinuationLike_run](
             this: ContinuationLike &
               PullableQueueLike<ContinuationLike> &
-              TContinuationProperties,
+              TContinuationProperties &
+              ContinuationContextLike,
           ): void {
             if (this[DisposableLike_isDisposed]) {
               return;
             }
 
             const scheduler = this[ContinuationLike_continuationScheduler];
-            const oldContinuation = currentContinuation;
-
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
-            currentContinuation = this;
 
             // Run any inner continuations first.
             let head: Optional<ContinuationLike> = none;
@@ -230,7 +213,6 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
                 scheduler[ContinuationSchedulerLike_shouldYield];
 
               if (shouldYield && !this[DisposableLike_isDisposed]) {
-                currentContinuation = oldContinuation;
                 scheduler[ContinuationSchedulerLike_schedule](this);
                 return;
               }
@@ -240,7 +222,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
             let yieldError: Optional<YieldError> = none;
 
             try {
-              this[Continuation_effect]();
+              this[Continuation_effect](this);
             } catch (e) {
               if (e instanceof YieldError) {
                 yieldError = e;
@@ -248,8 +230,6 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
                 err = error(e);
               }
             }
-
-            currentContinuation = oldContinuation;
 
             if (isSome(yieldError) && !this[DisposableLike_isDisposed]) {
               scheduler[ContinuationSchedulerLike_schedule](this, yieldError);
@@ -373,7 +353,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
         },
         [SchedulerLike_schedule](
           this: PrioritySchedulerImplementationLike & TSchedulerProperties,
-          effect: SideEffect,
+          effect: SideEffect1<ContinuationContextLike>,
           options?: { readonly delay?: number; priority?: number },
         ): DisposableLike {
           // FIXME: Cleanup the options
