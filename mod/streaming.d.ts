@@ -1,5 +1,5 @@
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
-import { Function1, Updater } from "./functions.js";
+import { Function1 } from "./functions.js";
 import { MulticastObservableLike } from "./rx.js";
 import { DispatcherLike, PauseableLike, PauseableState, SchedulerLike } from "./scheduling.js";
 /**
@@ -40,7 +40,7 @@ export interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T
 /**
  * @noInheritDoc
  */
-export interface FlowableStreamLike<T = unknown> extends StreamLike<Updater<PauseableState>, T>, PauseableLike {
+export interface FlowableStreamLike<T = unknown> extends StreamLike<PauseableState, T>, PauseableLike {
     readonly [StreamableLike_isEnumerable]: false;
     readonly [StreamableLike_isInteractive]: false;
 }
@@ -48,7 +48,7 @@ export interface FlowableStreamLike<T = unknown> extends StreamLike<Updater<Paus
  * @noInheritDoc
  * @category Container
  */
-export interface FlowableLike<T = unknown> extends StreamableLike<Updater<PauseableState>, T, FlowableStreamLike<T>>, ContainerLike {
+export interface FlowableLike<T = unknown> extends StreamableLike<PauseableState, T, FlowableStreamLike<T>>, ContainerLike {
     readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 /**

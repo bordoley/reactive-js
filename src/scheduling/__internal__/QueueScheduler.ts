@@ -21,7 +21,6 @@ import {
   Function1,
   Optional,
   SideEffect,
-  Updater,
   isNone,
   isSome,
   none,
@@ -33,7 +32,6 @@ import {
   PauseableSchedulerLike_isPaused,
   PauseableState,
   PauseableState_paused,
-  PauseableState_running,
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -337,14 +335,9 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
               DisposableRefLike &
               EnumeratorLike &
               PrioritySchedulerImplementationLike,
-            req: Updater<PauseableState>,
+            next: PauseableState,
           ): void {
-            const nextState = req(
-              this[PauseableSchedulerLike_isPaused]
-                ? PauseableState_paused
-                : PauseableState_running,
-            );
-            if (nextState === PauseableState_paused) {
+            if (next === PauseableState_paused) {
               this[PauseableSchedulerLike_isPaused] = true;
               this[MutableRefLike_current] = Disposable_disposed;
             } else {

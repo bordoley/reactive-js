@@ -63,7 +63,6 @@
     "./rx/Runnable": "./rx/Runnable.js",
     "./rx/Subject": "./rx/Subject.js",
     "./scheduling": "./scheduling.js",
-    "./scheduling/Pauseable": "./scheduling/Pauseable.js",
     "./scheduling/PriorityScheduler": "./scheduling/PriorityScheduler.js",
     "./scheduling/Scheduler": "./scheduling/Scheduler.js",
     "./streaming": "./streaming.js",

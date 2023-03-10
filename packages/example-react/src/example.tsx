@@ -35,17 +35,17 @@ import {
   PauseableLike,
 } from "@reactive-js/core/scheduling";
 import * as Queue from "@reactive-js/core/util/Queue";
-import * as Streamable from "@reactive-js/core/streaming/Streamable";
 import { QueueLike_push } from "@reactive-js/core/util";
+import { StreamableLike_stream } from "@reactive-js/core/streaming";
 
 const normalPriorityScheduler = createSchedulerWithNormalPriority();
 
 // History must be globally unique to an application
-const historyStream = pipe(
-  windowLocation,
-  Streamable.stream(normalPriorityScheduler, {
+const historyStream = windowLocation[StreamableLike_stream](
+  normalPriorityScheduler,
+  {
     replay: 1,
-  }),
+  },
 );
 
 const counterFlowable = pipe(
@@ -74,7 +74,7 @@ const createActions = (
       Queue.pushTo(stateDispatcher),
     ),
   setCounterMode: (mode: PauseableState) =>
-    counterDispatcher[QueueLike_push](returns(mode)),
+    counterDispatcher[QueueLike_push](mode),
 });
 
 const initialFlowModeState = (): PauseableState => PauseableState_paused;

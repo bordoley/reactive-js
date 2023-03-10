@@ -58,7 +58,7 @@ testModule(
 
         await pipe(
           dest,
-          Observable.endWith(returns(PauseableState_paused)),
+          Observable.endWith(PauseableState_paused),
           Observable.lastAsync(),
         );
 

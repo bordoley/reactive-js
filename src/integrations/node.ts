@@ -24,13 +24,11 @@ import {
   SideEffect4,
   SideEffect5,
   SideEffect6,
-  Updater,
   error,
   ignore,
   isFunction,
   pipe,
   pipeLazy,
-  returns,
 } from "../functions.js";
 import {
   ObservableLike,
@@ -44,7 +42,6 @@ import {
   PauseableState_paused,
   PauseableState_running,
 } from "../scheduling.js";
-import * as Pauseable from "../scheduling/Pauseable.js";
 import {
   FlowableLike,
   StreamableLike,
@@ -231,8 +228,8 @@ export const createWritableSink = /*@__PURE__*/ (() => {
   const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
   return (
     factory: Factory<Writable> | Writable,
-  ): StreamableLike<Uint8Array, Updater<PauseableState>> =>
-    Streamable_createLifted<Uint8Array, Updater<PauseableState>>(
+  ): StreamableLike<Uint8Array, PauseableState> =>
+    Streamable_createLifted<Uint8Array, PauseableState>(
       events =>
         Observable.create(observer => {
           const dispatcher = observer[ObserverLike_dispatcher];
@@ -263,15 +260,19 @@ export const createWritableSink = /*@__PURE__*/ (() => {
             }),
           );
 
-          const onDrain = pipeLazy(dispatcher, Pauseable.resume);
+          const onDrain = () => {
+            dispatcher[QueueLike_push](PauseableState_running);
+          };
           const onFinish = () => dispatcher[DisposableLike_dispose]();
-          const onPause = pipeLazy(dispatcher, Pauseable.pause);
+          const onPause = () => {
+            dispatcher[QueueLike_push](PauseableState_paused);
+          };
 
           writable.on("drain", onDrain);
           writable.on("finish", onFinish);
           writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-          Pauseable.resume(dispatcher);
+          dispatcher[QueueLike_push](PauseableState_running);
         }),
       false,
       false,
@@ -307,7 +308,6 @@ export const transform =
 
           pipe(
             modeObs,
-            Observable.map(returns),
             Observable.forEach(Queue.pushTo(transformReadableStream)),
             Observable.subscribe(observer[ObserverLike_scheduler]),
             addToNodeStream(transform),

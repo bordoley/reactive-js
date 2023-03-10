@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamLike`](streaming.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<[`PauseableState`](../modules/scheduling.md#pauseablestate)\>, `T`\>
+- [`StreamLike`](streaming.StreamLike.md)<[`PauseableState`](../modules/scheduling.md#pauseablestate), `T`\>
 
 - [`PauseableLike`](scheduling.PauseableLike.md)
 

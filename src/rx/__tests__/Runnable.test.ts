@@ -61,16 +61,18 @@ import {
   ThrottleMode_last,
 } from "../../rx.js";
 import {
+  PauseableState_paused,
+  PauseableState_running,
   SchedulerLike_now,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../scheduling.js";
-import * as Pauseable from "../../scheduling/Pauseable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { StreamableLike_stream } from "../../streaming.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueLike_push,
 } from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
@@ -319,18 +321,19 @@ const toFlowableTests = describe(
 
     const generateStream = streamableSrc[StreamableLike_stream](scheduler);
 
-    scheduler[SchedulerLike_schedule](
-      pipeLazy(generateStream, Pauseable.resume),
+    scheduler[SchedulerLike_schedule](() =>
+      generateStream[QueueLike_push](PauseableState_running),
     ),
       scheduler[SchedulerLike_schedule](
-        pipeLazy(generateStream, Pauseable.pause),
+        () => generateStream[QueueLike_push](PauseableState_paused),
+
         {
           delay: 2,
         },
       );
 
     scheduler[SchedulerLike_schedule](
-      pipeLazy(generateStream, Pauseable.resume),
+      () => generateStream[QueueLike_push](PauseableState_running),
       {
         delay: 4,
       },

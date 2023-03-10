@@ -1,7 +1,7 @@
 /// <reference types="./Flowable.toObservable.d.ts" />
 
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { compose, pipe, returns } from "../../../functions.js";
+import { compose, pipe } from "../../../functions.js";
 import { ObserverLike_dispatcher, ObserverLike_scheduler, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
@@ -27,10 +27,7 @@ const Flowable_toObservable = () => src => {
         // needs to be immediately subscribed to when created
         // otherwise it will have no dispatcher to queue events onto.
         // Observable.startWith uses concatenation.
-        Observable_mergeWith(pipe([
-            returns(PauseableState_paused),
-            returns(PauseableState_running),
-        ], ReadonlyArray_toObservable())), Observable_onSubscribe(() => dispatcher));
+        Observable_mergeWith(pipe([PauseableState_paused, PauseableState_running], ReadonlyArray_toObservable())), Observable_onSubscribe(() => dispatcher));
         pipe(Stream_create(op, scheduler), Stream_sourceFrom(src), Disposable_addTo(observer));
     });
 };

@@ -1,7 +1,11 @@
 /// <reference types="./Scheduler.toPausableScheduler.d.ts" />
 
-import { compose } from "../../../functions.js";
-import Pauseable_pause from "../../Pauseable/__internal__/Pauseable.pause.js";
+import { PauseableState_paused, } from "../../../scheduling.js";
+import { QueueLike_push } from "../../../util.js";
 import { create as createQueueScheduler } from "../../__internal__/QueueScheduler.js";
-const Scheduler_toPausableScheduler = /*@__PURE__*/ compose(createQueueScheduler, scheduler => (Pauseable_pause(scheduler), scheduler));
+const Scheduler_toPausableScheduler = scheduler => {
+    const pauseableScheduler = createQueueScheduler(scheduler);
+    pauseableScheduler[QueueLike_push](PauseableState_paused);
+    return pauseableScheduler;
+};
 export default Scheduler_toPausableScheduler;

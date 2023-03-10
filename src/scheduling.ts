@@ -1,4 +1,4 @@
-import { SideEffect, Updater } from "./functions.js";
+import { SideEffect } from "./functions.js";
 import { DisposableLike, QueueLike } from "./util.js";
 
 /** @ignore */
@@ -61,7 +61,7 @@ export type PauseableState =
 /**
  * @noInheritDoc
  */
-export interface PauseableLike extends QueueLike<Updater<PauseableState>> {}
+export interface PauseableLike extends QueueLike<PauseableState> {}
 
 /** @ignore */
 export const PauseableSchedulerLike_isPaused = Symbol(

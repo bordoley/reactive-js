@@ -1,5 +1,5 @@
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { compose, pipe, returns } from "../../../functions.js";
+import { compose, pipe } from "../../../functions.js";
 import {
   ObserverLike_dispatcher,
   ObserverLike_scheduler,
@@ -12,7 +12,6 @@ import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
-  PauseableState,
   PauseableState_paused,
   PauseableState_running,
 } from "../../../scheduling.js";
@@ -41,10 +40,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
         // Observable.startWith uses concatenation.
         Observable_mergeWith(
           pipe(
-            [
-              returns<PauseableState>(PauseableState_paused),
-              returns(PauseableState_running),
-            ],
+            [PauseableState_paused, PauseableState_running],
             ReadonlyArray_toObservable(),
           ),
         ),
