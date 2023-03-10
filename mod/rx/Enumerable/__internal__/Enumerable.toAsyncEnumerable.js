@@ -12,7 +12,6 @@ import Observable_concatMap from "../../Observable/__internal__/Observable.conca
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
-// FIXME: Support delay argument, and expose it in Iterable_toAsyncEnumerable
 const Enumerable_toAsyncEnumerable = 
 /*@__PURE__*/
 (options) => (enumerable) => {

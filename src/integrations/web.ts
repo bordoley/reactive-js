@@ -51,7 +51,6 @@ import {
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import * as Queue from "../util/Queue.js";
 
 /**
  * @noInheritDoc
@@ -192,8 +191,7 @@ export const fetch: <T>(
               onResponseResult instanceof Promise
                 ? pipe(onResponseResult, Promiseable.toObservable())
                 : onResponseResult;
-
-            pipe(resultObs, Observable.observeWith(observer));
+            resultObs[ObservableLike_observe](observer);
           } catch (e) {
             observer[DisposableLike_dispose](error(e));
           }
@@ -372,10 +370,10 @@ export const windowLocation: WindowLocationStreamableLike =
             stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
             { replace }: { replace: boolean } = { replace: false },
           ): void {
-            pipe(
-              { stateOrUpdater, replace },
-              Queue.pushTo(this[DelegatingLike_delegate]),
-            );
+            this[DelegatingLike_delegate][QueueLike_push]({
+              stateOrUpdater,
+              replace,
+            });
           },
 
           [WindowLocationStreamLike_goBack](

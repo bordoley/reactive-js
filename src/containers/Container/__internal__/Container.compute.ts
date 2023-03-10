@@ -12,8 +12,7 @@ const Container_compute =
     fromOptional: FromOptional<C, O>["fromOptional"],
     map: Map<C>["map"],
   ): Compute<C, O>["compute"] =>
-  <T>(factory: Factory<T>, options?: O): ContainerOf<C, T> => {
-    return pipe(factory, fromOptional(options), map(callWith()));
-  };
+  <T>(factory: Factory<T>, options?: O): ContainerOf<C, T> =>
+    pipe(factory, fromOptional(options), map(callWith()));
 
 export default Container_compute;

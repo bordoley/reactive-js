@@ -13,7 +13,6 @@ import Streamable_create from "../streaming/Streamable/__internal__/Streamable.c
 import { DisposableLike_dispose, QueueLike_count, QueueLike_push, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import * as Queue from "../util/Queue.js";
 /** @ignore */
 export const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");
 /** @ignore */
@@ -64,7 +63,7 @@ export const fetch =
             const resultObs = onResponseResult instanceof Promise
                 ? pipe(onResponseResult, Promiseable.toObservable())
                 : onResponseResult;
-            pipe(resultObs, Observable.observeWith(observer));
+            resultObs[ObservableLike_observe](observer);
         }
         catch (e) {
             observer[DisposableLike_dispose](error(e));
@@ -144,7 +143,10 @@ export const windowLocation =
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [QueueLike_push](stateOrUpdater, { replace } = { replace: false }) {
-            pipe({ stateOrUpdater, replace }, Queue.pushTo(this[DelegatingLike_delegate]));
+            this[DelegatingLike_delegate][QueueLike_push]({
+                stateOrUpdater,
+                replace,
+            });
         },
         [WindowLocationStreamLike_goBack]() {
             const canGoBack = this[WindowLocationStreamLike_canGoBack];
