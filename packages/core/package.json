@@ -55,7 +55,6 @@
     "./integrations/react": "./integrations/react.js",
     "./integrations/scheduler": "./integrations/scheduler.js",
     "./integrations/web": "./integrations/web.js",
-    "./integrations/web/WindowLocationStream": "./integrations/web/WindowLocationStream.js",
     "./rx": "./rx.js",
     "./rx/Enumerable": "./rx/Enumerable.js",
     "./rx/Observable": "./rx/Observable.js",

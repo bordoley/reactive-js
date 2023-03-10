@@ -18,15 +18,10 @@ import { createSchedulerWithNormalPriority } from "@reactive-js/core/integration
 import {
   windowLocation,
   WindowLocationURI,
+  WindowLocationStreamLike_canGoBack,
+  WindowLocationStreamLike_goBack,
 } from "@reactive-js/core/integrations/web";
-import * as WindowLocationStream from "@reactive-js/core/integrations/web/WindowLocationStream";
-import {
-  increment,
-  pipe,
-  pipeLazy,
-  returns,
-  Updater,
-} from "@reactive-js/core/functions";
+import { increment, pipe, returns, Updater } from "@reactive-js/core/functions";
 import {
   DispatcherLike,
   PauseableState,
@@ -57,14 +52,15 @@ const createActions = (
   stateDispatcher: DispatcherLike<Updater<PauseableState>>,
   counterDispatcher: PauseableLike,
 ) => ({
-  onValueChanged: (value: number) =>
-    pipe(
-      historyStream,
-      WindowLocationStream.replace((uri: WindowLocationURI) => ({
+  onValueChanged: (value: number) => {
+    historyStream[QueueLike_push](
+      (uri: WindowLocationURI) => ({
         ...uri,
         query: `v=${value}`,
-      })),
-    ),
+      }),
+      { replace: true },
+    );
+  },
   toggleStateMode: () =>
     pipe(
       (mode: PauseableState) =>
@@ -116,12 +112,14 @@ const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
   }));
 };
 
-const onGoBack = pipeLazy(historyStream, WindowLocationStream.goBack);
+const onGoBack = () => {
+  historyStream[WindowLocationStreamLike_goBack]();
+};
 
 const Root = () => {
   const uri = useObservable(historyStream);
 
-  const canGoBack = WindowLocationStream.canGoBack(historyStream);
+  const canGoBack = historyStream[WindowLocationStreamLike_canGoBack];
 
   return (
     <div>

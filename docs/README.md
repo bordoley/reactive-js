@@ -17,7 +17,6 @@ Reactive-JS
 - [integrations/react](modules/integrations_react.md)
 - [integrations/scheduler](modules/integrations_scheduler.md)
 - [integrations/web](modules/integrations_web.md)
-- [integrations/web/WindowLocationStream](modules/integrations_web_WindowLocationStream.md)
 - [rx](modules/rx.md)
 - [rx/Enumerable](modules/rx_Enumerable.md)
 - [rx/Observable](modules/rx_Observable.md)
