@@ -3,7 +3,7 @@ import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.js";
 import Scheduler_createHostScheduler from "./Scheduler/__internal__/Scheduler.createHostScheduler.js";
 import Scheduler_createVirtualTimeScheduler from "./Scheduler/__internal__/Scheduler.createVirtualTimeScheduler.js";
 import Scheduler_toPausableScheduler from "./Scheduler/__internal__/Scheduler.toPausableScheduler.js";
-import { create as Scheduler_toPriorityScheduler } from "./__internal__/QueueScheduler.js";
+import Scheduler_toPriorityScheduler from "./Scheduler/__internal__/Scheduler.toPriorityScheduler.js";
 
 export const createHostScheduler = Scheduler_createHostScheduler;
 
