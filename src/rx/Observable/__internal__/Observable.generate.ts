@@ -9,7 +9,6 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
 } from "../../../scheduling.js";
-import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
@@ -38,7 +37,7 @@ const Observable_generate = <T>(
     );
   };
 
-  return hasDelay(options)
+  return delay > 0
     ? Runnable_create(onSubscribe)
     : Enumerable_create(onSubscribe);
 };

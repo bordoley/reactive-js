@@ -13,7 +13,6 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
 } from "../../../scheduling.js";
-import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -89,7 +88,7 @@ const ReadonlyArray_toObservable: ReadonlyArrayToObservable =
         );
       };
 
-      return hasDelay(options)
+      return delay > 0
         ? Runnable_create(onSubscribe)
         : Enumerable_create(onSubscribe);
     },

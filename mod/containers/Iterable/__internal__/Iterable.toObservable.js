@@ -6,7 +6,6 @@ import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.cr
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
-import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 const Iterable_toObservable = ((options) => (iterable) => {
     const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
@@ -26,9 +25,7 @@ const Iterable_toObservable = ((options) => (iterable) => {
         };
         pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
     };
-    const retval = hasDelay(options)
-        ? Runnable_create(onSubscribe)
-        : Enumerable_create(onSubscribe);
+    const retval = delay > 0 ? Runnable_create(onSubscribe) : Enumerable_create(onSubscribe);
     return retval;
 });
 export default Iterable_toObservable;

@@ -6,7 +6,6 @@ import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.cr
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
-import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 const ReadonlyArray_toObservable = 
@@ -33,7 +32,7 @@ ReadonlyArray_toContainer((values, startIndex, count, options) => {
         };
         pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
     };
-    return hasDelay(options)
+    return delay > 0
         ? Runnable_create(onSubscribe)
         : Enumerable_create(onSubscribe);
 });

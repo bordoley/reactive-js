@@ -18,7 +18,6 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
 } from "../../../scheduling.js";
-import { hasDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -57,9 +56,8 @@ const Sequence_toObservable: SequenceToObservable = ((options?: {
       );
     };
 
-    const retval: ObservableLike<T> = hasDelay(options)
-      ? Runnable_create(onSubscribe)
-      : Enumerable_create(onSubscribe);
+    const retval: ObservableLike<T> =
+      delay > 0 ? Runnable_create(onSubscribe) : Enumerable_create(onSubscribe);
 
     return retval;
   }) as SequenceToObservable;
