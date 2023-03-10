@@ -5,7 +5,6 @@ import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import { getDelay } from "../../__internal__/Scheduler.options.js";
 const PrioritySchedulerDelegatingScheduler_priorityScheduler = Symbol("PrioritySchedulerDelegatingScheduler_priorityScheduler");
 const PrioritySchedulerDelegatingScheduler_priority = Symbol("PrioritySchedulerDelegatingScheduler_priority");
 const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(Disposable_mixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {
@@ -34,11 +33,10 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(
         this[PrioritySchedulerDelegatingScheduler_priorityScheduler][SchedulerLike_requestYield]();
     },
     [SchedulerLike_schedule](effect, options) {
-        const delay = getDelay(options);
         const scheduler = this[PrioritySchedulerDelegatingScheduler_priorityScheduler];
         return pipe(scheduler[SchedulerLike_schedule](effect, {
+            ...options,
             priority: this[PrioritySchedulerDelegatingScheduler_priority],
-            delay,
         }), Disposable_addToIgnoringChildErrors(this));
     },
 }));

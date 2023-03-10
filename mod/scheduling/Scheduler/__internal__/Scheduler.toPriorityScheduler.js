@@ -13,8 +13,7 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import PullableQueue_createPriorityQueue from "../../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
 import { PullableQueueLike_head, PullableQueueLike_pull, SerialDisposableLike_current, } from "../../../util/__internal__/util.internal.js";
-import { getDelay } from "../../__internal__/Scheduler.options.js";
-import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
     const QueueTask_continuation = Symbol("QueueTask_continuation");
     const QueueTask_dueTime = Symbol("QueueTask_dueTime");
@@ -169,15 +168,14 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
             }
             return this[EnumeratorLike_hasCurrent];
         },
-        [ContinuationSchedulerLike_schedule](continuation, options) {
-            const delay = getDelay(options);
+        [ContinuationSchedulerLike_schedule](continuation, delay) {
             const priority = continuation[ContinuationLike_priority];
             pipe(this, Disposable_addIgnoringChildErrors(continuation));
             if (continuation[DisposableLike_isDisposed]) {
                 return;
             }
             continuation[ContinuationLike_continuationScheduler] = this;
-            const now = this[QueueScheduler_hostScheduler][SchedulerLike_now];
+            const now = this[SchedulerLike_now];
             const dueTime = max(now + delay, now);
             const task = this[SchedulerLike_inContinuation] &&
                 this[EnumeratorLike_hasCurrent] &&

@@ -5,12 +5,12 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isSome, pipe, unsafeCast } from "../../../functions.js";
-import { SchedulerLike_now, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, } from "../../../scheduling.js";
+import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_push, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
 import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
-import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 const VirtualTask_continuation = Symbol("VirtualTask_continuation");
 const VirtualTask_dueTime = Symbol("VirtualTask_dueTime");
 const VirtualTask_id = Symbol("VirtualTask_id");
@@ -35,7 +35,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
     [VirtualTimeScheduler_microTaskTicks]: 0,
     [VirtualTimeScheduler_taskIDCount]: 0,
 }), {
-    get [SchedulerLike_shouldYield]() {
+    get [PrioritySchedulerImplementationLike_shouldYield]() {
         unsafeCast(this);
         this[VirtualTimeScheduler_microTaskTicks]++;
         return (this[VirtualTimeScheduler_microTaskTicks] >=
@@ -51,8 +51,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
             this[PrioritySchedulerImplementationLike_runContinuation](continuation);
         }
     },
-    [ContinuationSchedulerLike_schedule](continuation, options) {
-        const { delay = 0 } = options !== null && options !== void 0 ? options : {};
+    [ContinuationSchedulerLike_schedule](continuation, delay) {
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
         if (!continuation[DisposableLike_isDisposed]) {
             continuation[ContinuationLike_continuationScheduler] = this;

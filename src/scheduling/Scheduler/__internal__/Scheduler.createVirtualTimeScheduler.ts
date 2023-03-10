@@ -19,7 +19,6 @@ import MutableEnumerator_mixin, {
 import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import {
   SchedulerLike_now,
-  SchedulerLike_shouldYield,
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../../../scheduling.js";
@@ -41,8 +40,9 @@ import {
   ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
-} from "./Scheduler.mixin.js";
+} from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 
 const VirtualTask_continuation = Symbol("VirtualTask_continuation");
 const VirtualTask_dueTime = Symbol("VirtualTask_dueTime");
@@ -113,7 +113,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       [VirtualTimeScheduler_taskIDCount]: 0,
     }),
     {
-      get [SchedulerLike_shouldYield]() {
+      get [PrioritySchedulerImplementationLike_shouldYield]() {
         unsafeCast<TProperties>(this);
 
         this[VirtualTimeScheduler_microTaskTicks]++;
@@ -152,10 +152,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
           PullableQueueLike<VirtualTask> &
           PrioritySchedulerImplementationLike,
         continuation: ContinuationLike,
-        options?: { readonly delay?: number },
+        delay: number,
       ) {
-        const { delay = 0 } = options ?? {};
-
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
         if (!continuation[DisposableLike_isDisposed]) {

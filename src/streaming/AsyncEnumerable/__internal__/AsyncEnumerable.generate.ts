@@ -2,7 +2,6 @@ import { Generate } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { Factory, Updater, pipe } from "../../../functions.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
-import { getDelay } from "../../../scheduling/__internal__/Scheduler.options.js";
 import { AsyncEnumerableLike } from "../../../streaming.js";
 import Streamable_createLifted from "../../Streamable/__internal__/Streamable.createLifted.js";
 import AsyncEnumerable_generateLast from "./AsyncEnumerable.generateLast.js";
@@ -26,7 +25,7 @@ const AsyncEnumerable_generate: Generate<
     initialValue: Factory<T>,
     options?: { delay?: number },
   ): AsyncEnumerableLike<T> => {
-    const delay = getDelay(options);
+    const { delay = 0 } = options ?? {};
 
     return delay > 0
       ? AsyncEnumerable_generateLast(

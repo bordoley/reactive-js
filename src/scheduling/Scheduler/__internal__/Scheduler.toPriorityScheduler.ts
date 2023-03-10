@@ -58,7 +58,6 @@ import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../util/__internal__/util.internal.js";
-import { getDelay } from "../../__internal__/Scheduler.options.js";
 import {
   ContinuationLike,
   ContinuationLike_continuationScheduler,
@@ -68,7 +67,7 @@ import {
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
-} from "./Scheduler.mixin.js";
+} from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 
 const Scheduler_toPriorityScheduler: Function1<
   SchedulerLike,
@@ -353,9 +352,8 @@ const Scheduler_toPriorityScheduler: Function1<
             EnumeratorLike<QueueTask> &
             PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
-          options?: { delay?: number },
+          delay: number,
         ) {
-          const delay = getDelay(options);
           const priority = continuation[ContinuationLike_priority];
 
           pipe(this, Disposable_addIgnoringChildErrors(continuation));
@@ -366,7 +364,7 @@ const Scheduler_toPriorityScheduler: Function1<
 
           continuation[ContinuationLike_continuationScheduler] = this;
 
-          const now = this[QueueScheduler_hostScheduler][SchedulerLike_now];
+          const now = this[SchedulerLike_now];
           const dueTime = max(now + delay, now);
 
           const task =

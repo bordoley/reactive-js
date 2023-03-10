@@ -1,3 +1,4 @@
+import { floor, max } from "../../../__internal__/math.js";
 import {
   Mixin,
   Mutable,
@@ -42,7 +43,6 @@ import {
   PullableQueueLike,
   PullableQueueLike_pull,
 } from "../../../util/__internal__/util.internal.js";
-import { getDelay } from "../../__internal__/Scheduler.options.js";
 
 export const ContinuationSchedulerLike_now = Symbol(
   "ContinuationSchedulerLike_now",
@@ -62,7 +62,7 @@ export interface ContinuationSchedulerLike {
 
   [ContinuationSchedulerLike_schedule](
     continuation: ContinuationLike,
-    options?: { readonly delay?: number },
+    delay: number,
   ): void;
 }
 
@@ -213,7 +213,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
                 scheduler[ContinuationSchedulerLike_shouldYield];
 
               if (shouldYield && !this[DisposableLike_isDisposed]) {
-                scheduler[ContinuationSchedulerLike_schedule](this);
+                scheduler[ContinuationSchedulerLike_schedule](this, 0);
                 return;
               }
             }
@@ -232,7 +232,10 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
             }
 
             if (isSome(yieldError) && !this[DisposableLike_isDisposed]) {
-              scheduler[ContinuationSchedulerLike_schedule](this, yieldError);
+              scheduler[ContinuationSchedulerLike_schedule](
+                this,
+                yieldError.delay,
+              );
             } else {
               this[DisposableLike_dispose](err);
             }
@@ -245,7 +248,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
             ) {
               while (((head = this[PullableQueueLike_pull]()), isSome(head))) {
                 if (!head[DisposableLike_isDisposed]) {
-                  scheduler[ContinuationSchedulerLike_schedule](head);
+                  scheduler[ContinuationSchedulerLike_schedule](head, 0);
                 }
               }
             }
@@ -253,9 +256,8 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           [ContinuationSchedulerLike_schedule](
             this: ContinuationLike & TContinuationProperties,
             continuation: ContinuationLike,
-            options?: { readonly delay?: number },
+            delay: number,
           ): void {
-            const delay = getDelay(options);
             const childContinuation = this[Continuation_childContinuation];
             continuation[ContinuationLike_continuationScheduler] = this;
 
@@ -266,7 +268,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
             if (delay > 0 || this[DisposableLike_isDisposed]) {
               this[ContinuationLike_continuationScheduler][
                 ContinuationSchedulerLike_schedule
-              ](continuation, options);
+              ](continuation, delay);
             } else if (
               isSome(childContinuation) &&
               childContinuation !== continuation &&
@@ -274,7 +276,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
             ) {
               childContinuation[ContinuationSchedulerLike_schedule](
                 continuation,
-                options,
+                0,
               );
             } else {
               this[QueueLike_push](continuation);
@@ -356,8 +358,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           effect: SideEffect1<ContinuationContextLike>,
           options?: { readonly delay?: number; priority?: number },
         ): DisposableLike {
-          // FIXME: Cleanup the options
-          const delay = getDelay(options);
+          const delay = floor(max(options?.delay ?? 0, 0));
           const { priority = 0 } = options ?? {};
           const continuation = createContinuation(this, effect, priority);
 
@@ -368,10 +369,11 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
             isNone(currentContinuation) ||
             currentContinuation[ContinuationLike_priority] !== priority
           ) {
-            this[ContinuationSchedulerLike_schedule](continuation, options);
+            this[ContinuationSchedulerLike_schedule](continuation, delay);
           } else {
             currentContinuation[ContinuationSchedulerLike_schedule](
               continuation,
+              0,
             );
           }
 

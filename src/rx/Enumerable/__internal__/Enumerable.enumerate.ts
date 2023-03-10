@@ -35,7 +35,7 @@ import {
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
-} from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+} from "../../../scheduling/PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -127,7 +127,7 @@ const Enumerable_enumerate: <T>() => (
             PullableQueueLike<ContinuationLike> &
             PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
-          _?: { readonly delay?: number },
+          _delay: number,
         ): void {
           pipe(this, Disposable_add(continuation));
 

@@ -8,7 +8,7 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "object" && isFunction(performance.now))();
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsProcessHRTime = /*@__PURE__*/ (() => typeof process === "object" && isFunction(process.hrtime))();
@@ -66,8 +66,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
             this[HostScheduler_startTime] +
                 this[HostScheduler_maxYieldInterval] || isInputPending());
     },
-    [ContinuationSchedulerLike_schedule](continuation, options) {
-        const { delay = 0 } = options !== null && options !== void 0 ? options : {};
+    [ContinuationSchedulerLike_schedule](continuation, delay) {
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
         if (continuation[DisposableLike_isDisposed]) {
             return;

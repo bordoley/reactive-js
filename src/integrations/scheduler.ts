@@ -32,8 +32,7 @@ import {
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
-} from "../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
-import { getDelay } from "../scheduling/__internal__/Scheduler.options.js";
+} from "../scheduling/PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 
@@ -67,11 +66,8 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
         [ContinuationSchedulerLike_schedule](
           this: PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
-          options?: {
-            delay?: number;
-          },
+          delay: number,
         ) {
-          const delay = getDelay(options);
           const priority = continuation[ContinuationLike_priority];
 
           pipe(this, Disposable.addIgnoringChildErrors(continuation));

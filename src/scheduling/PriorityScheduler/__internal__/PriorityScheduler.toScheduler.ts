@@ -27,7 +27,6 @@ import {
 import { DisposableLike } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import { getDelay } from "../../__internal__/Scheduler.options.js";
 
 const PrioritySchedulerDelegatingScheduler_priorityScheduler = Symbol(
   "PrioritySchedulerDelegatingScheduler_priorityScheduler",
@@ -98,14 +97,12 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         effect: SideEffect1<ContinuationContextLike>,
         options?: { readonly delay?: number },
       ): DisposableLike {
-        const delay = getDelay(options);
-
         const scheduler =
           this[PrioritySchedulerDelegatingScheduler_priorityScheduler];
         return pipe(
           scheduler[SchedulerLike_schedule](effect, {
+            ...options,
             priority: this[PrioritySchedulerDelegatingScheduler_priority],
-            delay,
           }),
           Disposable_addToIgnoringChildErrors(this),
         );

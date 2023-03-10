@@ -31,7 +31,7 @@ import {
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
-} from "./Scheduler.mixin.js";
+} from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 
 declare const navigator: {
   scheduling: Optional<{
@@ -171,10 +171,8 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
         [ContinuationSchedulerLike_schedule](
           this: TProperties & PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
-          options?: { readonly delay?: number },
+          delay: number,
         ) {
-          const { delay = 0 } = options ?? {};
-
           pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
           if (continuation[DisposableLike_isDisposed]) {
