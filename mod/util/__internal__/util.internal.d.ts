@@ -1,12 +1,10 @@
 import { DelegatingLike } from "../../__internal__/mixins.js";
 import { Optional } from "../../functions.js";
 import { DisposableLike, QueueLike } from "../../util.js";
-export declare const MutableRefLike_current: unique symbol;
-export interface MutableRefLike<T = unknown> {
-    get [MutableRefLike_current](): T;
-    set [MutableRefLike_current](v: T);
-}
-export interface DisposableRefLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike, MutableRefLike<TDisposable> {
+export declare const SerialDisposableLike_current: unique symbol;
+export interface SerialDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike {
+    get [SerialDisposableLike_current](): TDisposable;
+    set [SerialDisposableLike_current](v: TDisposable);
 }
 export interface DelegatingDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DelegatingLike<TDisposable>, DisposableLike {
 }

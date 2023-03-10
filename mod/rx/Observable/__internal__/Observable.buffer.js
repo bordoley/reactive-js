@@ -14,8 +14,8 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create.js";
-import { MutableRefLike_current, } from "../../../util/__internal__/util.internal.js";
+import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
+import { SerialDisposableLike_current, } from "../../../util/__internal__/util.internal.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -36,7 +36,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         instance[BufferObserver_buffer] = [];
         instance[BufferObserver_durationFunction] = durationFunction;
         instance[BufferObserver_durationSubscription] =
-            DisposableRef_create(Disposable_disposed);
+            SerialDisposable_create(Disposable_disposed);
         instance[BufferObserver_maxBufferSize] = maxBufferSize;
         pipe(instance, Disposable_onComplete(() => {
             const { [BufferObserver_buffer]: buffer } = instance;
@@ -60,8 +60,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
             const { [BufferObserver_buffer]: buffer, [BufferObserver_maxBufferSize]: maxBufferSize, } = this;
             buffer.push(next);
             const doOnNotify = () => {
-                this[BufferObserver_durationSubscription][MutableRefLike_current] =
-                    Disposable_disposed;
+                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = Disposable_disposed;
                 const buffer = this[BufferObserver_buffer];
                 this[BufferObserver_buffer] = [];
                 this[DelegatingLike_delegate][ObserverLike_notify](buffer);
@@ -69,9 +68,8 @@ const Observable_buffer = /*@__PURE__*/ (() => {
             if (ReadonlyArray_getLength(buffer) === maxBufferSize) {
                 doOnNotify();
             }
-            else if (this[BufferObserver_durationSubscription][MutableRefLike_current][DisposableLike_isDisposed]) {
-                this[BufferObserver_durationSubscription][MutableRefLike_current] =
-                    pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribe(this[ObserverLike_scheduler]));
+            else if (this[BufferObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed]) {
+                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribe(this[ObserverLike_scheduler]));
             }
         },
     }));

@@ -10,9 +10,9 @@ import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, Pauseab
 import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
-import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
+import SerialDisposable_mixin from "../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import PullableQueue_createPriorityQueue from "../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
-import { MutableRefLike_current, PullableQueueLike_head, PullableQueueLike_pull, } from "../../util/__internal__/util.internal.js";
+import { PullableQueueLike_head, PullableQueueLike_pull, SerialDisposableLike_current, } from "../../util/__internal__/util.internal.js";
 import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../Scheduler/__internal__/Scheduler.mixin.js";
 import { getDelay } from "./Scheduler.options.js";
 export const create = 
@@ -73,7 +73,7 @@ export const create =
     const scheduleOnHost = (instance) => {
         var _a;
         const task = peek(instance);
-        const continuationActive = !instance[MutableRefLike_current][DisposableLike_isDisposed] &&
+        const continuationActive = !instance[SerialDisposableLike_current][DisposableLike_isDisposed] &&
             isSome(task) &&
             instance[QueueScheduler_dueTime] <= task[QueueTask_dueTime];
         if (isNone(task) ||
@@ -102,9 +102,9 @@ export const create =
             }
         });
         instance[QueueScheduler_hostContinuation] = continuation;
-        instance[MutableRefLike_current] = instance[QueueScheduler_hostScheduler][SchedulerLike_schedule](continuation, { delay });
+        instance[SerialDisposableLike_current] = instance[QueueScheduler_hostScheduler][SchedulerLike_schedule](continuation, { delay });
     };
-    const typedDisposableRefMixin = DisposableRef_mixin();
+    const typedSerialDisposableMixin = SerialDisposable_mixin();
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const QueueScheduler_delayed = Symbol("QueueScheduler_delayed");
     const QueueScheduler_dueTime = Symbol("QueueScheduler_dueTime");
@@ -112,10 +112,10 @@ export const create =
     const QueueScheduler_hostScheduler = Symbol("QueueScheduler_hostScheduler");
     const QueueScheduler_queue = Symbol("QueueScheduler_queue");
     const QueueScheduler_taskIDCounter = Symbol("QueueScheduler_taskIDCounter");
-    return createInstanceFactory(mix(include(PriorityScheduler_mixin, typedMutableEnumeratorMixin, typedDisposableRefMixin), function QueueScheduler(instance, host) {
+    return createInstanceFactory(mix(include(PriorityScheduler_mixin, typedMutableEnumeratorMixin, typedSerialDisposableMixin), function QueueScheduler(instance, host) {
         init(PriorityScheduler_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        init(typedDisposableRefMixin, instance, Disposable_disposed);
+        init(typedSerialDisposableMixin, instance, Disposable_disposed);
         instance[QueueScheduler_delayed] =
             PullableQueue_createPriorityQueue(delayedComparator);
         instance[QueueScheduler_queue] =
@@ -156,7 +156,7 @@ export const create =
         [QueueLike_push](next) {
             if (next === PauseableState_paused) {
                 this[PauseableSchedulerLike_isPaused] = true;
-                this[MutableRefLike_current] = Disposable_disposed;
+                this[SerialDisposableLike_current] = Disposable_disposed;
             }
             else {
                 this[PauseableSchedulerLike_isPaused] = false;

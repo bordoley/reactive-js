@@ -49,14 +49,14 @@ import {
 } from "../../util.js";
 import Disposable_addIgnoringChildErrors from "../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../util/Disposable/__internal__/Disposable.disposed.js";
-import DisposableRef_mixin from "../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
+import SerialDisposable_mixin from "../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import PullableQueue_createPriorityQueue from "../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
 import {
-  DisposableRefLike,
-  MutableRefLike_current,
   PullableQueueLike,
   PullableQueueLike_head,
   PullableQueueLike_pull,
+  SerialDisposableLike,
+  SerialDisposableLike_current,
 } from "../../util/__internal__/util.internal.js";
 import {
   ContinuationLike,
@@ -174,14 +174,14 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
 
     const scheduleOnHost = (
       instance: TProperties &
-        DisposableRefLike &
+        SerialDisposableLike &
         EnumeratorLike &
         PrioritySchedulerImplementationLike,
     ) => {
       const task = peek(instance);
 
       const continuationActive =
-        !instance[MutableRefLike_current][DisposableLike_isDisposed] &&
+        !instance[SerialDisposableLike_current][DisposableLike_isDisposed] &&
         isSome(task) &&
         instance[QueueScheduler_dueTime] <= task[QueueTask_dueTime];
 
@@ -234,12 +234,12 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         });
       instance[QueueScheduler_hostContinuation] = continuation;
 
-      instance[MutableRefLike_current] = instance[QueueScheduler_hostScheduler][
-        SchedulerLike_schedule
-      ](continuation, { delay });
+      instance[SerialDisposableLike_current] = instance[
+        QueueScheduler_hostScheduler
+      ][SchedulerLike_schedule](continuation, { delay });
     };
 
-    const typedDisposableRefMixin = DisposableRef_mixin();
+    const typedSerialDisposableMixin = SerialDisposable_mixin();
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin<QueueTask>();
 
     const QueueScheduler_delayed = Symbol("QueueScheduler_delayed");
@@ -268,7 +268,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         include(
           PriorityScheduler_mixin,
           typedMutableEnumeratorMixin,
-          typedDisposableRefMixin,
+          typedSerialDisposableMixin,
         ),
         function QueueScheduler(
           instance: Pick<
@@ -284,7 +284,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
         ): QueueSchedulerLike {
           init(PriorityScheduler_mixin, instance);
           init(typedMutableEnumeratorMixin, instance);
-          init(typedDisposableRefMixin, instance, Disposable_disposed);
+          init(typedSerialDisposableMixin, instance, Disposable_disposed);
 
           instance[QueueScheduler_delayed] =
             PullableQueue_createPriorityQueue(delayedComparator);
@@ -335,14 +335,14 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           },
           [QueueLike_push](
             this: TProperties &
-              DisposableRefLike &
+              SerialDisposableLike &
               EnumeratorLike &
               PrioritySchedulerImplementationLike,
             next: PauseableState,
           ): void {
             if (next === PauseableState_paused) {
               this[PauseableSchedulerLike_isPaused] = true;
-              this[MutableRefLike_current] = Disposable_disposed;
+              this[SerialDisposableLike_current] = Disposable_disposed;
             } else {
               this[PauseableSchedulerLike_isPaused] = false;
               scheduleOnHost(this);
@@ -364,7 +364,7 @@ export const create: Function1<SchedulerLike, QueueSchedulerLike> =
           },
           [ContinuationSchedulerLike_schedule](
             this: TProperties &
-              DisposableRefLike &
+              SerialDisposableLike &
               EnumeratorLike<QueueTask> &
               PrioritySchedulerImplementationLike,
             continuation: ContinuationLike,

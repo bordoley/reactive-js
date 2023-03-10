@@ -8,8 +8,8 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create.js";
-import { MutableRefLike_current, } from "../../../util/__internal__/util.internal.js";
+import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
+import { SerialDisposableLike_current, } from "../../../util/__internal__/util.internal.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -20,7 +20,7 @@ const HigherOrderObservable_switchAll = (lift) => {
     const createSwitchAllObserver = (() => {
         const typedObserverMixin = Observer_mixin();
         function onDispose() {
-            if (this[HigherOrderObservable_currentRef][MutableRefLike_current][DisposableLike_isDisposed]) {
+            if (this[HigherOrderObservable_currentRef][SerialDisposableLike_current][DisposableLike_isDisposed]) {
                 this[DelegatingLike_delegate][DisposableLike_dispose]();
             }
         }
@@ -28,7 +28,7 @@ const HigherOrderObservable_switchAll = (lift) => {
             init(Disposable_mixin, instance);
             init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
             init(delegatingMixin(), instance, delegate);
-            instance[HigherOrderObservable_currentRef] = pipe(DisposableRef_create(Disposable_disposed), Disposable_addTo(delegate));
+            instance[HigherOrderObservable_currentRef] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(onDispose));
             return instance;
         }, props({
@@ -36,12 +36,11 @@ const HigherOrderObservable_switchAll = (lift) => {
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[HigherOrderObservable_currentRef][MutableRefLike_current] =
-                    pipe(next, Observable_forEach(Observer_notifyObserver(this[DelegatingLike_delegate])), Observable_subscribe(this[ObserverLike_scheduler]), Disposable_onComplete(() => {
-                        if (this[DisposableLike_isDisposed]) {
-                            this[DelegatingLike_delegate][DisposableLike_dispose]();
-                        }
-                    }));
+                this[HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(Observer_notifyObserver(this[DelegatingLike_delegate])), Observable_subscribe(this[ObserverLike_scheduler]), Disposable_onComplete(() => {
+                    if (this[DisposableLike_isDisposed]) {
+                        this[DelegatingLike_delegate][DisposableLike_dispose]();
+                    }
+                }));
             },
         }));
     })();

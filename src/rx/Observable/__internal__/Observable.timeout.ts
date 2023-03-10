@@ -20,10 +20,10 @@ import {
 import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import DisposableRef_mixin from "../../../util/DisposableRef/__internal__/DisposableRef.mixin.js";
+import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import {
-  MutableRefLike,
-  MutableRefLike_current,
+  SerialDisposableLike,
+  SerialDisposableLike_current,
 } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -37,7 +37,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
 >() => {
   const timeoutError = Symbol("Observable.timeout.error");
 
-  const typedDisposableRefMixin = DisposableRef_mixin();
+  const typedSerialDisposableMixin = SerialDisposable_mixin();
   const typedObserverMixin = Observer_mixin();
 
   const TimeoutObserver_duration = Symbol("TimeoutObserver_duration");
@@ -46,11 +46,11 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
   };
 
   const setupDurationSubscription = (
-    observer: MutableRefLike<DisposableLike> &
+    observer: SerialDisposableLike<DisposableLike> &
       TProperties &
       DelegatingLike<ObserverLike<T>>,
   ) => {
-    observer[MutableRefLike_current] = pipe(
+    observer[SerialDisposableLike_current] = pipe(
       observer[TimeoutObserver_duration],
       Observable_subscribe(
         observer[DelegatingLike_delegate][ObserverLike_scheduler],
@@ -63,7 +63,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
       include(
         typedObserverMixin,
         Disposable_delegatingMixin<ObserverLike<T>>(),
-        typedDisposableRefMixin,
+        typedSerialDisposableMixin,
       ),
       function TimeoutObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
@@ -73,7 +73,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
       ): ObserverLike<T> {
         init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
         init(Disposable_delegatingMixin<ObserverLike<T>>(), instance, delegate);
-        init(typedDisposableRefMixin, instance, Disposable_disposed);
+        init(typedSerialDisposableMixin, instance, Disposable_disposed);
 
         instance[TimeoutObserver_duration] = duration;
 
@@ -87,14 +87,14 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
       {
         [ObserverLike_notify](
           this: TProperties &
-            MutableRefLike<DisposableLike> &
+            SerialDisposableLike<DisposableLike> &
             DelegatingLike<ObserverLike<T>> &
             ObserverLike,
           next: T,
         ) {
           Observer_assertState(this);
 
-          this[MutableRefLike_current][DisposableLike_dispose]();
+          this[SerialDisposableLike_current][DisposableLike_dispose]();
           this[DelegatingLike_delegate][ObserverLike_notify](next);
         },
       },

@@ -36,10 +36,10 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create.js";
+import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import {
-  DisposableRefLike,
-  MutableRefLike_current,
+  SerialDisposableLike,
+  SerialDisposableLike_current,
 } from "../../../util/__internal__/util.internal.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
@@ -69,7 +69,7 @@ const createThrottleObserver: <T>(
   type TProperties = {
     [ThrottleObserver_value]: Optional<T>;
     [ThrottleObserver_hasValue]: boolean;
-    readonly [ThrottleObserver_durationSubscription]: DisposableRefLike;
+    readonly [ThrottleObserver_durationSubscription]: SerialDisposableLike;
     readonly [ThrottleObserver_durationFunction]: Function1<T, ObservableLike>;
     readonly [ThrottleObserver_mode]: ThrottleMode;
     readonly [ThrottleObserver_onNotify]: SideEffect;
@@ -79,12 +79,13 @@ const createThrottleObserver: <T>(
     observer: ObserverLike<T> & TProperties,
     next: T,
   ) => {
-    observer[ThrottleObserver_durationSubscription][MutableRefLike_current] =
-      pipe(
-        observer[ThrottleObserver_durationFunction](next),
-        Observable_forEach<ObservableLike>(observer[ThrottleObserver_onNotify]),
-        Observable_subscribe(observer[ObserverLike_scheduler]),
-      );
+    observer[ThrottleObserver_durationSubscription][
+      SerialDisposableLike_current
+    ] = pipe(
+      observer[ThrottleObserver_durationFunction](next),
+      Observable_forEach<ObservableLike>(observer[ThrottleObserver_onNotify]),
+      Observable_subscribe(observer[ObserverLike_scheduler]),
+    );
   };
 
   return createInstanceFactory(
@@ -104,7 +105,7 @@ const createThrottleObserver: <T>(
         instance[ThrottleObserver_mode] = mode;
 
         instance[ThrottleObserver_durationSubscription] = pipe(
-          DisposableRef_create(Disposable_disposed),
+          SerialDisposable_create(Disposable_disposed),
           Disposable_addTo(delegate),
         );
 
@@ -156,9 +157,9 @@ const createThrottleObserver: <T>(
           this[ThrottleObserver_hasValue] = true;
 
           const durationSubscriptionDisposableIsDisposed =
-            this[ThrottleObserver_durationSubscription][MutableRefLike_current][
-              DisposableLike_isDisposed
-            ];
+            this[ThrottleObserver_durationSubscription][
+              SerialDisposableLike_current
+            ][DisposableLike_isDisposed];
 
           if (
             durationSubscriptionDisposableIsDisposed &&

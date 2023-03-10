@@ -30,10 +30,10 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import DisposableRef_create from "../../../util/DisposableRef/__internal__/DisposableRef.create.js";
+import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import {
-  DisposableRefLike,
-  MutableRefLike_current,
+  SerialDisposableLike,
+  SerialDisposableLike_current,
 } from "../../../util/__internal__/util.internal.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
@@ -56,14 +56,14 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
     const typedObserverMixin = Observer_mixin<ContainerOf<C, T>>();
 
     type TProperties = {
-      readonly [HigherOrderObservable_currentRef]: DisposableRefLike;
+      readonly [HigherOrderObservable_currentRef]: SerialDisposableLike;
     };
 
     function onDispose(
       this: TProperties & DisposableLike & DelegatingLike<ObserverLike<T>>,
     ) {
       if (
-        this[HigherOrderObservable_currentRef][MutableRefLike_current][
+        this[HigherOrderObservable_currentRef][SerialDisposableLike_current][
           DisposableLike_isDisposed
         ]
       ) {
@@ -87,7 +87,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
           init(delegatingMixin(), instance, delegate);
 
           instance[HigherOrderObservable_currentRef] = pipe(
-            DisposableRef_create(Disposable_disposed),
+            SerialDisposable_create(Disposable_disposed),
             Disposable_addTo(delegate),
           );
 
@@ -106,24 +106,25 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
           [ObserverLike_notify](
             this: TProperties &
               ObserverLike<ContainerOf<C, T>> &
-              DisposableRefLike &
+              SerialDisposableLike &
               DelegatingLike<ObserverLike<T>>,
             next: ContainerOf<C, T>,
           ) {
             Observer_assertState(this);
-            this[HigherOrderObservable_currentRef][MutableRefLike_current] =
-              pipe(
-                next,
-                Observable_forEach(
-                  Observer_notifyObserver(this[DelegatingLike_delegate]),
-                ),
-                Observable_subscribe(this[ObserverLike_scheduler]),
-                Disposable_onComplete(() => {
-                  if (this[DisposableLike_isDisposed]) {
-                    this[DelegatingLike_delegate][DisposableLike_dispose]();
-                  }
-                }),
-              );
+            this[HigherOrderObservable_currentRef][
+              SerialDisposableLike_current
+            ] = pipe(
+              next,
+              Observable_forEach(
+                Observer_notifyObserver(this[DelegatingLike_delegate]),
+              ),
+              Observable_subscribe(this[ObserverLike_scheduler]),
+              Disposable_onComplete(() => {
+                if (this[DisposableLike_isDisposed]) {
+                  this[DelegatingLike_delegate][DisposableLike_dispose]();
+                }
+              }),
+            );
           },
         },
       ),
