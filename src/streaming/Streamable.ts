@@ -1,17 +1,9 @@
-import {
-  Equality,
-  Factory,
-  Function1,
-  Reducer,
-  Updater,
-} from "../functions.js";
-import { SchedulerLike } from "../scheduling.js";
+import { Equality, Factory, Reducer, Updater } from "../functions.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
 
 import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
-import Streamable_stream from "./Streamable/__internal__/Streamable.stream.js";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -46,8 +38,3 @@ export const sinkInto: <TReq, T>(
   dest: StreamLike<T, TReq>,
 ) => (src: StreamableLike<TReq, T>) => StreamableLike<TReq, T> =
   Streamable_sinkInto;
-
-export const stream: <TReq, T, TStream extends StreamLike<TReq, T>>(
-  scheduler: SchedulerLike,
-  options?: { readonly replay?: number },
-) => Function1<StreamableLike<TReq, T, TStream>, TStream> = Streamable_stream;

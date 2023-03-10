@@ -8,7 +8,7 @@ import { ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from ".
 import { SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
 import * as Pauseable from "../../scheduling/Pauseable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import * as Streamable from "../../streaming/Streamable.js";
+import { StreamableLike_stream } from "../../streaming.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
@@ -35,10 +35,11 @@ const timeoutTests = describe("timeout", test("throws when a timeout occurs", pi
 // FIXME Move these tests into container?
 const toFlowableTests = describe("toFlowable", test("flow a generating source", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
-    const generateStream = pipe(Runnable.generate(increment, returns(-1), {
+    const streamableSrc = pipe(Runnable.generate(increment, returns(-1), {
         delay: 1,
         delayStart: true,
-    }), Runnable.toFlowable(), Streamable.stream(scheduler));
+    }), Runnable.toFlowable());
+    const generateStream = streamableSrc[StreamableLike_stream](scheduler);
     scheduler[SchedulerLike_schedule](pipeLazy(generateStream, Pauseable.resume)),
         scheduler[SchedulerLike_schedule](pipeLazy(generateStream, Pauseable.pause), {
             delay: 2,

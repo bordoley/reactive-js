@@ -1,9 +1,8 @@
 /// <reference types="./AsyncEnumerable.lift.d.ts" />
 
 var _a;
-import { newInstance, pipe, pipeUnsafe, } from "../../../functions.js";
+import { newInstance, pipeUnsafe } from "../../../functions.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../../../streaming.js";
-import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 const LiftedAsyncEnumerable_src = Symbol("LiftedAsyncEnumerable_src");
 const LiftedAsyncEnumerable_operators = Symbol("LiftedAsyncEnumerable_operators");
 class LiftedAsyncEnumerable {
@@ -15,7 +14,7 @@ class LiftedAsyncEnumerable {
         this[StreamableLike_isRunnable] = isRunnable;
     }
     [(_a = StreamableLike_isInteractive, StreamableLike_stream)](scheduler, options) {
-        const src = pipe(this[LiftedAsyncEnumerable_src], Streamable_stream(scheduler, options));
+        const src = this[LiftedAsyncEnumerable_src][StreamableLike_stream](scheduler, options);
         return pipeUnsafe(src, ...this[LiftedAsyncEnumerable_operators]);
     }
 }

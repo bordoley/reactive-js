@@ -12,9 +12,9 @@ import * as Observable from "../../rx/Observable.js";
 import * as Runnable from "../../rx/Runnable.js";
 import { PauseableState_paused } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
+import { StreamableLike_stream } from "../../streaming.js";
 import * as Flowable from "../../streaming/Flowable.js";
 import * as Stream from "../../streaming/Stream.js";
-import * as Streamable from "../../streaming/Streamable.js";
 import { DisposableLike_dispose } from "../../util.js";
 import {
   createReadableSource,
@@ -50,8 +50,9 @@ testModule(
         );
 
         const dest = pipe(
-          createWritableSink(returns(writable)),
-          Streamable.stream(scheduler),
+          createWritableSink(returns(writable))[StreamableLike_stream](
+            scheduler,
+          ),
           Stream.sourceFrom(src),
         );
 
@@ -91,8 +92,9 @@ testModule(
         );
 
         const dest = pipe(
-          createWritableSink(returns(writable)),
-          Streamable.stream(scheduler),
+          createWritableSink(returns(writable))[StreamableLike_stream](
+            scheduler,
+          ),
           Stream.sourceFrom(src),
         );
 

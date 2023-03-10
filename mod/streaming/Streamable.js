@@ -3,7 +3,6 @@
 import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
-import Streamable_stream from "./Streamable/__internal__/Streamable.stream.js";
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
  * over the notified actions, emitting each intermediate result.
@@ -25,4 +24,3 @@ export const createActionReducer = Streamable_createActionReducer;
  */
 export const createStateStore = Streamable_createStateStore;
 export const sinkInto = Streamable_sinkInto;
-export const stream = Streamable_stream;

@@ -67,7 +67,7 @@ import {
 } from "../../scheduling.js";
 import * as Pauseable from "../../scheduling/Pauseable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import * as Streamable from "../../streaming/Streamable.js";
+import { StreamableLike_stream } from "../../streaming.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -309,14 +309,15 @@ const toFlowableTests = describe(
   test("flow a generating source", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
 
-    const generateStream = pipe(
+    const streamableSrc = pipe(
       Runnable.generate(increment, returns(-1), {
         delay: 1,
         delayStart: true,
       }),
       Runnable.toFlowable(),
-      Streamable.stream(scheduler),
     );
+
+    const generateStream = streamableSrc[StreamableLike_stream](scheduler);
 
     scheduler[SchedulerLike_schedule](
       pipeLazy(generateStream, Pauseable.resume),

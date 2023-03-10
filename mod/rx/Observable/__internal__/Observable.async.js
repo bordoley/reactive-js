@@ -4,8 +4,8 @@ var _a, _b, _c, _d;
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { StreamableLike_stream, } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
-import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -265,7 +265,7 @@ export function Observable_async__currentScheduler() {
     return ctx[AsyncContext_observer][ObserverLike_scheduler];
 }
 export const Observable_async__stream = /*@__PURE__*/ (() => {
-    const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, Streamable_stream(scheduler, { replay }));
+    const streamOnSchedulerFactory = (streamable, scheduler, replay) => streamable[StreamableLike_stream](scheduler, { replay });
     return (streamable, { replay = 0, scheduler, } = {}) => {
         const currentScheduler = Observable_async__currentScheduler();
         return Observable_async__using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay);

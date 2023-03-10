@@ -22,9 +22,12 @@ import {
   ObserverLike_scheduler,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import { StreamLike, StreamableLike } from "../../../streaming.js";
+import {
+  StreamLike,
+  StreamableLike,
+  StreamableLike_stream,
+} from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
-import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -499,7 +502,7 @@ export const Observable_async__stream = /*@__PURE__*/ (() => {
     streamable: StreamableLike<TReq, T, TStream>,
     scheduler: SchedulerLike,
     replay: number,
-  ) => pipe(streamable, Streamable_stream(scheduler, { replay }));
+  ) => streamable[StreamableLike_stream](scheduler, { replay });
 
   return <TReq, T, TStream extends StreamLike<TReq, T>>(
     streamable: StreamableLike<TReq, T, TStream>,

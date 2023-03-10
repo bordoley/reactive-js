@@ -9,7 +9,6 @@
 - [createActionReducer](streaming_Streamable.md#createactionreducer)
 - [createStateStore](streaming_Streamable.md#createstatestore)
 - [sinkInto](streaming_Streamable.md#sinkinto)
-- [stream](streaming_Streamable.md#stream)
 
 ## Functions
 
@@ -102,29 +101,3 @@ ___
 ##### Returns
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
-
-___
-
-### stream
-
-▸ **stream**<`TReq`, `T`, `TStream`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\>, `TStream`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TReq` | `TReq` |
-| `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\>, `TStream`\>

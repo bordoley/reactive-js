@@ -45,10 +45,13 @@ import {
   PauseableState_running,
 } from "../scheduling.js";
 import * as Pauseable from "../scheduling/Pauseable.js";
-import { FlowableLike, StreamableLike } from "../streaming.js";
+import {
+  FlowableLike,
+  StreamableLike,
+  StreamableLike_stream,
+} from "../streaming.js";
 import Flowable_createLifted from "../streaming/Flowable/__internal__/Flowable.createLifted.js";
 import * as Stream from "../streaming/Stream.js";
-import * as Streamable from "../streaming/Streamable.js";
 import Streamable_createLifted from "../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import {
   DisposableLike,
@@ -287,15 +290,17 @@ export const transform =
           const transform = pipe(factory(), addToDisposable(observer));
 
           pipe(
-            createWritableSink(transform),
-            Streamable.stream(observer[ObserverLike_scheduler]),
+            createWritableSink(transform)[StreamableLike_stream](
+              observer[ObserverLike_scheduler],
+            ),
             Stream.sourceFrom(src),
             addToNodeStream(transform),
           );
 
           const transformReadableStream = pipe(
-            createReadableSource(transform),
-            Streamable.stream(observer[ObserverLike_scheduler]),
+            createReadableSource(transform)[StreamableLike_stream](
+              observer[ObserverLike_scheduler],
+            ),
             addToNodeStream(transform),
             Observable.observeWith(observer),
           );

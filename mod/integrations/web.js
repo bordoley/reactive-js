@@ -162,7 +162,7 @@ export const windowLocation =
         if (isSome(currentWindowLocationStream)) {
             raiseWithDebugMessage("Cannot stream more than once");
         }
-        const actionReducer = pipe(Streamable.createActionReducer(({ uri: stateURI }, { replace, stateOrUpdater }) => {
+        const actionReducer = Streamable.createActionReducer(({ uri: stateURI }, { replace, stateOrUpdater }) => {
             const uri = isFunction(stateOrUpdater)
                 ? stateOrUpdater(stateURI)
                 : stateOrUpdater;
@@ -170,7 +170,7 @@ export const windowLocation =
         }, () => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
-        }), { equality: areWindowLocationStatesEqual }), Streamable.stream(scheduler, options));
+        }), { equality: areWindowLocationStatesEqual })[StreamableLike_stream](scheduler, options);
         const windowLocationStream = createWindowLocationStream(actionReducer);
         pipe(actionReducer, Observable.map(({ uri, replace }) => ({
             uri: windowLocationURIToString(uri),

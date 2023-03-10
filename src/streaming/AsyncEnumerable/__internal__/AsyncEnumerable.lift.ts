@@ -1,10 +1,5 @@
 import { ContainerOperator } from "../../../containers.js";
-import {
-  Function1,
-  newInstance,
-  pipe,
-  pipeUnsafe,
-} from "../../../functions.js";
+import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   AsyncEnumerableLike,
@@ -14,7 +9,6 @@ import {
   StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../../../streaming.js";
-import Streamable_stream from "../../../streaming/Streamable/__internal__/Streamable.stream.js";
 
 const LiftedAsyncEnumerable_src = Symbol("LiftedAsyncEnumerable_src");
 const LiftedAsyncEnumerable_operators = Symbol(
@@ -51,10 +45,11 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ): StreamLike<void, T> {
-    const src = pipe(
-      this[LiftedAsyncEnumerable_src],
-      Streamable_stream(scheduler, options),
+    const src = this[LiftedAsyncEnumerable_src][StreamableLike_stream](
+      scheduler,
+      options,
     );
+
     return pipeUnsafe(
       src,
       ...this[LiftedAsyncEnumerable_operators],

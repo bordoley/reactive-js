@@ -6,18 +6,20 @@ import Observable_merge from "../../../rx/Observable/__internal__/Observable.mer
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
-import { StreamLike, StreamableLike } from "../../../streaming.js";
+import {
+  StreamLike,
+  StreamableLike,
+  StreamableLike_stream,
+} from "../../../streaming.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Queue_pushTo from "../../../util/Queue/__internal__/Queue.pushTo.js";
-
-import Streamable_stream from "./Streamable.stream.js";
 
 const Streamable_sinkInto =
   <TReq, T>(dest: StreamLike<T, TReq>) =>
   (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
     const { [DispatcherLike_scheduler]: scheduler } = dest;
-    const srcStream = pipe(src, Streamable_stream(scheduler));
+    const srcStream = src[StreamableLike_stream](scheduler);
 
     pipe(
       Observable_merge(
