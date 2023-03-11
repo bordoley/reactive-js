@@ -10,7 +10,6 @@ import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { Optional, newInstance, pipe, returns } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Runnable from "../../rx/Runnable.js";
-import { PauseableState_paused } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { StreamableLike_stream } from "../../streaming.js";
 import * as Flowable from "../../streaming/Flowable.js";
@@ -49,17 +48,12 @@ testModule(
           Runnable.toFlowable(),
         );
 
-        const dest = pipe(
+        await pipe(
           createWritableSink(returns(writable))[StreamableLike_stream](
             scheduler,
           ),
           Stream.sourceFrom(src),
-        );
-
-        await pipe(
-          dest,
-          Observable.endWith(PauseableState_paused),
-          Observable.lastAsync(),
+          Observable.lastAsync({ scheduler }),
         );
 
         pipe(writable.destroyed, expectEquals(true));
@@ -91,19 +85,14 @@ testModule(
           Runnable.toFlowable(),
         );
 
-        const dest = pipe(
+        const promise = pipe(
           createWritableSink(returns(writable))[StreamableLike_stream](
             scheduler,
           ),
           Stream.sourceFrom(src),
-        );
-
-        const promise = pipe(
-          dest,
-          Observable.ignoreElements(),
-          Observable.endWith(0),
           Observable.lastAsync({ scheduler }),
         );
+
         await expectPromiseToThrow(promise);
         pipe(writable.destroyed, expectEquals(true));
       } finally {
@@ -150,7 +139,6 @@ testModule(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
         ),
-        Observable.endWith(""),
         Observable.lastAsync(),
         expectPromiseToThrow,
       );
