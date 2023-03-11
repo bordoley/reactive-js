@@ -1,7 +1,7 @@
 /// <reference types="./Observable.zipObservables.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
@@ -45,7 +45,7 @@ const QueuedEnumerator_create =
     }), {
         [EnumeratorLike_move]() {
             if (this[QueueableLike_count] > 0) {
-                const next = this[PullableQueueLike_pull]();
+                const next = this[QueueLike_pull]();
                 this[EnumeratorLike_current] = next;
                 this[EnumeratorLike_hasCurrent] = true;
             }

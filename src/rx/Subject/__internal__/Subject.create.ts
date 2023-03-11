@@ -10,8 +10,8 @@ import {
 import {
   IndexedQueueLike,
   IndexedQueueLike_get,
-  PullableQueueLike,
-  PullableQueueLike_pull,
+  QueueLike,
+  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
 import {
@@ -81,7 +81,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
           },
 
           [SubjectLike_publish](
-            this: TProperties & SubjectLike<T> & PullableQueueLike<T>,
+            this: TProperties & SubjectLike<T> & QueueLike<T>,
             next: T,
           ) {
             if (!this[DisposableLike_isDisposed]) {
@@ -90,7 +90,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               if (replay > 0) {
                 this[QueueableLike_push](next);
                 if (this[QueueableLike_count] > replay) {
-                  this[PullableQueueLike_pull]();
+                  this[QueueLike_pull]();
                 }
               }
 

@@ -2,7 +2,7 @@
 
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { IndexedQueueLike_get, PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { IndexedQueueLike_get, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, SubjectLike_publish, } from "../../../rx.js";
 import { DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
@@ -35,7 +35,7 @@ const Subject_create =
                 if (replay > 0) {
                     this[QueueableLike_push](next);
                     if (this[QueueableLike_count] > replay) {
-                        this[PullableQueueLike_pull]();
+                        this[QueueLike_pull]();
                     }
                 }
                 for (const observer of this[Subject_observers]) {

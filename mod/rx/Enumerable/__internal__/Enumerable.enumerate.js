@@ -1,7 +1,7 @@
 /// <reference types="./Enumerable.enumerate.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isSome, pipe, returns, unsafeCast } from "../../../functions.js";
@@ -35,7 +35,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
         [EnumeratorLike_move]() {
             this[MutableEnumeratorLike_reset]();
             while (!this[EnumeratorLike_hasCurrent]) {
-                const continuation = this[PullableQueueLike_pull]();
+                const continuation = this[QueueLike_pull]();
                 if (isSome(continuation)) {
                     this[PrioritySchedulerImplementationLike_runContinuation](continuation);
                 }

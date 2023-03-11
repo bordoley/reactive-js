@@ -2,8 +2,8 @@ import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
   IndexedQueueLike,
   IndexedQueueLike_get,
-  PullableQueueLike_head,
-  PullableQueueLike_pull,
+  QueueLike_head,
+  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
   Optional,
@@ -95,14 +95,14 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
             ? (values[headOffsetIndex] as T)
             : (values[tailOffsetIndex] as T);
         },
-        get [PullableQueueLike_head]() {
+        get [QueueLike_head]() {
           unsafeCast<TProperties>(this);
           const head = this[FifoQueue_head];
           const values = this[FifoQueue_values] ?? [];
 
           return head === this[FifoQueue_tail] ? none : values[head];
         },
-        [PullableQueueLike_pull](this: TProperties & QueueableLike) {
+        [QueueLike_pull](this: TProperties & QueueableLike) {
           const tail = this[FifoQueue_tail];
           const values = this[FifoQueue_values] ?? [];
           const capacity = values.length;

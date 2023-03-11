@@ -12,7 +12,7 @@ import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.j
 import { PauseableState_paused, PauseableState_running, } from "../../../scheduling.js";
 import { StreamableLike_isRunnable } from "../../../streaming.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Queue_pushTo from "../../../util/Queue/__internal__/Queue.pushTo.js";
+import Queueable_pushTo from "../../../util/Queue/__internal__/Queueable.pushTo.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import Stream_sourceFrom from "../../Stream/__internal__/Stream.sourceFrom.js";
 const Flowable_toObservable = () => src => {
@@ -22,7 +22,7 @@ const Flowable_toObservable = () => src => {
     return create(observer => {
         const dispatcher = observer[ObserverLike_dispatcher];
         const scheduler = observer[ObserverLike_scheduler];
-        const op = compose(Observable_forEach(Queue_pushTo(dispatcher)), Observable_ignoreElements(), 
+        const op = compose(Observable_forEach(Queueable_pushTo(dispatcher)), Observable_ignoreElements(), 
         // Intentionally use mergeWith here. The stream dispatcher
         // needs to be immediately subscribed to when created
         // otherwise it will have no dispatcher to queue events onto.

@@ -11,8 +11,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
+  QueueLike,
+  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
   ConcatAll,
@@ -87,13 +87,13 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
       observer: TProperties &
         ObserverLike<ContainerOf<C, T>> &
         DelegatingLike<ObserverLike<T>> &
-        PullableQueueLike<ObservableLike<T>>,
+        QueueLike<ObservableLike<T>>,
     ) => {
       if (
         observer[MergeAllObserver_activeCount] <
         observer[MergeAllObserver_maxConcurrency]
       ) {
-        const nextObs = observer[PullableQueueLike_pull]();
+        const nextObs = observer[QueueLike_pull]();
 
         if (isSome(nextObs)) {
           observer[MergeAllObserver_activeCount]++;
@@ -174,7 +174,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             this: TProperties &
               ObserverLike<ContainerOf<C, T>> &
               DelegatingLike<ObserverLike<T>> &
-              PullableQueueLike<ContainerOf<C, T>>,
+              QueueLike<ContainerOf<C, T>>,
             next: ContainerOf<C, T>,
           ) {
             Observer_assertState(this);
@@ -185,7 +185,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
               this[QueueableLike_count] + this[MergeAllObserver_activeCount] >
               this[MergeAllObserver_maxBufferSize]
             ) {
-              this[PullableQueueLike_pull]();
+              this[QueueLike_pull]();
             }
             subscribeNext(this);
           },

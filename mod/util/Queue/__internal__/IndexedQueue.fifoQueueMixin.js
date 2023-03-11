@@ -1,7 +1,7 @@
 /// <reference types="./IndexedQueue.fifoQueueMixin.d.ts" />
 
 import { mix, props } from "../../../__internal__/mixins.js";
-import { IndexedQueueLike_get, PullableQueueLike_head, PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { IndexedQueueLike_get, QueueLike_head, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
@@ -46,14 +46,14 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                     ? values[headOffsetIndex]
                     : values[tailOffsetIndex];
         },
-        get [PullableQueueLike_head]() {
+        get [QueueLike_head]() {
             var _a;
             unsafeCast(this);
             const head = this[FifoQueue_head];
             const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
             return head === this[FifoQueue_tail] ? none : values[head];
         },
-        [PullableQueueLike_pull]() {
+        [QueueLike_pull]() {
             var _a;
             const tail = this[FifoQueue_tail];
             const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];

@@ -1,7 +1,7 @@
 /// <reference types="./Observable.takeLast.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
@@ -32,7 +32,7 @@ const Observable_takeLast = /*@__PURE__*/ (() => {
             this[QueueableLike_push](next);
             if (this[QueueableLike_count] >
                 this[TakeLastObserverMixin_takeLastCount]) {
-                this[PullableQueueLike_pull]();
+                this[QueueLike_pull]();
             }
         },
     }));

@@ -10,8 +10,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
+  QueueLike,
+  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
@@ -75,14 +75,14 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
         observer: TProperties &
           ObserverLike<TA> &
           DelegatingLike<ObserverLike<T>> &
-          PullableQueueLike<TA>,
+          QueueLike<TA>,
       ) => {
         if (
           observer[QueueableLike_count] > 0 &&
           observer[ZipWithLatestFromObserver_hasLatest]
         ) {
           observer[ZipWithLatestFromObserver_hasLatest] = false;
-          const next = observer[PullableQueueLike_pull]() as TA;
+          const next = observer[QueueLike_pull]() as TA;
           const result = observer[ZipWithLatestFromObserver_selector](
             next,
             observer[ZipWithLatestFromObserver_otherLatest] as TB,
@@ -164,7 +164,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
               this: TProperties &
                 ObserverLike<TA> &
                 DelegatingLike<ObserverLike<T>> &
-                PullableQueueLike<TA>,
+                QueueLike<TA>,
               next: TA,
             ) {
               Observer_assertState(this);

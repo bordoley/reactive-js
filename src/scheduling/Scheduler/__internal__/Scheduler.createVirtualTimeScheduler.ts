@@ -8,8 +8,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
+  QueueLike,
+  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
   EnumeratorLike,
@@ -33,7 +33,7 @@ import {
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
-import PullableQueue_priorityQueueMixin from "../../../util/Queue/__internal__/PullableQueue.priorityQueueMixin.js";
+import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
 import {
   ContinuationLike,
   ContinuationLike_continuationScheduler,
@@ -84,7 +84,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     include(
       PriorityScheduler_mixin,
       typedMutableEnumeratorMixin,
-      PullableQueue_priorityQueueMixin<VirtualTask>(),
+      Queue_priorityQueueMixin<VirtualTask>(),
     ),
     function VirtualTimeScheduler(
       instance: Pick<
@@ -96,11 +96,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     ): VirtualTimeSchedulerLike {
       init(PriorityScheduler_mixin, instance);
       init(typedMutableEnumeratorMixin, instance);
-      init(
-        PullableQueue_priorityQueueMixin<VirtualTask>(),
-        instance,
-        comparator,
-      );
+      init(Queue_priorityQueueMixin<VirtualTask>(), instance, comparator);
 
       instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
 
@@ -149,7 +145,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       [ContinuationSchedulerLike_schedule](
         this: TProperties &
           DisposableLike &
-          PullableQueueLike<VirtualTask> &
+          QueueLike<VirtualTask> &
           PrioritySchedulerImplementationLike,
         continuation: ContinuationLike,
         delay: number,
@@ -169,10 +165,10 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       [EnumeratorLike_move](
         this: TProperties &
           MutableEnumeratorLike<VirtualTask> &
-          PullableQueueLike<VirtualTask> &
+          QueueLike<VirtualTask> &
           DisposableLike,
       ): boolean {
-        const task = this[PullableQueueLike_pull]();
+        const task = this[QueueLike_pull]();
 
         if (isSome(task)) {
           this[EnumeratorLike_current] = task;

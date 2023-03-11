@@ -1,6 +1,6 @@
 /// <reference types="./Sequence.takeLast.d.ts" />
 
-import { PullableQueueLike_pull } from "../../../__internal__/util.internal.js";
+import { QueueLike_pull } from "../../../__internal__/util.internal.js";
 import { SequenceLike_data, SequenceLike_next, } from "../../../containers.js";
 import { callWith, isSome, pipe } from "../../../functions.js";
 import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
@@ -16,7 +16,7 @@ const Sequence_takeLast =
             if (isSome(result)) {
                 last[QueueableLike_push](result[SequenceLike_data]);
                 if (last[QueueableLike_count] > maxCount) {
-                    last[PullableQueueLike_pull]();
+                    last[QueueLike_pull]();
                 }
                 result = result[SequenceLike_next]();
             }

@@ -1,7 +1,7 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
 import { createInstanceFactory, getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { call, isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { ContinuationContextLike_yield, DispatcherLike_scheduler, } from "../../../scheduling.js";
@@ -30,7 +30,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         instance[ObserverDispatcher_continuation] = (ctx) => {
             const { [ObserverDispatcher_observer]: observer } = instance;
             while (instance[QueueableLike_count] > 0) {
-                const next = instance[PullableQueueLike_pull]();
+                const next = instance[QueueLike_pull]();
                 observer[ObserverLike_notify](next);
                 if (instance[QueueableLike_count] > 0) {
                     ctx[ContinuationContextLike_yield]();

@@ -7,8 +7,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
+  QueueLike,
+  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
   EnumeratorLike,
@@ -102,13 +102,13 @@ const Enumerable_enumerate: <T>() => (
         [EnumeratorLike_move](
           this: TEnumeratorSchedulerProperties &
             MutableEnumeratorLike<T> &
-            PullableQueueLike<ContinuationLike> &
+            QueueLike<ContinuationLike> &
             PrioritySchedulerImplementationLike,
         ) {
           this[MutableEnumeratorLike_reset]();
 
           while (!this[EnumeratorLike_hasCurrent]) {
-            const continuation = this[PullableQueueLike_pull]();
+            const continuation = this[QueueLike_pull]();
             if (isSome(continuation)) {
               this[PrioritySchedulerImplementationLike_runContinuation](
                 continuation,
@@ -124,7 +124,7 @@ const Enumerable_enumerate: <T>() => (
         [ContinuationSchedulerLike_schedule](
           this: TEnumeratorSchedulerProperties &
             DisposableLike &
-            PullableQueueLike<ContinuationLike> &
+            QueueLike<ContinuationLike> &
             PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
           _delay: number,

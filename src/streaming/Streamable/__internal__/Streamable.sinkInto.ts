@@ -13,7 +13,7 @@ import {
 } from "../../../streaming.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Queue_pushTo from "../../../util/Queue/__internal__/Queue.pushTo.js";
+import Queueable_pushTo from "../../../util/Queue/__internal__/Queueable.pushTo.js";
 
 const Streamable_sinkInto =
   <TReq, T>(dest: StreamLike<T, TReq>) =>
@@ -25,13 +25,13 @@ const Streamable_sinkInto =
       Observable_merge(
         pipe(
           srcStream,
-          Observable_forEach<ObservableLike, T>(Queue_pushTo(dest)),
+          Observable_forEach<ObservableLike, T>(Queueable_pushTo(dest)),
           Observable_ignoreElements(),
           Observable_onSubscribe(() => dest),
         ),
         pipe(
           dest,
-          Observable_forEach<ObservableLike, TReq>(Queue_pushTo(srcStream)),
+          Observable_forEach<ObservableLike, TReq>(Queueable_pushTo(srcStream)),
           Observable_ignoreElements(),
         ),
       ),

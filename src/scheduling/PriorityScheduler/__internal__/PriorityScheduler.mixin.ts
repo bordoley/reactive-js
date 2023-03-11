@@ -9,8 +9,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
+  QueueLike,
+  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
   Optional,
@@ -190,7 +190,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           },
           [ContinuationLike_run](
             this: ContinuationLike &
-              PullableQueueLike<ContinuationLike> &
+              QueueLike<ContinuationLike> &
               TContinuationProperties &
               ContinuationContextLike,
           ): void {
@@ -202,7 +202,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
 
             // Run any inner continuations first.
             let head: Optional<ContinuationLike> = none;
-            while (((head = this[PullableQueueLike_pull]()), isSome(head))) {
+            while (((head = this[QueueLike_pull]()), isSome(head))) {
               if (!head[DisposableLike_isDisposed]) {
                 this[Continuation_childContinuation] = head;
                 head[ContinuationLike_run]();
@@ -246,7 +246,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
               (isSome(yieldError) && yieldError.delay > 0) ||
               this[DisposableLike_isDisposed]
             ) {
-              while (((head = this[PullableQueueLike_pull]()), isSome(head))) {
+              while (((head = this[QueueLike_pull]()), isSome(head))) {
                 if (!head[DisposableLike_isDisposed]) {
                   scheduler[ContinuationSchedulerLike_schedule](head, 0);
                 }

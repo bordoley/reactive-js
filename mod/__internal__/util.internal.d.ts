@@ -8,13 +8,13 @@ export interface SerialDisposableLike<TDisposable extends DisposableLike = Dispo
 }
 export interface DelegatingDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DelegatingLike<TDisposable>, DisposableLike {
 }
-export declare const PullableQueueLike_head: unique symbol;
-export declare const PullableQueueLike_pull: unique symbol;
-export interface PullableQueueLike<T> extends QueueableLike<T> {
-    readonly [PullableQueueLike_head]: Optional<T>;
-    [PullableQueueLike_pull](): Optional<T>;
+export declare const QueueLike_head: unique symbol;
+export declare const QueueLike_pull: unique symbol;
+export interface QueueLike<T> extends QueueableLike<T> {
+    readonly [QueueLike_head]: Optional<T>;
+    [QueueLike_pull](): Optional<T>;
 }
 export declare const IndexedQueueLike_get: unique symbol;
-export interface IndexedQueueLike<T> extends PullableQueueLike<T> {
+export interface IndexedQueueLike<T> extends QueueLike<T> {
     [IndexedQueueLike_get](index: number): T;
 }

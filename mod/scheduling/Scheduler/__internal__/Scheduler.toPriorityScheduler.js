@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { PullableQueueLike_head, PullableQueueLike_pull, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
+import { QueueLike_head, QueueLike_pull, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
@@ -12,7 +12,7 @@ import { DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } f
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
-import PullableQueue_createPriorityQueue from "../../../util/Queue/__internal__/PullableQueue.createPriorityQueue.js";
+import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
 import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
     const QueueTask_continuation = Symbol("QueueTask_continuation");
@@ -35,7 +35,7 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
         const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue } = instance;
         const now = instance[QueueScheduler_hostScheduler][SchedulerLike_now];
         while (true) {
-            const task = delayed[PullableQueueLike_head];
+            const task = delayed[QueueLike_head];
             if (isNone(task)) {
                 break;
             }
@@ -43,23 +43,23 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
             if (task[QueueTask_dueTime] > now && !taskIsDispose) {
                 break;
             }
-            delayed[PullableQueueLike_pull]();
+            delayed[QueueLike_pull]();
             if (!taskIsDispose) {
                 queue[QueueableLike_push](task);
             }
         }
         let task = none;
         while (true) {
-            task = queue[PullableQueueLike_head];
+            task = queue[QueueLike_head];
             if (isNone(task)) {
                 break;
             }
             if (!task[QueueTask_continuation][DisposableLike_isDisposed]) {
                 break;
             }
-            queue[PullableQueueLike_pull]();
+            queue[QueueLike_pull]();
         }
-        return task !== null && task !== void 0 ? task : delayed[PullableQueueLike_head];
+        return task !== null && task !== void 0 ? task : delayed[QueueLike_head];
     };
     const priorityShouldYield = (instance, next) => {
         const { [EnumeratorLike_current]: current } = instance;
@@ -113,9 +113,9 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
         init(typedMutableEnumeratorMixin, instance);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
         instance[QueueScheduler_delayed] =
-            PullableQueue_createPriorityQueue(delayedComparator);
+            Queue_createPriorityQueue(delayedComparator);
         instance[QueueScheduler_queue] =
-            PullableQueue_createPriorityQueue(taskComparator);
+            Queue_createPriorityQueue(taskComparator);
         instance[QueueScheduler_hostScheduler] = host;
         return instance;
     }, props({
@@ -162,7 +162,7 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
         [EnumeratorLike_move]() {
             // First fast forward through disposed tasks.
             peek(this);
-            const task = this[QueueScheduler_queue][PullableQueueLike_pull]();
+            const task = this[QueueScheduler_queue][QueueLike_pull]();
             if (isSome(task)) {
                 this[EnumeratorLike_current] = task;
             }

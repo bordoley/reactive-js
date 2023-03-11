@@ -7,8 +7,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
+  QueueLike,
+  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -84,7 +84,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
       }),
       {
         [ObserverLike_notify](
-          this: TProperties & DisposableLike & PullableQueueLike<T>,
+          this: TProperties & DisposableLike & QueueLike<T>,
           next: T,
         ) {
           this[QueueableLike_push](next);
@@ -93,7 +93,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
             this[QueueableLike_count] >
             this[TakeLastObserverMixin_takeLastCount]
           ) {
-            this[PullableQueueLike_pull]();
+            this[QueueLike_pull]();
           }
         },
       },

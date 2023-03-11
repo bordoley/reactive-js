@@ -1,4 +1,4 @@
-import { PullableQueueLike_pull } from "../../../__internal__/util.internal.js";
+import { QueueLike_pull } from "../../../__internal__/util.internal.js";
 import {
   SequenceLike,
   SequenceLike_data,
@@ -23,7 +23,7 @@ const Sequence_takeLast: TakeLast<SequenceLike>["takeLast"] =
             last[QueueableLike_push](result[SequenceLike_data]);
 
             if (last[QueueableLike_count] > maxCount) {
-              last[PullableQueueLike_pull]();
+              last[QueueLike_pull]();
             }
             result = result[SequenceLike_next]();
           } else {

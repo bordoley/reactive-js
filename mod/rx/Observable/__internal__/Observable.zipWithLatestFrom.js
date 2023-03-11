@@ -1,7 +1,7 @@
 /// <reference types="./Observable.zipWithLatestFrom.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
@@ -25,7 +25,7 @@ const Observable_zipWithLatestFrom =
             if (observer[QueueableLike_count] > 0 &&
                 observer[ZipWithLatestFromObserver_hasLatest]) {
                 observer[ZipWithLatestFromObserver_hasLatest] = false;
-                const next = observer[PullableQueueLike_pull]();
+                const next = observer[QueueLike_pull]();
                 const result = observer[ZipWithLatestFromObserver_selector](next, observer[ZipWithLatestFromObserver_otherLatest]);
                 observer[DelegatingLike_delegate][ObserverLike_notify](result);
             }

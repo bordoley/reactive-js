@@ -10,8 +10,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
+  QueueLike,
+  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
   EnumeratorLike,
@@ -100,10 +100,10 @@ const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
         }),
         {
           [EnumeratorLike_move](
-            this: DisposableLike & TProperties & PullableQueueLike<T>,
+            this: DisposableLike & TProperties & QueueLike<T>,
           ) {
             if (this[QueueableLike_count] > 0) {
-              const next = this[PullableQueueLike_pull]() as T;
+              const next = this[QueueLike_pull]() as T;
               this[EnumeratorLike_current] = next;
               this[EnumeratorLike_hasCurrent] = true;
             } else {

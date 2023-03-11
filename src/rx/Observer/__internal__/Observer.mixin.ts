@@ -9,8 +9,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
+  QueueLike,
+  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
   Optional,
@@ -52,9 +52,7 @@ import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/Indexe
 import Observer_schedule from "./Observer.schedule.js";
 
 const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
-  const scheduleDrainQueue = (
-    dispatcher: TProperties & PullableQueueLike<T>,
-  ) => {
+  const scheduleDrainQueue = (dispatcher: TProperties & QueueLike<T>) => {
     if (dispatcher[QueueableLike_count] === 1) {
       const { [ObserverDispatcher_observer]: observer } = dispatcher;
       pipe(
@@ -102,7 +100,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           const { [ObserverDispatcher_observer]: observer } = instance;
 
           while (instance[QueueableLike_count] > 0) {
-            const next = instance[PullableQueueLike_pull]() as T;
+            const next = instance[QueueLike_pull]() as T;
             observer[ObserverLike_notify](next);
 
             if (instance[QueueableLike_count] > 0) {
@@ -139,7 +137,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           return this[ObserverDispatcher_observer][ObserverLike_scheduler];
         },
         [QueueableLike_push](
-          this: TProperties & DisposableLike & PullableQueueLike<T>,
+          this: TProperties & DisposableLike & QueueLike<T>,
           next: T,
         ) {
           if (!this[DisposableLike_isDisposed]) {

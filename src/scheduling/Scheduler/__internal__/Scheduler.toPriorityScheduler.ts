@@ -9,9 +9,9 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PullableQueueLike,
-  PullableQueueLike_head,
-  PullableQueueLike_pull,
+  QueueLike,
+  QueueLike_head,
+  QueueLike_pull,
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../__internal__/util.internal.js";
@@ -57,7 +57,7 @@ import {
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
-import PullableQueue_createPriorityQueue from "../../../util/Queue/__internal__/PullableQueue.createPriorityQueue.js";
+import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
 import {
   ContinuationLike,
   ContinuationLike_continuationScheduler,
@@ -105,7 +105,7 @@ const Scheduler_toPriorityScheduler: Function1<
     const now = instance[QueueScheduler_hostScheduler][SchedulerLike_now];
 
     while (true) {
-      const task = delayed[PullableQueueLike_head];
+      const task = delayed[QueueLike_head];
 
       if (isNone(task)) {
         break;
@@ -117,7 +117,7 @@ const Scheduler_toPriorityScheduler: Function1<
         break;
       }
 
-      delayed[PullableQueueLike_pull]();
+      delayed[QueueLike_pull]();
 
       if (!taskIsDispose) {
         queue[QueueableLike_push](task);
@@ -126,7 +126,7 @@ const Scheduler_toPriorityScheduler: Function1<
 
     let task: Optional<QueueTask> = none;
     while (true) {
-      task = queue[PullableQueueLike_head];
+      task = queue[QueueLike_head];
 
       if (isNone(task)) {
         break;
@@ -136,10 +136,10 @@ const Scheduler_toPriorityScheduler: Function1<
         break;
       }
 
-      queue[PullableQueueLike_pull]();
+      queue[QueueLike_pull]();
     }
 
-    return task ?? delayed[PullableQueueLike_head];
+    return task ?? delayed[QueueLike_head];
   };
 
   const priorityShouldYield = (
@@ -234,14 +234,14 @@ const Scheduler_toPriorityScheduler: Function1<
   const QueueScheduler_taskIDCounter = Symbol("QueueScheduler_taskIDCounter");
 
   type TProperties = {
-    readonly [QueueScheduler_delayed]: PullableQueueLike<QueueTask>;
+    readonly [QueueScheduler_delayed]: QueueLike<QueueTask>;
     [QueueScheduler_dueTime]: number;
     readonly [QueueScheduler_hostScheduler]: SchedulerLike;
     [QueueScheduler_hostContinuation]: Optional<
       SideEffect1<ContinuationContextLike>
     >;
     [PauseableSchedulerLike_isPaused]: boolean;
-    readonly [QueueScheduler_queue]: PullableQueueLike<QueueTask>;
+    readonly [QueueScheduler_queue]: QueueLike<QueueTask>;
     [QueueScheduler_taskIDCounter]: number;
   };
 
@@ -271,9 +271,9 @@ const Scheduler_toPriorityScheduler: Function1<
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
 
         instance[QueueScheduler_delayed] =
-          PullableQueue_createPriorityQueue(delayedComparator);
+          Queue_createPriorityQueue(delayedComparator);
         instance[QueueScheduler_queue] =
-          PullableQueue_createPriorityQueue(taskComparator);
+          Queue_createPriorityQueue(taskComparator);
         instance[QueueScheduler_hostScheduler] = host;
 
         return instance;
@@ -338,7 +338,7 @@ const Scheduler_toPriorityScheduler: Function1<
           // First fast forward through disposed tasks.
           peek(this);
 
-          const task = this[QueueScheduler_queue][PullableQueueLike_pull]();
+          const task = this[QueueScheduler_queue][QueueLike_pull]();
 
           if (isSome(task)) {
             this[EnumeratorLike_current] = task;

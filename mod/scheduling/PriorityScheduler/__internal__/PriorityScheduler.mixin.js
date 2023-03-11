@@ -2,7 +2,7 @@
 
 import { floor, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { error, isNone, isSome, newInstance, none, unsafeCast, } from "../../../functions.js";
 import { ContinuationContextLike_now, ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
@@ -65,7 +65,7 @@ export const PriorityScheduler_mixin =
             const scheduler = this[ContinuationLike_continuationScheduler];
             // Run any inner continuations first.
             let head = none;
-            while (((head = this[PullableQueueLike_pull]()), isSome(head))) {
+            while (((head = this[QueueLike_pull]()), isSome(head))) {
                 if (!head[DisposableLike_isDisposed]) {
                     this[Continuation_childContinuation] = head;
                     head[ContinuationLike_run]();
@@ -100,7 +100,7 @@ export const PriorityScheduler_mixin =
             // reschedule all its children on the parent.
             if ((isSome(yieldError) && yieldError.delay > 0) ||
                 this[DisposableLike_isDisposed]) {
-                while (((head = this[PullableQueueLike_pull]()), isSome(head))) {
+                while (((head = this[QueueLike_pull]()), isSome(head))) {
                     if (!head[DisposableLike_isDisposed]) {
                         scheduler[ContinuationSchedulerLike_schedule](head, 0);
                     }

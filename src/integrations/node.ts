@@ -56,7 +56,7 @@ import {
   QueueableLike_push,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-import * as Queue from "../util/Queue.js";
+import * as Queueable from "../util/Queueable.js";
 
 interface BindNodeCallback {
   <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<
@@ -202,7 +202,7 @@ export const createReadableSource = (
           addToNodeStream(readable),
         );
 
-        const onData = Queue.pushTo(dispatcher);
+        const onData = Queueable.pushTo(dispatcher);
         const onEnd = () => {
           dispatcher[DisposableLike_dispose]();
         };
@@ -308,7 +308,7 @@ export const transform =
 
           pipe(
             modeObs,
-            Observable.forEach(Queue.pushTo(transformReadableStream)),
+            Observable.forEach(Queueable.pushTo(transformReadableStream)),
             Observable.subscribe(observer[ObserverLike_scheduler]),
             addToNodeStream(transform),
           );

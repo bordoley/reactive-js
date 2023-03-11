@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { isSome, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
@@ -25,7 +25,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
         const subscribeNext = (observer) => {
             if (observer[MergeAllObserver_activeCount] <
                 observer[MergeAllObserver_maxConcurrency]) {
-                const nextObs = observer[PullableQueueLike_pull]();
+                const nextObs = observer[QueueLike_pull]();
                 if (isSome(nextObs)) {
                     observer[MergeAllObserver_activeCount]++;
                     pipe(nextObs, Observable_forEach(Observer_notifyObserver(observer[DelegatingLike_delegate])), Observable_subscribe(observer[ObserverLike_scheduler]), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
@@ -70,7 +70,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 // Drop old events if the maxBufferSize has been exceeded
                 if (this[QueueableLike_count] + this[MergeAllObserver_activeCount] >
                     this[MergeAllObserver_maxBufferSize]) {
-                    this[PullableQueueLike_pull]();
+                    this[QueueLike_pull]();
                 }
                 subscribeNext(this);
             },
