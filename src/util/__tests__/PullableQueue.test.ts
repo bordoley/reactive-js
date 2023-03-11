@@ -6,7 +6,7 @@ import {
   expectEquals,
   test,
   testModule,
-} from "../../__tests__/testing.js";
+} from "../../__internal__/testing.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../util.js";
 import IndexedQueue_fifoQueueMixin from "../PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";

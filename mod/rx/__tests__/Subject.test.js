@@ -1,6 +1,6 @@
 /// <reference types="./Subject.test.d.ts" />
 
-import { expectArrayEquals, expectEquals, test, testModule, } from "../../__tests__/testing.js";
+import { expectArrayEquals, expectEquals, test, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { pipe } from "../../functions.js";
 import { MulticastObservableLike_observerCount } from "../../rx.js";

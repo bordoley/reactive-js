@@ -1,11 +1,11 @@
 /// <reference types="./operators.d.ts" />
 
+import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, testAsync, } from "../__internal__/testing.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { alwaysFalse, alwaysTrue, arrayEquality, increment, none, pipe, pipeLazy, returns, } from "../functions.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
-import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, testAsync, } from "./testing.js";
 export const bufferTests = (m) => describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ maxBufferSize: 3 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],

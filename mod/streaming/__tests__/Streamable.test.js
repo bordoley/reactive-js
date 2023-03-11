@@ -1,6 +1,6 @@
 /// <reference types="./Streamable.test.d.ts" />
 
-import { describe, expectArrayEquals, test, testModule, } from "../../__tests__/testing.js";
+import { describe, expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
 import { pipe, returns } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";

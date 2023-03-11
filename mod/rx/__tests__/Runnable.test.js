@@ -1,7 +1,7 @@
 /// <reference types="./Runnable.test.d.ts" />
 
+import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, test, testModule, } from "../../__internal__/testing.js";
 import { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, containsTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, retryTests, scanLastTests, scanTests, skipFirstTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests as zipOperatorTests, zipWithTests, } from "../../__tests__/operators.js";
-import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, test, testModule, } from "../../__tests__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { arrayEquality, identity, increment, incrementBy, newInstance, none, pipe, pipeLazy, returns, } from "../../functions.js";
 import { ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../rx.js";

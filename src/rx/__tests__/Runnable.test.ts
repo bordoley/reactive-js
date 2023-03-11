@@ -1,4 +1,16 @@
 import {
+  describe,
+  expectArrayEquals,
+  expectEquals,
+  expectToHaveBeenCalledTimes,
+  expectToThrow,
+  expectToThrowError,
+  expectTrue,
+  mockFn,
+  test,
+  testModule,
+} from "../../__internal__/testing.js";
+import {
   bufferTests,
   catchErrorTests,
   concatAllTests,
@@ -30,18 +42,6 @@ import {
   zipTests as zipOperatorTests,
   zipWithTests,
 } from "../../__tests__/operators.js";
-import {
-  describe,
-  expectArrayEquals,
-  expectEquals,
-  expectToHaveBeenCalledTimes,
-  expectToThrow,
-  expectToThrowError,
-  expectTrue,
-  mockFn,
-  test,
-  testModule,
-} from "../../__tests__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import {
   arrayEquality,

@@ -2,7 +2,7 @@
 
 import { floor, random } from "../../__internal__/math.js";
 import { createInstanceFactory } from "../../__internal__/mixins.js";
-import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../../__tests__/testing.js";
+import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../../__internal__/testing.js";
 import { newInstance, none, pipe } from "../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../util.js";
 import IndexedQueue_fifoQueueMixin from "../PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";

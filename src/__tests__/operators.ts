@@ -1,4 +1,12 @@
 import {
+  describe,
+  expectArrayEquals,
+  expectEquals,
+  expectToThrowError,
+  test,
+  testAsync,
+} from "../__internal__/testing.js";
+import {
   Buffer,
   CatchError,
   Concat,
@@ -55,14 +63,6 @@ import {
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
-import {
-  describe,
-  expectArrayEquals,
-  expectEquals,
-  expectToThrowError,
-  test,
-  testAsync,
-} from "./testing.js";
 
 export const bufferTests = <C extends ContainerLike>(
   m: Buffer<C> & FromReadonlyArray<C> & ToRunnable<C>,

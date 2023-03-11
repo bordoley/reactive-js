@@ -4,7 +4,7 @@ import {
   expectPromiseToThrow,
   testAsync,
   testModule,
-} from "../../__tests__/testing.js";
+} from "../../__internal__/testing.js";
 import { Optional, newInstance, pipe } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Promiseable from "../Promiseable.js";

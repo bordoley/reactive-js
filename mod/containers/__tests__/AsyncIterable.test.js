@@ -1,6 +1,6 @@
 /// <reference types="./AsyncIterable.test.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, testAsync, testModule, } from "../../__tests__/testing.js";
+import { describe, expectArrayEquals, expectEquals, testAsync, testModule, } from "../../__internal__/testing.js";
 import { error, pipe } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Flowable from "../../streaming/Flowable.js";

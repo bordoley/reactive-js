@@ -1,4 +1,10 @@
 import {
+  describe,
+  expectArrayEquals,
+  test,
+  testModule,
+} from "../../__internal__/testing.js";
+import {
   bufferTests,
   concatAllTests,
   concatMapTests,
@@ -26,12 +32,6 @@ import {
   zipTests,
   zipWithTests,
 } from "../../__tests__/operators.js";
-import {
-  describe,
-  expectArrayEquals,
-  test,
-  testModule,
-} from "../../__tests__/testing.js";
 import { pipe, returns } from "../../functions.js";
 import { EnumerableLike } from "../../rx.js";
 import * as Enumerable from "../Enumerable.js";

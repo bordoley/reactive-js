@@ -7,7 +7,7 @@ import {
   mockFn,
   test,
   testModule,
-} from "../../__tests__/testing.js";
+} from "../../__internal__/testing.js";
 import {
   Optional,
   error,

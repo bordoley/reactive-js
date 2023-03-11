@@ -1,3 +1,4 @@
+import { testModule } from "../../__internal__/testing.js";
 import {
   fromReadonlyArrayTests,
   keepTests,
@@ -6,7 +7,6 @@ import {
   takeWhileTests,
   toObservableTests,
 } from "../../__tests__/operators.js";
-import { testModule } from "../../__tests__/testing.js";
 import { AsyncEnumerableLike } from "../../streaming.js";
 import * as AsyncEnumerable from "../AsyncEnumerable.js";
 

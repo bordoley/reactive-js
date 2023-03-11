@@ -1,3 +1,4 @@
+import { testModule } from "../../__internal__/testing.js";
 import {
   forEachTests,
   fromReadonlyArrayTests,
@@ -6,7 +7,6 @@ import {
   toEnumerableTests,
   toRunnableWithDelayTests,
 } from "../../__tests__/operators.js";
-import { testModule } from "../../__tests__/testing.js";
 import { ReadonlyArrayLike } from "../../containers.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 

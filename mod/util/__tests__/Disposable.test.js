@@ -1,6 +1,6 @@
 /// <reference types="./Disposable.test.d.ts" />
 
-import { expectArrayEquals, expectEquals, expectIsNone, expectToHaveBeenCalledTimes, expectTrue, mockFn, test, testModule, } from "../../__tests__/testing.js";
+import { expectArrayEquals, expectEquals, expectIsNone, expectToHaveBeenCalledTimes, expectTrue, mockFn, test, testModule, } from "../../__internal__/testing.js";
 import { error, none, pipe, pipeLazy, raise, } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import { SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";

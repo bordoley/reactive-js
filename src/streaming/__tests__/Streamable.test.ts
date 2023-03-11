@@ -3,7 +3,7 @@ import {
   expectArrayEquals,
   test,
   testModule,
-} from "../../__tests__/testing.js";
+} from "../../__internal__/testing.js";
 import { pipe, returns } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";

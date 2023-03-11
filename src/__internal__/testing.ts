@@ -13,6 +13,7 @@ import {
   raise,
   strictEquality,
 } from "../functions.js";
+import { __DENO__ } from "./constants.js";
 
 export const DescribeType = 1;
 export const TestType = 2;
@@ -187,8 +188,6 @@ export const expectPromiseToThrow = async (promise: PromiseLike<unknown>) => {
 declare const Deno: {
   test(name: string, f: () => void): void;
 };
-
-export const __DENO__ = typeof Deno === "object";
 
 const createTests = (testGroup: TestGroup, parents: readonly string[]) => {
   const path = [...parents, testGroup.name];

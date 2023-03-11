@@ -1,6 +1,6 @@
 /// <reference types="./Promiseable.test.d.ts" />
 
-import { describe, expectEquals, expectPromiseToThrow, testAsync, testModule, } from "../../__tests__/testing.js";
+import { describe, expectEquals, expectPromiseToThrow, testAsync, testModule, } from "../../__internal__/testing.js";
 import { newInstance, pipe } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Promiseable from "../Promiseable.js";

@@ -1,3 +1,4 @@
+import { testModule } from "../../__internal__/testing.js";
 import {
   concatAllTests,
   concatMapTests,
@@ -24,7 +25,6 @@ import {
   zipTests,
   zipWithTests,
 } from "../../__tests__/operators.js";
-import { testModule } from "../../__tests__/testing.js";
 import { SequenceLike } from "../../containers.js";
 import * as Sequence from "../Sequence.js";
 

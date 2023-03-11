@@ -5,7 +5,7 @@ import {
   expectPromiseToThrow,
   testAsync,
   testModule,
-} from "../../__tests__/testing.js";
+} from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { Optional, newInstance, pipe, returns } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";

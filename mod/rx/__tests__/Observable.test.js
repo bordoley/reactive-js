@@ -1,6 +1,6 @@
 /// <reference types="./Observable.test.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectIsSome, expectToHaveBeenCalledTimes, mockFn, test, testModule, } from "../../__tests__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectIsSome, expectToHaveBeenCalledTimes, mockFn, test, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { increment, isSome, pipe, raise, returns } from "../../functions.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
