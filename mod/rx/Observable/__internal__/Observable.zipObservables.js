@@ -12,7 +12,7 @@ import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -44,7 +44,7 @@ const QueuedEnumerator_create =
         [EnumeratorLike_hasCurrent]: false,
     }), {
         [EnumeratorLike_move]() {
-            if (this[QueueLike_count] > 0) {
+            if (this[QueueableLike_count] > 0) {
                 const next = this[PullableQueueLike_pull]();
                 this[EnumeratorLike_current] = next;
                 this[EnumeratorLike_hasCurrent] = true;
@@ -92,7 +92,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
-            queuedEnumerator[QueueLike_push](next);
+            queuedEnumerator[QueueableLike_push](next);
             if (!shouldEmit(enumerators)) {
                 return;
             }

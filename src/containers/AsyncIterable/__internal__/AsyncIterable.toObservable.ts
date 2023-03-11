@@ -15,8 +15,8 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueLike_count,
-  QueueLike_push,
+  QueueableLike_count,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
@@ -45,13 +45,13 @@ const AsyncIterable_toObservable: ToObservable<
             //
             // Check the dispatcher's buffer size so we can avoid queueing forever
             // in this situation.
-            dispatcher[QueueLike_count] < maxBuffer &&
+            dispatcher[QueueableLike_count] < maxBuffer &&
             scheduler[SchedulerLike_now] - startTime < maxYieldInterval
           ) {
             const next = await iterator.next();
 
             if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
-              dispatcher[QueueLike_push](next.value);
+              dispatcher[QueueableLike_push](next.value);
             } else {
               dispatcher[DisposableLike_dispose]();
             }

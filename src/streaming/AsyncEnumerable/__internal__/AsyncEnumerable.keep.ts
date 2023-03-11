@@ -27,7 +27,7 @@ import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
-import { QueueLike_push } from "../../../util.js";
+import { QueueableLike_push } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
@@ -62,7 +62,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
           delegate,
           Observable_forEach<ObservableLike, T>(x => {
             if (!predicate(x)) {
-              delegate[QueueLike_push](none);
+              delegate[QueueableLike_push](none);
             }
           }),
           Observable_keep(predicate),

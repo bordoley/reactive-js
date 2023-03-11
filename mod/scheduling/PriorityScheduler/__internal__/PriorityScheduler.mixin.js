@@ -5,7 +5,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { error, isNone, isSome, newInstance, none, unsafeCast, } from "../../../functions.js";
 import { ContinuationContextLike_now, ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 export const ContinuationSchedulerLike_now = Symbol("ContinuationSchedulerLike_now");
@@ -52,7 +52,7 @@ export const PriorityScheduler_mixin =
         },
         [ContinuationContextLike_yield](delay = 0) {
             const shouldYield = delay > 0 ||
-                this[QueueLike_count] > 0 ||
+                this[QueueableLike_count] > 0 ||
                 this[ContinuationSchedulerLike_shouldYield];
             if (shouldYield) {
                 throw newInstance(YieldError, delay);
@@ -122,7 +122,7 @@ export const PriorityScheduler_mixin =
                 childContinuation[ContinuationSchedulerLike_schedule](continuation, 0);
             }
             else {
-                this[QueueLike_push](continuation);
+                this[QueueableLike_push](continuation);
             }
         },
     }));

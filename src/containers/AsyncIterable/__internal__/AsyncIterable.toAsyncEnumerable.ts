@@ -13,7 +13,7 @@ import Streamable_createLifted from "../../../streaming/Streamable/__internal__/
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueLike_push,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 
@@ -38,7 +38,7 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
                   const next = await iterator.next();
 
                   if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
-                    dispatcher[QueueLike_push](next.value);
+                    dispatcher[QueueableLike_push](next.value);
                   } else {
                     dispatcher[DisposableLike_dispose]();
                   }

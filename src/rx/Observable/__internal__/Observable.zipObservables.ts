@@ -41,9 +41,9 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueLike,
-  QueueLike_count,
-  QueueLike_push,
+  QueueableLike,
+  QueueableLike_count,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -63,7 +63,7 @@ import Observable_isEnumerable from "./Observable.isEnumerable.js";
 
 export interface QueuedEnumeratorLike<T = unknown>
   extends EnumeratorLike<T>,
-    QueueLike<T>,
+    QueueableLike<T>,
     DisposableLike {}
 
 const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
@@ -79,7 +79,7 @@ const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
         function QueuedEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
             Mutable<TProperties>,
-        ): EnumeratorLike<T> & QueueLike<T> & DisposableLike {
+        ): EnumeratorLike<T> & QueueableLike<T> & DisposableLike {
           init(Disposable_mixin, instance);
           init(IndexedQueue_fifoQueueMixin<T>(), instance);
 
@@ -102,7 +102,7 @@ const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
           [EnumeratorLike_move](
             this: DisposableLike & TProperties & PullableQueueLike<T>,
           ) {
-            if (this[QueueLike_count] > 0) {
+            if (this[QueueableLike_count] > 0) {
               const next = this[PullableQueueLike_pull]() as T;
               this[EnumeratorLike_current] = next;
               this[EnumeratorLike_hasCurrent] = true;
@@ -209,7 +209,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             return;
           }
 
-          queuedEnumerator[QueueLike_push](next);
+          queuedEnumerator[QueueableLike_push](next);
 
           if (!shouldEmit(enumerators)) {
             return;

@@ -8,7 +8,7 @@ import Observable_create from "../../../rx/Observable/__internal__/Observable.cr
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueLike_push,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_toErrorHandler from "../../../util/Disposable/__internal__/Disposable.toErrorHandler.js";
 
@@ -20,7 +20,7 @@ const Promiseable_toObservable: ToObservable<PromiseableLike>["toObservable"] =
 
       promise.then(next => {
         if (!dispatcher[DisposableLike_isDisposed]) {
-          dispatcher[QueueLike_push](next);
+          dispatcher[QueueableLike_push](next);
           dispatcher[DisposableLike_dispose]();
         }
       }, Disposable_toErrorHandler(dispatcher));

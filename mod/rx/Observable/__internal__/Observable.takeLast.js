@@ -5,7 +5,7 @@ import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js"
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
-import { QueueLike_count, QueueLike_push, } from "../../../util.js";
+import { QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -29,8 +29,9 @@ const Observable_takeLast = /*@__PURE__*/ (() => {
         [TakeLastObserverMixin_takeLastCount]: 0,
     }), {
         [ObserverLike_notify](next) {
-            this[QueueLike_push](next);
-            if (this[QueueLike_count] > this[TakeLastObserverMixin_takeLastCount]) {
+            this[QueueableLike_push](next);
+            if (this[QueueableLike_count] >
+                this[TakeLastObserverMixin_takeLastCount]) {
                 this[PullableQueueLike_pull]();
             }
         },

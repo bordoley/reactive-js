@@ -44,7 +44,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueLike_push,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -137,7 +137,7 @@ const Enumerable_enumerate: <T>() => (
 
           continuation[ContinuationLike_continuationScheduler] = this;
 
-          this[QueueLike_push](continuation);
+          this[QueueableLike_push](continuation);
         },
         [ObserverLike_notify](
           this: MutableEnumeratorLike<T> & ObserverLike,

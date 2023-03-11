@@ -1,5 +1,5 @@
 import { Optional } from "../functions.js";
-import { DisposableLike, QueueLike } from "../util.js";
+import { DisposableLike, QueueableLike } from "../util.js";
 import { DelegatingLike } from "./mixins.js";
 
 export const SerialDisposableLike_current = Symbol(
@@ -21,7 +21,7 @@ export interface DelegatingDisposableLike<
 export const PullableQueueLike_head = Symbol("PullableQueueLike_head");
 export const PullableQueueLike_pull = Symbol("PullableQueueLike_pull");
 
-export interface PullableQueueLike<T> extends QueueLike<T> {
+export interface PullableQueueLike<T> extends QueueableLike<T> {
   readonly [PullableQueueLike_head]: Optional<T>;
 
   [PullableQueueLike_pull](): Optional<T>;

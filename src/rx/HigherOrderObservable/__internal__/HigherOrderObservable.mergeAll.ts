@@ -36,8 +36,8 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueLike_count,
-  QueueLike_push,
+  QueueableLike_count,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -152,7 +152,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
               if (delegate[DisposableLike_isDisposed]) {
                 // FIXME: Clear the queue
               } else if (
-                instance[QueueLike_count] +
+                instance[QueueableLike_count] +
                   instance[MergeAllObserver_activeCount] ===
                 0
               ) {
@@ -178,11 +178,11 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             next: ContainerOf<C, T>,
           ) {
             Observer_assertState(this);
-            this[QueueLike_push](next);
+            this[QueueableLike_push](next);
 
             // Drop old events if the maxBufferSize has been exceeded
             if (
-              this[QueueLike_count] + this[MergeAllObserver_activeCount] >
+              this[QueueableLike_count] + this[MergeAllObserver_activeCount] >
               this[MergeAllObserver_maxBufferSize]
             ) {
               this[PullableQueueLike_pull]();

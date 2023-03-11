@@ -41,8 +41,8 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  QueueLike_count,
-  QueueLike_push,
+  QueueableLike_count,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -55,7 +55,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
   const scheduleDrainQueue = (
     dispatcher: TProperties & PullableQueueLike<T>,
   ) => {
-    if (dispatcher[QueueLike_count] === 1) {
+    if (dispatcher[QueueableLike_count] === 1) {
       const { [ObserverDispatcher_observer]: observer } = dispatcher;
       pipe(
         observer,
@@ -101,11 +101,11 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         ) => {
           const { [ObserverDispatcher_observer]: observer } = instance;
 
-          while (instance[QueueLike_count] > 0) {
+          while (instance[QueueableLike_count] > 0) {
             const next = instance[PullableQueueLike_pull]() as T;
             observer[ObserverLike_notify](next);
 
-            if (instance[QueueLike_count] > 0) {
+            if (instance[QueueableLike_count] > 0) {
               ctx[ContinuationContextLike_yield]();
             }
           }
@@ -120,7 +120,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         pipe(
           instance,
           Disposable_onDisposed(e => {
-            if (instance[QueueLike_count] === 0) {
+            if (instance[QueueableLike_count] === 0) {
               observer[DisposableLike_dispose](e);
             }
           }),
@@ -138,12 +138,12 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
           unsafeCast<TProperties>(this);
           return this[ObserverDispatcher_observer][ObserverLike_scheduler];
         },
-        [QueueLike_push](
+        [QueueableLike_push](
           this: TProperties & DisposableLike & PullableQueueLike<T>,
           next: T,
         ) {
           if (!this[DisposableLike_isDisposed]) {
-            call(fifoQueueProtoype[QueueLike_push], this, next);
+            call(fifoQueueProtoype[QueueableLike_push], this, next);
             scheduleDrainQueue(this);
           }
         },

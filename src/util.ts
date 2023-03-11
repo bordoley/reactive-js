@@ -51,20 +51,20 @@ export interface DisposableLike {
 }
 
 /** @ignore */
-export const QueueLike_count = Symbol("QueueLike_count");
+export const QueueableLike_count = Symbol("QueueableLike_count");
 
 /** @ignore */
-export const QueueLike_push = Symbol("QueueLike_push");
+export const QueueableLike_push = Symbol("QueueableLike_push");
 
-export interface QueueLike<T = unknown> {
+export interface QueueableLike<T = unknown> {
   /**
    * The number of queued up items.
    */
-  readonly [QueueLike_count]: number;
+  readonly [QueueableLike_count]: number;
 
   /**
    * Push an item onto the queue
    * @param req
    */
-  [QueueLike_push](req: T): void;
+  [QueueableLike_push](req: T): void;
 }

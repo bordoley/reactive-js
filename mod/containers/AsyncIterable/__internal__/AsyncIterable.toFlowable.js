@@ -8,7 +8,7 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import { DispatcherLike_scheduler, PauseableState_paused, SchedulerLike_now, SchedulerLike_schedule, } from "../../../scheduling.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((modeObs) => Observable_create((observer) => {
@@ -28,11 +28,11 @@ const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((mod
                 // Check the dispatcher's buffer size so we can avoid queueing forever
                 // in this situation.
                 !isPaused &&
-                dispatcher[QueueLike_count] < maxBuffer &&
+                dispatcher[QueueableLike_count] < maxBuffer &&
                 scheduler[SchedulerLike_now] - startTime < maxYieldInterval) {
                 const next = await iterator.next();
                 if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
-                    dispatcher[QueueLike_push](next.value);
+                    dispatcher[QueueableLike_push](next.value);
                 }
                 else {
                     dispatcher[DisposableLike_dispose]();

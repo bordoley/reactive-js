@@ -1,5 +1,5 @@
 import { SideEffect1 } from "./functions.js";
-import { DisposableLike, QueueLike } from "./util.js";
+import { DisposableLike, QueueableLike } from "./util.js";
 /** @ignore */
 export declare const SchedulerLike_inContinuation: unique symbol;
 /** @ignore */
@@ -38,7 +38,7 @@ export declare const DispatcherLike_scheduler: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown> extends QueueLike<T>, DisposableLike {
+export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableLike {
     readonly [DispatcherLike_scheduler]: SchedulerLike;
 }
 /** @ignore */
@@ -49,7 +49,7 @@ export type PauseableState = typeof PauseableState_running | typeof PauseableSta
 /**
  * @noInheritDoc
  */
-export interface PauseableLike extends QueueLike<PauseableState> {
+export interface PauseableLike extends QueueableLike<PauseableState> {
 }
 /** @ignore */
 export declare const PauseableSchedulerLike_isPaused: unique symbol;

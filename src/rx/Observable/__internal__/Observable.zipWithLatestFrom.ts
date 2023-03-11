@@ -33,8 +33,8 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueLike_count,
-  QueueLike_push,
+  QueueableLike_count,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -78,7 +78,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
           PullableQueueLike<TA>,
       ) => {
         if (
-          observer[QueueLike_count] > 0 &&
+          observer[QueueableLike_count] > 0 &&
           observer[ZipWithLatestFromObserver_hasLatest]
         ) {
           observer[ZipWithLatestFromObserver_hasLatest] = false;
@@ -136,7 +136,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
 
                 if (
                   instance[DisposableLike_isDisposed] &&
-                  instance[QueueLike_count] === 0
+                  instance[QueueableLike_count] === 0
                 ) {
                   instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
@@ -168,7 +168,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
               next: TA,
             ) {
               Observer_assertState(this);
-              this[QueueLike_push](next);
+              this[QueueableLike_push](next);
               notifyDelegate(this);
             },
           },

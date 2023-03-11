@@ -15,13 +15,13 @@ import {
 } from "../../../rx.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
-import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
 
 const Stream_delegatingMixin: <TReq, T>() => Mixin1<
   Pick<
     StreamLike<TReq, T>,
-    | typeof QueueLike_count
-    | typeof QueueLike_push
+    | typeof QueueableLike_count
+    | typeof QueueableLike_push
     | typeof DispatcherLike_scheduler
     | typeof ObservableLike_isEnumerable
     | typeof ObservableLike_isRunnable
@@ -30,8 +30,8 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
 > = /*@__PURE__*/ (<TReq, T>() => {
   type TReturn = Pick<
     StreamLike<TReq, T>,
-    | typeof QueueLike_count
-    | typeof QueueLike_push
+    | typeof QueueableLike_count
+    | typeof QueueableLike_push
     | typeof DispatcherLike_scheduler
     | typeof ObservableLike_isEnumerable
     | typeof ObservableLike_isRunnable
@@ -50,16 +50,16 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
       },
       props({}),
       {
-        get [QueueLike_count](): number {
+        get [QueueableLike_count](): number {
           unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);
-          return this[DelegatingLike_delegate][QueueLike_count];
+          return this[DelegatingLike_delegate][QueueableLike_count];
         },
 
-        [QueueLike_push](
+        [QueueableLike_push](
           this: DelegatingLike<StreamLike<TReq, T>>,
           next: TReq,
         ) {
-          this[DelegatingLike_delegate][QueueLike_push](next);
+          this[DelegatingLike_delegate][QueueableLike_push](next);
         },
         get [DispatcherLike_scheduler]() {
           unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);

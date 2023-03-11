@@ -51,8 +51,8 @@ import {
 import {
   DisposableLike,
   DisposableLike_isDisposed,
-  QueueLike_count,
-  QueueLike_push,
+  QueueableLike_count,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -120,7 +120,7 @@ const Scheduler_toPriorityScheduler: Function1<
       delayed[PullableQueueLike_pull]();
 
       if (!taskIsDispose) {
-        queue[QueueLike_push](task);
+        queue[QueueableLike_push](task);
       }
     }
 
@@ -260,8 +260,8 @@ const Scheduler_toPriorityScheduler: Function1<
           | typeof SchedulerLike_now
           | typeof PrioritySchedulerImplementationLike_shouldYield
           | typeof ContinuationSchedulerLike_schedule
-          | typeof QueueLike_push
-          | typeof QueueLike_count
+          | typeof QueueableLike_push
+          | typeof QueueableLike_count
         > &
           Mutable<TProperties>,
         host: SchedulerLike,
@@ -307,7 +307,7 @@ const Scheduler_toPriorityScheduler: Function1<
             this[QueueScheduler_hostScheduler][SchedulerLike_shouldYield]
           );
         },
-        get [QueueLike_count](): number {
+        get [QueueableLike_count](): number {
           unsafeCast<TProperties>(this);
 
           // Intentional. This is a little wierd because though the QueueScheduler
@@ -317,7 +317,7 @@ const Scheduler_toPriorityScheduler: Function1<
           // and Flowable (which does queue and dispatch its pause events).
           return 0;
         },
-        [QueueLike_push](
+        [QueueableLike_push](
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike &
@@ -388,7 +388,7 @@ const Scheduler_toPriorityScheduler: Function1<
             [QueueScheduler_queue]: queue,
           } = this;
           const targetQueue = dueTime > now ? delayed : queue;
-          targetQueue[QueueLike_push](task);
+          targetQueue[QueueableLike_push](task);
 
           scheduleOnHost(this);
         },

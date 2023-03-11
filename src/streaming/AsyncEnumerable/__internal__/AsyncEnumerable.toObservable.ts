@@ -18,7 +18,7 @@ import {
   StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../../../streaming.js";
-import { QueueLike_push } from "../../../util.js";
+import { QueueableLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
@@ -40,10 +40,10 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
         pipe(
           enumerator,
           Observable_forEach<ObservableLike, T>(_ => {
-            enumerator[QueueLike_push](none);
+            enumerator[QueueableLike_push](none);
           }),
           Observable_onSubscribe(() => {
-            enumerator[QueueLike_push](none);
+            enumerator[QueueableLike_push](none);
           }),
           Observable_observeWith(observer),
         );

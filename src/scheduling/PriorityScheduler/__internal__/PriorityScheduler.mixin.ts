@@ -37,9 +37,9 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueLike,
-  QueueLike_count,
-  QueueLike_push,
+  QueueableLike,
+  QueueableLike_count,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -74,7 +74,7 @@ export const ContinuationLike_continuationScheduler = Symbol(
 
 export interface ContinuationLike
   extends DisposableLike,
-    QueueLike<ContinuationLike>,
+    QueueableLike<ContinuationLike>,
     ContinuationSchedulerLike {
   [ContinuationLike_continuationScheduler]: ContinuationSchedulerLike;
   readonly [ContinuationLike_priority]: number;
@@ -181,7 +181,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           [ContinuationContextLike_yield](this: ContinuationLike, delay = 0) {
             const shouldYield =
               delay > 0 ||
-              this[QueueLike_count] > 0 ||
+              this[QueueableLike_count] > 0 ||
               this[ContinuationSchedulerLike_shouldYield];
 
             if (shouldYield) {
@@ -279,7 +279,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
                 0,
               );
             } else {
-              this[QueueLike_push](continuation);
+              this[QueueableLike_push](continuation);
             }
           },
         },

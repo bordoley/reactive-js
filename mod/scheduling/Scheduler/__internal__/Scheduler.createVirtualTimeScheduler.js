@@ -7,7 +7,7 @@ import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move,
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import PullableQueue_priorityQueueMixin from "../../../util/Queue/__internal__/PullableQueue.priorityQueueMixin.js";
 import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
@@ -55,7 +55,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(m
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
         if (!continuation[DisposableLike_isDisposed]) {
             continuation[ContinuationLike_continuationScheduler] = this;
-            this[QueueLike_push]({
+            this[QueueableLike_push]({
                 [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
                 [VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
                 [VirtualTask_continuation]: continuation,

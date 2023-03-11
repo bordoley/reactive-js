@@ -5,7 +5,7 @@ import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, includ
 import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { isSome, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -51,7 +51,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 if (delegate[DisposableLike_isDisposed]) {
                     // FIXME: Clear the queue
                 }
-                else if (instance[QueueLike_count] +
+                else if (instance[QueueableLike_count] +
                     instance[MergeAllObserver_activeCount] ===
                     0) {
                     delegate[DisposableLike_dispose]();
@@ -66,9 +66,9 @@ const HigherOrderObservable_mergeAll = (lift) => {
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[QueueLike_push](next);
+                this[QueueableLike_push](next);
                 // Drop old events if the maxBufferSize has been exceeded
-                if (this[QueueLike_count] + this[MergeAllObserver_activeCount] >
+                if (this[QueueableLike_count] + this[MergeAllObserver_activeCount] >
                     this[MergeAllObserver_maxBufferSize]) {
                     this[PullableQueueLike_pull]();
                 }

@@ -7,7 +7,7 @@
 ### Interfaces
 
 - [DisposableLike](../interfaces/util.DisposableLike.md)
-- [QueueLike](../interfaces/util.QueueLike.md)
+- [QueueableLike](../interfaces/util.QueueableLike.md)
 
 ### Type Aliases
 

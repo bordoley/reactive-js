@@ -7,7 +7,7 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
-import { QueueLike_push } from "../../../util.js";
+import { QueueableLike_push } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
@@ -18,7 +18,7 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
         init(Stream_delegatingMixin(), instance, delegate);
         instance[KeepStream_obs] = pipe(delegate, Observable_forEach(x => {
             if (!predicate(x)) {
-                delegate[QueueLike_push](none);
+                delegate[QueueableLike_push](none);
             }
         }), Observable_keep(predicate), Observable_multicast(delegate[DispatcherLike_scheduler]));
         return instance;

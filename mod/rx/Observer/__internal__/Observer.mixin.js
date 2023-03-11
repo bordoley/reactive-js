@@ -5,7 +5,7 @@ import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js"
 import { call, isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { ContinuationContextLike_yield, DispatcherLike_scheduler, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -14,7 +14,7 @@ import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/Indexe
 import Observer_schedule from "./Observer.schedule.js";
 const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {
-        if (dispatcher[QueueLike_count] === 1) {
+        if (dispatcher[QueueableLike_count] === 1) {
             const { [ObserverDispatcher_observer]: observer } = dispatcher;
             pipe(observer, Observer_schedule(dispatcher[ObserverDispatcher_continuation]), Disposable_onComplete(dispatcher[ObserverDispatcher_onContinuationDispose]));
         }
@@ -29,10 +29,10 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         instance[ObserverDispatcher_observer] = observer;
         instance[ObserverDispatcher_continuation] = (ctx) => {
             const { [ObserverDispatcher_observer]: observer } = instance;
-            while (instance[QueueLike_count] > 0) {
+            while (instance[QueueableLike_count] > 0) {
                 const next = instance[PullableQueueLike_pull]();
                 observer[ObserverLike_notify](next);
-                if (instance[QueueLike_count] > 0) {
+                if (instance[QueueableLike_count] > 0) {
                     ctx[ContinuationContextLike_yield]();
                 }
             }
@@ -43,7 +43,7 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             }
         };
         pipe(instance, Disposable_onDisposed(e => {
-            if (instance[QueueLike_count] === 0) {
+            if (instance[QueueableLike_count] === 0) {
                 observer[DisposableLike_dispose](e);
             }
         }));
@@ -57,9 +57,9 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[ObserverDispatcher_observer][ObserverLike_scheduler];
         },
-        [QueueLike_push](next) {
+        [QueueableLike_push](next) {
             if (!this[DisposableLike_isDisposed]) {
-                call(fifoQueueProtoype[QueueLike_push], this, next);
+                call(fifoQueueProtoype[QueueableLike_push], this, next);
                 scheduleDrainQueue(this);
             }
         },

@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`QueueLike`](util.QueueLike.md)<[`PauseableState`](../modules/scheduling.md#pauseablestate)\>
+- [`QueueableLike`](util.QueueableLike.md)<[`PauseableState`](../modules/scheduling.md#pauseablestate)\>
 
   ↳ **`PauseableLike`**
 

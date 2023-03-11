@@ -12,7 +12,7 @@ import {
   PullableQueueLike_pull,
 } from "../../__internal__/util.internal.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
-import { QueueLike_count, QueueLike_push } from "../../util.js";
+import { QueueableLike_count, QueueableLike_push } from "../../util.js";
 import IndexedQueue_fifoQueueMixin from "../Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import PullableQueue_priorityQueueMixin from "../Queue/__internal__/PullableQueue.priorityQueueMixin.js";
 
@@ -67,14 +67,14 @@ testModule(
       );
 
       for (let i = 0; i < 8; i++) {
-        queue[QueueLike_push](i);
+        queue[QueueableLike_push](i);
         pipe(
           queue[PullableQueueLike_head],
           expectEquals(0 as Optional<number>),
         );
       }
 
-      pipe(queue[QueueLike_count], expectEquals(8));
+      pipe(queue[QueueableLike_count], expectEquals(8));
 
       pipe(
         queue[PullableQueueLike_pull](),
@@ -95,7 +95,7 @@ testModule(
       pipe(queue[PullableQueueLike_head], expectEquals(3 as Optional<number>));
 
       for (let i = 8; i < 16; i++) {
-        queue[QueueLike_push](i);
+        queue[QueueableLike_push](i);
         pipe(
           queue[PullableQueueLike_head],
           expectEquals(3 as Optional<number>),
@@ -121,7 +121,7 @@ testModule(
       pipe(queue[PullableQueueLike_head], expectEquals(6 as Optional<number>));
 
       for (let i = 16; i < 32; i++) {
-        queue[QueueLike_push](i);
+        queue[QueueableLike_push](i);
         pipe(
           queue[PullableQueueLike_head],
           expectEquals(6 as Optional<number>),
@@ -138,7 +138,7 @@ testModule(
       const queue = createFifoQueue();
 
       for (let i = 0; i < 300; i++) {
-        queue[QueueLike_push](i);
+        queue[QueueableLike_push](i);
       }
 
       for (let i = 0; i < 50; i++) {
@@ -148,7 +148,7 @@ testModule(
       pipe(queue[PullableQueueLike_head], expectEquals(50 as Optional<number>));
 
       for (let i = 300; i < 500; i++) {
-        queue[QueueLike_push](i);
+        queue[QueueableLike_push](i);
       }
 
       for (let i = 0; i < 200; i++) {
@@ -167,11 +167,11 @@ testModule(
       const queue = createPriorityQueue();
       const shuffledArray = makeShuffledArray(100);
       for (let i = 0; i < shuffledArray.length; i++) {
-        queue[QueueLike_push](shuffledArray[i]);
+        queue[QueueableLike_push](shuffledArray[i]);
       }
 
       const acc: number[] = [];
-      while (queue[QueueLike_count] > 0) {
+      while (queue[QueueableLike_count] > 0) {
         acc.push(queue[PullableQueueLike_pull]() as number);
       }
 

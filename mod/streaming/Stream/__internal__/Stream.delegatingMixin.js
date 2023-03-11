@@ -4,18 +4,18 @@ import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } 
 import { pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../rx.js";
 import { DispatcherLike_scheduler } from "../../../scheduling.js";
-import { QueueLike_count, QueueLike_push } from "../../../util.js";
+import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
 const Stream_delegatingMixin = /*@__PURE__*/ (() => {
     return pipe(mix(include(delegatingMixin()), function DelegatingStreamMixin(instance, delegate) {
         init(delegatingMixin(), instance, delegate);
         return instance;
     }, props({}), {
-        get [QueueLike_count]() {
+        get [QueueableLike_count]() {
             unsafeCast(this);
-            return this[DelegatingLike_delegate][QueueLike_count];
+            return this[DelegatingLike_delegate][QueueableLike_count];
         },
-        [QueueLike_push](next) {
-            this[DelegatingLike_delegate][QueueLike_push](next);
+        [QueueableLike_push](next) {
+            this[DelegatingLike_delegate][QueueableLike_push](next);
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);

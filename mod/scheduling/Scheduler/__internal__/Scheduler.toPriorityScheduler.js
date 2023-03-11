@@ -8,7 +8,7 @@ import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move,
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
 import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableState_paused, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
@@ -45,7 +45,7 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
             }
             delayed[PullableQueueLike_pull]();
             if (!taskIsDispose) {
-                queue[QueueLike_push](task);
+                queue[QueueableLike_push](task);
             }
         }
         let task = none;
@@ -140,7 +140,7 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
                 (isSome(next) ? priorityShouldYield(this, next) : false) ||
                 this[QueueScheduler_hostScheduler][SchedulerLike_shouldYield]);
         },
-        get [QueueLike_count]() {
+        get [QueueableLike_count]() {
             unsafeCast(this);
             // Intentional. This is a little wierd because though the QueueScheduler
             // technically implements the QueuableLike interface, it doesn't ever
@@ -149,7 +149,7 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
             // and Flowable (which does queue and dispatch its pause events).
             return 0;
         },
-        [QueueLike_push](next) {
+        [QueueableLike_push](next) {
             if (next === PauseableState_paused) {
                 this[PauseableSchedulerLike_isPaused] = true;
                 this[SerialDisposableLike_current] = Disposable_disposed;
@@ -193,7 +193,7 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
                 };
             const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue, } = this;
             const targetQueue = dueTime > now ? delayed : queue;
-            targetQueue[QueueLike_push](task);
+            targetQueue[QueueableLike_push](task);
             scheduleOnHost(this);
         },
     }));

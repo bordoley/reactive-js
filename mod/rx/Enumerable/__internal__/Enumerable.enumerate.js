@@ -11,7 +11,7 @@ import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js"
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
 import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -52,7 +52,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
                 return;
             }
             continuation[ContinuationLike_continuationScheduler] = this;
-            this[QueueLike_push](continuation);
+            this[QueueableLike_push](continuation);
         },
         [ObserverLike_notify](next) {
             Observer_assertState(this);

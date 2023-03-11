@@ -24,7 +24,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `queue` | [`QueueLike`](../interfaces/util.QueueLike.md)<`T`\> |
+| `queue` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> |
 
 #### Returns
 

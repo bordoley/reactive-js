@@ -27,8 +27,8 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_isDisposed,
-  QueueLike_count,
-  QueueLike_push,
+  QueueableLike_count,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -88,14 +88,14 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               const replay = this[MulticastObservableLike_replay];
 
               if (replay > 0) {
-                this[QueueLike_push](next);
-                if (this[QueueLike_count] > replay) {
+                this[QueueableLike_push](next);
+                if (this[QueueableLike_count] > replay) {
                   this[PullableQueueLike_pull]();
                 }
               }
 
               for (const observer of this[Subject_observers]) {
-                observer[ObserverLike_dispatcher][QueueLike_push](next);
+                observer[ObserverLike_dispatcher][QueueableLike_push](next);
               }
             }
           },
@@ -121,10 +121,10 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
-            const count = this[QueueLike_count];
+            const count = this[QueueableLike_count];
             for (let i = 0; i < count; i++) {
               const next = this[IndexedQueueLike_get](i);
-              dispatcher[QueueLike_push](next);
+              dispatcher[QueueableLike_push](next);
             }
 
             pipe(this, Disposable_addIgnoringChildErrors(dispatcher));

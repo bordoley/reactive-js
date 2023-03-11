@@ -53,7 +53,7 @@ import Streamable_createLifted from "../streaming/Streamable/__internal__/Stream
 import {
   DisposableLike,
   DisposableLike_dispose,
-  QueueLike_push,
+  QueueableLike_push,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import * as Queue from "../util/Queue.js";
@@ -115,7 +115,7 @@ export const bindNodeCallback: BindNodeCallback = <T>(
         if (err) {
           dispatcher[DisposableLike_dispose](error(err));
         } else {
-          dispatcher[QueueLike_push](arg);
+          dispatcher[QueueableLike_push](arg);
           dispatcher[DisposableLike_dispose]();
         }
       };
@@ -261,18 +261,18 @@ export const createWritableSink = /*@__PURE__*/ (() => {
           );
 
           const onDrain = () => {
-            dispatcher[QueueLike_push](PauseableState_running);
+            dispatcher[QueueableLike_push](PauseableState_running);
           };
           const onFinish = () => dispatcher[DisposableLike_dispose]();
           const onPause = () => {
-            dispatcher[QueueLike_push](PauseableState_paused);
+            dispatcher[QueueableLike_push](PauseableState_paused);
           };
 
           writable.on("drain", onDrain);
           writable.on("finish", onFinish);
           writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-          dispatcher[QueueLike_push](PauseableState_running);
+          dispatcher[QueueableLike_push](PauseableState_running);
         }),
       false,
       false,

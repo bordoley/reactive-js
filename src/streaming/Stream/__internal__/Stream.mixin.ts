@@ -44,8 +44,8 @@ import {
 import { StreamLike } from "../../../streaming.js";
 import {
   DisposableLike_isDisposed,
-  QueueLike_count,
-  QueueLike_push,
+  QueueableLike_count,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -75,8 +75,8 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             | typeof ObservableLike_observe
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
-            | typeof QueueLike_count
-            | typeof QueueLike_push
+            | typeof QueueableLike_count
+            | typeof QueueableLike_push
             | typeof DispatcherLike_scheduler
           > &
             Mutable<TProperties>,
@@ -91,14 +91,14 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
 
-          get [QueueLike_count](): number {
+          get [QueueableLike_count](): number {
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
             // Practically the observer can never be none.
             const observer = this[
               DispatchedObservable_observer
             ] as ObserverLike<T>;
             const dispatcher = observer[ObserverLike_dispatcher];
-            return dispatcher[QueueLike_count];
+            return dispatcher[QueueableLike_count];
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
@@ -110,7 +110,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             return observer[ObserverLike_scheduler];
           },
 
-          [QueueLike_push](
+          [QueueableLike_push](
             this: TProperties & DispatchedObservableLike<T>,
             next: T,
           ) {
@@ -130,13 +130,14 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             const dispatcher = observer[ObserverLike_dispatcher];
             const scheduler = observer[ObserverLike_scheduler];
             const inContinuation = scheduler[SchedulerLike_inContinuation];
-            const dispatcherQueueIsEmpty = dispatcher[QueueLike_count] === 0;
+            const dispatcherQueueIsEmpty =
+              dispatcher[QueueableLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
 
             if (inContinuation && dispatcherQueueIsEmpty && !isDisposed) {
               observer[ObserverLike_notify](next);
             } else if (!isDisposed) {
-              dispatcher[QueueLike_push](next);
+              dispatcher[QueueableLike_push](next);
             }
           },
 
@@ -183,8 +184,8 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           StreamLike<TReq, T>,
           | typeof MulticastObservableLike_observerCount
           | typeof MulticastObservableLike_replay
-          | typeof QueueLike_count
-          | typeof QueueLike_push
+          | typeof QueueableLike_count
+          | typeof QueueableLike_push
           | typeof ObservableLike_observe
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
@@ -230,20 +231,20 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           return this[StreamMixin_observable][MulticastObservableLike_replay];
         },
 
-        get [QueueLike_count](): number {
+        get [QueueableLike_count](): number {
           unsafeCast<DelegatingLike<DispatchedObservableLike<TReq>>>(this);
-          return this[DelegatingLike_delegate][QueueLike_count];
+          return this[DelegatingLike_delegate][QueueableLike_count];
         },
 
         [ObservableLike_isEnumerable]: false,
 
         [ObservableLike_isRunnable]: false,
 
-        [QueueLike_push](
+        [QueueableLike_push](
           this: DelegatingLike<DispatchedObservableLike<TReq>>,
           req: TReq,
         ) {
-          this[DelegatingLike_delegate][QueueLike_push](req);
+          this[DelegatingLike_delegate][QueueableLike_push](req);
         },
 
         [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {

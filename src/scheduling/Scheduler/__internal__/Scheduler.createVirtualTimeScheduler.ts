@@ -30,7 +30,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueLike_push,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import PullableQueue_priorityQueueMixin from "../../../util/Queue/__internal__/PullableQueue.priorityQueueMixin.js";
@@ -159,7 +159,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         if (!continuation[DisposableLike_isDisposed]) {
           continuation[ContinuationLike_continuationScheduler] = this;
 
-          this[QueueLike_push]({
+          this[QueueableLike_push]({
             [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
             [VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
             [VirtualTask_continuation]: continuation,

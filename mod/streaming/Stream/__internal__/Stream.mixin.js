@@ -6,7 +6,7 @@ import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast,
 import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { DispatcherLike_scheduler, SchedulerLike_inContinuation, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -22,12 +22,12 @@ const DispatchedObservable_create =
     }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
-        get [QueueLike_count]() {
+        get [QueueableLike_count]() {
             unsafeCast(this);
             // Practically the observer can never be none.
             const observer = this[DispatchedObservable_observer];
             const dispatcher = observer[ObserverLike_dispatcher];
-            return dispatcher[QueueLike_count];
+            return dispatcher[QueueableLike_count];
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
@@ -35,7 +35,7 @@ const DispatchedObservable_create =
             const observer = this[DispatchedObservable_observer];
             return observer[ObserverLike_scheduler];
         },
-        [QueueLike_push](next) {
+        [QueueableLike_push](next) {
             const observer = this[DispatchedObservable_observer];
             // Practically the observer can never be none,
             // unless the stream operator uses lazy subscriptions
@@ -46,13 +46,13 @@ const DispatchedObservable_create =
             const dispatcher = observer[ObserverLike_dispatcher];
             const scheduler = observer[ObserverLike_scheduler];
             const inContinuation = scheduler[SchedulerLike_inContinuation];
-            const dispatcherQueueIsEmpty = dispatcher[QueueLike_count] === 0;
+            const dispatcherQueueIsEmpty = dispatcher[QueueableLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
             if (inContinuation && dispatcherQueueIsEmpty && !isDisposed) {
                 observer[ObserverLike_notify](next);
             }
             else if (!isDisposed) {
-                dispatcher[QueueLike_push](next);
+                dispatcher[QueueableLike_push](next);
             }
         },
         [ObservableLike_observe](observer) {
@@ -84,14 +84,14 @@ const Stream_mixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[StreamMixin_observable][MulticastObservableLike_replay];
         },
-        get [QueueLike_count]() {
+        get [QueueableLike_count]() {
             unsafeCast(this);
-            return this[DelegatingLike_delegate][QueueLike_count];
+            return this[DelegatingLike_delegate][QueueableLike_count];
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
-        [QueueLike_push](req) {
-            this[DelegatingLike_delegate][QueueLike_push](req);
+        [QueueableLike_push](req) {
+            this[DelegatingLike_delegate][QueueableLike_push](req);
         },
         [ObservableLike_observe](observer) {
             this[StreamMixin_observable][ObservableLike_observe](observer);

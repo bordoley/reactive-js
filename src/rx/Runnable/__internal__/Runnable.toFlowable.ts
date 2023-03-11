@@ -12,7 +12,7 @@ import {
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import { ToFlowable } from "../../../streaming.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
-import { QueueLike_push } from "../../../util.js";
+import { QueueableLike_push } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_toObservable from "../../../util/Disposable/__internal__/Disposable.toObservable.js";
@@ -49,10 +49,12 @@ const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
                 Observable_forEach<ObservableLike, PauseableState>(mode => {
                   switch (mode) {
                     case PauseableState_paused:
-                      pauseableScheduler[QueueLike_push](PauseableState_paused);
+                      pauseableScheduler[QueueableLike_push](
+                        PauseableState_paused,
+                      );
                       break;
                     case PauseableState_running:
-                      pauseableScheduler[QueueLike_push](
+                      pauseableScheduler[QueueableLike_push](
                         PauseableState_running,
                       );
                       break;

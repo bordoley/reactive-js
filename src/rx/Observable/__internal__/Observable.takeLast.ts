@@ -21,8 +21,8 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike,
-  QueueLike_count,
-  QueueLike_push,
+  QueueableLike_count,
+  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -87,10 +87,11 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           this: TProperties & DisposableLike & PullableQueueLike<T>,
           next: T,
         ) {
-          this[QueueLike_push](next);
+          this[QueueableLike_push](next);
 
           if (
-            this[QueueLike_count] > this[TakeLastObserverMixin_takeLastCount]
+            this[QueueableLike_count] >
+            this[TakeLastObserverMixin_takeLastCount]
           ) {
             this[PullableQueueLike_pull]();
           }

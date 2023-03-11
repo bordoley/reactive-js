@@ -4,7 +4,7 @@ import {
   PauseableState_paused,
   SchedulerLike,
 } from "../../../scheduling.js";
-import { QueueLike_push } from "../../../util.js";
+import { QueueableLike_push } from "../../../util.js";
 import Scheduler_toPriorityScheduler from "./Scheduler.toPriorityScheduler.js";
 
 const Scheduler_toPausableScheduler: Function1<
@@ -12,7 +12,7 @@ const Scheduler_toPausableScheduler: Function1<
   PauseableSchedulerLike
 > = scheduler => {
   const pauseableScheduler = Scheduler_toPriorityScheduler(scheduler);
-  pauseableScheduler[QueueLike_push](PauseableState_paused);
+  pauseableScheduler[QueueableLike_push](PauseableState_paused);
   return pauseableScheduler;
 };
 
