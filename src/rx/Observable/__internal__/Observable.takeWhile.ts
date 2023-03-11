@@ -7,6 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { DelegatingDisposableLike } from "../../../__internal__/util.internal.js";
 import { TakeWhile } from "../../../containers.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
@@ -17,7 +18,6 @@ import {
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import { DelegatingDisposableLike } from "../../../util/__internal__/util.internal.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";

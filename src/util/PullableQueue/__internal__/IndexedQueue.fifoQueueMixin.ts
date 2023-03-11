@@ -1,5 +1,11 @@
 import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
+  IndexedQueueLike,
+  IndexedQueueLike_get,
+  PullableQueueLike_head,
+  PullableQueueLike_pull,
+} from "../../../__internal__/util.internal.js";
+import {
   Optional,
   newInstance,
   none,
@@ -9,12 +15,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import { QueueLike, QueueLike_count, QueueLike_push } from "../../../util.js";
-import {
-  IndexedQueueLike,
-  IndexedQueueLike_get,
-  PullableQueueLike_head,
-  PullableQueueLike_pull,
-} from "../../__internal__/util.internal.js";
 
 const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
   IndexedQueueLike<T>,

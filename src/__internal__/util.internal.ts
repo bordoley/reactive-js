@@ -1,6 +1,6 @@
-import { DelegatingLike } from "../../__internal__/mixins.js";
-import { Optional } from "../../functions.js";
-import { DisposableLike, QueueLike } from "../../util.js";
+import { Optional } from "../functions.js";
+import { DisposableLike, QueueLike } from "../util.js";
+import { DelegatingLike } from "./mixins.js";
 
 export const SerialDisposableLike_current = Symbol(
   "SerialDisposableLike_current",

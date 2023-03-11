@@ -1,6 +1,7 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
 import { createInstanceFactory, getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { call, isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { ContinuationContextLike_yield, DispatcherLike_scheduler, } from "../../../scheduling.js";
@@ -10,7 +11,6 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
-import { PullableQueueLike_pull, } from "../../../util/__internal__/util.internal.js";
 import Observer_schedule from "./Observer.schedule.js";
 const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {

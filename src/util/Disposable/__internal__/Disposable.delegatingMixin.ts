@@ -8,6 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { DelegatingDisposableLike } from "../../../__internal__/util.internal.js";
 import { Optional, pipe, returns, unsafeCast } from "../../../functions.js";
 import {
   DisposableLike,
@@ -17,7 +18,6 @@ import {
   DisposableLike_isDisposed,
   DisposableOrTeardown,
 } from "../../../util.js";
-import { DelegatingDisposableLike } from "../../__internal__/util.internal.js";
 import Disposable_onDisposed from "./Disposable.onDisposed.js";
 
 const Disposable_delegatingMixin: <

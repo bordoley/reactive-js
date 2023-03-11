@@ -1,9 +1,9 @@
-import { newInstance } from "../../../functions.js";
-import { QueueLike_count } from "../../../util.js";
 import {
   IndexedQueueLike,
   IndexedQueueLike_get,
-} from "../../__internal__/util.internal.js";
+} from "../../../__internal__/util.internal.js";
+import { newInstance } from "../../../functions.js";
+import { QueueLike_count } from "../../../util.js";
 
 const IndexedQueue_toReadonlyArray =
   <T>() =>

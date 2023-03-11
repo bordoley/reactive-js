@@ -9,6 +9,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  PullableQueueLike,
+  PullableQueueLike_pull,
+} from "../../../__internal__/util.internal.js";
+import {
   Optional,
   SideEffect,
   SideEffect1,
@@ -45,10 +49,6 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
-import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
-} from "../../../util/__internal__/util.internal.js";
 import Observer_schedule from "./Observer.schedule.js";
 
 const createObserverDispatcher = /*@__PURE__*/ (<T>() => {

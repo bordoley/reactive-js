@@ -3,6 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { PullableQueueLike_head, PullableQueueLike_pull, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
@@ -12,7 +13,6 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import PullableQueue_createPriorityQueue from "../../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
-import { PullableQueueLike_head, PullableQueueLike_pull, SerialDisposableLike_current, } from "../../../util/__internal__/util.internal.js";
 import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
     const QueueTask_continuation = Symbol("QueueTask_continuation");

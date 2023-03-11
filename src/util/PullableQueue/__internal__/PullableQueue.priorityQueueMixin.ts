@@ -1,5 +1,10 @@
 import { floor } from "../../../__internal__/math.js";
 import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
+import {
+  PullableQueueLike,
+  PullableQueueLike_head,
+  PullableQueueLike_pull,
+} from "../../../__internal__/util.internal.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Comparator,
@@ -10,11 +15,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
-import {
-  PullableQueueLike,
-  PullableQueueLike_head,
-  PullableQueueLike_pull,
-} from "../../__internal__/util.internal.js";
 
 const computeParentIndex = (index: number) => floor((index - 1) / 2);
 

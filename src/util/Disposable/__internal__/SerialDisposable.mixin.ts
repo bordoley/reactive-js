@@ -1,11 +1,11 @@
 import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
-import { none, pipe, returns, unsafeCast } from "../../../functions.js";
-import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
-import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import {
   SerialDisposableLike,
   SerialDisposableLike_current,
-} from "../../__internal__/util.internal.js";
+} from "../../../__internal__/util.internal.js";
+import { none, pipe, returns, unsafeCast } from "../../../functions.js";
+import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
+import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 
 const SerialDisposable_mixin: <TDisposable extends DisposableLike>() => Mixin1<
   SerialDisposableLike<TDisposable>,

@@ -7,6 +7,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  PullableQueueLike,
+  PullableQueueLike_pull,
+} from "../../../__internal__/util.internal.js";
+import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -45,10 +49,6 @@ import {
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
-import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
-} from "../../../util/__internal__/util.internal.js";
 
 const Enumerable_enumerate: <T>() => (
   enumerable: EnumerableLike<T>,

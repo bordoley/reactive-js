@@ -1,11 +1,11 @@
 /// <reference types="./Sequence.takeLast.d.ts" />
 
+import { PullableQueueLike_pull } from "../../../__internal__/util.internal.js";
 import { SequenceLike_data, SequenceLike_next, } from "../../../containers.js";
 import { callWith, isSome, pipe } from "../../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
 import IndexedQueue_createFifoQueue from "../../../util/PullableQueue/__internal__/IndexedQueue.createFifoQueue.js";
 import IndexedQueue_toReadonlyArray from "../../../util/PullableQueue/__internal__/IndexedQueue.toReadonlyArray.js";
-import { PullableQueueLike_pull } from "../../../util/__internal__/util.internal.js";
 import ReadonlyArray_toSequence from "../../ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
 const Sequence_takeLast = 
 /*@__PURE__*/ (() => {

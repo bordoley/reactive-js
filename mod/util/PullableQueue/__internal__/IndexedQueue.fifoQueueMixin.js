@@ -1,9 +1,9 @@
 /// <reference types="./IndexedQueue.fifoQueueMixin.d.ts" />
 
 import { mix, props } from "../../../__internal__/mixins.js";
+import { IndexedQueueLike_get, PullableQueueLike_head, PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
-import { IndexedQueueLike_get, PullableQueueLike_head, PullableQueueLike_pull, } from "../../__internal__/util.internal.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     const FifoQueue_head = Symbol("FifoQueue_head");
     const FifoQueue_tail = Symbol("FifoQueue_tail");

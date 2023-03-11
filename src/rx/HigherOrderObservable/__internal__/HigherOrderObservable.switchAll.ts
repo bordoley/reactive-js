@@ -10,6 +10,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  SerialDisposableLike,
+  SerialDisposableLike_current,
+} from "../../../__internal__/util.internal.js";
+import {
   ConcatAll,
   ContainerOf,
   ContainerOperator,
@@ -31,10 +35,6 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
-import {
-  SerialDisposableLike,
-  SerialDisposableLike_current,
-} from "../../../util/__internal__/util.internal.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";

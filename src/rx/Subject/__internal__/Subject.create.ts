@@ -7,6 +7,12 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  IndexedQueueLike,
+  IndexedQueueLike_get,
+  PullableQueueLike,
+  PullableQueueLike_pull,
+} from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
 import {
   MulticastObservableLike_observerCount,
@@ -28,12 +34,6 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
-import {
-  IndexedQueueLike,
-  IndexedQueueLike_get,
-  PullableQueueLike,
-  PullableQueueLike_pull,
-} from "../../../util/__internal__/util.internal.js";
 
 const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
   /*@__PURE__*/ (<T>() => {

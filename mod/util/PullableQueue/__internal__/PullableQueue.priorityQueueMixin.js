@@ -2,10 +2,10 @@
 
 import { floor } from "../../../__internal__/math.js";
 import { mix, props } from "../../../__internal__/mixins.js";
+import { PullableQueueLike_head, PullableQueueLike_pull, } from "../../../__internal__/util.internal.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { isSome, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../../util.js";
-import { PullableQueueLike_head, PullableQueueLike_pull, } from "../../__internal__/util.internal.js";
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const PriorityQueueImpl_comparator = Symbol("PriorityQueueImpl_comparator");
 const PriorityQueueImpl_values = Symbol("PriorityQueueImpl_values");

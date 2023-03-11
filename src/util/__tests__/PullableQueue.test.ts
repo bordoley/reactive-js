@@ -7,14 +7,14 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
+import {
+  PullableQueueLike_head,
+  PullableQueueLike_pull,
+} from "../../__internal__/util.internal.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
 import { QueueLike_count, QueueLike_push } from "../../util.js";
 import IndexedQueue_fifoQueueMixin from "../PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import PullableQueue_priorityQueueMixin from "../PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
-import {
-  PullableQueueLike_head,
-  PullableQueueLike_pull,
-} from "../__internal__/util.internal.js";
 
 const createPriorityQueue = /*@__PURE__*/ (() => {
   const compare = (a: number, b: number): number => a - b;

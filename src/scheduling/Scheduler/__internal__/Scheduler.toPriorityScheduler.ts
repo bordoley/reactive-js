@@ -9,6 +9,13 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  PullableQueueLike,
+  PullableQueueLike_head,
+  PullableQueueLike_pull,
+  SerialDisposableLike,
+  SerialDisposableLike_current,
+} from "../../../__internal__/util.internal.js";
+import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -51,13 +58,6 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import PullableQueue_createPriorityQueue from "../../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
-import {
-  PullableQueueLike,
-  PullableQueueLike_head,
-  PullableQueueLike_pull,
-  SerialDisposableLike,
-  SerialDisposableLike_current,
-} from "../../../util/__internal__/util.internal.js";
 import {
   ContinuationLike,
   ContinuationLike_continuationScheduler,

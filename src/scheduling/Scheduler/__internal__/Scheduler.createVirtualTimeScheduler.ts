@@ -8,6 +8,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  PullableQueueLike,
+  PullableQueueLike_pull,
+} from "../../../__internal__/util.internal.js";
+import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -30,10 +34,6 @@ import {
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
-import {
-  PullableQueueLike,
-  PullableQueueLike_pull,
-} from "../../../util/__internal__/util.internal.js";
 import {
   ContinuationLike,
   ContinuationLike_continuationScheduler,

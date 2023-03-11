@@ -4,8 +4,8 @@ import {
   init,
   mix,
 } from "../../../__internal__/mixins.js";
+import { SerialDisposableLike } from "../../../__internal__/util.internal.js";
 import { DisposableLike } from "../../../util.js";
-import { SerialDisposableLike } from "../../__internal__/util.internal.js";
 import Disposable_mixin from "./Disposable.mixin.js";
 import SerialDisposable_mixin from "./SerialDisposable.mixin.js";
 
