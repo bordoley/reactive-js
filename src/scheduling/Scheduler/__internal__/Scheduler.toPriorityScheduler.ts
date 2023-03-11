@@ -57,7 +57,7 @@ import {
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
-import PullableQueue_createPriorityQueue from "../../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
+import PullableQueue_createPriorityQueue from "../../../util/Queue/__internal__/PullableQueue.createPriorityQueue.js";
 import {
   ContinuationLike,
   ContinuationLike_continuationScheduler,

@@ -42,7 +42,7 @@ import {
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 
 export const ContinuationSchedulerLike_now = Symbol(
   "ContinuationSchedulerLike_now",

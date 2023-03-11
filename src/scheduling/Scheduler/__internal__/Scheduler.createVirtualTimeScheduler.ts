@@ -33,7 +33,7 @@ import {
   QueueLike_push,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
-import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
+import PullableQueue_priorityQueueMixin from "../../../util/Queue/__internal__/PullableQueue.priorityQueueMixin.js";
 import {
   ContinuationLike,
   ContinuationLike_continuationScheduler,

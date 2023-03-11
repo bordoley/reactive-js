@@ -7,7 +7,7 @@ import { error, isNone, isSome, newInstance, none, unsafeCast, } from "../../../
 import { ContinuationContextLike_now, ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 export const ContinuationSchedulerLike_now = Symbol("ContinuationSchedulerLike_now");
 export const ContinuationSchedulerLike_schedule = Symbol("ContinuationSchedulerLike_schedule");
 export const ContinuationSchedulerLike_shouldYield = Symbol("ContinuationSchedulerLike_shouldYield");

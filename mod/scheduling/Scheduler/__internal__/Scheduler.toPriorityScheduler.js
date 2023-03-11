@@ -12,7 +12,7 @@ import { DisposableLike_isDisposed, QueueLike_count, QueueLike_push, } from "../
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
-import PullableQueue_createPriorityQueue from "../../../util/PullableQueue/__internal__/PullableQueue.createPriorityQueue.js";
+import PullableQueue_createPriorityQueue from "../../../util/Queue/__internal__/PullableQueue.createPriorityQueue.js";
 import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
     const QueueTask_continuation = Symbol("QueueTask_continuation");

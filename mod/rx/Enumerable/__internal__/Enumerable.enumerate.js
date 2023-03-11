@@ -14,7 +14,7 @@ import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_sched
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 const Enumerable_enumerate = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const typedObserverMixin = Observer_mixin();

@@ -9,7 +9,7 @@ import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_push, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
-import PullableQueue_priorityQueueMixin from "../../../util/PullableQueue/__internal__/PullableQueue.priorityQueueMixin.js";
+import PullableQueue_priorityQueueMixin from "../../../util/Queue/__internal__/PullableQueue.priorityQueueMixin.js";
 import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 const VirtualTask_continuation = Symbol("VirtualTask_continuation");
 const VirtualTask_dueTime = Symbol("VirtualTask_dueTime");

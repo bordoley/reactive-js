@@ -10,7 +10,7 @@ import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__inte
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/PullableQueue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_schedule from "./Observer.schedule.js";
 const createObserverDispatcher = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (dispatcher) => {
