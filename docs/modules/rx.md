@@ -14,6 +14,7 @@
 
 ### Other Interfaces
 
+- [DispatcherLike](../interfaces/rx.DispatcherLike.md)
 - [EnumerableEnumeratorLike](../interfaces/rx.EnumerableEnumeratorLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 

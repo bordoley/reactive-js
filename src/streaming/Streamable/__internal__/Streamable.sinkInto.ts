@@ -1,11 +1,10 @@
 import { pipe } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObservableLike } from "../../../rx.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
-import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import {
   StreamLike,
   StreamableLike,

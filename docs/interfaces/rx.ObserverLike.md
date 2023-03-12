@@ -31,7 +31,7 @@
 
 ### [ObserverLike\_dispatcher]
 
-• `Readonly` **[ObserverLike\_dispatcher]**: [`DispatcherLike`](scheduling.DispatcherLike.md)<`T`\>
+• `Readonly` **[ObserverLike\_dispatcher]**: [`DispatcherLike`](rx.DispatcherLike.md)<`T`\>
 
 ___
 

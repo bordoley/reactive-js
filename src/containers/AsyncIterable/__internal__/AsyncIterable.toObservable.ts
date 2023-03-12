@@ -2,13 +2,13 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { AsyncIterableLike } from "../../../containers.js";
 import { error, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObserverLike,
   ObserverLike_dispatcher,
   ToObservable,
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import {
-  DispatcherLike_scheduler,
   SchedulerLike_now,
   SchedulerLike_schedule,
 } from "../../../scheduling.js";

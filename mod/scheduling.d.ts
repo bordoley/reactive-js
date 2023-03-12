@@ -1,5 +1,5 @@
 import { SideEffect1 } from "./functions.js";
-import { DisposableLike, QueueableLike } from "./util.js";
+import { DisposableLike } from "./util.js";
 /** @ignore */
 export declare const SchedulerLike_inContinuation: unique symbol;
 /** @ignore */
@@ -60,12 +60,4 @@ export declare const VirtualTimeSchedulerLike_run: unique symbol;
  */
 export interface VirtualTimeSchedulerLike extends SchedulerLike {
     [VirtualTimeSchedulerLike_run](): void;
-}
-/** @ignore */
-export declare const DispatcherLike_scheduler: unique symbol;
-/**
- * @noInheritDoc
- */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableLike {
-    readonly [DispatcherLike_scheduler]: SchedulerLike;
 }

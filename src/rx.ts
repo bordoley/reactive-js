@@ -8,8 +8,20 @@ import {
   EnumeratorLike,
 } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
-import { DispatcherLike, SchedulerLike } from "./scheduling.js";
-import { DisposableLike } from "./util.js";
+import { SchedulerLike } from "./scheduling.js";
+import { DisposableLike, QueueableLike } from "./util.js";
+
+/** @ignore */
+export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
+
+/**
+ * @noInheritDoc
+ */
+export interface DispatcherLike<T = unknown>
+  extends QueueableLike<T>,
+    DisposableLike {
+  readonly [DispatcherLike_scheduler]: SchedulerLike;
+}
 
 /** @ignore */
 export const ObserverLike_notify = Symbol("ObserverLike_notify");

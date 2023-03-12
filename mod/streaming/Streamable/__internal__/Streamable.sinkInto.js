@@ -1,12 +1,12 @@
 /// <reference types="./Streamable.sinkInto.d.ts" />
 
 import { pipe } from "../../../functions.js";
+import { DispatcherLike_scheduler } from "../../../rx.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
-import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";

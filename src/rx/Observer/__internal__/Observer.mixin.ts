@@ -24,6 +24,8 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
+  DispatcherLike,
+  DispatcherLike_scheduler,
   ObserverLike,
   ObserverLike_dispatcher,
   ObserverLike_notify,
@@ -32,8 +34,6 @@ import {
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  DispatcherLike,
-  DispatcherLike_scheduler,
   SchedulerLike,
 } from "../../../scheduling.js";
 import {

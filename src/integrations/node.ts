@@ -31,12 +31,12 @@ import {
   pipeLazy,
 } from "../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike_dispatcher,
   ObserverLike_scheduler,
 } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import { DispatcherLike_scheduler } from "../scheduling.js";
 import {
   FlowableLike,
   FlowableState,

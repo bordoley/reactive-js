@@ -10,10 +10,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import { pipe, returns, unsafeCast } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
 } from "../../../rx.js";
-import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
 

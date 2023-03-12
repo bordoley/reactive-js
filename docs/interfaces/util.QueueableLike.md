@@ -14,7 +14,7 @@
 
 - **`QueueableLike`**
 
-  ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)
+  ↳ [`DispatcherLike`](rx.DispatcherLike.md)
 
 ## Table of contents
 

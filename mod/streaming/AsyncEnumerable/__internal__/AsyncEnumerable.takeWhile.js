@@ -2,10 +2,9 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
+import { DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
-import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";

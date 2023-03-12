@@ -1,7 +1,7 @@
 import { Mixin3 } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
-import { DispatcherLike, SchedulerLike } from "../../../scheduling.js";
+import { DispatcherLike, ObservableLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 export interface DispatchedObservableLike<T> extends ObservableLike<T>, DispatcherLike<T> {
 }

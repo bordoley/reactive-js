@@ -4,9 +4,8 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { compose, error, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, } from "../rx.js";
+import { DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import { DispatcherLike_scheduler } from "../scheduling.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";

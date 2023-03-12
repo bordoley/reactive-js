@@ -16,6 +16,7 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
@@ -26,7 +27,6 @@ import {
 } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_scanLast from "../../../rx/Observable/__internal__/Observable.scanLast.js";
-import { DispatcherLike_scheduler } from "../../../scheduling.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";

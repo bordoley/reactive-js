@@ -26,6 +26,7 @@ import {
   unsafeCast,
 } from "../functions.js";
 import {
+  DispatcherLike_scheduler,
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
   ObservableLike,
@@ -36,7 +37,7 @@ import {
   ObserverLike_dispatcher,
 } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import { DispatcherLike_scheduler, SchedulerLike } from "../scheduling.js";
+import { SchedulerLike } from "../scheduling.js";
 import {
   StreamLike,
   StreamableLike,

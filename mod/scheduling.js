@@ -22,5 +22,3 @@ export const PauseableSchedulerLike_pause = Symbol("PauseableSchedulerLike_pause
 export const PauseableSchedulerLike_resume = Symbol("PauseableSchedulerLike_resume");
 /** @ignore */
 export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run");
-/** @ignore */
-export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");

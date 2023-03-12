@@ -22,6 +22,8 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
+  DispatcherLike,
+  DispatcherLike_scheduler,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
@@ -36,8 +38,6 @@ import {
 } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import {
-  DispatcherLike,
-  DispatcherLike_scheduler,
   SchedulerLike,
   SchedulerLike_inContinuation,
 } from "../../../scheduling.js";

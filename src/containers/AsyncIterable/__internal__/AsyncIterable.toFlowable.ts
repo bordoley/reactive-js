@@ -2,6 +2,7 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { AsyncIterableLike } from "../../../containers.js";
 import { error, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_dispatcher,
@@ -10,7 +11,6 @@ import Observable_create from "../../../rx/Observable/__internal__/Observable.cr
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import {
-  DispatcherLike_scheduler,
   SchedulerLike_now,
   SchedulerLike_schedule,
 } from "../../../scheduling.js";
