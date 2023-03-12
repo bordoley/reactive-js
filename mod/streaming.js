@@ -9,3 +9,7 @@ export const StreamableLike_isEnumerable = Symbol("StreamableLike_isEnumerable")
 export const StreamableLike_isInteractive = Symbol("StreamableLike_isInteractive");
 /** @ignore */
 export const StreamableLike_isRunnable = Symbol("StreamableLike_isRunnable");
+/** @ignore */
+export const FlowableState_running = Symbol("FlowableState_running");
+/** @ignore */
+export const FlowableState_paused = Symbol("FlowableState_paused");

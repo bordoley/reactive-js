@@ -36,14 +36,12 @@ import {
   ObserverLike_scheduler,
 } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import {
-  DispatcherLike_scheduler,
-  PauseableState,
-  PauseableState_paused,
-  PauseableState_running,
-} from "../scheduling.js";
+import { DispatcherLike_scheduler } from "../scheduling.js";
 import {
   FlowableLike,
+  FlowableState,
+  FlowableState_paused,
+  FlowableState_running,
   StreamableLike,
   StreamableLike_stream,
 } from "../streaming.js";
@@ -190,10 +188,10 @@ export const createReadableSource = (
           mode,
           Observable.forEach(ev => {
             switch (ev) {
-              case PauseableState_paused:
+              case FlowableState_paused:
                 readable.pause();
                 break;
-              case PauseableState_running:
+              case FlowableState_running:
                 readable.resume();
                 break;
             }
@@ -228,8 +226,8 @@ export const createWritableSink = /*@__PURE__*/ (() => {
   const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
   return (
     factory: Factory<Writable> | Writable,
-  ): StreamableLike<Uint8Array, PauseableState> =>
-    Streamable_createLifted<Uint8Array, PauseableState>(
+  ): StreamableLike<Uint8Array, FlowableState> =>
+    Streamable_createLifted<Uint8Array, FlowableState>(
       events =>
         Observable.create(observer => {
           const dispatcher = observer[ObserverLike_dispatcher];
@@ -261,18 +259,18 @@ export const createWritableSink = /*@__PURE__*/ (() => {
           );
 
           const onDrain = () => {
-            dispatcher[QueueableLike_push](PauseableState_running);
+            dispatcher[QueueableLike_push](FlowableState_running);
           };
           const onFinish = () => dispatcher[DisposableLike_dispose]();
           const onPause = () => {
-            dispatcher[QueueableLike_push](PauseableState_paused);
+            dispatcher[QueueableLike_push](FlowableState_paused);
           };
 
           writable.on("drain", onDrain);
           writable.on("finish", onFinish);
           writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-          dispatcher[QueueableLike_push](PauseableState_running);
+          dispatcher[QueueableLike_push](FlowableState_running);
         }),
       false,
       false,

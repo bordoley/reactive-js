@@ -5,14 +5,17 @@ import {
   RunnableLike,
 } from "../../../rx.js";
 import {
-  PauseableState,
-  PauseableState_paused,
-  PauseableState_running,
+  PauseableSchedulerLike_pause,
+  PauseableSchedulerLike_resume,
 } from "../../../scheduling.js";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
-import { ToFlowable } from "../../../streaming.js";
+import {
+  FlowableState,
+  FlowableState_paused,
+  FlowableState_running,
+  ToFlowable,
+} from "../../../streaming.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
-import { QueueableLike_push } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_toObservable from "../../../util/Disposable/__internal__/Disposable.toObservable.js";
@@ -26,7 +29,7 @@ import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom
 const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
   () => observable =>
     Flowable_createLifted(
-      (modeObs: ObservableLike<PauseableState>) =>
+      (modeObs: ObservableLike<FlowableState>) =>
         Observable_create(observer => {
           const pauseableScheduler = Scheduler_toPausableScheduler(
             observer[ObserverLike_scheduler],
@@ -46,17 +49,13 @@ const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
             Disposable_add(
               pipe(
                 modeObs,
-                Observable_forEach<ObservableLike, PauseableState>(mode => {
+                Observable_forEach<ObservableLike, FlowableState>(mode => {
                   switch (mode) {
-                    case PauseableState_paused:
-                      pauseableScheduler[QueueableLike_push](
-                        PauseableState_paused,
-                      );
+                    case FlowableState_paused:
+                      pauseableScheduler[PauseableSchedulerLike_pause]();
                       break;
-                    case PauseableState_running:
-                      pauseableScheduler[QueueableLike_push](
-                        PauseableState_running,
-                      );
+                    case FlowableState_running:
+                      pauseableScheduler[PauseableSchedulerLike_resume]();
                       break;
                   }
                 }),

@@ -2,10 +2,10 @@
 
 import { pipe } from "../../../functions.js";
 import { ObserverLike_scheduler, } from "../../../rx.js";
-import { PauseableState_paused, PauseableState_running, } from "../../../scheduling.js";
+import { PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, } from "../../../scheduling.js";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
+import { FlowableState_paused, FlowableState_running, } from "../../../streaming.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
-import { QueueableLike_push } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_toObservable from "../../../util/Disposable/__internal__/Disposable.toObservable.js";
@@ -19,11 +19,11 @@ const Runnable_toFlowable = () => observable => Flowable_createLifted((modeObs) 
     const pauseableScheduler = Scheduler_toPausableScheduler(observer[ObserverLike_scheduler]);
     pipe(observer, Observer_sourceFrom(pipe(observable, Observable_subscribeOn(pauseableScheduler), Observable_takeUntil(pipe(pauseableScheduler, Disposable_toObservable())))), Disposable_add(pipe(modeObs, Observable_forEach(mode => {
         switch (mode) {
-            case PauseableState_paused:
-                pauseableScheduler[QueueableLike_push](PauseableState_paused);
+            case FlowableState_paused:
+                pauseableScheduler[PauseableSchedulerLike_pause]();
                 break;
-            case PauseableState_running:
-                pauseableScheduler[QueueableLike_push](PauseableState_running);
+            case FlowableState_running:
+                pauseableScheduler[PauseableSchedulerLike_resume]();
                 break;
         }
     }), Observable_subscribe(observer[ObserverLike_scheduler]), Disposable_bindTo(pauseableScheduler))), Disposable_add(pauseableScheduler));

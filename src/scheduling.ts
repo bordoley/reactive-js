@@ -51,41 +51,27 @@ export interface SchedulerLike extends DisposableLike {
 }
 
 /** @ignore */
-export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
-
-/**
- * @noInheritDoc
- */
-export interface DispatcherLike<T = unknown>
-  extends QueueableLike<T>,
-    DisposableLike {
-  readonly [DispatcherLike_scheduler]: SchedulerLike;
-}
-
-/** @ignore */
-export const PauseableState_running = Symbol("PauseableState_running");
-/** @ignore */
-export const PauseableState_paused = Symbol("PauseableState_paused");
-
-export type PauseableState =
-  | typeof PauseableState_running
-  | typeof PauseableState_paused;
-
-/**
- * @noInheritDoc
- */
-export interface PauseableLike extends QueueableLike<PauseableState> {}
-
-/** @ignore */
 export const PauseableSchedulerLike_isPaused = Symbol(
   "PauseableSchedulerLike_isPaused",
+);
+
+/** @ignore */
+export const PauseableSchedulerLike_pause = Symbol(
+  "PauseableSchedulerLike_pause",
+);
+
+/** @ignore */
+export const PauseableSchedulerLike_resume = Symbol(
+  "PauseableSchedulerLike_resume",
 );
 
 /**
  * @noInheritDoc
  */
-export interface PauseableSchedulerLike extends PauseableLike, SchedulerLike {
+export interface PauseableSchedulerLike extends SchedulerLike {
   readonly [PauseableSchedulerLike_isPaused]: boolean;
+  [PauseableSchedulerLike_pause](): void;
+  [PauseableSchedulerLike_resume](): void;
 }
 
 export interface PrioritySchedulerLike extends SchedulerLike {
@@ -105,4 +91,16 @@ export const VirtualTimeSchedulerLike_run = Symbol(
  */
 export interface VirtualTimeSchedulerLike extends SchedulerLike {
   [VirtualTimeSchedulerLike_run](): void;
+}
+
+/** @ignore */
+export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
+
+/**
+ * @noInheritDoc
+ */
+export interface DispatcherLike<T = unknown>
+  extends QueueableLike<T>,
+    DisposableLike {
+  readonly [DispatcherLike_scheduler]: SchedulerLike;
 }

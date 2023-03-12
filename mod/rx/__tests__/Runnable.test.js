@@ -5,9 +5,9 @@ import { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTes
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { arrayEquality, identity, increment, incrementBy, newInstance, none, pipe, pipeLazy, returns, } from "../../functions.js";
 import { ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../rx.js";
-import { PauseableState_paused, PauseableState_running, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
+import { SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { StreamableLike_stream } from "../../streaming.js";
+import { FlowableState_paused, FlowableState_running, StreamableLike_stream, } from "../../streaming.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
@@ -39,11 +39,11 @@ const toFlowableTests = describe("toFlowable", test("flow a generating source", 
         delayStart: true,
     }), Runnable.toFlowable());
     const generateStream = streamableSrc[StreamableLike_stream](scheduler);
-    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](PauseableState_running)),
-        scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](PauseableState_paused), {
+    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](FlowableState_running)),
+        scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](FlowableState_paused), {
             delay: 2,
         });
-    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](PauseableState_running), {
+    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](FlowableState_running), {
         delay: 4,
     });
     scheduler[SchedulerLike_schedule](() => generateStream[DisposableLike_dispose](), {

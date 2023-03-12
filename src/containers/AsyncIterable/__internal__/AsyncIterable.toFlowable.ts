@@ -11,12 +11,14 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import {
   DispatcherLike_scheduler,
-  PauseableState,
-  PauseableState_paused,
   SchedulerLike_now,
   SchedulerLike_schedule,
 } from "../../../scheduling.js";
-import { ToFlowable } from "../../../streaming.js";
+import {
+  FlowableState,
+  FlowableState_paused,
+  ToFlowable,
+} from "../../../streaming.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
 import {
   DisposableLike_dispose,
@@ -34,7 +36,7 @@ const AsyncIterable_toFlowable: ToFlowable<
   <T>(o?: { maxBuffer?: number; maxYieldInterval?: number }) =>
   (iterable: AsyncIterableLike<T>) =>
     Flowable_createLifted(
-      (modeObs: ObservableLike<PauseableState>) =>
+      (modeObs: ObservableLike<FlowableState>) =>
         Observable_create<T>((observer: ObserverLike<T>) => {
           const { maxBuffer = MAX_SAFE_INTEGER, maxYieldInterval = 300 } =
             o ?? {};
@@ -83,10 +85,10 @@ const AsyncIterable_toFlowable: ToFlowable<
 
           pipe(
             modeObs,
-            Observable_forEach<ObservableLike, PauseableState>(
-              (mode: PauseableState) => {
+            Observable_forEach<ObservableLike, FlowableState>(
+              (mode: FlowableState) => {
                 const wasPaused = isPaused;
-                isPaused = mode === PauseableState_paused;
+                isPaused = mode === FlowableState_paused;
 
                 if (!isPaused && wasPaused) {
                   pipe(

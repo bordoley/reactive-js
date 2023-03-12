@@ -39,8 +39,8 @@ import {
   ContinuationContextLike_yield,
   PauseableSchedulerLike,
   PauseableSchedulerLike_isPaused,
-  PauseableState,
-  PauseableState_paused,
+  PauseableSchedulerLike_pause,
+  PauseableSchedulerLike_resume,
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -51,7 +51,6 @@ import {
 import {
   DisposableLike,
   DisposableLike_isDisposed,
-  QueueableLike_count,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
@@ -260,8 +259,8 @@ const Scheduler_toPriorityScheduler: Function1<
           | typeof SchedulerLike_now
           | typeof PrioritySchedulerImplementationLike_shouldYield
           | typeof ContinuationSchedulerLike_schedule
-          | typeof QueueableLike_push
-          | typeof QueueableLike_count
+          | typeof PauseableSchedulerLike_pause
+          | typeof PauseableSchedulerLike_resume
         > &
           Mutable<TProperties>,
         host: SchedulerLike,
@@ -307,30 +306,23 @@ const Scheduler_toPriorityScheduler: Function1<
             this[QueueScheduler_hostScheduler][SchedulerLike_shouldYield]
           );
         },
-        get [QueueableLike_count](): number {
-          unsafeCast<TProperties>(this);
-
-          // Intentional. This is a little wierd because though the QueueScheduler
-          // technically implements the QueuableLike interface, it doesn't ever
-          // actually queue up the actions. It's somewhat of a weird API glitch
-          // that enables a uniform Pausable interface between PausableScheduler
-          // and Flowable (which does queue and dispatch its pause events).
-          return 0;
-        },
-        [QueueableLike_push](
+        [PauseableSchedulerLike_pause](
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike &
             PrioritySchedulerImplementationLike,
-          next: PauseableState,
-        ): void {
-          if (next === PauseableState_paused) {
-            this[PauseableSchedulerLike_isPaused] = true;
-            this[SerialDisposableLike_current] = Disposable_disposed;
-          } else {
-            this[PauseableSchedulerLike_isPaused] = false;
-            scheduleOnHost(this);
-          }
+        ) {
+          this[PauseableSchedulerLike_isPaused] = true;
+          this[SerialDisposableLike_current] = Disposable_disposed;
+        },
+        [PauseableSchedulerLike_resume](
+          this: TProperties &
+            SerialDisposableLike &
+            EnumeratorLike &
+            PrioritySchedulerImplementationLike,
+        ) {
+          this[PauseableSchedulerLike_isPaused] = false;
+          scheduleOnHost(this);
         },
         [EnumeratorLike_move](
           this: TProperties & MutableEnumeratorLike<QueueTask>,

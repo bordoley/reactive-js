@@ -1,7 +1,7 @@
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
 import { Function1 } from "./functions.js";
 import { MulticastObservableLike } from "./rx.js";
-import { DispatcherLike, PauseableLike, PauseableState, SchedulerLike } from "./scheduling.js";
+import { DispatcherLike, SchedulerLike } from "./scheduling.js";
 /**
  * Represents a duplex stream
  *
@@ -37,10 +37,15 @@ export interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T
     readonly [ContainerLike_type]?: AsyncEnumerableLike<this[typeof ContainerLike_T]>;
     readonly [StreamableLike_isInteractive]: true;
 }
+/** @ignore */
+export declare const FlowableState_running: unique symbol;
+/** @ignore */
+export declare const FlowableState_paused: unique symbol;
+export type FlowableState = typeof FlowableState_running | typeof FlowableState_paused;
 /**
  * @noInheritDoc
  */
-export interface FlowableStreamLike<T = unknown> extends StreamLike<PauseableState, T>, PauseableLike {
+export interface FlowableStreamLike<T = unknown> extends StreamLike<FlowableState, T> {
     readonly [StreamableLike_isEnumerable]: false;
     readonly [StreamableLike_isInteractive]: false;
 }
@@ -48,7 +53,7 @@ export interface FlowableStreamLike<T = unknown> extends StreamLike<PauseableSta
  * @noInheritDoc
  * @category Container
  */
-export interface FlowableLike<T = unknown> extends StreamableLike<PauseableState, T, FlowableStreamLike<T>>, ContainerLike {
+export interface FlowableLike<T = unknown> extends StreamableLike<FlowableState, T, FlowableStreamLike<T>>, ContainerLike {
     readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }
 /**

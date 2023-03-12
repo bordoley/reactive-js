@@ -12,10 +12,11 @@ import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
-  PauseableState_paused,
-  PauseableState_running,
-} from "../../../scheduling.js";
-import { FlowableLike, StreamableLike_isRunnable } from "../../../streaming.js";
+  FlowableLike,
+  FlowableState_paused,
+  FlowableState_running,
+  StreamableLike_isRunnable,
+} from "../../../streaming.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Queueable_pushTo from "../../../util/Queue/__internal__/Queueable.pushTo.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
@@ -40,7 +41,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
         // Observable.startWith uses concatenation.
         Observable_mergeWith(
           pipe(
-            [PauseableState_paused, PauseableState_running],
+            [FlowableState_paused, FlowableState_running],
             ReadonlyArray_toObservable(),
           ),
         ),

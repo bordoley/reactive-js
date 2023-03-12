@@ -7,12 +7,7 @@ import {
 } from "./containers.js";
 import { Function1 } from "./functions.js";
 import { MulticastObservableLike } from "./rx.js";
-import {
-  DispatcherLike,
-  PauseableLike,
-  PauseableState,
-  SchedulerLike,
-} from "./scheduling.js";
+import { DispatcherLike, SchedulerLike } from "./scheduling.js";
 
 /**
  * Represents a duplex stream
@@ -72,12 +67,20 @@ export interface AsyncEnumerableLike<T = unknown>
   readonly [StreamableLike_isInteractive]: true;
 }
 
+/** @ignore */
+export const FlowableState_running = Symbol("FlowableState_running");
+/** @ignore */
+export const FlowableState_paused = Symbol("FlowableState_paused");
+
+export type FlowableState =
+  | typeof FlowableState_running
+  | typeof FlowableState_paused;
+
 /**
  * @noInheritDoc
  */
 export interface FlowableStreamLike<T = unknown>
-  extends StreamLike<PauseableState, T>,
-    PauseableLike {
+  extends StreamLike<FlowableState, T> {
   readonly [StreamableLike_isEnumerable]: false;
   readonly [StreamableLike_isInteractive]: false;
 }
@@ -87,7 +90,7 @@ export interface FlowableStreamLike<T = unknown>
  * @category Container
  */
 export interface FlowableLike<T = unknown>
-  extends StreamableLike<PauseableState, T, FlowableStreamLike<T>>,
+  extends StreamableLike<FlowableState, T, FlowableStreamLike<T>>,
     ContainerLike {
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
 }

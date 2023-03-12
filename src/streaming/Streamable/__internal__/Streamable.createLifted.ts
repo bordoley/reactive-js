@@ -1,10 +1,9 @@
 import { ContainerOperator } from "../../../containers.js";
-import { Updater } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import { PauseableState } from "../../../scheduling.js";
 import {
   AsyncEnumerableLike,
   FlowableLike,
+  FlowableState,
   StreamLike,
   StreamableLike,
 } from "../../../streaming.js";
@@ -19,7 +18,7 @@ interface StreamableCreateLifted {
     isRunnable: boolean,
   ): AsyncEnumerableLike<T>;
   <T>(
-    op: ContainerOperator<ObservableLike, Updater<PauseableState>, T>,
+    op: ContainerOperator<ObservableLike, FlowableState, T>,
     isInteractive: false,
     isEnumerable: boolean,
     isRunnable: boolean,

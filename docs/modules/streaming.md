@@ -21,3 +21,13 @@
 - [FromFlowable](../interfaces/streaming.FromFlowable.md)
 - [ToAsyncEnumerable](../interfaces/streaming.ToAsyncEnumerable.md)
 - [ToFlowable](../interfaces/streaming.ToFlowable.md)
+
+### Type Aliases
+
+- [FlowableState](streaming.md#flowablestate)
+
+## Type Aliases
+
+### FlowableState
+
+Ƭ **FlowableState**: typeof `FlowableState_running` \| typeof `FlowableState_paused`

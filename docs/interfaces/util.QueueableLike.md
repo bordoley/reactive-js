@@ -16,8 +16,6 @@
 
   ↳ [`DispatcherLike`](scheduling.DispatcherLike.md)
 
-  ↳ [`PauseableLike`](scheduling.PauseableLike.md)
-
 ## Table of contents
 
 ### Properties

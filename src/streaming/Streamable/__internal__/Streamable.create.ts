@@ -1,8 +1,8 @@
-import { Updater } from "../../../functions.js";
-import { PauseableState, SchedulerLike } from "../../../scheduling.js";
+import { SchedulerLike } from "../../../scheduling.js";
 import {
   AsyncEnumerableLike,
   FlowableLike,
+  FlowableState,
   StreamLike,
   StreamableLike,
   StreamableLike_isEnumerable,
@@ -25,7 +25,7 @@ interface StreamableCreate {
     stream: (
       scheduler: SchedulerLike,
       options?: { readonly replay?: number },
-    ) => StreamLike<Updater<PauseableState>, T>,
+    ) => StreamLike<FlowableState, T>,
     isInteractive: false,
     isEnumerable: boolean,
     isRunnable: boolean,

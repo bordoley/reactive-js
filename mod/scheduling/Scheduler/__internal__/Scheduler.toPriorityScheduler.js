@@ -7,8 +7,8 @@ import { QueueLike_head, QueueLike_pull, SerialDisposableLike_current, } from ".
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
-import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableState_paused, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
+import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
@@ -140,24 +140,13 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
                 (isSome(next) ? priorityShouldYield(this, next) : false) ||
                 this[QueueScheduler_hostScheduler][SchedulerLike_shouldYield]);
         },
-        get [QueueableLike_count]() {
-            unsafeCast(this);
-            // Intentional. This is a little wierd because though the QueueScheduler
-            // technically implements the QueuableLike interface, it doesn't ever
-            // actually queue up the actions. It's somewhat of a weird API glitch
-            // that enables a uniform Pausable interface between PausableScheduler
-            // and Flowable (which does queue and dispatch its pause events).
-            return 0;
+        [PauseableSchedulerLike_pause]() {
+            this[PauseableSchedulerLike_isPaused] = true;
+            this[SerialDisposableLike_current] = Disposable_disposed;
         },
-        [QueueableLike_push](next) {
-            if (next === PauseableState_paused) {
-                this[PauseableSchedulerLike_isPaused] = true;
-                this[SerialDisposableLike_current] = Disposable_disposed;
-            }
-            else {
-                this[PauseableSchedulerLike_isPaused] = false;
-                scheduleOnHost(this);
-            }
+        [PauseableSchedulerLike_resume]() {
+            this[PauseableSchedulerLike_isPaused] = false;
+            scheduleOnHost(this);
         },
         [EnumeratorLike_move]() {
             // First fast forward through disposed tasks.

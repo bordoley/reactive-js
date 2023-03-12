@@ -15,12 +15,12 @@ export const ContinuationContextLike_now = Symbol("ContinuationContextLike_now")
 /** @ignore */
 export const ContinuationContextLike_yield = Symbol("ContinuationContextLike_yield");
 /** @ignore */
-export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
-/** @ignore */
-export const PauseableState_running = Symbol("PauseableState_running");
-/** @ignore */
-export const PauseableState_paused = Symbol("PauseableState_paused");
-/** @ignore */
 export const PauseableSchedulerLike_isPaused = Symbol("PauseableSchedulerLike_isPaused");
 /** @ignore */
+export const PauseableSchedulerLike_pause = Symbol("PauseableSchedulerLike_pause");
+/** @ignore */
+export const PauseableSchedulerLike_resume = Symbol("PauseableSchedulerLike_resume");
+/** @ignore */
 export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run");
+/** @ignore */
+export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");

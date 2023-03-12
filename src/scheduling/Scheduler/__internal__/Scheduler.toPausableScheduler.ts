@@ -1,10 +1,9 @@
 import { Function1 } from "../../../functions.js";
 import {
   PauseableSchedulerLike,
-  PauseableState_paused,
+  PauseableSchedulerLike_pause,
   SchedulerLike,
 } from "../../../scheduling.js";
-import { QueueableLike_push } from "../../../util.js";
 import Scheduler_toPriorityScheduler from "./Scheduler.toPriorityScheduler.js";
 
 const Scheduler_toPausableScheduler: Function1<
@@ -12,7 +11,7 @@ const Scheduler_toPausableScheduler: Function1<
   PauseableSchedulerLike
 > = scheduler => {
   const pauseableScheduler = Scheduler_toPriorityScheduler(scheduler);
-  pauseableScheduler[QueueableLike_push](PauseableState_paused);
+  pauseableScheduler[PauseableSchedulerLike_pause]();
   return pauseableScheduler;
 };
 
