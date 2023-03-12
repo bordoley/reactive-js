@@ -1,3 +1,4 @@
+import { max } from "../../../__internal__/math.js";
 import {
   ContainerOperator,
   SequenceLike,
@@ -30,7 +31,7 @@ const Sequence_skipFirst: SkipFirst<SequenceLike>["skipFirst"] =
   (seq: SequenceLike<T>) =>
   () => {
     const { count = 1 } = options;
-    return Sequence_seek<T>(count)(seq)();
+    return Sequence_seek<T>(max(count, 0))(seq)();
   };
 
 export default Sequence_skipFirst;

@@ -114,6 +114,7 @@ export declare const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest
 export declare const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsyncEnumerable"];
 export declare const fromAsyncIterable: FromAsyncIterable<ObservableLike, {
     maxBuffer?: number;
+    maxYieldInterval?: number;
 }>["fromAsyncIterable"];
 export declare const fromIterable: FromIterable<ObservableLike, {
     readonly delay?: number;

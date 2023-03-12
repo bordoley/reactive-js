@@ -37,9 +37,8 @@ const Observable_takeFirst = /*@__PURE__*/ (() => {
         }));
     })();
     return ((options = {}) => {
-        var _a;
-        const { count = max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
-        return pipe(createTakeFirstObserver, partial(count), Observable_liftEnumerableOperator);
+        const { count = 1 } = options;
+        return pipe(createTakeFirstObserver, partial(max(count, 0)), Observable_liftEnumerableOperator);
     });
 })();
 export default Observable_takeFirst;

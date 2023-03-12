@@ -13,9 +13,9 @@ export const fromReadonlyArray = ReadonlyArray_toReadonlyArray;
 export const fromSequence = Sequence_toIterable;
 export const toAsyncEnumerable = Iterable_toAsyncEnumerable;
 export const toEnumerable = Iterable_toObservable;
+export const toFlowable = Iterable_toFlowable;
 export const toIterable = 
 /*@__PURE__*/ returns(identity);
-export const toFlowable = Iterable_toFlowable;
 export const toObservable = Iterable_toObservable;
 export const toReadonlyArray = Iterable_toReadonlyArray;
 export const toRunnable = Iterable_toObservable;

@@ -1,3 +1,4 @@
+import { max } from "../../../__internal__/math.js";
 import {
   SequenceLike,
   SequenceLike_data,
@@ -30,7 +31,7 @@ const Sequence_takeFirst: TakeFirst<SequenceLike>["takeFirst"] =
     return <T>(options: { readonly count?: number } = {}) =>
       (seq: SequenceLike<T>) => {
         const { count = 1 } = options;
-        return _takeFirst(count, seq);
+        return _takeFirst(max(count, 0), seq);
       };
   })();
 

@@ -1,5 +1,6 @@
 /// <reference types="./Observable.skipFirst.d.ts" />
 
+import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
@@ -32,8 +33,8 @@ const Observable_skipFirst = /*@__PURE__*/ (() => {
     })();
     return ((options = {}) => {
         const { count = 1 } = options;
-        const lifted = pipe(createSkipFirstObserver, partial(count), Observable_liftEnumerableOperator);
-        return obs => (count > 0 ? pipe(obs, lifted) : obs);
+        const op = pipe(createSkipFirstObserver, partial(max(count, 0)), Observable_liftEnumerableOperator);
+        return obs => (count > 0 ? op(obs) : obs);
     });
 })();
 export default Observable_skipFirst;

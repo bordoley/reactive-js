@@ -1,5 +1,6 @@
 /// <reference types="./Sequence.takeFirst.d.ts" />
 
+import { max } from "../../../__internal__/math.js";
 import { SequenceLike_data, SequenceLike_next, } from "../../../containers.js";
 import { isSome, none } from "../../../functions.js";
 const Sequence_takeFirst = 
@@ -20,7 +21,7 @@ const Sequence_takeFirst =
     };
     return (options = {}) => (seq) => {
         const { count = 1 } = options;
-        return _takeFirst(count, seq);
+        return _takeFirst(max(count, 0), seq);
     };
 })();
 export default Sequence_takeFirst;

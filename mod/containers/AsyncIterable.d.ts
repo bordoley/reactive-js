@@ -4,7 +4,9 @@ import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 export declare const toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnumerable"];
 export declare const toFlowable: ToFlowable<AsyncIterableLike, {
     maxBuffer?: number;
+    maxYieldInterval?: number;
 }>["toFlowable"];
 export declare const toObservable: ToObservable<AsyncIterableLike, {
     maxBuffer?: number;
+    maxYieldInterval?: number;
 }>["toObservable"];

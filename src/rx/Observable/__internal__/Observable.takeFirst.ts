@@ -96,10 +96,10 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
   })();
 
   return ((options: { readonly count?: number } = {}) => {
-    const { count = max(options.count ?? 1, 0) } = options;
+    const { count = 1 } = options;
     return pipe(
       createTakeFirstObserver,
-      partial(count),
+      partial(max(count, 0)),
       Observable_liftEnumerableOperator,
     );
   }) as ObservableTakeFirst;

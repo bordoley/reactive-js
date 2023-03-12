@@ -22,7 +22,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 
 const AsyncIterable_toObservable: ToObservable<
   AsyncIterableLike,
-  { maxBuffer?: number }
+  { maxBuffer?: number; maxYieldInterval?: number }
 >["toObservable"] =
   <T>(o?: { maxBuffer?: number; maxYieldInterval?: number }) =>
   (iterable: AsyncIterableLike<T>) =>

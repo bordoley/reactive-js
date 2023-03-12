@@ -1,3 +1,4 @@
+import { max } from "../../../__internal__/math.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -104,7 +105,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
     const { count = 1 } = options;
     return pipe(
       createTakeLastObserver,
-      partial(count),
+      partial(max(count, 0)),
       Observable_liftEnumerableOperator,
     );
   }) as ObservableTakeLast;

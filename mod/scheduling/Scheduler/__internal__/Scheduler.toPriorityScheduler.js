@@ -86,13 +86,13 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
             for (let task = peek(instance); isSome(task) && !instance[DisposableLike_isDisposed]; task = peek(instance)) {
                 const { [QueueTask_continuation]: continuation, [QueueTask_dueTime]: dueTime, } = task;
                 const delay = max(dueTime - instance[QueueScheduler_hostScheduler][SchedulerLike_now], 0);
-                if (delay === 0) {
-                    instance[EnumeratorLike_move]();
-                    instance[PrioritySchedulerImplementationLike_runContinuation](continuation);
-                }
-                else {
+                if (delay > 0) {
                     instance[QueueScheduler_dueTime] =
                         instance[QueueScheduler_hostScheduler][SchedulerLike_now] + delay;
+                }
+                else {
+                    instance[EnumeratorLike_move]();
+                    instance[PrioritySchedulerImplementationLike_runContinuation](continuation);
                 }
                 ctx[ContinuationContextLike_yield](delay);
             }

@@ -8,11 +8,11 @@ export declare const toAsyncEnumerable: ToAsyncEnumerable<IterableLike, {
     delay?: number;
 }>["toAsyncEnumerable"];
 export declare const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"];
-export declare const toIterable: ToIterable<IterableLike>["toIterable"];
 export declare const toFlowable: ToFlowable<IterableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["toFlowable"];
+export declare const toIterable: ToIterable<IterableLike>["toIterable"];
 export declare const toObservable: ToObservable<IterableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;

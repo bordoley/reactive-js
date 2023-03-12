@@ -412,7 +412,7 @@ export const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsync
 
 export const fromAsyncIterable: FromAsyncIterable<
   ObservableLike,
-  { maxBuffer?: number }
+  { maxBuffer?: number; maxYieldInterval?: number }
 >["fromAsyncIterable"] = AsyncIterable_toObservable;
 
 export const fromIterable: FromIterable<

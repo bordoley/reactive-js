@@ -1,5 +1,6 @@
 /// <reference types="./Sequence.takeLast.d.ts" />
 
+import { max } from "../../../__internal__/math.js";
 import { QueueLike_pull } from "../../../__internal__/util.internal.js";
 import { SequenceLike_data, SequenceLike_next, } from "../../../containers.js";
 import { callWith, isSome, pipe } from "../../../functions.js";
@@ -28,7 +29,7 @@ const Sequence_takeLast =
     };
     return (options = {}) => (seq) => {
         const { count = 1 } = options;
-        return _takeLast(count, seq);
+        return _takeLast(max(count, 0), seq);
     };
 })();
 export default Sequence_takeLast;

@@ -23,6 +23,6 @@ const Enumerable_toAsyncEnumerable =
         }), Observable_takeWhile(_ => enumerator[EnumeratorLike_hasCurrent]), delay > 0
             ? Observable_concatMap(_ => pipe(enumerator[EnumeratorLike_current], Optional_toObservable({ delay })))
             : Observable_map(_ => enumerator[EnumeratorLike_current]), Observable_observeWith(observer));
-    }), true, delay === 0, true);
+    }), true, delay <= 0, true);
 };
 export default Enumerable_toAsyncEnumerable;

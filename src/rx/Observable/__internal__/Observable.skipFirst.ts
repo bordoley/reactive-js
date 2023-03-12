@@ -1,3 +1,4 @@
+import { max } from "../../../__internal__/math.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -84,12 +85,12 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
 
   return ((options: { readonly count?: number } = {}) => {
     const { count = 1 } = options;
-    const lifted = pipe(
+    const op = pipe(
       createSkipFirstObserver,
-      partial(count),
+      partial(max(count, 0)),
       Observable_liftEnumerableOperator,
     );
-    return obs => (count > 0 ? pipe(obs, lifted) : obs);
+    return obs => (count > 0 ? op(obs) : obs);
   }) as ObservableSkipFirst;
 })();
 

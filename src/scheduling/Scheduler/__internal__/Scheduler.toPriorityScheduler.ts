@@ -201,15 +201,15 @@ const Scheduler_toPriorityScheduler: Function1<
             0,
           );
 
-          if (delay === 0) {
+          if (delay > 0) {
+            instance[QueueScheduler_dueTime] =
+              instance[QueueScheduler_hostScheduler][SchedulerLike_now] + delay;
+          } else {
             instance[EnumeratorLike_move]();
 
             instance[PrioritySchedulerImplementationLike_runContinuation](
               continuation,
             );
-          } else {
-            instance[QueueScheduler_dueTime] =
-              instance[QueueScheduler_hostScheduler][SchedulerLike_now] + delay;
           }
           ctx[ContinuationContextLike_yield](delay);
         }

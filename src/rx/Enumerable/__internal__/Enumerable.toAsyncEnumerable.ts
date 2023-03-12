@@ -57,7 +57,7 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
             );
           }),
         true,
-        delay === 0,
+        delay <= 0,
         true,
       );
     };

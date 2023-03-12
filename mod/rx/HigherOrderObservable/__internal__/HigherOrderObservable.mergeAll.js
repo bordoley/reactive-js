@@ -1,6 +1,7 @@
 /// <reference types="./HigherOrderObservable.mergeAll.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { isSome, none, partial, pipe, } from "../../../functions.js";
@@ -78,7 +79,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
     })();
     return (options = {}) => {
         const { maxBufferSize = MAX_SAFE_INTEGER, maxConcurrency = MAX_SAFE_INTEGER, } = options;
-        const f = pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency));
+        const f = pipe(createMergeAllObserver, partial(max(maxBufferSize, 0), max(maxConcurrency, 1)));
         return lift(f);
     };
 };

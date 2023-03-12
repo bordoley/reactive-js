@@ -1,4 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { max } from "../../../__internal__/math.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -207,7 +208,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
     const f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>> = pipe(
       createMergeAllObserver,
-      partial(maxBufferSize, maxConcurrency),
+      partial(max(maxBufferSize, 0), max(maxConcurrency, 1)),
     );
 
     return lift(f);

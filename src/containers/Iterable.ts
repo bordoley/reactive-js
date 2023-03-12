@@ -34,9 +34,6 @@ export const toAsyncEnumerable: ToAsyncEnumerable<
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   Iterable_toObservable;
 
-export const toIterable: ToIterable<IterableLike>["toIterable"] =
-  /*@__PURE__*/ returns(identity) as ToIterable<IterableLike>["toIterable"];
-
 export const toFlowable: ToFlowable<
   IterableLike,
   {
@@ -44,6 +41,9 @@ export const toFlowable: ToFlowable<
     readonly delayStart?: boolean;
   }
 >["toFlowable"] = Iterable_toFlowable;
+
+export const toIterable: ToIterable<IterableLike>["toIterable"] =
+  /*@__PURE__*/ returns(identity) as ToIterable<IterableLike>["toIterable"];
 
 export const toObservable: ToObservable<
   IterableLike,

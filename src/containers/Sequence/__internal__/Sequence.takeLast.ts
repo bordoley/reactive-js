@@ -1,3 +1,4 @@
+import { max } from "../../../__internal__/math.js";
 import { QueueLike_pull } from "../../../__internal__/util.internal.js";
 import {
   SequenceLike,
@@ -41,7 +42,7 @@ const Sequence_takeLast: TakeLast<SequenceLike>["takeLast"] =
     return <T>(options: { readonly count?: number } = {}) =>
       (seq: SequenceLike<T>) => {
         const { count = 1 } = options;
-        return _takeLast(count, seq);
+        return _takeLast(max(count, 0), seq);
       };
   })();
 

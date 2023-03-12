@@ -63,7 +63,7 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
           Observable_takeFirst<ObservableLike, T>({ count: abs(count) }),
         ),
         true,
-        delay === 0,
+        delay <= 0,
         true,
       );
     },

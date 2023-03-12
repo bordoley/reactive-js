@@ -1,5 +1,6 @@
 /// <reference types="./Observable.takeLast.d.ts" />
 
+import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -38,7 +39,7 @@ const Observable_takeLast = /*@__PURE__*/ (() => {
     }));
     return ((options = {}) => {
         const { count = 1 } = options;
-        return pipe(createTakeLastObserver, partial(count), Observable_liftEnumerableOperator);
+        return pipe(createTakeLastObserver, partial(max(count, 0)), Observable_liftEnumerableOperator);
     });
 })();
 export default Observable_takeLast;

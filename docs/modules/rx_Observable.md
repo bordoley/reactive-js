@@ -1076,6 +1076,7 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.maxBuffer?` | `number` |
+| `options.maxYieldInterval?` | `number` |
 
 #### Returns
 

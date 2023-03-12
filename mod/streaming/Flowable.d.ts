@@ -3,6 +3,7 @@ import { FromEnumerable, FromRunnable, ToObservable, ToRunnable } from "../rx.js
 import { FlowableLike } from "../streaming.js";
 export declare const fromAsyncIterable: FromAsyncIterable<FlowableLike, {
     maxBuffer?: number;
+    maxYieldInterval?: number;
 }>["fromAsyncIterable"];
 export declare const fromEnumerable: FromEnumerable<FlowableLike>["fromEnumerable"];
 export declare const fromIterable: FromIterable<FlowableLike>["fromIterable"];
