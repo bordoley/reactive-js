@@ -11,10 +11,7 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
-import {
-  DisposableLike_dispose,
-  QueueableLike_push,
-} from "../../../util.js";
+import { DisposableLike_dispose, QueueableLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 

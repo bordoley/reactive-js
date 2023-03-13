@@ -27,9 +27,9 @@ import {
   error,
   ignore,
   isFunction,
+  isSome,
   pipe,
   pipeLazy,
-  isSome,
 } from "../functions.js";
 import {
   DispatcherLike_complete,
@@ -179,7 +179,7 @@ export const createReadableSource = (
         const dispatchDisposable = pipe(
           Disposable.create(),
           Disposable.onDisposed(e => {
-            if(isSome(e)) {
+            if (isSome(e)) {
               observer[DisposableLike_dispose](e);
             } else {
               dispatcher[DispatcherLike_complete]();
@@ -247,7 +247,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
           const dispatchDisposable = pipe(
             Disposable.create(),
             Disposable.onDisposed(e => {
-              if(isSome(e)) {
+              if (isSome(e)) {
                 observer[DisposableLike_dispose](e);
               } else {
                 dispatcher[DispatcherLike_complete]();

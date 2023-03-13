@@ -13,7 +13,13 @@ import {
   QueueLike,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
-import { isSome, newInstance, none, pipe, unsafeCast } from "../../../functions.js";
+import {
+  isSome,
+  newInstance,
+  none,
+  pipe,
+  unsafeCast,
+} from "../../../functions.js";
 import {
   DispatcherLike_complete,
   MulticastObservableLike_observerCount,
