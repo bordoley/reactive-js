@@ -1,8 +1,13 @@
 import { ContainerOperator } from "../../../containers.js";
-import { compose } from "../../../functions.js";
+import { Updater, compose, isFunction, returns } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
-import { FlowableLike, FlowableState } from "../../../streaming.js";
+import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
+import {
+  FlowableLike,
+  FlowableState,
+  FlowableState_paused,
+} from "../../../streaming.js";
 import Streamable_createLifted from "../../Streamable/__internal__/Streamable.createLifted.js";
 
 const Flowable_createLifted = <T>(
@@ -10,7 +15,18 @@ const Flowable_createLifted = <T>(
   isRunnable: boolean,
 ): FlowableLike<T> =>
   Streamable_createLifted(
-    compose(Observable_distinctUntilChanged<FlowableState>(), op),
+    compose(
+      Observable_scan<
+        ObservableLike,
+        FlowableState | Updater<FlowableState>,
+        FlowableState
+      >(
+        (acc, next) => (isFunction(next) ? next(acc) : next),
+        returns(FlowableState_paused),
+      ),
+      Observable_distinctUntilChanged<FlowableState>(),
+      op,
+    ),
     false,
     false,
     isRunnable,

@@ -14,7 +14,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Queueable_pushTo from "../../../util/Queue/__internal__/Queueable.pushTo.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import Stream_sourceFrom from "../../Stream/__internal__/Stream.sourceFrom.js";
-const Flowable_toObservable = () => src => {
+const Flowable_toObservable = () => (src) => {
     const create = src[StreamableLike_isRunnable]
         ? Runnable_create
         : Observable_create;
