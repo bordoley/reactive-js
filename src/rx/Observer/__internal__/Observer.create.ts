@@ -10,30 +10,33 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
 
-const Observer_create: <T>(scheduler: SchedulerLike) => ObserverLike<T> =
-  /*@__PURE__*/ (<T>() => {
-    const typedObserverMixin = Observer_mixin<T>();
+const Observer_create: <T>(
+  scheduler: SchedulerLike,
+  maxBufferSize: number,
+) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
+  const typedObserverMixin = Observer_mixin<T>();
 
-    return createInstanceFactory(
-      mix(
-        include(Disposable_mixin, typedObserverMixin),
-        function Observer(
-          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
-          scheduler: SchedulerLike,
-        ): ObserverLike<T> {
-          init(Disposable_mixin, instance);
-          init(typedObserverMixin, instance, scheduler);
+  return createInstanceFactory(
+    mix(
+      include(Disposable_mixin, typedObserverMixin),
+      function Observer(
+        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
+        scheduler: SchedulerLike,
+        maxBufferSize: number,
+      ): ObserverLike<T> {
+        init(Disposable_mixin, instance);
+        init(typedObserverMixin, instance, scheduler, maxBufferSize);
 
-          return instance;
+        return instance;
+      },
+      {},
+      {
+        [ObserverLike_notify](this: ObserverLike, _: T) {
+          Observer_assertState(this);
         },
-        {},
-        {
-          [ObserverLike_notify](this: ObserverLike, _: T) {
-            Observer_assertState(this);
-          },
-        },
-      ),
-    );
-  })();
+      },
+    ),
+  );
+})();
 
 export default Observer_create;

@@ -73,8 +73,6 @@ export interface EnumerableEnumeratorLike<T = unknown> extends EnumeratorLike<T>
 }
 /** @ignore */
 export declare const MulticastObservableLike_observerCount: unique symbol;
-/** @ignore */
-export declare const MulticastObservableLike_replay: unique symbol;
 /**
  * @noInheritDoc
  * @category Container
@@ -84,7 +82,6 @@ export interface MulticastObservableLike<T = unknown> extends ObservableLike<T>,
      * The number of observers currently observing.
      */
     readonly [MulticastObservableLike_observerCount]: number;
-    readonly [MulticastObservableLike_replay]: number;
 }
 /** @ignore */
 export declare const SubjectLike_publish: unique symbol;

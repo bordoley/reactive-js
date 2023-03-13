@@ -1,5 +1,6 @@
 /// <reference types="./PriorityScheduler.mixin.d.ts" />
 
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { floor, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
@@ -27,7 +28,7 @@ export const PriorityScheduler_mixin =
     const Continuation_effect = Symbol("Continuation_effect");
     const createContinuation = createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function Continuation(instance, scheduler, effect, priority) {
         init(Disposable_mixin, instance);
-        init(IndexedQueue_fifoQueueMixin(), instance);
+        init(IndexedQueue_fifoQueueMixin(), instance, MAX_SAFE_INTEGER);
         instance[ContinuationLike_continuationScheduler] = scheduler;
         instance[Continuation_effect] = effect;
         instance[ContinuationLike_priority] = priority;

@@ -3,10 +3,10 @@
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -22,6 +22,12 @@ const DispatchedObservable_create =
     }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
+        get [QueueableLike_maxBufferSize]() {
+            unsafeCast(this);
+            // Practically the observer can never be none.
+            const observer = this[DispatchedObservable_observer];
+            return observer[QueueableLike_maxBufferSize];
+        },
         get [QueueableLike_count]() {
             unsafeCast(this);
             // Practically the observer can never be none.
@@ -95,9 +101,9 @@ const Stream_mixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[StreamMixin_observable][MulticastObservableLike_observerCount];
         },
-        get [MulticastObservableLike_replay]() {
+        get [QueueableLike_maxBufferSize]() {
             unsafeCast(this);
-            return this[StreamMixin_observable][MulticastObservableLike_replay];
+            return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
         },
         get [QueueableLike_count]() {
             unsafeCast(this);

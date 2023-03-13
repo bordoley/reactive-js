@@ -39,6 +39,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_count,
+  QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -138,6 +139,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             typedObserverMixin,
             instance,
             delegate[DispatcherLike_scheduler],
+            delegate[QueueableLike_maxBufferSize],
           );
           init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
 

@@ -13,6 +13,7 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
+import { QueueableLike_maxBufferSize } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
@@ -31,6 +32,7 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
             Observer_mixin<T>(),
             instance,
             observer[DispatcherLike_scheduler],
+            observer[QueueableLike_maxBufferSize],
           );
           init(delegatingMixin(), instance, observer);
 

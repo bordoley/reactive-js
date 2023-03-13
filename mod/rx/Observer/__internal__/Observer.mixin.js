@@ -9,8 +9,7 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count,
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_schedule from "./Observer.schedule.js";
-const Observer_mixin = 
-/*@__PURE__*/ (() => {
+const Observer_mixin = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (observer) => {
         if (observer[QueueableLike_count] === 1) {
             pipe(observer, Observer_schedule(observer[ObserverMixin_continuation]), Disposable_onComplete(observer[ObserverMixin_onContinuationDispose]));
@@ -20,8 +19,8 @@ const Observer_mixin =
     const ObserverMixin_continuation = Symbol("ObserverDispatcher_continuation");
     const ObserverMixin_isCompleted = Symbol("ObserverDispatcher_observer");
     const ObserverMixin_onContinuationDispose = Symbol("ObserverDispatcher_onContinuationDispose");
-    return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function ObserverMixin(instance, scheduler) {
-        init(IndexedQueue_fifoQueueMixin(), instance);
+    return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function ObserverMixin(instance, scheduler, maxBufferSize) {
+        init(IndexedQueue_fifoQueueMixin(), instance, maxBufferSize);
         instance[DispatcherLike_scheduler] = scheduler;
         instance[ObserverMixin_continuation] = (ctx) => {
             while (instance[QueueableLike_count] > 0) {

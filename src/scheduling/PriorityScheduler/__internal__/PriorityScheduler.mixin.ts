@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { floor, max } from "../../../__internal__/math.js";
 import {
   Mixin,
@@ -147,7 +148,11 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           priority: number,
         ): ContinuationLike & ContinuationContextLike {
           init(Disposable_mixin, instance);
-          init(IndexedQueue_fifoQueueMixin<ContinuationLike>(), instance);
+          init(
+            IndexedQueue_fifoQueueMixin<ContinuationLike>(),
+            instance,
+            MAX_SAFE_INTEGER,
+          );
 
           instance[ContinuationLike_continuationScheduler] = scheduler;
           instance[Continuation_effect] = effect;

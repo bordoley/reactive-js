@@ -5,12 +5,11 @@ import { ObserverLike_notify } from "../../../rx.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
-const Observer_create = 
-/*@__PURE__*/ (() => {
+const Observer_create = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
-    return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function Observer(instance, scheduler) {
+    return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function Observer(instance, scheduler, maxBufferSize) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, scheduler);
+        init(typedObserverMixin, instance, scheduler, maxBufferSize);
         return instance;
     }, {}, {
         [ObserverLike_notify](_) {

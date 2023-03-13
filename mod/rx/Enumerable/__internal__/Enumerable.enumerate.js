@@ -1,5 +1,6 @@
 /// <reference types="./Enumerable.enumerate.d.ts" />
 
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
@@ -23,7 +24,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         init(PriorityScheduler_mixin, instance);
-        init(typedObserverMixin, instance, instance);
+        init(typedObserverMixin, instance, instance, MAX_SAFE_INTEGER);
         instance[EnumerableEnumerator_continuationQueue] =
             IndexedQueue_createFifoQueue();
         // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field

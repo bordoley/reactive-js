@@ -3,7 +3,7 @@
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose } from "../../../util.js";
+import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -17,7 +17,7 @@ const Observable_throwIfEmpty =
         return createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function ThrowIfEmptyObserverMixin(instance, delegate, factory) {
             init(Disposable_mixin, instance);
             init(delegatingMixin(), instance, delegate);
-            init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler]);
+            init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
                 let err = none;
                 if (instance[ThrowIfEmptyObserverMixin_isEmpty]) {

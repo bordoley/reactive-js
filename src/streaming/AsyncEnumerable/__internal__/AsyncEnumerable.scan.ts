@@ -19,7 +19,6 @@ import {
 } from "../../../functions.js";
 import {
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -53,7 +52,6 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
           StreamLike<void, TAcc>,
           | typeof ObservableLike_observe
           | typeof MulticastObservableLike_observerCount
-          | typeof MulticastObservableLike_replay
         > &
           Mutable<TProperties>,
         delegate: StreamLike<void, T>,
@@ -75,10 +73,6 @@ const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
           return this[DelegatingLike_delegate][
             MulticastObservableLike_observerCount
           ];
-        },
-        get [MulticastObservableLike_replay]() {
-          unsafeCast<TProperties & DelegatingLike<StreamLike<void, T>>>(this);
-          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](
           this: TProperties & DelegatingLike<StreamLike<void, T>>,

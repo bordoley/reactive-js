@@ -4,7 +4,7 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose } from "../../../util.js";
+import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
@@ -23,7 +23,7 @@ const Observable_timeout = /*@__PURE__*/ (() => {
         observer[SerialDisposableLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribe(observer[DelegatingLike_delegate][DispatcherLike_scheduler]));
     };
     const createTimeoutObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_delegatingMixin(), typedSerialDisposableMixin), function TimeoutObserver(instance, delegate, duration) {
-        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
         init(Disposable_delegatingMixin(), instance, delegate);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
         instance[TimeoutObserver_duration] = duration;

@@ -18,7 +18,6 @@ import {
 } from "../../../functions.js";
 import {
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -48,7 +47,6 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
           StreamLike<void, TB>,
           | typeof ObservableLike_observe
           | typeof MulticastObservableLike_observerCount
-          | typeof MulticastObservableLike_replay
         > &
           Mutable<TProperties>,
         delegate: StreamLike<void, TA>,
@@ -69,10 +67,6 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
           return this[DelegatingLike_delegate][
             MulticastObservableLike_observerCount
           ];
-        },
-        get [MulticastObservableLike_replay]() {
-          unsafeCast<DelegatingLike<StreamLike<void, TA>>>(this);
-          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](
           this: TProperties & DelegatingLike<StreamLike<void, TA>>,

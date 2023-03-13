@@ -30,6 +30,7 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -79,7 +80,12 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
         maxBufferSize: number,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
+        init(
+          typedObserverMixin,
+          instance,
+          delegate[DispatcherLike_scheduler],
+          delegate[QueueableLike_maxBufferSize],
+        );
         init(delegatingMixin(), instance, delegate);
 
         instance[BufferObserver_buffer] = [];

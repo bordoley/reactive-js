@@ -110,11 +110,6 @@ export const MulticastObservableLike_observerCount = Symbol(
   "MulticastObservableLike_observerCount",
 );
 
-/** @ignore */
-export const MulticastObservableLike_replay = Symbol(
-  "MulticastObservableLike_replay",
-);
-
 /**
  * @noInheritDoc
  * @category Container
@@ -126,7 +121,6 @@ export interface MulticastObservableLike<T = unknown>
    * The number of observers currently observing.
    */
   readonly [MulticastObservableLike_observerCount]: number;
-  readonly [MulticastObservableLike_replay]: number;
 }
 
 /** @ignore */

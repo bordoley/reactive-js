@@ -1,4 +1,5 @@
-import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins.js";
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
   IndexedQueueLike,
   IndexedQueueLike_get,
@@ -17,12 +18,17 @@ import {
 import {
   QueueableLike,
   QueueableLike_count,
+  QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
 
-const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
+const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
   IndexedQueueLike<T>,
-  Omit<IndexedQueueLike<T>, typeof QueueableLike_count>
+  number,
+  Omit<
+    IndexedQueueLike<T>,
+    typeof QueueableLike_count | typeof QueueableLike_maxBufferSize
+  >
 > = /*@__PURE__*/ (<T>() => {
   const FifoQueue_head = Symbol("FifoQueue_head");
   const FifoQueue_tail = Symbol("FifoQueue_tail");
@@ -31,6 +37,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
 
   type TProperties = {
     [QueueableLike_count]: number;
+    readonly [QueueableLike_maxBufferSize]: number;
     [FifoQueue_head]: number;
     [FifoQueue_tail]: number;
     [FifoQueue_capacityMask]: number;
@@ -64,13 +71,19 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin<
   return pipe(
     mix(
       function FifoQueue(
-        instance: Omit<IndexedQueueLike<T>, typeof QueueableLike_count> &
+        instance: Omit<
+          IndexedQueueLike<T>,
+          typeof QueueableLike_count | typeof QueueableLike_maxBufferSize
+        > &
           Mutable<TProperties>,
+        maxBufferSize: number,
       ): IndexedQueueLike<T> {
+        instance[QueueableLike_maxBufferSize] = maxBufferSize;
         return instance;
       },
       props<TProperties>({
         [QueueableLike_count]: 0,
+        [QueueableLike_maxBufferSize]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
         [FifoQueue_capacityMask]: 0,

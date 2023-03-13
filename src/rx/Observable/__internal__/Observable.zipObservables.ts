@@ -43,6 +43,7 @@ import {
   DisposableLike_isDisposed,
   QueueableLike,
   QueueableLike_count,
+  QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -66,56 +67,58 @@ export interface QueuedEnumeratorLike<T = unknown>
     QueueableLike<T>,
     DisposableLike {}
 
-const QueuedEnumerator_create: <T>() => QueuedEnumeratorLike<T> =
-  /*@__PURE__*/ (<T>() => {
-    type TProperties = {
-      [EnumeratorLike_current]: T;
-      [EnumeratorLike_hasCurrent]: boolean;
-    };
+const QueuedEnumerator_create: <T>(
+  maxBufferSize: number,
+) => QueuedEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
+  type TProperties = {
+    [EnumeratorLike_current]: T;
+    [EnumeratorLike_hasCurrent]: boolean;
+  };
 
-    return createInstanceFactory(
-      mix(
-        include(Disposable_mixin, IndexedQueue_fifoQueueMixin<T>()),
-        function QueuedEnumerator(
-          instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
-            Mutable<TProperties>,
-        ): EnumeratorLike<T> & QueueableLike<T> & DisposableLike {
-          init(Disposable_mixin, instance);
-          init(IndexedQueue_fifoQueueMixin<T>(), instance);
+  return createInstanceFactory(
+    mix(
+      include(Disposable_mixin, IndexedQueue_fifoQueueMixin<T>()),
+      function QueuedEnumerator(
+        instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
+          Mutable<TProperties>,
+        maxBufferSize: number,
+      ): EnumeratorLike<T> & QueueableLike<T> & DisposableLike {
+        init(Disposable_mixin, instance);
+        init(IndexedQueue_fifoQueueMixin<T>(), instance, maxBufferSize);
 
-          pipe(
-            instance,
-            Disposable_onDisposed(() => {
-              // FIXME: Maybe should clear the queue here as well to early
-              // release references?
-              instance[EnumeratorLike_hasCurrent] = false;
-            }),
-          );
+        pipe(
+          instance,
+          Disposable_onDisposed(() => {
+            // FIXME: Maybe should clear the queue here as well to early
+            // release references?
+            instance[EnumeratorLike_hasCurrent] = false;
+          }),
+        );
 
-          return instance;
+        return instance;
+      },
+      props<TProperties>({
+        [EnumeratorLike_current]: none,
+        [EnumeratorLike_hasCurrent]: false,
+      }),
+      {
+        [EnumeratorLike_move](
+          this: DisposableLike & TProperties & QueueLike<T>,
+        ) {
+          if (this[QueueableLike_count] > 0) {
+            const next = this[QueueLike_pull]() as T;
+            this[EnumeratorLike_current] = next;
+            this[EnumeratorLike_hasCurrent] = true;
+          } else {
+            this[EnumeratorLike_hasCurrent] = false;
+          }
+
+          return this[EnumeratorLike_hasCurrent];
         },
-        props<TProperties>({
-          [EnumeratorLike_current]: none,
-          [EnumeratorLike_hasCurrent]: false,
-        }),
-        {
-          [EnumeratorLike_move](
-            this: DisposableLike & TProperties & QueueLike<T>,
-          ) {
-            if (this[QueueableLike_count] > 0) {
-              const next = this[QueueLike_pull]() as T;
-              this[EnumeratorLike_current] = next;
-              this[EnumeratorLike_hasCurrent] = true;
-            } else {
-              this[EnumeratorLike_hasCurrent] = false;
-            }
-
-            return this[EnumeratorLike_hasCurrent];
-          },
-        },
-      ),
-    );
-  })();
+      },
+    ),
+  );
+})();
 
 const Observable_zipObservables = /*@__PURE__*/ (() => {
   const typedObserverMixin = Observer_mixin();
@@ -167,7 +170,12 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         queuedEnumerator: QueuedEnumeratorLike,
       ): ObserverLike {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
+        init(
+          typedObserverMixin,
+          instance,
+          delegate[DispatcherLike_scheduler],
+          delegate[QueueableLike_maxBufferSize],
+        );
         init(delegatingMixin(), instance, delegate);
 
         instance[ZipObserver_queuedEnumerator] = queuedEnumerator;
@@ -281,7 +289,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           enumerators.push(enumerator);
         } else {
           const enumerator = pipe(
-            QueuedEnumerator_create(),
+            QueuedEnumerator_create(observer[QueueableLike_maxBufferSize]),
             Disposable_addTo(observer),
           );
           enumerators.push(enumerator);

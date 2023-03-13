@@ -18,7 +18,6 @@ import {
   DispatcherLike_scheduler,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
   ObservableLike_observe,
   ObserverLike,
 } from "../../../rx.js";
@@ -46,7 +45,6 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
             StreamLike<void, T>,
             | typeof ObservableLike_observe
             | typeof MulticastObservableLike_observerCount
-            | typeof MulticastObservableLike_replay
           > &
             Mutable<TProperties>,
           delegate: StreamLike<void, T>,
@@ -73,10 +71,6 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
             return this[TakeWhileStream_obs][
               MulticastObservableLike_observerCount
             ];
-          },
-          get [MulticastObservableLike_replay]() {
-            unsafeCast<TProperties>(this);
-            return this[TakeWhileStream_obs][MulticastObservableLike_replay];
           },
           [ObservableLike_observe](
             this: TProperties,

@@ -29,7 +29,6 @@ import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -48,6 +47,7 @@ import Streamable_create from "../streaming/Streamable/__internal__/Streamable.c
 import {
   DisposableLike_dispose,
   QueueableLike_count,
+  QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
@@ -312,13 +312,13 @@ export const windowLocation: WindowLocationStreamableLike =
           instance: Pick<
             WindowLocationStreamLike,
             | typeof MulticastObservableLike_observerCount
-            | typeof MulticastObservableLike_replay
             | typeof DispatcherLike_scheduler
             | typeof DispatcherLike_complete
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof QueueableLike_push
             | typeof QueueableLike_count
+            | typeof QueueableLike_maxBufferSize
             | typeof WindowLocationStreamLike_canGoBack
             | typeof WindowLocationStreamLike_goBack
             | typeof ObservableLike_observe
@@ -342,11 +342,9 @@ export const windowLocation: WindowLocationStreamableLike =
             ];
           },
 
-          get [MulticastObservableLike_replay](): number {
+          get [QueueableLike_maxBufferSize](): number {
             unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return this[DelegatingLike_delegate][
-              MulticastObservableLike_replay
-            ];
+            return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
           },
 
           get [QueueableLike_count](): number {

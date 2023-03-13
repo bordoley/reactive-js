@@ -1,19 +1,16 @@
 /// <reference types="./Queue.test.d.ts" />
 
 import { floor, random } from "../../__internal__/math.js";
-import { createInstanceFactory } from "../../__internal__/mixins.js";
 import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../../__internal__/testing.js";
 import { QueueLike_head, QueueLike_pull, } from "../../__internal__/util.internal.js";
 import { newInstance, none, pipe } from "../../functions.js";
 import { QueueableLike_count, QueueableLike_push } from "../../util.js";
-import IndexedQueue_fifoQueueMixin from "../Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
-import Queue_priorityQueueMixin from "../Queue/__internal__/Queue.priorityQueueMixin.js";
+import IndexedQueue_createFifoQueue from "../Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createPriorityQueue from "../Queue/__internal__/Queue.createPriorityQueue.js";
 const createPriorityQueue = /*@__PURE__*/ (() => {
     const compare = (a, b) => a - b;
-    const createInstance = createInstanceFactory(Queue_priorityQueueMixin());
-    return () => createInstance(compare);
+    return () => Queue_createPriorityQueue(compare);
 })();
-const createFifoQueue = /*@__PURE__*/ (() => createInstanceFactory(IndexedQueue_fifoQueueMixin()))();
 const makeSortedArray = (n) => {
     const result = newInstance(Array, n);
     for (let i = 0; i < n; i++) {
@@ -32,7 +29,7 @@ const makeShuffledArray = (n) => {
     return result;
 };
 testModule("Queue", describe("fifoQueueMixin", test("push/pull/count", () => {
-    const queue = createFifoQueue();
+    const queue = IndexedQueue_createFifoQueue();
     pipe(queue[QueueLike_head], expectEquals(none));
     pipe(queue[QueueLike_pull](), expectEquals(none));
     for (let i = 0; i < 8; i++) {
@@ -65,7 +62,7 @@ testModule("Queue", describe("fifoQueueMixin", test("push/pull/count", () => {
     }
     pipe(queue[QueueLike_head], expectEquals(26));
 }), test("shrink", () => {
-    const queue = createFifoQueue();
+    const queue = IndexedQueue_createFifoQueue();
     for (let i = 0; i < 300; i++) {
         queue[QueueableLike_push](i);
     }

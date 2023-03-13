@@ -26,7 +26,7 @@ const VirtualTimeScheduler_taskIDCount = Symbol("VirtualTimeScheduler_taskIDCoun
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(PriorityScheduler_mixin, typedMutableEnumeratorMixin, Queue_priorityQueueMixin()), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(PriorityScheduler_mixin, instance);
     init(typedMutableEnumeratorMixin, instance);
-    init(Queue_priorityQueueMixin(), instance, comparator);
+    init(Queue_priorityQueueMixin(), instance, comparator, MAX_SAFE_INTEGER);
     instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
     return instance;
 }, props({
