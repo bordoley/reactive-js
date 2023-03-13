@@ -8,7 +8,7 @@ import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal_
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import { compose, isTrue, none, pipe } from "../../../functions.js";
-import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
@@ -70,7 +70,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     const ZipObserver_queuedEnumerator = Symbol("ZipObserver_queuedEnumerator");
     const createZipObserver = createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function ZipObserver(instance, delegate, enumerators, queuedEnumerator) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
         init(delegatingMixin(), instance, delegate);
         instance[ZipObserver_queuedEnumerator] = queuedEnumerator;
         instance[ZipObserver_enumerators] = enumerators;

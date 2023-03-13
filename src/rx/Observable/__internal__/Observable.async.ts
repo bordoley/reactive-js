@@ -16,10 +16,10 @@ import {
   raiseWithDebugMessage,
 } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
@@ -236,7 +236,7 @@ class AsyncContext {
         [AsyncContext_observer]: observer,
         [AsyncContext_runComputation]: runComputation,
       } = this;
-      const scheduler = observer[ObserverLike_scheduler];
+      const scheduler = observer[DispatcherLike_scheduler];
 
       const subscription = pipe(
         observable,
@@ -464,7 +464,7 @@ export const Observable_async__do = /*@__PURE__*/ (() => {
   return (f: (...args: any[]) => void, ...args: unknown[]): void => {
     const ctx = assertCurrentContext();
 
-    const scheduler = ctx[AsyncContext_observer][ObserverLike_scheduler];
+    const scheduler = ctx[AsyncContext_observer][DispatcherLike_scheduler];
     const observable = ctx[AsyncContext_memoOrUse](
       false,
       deferSideEffect,
@@ -490,7 +490,7 @@ export const Observable_async__using = <T extends DisposableLike>(
 
 export function Observable_async__currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();
-  return ctx[AsyncContext_observer][ObserverLike_scheduler];
+  return ctx[AsyncContext_observer][DispatcherLike_scheduler];
 }
 
 export const Observable_async__stream = /*@__PURE__*/ (() => {

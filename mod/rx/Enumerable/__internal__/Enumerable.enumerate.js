@@ -4,7 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { isSome, pipe, returns, unsafeCast } from "../../../functions.js";
+import { isSome, none, pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js";
@@ -14,19 +14,23 @@ import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_sched
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 const Enumerable_enumerate = /*@__PURE__*/ (() => {
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     const typedObserverMixin = Observer_mixin();
-    const createEnumeratorScheduler = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin, IndexedQueue_fifoQueueMixin(), typedObserverMixin, PriorityScheduler_mixin), function EnumeratorScheduler(instance) {
+    const EnumerableEnumerator_continuationQueue = Symbol("EnumerableEnumerator_continuationQueue");
+    const createEnumeratorScheduler = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin, typedObserverMixin, PriorityScheduler_mixin), function EnumeratorScheduler(instance) {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        init(IndexedQueue_fifoQueueMixin(), instance);
         init(PriorityScheduler_mixin, instance);
         init(typedObserverMixin, instance, instance);
+        instance[EnumerableEnumerator_continuationQueue] =
+            IndexedQueue_createFifoQueue();
         // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
         return instance;
-    }, props({}), {
+    }, props({
+        [EnumerableEnumerator_continuationQueue]: none,
+    }), {
         [SchedulerLike_now]: 0,
         get [PrioritySchedulerImplementationLike_shouldYield]() {
             unsafeCast(this);
@@ -35,7 +39,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
         [EnumeratorLike_move]() {
             this[MutableEnumeratorLike_reset]();
             while (!this[EnumeratorLike_hasCurrent]) {
-                const continuation = this[QueueLike_pull]();
+                const continuation = this[EnumerableEnumerator_continuationQueue][QueueLike_pull]();
                 if (isSome(continuation)) {
                     this[PrioritySchedulerImplementationLike_runContinuation](continuation);
                 }
@@ -52,7 +56,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
                 return;
             }
             continuation[ContinuationLike_continuationScheduler] = this;
-            this[QueueableLike_push](continuation);
+            this[EnumerableEnumerator_continuationQueue][QueueableLike_push](continuation);
         },
         [ObserverLike_notify](next) {
             Observer_assertState(this);

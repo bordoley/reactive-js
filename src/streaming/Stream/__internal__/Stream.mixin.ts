@@ -33,9 +33,7 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  ObserverLike_dispatcher,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import {
@@ -102,8 +100,8 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             const observer = this[
               DispatchedObservable_observer
             ] as ObserverLike<T>;
-            const dispatcher = observer[ObserverLike_dispatcher];
-            return dispatcher[QueueableLike_count];
+
+            return observer[QueueableLike_count];
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
@@ -112,7 +110,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             const observer = this[
               DispatchedObservable_observer
             ] as ObserverLike<T>;
-            return observer[ObserverLike_scheduler];
+            return observer[DispatcherLike_scheduler];
           },
 
           [QueueableLike_push](
@@ -132,17 +130,15 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
               );
             }
 
-            const dispatcher = observer[ObserverLike_dispatcher];
-            const scheduler = observer[ObserverLike_scheduler];
+            const scheduler = observer[DispatcherLike_scheduler];
             const inContinuation = scheduler[SchedulerLike_inContinuation];
-            const dispatcherQueueIsEmpty =
-              dispatcher[QueueableLike_count] === 0;
+            const observerQueueIsEmpty = observer[QueueableLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
 
-            if (inContinuation && dispatcherQueueIsEmpty && !isDisposed) {
+            if (inContinuation && observerQueueIsEmpty && !isDisposed) {
               observer[ObserverLike_notify](next);
             } else if (!isDisposed) {
-              dispatcher[QueueableLike_push](next);
+              observer[QueueableLike_push](next);
             }
           },
 
@@ -162,8 +158,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
               );
             }
 
-            const dispatcher = observer[ObserverLike_dispatcher];
-            dispatcher[DispatcherLike_complete]();
+            observer[DispatcherLike_complete]();
           },
 
           [ObservableLike_observe](
@@ -184,7 +179,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
                 if (isSome(e)) {
                   observer[DisposableLike_dispose](e);
                 } else {
-                  observer[ObserverLike_dispatcher][DispatcherLike_complete]();
+                  observer[DispatcherLike_complete]();
                 }
               }),
             );

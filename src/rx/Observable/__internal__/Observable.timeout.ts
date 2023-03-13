@@ -14,11 +14,11 @@ import {
 } from "../../../__internal__/util.internal.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
   Timeout,
 } from "../../../rx.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
@@ -53,7 +53,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
     observer[SerialDisposableLike_current] = pipe(
       observer[TimeoutObserver_duration],
       Observable_subscribe(
-        observer[DelegatingLike_delegate][ObserverLike_scheduler],
+        observer[DelegatingLike_delegate][DispatcherLike_scheduler],
       ),
     );
   };
@@ -71,7 +71,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
         delegate: ObserverLike<T>,
         duration: ObservableLike<unknown>,
       ): ObserverLike<T> {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
         init(Disposable_delegatingMixin<ObserverLike<T>>(), instance, delegate);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
 

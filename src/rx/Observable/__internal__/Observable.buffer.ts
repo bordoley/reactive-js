@@ -22,10 +22,10 @@ import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal_
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { Function1, isNumber, none, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
@@ -79,7 +79,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
         maxBufferSize: number,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
         init(delegatingMixin(), instance, delegate);
 
         instance[BufferObserver_buffer] = [];
@@ -154,7 +154,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
               next,
               this[BufferObserver_durationFunction],
               Observable_forEach<ObservableLike>(doOnNotify),
-              Observable_subscribe(this[ObserverLike_scheduler]),
+              Observable_subscribe(this[DispatcherLike_scheduler]),
             );
           }
         },

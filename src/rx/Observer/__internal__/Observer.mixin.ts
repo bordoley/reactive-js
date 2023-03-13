@@ -1,36 +1,27 @@
 import {
   Mixin1,
   Mutable,
-  createInstanceFactory,
   getPrototype,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { QueueLike_pull } from "../../../__internal__/util.internal.js";
 import {
-  QueueLike,
-  QueueLike_pull,
-} from "../../../__internal__/util.internal.js";
-import {
-  Optional,
   SideEffect,
   SideEffect1,
   call,
-  isNone,
   none,
   pipe,
   returns,
   unsafeCast,
 } from "../../../functions.js";
 import {
-  DispatcherLike,
   DispatcherLike_complete,
   DispatcherLike_scheduler,
   ObserverLike,
-  ObserverLike_dispatcher,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import {
   ContinuationContextLike,
@@ -48,109 +39,6 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_schedule from "./Observer.schedule.js";
 
-const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
-  const scheduleDrainQueue = (dispatcher: TProperties & QueueLike<T>) => {
-    if (dispatcher[QueueableLike_count] === 1) {
-      const { [ObserverDispatcher_observer]: observer } = dispatcher;
-      pipe(
-        observer,
-        Observer_schedule(dispatcher[ObserverDispatcher_continuation]),
-        Disposable_onComplete(
-          dispatcher[ObserverDispatcher_onContinuationDispose],
-        ),
-      );
-    }
-  };
-
-  const ObserverDispatcher_continuation = Symbol(
-    "ObserverDispatcher_continuation",
-  );
-  const ObserverDispatcher_isCompleted = Symbol("ObserverDispatcher_observer");
-  const ObserverDispatcher_observer = Symbol("ObserverDispatcher_observer");
-  const ObserverDispatcher_onContinuationDispose = Symbol(
-    "ObserverDispatcher_onContinuationDispose",
-  );
-
-  type TProperties = {
-    readonly [ObserverDispatcher_continuation]: SideEffect1<ContinuationContextLike>;
-    readonly [ObserverDispatcher_observer]: ObserverLike<T>;
-    readonly [ObserverDispatcher_onContinuationDispose]: SideEffect;
-    [ObserverDispatcher_isCompleted]: boolean;
-  };
-
-  const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin<T>());
-
-  return createInstanceFactory(
-    mix(
-      include(IndexedQueue_fifoQueueMixin()),
-      function ObserverDispatcher(
-        instance: Pick<
-          DispatcherLike,
-          typeof DispatcherLike_scheduler | typeof DispatcherLike_complete
-        > &
-          Mutable<TProperties>,
-        observer: ObserverLike<T>,
-      ): DispatcherLike<T> {
-        init(IndexedQueue_fifoQueueMixin<T>(), instance);
-
-        instance[ObserverDispatcher_observer] = observer;
-
-        instance[ObserverDispatcher_continuation] = (
-          ctx: ContinuationContextLike,
-        ) => {
-          const { [ObserverDispatcher_observer]: observer } = instance;
-
-          while (instance[QueueableLike_count] > 0) {
-            const next = instance[QueueLike_pull]() as T;
-            observer[ObserverLike_notify](next);
-
-            if (instance[QueueableLike_count] > 0) {
-              ctx[ContinuationContextLike_yield]();
-            }
-          }
-        };
-
-        instance[ObserverDispatcher_onContinuationDispose] = () => {
-          if (instance[ObserverDispatcher_isCompleted]) {
-            observer[DisposableLike_dispose]();
-          }
-        };
-
-        return instance;
-      },
-      props<TProperties>({
-        [ObserverDispatcher_continuation]: none,
-        [ObserverDispatcher_observer]: none,
-        [ObserverDispatcher_onContinuationDispose]: none,
-        [ObserverDispatcher_isCompleted]: false,
-      }),
-      {
-        get [DispatcherLike_scheduler]() {
-          unsafeCast<TProperties>(this);
-          return this[ObserverDispatcher_observer][ObserverLike_scheduler];
-        },
-        [QueueableLike_push](this: TProperties & QueueLike<T>, next: T) {
-          if (
-            !this[ObserverDispatcher_isCompleted] &&
-            !this[ObserverDispatcher_observer][DisposableLike_isDisposed]
-          ) {
-            call(fifoQueueProtoype[QueueableLike_push], this, next);
-            scheduleDrainQueue(this);
-          }
-        },
-        [DispatcherLike_complete](this: TProperties & QueueLike<T>) {
-          const isCompleted = this[ObserverDispatcher_isCompleted];
-          this[ObserverDispatcher_isCompleted] = true;
-
-          if (this[QueueableLike_count] === 0 && !isCompleted) {
-            this[ObserverDispatcher_observer][DisposableLike_dispose]();
-          }
-        },
-      },
-    ),
-  );
-})();
-
 type TObserverMixinReturn<T> = Omit<
   ObserverLike<T>,
   keyof DisposableLike | typeof ObserverLike_notify
@@ -158,37 +46,94 @@ type TObserverMixinReturn<T> = Omit<
 
 const Observer_mixin: <T>() => Mixin1<TObserverMixinReturn<T>, SchedulerLike> =
   /*@__PURE__*/ (<T>() => {
-    const ObserverMixin_dispatcher = Symbol("ObserverMixin_dispatcher");
+    const scheduleDrainQueue = (observer: TProperties & ObserverLike<T>) => {
+      if (observer[QueueableLike_count] === 1) {
+        pipe(
+          observer,
+          Observer_schedule(observer[ObserverMixin_continuation]),
+          Disposable_onComplete(observer[ObserverMixin_onContinuationDispose]),
+        );
+      }
+    };
+
+    const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin<T>());
+
+    const ObserverMixin_continuation = Symbol(
+      "ObserverDispatcher_continuation",
+    );
+    const ObserverMixin_isCompleted = Symbol("ObserverDispatcher_observer");
+    const ObserverMixin_onContinuationDispose = Symbol(
+      "ObserverDispatcher_onContinuationDispose",
+    );
 
     type TProperties = {
-      readonly [ObserverLike_scheduler]: SchedulerLike;
-      [ObserverMixin_dispatcher]: Optional<DispatcherLike<T>>;
+      readonly [DispatcherLike_scheduler]: SchedulerLike;
+      [ObserverMixin_continuation]: SideEffect1<ContinuationContextLike>;
+      [ObserverMixin_onContinuationDispose]: SideEffect;
+      [ObserverMixin_isCompleted]: boolean;
     };
 
     return pipe(
       mix(
+        include(IndexedQueue_fifoQueueMixin()),
         function ObserverMixin(
-          instance: Pick<ObserverLike, typeof ObserverLike_dispatcher> &
+          instance: Pick<
+            ObserverLike,
+            typeof DispatcherLike_scheduler | typeof DispatcherLike_complete
+          > &
             Mutable<TProperties>,
           scheduler: SchedulerLike,
         ): TObserverMixinReturn<T> {
-          instance[ObserverLike_scheduler] = scheduler;
+          init(IndexedQueue_fifoQueueMixin<T>(), instance);
+
+          instance[DispatcherLike_scheduler] = scheduler;
+
+          instance[ObserverMixin_continuation] = (
+            ctx: ContinuationContextLike,
+          ) => {
+            while (instance[QueueableLike_count] > 0) {
+              unsafeCast<TProperties & ObserverLike<T>>(instance);
+              const next = instance[QueueLike_pull]() as T;
+              instance[ObserverLike_notify](next);
+
+              if (instance[QueueableLike_count] > 0) {
+                ctx[ContinuationContextLike_yield]();
+              }
+            }
+          };
+
+          instance[ObserverMixin_onContinuationDispose] = () => {
+            unsafeCast<TProperties & ObserverLike<T>>(instance);
+            if (instance[ObserverMixin_isCompleted]) {
+              instance[DisposableLike_dispose]();
+            }
+          };
 
           return instance;
         },
         props<TProperties>({
-          [ObserverLike_scheduler]: none,
-          [ObserverMixin_dispatcher]: none,
+          [DispatcherLike_scheduler]: none,
+          [ObserverMixin_continuation]: none,
+          [ObserverMixin_onContinuationDispose]: none,
+          [ObserverMixin_isCompleted]: false,
         }),
         {
-          get [ObserverLike_dispatcher](): DispatcherLike<T> {
-            unsafeCast<ObserverLike<T> & TProperties>(this);
-            let { [ObserverMixin_dispatcher]: dispatcher } = this;
-            if (isNone(dispatcher)) {
-              dispatcher = createObserverDispatcher(this);
-              this[ObserverMixin_dispatcher] = dispatcher;
+          [QueueableLike_push](this: TProperties & ObserverLike<T>, next: T) {
+            if (
+              !this[ObserverMixin_isCompleted] &&
+              !this[DisposableLike_isDisposed]
+            ) {
+              call(fifoQueueProtoype[QueueableLike_push], this, next);
+              scheduleDrainQueue(this);
             }
-            return dispatcher;
+          },
+          [DispatcherLike_complete](this: TProperties & ObserverLike<T>) {
+            const isCompleted = this[ObserverMixin_isCompleted];
+            this[ObserverMixin_isCompleted] = true;
+
+            if (this[QueueableLike_count] === 0 && !isCompleted) {
+              this[DisposableLike_dispose]();
+            }
           },
         },
       ),

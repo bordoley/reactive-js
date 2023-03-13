@@ -3,7 +3,7 @@
 var _a, _b, _c, _d;
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
-import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
@@ -112,7 +112,7 @@ class AsyncContext {
         else {
             effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
             const { [AsyncContext_observer]: observer, [AsyncContext_runComputation]: runComputation, } = this;
-            const scheduler = observer[ObserverLike_scheduler];
+            const scheduler = observer[DispatcherLike_scheduler];
             const subscription = pipe(observable, Observable_forEach(next => {
                 effect[AwaitOrObserveEffect_value] = next;
                 effect[AwaitOrObserveEffect_hasValue] = true;
@@ -250,7 +250,7 @@ export const Observable_async__do = /*@__PURE__*/ (() => {
     });
     return (f, ...args) => {
         const ctx = assertCurrentContext();
-        const scheduler = ctx[AsyncContext_observer][ObserverLike_scheduler];
+        const scheduler = ctx[AsyncContext_observer][DispatcherLike_scheduler];
         const observable = ctx[AsyncContext_memoOrUse](false, deferSideEffect, f, ...args);
         const subscribeOnScheduler = ctx[AsyncContext_memoOrUse](false, Observable_subscribe, scheduler);
         ctx[AsyncContext_memoOrUse](true, subscribeOnScheduler, observable);
@@ -262,7 +262,7 @@ export const Observable_async__using = (f, ...args) => {
 };
 export function Observable_async__currentScheduler() {
     const ctx = assertCurrentContext();
-    return ctx[AsyncContext_observer][ObserverLike_scheduler];
+    return ctx[AsyncContext_observer][DispatcherLike_scheduler];
 }
 export const Observable_async__stream = /*@__PURE__*/ (() => {
     const streamOnSchedulerFactory = (streamable, scheduler, replay) => streamable[StreamableLike_stream](scheduler, { replay });

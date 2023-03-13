@@ -1,10 +1,10 @@
 import { pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
-  ObserverLike_scheduler,
   TakeUntil,
 } from "../../../rx.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
@@ -24,7 +24,7 @@ const Observable_takeUntil: TakeUntil<ObservableLike>["takeUntil"] = <T>(
         pipe(
           notifier,
           Observable_takeFirst<ObservableLike, T>(),
-          Observable_subscribe(delegate[ObserverLike_scheduler]),
+          Observable_subscribe(delegate[DispatcherLike_scheduler]),
         ),
       ),
     );

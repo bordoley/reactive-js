@@ -19,10 +19,10 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -57,7 +57,7 @@ const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
             init(
               Observer_mixin<T>(),
               instance,
-              delegate[ObserverLike_scheduler],
+              delegate[DispatcherLike_scheduler],
             );
 
             pipe(

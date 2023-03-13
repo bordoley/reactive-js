@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { error, pipe } from "../../../functions.js";
-import { DispatcherLike_complete, DispatcherLike_scheduler, ObserverLike_dispatcher, } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
@@ -14,9 +14,8 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((modeObs) => Observable_create((observer) => {
     const { maxBuffer = MAX_SAFE_INTEGER, maxYieldInterval = 300 } = o !== null && o !== void 0 ? o : {};
-    const dispatcher = observer[ObserverLike_dispatcher];
     const iterator = iterable[Symbol.asyncIterator]();
-    const scheduler = dispatcher[DispatcherLike_scheduler];
+    const scheduler = observer[DispatcherLike_scheduler];
     let isPaused = true;
     const continuation = async () => {
         const startTime = scheduler[SchedulerLike_now];
@@ -26,17 +25,17 @@ const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((mod
                 // scheduled on the microtask queue. This prevents the observer's scheduler
                 // from running and draining dispatched events.
                 //
-                // Check the dispatcher's buffer size so we can avoid queueing forever
+                // Check the observer's buffer size so we can avoid queueing forever
                 // in this situation.
                 !isPaused &&
-                dispatcher[QueueableLike_count] < maxBuffer &&
+                observer[QueueableLike_count] < maxBuffer &&
                 scheduler[SchedulerLike_now] - startTime < maxYieldInterval) {
                 const next = await iterator.next();
                 if (!next.done) {
-                    dispatcher[QueueableLike_push](next.value);
+                    observer[QueueableLike_push](next.value);
                 }
                 else {
-                    dispatcher[DispatcherLike_complete]();
+                    observer[DispatcherLike_complete]();
                 }
             }
         }
@@ -53,6 +52,6 @@ const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((mod
         if (!isPaused && wasPaused) {
             pipe(scheduler[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
         }
-    }), Observable_subscribe(scheduler), Disposable_addTo(observer), Disposable_onComplete(() => observer[ObserverLike_dispatcher][DispatcherLike_complete]()));
+    }), Observable_subscribe(scheduler), Disposable_addTo(observer), Disposable_onComplete(() => observer[DispatcherLike_complete]()));
 }), false);
 export default AsyncIterable_toFlowable;

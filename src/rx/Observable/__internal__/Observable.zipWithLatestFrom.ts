@@ -10,6 +10,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  IndexedQueueLike,
   QueueLike,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
@@ -22,12 +23,12 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
   ZipWithLatestFrom,
 } from "../../../rx.js";
 import {
@@ -39,7 +40,7 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -65,24 +66,31 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
         "ZipWithLatestFromObserver_selector",
       );
 
+      const ZipWithLatestFromObserver_TAQueue = Symbol(
+        "ZipWithLatestFromObserver_selector",
+      );
+
       type TProperties = {
         [ZipWithLatestFromObserver_hasLatest]: boolean;
         [ZipWithLatestFromObserver_otherLatest]: Optional<TB>;
         readonly [ZipWithLatestFromObserver_selector]: Function2<TA, TB, T>;
+        readonly [ZipWithLatestFromObserver_TAQueue]: IndexedQueueLike<TA>;
       };
 
       const notifyDelegate = (
         observer: TProperties &
           ObserverLike<TA> &
-          DelegatingLike<ObserverLike<T>> &
-          QueueLike<TA>,
+          DelegatingLike<ObserverLike<T>>,
       ) => {
         if (
-          observer[QueueableLike_count] > 0 &&
+          observer[ZipWithLatestFromObserver_TAQueue][QueueableLike_count] >
+            0 &&
           observer[ZipWithLatestFromObserver_hasLatest]
         ) {
           observer[ZipWithLatestFromObserver_hasLatest] = false;
-          const next = observer[QueueLike_pull]() as TA;
+          const next = observer[ZipWithLatestFromObserver_TAQueue][
+            QueueLike_pull
+          ]() as TA;
           const result = observer[ZipWithLatestFromObserver_selector](
             next,
             observer[ZipWithLatestFromObserver_otherLatest] as TB,
@@ -94,12 +102,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
 
       return createInstanceFactory(
         mix(
-          include(
-            Disposable_mixin,
-            typedObserverMixin,
-            delegatingMixin(),
-            IndexedQueue_fifoQueueMixin<TA>(),
-          ),
+          include(Disposable_mixin, typedObserverMixin, delegatingMixin()),
           function ZipWithLatestFromObserver(
             instance: Pick<ObserverLike, typeof ObserverLike_notify> &
               Mutable<TProperties>,
@@ -111,12 +114,13 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             init(
               typedObserverMixin,
               instance,
-              delegate[ObserverLike_scheduler],
+              delegate[DispatcherLike_scheduler],
             );
             init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
-            init(IndexedQueue_fifoQueueMixin<TA>(), instance);
 
             instance[ZipWithLatestFromObserver_selector] = selector;
+            instance[ZipWithLatestFromObserver_TAQueue] =
+              IndexedQueue_createFifoQueue();
 
             const disposeDelegate = () => {
               if (
@@ -136,12 +140,14 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
 
                 if (
                   instance[DisposableLike_isDisposed] &&
-                  instance[QueueableLike_count] === 0
+                  instance[ZipWithLatestFromObserver_TAQueue][
+                    QueueableLike_count
+                  ] === 0
                 ) {
                   instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
               }),
-              Observable_subscribe(delegate[ObserverLike_scheduler]),
+              Observable_subscribe(delegate[DispatcherLike_scheduler]),
               Disposable_onComplete(disposeDelegate),
               Disposable_addTo(delegate),
             );
@@ -158,6 +164,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             [ZipWithLatestFromObserver_hasLatest]: false,
             [ZipWithLatestFromObserver_otherLatest]: none,
             [ZipWithLatestFromObserver_selector]: none,
+            [ZipWithLatestFromObserver_TAQueue]: none,
           }),
           {
             [ObserverLike_notify](
@@ -168,7 +175,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
               next: TA,
             ) {
               Observer_assertState(this);
-              this[QueueableLike_push](next);
+              this[ZipWithLatestFromObserver_TAQueue][QueueableLike_push](next);
               notifyDelegate(this);
             },
           },

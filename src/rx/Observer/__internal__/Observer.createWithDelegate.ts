@@ -9,9 +9,9 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  DispatcherLike_scheduler,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
@@ -27,7 +27,11 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
           observer: ObserverLike<T>,
         ): ObserverLike<T> {
           init(Disposable_mixin, instance);
-          init(Observer_mixin<T>(), instance, observer[ObserverLike_scheduler]);
+          init(
+            Observer_mixin<T>(),
+            instance,
+            observer[DispatcherLike_scheduler],
+          );
           init(delegatingMixin(), instance, observer);
 
           return instance;

@@ -28,7 +28,6 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  ObserverLike_dispatcher,
   SubjectLike,
   SubjectLike_publish,
 } from "../../../rx.js";
@@ -102,7 +101,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               }
 
               for (const observer of this[Subject_observers]) {
-                observer[ObserverLike_dispatcher][QueueableLike_push](next);
+                observer[QueueableLike_push](next);
               }
             }
           },
@@ -123,15 +122,13 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               );
             }
 
-            const dispatcher = observer[ObserverLike_dispatcher];
-
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
             const count = this[QueueableLike_count];
             for (let i = 0; i < count; i++) {
               const next = this[IndexedQueueLike_get](i);
-              dispatcher[QueueableLike_push](next);
+              observer[QueueableLike_push](next);
             }
 
             pipe(
@@ -140,7 +137,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
                 if (isSome(e)) {
                   observer[DisposableLike_dispose](e);
                 } else {
-                  observer[ObserverLike_dispatcher][DispatcherLike_complete]();
+                  observer[DispatcherLike_complete]();
                 }
               }),
             );

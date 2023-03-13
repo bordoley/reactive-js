@@ -12,6 +12,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  IndexedQueueLike,
   QueueLike,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
@@ -29,10 +30,10 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
@@ -43,7 +44,7 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -77,24 +78,29 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
     );
     const MergeAllObserver_onDispose = Symbol("MergeAllObserver_onDispose");
 
+    const MergeAllObserver_observablesQueue = Symbol(
+      "MergeAllObserver_observablesQueue",
+    );
+
     type TProperties = {
       [MergeAllObserver_activeCount]: number;
       readonly [MergeAllObserver_maxBufferSize]: number;
       readonly [MergeAllObserver_maxConcurrency]: number;
       readonly [MergeAllObserver_onDispose]: SideEffect;
+      readonly [MergeAllObserver_observablesQueue]: IndexedQueueLike<ObservableLike>;
     };
 
     const subscribeNext = (
       observer: TProperties &
         ObserverLike<ContainerOf<C, T>> &
-        DelegatingLike<ObserverLike<T>> &
-        QueueLike<ObservableLike<T>>,
+        DelegatingLike<ObserverLike<T>>,
     ) => {
       if (
         observer[MergeAllObserver_activeCount] <
         observer[MergeAllObserver_maxConcurrency]
       ) {
-        const nextObs = observer[QueueLike_pull]();
+        const nextObs =
+          observer[MergeAllObserver_observablesQueue][QueueLike_pull]();
 
         if (isSome(nextObs)) {
           observer[MergeAllObserver_activeCount]++;
@@ -104,7 +110,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             Observable_forEach<ObservableLike, T>(
               Observer_notifyObserver(observer[DelegatingLike_delegate]),
             ),
-            Observable_subscribe(observer[ObserverLike_scheduler]),
+            Observable_subscribe(observer[DispatcherLike_scheduler]),
             Disposable_addTo(observer[DelegatingLike_delegate]),
             Disposable_onComplete(observer[MergeAllObserver_onDispose]),
           );
@@ -116,12 +122,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
     return createInstanceFactory(
       mix(
-        include(
-          Disposable_mixin,
-          typedObserverMixin,
-          delegatingMixin(),
-          IndexedQueue_fifoQueueMixin<ObservableLike<T>>(),
-        ),
+        include(Disposable_mixin, typedObserverMixin, delegatingMixin()),
         function MergeAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
@@ -133,10 +134,15 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           maxConcurrency: number,
         ): ObserverLike<ContainerOf<C, T>> {
           init(Disposable_mixin, instance);
-          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+          init(
+            typedObserverMixin,
+            instance,
+            delegate[DispatcherLike_scheduler],
+          );
           init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
-          init(IndexedQueue_fifoQueueMixin<ObservableLike<T>>(), instance);
 
+          instance[MergeAllObserver_observablesQueue] =
+            IndexedQueue_createFifoQueue();
           instance[MergeAllObserver_maxBufferSize] = maxBufferSize;
           instance[MergeAllObserver_maxConcurrency] = maxConcurrency;
 
@@ -153,7 +159,9 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
               if (delegate[DisposableLike_isDisposed]) {
                 // FIXME: Clear the queue
               } else if (
-                instance[QueueableLike_count] +
+                instance[MergeAllObserver_observablesQueue][
+                  QueueableLike_count
+                ] +
                   instance[MergeAllObserver_activeCount] ===
                 0
               ) {
@@ -169,6 +177,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           [MergeAllObserver_maxBufferSize]: 0,
           [MergeAllObserver_maxConcurrency]: 0,
           [MergeAllObserver_onDispose]: none,
+          [MergeAllObserver_observablesQueue]: none,
         }),
         {
           [ObserverLike_notify](
@@ -179,14 +188,15 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             next: ContainerOf<C, T>,
           ) {
             Observer_assertState(this);
-            this[QueueableLike_push](next);
+            this[MergeAllObserver_observablesQueue][QueueableLike_push](next);
 
             // Drop old events if the maxBufferSize has been exceeded
             if (
-              this[QueueableLike_count] + this[MergeAllObserver_activeCount] >
+              this[MergeAllObserver_observablesQueue][QueueableLike_count] +
+                this[MergeAllObserver_activeCount] >
               this[MergeAllObserver_maxBufferSize]
             ) {
-              this[QueueLike_pull]();
+              this[MergeAllObserver_observablesQueue][QueueLike_pull]();
             }
             subscribeNext(this);
           },

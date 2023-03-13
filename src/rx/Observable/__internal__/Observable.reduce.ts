@@ -17,10 +17,10 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -55,7 +55,7 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
         initialValue: Factory<TAcc>,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
+        init(Observer_mixin<T>(), instance, delegate[DispatcherLike_scheduler]);
 
         instance[ReduceObserverMixin_reducer] = reducer;
 

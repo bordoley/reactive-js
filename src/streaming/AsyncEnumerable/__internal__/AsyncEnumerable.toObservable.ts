@@ -1,8 +1,8 @@
 import { none, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
-  ObserverLike_scheduler,
   ToObservable,
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
@@ -33,7 +33,7 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
 
       return create<T>((observer: ObserverLike<T>) => {
         const enumerator: StreamLike<void, T> = pipe(
-          enumerable[StreamableLike_stream](observer[ObserverLike_scheduler]),
+          enumerable[StreamableLike_stream](observer[DispatcherLike_scheduler]),
           Disposable_addTo<StreamLike<void, T>>(observer),
         );
 

@@ -4,7 +4,7 @@ import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { IndexedQueueLike_get, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_complete, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, SubjectLike_publish, } from "../../../rx.js";
+import { DispatcherLike_complete, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_publish, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -38,7 +38,7 @@ const Subject_create =
                     }
                 }
                 for (const observer of this[Subject_observers]) {
-                    observer[ObserverLike_dispatcher][QueueableLike_push](next);
+                    observer[QueueableLike_push](next);
                 }
             }
         },
@@ -50,21 +50,20 @@ const Subject_create =
                     observers.delete(observer);
                 }));
             }
-            const dispatcher = observer[ObserverLike_dispatcher];
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
             const count = this[QueueableLike_count];
             for (let i = 0; i < count; i++) {
                 const next = this[IndexedQueueLike_get](i);
-                dispatcher[QueueableLike_push](next);
+                observer[QueueableLike_push](next);
             }
             pipe(this, Disposable_onDisposed(e => {
                 if (isSome(e)) {
                     observer[DisposableLike_dispose](e);
                 }
                 else {
-                    observer[ObserverLike_dispatcher][DispatcherLike_complete]();
+                    observer[DispatcherLike_complete]();
                 }
             }));
         },

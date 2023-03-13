@@ -9,7 +9,7 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { isNumber, none, pipe } from "../../../functions.js";
-import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -31,7 +31,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
     const BufferObserver_maxBufferSize = Symbol("BufferObserver_maxBufferSize");
     const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin, delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
         init(delegatingMixin(), instance, delegate);
         instance[BufferObserver_buffer] = [];
         instance[BufferObserver_durationFunction] = durationFunction;
@@ -69,7 +69,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                 doOnNotify();
             }
             else if (this[BufferObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed]) {
-                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribe(this[ObserverLike_scheduler]));
+                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribe(this[DispatcherLike_scheduler]));
             }
         },
     }));

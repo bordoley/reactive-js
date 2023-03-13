@@ -3,12 +3,12 @@
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { none, partial, pipe, } from "../../../functions.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -21,21 +21,24 @@ const Observable_zipWithLatestFrom =
         const ZipWithLatestFromObserver_hasLatest = Symbol("ZipWithLatestFromObserver_hasLatest");
         const ZipWithLatestFromObserver_otherLatest = Symbol("ZipWithLatestFromObserver_otherLatest");
         const ZipWithLatestFromObserver_selector = Symbol("ZipWithLatestFromObserver_selector");
+        const ZipWithLatestFromObserver_TAQueue = Symbol("ZipWithLatestFromObserver_selector");
         const notifyDelegate = (observer) => {
-            if (observer[QueueableLike_count] > 0 &&
+            if (observer[ZipWithLatestFromObserver_TAQueue][QueueableLike_count] >
+                0 &&
                 observer[ZipWithLatestFromObserver_hasLatest]) {
                 observer[ZipWithLatestFromObserver_hasLatest] = false;
-                const next = observer[QueueLike_pull]();
+                const next = observer[ZipWithLatestFromObserver_TAQueue][QueueLike_pull]();
                 const result = observer[ZipWithLatestFromObserver_selector](next, observer[ZipWithLatestFromObserver_otherLatest]);
                 observer[DelegatingLike_delegate][ObserverLike_notify](result);
             }
         };
-        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin(), IndexedQueue_fifoQueueMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
+        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
             init(Disposable_mixin, instance);
-            init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
             init(delegatingMixin(), instance, delegate);
-            init(IndexedQueue_fifoQueueMixin(), instance);
             instance[ZipWithLatestFromObserver_selector] = selector;
+            instance[ZipWithLatestFromObserver_TAQueue] =
+                IndexedQueue_createFifoQueue();
             const disposeDelegate = () => {
                 if (instance[DisposableLike_isDisposed] &&
                     otherSubscription[DisposableLike_isDisposed]) {
@@ -47,20 +50,21 @@ const Observable_zipWithLatestFrom =
                 instance[ZipWithLatestFromObserver_otherLatest] = otherLatest;
                 notifyDelegate(instance);
                 if (instance[DisposableLike_isDisposed] &&
-                    instance[QueueableLike_count] === 0) {
+                    instance[ZipWithLatestFromObserver_TAQueue][QueueableLike_count] === 0) {
                     instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
-            }), Observable_subscribe(delegate[ObserverLike_scheduler]), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
+            }), Observable_subscribe(delegate[DispatcherLike_scheduler]), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({
             [ZipWithLatestFromObserver_hasLatest]: false,
             [ZipWithLatestFromObserver_otherLatest]: none,
             [ZipWithLatestFromObserver_selector]: none,
+            [ZipWithLatestFromObserver_TAQueue]: none,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[QueueableLike_push](next);
+                this[ZipWithLatestFromObserver_TAQueue][QueueableLike_push](next);
                 notifyDelegate(this);
             },
         }));

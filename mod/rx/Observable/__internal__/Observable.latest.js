@@ -4,7 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { none, pipe } from "../../../functions.js";
-import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -78,7 +78,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
             const onCompleteCb = () => {
                 onCompleted(ctx);
             };
-            const scheduler = delegate[ObserverLike_scheduler];
+            const scheduler = delegate[DispatcherLike_scheduler];
             for (const observable of observables) {
                 const innerObserver = pipe(createLatestObserver(scheduler, ctx), Disposable_addTo(delegate), Disposable_onComplete(onCompleteCb), Observer_sourceFrom(observable));
                 add(ctx, innerObserver);

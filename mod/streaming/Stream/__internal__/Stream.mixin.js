@@ -3,7 +3,7 @@
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
@@ -26,14 +26,13 @@ const DispatchedObservable_create =
             unsafeCast(this);
             // Practically the observer can never be none.
             const observer = this[DispatchedObservable_observer];
-            const dispatcher = observer[ObserverLike_dispatcher];
-            return dispatcher[QueueableLike_count];
+            return observer[QueueableLike_count];
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
             // Practically the observer can never be none.
             const observer = this[DispatchedObservable_observer];
-            return observer[ObserverLike_scheduler];
+            return observer[DispatcherLike_scheduler];
         },
         [QueueableLike_push](next) {
             const observer = this[DispatchedObservable_observer];
@@ -43,16 +42,15 @@ const DispatchedObservable_create =
             if (__DEV__ && isNone(observer)) {
                 raiseWithDebugMessage("DispatchedObservable has not been subscribed to yet");
             }
-            const dispatcher = observer[ObserverLike_dispatcher];
-            const scheduler = observer[ObserverLike_scheduler];
+            const scheduler = observer[DispatcherLike_scheduler];
             const inContinuation = scheduler[SchedulerLike_inContinuation];
-            const dispatcherQueueIsEmpty = dispatcher[QueueableLike_count] === 0;
+            const observerQueueIsEmpty = observer[QueueableLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
-            if (inContinuation && dispatcherQueueIsEmpty && !isDisposed) {
+            if (inContinuation && observerQueueIsEmpty && !isDisposed) {
                 observer[ObserverLike_notify](next);
             }
             else if (!isDisposed) {
-                dispatcher[QueueableLike_push](next);
+                observer[QueueableLike_push](next);
             }
         },
         [DispatcherLike_complete]() {
@@ -63,8 +61,7 @@ const DispatchedObservable_create =
             if (__DEV__ && isNone(observer)) {
                 raiseWithDebugMessage("DispatchedObservable has not been subscribed to yet");
             }
-            const dispatcher = observer[ObserverLike_dispatcher];
-            dispatcher[DispatcherLike_complete]();
+            observer[DispatcherLike_complete]();
         },
         [ObservableLike_observe](observer) {
             if (isSome(this[DispatchedObservable_observer])) {
@@ -76,7 +73,7 @@ const DispatchedObservable_create =
                     observer[DisposableLike_dispose](e);
                 }
                 else {
-                    observer[ObserverLike_dispatcher][DispatcherLike_complete]();
+                    observer[DispatcherLike_complete]();
                 }
             }));
         },
