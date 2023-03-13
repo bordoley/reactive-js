@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
+import { DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_observe, } from "../../../rx.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
@@ -27,10 +27,6 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return this[KeepStream_obs][MulticastObservableLike_observerCount];
-        },
-        get [MulticastObservableLike_replay]() {
-            unsafeCast(this);
-            return this[KeepStream_obs][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](observer) {
             this[KeepStream_obs][ObservableLike_observe](observer);

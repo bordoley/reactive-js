@@ -28,6 +28,7 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -78,6 +79,7 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
               typedObserverMixin,
               instance,
               delegate[DispatcherLike_scheduler],
+              delegate[QueueableLike_maxBufferSize],
             );
 
             instance[WithLatestFromObserver_selector] = selector;

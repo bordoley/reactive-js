@@ -1,9 +1,10 @@
 /// <reference types="./IndexedQueue.fifoQueueMixin.d.ts" />
 
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { mix, props } from "../../../__internal__/mixins.js";
 import { IndexedQueueLike_get, QueueLike_head, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { QueueableLike_count, QueueableLike_push, } from "../../../util.js";
+import { QueueableLike_count, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     const FifoQueue_head = Symbol("FifoQueue_head");
     const FifoQueue_tail = Symbol("FifoQueue_tail");
@@ -23,10 +24,12 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         }
         return dest;
     };
-    return pipe(mix(function FifoQueue(instance) {
+    return pipe(mix(function FifoQueue(instance, maxBufferSize) {
+        instance[QueueableLike_maxBufferSize] = maxBufferSize;
         return instance;
     }, props({
         [QueueableLike_count]: 0,
+        [QueueableLike_maxBufferSize]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
         [FifoQueue_capacityMask]: 0,

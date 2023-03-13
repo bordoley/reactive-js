@@ -35,7 +35,10 @@ import {
   ThrottleMode_interval,
   ThrottleMode_last,
 } from "../../../rx.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
+import {
+  DisposableLike_isDisposed,
+  QueueableLike_maxBufferSize,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -99,7 +102,12 @@ const createThrottleObserver: <T>(
         mode: ThrottleMode,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
+        init(
+          typedObserverMixin,
+          instance,
+          delegate[DispatcherLike_scheduler],
+          delegate[QueueableLike_maxBufferSize],
+        );
 
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;

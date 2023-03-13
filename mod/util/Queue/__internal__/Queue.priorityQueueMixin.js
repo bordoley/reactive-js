@@ -1,16 +1,16 @@
 /// <reference types="./Queue.priorityQueueMixin.d.ts" />
 
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { floor } from "../../../__internal__/math.js";
 import { mix, props } from "../../../__internal__/mixins.js";
 import { QueueLike_head, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { isSome, none, pipe, returns, unsafeCast, } from "../../../functions.js";
-import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
+import { QueueableLike_count, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const PriorityQueueImpl_comparator = Symbol("PriorityQueueImpl_comparator");
 const PriorityQueueImpl_values = Symbol("PriorityQueueImpl_values");
-const Queue_priorityQueueMixin = 
-/*@__PURE__*/ (() => {
+const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
     const siftDown = (queue, item) => {
         const { [PriorityQueueImpl_values]: values, [PriorityQueueImpl_comparator]: compare, } = queue;
         const length = ReadonlyArray_getLength(values);
@@ -50,11 +50,13 @@ const Queue_priorityQueueMixin =
             values[index] = parent;
         }
     };
-    return pipe(mix(function PriorityQueue(instance, comparator) {
+    return pipe(mix(function PriorityQueue(instance, comparator, maxBufferSize) {
+        instance[QueueableLike_maxBufferSize] = maxBufferSize;
         instance[PriorityQueueImpl_values] = [];
         instance[PriorityQueueImpl_comparator] = comparator;
         return instance;
     }, props({
+        [QueueableLike_maxBufferSize]: MAX_SAFE_INTEGER,
         [PriorityQueueImpl_values]: none,
         [PriorityQueueImpl_comparator]: none,
     }), {

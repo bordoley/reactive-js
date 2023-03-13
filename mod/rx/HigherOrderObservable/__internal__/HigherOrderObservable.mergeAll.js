@@ -6,7 +6,7 @@ import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, includ
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { isSome, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -39,7 +39,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
         };
         return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function MergeAllObserver(instance, delegate, maxBufferSize, maxConcurrency) {
             init(Disposable_mixin, instance);
-            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
+            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
             init(delegatingMixin(), instance, delegate);
             instance[MergeAllObserver_observablesQueue] =
                 IndexedQueue_createFifoQueue();

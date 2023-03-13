@@ -21,7 +21,11 @@ import {
   ObserverLike_notify,
   Timeout,
 } from "../../../rx.js";
-import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  QueueableLike_maxBufferSize,
+} from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
@@ -71,7 +75,12 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
         delegate: ObserverLike<T>,
         duration: ObservableLike<unknown>,
       ): ObserverLike<T> {
-        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
+        init(
+          typedObserverMixin,
+          instance,
+          delegate[DispatcherLike_scheduler],
+          delegate[QueueableLike_maxBufferSize],
+        );
         init(Disposable_delegatingMixin<ObserverLike<T>>(), instance, delegate);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
 

@@ -21,6 +21,7 @@
 ### Properties
 
 - [[QueueableLike\_count]](util.QueueableLike.md#[queueablelike_count])
+- [[QueueableLike\_maxBufferSize]](util.QueueableLike.md#[queueablelike_maxbuffersize])
 
 ### Methods
 
@@ -33,6 +34,12 @@
 • `Readonly` **[QueueableLike\_count]**: `number`
 
 The number of queued up items.
+
+___
+
+### [QueueableLike\_maxBufferSize]
+
+• `Readonly` **[QueueableLike\_maxBufferSize]**: `number`
 
 ## Methods
 

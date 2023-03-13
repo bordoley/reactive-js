@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
+import { DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_observe, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_scanLast from "../../../rx/Observable/__internal__/Observable.scanLast.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -21,10 +21,6 @@ const AsyncEnumerable_scanLast = /*@__PURE__*/ (() => {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return this[ScanLastStream_obs][MulticastObservableLike_observerCount];
-        },
-        get [MulticastObservableLike_replay]() {
-            unsafeCast(this);
-            return this[ScanLastStream_obs][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](observer) {
             this[ScanLastStream_obs][ObservableLike_observe](observer);

@@ -40,7 +40,10 @@ export interface DisposableLike {
 export declare const QueueableLike_count: unique symbol;
 /** @ignore */
 export declare const QueueableLike_push: unique symbol;
+/** @ignore */
+export declare const QueueableLike_maxBufferSize: unique symbol;
 export interface QueueableLike<T = unknown> {
+    readonly [QueueableLike_maxBufferSize]: number;
     /**
      * The number of queued up items.
      */

@@ -5,7 +5,7 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { none, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose } from "../../../util.js";
+import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -49,9 +49,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const LatestObserver_ready = Symbol("LatestObserver_ready");
     const LatestObserver_latest = Symbol("LatestObserver_latest");
     const LatestObserver_ctx = Symbol("LatestObserver_ctx");
-    const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin), function LatestObserver(instance, scheduler, ctx) {
+    const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin), function LatestObserver(instance, ctx, scheduler, maxBufferSize) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, scheduler);
+        init(typedObserverMixin, instance, scheduler, maxBufferSize);
         instance[LatestObserver_ctx] = ctx;
         return instance;
     }, props({
@@ -78,9 +78,8 @@ const Observable_latest = /*@__PURE__*/ (() => {
             const onCompleteCb = () => {
                 onCompleted(ctx);
             };
-            const scheduler = delegate[DispatcherLike_scheduler];
             for (const observable of observables) {
-                const innerObserver = pipe(createLatestObserver(scheduler, ctx), Disposable_addTo(delegate), Disposable_onComplete(onCompleteCb), Observer_sourceFrom(observable));
+                const innerObserver = pipe(createLatestObserver(ctx, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]), Disposable_addTo(delegate), Disposable_onComplete(onCompleteCb), Observer_sourceFrom(observable));
                 add(ctx, innerObserver);
             }
         };

@@ -16,7 +16,10 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import { DisposableLike_dispose } from "../../../util.js";
+import {
+  DisposableLike_dispose,
+  QueueableLike_maxBufferSize,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -98,11 +101,12 @@ const Observable_latest = /*@__PURE__*/ (() => {
       function LatestObserver(
         instance: Pick<ObserverLike, typeof ObserverLike_notify> &
           Mutable<TProperties>,
-        scheduler: SchedulerLike,
         ctx: LatestCtx,
+        scheduler: SchedulerLike,
+        maxBufferSize: number,
       ): ObserverLike & TProperties {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, scheduler);
+        init(typedObserverMixin, instance, scheduler, maxBufferSize);
 
         instance[LatestObserver_ctx] = ctx;
 
@@ -143,11 +147,13 @@ const Observable_latest = /*@__PURE__*/ (() => {
         onCompleted(ctx);
       };
 
-      const scheduler = delegate[DispatcherLike_scheduler];
-
       for (const observable of observables) {
         const innerObserver = pipe(
-          createLatestObserver(scheduler, ctx),
+          createLatestObserver(
+            ctx,
+            delegate[DispatcherLike_scheduler],
+            delegate[QueueableLike_maxBufferSize],
+          ),
           Disposable_addTo(delegate),
           Disposable_onComplete(onCompleteCb),
           Observer_sourceFrom(observable),

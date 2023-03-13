@@ -1,5 +1,4 @@
 import { floor, random } from "../../__internal__/math.js";
-import { createInstanceFactory } from "../../__internal__/mixins.js";
 import {
   describe,
   expectArrayEquals,
@@ -13,20 +12,14 @@ import {
 } from "../../__internal__/util.internal.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
 import { QueueableLike_count, QueueableLike_push } from "../../util.js";
-import IndexedQueue_fifoQueueMixin from "../Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
-import Queue_priorityQueueMixin from "../Queue/__internal__/Queue.priorityQueueMixin.js";
+import IndexedQueue_createFifoQueue from "../Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createPriorityQueue from "../Queue/__internal__/Queue.createPriorityQueue.js";
 
 const createPriorityQueue = /*@__PURE__*/ (() => {
   const compare = (a: number, b: number): number => a - b;
-  const createInstance = createInstanceFactory(
-    Queue_priorityQueueMixin<number>(),
-  );
 
-  return () => createInstance(compare);
+  return () => Queue_createPriorityQueue(compare);
 })();
-
-const createFifoQueue = /*@__PURE__*/ (() =>
-  createInstanceFactory(IndexedQueue_fifoQueueMixin<number>()))();
 
 const makeSortedArray = (n: number) => {
   const result = newInstance<Array<number>, number>(Array, n);
@@ -55,7 +48,7 @@ testModule(
   describe(
     "fifoQueueMixin",
     test("push/pull/count", () => {
-      const queue = createFifoQueue();
+      const queue = IndexedQueue_createFifoQueue<number>();
 
       pipe(queue[QueueLike_head], expectEquals(none as Optional<number>));
       pipe(queue[QueueLike_pull](), expectEquals(none as Optional<number>));
@@ -102,7 +95,7 @@ testModule(
       pipe(queue[QueueLike_head], expectEquals(26 as Optional<number>));
     }),
     test("shrink", () => {
-      const queue = createFifoQueue();
+      const queue = IndexedQueue_createFifoQueue<number>();
 
       for (let i = 0; i < 300; i++) {
         queue[QueueableLike_push](i);

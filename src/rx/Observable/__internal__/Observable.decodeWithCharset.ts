@@ -18,7 +18,10 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import { DisposableLike_dispose } from "../../../util.js";
+import {
+  DisposableLike_dispose,
+  QueueableLike_maxBufferSize,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -59,6 +62,7 @@ const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWit
             Observer_mixin<ArrayBuffer>(),
             instance,
             delegate[DispatcherLike_scheduler],
+            delegate[QueueableLike_maxBufferSize],
           );
 
           const textDecoder = newInstance(TextDecoder, charset, {

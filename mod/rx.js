@@ -16,8 +16,6 @@ export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 /** @ignore */
 export const MulticastObservableLike_observerCount = Symbol("MulticastObservableLike_observerCount");
 /** @ignore */
-export const MulticastObservableLike_replay = Symbol("MulticastObservableLike_replay");
-/** @ignore */
 export const SubjectLike_publish = Symbol("SubjectLike_publish");
 export const ThrottleMode_first = Symbol("ThrottleMode_first");
 export const ThrottleMode_last = Symbol("ThrottleMode_last");

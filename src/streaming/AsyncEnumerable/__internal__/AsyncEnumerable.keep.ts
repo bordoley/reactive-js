@@ -18,7 +18,6 @@ import {
   DispatcherLike_scheduler,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -49,7 +48,6 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
           StreamLike<void, T>,
           | typeof ObservableLike_observe
           | typeof MulticastObservableLike_observerCount
-          | typeof MulticastObservableLike_replay
         > &
           Mutable<TProperties>,
         delegate: StreamLike<void, T>,
@@ -78,10 +76,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = /*@__PURE__*/ (<
           unsafeCast<TProperties>(this);
           return this[KeepStream_obs][MulticastObservableLike_observerCount];
         },
-        get [MulticastObservableLike_replay]() {
-          unsafeCast<TProperties>(this);
-          return this[KeepStream_obs][MulticastObservableLike_replay];
-        },
+
         [ObservableLike_observe](
           this: TProperties,
           observer: ObserverLike<T>,

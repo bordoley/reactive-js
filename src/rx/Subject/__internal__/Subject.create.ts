@@ -23,7 +23,6 @@ import {
 import {
   DispatcherLike_complete,
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -35,6 +34,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_count,
+  QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -46,7 +46,6 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
     const Subject_observers = Symbol("Subject_observers");
 
     type TProperties = {
-      readonly [MulticastObservableLike_replay]: number;
       readonly [Subject_observers]: Set<ObserverLike<T>>;
     };
 
@@ -66,15 +65,13 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
           replay: number,
         ): SubjectLike<T> {
           init(Disposable_mixin, instance);
-          init(IndexedQueue_fifoQueueMixin<T>(), instance);
+          init(IndexedQueue_fifoQueueMixin<T>(), instance, replay);
 
-          instance[MulticastObservableLike_replay] = replay;
           instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
 
           return instance;
         },
         props<TProperties>({
-          [MulticastObservableLike_replay]: 0,
           [Subject_observers]: none,
         }),
         {
@@ -91,7 +88,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             next: T,
           ) {
             if (!this[DisposableLike_isDisposed]) {
-              const replay = this[MulticastObservableLike_replay];
+              const replay = this[QueueableLike_maxBufferSize];
 
               if (replay > 0) {
                 this[QueueableLike_push](next);

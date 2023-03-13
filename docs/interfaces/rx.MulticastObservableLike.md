@@ -27,7 +27,6 @@
 ### Properties
 
 - [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
-- [[MulticastObservableLike\_replay]](rx.MulticastObservableLike.md#[multicastobservablelike_replay])
 
 ## Properties
 
@@ -36,9 +35,3 @@
 • `Readonly` **[MulticastObservableLike\_observerCount]**: `number`
 
 The number of observers currently observing.
-
-___
-
-### [MulticastObservableLike\_replay]
-
-• `Readonly` **[MulticastObservableLike\_replay]**: `number`

@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
-import { MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_observe, } from "../../../rx.js";
+import { MulticastObservableLike_observerCount, ObservableLike_observe, } from "../../../rx.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -21,10 +21,6 @@ const AsyncEnumerable_map = /*@__PURE__*/ (() => {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return this[DelegatingLike_delegate][MulticastObservableLike_observerCount];
-        },
-        get [MulticastObservableLike_replay]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](observer) {
             pipe(this[DelegatingLike_delegate], this[MapAsyncEnumerator_op], Observable_observeWith(observer));

@@ -19,7 +19,6 @@ import {
   DispatcherLike_scheduler,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -50,7 +49,6 @@ const AsyncEnumerable_scanLast: ScanLast<
           StreamLike<void, TAcc>,
           | typeof ObservableLike_observe
           | typeof MulticastObservableLike_observerCount
-          | typeof MulticastObservableLike_replay
         > &
           Mutable<TProperties>,
         delegate: StreamLike<void, T>,
@@ -76,10 +74,6 @@ const AsyncEnumerable_scanLast: ScanLast<
           return this[ScanLastStream_obs][
             MulticastObservableLike_observerCount
           ];
-        },
-        get [MulticastObservableLike_replay]() {
-          unsafeCast<TProperties>(this);
-          return this[ScanLastStream_obs][MulticastObservableLike_replay];
         },
         [ObservableLike_observe](
           this: TProperties,

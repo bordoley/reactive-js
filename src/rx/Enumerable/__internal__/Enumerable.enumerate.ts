@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -92,7 +93,7 @@ const Enumerable_enumerate: <T>() => (
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         init(PriorityScheduler_mixin, instance);
-        init(typedObserverMixin, instance, instance);
+        init(typedObserverMixin, instance, instance, MAX_SAFE_INTEGER);
 
         instance[EnumerableEnumerator_continuationQueue] =
           IndexedQueue_createFifoQueue();

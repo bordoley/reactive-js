@@ -16,13 +16,18 @@ import {
   ObservableLike_isRunnable,
 } from "../../../rx.js";
 import { StreamLike } from "../../../streaming.js";
-import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
+import {
+  QueueableLike_count,
+  QueueableLike_maxBufferSize,
+  QueueableLike_push,
+} from "../../../util.js";
 
 const Stream_delegatingMixin: <TReq, T>() => Mixin1<
   Pick<
     StreamLike<TReq, T>,
     | typeof QueueableLike_count
     | typeof QueueableLike_push
+    | typeof QueueableLike_maxBufferSize
     | typeof DispatcherLike_scheduler
     | typeof ObservableLike_isEnumerable
     | typeof ObservableLike_isRunnable
@@ -33,6 +38,7 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
   type TReturn = Pick<
     StreamLike<TReq, T>,
     | typeof QueueableLike_count
+    | typeof QueueableLike_maxBufferSize
     | typeof QueueableLike_push
     | typeof DispatcherLike_scheduler
     | typeof ObservableLike_isEnumerable
@@ -56,6 +62,11 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
         get [QueueableLike_count](): number {
           unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);
           return this[DelegatingLike_delegate][QueueableLike_count];
+        },
+
+        get [QueueableLike_maxBufferSize](): number {
+          unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);
+          return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
         },
 
         [QueueableLike_push](

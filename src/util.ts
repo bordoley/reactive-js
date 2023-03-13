@@ -56,7 +56,14 @@ export const QueueableLike_count = Symbol("QueueableLike_count");
 /** @ignore */
 export const QueueableLike_push = Symbol("QueueableLike_push");
 
+/** @ignore */
+export const QueueableLike_maxBufferSize = Symbol(
+  "QueueableLike_maxBufferSize",
+);
+
 export interface QueueableLike<T = unknown> {
+  readonly [QueueableLike_maxBufferSize]: number;
+
   /**
    * The number of queued up items.
    */

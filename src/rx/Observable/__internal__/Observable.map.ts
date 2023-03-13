@@ -16,6 +16,7 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
+import { QueueableLike_maxBufferSize } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -49,6 +50,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
             Observer_mixin<TA>(),
             instance,
             delegate[DispatcherLike_scheduler],
+            delegate[QueueableLike_maxBufferSize],
           );
           instance[MapObserverMixin_mapper] = mapper;
 

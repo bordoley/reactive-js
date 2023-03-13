@@ -27,7 +27,6 @@ import {
   DispatcherLike_scheduler,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -46,6 +45,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_count,
+  QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
@@ -79,6 +79,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             | typeof ObservableLike_isRunnable
             | typeof QueueableLike_count
             | typeof QueueableLike_push
+            | typeof QueueableLike_maxBufferSize
             | typeof DispatcherLike_complete
             | typeof DispatcherLike_scheduler
           > &
@@ -93,6 +94,16 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
         {
           [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
+
+          get [QueueableLike_maxBufferSize](): number {
+            unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
+            // Practically the observer can never be none.
+            const observer = this[
+              DispatchedObservable_observer
+            ] as ObserverLike<T>;
+
+            return observer[QueueableLike_maxBufferSize];
+          },
 
           get [QueueableLike_count](): number {
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
@@ -209,9 +220,9 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         instance: Pick<
           StreamLike<TReq, T>,
           | typeof MulticastObservableLike_observerCount
-          | typeof MulticastObservableLike_replay
           | typeof QueueableLike_count
           | typeof QueueableLike_push
+          | typeof QueueableLike_maxBufferSize
           | typeof DispatcherLike_complete
           | typeof ObservableLike_observe
           | typeof ObservableLike_isEnumerable
@@ -253,9 +264,9 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           ];
         },
 
-        get [MulticastObservableLike_replay](): number {
-          unsafeCast<TProperties>(this);
-          return this[StreamMixin_observable][MulticastObservableLike_replay];
+        get [QueueableLike_maxBufferSize](): number {
+          unsafeCast<DelegatingLike<DispatchedObservableLike<TReq>>>(this);
+          return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
         },
 
         get [QueueableLike_count](): number {
