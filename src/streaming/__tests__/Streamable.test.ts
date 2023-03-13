@@ -5,11 +5,12 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import { pipe, returns } from "../../functions.js";
+import { DispatcherLike_complete } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { StreamableLike_stream } from "../../streaming.js";
-import { DisposableLike_dispose, QueueableLike_push } from "../../util.js";
+import { QueueableLike_push } from "../../util.js";
 import * as Streamable from "../Streamable.js";
 
 testModule(
@@ -23,7 +24,7 @@ testModule(
 
       stateStream[QueueableLike_push](returns(2));
       stateStream[QueueableLike_push](returns(3));
-      stateStream[DisposableLike_dispose]();
+      stateStream[DispatcherLike_complete]();
 
       let result: number[] = [];
 
