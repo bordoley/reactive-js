@@ -26,6 +26,7 @@ import {
   unsafeCast,
 } from "../functions.js";
 import {
+  DispatcherLike_complete,
   DispatcherLike_scheduler,
   MulticastObservableLike_observerCount,
   MulticastObservableLike_replay,
@@ -314,6 +315,7 @@ export const windowLocation: WindowLocationStreamableLike =
             | typeof MulticastObservableLike_observerCount
             | typeof MulticastObservableLike_replay
             | typeof DispatcherLike_scheduler
+            | typeof DispatcherLike_complete
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof QueueableLike_push
@@ -365,6 +367,12 @@ export const windowLocation: WindowLocationStreamableLike =
 
           [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
+
+          [DispatcherLike_complete](
+            this: DelegatingLike<StreamLike<TAction, TState>>,
+          ) {
+            this[DelegatingLike_delegate][DispatcherLike_complete]();
+          },
 
           [QueueableLike_push](
             this: DelegatingLike<StreamLike<TAction, TState>>,

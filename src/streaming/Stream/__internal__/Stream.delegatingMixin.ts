@@ -10,6 +10,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { pipe, returns, unsafeCast } from "../../../functions.js";
 import {
+  DispatcherLike_complete,
   DispatcherLike_scheduler,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -25,6 +26,7 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
     | typeof DispatcherLike_scheduler
     | typeof ObservableLike_isEnumerable
     | typeof ObservableLike_isRunnable
+    | typeof DispatcherLike_complete
   >,
   StreamLike<TReq, T>
 > = /*@__PURE__*/ (<TReq, T>() => {
@@ -35,6 +37,7 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
     | typeof DispatcherLike_scheduler
     | typeof ObservableLike_isEnumerable
     | typeof ObservableLike_isRunnable
+    | typeof DispatcherLike_complete
   >;
 
   return pipe(
@@ -67,6 +70,10 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
+
+        [DispatcherLike_complete](this: DelegatingLike<StreamLike<TReq, T>>) {
+          this[DelegatingLike_delegate][DispatcherLike_complete]();
+        },
       },
     ),
     returns,

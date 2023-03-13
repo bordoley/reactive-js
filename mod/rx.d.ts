@@ -3,12 +3,15 @@ import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import { DisposableLike, QueueableLike } from "./util.js";
 /** @ignore */
+export declare const DispatcherLike_complete: unique symbol;
+/** @ignore */
 export declare const DispatcherLike_scheduler: unique symbol;
 /**
  * @noInheritDoc
  */
 export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableLike {
     readonly [DispatcherLike_scheduler]: SchedulerLike;
+    [DispatcherLike_complete](): void;
 }
 /** @ignore */
 export declare const ObserverLike_notify: unique symbol;

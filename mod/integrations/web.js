@@ -4,7 +4,7 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { compose, error, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
-import { DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, } from "../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
@@ -141,6 +141,9 @@ export const windowLocation =
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
+        [DispatcherLike_complete]() {
+            this[DelegatingLike_delegate][DispatcherLike_complete]();
+        },
         [QueueableLike_push](stateOrUpdater, { replace } = { replace: false }) {
             this[DelegatingLike_delegate][QueueableLike_push]({
                 stateOrUpdater,

@@ -2,6 +2,8 @@
 
 import { ContainerLike_type, } from "./containers.js";
 /** @ignore */
+export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
+/** @ignore */
 export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
 /** @ignore */
 export const ObserverLike_notify = Symbol("ObserverLike_notify");

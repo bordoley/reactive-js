@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { pipe, returns, unsafeCast } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../rx.js";
 import { QueueableLike_count, QueueableLike_push } from "../../../util.js";
 const Stream_delegatingMixin = /*@__PURE__*/ (() => {
     return pipe(mix(include(delegatingMixin()), function DelegatingStreamMixin(instance, delegate) {
@@ -22,6 +22,9 @@ const Stream_delegatingMixin = /*@__PURE__*/ (() => {
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
+        [DispatcherLike_complete]() {
+            this[DelegatingLike_delegate][DispatcherLike_complete]();
+        },
     }), returns);
 })();
 export default Stream_delegatingMixin;

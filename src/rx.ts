@@ -12,6 +12,9 @@ import { SchedulerLike } from "./scheduling.js";
 import { DisposableLike, QueueableLike } from "./util.js";
 
 /** @ignore */
+export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
+
+/** @ignore */
 export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
 
 /**
@@ -21,6 +24,8 @@ export interface DispatcherLike<T = unknown>
   extends QueueableLike<T>,
     DisposableLike {
   readonly [DispatcherLike_scheduler]: SchedulerLike;
+
+  [DispatcherLike_complete](): void;
 }
 
 /** @ignore */

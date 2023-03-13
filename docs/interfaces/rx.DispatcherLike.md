@@ -26,8 +26,22 @@
 
 - [[DispatcherLike\_scheduler]](rx.DispatcherLike.md#[dispatcherlike_scheduler])
 
+### Methods
+
+- [[DispatcherLike\_complete]](rx.DispatcherLike.md#[dispatcherlike_complete])
+
 ## Properties
 
 ### [DispatcherLike\_scheduler]
 
 • `Readonly` **[DispatcherLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)
+
+## Methods
+
+### [DispatcherLike\_complete]
+
+▸ **[DispatcherLike_complete]**(): `void`
+
+#### Returns
+
+`void`
