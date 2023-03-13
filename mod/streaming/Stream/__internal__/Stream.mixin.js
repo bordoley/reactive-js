@@ -3,7 +3,7 @@
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
 import { DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
@@ -55,6 +55,17 @@ const DispatchedObservable_create =
                 dispatcher[QueueableLike_push](next);
             }
         },
+        [DispatcherLike_complete]() {
+            const observer = this[DispatchedObservable_observer];
+            // Practically the observer can never be none,
+            // unless the stream operator uses lazy subscriptions
+            // eg. concat.
+            if (__DEV__ && isNone(observer)) {
+                raiseWithDebugMessage("DispatchedObservable has not been subscribed to yet");
+            }
+            const dispatcher = observer[ObserverLike_dispatcher];
+            dispatcher[DispatcherLike_complete]();
+        },
         [ObservableLike_observe](observer) {
             if (isSome(this[DispatchedObservable_observer])) {
                 raiseWithDebugMessage("DispatchedObservable already subscribed to");
@@ -92,6 +103,9 @@ const Stream_mixin = /*@__PURE__*/ (() => {
         [ObservableLike_isRunnable]: false,
         [QueueableLike_push](req) {
             this[DelegatingLike_delegate][QueueableLike_push](req);
+        },
+        [DispatcherLike_complete]() {
+            this[DelegatingLike_delegate][DispatcherLike_complete]();
         },
         [ObservableLike_observe](observer) {
             this[StreamMixin_observable][ObservableLike_observe](observer);

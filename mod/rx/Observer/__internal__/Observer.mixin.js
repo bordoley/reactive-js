@@ -3,7 +3,7 @@
 import { createInstanceFactory, getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { call, isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -62,6 +62,9 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
                 call(fifoQueueProtoype[QueueableLike_push], this, next);
                 scheduleDrainQueue(this);
             }
+        },
+        [DispatcherLike_complete]() {
+            this[DisposableLike_dispose]();
         },
     }));
 })();

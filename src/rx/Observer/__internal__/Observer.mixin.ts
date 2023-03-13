@@ -25,6 +25,7 @@ import {
 } from "../../../functions.js";
 import {
   DispatcherLike,
+  DispatcherLike_complete,
   DispatcherLike_scheduler,
   ObserverLike,
   ObserverLike_dispatcher,
@@ -85,7 +86,10 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
     mix(
       include(Disposable_mixin, IndexedQueue_fifoQueueMixin()),
       function ObserverDispatcher(
-        instance: Pick<DispatcherLike, typeof DispatcherLike_scheduler> &
+        instance: Pick<
+          DispatcherLike,
+          typeof DispatcherLike_scheduler | typeof DispatcherLike_complete
+        > &
           Mutable<TProperties>,
         observer: ObserverLike<T>,
       ): DispatcherLike<T> {
@@ -144,6 +148,11 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
             call(fifoQueueProtoype[QueueableLike_push], this, next);
             scheduleDrainQueue(this);
           }
+        },
+        [DispatcherLike_complete](
+          this: TProperties & DisposableLike & QueueLike<T>,
+        ) {
+          this[DisposableLike_dispose]();
         },
       },
     ),

@@ -23,6 +23,7 @@ import {
 } from "../../../functions.js";
 import {
   DispatcherLike,
+  DispatcherLike_complete,
   DispatcherLike_scheduler,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
@@ -77,6 +78,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             | typeof ObservableLike_isRunnable
             | typeof QueueableLike_count
             | typeof QueueableLike_push
+            | typeof DispatcherLike_complete
             | typeof DispatcherLike_scheduler
           > &
             Mutable<TProperties>,
@@ -141,6 +143,26 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             }
           },
 
+          [DispatcherLike_complete](
+            this: TProperties & DispatchedObservableLike<T>,
+          ) {
+            const observer = this[
+              DispatchedObservable_observer
+            ] as ObserverLike<T>;
+
+            // Practically the observer can never be none,
+            // unless the stream operator uses lazy subscriptions
+            // eg. concat.
+            if (__DEV__ && isNone(observer)) {
+              raiseWithDebugMessage(
+                "DispatchedObservable has not been subscribed to yet",
+              );
+            }
+
+            const dispatcher = observer[ObserverLike_dispatcher];
+            dispatcher[DispatcherLike_complete]();
+          },
+
           [ObservableLike_observe](
             this: TProperties & DispatchedObservableLike<T>,
             observer: ObserverLike<T>,
@@ -186,6 +208,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           | typeof MulticastObservableLike_replay
           | typeof QueueableLike_count
           | typeof QueueableLike_push
+          | typeof DispatcherLike_complete
           | typeof ObservableLike_observe
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
@@ -245,6 +268,10 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           req: TReq,
         ) {
           this[DelegatingLike_delegate][QueueableLike_push](req);
+        },
+
+        [DispatcherLike_complete](this: DelegatingLike<StreamLike<TReq, T>>) {
+          this[DelegatingLike_delegate][DispatcherLike_complete]();
         },
 
         [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
