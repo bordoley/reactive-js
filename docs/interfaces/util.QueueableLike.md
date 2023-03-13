@@ -45,7 +45,7 @@ ___
 
 ### [QueueableLike\_push]
 
-▸ **[QueueableLike_push]**(`req`): `void`
+▸ **[QueueableLike_push]**(`req`): `boolean`
 
 Push an item onto the queue
 
@@ -57,4 +57,4 @@ Push an item onto the queue
 
 #### Returns
 
-`void`
+`boolean`

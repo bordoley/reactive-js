@@ -72,8 +72,8 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
         [QueueableLike_push](
           this: DelegatingLike<StreamLike<TReq, T>>,
           next: TReq,
-        ) {
-          this[DelegatingLike_delegate][QueueableLike_push](next);
+        ): boolean {
+          return this[DelegatingLike_delegate][QueueableLike_push](next);
         },
         get [DispatcherLike_scheduler]() {
           unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);

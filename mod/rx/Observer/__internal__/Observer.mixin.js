@@ -48,9 +48,11 @@ const Observer_mixin = /*@__PURE__*/ (() => {
         [QueueableLike_push](next) {
             if (!this[ObserverMixin_isCompleted] &&
                 !this[DisposableLike_isDisposed]) {
-                call(fifoQueueProtoype[QueueableLike_push], this, next);
+                const result = call(fifoQueueProtoype[QueueableLike_push], this, next);
                 scheduleDrainQueue(this);
+                return result;
             }
+            return true;
         },
         [DispatcherLike_complete]() {
             const isCompleted = this[ObserverMixin_isCompleted];

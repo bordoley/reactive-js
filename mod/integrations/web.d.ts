@@ -23,7 +23,7 @@ export declare const WindowLocationStreamLike_canGoBack: unique symbol;
 export interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
     [QueueableLike_push](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
         readonly replace?: boolean;
-    }): void;
+    }): boolean;
     readonly [WindowLocationStreamLike_canGoBack]: boolean;
     [WindowLocationStreamLike_goBack](): boolean;
 }

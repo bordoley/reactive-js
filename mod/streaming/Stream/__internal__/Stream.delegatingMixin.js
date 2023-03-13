@@ -18,7 +18,7 @@ const Stream_delegatingMixin = /*@__PURE__*/ (() => {
             return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
         },
         [QueueableLike_push](next) {
-            this[DelegatingLike_delegate][QueueableLike_push](next);
+            return this[DelegatingLike_delegate][QueueableLike_push](next);
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
