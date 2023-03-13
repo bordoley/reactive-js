@@ -88,7 +88,7 @@ export interface WindowLocationStreamLike
   [QueueableLike_push](
     stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI,
     options?: { readonly replace?: boolean },
-  ): void;
+  ): boolean;
 
   readonly [WindowLocationStreamLike_canGoBack]: boolean;
 
@@ -375,8 +375,8 @@ export const windowLocation: WindowLocationStreamableLike =
             this: DelegatingLike<StreamLike<TAction, TState>>,
             stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
             { replace }: { replace: boolean } = { replace: false },
-          ): void {
-            this[DelegatingLike_delegate][QueueableLike_push]({
+          ): boolean {
+            return this[DelegatingLike_delegate][QueueableLike_push]({
               stateOrUpdater,
               replace,
             });

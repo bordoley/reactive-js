@@ -141,9 +141,14 @@ const Queue_priorityQueueMixin: <T>() => Mixin2<
             return first;
           }
         },
-        [QueueableLike_push](this: TProperties, item: T) {
+        [QueueableLike_push](
+          this: TProperties & QueueLike<T>,
+          item: T,
+        ): boolean {
           this[PriorityQueueImpl_values].push(item);
           siftUp(this, item);
+
+          return this[QueueableLike_count] <= this[QueueableLike_maxBufferSize];
         },
       },
     ),

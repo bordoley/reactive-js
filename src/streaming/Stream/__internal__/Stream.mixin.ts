@@ -127,7 +127,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           [QueueableLike_push](
             this: TProperties & DispatchedObservableLike<T>,
             next: T,
-          ) {
+          ): boolean {
             const observer = this[
               DispatchedObservable_observer
             ] as ObserverLike<T>;
@@ -148,8 +148,11 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
 
             if (inContinuation && observerQueueIsEmpty && !isDisposed) {
               observer[ObserverLike_notify](next);
+              return true;
             } else if (!isDisposed) {
-              observer[QueueableLike_push](next);
+              return observer[QueueableLike_push](next);
+            } else {
+              return true;
             }
           },
 
@@ -281,8 +284,8 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         [QueueableLike_push](
           this: DelegatingLike<DispatchedObservableLike<TReq>>,
           req: TReq,
-        ) {
-          this[DelegatingLike_delegate][QueueableLike_push](req);
+        ): boolean {
+          return this[DelegatingLike_delegate][QueueableLike_push](req);
         },
 
         [DispatcherLike_complete](this: DelegatingLike<StreamLike<TReq, T>>) {

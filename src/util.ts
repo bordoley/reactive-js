@@ -73,5 +73,5 @@ export interface QueueableLike<T = unknown> {
    * Push an item onto the queue
    * @param req
    */
-  [QueueableLike_push](req: T): void;
+  [QueueableLike_push](req: T): boolean;
 }

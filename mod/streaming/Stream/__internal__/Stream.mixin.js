@@ -54,9 +54,13 @@ const DispatchedObservable_create =
             const isDisposed = observer[DisposableLike_isDisposed];
             if (inContinuation && observerQueueIsEmpty && !isDisposed) {
                 observer[ObserverLike_notify](next);
+                return true;
             }
             else if (!isDisposed) {
-                observer[QueueableLike_push](next);
+                return observer[QueueableLike_push](next);
+            }
+            else {
+                return true;
             }
         },
         [DispatcherLike_complete]() {
@@ -112,7 +116,7 @@ const Stream_mixin = /*@__PURE__*/ (() => {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [QueueableLike_push](req) {
-            this[DelegatingLike_delegate][QueueableLike_push](req);
+            return this[DelegatingLike_delegate][QueueableLike_push](req);
         },
         [DispatcherLike_complete]() {
             this[DelegatingLike_delegate][DispatcherLike_complete]();

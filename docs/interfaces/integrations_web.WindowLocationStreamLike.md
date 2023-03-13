@@ -31,7 +31,7 @@
 
 ### [QueueableLike\_push]
 
-▸ **[QueueableLike_push]**(`stateOrUpdater`, `options?`): `void`
+▸ **[QueueableLike_push]**(`stateOrUpdater`, `options?`): `boolean`
 
 #### Parameters
 
@@ -43,7 +43,7 @@
 
 #### Returns
 
-`void`
+`boolean`
 
 #### Overrides
 

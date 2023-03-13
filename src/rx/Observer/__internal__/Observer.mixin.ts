@@ -120,14 +120,23 @@ const Observer_mixin: <T>() => Mixin2<
         [ObserverMixin_isCompleted]: false,
       }),
       {
-        [QueueableLike_push](this: TProperties & ObserverLike<T>, next: T) {
+        [QueueableLike_push](
+          this: TProperties & ObserverLike<T>,
+          next: T,
+        ): boolean {
           if (
             !this[ObserverMixin_isCompleted] &&
             !this[DisposableLike_isDisposed]
           ) {
-            call(fifoQueueProtoype[QueueableLike_push], this, next);
+            const result = call(
+              fifoQueueProtoype[QueueableLike_push],
+              this,
+              next,
+            );
             scheduleDrainQueue(this);
+            return result;
           }
+          return true;
         },
         [DispatcherLike_complete](this: TProperties & ObserverLike<T>) {
           const isCompleted = this[ObserverMixin_isCompleted];

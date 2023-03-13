@@ -88,6 +88,7 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
         [QueueableLike_push](item) {
             this[PriorityQueueImpl_values].push(item);
             siftUp(this, item);
+            return this[QueueableLike_count] <= this[QueueableLike_maxBufferSize];
         },
     }), returns);
 })();

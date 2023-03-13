@@ -145,7 +145,7 @@ export const windowLocation =
             this[DelegatingLike_delegate][DispatcherLike_complete]();
         },
         [QueueableLike_push](stateOrUpdater, { replace } = { replace: false }) {
-            this[DelegatingLike_delegate][QueueableLike_push]({
+            return this[DelegatingLike_delegate][QueueableLike_push]({
                 stateOrUpdater,
                 replace,
             });

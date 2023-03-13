@@ -110,6 +110,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                 this[FifoQueue_tail] = count;
                 this[FifoQueue_capacityMask] = (capacityMask << 1) | 1;
             }
+            return this[QueueableLike_count] <= this[QueueableLike_maxBufferSize];
         },
     }), returns);
 })();

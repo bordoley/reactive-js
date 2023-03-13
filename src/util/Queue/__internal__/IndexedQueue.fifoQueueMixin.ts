@@ -144,7 +144,10 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
 
           return item;
         },
-        [QueueableLike_push](this: TProperties & QueueableLike, item: T) {
+        [QueueableLike_push](
+          this: TProperties & QueueableLike,
+          item: T,
+        ): boolean {
           const values =
             this[FifoQueue_values] ??
             ((this[FifoQueue_capacityMask] = 31),
@@ -185,6 +188,8 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
             this[FifoQueue_tail] = count;
             this[FifoQueue_capacityMask] = (capacityMask << 1) | 1;
           }
+
+          return this[QueueableLike_count] <= this[QueueableLike_maxBufferSize];
         },
       },
     ),
