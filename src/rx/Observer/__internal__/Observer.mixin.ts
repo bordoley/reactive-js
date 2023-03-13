@@ -92,7 +92,7 @@ const createObserverDispatcher = /*@__PURE__*/ (<T>() => {
         > &
           Mutable<TProperties>,
         observer: ObserverLike<T>,
-      ): DispatcherLike<T> {
+      ): DispatcherLike<T> & DisposableLike {
         init(Disposable_mixin, instance);
         init(IndexedQueue_fifoQueueMixin<T>(), instance);
 
@@ -195,7 +195,7 @@ const Observer_mixin: <T>() => Mixin1<TObserverMixinReturn<T>, SchedulerLike> =
             if (isNone(dispatcher)) {
               dispatcher = pipe(
                 createObserverDispatcher(this),
-                Disposable_addToIgnoringChildErrors<DispatcherLike<T>>(this),
+                Disposable_addToIgnoringChildErrors<DispatcherLike<T> & DisposableLike>(this),
               );
               this[ObserverMixin_dispatcher] = dispatcher;
             }

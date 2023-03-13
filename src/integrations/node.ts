@@ -29,8 +29,10 @@ import {
   isFunction,
   pipe,
   pipeLazy,
+  isSome,
 } from "../functions.js";
 import {
+  DispatcherLike_complete,
   DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike_dispatcher,
@@ -111,10 +113,10 @@ export const bindNodeCallback: BindNodeCallback = <T>(
       const dispatcher = observer[ObserverLike_dispatcher];
       const handler = (err: unknown, arg: unknown) => {
         if (err) {
-          dispatcher[DisposableLike_dispose](error(err));
+          observer[DisposableLike_dispose](error(err));
         } else {
           dispatcher[QueueableLike_push](arg);
-          dispatcher[DisposableLike_dispose]();
+          dispatcher[DispatcherLike_complete]();
         }
       };
 
@@ -174,13 +176,24 @@ export const createReadableSource = (
       Observable.create(observer => {
         const dispatcher = observer[ObserverLike_dispatcher];
 
+        const dispatchDisposable = pipe(
+          Disposable.create(),
+          Disposable.onDisposed(e => {
+            if(isSome(e)) {
+              observer[DisposableLike_dispose](e);
+            } else {
+              dispatcher[DispatcherLike_complete]();
+            }
+          }),
+        );
+
         const readable = isFunction(factory)
           ? pipe(
               factory(),
               addToDisposable(observer),
-              addDisposable(dispatcher),
+              addDisposable(dispatchDisposable),
             )
-          : pipe(factory, addDisposable(dispatcher));
+          : pipe(factory, addDisposable(dispatchDisposable));
 
         readable.pause();
 
@@ -202,7 +215,7 @@ export const createReadableSource = (
 
         const onData = Queueable.pushTo(dispatcher);
         const onEnd = () => {
-          dispatcher[DisposableLike_dispose]();
+          dispatcher[DispatcherLike_complete]();
         };
 
         readable.on("data", onData);
@@ -231,14 +244,24 @@ export const createWritableSink = /*@__PURE__*/ (() => {
       events =>
         Observable.create(observer => {
           const dispatcher = observer[ObserverLike_dispatcher];
+          const dispatchDisposable = pipe(
+            Disposable.create(),
+            Disposable.onDisposed(e => {
+              if(isSome(e)) {
+                observer[DisposableLike_dispose](e);
+              } else {
+                dispatcher[DispatcherLike_complete]();
+              }
+            }),
+          );
 
           const writable = isFunction(factory)
             ? pipe(
                 factory(),
                 addToDisposable(observer),
-                addDisposable(dispatcher),
+                addDisposable(dispatchDisposable),
               )
-            : pipe(factory, addDisposable(dispatcher));
+            : pipe(factory, addDisposable(dispatchDisposable));
 
           pipe(
             events,
@@ -261,7 +284,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
           const onDrain = () => {
             dispatcher[QueueableLike_push](FlowableState_running);
           };
-          const onFinish = () => dispatcher[DisposableLike_dispose]();
+          const onFinish = () => dispatcher[DispatcherLike_complete]();
           const onPause = () => {
             dispatcher[QueueableLike_push](FlowableState_paused);
           };

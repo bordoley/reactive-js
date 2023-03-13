@@ -2,6 +2,7 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { AsyncIterableLike } from "../../../containers.js";
 import { error, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_complete,
   DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
@@ -27,7 +28,7 @@ import {
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 
 const AsyncIterable_toFlowable: ToFlowable<
   AsyncIterableLike,
@@ -52,7 +53,7 @@ const AsyncIterable_toFlowable: ToFlowable<
 
             try {
               while (
-                !dispatcher[DisposableLike_isDisposed] &&
+                !observer[DisposableLike_isDisposed] &&
                 // An async iterable can produce resolved promises which are immediately
                 // scheduled on the microtask queue. This prevents the observer's scheduler
                 // from running and draining dispatched events.
@@ -65,17 +66,17 @@ const AsyncIterable_toFlowable: ToFlowable<
               ) {
                 const next = await iterator.next();
 
-                if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
+                if (!next.done) {
                   dispatcher[QueueableLike_push](next.value);
                 } else {
-                  dispatcher[DisposableLike_dispose]();
+                  dispatcher[DispatcherLike_complete]();
                 }
               }
             } catch (e) {
-              dispatcher[DisposableLike_dispose](error(e));
+              observer[DisposableLike_dispose](error(e));
             }
 
-            if (!dispatcher[DisposableLike_isDisposed] && !isPaused) {
+            if (!observer[DisposableLike_isDisposed] && !isPaused) {
               pipe(
                 scheduler[SchedulerLike_schedule](continuation),
                 Disposable_addTo(observer),
@@ -99,7 +100,10 @@ const AsyncIterable_toFlowable: ToFlowable<
               },
             ),
             Observable_subscribe(scheduler),
-            Disposable_bindTo(observer),
+            Disposable_addTo(observer),
+            Disposable_onComplete(() =>
+              observer[ObserverLike_dispatcher][DispatcherLike_complete](),
+            ),
           );
         }),
       false,

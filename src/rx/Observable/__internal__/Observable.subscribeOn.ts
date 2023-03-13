@@ -1,7 +1,8 @@
 import { pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike_dispatcher } from "../../../rx.js";
+import { DispatcherLike_complete, ObservableLike, ObserverLike_dispatcher } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Queueable_pushTo from "../../../util/Queue/__internal__/Queueable.pushTo.js";
 import Observable_create from "./Observable.create.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -18,7 +19,10 @@ const Observable_subscribeOn =
           Queueable_pushTo(observer[ObserverLike_dispatcher]),
         ),
         Observable_subscribe(scheduler),
-        Disposable_bindTo(observer[ObserverLike_dispatcher]),
+        Disposable_onComplete(
+          () => observer[ObserverLike_dispatcher][DispatcherLike_complete](),
+        ),
+        Disposable_addTo(observer),
       ),
     );
 
