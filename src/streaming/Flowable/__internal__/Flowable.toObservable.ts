@@ -3,6 +3,7 @@ import { compose, pipe } from "../../../functions.js";
 import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
+  ObservableLike,
   ToObservable,
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
@@ -12,6 +13,7 @@ import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
   FlowableLike,
+  FlowableState,
   FlowableState_paused,
   FlowableState_running,
   StreamableLike_isRunnable,
@@ -23,7 +25,8 @@ import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import Stream_sourceFrom from "../../Stream/__internal__/Stream.sourceFrom.js";
 
 const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
-  () => src => {
+  <T>() =>
+  (src: FlowableLike<T>): ObservableLike<T> => {
     const create = src[StreamableLike_isRunnable]
       ? Runnable_create
       : Observable_create;
@@ -47,7 +50,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
       );
 
       pipe(
-        Stream_create(op, scheduler),
+        Stream_create<T, FlowableState>(op, scheduler),
         Stream_sourceFrom(src),
         Disposable_addTo(observer),
         Disposable_onComplete(() => observer[DispatcherLike_complete]()),

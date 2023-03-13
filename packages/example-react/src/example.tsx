@@ -21,17 +21,17 @@ import {
   WindowLocationStreamLike_canGoBack,
   WindowLocationStreamLike_goBack,
 } from "@reactive-js/core/integrations/web";
-import { increment, pipe, returns, Updater } from "@reactive-js/core/functions";
+import { Updater, increment, pipe, returns } from "@reactive-js/core/functions";
+import { DispatcherLike } from "@reactive-js/core/rx";
+import * as Queueable from "@reactive-js/core/util/Queueable";
+import { QueueableLike_push } from "@reactive-js/core/util";
 import {
-  DispatcherLike,
-  PauseableState,
-  PauseableState_paused,
-  PauseableState_running,
-  PauseableLike,
-} from "@reactive-js/core/scheduling";
-import * as Queue from "@reactive-js/core/util/Queue";
-import { QueueLike_push } from "@reactive-js/core/util";
-import { StreamableLike_stream } from "@reactive-js/core/streaming";
+  FlowableStreamLike,
+  FlowableState,
+  FlowableState_paused,
+  FlowableState_running,
+  StreamableLike_stream,
+} from "@reactive-js/core/streaming";
 
 const normalPriorityScheduler = createSchedulerWithNormalPriority();
 
@@ -49,11 +49,11 @@ const counterFlowable = pipe(
 );
 
 const createActions = (
-  stateDispatcher: DispatcherLike<Updater<PauseableState>>,
-  counterDispatcher: PauseableLike,
+  stateDispatcher: DispatcherLike<FlowableState | Updater<FlowableState>>,
+  counterDispatcher: FlowableStreamLike,
 ) => ({
   onValueChanged: (value: number) => {
-    historyStream[QueueLike_push](
+    historyStream[QueueableLike_push](
       (uri: WindowLocationURI) => ({
         ...uri,
         query: `v=${value}`,
@@ -63,17 +63,17 @@ const createActions = (
   },
   toggleStateMode: () =>
     pipe(
-      (mode: PauseableState) =>
-        mode === PauseableState_paused
-          ? PauseableState_running
-          : PauseableState_paused,
-      Queue.pushTo(stateDispatcher),
+      (mode: FlowableState) =>
+        mode === FlowableState_paused
+          ? FlowableState_running
+          : FlowableState_paused,
+      Queueable.pushTo(stateDispatcher),
     ),
-  setCounterMode: (mode: PauseableState) =>
-    counterDispatcher[QueueLike_push](mode),
+  setCounterMode: (mode: FlowableState) =>
+    counterDispatcher[QueueableLike_push](mode),
 });
 
-const initialFlowModeState = (): PauseableState => PauseableState_paused;
+const initialFlowModeState = (): FlowableState => FlowableState_paused;
 
 const StreamPauseResume = createComponent(() =>
   Observable.async(() => {
@@ -92,7 +92,7 @@ const StreamPauseResume = createComponent(() =>
     const value = __observe(counter) ?? 0;
     __do(onValueChanged, value);
 
-    const label = mode === PauseableState_running ? "PAUSE" : "RESUME";
+    const label = mode === FlowableState_running ? "PAUSE" : "RESUME";
 
     return (
       <>
@@ -106,7 +106,7 @@ const StreamPauseResume = createComponent(() =>
 const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
   const { value: path } = ev.target;
 
-  historyStream[QueueLike_push]((uri: WindowLocationURI) => ({
+  historyStream[QueueableLike_push]((uri: WindowLocationURI) => ({
     ...uri,
     path,
   }));
