@@ -15,11 +15,11 @@ import {
 } from "../../../containers.js";
 import { Function1, error, isSome, partial, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -45,7 +45,11 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
         ): ObserverLike<T> {
           init(Disposable_mixin, instance);
           init(delegatingMixin(), instance, delegate);
-          init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
+          init(
+            Observer_mixin<T>(),
+            instance,
+            delegate[DispatcherLike_scheduler],
+          );
 
           pipe(
             instance,

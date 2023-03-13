@@ -12,32 +12,17 @@
 
 ## Hierarchy
 
+- [`DispatcherLike`](rx.DispatcherLike.md)<`T`\>
+
 - [`DisposableLike`](util.DisposableLike.md)
 
   ↳ **`ObserverLike`**
 
 ## Table of contents
 
-### Properties
-
-- [[ObserverLike\_dispatcher]](rx.ObserverLike.md#[observerlike_dispatcher])
-- [[ObserverLike\_scheduler]](rx.ObserverLike.md#[observerlike_scheduler])
-
 ### Methods
 
 - [[ObserverLike\_notify]](rx.ObserverLike.md#[observerlike_notify])
-
-## Properties
-
-### [ObserverLike\_dispatcher]
-
-• `Readonly` **[ObserverLike\_dispatcher]**: [`DispatcherLike`](rx.DispatcherLike.md)<`T`\>
-
-___
-
-### [ObserverLike\_scheduler]
-
-• `Readonly` **[ObserverLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)
 
 ## Methods
 

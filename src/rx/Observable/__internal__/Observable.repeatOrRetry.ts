@@ -1,9 +1,9 @@
 import { ContainerOperator } from "../../../containers.js";
 import { error, partial, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -43,7 +43,7 @@ const Observable_repeatOrRetry: <T>(
           Observable_forEach<ObservableLike, T>(
             Observer_notifyObserver(delegate),
           ),
-          Observable_subscribe(delegate[ObserverLike_scheduler]),
+          Observable_subscribe(delegate[DispatcherLike_scheduler]),
           Disposable_addToIgnoringChildErrors(delegate),
           Disposable_onDisposed(doOnDispose),
         );

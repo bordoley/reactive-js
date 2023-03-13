@@ -7,6 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  IndexedQueueLike,
   QueueLike,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
@@ -20,7 +21,7 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
 } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { isSome, pipe, returns, unsafeCast } from "../../../functions.js";
+import { isSome, none, pipe, returns, unsafeCast } from "../../../functions.js";
 import {
   EnumerableEnumeratorLike,
   EnumerableLike,
@@ -48,7 +49,7 @@ import {
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 
 const Enumerable_enumerate: <T>() => (
   enumerable: EnumerableLike<T>,
@@ -56,7 +57,13 @@ const Enumerable_enumerate: <T>() => (
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
   const typedObserverMixin = Observer_mixin<T>();
 
-  type TEnumeratorSchedulerProperties = unknown;
+  const EnumerableEnumerator_continuationQueue = Symbol(
+    "EnumerableEnumerator_continuationQueue",
+  );
+
+  type TEnumeratorSchedulerProperties = {
+    readonly [EnumerableEnumerator_continuationQueue]: IndexedQueueLike<ContinuationLike>;
+  };
 
   interface EnumeratorScheduler<T>
     extends EnumerableEnumeratorLike<T>,
@@ -68,7 +75,6 @@ const Enumerable_enumerate: <T>() => (
       include(
         Disposable_mixin,
         typedMutableEnumeratorMixin,
-        IndexedQueue_fifoQueueMixin<ContinuationLike>(),
         typedObserverMixin,
         PriorityScheduler_mixin,
       ),
@@ -85,14 +91,18 @@ const Enumerable_enumerate: <T>() => (
       ): EnumeratorScheduler<T> {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        init(IndexedQueue_fifoQueueMixin<ContinuationLike>(), instance);
         init(PriorityScheduler_mixin, instance);
         init(typedObserverMixin, instance, instance);
+
+        instance[EnumerableEnumerator_continuationQueue] =
+          IndexedQueue_createFifoQueue();
 
         // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
         return instance as EnumeratorScheduler<T>;
       },
-      props<TEnumeratorSchedulerProperties>({}),
+      props<TEnumeratorSchedulerProperties>({
+        [EnumerableEnumerator_continuationQueue]: none,
+      }),
       {
         [SchedulerLike_now]: 0,
         get [PrioritySchedulerImplementationLike_shouldYield](): boolean {
@@ -108,7 +118,8 @@ const Enumerable_enumerate: <T>() => (
           this[MutableEnumeratorLike_reset]();
 
           while (!this[EnumeratorLike_hasCurrent]) {
-            const continuation = this[QueueLike_pull]();
+            const continuation =
+              this[EnumerableEnumerator_continuationQueue][QueueLike_pull]();
             if (isSome(continuation)) {
               this[PrioritySchedulerImplementationLike_runContinuation](
                 continuation,
@@ -137,7 +148,9 @@ const Enumerable_enumerate: <T>() => (
 
           continuation[ContinuationLike_continuationScheduler] = this;
 
-          this[QueueableLike_push](continuation);
+          this[EnumerableEnumerator_continuationQueue][QueueableLike_push](
+            continuation,
+          );
         },
         [ObserverLike_notify](
           this: MutableEnumeratorLike<T> & ObserverLike,

@@ -5,7 +5,6 @@ import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
   ObserverLike,
-  ObserverLike_dispatcher,
   ToObservable,
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
@@ -30,9 +29,8 @@ const AsyncIterable_toObservable: ToObservable<
     Observable_create<T>((observer: ObserverLike<T>) => {
       const { maxBuffer = MAX_SAFE_INTEGER, maxYieldInterval = 300 } = o ?? {};
 
-      const dispatcher = observer[ObserverLike_dispatcher];
       const iterator = iterable[Symbol.asyncIterator]();
-      const scheduler = dispatcher[DispatcherLike_scheduler];
+      const scheduler = observer[DispatcherLike_scheduler];
 
       const continuation = async () => {
         const startTime = scheduler[SchedulerLike_now];
@@ -44,17 +42,17 @@ const AsyncIterable_toObservable: ToObservable<
             // scheduled on the microtask queue. This prevents the observer's scheduler
             // from running and draining dispatched events.
             //
-            // Check the dispatcher's buffer size so we can avoid queueing forever
+            // Check the observer's buffer size so we can avoid queueing forever
             // in this situation.
-            dispatcher[QueueableLike_count] < maxBuffer &&
+            observer[QueueableLike_count] < maxBuffer &&
             scheduler[SchedulerLike_now] - startTime < maxYieldInterval
           ) {
             const next = await iterator.next();
 
             if (!next.done) {
-              dispatcher[QueueableLike_push](next.value);
+              observer[QueueableLike_push](next.value);
             } else {
-              dispatcher[DispatcherLike_complete]();
+              observer[DispatcherLike_complete]();
             }
           }
         } catch (e) {

@@ -1,7 +1,7 @@
 /// <reference types="./AsyncIterable.toAsyncEnumerable.d.ts" />
 
 import { error, pipe, returns } from "../../../functions.js";
-import { DispatcherLike_complete, ObserverLike_dispatcher, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
@@ -11,7 +11,6 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 const AsyncIterable_toAsyncEnumerable = 
 /*@__PURE__*/ returns((iterable) => Streamable_createLifted(observable => Observable_create(observer => {
-    const dispatcher = observer[ObserverLike_dispatcher];
     const iterator = iterable[Symbol.asyncIterator]();
     pipe(observable, Observable_forEach(async (_) => {
         try {
@@ -22,15 +21,15 @@ const AsyncIterable_toAsyncEnumerable =
             // resolve.
             const next = await iterator.next();
             if (!next.done) {
-                dispatcher[QueueableLike_push](next.value);
+                observer[QueueableLike_push](next.value);
             }
             else {
-                dispatcher[DispatcherLike_complete]();
+                observer[DispatcherLike_complete]();
             }
         }
         catch (e) {
             observer[DisposableLike_dispose](error(e));
         }
-    }), Observable_subscribe(observer[ObserverLike_scheduler]), Disposable_addTo(observer), Disposable_onComplete(() => observer[ObserverLike_dispatcher][DispatcherLike_complete]()));
+    }), Observable_subscribe(observer[DispatcherLike_scheduler]), Disposable_addTo(observer), Disposable_onComplete(() => observer[DispatcherLike_complete]()));
 }), true, false, false));
 export default AsyncIterable_toAsyncEnumerable;

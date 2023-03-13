@@ -13,10 +13,10 @@ import {
 import { DecodeWithCharset } from "../../../containers.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -58,7 +58,7 @@ const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWit
           init(
             Observer_mixin<ArrayBuffer>(),
             instance,
-            delegate[ObserverLike_scheduler],
+            delegate[DispatcherLike_scheduler],
           );
 
           const textDecoder = newInstance(TextDecoder, charset, {

@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, partial, pipe } from "../../../functions.js";
-import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -15,7 +15,7 @@ const Observable_takeWhile =
         const TakeWhileObserverMixin_inclusive = Symbol("TakeWhileObserverMixin_inclusive");
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function TakeWhileObserverMixin(instance, delegate, predicate, inclusive) {
             init(Disposable_delegatingMixin(), instance, delegate);
-            init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
+            init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler]);
             instance[TakeWhileObserverMixin_predicate] = predicate;
             instance[TakeWhileObserverMixin_inclusive] = inclusive;
             return instance;

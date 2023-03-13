@@ -4,36 +4,39 @@ import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { partial, pipe } from "../../../functions.js";
-import { ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { none, partial, pipe } from "../../../functions.js";
+import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import IndexedQueue_toReadonlyArray from "../../../util/Queue/__internal__/IndexedQueue.toReadonlyArray.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 import Observable_observeWith from "./Observable.observeWith.js";
 const Observable_takeLast = /*@__PURE__*/ (() => {
     const TakeLastObserverMixin_takeLastCount = Symbol("TakeLastObserverMixin_takeLastCount");
-    const createTakeLastObserver = createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin(), Observer_mixin()), function TakeLastObserverMixin(instance, delegate, takeLastCount) {
+    const TakeLastObserverMixin_takeLastQueue = Symbol("TakeLastObserverMixin_takeLastQueue");
+    const createTakeLastObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function TakeLastObserverMixin(instance, delegate, takeLastCount) {
         init(Disposable_mixin, instance);
-        init(IndexedQueue_fifoQueueMixin(), instance);
-        init(Observer_mixin(), instance, delegate[ObserverLike_scheduler]);
+        init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler]);
+        instance[TakeLastObserverMixin_takeLastQueue] =
+            IndexedQueue_createFifoQueue();
         instance[TakeLastObserverMixin_takeLastCount] = takeLastCount;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            pipe(instance, IndexedQueue_toReadonlyArray(), ReadonlyArray_toObservable(), Observable_observeWith(delegate));
+            pipe(instance[TakeLastObserverMixin_takeLastQueue], IndexedQueue_toReadonlyArray(), ReadonlyArray_toObservable(), Observable_observeWith(delegate));
         }));
         return instance;
     }, props({
         [TakeLastObserverMixin_takeLastCount]: 0,
+        [TakeLastObserverMixin_takeLastQueue]: none,
     }), {
         [ObserverLike_notify](next) {
-            this[QueueableLike_push](next);
-            if (this[QueueableLike_count] >
+            this[TakeLastObserverMixin_takeLastQueue][QueueableLike_push](next);
+            if (this[TakeLastObserverMixin_takeLastQueue][QueueableLike_count] >
                 this[TakeLastObserverMixin_takeLastCount]) {
-                this[QueueLike_pull]();
+                this[TakeLastObserverMixin_takeLastQueue][QueueLike_pull]();
             }
         },
     }));

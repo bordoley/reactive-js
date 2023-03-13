@@ -3,7 +3,7 @@
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
-import { ObservableLike_isRunnable, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -20,10 +20,10 @@ const Observable_timeout = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
     const TimeoutObserver_duration = Symbol("TimeoutObserver_duration");
     const setupDurationSubscription = (observer) => {
-        observer[SerialDisposableLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribe(observer[DelegatingLike_delegate][ObserverLike_scheduler]));
+        observer[SerialDisposableLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribe(observer[DelegatingLike_delegate][DispatcherLike_scheduler]));
     };
     const createTimeoutObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_delegatingMixin(), typedSerialDisposableMixin), function TimeoutObserver(instance, delegate, duration) {
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
         init(Disposable_delegatingMixin(), instance, delegate);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
         instance[TimeoutObserver_duration] = duration;

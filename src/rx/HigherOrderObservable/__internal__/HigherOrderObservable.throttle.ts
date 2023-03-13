@@ -26,10 +26,10 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
   ThrottleMode,
   ThrottleMode_first,
   ThrottleMode_interval,
@@ -84,7 +84,7 @@ const createThrottleObserver: <T>(
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
       Observable_forEach<ObservableLike>(observer[ThrottleObserver_onNotify]),
-      Observable_subscribe(observer[ObserverLike_scheduler]),
+      Observable_subscribe(observer[DispatcherLike_scheduler]),
     );
   };
 
@@ -99,7 +99,7 @@ const createThrottleObserver: <T>(
         mode: ThrottleMode,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
 
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;

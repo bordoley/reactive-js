@@ -1,7 +1,7 @@
 /// <reference types="./Observable.repeatOrRetry.d.ts" />
 
 import { error, partial, pipe } from "../../../functions.js";
-import { ObserverLike_scheduler, } from "../../../rx.js";
+import { DispatcherLike_scheduler, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -27,7 +27,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(Observer_notifyObserver(delegate)), Observable_subscribe(delegate[ObserverLike_scheduler]), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(Observer_notifyObserver(delegate)), Observable_subscribe(delegate[DispatcherLike_scheduler]), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
             }
         };
         return pipe(Observer_createWithDelegate(delegate), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));

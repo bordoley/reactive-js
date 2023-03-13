@@ -15,16 +15,10 @@ export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
 }
 /** @ignore */
 export declare const ObserverLike_notify: unique symbol;
-/** @ignore */
-export declare const ObserverLike_dispatcher: unique symbol;
-/** @ignore */
-export declare const ObserverLike_scheduler: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface ObserverLike<T = unknown> extends DisposableLike {
-    readonly [ObserverLike_dispatcher]: DispatcherLike<T>;
-    readonly [ObserverLike_scheduler]: SchedulerLike;
+export interface ObserverLike<T = unknown> extends DispatcherLike<T>, DisposableLike {
     /**
      * Notifies the the observer of the next notification produced by the observable source.
      *

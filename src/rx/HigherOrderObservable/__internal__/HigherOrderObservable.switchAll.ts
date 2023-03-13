@@ -20,10 +20,10 @@ import {
 } from "../../../containers.js";
 import { Function1, none, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import {
   DisposableLike,
@@ -83,7 +83,11 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
           delegate: ObserverLike<T>,
         ): ObserverLike<ContainerOf<C, T>> {
           init(Disposable_mixin, instance);
-          init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+          init(
+            typedObserverMixin,
+            instance,
+            delegate[DispatcherLike_scheduler],
+          );
           init(delegatingMixin(), instance, delegate);
 
           instance[HigherOrderObservable_currentRef] = pipe(
@@ -118,7 +122,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
               Observable_forEach(
                 Observer_notifyObserver(this[DelegatingLike_delegate]),
               ),
-              Observable_subscribe(this[ObserverLike_scheduler]),
+              Observable_subscribe(this[DispatcherLike_scheduler]),
               Disposable_onComplete(() => {
                 if (this[DisposableLike_isDisposed]) {
                   this[DelegatingLike_delegate][DisposableLike_dispose]();

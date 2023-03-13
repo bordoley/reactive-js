@@ -35,7 +35,6 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  ObserverLike_dispatcher,
 } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { SchedulerLike } from "../scheduling.js";
@@ -150,7 +149,7 @@ export const createEventSource = (
 
     const eventSource = newInstance(EventSource, requestURL, options);
     const listener = (ev: MessageEvent) => {
-      observer[ObserverLike_dispatcher][QueueableLike_push]({
+      observer[QueueableLike_push]({
         id: ev.lastEventId ?? "",
         type: ev.type ?? "",
         data: ev.data ?? "",
@@ -216,7 +215,7 @@ export const addEventListener =
 
       const listener = (event: Event) => {
         const result = selector(event);
-        observer[ObserverLike_dispatcher][QueueableLike_push](result);
+        observer[QueueableLike_push](result);
       };
 
       target.addEventListener(eventName, listener, { passive: true });

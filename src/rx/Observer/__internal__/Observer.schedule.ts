@@ -1,5 +1,5 @@
 import { Function1, SideEffect1, pipe } from "../../../functions.js";
-import { ObserverLike, ObserverLike_scheduler } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObserverLike } from "../../../rx.js";
 import {
   ContinuationContextLike,
   SchedulerLike_schedule,
@@ -14,7 +14,7 @@ const Observer_schedule =
   ): Function1<ObserverLike<unknown>, DisposableLike> =>
   observer =>
     pipe(
-      observer[ObserverLike_scheduler][SchedulerLike_schedule](f, options),
+      observer[DispatcherLike_scheduler][SchedulerLike_schedule](f, options),
       Disposable_addTo(observer),
     );
 

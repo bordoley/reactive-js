@@ -4,7 +4,7 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { compose, error, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
-import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, } from "../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
@@ -31,7 +31,7 @@ export const createEventSource = (url, options = {}) => {
         const eventSource = newInstance(EventSource, requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;
-            observer[ObserverLike_dispatcher][QueueableLike_push]({
+            observer[QueueableLike_push]({
                 id: (_a = ev.lastEventId) !== null && _a !== void 0 ? _a : "",
                 type: (_b = ev.type) !== null && _b !== void 0 ? _b : "",
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
@@ -75,7 +75,7 @@ export const addEventListener = (eventName, selector) => target => Observable.cr
     }));
     const listener = (event) => {
         const result = selector(event);
-        observer[ObserverLike_dispatcher][QueueableLike_push](result);
+        observer[QueueableLike_push](result);
     };
     target.addEventListener(eventName, listener, { passive: true });
 });

@@ -1,7 +1,7 @@
 import { pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
-  ObserverLike_scheduler,
   RunnableLike,
 } from "../../../rx.js";
 import {
@@ -32,7 +32,7 @@ const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
       (modeObs: ObservableLike<FlowableState>) =>
         Observable_create(observer => {
           const pauseableScheduler = Scheduler_toPausableScheduler(
-            observer[ObserverLike_scheduler],
+            observer[DispatcherLike_scheduler],
           );
 
           pipe(
@@ -59,7 +59,7 @@ const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
                       break;
                   }
                 }),
-                Observable_subscribe(observer[ObserverLike_scheduler]),
+                Observable_subscribe(observer[DispatcherLike_scheduler]),
                 Disposable_bindTo(pauseableScheduler),
               ),
             ),

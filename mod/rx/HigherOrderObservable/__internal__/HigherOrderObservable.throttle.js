@@ -4,7 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { isNumber, none, partial, pipe, } from "../../../functions.js";
-import { ObserverLike_notify, ObserverLike_scheduler, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObserverLike_notify, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -26,11 +26,11 @@ const createThrottleObserver = (() => {
     const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
     const ThrottleObserver_onNotify = Symbol("ThrottleObserver_onNotify");
     const setupDurationSubscription = (observer, next) => {
-        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(observer[ThrottleObserver_onNotify]), Observable_subscribe(observer[ObserverLike_scheduler]));
+        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(observer[ThrottleObserver_onNotify]), Observable_subscribe(observer[DispatcherLike_scheduler]));
     };
     return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function ThrottleObserver(instance, delegate, durationFunction, mode) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[ObserverLike_scheduler]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler]);
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;
         instance[ThrottleObserver_durationSubscription] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));

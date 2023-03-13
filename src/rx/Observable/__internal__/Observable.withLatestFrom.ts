@@ -17,12 +17,12 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
   WithLatestFrom,
 } from "../../../rx.js";
 import {
@@ -77,7 +77,7 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
             init(
               typedObserverMixin,
               instance,
-              delegate[ObserverLike_scheduler],
+              delegate[DispatcherLike_scheduler],
             );
 
             instance[WithLatestFromObserver_selector] = selector;
@@ -88,7 +88,7 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
                 instance[WithLatestFromObserver_hasLatest] = true;
                 instance[WithLatestFromObserver_otherLatest] = next;
               }),
-              Observable_subscribe(delegate[ObserverLike_scheduler]),
+              Observable_subscribe(delegate[DispatcherLike_scheduler]),
               Disposable_addTo(instance),
               Disposable_onComplete(() => {
                 if (!instance[WithLatestFromObserver_hasLatest]) {

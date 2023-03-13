@@ -10,10 +10,10 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { none, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { DisposableLike_dispose } from "../../../util.js";
@@ -143,7 +143,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         onCompleted(ctx);
       };
 
-      const scheduler = delegate[ObserverLike_scheduler];
+      const scheduler = delegate[DispatcherLike_scheduler];
 
       for (const observable of observables) {
         const innerObserver = pipe(

@@ -12,9 +12,9 @@ import {
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { Predicate, none, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
@@ -53,7 +53,7 @@ const Observer_satisfyMixin: <T>(
     ): ObserverLike<T> {
       init(Disposable_mixin, instance);
       init(delegatingMixin(), instance, delegate);
-      init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
+      init(Observer_mixin<T>(), instance, delegate[DispatcherLike_scheduler]);
 
       instance[SatisfyObserverMixin_predicate] = predicate;
 

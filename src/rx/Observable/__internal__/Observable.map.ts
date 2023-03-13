@@ -11,10 +11,10 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -48,7 +48,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
           init(
             Observer_mixin<TA>(),
             instance,
-            delegate[ObserverLike_scheduler],
+            delegate[DispatcherLike_scheduler],
           );
           instance[MapObserverMixin_mapper] = mapper;
 

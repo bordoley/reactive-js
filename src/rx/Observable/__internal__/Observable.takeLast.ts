@@ -8,17 +8,18 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  IndexedQueueLike,
   QueueLike,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { partial, pipe } from "../../../functions.js";
+import { none, partial, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ObserverLike_scheduler,
 } from "../../../rx.js";
 import {
   DisposableLike,
@@ -28,7 +29,7 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import IndexedQueue_toReadonlyArray from "../../../util/Queue/__internal__/IndexedQueue.toReadonlyArray.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
@@ -42,17 +43,18 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
     "TakeLastObserverMixin_takeLastCount",
   );
 
+  const TakeLastObserverMixin_takeLastQueue = Symbol(
+    "TakeLastObserverMixin_takeLastQueue",
+  );
+
   type TProperties = {
     readonly [TakeLastObserverMixin_takeLastCount]: number;
+    readonly [TakeLastObserverMixin_takeLastQueue]: IndexedQueueLike<T>;
   };
 
   const createTakeLastObserver = createInstanceFactory(
     mix(
-      include(
-        Disposable_mixin,
-        IndexedQueue_fifoQueueMixin(),
-        Observer_mixin<T>(),
-      ),
+      include(Disposable_mixin, Observer_mixin<T>()),
       function TakeLastObserverMixin(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
@@ -60,9 +62,10 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
         takeLastCount: number,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(IndexedQueue_fifoQueueMixin<T>(), instance);
-        init(Observer_mixin<T>(), instance, delegate[ObserverLike_scheduler]);
+        init(Observer_mixin<T>(), instance, delegate[DispatcherLike_scheduler]);
 
+        instance[TakeLastObserverMixin_takeLastQueue] =
+          IndexedQueue_createFifoQueue();
         instance[TakeLastObserverMixin_takeLastCount] = takeLastCount;
 
         pipe(
@@ -70,7 +73,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             pipe(
-              instance,
+              instance[TakeLastObserverMixin_takeLastQueue],
               IndexedQueue_toReadonlyArray<T>(),
               ReadonlyArray_toObservable(),
               Observable_observeWith(delegate),
@@ -82,19 +85,20 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
       },
       props<TProperties>({
         [TakeLastObserverMixin_takeLastCount]: 0,
+        [TakeLastObserverMixin_takeLastQueue]: none,
       }),
       {
         [ObserverLike_notify](
           this: TProperties & DisposableLike & QueueLike<T>,
           next: T,
         ) {
-          this[QueueableLike_push](next);
+          this[TakeLastObserverMixin_takeLastQueue][QueueableLike_push](next);
 
           if (
-            this[QueueableLike_count] >
+            this[TakeLastObserverMixin_takeLastQueue][QueueableLike_count] >
             this[TakeLastObserverMixin_takeLastCount]
           ) {
-            this[QueueLike_pull]();
+            this[TakeLastObserverMixin_takeLastQueue][QueueLike_pull]();
           }
         },
       },

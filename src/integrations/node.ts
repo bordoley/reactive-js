@@ -35,8 +35,6 @@ import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
   ObservableLike,
-  ObserverLike_dispatcher,
-  ObserverLike_scheduler,
 } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import {
@@ -110,13 +108,12 @@ export const bindNodeCallback: BindNodeCallback = <T>(
 ): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
   function (this: unknown, ...args: readonly unknown[]) {
     return Observable.create<unknown>(observer => {
-      const dispatcher = observer[ObserverLike_dispatcher];
       const handler = (err: unknown, arg: unknown) => {
         if (err) {
           observer[DisposableLike_dispose](error(err));
         } else {
-          dispatcher[QueueableLike_push](arg);
-          dispatcher[DispatcherLike_complete]();
+          observer[QueueableLike_push](arg);
+          observer[DispatcherLike_complete]();
         }
       };
 
@@ -174,15 +171,13 @@ export const createReadableSource = (
   Flowable_createLifted(
     mode =>
       Observable.create(observer => {
-        const dispatcher = observer[ObserverLike_dispatcher];
-
         const dispatchDisposable = pipe(
           Disposable.create(),
           Disposable.onDisposed(e => {
             if (isSome(e)) {
               observer[DisposableLike_dispose](e);
             } else {
-              dispatcher[DispatcherLike_complete]();
+              observer[DispatcherLike_complete]();
             }
           }),
         );
@@ -209,13 +204,13 @@ export const createReadableSource = (
                 break;
             }
           }),
-          Observable.subscribe(observer[ObserverLike_scheduler]),
+          Observable.subscribe(observer[DispatcherLike_scheduler]),
           addToNodeStream(readable),
         );
 
-        const onData = Queueable.pushTo(dispatcher);
+        const onData = Queueable.pushTo(observer);
         const onEnd = () => {
-          dispatcher[DispatcherLike_complete]();
+          observer[DispatcherLike_complete]();
         };
 
         readable.on("data", onData);
@@ -243,14 +238,13 @@ export const createWritableSink = /*@__PURE__*/ (() => {
     Streamable_createLifted<Uint8Array, FlowableState>(
       events =>
         Observable.create(observer => {
-          const dispatcher = observer[ObserverLike_dispatcher];
           const dispatchDisposable = pipe(
             Disposable.create(),
             Disposable.onDisposed(e => {
               if (isSome(e)) {
                 observer[DisposableLike_dispose](e);
               } else {
-                dispatcher[DispatcherLike_complete]();
+                observer[DispatcherLike_complete]();
               }
             }),
           );
@@ -274,7 +268,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
                 writable.emit(NODE_JS_PAUSE_EVENT);
               }
             }),
-            Observable.subscribe(dispatcher[DispatcherLike_scheduler]),
+            Observable.subscribe(observer[DispatcherLike_scheduler]),
             addToNodeStream(writable),
             Disposable.onComplete(() => {
               writable.end();
@@ -282,18 +276,18 @@ export const createWritableSink = /*@__PURE__*/ (() => {
           );
 
           const onDrain = () => {
-            dispatcher[QueueableLike_push](FlowableState_running);
+            observer[QueueableLike_push](FlowableState_running);
           };
-          const onFinish = () => dispatcher[DispatcherLike_complete]();
+          const onFinish = () => observer[DispatcherLike_complete]();
           const onPause = () => {
-            dispatcher[QueueableLike_push](FlowableState_paused);
+            observer[QueueableLike_push](FlowableState_paused);
           };
 
           writable.on("drain", onDrain);
           writable.on("finish", onFinish);
           writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-          dispatcher[QueueableLike_push](FlowableState_running);
+          observer[QueueableLike_push](FlowableState_running);
         }),
       false,
       false,
@@ -313,7 +307,7 @@ export const transform =
 
           pipe(
             createWritableSink(transform)[StreamableLike_stream](
-              observer[ObserverLike_scheduler],
+              observer[DispatcherLike_scheduler],
             ),
             Stream.sourceFrom(src),
             addToNodeStream(transform),
@@ -321,7 +315,7 @@ export const transform =
 
           const transformReadableStream = pipe(
             createReadableSource(transform)[StreamableLike_stream](
-              observer[ObserverLike_scheduler],
+              observer[DispatcherLike_scheduler],
             ),
             addToNodeStream(transform),
             Observable.observeWith(observer),
@@ -330,7 +324,7 @@ export const transform =
           pipe(
             modeObs,
             Observable.forEach(Queueable.pushTo(transformReadableStream)),
-            Observable.subscribe(observer[ObserverLike_scheduler]),
+            Observable.subscribe(observer[DispatcherLike_scheduler]),
             addToNodeStream(transform),
           );
         }),

@@ -16,6 +16,8 @@
 
   ↳ **`DispatcherLike`**
 
+  ↳↳ [`ObserverLike`](rx.ObserverLike.md)
+
   ↳↳ [`StreamLike`](streaming.StreamLike.md)
 
 ## Table of contents
