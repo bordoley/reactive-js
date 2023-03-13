@@ -19,15 +19,10 @@ export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
 export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
 
 /** @ignore */
-export const ContinuationContextLike_now = Symbol(
-  "ContinuationContextLike_now",
-);
-/** @ignore */
 export const ContinuationContextLike_yield = Symbol(
   "ContinuationContextLike_yield",
 );
 export interface ContinuationContextLike {
-  readonly [ContinuationContextLike_now]: number;
   [ContinuationContextLike_yield](delay?: number): void;
 }
 

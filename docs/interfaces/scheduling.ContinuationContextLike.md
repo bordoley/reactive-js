@@ -6,19 +6,9 @@
 
 ## Table of contents
 
-### Properties
-
-- [[ContinuationContextLike\_now]](scheduling.ContinuationContextLike.md#[continuationcontextlike_now])
-
 ### Methods
 
 - [[ContinuationContextLike\_yield]](scheduling.ContinuationContextLike.md#[continuationcontextlike_yield])
-
-## Properties
-
-### [ContinuationContextLike\_now]
-
-• `Readonly` **[ContinuationContextLike\_now]**: `number`
 
 ## Methods
 

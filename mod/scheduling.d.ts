@@ -11,11 +11,8 @@ export declare const SchedulerLike_shouldYield: unique symbol;
 /** @ignore */
 export declare const SchedulerLike_schedule: unique symbol;
 /** @ignore */
-export declare const ContinuationContextLike_now: unique symbol;
-/** @ignore */
 export declare const ContinuationContextLike_yield: unique symbol;
 export interface ContinuationContextLike {
-    readonly [ContinuationContextLike_now]: number;
     [ContinuationContextLike_yield](delay?: number): void;
 }
 /**

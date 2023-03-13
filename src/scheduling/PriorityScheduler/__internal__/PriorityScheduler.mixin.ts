@@ -26,7 +26,6 @@ import {
 } from "../../../functions.js";
 import {
   ContinuationContextLike,
-  ContinuationContextLike_now,
   ContinuationContextLike_yield,
   PrioritySchedulerLike,
   SchedulerLike_inContinuation,
@@ -139,7 +138,6 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
             | typeof ContinuationSchedulerLike_now
             | typeof ContinuationSchedulerLike_schedule
             | typeof ContinuationSchedulerLike_shouldYield
-            | typeof ContinuationContextLike_now
             | typeof ContinuationContextLike_yield
           > &
             Mutable<TContinuationProperties>,
@@ -167,10 +165,6 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           [Continuation_effect]: none,
         }),
         {
-          get [ContinuationContextLike_now](): number {
-            unsafeCast<ContinuationLike>(this);
-            return this[ContinuationSchedulerLike_now];
-          },
           get [ContinuationSchedulerLike_now](): number {
             unsafeCast<TContinuationProperties>(this);
             return this[ContinuationLike_continuationScheduler][
