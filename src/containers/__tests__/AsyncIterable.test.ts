@@ -22,11 +22,11 @@ testModule(
             yield i++;
           }
         })(),
-        AsyncIterable.toFlowable({ maxBuffer: 5 }),
+        AsyncIterable.toFlowable(),
         Flowable.toObservable(),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer(),
-        Observable.lastAsync(),
+        Observable.lastAsync({ maxBufferSize: 5 }),
       );
 
       pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
@@ -38,10 +38,10 @@ testModule(
           yield 2;
           yield 3;
         })(),
-        AsyncIterable.toFlowable({ maxBuffer: 5 }),
+        AsyncIterable.toFlowable(),
         Flowable.toObservable(),
         Observable.buffer(),
-        Observable.lastAsync(),
+        Observable.lastAsync({ maxBufferSize: 5 }),
       );
 
       pipe(result ?? [], expectArrayEquals([1, 2, 3]));
@@ -54,10 +54,10 @@ testModule(
         (async function* foo() {
           throw e;
         })(),
-        AsyncIterable.toFlowable({ maxBuffer: 5 }),
+        AsyncIterable.toFlowable(),
         Flowable.toObservable(),
         Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
-        Observable.lastAsync(),
+        Observable.lastAsync({ maxBufferSize: 5 }),
       );
 
       pipe(result, expectEquals(e as unknown));
@@ -73,10 +73,10 @@ testModule(
             yield i++;
           }
         })(),
-        AsyncIterable.toObservable({ maxBuffer: 5 }),
+        AsyncIterable.toObservable(),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer(),
-        Observable.lastAsync(),
+        Observable.lastAsync({ maxBufferSize: 5 }),
       );
 
       pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
@@ -88,9 +88,9 @@ testModule(
           yield 2;
           yield 3;
         })(),
-        AsyncIterable.toObservable({ maxBuffer: 1 }),
+        AsyncIterable.toObservable(),
         Observable.buffer(),
-        Observable.lastAsync(),
+        Observable.lastAsync({ maxBufferSize: 1 }),
       );
 
       pipe(result ?? [], expectArrayEquals([1, 2, 3]));
@@ -103,9 +103,9 @@ testModule(
         (async function* foo() {
           throw e;
         })(),
-        AsyncIterable.toObservable({ maxBuffer: 1 }),
+        AsyncIterable.toObservable(),
         Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
-        Observable.lastAsync(),
+        Observable.lastAsync({ maxBufferSize: 1 }),
       );
 
       pipe(result, expectEquals(e as unknown));

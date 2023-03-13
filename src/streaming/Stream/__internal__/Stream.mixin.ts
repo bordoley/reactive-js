@@ -10,6 +10,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  QueueLike,
+  QueueLike_count,
+} from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Optional,
@@ -44,7 +48,6 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_count,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
@@ -77,7 +80,6 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             | typeof ObservableLike_observe
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
-            | typeof QueueableLike_count
             | typeof QueueableLike_push
             | typeof QueueableLike_maxBufferSize
             | typeof DispatcherLike_complete
@@ -103,16 +105,6 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             ] as ObserverLike<T>;
 
             return observer[QueueableLike_maxBufferSize];
-          },
-
-          get [QueueableLike_count](): number {
-            unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
-            // Practically the observer can never be none.
-            const observer = this[
-              DispatchedObservable_observer
-            ] as ObserverLike<T>;
-
-            return observer[QueueableLike_count];
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
@@ -143,7 +135,11 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
 
             const scheduler = observer[DispatcherLike_scheduler];
             const inContinuation = scheduler[SchedulerLike_inContinuation];
-            const observerQueueIsEmpty = observer[QueueableLike_count] === 0;
+
+            // Observer only implement Queueable publicly so cast to the implementation interface
+            // to enable bypassing the queue
+            const observerQueueIsEmpty =
+              (observer as unknown as QueueLike<T>)[QueueLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
 
             if (inContinuation && observerQueueIsEmpty && !isDisposed) {
@@ -223,7 +219,6 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         instance: Pick<
           StreamLike<TReq, T>,
           | typeof MulticastObservableLike_observerCount
-          | typeof QueueableLike_count
           | typeof QueueableLike_push
           | typeof QueueableLike_maxBufferSize
           | typeof DispatcherLike_complete
@@ -270,11 +265,6 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         get [QueueableLike_maxBufferSize](): number {
           unsafeCast<DelegatingLike<DispatchedObservableLike<TReq>>>(this);
           return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
-        },
-
-        get [QueueableLike_count](): number {
-          unsafeCast<DelegatingLike<DispatchedObservableLike<TReq>>>(this);
-          return this[DelegatingLike_delegate][QueueableLike_count];
         },
 
         [ObservableLike_isEnumerable]: false,

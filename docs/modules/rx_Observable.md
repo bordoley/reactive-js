@@ -1075,7 +1075,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.maxBuffer?` | `number` |
 | `options.maxYieldInterval?` | `number` |
 
 #### Returns
@@ -4075,6 +4074,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
@@ -4098,6 +4098,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns

@@ -7,7 +7,11 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { QueueLike_pull } from "../../../__internal__/util.internal.js";
+import {
+  QueueLike,
+  QueueLike_count,
+  QueueLike_pull,
+} from "../../../__internal__/util.internal.js";
 import {
   SideEffect,
   SideEffect1,
@@ -32,7 +36,6 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_count,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -49,8 +52,10 @@ const Observer_mixin: <T>() => Mixin2<
   SchedulerLike,
   number
 > = /*@__PURE__*/ (<T>() => {
-  const scheduleDrainQueue = (observer: TProperties & ObserverLike<T>) => {
-    if (observer[QueueableLike_count] === 1) {
+  const scheduleDrainQueue = (
+    observer: TProperties & ObserverLike<T> & QueueLike<T>,
+  ) => {
+    if (observer[QueueLike_count] === 1) {
       pipe(
         observer,
         Observer_schedule(observer[ObserverMixin_continuation]),
@@ -93,12 +98,13 @@ const Observer_mixin: <T>() => Mixin2<
         instance[ObserverMixin_continuation] = (
           ctx: ContinuationContextLike,
         ) => {
-          while (instance[QueueableLike_count] > 0) {
-            unsafeCast<TProperties & ObserverLike<T>>(instance);
+          unsafeCast<TProperties & ObserverLike<T>>(instance);
+
+          while (instance[QueueLike_count] > 0) {
             const next = instance[QueueLike_pull]() as T;
             instance[ObserverLike_notify](next);
 
-            if (instance[QueueableLike_count] > 0) {
+            if (instance[QueueLike_count] > 0) {
               ctx[ContinuationContextLike_yield]();
             }
           }
@@ -121,7 +127,7 @@ const Observer_mixin: <T>() => Mixin2<
       }),
       {
         [QueueableLike_push](
-          this: TProperties & ObserverLike<T>,
+          this: TProperties & ObserverLike<T> & QueueLike<T>,
           next: T,
         ): boolean {
           if (
@@ -138,11 +144,13 @@ const Observer_mixin: <T>() => Mixin2<
           }
           return true;
         },
-        [DispatcherLike_complete](this: TProperties & ObserverLike<T>) {
+        [DispatcherLike_complete](
+          this: TProperties & ObserverLike<T> & QueueLike<T>,
+        ) {
           const isCompleted = this[ObserverMixin_isCompleted];
           this[ObserverMixin_isCompleted] = true;
 
-          if (this[QueueableLike_count] === 0 && !isCompleted) {
+          if (this[QueueLike_count] === 0 && !isCompleted) {
             this[DisposableLike_dispose]();
           }
         },

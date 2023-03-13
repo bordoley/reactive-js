@@ -3,10 +3,10 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { floor } from "../../../__internal__/math.js";
 import { mix, props } from "../../../__internal__/mixins.js";
-import { QueueLike_head, QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_count, QueueLike_head, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { isSome, none, pipe, returns, unsafeCast, } from "../../../functions.js";
-import { QueueableLike_count, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const PriorityQueueImpl_comparator = Symbol("PriorityQueueImpl_comparator");
 const PriorityQueueImpl_values = Symbol("PriorityQueueImpl_values");
@@ -60,7 +60,7 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
         [PriorityQueueImpl_values]: none,
         [PriorityQueueImpl_comparator]: none,
     }), {
-        get [QueueableLike_count]() {
+        get [QueueLike_count]() {
             unsafeCast(this);
             return ReadonlyArray_getLength(this[PriorityQueueImpl_values]);
         },
@@ -88,7 +88,7 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
         [QueueableLike_push](item) {
             this[PriorityQueueImpl_values].push(item);
             siftUp(this, item);
-            return this[QueueableLike_count] <= this[QueueableLike_maxBufferSize];
+            return this[QueueLike_count] <= this[QueueableLike_maxBufferSize];
         },
     }), returns);
 })();

@@ -2,10 +2,10 @@
 
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { IndexedQueueLike_get, QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { IndexedQueueLike_get, QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_publish, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -30,8 +30,7 @@ const Subject_create =
             if (!this[DisposableLike_isDisposed]) {
                 const replay = this[QueueableLike_maxBufferSize];
                 if (replay > 0) {
-                    this[QueueableLike_push](next);
-                    if (this[QueueableLike_count] > replay) {
+                    if (!this[QueueableLike_push](next)) {
                         this[QueueLike_pull]();
                     }
                 }
@@ -51,7 +50,7 @@ const Subject_create =
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
-            const count = this[QueueableLike_count];
+            const count = this[QueueLike_count];
             for (let i = 0; i < count; i++) {
                 const next = this[IndexedQueueLike_get](i);
                 observer[QueueableLike_push](next);

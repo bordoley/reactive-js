@@ -11,6 +11,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   QueueLike,
+  QueueLike_count,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
@@ -39,7 +40,6 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike,
-  QueueableLike_count,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -183,10 +183,13 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
               ContinuationSchedulerLike_shouldYield
             ];
           },
-          [ContinuationContextLike_yield](this: ContinuationLike, delay = 0) {
+          [ContinuationContextLike_yield](
+            this: ContinuationLike & QueueLike<ContinuationLike>,
+            delay = 0,
+          ) {
             const shouldYield =
               delay > 0 ||
-              this[QueueableLike_count] > 0 ||
+              this[QueueLike_count] > 0 ||
               this[ContinuationSchedulerLike_shouldYield];
 
             if (shouldYield) {
