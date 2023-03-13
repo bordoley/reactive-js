@@ -2,6 +2,7 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { AsyncIterableLike } from "../../../containers.js";
 import { error, pipe } from "../../../functions.js";
 import {
+  DispatcherLike_complete,
   DispatcherLike_scheduler,
   ObserverLike,
   ObserverLike_dispatcher,
@@ -38,7 +39,7 @@ const AsyncIterable_toObservable: ToObservable<
 
         try {
           while (
-            !dispatcher[DisposableLike_isDisposed] &&
+            !observer[DisposableLike_isDisposed] &&
             // An async iterable can produce resolved promises which are immediately
             // scheduled on the microtask queue. This prevents the observer's scheduler
             // from running and draining dispatched events.
@@ -50,17 +51,17 @@ const AsyncIterable_toObservable: ToObservable<
           ) {
             const next = await iterator.next();
 
-            if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
+            if (!next.done) {
               dispatcher[QueueableLike_push](next.value);
             } else {
-              dispatcher[DisposableLike_dispose]();
+              dispatcher[DispatcherLike_complete]();
             }
           }
         } catch (e) {
-          dispatcher[DisposableLike_dispose](error(e));
+          observer[DisposableLike_dispose](error(e));
         }
 
-        if (!dispatcher[DisposableLike_isDisposed]) {
+        if (!observer[DisposableLike_isDisposed]) {
           pipe(
             scheduler[SchedulerLike_schedule](continuation),
             Disposable_addTo(observer),

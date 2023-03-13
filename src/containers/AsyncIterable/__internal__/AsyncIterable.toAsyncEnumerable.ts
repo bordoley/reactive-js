@@ -1,6 +1,7 @@
 import { AsyncIterableLike } from "../../../containers.js";
 import { error, pipe, returns } from "../../../functions.js";
 import {
+  DispatcherLike_complete,
   ObservableLike,
   ObserverLike_dispatcher,
   ObserverLike_scheduler,
@@ -12,10 +13,10 @@ import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import {
   DisposableLike_dispose,
-  DisposableLike_isDisposed,
   QueueableLike_push,
 } from "../../../util.js";
-import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 
 const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnumerable"] =
   /*@__PURE__*/ returns(
@@ -37,17 +38,20 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
                   // resolve.
                   const next = await iterator.next();
 
-                  if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
+                  if (!next.done) {
                     dispatcher[QueueableLike_push](next.value);
                   } else {
-                    dispatcher[DisposableLike_dispose]();
+                    dispatcher[DispatcherLike_complete]();
                   }
                 } catch (e) {
-                  dispatcher[DisposableLike_dispose](error(e));
+                  observer[DisposableLike_dispose](error(e));
                 }
               }),
               Observable_subscribe(observer[ObserverLike_scheduler]),
-              Disposable_bindTo(observer),
+              Disposable_addTo(observer),
+              Disposable_onComplete(() =>
+                observer[ObserverLike_dispatcher][DispatcherLike_complete](),
+              ),
             );
           }),
         true,

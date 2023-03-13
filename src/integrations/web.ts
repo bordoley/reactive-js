@@ -138,8 +138,8 @@ export const createEventSource = (
   const requestURL = url instanceof URL ? url.toString() : url;
 
   return Observable.create(observer => {
-    const dispatcher = pipe(
-      observer[ObserverLike_dispatcher],
+    pipe(
+      observer,
       Disposable.onDisposed(_ => {
         for (const ev of events) {
           eventSource.removeEventListener(ev, listener);
@@ -150,7 +150,7 @@ export const createEventSource = (
 
     const eventSource = newInstance(EventSource, requestURL, options);
     const listener = (ev: MessageEvent) => {
-      dispatcher[QueueableLike_push]({
+      observer[ObserverLike_dispatcher][QueueableLike_push]({
         id: ev.lastEventId ?? "",
         type: ev.type ?? "",
         data: ev.data ?? "",
@@ -207,8 +207,8 @@ export const addEventListener =
   ): Function1<EventTarget, ObservableLike<T>> =>
   target =>
     Observable.create(observer => {
-      const dispatcher = pipe(
-        observer[ObserverLike_dispatcher],
+      pipe(
+        observer,
         Disposable.onDisposed(_ => {
           target.removeEventListener(eventName, listener);
         }),
@@ -216,7 +216,7 @@ export const addEventListener =
 
       const listener = (event: Event) => {
         const result = selector(event);
-        dispatcher[QueueableLike_push](result);
+        observer[ObserverLike_dispatcher][QueueableLike_push](result);
       };
 
       target.addEventListener(eventName, listener, { passive: true });

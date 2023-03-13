@@ -44,18 +44,20 @@ import {
 } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 import {
+  DisposableLike,
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_count,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 
 export interface DispatchedObservableLike<T>
   extends ObservableLike<T>,
-    DispatcherLike<T> {}
+    DispatcherLike<T>, DisposableLike {}
 
 const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
   /*@__PURE__*/ (<T>() => {
@@ -164,7 +166,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           },
 
           [ObservableLike_observe](
-            this: TProperties & DispatchedObservableLike<T>,
+            this: TProperties & DispatchedObservableLike<T> & DisposableLike,
             observer: ObserverLike<T>,
           ) {
             if (isSome(this[DispatchedObservable_observer])) {
@@ -175,10 +177,13 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
 
             this[DispatchedObservable_observer] = observer;
 
-            pipe(
-              observer[ObserverLike_dispatcher],
-              Disposable_addToIgnoringChildErrors(this),
-            );
+            pipe(this, Disposable_onDisposed(e => {
+              if(isSome(e)) {
+                observer[DisposableLike_dispose](e)
+              } else {
+                observer[ObserverLike_dispatcher][DispatcherLike_complete]()
+              }
+            }))
           },
         },
       ),

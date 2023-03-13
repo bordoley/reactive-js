@@ -21,8 +21,7 @@ export const DispatcherLike_scheduler = Symbol("DispatcherLike_scheduler");
  * @noInheritDoc
  */
 export interface DispatcherLike<T = unknown>
-  extends QueueableLike<T>,
-    DisposableLike {
+  extends QueueableLike<T> {
   readonly [DispatcherLike_scheduler]: SchedulerLike;
 
   [DispatcherLike_complete](): void;
