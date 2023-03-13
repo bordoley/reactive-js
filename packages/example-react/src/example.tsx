@@ -23,7 +23,6 @@ import {
 } from "@reactive-js/core/integrations/web";
 import { Updater, increment, pipe, returns } from "@reactive-js/core/functions";
 import { DispatcherLike } from "@reactive-js/core/rx";
-import * as Queueable from "@reactive-js/core/util/Queueable";
 import { QueueableLike_push } from "@reactive-js/core/util";
 import {
   FlowableStreamLike,
@@ -62,12 +61,10 @@ const createActions = (
     );
   },
   toggleStateMode: () =>
-    pipe(
-      (mode: FlowableState) =>
-        mode === FlowableState_paused
-          ? FlowableState_running
-          : FlowableState_paused,
-      Queueable.pushTo(stateDispatcher),
+    stateDispatcher[QueueableLike_push]((mode: FlowableState) =>
+      mode === FlowableState_paused
+        ? FlowableState_running
+        : FlowableState_paused,
     ),
   setCounterMode: (mode: FlowableState) =>
     counterDispatcher[QueueableLike_push](mode),

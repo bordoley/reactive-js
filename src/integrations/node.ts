@@ -37,6 +37,7 @@ import {
   ObservableLike,
 } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
+import { SchedulerLike_requestYield } from "../scheduling.js";
 import {
   FlowableLike,
   FlowableState,
@@ -54,7 +55,6 @@ import {
   QueueableLike_push,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-import * as Queueable from "../util/Queueable.js";
 
 interface BindNodeCallback {
   <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<
@@ -208,7 +208,9 @@ export const createReadableSource = (
           addToNodeStream(readable),
         );
 
-        const onData = Queueable.pushTo(observer);
+        const onData = (v: Uint8Array) => {
+          observer[QueueableLike_push](v);
+        };
         const onEnd = () => {
           observer[DispatcherLike_complete]();
         };
@@ -323,7 +325,13 @@ export const transform =
 
           pipe(
             modeObs,
-            Observable.forEach(Queueable.pushTo(transformReadableStream)),
+            Observable.forEach(v => {
+              if (!transformReadableStream[QueueableLike_push](v)) {
+                observer[DispatcherLike_scheduler][
+                  SchedulerLike_requestYield
+                ]();
+              }
+            }),
             Observable.subscribe(observer[DispatcherLike_scheduler]),
             addToNodeStream(transform),
           );

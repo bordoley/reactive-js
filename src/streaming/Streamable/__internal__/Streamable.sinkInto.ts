@@ -5,14 +5,15 @@ import Observable_ignoreElements from "../../../rx/Observable/__internal__/Obser
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
+import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import {
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../streaming.js";
+import { QueueableLike_push } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Queueable_pushTo from "../../../util/Queue/__internal__/Queueable.pushTo.js";
 
 const Streamable_sinkInto =
   <TReq, T>(dest: StreamLike<T, TReq>) =>
@@ -24,13 +25,21 @@ const Streamable_sinkInto =
       Observable_merge(
         pipe(
           srcStream,
-          Observable_forEach<ObservableLike, T>(Queueable_pushTo(dest)),
+          Observable_forEach<ObservableLike, T>(v => {
+            if (!dest[QueueableLike_push](v)) {
+              scheduler[SchedulerLike_requestYield]();
+            }
+          }),
           Observable_ignoreElements(),
           Observable_onSubscribe(() => dest),
         ),
         pipe(
           dest,
-          Observable_forEach<ObservableLike, TReq>(Queueable_pushTo(srcStream)),
+          Observable_forEach<ObservableLike, TReq>(v => {
+            if (!srcStream[QueueableLike_push](v)) {
+              scheduler[SchedulerLike_requestYield]();
+            }
+          }),
           Observable_ignoreElements(),
         ),
       ),

@@ -11,6 +11,7 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
+import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import {
   FlowableLike,
   FlowableState,
@@ -18,9 +19,9 @@ import {
   FlowableState_running,
   StreamableLike_isRunnable,
 } from "../../../streaming.js";
+import { QueueableLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import Queueable_pushTo from "../../../util/Queue/__internal__/Queueable.pushTo.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import Stream_sourceFrom from "../../Stream/__internal__/Stream.sourceFrom.js";
 
@@ -35,7 +36,11 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
       const scheduler = observer[DispatcherLike_scheduler];
 
       const op = compose(
-        Observable_forEach(Queueable_pushTo(observer)),
+        Observable_forEach(v => {
+          if (!observer[QueueableLike_push](v)) {
+            scheduler[SchedulerLike_requestYield]();
+          }
+        }),
         Observable_ignoreElements(),
         // Intentionally use mergeWith here. The stream observer
         // needs to be immediately subscribed to when created
