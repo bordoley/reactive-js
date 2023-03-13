@@ -1,5 +1,9 @@
 import { pipe } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObservableLike } from "../../../rx.js";
+import {
+  DispatcherLike_complete,
+  DispatcherLike_scheduler,
+  ObservableLike,
+} from "../../../rx.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
@@ -31,7 +35,7 @@ const Streamable_sinkInto =
             }
           }),
           Observable_ignoreElements(),
-          Observable_onSubscribe(() => dest),
+          Observable_onSubscribe(() => () => dest[DispatcherLike_complete]()),
         ),
         pipe(
           dest,

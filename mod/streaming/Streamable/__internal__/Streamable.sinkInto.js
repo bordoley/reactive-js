@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.sinkInto.d.ts" />
 
 import { pipe } from "../../../functions.js";
-import { DispatcherLike_scheduler } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, } from "../../../rx.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
@@ -19,7 +19,7 @@ const Streamable_sinkInto = (dest) => (src) => {
         if (!dest[QueueableLike_push](v)) {
             scheduler[SchedulerLike_requestYield]();
         }
-    }), Observable_ignoreElements(), Observable_onSubscribe(() => dest)), pipe(dest, Observable_forEach(v => {
+    }), Observable_ignoreElements(), Observable_onSubscribe(() => () => dest[DispatcherLike_complete]())), pipe(dest, Observable_forEach(v => {
         if (!srcStream[QueueableLike_push](v)) {
             scheduler[SchedulerLike_requestYield]();
         }

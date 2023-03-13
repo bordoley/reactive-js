@@ -46,20 +46,15 @@ import {
 import { StreamLike } from "../../../streaming.js";
 import {
   DisposableLike,
-  DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 
-export interface DispatchedObservableLike<T>
+interface DispatchedObservableLike<T>
   extends ObservableLike<T>,
-    DispatcherLike<T>,
-    DisposableLike {}
+    DispatcherLike<T> {}
 
 const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
   /*@__PURE__*/ (<T>() => {
@@ -73,7 +68,6 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
 
     return createInstanceFactory(
       mix(
-        include(Disposable_mixin),
         function DispatchedObservable(
           instance: Pick<
             DispatchedObservableLike<T>,
@@ -87,7 +81,6 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           > &
             Mutable<TProperties>,
         ): DispatchedObservableLike<T> {
-          init(Disposable_mixin, instance);
           return instance;
         },
         props<TProperties>({
@@ -182,17 +175,6 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             }
 
             this[DispatchedObservable_observer] = observer;
-
-            pipe(
-              this,
-              Disposable_onDisposed(e => {
-                if (isSome(e)) {
-                  observer[DisposableLike_dispose](e);
-                } else {
-                  observer[DispatcherLike_complete]();
-                }
-              }),
-            );
           },
         },
       ),
@@ -205,16 +187,16 @@ const Stream_mixin: <TReq, T>() => Mixin3<
   SchedulerLike,
   number
 > = /*@__PURE__*/ (<TReq, T>() => {
-  const StreamMixin_observable = Symbol("StreamMixin_observable");
+  const StreamMixin_dispatcher = Symbol("StreamMixin_dispatcher");
 
   type TProperties = {
-    readonly [StreamMixin_observable]: MulticastObservableLike<T>;
+    readonly [StreamMixin_dispatcher]: DispatcherLike<TReq>;
     readonly [DispatcherLike_scheduler]: SchedulerLike;
   };
 
   return returns(
     mix(
-      include(Disposable_delegatingMixin<DispatchedObservableLike<T>>()),
+      include(Disposable_delegatingMixin<MulticastObservableLike<T>>()),
       function StreamMixin(
         instance: Pick<
           StreamLike<TReq, T>,
@@ -231,59 +213,59 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         scheduler: SchedulerLike,
         replay: number,
       ): StreamLike<TReq, T> {
-        const dispatchedObservable = DispatchedObservable_create<TReq>();
-
-        init(
-          Disposable_delegatingMixin<DispatchedObservableLike<TReq>>(),
-          instance,
-          dispatchedObservable,
-        );
-
         instance[DispatcherLike_scheduler] = scheduler;
 
-        instance[StreamMixin_observable] = pipe(
+        const dispatchedObservable = DispatchedObservable_create<TReq>();
+        instance[StreamMixin_dispatcher] = dispatchedObservable;
+
+        const delegate = pipe(
           dispatchedObservable,
           op,
           Observable_multicast<T>(scheduler, { replay }),
-          Disposable_add(instance),
+        );
+
+        init(
+          Disposable_delegatingMixin<MulticastObservableLike<T>>(),
+          instance,
+          delegate,
         );
 
         return instance;
       },
       props<TProperties>({
-        [StreamMixin_observable]: none,
+        [StreamMixin_dispatcher]: none,
         [DispatcherLike_scheduler]: none,
       }),
       {
         get [MulticastObservableLike_observerCount](): number {
-          unsafeCast<TProperties>(this);
-          return this[StreamMixin_observable][
+          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
+          return this[DelegatingLike_delegate][
             MulticastObservableLike_observerCount
           ];
         },
 
         get [QueueableLike_maxBufferSize](): number {
-          unsafeCast<DelegatingLike<DispatchedObservableLike<TReq>>>(this);
-          return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
+          unsafeCast<TProperties>(this);
+          return this[StreamMixin_dispatcher][QueueableLike_maxBufferSize];
         },
 
         [ObservableLike_isEnumerable]: false,
 
         [ObservableLike_isRunnable]: false,
 
-        [QueueableLike_push](
-          this: DelegatingLike<DispatchedObservableLike<TReq>>,
-          req: TReq,
-        ): boolean {
-          return this[DelegatingLike_delegate][QueueableLike_push](req);
+        [QueueableLike_push](this: TProperties, req: TReq): boolean {
+          return this[StreamMixin_dispatcher][QueueableLike_push](req);
         },
 
-        [DispatcherLike_complete](this: DelegatingLike<StreamLike<TReq, T>>) {
-          this[DelegatingLike_delegate][DispatcherLike_complete]();
+        [DispatcherLike_complete](this: TProperties) {
+          this[StreamMixin_dispatcher][DispatcherLike_complete]();
         },
 
-        [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
-          this[StreamMixin_observable][ObservableLike_observe](observer);
+        [ObservableLike_observe](
+          this: DelegatingLike<MulticastObservableLike<T>>,
+          observer: ObserverLike<T>,
+        ) {
+          this[DelegatingLike_delegate][ObservableLike_observe](observer);
         },
       },
     ),

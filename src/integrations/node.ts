@@ -55,6 +55,7 @@ import {
   QueueableLike_push,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
+import Disposable_addTo from "../util/Disposable/__internal__/Disposable.addTo.js";
 
 interface BindNodeCallback {
   <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<
@@ -233,7 +234,7 @@ export const readFile = (
 ) => createReadableSource(() => fs.createReadStream(path, options));
 
 export const createWritableSink = /*@__PURE__*/ (() => {
-  const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
+  const NODE_JS_PAUSE_EVENT = Symbol("__REACTIVE_JS_NODE_WRITABLE_PAUSE__");
   return (
     factory: Factory<Writable> | Writable,
   ): StreamableLike<Uint8Array, FlowableState> =>
@@ -312,14 +313,13 @@ export const transform =
               observer[DispatcherLike_scheduler],
             ),
             Stream.sourceFrom(src),
-            addToNodeStream(transform),
+            Disposable_addTo(observer),
           );
 
           const transformReadableStream = pipe(
             createReadableSource(transform)[StreamableLike_stream](
               observer[DispatcherLike_scheduler],
             ),
-            addToNodeStream(transform),
             Observable.observeWith(observer),
           );
 

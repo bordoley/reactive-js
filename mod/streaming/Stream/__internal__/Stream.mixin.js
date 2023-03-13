@@ -7,16 +7,12 @@ import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast,
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import { DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
     const DispatchedObservable_observer = Symbol("DispatchedObservable_observer");
-    return createInstanceFactory(mix(include(Disposable_mixin), function DispatchedObservable(instance) {
-        init(Disposable_mixin, instance);
+    return createInstanceFactory(mix(function DispatchedObservable(instance) {
         return instance;
     }, props({
         [DispatchedObservable_observer]: none,
@@ -75,47 +71,40 @@ const DispatchedObservable_create =
                 raiseWithDebugMessage("DispatchedObservable already subscribed to");
             }
             this[DispatchedObservable_observer] = observer;
-            pipe(this, Disposable_onDisposed(e => {
-                if (isSome(e)) {
-                    observer[DisposableLike_dispose](e);
-                }
-                else {
-                    observer[DispatcherLike_complete]();
-                }
-            }));
         },
     }));
 })();
 const Stream_mixin = /*@__PURE__*/ (() => {
-    const StreamMixin_observable = Symbol("StreamMixin_observable");
+    const StreamMixin_dispatcher = Symbol("StreamMixin_dispatcher");
     return returns(mix(include(Disposable_delegatingMixin()), function StreamMixin(instance, op, scheduler, replay) {
-        const dispatchedObservable = DispatchedObservable_create();
-        init(Disposable_delegatingMixin(), instance, dispatchedObservable);
         instance[DispatcherLike_scheduler] = scheduler;
-        instance[StreamMixin_observable] = pipe(dispatchedObservable, op, Observable_multicast(scheduler, { replay }), Disposable_add(instance));
+        const dispatchedObservable = DispatchedObservable_create();
+        instance[StreamMixin_dispatcher] = dispatchedObservable;
+        const delegate = pipe(dispatchedObservable, op, Observable_multicast(scheduler, { replay }));
+        init(Disposable_delegatingMixin(), instance, delegate);
         return instance;
     }, props({
-        [StreamMixin_observable]: none,
+        [StreamMixin_dispatcher]: none,
         [DispatcherLike_scheduler]: none,
     }), {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return this[StreamMixin_observable][MulticastObservableLike_observerCount];
+            return this[DelegatingLike_delegate][MulticastObservableLike_observerCount];
         },
         get [QueueableLike_maxBufferSize]() {
             unsafeCast(this);
-            return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
+            return this[StreamMixin_dispatcher][QueueableLike_maxBufferSize];
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [QueueableLike_push](req) {
-            return this[DelegatingLike_delegate][QueueableLike_push](req);
+            return this[StreamMixin_dispatcher][QueueableLike_push](req);
         },
         [DispatcherLike_complete]() {
-            this[DelegatingLike_delegate][DispatcherLike_complete]();
+            this[StreamMixin_dispatcher][DispatcherLike_complete]();
         },
         [ObservableLike_observe](observer) {
-            this[StreamMixin_observable][ObservableLike_observe](observer);
+            this[DelegatingLike_delegate][ObservableLike_observe](observer);
         },
     }));
 })();

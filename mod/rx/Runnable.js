@@ -92,7 +92,6 @@ export const forkConcat = Observable_forkConcat;
 export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
-// FIXME?
 export const fromEnumerable = /*@__PURE__*/ returns(identity);
 export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;

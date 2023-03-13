@@ -213,7 +213,6 @@ export const forkZip: ForkZip<RunnableLike>["forkZip"] =
 export const forkZipLatest: ForkZipLatest<RunnableLike>["forkZipLatest"] =
   Observable_forkZipLatest as ForkZipLatest<RunnableLike>["forkZipLatest"];
 
-// FIXME?
 export const fromEnumerable: FromEnumerable<
   RunnableLike,
   {
