@@ -57,7 +57,8 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 
 export interface DispatchedObservableLike<T>
   extends ObservableLike<T>,
-    DispatcherLike<T>, DisposableLike {}
+    DispatcherLike<T>,
+    DisposableLike {}
 
 const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
   /*@__PURE__*/ (<T>() => {
@@ -177,13 +178,16 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
 
             this[DispatchedObservable_observer] = observer;
 
-            pipe(this, Disposable_onDisposed(e => {
-              if(isSome(e)) {
-                observer[DisposableLike_dispose](e)
-              } else {
-                observer[ObserverLike_dispatcher][DispatcherLike_complete]()
-              }
-            }))
+            pipe(
+              this,
+              Disposable_onDisposed(e => {
+                if (isSome(e)) {
+                  observer[DisposableLike_dispose](e);
+                } else {
+                  observer[ObserverLike_dispatcher][DispatcherLike_complete]();
+                }
+              }),
+            );
           },
         },
       ),

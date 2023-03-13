@@ -14,8 +14,6 @@
 
 - [`QueueableLike`](util.QueueableLike.md)<`T`\>
 
-- [`DisposableLike`](util.DisposableLike.md)
-
   ↳ **`DispatcherLike`**
 
   ↳↳ [`StreamLike`](streaming.StreamLike.md)

@@ -5,11 +5,8 @@ import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { call, isNone, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_schedule from "./Observer.schedule.js";
 const createObserverDispatcher = /*@__PURE__*/ (() => {
@@ -20,11 +17,11 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
         }
     };
     const ObserverDispatcher_continuation = Symbol("ObserverDispatcher_continuation");
+    const ObserverDispatcher_isCompleted = Symbol("ObserverDispatcher_observer");
     const ObserverDispatcher_observer = Symbol("ObserverDispatcher_observer");
     const ObserverDispatcher_onContinuationDispose = Symbol("ObserverDispatcher_onContinuationDispose");
     const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin());
-    return createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function ObserverDispatcher(instance, observer) {
-        init(Disposable_mixin, instance);
+    return createInstanceFactory(mix(include(IndexedQueue_fifoQueueMixin()), function ObserverDispatcher(instance, observer) {
         init(IndexedQueue_fifoQueueMixin(), instance);
         instance[ObserverDispatcher_observer] = observer;
         instance[ObserverDispatcher_continuation] = (ctx) => {
@@ -38,33 +35,34 @@ const createObserverDispatcher = /*@__PURE__*/ (() => {
             }
         };
         instance[ObserverDispatcher_onContinuationDispose] = () => {
-            if (instance[DisposableLike_isDisposed]) {
-                observer[DisposableLike_dispose](instance[DisposableLike_error]);
+            if (instance[ObserverDispatcher_isCompleted]) {
+                observer[DisposableLike_dispose]();
             }
         };
-        pipe(instance, Disposable_onDisposed(e => {
-            if (instance[QueueableLike_count] === 0) {
-                observer[DisposableLike_dispose](e);
-            }
-        }));
         return instance;
     }, props({
         [ObserverDispatcher_continuation]: none,
         [ObserverDispatcher_observer]: none,
         [ObserverDispatcher_onContinuationDispose]: none,
+        [ObserverDispatcher_isCompleted]: false,
     }), {
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
             return this[ObserverDispatcher_observer][ObserverLike_scheduler];
         },
         [QueueableLike_push](next) {
-            if (!this[DisposableLike_isDisposed]) {
+            if (!this[ObserverDispatcher_isCompleted] &&
+                !this[ObserverDispatcher_observer][DisposableLike_isDisposed]) {
                 call(fifoQueueProtoype[QueueableLike_push], this, next);
                 scheduleDrainQueue(this);
             }
         },
         [DispatcherLike_complete]() {
-            this[DisposableLike_dispose]();
+            const isCompleted = this[ObserverDispatcher_isCompleted];
+            this[ObserverDispatcher_isCompleted] = true;
+            if (this[QueueableLike_count] === 0 && !isCompleted) {
+                this[ObserverDispatcher_observer][DisposableLike_dispose]();
+            }
         },
     }));
 })();
@@ -82,7 +80,7 @@ const Observer_mixin =
             unsafeCast(this);
             let { [ObserverMixin_dispatcher]: dispatcher } = this;
             if (isNone(dispatcher)) {
-                dispatcher = pipe(createObserverDispatcher(this), Disposable_addToIgnoringChildErrors(this));
+                dispatcher = createObserverDispatcher(this);
                 this[ObserverMixin_dispatcher] = dispatcher;
             }
             return dispatcher;

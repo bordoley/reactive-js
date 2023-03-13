@@ -6,11 +6,11 @@ import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast,
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_dispatcher, ObserverLike_notify, ObserverLike_scheduler, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
     const DispatchedObservable_observer = Symbol("DispatchedObservable_observer");
@@ -71,7 +71,14 @@ const DispatchedObservable_create =
                 raiseWithDebugMessage("DispatchedObservable already subscribed to");
             }
             this[DispatchedObservable_observer] = observer;
-            pipe(observer[ObserverLike_dispatcher], Disposable_addToIgnoringChildErrors(this));
+            pipe(this, Disposable_onDisposed(e => {
+                if (isSome(e)) {
+                    observer[DisposableLike_dispose](e);
+                }
+                else {
+                    observer[ObserverLike_dispatcher][DispatcherLike_complete]();
+                }
+            }));
         },
     }));
 })();

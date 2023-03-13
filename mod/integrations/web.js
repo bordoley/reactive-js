@@ -22,7 +22,7 @@ export const createEventSource = (url, options = {}) => {
     const events = pipe(eventsOption, ReadonlyArray.keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
     return Observable.create(observer => {
-        const dispatcher = pipe(observer[ObserverLike_dispatcher], Disposable.onDisposed(_ => {
+        pipe(observer, Disposable.onDisposed(_ => {
             for (const ev of events) {
                 eventSource.removeEventListener(ev, listener);
             }
@@ -31,7 +31,7 @@ export const createEventSource = (url, options = {}) => {
         const eventSource = newInstance(EventSource, requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;
-            dispatcher[QueueableLike_push]({
+            observer[ObserverLike_dispatcher][QueueableLike_push]({
                 id: (_a = ev.lastEventId) !== null && _a !== void 0 ? _a : "",
                 type: (_b = ev.type) !== null && _b !== void 0 ? _b : "",
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
@@ -70,12 +70,12 @@ export const fetch =
     });
 })();
 export const addEventListener = (eventName, selector) => target => Observable.create(observer => {
-    const dispatcher = pipe(observer[ObserverLike_dispatcher], Disposable.onDisposed(_ => {
+    pipe(observer, Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));
     const listener = (event) => {
         const result = selector(event);
-        dispatcher[QueueableLike_push](result);
+        observer[ObserverLike_dispatcher][QueueableLike_push](result);
     };
     target.addEventListener(eventName, listener, { passive: true });
 });

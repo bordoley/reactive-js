@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { error, pipe } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObserverLike_dispatcher, } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, ObserverLike_dispatcher, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import { SchedulerLike_now, SchedulerLike_schedule, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_push, } from "../../../util.js";
@@ -15,7 +15,7 @@ const AsyncIterable_toObservable = (o) => (iterable) => Observable_create((obser
     const continuation = async () => {
         const startTime = scheduler[SchedulerLike_now];
         try {
-            while (!dispatcher[DisposableLike_isDisposed] &&
+            while (!observer[DisposableLike_isDisposed] &&
                 // An async iterable can produce resolved promises which are immediately
                 // scheduled on the microtask queue. This prevents the observer's scheduler
                 // from running and draining dispatched events.
@@ -25,18 +25,18 @@ const AsyncIterable_toObservable = (o) => (iterable) => Observable_create((obser
                 dispatcher[QueueableLike_count] < maxBuffer &&
                 scheduler[SchedulerLike_now] - startTime < maxYieldInterval) {
                 const next = await iterator.next();
-                if (!next.done && !dispatcher[DisposableLike_isDisposed]) {
+                if (!next.done) {
                     dispatcher[QueueableLike_push](next.value);
                 }
                 else {
-                    dispatcher[DisposableLike_dispose]();
+                    dispatcher[DispatcherLike_complete]();
                 }
             }
         }
         catch (e) {
-            dispatcher[DisposableLike_dispose](error(e));
+            observer[DisposableLike_dispose](error(e));
         }
-        if (!dispatcher[DisposableLike_isDisposed]) {
+        if (!observer[DisposableLike_isDisposed]) {
             pipe(scheduler[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
         }
     };

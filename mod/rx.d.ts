@@ -9,7 +9,7 @@ export declare const DispatcherLike_scheduler: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T>, DisposableLike {
+export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
     readonly [DispatcherLike_scheduler]: SchedulerLike;
     [DispatcherLike_complete](): void;
 }
