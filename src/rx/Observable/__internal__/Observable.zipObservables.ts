@@ -11,6 +11,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   QueueLike,
+  QueueLike_count,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
@@ -42,7 +43,6 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike,
-  QueueableLike_count,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
@@ -105,7 +105,7 @@ const QueuedEnumerator_create: <T>(
         [EnumeratorLike_move](
           this: DisposableLike & TProperties & QueueLike<T>,
         ) {
-          if (this[QueueableLike_count] > 0) {
+          if (this[QueueLike_count] > 0) {
             const next = this[QueueLike_pull]() as T;
             this[EnumeratorLike_current] = next;
             this[EnumeratorLike_hasCurrent] = true;

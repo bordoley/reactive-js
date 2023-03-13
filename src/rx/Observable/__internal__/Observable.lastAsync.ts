@@ -15,7 +15,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_lastAsync =
-  <T>(options?: { scheduler: SchedulerLike }) =>
+  <T>(options?: { scheduler?: SchedulerLike; maxBufferSize?: number }) =>
   async (observable: ObservableLike<T>): Promise<Optional<T>> => {
     const { scheduler: schedulerOption } = options ?? {};
 
@@ -36,7 +36,7 @@ const Observable_lastAsync =
           Observable_forEach<ObservableLike, T>(next => {
             result = next;
           }),
-          Observable_subscribe(scheduler),
+          Observable_subscribe(scheduler, options),
           Disposable_onDisposed(err => {
             if (isSome(err)) {
               reject(err);

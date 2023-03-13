@@ -2,11 +2,12 @@
 
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { QueueLike_count, } from "../../../__internal__/util.internal.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -28,12 +29,6 @@ const DispatchedObservable_create =
             const observer = this[DispatchedObservable_observer];
             return observer[QueueableLike_maxBufferSize];
         },
-        get [QueueableLike_count]() {
-            unsafeCast(this);
-            // Practically the observer can never be none.
-            const observer = this[DispatchedObservable_observer];
-            return observer[QueueableLike_count];
-        },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
             // Practically the observer can never be none.
@@ -50,7 +45,9 @@ const DispatchedObservable_create =
             }
             const scheduler = observer[DispatcherLike_scheduler];
             const inContinuation = scheduler[SchedulerLike_inContinuation];
-            const observerQueueIsEmpty = observer[QueueableLike_count] === 0;
+            // Observer only implement Queueable publicly so cast to the implementation interface
+            // to enable bypassing the queue
+            const observerQueueIsEmpty = observer[QueueLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
             if (inContinuation && observerQueueIsEmpty && !isDisposed) {
                 observer[ObserverLike_notify](next);
@@ -108,10 +105,6 @@ const Stream_mixin = /*@__PURE__*/ (() => {
         get [QueueableLike_maxBufferSize]() {
             unsafeCast(this);
             return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
-        },
-        get [QueueableLike_count]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][QueueableLike_count];
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

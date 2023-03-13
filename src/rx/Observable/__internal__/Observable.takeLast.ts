@@ -23,7 +23,6 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike,
-  QueueableLike_count,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
@@ -40,16 +39,11 @@ type ObservableTakeLast = <C extends ObservableLike, T>(options?: {
   readonly count?: number;
 }) => ContainerOperator<C, T, T>;
 const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
-  const TakeLastObserverMixin_takeLastCount = Symbol(
-    "TakeLastObserverMixin_takeLastCount",
-  );
-
   const TakeLastObserverMixin_takeLastQueue = Symbol(
     "TakeLastObserverMixin_takeLastQueue",
   );
 
   type TProperties = {
-    readonly [TakeLastObserverMixin_takeLastCount]: number;
     readonly [TakeLastObserverMixin_takeLastQueue]: IndexedQueueLike<T>;
   };
 
@@ -71,8 +65,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
         );
 
         instance[TakeLastObserverMixin_takeLastQueue] =
-          IndexedQueue_createFifoQueue();
-        instance[TakeLastObserverMixin_takeLastCount] = takeLastCount;
+          IndexedQueue_createFifoQueue({ maxBufferSize: takeLastCount });
 
         pipe(
           instance,
@@ -90,7 +83,6 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
         return instance;
       },
       props<TProperties>({
-        [TakeLastObserverMixin_takeLastCount]: 0,
         [TakeLastObserverMixin_takeLastQueue]: none,
       }),
       {
@@ -98,11 +90,8 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           this: TProperties & DisposableLike & QueueLike<T>,
           next: T,
         ) {
-          this[TakeLastObserverMixin_takeLastQueue][QueueableLike_push](next);
-
           if (
-            this[TakeLastObserverMixin_takeLastQueue][QueueableLike_count] >
-            this[TakeLastObserverMixin_takeLastCount]
+            !this[TakeLastObserverMixin_takeLastQueue][QueueableLike_push](next)
           ) {
             this[TakeLastObserverMixin_takeLastQueue][QueueLike_pull]();
           }

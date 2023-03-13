@@ -37,17 +37,11 @@ export interface DisposableLike {
     [DisposableLike_dispose](error?: Error): void;
 }
 /** @ignore */
-export declare const QueueableLike_count: unique symbol;
-/** @ignore */
 export declare const QueueableLike_push: unique symbol;
 /** @ignore */
 export declare const QueueableLike_maxBufferSize: unique symbol;
 export interface QueueableLike<T = unknown> {
     readonly [QueueableLike_maxBufferSize]: number;
-    /**
-     * The number of queued up items.
-     */
-    readonly [QueueableLike_count]: number;
     /**
      * Push an item onto the queue
      * @param req

@@ -51,9 +51,6 @@ export interface DisposableLike {
 }
 
 /** @ignore */
-export const QueueableLike_count = Symbol("QueueableLike_count");
-
-/** @ignore */
 export const QueueableLike_push = Symbol("QueueableLike_push");
 
 /** @ignore */
@@ -63,11 +60,6 @@ export const QueueableLike_maxBufferSize = Symbol(
 
 export interface QueueableLike<T = unknown> {
   readonly [QueueableLike_maxBufferSize]: number;
-
-  /**
-   * The number of queued up items.
-   */
-  readonly [QueueableLike_count]: number;
 
   /**
    * Push an item onto the queue

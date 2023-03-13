@@ -102,6 +102,7 @@ export declare const exhaust: Exhaust<ObservableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"];
 export declare const firstAsync: FirstAsync<ObservableLike, {
     scheduler?: SchedulerLike;
+    maxBufferSize?: number;
 }>["firstAsync"];
 export declare const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"];
 export declare const flatMapPromise: <TA, TB>(f: Function1<TA, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
@@ -113,7 +114,6 @@ export declare const forkZip: ForkZip<ObservableLike>["forkZip"];
 export declare const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"];
 export declare const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsyncEnumerable"];
 export declare const fromAsyncIterable: FromAsyncIterable<ObservableLike, {
-    maxBuffer?: number;
     maxYieldInterval?: number;
 }>["fromAsyncIterable"];
 export declare const fromIterable: FromIterable<ObservableLike, {
@@ -141,6 +141,7 @@ export declare const keep: Keep<ObservableLike>["keep"];
 export declare const keepType: KeepType<ObservableLike>["keepType"];
 export declare const lastAsync: LastAsync<ObservableLike, {
     scheduler?: SchedulerLike;
+    maxBufferSize?: number;
 }>["lastAsync"];
 export declare const map: Map<ObservableLike>["map"];
 export declare const mapTo: MapTo<ObservableLike>["mapTo"];

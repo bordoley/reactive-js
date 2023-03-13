@@ -10,10 +10,10 @@ export const toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnu
 
 export const toFlowable: ToFlowable<
   AsyncIterableLike,
-  { maxBuffer?: number; maxYieldInterval?: number }
+  { maxYieldInterval?: number }
 >["toFlowable"] = AsyncIterable_toFlowable;
 
 export const toObservable: ToObservable<
   AsyncIterableLike,
-  { maxBuffer?: number; maxYieldInterval?: number }
+  { maxYieldInterval?: number }
 >["toObservable"] = AsyncIterable_toObservable;

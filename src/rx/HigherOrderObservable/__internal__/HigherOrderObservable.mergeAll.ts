@@ -14,6 +14,7 @@ import {
 import {
   IndexedQueueLike,
   QueueLike,
+  QueueLike_count,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
@@ -38,7 +39,6 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_count,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
@@ -161,9 +161,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
               if (delegate[DisposableLike_isDisposed]) {
                 // FIXME: Clear the queue
               } else if (
-                instance[MergeAllObserver_observablesQueue][
-                  QueueableLike_count
-                ] +
+                instance[MergeAllObserver_observablesQueue][QueueLike_count] +
                   instance[MergeAllObserver_activeCount] ===
                 0
               ) {
@@ -194,7 +192,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
             // Drop old events if the maxBufferSize has been exceeded
             if (
-              this[MergeAllObserver_observablesQueue][QueueableLike_count] +
+              this[MergeAllObserver_observablesQueue][QueueLike_count] +
                 this[MergeAllObserver_activeCount] >
               this[MergeAllObserver_maxBufferSize]
             ) {

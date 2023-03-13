@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { AsyncIterableLike } from "../../../containers.js";
 import { error, pipe } from "../../../functions.js";
 import {
@@ -23,7 +22,6 @@ import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flow
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_count,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -31,15 +29,14 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 
 const AsyncIterable_toFlowable: ToFlowable<
   AsyncIterableLike,
-  { maxBuffer?: number }
+  { maxYieldInterval?: number }
 >["toFlowable"] =
-  <T>(o?: { maxBuffer?: number; maxYieldInterval?: number }) =>
+  <T>(o?: { maxYieldInterval?: number }) =>
   (iterable: AsyncIterableLike<T>) =>
     Flowable_createLifted(
       (modeObs: ObservableLike<FlowableState>) =>
         Observable_create<T>((observer: ObserverLike<T>) => {
-          const { maxBuffer = MAX_SAFE_INTEGER, maxYieldInterval = 300 } =
-            o ?? {};
+          const { maxYieldInterval = 300 } = o ?? {};
 
           const iterator = iterable[Symbol.asyncIterator]();
           const scheduler = observer[DispatcherLike_scheduler];
@@ -52,22 +49,22 @@ const AsyncIterable_toFlowable: ToFlowable<
             try {
               while (
                 !observer[DisposableLike_isDisposed] &&
-                // An async iterable can produce resolved promises which are immediately
-                // scheduled on the microtask queue. This prevents the observer's scheduler
-                // from running and draining dispatched events.
-                //
-                // Check the observer's buffer size so we can avoid queueing forever
-                // in this situation.
                 !isPaused &&
-                observer[QueueableLike_count] < maxBuffer &&
                 scheduler[SchedulerLike_now] - startTime < maxYieldInterval
               ) {
                 const next = await iterator.next();
 
-                if (!next.done) {
-                  observer[QueueableLike_push](next.value);
-                } else {
+                if (next.done) {
                   observer[DispatcherLike_complete]();
+                  break;
+                } else if (!observer[QueueableLike_push](next.value)) {
+                  // An async iterable can produce resolved promises which are immediately
+                  // scheduled on the microtask queue. This prevents the observer's scheduler
+                  // from running and draining dispatched events.
+                  //
+                  // Check the observer's buffer size so we can avoid queueing forever
+                  // in this situation.
+                  break;
                 }
               }
             } catch (e) {

@@ -14,7 +14,7 @@ const Observable_lastAsync = (options) => async (observable) => {
             let result = none;
             pipe(observable, Observable_forEach(next => {
                 result = next;
-            }), Observable_subscribe(scheduler), Disposable_onDisposed(err => {
+            }), Observable_subscribe(scheduler, options), Disposable_onDisposed(err => {
                 if (isSome(err)) {
                     reject(err);
                 }

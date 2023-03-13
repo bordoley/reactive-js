@@ -23,7 +23,7 @@ import Flowable_toRunnable from "./Flowable/__internal__/Flowable.toRunnable.js"
 
 export const fromAsyncIterable: FromAsyncIterable<
   FlowableLike,
-  { maxBuffer?: number; maxYieldInterval?: number }
+  { maxYieldInterval?: number }
 >["fromAsyncIterable"] = AsyncIterable_toFlowable;
 
 export const fromEnumerable: FromEnumerable<FlowableLike>["fromEnumerable"] =

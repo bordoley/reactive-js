@@ -7,11 +7,12 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import {
+  QueueLike_count,
   QueueLike_head,
   QueueLike_pull,
 } from "../../__internal__/util.internal.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
-import { QueueableLike_count, QueueableLike_push } from "../../util.js";
+import { QueueableLike_push } from "../../util.js";
 import IndexedQueue_createFifoQueue from "../Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Queue_createPriorityQueue from "../Queue/__internal__/Queue.createPriorityQueue.js";
 
@@ -58,7 +59,7 @@ testModule(
         pipe(queue[QueueLike_head], expectEquals(0 as Optional<number>));
       }
 
-      pipe(queue[QueueableLike_count], expectEquals(8));
+      pipe(queue[QueueLike_count], expectEquals(8));
 
       pipe(queue[QueueLike_pull](), expectEquals(0 as Optional<number>));
       pipe(queue[QueueLike_head], expectEquals(1 as Optional<number>));
@@ -128,7 +129,7 @@ testModule(
       }
 
       const acc: number[] = [];
-      while (queue[QueueableLike_count] > 0) {
+      while (queue[QueueLike_count] > 0) {
         acc.push(queue[QueueLike_pull]() as number);
       }
 

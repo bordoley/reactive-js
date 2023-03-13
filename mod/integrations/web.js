@@ -9,7 +9,7 @@ import * as Observable from "../rx/Observable.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
-import { DisposableLike_dispose, QueueableLike_count, QueueableLike_maxBufferSize, QueueableLike_push, } from "../util.js";
+import { DisposableLike_dispose, QueueableLike_maxBufferSize, QueueableLike_push, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 /** @ignore */
@@ -126,10 +126,6 @@ export const windowLocation =
         get [QueueableLike_maxBufferSize]() {
             unsafeCast(this);
             return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
-        },
-        get [QueueableLike_count]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][QueueableLike_count];
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);

@@ -10,7 +10,9 @@ export interface DelegatingDisposableLike<TDisposable extends DisposableLike = D
 }
 export declare const QueueLike_head: unique symbol;
 export declare const QueueLike_pull: unique symbol;
+export declare const QueueLike_count: unique symbol;
 export interface QueueLike<T> extends QueueableLike<T> {
+    readonly [QueueLike_count]: number;
     readonly [QueueLike_head]: Optional<T>;
     [QueueLike_pull](): Optional<T>;
 }

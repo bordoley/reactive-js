@@ -3,6 +3,7 @@ import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
   IndexedQueueLike,
   IndexedQueueLike_get,
+  QueueLike_count,
   QueueLike_head,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
@@ -17,7 +18,6 @@ import {
 } from "../../../functions.js";
 import {
   QueueableLike,
-  QueueableLike_count,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
@@ -27,7 +27,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
   number,
   Omit<
     IndexedQueueLike<T>,
-    typeof QueueableLike_count | typeof QueueableLike_maxBufferSize
+    typeof QueueLike_count | typeof QueueableLike_maxBufferSize
   >
 > = /*@__PURE__*/ (<T>() => {
   const FifoQueue_head = Symbol("FifoQueue_head");
@@ -36,7 +36,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
   const FifoQueue_values = Symbol("FifoQueue_values");
 
   type TProperties = {
-    [QueueableLike_count]: number;
+    [QueueLike_count]: number;
     readonly [QueueableLike_maxBufferSize]: number;
     [FifoQueue_head]: number;
     [FifoQueue_tail]: number;
@@ -73,7 +73,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
       function FifoQueue(
         instance: Omit<
           IndexedQueueLike<T>,
-          typeof QueueableLike_count | typeof QueueableLike_maxBufferSize
+          typeof QueueLike_count | typeof QueueableLike_maxBufferSize
         > &
           Mutable<TProperties>,
         maxBufferSize: number,
@@ -82,7 +82,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
         return instance;
       },
       props<TProperties>({
-        [QueueableLike_count]: 0,
+        [QueueLike_count]: 0,
         [QueueableLike_maxBufferSize]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
@@ -94,7 +94,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
           this: TProperties & QueueableLike,
           index: number,
         ): T {
-          const count = this[QueueableLike_count];
+          const count = this[QueueLike_count];
           const capacity = this[FifoQueue_values]?.length ?? 0;
           const head = this[FifoQueue_head];
           const values = this[FifoQueue_values] ?? [];
@@ -128,10 +128,10 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
             values[head] = none;
             head = (head + 1) & this[FifoQueue_capacityMask];
             this[FifoQueue_head] = head;
-            this[QueueableLike_count]--;
+            this[QueueLike_count]--;
           }
 
-          const count = this[QueueableLike_count];
+          const count = this[QueueLike_count];
           if (count < capacity / 4 && capacity > 32) {
             const newCapacity = capacity >> 1;
             const newList = copyArray(values, head, tail, newCapacity);
@@ -162,12 +162,12 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
 
           const capacity = values.length;
 
-          let count = this[QueueableLike_count];
+          let count = this[QueueLike_count];
           let tail = this[FifoQueue_tail];
 
           values[tail] = item;
           count++;
-          this[QueueableLike_count] = count;
+          this[QueueLike_count] = count;
 
           tail = (tail + 1) & capacityMask;
           this[FifoQueue_tail] = tail;
@@ -189,7 +189,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
             this[FifoQueue_capacityMask] = (capacityMask << 1) | 1;
           }
 
-          return this[QueueableLike_count] <= this[QueueableLike_maxBufferSize];
+          return this[QueueLike_count] <= this[QueueableLike_maxBufferSize];
         },
       },
     ),

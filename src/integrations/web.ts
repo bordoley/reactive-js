@@ -46,7 +46,6 @@ import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
 import {
   DisposableLike_dispose,
-  QueueableLike_count,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../util.js";
@@ -317,7 +316,6 @@ export const windowLocation: WindowLocationStreamableLike =
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof QueueableLike_push
-            | typeof QueueableLike_count
             | typeof QueueableLike_maxBufferSize
             | typeof WindowLocationStreamLike_canGoBack
             | typeof WindowLocationStreamLike_goBack
@@ -345,11 +343,6 @@ export const windowLocation: WindowLocationStreamableLike =
           get [QueueableLike_maxBufferSize](): number {
             unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
             return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
-          },
-
-          get [QueueableLike_count](): number {
-            unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return this[DelegatingLike_delegate][QueueableLike_count];
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {

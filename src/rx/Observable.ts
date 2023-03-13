@@ -383,7 +383,7 @@ export const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"] =
 
 export const firstAsync: FirstAsync<
   ObservableLike,
-  { scheduler?: SchedulerLike }
+  { scheduler?: SchedulerLike; maxBufferSize?: number }
 >["firstAsync"] = Observable_firstAsync;
 
 export const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"] =
@@ -412,7 +412,7 @@ export const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsync
 
 export const fromAsyncIterable: FromAsyncIterable<
   ObservableLike,
-  { maxBuffer?: number; maxYieldInterval?: number }
+  { maxYieldInterval?: number }
 >["fromAsyncIterable"] = AsyncIterable_toObservable;
 
 export const fromIterable: FromIterable<
@@ -462,7 +462,7 @@ export const keepType: KeepType<ObservableLike>["keepType"] =
 
 export const lastAsync: LastAsync<
   ObservableLike,
-  { scheduler?: SchedulerLike }
+  { scheduler?: SchedulerLike; maxBufferSize?: number }
 >["lastAsync"] = Observable_lastAsync;
 
 export const map: Map<ObservableLike>["map"] = Observable_map;

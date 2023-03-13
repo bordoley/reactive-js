@@ -3,10 +3,10 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { isSome, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_count, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -54,7 +54,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 if (delegate[DisposableLike_isDisposed]) {
                     // FIXME: Clear the queue
                 }
-                else if (instance[MergeAllObserver_observablesQueue][QueueableLike_count] +
+                else if (instance[MergeAllObserver_observablesQueue][QueueLike_count] +
                     instance[MergeAllObserver_activeCount] ===
                     0) {
                     delegate[DisposableLike_dispose]();
@@ -72,7 +72,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 Observer_assertState(this);
                 this[MergeAllObserver_observablesQueue][QueueableLike_push](next);
                 // Drop old events if the maxBufferSize has been exceeded
-                if (this[MergeAllObserver_observablesQueue][QueueableLike_count] +
+                if (this[MergeAllObserver_observablesQueue][QueueLike_count] +
                     this[MergeAllObserver_activeCount] >
                     this[MergeAllObserver_maxBufferSize]) {
                     this[MergeAllObserver_observablesQueue][QueueLike_pull]();

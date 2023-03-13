@@ -11,6 +11,7 @@ import {
   IndexedQueueLike,
   IndexedQueueLike_get,
   QueueLike,
+  QueueLike_count,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
@@ -33,7 +34,6 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_count,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
@@ -91,8 +91,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               const replay = this[QueueableLike_maxBufferSize];
 
               if (replay > 0) {
-                this[QueueableLike_push](next);
-                if (this[QueueableLike_count] > replay) {
+                if (!this[QueueableLike_push](next)) {
                   this[QueueLike_pull]();
                 }
               }
@@ -122,7 +121,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
-            const count = this[QueueableLike_count];
+            const count = this[QueueLike_count];
             for (let i = 0; i < count; i++) {
               const next = this[IndexedQueueLike_get](i);
               observer[QueueableLike_push](next);

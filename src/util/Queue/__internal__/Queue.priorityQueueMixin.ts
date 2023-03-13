@@ -3,6 +3,7 @@ import { floor } from "../../../__internal__/math.js";
 import { Mixin2, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
   QueueLike,
+  QueueLike_count,
   QueueLike_head,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
@@ -16,7 +17,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  QueueableLike_count,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
@@ -96,7 +96,7 @@ const Queue_priorityQueueMixin: <T>() => Mixin2<
       function PriorityQueue(
         instance: Pick<
           QueueLike<T>,
-          | typeof QueueableLike_count
+          | typeof QueueLike_count
           | typeof QueueLike_head
           | typeof QueueLike_pull
           | typeof QueueableLike_push
@@ -116,7 +116,7 @@ const Queue_priorityQueueMixin: <T>() => Mixin2<
         [PriorityQueueImpl_comparator]: none,
       }),
       {
-        get [QueueableLike_count](): number {
+        get [QueueLike_count](): number {
           unsafeCast<TProperties>(this);
           return ReadonlyArray_getLength(this[PriorityQueueImpl_values]);
         },
@@ -148,7 +148,7 @@ const Queue_priorityQueueMixin: <T>() => Mixin2<
           this[PriorityQueueImpl_values].push(item);
           siftUp(this, item);
 
-          return this[QueueableLike_count] <= this[QueueableLike_maxBufferSize];
+          return this[QueueLike_count] <= this[QueueableLike_maxBufferSize];
         },
       },
     ),
