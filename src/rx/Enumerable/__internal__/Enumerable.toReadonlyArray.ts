@@ -1,5 +1,5 @@
 import { ToReadonlyArray } from "../../../containers.js";
-import Enumerator_toReadonlyArray from "../../../containers/Enumerator/__internal__/Enumerator.toArray.js";
+import Enumerator_toReadonlyArray from "../../../containers/Enumerator/__internal__/Enumerator.toReadonlyArray.js";
 import { isSome, pipe, raiseError } from "../../../functions.js";
 import { EnumerableLike } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../../util.js";

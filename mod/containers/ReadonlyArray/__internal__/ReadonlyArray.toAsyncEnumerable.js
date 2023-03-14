@@ -13,10 +13,10 @@ const ReadonlyArray_toAsyncEnumerable =
 /*@__PURE__*/
 ReadonlyArray_toContainer((array, start, count, options) => {
     var _a;
-    const delay = (_a = options === null || options === void 0 ? void 0 : options.delay) !== null && _a !== void 0 ? _a : 0 > 0;
+    const delay = (_a = options === null || options === void 0 ? void 0 : options.delay) !== null && _a !== void 0 ? _a : 0;
     return Streamable_createLifted(compose(count >= 0
         ? Observable_scan(increment, returns(start - 1))
-        : Observable_scan(decrement, returns(start + 1)), (delay !== null && delay !== void 0 ? delay : 0 > 0)
+        : Observable_scan(decrement, returns(start + 1)), delay > 0
         ? Observable_concatMap((i) => pipe(array[i], Optional_toObservable(options)))
         : Observable_map((i) => array[i]), Observable_takeFirst({ count: abs(count) })), true, delay <= 0, true);
 });

@@ -40,7 +40,7 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
         readonly delay?: number;
       },
     ) => {
-      const delay = options?.delay ?? 0 > 0;
+      const delay = options?.delay ?? 0;
 
       return Streamable_createLifted<T>(
         compose(
@@ -53,7 +53,7 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
                 decrement,
                 returns(start + 1),
               ),
-          delay ?? 0 > 0
+          delay > 0
             ? Observable_concatMap((i: number) =>
                 pipe(array[i], Optional_toObservable(options)),
               )

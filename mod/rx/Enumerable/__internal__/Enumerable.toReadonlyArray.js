@@ -1,6 +1,6 @@
 /// <reference types="./Enumerable.toReadonlyArray.d.ts" />
 
-import Enumerator_toReadonlyArray from "../../../containers/Enumerator/__internal__/Enumerator.toArray.js";
+import Enumerator_toReadonlyArray from "../../../containers/Enumerator/__internal__/Enumerator.toReadonlyArray.js";
 import { isSome, pipe, raiseError } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../../util.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";

@@ -3,11 +3,14 @@
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { IndexedQueueLike_get, QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
-import { isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
+import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
 import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_publish, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
+import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
+import Disposable_toErrorHandler from "../../../util/Disposable/__internal__/Disposable.toErrorHandler.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 const Subject_create = 
 /*@__PURE__*/ (() => {
@@ -27,16 +30,15 @@ const Subject_create =
             return this[Subject_observers].size;
         },
         [SubjectLike_publish](next) {
-            if (!this[DisposableLike_isDisposed]) {
-                const replay = this[QueueableLike_maxBufferSize];
-                if (replay > 0) {
-                    if (!this[QueueableLike_push](next)) {
-                        this[QueueLike_pull]();
-                    }
-                }
-                for (const observer of this[Subject_observers]) {
-                    observer[QueueableLike_push](next);
-                }
+            if (this[DisposableLike_isDisposed]) {
+                return;
+            }
+            const replay = this[QueueableLike_maxBufferSize];
+            if (replay > 0 && !this[QueueableLike_push](next)) {
+                this[QueueLike_pull]();
+            }
+            for (const observer of this[Subject_observers]) {
+                observer[QueueableLike_push](next);
             }
         },
         [ObservableLike_observe](observer) {
@@ -55,13 +57,8 @@ const Subject_create =
                 const next = this[IndexedQueueLike_get](i);
                 observer[QueueableLike_push](next);
             }
-            pipe(this, Disposable_onDisposed(e => {
-                if (isSome(e)) {
-                    observer[DisposableLike_dispose](e);
-                }
-                else {
-                    observer[DispatcherLike_complete]();
-                }
+            pipe(this, Disposable_onError(Disposable_toErrorHandler(observer)), Disposable_onComplete(() => {
+                observer[DispatcherLike_complete]();
             }));
         },
     }));

@@ -11,9 +11,6 @@ const ReadonlyArray_toFlowable: ToFlowable<
     readonly delayStart?: boolean;
   }
 >["toFlowable"] = options =>
-  compose(
-    ReadonlyArray_toObservable(options as unknown),
-    Runnable_toFlowable(),
-  );
+  compose(ReadonlyArray_toObservable(options), Runnable_toFlowable());
 
 export default ReadonlyArray_toFlowable;

@@ -27,7 +27,6 @@ import {
   error,
   ignore,
   isFunction,
-  isSome,
   pipe,
   pipeLazy,
 } from "../functions.js";
@@ -174,12 +173,9 @@ export const createReadableSource = (
       Observable.create(observer => {
         const dispatchDisposable = pipe(
           Disposable.create(),
-          Disposable.onDisposed(e => {
-            if (isSome(e)) {
-              observer[DisposableLike_dispose](e);
-            } else {
-              observer[DispatcherLike_complete]();
-            }
+          Disposable.onError(Disposable.toErrorHandler(observer)),
+          Disposable.onComplete(() => {
+            observer[DispatcherLike_complete]();
           }),
         );
 
@@ -243,12 +239,9 @@ export const createWritableSink = /*@__PURE__*/ (() => {
         Observable.create(observer => {
           const dispatchDisposable = pipe(
             Disposable.create(),
-            Disposable.onDisposed(e => {
-              if (isSome(e)) {
-                observer[DisposableLike_dispose](e);
-              } else {
-                observer[DispatcherLike_complete]();
-              }
+            Disposable.onError(Disposable.toErrorHandler(observer)),
+            Disposable.onComplete(() => {
+              observer[DispatcherLike_complete]();
             }),
           );
 
