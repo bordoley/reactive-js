@@ -5,11 +5,10 @@ import { floor, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { error, isNone, isSome, newInstance, none, unsafeCast, } from "../../../functions.js";
-import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
-export const ContinuationSchedulerLike_now = Symbol("ContinuationSchedulerLike_now");
 export const ContinuationSchedulerLike_schedule = Symbol("ContinuationSchedulerLike_schedule");
 export const ContinuationSchedulerLike_shouldYield = Symbol("ContinuationSchedulerLike_shouldYield");
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
@@ -39,10 +38,6 @@ export const PriorityScheduler_mixin =
         [Continuation_childContinuation]: none,
         [Continuation_effect]: none,
     }), {
-        get [ContinuationSchedulerLike_now]() {
-            unsafeCast(this);
-            return this[ContinuationLike_continuationScheduler][ContinuationSchedulerLike_now];
-        },
         get [ContinuationSchedulerLike_shouldYield]() {
             unsafeCast(this);
             return this[ContinuationLike_continuationScheduler][ContinuationSchedulerLike_shouldYield];
@@ -142,10 +137,6 @@ export const PriorityScheduler_mixin =
             return (inContinuation &&
                 (yieldRequested ||
                     this[PrioritySchedulerImplementationLike_shouldYield]));
-        },
-        get [ContinuationSchedulerLike_now]() {
-            unsafeCast(this);
-            return this[SchedulerLike_now];
         },
         get [ContinuationSchedulerLike_shouldYield]() {
             unsafeCast(this);

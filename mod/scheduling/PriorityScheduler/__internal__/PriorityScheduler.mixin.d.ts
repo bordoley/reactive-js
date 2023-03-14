@@ -1,12 +1,10 @@
 import { Mixin } from "../../../__internal__/mixins.js";
 import { PrioritySchedulerLike, SchedulerLike_now } from "../../../scheduling.js";
 import { DisposableLike, QueueableLike } from "../../../util.js";
-export declare const ContinuationSchedulerLike_now: unique symbol;
 export declare const ContinuationSchedulerLike_schedule: unique symbol;
 export declare const ContinuationSchedulerLike_shouldYield: unique symbol;
 export interface ContinuationSchedulerLike {
     readonly [ContinuationSchedulerLike_shouldYield]: boolean;
-    readonly [ContinuationSchedulerLike_now]: number;
     [ContinuationSchedulerLike_schedule](continuation: ContinuationLike, delay: number): void;
 }
 export declare const ContinuationLike_run: unique symbol;

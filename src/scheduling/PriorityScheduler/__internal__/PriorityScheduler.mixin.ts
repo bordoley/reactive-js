@@ -44,10 +44,6 @@ import {
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 
-export const ContinuationSchedulerLike_now = Symbol(
-  "ContinuationSchedulerLike_now",
-);
-
 export const ContinuationSchedulerLike_schedule = Symbol(
   "ContinuationSchedulerLike_schedule",
 );
@@ -58,7 +54,6 @@ export const ContinuationSchedulerLike_shouldYield = Symbol(
 
 export interface ContinuationSchedulerLike {
   readonly [ContinuationSchedulerLike_shouldYield]: boolean;
-  readonly [ContinuationSchedulerLike_now]: number;
 
   [ContinuationSchedulerLike_schedule](
     continuation: ContinuationLike,
@@ -135,7 +130,6 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           instance: Pick<
             ContinuationLike & ContinuationContextLike,
             | typeof ContinuationLike_run
-            | typeof ContinuationSchedulerLike_now
             | typeof ContinuationSchedulerLike_schedule
             | typeof ContinuationSchedulerLike_shouldYield
             | typeof ContinuationContextLike_yield
@@ -165,12 +159,6 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           [Continuation_effect]: none,
         }),
         {
-          get [ContinuationSchedulerLike_now](): number {
-            unsafeCast<TContinuationProperties>(this);
-            return this[ContinuationLike_continuationScheduler][
-              ContinuationSchedulerLike_now
-            ];
-          },
           get [ContinuationSchedulerLike_shouldYield](): boolean {
             unsafeCast<TContinuationProperties>(this);
             return this[ContinuationLike_continuationScheduler][
@@ -308,7 +296,6 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           | typeof SchedulerLike_schedule
           | typeof SchedulerLike_shouldYield
           | typeof PrioritySchedulerImplementationLike_runContinuation
-          | typeof ContinuationSchedulerLike_now
           | typeof ContinuationSchedulerLike_shouldYield
         > &
           Mutable<TSchedulerProperties>,
@@ -341,10 +328,6 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
             (yieldRequested ||
               this[PrioritySchedulerImplementationLike_shouldYield])
           );
-        },
-        get [ContinuationSchedulerLike_now](): number {
-          unsafeCast<PrioritySchedulerLike>(this);
-          return this[SchedulerLike_now];
         },
         get [ContinuationSchedulerLike_shouldYield](): boolean {
           unsafeCast<PrioritySchedulerLike>(this);
