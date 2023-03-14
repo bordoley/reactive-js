@@ -33,7 +33,7 @@ const shareTests = describe("share", test("shared observable zipped with itself"
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([2, 4, 6]));
 }));
-const asyncTests = describe("async", test("batch mode", () => {
+const computeTests = describe("compute", test("batch mode", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const fromValueWithDelay = (delay, value) => pipe([value], Observable.fromReadonlyArray({ delay }));
     let result = -1;
@@ -85,4 +85,4 @@ const asyncTests = describe("async", test("batch mode", () => {
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]));
 }));
-testModule("Observable", asyncTests, onSubscribeTests, shareTests);
+testModule("Observable", computeTests, onSubscribeTests, shareTests);

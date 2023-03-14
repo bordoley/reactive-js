@@ -79,8 +79,8 @@ const shareTests = describe(
   }),
 );
 
-const asyncTests = describe(
-  "async",
+const computeTests = describe(
+  "compute",
   test("batch mode", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
 
@@ -185,4 +185,4 @@ const asyncTests = describe(
   }),
 );
 
-testModule("Observable", asyncTests, onSubscribeTests, shareTests);
+testModule("Observable", computeTests, onSubscribeTests, shareTests);
