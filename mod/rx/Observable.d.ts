@@ -188,7 +188,9 @@ export declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];
 export declare const startWith: StartWith<ObservableLike>["startWith"];
 export declare const switchAll: SwitchAll<ObservableLike>["switchAll"];
 export declare const switchMap: SwitchMap<ObservableLike>["switchMap"];
-export declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, DisposableLike>;
+export declare const subscribe: <T>(scheduler: SchedulerLike, options?: {
+    maxBufferSize?: number;
+}) => Function1<ObservableLike<T>, DisposableLike>;
 export declare const subscribeOn: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => ObservableLike<T>;
 export declare const takeFirst: TakeFirst<ObservableLike>["takeFirst"];
 export declare const takeLast: TakeLast<ObservableLike>["takeLast"];

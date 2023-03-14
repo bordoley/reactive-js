@@ -544,6 +544,7 @@ export const switchMap: SwitchMap<ObservableLike>["switchMap"] =
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,
+  options?: { maxBufferSize?: number },
 ) => Function1<ObservableLike<T>, DisposableLike> = Observable_subscribe;
 
 export const subscribeOn = Observable_subscribeOn;
