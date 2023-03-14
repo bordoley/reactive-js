@@ -112,15 +112,24 @@ export const __stream = Observable_compute__stream;
  * @category ComputationalEffect
  */
 export const __using = Observable_compute__using;
+/**
+ * @category Operator
+ */
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
 export const combineLatest = Observable_combineLatest;
+/**
+ * @category Constructor
+ */
 export const compute = Observable_compute;
 export const concat = Observable_concat;
 export const concatAll = Observable_concatAll;
 export const concatMap = Observable_concatMap;
 export const concatWith = Observable_concatWith;
 export const contains = Observable_contains;
+/**
+ * @category Constructor
+ */
 export const create = Observable_create;
 export const decodeWithCharset = Observable_decodeWithCharset;
 export const defer = Observable_defer;
@@ -133,6 +142,9 @@ export const exhaust = Observable_exhaust;
 export const exhaustMap = Observable_exhaustMap;
 export const firstAsync = Observable_firstAsync;
 export const flatMapIterable = Observable_flatMapIterable;
+/**
+ * @category Operator
+ */
 export const flatMapPromise = Observable_flatMapPromise;
 export const forEach = Observable_forEach;
 export const forkCombineLatest = Observable_forkCombineLatest;
@@ -165,9 +177,15 @@ export const mergeWith = Observable_mergeWith;
  * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
  * @param replay The number of events that should be replayed when the `MulticastObservableLike`
  * is subscribed to.
+ *
+ * @category Transform
  */
 export const multicast = Observable_multicast;
 export const never = Observable_never;
+export const observeWith = Observable_observeWith;
+/**
+ * @category Operator
+ */
 export const onSubscribe = Observable_onSubscribe;
 export const pairwise = Observable_pairwise;
 export const reduce = Observable_reduce;
@@ -183,15 +201,19 @@ export const scanLast = Observable_scanLast;
  * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
  * @param replay The number of events that should be replayed when the `ObservableLike`
  * is subscribed to.
+ *
+ * @category Operator
  */
 export const share = Observable_share;
-export const observeWith = Observable_observeWith;
 export const skipFirst = Observable_skipFirst;
 export const someSatisfy = Observable_someSatisfy;
 export const startWith = Observable_startWith;
 export const switchAll = Observable_switchAll;
 export const switchMap = Observable_switchMap;
 export const subscribe = Observable_subscribe;
+/**
+ * @category Operator
+ */
 export const subscribeOn = Observable_subscribeOn;
 export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;

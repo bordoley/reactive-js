@@ -69,12 +69,18 @@ interface __Using {
  * @category ComputationalEffect
  */
 export declare const __using: __Using;
+/**
+ * @category Operator
+ */
 export declare const buffer: <T>(options?: {
     readonly duration?: number | Function1<T, ObservableLike>;
     readonly maxBufferSize?: number;
 }) => ContainerOperator<ObservableLike, T, readonly T[]>;
 export declare const catchError: CatchError<ObservableLike>["catchError"];
 export declare const combineLatest: CombineLatest<ObservableLike>["combineLatest"];
+/**
+ * @category Constructor
+ */
 export declare const compute: <T>(computation: Factory<T>, { mode }?: {
     mode?: "batched" | "combine-latest" | undefined;
 }) => ObservableLike<T>;
@@ -85,6 +91,9 @@ export declare const concatAll: ConcatAll<ObservableLike, {
 export declare const concatMap: ConcatMap<ObservableLike>["concatMap"];
 export declare const concatWith: ConcatWith<ObservableLike>["concatWith"];
 export declare const contains: Contains<ObservableLike>["contains"];
+/**
+ * @category Constructor
+ */
 export declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
 export declare const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"];
 export declare const defer: Defer<ObservableLike>["defer"];
@@ -102,6 +111,9 @@ export declare const firstAsync: FirstAsync<ObservableLike, {
     maxBufferSize?: number;
 }>["firstAsync"];
 export declare const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"];
+/**
+ * @category Operator
+ */
 export declare const flatMapPromise: <TA, TB>(f: Function1<TA, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
 export declare const forEach: ForEach<ObservableLike>["forEach"];
 export declare const forkCombineLatest: ForkCombineLatest<ObservableLike>["forkCombineLatest"];
@@ -158,11 +170,17 @@ export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
  * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
  * @param replay The number of events that should be replayed when the `MulticastObservableLike`
  * is subscribed to.
+ *
+ * @category Transform
  */
 export declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 }) => Function1<ObservableLike<T>, import("../rx.js").MulticastObservableLike<T>>;
 export declare const never: Never<ObservableLike>["never"];
+export declare const observeWith: <C extends ObservableLike<unknown>, T>(observer: ObserverLike<T>) => Function1<C, C>;
+/**
+ * @category Operator
+ */
 export declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<ObservableLike, T, T>;
 export declare const pairwise: Pairwise<ObservableLike>["pairwise"];
 export declare const reduce: Reduce<ObservableLike>["reduce"];
@@ -178,11 +196,12 @@ export declare const scanLast: ScanLast<ObservableLike, ObservableLike>["scanLas
  * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
  * @param replay The number of events that should be replayed when the `ObservableLike`
  * is subscribed to.
+ *
+ * @category Operator
  */
 export declare const share: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 } | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
-export declare const observeWith: <C extends ObservableLike<unknown>, T>(observer: ObserverLike<T>) => Function1<C, C>;
 export declare const skipFirst: SkipFirst<ObservableLike>["skipFirst"];
 export declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];
 export declare const startWith: StartWith<ObservableLike>["startWith"];
@@ -191,6 +210,9 @@ export declare const switchMap: SwitchMap<ObservableLike>["switchMap"];
 export declare const subscribe: <T>(scheduler: SchedulerLike, options?: {
     maxBufferSize?: number;
 }) => Function1<ObservableLike<T>, DisposableLike>;
+/**
+ * @category Operator
+ */
 export declare const subscribeOn: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => ObservableLike<T>;
 export declare const takeFirst: TakeFirst<ObservableLike>["takeFirst"];
 export declare const takeLast: TakeLast<ObservableLike>["takeLast"];

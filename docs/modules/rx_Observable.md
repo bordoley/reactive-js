@@ -18,7 +18,9 @@
 ### Constructor Functions
 
 - [combineLatest](rx_Observable.md#combinelatest)
+- [compute](rx_Observable.md#compute)
 - [concat](rx_Observable.md#concat)
+- [create](rx_Observable.md#create)
 - [defer](rx_Observable.md#defer)
 - [empty](rx_Observable.md#empty)
 - [fromAsyncEnumerable](rx_Observable.md#fromasyncenumerable)
@@ -38,6 +40,7 @@
 
 ### Operator Functions
 
+- [buffer](rx_Observable.md#buffer)
 - [catchError](rx_Observable.md#catcherror)
 - [concatAll](rx_Observable.md#concatall)
 - [concatMap](rx_Observable.md#concatmap)
@@ -51,6 +54,7 @@
 - [exhaust](rx_Observable.md#exhaust)
 - [exhaustMap](rx_Observable.md#exhaustmap)
 - [flatMapIterable](rx_Observable.md#flatmapiterable)
+- [flatMapPromise](rx_Observable.md#flatmappromise)
 - [forEach](rx_Observable.md#foreach)
 - [forkCombineLatest](rx_Observable.md#forkcombinelatest)
 - [forkConcat](rx_Observable.md#forkconcat)
@@ -65,15 +69,18 @@
 - [mergeAll](rx_Observable.md#mergeall)
 - [mergeMap](rx_Observable.md#mergemap)
 - [mergeWith](rx_Observable.md#mergewith)
+- [onSubscribe](rx_Observable.md#onsubscribe)
 - [pairwise](rx_Observable.md#pairwise)
 - [reduce](rx_Observable.md#reduce)
 - [repeat](rx_Observable.md#repeat)
 - [retry](rx_Observable.md#retry)
 - [scan](rx_Observable.md#scan)
 - [scanLast](rx_Observable.md#scanlast)
+- [share](rx_Observable.md#share)
 - [skipFirst](rx_Observable.md#skipfirst)
 - [someSatisfy](rx_Observable.md#somesatisfy)
 - [startWith](rx_Observable.md#startwith)
+- [subscribeOn](rx_Observable.md#subscribeon)
 - [switchAll](rx_Observable.md#switchall)
 - [switchMap](rx_Observable.md#switchmap)
 - [takeFirst](rx_Observable.md#takefirst)
@@ -89,21 +96,14 @@
 
 ### Other Functions
 
-- [buffer](rx_Observable.md#buffer)
-- [compute](rx_Observable.md#compute)
-- [create](rx_Observable.md#create)
-- [flatMapPromise](rx_Observable.md#flatmappromise)
-- [multicast](rx_Observable.md#multicast)
 - [observeWith](rx_Observable.md#observewith)
-- [onSubscribe](rx_Observable.md#onsubscribe)
-- [share](rx_Observable.md#share)
 - [subscribe](rx_Observable.md#subscribe)
-- [subscribeOn](rx_Observable.md#subscribeon)
 
 ### Transform Functions
 
 - [firstAsync](rx_Observable.md#firstasync)
 - [lastAsync](rx_Observable.md#lastasync)
+- [multicast](rx_Observable.md#multicast)
 - [toEnumerable](rx_Observable.md#toenumerable)
 - [toRunnable](rx_Observable.md#torunnable)
 
@@ -940,6 +940,30 @@ ___
 
 ___
 
+### compute
+
+▸ **compute**<`T`\>(`computation`, `«destructured»?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `«destructured»` | `Object` |
+| › `mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
 ### concat
 
 ▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
@@ -959,6 +983,28 @@ Returns a ContainerLike which emits all values from each source sequentially.
 | `fst` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
 | `snd` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
 | `...tail` | readonly [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
+### create
+
+▸ **create**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\>\> |
 
 #### Returns
 
@@ -1745,6 +1791,30 @@ ___
 
 ## Operator Functions
 
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.duration?` | `number` \| [`Function1`](functions.md#function1)<`T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `options.maxBufferSize?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+___
+
 ### catchError
 
 ▸ **catchError**<`T`\>(`onError`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
@@ -2037,6 +2107,29 @@ ___
 | :------ | :------ |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, [`IterableLike`](../interfaces/containers.IterableLike.md)<`TB`\>\> |
 | `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### flatMapPromise
+
+▸ **flatMapPromise**<`TA`, `TB`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Function1`](functions.md#function1)<`TA`, `Promise`<`TB`\>\> |
 
 #### Returns
 
@@ -3006,6 +3099,28 @@ ___
 
 ___
 
+### onSubscribe
+
+▸ **onSubscribe**<`T`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](util.md#disposableorteardown)\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
 ### pairwise
 
 ▸ **pairwise**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
@@ -3211,6 +3326,34 @@ ___
 
 ___
 
+### share
+
+▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+Returns an `ObservableLike` backed by a shared refcounted subscription to the
+source. When the refcount goes to 0, the underlying subscription
+to the source is disposed.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
+| `options?` | `Object` | - |
+| `options.replay?` | `number` | - |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
 ### skipFirst
 
 ▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
@@ -3279,6 +3422,40 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### subscribeOn
+
+▸ **subscribeOn**<`T`\>(`scheduler`): (`observable`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+
+#### Returns
+
+`fn`
+
+▸ (`observable`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+
+##### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
@@ -3809,125 +3986,6 @@ ___
 
 ## Other Functions
 
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.duration?` | `number` \| [`Function1`](functions.md#function1)<`T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
-| `options.maxBufferSize?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
-
-___
-
-### compute
-
-▸ **compute**<`T`\>(`computation`, `«destructured»?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](functions.md#factory)<`T`\> |
-| `«destructured»` | `Object` |
-| › `mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-___
-
-### create
-
-▸ **create**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-___
-
-### flatMapPromise
-
-▸ **flatMapPromise**<`TA`, `TB`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`Function1`](functions.md#function1)<`TA`, `Promise`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-___
-
-### multicast
-
-▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
-
-Returns a `MulticastObservableLike` backed by a single subscription to the source.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
-| `options?` | `Object` | - |
-| `options.replay?` | `number` | - |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
-
-___
-
 ### observeWith
 
 ▸ **observeWith**<`C`, `T`\>(`observer`): [`Function1`](functions.md#function1)<`C`, `C`\>
@@ -3948,56 +4006,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`C`, `C`\>
-
-___
-
-### onSubscribe
-
-▸ **onSubscribe**<`T`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](util.md#disposableorteardown)\> |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
-### share
-
-▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-Returns an `ObservableLike` backed by a shared refcounted subscription to the
-source. When the refcount goes to 0, the underlying subscription
-to the source is disposed.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
-| `options?` | `Object` | - |
-| `options.replay?` | `number` | - |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 
@@ -4022,40 +4030,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-___
-
-### subscribeOn
-
-▸ **subscribeOn**<`T`\>(`scheduler`): (`observable`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-`fn`
-
-▸ (`observable`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
-
-##### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
@@ -4106,6 +4080,32 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+___
+
+### multicast
+
+▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
+
+Returns a `MulticastObservableLike` backed by a single subscription to the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
+| `options?` | `Object` | - |
+| `options.replay?` | `number` | - |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
 
 ___
 

@@ -320,6 +320,9 @@ interface __Using {
  */
 export const __using: __Using = Observable_compute__using;
 
+/**
+ * @category Operator
+ */
 export const buffer: <T>(options?: {
   readonly duration?: number | Function1<T, ObservableLike>;
   readonly maxBufferSize?: number;
@@ -331,6 +334,9 @@ export const catchError: CatchError<ObservableLike>["catchError"] =
 export const combineLatest: CombineLatest<ObservableLike>["combineLatest"] =
   Observable_combineLatest;
 
+/**
+ * @category Constructor
+ */
 export const compute = Observable_compute;
 
 export const concat: Concat<ObservableLike>["concat"] = Observable_concat;
@@ -351,6 +357,10 @@ export const concatWith: ConcatWith<ObservableLike>["concatWith"] =
 export const contains: Contains<ObservableLike>["contains"] =
   Observable_contains;
 
+
+/**
+ * @category Constructor
+ */
 export const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T> =
   Observable_create;
 
@@ -386,6 +396,9 @@ export const firstAsync: FirstAsync<
 export const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"] =
   Observable_flatMapIterable;
 
+/**
+ * @category Operator
+ */
 export const flatMapPromise = Observable_flatMapPromise;
 
 export const forEach: ForEach<ObservableLike>["forEach"] = Observable_forEach;
@@ -493,11 +506,18 @@ export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =
  * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
  * @param replay The number of events that should be replayed when the `MulticastObservableLike`
  * is subscribed to.
+ * 
+ * @category Transform
  */
 export const multicast = Observable_multicast;
 
 export const never: Never<ObservableLike>["never"] = Observable_never;
 
+export const observeWith = Observable_observeWith;
+
+/**
+ * @category Operator
+ */
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
 ) => ContainerOperator<ObservableLike, T, T> = Observable_onSubscribe;
@@ -524,10 +544,10 @@ export const scanLast: ScanLast<ObservableLike, ObservableLike>["scanLast"] =
  * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
  * @param replay The number of events that should be replayed when the `ObservableLike`
  * is subscribed to.
+ * 
+ * @category Operator
  */
 export const share = Observable_share;
-
-export const observeWith = Observable_observeWith;
 
 export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
   Observable_skipFirst;
@@ -549,6 +569,9 @@ export const subscribe: <T>(
   options?: { maxBufferSize?: number },
 ) => Function1<ObservableLike<T>, DisposableLike> = Observable_subscribe;
 
+/**
+ * @category Operator
+ */
 export const subscribeOn = Observable_subscribeOn;
 
 export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
