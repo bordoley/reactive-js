@@ -34,6 +34,7 @@ import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
   ObservableLike,
+  ObservableLike_observe,
 } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { SchedulerLike_requestYield } from "../scheduling.js";
@@ -309,12 +310,11 @@ export const transform =
             Disposable_addTo(observer),
           );
 
-          const transformReadableStream = pipe(
-            createReadableSource(transform)[StreamableLike_stream](
-              observer[DispatcherLike_scheduler],
-            ),
-            Observable.observeWith(observer),
-          );
+          const transformReadableStream = createReadableSource(transform)[
+            StreamableLike_stream
+          ](observer[DispatcherLike_scheduler]);
+
+          transformReadableStream[ObservableLike_observe](observer);
 
           pipe(
             modeObs,
