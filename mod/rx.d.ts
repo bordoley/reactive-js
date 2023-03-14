@@ -78,6 +78,9 @@ export declare const MulticastObservableLike_observerCount: unique symbol;
  * @category Container
  */
 export interface MulticastObservableLike<T = unknown> extends ObservableLike<T>, DisposableLike {
+    readonly [ContainerLike_type]?: MulticastObservableLike<this[typeof ContainerLike_T]>;
+    readonly [ObservableLike_isEnumerable]: false;
+    readonly [ObservableLike_isRunnable]: false;
     /**
      * The number of observers currently observing.
      */
@@ -90,6 +93,7 @@ export declare const SubjectLike_publish: unique symbol;
  * @category Container
  */
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
+    readonly [ContainerLike_type]?: SubjectLike<this[typeof ContainerLike_T]>;
     [SubjectLike_publish](next: T): void;
 }
 /**

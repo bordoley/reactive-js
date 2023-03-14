@@ -71,8 +71,8 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
           [Subject_observers]: none,
         }),
         {
-          [ObservableLike_isEnumerable]: false,
-          [ObservableLike_isRunnable]: false,
+          [ObservableLike_isEnumerable]: false as const,
+          [ObservableLike_isRunnable]: false as const,
 
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<TProperties>(this);

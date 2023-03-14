@@ -71,8 +71,8 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
           unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);
           return this[DelegatingLike_delegate][DispatcherLike_scheduler];
         },
-        [ObservableLike_isEnumerable]: false,
-        [ObservableLike_isRunnable]: false,
+        [ObservableLike_isEnumerable]: false as const,
+        [ObservableLike_isRunnable]: false as const,
 
         [DispatcherLike_complete](this: DelegatingLike<StreamLike<TReq, T>>) {
           this[DelegatingLike_delegate][DispatcherLike_complete]();

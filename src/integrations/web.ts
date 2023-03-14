@@ -355,8 +355,8 @@ export const windowLocation: WindowLocationStreamableLike =
             return this[WindowLocationStream_historyCounter] > 0;
           },
 
-          [ObservableLike_isEnumerable]: false,
-          [ObservableLike_isRunnable]: false,
+          [ObservableLike_isEnumerable]: false as const,
+          [ObservableLike_isRunnable]: false as const,
 
           [DispatcherLike_complete](
             this: DelegatingLike<StreamLike<TAction, TState>>,

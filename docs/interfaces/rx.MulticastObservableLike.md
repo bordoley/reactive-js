@@ -26,12 +26,45 @@
 
 ### Properties
 
+- [[ContainerLike\_type]](rx.MulticastObservableLike.md#[containerlike_type])
 - [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
+- [[ObservableLike\_isEnumerable]](rx.MulticastObservableLike.md#[observablelike_isenumerable])
+- [[ObservableLike\_isRunnable]](rx.MulticastObservableLike.md#[observablelike_isrunnable])
 
 ## Properties
+
+### [ContainerLike\_type]
+
+• `Optional` `Readonly` **[ContainerLike\_type]**: [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`unknown`\>
+
+#### Overrides
+
+[ObservableLike](rx.ObservableLike.md).[[ContainerLike_type]](rx.ObservableLike.md#[containerlike_type])
+
+___
 
 ### [MulticastObservableLike\_observerCount]
 
 • `Readonly` **[MulticastObservableLike\_observerCount]**: `number`
 
 The number of observers currently observing.
+
+___
+
+### [ObservableLike\_isEnumerable]
+
+• `Readonly` **[ObservableLike\_isEnumerable]**: ``false``
+
+#### Overrides
+
+[ObservableLike](rx.ObservableLike.md).[[ObservableLike_isEnumerable]](rx.ObservableLike.md#[observablelike_isenumerable])
+
+___
+
+### [ObservableLike\_isRunnable]
+
+• `Readonly` **[ObservableLike\_isRunnable]**: ``false``
+
+#### Overrides
+
+[ObservableLike](rx.ObservableLike.md).[[ObservableLike_isRunnable]](rx.ObservableLike.md#[observablelike_isrunnable])

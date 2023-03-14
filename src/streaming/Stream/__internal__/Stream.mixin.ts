@@ -249,9 +249,9 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           return this[StreamMixin_dispatcher][QueueableLike_maxBufferSize];
         },
 
-        [ObservableLike_isEnumerable]: false,
+        [ObservableLike_isEnumerable]: false as const,
 
-        [ObservableLike_isRunnable]: false,
+        [ObservableLike_isRunnable]: false as const,
 
         [QueueableLike_push](this: TProperties, req: TReq): boolean {
           return this[StreamMixin_dispatcher][QueueableLike_push](req);
