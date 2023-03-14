@@ -7,10 +7,8 @@ import Iterable_toFlowable from "./Iterable/__internal__/Iterable.toFlowable.js"
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
-import Sequence_toIterable from "./Sequence/__internal__/Sequence.toIterable.js";
 export const enumerate = Iterable_enumerate;
 export const fromReadonlyArray = ReadonlyArray_toReadonlyArray;
-export const fromSequence = Sequence_toIterable;
 export const toAsyncEnumerable = Iterable_toAsyncEnumerable;
 export const toEnumerable = Iterable_toObservable;
 export const toFlowable = Iterable_toFlowable;

@@ -12,7 +12,6 @@
 - [fromOptional](containers_ReadonlyArray.md#fromoptional)
 - [fromReadonlyArray](containers_ReadonlyArray.md#fromreadonlyarray)
 - [fromRunnable](containers_ReadonlyArray.md#fromrunnable)
-- [fromSequence](containers_ReadonlyArray.md#fromsequence)
 
 ### Operator Functions
 
@@ -40,7 +39,6 @@
 - [toObservable](containers_ReadonlyArray.md#toobservable)
 - [toReadonlyArray](containers_ReadonlyArray.md#toreadonlyarray)
 - [toRunnable](containers_ReadonlyArray.md#torunnable)
-- [toSequence](containers_ReadonlyArray.md#tosequence)
 
 ## Constructor Functions
 
@@ -177,28 +175,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
-
-___
-
-### fromSequence
-
-▸ **fromSequence**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
 
 ___
 
@@ -640,29 +616,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
-
-___
-
-### toSequence
-
-▸ **toSequence**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>
-
-Converts the ContainerLike to a `SequenceLike`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>, [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>\>

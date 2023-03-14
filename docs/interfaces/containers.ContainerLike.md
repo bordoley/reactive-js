@@ -16,8 +16,6 @@
 
   ↳ [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)
 
-  ↳ [`SequenceLike`](containers.SequenceLike.md)
-
   ↳ [`EnumeratorLike`](containers.EnumeratorLike.md)
 
   ↳ [`ObservableLike`](rx.ObservableLike.md)

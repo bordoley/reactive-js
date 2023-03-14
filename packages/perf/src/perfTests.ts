@@ -18,7 +18,6 @@ import {
 import * as Enumerable from "@reactive-js/core/rx/Enumerable";
 import * as ReadonlyArray from "@reactive-js/core/containers/ReadonlyArray";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
-import * as Sequence from "@reactive-js/core/containers/Sequence";
 import { ToRunnable } from "@reactive-js/core/rx";
 
 /**
@@ -65,7 +64,6 @@ export const map = (n: number) =>
     pipeLazy<number, readonly number[]>(n, createArray),
     createMapPerfTest("Enumerable", Enumerable),
     createMapPerfTest("Runnable", Runnable),
-    createMapPerfTest("Sequence", Sequence),
     createMapPerfTest("readonlyArray", ReadonlyArray),
     benchmarkTest(
       "array methods",
@@ -104,7 +102,6 @@ export const filterMapFusion = (n: number) =>
     pipeLazy<number, readonly number[]>(n, createArray),
     createFilterMapFusionPerfTest("Enumerable", Enumerable),
     createFilterMapFusionPerfTest("Runnable", Runnable),
-    createFilterMapFusionPerfTest("Sequence", Sequence),
     benchmarkTest(
       "array methods",
       async src => {
@@ -146,7 +143,6 @@ export const filterMapReduce = (n: number) =>
     pipeLazy<number, readonly number[]>(n, createArray),
     createFilterMapReducePerfTest("Enumerable", Enumerable),
     createFilterMapReducePerfTest("Runnable", Runnable),
-    createFilterMapReducePerfTest("Sequence", Sequence),
     benchmarkTest(
       "array methods",
       async src => {
@@ -196,7 +192,6 @@ export const scanReduce = (n: number) =>
     pipeLazy<number, readonly number[]>(n, createArray),
     createScanReducePerfTest("Enumerable", Enumerable),
     createScanReducePerfTest("Runnable", Runnable),
-    createScanReducePerfTest("Sequence", Sequence),
     benchmarkTest(
       "most",
       async src => {

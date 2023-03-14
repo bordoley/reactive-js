@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, Enumerate, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, Enumerate, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { EnumerableEnumeratorLike, EnumerableLike, Retry, ScanLast, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
@@ -27,7 +27,6 @@ export declare const fromFactory: FromFactory<EnumerableLike>["fromFactory"];
 export declare const fromIterable: FromIterable<EnumerableLike>["fromIterable"];
 export declare const fromOptional: FromOptional<EnumerableLike>["fromOptional"];
 export declare const fromReadonlyArray: FromReadonlyArray<EnumerableLike>["fromReadonlyArray"];
-export declare const fromSequence: FromSequence<EnumerableLike>["fromSequence"];
 export declare const generate: Generate<EnumerableLike>["generate"];
 export declare const ignoreElements: IgnoreElements<EnumerableLike>["ignoreElements"];
 export declare const keep: Keep<EnumerableLike>["keep"];

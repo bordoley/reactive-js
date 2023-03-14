@@ -3,7 +3,6 @@ import {
   FromIterable,
   FromOptional,
   FromReadonlyArray,
-  FromSequence,
   Generate,
   Keep,
   Map,
@@ -14,7 +13,6 @@ import AsyncIterable_toAsyncEnumerable from "../containers/AsyncIterable/__inter
 import Iterable_toAsyncEnumerable from "../containers/Iterable/__internal__/Iterable.toAsyncEnumerable.js";
 import Optional_toAsyncEnumerable from "../containers/Optional/__internal__/Optional.toAsyncEnumerable.js";
 import ReadonlyArray_toAsyncEnumerable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
-import Sequence_toAsyncEnumerable from "../containers/Sequence/__internal__/Sequence.toAsyncEnumerable.js";
 import {
   FromEnumerable,
   GenerateLast,
@@ -60,9 +58,6 @@ export const fromReadonlyArray: FromReadonlyArray<
     readonly count?: number;
   }
 >["fromReadonlyArray"] = ReadonlyArray_toAsyncEnumerable;
-
-export const fromSequence: FromSequence<AsyncEnumerableLike>["fromSequence"] =
-  Sequence_toAsyncEnumerable;
 
 export const generate: Generate<
   AsyncEnumerableLike,

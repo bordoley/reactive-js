@@ -11,7 +11,6 @@ Reactive-JS
 - [containers/Iterable](modules/containers_Iterable.md)
 - [containers/Promiseable](modules/containers_Promiseable.md)
 - [containers/ReadonlyArray](modules/containers_ReadonlyArray.md)
-- [containers/Sequence](modules/containers_Sequence.md)
 - [functions](modules/functions.md)
 - [integrations/node](modules/integrations_node.md)
 - [integrations/react](modules/integrations_react.md)

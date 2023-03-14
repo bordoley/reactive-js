@@ -11,7 +11,6 @@
 - [fromIterable](streaming_AsyncEnumerable.md#fromiterable)
 - [fromOptional](streaming_AsyncEnumerable.md#fromoptional)
 - [fromReadonlyArray](streaming_AsyncEnumerable.md#fromreadonlyarray)
-- [fromSequence](streaming_AsyncEnumerable.md#fromsequence)
 - [generate](streaming_AsyncEnumerable.md#generate)
 - [generateLast](streaming_AsyncEnumerable.md#generatelast)
 
@@ -139,28 +138,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
-
-___
-
-### fromSequence
-
-▸ **fromSequence**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
 
 ___
 

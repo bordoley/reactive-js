@@ -7,7 +7,6 @@ import {
   FromIterable,
   FromOptional,
   FromReadonlyArray,
-  FromSequence,
   Keep,
   KeepType,
   Last,
@@ -16,7 +15,6 @@ import {
   Some,
   ToIterable,
   ToReadonlyArray,
-  ToSequence,
 } from "../containers.js";
 import {
   FromEnumerable,
@@ -45,8 +43,6 @@ import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/Readon
 import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
-import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
-import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
 
 export const empty: Empty<ReadonlyArrayLike>["empty"] = ReadonlyArray_empty;
 
@@ -74,9 +70,6 @@ export const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayLike>["fromReadon
 
 export const fromRunnable: FromRunnable<ReadonlyArrayLike>["fromRunnable"] =
   Runnable_toReadonlyArray;
-
-export const fromSequence: FromSequence<ReadonlyArrayLike>["fromSequence"] =
-  Sequence_toReadonlyArray;
 
 export const getLength = ReadonlyArray_getLength;
 
@@ -153,11 +146,3 @@ export const toRunnable: ToRunnable<
     readonly start?: number;
   }
 >["toRunnable"] = ReadonlyArray_toObservable;
-
-export const toSequence: ToSequence<
-  ReadonlyArrayLike,
-  {
-    readonly count?: number;
-    readonly start?: number;
-  }
->["toSequence"] = ReadonlyArray_toSequence;

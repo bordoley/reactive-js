@@ -39,21 +39,6 @@ export interface PromiseableLike<T = unknown> extends ContainerLike, PromiseLike
 export interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T> {
     readonly [ContainerLike_type]?: ReadonlyArrayLike<this[typeof ContainerLike_T]>;
 }
-/**  @ignore */
-export declare const SequenceLike_data: unique symbol;
-/**  @ignore */
-export declare const SequenceLike_next: unique symbol;
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface SequenceLike<T = unknown> extends ContainerLike {
-    readonly [ContainerLike_type]?: SequenceLike<this[typeof ContainerLike_T]>;
-    (): Optional<{
-        readonly [SequenceLike_data]: T;
-        readonly [SequenceLike_next]: SequenceLike<T>;
-    }>;
-}
 /** @ignore */
 export declare const EnumeratorLike_move: unique symbol;
 /** @ignore */
@@ -409,16 +394,6 @@ export interface FromReadonlyArray<C extends ContainerLike, O = unknown> extends
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromSequence<C extends ContainerLike, O = never> extends Container<C> {
-    /**
-     * @category Constructor
-     */
-    fromSequence<T>(options?: O): Function1<SequenceLike<T>, ContainerOf<C, T>>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface Generate<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * Generates a ContainerLike from a generator function
@@ -743,18 +718,6 @@ export interface ToReadonlyArray<C extends ContainerLike, O = never> extends Con
      * @category Transform
      */
     toReadonlyArray<T>(options?: O): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface ToSequence<C extends ContainerLike, O = never> extends Container<C> {
-    /**
-     * Converts the ContainerLike to a `SequenceLike`.
-     *
-     * @category Transform
-     */
-    toSequence<T>(options?: O): Function1<ContainerOf<C, T>, SequenceLike<T>>;
 }
 /**
  * @noInheritDoc

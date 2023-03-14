@@ -1,6 +1,0 @@
-/// <reference types="./Sequence.test.d.ts" />
-
-import { testModule } from "../../__internal__/testing.js";
-import { concatAllTests, concatMapTests, concatTests, concatWithTests, distinctUntilChangedTests, endWithTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, repeatTests, scanTests, skipFirstTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, toEnumerableTests, toObservableTests, toRunnableWithDelayTests, zipTests, zipWithTests, } from "../../__tests__/operators.js";
-import * as Sequence from "../Sequence.js";
-testModule("Sequence", concatTests(Sequence), concatAllTests(Sequence), concatMapTests(Sequence), concatWithTests(Sequence), distinctUntilChangedTests(Sequence), endWithTests(Sequence), fromReadonlyArrayTests(Sequence), ignoreElementsTests(Sequence), keepTests(Sequence), mapTests(Sequence), mapToTests(Sequence), pairwiseTests(Sequence), repeatTests(Sequence), scanTests(Sequence), skipFirstTests(Sequence), startWithTests(Sequence), takeFirstTests(Sequence), takeLastTests(Sequence), toEnumerableTests(Sequence), toObservableTests(Sequence), toRunnableWithDelayTests(Sequence), takeWhileTests(Sequence), zipTests(Sequence), zipWithTests(Sequence));

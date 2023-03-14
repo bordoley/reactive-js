@@ -12,7 +12,6 @@
 - [fromOptional](streaming_Flowable.md#fromoptional)
 - [fromReadonlyArray](streaming_Flowable.md#fromreadonlyarray)
 - [fromRunnable](streaming_Flowable.md#fromrunnable)
-- [fromSequence](streaming_Flowable.md#fromsequence)
 
 ### Transform Functions
 
@@ -152,28 +151,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-___
-
-### fromSequence
-
-▸ **fromSequence**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 

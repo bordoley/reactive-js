@@ -13,7 +13,6 @@
 - [fromIterable](rx_Enumerable.md#fromiterable)
 - [fromOptional](rx_Enumerable.md#fromoptional)
 - [fromReadonlyArray](rx_Enumerable.md#fromreadonlyarray)
-- [fromSequence](rx_Enumerable.md#fromsequence)
 - [generate](rx_Enumerable.md#generate)
 - [throws](rx_Enumerable.md#throws)
 - [zip](rx_Enumerable.md#zip)
@@ -229,28 +228,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
-
-___
-
-### fromSequence
-
-▸ **fromSequence**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
 
 ___
 

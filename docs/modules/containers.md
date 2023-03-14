@@ -12,7 +12,6 @@
 - [IterableLike](../interfaces/containers.IterableLike.md)
 - [PromiseableLike](../interfaces/containers.PromiseableLike.md)
 - [ReadonlyArrayLike](../interfaces/containers.ReadonlyArrayLike.md)
-- [SequenceLike](../interfaces/containers.SequenceLike.md)
 
 ### TypeClass Interfaces
 
@@ -44,7 +43,6 @@
 - [FromIterable](../interfaces/containers.FromIterable.md)
 - [FromOptional](../interfaces/containers.FromOptional.md)
 - [FromReadonlyArray](../interfaces/containers.FromReadonlyArray.md)
-- [FromSequence](../interfaces/containers.FromSequence.md)
 - [Generate](../interfaces/containers.Generate.md)
 - [IgnoreElements](../interfaces/containers.IgnoreElements.md)
 - [Keep](../interfaces/containers.Keep.md)
@@ -70,7 +68,6 @@
 - [Throws](../interfaces/containers.Throws.md)
 - [ToIterable](../interfaces/containers.ToIterable.md)
 - [ToReadonlyArray](../interfaces/containers.ToReadonlyArray.md)
-- [ToSequence](../interfaces/containers.ToSequence.md)
 - [Zip](../interfaces/containers.Zip.md)
 - [ZipWith](../interfaces/containers.ZipWith.md)
 

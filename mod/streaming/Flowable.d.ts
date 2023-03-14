@@ -1,4 +1,4 @@
-import { FromAsyncIterable, FromIterable, FromOptional, FromReadonlyArray, FromSequence } from "../containers.js";
+import { FromAsyncIterable, FromIterable, FromOptional, FromReadonlyArray } from "../containers.js";
 import { FromEnumerable, FromRunnable, ToObservable, ToRunnable } from "../rx.js";
 import { FlowableLike } from "../streaming.js";
 export declare const fromAsyncIterable: FromAsyncIterable<FlowableLike, {
@@ -14,6 +14,5 @@ export declare const fromReadonlyArray: FromReadonlyArray<FlowableLike, {
     readonly delayStart?: boolean;
 }>["fromReadonlyArray"];
 export declare const fromRunnable: FromRunnable<FlowableLike>["fromRunnable"];
-export declare const fromSequence: FromSequence<FlowableLike>["fromSequence"];
 export declare const toObservable: ToObservable<FlowableLike>["toObservable"];
 export declare const toRunnable: ToRunnable<FlowableLike>["toRunnable"];

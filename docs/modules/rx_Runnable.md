@@ -15,7 +15,6 @@
 - [fromIterable](rx_Runnable.md#fromiterable)
 - [fromOptional](rx_Runnable.md#fromoptional)
 - [fromReadonlyArray](rx_Runnable.md#fromreadonlyarray)
-- [fromSequence](rx_Runnable.md#fromsequence)
 - [generate](rx_Runnable.md#generate)
 - [merge](rx_Runnable.md#merge)
 - [throws](rx_Runnable.md#throws)
@@ -495,28 +494,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
-
-___
-
-### fromSequence
-
-▸ **fromSequence**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 

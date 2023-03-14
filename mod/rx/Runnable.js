@@ -3,7 +3,6 @@
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import { identity, returns } from "../functions.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
@@ -96,7 +95,6 @@ export const fromFactory = Observable_fromFactory;
 export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toObservable;
-export const fromSequence = Sequence_toObservable;
 export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;

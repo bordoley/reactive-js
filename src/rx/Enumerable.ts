@@ -23,7 +23,6 @@ import {
   FromIterable,
   FromOptional,
   FromReadonlyArray,
-  FromSequence,
   Generate,
   IgnoreElements,
   Keep,
@@ -49,7 +48,6 @@ import {
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import { identity, returns } from "../functions.js";
 import {
   EnumerableEnumeratorLike,
@@ -181,9 +179,6 @@ export const fromOptional: FromOptional<EnumerableLike>["fromOptional"] =
 
 export const fromReadonlyArray: FromReadonlyArray<EnumerableLike>["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
-
-export const fromSequence: FromSequence<EnumerableLike>["fromSequence"] =
-  Sequence_toObservable;
 
 export const generate: Generate<EnumerableLike>["generate"] =
   Observable_generate as Generate<EnumerableLike>["generate"];

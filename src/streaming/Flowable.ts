@@ -3,13 +3,11 @@ import {
   FromIterable,
   FromOptional,
   FromReadonlyArray,
-  FromSequence,
 } from "../containers.js";
 import AsyncIterable_toFlowable from "../containers/AsyncIterable/__internal__/AsyncIterable.toFlowable.js";
 import Iterable_toFlowable from "../containers/Iterable/__internal__/Iterable.toFlowable.js";
 import Optional_toFlowable from "../containers/Optional/__internal__/Optional.toFlowable.js";
 import ReadonlyArray_toFlowable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
-import Sequence_toFlowable from "../containers/Sequence/__internal__/Sequence.toFlowable.js";
 import {
   FromEnumerable,
   FromRunnable,
@@ -47,9 +45,6 @@ export const fromReadonlyArray: FromReadonlyArray<
 
 export const fromRunnable: FromRunnable<FlowableLike>["fromRunnable"] =
   Runnable_toFlowable;
-
-export const fromSequence: FromSequence<FlowableLike>["fromSequence"] =
-  Sequence_toFlowable;
 
 export const toObservable: ToObservable<FlowableLike>["toObservable"] =
   Flowable_toObservable;

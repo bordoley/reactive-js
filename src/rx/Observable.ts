@@ -23,7 +23,6 @@ import {
   FromIterable,
   FromOptional,
   FromReadonlyArray,
-  FromSequence,
   Generate,
   IgnoreElements,
   Keep,
@@ -51,7 +50,6 @@ import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import {
   Factory,
   Function1,
@@ -357,7 +355,6 @@ export const concatWith: ConcatWith<ObservableLike>["concatWith"] =
 export const contains: Contains<ObservableLike>["contains"] =
   Observable_contains;
 
-
 /**
  * @category Constructor
  */
@@ -454,14 +451,6 @@ export const fromReadonlyArray: FromReadonlyArray<
   }
 >["fromReadonlyArray"] = ReadonlyArray_toObservable;
 
-export const fromSequence: FromSequence<
-  ObservableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["fromSequence"] = Sequence_toObservable;
-
 export const generate: Generate<
   ObservableLike,
   { readonly delay?: number; readonly delayStart?: boolean }
@@ -506,7 +495,7 @@ export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =
  * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
  * @param replay The number of events that should be replayed when the `MulticastObservableLike`
  * is subscribed to.
- * 
+ *
  * @category Transform
  */
 export const multicast = Observable_multicast;
@@ -544,7 +533,7 @@ export const scanLast: ScanLast<ObservableLike, ObservableLike>["scanLast"] =
  * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
  * @param replay The number of events that should be replayed when the `ObservableLike`
  * is subscribed to.
- * 
+ *
  * @category Operator
  */
 export const share = Observable_share;

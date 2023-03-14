@@ -68,8 +68,6 @@
 
   ↳ [`FromReadonlyArray`](containers.FromReadonlyArray.md)
 
-  ↳ [`FromSequence`](containers.FromSequence.md)
-
   ↳ [`Generate`](containers.Generate.md)
 
   ↳ [`IgnoreElements`](containers.IgnoreElements.md)
@@ -119,8 +117,6 @@
   ↳ [`ToIterable`](containers.ToIterable.md)
 
   ↳ [`ToReadonlyArray`](containers.ToReadonlyArray.md)
-
-  ↳ [`ToSequence`](containers.ToSequence.md)
 
   ↳ [`Zip`](containers.Zip.md)
 
