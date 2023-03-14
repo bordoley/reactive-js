@@ -62,7 +62,7 @@ import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 
-export interface QueuedEnumeratorLike<T = unknown>
+interface QueuedEnumeratorLike<T = unknown>
   extends EnumeratorLike<T>,
     QueueableLike<T>,
     DisposableLike {}
