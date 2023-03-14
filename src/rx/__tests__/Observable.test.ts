@@ -93,7 +93,7 @@ const asyncTests = describe(
     let result = -1;
 
     pipe(
-      Observable.async(() => {
+      Observable.compute(() => {
         const obs1 = __memo(fromValueWithDelay, 10, 5);
         const result1 = __await(obs1);
         const obs2 = __memo(fromValueWithDelay, 20, 10);
@@ -127,7 +127,7 @@ const asyncTests = describe(
     const result: number[] = [];
 
     pipe(
-      Observable.async(
+      Observable.compute(
         () => {
           const v = __await(oneTwoThreeDelayed);
           const next = __memo(createOneTwoThree, v);
@@ -161,7 +161,7 @@ const asyncTests = describe(
     const result: number[] = [];
 
     pipe(
-      Observable.async(() => {
+      Observable.compute(() => {
         const v = __await(src);
 
         if (v % 2 === 0) {

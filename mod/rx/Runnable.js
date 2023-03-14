@@ -7,7 +7,6 @@ import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.
 import { identity, returns } from "../functions.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
-import Observable_compute from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
@@ -21,6 +20,7 @@ import Observable_forkConcat from "./Observable/__internal__/Observable.forkConc
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
+import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
@@ -70,7 +70,6 @@ import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonl
 export const buffer = Observable_buffer;
 export const catchError = Runnable_catchError;
 export const combineLatest = Observable_combineLatest;
-export const compute = Observable_compute;
 export const concat = Observable_concat;
 export const concatAll = Runnable_concatAll;
 export const concatMap = Runnable_concatMap;
@@ -93,6 +92,7 @@ export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
 export const fromEnumerable = /*@__PURE__*/ returns(identity);
+export const fromFactory = Observable_fromFactory;
 export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toObservable;

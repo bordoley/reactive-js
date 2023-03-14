@@ -37,7 +37,7 @@ const asyncTests = describe("async", test("batch mode", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const fromValueWithDelay = (delay, value) => pipe([value], Observable.fromReadonlyArray({ delay }));
     let result = -1;
-    pipe(Observable.async(() => {
+    pipe(Observable.compute(() => {
         const obs1 = __memo(fromValueWithDelay, 10, 5);
         const result1 = __await(obs1);
         const obs2 = __memo(fromValueWithDelay, 20, 10);
@@ -55,7 +55,7 @@ const asyncTests = describe("async", test("batch mode", () => {
     const oneTwoThreeDelayed = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }));
     const createOneTwoThree = (_) => pipe([1, 2, 3], Observable.fromReadonlyArray());
     const result = [];
-    pipe(Observable.async(() => {
+    pipe(Observable.compute(() => {
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
@@ -72,7 +72,7 @@ const asyncTests = describe("async", test("batch mode", () => {
         delayStart: false,
     });
     const result = [];
-    pipe(Observable.async(() => {
+    pipe(Observable.compute(() => {
         const v = __await(src);
         if (v % 2 === 0) {
             __memo(increment, 1);

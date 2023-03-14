@@ -6,8 +6,8 @@
 
 ### Constructor Functions
 
-- [compute](containers_Sequence.md#compute)
 - [concat](containers_Sequence.md#concat)
+- [fromFactory](containers_Sequence.md#fromfactory)
 - [fromOptional](containers_Sequence.md#fromoptional)
 - [fromReadonlyArray](containers_Sequence.md#fromreadonlyarray)
 - [generate](containers_Sequence.md#generate)
@@ -51,29 +51,6 @@
 
 ## Constructor Functions
 
-### compute
-
-▸ **compute**<`T`\>(`factory`, `options?`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
-
-___
-
 ### concat
 
 ▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
@@ -93,6 +70,29 @@ Returns a ContainerLike which emits all values from each source sequentially.
 | `fst` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\> |
 | `snd` | [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\> |
 | `...tail` | readonly [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>[] |
+
+#### Returns
+
+[`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(`factory`, `options?`): [`SequenceLike`](../interfaces/containers.SequenceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `undefined` |
 
 #### Returns
 

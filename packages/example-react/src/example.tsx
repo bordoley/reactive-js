@@ -73,7 +73,7 @@ const createActions = (
 const initialFlowModeState = (): FlowableState => FlowableState_paused;
 
 const StreamPauseResume = createComponent(() =>
-  Observable.async(() => {
+  Observable.compute(() => {
     const counter = __stream(counterFlowable);
     const state = __state(initialFlowModeState);
 

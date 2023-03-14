@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### AsyncEffect Functions
+### ComputationalEffect Functions
 
 - [\_\_await](rx_Observable.md#__await)
 - [\_\_currentScheduler](rx_Observable.md#__currentscheduler)
@@ -18,12 +18,12 @@
 ### Constructor Functions
 
 - [combineLatest](rx_Observable.md#combinelatest)
-- [compute](rx_Observable.md#compute)
 - [concat](rx_Observable.md#concat)
 - [defer](rx_Observable.md#defer)
 - [empty](rx_Observable.md#empty)
 - [fromAsyncEnumerable](rx_Observable.md#fromasyncenumerable)
 - [fromAsyncIterable](rx_Observable.md#fromasynciterable)
+- [fromFactory](rx_Observable.md#fromfactory)
 - [fromFlowable](rx_Observable.md#fromflowable)
 - [fromIterable](rx_Observable.md#fromiterable)
 - [fromOptional](rx_Observable.md#fromoptional)
@@ -89,8 +89,8 @@
 
 ### Other Functions
 
-- [async](rx_Observable.md#async)
 - [buffer](rx_Observable.md#buffer)
+- [compute](rx_Observable.md#compute)
 - [create](rx_Observable.md#create)
 - [flatMapPromise](rx_Observable.md#flatmappromise)
 - [multicast](rx_Observable.md#multicast)
@@ -107,7 +107,7 @@
 - [toEnumerable](rx_Observable.md#toenumerable)
 - [toRunnable](rx_Observable.md#torunnable)
 
-## AsyncEffect Functions
+## ComputationalEffect Functions
 
 ### \_\_await
 
@@ -940,30 +940,6 @@ ___
 
 ___
 
-### compute
-
-▸ **compute**<`T`\>(`factory`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.delay` | `number` |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-___
-
 ### concat
 
 ▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
@@ -1080,6 +1056,30 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(`factory`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
@@ -3809,30 +3809,6 @@ ___
 
 ## Other Functions
 
-### async
-
-▸ **async**<`T`\>(`computation`, `«destructured»?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](functions.md#factory)<`T`\> |
-| `«destructured»` | `Object` |
-| › `mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-___
-
 ### buffer
 
 ▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
@@ -3854,6 +3830,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+
+___
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `«destructured»?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `«destructured»` | `Object` |
+| › `mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 

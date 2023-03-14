@@ -18,7 +18,6 @@
 
 - [Buffer](../interfaces/containers.Buffer.md)
 - [CatchError](../interfaces/containers.CatchError.md)
-- [Compute](../interfaces/containers.Compute.md)
 - [Concat](../interfaces/containers.Concat.md)
 - [ConcatAll](../interfaces/containers.ConcatAll.md)
 - [ConcatMap](../interfaces/containers.ConcatMap.md)
@@ -41,6 +40,7 @@
 - [ForkConcat](../interfaces/containers.ForkConcat.md)
 - [ForkZip](../interfaces/containers.ForkZip.md)
 - [FromAsyncIterable](../interfaces/containers.FromAsyncIterable.md)
+- [FromFactory](../interfaces/containers.FromFactory.md)
 - [FromIterable](../interfaces/containers.FromIterable.md)
 - [FromOptional](../interfaces/containers.FromOptional.md)
 - [FromReadonlyArray](../interfaces/containers.FromReadonlyArray.md)

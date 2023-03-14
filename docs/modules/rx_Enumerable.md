@@ -6,10 +6,10 @@
 
 ### Constructor Functions
 
-- [compute](rx_Enumerable.md#compute)
 - [concat](rx_Enumerable.md#concat)
 - [defer](rx_Enumerable.md#defer)
 - [empty](rx_Enumerable.md#empty)
+- [fromFactory](rx_Enumerable.md#fromfactory)
 - [fromIterable](rx_Enumerable.md#fromiterable)
 - [fromOptional](rx_Enumerable.md#fromoptional)
 - [fromReadonlyArray](rx_Enumerable.md#fromreadonlyarray)
@@ -67,29 +67,6 @@
 - [toRunnable](rx_Enumerable.md#torunnable)
 
 ## Constructor Functions
-
-### compute
-
-▸ **compute**<`T`\>(`factory`, `options?`): [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>
-
-___
 
 ### concat
 
@@ -156,6 +133,29 @@ Return an ContainerLike that emits no items.
 
 | Name | Type |
 | :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(`factory`, `options?`): [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`T`\> |
 | `options?` | `undefined` |
 
 #### Returns

@@ -34,7 +34,7 @@ const DispatchedObservable_create =
         [QueueableLike_push](next) {
             const observer = this[DispatchedObservable_observer];
             // Practically the observer can never be none,
-            // unless the stream operator uses lazy subscriptions
+            // unless the stream operator uses fromFactory subscriptions
             // eg. concat.
             if (__DEV__ && isNone(observer)) {
                 raiseWithDebugMessage("DispatchedObservable has not been subscribed to yet");
@@ -59,7 +59,7 @@ const DispatchedObservable_create =
         [DispatcherLike_complete]() {
             const observer = this[DispatchedObservable_observer];
             // Practically the observer can never be none,
-            // unless the stream operator uses lazy subscriptions
+            // unless the stream operator uses fromFactory subscriptions
             // eg. concat.
             if (__DEV__ && isNone(observer)) {
                 raiseWithDebugMessage("DispatchedObservable has not been subscribed to yet");

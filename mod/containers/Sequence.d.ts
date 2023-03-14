@@ -1,7 +1,6 @@
-import { Compute, Concat, ConcatAll, ConcatMap, ConcatWith, DistinctUntilChanged, EndWith, Enumerate, First, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Repeat, Scan, SequenceLike, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ToIterable, ToReadonlyArray, ToSequence, Zip, ZipWith } from "../containers.js";
+import { Concat, ConcatAll, ConcatMap, ConcatWith, DistinctUntilChanged, EndWith, Enumerate, First, FromFactory, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Repeat, Scan, SequenceLike, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ToIterable, ToReadonlyArray, ToSequence, Zip, ZipWith } from "../containers.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
-export declare const compute: Compute<SequenceLike>["compute"];
 export declare const concat: Concat<SequenceLike>["concat"];
 export declare const concatAll: ConcatAll<SequenceLike>["concatAll"];
 export declare const concatMap: ConcatMap<SequenceLike>["concatMap"];
@@ -10,6 +9,7 @@ export declare const distinctUntilChanged: DistinctUntilChanged<SequenceLike>["d
 export declare const endWith: EndWith<SequenceLike>["endWith"];
 export declare const enumerate: Enumerate<SequenceLike>["enumerate"];
 export declare const first: First<SequenceLike>["first"];
+export declare const fromFactory: FromFactory<SequenceLike>["fromFactory"];
 export declare const fromOptional: FromOptional<SequenceLike>["fromOptional"];
 export declare const fromReadonlyArray: FromReadonlyArray<SequenceLike>["fromReadonlyArray"];
 export declare const generate: Generate<SequenceLike>["generate"];

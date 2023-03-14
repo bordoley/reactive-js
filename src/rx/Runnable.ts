@@ -1,7 +1,6 @@
 import {
   Buffer,
   CatchError,
-  Compute,
   Concat,
   ConcatAll,
   ConcatMap,
@@ -19,6 +18,7 @@ import {
   ForEach,
   ForkConcat,
   ForkZip,
+  FromFactory,
   FromIterable,
   FromOptional,
   FromReadonlyArray,
@@ -78,7 +78,6 @@ import {
 import { ToFlowable } from "../streaming.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
-import Observable_compute from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
@@ -92,6 +91,7 @@ import Observable_forkConcat from "./Observable/__internal__/Observable.forkConc
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
+import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
@@ -146,9 +146,6 @@ export const catchError: CatchError<RunnableLike>["catchError"] =
 
 export const combineLatest: CombineLatest<RunnableLike>["combineLatest"] =
   Observable_combineLatest;
-
-export const compute: Compute<RunnableLike, { delay: number }>["compute"] =
-  Observable_compute as Compute<RunnableLike>["compute"];
 
 export const concat: Concat<RunnableLike>["concat"] =
   Observable_concat as Concat<RunnableLike>["concat"];
@@ -220,6 +217,12 @@ export const fromEnumerable: FromEnumerable<
     readonly delayStart?: boolean;
   }
 >["fromEnumerable"] = /*@__PURE__*/ returns(identity);
+
+export const fromFactory: FromFactory<
+  RunnableLike,
+  { delay: number }
+>["fromFactory"] =
+  Observable_fromFactory as FromFactory<RunnableLike>["fromFactory"];
 
 export const fromIterable: FromIterable<
   RunnableLike,

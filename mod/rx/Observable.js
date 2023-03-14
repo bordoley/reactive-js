@@ -7,11 +7,10 @@ import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__
 import Sequence_toObservable from "../containers/Sequence/__internal__/Sequence.toObservable.js";
 import AsyncEnumerable_toObservable from "../streaming/AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
-import { Observable_async, Observable_async__await, Observable_async__currentScheduler, Observable_async__do, Observable_async__memo, Observable_async__observe, Observable_async__state, Observable_async__stream, Observable_async__using, } from "./Observable/__internal__/Observable.async.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
-import Observable_compute from "./Observable/__internal__/Observable.compute.js";
+import { Observable_compute, Observable_compute__await, Observable_compute__currentScheduler, Observable_compute__do, Observable_compute__memo, Observable_compute__observe, Observable_compute__state, Observable_compute__stream, Observable_compute__using, } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatAll from "./Observable/__internal__/Observable.concatAll.js";
 import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
@@ -36,6 +35,7 @@ import Observable_forkConcat from "./Observable/__internal__/Observable.forkConc
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
+import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
@@ -81,38 +81,37 @@ import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __memo = Observable_async__memo;
+export const __memo = Observable_compute__memo;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __await = Observable_async__await;
+export const __await = Observable_compute__await;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __currentScheduler = Observable_async__currentScheduler;
+export const __currentScheduler = Observable_compute__currentScheduler;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __do = Observable_async__do;
+export const __do = Observable_compute__do;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __observe = Observable_async__observe;
+export const __observe = Observable_compute__observe;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __state = Observable_async__state;
+export const __state = Observable_compute__state;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __stream = Observable_async__stream;
+export const __stream = Observable_compute__stream;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __using = Observable_async__using;
-export const async = Observable_async;
+export const __using = Observable_compute__using;
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
 export const combineLatest = Observable_combineLatest;
@@ -143,8 +142,9 @@ export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
 export const fromAsyncEnumerable = AsyncEnumerable_toObservable;
 export const fromAsyncIterable = AsyncIterable_toObservable;
-export const fromIterable = Iterable_toObservable;
+export const fromFactory = Observable_fromFactory;
 export const fromFlowable = Flowable_toObservable;
+export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toObservable;
 export const fromSequence = Sequence_toObservable;

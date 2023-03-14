@@ -1,12 +1,9 @@
-import { Buffer, CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { CombineLatest, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, FromEnumerable, Merge, MergeAll, MergeWith, Retry, RunnableLike, ScanLast, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<RunnableLike>["buffer"];
 export declare const catchError: CatchError<RunnableLike>["catchError"];
 export declare const combineLatest: CombineLatest<RunnableLike>["combineLatest"];
-export declare const compute: Compute<RunnableLike, {
-    delay: number;
-}>["compute"];
 export declare const concat: Concat<RunnableLike>["concat"];
 export declare const concatAll: ConcatAll<RunnableLike, {
     maxBufferSize?: number;
@@ -36,6 +33,9 @@ export declare const fromEnumerable: FromEnumerable<RunnableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["fromEnumerable"];
+export declare const fromFactory: FromFactory<RunnableLike, {
+    delay: number;
+}>["fromFactory"];
 export declare const fromIterable: FromIterable<RunnableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;

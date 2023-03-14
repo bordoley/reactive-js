@@ -18,8 +18,6 @@
 
   ↳ [`CatchError`](containers.CatchError.md)
 
-  ↳ [`Compute`](containers.Compute.md)
-
   ↳ [`Concat`](containers.Concat.md)
 
   ↳ [`ConcatAll`](containers.ConcatAll.md)
@@ -61,6 +59,8 @@
   ↳ [`ForkZip`](containers.ForkZip.md)
 
   ↳ [`FromAsyncIterable`](containers.FromAsyncIterable.md)
+
+  ↳ [`FromFactory`](containers.FromFactory.md)
 
   ↳ [`FromIterable`](containers.FromIterable.md)
 

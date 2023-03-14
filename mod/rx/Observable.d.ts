@@ -1,10 +1,10 @@
-import { CatchError, Compute, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
+import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromFactory, FromIterable, FromOptional, FromReadonlyArray, FromSequence, Generate, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
 import { CombineLatest, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, ScanLast, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToRunnable, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
-import { Observable_async__currentScheduler } from "./Observable/__internal__/Observable.async.js";
+import { Observable_compute__currentScheduler } from "./Observable/__internal__/Observable.compute.js";
 interface __Memo {
     <T>(fn: Factory<T>): T;
     <TA, T>(fn: Function1<TA, T>, a: TA): T;
@@ -15,17 +15,17 @@ interface __Memo {
     <TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
 }
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
 export declare const __memo: __Memo;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
 export declare const __await: <T>(observable: ObservableLike<T>) => T;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export declare const __currentScheduler: typeof Observable_async__currentScheduler;
+export declare const __currentScheduler: typeof Observable_compute__currentScheduler;
 interface __Do {
     (fn: SideEffect): void;
     <TA>(fn: SideEffect1<TA>, a: TA): void;
@@ -36,21 +36,21 @@ interface __Do {
     <TA, TB, TC, TD, TE, TF>(fn: SideEffect6<TA, TB, TC, TD, TE, TF>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): void;
 }
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
 export declare const __do: __Do;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
 export declare const __observe: <T>(observable: ObservableLike<T>) => import("../functions.js").Optional<T>;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
 export declare const __state: <T>(initialState: () => T, options?: {
     readonly equality?: import("../functions.js").Optional<import("../functions.js").Equality<T>>;
 }) => import("../streaming.js").StreamLike<import("../functions.js").Updater<T>, T>;
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
 export declare const __stream: <TReq, T, TStream extends import("../streaming.js").StreamLike<TReq, T>>(streamable: import("../streaming.js").StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
     readonly replay?: number | undefined;
@@ -66,21 +66,18 @@ interface __Using {
     <TA, TB, TC, TD, TE, TF, T extends DisposableLike>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
 }
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
 export declare const __using: __Using;
-export declare const async: <T>(computation: Factory<T>, { mode }?: {
-    mode?: "batched" | "combine-latest" | undefined;
-}) => ObservableLike<T>;
 export declare const buffer: <T>(options?: {
     readonly duration?: number | Function1<T, ObservableLike>;
     readonly maxBufferSize?: number;
 }) => ContainerOperator<ObservableLike, T, readonly T[]>;
 export declare const catchError: CatchError<ObservableLike>["catchError"];
 export declare const combineLatest: CombineLatest<ObservableLike>["combineLatest"];
-export declare const compute: Compute<ObservableLike, {
-    delay: number;
-}>["compute"];
+export declare const compute: <T>(computation: Factory<T>, { mode }?: {
+    mode?: "batched" | "combine-latest" | undefined;
+}) => ObservableLike<T>;
 export declare const concat: Concat<ObservableLike>["concat"];
 export declare const concatAll: ConcatAll<ObservableLike, {
     maxBufferSize?: number;
@@ -116,11 +113,14 @@ export declare const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["f
 export declare const fromAsyncIterable: FromAsyncIterable<ObservableLike, {
     maxYieldInterval?: number;
 }>["fromAsyncIterable"];
+export declare const fromFactory: FromFactory<ObservableLike, {
+    delay: number;
+}>["fromFactory"];
+export declare const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"];
 export declare const fromIterable: FromIterable<ObservableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["fromIterable"];
-export declare const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"];
 export declare const fromOptional: FromOptional<ObservableLike, {
     delay?: number;
 }>["fromOptional"];

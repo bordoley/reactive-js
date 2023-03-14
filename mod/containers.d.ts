@@ -122,16 +122,6 @@ export interface CatchError<C extends ContainerLike, O = never> extends Containe
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Compute<C extends ContainerLike, O = never> extends Container<C> {
-    /**
-     * @category Constructor
-     */
-    compute<T>(factory: Factory<T>, options?: O): ContainerOf<C, T>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface Concat<C extends ContainerLike> extends Container<C> {
     /**
      * Returns a ContainerLike which emits all values from each source sequentially.
@@ -371,6 +361,16 @@ export interface FromAsyncIterable<C extends ContainerLike, O = never> extends C
      * @category Constructor
      */
     fromAsyncIterable<T>(options?: O): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface FromFactory<C extends ContainerLike, O = never> extends Container<C> {
+    /**
+     * @category Constructor
+     */
+    fromFactory<T>(factory: Factory<T>, options?: O): ContainerOf<C, T>;
 }
 /**
  * @noInheritDoc

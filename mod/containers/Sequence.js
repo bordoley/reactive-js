@@ -3,7 +3,6 @@
 import { identity, returns } from "../functions.js";
 import Optional_toSequence from "./Optional/__internal__/Optional.toSequence.js";
 import ReadonlyArray_toSequence from "./ReadonlyArray/__internal__/ReadonlyArray.toSequence.js";
-import Sequence_compute from "./Sequence/__internal__/Sequence.compute.js";
 import Sequence_concat from "./Sequence/__internal__/Sequence.concat.js";
 import Sequence_concatAll from "./Sequence/__internal__/Sequence.concatAll.js";
 import Sequence_concatMap from "./Sequence/__internal__/Sequence.concatMap.js";
@@ -12,6 +11,7 @@ import Sequence_distinctUntilChanged from "./Sequence/__internal__/Sequence.dist
 import Sequence_endWith from "./Sequence/__internal__/Sequence.endWith.js";
 import Sequence_enumerate from "./Sequence/__internal__/Sequence.enumerate.js";
 import Sequence_first from "./Sequence/__internal__/Sequence.first.js";
+import Sequence_fromFactory from "./Sequence/__internal__/Sequence.fromFactory.js";
 import Sequence_generate from "./Sequence/__internal__/Sequence.generate.js";
 import Sequence_ignoreElements from "./Sequence/__internal__/Sequence.ignoreElements.js";
 import Sequence_keep from "./Sequence/__internal__/Sequence.keep.js";
@@ -34,7 +34,6 @@ import Sequence_toObservable from "./Sequence/__internal__/Sequence.toObservable
 import Sequence_toReadonlyArray from "./Sequence/__internal__/Sequence.toReadonlyArray.js";
 import Sequence_zip from "./Sequence/__internal__/Sequence.zip.js";
 import Sequence_zipWith from "./Sequence/__internal__/Sequence.zipWith.js";
-export const compute = Sequence_compute;
 export const concat = Sequence_concat;
 export const concatAll = Sequence_concatAll;
 export const concatMap = Sequence_concatMap;
@@ -43,6 +42,7 @@ export const distinctUntilChanged = Sequence_distinctUntilChanged;
 export const endWith = Sequence_endWith;
 export const enumerate = Sequence_enumerate;
 export const first = Sequence_first;
+export const fromFactory = Sequence_fromFactory;
 export const fromOptional = Optional_toSequence;
 export const fromReadonlyArray = ReadonlyArray_toSequence;
 export const generate = Sequence_generate;

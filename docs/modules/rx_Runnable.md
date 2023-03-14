@@ -7,11 +7,11 @@
 ### Constructor Functions
 
 - [combineLatest](rx_Runnable.md#combinelatest)
-- [compute](rx_Runnable.md#compute)
 - [concat](rx_Runnable.md#concat)
 - [defer](rx_Runnable.md#defer)
 - [empty](rx_Runnable.md#empty)
 - [fromEnumerable](rx_Runnable.md#fromenumerable)
+- [fromFactory](rx_Runnable.md#fromfactory)
 - [fromIterable](rx_Runnable.md#fromiterable)
 - [fromOptional](rx_Runnable.md#fromoptional)
 - [fromReadonlyArray](rx_Runnable.md#fromreadonlyarray)
@@ -307,30 +307,6 @@
 
 ___
 
-### compute
-
-▸ **compute**<`T`\>(`factory`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.delay` | `number` |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-___
-
 ### concat
 
 ▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
@@ -426,6 +402,30 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(`factory`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 ___
 

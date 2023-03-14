@@ -1,6 +1,5 @@
 import {
   CatchError,
-  Compute,
   Concat,
   ConcatAll,
   ConcatMap,
@@ -20,6 +19,7 @@ import {
   ForkConcat,
   ForkZip,
   FromAsyncIterable,
+  FromFactory,
   FromIterable,
   FromOptional,
   FromReadonlyArray,
@@ -99,21 +99,20 @@ import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import AsyncEnumerable_toObservable from "../streaming/AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
-import {
-  Observable_async,
-  Observable_async__await,
-  Observable_async__currentScheduler,
-  Observable_async__do,
-  Observable_async__memo,
-  Observable_async__observe,
-  Observable_async__state,
-  Observable_async__stream,
-  Observable_async__using,
-} from "./Observable/__internal__/Observable.async.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
-import Observable_compute from "./Observable/__internal__/Observable.compute.js";
+import {
+  Observable_compute,
+  Observable_compute__await,
+  Observable_compute__currentScheduler,
+  Observable_compute__do,
+  Observable_compute__memo,
+  Observable_compute__observe,
+  Observable_compute__state,
+  Observable_compute__stream,
+  Observable_compute__using,
+} from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatAll from "./Observable/__internal__/Observable.concatAll.js";
 import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
@@ -138,6 +137,7 @@ import Observable_forkConcat from "./Observable/__internal__/Observable.forkConc
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
+import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
@@ -215,19 +215,19 @@ interface __Memo {
 }
 
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __memo: __Memo = Observable_async__memo;
+export const __memo: __Memo = Observable_compute__memo;
 
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __await = Observable_async__await;
+export const __await = Observable_compute__await;
 
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __currentScheduler = Observable_async__currentScheduler;
+export const __currentScheduler = Observable_compute__currentScheduler;
 
 interface __Do {
   (fn: SideEffect): void;
@@ -261,24 +261,24 @@ interface __Do {
 }
 
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __do: __Do = Observable_async__do;
+export const __do: __Do = Observable_compute__do;
 
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __observe = Observable_async__observe;
+export const __observe = Observable_compute__observe;
 
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __state = Observable_async__state;
+export const __state = Observable_compute__state;
 
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __stream = Observable_async__stream;
+export const __stream = Observable_compute__stream;
 
 interface __Using {
   <T extends DisposableLike>(fn: Factory<T>): T;
@@ -316,11 +316,9 @@ interface __Using {
   ): T;
 }
 /**
- * @category AsyncEffect
+ * @category ComputationalEffect
  */
-export const __using: __Using = Observable_async__using;
-
-export const async = Observable_async;
+export const __using: __Using = Observable_compute__using;
 
 export const buffer: <T>(options?: {
   readonly duration?: number | Function1<T, ObservableLike>;
@@ -333,8 +331,7 @@ export const catchError: CatchError<ObservableLike>["catchError"] =
 export const combineLatest: CombineLatest<ObservableLike>["combineLatest"] =
   Observable_combineLatest;
 
-export const compute: Compute<ObservableLike, { delay: number }>["compute"] =
-  Observable_compute;
+export const compute = Observable_compute;
 
 export const concat: Concat<ObservableLike>["concat"] = Observable_concat;
 
@@ -415,6 +412,14 @@ export const fromAsyncIterable: FromAsyncIterable<
   { maxYieldInterval?: number }
 >["fromAsyncIterable"] = AsyncIterable_toObservable;
 
+export const fromFactory: FromFactory<
+  ObservableLike,
+  { delay: number }
+>["fromFactory"] = Observable_fromFactory;
+
+export const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"] =
+  Flowable_toObservable;
+
 export const fromIterable: FromIterable<
   ObservableLike,
   {
@@ -422,9 +427,6 @@ export const fromIterable: FromIterable<
     readonly delayStart?: boolean;
   }
 >["fromIterable"] = Iterable_toObservable;
-
-export const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"] =
-  Flowable_toObservable;
 
 export const fromOptional: FromOptional<
   ObservableLike,

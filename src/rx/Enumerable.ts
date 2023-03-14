@@ -1,7 +1,6 @@
 import {
   Buffer,
   CatchError,
-  Compute,
   Concat,
   ConcatAll,
   ConcatMap,
@@ -20,6 +19,7 @@ import {
   ForEach,
   ForkConcat,
   ForkZip,
+  FromFactory,
   FromIterable,
   FromOptional,
   FromReadonlyArray,
@@ -68,7 +68,6 @@ import Enumerable_encodeUtf8 from "../rx/Enumerable/__internal__/Enumerable.enco
 import Enumerable_flatMapIterable from "../rx/Enumerable/__internal__/Enumerable.flatMapIterable.js";
 import Enumerable_scanLast from "../rx/Enumerable/__internal__/Enumerable.scanLast.js";
 import Observable_buffer from "../rx/Observable/__internal__/Observable.buffer.js";
-import Observable_compute from "../rx/Observable/__internal__/Observable.compute.js";
 import Observable_concat from "../rx/Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "../rx/Observable/__internal__/Observable.concatWith.js";
 import Observable_contains from "../rx/Observable/__internal__/Observable.contains.js";
@@ -80,6 +79,7 @@ import Observable_everySatisfy from "../rx/Observable/__internal__/Observable.ev
 import Observable_forEach from "../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_forkConcat from "../rx/Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkZip from "../rx/Observable/__internal__/Observable.forkZip.js";
+import Observable_fromFactory from "../rx/Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "../rx/Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "../rx/Observable/__internal__/Observable.keep.js";
@@ -112,9 +112,6 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = Observable_buffer;
 
 export const catchError: CatchError<EnumerableLike>["catchError"] =
   Enumerable_catchError;
-
-export const compute: Compute<EnumerableLike>["compute"] =
-  Observable_compute as Compute<EnumerableLike>["compute"];
 
 export const concat: Concat<EnumerableLike>["concat"] =
   Observable_concat as Concat<EnumerableLike>["concat"];
@@ -172,6 +169,9 @@ export const forkConcat: ForkConcat<EnumerableLike>["forkConcat"] =
 
 export const forkZip: ForkZip<EnumerableLike>["forkZip"] =
   Observable_forkZip as ForkZip<EnumerableLike>["forkZip"];
+
+export const fromFactory: FromFactory<EnumerableLike>["fromFactory"] =
+  Observable_fromFactory as FromFactory<EnumerableLike>["fromFactory"];
 
 export const fromIterable: FromIterable<EnumerableLike>["fromIterable"] =
   Iterable_toObservable;

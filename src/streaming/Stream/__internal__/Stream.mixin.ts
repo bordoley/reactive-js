@@ -118,7 +118,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             ] as ObserverLike<T>;
 
             // Practically the observer can never be none,
-            // unless the stream operator uses lazy subscriptions
+            // unless the stream operator uses fromFactory subscriptions
             // eg. concat.
             if (__DEV__ && isNone(observer)) {
               raiseWithDebugMessage(
@@ -153,7 +153,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             ] as ObserverLike<T>;
 
             // Practically the observer can never be none,
-            // unless the stream operator uses lazy subscriptions
+            // unless the stream operator uses fromFactory subscriptions
             // eg. concat.
             if (__DEV__ && isNone(observer)) {
               raiseWithDebugMessage(
