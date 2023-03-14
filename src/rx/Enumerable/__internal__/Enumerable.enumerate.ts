@@ -1,4 +1,4 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { MAX_SAFE_INTEGER, __DEV__ } from "../../../__internal__/constants.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -22,10 +22,18 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
 } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { isSome, none, pipe, returns, unsafeCast } from "../../../functions.js";
+import {
+  isSome,
+  none,
+  pipe,
+  raiseWithDebugMessage,
+  returns,
+  unsafeCast,
+} from "../../../functions.js";
 import {
   EnumerableEnumeratorLike,
   EnumerableLike,
+  ObservableLike_isEnumerable,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -165,8 +173,14 @@ const Enumerable_enumerate: <T>() => (
   );
 
   return returns(
-    (enumerable: EnumerableLike<T>): EnumerableEnumeratorLike<T> =>
-      pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable)),
+    (enumerable: EnumerableLike<T>): EnumerableEnumeratorLike<T> => {
+      if (__DEV__ && !enumerable[ObservableLike_isEnumerable]) {
+        raiseWithDebugMessage(
+          "Enumerable.enumerate() invoked with a non-enumerable ObservableLike",
+        );
+      }
+      return pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable));
+    },
   );
 })();
 

@@ -1,12 +1,12 @@
 /// <reference types="./Enumerable.enumerate.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { MAX_SAFE_INTEGER, __DEV__ } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { isSome, none, pipe, returns, unsafeCast } from "../../../functions.js";
-import { ObserverLike_notify, } from "../../../rx.js";
+import { isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
+import { ObservableLike_isEnumerable, ObserverLike_notify, } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
@@ -64,6 +64,11 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             this[EnumeratorLike_current] = next;
         },
     }));
-    return returns((enumerable) => pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable)));
+    return returns((enumerable) => {
+        if (__DEV__ && !enumerable[ObservableLike_isEnumerable]) {
+            raiseWithDebugMessage("Enumerable.enumerate() invoked with a non-enumerable ObservableLike");
+        }
+        return pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable));
+    });
 })();
 export default Enumerable_enumerate;
