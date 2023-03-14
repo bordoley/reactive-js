@@ -205,11 +205,9 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
             // Run any inner continuations first.
             let head: Optional<ContinuationLike> = none;
             while (((head = this[QueueLike_pull]()), isSome(head))) {
-              if (!head[DisposableLike_isDisposed]) {
-                this[Continuation_childContinuation] = head;
-                head[ContinuationLike_run]();
-                this[Continuation_childContinuation] = none;
-              }
+              this[Continuation_childContinuation] = head;
+              head[ContinuationLike_run]();
+              this[Continuation_childContinuation] = none;
 
               const shouldYield =
                 scheduler[ContinuationSchedulerLike_shouldYield];
@@ -385,10 +383,6 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           this: PrioritySchedulerImplementationLike & TSchedulerProperties,
           continuation: ContinuationLike,
         ): void {
-          if (continuation[DisposableLike_isDisposed]) {
-            return;
-          }
-
           this[SchedulerMixin_currentContinuation] = continuation;
           this[SchedulerMixin_yieldRequested] = false;
           continuation[ContinuationLike_run]();

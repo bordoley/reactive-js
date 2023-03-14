@@ -63,11 +63,9 @@ export const PriorityScheduler_mixin =
             // Run any inner continuations first.
             let head = none;
             while (((head = this[QueueLike_pull]()), isSome(head))) {
-                if (!head[DisposableLike_isDisposed]) {
-                    this[Continuation_childContinuation] = head;
-                    head[ContinuationLike_run]();
-                    this[Continuation_childContinuation] = none;
-                }
+                this[Continuation_childContinuation] = head;
+                head[ContinuationLike_run]();
+                this[Continuation_childContinuation] = none;
                 const shouldYield = scheduler[ContinuationSchedulerLike_shouldYield];
                 if (shouldYield && !this[DisposableLike_isDisposed]) {
                     scheduler[ContinuationSchedulerLike_schedule](this, 0);
@@ -173,9 +171,6 @@ export const PriorityScheduler_mixin =
             return continuation;
         },
         [PrioritySchedulerImplementationLike_runContinuation](continuation) {
-            if (continuation[DisposableLike_isDisposed]) {
-                return;
-            }
             this[SchedulerMixin_currentContinuation] = continuation;
             this[SchedulerMixin_yieldRequested] = false;
             continuation[ContinuationLike_run]();
