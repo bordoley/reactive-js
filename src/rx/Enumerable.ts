@@ -13,6 +13,7 @@ import {
   EncodeUtf8,
   EndWith,
   Enumerate,
+  EnumeratorLike,
   EverySatisfy,
   First,
   FlatMapIterable,
@@ -50,7 +51,6 @@ import Optional_toObservable from "../containers/Optional/__internal__/Optional.
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { identity, returns } from "../functions.js";
 import {
-  EnumerableEnumeratorLike,
   EnumerableLike,
   Retry,
   ScanLast,
@@ -100,6 +100,7 @@ import Observable_zip from "../rx/Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith.js";
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import { DisposableLike } from "../util.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
@@ -149,7 +150,7 @@ export const endWith: EndWith<EnumerableLike>["endWith"] =
 
 export const enumerate: Enumerate<
   EnumerableLike,
-  EnumerableEnumeratorLike
+  EnumeratorLike & DisposableLike
 >["enumerate"] = Enumerable_enumerate;
 
 export const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"] =

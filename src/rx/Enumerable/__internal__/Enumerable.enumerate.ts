@@ -31,7 +31,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  EnumerableEnumeratorLike,
   EnumerableLike,
   ObservableLike_isEnumerable,
   ObserverLike,
@@ -62,7 +61,7 @@ import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/Index
 
 const Enumerable_enumerate: <T>() => (
   enumerable: EnumerableLike<T>,
-) => EnumerableEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
+) => EnumeratorLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
   const typedObserverMixin = Observer_mixin<T>();
 
@@ -75,7 +74,8 @@ const Enumerable_enumerate: <T>() => (
   };
 
   interface EnumeratorScheduler<T>
-    extends EnumerableEnumeratorLike<T>,
+    extends EnumeratorLike<T>,
+      DisposableLike,
       PrioritySchedulerImplementationLike,
       ObserverLike<T> {}
 
@@ -173,7 +173,7 @@ const Enumerable_enumerate: <T>() => (
   );
 
   return returns(
-    (enumerable: EnumerableLike<T>): EnumerableEnumeratorLike<T> => {
+    (enumerable: EnumerableLike<T>): EnumeratorLike<T> & DisposableLike => {
       if (__DEV__ && !enumerable[ObservableLike_isEnumerable]) {
         raiseWithDebugMessage(
           "Enumerable.enumerate() invoked with a non-enumerable ObservableLike",

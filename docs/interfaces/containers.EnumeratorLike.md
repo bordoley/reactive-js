@@ -16,8 +16,6 @@
 
   ↳ **`EnumeratorLike`**
 
-  ↳↳ [`EnumerableEnumeratorLike`](rx.EnumerableEnumeratorLike.md)
-
 ## Table of contents
 
 ### Properties

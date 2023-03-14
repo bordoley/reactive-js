@@ -1,6 +1,7 @@
-import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, Enumerate, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { EnumerableEnumeratorLike, EnumerableLike, Retry, ScanLast, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
+import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, Enumerate, EnumeratorLike, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { EnumerableLike, Retry, ScanLast, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import { DisposableLike } from "../util.js";
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
 export declare const catchError: CatchError<EnumerableLike>["catchError"];
 export declare const concat: Concat<EnumerableLike>["concat"];
@@ -16,7 +17,7 @@ export declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>[
 export declare const empty: Empty<EnumerableLike>["empty"];
 export declare const encodeUtf8: EncodeUtf8<EnumerableLike>["encodeUtf8"];
 export declare const endWith: EndWith<EnumerableLike>["endWith"];
-export declare const enumerate: Enumerate<EnumerableLike, EnumerableEnumeratorLike>["enumerate"];
+export declare const enumerate: Enumerate<EnumerableLike, EnumeratorLike & DisposableLike>["enumerate"];
 export declare const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"];
 export declare const first: First<EnumerableLike>["first"];
 export declare const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"];
