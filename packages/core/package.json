@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/core",
-  "version": "0.25.0",
+  "version": "0.26.0",
   "type": "module",
   "keywords": [
     "asynchronous",
