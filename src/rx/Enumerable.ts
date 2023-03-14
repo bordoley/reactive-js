@@ -5,6 +5,8 @@ import {
   ConcatAll,
   ConcatMap,
   ConcatWith,
+  ContainerLike_T,
+  ContainerLike_type,
   Contains,
   DecodeWithCharset,
   Defer,
@@ -148,9 +150,13 @@ export const encodeUtf8: EncodeUtf8<EnumerableLike>["encodeUtf8"] =
 export const endWith: EndWith<EnumerableLike>["endWith"] =
   Observable_endWith as EndWith<EnumerableLike>["endWith"];
 
+interface EnumerableEnumerator<T = unknown> extends EnumeratorLike<T> {
+  readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]> &
+    DisposableLike;
+}
 export const enumerate: Enumerate<
   EnumerableLike,
-  EnumeratorLike & DisposableLike
+  EnumerableEnumerator
 >["enumerate"] = Enumerable_enumerate;
 
 export const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"] =

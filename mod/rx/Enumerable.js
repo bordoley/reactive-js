@@ -1,5 +1,6 @@
 /// <reference types="./Enumerable.d.ts" />
 
+import { ContainerLike_type, } from "../containers.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
