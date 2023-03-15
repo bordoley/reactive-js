@@ -1,70 +1,42 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-  Mutable,
   createInstanceFactory,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ContainerOperator, Scan } from "../../../containers.js";
-import { Factory, Reducer, none, partial, pipe } from "../../../functions.js";
-import {
-  ObservableLike,
-  ObservableLike_observe,
-  ObserverLike,
-} from "../../../rx.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
+import { Scan } from "../../../containers.js";
+import { Factory, Reducer, partial, pipe } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
-import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
+import AsyncEnumerator_delegatingMixin from "./AsyncEnumerator.delegatingMixin.js";
 
 const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = /*@__PURE__*/ (<
   T,
   TAcc,
 >() => {
-  const ScanLastEnumerator_op = Symbol("ScanLastEnumerator_op");
-
-  type TProperties = {
-    readonly [ScanLastEnumerator_op]: ContainerOperator<
-      ObservableLike,
-      T,
-      TAcc
-    >;
-  };
-
   const createScanStream = createInstanceFactory(
     mix(
-      include(Stream_delegatingMixin()),
-      function KeepStream(
-        instance: Pick<StreamLike<void, TAcc>, typeof ObservableLike_observe> &
-          Mutable<TProperties>,
+      include(AsyncEnumerator_delegatingMixin<T, TAcc>()),
+      function ScanStream(
+        instance: unknown,
         delegate: StreamLike<void, T>,
         reducer: Reducer<T, TAcc>,
         acc: Factory<TAcc>,
       ): StreamLike<void, TAcc> {
-        init(Stream_delegatingMixin(), instance, delegate);
+        init(
+          AsyncEnumerator_delegatingMixin<T, TAcc>(),
+          instance,
+          delegate,
+          Observable_scan<ObservableLike, T, TAcc>(reducer, acc),
+        );
 
-        instance[ScanLastEnumerator_op] = Observable_scan(reducer, acc);
         return instance;
       },
-      props<TProperties>({
-        [ScanLastEnumerator_op]: none,
-      }),
-      {
-        [ObservableLike_observe](
-          this: TProperties & DelegatingLike<StreamLike<void, T>>,
-          observer: ObserverLike<TAcc>,
-        ): void {
-          pipe(
-            this[DelegatingLike_delegate],
-            this[ScanLastEnumerator_op],
-            Observable_observeWith(observer),
-          );
-        },
-      },
+      props({}),
+      {},
     ),
   );
 

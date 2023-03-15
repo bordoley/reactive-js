@@ -1,5 +1,4 @@
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -7,81 +6,34 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { TakeWhile } from "../../../containers.js";
-import {
-  Predicate,
-  none,
-  partial,
-  pipe,
-  unsafeCast,
-} from "../../../functions.js";
-import {
-  DispatcherLike_scheduler,
-  MulticastObservableLike,
-  MulticastObservableLike_observerCount,
-  ObservableLike_observe,
-  ObserverLike,
-} from "../../../rx.js";
-import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import { Predicate, partial, pipe } from "../../../functions.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
-import { QueueableLike_maxBufferSize } from "../../../util.js";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
+import AsyncEnumerator_delegatingMixin from "./AsyncEnumerator.delegatingMixin.js";
 
 const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] =
   /*@__PURE__*/ (<T>() => {
-    const TakeWhileStream_obs = Symbol("TakeWhileStream_obs");
-
-    type TProperties = {
-      readonly [TakeWhileStream_obs]: MulticastObservableLike<T>;
-    };
-
     const createTakeWhileStream = createInstanceFactory(
       mix(
-        include(Disposable_delegatingMixin(), Stream_delegatingMixin()),
+        include(AsyncEnumerator_delegatingMixin<T, T>()),
         function TakeWhileStream(
-          instance: Pick<
-            StreamLike<void, T>,
-            | typeof ObservableLike_observe
-            | typeof MulticastObservableLike_observerCount
-          > &
-            Mutable<TProperties>,
+          instance: unknown,
           delegate: StreamLike<void, T>,
           predicate: Predicate<T>,
           inclusive: boolean,
         ): StreamLike<void, T> {
-          init(Disposable_delegatingMixin(), instance, delegate);
-          init(Stream_delegatingMixin(), instance, delegate);
-
-          instance[TakeWhileStream_obs] = pipe(
+          init(
+            AsyncEnumerator_delegatingMixin<T, T>(),
+            instance,
             delegate,
             Observable_takeWhile(predicate, { inclusive }),
-            Observable_multicast(delegate[DispatcherLike_scheduler], {
-              maxBufferSize: delegate[QueueableLike_maxBufferSize],
-            }),
-            Disposable_add(instance),
           );
+
           return instance;
         },
-        props<TProperties>({
-          [TakeWhileStream_obs]: none,
-        }),
-        {
-          get [MulticastObservableLike_observerCount]() {
-            unsafeCast<TProperties>(this);
-            return this[TakeWhileStream_obs][
-              MulticastObservableLike_observerCount
-            ];
-          },
-          [ObservableLike_observe](
-            this: TProperties,
-            observer: ObserverLike<T>,
-          ): void {
-            this[TakeWhileStream_obs][ObservableLike_observe](observer);
-          },
-        },
+        props({}),
+        {},
       ),
     );
 

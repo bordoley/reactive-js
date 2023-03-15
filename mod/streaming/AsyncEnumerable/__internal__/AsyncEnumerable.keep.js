@@ -1,40 +1,22 @@
 /// <reference types="./AsyncEnumerable.keep.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_observe, } from "../../../rx.js";
+import { compose, none, partial, pipe } from "../../../functions.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
-import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
+import { QueueableLike_push } from "../../../util.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
+import AsyncEnumerator_delegatingMixin from "./AsyncEnumerator.delegatingMixin.js";
 const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
-    const KeepStream_obs = Symbol("KeepStream_obs");
-    const createKeepStream = createInstanceFactory(mix(include(Disposable_delegatingMixin(), Stream_delegatingMixin()), function KeepStream(instance, delegate, predicate) {
-        init(Disposable_delegatingMixin(), instance, delegate);
-        init(Stream_delegatingMixin(), instance, delegate);
-        instance[KeepStream_obs] = pipe(delegate, Observable_forEach(x => {
+    const createKeepStream = createInstanceFactory(mix(include(AsyncEnumerator_delegatingMixin()), function KeepStream(instance, delegate, predicate) {
+        const op = compose(Observable_forEach(x => {
             if (!predicate(x)) {
                 delegate[QueueableLike_push](none);
             }
-        }), Observable_keep(predicate), Observable_multicast(delegate[DispatcherLike_scheduler], {
-            maxBufferSize: delegate[QueueableLike_maxBufferSize],
-        }), Disposable_add(instance));
+        }), Observable_keep(predicate));
+        init(AsyncEnumerator_delegatingMixin(), instance, delegate, op);
         return instance;
-    }, props({
-        [KeepStream_obs]: none,
-    }), {
-        get [MulticastObservableLike_observerCount]() {
-            unsafeCast(this);
-            return this[KeepStream_obs][MulticastObservableLike_observerCount];
-        },
-        [ObservableLike_observe](observer) {
-            this[KeepStream_obs][ObservableLike_observe](observer);
-        },
-    }));
+    }, props({}), {}));
     return ((predicate) => pipe(createKeepStream, partial(predicate), AsyncEnumerable_lift(true, true)));
 })();
 export default AsyncEnumerable_keep;

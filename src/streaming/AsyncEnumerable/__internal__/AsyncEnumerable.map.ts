@@ -1,65 +1,41 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-  Mutable,
   createInstanceFactory,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ContainerOperator, Map } from "../../../containers.js";
-import { Function1, none, partial, pipe } from "../../../functions.js";
-import {
-  ObservableLike,
-  ObservableLike_observe,
-  ObserverLike,
-} from "../../../rx.js";
+import { Map } from "../../../containers.js";
+import { Function1, partial, pipe } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
-import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
+import AsyncEnumerator_delegatingMixin from "./AsyncEnumerator.delegatingMixin.js";
 
 const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
   TA,
   TB,
 >() => {
-  const MapAsyncEnumerator_op = Symbol("MapAsyncEnumerator_op");
-
-  type TProperties = {
-    readonly [MapAsyncEnumerator_op]: ContainerOperator<ObservableLike, TA, TB>;
-  };
-
   const createMapStream = createInstanceFactory(
     mix(
-      include(Stream_delegatingMixin()),
+      include(AsyncEnumerator_delegatingMixin<TA, TB>()),
       function MapStream(
-        instance: Pick<StreamLike<void, TB>, typeof ObservableLike_observe> &
-          Mutable<TProperties>,
+        instance: unknown,
         delegate: StreamLike<void, TA>,
         mapper: Function1<TA, TB>,
       ): StreamLike<void, TB> {
-        init(Stream_delegatingMixin(), instance, delegate);
+        init(
+          AsyncEnumerator_delegatingMixin<TA, TB>(),
+          instance,
+          delegate,
+          Observable_map<ObservableLike, TA, TB>(mapper),
+        );
 
-        instance[MapAsyncEnumerator_op] = Observable_map(mapper);
         return instance;
       },
-      props<TProperties>({
-        [MapAsyncEnumerator_op]: none,
-      }),
-      {
-        [ObservableLike_observe](
-          this: TProperties & DelegatingLike<StreamLike<void, TA>>,
-          observer: ObserverLike<TB>,
-        ): void {
-          pipe(
-            this[DelegatingLike_delegate],
-            this[MapAsyncEnumerator_op],
-            Observable_observeWith(observer),
-          );
-        },
-      },
+      props({}),
+      {},
     ),
   );
 

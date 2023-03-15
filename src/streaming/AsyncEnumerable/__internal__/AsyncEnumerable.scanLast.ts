@@ -1,5 +1,4 @@
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -7,86 +6,37 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
-import {
-  Factory,
-  Function2,
-  none,
-  partial,
-  pipe,
-  unsafeCast,
-} from "../../../functions.js";
-import {
-  DispatcherLike_scheduler,
-  MulticastObservableLike,
-  MulticastObservableLike_observerCount,
-  ObservableLike,
-  ObservableLike_observe,
-  ObserverLike,
-  ScanLast,
-} from "../../../rx.js";
-import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import { Factory, Function2, partial, pipe } from "../../../functions.js";
+import { ObservableLike, ScanLast } from "../../../rx.js";
 import Observable_scanLast from "../../../rx/Observable/__internal__/Observable.scanLast.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
-import { QueueableLike_maxBufferSize } from "../../../util.js";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
+import AsyncEnumerator_delegatingMixin from "./AsyncEnumerator.delegatingMixin.js";
 
 const AsyncEnumerable_scanLast: ScanLast<
   AsyncEnumerableLike,
   ObservableLike
 >["scanLast"] = /*@__PURE__*/ (<T, TAcc>() => {
-  const ScanLastStream_obs = Symbol("ScanLastStream_obs");
-
-  type TProperties = {
-    readonly [ScanLastStream_obs]: MulticastObservableLike<TAcc>;
-  };
-
   const createScanLastStream = createInstanceFactory(
     mix(
-      include(Disposable_delegatingMixin(), Stream_delegatingMixin()),
+      include(AsyncEnumerator_delegatingMixin<T, TAcc>()),
       function ScanLastStream(
-        instance: Pick<
-          StreamLike<void, TAcc>,
-          | typeof ObservableLike_observe
-          | typeof MulticastObservableLike_observerCount
-        > &
-          Mutable<TProperties>,
+        instance: unknown,
         delegate: StreamLike<void, T>,
         reducer: Function2<TAcc, T, ObservableLike<TAcc>>,
         initialValue: Factory<TAcc>,
       ): StreamLike<void, TAcc> {
-        init(Disposable_delegatingMixin(), instance, delegate);
-        init(Stream_delegatingMixin(), instance, delegate);
-
-        instance[ScanLastStream_obs] = pipe(
+        init(
+          AsyncEnumerator_delegatingMixin<T, TAcc>(),
+          instance,
           delegate,
           Observable_scanLast(reducer, initialValue),
-          Observable_multicast(delegate[DispatcherLike_scheduler], {
-            maxBufferSize: delegate[QueueableLike_maxBufferSize],
-          }),
-          Disposable_add(instance),
         );
+
         return instance;
       },
-      props<TProperties>({
-        [ScanLastStream_obs]: none,
-      }),
-      {
-        get [MulticastObservableLike_observerCount]() {
-          unsafeCast<TProperties>(this);
-          return this[ScanLastStream_obs][
-            MulticastObservableLike_observerCount
-          ];
-        },
-        [ObservableLike_observe](
-          this: TProperties,
-          observer: ObserverLike<TAcc>,
-        ): void {
-          this[ScanLastStream_obs][ObservableLike_observe](observer);
-        },
-      },
+      props({}),
+      {},
     ),
   );
 
