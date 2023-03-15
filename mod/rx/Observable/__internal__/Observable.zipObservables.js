@@ -87,11 +87,8 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     }), {
         [ObserverLike_notify](next) {
             Observer_assertState(this);
-            const { [ZipObserver_queuedEnumerator]: queuedEnumerator, [ZipObserver_enumerators]: enumerators, } = this;
-            if (this[DisposableLike_isDisposed]) {
-                return;
-            }
-            queuedEnumerator[QueueableLike_push](next);
+            this[ZipObserver_queuedEnumerator][QueueableLike_push](next);
+            const enumerators = this[ZipObserver_enumerators];
             if (!shouldEmit(enumerators)) {
                 return;
             }
