@@ -22,13 +22,13 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
     const delayedComparator = (a, b) => {
         let diff = 0;
         diff = diff !== 0 ? diff : a[QueueTask_dueTime] - b[QueueTask_dueTime];
-        diff = diff !== 0 ? diff : a[QueueTask_taskID] - b[QueueTask_taskID];
+        diff = diff !== 0 ? diff : b[QueueTask_taskID] - a[QueueTask_taskID];
         return diff;
     };
     const taskComparator = (a, b) => {
         let diff = 0;
         diff = diff !== 0 ? diff : a[QueueTask_priority] - b[QueueTask_priority];
-        diff = diff !== 0 ? diff : a[QueueTask_taskID] - b[QueueTask_taskID];
+        diff = diff !== 0 ? diff : b[QueueTask_taskID] - a[QueueTask_taskID];
         return diff;
     };
     const peek = (instance) => {
