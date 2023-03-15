@@ -29,7 +29,7 @@ module.exports = {
     project: "./tsconfig.typecheck.json",
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint", "import"],
+  plugins: ["@typescript-eslint", "import", "unused-imports"],
   root: true,
   rules: {
     curly: ["error"],
@@ -54,6 +54,8 @@ module.exports = {
         },
       },
     ],
+
+    "unused-imports/no-unused-imports": "error",
 
     "@typescript-eslint/ban-types": "error",
     "@typescript-eslint/consistent-type-assertions": "error",
