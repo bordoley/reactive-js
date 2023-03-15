@@ -1,12 +1,15 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
   include,
+  init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
-import { Optional, none, pipe, unsafeCast } from "../../../functions.js";
+import { none, pipe, unsafeCast } from "../../../functions.js";
 import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
@@ -25,13 +28,11 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  DisposableOrTeardown,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 
 const AsyncEnumerator_create: <TA, TB>(
   stream: StreamLike<void, TA>,
@@ -40,45 +41,47 @@ const AsyncEnumerator_create: <TA, TB>(
   const AsyncEnumeratorDelegatingMixin_src = Symbol(
     "AsyncEnumeratorDelegatingMixin_src",
   );
-  const AsyncEnumeratorDelegatingMixin_observable = Symbol(
-    "AsyncEnumeratorDelegatingMixin_observable",
-  );
 
   type TProperties = {
     readonly [AsyncEnumeratorDelegatingMixin_src]: StreamLike<void, TA>;
-    readonly [AsyncEnumeratorDelegatingMixin_observable]: MulticastObservableLike<TB>;
-    readonly [DisposableLike_isDisposed]: boolean;
   };
 
   return createInstanceFactory(
     mix(
-      include(Disposable_delegatingMixin()),
+      include(Disposable_delegatingMixin<MulticastObservableLike<TB>>()),
       function AsyncEnumeratorDelegatingMixin(
-        instance: Omit<StreamLike<void, TB>, typeof DisposableLike_isDisposed> &
+        instance: Omit<
+          StreamLike<void, TB>,
+          | typeof DisposableLike_add
+          | typeof DisposableLike_dispose
+          | typeof DisposableLike_error
+          | typeof DisposableLike_isDisposed
+        > &
           Mutable<TProperties>,
         delegate: StreamLike<void, TA>,
         operator: ContainerOperator<ObservableLike, TA, TB>,
       ): StreamLike<void, TB> {
-        instance[AsyncEnumeratorDelegatingMixin_src] = delegate;
-
-        instance[AsyncEnumeratorDelegatingMixin_observable] = pipe(
+        const observable = pipe(
           delegate,
           operator,
           Observable_multicast(delegate[DispatcherLike_scheduler], {
             maxBufferSize: delegate[QueueableLike_maxBufferSize],
           }),
           Disposable_add(delegate),
-          Disposable_onDisposed(_ => {
-            instance[DisposableLike_isDisposed] = true;
-          }),
         );
+
+        init(
+          Disposable_delegatingMixin<MulticastObservableLike<TB>>(),
+          instance,
+          observable,
+        );
+
+        instance[AsyncEnumeratorDelegatingMixin_src] = delegate;
 
         return instance;
       },
       props<TProperties>({
         [AsyncEnumeratorDelegatingMixin_src]: none,
-        [AsyncEnumeratorDelegatingMixin_observable]: none,
-        [DisposableLike_isDisposed]: false,
       }),
       {
         [ObservableLike_isEnumerable]: false as const,
@@ -91,13 +94,6 @@ const AsyncEnumerator_create: <TA, TB>(
           ];
         },
 
-        get [DisposableLike_error](): Optional<Error> {
-          unsafeCast<TProperties>(this);
-          return this[AsyncEnumeratorDelegatingMixin_observable][
-            DisposableLike_error
-          ];
-        },
-
         get [QueueableLike_maxBufferSize](): number {
           unsafeCast<TProperties>(this);
           return this[AsyncEnumeratorDelegatingMixin_src][
@@ -106,27 +102,10 @@ const AsyncEnumerator_create: <TA, TB>(
         },
 
         get [MulticastObservableLike_observerCount]() {
-          unsafeCast<TProperties>(this);
-          return this[AsyncEnumeratorDelegatingMixin_observable][
+          unsafeCast<DelegatingLike<MulticastObservableLike<TB>>>(this);
+          return this[DelegatingLike_delegate][
             MulticastObservableLike_observerCount
           ];
-        },
-
-        [DisposableLike_add](
-          this: TProperties,
-          disposable: DisposableOrTeardown,
-          ignoreChildErrors: boolean,
-        ) {
-          this[AsyncEnumeratorDelegatingMixin_observable][DisposableLike_add](
-            disposable,
-            ignoreChildErrors,
-          );
-        },
-
-        [DisposableLike_dispose](this: TProperties, error?: Error) {
-          this[AsyncEnumeratorDelegatingMixin_observable][
-            DisposableLike_dispose
-          ](error);
         },
 
         [DispatcherLike_complete](this: TProperties) {
@@ -140,12 +119,10 @@ const AsyncEnumerator_create: <TA, TB>(
         },
 
         [ObservableLike_observe](
-          this: TProperties,
+          this: DelegatingLike<MulticastObservableLike<TB>>,
           observer: ObserverLike<TB>,
         ): void {
-          this[AsyncEnumeratorDelegatingMixin_observable][
-            ObservableLike_observe
-          ](observer);
+          this[DelegatingLike_delegate][ObservableLike_observe](observer);
         },
       },
     ),
