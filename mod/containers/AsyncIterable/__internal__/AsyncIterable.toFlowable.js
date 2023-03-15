@@ -4,11 +4,11 @@ import { error, pipe } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
 import { SchedulerLike_now, SchedulerLike_schedule, } from "../../../scheduling.js";
 import { FlowableState_paused, } from "../../../streaming.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((modeObs) => Observable_create((observer) => {
@@ -51,6 +51,6 @@ const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((mod
         if (!isPaused && wasPaused) {
             pipe(scheduler[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
         }
-    }), Observable_subscribe(scheduler), Disposable_addTo(observer), Disposable_onComplete(() => observer[DispatcherLike_complete]()));
+    }), Observable_subscribeWithMaxBufferSize(scheduler, observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(() => observer[DispatcherLike_complete]()));
 }), false);
 export default AsyncIterable_toFlowable;

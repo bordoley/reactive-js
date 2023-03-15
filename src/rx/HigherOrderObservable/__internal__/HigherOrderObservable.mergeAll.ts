@@ -47,7 +47,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "../../Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
@@ -111,7 +111,10 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             Observable_forEach<ObservableLike, T>(
               Observer_notifyObserver(observer[DelegatingLike_delegate]),
             ),
-            Observable_subscribe(observer[DispatcherLike_scheduler]),
+            Observable_subscribeWithMaxBufferSize(
+              observer[DispatcherLike_scheduler],
+              observer[QueueableLike_maxBufferSize],
+            ),
             Disposable_addTo(observer[DelegatingLike_delegate]),
             Disposable_onComplete(observer[MergeAllObserver_onDispose]),
           );

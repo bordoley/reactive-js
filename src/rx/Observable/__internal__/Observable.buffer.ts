@@ -43,7 +43,7 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 
 type ObservableBuffer = <C extends ObservableLike, T>(options?: {
   readonly duration?: number | Function1<T, C>;
@@ -160,7 +160,10 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
               next,
               this[BufferObserver_durationFunction],
               Observable_forEach<ObservableLike>(doOnNotify),
-              Observable_subscribe(this[DispatcherLike_scheduler]),
+              Observable_subscribeWithMaxBufferSize(
+                this[DispatcherLike_scheduler],
+                this[QueueableLike_maxBufferSize],
+              ),
             );
           }
         },

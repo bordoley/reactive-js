@@ -3402,7 +3402,7 @@ ___
 
 ### subscribeOn
 
-▸ **subscribeOn**<`T`\>(`scheduler`): (`observable`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **subscribeOn**<`T`\>(`scheduler`, `options?`): (`observable`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -3415,6 +3415,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
 
 #### Returns
 
@@ -4076,6 +4078,7 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 | :------ | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
 | `options?` | `Object` | - |
+| `options.maxBufferSize?` | `number` | - |
 | `options.replay?` | `number` | - |
 
 #### Returns

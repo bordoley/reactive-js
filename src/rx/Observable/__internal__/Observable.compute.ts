@@ -32,6 +32,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -41,6 +42,7 @@ import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 
 type EffectsMode = "batched" | "combine-latest";
 
@@ -259,7 +261,10 @@ class ComputeContext {
                 : scheduledComputationSubscription;
           }
         }),
-        Observable_subscribe(scheduler),
+        Observable_subscribeWithMaxBufferSize(
+          scheduler,
+          observer[QueueableLike_maxBufferSize],
+        ),
         Disposable_addTo(observer),
         Disposable_onComplete(this[ComputeContext_cleanup]),
       );

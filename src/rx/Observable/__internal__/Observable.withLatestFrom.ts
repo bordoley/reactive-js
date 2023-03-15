@@ -37,7 +37,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 
 const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"] =
   /*@__PURE__*/ (() => {
@@ -90,7 +90,10 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
                 instance[WithLatestFromObserver_hasLatest] = true;
                 instance[WithLatestFromObserver_otherLatest] = next;
               }),
-              Observable_subscribe(delegate[DispatcherLike_scheduler]),
+              Observable_subscribeWithMaxBufferSize(
+                delegate[DispatcherLike_scheduler],
+                delegate[QueueableLike_maxBufferSize],
+              ),
               Disposable_addTo(instance),
               Disposable_onComplete(() => {
                 if (!instance[WithLatestFromObserver_hasLatest]) {

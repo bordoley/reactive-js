@@ -11,7 +11,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "../../Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
@@ -36,7 +36,7 @@ const HigherOrderObservable_switchAll = (lift) => {
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(Observer_notifyObserver(this[DelegatingLike_delegate])), Observable_subscribe(this[DispatcherLike_scheduler]), Disposable_onComplete(() => {
+                this[HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(Observer_notifyObserver(this[DelegatingLike_delegate])), Observable_subscribeWithMaxBufferSize(this[DispatcherLike_scheduler], this[QueueableLike_maxBufferSize]), Disposable_onComplete(() => {
                     if (this[DisposableLike_isDisposed]) {
                         this[DelegatingLike_delegate][DisposableLike_dispose]();
                     }

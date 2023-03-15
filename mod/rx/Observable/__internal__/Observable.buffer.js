@@ -22,7 +22,7 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 const Observable_buffer = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
     const BufferObserver_buffer = Symbol("BufferObserver_buffer");
@@ -69,7 +69,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                 doOnNotify();
             }
             else if (this[BufferObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed]) {
-                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribe(this[DispatcherLike_scheduler]));
+                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribeWithMaxBufferSize(this[DispatcherLike_scheduler], this[QueueableLike_maxBufferSize]));
             }
         },
     }));

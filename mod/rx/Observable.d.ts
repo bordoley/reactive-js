@@ -171,6 +171,7 @@ export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
  */
 export declare const multicast: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
+    readonly maxBufferSize?: number | undefined;
 }) => Function1<ObservableLike<T>, import("../rx.js").MulticastObservableLike<T>>;
 export declare const never: Never<ObservableLike>["never"];
 export declare const observeWith: <C extends ObservableLike<unknown>, T>(observer: ObserverLike<T>) => Function1<C, C>;
@@ -209,7 +210,9 @@ export declare const subscribe: <T>(scheduler: SchedulerLike, options?: {
 /**
  * @category Operator
  */
-export declare const subscribeOn: <T>(scheduler: SchedulerLike) => (observable: ObservableLike<T>) => ObservableLike<T>;
+export declare const subscribeOn: <T>(scheduler: SchedulerLike, options?: {
+    readonly maxBufferSize?: number | undefined;
+} | undefined) => (observable: ObservableLike<T>) => ObservableLike<T>;
 export declare const takeFirst: TakeFirst<ObservableLike>["takeFirst"];
 export declare const takeLast: TakeLast<ObservableLike>["takeLast"];
 export declare const takeUntil: TakeUntil<ObservableLike>["takeUntil"];

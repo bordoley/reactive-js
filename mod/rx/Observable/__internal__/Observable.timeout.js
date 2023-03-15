@@ -12,7 +12,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 import Observable_throws from "./Observable.throws.js";
 const Observable_timeout = /*@__PURE__*/ (() => {
     const timeoutError = Symbol("Observable.timeout.error");
@@ -20,7 +20,7 @@ const Observable_timeout = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
     const TimeoutObserver_duration = Symbol("TimeoutObserver_duration");
     const setupDurationSubscription = (observer) => {
-        observer[SerialDisposableLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribe(observer[DelegatingLike_delegate][DispatcherLike_scheduler]));
+        observer[SerialDisposableLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]));
     };
     const createTimeoutObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_delegatingMixin(), typedSerialDisposableMixin), function TimeoutObserver(instance, delegate, duration) {
         init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);

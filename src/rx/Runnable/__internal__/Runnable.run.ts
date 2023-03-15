@@ -12,7 +12,7 @@ import { DisposableLike_error } from "../../../util.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 
 const Runnable_run =
-  <T>() =>
+  <T>(options?: { maxBufferSize?: number }) =>
   (observable: RunnableLike<T>) => {
     if (__DEV__ && !observable[ObservableLike_isRunnable]) {
       raiseWithDebugMessage(
@@ -22,7 +22,10 @@ const Runnable_run =
 
     const scheduler = Scheduler_createVirtualTimeScheduler();
 
-    const subscription = pipe(observable, Observable_subscribe(scheduler));
+    const subscription = pipe(
+      observable,
+      Observable_subscribe(scheduler, options),
+    );
 
     scheduler[VirtualTimeSchedulerLike_run]();
     const error = subscription[DisposableLike_error];

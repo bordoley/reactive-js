@@ -66,7 +66,9 @@ export declare const mergeWith: MergeWith<RunnableLike>["mergeWith"];
 export declare const pairwise: Pairwise<RunnableLike>["pairwise"];
 export declare const reduce: Reduce<RunnableLike>["reduce"];
 export declare const retry: Retry<RunnableLike>["retry"];
-export declare const run: <T>() => (observable: RunnableLike<T>) => void;
+export declare const run: <T>(options?: {
+    maxBufferSize?: number | undefined;
+} | undefined) => (observable: RunnableLike<T>) => void;
 export declare const scan: Scan<RunnableLike>["scan"];
 export declare const scanLast: ScanLast<RunnableLike, RunnableLike>["scanLast"];
 export declare const skipFirst: SkipFirst<RunnableLike>["skipFirst"];

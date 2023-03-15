@@ -33,7 +33,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 import Observable_throws from "./Observable.throws.js";
 
 const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
@@ -50,14 +50,13 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
   };
 
   const setupDurationSubscription = (
-    observer: SerialDisposableLike<DisposableLike> &
-      TProperties &
-      DelegatingLike<ObserverLike<T>>,
+    observer: SerialDisposableLike<DisposableLike> & TProperties & ObserverLike,
   ) => {
     observer[SerialDisposableLike_current] = pipe(
       observer[TimeoutObserver_duration],
-      Observable_subscribe(
-        observer[DelegatingLike_delegate][DispatcherLike_scheduler],
+      Observable_subscribeWithMaxBufferSize(
+        observer[DispatcherLike_scheduler],
+        observer[QueueableLike_maxBufferSize],
       ),
     );
   };

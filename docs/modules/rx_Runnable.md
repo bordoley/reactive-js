@@ -2794,13 +2794,20 @@ ___
 
 ### run
 
-▸ **run**<`T`\>(): (`observable`: [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>) => `void`
+▸ **run**<`T`\>(`options?`): (`observable`: [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>) => `void`
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
 
 #### Returns
 

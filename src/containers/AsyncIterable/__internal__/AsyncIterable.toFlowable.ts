@@ -8,7 +8,7 @@ import {
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
 import {
   SchedulerLike_now,
   SchedulerLike_schedule,
@@ -22,6 +22,7 @@ import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flow
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_maxBufferSize,
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -94,7 +95,10 @@ const AsyncIterable_toFlowable: ToFlowable<
                 }
               },
             ),
-            Observable_subscribe(scheduler),
+            Observable_subscribeWithMaxBufferSize(
+              scheduler,
+              observer[QueueableLike_maxBufferSize],
+            ),
             Disposable_addTo(observer),
             Disposable_onComplete(() => observer[DispatcherLike_complete]()),
           );

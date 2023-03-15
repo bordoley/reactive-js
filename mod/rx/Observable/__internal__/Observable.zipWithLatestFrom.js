@@ -13,7 +13,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 const Observable_zipWithLatestFrom = 
 /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
@@ -52,7 +52,7 @@ const Observable_zipWithLatestFrom =
                     instance[ZipWithLatestFromObserver_TAQueue][QueueLike_count] === 0) {
                     instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
-            }), Observable_subscribe(delegate[DispatcherLike_scheduler]), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
+            }), Observable_subscribeWithMaxBufferSize(delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({

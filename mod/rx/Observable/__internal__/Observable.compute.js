@@ -6,7 +6,7 @@ import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, 
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -15,6 +15,7 @@ import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 const Memo = 1;
 const Await = 2;
 const Observe = 3;
@@ -126,7 +127,7 @@ class ComputeContext {
                             ? pipe(observer, Observer_schedule(runComputation))
                             : scheduledComputationSubscription;
                 }
-            }), Observable_subscribe(scheduler), Disposable_addTo(observer), Disposable_onComplete(this[ComputeContext_cleanup]));
+            }), Observable_subscribeWithMaxBufferSize(scheduler, observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(this[ComputeContext_cleanup]));
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_subscription] = subscription;
             effect[AwaitOrObserveEffect_value] = none;

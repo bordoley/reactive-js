@@ -4,15 +4,21 @@ import {
   SchedulerLike,
   SchedulerLike_requestYield,
 } from "../../../scheduling.js";
-import { QueueableLike_push } from "../../../util.js";
+import {
+  QueueableLike_maxBufferSize,
+  QueueableLike_push,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "./Observable.create.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 
 const Observable_subscribeOn =
-  <T>(scheduler: SchedulerLike) =>
+  <T>(
+    scheduler: SchedulerLike,
+    options?: { readonly maxBufferSize?: number },
+  ) =>
   (observable: ObservableLike<T>): ObservableLike<T> =>
     // FIXME: type test for VTS
     Observable_create<T>(observer =>
@@ -23,7 +29,10 @@ const Observable_subscribeOn =
             scheduler[SchedulerLike_requestYield]();
           }
         }),
-        Observable_subscribe(scheduler),
+        Observable_subscribeWithMaxBufferSize(
+          scheduler,
+          options?.maxBufferSize ?? observer[QueueableLike_maxBufferSize],
+        ),
         Disposable_onComplete(() => observer[DispatcherLike_complete]()),
         Disposable_addTo(observer),
       ),
