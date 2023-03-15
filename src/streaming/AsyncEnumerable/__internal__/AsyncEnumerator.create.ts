@@ -1,18 +1,12 @@
 import {
-  Mixin2,
   Mutable,
+  createInstanceFactory,
   include,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
-import {
-  Optional,
-  none,
-  pipe,
-  returns,
-  unsafeCast,
-} from "../../../functions.js";
+import { Optional, none, pipe, unsafeCast } from "../../../functions.js";
 import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
@@ -39,11 +33,10 @@ import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 
-const AsyncEnumerator_delegatingMixin: <TA, TB>() => Mixin2<
-  StreamLike<void, TB>,
-  StreamLike<void, TA>,
-  ContainerOperator<ObservableLike, TA, TB>
-> = /*@__PURE__*/ (<TA, TB>() => {
+const AsyncEnumerator_create: <TA, TB>(
+  stream: StreamLike<void, TA>,
+  op: ContainerOperator<ObservableLike, TA, TB>,
+) => StreamLike<void, TB> = /*@__PURE__*/ (<TA, TB>() => {
   const AsyncEnumeratorDelegatingMixin_src = Symbol(
     "AsyncEnumeratorDelegatingMixin_src",
   );
@@ -57,7 +50,7 @@ const AsyncEnumerator_delegatingMixin: <TA, TB>() => Mixin2<
     readonly [DisposableLike_isDisposed]: boolean;
   };
 
-  return pipe(
+  return createInstanceFactory(
     mix(
       include(Disposable_delegatingMixin()),
       function AsyncEnumeratorDelegatingMixin(
@@ -156,8 +149,7 @@ const AsyncEnumerator_delegatingMixin: <TA, TB>() => Mixin2<
         },
       },
     ),
-    returns,
   );
 })();
 
-export default AsyncEnumerator_delegatingMixin;
+export default AsyncEnumerator_create;
