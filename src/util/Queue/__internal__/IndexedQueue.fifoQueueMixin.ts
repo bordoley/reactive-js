@@ -137,14 +137,15 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
 
           let tail = this[FifoQueue_tail];
 
-          const item = head === tail ? none : values[tail];
+          const item =
+            head === tail
+              ? none
+              : ((tail = (tail - 1 + capacity) & this[FifoQueue_capacityMask]),
+                (this[FifoQueue_tail] = tail),
+                this[QueueLike_count]--,
+                values[tail]);
 
-          if (head !== tail) {
-            values[tail] = none;
-
-            tail = (tail - 1 + capacity) & this[FifoQueue_capacityMask];
-            this[FifoQueue_tail] = tail;
-          }
+          values[tail] = none;
 
           const count = this[QueueLike_count];
           if (count < capacity / 4 && capacity > 32) {

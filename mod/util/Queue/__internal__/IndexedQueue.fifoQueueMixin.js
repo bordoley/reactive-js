@@ -72,12 +72,13 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
             const capacity = values.length;
             let tail = this[FifoQueue_tail];
-            const item = head === tail ? none : values[tail];
-            if (head !== tail) {
-                values[tail] = none;
-                tail = (tail - 1 + capacity) & this[FifoQueue_capacityMask];
-                this[FifoQueue_tail] = tail;
-            }
+            const item = head === tail
+                ? none
+                : ((tail = (tail - 1 + capacity) & this[FifoQueue_capacityMask]),
+                    (this[FifoQueue_tail] = tail),
+                    this[QueueLike_count]--,
+                    values[tail]);
+            values[tail] = none;
             const count = this[QueueLike_count];
             if (count < capacity / 4 && capacity > 32) {
                 const newCapacity = capacity >> 1;
