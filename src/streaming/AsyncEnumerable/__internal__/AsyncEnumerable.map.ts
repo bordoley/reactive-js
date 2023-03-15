@@ -9,15 +9,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator, Map } from "../../../containers.js";
+import { Function1, none, partial, pipe } from "../../../functions.js";
 import {
-  Function1,
-  none,
-  partial,
-  pipe,
-  unsafeCast,
-} from "../../../functions.js";
-import {
-  MulticastObservableLike_observerCount,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -25,7 +18,6 @@ import {
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 
@@ -41,18 +33,13 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
 
   const createMapStream = createInstanceFactory(
     mix(
-      include(Disposable_delegatingMixin(), Stream_delegatingMixin()),
-      function KeepStream(
-        instance: Pick<
-          StreamLike<void, TB>,
-          | typeof ObservableLike_observe
-          | typeof MulticastObservableLike_observerCount
-        > &
+      include(Stream_delegatingMixin()),
+      function MapStream(
+        instance: Pick<StreamLike<void, TB>, typeof ObservableLike_observe> &
           Mutable<TProperties>,
         delegate: StreamLike<void, TA>,
         mapper: Function1<TA, TB>,
       ): StreamLike<void, TB> {
-        init(Disposable_delegatingMixin(), instance, delegate);
         init(Stream_delegatingMixin(), instance, delegate);
 
         instance[MapAsyncEnumerator_op] = Observable_map(mapper);
@@ -62,12 +49,6 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = /*@__PURE__*/ (<
         [MapAsyncEnumerator_op]: none,
       }),
       {
-        get [MulticastObservableLike_observerCount]() {
-          unsafeCast<DelegatingLike<StreamLike<void, TA>>>(this);
-          return this[DelegatingLike_delegate][
-            MulticastObservableLike_observerCount
-          ];
-        },
         [ObservableLike_observe](
           this: TProperties & DelegatingLike<StreamLike<void, TA>>,
           observer: ObserverLike<TB>,

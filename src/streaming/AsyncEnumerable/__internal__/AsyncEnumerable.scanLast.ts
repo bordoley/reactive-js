@@ -27,6 +27,8 @@ import {
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import Observable_scanLast from "../../../rx/Observable/__internal__/Observable.scanLast.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
+import { QueueableLike_maxBufferSize } from "../../../util.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
@@ -61,7 +63,10 @@ const AsyncEnumerable_scanLast: ScanLast<
         instance[ScanLastStream_obs] = pipe(
           delegate,
           Observable_scanLast(reducer, initialValue),
-          Observable_multicast(delegate[DispatcherLike_scheduler]),
+          Observable_multicast(delegate[DispatcherLike_scheduler], {
+            maxBufferSize: delegate[QueueableLike_maxBufferSize],
+          }),
+          Disposable_add(instance),
         );
         return instance;
       },

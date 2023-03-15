@@ -198,6 +198,7 @@ export declare const scanLast: ScanLast<ObservableLike, ObservableLike>["scanLas
  */
 export declare const share: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
+    readonly maxBufferSize?: number | undefined;
 } | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
 export declare const skipFirst: SkipFirst<ObservableLike>["skipFirst"];
 export declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];

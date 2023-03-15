@@ -21,7 +21,7 @@ import Observable_multicast from "./Observable.multicast.js";
 const Observable_share =
   <T>(
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
+    options?: { readonly replay?: number; readonly maxBufferSize?: number },
   ): Function1<ObservableLike<T>, ObservableLike<T>> =>
   (source: ObservableLike<T>) => {
     let multicasted: Optional<MulticastObservableLike<T>> = none;

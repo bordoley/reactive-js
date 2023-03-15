@@ -3321,6 +3321,7 @@ to the source is disposed.
 | :------ | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
 | `options?` | `Object` | - |
+| `options.maxBufferSize?` | `number` | - |
 | `options.replay?` | `number` | - |
 
 #### Returns

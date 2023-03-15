@@ -2,7 +2,7 @@ import { __DEV__ } from "../../../__internal__/constants.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-  Mixin3,
+  Mixin4,
   Mutable,
   createInstanceFactory,
   include,
@@ -181,10 +181,11 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
     );
   })();
 
-const Stream_mixin: <TReq, T>() => Mixin3<
+const Stream_mixin: <TReq, T>() => Mixin4<
   StreamLike<TReq, T>,
   ContainerOperator<ObservableLike, TReq, T>,
   SchedulerLike,
+  number,
   number
 > = /*@__PURE__*/ (<TReq, T>() => {
   const StreamMixin_dispatcher = Symbol("StreamMixin_dispatcher");
@@ -212,6 +213,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         op: ContainerOperator<ObservableLike, TReq, T>,
         scheduler: SchedulerLike,
         replay: number,
+        maxBufferSize: number,
       ): StreamLike<TReq, T> {
         instance[DispatcherLike_scheduler] = scheduler;
 
@@ -221,7 +223,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         const delegate = pipe(
           dispatchedObservable,
           op,
-          Observable_multicast<T>(scheduler, { replay }),
+          Observable_multicast<T>(scheduler, { replay, maxBufferSize }),
         );
 
         init(

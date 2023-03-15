@@ -6,7 +6,8 @@ import { DispatcherLike_scheduler, MulticastObservableLike_observerCount, Observ
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import { QueueableLike_push } from "../../../util.js";
+import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
@@ -19,7 +20,9 @@ const AsyncEnumerable_keep = /*@__PURE__*/ (() => {
             if (!predicate(x)) {
                 delegate[QueueableLike_push](none);
             }
-        }), Observable_keep(predicate), Observable_multicast(delegate[DispatcherLike_scheduler]));
+        }), Observable_keep(predicate), Observable_multicast(delegate[DispatcherLike_scheduler], {
+            maxBufferSize: delegate[QueueableLike_maxBufferSize],
+        }), Disposable_add(instance));
         return instance;
     }, props({
         [KeepStream_obs]: none,

@@ -76,11 +76,11 @@ const DispatchedObservable_create =
 })();
 const Stream_mixin = /*@__PURE__*/ (() => {
     const StreamMixin_dispatcher = Symbol("StreamMixin_dispatcher");
-    return returns(mix(include(Disposable_delegatingMixin()), function StreamMixin(instance, op, scheduler, replay) {
+    return returns(mix(include(Disposable_delegatingMixin()), function StreamMixin(instance, op, scheduler, replay, maxBufferSize) {
         instance[DispatcherLike_scheduler] = scheduler;
         const dispatchedObservable = DispatchedObservable_create();
         instance[StreamMixin_dispatcher] = dispatchedObservable;
-        const delegate = pipe(dispatchedObservable, op, Observable_multicast(scheduler, { replay }));
+        const delegate = pipe(dispatchedObservable, op, Observable_multicast(scheduler, { replay, maxBufferSize }));
         init(Disposable_delegatingMixin(), instance, delegate);
         return instance;
     }, props({
