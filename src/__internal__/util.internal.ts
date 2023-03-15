@@ -30,6 +30,12 @@ export interface QueueLike<T> extends QueueableLike<T> {
 }
 
 export const IndexedQueueLike_get = Symbol("IndexedQueueLike_get");
+export const IndexedQueueLike_set = Symbol("IndexedQueueLike_set");
+export const IndexedQueueLike_pop = Symbol("IndexedQueueLike_pop");
+
 export interface IndexedQueueLike<T> extends QueueLike<T> {
   [IndexedQueueLike_get](index: number): T;
+  [IndexedQueueLike_set](index: number, value: T): T;
+
+  [IndexedQueueLike_pop](): Optional<T>;
 }

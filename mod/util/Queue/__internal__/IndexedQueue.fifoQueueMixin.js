@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { mix, props } from "../../../__internal__/mixins.js";
-import { IndexedQueueLike_get, QueueLike_count, QueueLike_head, QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { IndexedQueueLike_get, IndexedQueueLike_pop, IndexedQueueLike_set, QueueLike_count, QueueLike_head, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
@@ -35,20 +35,6 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         [FifoQueue_capacityMask]: 0,
         [FifoQueue_values]: none,
     }), {
-        [IndexedQueueLike_get](index) {
-            var _a, _b, _c;
-            const count = this[QueueLike_count];
-            const capacity = (_b = (_a = this[FifoQueue_values]) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0;
-            const head = this[FifoQueue_head];
-            const values = (_c = this[FifoQueue_values]) !== null && _c !== void 0 ? _c : [];
-            const headOffsetIndex = index + head;
-            const tailOffsetIndex = headOffsetIndex - capacity;
-            return index < 0 || index >= count
-                ? raiseWithDebugMessage("index out of range")
-                : headOffsetIndex < capacity
-                    ? values[headOffsetIndex]
-                    : values[tailOffsetIndex];
-        },
         get [QueueLike_head]() {
             var _a;
             unsafeCast(this);
@@ -79,6 +65,61 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                 this[FifoQueue_capacityMask] = newCapacity - 1;
             }
             return item;
+        },
+        [IndexedQueueLike_pop]() {
+            var _a;
+            const head = this[FifoQueue_head];
+            const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
+            const capacity = values.length;
+            let tail = this[FifoQueue_tail];
+            const item = head === tail ? none : values[tail];
+            if (head !== tail) {
+                values[tail] = none;
+                tail = (tail - 1 + capacity) & this[FifoQueue_capacityMask];
+                this[FifoQueue_tail] = tail;
+            }
+            const count = this[QueueLike_count];
+            if (count < capacity / 4 && capacity > 32) {
+                const newCapacity = capacity >> 1;
+                const newList = copyArray(values, head, tail, newCapacity);
+                this[FifoQueue_values] = newList;
+                this[FifoQueue_head] = 0;
+                this[FifoQueue_tail] = count;
+                this[FifoQueue_capacityMask] = newCapacity - 1;
+            }
+            return item;
+        },
+        [IndexedQueueLike_get](index) {
+            var _a, _b, _c;
+            const count = this[QueueLike_count];
+            const capacity = (_b = (_a = this[FifoQueue_values]) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0;
+            const head = this[FifoQueue_head];
+            const values = (_c = this[FifoQueue_values]) !== null && _c !== void 0 ? _c : [];
+            const headOffsetIndex = index + head;
+            const tailOffsetIndex = headOffsetIndex - capacity;
+            const computedIndex = index < 0 || index >= count
+                ? raiseWithDebugMessage("index out of range")
+                : headOffsetIndex < capacity
+                    ? headOffsetIndex
+                    : tailOffsetIndex;
+            return values[computedIndex];
+        },
+        [IndexedQueueLike_set](index, value) {
+            var _a, _b, _c;
+            const count = this[QueueLike_count];
+            const capacity = (_b = (_a = this[FifoQueue_values]) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0;
+            const head = this[FifoQueue_head];
+            const values = (_c = this[FifoQueue_values]) !== null && _c !== void 0 ? _c : [];
+            const headOffsetIndex = index + head;
+            const tailOffsetIndex = headOffsetIndex - capacity;
+            const computedIndex = index < 0 || index >= count
+                ? raiseWithDebugMessage("index out of range")
+                : headOffsetIndex < capacity
+                    ? headOffsetIndex
+                    : tailOffsetIndex;
+            const oldValue = values[computedIndex];
+            values[computedIndex] = value;
+            return oldValue;
         },
         [QueueableLike_push](item) {
             var _a;

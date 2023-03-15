@@ -3,6 +3,8 @@ import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
   IndexedQueueLike,
   IndexedQueueLike_get,
+  IndexedQueueLike_pop,
+  IndexedQueueLike_set,
   QueueLike_count,
   QueueLike_head,
   QueueLike_pull,
@@ -90,24 +92,6 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
         [FifoQueue_values]: none,
       }),
       {
-        [IndexedQueueLike_get](
-          this: TProperties & QueueableLike,
-          index: number,
-        ): T {
-          const count = this[QueueLike_count];
-          const capacity = this[FifoQueue_values]?.length ?? 0;
-          const head = this[FifoQueue_head];
-          const values = this[FifoQueue_values] ?? [];
-
-          const headOffsetIndex = index + head;
-          const tailOffsetIndex = headOffsetIndex - capacity;
-
-          return index < 0 || index >= count
-            ? raiseWithDebugMessage("index out of range")
-            : headOffsetIndex < capacity
-            ? (values[headOffsetIndex] as T)
-            : (values[tailOffsetIndex] as T);
-        },
         get [QueueLike_head]() {
           unsafeCast<TProperties>(this);
           const head = this[FifoQueue_head];
@@ -115,6 +99,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
 
           return head === this[FifoQueue_tail] ? none : values[head];
         },
+
         [QueueLike_pull](this: TProperties & QueueableLike) {
           const tail = this[FifoQueue_tail];
           const values = this[FifoQueue_values] ?? [];
@@ -144,6 +129,86 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
 
           return item;
         },
+
+        [IndexedQueueLike_pop](this: TProperties & QueueableLike): Optional<T> {
+          const head = this[FifoQueue_head];
+          const values = this[FifoQueue_values] ?? [];
+          const capacity = values.length;
+
+          let tail = this[FifoQueue_tail];
+
+          const item = head === tail ? none : values[tail];
+
+          if (head !== tail) {
+            values[tail] = none;
+
+            tail = (tail - 1 + capacity) & this[FifoQueue_capacityMask];
+            this[FifoQueue_tail] = tail;
+          }
+
+          const count = this[QueueLike_count];
+          if (count < capacity / 4 && capacity > 32) {
+            const newCapacity = capacity >> 1;
+            const newList = copyArray(values, head, tail, newCapacity);
+
+            this[FifoQueue_values] = newList;
+            this[FifoQueue_head] = 0;
+            this[FifoQueue_tail] = count;
+            this[FifoQueue_capacityMask] = newCapacity - 1;
+          }
+
+          return item;
+        },
+
+        [IndexedQueueLike_get](
+          this: TProperties & QueueableLike,
+          index: number,
+        ): T {
+          const count = this[QueueLike_count];
+          const capacity = this[FifoQueue_values]?.length ?? 0;
+          const head = this[FifoQueue_head];
+          const values = this[FifoQueue_values] ?? [];
+
+          const headOffsetIndex = index + head;
+          const tailOffsetIndex = headOffsetIndex - capacity;
+
+          const computedIndex =
+            index < 0 || index >= count
+              ? raiseWithDebugMessage<number>("index out of range")
+              : headOffsetIndex < capacity
+              ? headOffsetIndex
+              : tailOffsetIndex;
+
+          return values[computedIndex] as T;
+        },
+
+        [IndexedQueueLike_set](
+          this: TProperties & QueueableLike,
+          index: number,
+          value: T,
+        ): T {
+          const count = this[QueueLike_count];
+          const capacity = this[FifoQueue_values]?.length ?? 0;
+          const head = this[FifoQueue_head];
+          const values = this[FifoQueue_values] ?? [];
+
+          const headOffsetIndex = index + head;
+          const tailOffsetIndex = headOffsetIndex - capacity;
+
+          const computedIndex =
+            index < 0 || index >= count
+              ? raiseWithDebugMessage<number>("index out of range")
+              : headOffsetIndex < capacity
+              ? headOffsetIndex
+              : tailOffsetIndex;
+
+          const oldValue = values[computedIndex] as T;
+
+          values[computedIndex] = value;
+
+          return oldValue;
+        },
+
         [QueueableLike_push](
           this: TProperties & QueueableLike,
           item: T,
