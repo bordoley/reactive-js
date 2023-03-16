@@ -54,10 +54,9 @@
     "moduleNameMapper": {
       "^(\\.{1,2}/.*)\\.js$": "$1"
     },
-    "preset": "ts-jest",
     "testRegex": "tests.ts",
     "transform": {
-      "^.+\\.(ts|tsx)$": [
+      "^.+\\.(js|ts|tsx)$": [
         "ts-jest",
         {
           "useESM": true,

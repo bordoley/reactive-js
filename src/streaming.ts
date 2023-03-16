@@ -1,4 +1,12 @@
 import {
+  FlowableState_paused,
+  FlowableState_running,
+  StreamableLike_isEnumerable,
+  StreamableLike_isInteractive,
+  StreamableLike_isRunnable,
+  StreamableLike_stream,
+} from "./__internal__/streaming.symbols.js";
+import {
   Container,
   ContainerLike,
   ContainerLike_T,
@@ -9,6 +17,15 @@ import { Function1, Updater } from "./functions.js";
 import { DispatcherLike, MulticastObservableLike } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
 
+export {
+  StreamableLike_stream,
+  StreamableLike_isEnumerable,
+  StreamableLike_isInteractive,
+  StreamableLike_isRunnable,
+  FlowableState_running,
+  FlowableState_paused,
+};
+
 /**
  * Represents a duplex stream
  *
@@ -17,22 +34,6 @@ import { SchedulerLike } from "./scheduling.js";
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
     MulticastObservableLike<T> {}
-
-/** @ignore */
-export const StreamableLike_stream = Symbol("StreamableLike_stream");
-
-/** @ignore */
-export const StreamableLike_isEnumerable = Symbol(
-  "StreamableLike_isEnumerable",
-);
-
-/** @ignore */
-export const StreamableLike_isInteractive = Symbol(
-  "StreamableLike_isInteractive",
-);
-
-/** @ignore */
-export const StreamableLike_isRunnable = Symbol("StreamableLike_isRunnable");
 
 /**
  * @noInheritDoc
@@ -66,11 +67,6 @@ export interface AsyncEnumerableLike<T = unknown>
 
   readonly [StreamableLike_isInteractive]: true;
 }
-
-/** @ignore */
-export const FlowableState_running = Symbol("FlowableState_running");
-/** @ignore */
-export const FlowableState_paused = Symbol("FlowableState_paused");
 
 export type FlowableState =
   | typeof FlowableState_running

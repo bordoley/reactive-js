@@ -1,0 +1,12 @@
+/** @type {unique symbol} */
+export const StreamableLike_stream: unique symbol;
+/** @type {unique symbol} */
+export const StreamableLike_isEnumerable: unique symbol;
+/** @type {unique symbol} */
+export const StreamableLike_isInteractive: unique symbol;
+/** @type {unique symbol} */
+export const StreamableLike_isRunnable: unique symbol;
+/** @type {unique symbol} */
+export const FlowableState_running: unique symbol;
+/** @type {unique symbol} */
+export const FlowableState_paused: unique symbol;

@@ -1,8 +1,6 @@
+import { ContainerLike_T, ContainerLike_type, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move } from "./__internal__/containers.symbols.js";
 import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1, TypePredicate, Updater } from "./functions.js";
-/**  @ignore */
-export declare const ContainerLike_T: unique symbol;
-/**  @ignore */
-export declare const ContainerLike_type: unique symbol;
+export { ContainerLike_T, ContainerLike_type, EnumeratorLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent, };
 /**
  * @noInheritDoc
  * @category Container
@@ -39,12 +37,6 @@ export interface PromiseableLike<T = unknown> extends ContainerLike, PromiseLike
 export interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyArray<T> {
     readonly [ContainerLike_type]?: ReadonlyArrayLike<this[typeof ContainerLike_T]>;
 }
-/** @ignore */
-export declare const EnumeratorLike_move: unique symbol;
-/** @ignore */
-export declare const EnumeratorLike_current: unique symbol;
-/** @ignore */
-export declare const EnumeratorLike_hasCurrent: unique symbol;
 /**
  * @noInheritDoc
  * @category Container

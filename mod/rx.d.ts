@@ -1,11 +1,9 @@
+import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, SubjectLike_publish, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last } from "./__internal__/rx.symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import { DisposableLike, QueueableLike } from "./util.js";
-/** @ignore */
-export declare const DispatcherLike_complete: unique symbol;
-/** @ignore */
-export declare const DispatcherLike_scheduler: unique symbol;
+export { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, SubjectLike_publish, ThrottleMode_first, ThrottleMode_last, ThrottleMode_interval, };
 /**
  * @noInheritDoc
  */
@@ -13,8 +11,6 @@ export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
     readonly [DispatcherLike_scheduler]: SchedulerLike;
     [DispatcherLike_complete](): void;
 }
-/** @ignore */
-export declare const ObserverLike_notify: unique symbol;
 /**
  * @noInheritDoc
  */
@@ -29,12 +25,6 @@ export interface ObserverLike<T = unknown> extends DispatcherLike<T>, Disposable
      */
     [ObserverLike_notify](next: T): void;
 }
-/** @ignore */
-export declare const ObservableLike_observe: unique symbol;
-/**  @ignore */
-export declare const ObservableLike_isEnumerable: unique symbol;
-/**  @ignore */
-export declare const ObservableLike_isRunnable: unique symbol;
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
  *
@@ -65,8 +55,6 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
     readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: true;
 }
-/** @ignore */
-export declare const MulticastObservableLike_observerCount: unique symbol;
 /**
  * @noInheritDoc
  * @category Container
@@ -80,8 +68,6 @@ export interface MulticastObservableLike<T = unknown> extends ObservableLike<T>,
      */
     readonly [MulticastObservableLike_observerCount]: number;
 }
-/** @ignore */
-export declare const SubjectLike_publish: unique symbol;
 /**
  * @noInheritDoc
  * @category Container
@@ -317,9 +303,6 @@ export interface TakeUntil<C extends ObservableLike> extends Container<C> {
      */
     takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
 }
-export declare const ThrottleMode_first: unique symbol;
-export declare const ThrottleMode_last: unique symbol;
-export declare const ThrottleMode_interval: unique symbol;
 export type ThrottleMode = typeof ThrottleMode_first | typeof ThrottleMode_last | typeof ThrottleMode_interval;
 /**
  * @noInheritDoc

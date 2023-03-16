@@ -51,32 +51,8 @@
 
 - [ThrottleMode](rx.md#throttlemode)
 
-### Variables
-
-- [ThrottleMode\_first](rx.md#throttlemode_first)
-- [ThrottleMode\_interval](rx.md#throttlemode_interval)
-- [ThrottleMode\_last](rx.md#throttlemode_last)
-
 ## Type Aliases
 
 ### ThrottleMode
 
-Ƭ **ThrottleMode**: typeof [`ThrottleMode_first`](rx.md#throttlemode_first) \| typeof [`ThrottleMode_last`](rx.md#throttlemode_last) \| typeof [`ThrottleMode_interval`](rx.md#throttlemode_interval)
-
-## Variables
-
-### ThrottleMode\_first
-
-• `Const` **ThrottleMode\_first**: unique `symbol`
-
-___
-
-### ThrottleMode\_interval
-
-• `Const` **ThrottleMode\_interval**: unique `symbol`
-
-___
-
-### ThrottleMode\_last
-
-• `Const` **ThrottleMode\_last**: unique `symbol`
+Ƭ **ThrottleMode**: typeof `ThrottleMode_first` \| typeof `ThrottleMode_last` \| typeof `ThrottleMode_interval`

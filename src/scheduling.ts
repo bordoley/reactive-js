@@ -1,27 +1,31 @@
+import {
+  ContinuationContextLike_yield,
+  PauseableSchedulerLike_isPaused,
+  PauseableSchedulerLike_pause,
+  PauseableSchedulerLike_resume,
+  SchedulerLike_inContinuation,
+  SchedulerLike_now,
+  SchedulerLike_requestYield,
+  SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
+  VirtualTimeSchedulerLike_run,
+} from "./__internal__/scheduling.symbols.js";
 import { SideEffect1 } from "./functions.js";
 import { DisposableLike } from "./util.js";
 
-/** @ignore */
-export const SchedulerLike_inContinuation = Symbol(
-  "SchedulerLike_inContinuation",
-);
+export {
+  SchedulerLike_inContinuation,
+  SchedulerLike_now,
+  SchedulerLike_requestYield,
+  SchedulerLike_shouldYield,
+  SchedulerLike_schedule,
+  ContinuationContextLike_yield,
+  PauseableSchedulerLike_isPaused,
+  PauseableSchedulerLike_pause,
+  PauseableSchedulerLike_resume,
+  VirtualTimeSchedulerLike_run,
+};
 
-/** @ignore */
-export const SchedulerLike_now = Symbol("SchedulerLike_now");
-
-/** @ignore */
-export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
-
-/** @ignore */
-export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
-
-/** @ignore */
-export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
-
-/** @ignore */
-export const ContinuationContextLike_yield = Symbol(
-  "ContinuationContextLike_yield",
-);
 export interface ContinuationContextLike {
   [ContinuationContextLike_yield](delay?: number): void;
 }
@@ -45,21 +49,6 @@ export interface SchedulerLike extends DisposableLike {
   ): DisposableLike;
 }
 
-/** @ignore */
-export const PauseableSchedulerLike_isPaused = Symbol(
-  "PauseableSchedulerLike_isPaused",
-);
-
-/** @ignore */
-export const PauseableSchedulerLike_pause = Symbol(
-  "PauseableSchedulerLike_pause",
-);
-
-/** @ignore */
-export const PauseableSchedulerLike_resume = Symbol(
-  "PauseableSchedulerLike_resume",
-);
-
 /**
  * @noInheritDoc
  */
@@ -75,11 +64,6 @@ export interface PrioritySchedulerLike extends SchedulerLike {
     options?: { readonly delay?: number; readonly priority?: number },
   ): DisposableLike;
 }
-
-/** @ignore */
-export const VirtualTimeSchedulerLike_run = Symbol(
-  "VirtualTimeSchedulerLike_run",
-);
 
 /**
  * @noInheritDoc

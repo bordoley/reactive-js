@@ -1,15 +1,5 @@
 /// <reference types="./streaming.d.ts" />
 
+import { FlowableState_paused, FlowableState_running, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "./__internal__/streaming.symbols.js";
 import { ContainerLike_type, } from "./containers.js";
-/** @ignore */
-export const StreamableLike_stream = Symbol("StreamableLike_stream");
-/** @ignore */
-export const StreamableLike_isEnumerable = Symbol("StreamableLike_isEnumerable");
-/** @ignore */
-export const StreamableLike_isInteractive = Symbol("StreamableLike_isInteractive");
-/** @ignore */
-export const StreamableLike_isRunnable = Symbol("StreamableLike_isRunnable");
-/** @ignore */
-export const FlowableState_running = Symbol("FlowableState_running");
-/** @ignore */
-export const FlowableState_paused = Symbol("FlowableState_paused");
+export { StreamableLike_stream, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, FlowableState_running, FlowableState_paused, };

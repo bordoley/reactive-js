@@ -1,17 +1,7 @@
+import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run } from "./__internal__/scheduling.symbols.js";
 import { SideEffect1 } from "./functions.js";
 import { DisposableLike } from "./util.js";
-/** @ignore */
-export declare const SchedulerLike_inContinuation: unique symbol;
-/** @ignore */
-export declare const SchedulerLike_now: unique symbol;
-/** @ignore */
-export declare const SchedulerLike_requestYield: unique symbol;
-/** @ignore */
-export declare const SchedulerLike_shouldYield: unique symbol;
-/** @ignore */
-export declare const SchedulerLike_schedule: unique symbol;
-/** @ignore */
-export declare const ContinuationContextLike_yield: unique symbol;
+export { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule, ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, VirtualTimeSchedulerLike_run, };
 export interface ContinuationContextLike {
     [ContinuationContextLike_yield](delay?: number): void;
 }
@@ -30,12 +20,6 @@ export interface SchedulerLike extends DisposableLike {
         readonly delay?: number;
     }): DisposableLike;
 }
-/** @ignore */
-export declare const PauseableSchedulerLike_isPaused: unique symbol;
-/** @ignore */
-export declare const PauseableSchedulerLike_pause: unique symbol;
-/** @ignore */
-export declare const PauseableSchedulerLike_resume: unique symbol;
 /**
  * @noInheritDoc
  */
@@ -50,8 +34,6 @@ export interface PrioritySchedulerLike extends SchedulerLike {
         readonly priority?: number;
     }): DisposableLike;
 }
-/** @ignore */
-export declare const VirtualTimeSchedulerLike_run: unique symbol;
 /**
  * @noInheritDoc
  */

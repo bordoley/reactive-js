@@ -1,10 +1,25 @@
 import { Optional } from "../functions.js";
 import { DisposableLike, QueueableLike } from "../util.js";
 import { DelegatingLike } from "./mixins.js";
+import {
+  IndexedQueueLike_get,
+  IndexedQueueLike_pop,
+  IndexedQueueLike_set,
+  QueueLike_count,
+  QueueLike_head,
+  QueueLike_pull,
+  SerialDisposableLike_current,
+} from "./util.symbols.js";
 
-export const SerialDisposableLike_current = Symbol(
-  "SerialDisposableLike_current",
-);
+export {
+  SerialDisposableLike_current,
+  QueueLike_head,
+  QueueLike_pull,
+  QueueLike_count,
+  IndexedQueueLike_get,
+  IndexedQueueLike_set,
+  IndexedQueueLike_pop,
+};
 
 export interface SerialDisposableLike<
   TDisposable extends DisposableLike = DisposableLike,
@@ -18,10 +33,6 @@ export interface DelegatingDisposableLike<
 > extends DelegatingLike<TDisposable>,
     DisposableLike {}
 
-export const QueueLike_head = Symbol("QueueLike_head");
-export const QueueLike_pull = Symbol("QueueLike_pull");
-export const QueueLike_count = Symbol("QueueableLike_count");
-
 export interface QueueLike<T> extends QueueableLike<T> {
   readonly [QueueLike_count]: number;
   readonly [QueueLike_head]: Optional<T>;
@@ -29,13 +40,8 @@ export interface QueueLike<T> extends QueueableLike<T> {
   [QueueLike_pull](): Optional<T>;
 }
 
-export const IndexedQueueLike_get = Symbol("IndexedQueueLike_get");
-export const IndexedQueueLike_set = Symbol("IndexedQueueLike_set");
-export const IndexedQueueLike_pop = Symbol("IndexedQueueLike_pop");
-
 export interface IndexedQueueLike<T> extends QueueLike<T> {
   [IndexedQueueLike_get](index: number): T;
   [IndexedQueueLike_set](index: number, value: T): T;
-
   [IndexedQueueLike_pop](): Optional<T>;
 }

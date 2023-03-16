@@ -1,0 +1,10 @@
+export declare const SchedulerLike_inContinuation: unique symbol;
+export declare const SchedulerLike_now: unique symbol;
+export declare const SchedulerLike_requestYield: unique symbol;
+export declare const SchedulerLike_shouldYield: unique symbol;
+export declare const SchedulerLike_schedule: unique symbol;
+export declare const ContinuationContextLike_yield: unique symbol;
+export declare const PauseableSchedulerLike_isPaused: unique symbol;
+export declare const PauseableSchedulerLike_pause: unique symbol;
+export declare const PauseableSchedulerLike_resume: unique symbol;
+export declare const VirtualTimeSchedulerLike_run: unique symbol;

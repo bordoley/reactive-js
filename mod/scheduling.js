@@ -1,22 +1,4 @@
 /// <reference types="./scheduling.d.ts" />
 
-/** @ignore */
-export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
-/** @ignore */
-export const SchedulerLike_now = Symbol("SchedulerLike_now");
-/** @ignore */
-export const SchedulerLike_requestYield = Symbol("SchedulerLike_requestYield");
-/** @ignore */
-export const SchedulerLike_shouldYield = Symbol("SchedulerLike_shouldYield");
-/** @ignore */
-export const SchedulerLike_schedule = Symbol("SchedulerLike_schedule");
-/** @ignore */
-export const ContinuationContextLike_yield = Symbol("ContinuationContextLike_yield");
-/** @ignore */
-export const PauseableSchedulerLike_isPaused = Symbol("PauseableSchedulerLike_isPaused");
-/** @ignore */
-export const PauseableSchedulerLike_pause = Symbol("PauseableSchedulerLike_pause");
-/** @ignore */
-export const PauseableSchedulerLike_resume = Symbol("PauseableSchedulerLike_resume");
-/** @ignore */
-export const VirtualTimeSchedulerLike_run = Symbol("VirtualTimeSchedulerLike_run");
+import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, } from "./__internal__/scheduling.symbols.js";
+export { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_shouldYield, SchedulerLike_schedule, ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, VirtualTimeSchedulerLike_run, };

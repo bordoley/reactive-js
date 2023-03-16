@@ -1,9 +1,10 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "allowJs": false,
     "noEmit": true,
     "noEmitOnError": true,
-    "rootDir": "src"
+    "rootDir": "./packages/core/"
   },
   "include": ["./packages/core/**/*"]
 }

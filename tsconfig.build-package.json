@@ -3,7 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "outDir": "./packages/core",
-    "rootDir": "src"
+    "rootDir": "./src"
   },
   "include": ["./src/**/*"],
   "exclude": ["./src/__tests__", "./src/**/__tests__"]

@@ -1,15 +1,21 @@
+import {
+  DisposableLike_add,
+  DisposableLike_dispose,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+  QueueableLike_maxBufferSize,
+  QueueableLike_push,
+} from "./__internal__/util.symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
-/** @ignore */
-export const DisposableLike_add = Symbol("DisposableLike_add");
 
-/** @ignore */
-export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
-
-/** @ignore */
-export const DisposableLike_error = Symbol("DisposableLike_error");
-
-/** @ignore */
-export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
+export {
+  DisposableLike_add,
+  DisposableLike_dispose,
+  DisposableLike_error,
+  DisposableLike_isDisposed,
+  QueueableLike_push,
+  QueueableLike_maxBufferSize,
+};
 
 export type DisposableOrTeardown =
   | DisposableLike
@@ -49,14 +55,6 @@ export interface DisposableLike {
    */
   [DisposableLike_dispose](error?: Error): void;
 }
-
-/** @ignore */
-export const QueueableLike_push = Symbol("QueueableLike_push");
-
-/** @ignore */
-export const QueueableLike_maxBufferSize = Symbol(
-  "QueueableLike_maxBufferSize",
-);
 
 export interface QueueableLike<T = unknown> {
   readonly [QueueableLike_maxBufferSize]: number;

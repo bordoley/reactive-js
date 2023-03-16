@@ -1,0 +1,11 @@
+export declare const DispatcherLike_complete: unique symbol;
+export declare const DispatcherLike_scheduler: unique symbol;
+export declare const MulticastObservableLike_observerCount: unique symbol;
+export declare const ObserverLike_notify: unique symbol;
+export declare const ObservableLike_observe: unique symbol;
+export declare const ObservableLike_isEnumerable: unique symbol;
+export declare const ObservableLike_isRunnable: unique symbol;
+export declare const SubjectLike_publish: unique symbol;
+export declare const ThrottleMode_first: unique symbol;
+export declare const ThrottleMode_last: unique symbol;
+export declare const ThrottleMode_interval: unique symbol;

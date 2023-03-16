@@ -3,7 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "outDir": "./mod",
-    "rootDir": "src"
+    "rootDir": "./src"
   },
   "include": ["./src/**/*"],
   "exclude": [

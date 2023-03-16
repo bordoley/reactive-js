@@ -1,12 +1,4 @@
 /// <reference types="./containers.d.ts" />
 
-/**  @ignore */
-export const ContainerLike_T = Symbol("ContainerLike_T");
-/**  @ignore */
-export const ContainerLike_type = Symbol("ContainerLike_type");
-/** @ignore */
-export const EnumeratorLike_move = Symbol("EnumeratorLike_move");
-/** @ignore */
-export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
-/** @ignore */
-export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
+import { ContainerLike_T, ContainerLike_type, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "./__internal__/containers.symbols.js";
+export { ContainerLike_T, ContainerLike_type, EnumeratorLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent, };
