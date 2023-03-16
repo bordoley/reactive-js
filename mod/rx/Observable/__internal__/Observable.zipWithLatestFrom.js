@@ -1,6 +1,7 @@
 /// <reference types="./Observable.zipWithLatestFrom.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { ZipWithLatestFromObserver_TAQueue, ZipWithLatestFromObserver_hasLatest, ZipWithLatestFromObserver_otherLatest, ZipWithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
 import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
@@ -18,10 +19,6 @@ const Observable_zipWithLatestFrom =
 /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
         const typedObserverMixin = Observer_mixin();
-        const ZipWithLatestFromObserver_hasLatest = Symbol("ZipWithLatestFromObserver_hasLatest");
-        const ZipWithLatestFromObserver_otherLatest = Symbol("ZipWithLatestFromObserver_otherLatest");
-        const ZipWithLatestFromObserver_selector = Symbol("ZipWithLatestFromObserver_selector");
-        const ZipWithLatestFromObserver_TAQueue = Symbol("ZipWithLatestFromObserver_selector");
         const notifyDelegate = (observer) => {
             if (observer[ZipWithLatestFromObserver_TAQueue][QueueLike_count] > 0 &&
                 observer[ZipWithLatestFromObserver_hasLatest]) {

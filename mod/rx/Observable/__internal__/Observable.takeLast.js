@@ -2,6 +2,7 @@
 
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { TakeLastObserverMixin_takeLastQueue } from "../../../__internal__/symbols.js";
 import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { none, partial, pipe } from "../../../functions.js";
@@ -16,7 +17,6 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 import Observable_observeWith from "./Observable.observeWith.js";
 const Observable_takeLast = /*@__PURE__*/ (() => {
-    const TakeLastObserverMixin_takeLastQueue = Symbol("TakeLastObserverMixin_takeLastQueue");
     const createTakeLastObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function TakeLastObserverMixin(instance, delegate, takeLastCount) {
         init(Disposable_mixin, instance);
         init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);

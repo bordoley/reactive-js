@@ -7,6 +7,11 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ReadonlyArrayEnumerator_count,
+  ReadonlyArrayEnumerator_index,
+  ReadonlyArrayEnumerator_values,
+} from "../../../__internal__/symbols.js";
+import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -24,12 +29,6 @@ const ReadonlyArray_enumerate: <T>() => Function1<
   ReadonlyArrayLike<T>,
   EnumeratorLike<T>
 > = /*@__PURE__*/ (<T>() => {
-  const ReadonlyArrayEnumerator_values = Symbol(
-    "ReadonlyArrayEnumerator_values",
-  );
-  const ReadonlyArrayEnumerator_index = Symbol("ReadonlyArrayEnumerator_index");
-  const ReadonlyArrayEnumerator_count = Symbol("ReadonlyArrayEnumerator_count");
-
   type TReadonlyArrayEnumeratorProperties = {
     [ReadonlyArrayEnumerator_values]: ReadonlyArrayLike<T>;
     [ReadonlyArrayEnumerator_index]: number;

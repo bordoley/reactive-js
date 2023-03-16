@@ -2,14 +2,11 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { mix, props } from "../../../__internal__/mixins.js";
+import { FifoQueue_capacityMask, FifoQueue_head, FifoQueue_tail, FifoQueue_values, } from "../../../__internal__/symbols.js";
 import { IndexedQueueLike_get, IndexedQueueLike_pop, IndexedQueueLike_set, QueueLike_count, QueueLike_head, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
-    const FifoQueue_head = Symbol("FifoQueue_head");
-    const FifoQueue_tail = Symbol("FifoQueue_tail");
-    const FifoQueue_capacityMask = Symbol("FifoQueue_capacityMask");
-    const FifoQueue_values = Symbol("FifoQueue_values");
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;
         const dest = newInstance(Array, size);

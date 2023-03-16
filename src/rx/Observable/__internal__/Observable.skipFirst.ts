@@ -9,6 +9,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  SkipFirstObserverMixin_count,
+  SkipFirstObserverMixin_skipCount,
+} from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { partial, pipe } from "../../../functions.js";
 import {
@@ -32,11 +36,6 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
     delegate: ObserverLike<T>,
     count: number,
   ) => ObserverLike<T> = (<T>() => {
-    const SkipFirstObserverMixin_skipCount = Symbol(
-      "SkipFirstObserverMixin_skipCount",
-    );
-    const SkipFirstObserverMixin_count = Symbol("SkipFirstObserverMixin_count");
-
     type TProperties = {
       readonly [SkipFirstObserverMixin_skipCount]: number;
       [SkipFirstObserverMixin_count]: number;

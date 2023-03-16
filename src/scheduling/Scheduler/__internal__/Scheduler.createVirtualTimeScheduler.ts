@@ -8,6 +8,14 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  VirtualTask_continuation,
+  VirtualTask_dueTime,
+  VirtualTask_id,
+  VirtualTimeScheduler_maxMicroTaskTicks,
+  VirtualTimeScheduler_microTaskTicks,
+  VirtualTimeScheduler_taskIDCount,
+} from "../../../__internal__/symbols.js";
+import {
   QueueLike,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
@@ -44,10 +52,6 @@ import {
   PriorityScheduler_mixin,
 } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 
-const VirtualTask_continuation = Symbol("VirtualTask_continuation");
-const VirtualTask_dueTime = Symbol("VirtualTask_dueTime");
-const VirtualTask_id = Symbol("VirtualTask_id");
-
 type VirtualTask = {
   readonly [VirtualTask_continuation]: ContinuationLike;
   [VirtualTask_dueTime]: number;
@@ -61,16 +65,6 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 
 const typedMutableEnumeratorMixin =
   /*@__PURE__*/ MutableEnumerator_mixin<VirtualTask>();
-
-const VirtualTimeScheduler_maxMicroTaskTicks = Symbol(
-  "VirtualTimeScheduler_maxMicroTaskTicks",
-);
-const VirtualTimeScheduler_microTaskTicks = Symbol(
-  "VirtualTimeScheduler_microTaskTicks",
-);
-const VirtualTimeScheduler_taskIDCount = Symbol(
-  "VirtualTimeScheduler_taskIDCount",
-);
 
 type TProperties = {
   [SchedulerLike_now]: number;

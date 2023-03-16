@@ -9,6 +9,18 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  QueueScheduler_delayed,
+  QueueScheduler_dueTime,
+  QueueScheduler_hostContinuation,
+  QueueScheduler_hostScheduler,
+  QueueScheduler_queue,
+  QueueScheduler_taskIDCounter,
+  QueueTask_continuation,
+  QueueTask_dueTime,
+  QueueTask_priority,
+  QueueTask_taskID,
+} from "../../../__internal__/symbols.js";
+import {
   QueueLike,
   QueueLike_head,
   QueueLike_pull,
@@ -72,11 +84,6 @@ const Scheduler_toPriorityScheduler: Function1<
   SchedulerLike,
   PauseableSchedulerLike & PrioritySchedulerLike
 > = /*@__PURE__*/ (() => {
-  const QueueTask_continuation = Symbol("QueueTask_continuation");
-  const QueueTask_dueTime = Symbol("QueueTask_dueTime");
-  const QueueTask_priority = Symbol("QueueTask_priority");
-  const QueueTask_taskID = Symbol("QueueTask_taskID");
-
   type QueueTask = {
     readonly [QueueTask_continuation]: ContinuationLike;
     [QueueTask_dueTime]: number;
@@ -222,15 +229,6 @@ const Scheduler_toPriorityScheduler: Function1<
 
   const typedSerialDisposableMixin = SerialDisposable_mixin();
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<QueueTask>();
-
-  const QueueScheduler_delayed = Symbol("QueueScheduler_delayed");
-  const QueueScheduler_dueTime = Symbol("QueueScheduler_dueTime");
-  const QueueScheduler_hostContinuation = Symbol(
-    "QueueScheduler_hostContinuation",
-  );
-  const QueueScheduler_hostScheduler = Symbol("QueueScheduler_hostScheduler");
-  const QueueScheduler_queue = Symbol("QueueScheduler_queue");
-  const QueueScheduler_taskIDCounter = Symbol("QueueScheduler_taskIDCounter");
 
   type TProperties = {
     readonly [QueueScheduler_delayed]: QueueLike<QueueTask>;

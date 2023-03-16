@@ -1,12 +1,12 @@
 /// <reference types="./MutableEnumerator.mixin.d.ts" />
 
 import { mix, props } from "../../../__internal__/mixins.js";
+import { Enumerator_private_current, MutableEnumeratorLike_reset, } from "../../../__internal__/symbols.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, } from "../../../containers.js";
 import { none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-export const MutableEnumeratorLike_reset = Symbol("MutableEnumeratorLike_reset");
+export { MutableEnumeratorLike_reset };
 const MutableEnumerator_mixin = 
 /*@__PURE__*/ (() => {
-    const Enumerator_private_current = Symbol("Enumerator_private_current");
     return pipe(mix(function EnumeratorMixin(instance) {
         return instance;
     }, props({

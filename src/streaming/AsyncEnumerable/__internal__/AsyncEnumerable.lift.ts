@@ -1,3 +1,7 @@
+import {
+  LiftedAsyncEnumerable_operators,
+  LiftedAsyncEnumerable_src,
+} from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import { SchedulerLike } from "../../../scheduling.js";
@@ -9,11 +13,6 @@ import {
   StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../../../streaming.js";
-
-const LiftedAsyncEnumerable_src = Symbol("LiftedAsyncEnumerable_src");
-const LiftedAsyncEnumerable_operators = Symbol(
-  "LiftedAsyncEnumerable_operators",
-);
 
 class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
   readonly [LiftedAsyncEnumerable_src]: AsyncEnumerableLike<any>;

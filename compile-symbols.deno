@@ -1,0 +1,31 @@
+const src = "./src/__internal__/symbols";
+
+const makeJS = async symbols => {
+  const output = 
+    'import symbol from "./symbol.js";\n' + 
+    symbols.map(symbol =>
+`
+/** @type {unique symbol} */
+export const ${symbol} = /*@__PURE__*/ symbol("${symbol}");`
+    ).join("\n");
+
+  await Deno.writeTextFile(src + ".js", output);
+}
+
+const makeDTS = async symbols => {
+  const output = symbols.map(
+    symbol => `export declare const ${symbol}: unique symbol;\n`
+  ).join("\n");
+
+  await Deno.writeTextFile(src + ".d.ts", output);
+}
+
+const makeSymbolFiles = async () => {
+  const data = await Deno.readTextFile(src + ".in");
+  const symbols = data.split("\n");
+  
+  await makeJS(symbols)
+  await makeDTS(symbols);
+}
+
+makeSymbolFiles();

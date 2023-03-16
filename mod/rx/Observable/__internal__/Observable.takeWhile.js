@@ -1,6 +1,7 @@
 /// <reference types="./Observable.takeWhile.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { TakeWhileObserverMixin_inclusive, TakeWhileObserverMixin_predicate, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
@@ -11,8 +12,6 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_takeWhile = 
 /*@__PURE__*/ (() => {
     const createTakeWhileObserver = (() => {
-        const TakeWhileObserverMixin_predicate = Symbol("TakeWhileObserverMixin_predicate");
-        const TakeWhileObserverMixin_inclusive = Symbol("TakeWhileObserverMixin_inclusive");
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function TakeWhileObserverMixin(instance, delegate, predicate, inclusive) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);

@@ -8,6 +8,11 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ObserverMixin_continuation,
+  ObserverMixin_isCompleted,
+  ObserverMixin_onContinuationDispose,
+} from "../../../__internal__/symbols.js";
+import {
   QueueLike,
   QueueLike_count,
   QueueLike_pull,
@@ -65,12 +70,6 @@ const Observer_mixin: <T>() => Mixin2<
   };
 
   const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin<T>());
-
-  const ObserverMixin_continuation = Symbol("ObserverDispatcher_continuation");
-  const ObserverMixin_isCompleted = Symbol("ObserverDispatcher_observer");
-  const ObserverMixin_onContinuationDispose = Symbol(
-    "ObserverDispatcher_onContinuationDispose",
-  );
 
   type TProperties = {
     readonly [DispatcherLike_scheduler]: SchedulerLike;

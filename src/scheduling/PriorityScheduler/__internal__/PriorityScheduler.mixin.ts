@@ -10,6 +10,19 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ContinuationLike_continuationScheduler,
+  ContinuationLike_priority,
+  ContinuationLike_run,
+  ContinuationSchedulerLike_schedule,
+  ContinuationSchedulerLike_shouldYield,
+  Continuation_childContinuation,
+  Continuation_effect,
+  PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_shouldYield,
+  SchedulerMixin_currentContinuation,
+  SchedulerMixin_yieldRequested,
+} from "../../../__internal__/symbols.js";
+import {
   QueueLike,
   QueueLike_count,
   QueueLike_pull,
@@ -44,13 +57,13 @@ import {
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 
-export const ContinuationSchedulerLike_schedule = Symbol(
-  "ContinuationSchedulerLike_schedule",
-);
-
-export const ContinuationSchedulerLike_shouldYield = Symbol(
-  "ContinuationSchedulerLike_shouldYield",
-);
+export {
+  ContinuationLike_continuationScheduler,
+  ContinuationLike_priority,
+  ContinuationSchedulerLike_schedule,
+  PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_shouldYield,
+};
 
 export interface ContinuationSchedulerLike {
   readonly [ContinuationSchedulerLike_shouldYield]: boolean;
@@ -61,12 +74,6 @@ export interface ContinuationSchedulerLike {
   ): void;
 }
 
-export const ContinuationLike_run = Symbol("ContinuationLike_run");
-export const ContinuationLike_priority = Symbol("ContinuationLike_run");
-export const ContinuationLike_continuationScheduler = Symbol(
-  "ContinuationLike_continuationScheduler",
-);
-
 export interface ContinuationLike
   extends DisposableLike,
     QueueableLike<ContinuationLike>,
@@ -76,14 +83,6 @@ export interface ContinuationLike
 
   [ContinuationLike_run](): void;
 }
-
-export const PrioritySchedulerImplementationLike_runContinuation = Symbol(
-  "PrioritySchedulerImplementationLike_runContinuation",
-);
-
-export const PrioritySchedulerImplementationLike_shouldYield = Symbol(
-  "PrioritySchedulerImplementationLike_shouldYield",
-);
 
 export interface PrioritySchedulerImplementationLike
   extends PrioritySchedulerLike,
@@ -108,11 +107,6 @@ type PrioritySchedulerMixin = Omit<
 
 export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
   /*@__PURE__*/ (() => {
-    const Continuation_childContinuation = Symbol(
-      "Continuation_childContinuation",
-    );
-    const Continuation_effect = Symbol("Continuation_effect");
-
     type TContinuationProperties = {
       [ContinuationLike_continuationScheduler]: ContinuationSchedulerLike;
       [ContinuationLike_priority]: number;
@@ -272,13 +266,6 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           },
         },
       ),
-    );
-
-    const SchedulerMixin_yieldRequested = Symbol(
-      "SchedulerMixin_yieldRequested",
-    );
-    const SchedulerMixin_currentContinuation = Symbol(
-      "SchedulerMixin_currentContinuation",
     );
 
     type TSchedulerProperties = {

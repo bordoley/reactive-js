@@ -1,6 +1,7 @@
 /// <reference types="./Observable.timeout.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { TimeoutObserver_duration, timeoutError, } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
@@ -15,10 +16,8 @@ import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 import Observable_throws from "./Observable.throws.js";
 const Observable_timeout = /*@__PURE__*/ (() => {
-    const timeoutError = Symbol("Observable.timeout.error");
     const typedSerialDisposableMixin = SerialDisposable_mixin();
     const typedObserverMixin = Observer_mixin();
-    const TimeoutObserver_duration = Symbol("TimeoutObserver_duration");
     const setupDurationSubscription = (observer) => {
         observer[SerialDisposableLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]));
     };

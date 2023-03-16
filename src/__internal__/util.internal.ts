@@ -9,7 +9,7 @@ import {
   QueueLike_head,
   QueueLike_pull,
   SerialDisposableLike_current,
-} from "./util.symbols.js";
+} from "./symbols.js";
 
 export {
   SerialDisposableLike_current,

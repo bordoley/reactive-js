@@ -1,6 +1,7 @@
 /// <reference types="./Observable.distinctUntilChanged.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DistinctUntilChangedObserverMixin_equality, DistinctUntilChangedObserverMixin_hasValue, DistinctUntilChangedObserverMixin_prev, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { QueueableLike_maxBufferSize } from "../../../util.js";
@@ -11,9 +12,6 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const createDistinctUntilChangedObserver = (() => {
-        const DistinctUntilChangedObserverMixin_equality = Symbol("DistinctUntilChangedObserverMixin_equality");
-        const DistinctUntilChangedObserverMixin_prev = Symbol("DistinctUntilChangedObserverMixin_prev");
-        const DistinctUntilChangedObserverMixin_hasValue = Symbol("DistinctUntilChangedObserverMixin_hasValue");
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function DistinctUntilChangedObserverMixin(instance, delegate, equality) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);

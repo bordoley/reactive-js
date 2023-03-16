@@ -10,6 +10,12 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ZipWithLatestFromObserver_TAQueue,
+  ZipWithLatestFromObserver_hasLatest,
+  ZipWithLatestFromObserver_otherLatest,
+  ZipWithLatestFromObserver_selector,
+} from "../../../__internal__/symbols.js";
+import {
   IndexedQueueLike,
   QueueLike,
   QueueLike_count,
@@ -56,20 +62,6 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
       selector: Function2<TA, TB, T>,
     ) => ObserverLike<TA> = (<TA, TB, T>() => {
       const typedObserverMixin = Observer_mixin<TA>();
-
-      const ZipWithLatestFromObserver_hasLatest = Symbol(
-        "ZipWithLatestFromObserver_hasLatest",
-      );
-      const ZipWithLatestFromObserver_otherLatest = Symbol(
-        "ZipWithLatestFromObserver_otherLatest",
-      );
-      const ZipWithLatestFromObserver_selector = Symbol(
-        "ZipWithLatestFromObserver_selector",
-      );
-
-      const ZipWithLatestFromObserver_TAQueue = Symbol(
-        "ZipWithLatestFromObserver_selector",
-      );
 
       type TProperties = {
         [ZipWithLatestFromObserver_hasLatest]: boolean;

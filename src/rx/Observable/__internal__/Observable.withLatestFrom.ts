@@ -8,6 +8,11 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  WithLatestFromObserver_hasLatest,
+  WithLatestFromObserver_otherLatest,
+  WithLatestFromObserver_selector,
+} from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Function2,
@@ -47,16 +52,6 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
       selector: Function2<TA, TB, T>,
     ) => ObserverLike<TA> = (<TA, TB, T>() => {
       const typedObserverMixin = Observer_mixin<TA>();
-
-      const WithLatestFromObserver_hasLatest = Symbol(
-        "WithLatestFromObserver_hasLatest",
-      );
-      const WithLatestFromObserver_otherLatest = Symbol(
-        "WithLatestFromObserver_otherLatest",
-      );
-      const WithLatestFromObserver_selector = Symbol(
-        "WithLatestFromObserver_selector",
-      );
 
       type TProperties = {
         [WithLatestFromObserver_hasLatest]: boolean;

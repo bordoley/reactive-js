@@ -1,6 +1,7 @@
 /// <reference types="./HigherOrderObservable.throttle.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { ThrottleObserver_durationFunction, ThrottleObserver_durationSubscription, ThrottleObserver_hasValue, ThrottleObserver_mode, ThrottleObserver_onNotify, ThrottleObserver_value, } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { isNumber, none, partial, pipe, } from "../../../functions.js";
@@ -19,12 +20,6 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 const createThrottleObserver = (() => {
     const typedObserverMixin = Observer_mixin();
-    const ThrottleObserver_value = Symbol("ThrottleObserver_value");
-    const ThrottleObserver_hasValue = Symbol("ThrottleObserver_hasValue");
-    const ThrottleObserver_durationSubscription = Symbol("ThrottleObserver_durationSubscription");
-    const ThrottleObserver_durationFunction = Symbol("ThrottleObserver_durationFunction");
-    const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
-    const ThrottleObserver_onNotify = Symbol("ThrottleObserver_onNotify");
     const setupDurationSubscription = (observer, next) => {
         observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(observer[ThrottleObserver_onNotify]), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]));
     };

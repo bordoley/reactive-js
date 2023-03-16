@@ -8,6 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { KeepObserverMixin_predicate } from "../../../__internal__/symbols.js";
 import { Keep } from "../../../containers.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
@@ -27,8 +28,6 @@ const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     delegate: ObserverLike<T>,
     predicate: Predicate<T>,
   ) => ObserverLike<T> = (<T>() => {
-    const KeepObserverMixin_predicate = Symbol("KeepObserverMixin_predicate");
-
     type TProperties = {
       readonly [KeepObserverMixin_predicate]: Predicate<T>;
     };

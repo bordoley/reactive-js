@@ -2,6 +2,7 @@
 
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DispatchedObservable_observer, StreamMixin_dispatcher, } from "../../../__internal__/symbols.js";
 import { QueueLike_count, } from "../../../__internal__/util.internal.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
@@ -11,7 +12,6 @@ import { DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_p
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
-    const DispatchedObservable_observer = Symbol("DispatchedObservable_observer");
     return createInstanceFactory(mix(function DispatchedObservable(instance) {
         return instance;
     }, props({
@@ -75,7 +75,6 @@ const DispatchedObservable_create =
     }));
 })();
 const Stream_mixin = /*@__PURE__*/ (() => {
-    const StreamMixin_dispatcher = Symbol("StreamMixin_dispatcher");
     return returns(mix(include(Disposable_delegatingMixin()), function StreamMixin(instance, op, scheduler, replay, maxBufferSize) {
         instance[DispatcherLike_scheduler] = scheduler;
         const dispatchedObservable = DispatchedObservable_create();

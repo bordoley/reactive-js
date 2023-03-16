@@ -16,9 +16,9 @@ yarn-error.log
 .npmignore
 .prettierignore
 
-build
-build-types
 coverage
 docs
 mod
 packages/core
+
+symbols.in

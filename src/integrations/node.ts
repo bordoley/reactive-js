@@ -10,6 +10,7 @@ import {
   createGzip,
   createInflate,
 } from "zlib";
+import { NODE_JS_PAUSE_EVENT } from "../__internal__/symbols.js";
 import { ContainerOperator } from "../containers.js";
 import {
   Factory,
@@ -231,7 +232,6 @@ export const readFile = (
 ) => createReadableSource(() => fs.createReadStream(path, options));
 
 export const createWritableSink = /*@__PURE__*/ (() => {
-  const NODE_JS_PAUSE_EVENT = Symbol("__REACTIVE_JS_NODE_WRITABLE_PAUSE__");
   return (
     factory: Factory<Writable> | Writable,
   ): StreamableLike<Uint8Array, FlowableState> =>

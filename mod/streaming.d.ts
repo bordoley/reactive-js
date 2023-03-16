@@ -1,4 +1,4 @@
-import { FlowableState_paused, FlowableState_running, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream } from "./__internal__/streaming.symbols.js";
+import { FlowableState_paused, FlowableState_running, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
 import { Function1, Updater } from "./functions.js";
 import { DispatcherLike, MulticastObservableLike } from "./rx.js";

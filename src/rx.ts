@@ -10,7 +10,7 @@ import {
   ThrottleMode_first,
   ThrottleMode_interval,
   ThrottleMode_last,
-} from "./__internal__/rx.symbols.js";
+} from "./__internal__/symbols.js";
 import {
   Container,
   ContainerLike,

@@ -8,6 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { AsyncEnumeratorDelegatingMixin_src } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { none, pipe, unsafeCast } from "../../../functions.js";
 import {
@@ -38,10 +39,6 @@ const AsyncEnumerator_create: <TA, TB>(
   stream: StreamLike<void, TA>,
   op: ContainerOperator<ObservableLike, TA, TB>,
 ) => StreamLike<void, TB> = /*@__PURE__*/ (<TA, TB>() => {
-  const AsyncEnumeratorDelegatingMixin_src = Symbol(
-    "AsyncEnumeratorDelegatingMixin_src",
-  );
-
   type TProperties = {
     readonly [AsyncEnumeratorDelegatingMixin_src]: StreamLike<void, TA>;
   };

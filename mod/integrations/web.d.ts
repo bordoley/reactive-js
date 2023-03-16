@@ -1,8 +1,10 @@
+import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack } from "../__internal__/symbols.js";
 import { Function1, Updater } from "../functions.js";
 import { ObservableLike } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { StreamLike, StreamableLike, StreamableLike_stream } from "../streaming.js";
 import { QueueableLike_push } from "../util.js";
+export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack };
 /**
  * @noInheritDoc
  */
@@ -12,10 +14,6 @@ export interface WindowLocationURI {
     readonly query: string;
     readonly fragment: string;
 }
-/** @ignore */
-export declare const WindowLocationStreamLike_goBack: unique symbol;
-/** @ignore */
-export declare const WindowLocationStreamLike_canGoBack: unique symbol;
 /**
  * @noInheritDoc
  * @category Container

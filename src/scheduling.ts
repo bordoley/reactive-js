@@ -9,7 +9,7 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   VirtualTimeSchedulerLike_run,
-} from "./__internal__/scheduling.symbols.js";
+} from "./__internal__/symbols.js";
 import { SideEffect1 } from "./functions.js";
 import { DisposableLike } from "./util.js";
 

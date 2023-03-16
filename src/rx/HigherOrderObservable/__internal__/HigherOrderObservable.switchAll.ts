@@ -9,6 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { HigherOrderObservable_currentRef } from "../../../__internal__/symbols.js";
 import {
   SerialDisposableLike,
   SerialDisposableLike_current,
@@ -41,10 +42,6 @@ import Observable_subscribeWithMaxBufferSize from "../../Observable/__internal__
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
-
-const HigherOrderObservable_currentRef = Symbol(
-  "HigherOrderObservable_currentRef",
-);
 
 const HigherOrderObservable_switchAll = <C extends ObservableLike>(
   lift: <T>(

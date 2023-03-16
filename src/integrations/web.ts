@@ -8,6 +8,11 @@ import {
   mix,
   props,
 } from "../__internal__/mixins.js";
+import {
+  WindowLocationStreamLike_canGoBack,
+  WindowLocationStreamLike_goBack,
+  WindowLocationStream_historyCounter,
+} from "../__internal__/symbols.js";
 import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import {
@@ -52,6 +57,8 @@ import {
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
+export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack };
+
 /**
  * @noInheritDoc
  */
@@ -64,16 +71,6 @@ export interface WindowLocationURI {
   readonly query: string;
   readonly fragment: string;
 }
-
-/** @ignore */
-export const WindowLocationStreamLike_goBack = Symbol(
-  "WindowLocationStreamLike_goBack",
-);
-
-/** @ignore */
-export const WindowLocationStreamLike_canGoBack = Symbol(
-  "WindowLocationStreamLike_canGoBack",
-);
 
 /**
  * @noInheritDoc
@@ -295,10 +292,6 @@ export const windowLocation: WindowLocationStreamableLike =
         uri,
       );
     };
-
-    const WindowLocationStream_historyCounter = Symbol(
-      "WindowLocationStream_historyCounter",
-    );
 
     type TProperties = {
       [WindowLocationStream_historyCounter]: number;

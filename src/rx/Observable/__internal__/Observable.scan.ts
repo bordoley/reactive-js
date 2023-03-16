@@ -8,6 +8,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  ScanObserverMixin_acc,
+  ScanObserverMixin_reducer,
+} from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Factory,
@@ -42,9 +46,6 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ) => ObserverLike<T> = (() => {
-    const ScanObserverMixin_reducer = Symbol("ScanObserverMixin_reducer");
-    const ScanObserverMixin_acc = Symbol("ScanObserverMixin_acc");
-
     type TProperties = {
       readonly [ScanObserverMixin_reducer]: Reducer<T, TAcc>;
       [ScanObserverMixin_acc]: TAcc;

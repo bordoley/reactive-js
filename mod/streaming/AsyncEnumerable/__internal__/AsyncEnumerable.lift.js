@@ -1,10 +1,9 @@
 /// <reference types="./AsyncEnumerable.lift.d.ts" />
 
 var _a;
+import { LiftedAsyncEnumerable_operators, LiftedAsyncEnumerable_src, } from "../../../__internal__/symbols.js";
 import { newInstance, pipeUnsafe } from "../../../functions.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../../../streaming.js";
-const LiftedAsyncEnumerable_src = Symbol("LiftedAsyncEnumerable_src");
-const LiftedAsyncEnumerable_operators = Symbol("LiftedAsyncEnumerable_operators");
 class LiftedAsyncEnumerable {
     constructor(src, operators, isEnumerable, isRunnable) {
         this[_a] = true;

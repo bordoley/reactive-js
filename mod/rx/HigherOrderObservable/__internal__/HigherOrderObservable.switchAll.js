@@ -1,6 +1,7 @@
 /// <reference types="./HigherOrderObservable.switchAll.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { HigherOrderObservable_currentRef } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { none, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
@@ -15,7 +16,6 @@ import Observable_subscribeWithMaxBufferSize from "../../Observable/__internal__
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
-const HigherOrderObservable_currentRef = Symbol("HigherOrderObservable_currentRef");
 const HigherOrderObservable_switchAll = (lift) => {
     const createSwitchAllObserver = (() => {
         const typedObserverMixin = Observer_mixin();

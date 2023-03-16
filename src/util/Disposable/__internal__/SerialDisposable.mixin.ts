@@ -1,4 +1,5 @@
 import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
+import { SerialDisposableMixin_current } from "../../../__internal__/symbols.js";
 import {
   SerialDisposableLike,
   SerialDisposableLike_current,
@@ -11,8 +12,6 @@ const SerialDisposable_mixin: <TDisposable extends DisposableLike>() => Mixin1<
   SerialDisposableLike<TDisposable>,
   TDisposable
 > = /*@__PURE__*/ (<TDisposable extends DisposableLike>() => {
-  const SerialDisposableMixin_current = Symbol("SerialDisposableMixin_current");
-
   type TProperties = {
     [SerialDisposableMixin_current]: TDisposable;
   };

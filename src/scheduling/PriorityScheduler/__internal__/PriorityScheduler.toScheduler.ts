@@ -7,6 +7,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  PrioritySchedulerDelegatingScheduler_priority,
+  PrioritySchedulerDelegatingScheduler_priorityScheduler,
+} from "../../../__internal__/symbols.js";
+import {
   Function1,
   SideEffect1,
   none,
@@ -27,13 +31,6 @@ import {
 import { DisposableLike } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-
-const PrioritySchedulerDelegatingScheduler_priorityScheduler = Symbol(
-  "PrioritySchedulerDelegatingScheduler_priorityScheduler",
-);
-const PrioritySchedulerDelegatingScheduler_priority = Symbol(
-  "PrioritySchedulerDelegatingScheduler_priority",
-);
 
 type TProperties = {
   readonly [PrioritySchedulerDelegatingScheduler_priorityScheduler]: PrioritySchedulerLike;

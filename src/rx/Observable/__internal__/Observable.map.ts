@@ -8,6 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { MapObserverMixin_mapper } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
 import {
@@ -30,8 +31,6 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
     delegate: ObserverLike<TB>,
     predicate: Function1<TA, TB>,
   ) => ObserverLike<TA> = (<TA, TB>() => {
-    const MapObserverMixin_mapper = Symbol("MapObserverMixin_mapper");
-
     type TProperties = {
       readonly [MapObserverMixin_mapper]: Function1<TA, TB>;
     };

@@ -7,6 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { Subject_observers } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
   IndexedQueueLike_get,
@@ -39,8 +40,6 @@ import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/Indexe
 
 const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
   /*@__PURE__*/ (<T>() => {
-    const Subject_observers = Symbol("Subject_observers");
-
     type TProperties = {
       readonly [Subject_observers]: Set<ObserverLike<T>>;
     };

@@ -4,7 +4,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
-} from "./__internal__/containers.symbols.js";
+} from "./__internal__/symbols.js";
 import {
   Equality,
   Factory,

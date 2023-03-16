@@ -12,6 +12,12 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  BufferObserver_buffer,
+  BufferObserver_durationFunction,
+  BufferObserver_durationSubscription,
+  BufferObserver_maxBufferSize,
+} from "../../../__internal__/symbols.js";
+import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../__internal__/util.internal.js";
@@ -52,15 +58,6 @@ type ObservableBuffer = <C extends ObservableLike, T>(options?: {
 
 const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
   const typedObserverMixin = Observer_mixin<T>();
-
-  const BufferObserver_buffer = Symbol("BufferObserver_buffer");
-  const BufferObserver_durationFunction = Symbol(
-    "BufferObserver_durationFunction",
-  );
-  const BufferObserver_durationSubscription = Symbol(
-    "BufferObserver_durationSubscription",
-  );
-  const BufferObserver_maxBufferSize = Symbol("BufferObserver_maxBufferSize");
 
   type TProperties = {
     [BufferObserver_buffer]: T[];

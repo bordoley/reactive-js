@@ -6,6 +6,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  ReduceObserverMixin_acc,
+  ReduceObserverMixin_reducer,
+} from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
@@ -39,9 +43,6 @@ type ObservableReduce = <C extends ObservableLike, T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => ContainerOperator<C, T, TAcc>;
 const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
-  const ReduceObserverMixin_reducer = Symbol("ReduceObserverMixin_reducer");
-  const ReduceObserverMixin_acc = Symbol("ReduceObserverMixin_acc");
-
   type TProperties = {
     readonly [ReduceObserverMixin_reducer]: Reducer<T, TAcc>;
     [ReduceObserverMixin_acc]: TAcc;

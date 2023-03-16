@@ -9,6 +9,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  TimeoutObserver_duration,
+  timeoutError,
+} from "../../../__internal__/symbols.js";
+import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../__internal__/util.internal.js";
@@ -39,12 +43,9 @@ import Observable_throws from "./Observable.throws.js";
 const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
   T,
 >() => {
-  const timeoutError = Symbol("Observable.timeout.error");
-
   const typedSerialDisposableMixin = SerialDisposable_mixin();
   const typedObserverMixin = Observer_mixin();
 
-  const TimeoutObserver_duration = Symbol("TimeoutObserver_duration");
   type TProperties = {
     readonly [TimeoutObserver_duration]: ObservableLike<unknown>;
   };

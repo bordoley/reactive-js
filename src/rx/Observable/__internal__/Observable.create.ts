@@ -4,6 +4,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { CreateObservable_effect } from "../../../__internal__/symbols.js";
 import { SideEffect1, error, none } from "../../../functions.js";
 import {
   ObservableLike,
@@ -19,8 +20,6 @@ const Observable_create: <T>(
   isEnumerable?: boolean,
   isRunnable?: boolean,
 ) => ObservableLike<T> = /*@__PURE__*/ (() => {
-  const CreateObservable_effect = Symbol("CreateObservable_effect");
-
   type TProperties = {
     readonly [CreateObservable_effect]: SideEffect1<ObserverLike>;
     readonly [ObservableLike_isEnumerable]: boolean;

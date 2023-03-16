@@ -1,5 +1,9 @@
 import { Mixin, mix, props } from "../../../__internal__/mixins.js";
 import {
+  Enumerator_private_current,
+  MutableEnumeratorLike_reset,
+} from "../../../__internal__/symbols.js";
+import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -12,10 +16,7 @@ import {
   returns,
   unsafeCast,
 } from "../../../functions.js";
-
-export const MutableEnumeratorLike_reset = Symbol(
-  "MutableEnumeratorLike_reset",
-);
+export { MutableEnumeratorLike_reset };
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
@@ -29,8 +30,6 @@ type TEnumeratorMixinReturn<T> = Omit<
 
 const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
   /*@__PURE__*/ (<T>() => {
-    const Enumerator_private_current = Symbol("Enumerator_private_current");
-
     type TProperties = {
       [Enumerator_private_current]: T;
       [EnumeratorLike_hasCurrent]: boolean;

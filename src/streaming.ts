@@ -5,7 +5,7 @@ import {
   StreamableLike_isInteractive,
   StreamableLike_isRunnable,
   StreamableLike_stream,
-} from "./__internal__/streaming.symbols.js";
+} from "./__internal__/symbols.js";
 import {
   Container,
   ContainerLike,

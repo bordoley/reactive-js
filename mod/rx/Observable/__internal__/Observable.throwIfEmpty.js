@@ -1,6 +1,7 @@
 /// <reference types="./Observable.throwIfEmpty.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { ThrowIfEmptyObserverMixin_isEmpty } from "../../../__internal__/symbols.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
@@ -13,7 +14,6 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_throwIfEmpty = 
 /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (() => {
-        const ThrowIfEmptyObserverMixin_isEmpty = Symbol("ThrowIfEmptyObserverMixin_isEmpty");
         return createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function ThrowIfEmptyObserverMixin(instance, delegate, factory) {
             init(Disposable_mixin, instance);
             init(delegatingMixin(), instance, delegate);

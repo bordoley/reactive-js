@@ -1,4 +1,4 @@
-import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push } from "./__internal__/util.symbols.js";
+import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push } from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
 export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_push, QueueableLike_maxBufferSize, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;

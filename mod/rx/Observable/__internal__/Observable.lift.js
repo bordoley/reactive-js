@@ -1,10 +1,9 @@
 /// <reference types="./Observable.lift.d.ts" />
 
+import { LiftedObservable_operators, LiftedObservable_source, } from "../../../__internal__/symbols.js";
 import { newInstance, pipeUnsafe } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
-const LiftedObservable_source = Symbol("LiftedObservable_source");
-const LiftedObservable_operators = Symbol("LiftedObservable_operators");
 class LiftedObservable {
     constructor(source, operators, isEnumerable, isRunnable) {
         this[LiftedObservable_source] = source;

@@ -1,6 +1,7 @@
 /// <reference types="./Observable.reduce.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { ReduceObserverMixin_acc, ReduceObserverMixin_reducer, } from "../../../__internal__/symbols.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
@@ -13,8 +14,6 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 import Observable_observeWith from "./Observable.observeWith.js";
 const Observable_reduce = /*@__PURE__*/ (() => {
-    const ReduceObserverMixin_reducer = Symbol("ReduceObserverMixin_reducer");
-    const ReduceObserverMixin_acc = Symbol("ReduceObserverMixin_acc");
     const createReduceObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function ReduceObserverMixin(instance, delegate, reducer, initialValue) {
         init(Disposable_mixin, instance);
         init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);

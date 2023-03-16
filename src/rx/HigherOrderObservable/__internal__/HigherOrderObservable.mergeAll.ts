@@ -12,6 +12,13 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  MergeAllObserver_activeCount,
+  MergeAllObserver_maxBufferSize,
+  MergeAllObserver_maxConcurrency,
+  MergeAllObserver_observablesQueue,
+  MergeAllObserver_onDispose,
+} from "../../../__internal__/symbols.js";
+import {
   IndexedQueueLike,
   QueueLike,
   QueueLike_count,
@@ -69,19 +76,6 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
     maxConcurrency: number,
   ) => ObserverLike<ContainerOf<C, T>> = (<T>() => {
     const typedObserverMixin = Observer_mixin<ContainerOf<C, T>>();
-
-    const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
-    const MergeAllObserver_maxBufferSize = Symbol(
-      "MergeAllObserver_maxBufferSize",
-    );
-    const MergeAllObserver_maxConcurrency = Symbol(
-      "MergeAllObserver_maxConcurrency",
-    );
-    const MergeAllObserver_onDispose = Symbol("MergeAllObserver_onDispose");
-
-    const MergeAllObserver_observablesQueue = Symbol(
-      "MergeAllObserver_observablesQueue",
-    );
 
     type TProperties = {
       [MergeAllObserver_activeCount]: number;

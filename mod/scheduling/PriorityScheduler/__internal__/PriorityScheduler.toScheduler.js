@@ -1,12 +1,11 @@
 /// <reference types="./PriorityScheduler.toScheduler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { PrioritySchedulerDelegatingScheduler_priority, PrioritySchedulerDelegatingScheduler_priorityScheduler, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe, unsafeCast, } from "../../../functions.js";
 import { SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-const PrioritySchedulerDelegatingScheduler_priorityScheduler = Symbol("PrioritySchedulerDelegatingScheduler_priorityScheduler");
-const PrioritySchedulerDelegatingScheduler_priority = Symbol("PrioritySchedulerDelegatingScheduler_priority");
 const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(Disposable_mixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {
     init(Disposable_mixin, instance);
     instance[PrioritySchedulerDelegatingScheduler_priorityScheduler] =

@@ -7,6 +7,14 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ThrottleObserver_durationFunction,
+  ThrottleObserver_durationSubscription,
+  ThrottleObserver_hasValue,
+  ThrottleObserver_mode,
+  ThrottleObserver_onNotify,
+  ThrottleObserver_value,
+} from "../../../__internal__/symbols.js";
+import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../__internal__/util.internal.js";
@@ -57,17 +65,6 @@ const createThrottleObserver: <T>(
   mode: ThrottleMode,
 ) => ObserverLike<T> = (<T>() => {
   const typedObserverMixin = Observer_mixin<T>();
-
-  const ThrottleObserver_value = Symbol("ThrottleObserver_value");
-  const ThrottleObserver_hasValue = Symbol("ThrottleObserver_hasValue");
-  const ThrottleObserver_durationSubscription = Symbol(
-    "ThrottleObserver_durationSubscription",
-  );
-  const ThrottleObserver_durationFunction = Symbol(
-    "ThrottleObserver_durationFunction",
-  );
-  const ThrottleObserver_mode = Symbol("ThrottleObserver_mode");
-  const ThrottleObserver_onNotify = Symbol("ThrottleObserver_onNotify");
 
   type TProperties = {
     [ThrottleObserver_value]: Optional<T>;

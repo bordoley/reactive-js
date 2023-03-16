@@ -1,4 +1,5 @@
 import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins.js";
+import { DisposableMixin_disposables } from "../../../__internal__/symbols.js";
 import {
   Optional,
   call,
@@ -33,8 +34,6 @@ const doDispose = (
     disposable[DisposableLike_dispose](error);
   }
 };
-
-const DisposableMixin_disposables = Symbol("DisposableMixin_disposables");
 
 type TProperties = {
   [DisposableLike_error]: Optional<Error>;

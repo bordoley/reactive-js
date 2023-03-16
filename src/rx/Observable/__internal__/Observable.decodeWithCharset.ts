@@ -9,6 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { DecodeWithCharsetObserverMixin_textDecoder } from "../../../__internal__/symbols.js";
 import { DecodeWithCharset } from "../../../containers.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import {
@@ -31,10 +32,6 @@ import Observable_observeWith from "./Observable.observeWith.js";
 
 const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   /*@__PURE__*/ (() => {
-    const DecodeWithCharsetObserverMixin_textDecoder = Symbol(
-      "DecodeWithCharsetObserverMixin_textDecoder",
-    );
-
     type TProperties = {
       readonly [DecodeWithCharsetObserverMixin_textDecoder]: TextDecoder;
     };

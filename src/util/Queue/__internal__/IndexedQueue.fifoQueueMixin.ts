@@ -1,6 +1,12 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
+  FifoQueue_capacityMask,
+  FifoQueue_head,
+  FifoQueue_tail,
+  FifoQueue_values,
+} from "../../../__internal__/symbols.js";
+import {
   IndexedQueueLike,
   IndexedQueueLike_get,
   IndexedQueueLike_pop,
@@ -32,11 +38,6 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
     typeof QueueLike_count | typeof QueueableLike_maxBufferSize
   >
 > = /*@__PURE__*/ (<T>() => {
-  const FifoQueue_head = Symbol("FifoQueue_head");
-  const FifoQueue_tail = Symbol("FifoQueue_tail");
-  const FifoQueue_capacityMask = Symbol("FifoQueue_capacityMask");
-  const FifoQueue_values = Symbol("FifoQueue_values");
-
   type TProperties = {
     [QueueLike_count]: number;
     readonly [QueueableLike_maxBufferSize]: number;

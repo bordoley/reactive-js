@@ -2,12 +2,12 @@
 
 import { floor } from "../../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
 import { IndexedQueueLike_get, IndexedQueueLike_pop, IndexedQueueLike_set, QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { call, none, pipe, returns, } from "../../../functions.js";
 import { QueueableLike_push } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
 const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
-    const PriorityQueueImpl_comparator = Symbol("PriorityQueueImpl_comparator");
     const IndexedQueuePrototype = getPrototype(IndexedQueue_fifoQueueMixin());
     const siftDown = (queue, item) => {
         const compare = queue[PriorityQueueImpl_comparator];

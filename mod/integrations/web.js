@@ -1,6 +1,7 @@
 /// <reference types="./web.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
+import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStream_historyCounter, } from "../__internal__/symbols.js";
 import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { compose, error, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
@@ -12,10 +13,7 @@ import Streamable_create from "../streaming/Streamable/__internal__/Streamable.c
 import { DisposableLike_dispose, QueueableLike_maxBufferSize, QueueableLike_push, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-/** @ignore */
-export const WindowLocationStreamLike_goBack = Symbol("WindowLocationStreamLike_goBack");
-/** @ignore */
-export const WindowLocationStreamLike_canGoBack = Symbol("WindowLocationStreamLike_canGoBack");
+export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack };
 const reservedEvents = ["error", "open"];
 export const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;
@@ -111,7 +109,6 @@ export const windowLocation =
         instance[WindowLocationStream_historyCounter]++;
         history.pushState({ counter: instance[WindowLocationStream_historyCounter], title }, "", uri);
     };
-    const WindowLocationStream_historyCounter = Symbol("WindowLocationStream_historyCounter");
     const createWindowLocationStream = createInstanceFactory(mix(include(Disposable_delegatingMixin()), function WindowLocationStream(instance, delegate) {
         init(Disposable_delegatingMixin(), instance, delegate);
         instance[WindowLocationStream_historyCounter] = -1;

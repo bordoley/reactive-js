@@ -1,8 +1,6 @@
 import { Factory, Function1, Function2, Function3, Function4, Optional } from "../functions.js";
-declare const Object_init: unique symbol;
-declare const Object_properties: unique symbol;
-declare const Object_prototype: unique symbol;
-declare const Object_private_initializedProperties: unique symbol;
+import { DelegatingLike_delegate, Object_init, Object_private_initializedProperties, Object_properties, Object_prototype } from "./symbols.js";
+export { DelegatingLike_delegate };
 type OptionalProperties<T> = T extends object ? {
     [P in keyof T]: Optional<T[P]>;
 } : T;
@@ -74,7 +72,6 @@ export declare const createInstanceFactory: CreateInstanceFactory;
 export declare const props: <TProperties>(o: OptionalProperties<TProperties>) => TProperties & {
     [Object_private_initializedProperties]?: true | undefined;
 };
-export declare const DelegatingLike_delegate: unique symbol;
 export interface DelegatingLike<T> {
     readonly [DelegatingLike_delegate]: T;
 }
@@ -83,4 +80,3 @@ export type MixinPrototype<TPrototype> = {
     [Object_prototype]: TPrototype;
 };
 export declare const getPrototype: <TPrototype>(mixin: MixinPrototype<TPrototype>) => TPrototype;
-export {};

@@ -8,6 +8,11 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  DistinctUntilChangedObserverMixin_equality,
+  DistinctUntilChangedObserverMixin_hasValue,
+  DistinctUntilChangedObserverMixin_prev,
+} from "../../../__internal__/symbols.js";
 import { DistinctUntilChanged } from "../../../containers.js";
 import {
   Equality,
@@ -34,16 +39,6 @@ const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["dis
       delegate: ObserverLike<T>,
       equality: Equality<T>,
     ) => ObserverLike<T> = (<T>() => {
-      const DistinctUntilChangedObserverMixin_equality = Symbol(
-        "DistinctUntilChangedObserverMixin_equality",
-      );
-      const DistinctUntilChangedObserverMixin_prev = Symbol(
-        "DistinctUntilChangedObserverMixin_prev",
-      );
-      const DistinctUntilChangedObserverMixin_hasValue = Symbol(
-        "DistinctUntilChangedObserverMixin_hasValue",
-      );
-
       type TProperties = {
         readonly [DistinctUntilChangedObserverMixin_equality]: Equality<T>;
         [DistinctUntilChangedObserverMixin_prev]: T;

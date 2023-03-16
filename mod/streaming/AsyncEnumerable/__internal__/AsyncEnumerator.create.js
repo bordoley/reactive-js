@@ -1,6 +1,7 @@
 /// <reference types="./AsyncEnumerator.create.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { AsyncEnumeratorDelegatingMixin_src } from "../../../__internal__/symbols.js";
 import { none, pipe, unsafeCast } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
@@ -8,7 +9,6 @@ import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const AsyncEnumerator_create = /*@__PURE__*/ (() => {
-    const AsyncEnumeratorDelegatingMixin_src = Symbol("AsyncEnumeratorDelegatingMixin_src");
     return createInstanceFactory(mix(include(Disposable_delegatingMixin()), function AsyncEnumeratorDelegatingMixin(instance, delegate, operator) {
         const observable = pipe(delegate, operator, Observable_multicast(delegate[DispatcherLike_scheduler], {
             maxBufferSize: delegate[QueueableLike_maxBufferSize],

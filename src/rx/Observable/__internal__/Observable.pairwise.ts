@@ -8,6 +8,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  PairwiseObserverMixin_hasPrev,
+  PairwiseObserverMixin_prev,
+} from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { none, pipe, returns } from "../../../functions.js";
 import {
@@ -31,11 +35,6 @@ const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
   const createPairwiseObserver: <T>(
     delegate: ObserverLike<readonly [T, T]>,
   ) => ObserverLike<T> = (<T>() => {
-    const PairwiseObserverMixin_prev = Symbol("PairwiseObserverMixin_prev");
-    const PairwiseObserverMixin_hasPrev = Symbol(
-      "PairwiseObserverMixin_hasPrev",
-    );
-
     type TProperties = {
       [PairwiseObserverMixin_prev]: T;
       [PairwiseObserverMixin_hasPrev]: boolean;

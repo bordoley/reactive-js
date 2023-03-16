@@ -3,6 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { BufferObserver_buffer, BufferObserver_durationFunction, BufferObserver_durationSubscription, BufferObserver_maxBufferSize, } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
@@ -25,10 +26,6 @@ import Observable_never from "./Observable.never.js";
 import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 const Observable_buffer = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
-    const BufferObserver_buffer = Symbol("BufferObserver_buffer");
-    const BufferObserver_durationFunction = Symbol("BufferObserver_durationFunction");
-    const BufferObserver_durationSubscription = Symbol("BufferObserver_durationSubscription");
-    const BufferObserver_maxBufferSize = Symbol("BufferObserver_maxBufferSize");
     const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin, delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);

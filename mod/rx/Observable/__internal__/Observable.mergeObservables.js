@@ -1,5 +1,6 @@
 /// <reference types="./Observable.mergeObservables.d.ts" />
 
+import { MergeObserverCtx_completedCount } from "../../../__internal__/symbols.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { pipe } from "../../../functions.js";
 import Enumerablee_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
@@ -13,7 +14,6 @@ import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 const Observable_mergeObservables = /*@__PURE__*/ (() => {
-    const MergeObserverCtx_completedCount = Symbol("MergeObserverCtx_completedCount");
     const createMergeObserver = (delegate, count, ctx) => pipe(Observer_createWithDelegate(delegate), Disposable_addTo(delegate), Disposable_onComplete(() => {
         ctx[MergeObserverCtx_completedCount]++;
         if (ctx[MergeObserverCtx_completedCount] >= count) {

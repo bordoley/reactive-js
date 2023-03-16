@@ -2,10 +2,8 @@
 
 import ReadonlyArray_getLength from "../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { isFunction, none, pipe, returns, } from "../functions.js";
-const Object_init = Symbol("Object_init");
-const Object_properties = Symbol("Object_properties");
-const Object_prototype = Symbol("Object_prototype");
-const Object_private_initializedProperties = Symbol("Object_private_initializedProperties");
+import { DelegatingLike_delegate, Object_init, Object_private_initializedProperties, Object_properties, Object_prototype, } from "./symbols.js";
+export { DelegatingLike_delegate };
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
 function initUnsafe(mixin, instance, ...args) {
     const f = mixin[Object_init];
@@ -62,7 +60,7 @@ export const createInstanceFactory = (mixin) => {
         ...getOwnPropertyDescriptors(mixin[Object_prototype]),
         constructor: {
             configurable: true,
-            enumerable: true,
+            enumerable: false,
             value: mixin[Object_init],
             writable: true,
         },
@@ -77,7 +75,6 @@ export const createInstanceFactory = (mixin) => {
 export const props = (o) => {
     return o;
 };
-export const DelegatingLike_delegate = Symbol("DelegatingMixin_delegate");
 export const delegatingMixin = /*@__PURE__*/ (() => {
     return pipe(mix(function DelegatingDisposableMixin(instance, delegate) {
         instance[DelegatingLike_delegate] = delegate;

@@ -6,6 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { IteratorEnumerator_iterator } from "../../../__internal__/symbols.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -23,8 +24,6 @@ const Iterable_enumerate: <T>() => Function1<
   IterableLike<T>,
   EnumeratorLike<T>
 > = /*@__PURE__*/ (<T>() => {
-  const IteratorEnumerator_iterator = Symbol("IteratorEnumerator_iterator");
-
   type TIteratorEnumeratorProperties = {
     [IteratorEnumerator_iterator]: Iterator<T>;
   };

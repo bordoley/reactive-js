@@ -7,6 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
   QueueLike,
@@ -64,10 +65,6 @@ const Enumerable_enumerate: <T>() => (
 ) => EnumeratorLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
   const typedObserverMixin = Observer_mixin<T>();
-
-  const EnumerableEnumerator_continuationQueue = Symbol(
-    "EnumerableEnumerator_continuationQueue",
-  );
 
   type TEnumeratorSchedulerProperties = {
     readonly [EnumerableEnumerator_continuationQueue]: IndexedQueueLike<ContinuationLike>;

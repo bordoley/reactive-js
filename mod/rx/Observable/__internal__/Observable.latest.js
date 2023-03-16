@@ -1,6 +1,7 @@
 /// <reference types="./Observable.latest.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { LatestCtx_completedCount, LatestCtx_delegate, LatestCtx_mode, LatestCtx_observers, LatestObserver_ctx, LatestObserver_latest, LatestObserver_ready, } from "../../../__internal__/symbols.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { none, pipe } from "../../../functions.js";
@@ -18,10 +19,6 @@ import Observable_create from "./Observable.create.js";
 const zipMode = 2;
 const Observable_latest = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
-    const LatestCtx_delegate = Symbol("LatestCtx_delegate");
-    const LatestCtx_mode = Symbol("LatestCtx_mode");
-    const LatestCtx_completedCount = Symbol("LatestCtx_completedCount");
-    const LatestCtx_observers = Symbol("LatestCtx_observers");
     const add = (instance, observer) => {
         instance[LatestCtx_observers].push(observer);
     };
@@ -46,9 +43,6 @@ const Observable_latest = /*@__PURE__*/ (() => {
             instance[LatestCtx_delegate][DisposableLike_dispose]();
         }
     };
-    const LatestObserver_ready = Symbol("LatestObserver_ready");
-    const LatestObserver_latest = Symbol("LatestObserver_latest");
-    const LatestObserver_ctx = Symbol("LatestObserver_ctx");
     const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin), function LatestObserver(instance, ctx, scheduler, maxBufferSize) {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, scheduler, maxBufferSize);

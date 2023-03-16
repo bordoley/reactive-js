@@ -3,6 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { QueueScheduler_delayed, QueueScheduler_dueTime, QueueScheduler_hostContinuation, QueueScheduler_hostScheduler, QueueScheduler_queue, QueueScheduler_taskIDCounter, QueueTask_continuation, QueueTask_dueTime, QueueTask_priority, QueueTask_taskID, } from "../../../__internal__/symbols.js";
 import { QueueLike_head, QueueLike_pull, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
@@ -15,10 +16,6 @@ import SerialDisposable_mixin from "../../../util/Disposable/__internal__/Serial
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
 import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
 const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
-    const QueueTask_continuation = Symbol("QueueTask_continuation");
-    const QueueTask_dueTime = Symbol("QueueTask_dueTime");
-    const QueueTask_priority = Symbol("QueueTask_priority");
-    const QueueTask_taskID = Symbol("QueueTask_taskID");
     const delayedComparator = (a, b) => {
         let diff = 0;
         diff = diff !== 0 ? diff : a[QueueTask_dueTime] - b[QueueTask_dueTime];
@@ -102,12 +99,6 @@ const Scheduler_toPriorityScheduler = /*@__PURE__*/ (() => {
     };
     const typedSerialDisposableMixin = SerialDisposable_mixin();
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
-    const QueueScheduler_delayed = Symbol("QueueScheduler_delayed");
-    const QueueScheduler_dueTime = Symbol("QueueScheduler_dueTime");
-    const QueueScheduler_hostContinuation = Symbol("QueueScheduler_hostContinuation");
-    const QueueScheduler_hostScheduler = Symbol("QueueScheduler_hostScheduler");
-    const QueueScheduler_queue = Symbol("QueueScheduler_queue");
-    const QueueScheduler_taskIDCounter = Symbol("QueueScheduler_taskIDCounter");
     return createInstanceFactory(mix(include(PriorityScheduler_mixin, typedMutableEnumeratorMixin, typedSerialDisposableMixin), function QueueScheduler(instance, host) {
         init(PriorityScheduler_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);

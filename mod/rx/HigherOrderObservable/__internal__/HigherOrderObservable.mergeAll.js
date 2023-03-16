@@ -3,6 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { MergeAllObserver_activeCount, MergeAllObserver_maxBufferSize, MergeAllObserver_maxConcurrency, MergeAllObserver_observablesQueue, MergeAllObserver_onDispose, } from "../../../__internal__/symbols.js";
 import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { isSome, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
@@ -19,11 +20,6 @@ import Observer_notifyObserver from "../../Observer/__internal__/Observer.notify
 const HigherOrderObservable_mergeAll = (lift) => {
     const createMergeAllObserver = (() => {
         const typedObserverMixin = Observer_mixin();
-        const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
-        const MergeAllObserver_maxBufferSize = Symbol("MergeAllObserver_maxBufferSize");
-        const MergeAllObserver_maxConcurrency = Symbol("MergeAllObserver_maxConcurrency");
-        const MergeAllObserver_onDispose = Symbol("MergeAllObserver_onDispose");
-        const MergeAllObserver_observablesQueue = Symbol("MergeAllObserver_observablesQueue");
         const subscribeNext = (observer) => {
             if (observer[MergeAllObserver_activeCount] <
                 observer[MergeAllObserver_maxConcurrency]) {

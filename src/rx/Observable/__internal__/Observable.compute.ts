@@ -1,3 +1,22 @@
+import {
+  AwaitOrObserveEffect_hasValue,
+  AwaitOrObserveEffect_observable,
+  AwaitOrObserveEffect_subscription,
+  AwaitOrObserveEffect_value,
+  ComputeContext_awaitOrObserve,
+  ComputeContext_cleanup,
+  ComputeContext_effects,
+  ComputeContext_index,
+  ComputeContext_memoOrUse,
+  ComputeContext_mode,
+  ComputeContext_observer,
+  ComputeContext_runComputation,
+  ComputeContext_scheduledComputationSubscription,
+  ComputeEffect_type,
+  MemoOrUsingEffect_args,
+  MemoOrUsingEffect_func,
+  MemoOrUsingEffect_value,
+} from "../../../__internal__/symbols.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Equality,
@@ -57,12 +76,6 @@ type ComputeEffectType =
   | typeof Observe
   | typeof Using;
 
-const ComputeEffect_type = Symbol("ComputeEffect_type");
-
-const MemoOrUsingEffect_func = Symbol("MemoOrUsingEffect_func");
-const MemoOrUsingEffect_args = Symbol("MemoOrUsingEffect_args");
-const MemoOrUsingEffect_value = Symbol("MemoOrUsingEffect_value");
-
 type MemoOrUsingEffect<T = unknown> = {
   [MemoOrUsingEffect_func]: (...args: any[]) => unknown;
   [MemoOrUsingEffect_args]: unknown[];
@@ -79,14 +92,6 @@ type UsingEffect = {
   [MemoOrUsingEffect_args]: unknown[];
 } & MemoOrUsingEffect<DisposableLike>;
 
-const AwaitOrObserveEffect_observable = Symbol(
-  "AwaitOrObserveEffect_observable",
-);
-const AwaitOrObserveEffect_subscription = Symbol(
-  "AwaitOrObserveEffect_subscription",
-);
-const AwaitOrObserveEffect_value = Symbol("AwaitOrObserveEffect_value");
-const AwaitOrObserveEffect_hasValue = Symbol("AwaitOrObserveEffect_hasValue");
 type AwaitOrObserveEffect = {
   [AwaitOrObserveEffect_observable]: ObservableLike;
   [AwaitOrObserveEffect_subscription]: DisposableLike;
@@ -167,20 +172,6 @@ const validateComputeEffect: ValidateComputeEffect = ((
 const arrayStrictEquality = arrayEquality();
 
 const awaiting = error();
-
-const ComputeContext_index = Symbol("ComputeContext_index");
-const ComputeContext_cleanup = Symbol("ComputeContext_cleanup");
-const ComputeContext_effects = Symbol("ComputeContext_effects");
-const ComputeContext_mode = Symbol("ComputeContext_mode");
-export const ComputeContext_observer = Symbol("ComputeContext_observer");
-const ComputeContext_runComputation = Symbol("ComputeContext_runComputation");
-const ComputeContext_scheduledComputationSubscription = Symbol(
-  "ComputeContext_scheduledComputationSubscription",
-);
-export const ComputeContext_awaitOrObserve = Symbol(
-  "ComputeContext_awaitOrObserve",
-);
-export const ComputeContext_memoOrUse = Symbol("ComputeContext_memoOrUse");
 
 class ComputeContext {
   [ComputeContext_index] = 0;

@@ -11,14 +11,15 @@ import {
   pipe,
   returns,
 } from "../functions.js";
+import {
+  DelegatingLike_delegate,
+  Object_init,
+  Object_private_initializedProperties,
+  Object_properties,
+  Object_prototype,
+} from "./symbols.js";
 
-const Object_init = Symbol("Object_init");
-const Object_properties = Symbol("Object_properties");
-const Object_prototype = Symbol("Object_prototype");
-
-const Object_private_initializedProperties = Symbol(
-  "Object_private_initializedProperties",
-);
+export { DelegatingLike_delegate };
 
 type OptionalProperties<T> = T extends object
   ? {
@@ -260,7 +261,7 @@ export const createInstanceFactory: CreateInstanceFactory = <TReturn>(
     ...getOwnPropertyDescriptors(mixin[Object_prototype]),
     constructor: {
       configurable: true,
-      enumerable: true,
+      enumerable: false,
       value: mixin[Object_init],
       writable: true,
     },
@@ -284,8 +285,6 @@ export const props = <TProperties>(
     [Object_private_initializedProperties]?: true;
   };
 };
-
-export const DelegatingLike_delegate = Symbol("DelegatingMixin_delegate");
 
 export interface DelegatingLike<T> {
   readonly [DelegatingLike_delegate]: T;

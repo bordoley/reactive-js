@@ -1,6 +1,7 @@
 /// <reference types="./Observer.satisfyMixin.d.ts" />
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { SatisfyObserverMixin_predicate } from "../../../__internal__/symbols.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { none, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
@@ -12,7 +13,6 @@ import Observable_observeWith from "../../Observable/__internal__/Observable.obs
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
 const Observer_satisfyMixin = (defaultResult) => {
-    const SatisfyObserverMixin_predicate = Symbol("SatisfyObserverMixin_predicate");
     return mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function SatisfyObserverMixin(instance, delegate, predicate) {
         init(Disposable_mixin, instance);
         init(delegatingMixin(), instance, delegate);

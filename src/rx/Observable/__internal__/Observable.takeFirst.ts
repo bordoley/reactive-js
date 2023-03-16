@@ -8,6 +8,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  TakeFirstObserverMixin_count,
+  TakeFirstObserverMixin_takeCount,
+} from "../../../__internal__/symbols.js";
 import { DelegatingDisposableLike } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import { partial, pipe } from "../../../functions.js";
@@ -34,11 +38,6 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
     delegate: ObserverLike<T>,
     count: number,
   ) => ObserverLike<T> = (<T>() => {
-    const TakeFirstObserverMixin_takeCount = Symbol(
-      "TakeFirstObserverMixin_takeCount",
-    );
-    const TakeFirstObserverMixin_count = Symbol("TakeFirstObserverMixin_count");
-
     type TProperties = {
       readonly [TakeFirstObserverMixin_takeCount]: number;
       [TakeFirstObserverMixin_count]: number;

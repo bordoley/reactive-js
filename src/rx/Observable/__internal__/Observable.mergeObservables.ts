@@ -1,3 +1,4 @@
+import { MergeObserverCtx_completedCount } from "../../../__internal__/symbols.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { pipe } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
@@ -13,9 +14,6 @@ import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 
 const Observable_mergeObservables = /*@__PURE__*/ (() => {
-  const MergeObserverCtx_completedCount = Symbol(
-    "MergeObserverCtx_completedCount",
-  );
   const createMergeObserver = <T>(
     delegate: ObserverLike<T>,
     count: number,

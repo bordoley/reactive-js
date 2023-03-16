@@ -2,6 +2,7 @@
 
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { Subject_observers } from "../../../__internal__/symbols.js";
 import { IndexedQueueLike_get, QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
 import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_publish, } from "../../../rx.js";
@@ -14,7 +15,6 @@ import Disposable_toErrorHandler from "../../../util/Disposable/__internal__/Dis
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 const Subject_create = 
 /*@__PURE__*/ (() => {
-    const Subject_observers = Symbol("Subject_observers");
     const createSubjectInstance = createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function Subject(instance, replay) {
         init(Disposable_mixin, instance);
         init(IndexedQueue_fifoQueueMixin(), instance, replay);

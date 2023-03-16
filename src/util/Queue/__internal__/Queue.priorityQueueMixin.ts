@@ -8,6 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
   IndexedQueueLike_get,
@@ -33,8 +34,6 @@ const Queue_priorityQueueMixin: <T>() => Mixin2<
   Comparator<T>,
   number
 > = /*@__PURE__*/ (<T>() => {
-  const PriorityQueueImpl_comparator = Symbol("PriorityQueueImpl_comparator");
-
   const IndexedQueuePrototype = getPrototype(IndexedQueue_fifoQueueMixin());
 
   type TProperties = {

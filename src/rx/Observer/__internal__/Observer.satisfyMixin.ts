@@ -9,6 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { SatisfyObserverMixin_predicate } from "../../../__internal__/symbols.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { Predicate, none, pipe } from "../../../functions.js";
 import {
@@ -36,10 +37,6 @@ const Observer_satisfyMixin: <T>(
   Predicate<T>,
   Pick<ObserverLike<T>, typeof ObserverLike_notify>
 > = <T>(defaultResult: boolean) => {
-  const SatisfyObserverMixin_predicate = Symbol(
-    "SatisfyObserverMixin_predicate",
-  );
-
   type TProperties = {
     readonly [SatisfyObserverMixin_predicate]: Predicate<T>;
   };

@@ -1,6 +1,7 @@
 /// <reference types="./Observable.scan.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { ScanObserverMixin_acc, ScanObserverMixin_reducer, } from "../../../__internal__/symbols.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
@@ -10,8 +11,6 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_scan = /*@__PURE__*/ (() => {
     const createScanObserver = (() => {
-        const ScanObserverMixin_reducer = Symbol("ScanObserverMixin_reducer");
-        const ScanObserverMixin_acc = Symbol("ScanObserverMixin_acc");
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function ScanObserverMixin(instance, delegate, reducer, initialValue) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);

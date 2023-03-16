@@ -11,15 +11,12 @@ module.exports = {
   extends: ["plugin:import/errors", "plugin:import/typescript", "prettier"],
   ignorePatterns: [
     ".eslintrc.js",
-    "build-types",
     "coverage",
     "docs",
     "packages/*",
     "mod",
     "node_modules",
-    "rollup.config.js",
-    "scripts",
-    "old_src",
+    "symbols.in",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {

@@ -11,6 +11,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  DispatchedObservable_observer,
+  StreamMixin_dispatcher,
+} from "../../../__internal__/symbols.js";
+import {
   QueueLike,
   QueueLike_count,
 } from "../../../__internal__/util.internal.js";
@@ -58,10 +62,6 @@ interface DispatchedObservableLike<T>
 
 const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
   /*@__PURE__*/ (<T>() => {
-    const DispatchedObservable_observer = Symbol(
-      "DispatchedObservable_observer",
-    );
-
     type TProperties = {
       [DispatchedObservable_observer]: Optional<ObserverLike<T>>;
     };
@@ -188,8 +188,6 @@ const Stream_mixin: <TReq, T>() => Mixin4<
   number,
   number
 > = /*@__PURE__*/ (<TReq, T>() => {
-  const StreamMixin_dispatcher = Symbol("StreamMixin_dispatcher");
-
   type TProperties = {
     readonly [StreamMixin_dispatcher]: DispatcherLike<TReq>;
     readonly [DispatcherLike_scheduler]: SchedulerLike;

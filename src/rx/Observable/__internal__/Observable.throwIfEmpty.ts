@@ -9,6 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { ThrowIfEmptyObserverMixin_isEmpty } from "../../../__internal__/symbols.js";
 import { ThrowIfEmpty } from "../../../containers.js";
 import {
   Factory,
@@ -39,10 +40,6 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
   /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (<T>() => {
-      const ThrowIfEmptyObserverMixin_isEmpty = Symbol(
-        "ThrowIfEmptyObserverMixin_isEmpty",
-      );
-
       type TProperties = {
         [ThrowIfEmptyObserverMixin_isEmpty]: boolean;
       };

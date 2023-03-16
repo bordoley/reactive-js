@@ -1,6 +1,7 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { ObserverMixin_continuation, ObserverMixin_isCompleted, ObserverMixin_onContinuationDispose, } from "../../../__internal__/symbols.js";
 import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { call, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
@@ -16,9 +17,6 @@ const Observer_mixin = /*@__PURE__*/ (() => {
         }
     };
     const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin());
-    const ObserverMixin_continuation = Symbol("ObserverDispatcher_continuation");
-    const ObserverMixin_isCompleted = Symbol("ObserverDispatcher_observer");
-    const ObserverMixin_onContinuationDispose = Symbol("ObserverDispatcher_onContinuationDispose");
     return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function ObserverMixin(instance, scheduler, maxBufferSize) {
         init(IndexedQueue_fifoQueueMixin(), instance, maxBufferSize);
         instance[DispatcherLike_scheduler] = scheduler;

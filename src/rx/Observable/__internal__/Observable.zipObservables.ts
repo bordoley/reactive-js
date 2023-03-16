@@ -10,6 +10,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ZipObserver_enumerators,
+  ZipObserver_queuedEnumerator,
+} from "../../../__internal__/symbols.js";
+import {
   QueueLike,
   QueueLike_count,
   QueueLike_pull,
@@ -149,9 +153,6 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
       ReadonlyArray_forEach(Enumerator_move<EnumeratorLike & DisposableLike>()),
       ReadonlyArray_some(x => x[DisposableLike_isDisposed]),
     ))();
-
-  const ZipObserver_enumerators = Symbol("ZipObserver_enumerators");
-  const ZipObserver_queuedEnumerator = Symbol("ZipObserver_queuedEnumerator");
 
   type TProperties = {
     readonly [ZipObserver_enumerators]: readonly (EnumeratorLike<any> &

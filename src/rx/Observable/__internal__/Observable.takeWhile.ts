@@ -7,6 +7,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  TakeWhileObserverMixin_inclusive,
+  TakeWhileObserverMixin_predicate,
+} from "../../../__internal__/symbols.js";
 import { DelegatingDisposableLike } from "../../../__internal__/util.internal.js";
 import { TakeWhile } from "../../../containers.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
@@ -32,13 +36,6 @@ const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
       predicate: Predicate<T>,
       inclusive: boolean,
     ) => ObserverLike<T> = (<T>() => {
-      const TakeWhileObserverMixin_predicate = Symbol(
-        "TakeWhileObserverMixin_predicate",
-      );
-      const TakeWhileObserverMixin_inclusive = Symbol(
-        "TakeWhileObserverMixin_inclusive",
-      );
-
       type TProperties = {
         readonly [TakeWhileObserverMixin_predicate]: Predicate<T>;
         readonly [TakeWhileObserverMixin_inclusive]: boolean;

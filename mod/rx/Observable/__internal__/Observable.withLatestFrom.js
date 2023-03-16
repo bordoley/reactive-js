@@ -1,6 +1,7 @@
 /// <reference types="./Observable.withLatestFrom.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { WithLatestFromObserver_hasLatest, WithLatestFromObserver_otherLatest, WithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, } from "../../../util.js";
@@ -16,9 +17,6 @@ const Observable_withLatestFrom =
 /*@__PURE__*/ (() => {
     const createWithLatestObserver = (() => {
         const typedObserverMixin = Observer_mixin();
-        const WithLatestFromObserver_hasLatest = Symbol("WithLatestFromObserver_hasLatest");
-        const WithLatestFromObserver_otherLatest = Symbol("WithLatestFromObserver_otherLatest");
-        const WithLatestFromObserver_selector = Symbol("WithLatestFromObserver_selector");
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), typedObserverMixin), function WithLatestFromObserver(instance, delegate, other, selector) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);

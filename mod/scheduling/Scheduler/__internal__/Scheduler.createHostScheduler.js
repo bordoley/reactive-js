@@ -1,6 +1,7 @@
 /// <reference types="./Scheduler.createHostScheduler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { HostScheduler_maxYieldInterval, HostScheduler_startTime, } from "../../../__internal__/symbols.js";
 import { isFunction, none, pipe, unsafeCast, } from "../../../functions.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
@@ -38,8 +39,6 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
     scheduler[HostScheduler_startTime] = scheduler[SchedulerLike_now];
     scheduler[PrioritySchedulerImplementationLike_runContinuation](continuation);
 };
-const HostScheduler_startTime = Symbol("HostScheduler_startTime");
-const HostScheduler_maxYieldInterval = Symbol("HostScheduler_maxYieldInterval");
 const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(PriorityScheduler_mixin), function HostScheduler(instance, maxYieldInterval) {
     init(PriorityScheduler_mixin, instance);
     instance[HostScheduler_maxYieldInterval] = maxYieldInterval;

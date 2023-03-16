@@ -7,6 +7,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  HostScheduler_maxYieldInterval,
+  HostScheduler_startTime,
+} from "../../../__internal__/symbols.js";
+import {
   Optional,
   isFunction,
   none,
@@ -114,9 +118,6 @@ const runContinuation = (
 
   scheduler[PrioritySchedulerImplementationLike_runContinuation](continuation);
 };
-
-const HostScheduler_startTime = Symbol("HostScheduler_startTime");
-const HostScheduler_maxYieldInterval = Symbol("HostScheduler_maxYieldInterval");
 
 type TProperties = {
   [HostScheduler_startTime]: number;

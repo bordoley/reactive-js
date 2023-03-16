@@ -7,6 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { TakeLastObserverMixin_takeLastQueue } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
   QueueLike,
@@ -39,10 +40,6 @@ type ObservableTakeLast = <C extends ObservableLike, T>(options?: {
   readonly count?: number;
 }) => ContainerOperator<C, T, T>;
 const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
-  const TakeLastObserverMixin_takeLastQueue = Symbol(
-    "TakeLastObserverMixin_takeLastQueue",
-  );
-
   type TProperties = {
     readonly [TakeLastObserverMixin_takeLastQueue]: IndexedQueueLike<T>;
   };

@@ -5,7 +5,7 @@ import {
   DisposableLike_isDisposed,
   QueueableLike_maxBufferSize,
   QueueableLike_push,
-} from "./__internal__/util.symbols.js";
+} from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
 
 export {
