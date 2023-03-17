@@ -11,6 +11,7 @@ import {
   pipe,
   returns,
 } from "../functions.js";
+import { __DEV__ } from "./constants.js";
 import {
   DelegatingLike_delegate,
   Object_init,
@@ -257,15 +258,17 @@ export const createInstanceFactory: CreateInstanceFactory = <TReturn>(
     mixin[Object_properties],
   );
 
-  const prototypeDescription = {
-    ...getOwnPropertyDescriptors(mixin[Object_prototype]),
-    constructor: {
-      configurable: true,
-      enumerable: false,
-      value: mixin[Object_init],
-      writable: true,
-    },
-  };
+  const prototypeDescription = __DEV__
+    ? {
+        ...getOwnPropertyDescriptors(mixin[Object_prototype]),
+        constructor: {
+          configurable: true,
+          enumerable: false,
+          value: mixin[Object_init],
+          writable: true,
+        },
+      }
+    : getOwnPropertyDescriptors(mixin[Object_prototype]);
 
   const prototype = createObject(objectPrototype, prototypeDescription);
 

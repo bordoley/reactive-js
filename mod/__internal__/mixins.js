@@ -2,6 +2,7 @@
 
 import ReadonlyArray_getLength from "../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { isFunction, none, pipe, returns, } from "../functions.js";
+import { __DEV__ } from "./constants.js";
 import { DelegatingLike_delegate, Object_init, Object_private_initializedProperties, Object_properties, Object_prototype, } from "./symbols.js";
 export { DelegatingLike_delegate };
 const { create: createObject, getOwnPropertyDescriptors, prototype: objectPrototype, } = Object;
@@ -56,15 +57,17 @@ export const mix = ((initOrParent, propertiesOrInit, prototypeOrParent, nothingO
 });
 export const createInstanceFactory = (mixin) => {
     const propertyDescription = getOwnPropertyDescriptors(mixin[Object_properties]);
-    const prototypeDescription = {
-        ...getOwnPropertyDescriptors(mixin[Object_prototype]),
-        constructor: {
-            configurable: true,
-            enumerable: false,
-            value: mixin[Object_init],
-            writable: true,
-        },
-    };
+    const prototypeDescription = __DEV__
+        ? {
+            ...getOwnPropertyDescriptors(mixin[Object_prototype]),
+            constructor: {
+                configurable: true,
+                enumerable: false,
+                value: mixin[Object_init],
+                writable: true,
+            },
+        }
+        : getOwnPropertyDescriptors(mixin[Object_prototype]);
     const prototype = createObject(objectPrototype, prototypeDescription);
     return (...args) => {
         const instance = createObject(prototype, propertyDescription);
