@@ -152,7 +152,12 @@ const Observer_mixin: <T>() => Mixin2<
           const isCompleted = this[ObserverMixin_isCompleted];
           this[ObserverMixin_isCompleted] = true;
 
-          if (this[QueueLike_count] === 0 && !isCompleted) {
+          if (
+            this[ObserverMixin_dispatchSubscription][
+              DisposableLike_isDisposed
+            ] &&
+            !isCompleted
+          ) {
             this[DisposableLike_dispose]();
           }
         },

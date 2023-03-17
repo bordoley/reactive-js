@@ -55,7 +55,8 @@ const Observer_mixin = /*@__PURE__*/ (() => {
         [DispatcherLike_complete]() {
             const isCompleted = this[ObserverMixin_isCompleted];
             this[ObserverMixin_isCompleted] = true;
-            if (this[QueueLike_count] === 0 && !isCompleted) {
+            if (this[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed] &&
+                !isCompleted) {
                 this[DisposableLike_dispose]();
             }
         },
