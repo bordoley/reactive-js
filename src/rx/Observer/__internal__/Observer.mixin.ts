@@ -9,8 +9,8 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   ObserverMixin_continuation,
+  ObserverMixin_dispatchSubscription,
   ObserverMixin_isCompleted,
-  ObserverMixin_onContinuationDispose,
 } from "../../../__internal__/symbols.js";
 import {
   QueueLike,
@@ -19,7 +19,6 @@ import {
 } from "../../../__internal__/util.internal.js";
 import {
   Optional,
-  SideEffect,
   SideEffect1,
   call,
   none,
@@ -44,7 +43,8 @@ import {
   DisposableLike_isDisposed,
   QueueableLike_push,
 } from "../../../util.js";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_schedule from "./Observer.schedule.js";
 
@@ -61,7 +61,9 @@ const Observer_mixin: <T>() => Mixin2<
   const scheduleDrainQueue = (
     observer: TProperties & ObserverLike<T> & QueueLike<T>,
   ) => {
-    if (observer[QueueLike_count] === 1) {
+    if (
+      observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
+    ) {
       const continuation =
         observer[ObserverMixin_continuation] ??
         ((ctx: ContinuationContextLike) => {
@@ -75,23 +77,17 @@ const Observer_mixin: <T>() => Mixin2<
               ctx[ContinuationContextLike_yield]();
             }
           }
-        });
-      observer[ObserverMixin_continuation] = continuation;
 
-      const onDisposed =
-        observer[ObserverMixin_onContinuationDispose] ??
-        (() => {
-          unsafeCast<TProperties & ObserverLike<T>>(observer);
           if (observer[ObserverMixin_isCompleted]) {
             observer[DisposableLike_dispose]();
           }
         });
-      observer[ObserverMixin_onContinuationDispose] = onDisposed;
+      observer[ObserverMixin_continuation] = continuation;
 
-      pipe(
+      observer[ObserverMixin_dispatchSubscription] = pipe(
         observer,
         Observer_schedule(continuation),
-        Disposable_onComplete(onDisposed),
+        Disposable_addTo(observer),
       );
     }
   };
@@ -103,8 +99,8 @@ const Observer_mixin: <T>() => Mixin2<
     [ObserverMixin_continuation]: Optional<
       SideEffect1<ContinuationContextLike>
     >;
-    [ObserverMixin_onContinuationDispose]: Optional<SideEffect>;
     [ObserverMixin_isCompleted]: boolean;
+    [ObserverMixin_dispatchSubscription]: DisposableLike;
   };
 
   return pipe(
@@ -128,8 +124,8 @@ const Observer_mixin: <T>() => Mixin2<
       props<TProperties>({
         [DispatcherLike_scheduler]: none,
         [ObserverMixin_continuation]: none,
-        [ObserverMixin_onContinuationDispose]: none,
         [ObserverMixin_isCompleted]: false,
+        [ObserverMixin_dispatchSubscription]: Disposable_disposed,
       }),
       {
         [QueueableLike_push](

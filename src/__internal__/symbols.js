@@ -424,8 +424,8 @@ export const ObserverMixin_isCompleted = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const ObserverMixin_onContinuationDispose = /*@__PURE__*/ symbol(
-  "ObserverMixin_onContinuationDispose",
+export const ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol(
+  "ObserverMixin_dispatchSubscription",
 );
 
 /** @type {unique symbol} */

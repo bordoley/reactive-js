@@ -179,7 +179,7 @@ export const ObserverMixin_continuation = /*@__PURE__*/ symbol("ObserverMixin_co
 /** @type {unique symbol} */
 export const ObserverMixin_isCompleted = /*@__PURE__*/ symbol("ObserverMixin_isCompleted");
 /** @type {unique symbol} */
-export const ObserverMixin_onContinuationDispose = /*@__PURE__*/ symbol("ObserverMixin_onContinuationDispose");
+export const ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol("ObserverMixin_dispatchSubscription");
 /** @type {unique symbol} */
 export const SatisfyObserverMixin_predicate = /*@__PURE__*/ symbol("SatisfyObserverMixin_predicate");
 /** @type {unique symbol} */

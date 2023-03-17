@@ -175,7 +175,7 @@ export const ObserverMixin_continuation: unique symbol;
 /** @type {unique symbol} */
 export const ObserverMixin_isCompleted: unique symbol;
 /** @type {unique symbol} */
-export const ObserverMixin_onContinuationDispose: unique symbol;
+export const ObserverMixin_dispatchSubscription: unique symbol;
 /** @type {unique symbol} */
 export const SatisfyObserverMixin_predicate: unique symbol;
 /** @type {unique symbol} */

@@ -1,19 +1,20 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObserverMixin_continuation, ObserverMixin_isCompleted, ObserverMixin_onContinuationDispose, } from "../../../__internal__/symbols.js";
+import { ObserverMixin_continuation, ObserverMixin_dispatchSubscription, ObserverMixin_isCompleted, } from "../../../__internal__/symbols.js";
 import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { call, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_schedule from "./Observer.schedule.js";
 const Observer_mixin = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (observer) => {
-        var _a, _b;
-        if (observer[QueueLike_count] === 1) {
+        var _a;
+        if (observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
             const continuation = (_a = observer[ObserverMixin_continuation]) !== null && _a !== void 0 ? _a : ((ctx) => {
                 unsafeCast(observer);
                 while (observer[QueueLike_count] > 0) {
@@ -23,16 +24,12 @@ const Observer_mixin = /*@__PURE__*/ (() => {
                         ctx[ContinuationContextLike_yield]();
                     }
                 }
-            });
-            observer[ObserverMixin_continuation] = continuation;
-            const onDisposed = (_b = observer[ObserverMixin_onContinuationDispose]) !== null && _b !== void 0 ? _b : (() => {
-                unsafeCast(observer);
                 if (observer[ObserverMixin_isCompleted]) {
                     observer[DisposableLike_dispose]();
                 }
             });
-            observer[ObserverMixin_onContinuationDispose] = onDisposed;
-            pipe(observer, Observer_schedule(continuation), Disposable_onComplete(onDisposed));
+            observer[ObserverMixin_continuation] = continuation;
+            observer[ObserverMixin_dispatchSubscription] = pipe(observer, Observer_schedule(continuation), Disposable_addTo(observer));
         }
     };
     const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin());
@@ -43,8 +40,8 @@ const Observer_mixin = /*@__PURE__*/ (() => {
     }, props({
         [DispatcherLike_scheduler]: none,
         [ObserverMixin_continuation]: none,
-        [ObserverMixin_onContinuationDispose]: none,
         [ObserverMixin_isCompleted]: false,
+        [ObserverMixin_dispatchSubscription]: Disposable_disposed,
     }), {
         [QueueableLike_push](next) {
             if (!this[ObserverMixin_isCompleted] &&

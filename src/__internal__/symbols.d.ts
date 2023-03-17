@@ -174,7 +174,7 @@ export declare const ObserverMixin_continuation: unique symbol;
 
 export declare const ObserverMixin_isCompleted: unique symbol;
 
-export declare const ObserverMixin_onContinuationDispose: unique symbol;
+export declare const ObserverMixin_dispatchSubscription: unique symbol;
 
 export declare const SatisfyObserverMixin_predicate: unique symbol;
 
