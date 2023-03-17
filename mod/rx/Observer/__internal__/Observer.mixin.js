@@ -12,30 +12,33 @@ import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/Indexe
 import Observer_schedule from "./Observer.schedule.js";
 const Observer_mixin = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (observer) => {
+        var _a, _b;
         if (observer[QueueLike_count] === 1) {
-            pipe(observer, Observer_schedule(observer[ObserverMixin_continuation]), Disposable_onComplete(observer[ObserverMixin_onContinuationDispose]));
+            const continuation = (_a = observer[ObserverMixin_continuation]) !== null && _a !== void 0 ? _a : ((ctx) => {
+                unsafeCast(observer);
+                while (observer[QueueLike_count] > 0) {
+                    const next = observer[QueueLike_pull]();
+                    observer[ObserverLike_notify](next);
+                    if (observer[QueueLike_count] > 0) {
+                        ctx[ContinuationContextLike_yield]();
+                    }
+                }
+            });
+            observer[ObserverMixin_continuation] = continuation;
+            const onDisposed = (_b = observer[ObserverMixin_onContinuationDispose]) !== null && _b !== void 0 ? _b : (() => {
+                unsafeCast(observer);
+                if (observer[ObserverMixin_isCompleted]) {
+                    observer[DisposableLike_dispose]();
+                }
+            });
+            observer[ObserverMixin_onContinuationDispose] = onDisposed;
+            pipe(observer, Observer_schedule(continuation), Disposable_onComplete(onDisposed));
         }
     };
     const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin());
     return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function ObserverMixin(instance, scheduler, maxBufferSize) {
         init(IndexedQueue_fifoQueueMixin(), instance, maxBufferSize);
         instance[DispatcherLike_scheduler] = scheduler;
-        instance[ObserverMixin_continuation] = (ctx) => {
-            unsafeCast(instance);
-            while (instance[QueueLike_count] > 0) {
-                const next = instance[QueueLike_pull]();
-                instance[ObserverLike_notify](next);
-                if (instance[QueueLike_count] > 0) {
-                    ctx[ContinuationContextLike_yield]();
-                }
-            }
-        };
-        instance[ObserverMixin_onContinuationDispose] = () => {
-            unsafeCast(instance);
-            if (instance[ObserverMixin_isCompleted]) {
-                instance[DisposableLike_dispose]();
-            }
-        };
         return instance;
     }, props({
         [DispatcherLike_scheduler]: none,

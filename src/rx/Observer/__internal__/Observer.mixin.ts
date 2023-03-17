@@ -18,6 +18,7 @@ import {
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
+  Optional,
   SideEffect,
   SideEffect1,
   call,
@@ -61,10 +62,36 @@ const Observer_mixin: <T>() => Mixin2<
     observer: TProperties & ObserverLike<T> & QueueLike<T>,
   ) => {
     if (observer[QueueLike_count] === 1) {
+      const continuation =
+        observer[ObserverMixin_continuation] ??
+        ((ctx: ContinuationContextLike) => {
+          unsafeCast<TProperties & ObserverLike<T>>(observer);
+
+          while (observer[QueueLike_count] > 0) {
+            const next = observer[QueueLike_pull]() as T;
+            observer[ObserverLike_notify](next);
+
+            if (observer[QueueLike_count] > 0) {
+              ctx[ContinuationContextLike_yield]();
+            }
+          }
+        });
+      observer[ObserverMixin_continuation] = continuation;
+
+      const onDisposed =
+        observer[ObserverMixin_onContinuationDispose] ??
+        (() => {
+          unsafeCast<TProperties & ObserverLike<T>>(observer);
+          if (observer[ObserverMixin_isCompleted]) {
+            observer[DisposableLike_dispose]();
+          }
+        });
+      observer[ObserverMixin_onContinuationDispose] = onDisposed;
+
       pipe(
         observer,
-        Observer_schedule(observer[ObserverMixin_continuation]),
-        Disposable_onComplete(observer[ObserverMixin_onContinuationDispose]),
+        Observer_schedule(continuation),
+        Disposable_onComplete(onDisposed),
       );
     }
   };
@@ -73,8 +100,10 @@ const Observer_mixin: <T>() => Mixin2<
 
   type TProperties = {
     readonly [DispatcherLike_scheduler]: SchedulerLike;
-    [ObserverMixin_continuation]: SideEffect1<ContinuationContextLike>;
-    [ObserverMixin_onContinuationDispose]: SideEffect;
+    [ObserverMixin_continuation]: Optional<
+      SideEffect1<ContinuationContextLike>
+    >;
+    [ObserverMixin_onContinuationDispose]: Optional<SideEffect>;
     [ObserverMixin_isCompleted]: boolean;
   };
 
@@ -93,28 +122,6 @@ const Observer_mixin: <T>() => Mixin2<
         init(IndexedQueue_fifoQueueMixin<T>(), instance, maxBufferSize);
 
         instance[DispatcherLike_scheduler] = scheduler;
-
-        instance[ObserverMixin_continuation] = (
-          ctx: ContinuationContextLike,
-        ) => {
-          unsafeCast<TProperties & ObserverLike<T>>(instance);
-
-          while (instance[QueueLike_count] > 0) {
-            const next = instance[QueueLike_pull]() as T;
-            instance[ObserverLike_notify](next);
-
-            if (instance[QueueLike_count] > 0) {
-              ctx[ContinuationContextLike_yield]();
-            }
-          }
-        };
-
-        instance[ObserverMixin_onContinuationDispose] = () => {
-          unsafeCast<TProperties & ObserverLike<T>>(instance);
-          if (instance[ObserverMixin_isCompleted]) {
-            instance[DisposableLike_dispose]();
-          }
-        };
 
         return instance;
       },
