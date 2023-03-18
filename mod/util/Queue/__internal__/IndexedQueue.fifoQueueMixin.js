@@ -21,6 +21,52 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         }
         return dest;
     };
+    const grow = (instance) => {
+        var _a;
+        const head = instance[FifoQueue_head];
+        const tail = instance[FifoQueue_tail];
+        if (tail !== head && tail !== 0) {
+            return;
+        }
+        const values = (_a = instance[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
+        const capacity = values.length;
+        const capacityMask = instance[FifoQueue_capacityMask];
+        const count = instance[QueueLike_count];
+        if (head === 0 || (tail === 0 && head < capacity >> 2)) {
+            values.length <<= 1;
+            instance[FifoQueue_tail] = count + head;
+        }
+        else {
+            const newCapacity = capacity << 1;
+            const newList = copyArray(values, head, tail, newCapacity);
+            instance[FifoQueue_values] = newList;
+            instance[FifoQueue_head] = 0;
+            instance[FifoQueue_tail] = count;
+        }
+        instance[FifoQueue_capacityMask] = (capacityMask << 1) | 1;
+    };
+    const shrink = (instance) => {
+        var _a;
+        const values = (_a = instance[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
+        const capacity = values.length;
+        const count = instance[QueueLike_count];
+        if (count >= capacity >> 2 || capacity <= 32) {
+            return;
+        }
+        const head = instance[FifoQueue_head];
+        const tail = instance[FifoQueue_tail];
+        const newCapacity = capacity >> 1;
+        if (tail >= head && tail < newCapacity) {
+            values.length >>= 1;
+        }
+        else {
+            const newList = copyArray(values, head, tail, newCapacity);
+            instance[FifoQueue_values] = newList;
+            instance[FifoQueue_head] = 0;
+            instance[FifoQueue_tail] = count;
+        }
+        instance[FifoQueue_capacityMask] = newCapacity - 1;
+    };
     return pipe(mix(function FifoQueue(instance, maxBufferSize) {
         instance[QueueableLike_maxBufferSize] = maxBufferSize;
         return instance;
@@ -43,7 +89,6 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             var _a;
             const tail = this[FifoQueue_tail];
             const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
-            const capacity = values.length;
             let head = this[FifoQueue_head];
             const item = head === tail ? none : values[head];
             if (head !== tail) {
@@ -52,15 +97,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                 this[FifoQueue_head] = head;
                 this[QueueLike_count]--;
             }
-            const count = this[QueueLike_count];
-            if (count < capacity / 4 && capacity > 32) {
-                const newCapacity = capacity >> 1;
-                const newList = copyArray(values, head, tail, newCapacity);
-                this[FifoQueue_values] = newList;
-                this[FifoQueue_head] = 0;
-                this[FifoQueue_tail] = count;
-                this[FifoQueue_capacityMask] = newCapacity - 1;
-            }
+            shrink(this);
             return item;
         },
         [IndexedQueueLike_pop]() {
@@ -76,15 +113,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                     this[QueueLike_count]--,
                     values[tail]);
             values[tail] = none;
-            const count = this[QueueLike_count];
-            if (count < capacity / 4 && capacity > 32) {
-                const newCapacity = capacity >> 1;
-                const newList = copyArray(values, head, tail, newCapacity);
-                this[FifoQueue_values] = newList;
-                this[FifoQueue_head] = 0;
-                this[FifoQueue_tail] = count;
-                this[FifoQueue_capacityMask] = newCapacity - 1;
-            }
+            shrink(this);
             return item;
         },
         [IndexedQueueLike_get](index) {
@@ -125,8 +154,6 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                 (this[FifoQueue_values] = newInstance(Array, 32)),
                 this[FifoQueue_values]);
             const capacityMask = this[FifoQueue_capacityMask];
-            const head = this[FifoQueue_head];
-            const capacity = values.length;
             let count = this[QueueLike_count];
             let tail = this[FifoQueue_tail];
             values[tail] = item;
@@ -134,21 +161,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             this[QueueLike_count] = count;
             tail = (tail + 1) & capacityMask;
             this[FifoQueue_tail] = tail;
-            if (tail === head) {
-                // growArray
-                if (head !== 0) {
-                    const newCapacity = capacity << 1;
-                    const newList = copyArray(values, head, tail, newCapacity);
-                    this[FifoQueue_values] = newList;
-                    this[FifoQueue_head] = 0;
-                }
-                else {
-                    // double the queue length.
-                    this[FifoQueue_values].length <<= 1;
-                }
-                this[FifoQueue_tail] = count;
-                this[FifoQueue_capacityMask] = (capacityMask << 1) | 1;
-            }
+            grow(this);
             return this[QueueLike_count] <= this[QueueableLike_maxBufferSize];
         },
     }), returns);
