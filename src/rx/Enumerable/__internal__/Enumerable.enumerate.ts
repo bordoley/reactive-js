@@ -49,7 +49,7 @@ import {
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
-} from "../../../scheduling/PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
+} from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import {
   DisposableLike,
   DisposableLike_dispose,

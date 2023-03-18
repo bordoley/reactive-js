@@ -11,7 +11,7 @@ import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../../../sched
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
-import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
+import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const comparator = (a, b) => {
     const diff = a[VirtualTask_dueTime] - b[VirtualTask_dueTime];
     return diff !== 0 ? diff : a[VirtualTask_id] - b[VirtualTask_id];

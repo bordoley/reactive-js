@@ -50,7 +50,7 @@ import {
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
-} from "../../PriorityScheduler/__internal__/PriorityScheduler.mixin.js";
+} from "./Scheduler.mixin.js";
 
 type VirtualTask = {
   readonly [VirtualTask_continuation]: ContinuationLike;

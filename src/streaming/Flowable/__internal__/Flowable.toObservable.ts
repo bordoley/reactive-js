@@ -1,4 +1,4 @@
-import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { compose, pipe } from "../../../functions.js";
 import {
   DispatcherLike_complete,
@@ -15,7 +15,6 @@ import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import {
   FlowableLike,
   FlowableState,
-  FlowableState_paused,
   FlowableState_running,
   StreamableLike_isRunnable,
 } from "../../../streaming.js";
@@ -47,10 +46,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
         // otherwise it will have no observer to queue events onto.
         // Observable.startWith uses concatenation.
         Observable_mergeWith(
-          pipe(
-            [FlowableState_paused, FlowableState_running],
-            ReadonlyArray_toObservable(),
-          ),
+          pipe(FlowableState_running, Optional_toObservable()),
         ),
       );
 

@@ -1,10 +1,6 @@
 /// <reference types="./Scheduler.toPausableScheduler.d.ts" />
 
-import { PauseableSchedulerLike_pause, } from "../../../scheduling.js";
-import Scheduler_toPriorityScheduler from "./Scheduler.toPriorityScheduler.js";
-const Scheduler_toPausableScheduler = scheduler => {
-    const pauseableScheduler = Scheduler_toPriorityScheduler(scheduler);
-    pauseableScheduler[PauseableSchedulerLike_pause]();
-    return pauseableScheduler;
-};
-export default Scheduler_toPausableScheduler;
+import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Scheduler_createQueueScheduler from "./Scheduler.createQueueScheduler.js";
+const Scheduler_toPriorityScheduler = (hostScheduler) => Scheduler_createQueueScheduler(hostScheduler, IndexedQueue_createFifoQueue);
+export default Scheduler_toPriorityScheduler;

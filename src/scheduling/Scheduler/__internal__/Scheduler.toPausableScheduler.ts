@@ -1,18 +1,12 @@
 import { Function1 } from "../../../functions.js";
-import {
-  PauseableSchedulerLike,
-  PauseableSchedulerLike_pause,
-  SchedulerLike,
-} from "../../../scheduling.js";
-import Scheduler_toPriorityScheduler from "./Scheduler.toPriorityScheduler.js";
+import { PauseableSchedulerLike, SchedulerLike } from "../../../scheduling.js";
+import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Scheduler_createQueueScheduler from "./Scheduler.createQueueScheduler.js";
 
-const Scheduler_toPausableScheduler: Function1<
+const Scheduler_toPriorityScheduler: Function1<
   SchedulerLike,
   PauseableSchedulerLike
-> = scheduler => {
-  const pauseableScheduler = Scheduler_toPriorityScheduler(scheduler);
-  pauseableScheduler[PauseableSchedulerLike_pause]();
-  return pauseableScheduler;
-};
+> = (hostScheduler: SchedulerLike) =>
+  Scheduler_createQueueScheduler(hostScheduler, IndexedQueue_createFifoQueue);
 
-export default Scheduler_toPausableScheduler;
+export default Scheduler_toPriorityScheduler;
