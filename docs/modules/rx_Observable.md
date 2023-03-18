@@ -24,6 +24,7 @@
 - [defer](rx_Observable.md#defer)
 - [empty](rx_Observable.md#empty)
 - [fromAsyncEnumerable](rx_Observable.md#fromasyncenumerable)
+- [fromAsyncFactory](rx_Observable.md#fromasyncfactory)
 - [fromAsyncIterable](rx_Observable.md#fromasynciterable)
 - [fromFactory](rx_Observable.md#fromfactory)
 - [fromFlowable](rx_Observable.md#fromflowable)
@@ -95,7 +96,6 @@
 
 ### Other Functions
 
-- [fromAsyncFactory](rx_Observable.md#fromasyncfactory)
 - [observeWith](rx_Observable.md#observewith)
 - [subscribe](rx_Observable.md#subscribe)
 
@@ -1079,6 +1079,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### fromAsyncFactory
+
+▸ **fromAsyncFactory**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | (`abortSignal`: `AbortSignal`) => `Promise`<`T`\> |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
@@ -3964,28 +3986,6 @@ ___
 ___
 
 ## Other Functions
-
-### fromAsyncFactory
-
-▸ **fromAsyncFactory**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | (`abortSignal`: `AbortSignal`) => `Promise`<`T`\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-___
 
 ### observeWith
 

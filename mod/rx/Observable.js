@@ -153,6 +153,9 @@ export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
 export const fromAsyncEnumerable = AsyncEnumerable_toObservable;
+/**
+ * @category Constructor
+ */
 export const fromAsyncFactory = Observable_fromAsyncFactory;
 export const fromAsyncIterable = AsyncIterable_toObservable;
 export const fromFactory = Observable_fromFactory;
