@@ -2,15 +2,14 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
 import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStream_historyCounter, } from "../__internal__/symbols.js";
-import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
-import { compose, error, isFunction, isSome, isString, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
+import { compose, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
-import { DisposableLike_dispose, QueueableLike_maxBufferSize, QueueableLike_push, } from "../util.js";
+import { QueueableLike_maxBufferSize, QueueableLike_push } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack };
@@ -40,33 +39,6 @@ export const createEventSource = (url, options = {}) => {
         }
     });
 };
-export const fetch = 
-/*@__PURE__*/ (() => {
-    const globalFetch = self.fetch;
-    return (onResponse) => fetchRequest => Observable.create(async (observer) => {
-        const signal = Disposable.toAbortSignal(observer);
-        let request = none;
-        if (isString(fetchRequest)) {
-            request = fetchRequest;
-        }
-        else {
-            const { uri, ...requestInit } = fetchRequest;
-            request = newInstance(Request, uri, requestInit);
-        }
-        // This try/catch is necessary because we await in the try block.
-        try {
-            const response = await globalFetch(request, { signal });
-            const onResponseResult = onResponse(response);
-            const resultObs = onResponseResult instanceof Promise
-                ? pipe(onResponseResult, Promiseable.toObservable())
-                : onResponseResult;
-            resultObs[ObservableLike_observe](observer);
-        }
-        catch (e) {
-            observer[DisposableLike_dispose](error(e));
-        }
-    });
-})();
 export const addEventListener = (eventName, selector) => target => Observable.create(observer => {
     pipe(observer, Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);

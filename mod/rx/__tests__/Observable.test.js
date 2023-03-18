@@ -1,8 +1,8 @@
 /// <reference types="./Observable.test.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectIsSome, expectToHaveBeenCalledTimes, mockFn, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
-import { increment, isSome, pipe, raise, returns } from "../../functions.js";
+import { increment, isSome, pipe, raise, returns, } from "../../functions.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { DisposableLike_error } from "../../util.js";
@@ -85,4 +85,20 @@ const computeTests = describe("compute", test("batch mode", () => {
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]));
 }));
-testModule("Observable", computeTests, onSubscribeTests, shareTests);
+const fromAsyncFactoryTests = describe("fromAsyncFactory", testAsync("when promise resolves", async () => {
+    const result = await pipe(Observable.fromAsyncFactory(async () => {
+        await Promise.resolve(1);
+        return 2;
+    }), Observable.lastAsync());
+    pipe(result, expectEquals(2));
+}), testAsync("when promise fails with an exception", async () => {
+    await pipe(Observable.fromAsyncFactory(async () => {
+        await Promise.resolve(1);
+        raise();
+    }), Observable.lastAsync(), expectPromiseToThrow);
+}), testAsync("when factory throws an exception", async () => {
+    await pipe(Observable.fromAsyncFactory(async () => {
+        raise();
+    }), Observable.lastAsync(), expectPromiseToThrow);
+}));
+testModule("Observable", computeTests, fromAsyncFactoryTests, onSubscribeTests, shareTests);

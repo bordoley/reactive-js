@@ -24,6 +24,7 @@
 - [defer](rx_Observable.md#defer)
 - [empty](rx_Observable.md#empty)
 - [fromAsyncEnumerable](rx_Observable.md#fromasyncenumerable)
+- [fromAsyncFactory](rx_Observable.md#fromasyncfactory)
 - [fromAsyncIterable](rx_Observable.md#fromasynciterable)
 - [fromFactory](rx_Observable.md#fromfactory)
 - [fromFlowable](rx_Observable.md#fromflowable)
@@ -1078,6 +1079,120 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### fromAsyncFactory
+
+▸ **fromAsyncFactory**<`T`\>(`f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | (`abortSignal`: `AbortSignal`) => `Promise`<`T`\> |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+▸ **fromAsyncFactory**<`T`, `TA`\>(`f`, `a`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | (`a`: `TA`, `abortSignal`: `AbortSignal`) => `Promise`<`T`\> |
+| `a` | `TA` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+▸ **fromAsyncFactory**<`T`, `TA`, `TB`\>(`f`, `a`, `b`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | (`a`: `TA`, `b`: `TB`, `abortSignal`: `AbortSignal`) => `Promise`<`T`\> |
+| `a` | `TA` |
+| `b` | `TB` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+▸ **fromAsyncFactory**<`T`, `TA`, `TB`, `TC`\>(`f`, `a`, `b`, `c`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | (`a`: `TA`, `b`: `TB`, `c`: `TC`, `abortSignal`: `AbortSignal`) => `Promise`<`T`\> |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+▸ **fromAsyncFactory**<`T`, `TA`, `TB`, `TC`, `TD`\>(`f`, `a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `abortSignal`: `AbortSignal`) => `Promise`<`T`\> |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 

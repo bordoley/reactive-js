@@ -34,6 +34,7 @@ import Observable_forkConcat from "./Observable/__internal__/Observable.forkConc
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
+import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -152,6 +153,7 @@ export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
 export const fromAsyncEnumerable = AsyncEnumerable_toObservable;
+export const fromAsyncFactory = Observable_fromAsyncFactory;
 export const fromAsyncIterable = AsyncIterable_toObservable;
 export const fromFactory = Observable_fromFactory;
 export const fromFlowable = Flowable_toObservable;

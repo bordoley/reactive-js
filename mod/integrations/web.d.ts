@@ -24,12 +24,6 @@ export interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocat
     readonly [WindowLocationStreamLike_canGoBack]: boolean;
     [WindowLocationStreamLike_goBack](): boolean;
 }
-/**
- * @noInheritDoc
- */
-export interface FetchRequest extends RequestInit {
-    readonly uri: string;
-}
 export declare const createEventSource: (url: string | URL, options?: EventSourceInit & {
     readonly events?: readonly string[];
 }) => ObservableLike<{
@@ -37,6 +31,5 @@ export declare const createEventSource: (url: string | URL, options?: EventSourc
     readonly type: string;
     readonly data: string;
 }>;
-export declare const fetch: <T>(onResponse: Function1<Response, Promise<T> | ObservableLike<T>>) => Function1<FetchRequest | string, ObservableLike<T>>;
 export declare const addEventListener: <T>(eventName: string, selector: Function1<Event, T>) => Function1<EventTarget, ObservableLike<T>>;
 export declare const windowLocation: StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike>;

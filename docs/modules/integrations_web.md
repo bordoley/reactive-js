@@ -10,7 +10,6 @@
 
 ### Other Interfaces
 
-- [FetchRequest](../interfaces/integrations_web.FetchRequest.md)
 - [WindowLocationURI](../interfaces/integrations_web.WindowLocationURI.md)
 
 ### Variables
@@ -21,7 +20,6 @@
 
 - [addEventListener](integrations_web.md#addeventlistener)
 - [createEventSource](integrations_web.md#createeventsource)
-- [fetch](integrations_web.md#fetch)
 
 ## Variables
 
@@ -68,25 +66,3 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<{ `data`: `string` ; `id`: `string` ; `type`: `string`  }\>
-
-___
-
-### fetch
-
-▸ **fetch**<`T`\>(`onResponse`): [`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](../interfaces/integrations_web.FetchRequest.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onResponse` | [`Function1`](functions.md#function1)<`Response`, `Promise`<`T`\> \| [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](../interfaces/integrations_web.FetchRequest.md), [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>

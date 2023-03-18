@@ -13,17 +13,14 @@ import {
   WindowLocationStreamLike_goBack,
   WindowLocationStream_historyCounter,
 } from "../__internal__/symbols.js";
-import * as Promiseable from "../containers/Promiseable.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import {
   Function1,
   Optional,
   Updater,
   compose,
-  error,
   isFunction,
   isSome,
-  isString,
   newInstance,
   none,
   pipe,
@@ -49,11 +46,7 @@ import {
 } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
-import {
-  DisposableLike_dispose,
-  QueueableLike_maxBufferSize,
-  QueueableLike_push,
-} from "../util.js";
+import { QueueableLike_maxBufferSize, QueueableLike_push } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
@@ -89,13 +82,6 @@ export interface WindowLocationStreamLike
   readonly [WindowLocationStreamLike_canGoBack]: boolean;
 
   [WindowLocationStreamLike_goBack](): boolean;
-}
-
-/**
- * @noInheritDoc
- */
-export interface FetchRequest extends RequestInit {
-  readonly uri: string;
 }
 
 const reservedEvents = ["error", "open"];
@@ -142,43 +128,6 @@ export const createEventSource = (
     }
   });
 };
-
-export const fetch: <T>(
-  onResponse: Function1<Response, Promise<T> | ObservableLike<T>>,
-) => Function1<FetchRequest | string, ObservableLike<T>> =
-  /*@__PURE__*/ (() => {
-    const globalFetch = self.fetch;
-
-    return <T>(
-        onResponse: Function1<Response, Promise<T> | ObservableLike<T>>,
-      ): Function1<FetchRequest | string, ObservableLike<T>> =>
-      fetchRequest =>
-        Observable.create(async observer => {
-          const signal = Disposable.toAbortSignal(observer);
-
-          let request: Optional<string | Request> = none;
-          if (isString(fetchRequest)) {
-            request = fetchRequest;
-          } else {
-            const { uri, ...requestInit } = fetchRequest;
-            request = newInstance(Request, uri, requestInit);
-          }
-
-          // This try/catch is necessary because we await in the try block.
-          try {
-            const response = await globalFetch(request, { signal });
-
-            const onResponseResult = onResponse(response);
-            const resultObs =
-              onResponseResult instanceof Promise
-                ? pipe(onResponseResult, Promiseable.toObservable())
-                : onResponseResult;
-            resultObs[ObservableLike_observe](observer);
-          } catch (e) {
-            observer[DisposableLike_dispose](error(e));
-          }
-        });
-  })();
 
 export const addEventListener =
   <T>(

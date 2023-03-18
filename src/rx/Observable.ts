@@ -135,6 +135,7 @@ import Observable_forkConcat from "./Observable/__internal__/Observable.forkConc
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
+import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -416,6 +417,36 @@ export const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"] =
 
 export const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsyncEnumerable"] =
   AsyncEnumerable_toObservable;
+
+interface FromAsyncFactory {
+  /**
+   * @category Constructor
+   */
+  <T>(f: (abortSignal: AbortSignal) => Promise<T>): ObservableLike<T>;
+  <T, TA>(
+    f: (a: TA, abortSignal: AbortSignal) => Promise<T>,
+    a: TA,
+  ): ObservableLike<T>;
+  <T, TA, TB>(
+    f: (a: TA, b: TB, abortSignal: AbortSignal) => Promise<T>,
+    a: TA,
+    b: TB,
+  ): ObservableLike<T>;
+  <T, TA, TB, TC>(
+    f: (a: TA, b: TB, c: TC, abortSignal: AbortSignal) => Promise<T>,
+    a: TA,
+    b: TB,
+    c: TC,
+  ): ObservableLike<T>;
+  <T, TA, TB, TC, TD>(
+    f: (a: TA, b: TB, c: TC, d: TD, abortSignal: AbortSignal) => Promise<T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): ObservableLike<T>;
+}
+export const fromAsyncFactory: FromAsyncFactory = Observable_fromAsyncFactory;
 
 export const fromAsyncIterable: FromAsyncIterable<
   ObservableLike,
