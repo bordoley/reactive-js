@@ -77,8 +77,7 @@ export const addEventListener = (eventName, selector) => target => Observable.cr
     };
     target.addEventListener(eventName, listener, { passive: true });
 });
-export const windowLocation = 
-/*@__PURE__*/ (() => {
+export const windowLocation = /*@__PURE__*/ (() => {
     const { history, location } = window;
     const windowLocationURIToString = ({ path, query, fragment, }) => {
         let uri = path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;

@@ -11,7 +11,6 @@
 ### Other Interfaces
 
 - [FetchRequest](../interfaces/integrations_web.FetchRequest.md)
-- [WindowLocationStreamableLike](../interfaces/integrations_web.WindowLocationStreamableLike.md)
 - [WindowLocationURI](../interfaces/integrations_web.WindowLocationURI.md)
 
 ### Variables
@@ -28,7 +27,7 @@
 
 ### windowLocation
 
-• `Const` **windowLocation**: [`WindowLocationStreamableLike`](../interfaces/integrations_web.WindowLocationStreamableLike.md)
+• `Const` **windowLocation**: [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\> \| [`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md), [`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md), [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
 
 ## Functions
 

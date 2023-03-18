@@ -94,21 +94,6 @@ export interface WindowLocationStreamLike
 /**
  * @noInheritDoc
  */
-export interface WindowLocationStreamableLike
-  extends StreamableLike<
-    Updater<WindowLocationURI> | WindowLocationURI,
-    WindowLocationURI,
-    WindowLocationStreamLike
-  > {
-  [StreamableLike_stream](
-    scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
-  ): WindowLocationStreamLike;
-}
-
-/**
- * @noInheritDoc
- */
 export interface FetchRequest extends RequestInit {
   readonly uri: string;
 }
@@ -217,290 +202,293 @@ export const addEventListener =
       target.addEventListener(eventName, listener, { passive: true });
     });
 
-export const windowLocation: WindowLocationStreamableLike =
-  /*@__PURE__*/ (() => {
-    const { history, location } = window;
+export const windowLocation: StreamableLike<
+  Updater<WindowLocationURI> | WindowLocationURI,
+  WindowLocationURI,
+  WindowLocationStreamLike
+> = /*@__PURE__*/ (() => {
+  const { history, location } = window;
 
-    const windowLocationURIToString = ({
+  const windowLocationURIToString = ({
+    path,
+    query,
+    fragment,
+  }: WindowLocationURI): string => {
+    let uri =
+      path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;
+    uri = query.length > 0 ? `${uri}?${query}` : uri;
+    uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
+    return newInstance(URL, uri, location.href).toString();
+  };
+
+  const getCurrentWindowLocationURI = (): WindowLocationURI => {
+    const {
+      pathname: path,
+      search: query,
+      hash: fragment,
+    } = newInstance(URL, location.href);
+    return {
+      title: document.title,
       path,
-      query,
-      fragment,
-    }: WindowLocationURI): string => {
-      let uri =
-        path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;
-      uri = query.length > 0 ? `${uri}?${query}` : uri;
-      uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
-      return newInstance(URL, uri, location.href).toString();
+      query: query.slice(1),
+      fragment: fragment.slice(1),
     };
+  };
 
-    const getCurrentWindowLocationURI = (): WindowLocationURI => {
-      const {
-        pathname: path,
-        search: query,
-        hash: fragment,
-      } = newInstance(URL, location.href);
-      return {
-        title: document.title,
-        path,
-        query: query.slice(1),
-        fragment: fragment.slice(1),
-      };
-    };
+  type TState = {
+    replace: boolean;
+    uri: WindowLocationURI;
+  };
 
-    type TState = {
-      replace: boolean;
-      uri: WindowLocationURI;
-    };
+  type TAction = {
+    replace: boolean;
+    stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>;
+  };
 
-    type TAction = {
-      replace: boolean;
-      stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>;
-    };
+  const areWindowLocationStatesEqual = (
+    { uri: a }: TState,
+    { uri: b }: TState,
+  ) =>
+    // Intentionally ignore the replace flag.
+    a === b ||
+    (a.title === b.title &&
+      a.path === b.path &&
+      a.query === b.query &&
+      a.fragment === b.fragment);
 
-    const areWindowLocationStatesEqual = (
-      { uri: a }: TState,
-      { uri: b }: TState,
-    ) =>
-      // Intentionally ignore the replace flag.
-      a === b ||
-      (a.title === b.title &&
-        a.path === b.path &&
-        a.query === b.query &&
-        a.fragment === b.fragment);
-
-    const windowHistoryReplaceState = (
-      instance: WindowLocationStreamLike & TProperties,
-      title: string,
-      uri: string,
-    ) => {
-      history.replaceState(
-        { counter: instance[WindowLocationStream_historyCounter], title },
-        "",
-        uri,
-      );
-    };
-
-    const windowHistoryPushState = (
-      instance: WindowLocationStreamLike & TProperties,
-      title: string,
-      uri: string,
-    ) => {
-      instance[WindowLocationStream_historyCounter]++;
-      history.pushState(
-        { counter: instance[WindowLocationStream_historyCounter], title },
-        "",
-        uri,
-      );
-    };
-
-    type TProperties = {
-      [WindowLocationStream_historyCounter]: number;
-    };
-
-    const createWindowLocationStream = createInstanceFactory(
-      mix(
-        include(Disposable_delegatingMixin()),
-        function WindowLocationStream(
-          instance: Pick<
-            WindowLocationStreamLike,
-            | typeof MulticastObservableLike_observerCount
-            | typeof DispatcherLike_scheduler
-            | typeof DispatcherLike_complete
-            | typeof ObservableLike_isEnumerable
-            | typeof ObservableLike_isRunnable
-            | typeof QueueableLike_push
-            | typeof QueueableLike_maxBufferSize
-            | typeof WindowLocationStreamLike_canGoBack
-            | typeof WindowLocationStreamLike_goBack
-            | typeof ObservableLike_observe
-          > &
-            Mutable<TProperties>,
-          delegate: StreamLike<TAction, TState>,
-        ): WindowLocationStreamLike & TProperties {
-          init(Disposable_delegatingMixin(), instance, delegate);
-          instance[WindowLocationStream_historyCounter] = -1;
-
-          return instance;
-        },
-        props<TProperties>({
-          [WindowLocationStream_historyCounter]: -1,
-        }),
-        {
-          get [MulticastObservableLike_observerCount]() {
-            unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return this[DelegatingLike_delegate][
-              MulticastObservableLike_observerCount
-            ];
-          },
-
-          get [QueueableLike_maxBufferSize](): number {
-            unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
-          },
-
-          get [DispatcherLike_scheduler](): SchedulerLike {
-            unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
-            return this[DelegatingLike_delegate][DispatcherLike_scheduler];
-          },
-
-          get [WindowLocationStreamLike_canGoBack](): boolean {
-            unsafeCast<TProperties>(this);
-            return this[WindowLocationStream_historyCounter] > 0;
-          },
-
-          [ObservableLike_isEnumerable]: false as const,
-          [ObservableLike_isRunnable]: false as const,
-
-          [DispatcherLike_complete](
-            this: DelegatingLike<StreamLike<TAction, TState>>,
-          ) {
-            this[DelegatingLike_delegate][DispatcherLike_complete]();
-          },
-
-          [QueueableLike_push](
-            this: DelegatingLike<StreamLike<TAction, TState>>,
-            stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
-            { replace }: { replace: boolean } = { replace: false },
-          ): boolean {
-            return this[DelegatingLike_delegate][QueueableLike_push]({
-              stateOrUpdater,
-              replace,
-            });
-          },
-
-          [WindowLocationStreamLike_goBack](
-            this: WindowLocationStreamLike,
-          ): boolean {
-            const canGoBack = this[WindowLocationStreamLike_canGoBack];
-
-            if (canGoBack) {
-              history.back();
-            }
-
-            return canGoBack;
-          },
-
-          [ObservableLike_observe](
-            this: DelegatingLike<StreamLike<TAction, TState>>,
-            observer: ObserverLike<WindowLocationURI>,
-          ): void {
-            pipe(
-              this[DelegatingLike_delegate],
-              Observable.map(({ uri }) => uri),
-              Observable.observeWith(observer),
-            );
-          },
-        },
-      ),
+  const windowHistoryReplaceState = (
+    instance: WindowLocationStreamLike & TProperties,
+    title: string,
+    uri: string,
+  ) => {
+    history.replaceState(
+      { counter: instance[WindowLocationStream_historyCounter], title },
+      "",
+      uri,
     );
+  };
 
-    let currentWindowLocationStream: Optional<WindowLocationStreamLike> = none;
+  const windowHistoryPushState = (
+    instance: WindowLocationStreamLike & TProperties,
+    title: string,
+    uri: string,
+  ) => {
+    instance[WindowLocationStream_historyCounter]++;
+    history.pushState(
+      { counter: instance[WindowLocationStream_historyCounter], title },
+      "",
+      uri,
+    );
+  };
 
-    return Streamable_create<
-      Updater<WindowLocationURI> | WindowLocationURI,
-      WindowLocationURI,
-      WindowLocationStreamLike
-    >(
-      (scheduler, options): WindowLocationStreamLike => {
-        if (isSome(currentWindowLocationStream)) {
-          raiseWithDebugMessage("Cannot stream more than once");
-        }
+  type TProperties = {
+    [WindowLocationStream_historyCounter]: number;
+  };
 
-        const actionReducer = Streamable.createActionReducer(
-          ({ uri: stateURI }, { replace, stateOrUpdater }: TAction) => {
-            const uri = isFunction(stateOrUpdater)
-              ? stateOrUpdater(stateURI)
-              : stateOrUpdater;
-            return { uri, replace };
-          },
-          () => ({
-            replace: true,
-            uri: getCurrentWindowLocationURI(),
-          }),
-          { equality: areWindowLocationStatesEqual },
-        )[StreamableLike_stream](scheduler, options);
+  const createWindowLocationStream = createInstanceFactory(
+    mix(
+      include(Disposable_delegatingMixin()),
+      function WindowLocationStream(
+        instance: Pick<
+          WindowLocationStreamLike,
+          | typeof MulticastObservableLike_observerCount
+          | typeof DispatcherLike_scheduler
+          | typeof DispatcherLike_complete
+          | typeof ObservableLike_isEnumerable
+          | typeof ObservableLike_isRunnable
+          | typeof QueueableLike_push
+          | typeof QueueableLike_maxBufferSize
+          | typeof WindowLocationStreamLike_canGoBack
+          | typeof WindowLocationStreamLike_goBack
+          | typeof ObservableLike_observe
+        > &
+          Mutable<TProperties>,
+        delegate: StreamLike<TAction, TState>,
+      ): WindowLocationStreamLike & TProperties {
+        init(Disposable_delegatingMixin(), instance, delegate);
+        instance[WindowLocationStream_historyCounter] = -1;
 
-        const windowLocationStream = createWindowLocationStream(actionReducer);
-
-        pipe(
-          actionReducer,
-          Observable.map(({ uri, replace }) => ({
-            uri: windowLocationURIToString(uri),
-            title: uri.title,
-            replace,
-          })),
-          Observable.forkCombineLatest(
-            compose(
-              Observable.takeWhile(
-                _ =>
-                  windowLocationStream[WindowLocationStream_historyCounter] ===
-                  -1,
-              ),
-              Observable.forEach(({ uri, title }) => {
-                // Initialize the history state on page load
-                windowLocationStream[WindowLocationStream_historyCounter]++;
-                windowHistoryReplaceState(windowLocationStream, title, uri);
-              }),
-              Observable.ignoreElements(),
-            ),
-            compose(
-              Observable.keep(({ replace, title, uri }) => {
-                const titleChanged = document.title !== title;
-                const uriChanged = uri !== location.href;
-
-                return replace || (titleChanged && !uriChanged);
-              }),
-              Observable.throttle(100),
-              Observable.forEach(({ title, uri }) => {
-                document.title = title;
-                windowHistoryReplaceState(windowLocationStream, title, uri);
-              }),
-              Observable.ignoreElements(),
-            ),
-            compose(
-              Observable.keep(({ replace, uri }) => {
-                const uriChanged = uri !== location.href;
-                return !replace && uriChanged;
-              }),
-              Observable.throttle(100),
-              Observable.forEach(({ title, uri }) => {
-                document.title = title;
-                windowHistoryPushState(windowLocationStream, title, uri);
-              }),
-              Observable.ignoreElements(),
-            ),
-          ),
-          Observable.subscribe(scheduler),
-          Disposable.addTo(windowLocationStream),
-        );
-
-        pipe(
-          window,
-          addEventListener("popstate", (e: Event) => {
-            const { counter, title } = (e as any).state as {
-              counter: number;
-              title: string;
-            };
-
-            const uri = {
-              ...getCurrentWindowLocationURI(),
-              title,
-            };
-
-            return { counter, uri };
-          }),
-          Observable.forEach(({ counter, uri }) => {
-            windowLocationStream[WindowLocationStream_historyCounter] = counter;
-            windowLocationStream[QueueableLike_push](uri, { replace: true });
-          }),
-          Observable.subscribe(scheduler),
-          Disposable.addTo(windowLocationStream),
-        );
-
-        return windowLocationStream;
+        return instance;
       },
-      false,
-      false,
-      false,
-    );
-  })();
+      props<TProperties>({
+        [WindowLocationStream_historyCounter]: -1,
+      }),
+      {
+        get [MulticastObservableLike_observerCount]() {
+          unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
+          return this[DelegatingLike_delegate][
+            MulticastObservableLike_observerCount
+          ];
+        },
+
+        get [QueueableLike_maxBufferSize](): number {
+          unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
+          return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
+        },
+
+        get [DispatcherLike_scheduler](): SchedulerLike {
+          unsafeCast<DelegatingLike<StreamLike<TAction, TState>>>(this);
+          return this[DelegatingLike_delegate][DispatcherLike_scheduler];
+        },
+
+        get [WindowLocationStreamLike_canGoBack](): boolean {
+          unsafeCast<TProperties>(this);
+          return this[WindowLocationStream_historyCounter] > 0;
+        },
+
+        [ObservableLike_isEnumerable]: false as const,
+        [ObservableLike_isRunnable]: false as const,
+
+        [DispatcherLike_complete](
+          this: DelegatingLike<StreamLike<TAction, TState>>,
+        ) {
+          this[DelegatingLike_delegate][DispatcherLike_complete]();
+        },
+
+        [QueueableLike_push](
+          this: DelegatingLike<StreamLike<TAction, TState>>,
+          stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
+          { replace }: { replace: boolean } = { replace: false },
+        ): boolean {
+          return this[DelegatingLike_delegate][QueueableLike_push]({
+            stateOrUpdater,
+            replace,
+          });
+        },
+
+        [WindowLocationStreamLike_goBack](
+          this: WindowLocationStreamLike,
+        ): boolean {
+          const canGoBack = this[WindowLocationStreamLike_canGoBack];
+
+          if (canGoBack) {
+            history.back();
+          }
+
+          return canGoBack;
+        },
+
+        [ObservableLike_observe](
+          this: DelegatingLike<StreamLike<TAction, TState>>,
+          observer: ObserverLike<WindowLocationURI>,
+        ): void {
+          pipe(
+            this[DelegatingLike_delegate],
+            Observable.map(({ uri }) => uri),
+            Observable.observeWith(observer),
+          );
+        },
+      },
+    ),
+  );
+
+  let currentWindowLocationStream: Optional<WindowLocationStreamLike> = none;
+
+  return Streamable_create<
+    Updater<WindowLocationURI> | WindowLocationURI,
+    WindowLocationURI,
+    WindowLocationStreamLike
+  >(
+    (scheduler, options): WindowLocationStreamLike => {
+      if (isSome(currentWindowLocationStream)) {
+        raiseWithDebugMessage("Cannot stream more than once");
+      }
+
+      const actionReducer = Streamable.createActionReducer(
+        ({ uri: stateURI }, { replace, stateOrUpdater }: TAction) => {
+          const uri = isFunction(stateOrUpdater)
+            ? stateOrUpdater(stateURI)
+            : stateOrUpdater;
+          return { uri, replace };
+        },
+        () => ({
+          replace: true,
+          uri: getCurrentWindowLocationURI(),
+        }),
+        { equality: areWindowLocationStatesEqual },
+      )[StreamableLike_stream](scheduler, options);
+
+      const windowLocationStream = createWindowLocationStream(actionReducer);
+
+      pipe(
+        actionReducer,
+        Observable.map(({ uri, replace }) => ({
+          uri: windowLocationURIToString(uri),
+          title: uri.title,
+          replace,
+        })),
+        Observable.forkCombineLatest(
+          compose(
+            Observable.takeWhile(
+              _ =>
+                windowLocationStream[WindowLocationStream_historyCounter] ===
+                -1,
+            ),
+            Observable.forEach(({ uri, title }) => {
+              // Initialize the history state on page load
+              windowLocationStream[WindowLocationStream_historyCounter]++;
+              windowHistoryReplaceState(windowLocationStream, title, uri);
+            }),
+            Observable.ignoreElements(),
+          ),
+          compose(
+            Observable.keep(({ replace, title, uri }) => {
+              const titleChanged = document.title !== title;
+              const uriChanged = uri !== location.href;
+
+              return replace || (titleChanged && !uriChanged);
+            }),
+            Observable.throttle(100),
+            Observable.forEach(({ title, uri }) => {
+              document.title = title;
+              windowHistoryReplaceState(windowLocationStream, title, uri);
+            }),
+            Observable.ignoreElements(),
+          ),
+          compose(
+            Observable.keep(({ replace, uri }) => {
+              const uriChanged = uri !== location.href;
+              return !replace && uriChanged;
+            }),
+            Observable.throttle(100),
+            Observable.forEach(({ title, uri }) => {
+              document.title = title;
+              windowHistoryPushState(windowLocationStream, title, uri);
+            }),
+            Observable.ignoreElements(),
+          ),
+        ),
+        Observable.subscribe(scheduler),
+        Disposable.addTo(windowLocationStream),
+      );
+
+      pipe(
+        window,
+        addEventListener("popstate", (e: Event) => {
+          const { counter, title } = (e as any).state as {
+            counter: number;
+            title: string;
+          };
+
+          const uri = {
+            ...getCurrentWindowLocationURI(),
+            title,
+          };
+
+          return { counter, uri };
+        }),
+        Observable.forEach(({ counter, uri }) => {
+          windowLocationStream[WindowLocationStream_historyCounter] = counter;
+          windowLocationStream[QueueableLike_push](uri, { replace: true });
+        }),
+        Observable.subscribe(scheduler),
+        Disposable.addTo(windowLocationStream),
+      );
+
+      return windowLocationStream;
+    },
+    false,
+    false,
+    false,
+  );
+})();
