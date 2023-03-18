@@ -1,9 +1,9 @@
 /// <reference types="./web.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
-import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStream_historyCounter, } from "../__internal__/symbols.js";
+import { DisposableLike_dispose, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStream_historyCounter, } from "../__internal__/symbols.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
-import { compose, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
+import { compose, error, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_stream, } from "../streaming.js";
@@ -13,13 +13,15 @@ import { QueueableLike_maxBufferSize, QueueableLike_push } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack };
-const reservedEvents = ["error", "open"];
+const errorEvent = "error";
+const reservedEvents = [errorEvent, "open"];
 export const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;
     const events = pipe(eventsOption, ReadonlyArray.keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
     return Observable.create(observer => {
         pipe(observer, Disposable.onDisposed(_ => {
+            eventSource.removeEventListener(errorEvent, onError);
             for (const ev of events) {
                 eventSource.removeEventListener(ev, listener);
             }
@@ -34,6 +36,10 @@ export const createEventSource = (url, options = {}) => {
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
             });
         };
+        const onError = (e) => {
+            observer[DisposableLike_dispose](error(e));
+        };
+        eventSource.addEventListener(errorEvent, onError);
         for (const ev of events) {
             eventSource.addEventListener(ev, listener);
         }

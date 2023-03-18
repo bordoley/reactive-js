@@ -9,6 +9,7 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import {
+  DisposableLike_dispose,
   WindowLocationStreamLike_canGoBack,
   WindowLocationStreamLike_goBack,
   WindowLocationStream_historyCounter,
@@ -19,6 +20,7 @@ import {
   Optional,
   Updater,
   compose,
+  error,
   isFunction,
   isSome,
   newInstance,
@@ -83,8 +85,9 @@ export interface WindowLocationStreamLike
 
   [WindowLocationStreamLike_goBack](): boolean;
 }
+const errorEvent = "error";
 
-const reservedEvents = ["error", "open"];
+const reservedEvents = [errorEvent, "open"];
 
 export const createEventSource = (
   url: string | URL,
@@ -107,6 +110,8 @@ export const createEventSource = (
     pipe(
       observer,
       Disposable.onDisposed(_ => {
+        eventSource.removeEventListener(errorEvent, onError);
+
         for (const ev of events) {
           eventSource.removeEventListener(ev, listener);
         }
@@ -122,6 +127,12 @@ export const createEventSource = (
         data: ev.data ?? "",
       });
     };
+
+    const onError = (e: unknown) => {
+      observer[DisposableLike_dispose](error(e));
+    };
+
+    eventSource.addEventListener(errorEvent, onError);
 
     for (const ev of events) {
       eventSource.addEventListener(ev, listener);
