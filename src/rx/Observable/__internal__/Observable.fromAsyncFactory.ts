@@ -5,13 +5,12 @@ import Disposable_toAbortSignal from "../../../util/Disposable/__internal__/Disp
 import Observable_create from "./Observable.create.js";
 
 const Observable_fromAsyncFactory = <T>(
-  f: (...args: any[]) => Promise<T>,
-  ...args: unknown[]
+  f: (abortSignal: AbortSignal) => Promise<T>,
 ) =>
   Observable_create<T>(async (observer: ObserverLike<T>) => {
     const abortSignal = Disposable_toAbortSignal(observer);
     try {
-      const result = await f(...args, abortSignal);
+      const result = await f(abortSignal);
       observer[QueueableLike_push](result);
       observer[DispatcherLike_complete]();
     } catch (e) {

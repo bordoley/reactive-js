@@ -418,35 +418,7 @@ export const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"] =
 export const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsyncEnumerable"] =
   AsyncEnumerable_toObservable;
 
-interface FromAsyncFactory {
-  /**
-   * @category Constructor
-   */
-  <T>(f: (abortSignal: AbortSignal) => Promise<T>): ObservableLike<T>;
-  <T, TA>(
-    f: (a: TA, abortSignal: AbortSignal) => Promise<T>,
-    a: TA,
-  ): ObservableLike<T>;
-  <T, TA, TB>(
-    f: (a: TA, b: TB, abortSignal: AbortSignal) => Promise<T>,
-    a: TA,
-    b: TB,
-  ): ObservableLike<T>;
-  <T, TA, TB, TC>(
-    f: (a: TA, b: TB, c: TC, abortSignal: AbortSignal) => Promise<T>,
-    a: TA,
-    b: TB,
-    c: TC,
-  ): ObservableLike<T>;
-  <T, TA, TB, TC, TD>(
-    f: (a: TA, b: TB, c: TC, d: TD, abortSignal: AbortSignal) => Promise<T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-  ): ObservableLike<T>;
-}
-export const fromAsyncFactory: FromAsyncFactory = Observable_fromAsyncFactory;
+export const fromAsyncFactory = Observable_fromAsyncFactory;
 
 export const fromAsyncIterable: FromAsyncIterable<
   ObservableLike,

@@ -122,17 +122,7 @@ export declare const forkMerge: ForkMerge<ObservableLike>["forkMerge"];
 export declare const forkZip: ForkZip<ObservableLike>["forkZip"];
 export declare const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"];
 export declare const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsyncEnumerable"];
-interface FromAsyncFactory {
-    /**
-     * @category Constructor
-     */
-    <T>(f: (abortSignal: AbortSignal) => Promise<T>): ObservableLike<T>;
-    <T, TA>(f: (a: TA, abortSignal: AbortSignal) => Promise<T>, a: TA): ObservableLike<T>;
-    <T, TA, TB>(f: (a: TA, b: TB, abortSignal: AbortSignal) => Promise<T>, a: TA, b: TB): ObservableLike<T>;
-    <T, TA, TB, TC>(f: (a: TA, b: TB, c: TC, abortSignal: AbortSignal) => Promise<T>, a: TA, b: TB, c: TC): ObservableLike<T>;
-    <T, TA, TB, TC, TD>(f: (a: TA, b: TB, c: TC, d: TD, abortSignal: AbortSignal) => Promise<T>, a: TA, b: TB, c: TC, d: TD): ObservableLike<T>;
-}
-export declare const fromAsyncFactory: FromAsyncFactory;
+export declare const fromAsyncFactory: <T>(f: (abortSignal: AbortSignal) => Promise<T>) => ObservableLike<T>;
 export declare const fromAsyncIterable: FromAsyncIterable<ObservableLike, {
     maxYieldInterval?: number;
 }>["fromAsyncIterable"];
