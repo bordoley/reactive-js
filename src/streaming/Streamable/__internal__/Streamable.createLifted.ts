@@ -6,9 +6,12 @@ import {
   FlowableState,
   StreamLike,
   StreamableLike,
+  StreamableLike_isEnumerable,
+  StreamableLike_isInteractive,
+  StreamableLike_isRunnable,
+  StreamableLike_stream,
 } from "../../../streaming.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
-import Streamable_create from "./Streamable.create.js";
 
 interface StreamableCreateLifted {
   <T>(
@@ -36,12 +39,12 @@ const Streamable_createLifted: StreamableCreateLifted = (<TReq, T>(
   isInteractive: boolean,
   isEnumerable: boolean,
   isRunnable: boolean,
-): StreamableLike<TReq, T> =>
-  Streamable_create(
-    (scheduler, options) => Stream_create(op, scheduler, options),
-    isInteractive,
-    isEnumerable,
-    isRunnable,
-  )) as StreamableCreateLifted;
+): StreamableLike<TReq, T> => ({
+  [StreamableLike_isEnumerable]: isEnumerable,
+  [StreamableLike_isInteractive]: isInteractive,
+  [StreamableLike_isRunnable]: isRunnable,
+  [StreamableLike_stream]: (scheduler, options) =>
+    Stream_create(op, scheduler, options),
+})) as StreamableCreateLifted;
 
 export default Streamable_createLifted;

@@ -1,15 +1,14 @@
 /// <reference types="./web.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
-import { DisposableLike_dispose, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStream_historyCounter, } from "../__internal__/symbols.js";
+import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStream_historyCounter, } from "../__internal__/symbols.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { compose, error, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import { StreamableLike_stream, } from "../streaming.js";
+import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
-import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
-import { QueueableLike_maxBufferSize, QueueableLike_push } from "../util.js";
+import { DisposableLike_dispose, QueueableLike_maxBufferSize, QueueableLike_push, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack };
@@ -132,7 +131,7 @@ export const windowLocation = /*@__PURE__*/ (() => {
         },
     }));
     let currentWindowLocationStream = none;
-    return Streamable_create((scheduler, options) => {
+    const stream = (scheduler, options) => {
         if (isSome(currentWindowLocationStream)) {
             raiseWithDebugMessage("Cannot stream more than once");
         }
@@ -150,8 +149,7 @@ export const windowLocation = /*@__PURE__*/ (() => {
             uri: windowLocationURIToString(uri),
             title: uri.title,
             replace,
-        })), Observable.forkCombineLatest(compose(Observable.takeWhile(_ => windowLocationStream[WindowLocationStream_historyCounter] ===
-            -1), Observable.forEach(({ uri, title }) => {
+        })), Observable.forkCombineLatest(compose(Observable.takeWhile(_ => windowLocationStream[WindowLocationStream_historyCounter] === -1), Observable.forEach(({ uri, title }) => {
             // Initialize the history state on page load
             windowLocationStream[WindowLocationStream_historyCounter]++;
             windowHistoryReplaceState(windowLocationStream, title, uri);
@@ -181,5 +179,11 @@ export const windowLocation = /*@__PURE__*/ (() => {
             windowLocationStream[QueueableLike_push](uri, { replace: true });
         }), Observable.subscribe(scheduler), Disposable.addTo(windowLocationStream));
         return windowLocationStream;
-    }, false, false, false);
+    };
+    return {
+        [StreamableLike_isEnumerable]: false,
+        [StreamableLike_isInteractive]: false,
+        [StreamableLike_isRunnable]: false,
+        [StreamableLike_stream]: stream,
+    };
 })();

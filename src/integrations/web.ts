@@ -9,7 +9,6 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import {
-  DisposableLike_dispose,
   WindowLocationStreamLike_canGoBack,
   WindowLocationStreamLike_goBack,
   WindowLocationStream_historyCounter,
@@ -44,11 +43,17 @@ import { SchedulerLike } from "../scheduling.js";
 import {
   StreamLike,
   StreamableLike,
+  StreamableLike_isEnumerable,
+  StreamableLike_isInteractive,
+  StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
-import Streamable_create from "../streaming/Streamable/__internal__/Streamable.create.js";
-import { QueueableLike_maxBufferSize, QueueableLike_push } from "../util.js";
+import {
+  DisposableLike_dispose,
+  QueueableLike_maxBufferSize,
+  QueueableLike_push,
+} from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
@@ -344,111 +349,111 @@ export const windowLocation: StreamableLike<
 
   let currentWindowLocationStream: Optional<WindowLocationStreamLike> = none;
 
-  return Streamable_create<
-    Updater<WindowLocationURI> | WindowLocationURI,
-    WindowLocationURI,
-    WindowLocationStreamLike
-  >(
-    (scheduler, options): WindowLocationStreamLike => {
-      if (isSome(currentWindowLocationStream)) {
-        raiseWithDebugMessage("Cannot stream more than once");
-      }
+  const stream = (
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): WindowLocationStreamLike => {
+    if (isSome(currentWindowLocationStream)) {
+      raiseWithDebugMessage("Cannot stream more than once");
+    }
 
-      const actionReducer = Streamable.createActionReducer(
-        ({ uri: stateURI }, { replace, stateOrUpdater }: TAction) => {
-          const uri = isFunction(stateOrUpdater)
-            ? stateOrUpdater(stateURI)
-            : stateOrUpdater;
-          return { uri, replace };
-        },
-        () => ({
-          replace: true,
-          uri: getCurrentWindowLocationURI(),
-        }),
-        { equality: areWindowLocationStatesEqual },
-      )[StreamableLike_stream](scheduler, options);
+    const actionReducer = Streamable.createActionReducer(
+      ({ uri: stateURI }, { replace, stateOrUpdater }: TAction) => {
+        const uri = isFunction(stateOrUpdater)
+          ? stateOrUpdater(stateURI)
+          : stateOrUpdater;
+        return { uri, replace };
+      },
+      () => ({
+        replace: true,
+        uri: getCurrentWindowLocationURI(),
+      }),
+      { equality: areWindowLocationStatesEqual },
+    )[StreamableLike_stream](scheduler, options);
 
-      const windowLocationStream = createWindowLocationStream(actionReducer);
+    const windowLocationStream = createWindowLocationStream(actionReducer);
 
-      pipe(
-        actionReducer,
-        Observable.map(({ uri, replace }) => ({
-          uri: windowLocationURIToString(uri),
-          title: uri.title,
-          replace,
-        })),
-        Observable.forkCombineLatest(
-          compose(
-            Observable.takeWhile(
-              _ =>
-                windowLocationStream[WindowLocationStream_historyCounter] ===
-                -1,
-            ),
-            Observable.forEach(({ uri, title }) => {
-              // Initialize the history state on page load
-              windowLocationStream[WindowLocationStream_historyCounter]++;
-              windowHistoryReplaceState(windowLocationStream, title, uri);
-            }),
-            Observable.ignoreElements(),
+    pipe(
+      actionReducer,
+      Observable.map(({ uri, replace }) => ({
+        uri: windowLocationURIToString(uri),
+        title: uri.title,
+        replace,
+      })),
+      Observable.forkCombineLatest(
+        compose(
+          Observable.takeWhile(
+            _ =>
+              windowLocationStream[WindowLocationStream_historyCounter] === -1,
           ),
-          compose(
-            Observable.keep(({ replace, title, uri }) => {
-              const titleChanged = document.title !== title;
-              const uriChanged = uri !== location.href;
-
-              return replace || (titleChanged && !uriChanged);
-            }),
-            Observable.throttle(100),
-            Observable.forEach(({ title, uri }) => {
-              document.title = title;
-              windowHistoryReplaceState(windowLocationStream, title, uri);
-            }),
-            Observable.ignoreElements(),
-          ),
-          compose(
-            Observable.keep(({ replace, uri }) => {
-              const uriChanged = uri !== location.href;
-              return !replace && uriChanged;
-            }),
-            Observable.throttle(100),
-            Observable.forEach(({ title, uri }) => {
-              document.title = title;
-              windowHistoryPushState(windowLocationStream, title, uri);
-            }),
-            Observable.ignoreElements(),
-          ),
+          Observable.forEach(({ uri, title }) => {
+            // Initialize the history state on page load
+            windowLocationStream[WindowLocationStream_historyCounter]++;
+            windowHistoryReplaceState(windowLocationStream, title, uri);
+          }),
+          Observable.ignoreElements(),
         ),
-        Observable.subscribe(scheduler),
-        Disposable.addTo(windowLocationStream),
-      );
+        compose(
+          Observable.keep(({ replace, title, uri }) => {
+            const titleChanged = document.title !== title;
+            const uriChanged = uri !== location.href;
 
-      pipe(
-        window,
-        addEventListener("popstate", (e: Event) => {
-          const { counter, title } = (e as any).state as {
-            counter: number;
-            title: string;
-          };
+            return replace || (titleChanged && !uriChanged);
+          }),
+          Observable.throttle(100),
+          Observable.forEach(({ title, uri }) => {
+            document.title = title;
+            windowHistoryReplaceState(windowLocationStream, title, uri);
+          }),
+          Observable.ignoreElements(),
+        ),
+        compose(
+          Observable.keep(({ replace, uri }) => {
+            const uriChanged = uri !== location.href;
+            return !replace && uriChanged;
+          }),
+          Observable.throttle(100),
+          Observable.forEach(({ title, uri }) => {
+            document.title = title;
+            windowHistoryPushState(windowLocationStream, title, uri);
+          }),
+          Observable.ignoreElements(),
+        ),
+      ),
+      Observable.subscribe(scheduler),
+      Disposable.addTo(windowLocationStream),
+    );
 
-          const uri = {
-            ...getCurrentWindowLocationURI(),
-            title,
-          };
+    pipe(
+      window,
+      addEventListener("popstate", (e: Event) => {
+        const { counter, title } = (e as any).state as {
+          counter: number;
+          title: string;
+        };
 
-          return { counter, uri };
-        }),
-        Observable.forEach(({ counter, uri }) => {
-          windowLocationStream[WindowLocationStream_historyCounter] = counter;
-          windowLocationStream[QueueableLike_push](uri, { replace: true });
-        }),
-        Observable.subscribe(scheduler),
-        Disposable.addTo(windowLocationStream),
-      );
+        const uri = {
+          ...getCurrentWindowLocationURI(),
+          title,
+        };
 
-      return windowLocationStream;
-    },
-    false,
-    false,
-    false,
-  );
+        return { counter, uri };
+      }),
+      Observable.forEach(({ counter, uri }) => {
+        windowLocationStream[WindowLocationStream_historyCounter] = counter;
+        windowLocationStream[QueueableLike_push](uri, { replace: true });
+      }),
+      Observable.subscribe(scheduler),
+      Disposable.addTo(windowLocationStream),
+    );
+
+    return windowLocationStream;
+  };
+
+  return {
+    [StreamableLike_isEnumerable]: false,
+    [StreamableLike_isInteractive]: false,
+    [StreamableLike_isRunnable]: false,
+    [StreamableLike_stream]: stream,
+  };
 })();

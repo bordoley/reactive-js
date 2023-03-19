@@ -7,11 +7,11 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
 import { SchedulerLike_now, SchedulerLike_schedule, } from "../../../scheduling.js";
 import { FlowableState_paused, } from "../../../streaming.js";
-import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
+import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.create.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((modeObs) => Observable_create((observer) => {
+const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_create((modeObs) => Observable_create((observer) => {
     const { maxYieldInterval = 300 } = o !== null && o !== void 0 ? o : {};
     const iterator = iterable[Symbol.asyncIterator]();
     const scheduler = observer[DispatcherLike_scheduler];
@@ -52,5 +52,5 @@ const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_createLifted((mod
             pipe(scheduler[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
         }
     }), Observable_subscribeWithMaxBufferSize(scheduler, observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(() => observer[DispatcherLike_complete]()));
-}), false);
+}));
 export default AsyncIterable_toFlowable;

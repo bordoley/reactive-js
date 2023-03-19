@@ -47,7 +47,7 @@ import {
   StreamableLike,
   StreamableLike_stream,
 } from "../streaming.js";
-import Flowable_createLifted from "../streaming/Flowable/__internal__/Flowable.createLifted.js";
+import * as Flowable from "../streaming/Flowable.js";
 import * as Stream from "../streaming/Stream.js";
 import Streamable_createLifted from "../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import {
@@ -56,7 +56,6 @@ import {
   QueueableLike_push,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-import Disposable_addTo from "../util/Disposable/__internal__/Disposable.addTo.js";
 
 interface BindNodeCallback {
   <T>(callbackFunc: SideEffect1<SideEffect2<unknown, T>>): Factory<
@@ -170,54 +169,52 @@ const addToDisposable =
 export const createReadableSource = (
   factory: Factory<Readable> | Readable,
 ): FlowableLike<Uint8Array> =>
-  Flowable_createLifted(
-    mode =>
-      Observable.create(observer => {
-        const dispatchDisposable = pipe(
-          Disposable.create(),
-          Disposable.onError(Disposable.toErrorHandler(observer)),
-          Disposable.onComplete(() => {
-            observer[DispatcherLike_complete]();
-          }),
-        );
-
-        const readable = isFunction(factory)
-          ? pipe(
-              factory(),
-              addToDisposable(observer),
-              addDisposable(dispatchDisposable),
-            )
-          : pipe(factory, addDisposable(dispatchDisposable));
-
-        readable.pause();
-
-        pipe(
-          mode,
-          Observable.forEach(ev => {
-            switch (ev) {
-              case FlowableState_paused:
-                readable.pause();
-                break;
-              case FlowableState_running:
-                readable.resume();
-                break;
-            }
-          }),
-          Observable.subscribe(observer[DispatcherLike_scheduler]),
-          addToNodeStream(readable),
-        );
-
-        const onData = (v: Uint8Array) => {
-          observer[QueueableLike_push](v);
-        };
-        const onEnd = () => {
+  Flowable.create(mode =>
+    Observable.create(observer => {
+      const dispatchDisposable = pipe(
+        Disposable.create(),
+        Disposable.onError(Disposable.toErrorHandler(observer)),
+        Disposable.onComplete(() => {
           observer[DispatcherLike_complete]();
-        };
+        }),
+      );
 
-        readable.on("data", onData);
-        readable.on("end", onEnd);
-      }),
-    false,
+      const readable = isFunction(factory)
+        ? pipe(
+            factory(),
+            addToDisposable(observer),
+            addDisposable(dispatchDisposable),
+          )
+        : pipe(factory, addDisposable(dispatchDisposable));
+
+      readable.pause();
+
+      pipe(
+        mode,
+        Observable.forEach(ev => {
+          switch (ev) {
+            case FlowableState_paused:
+              readable.pause();
+              break;
+            case FlowableState_running:
+              readable.resume();
+              break;
+          }
+        }),
+        Observable.subscribe(observer[DispatcherLike_scheduler]),
+        addToNodeStream(readable),
+      );
+
+      const onData = (v: Uint8Array) => {
+        observer[QueueableLike_push](v);
+      };
+      const onEnd = () => {
+        observer[DispatcherLike_complete]();
+      };
+
+      readable.on("data", onData);
+      readable.on("end", onEnd);
+    }),
   );
 
 export const readFile = (
@@ -297,39 +294,35 @@ export const transform =
     factory: Factory<Transform>,
   ): ContainerOperator<FlowableLike, Uint8Array, Uint8Array> =>
   src =>
-    Flowable_createLifted(
-      modeObs =>
-        Observable.create(observer => {
-          const transform = pipe(factory(), addToDisposable(observer));
+    Flowable.create(modeObs =>
+      Observable.create(observer => {
+        const transform = pipe(factory(), addToDisposable(observer));
 
-          pipe(
-            createWritableSink(transform)[StreamableLike_stream](
-              observer[DispatcherLike_scheduler],
-            ),
-            Stream.sourceFrom(src),
-            Disposable_addTo(observer),
-          );
+        pipe(
+          createWritableSink(transform)[StreamableLike_stream](
+            observer[DispatcherLike_scheduler],
+          ),
+          Stream.sourceFrom(src),
+          Disposable.addTo(observer),
+        );
 
-          const transformReadableStream = createReadableSource(transform)[
-            StreamableLike_stream
-          ](observer[DispatcherLike_scheduler]);
+        const transformReadableStream = createReadableSource(transform)[
+          StreamableLike_stream
+        ](observer[DispatcherLike_scheduler]);
 
-          transformReadableStream[ObservableLike_observe](observer);
+        transformReadableStream[ObservableLike_observe](observer);
 
-          pipe(
-            modeObs,
-            Observable.forEach(v => {
-              if (!transformReadableStream[QueueableLike_push](v)) {
-                observer[DispatcherLike_scheduler][
-                  SchedulerLike_requestYield
-                ]();
-              }
-            }),
-            Observable.subscribe(observer[DispatcherLike_scheduler]),
-            addToNodeStream(transform),
-          );
-        }),
-      false,
+        pipe(
+          modeObs,
+          Observable.forEach(v => {
+            if (!transformReadableStream[QueueableLike_push](v)) {
+              observer[DispatcherLike_scheduler][SchedulerLike_requestYield]();
+            }
+          }),
+          Observable.subscribe(observer[DispatcherLike_scheduler]),
+          addToNodeStream(transform),
+        );
+      }),
     );
 
 export const brotliDecompress = (

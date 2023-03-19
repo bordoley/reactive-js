@@ -16,8 +16,14 @@ import {
 } from "../rx.js";
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
 import { FlowableLike } from "../streaming.js";
+import Flowable_create from "./Flowable/__internal__/Flowable.create.js";
 import Flowable_toObservable from "./Flowable/__internal__/Flowable.toObservable.js";
 import Flowable_toRunnable from "./Flowable/__internal__/Flowable.toRunnable.js";
+
+/**
+ * @category Constructor
+ */
+export const create = Flowable_create;
 
 export const fromAsyncIterable: FromAsyncIterable<
   FlowableLike,

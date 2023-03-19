@@ -6,6 +6,7 @@
 
 ### Constructor Functions
 
+- [create](streaming_Flowable.md#create)
 - [fromAsyncIterable](streaming_Flowable.md#fromasynciterable)
 - [fromEnumerable](streaming_Flowable.md#fromenumerable)
 - [fromIterable](streaming_Flowable.md#fromiterable)
@@ -19,6 +20,28 @@
 - [toRunnable](streaming_Flowable.md#torunnable)
 
 ## Constructor Functions
+
+### create
+
+▸ **create**<`T`\>(`op`): [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, [`FlowableState`](streaming.md#flowablestate), `T`\> |
+
+#### Returns
+
+[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>
+
+___
 
 ### fromAsyncIterable
 
