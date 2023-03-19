@@ -8,12 +8,8 @@ import AsyncIterable_toObservable from "./AsyncIterable/__internal__/AsyncIterab
 export const toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnumerable"] =
   AsyncIterable_toAsyncEnumerable;
 
-export const toFlowable: ToFlowable<
-  AsyncIterableLike,
-  { maxYieldInterval?: number }
->["toFlowable"] = AsyncIterable_toFlowable;
+export const toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
+  AsyncIterable_toFlowable;
 
-export const toObservable: ToObservable<
-  AsyncIterableLike,
-  { maxYieldInterval?: number }
->["toObservable"] = AsyncIterable_toObservable;
+export const toObservable: ToObservable<AsyncIterableLike>["toObservable"] =
+  AsyncIterable_toObservable;

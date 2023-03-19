@@ -4,6 +4,7 @@ import {
   PauseableSchedulerLike_pause,
   PauseableSchedulerLike_resume,
   SchedulerLike_inContinuation,
+  SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
@@ -15,6 +16,7 @@ import { DisposableLike } from "./util.js";
 
 export {
   SchedulerLike_inContinuation,
+  SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_shouldYield,
@@ -35,6 +37,7 @@ export interface ContinuationContextLike {
  */
 export interface SchedulerLike extends DisposableLike {
   readonly [SchedulerLike_inContinuation]: boolean;
+  readonly [SchedulerLike_maxYieldInterval]: number;
   readonly [SchedulerLike_now]: number;
   readonly [SchedulerLike_shouldYield]: boolean;
 
@@ -58,6 +61,9 @@ export interface PauseableSchedulerLike extends SchedulerLike {
   [PauseableSchedulerLike_resume](): void;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface PrioritySchedulerLike extends SchedulerLike {
   [SchedulerLike_schedule](
     continuation: SideEffect1<ContinuationContextLike>,

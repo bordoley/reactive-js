@@ -5,16 +5,16 @@ import { DispatcherLike_complete, DispatcherLike_scheduler, } from "../../../rx.
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
-import { SchedulerLike_now, SchedulerLike_schedule, } from "../../../scheduling.js";
+import { SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../../../scheduling.js";
 import { FlowableState_paused, } from "../../../streaming.js";
 import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.create.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-const AsyncIterable_toFlowable = (o) => (iterable) => Flowable_create((modeObs) => Observable_create((observer) => {
-    const { maxYieldInterval = 300 } = o !== null && o !== void 0 ? o : {};
+const AsyncIterable_toFlowable = () => (iterable) => Flowable_create((modeObs) => Observable_create((observer) => {
     const iterator = iterable[Symbol.asyncIterator]();
     const scheduler = observer[DispatcherLike_scheduler];
+    const maxYieldInterval = scheduler[SchedulerLike_maxYieldInterval];
     let isPaused = true;
     const continuation = async () => {
         const startTime = scheduler[SchedulerLike_now];

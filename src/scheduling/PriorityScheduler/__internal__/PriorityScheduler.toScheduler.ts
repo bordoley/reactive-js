@@ -23,6 +23,7 @@ import {
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
+  SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
@@ -44,6 +45,7 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
       instance: Pick<
         SchedulerLike,
         | typeof SchedulerLike_inContinuation
+        | typeof SchedulerLike_maxYieldInterval
         | typeof SchedulerLike_now
         | typeof SchedulerLike_shouldYield
         | typeof SchedulerLike_requestYield
@@ -70,6 +72,12 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         unsafeCast<TProperties>(this);
         return this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
           SchedulerLike_inContinuation
+        ];
+      },
+      get [SchedulerLike_maxYieldInterval]() {
+        unsafeCast<TProperties>(this);
+        return this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
+          SchedulerLike_maxYieldInterval
         ];
       },
       get [SchedulerLike_now]() {

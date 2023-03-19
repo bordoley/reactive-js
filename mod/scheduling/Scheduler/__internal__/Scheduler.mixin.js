@@ -3,10 +3,10 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { floor, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationLike_run, ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, Continuation_childContinuation, Continuation_effect, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, SchedulerMixin_currentContinuation, SchedulerMixin_yieldRequested, } from "../../../__internal__/symbols.js";
+import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationLike_run, ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, Continuation_childContinuation, Continuation_effect, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, SchedulerMixin_currentContinuation, SchedulerMixin_startTime, SchedulerMixin_yieldRequested, } from "../../../__internal__/symbols.js";
 import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
 import { error, isNone, isSome, newInstance, none, unsafeCast, } from "../../../functions.js";
-import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -109,12 +109,15 @@ export const PriorityScheduler_mixin =
             }
         },
     }));
-    return mix(include(Disposable_mixin), function SchedulerMixin(instance) {
+    return mix(include(Disposable_mixin), function SchedulerMixin(instance, maxYieldInterval) {
         init(Disposable_mixin, instance);
+        instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
         return instance;
     }, props({
         [SchedulerMixin_currentContinuation]: none,
         [SchedulerMixin_yieldRequested]: false,
+        [SchedulerLike_maxYieldInterval]: MAX_SAFE_INTEGER,
+        [SchedulerMixin_startTime]: 0,
     }), {
         get [SchedulerLike_inContinuation]() {
             unsafeCast(this);
@@ -124,9 +127,15 @@ export const PriorityScheduler_mixin =
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
             const inContinuation = this[SchedulerLike_inContinuation];
+            const isDisposed = this[DisposableLike_isDisposed];
             const yieldRequested = this[SchedulerMixin_yieldRequested];
+            const exceededMaxYieldInterval = this[SchedulerLike_now] >
+                this[SchedulerMixin_startTime] +
+                    this[SchedulerLike_maxYieldInterval];
             return (inContinuation &&
-                (yieldRequested ||
+                (isDisposed ||
+                    yieldRequested ||
+                    exceededMaxYieldInterval ||
                     this[PrioritySchedulerImplementationLike_shouldYield]));
         },
         get [ContinuationSchedulerLike_shouldYield]() {
@@ -153,6 +162,7 @@ export const PriorityScheduler_mixin =
             return continuation;
         },
         [PrioritySchedulerImplementationLike_runContinuation](continuation) {
+            this[SchedulerMixin_startTime] = this[SchedulerLike_now];
             this[SchedulerMixin_currentContinuation] = continuation;
             this[SchedulerMixin_yieldRequested] = false;
             continuation[ContinuationLike_run]();

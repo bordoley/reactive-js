@@ -23,7 +23,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
     const createEnumeratorScheduler = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin, typedObserverMixin, PriorityScheduler_mixin), function EnumeratorScheduler(instance) {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        init(PriorityScheduler_mixin, instance);
+        init(PriorityScheduler_mixin, instance, 0);
         init(typedObserverMixin, instance, instance, MAX_SAFE_INTEGER);
         instance[EnumerableEnumerator_continuationQueue] =
             IndexedQueue_createFifoQueue();

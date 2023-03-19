@@ -19,7 +19,7 @@ const comparator = (a, b) => {
 const typedMutableEnumeratorMixin = 
 /*@__PURE__*/ MutableEnumerator_mixin();
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(PriorityScheduler_mixin, typedMutableEnumeratorMixin, Queue_priorityQueueMixin()), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
-    init(PriorityScheduler_mixin, instance);
+    init(PriorityScheduler_mixin, instance, 1);
     init(typedMutableEnumeratorMixin, instance);
     init(Queue_priorityQueueMixin(), instance, comparator, MAX_SAFE_INTEGER);
     instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;

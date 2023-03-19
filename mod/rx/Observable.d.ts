@@ -126,9 +126,7 @@ export declare const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["f
  * @category Constructor
  */
 export declare const fromAsyncFactory: <T>(f: (abortSignal: AbortSignal) => Promise<T>) => ObservableLike<T>;
-export declare const fromAsyncIterable: FromAsyncIterable<ObservableLike, {
-    maxYieldInterval?: number;
-}>["fromAsyncIterable"];
+export declare const fromAsyncIterable: FromAsyncIterable<ObservableLike>["fromAsyncIterable"];
 export declare const fromFactory: FromFactory<ObservableLike, {
     delay: number;
 }>["fromFactory"];

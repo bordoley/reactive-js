@@ -50,7 +50,7 @@ const createPriorityScheduler = /*@__PURE__*/ (() => {
           | typeof ContinuationSchedulerLike_schedule
         >,
       ): PrioritySchedulerLike {
-        init(PriorityScheduler_mixin, instance);
+        init(PriorityScheduler_mixin, instance, 300);
         return instance;
       },
       props<TProperties>({}),

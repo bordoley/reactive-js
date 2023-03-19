@@ -423,10 +423,8 @@ export const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsync
  */
 export const fromAsyncFactory = Observable_fromAsyncFactory;
 
-export const fromAsyncIterable: FromAsyncIterable<
-  ObservableLike,
-  { maxYieldInterval?: number }
->["fromAsyncIterable"] = AsyncIterable_toObservable;
+export const fromAsyncIterable: FromAsyncIterable<ObservableLike>["fromAsyncIterable"] =
+  AsyncIterable_toObservable;
 
 export const fromFactory: FromFactory<
   ObservableLike,

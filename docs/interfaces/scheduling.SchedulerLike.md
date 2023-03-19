@@ -21,6 +21,7 @@
 ### Properties
 
 - [[SchedulerLike\_inContinuation]](scheduling.SchedulerLike.md#[schedulerlike_incontinuation])
+- [[SchedulerLike\_maxYieldInterval]](scheduling.SchedulerLike.md#[schedulerlike_maxyieldinterval])
 - [[SchedulerLike\_now]](scheduling.SchedulerLike.md#[schedulerlike_now])
 - [[SchedulerLike\_shouldYield]](scheduling.SchedulerLike.md#[schedulerlike_shouldyield])
 
@@ -34,6 +35,12 @@
 ### [SchedulerLike\_inContinuation]
 
 • `Readonly` **[SchedulerLike\_inContinuation]**: `boolean`
+
+___
+
+### [SchedulerLike\_maxYieldInterval]
+
+• `Readonly` **[SchedulerLike\_maxYieldInterval]**: `number`
 
 ___
 

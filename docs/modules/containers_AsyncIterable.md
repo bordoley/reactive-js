@@ -48,8 +48,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.maxYieldInterval?` | `number` |
+| `options?` | `undefined` |
 
 #### Returns
 
@@ -71,8 +70,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.maxYieldInterval?` | `number` |
+| `options?` | `undefined` |
 
 #### Returns
 

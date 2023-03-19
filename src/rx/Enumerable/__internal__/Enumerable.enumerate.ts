@@ -97,7 +97,7 @@ const Enumerable_enumerate: <T>() => (
       ): EnumeratorScheduler<T> {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
-        init(PriorityScheduler_mixin, instance);
+        init(PriorityScheduler_mixin, instance, 0);
         init(typedObserverMixin, instance, instance, MAX_SAFE_INTEGER);
 
         instance[EnumerableEnumerator_continuationQueue] =

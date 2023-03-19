@@ -57,8 +57,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.maxYieldInterval?` | `number` |
+| `options?` | `undefined` |
 
 #### Returns
 

@@ -57,6 +57,7 @@ import {
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
+  SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
@@ -259,7 +260,11 @@ const Scheduler_createQueueScheduler: Function2<
         host: SchedulerLike,
         createImmediateQueue: Factory<QueueLike<QueueTask>>,
       ): PauseableSchedulerLike & PrioritySchedulerLike {
-        init(PriorityScheduler_mixin, instance);
+        init(
+          PriorityScheduler_mixin,
+          instance,
+          host[SchedulerLike_maxYieldInterval],
+        );
         init(typedMutableEnumeratorMixin, instance);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
 
@@ -292,7 +297,6 @@ const Scheduler_createQueueScheduler: Function2<
           const next = peek(this);
 
           return (
-            this[DisposableLike_isDisposed] ||
             !this[EnumeratorLike_hasCurrent] ||
             this[PauseableSchedulerLike_isPaused] ||
             (isSome(next) ? priorityShouldYield(this, next) : false) ||

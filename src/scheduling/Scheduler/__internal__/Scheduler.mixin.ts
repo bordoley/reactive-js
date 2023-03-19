@@ -1,7 +1,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { floor, max } from "../../../__internal__/math.js";
 import {
-  Mixin,
+  Mixin1,
   Mutable,
   createInstanceFactory,
   include,
@@ -20,6 +20,7 @@ import {
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   SchedulerMixin_currentContinuation,
+  SchedulerMixin_startTime,
   SchedulerMixin_yieldRequested,
 } from "../../../__internal__/symbols.js";
 import {
@@ -42,6 +43,7 @@ import {
   ContinuationContextLike_yield,
   PrioritySchedulerLike,
   SchedulerLike_inContinuation,
+  SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
@@ -105,7 +107,7 @@ type PrioritySchedulerMixin = Omit<
   | typeof PrioritySchedulerImplementationLike_shouldYield
 >;
 
-export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
+export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
   /*@__PURE__*/ (() => {
     type TContinuationProperties = {
       [ContinuationLike_continuationScheduler]: ContinuationSchedulerLike;
@@ -271,6 +273,8 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
     type TSchedulerProperties = {
       [SchedulerMixin_yieldRequested]: boolean;
       [SchedulerMixin_currentContinuation]: Optional<ContinuationLike>;
+      [SchedulerLike_maxYieldInterval]: number;
+      [SchedulerMixin_startTime]: number;
     };
 
     return mix(
@@ -286,14 +290,18 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           | typeof ContinuationSchedulerLike_shouldYield
         > &
           Mutable<TSchedulerProperties>,
+        maxYieldInterval: number,
       ): PrioritySchedulerMixin {
         init(Disposable_mixin, instance);
+        instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
 
         return instance;
       },
       props<TSchedulerProperties>({
         [SchedulerMixin_currentContinuation]: none,
         [SchedulerMixin_yieldRequested]: false,
+        [SchedulerLike_maxYieldInterval]: MAX_SAFE_INTEGER,
+        [SchedulerMixin_startTime]: 0,
       }),
       {
         get [SchedulerLike_inContinuation](): boolean {
@@ -308,11 +316,19 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
             TSchedulerProperties & PrioritySchedulerImplementationLike
           >(this);
           const inContinuation = this[SchedulerLike_inContinuation];
+          const isDisposed = this[DisposableLike_isDisposed];
           const yieldRequested = this[SchedulerMixin_yieldRequested];
+
+          const exceededMaxYieldInterval =
+            this[SchedulerLike_now] >
+            this[SchedulerMixin_startTime] +
+              this[SchedulerLike_maxYieldInterval];
 
           return (
             inContinuation &&
-            (yieldRequested ||
+            (isDisposed ||
+              yieldRequested ||
+              exceededMaxYieldInterval ||
               this[PrioritySchedulerImplementationLike_shouldYield])
           );
         },
@@ -353,6 +369,7 @@ export const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin> =
           this: PrioritySchedulerImplementationLike & TSchedulerProperties,
           continuation: ContinuationLike,
         ): void {
+          this[SchedulerMixin_startTime] = this[SchedulerLike_now];
           this[SchedulerMixin_currentContinuation] = continuation;
           this[SchedulerMixin_yieldRequested] = false;
           continuation[ContinuationLike_run]();

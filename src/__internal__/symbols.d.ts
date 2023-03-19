@@ -202,13 +202,11 @@ export declare const SchedulerMixin_yieldRequested: unique symbol;
 
 export declare const SchedulerMixin_currentContinuation: unique symbol;
 
+export declare const SchedulerMixin_startTime: unique symbol;
+
 export declare const PrioritySchedulerDelegatingScheduler_priorityScheduler: unique symbol;
 
 export declare const PrioritySchedulerDelegatingScheduler_priority: unique symbol;
-
-export declare const HostScheduler_startTime: unique symbol;
-
-export declare const HostScheduler_maxYieldInterval: unique symbol;
 
 export declare const VirtualTask_continuation: unique symbol;
 
@@ -317,6 +315,8 @@ export declare const SchedulerLike_requestYield: unique symbol;
 export declare const SchedulerLike_shouldYield: unique symbol;
 
 export declare const SchedulerLike_schedule: unique symbol;
+
+export declare const SchedulerLike_maxYieldInterval: unique symbol;
 
 export declare const ContinuationContextLike_yield: unique symbol;
 

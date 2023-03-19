@@ -8,7 +8,7 @@ import { QueueLike_head, QueueLike_pull, SerialDisposableLike_current, } from ".
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
-import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import { DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -94,7 +94,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
     const typedSerialDisposableMixin = SerialDisposable_mixin();
     const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
     return createInstanceFactory(mix(include(PriorityScheduler_mixin, typedMutableEnumeratorMixin, typedSerialDisposableMixin), function QueueScheduler(instance, host, createImmediateQueue) {
-        init(PriorityScheduler_mixin, instance);
+        init(PriorityScheduler_mixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(typedMutableEnumeratorMixin, instance);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
         instance[QueueScheduler_delayed] =
@@ -118,8 +118,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
         get [PrioritySchedulerImplementationLike_shouldYield]() {
             unsafeCast(this);
             const next = peek(this);
-            return (this[DisposableLike_isDisposed] ||
-                !this[EnumeratorLike_hasCurrent] ||
+            return (!this[EnumeratorLike_hasCurrent] ||
                 this[PauseableSchedulerLike_isPaused] ||
                 (isSome(next) ? priorityShouldYield(this, next) : false) ||
                 this[QueueScheduler_hostScheduler][SchedulerLike_shouldYield]);

@@ -1,7 +1,6 @@
 /// <reference types="./Scheduler.createHostScheduler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { HostScheduler_maxYieldInterval, HostScheduler_startTime, } from "../../../__internal__/symbols.js";
 import { isFunction, none, pipe, unsafeCast, } from "../../../functions.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
@@ -36,17 +35,12 @@ const scheduleImmediate = (scheduler, continuation) => {
 const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
     immmediateOrTimerDisposable[DisposableLike_dispose]();
-    scheduler[HostScheduler_startTime] = scheduler[SchedulerLike_now];
     scheduler[PrioritySchedulerImplementationLike_runContinuation](continuation);
 };
 const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(PriorityScheduler_mixin), function HostScheduler(instance, maxYieldInterval) {
-    init(PriorityScheduler_mixin, instance);
-    instance[HostScheduler_maxYieldInterval] = maxYieldInterval;
+    init(PriorityScheduler_mixin, instance, maxYieldInterval);
     return instance;
-}, props({
-    [HostScheduler_startTime]: 0,
-    [HostScheduler_maxYieldInterval]: 0,
-}), {
+}, props({}), {
     get [SchedulerLike_now]() {
         if (supportsPerformanceNow) {
             return performance.now();
@@ -61,9 +55,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
     },
     get [PrioritySchedulerImplementationLike_shouldYield]() {
         unsafeCast(this);
-        return (this[SchedulerLike_now] >
-            this[HostScheduler_startTime] +
-                this[HostScheduler_maxYieldInterval] || isInputPending());
+        return isInputPending();
     },
     [ContinuationSchedulerLike_schedule](continuation, delay) {
         pipe(this, Disposable_addIgnoringChildErrors(continuation));

@@ -203,13 +203,11 @@ export const SchedulerMixin_yieldRequested: unique symbol;
 /** @type {unique symbol} */
 export const SchedulerMixin_currentContinuation: unique symbol;
 /** @type {unique symbol} */
+export const SchedulerMixin_startTime: unique symbol;
+/** @type {unique symbol} */
 export const PrioritySchedulerDelegatingScheduler_priorityScheduler: unique symbol;
 /** @type {unique symbol} */
 export const PrioritySchedulerDelegatingScheduler_priority: unique symbol;
-/** @type {unique symbol} */
-export const HostScheduler_startTime: unique symbol;
-/** @type {unique symbol} */
-export const HostScheduler_maxYieldInterval: unique symbol;
 /** @type {unique symbol} */
 export const VirtualTask_continuation: unique symbol;
 /** @type {unique symbol} */
@@ -318,6 +316,8 @@ export const SchedulerLike_requestYield: unique symbol;
 export const SchedulerLike_shouldYield: unique symbol;
 /** @type {unique symbol} */
 export const SchedulerLike_schedule: unique symbol;
+/** @type {unique symbol} */
+export const SchedulerLike_maxYieldInterval: unique symbol;
 /** @type {unique symbol} */
 export const ContinuationContextLike_yield: unique symbol;
 /** @type {unique symbol} */

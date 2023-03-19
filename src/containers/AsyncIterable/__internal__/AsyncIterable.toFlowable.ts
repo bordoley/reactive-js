@@ -10,6 +10,7 @@ import Observable_create from "../../../rx/Observable/__internal__/Observable.cr
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
 import {
+  SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_schedule,
 } from "../../../scheduling.js";
@@ -28,18 +29,14 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 
-const AsyncIterable_toFlowable: ToFlowable<
-  AsyncIterableLike,
-  { maxYieldInterval?: number }
->["toFlowable"] =
-  <T>(o?: { maxYieldInterval?: number }) =>
+const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
+  <T>() =>
   (iterable: AsyncIterableLike<T>) =>
     Flowable_create((modeObs: ObservableLike<FlowableState>) =>
       Observable_create<T>((observer: ObserverLike<T>) => {
-        const { maxYieldInterval = 300 } = o ?? {};
-
         const iterator = iterable[Symbol.asyncIterator]();
         const scheduler = observer[DispatcherLike_scheduler];
+        const maxYieldInterval = scheduler[SchedulerLike_maxYieldInterval];
 
         let isPaused = true;
 

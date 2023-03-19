@@ -88,7 +88,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         Mutable<TProperties>,
       maxMicroTaskTicks: number,
     ): VirtualTimeSchedulerLike {
-      init(PriorityScheduler_mixin, instance);
+      init(PriorityScheduler_mixin, instance, 1);
       init(typedMutableEnumeratorMixin, instance);
       init(
         Queue_priorityQueueMixin<VirtualTask>(),

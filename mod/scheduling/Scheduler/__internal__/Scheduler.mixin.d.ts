@@ -1,4 +1,4 @@
-import { Mixin } from "../../../__internal__/mixins.js";
+import { Mixin1 } from "../../../__internal__/mixins.js";
 import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationLike_run, ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield } from "../../../__internal__/symbols.js";
 import { PrioritySchedulerLike, SchedulerLike_now } from "../../../scheduling.js";
 import { DisposableLike, QueueableLike } from "../../../util.js";
@@ -17,4 +17,4 @@ export interface PrioritySchedulerImplementationLike extends PrioritySchedulerLi
     [PrioritySchedulerImplementationLike_runContinuation](continuation: ContinuationLike): void;
 }
 type PrioritySchedulerMixin = Omit<PrioritySchedulerImplementationLike, typeof SchedulerLike_now | typeof ContinuationSchedulerLike_schedule | typeof PrioritySchedulerImplementationLike_shouldYield>;
-export declare const PriorityScheduler_mixin: Mixin<PrioritySchedulerMixin>;
+export declare const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number>;

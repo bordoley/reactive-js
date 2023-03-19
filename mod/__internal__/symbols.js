@@ -209,15 +209,13 @@ export const SchedulerMixin_yieldRequested = /*@__PURE__*/ symbol("SchedulerMixi
 /** @type {unique symbol} */
 export const SchedulerMixin_currentContinuation = /*@__PURE__*/ symbol("SchedulerMixin_currentContinuation");
 /** @type {unique symbol} */
+export const SchedulerMixin_startTime = /*@__PURE__*/ symbol("SchedulerMixin_startTime");
+/** @type {unique symbol} */
 export const PrioritySchedulerDelegatingScheduler_priorityScheduler = 
 /*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priorityScheduler");
 /** @type {unique symbol} */
 export const PrioritySchedulerDelegatingScheduler_priority = 
 /*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priority");
-/** @type {unique symbol} */
-export const HostScheduler_startTime = /*@__PURE__*/ symbol("HostScheduler_startTime");
-/** @type {unique symbol} */
-export const HostScheduler_maxYieldInterval = /*@__PURE__*/ symbol("HostScheduler_maxYieldInterval");
 /** @type {unique symbol} */
 export const VirtualTask_continuation = /*@__PURE__*/ symbol("VirtualTask_continuation");
 /** @type {unique symbol} */
@@ -326,6 +324,8 @@ export const SchedulerLike_requestYield = /*@__PURE__*/ symbol("SchedulerLike_re
 export const SchedulerLike_shouldYield = /*@__PURE__*/ symbol("SchedulerLike_shouldYield");
 /** @type {unique symbol} */
 export const SchedulerLike_schedule = /*@__PURE__*/ symbol("SchedulerLike_schedule");
+/** @type {unique symbol} */
+export const SchedulerLike_maxYieldInterval = /*@__PURE__*/ symbol("SchedulerLike_maxYieldInterval");
 /** @type {unique symbol} */
 export const ContinuationContextLike_yield = /*@__PURE__*/ symbol("ContinuationContextLike_yield");
 /** @type {unique symbol} */

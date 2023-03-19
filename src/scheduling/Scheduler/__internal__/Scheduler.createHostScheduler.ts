@@ -1,15 +1,10 @@
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  HostScheduler_maxYieldInterval,
-  HostScheduler_startTime,
-} from "../../../__internal__/symbols.js";
 import {
   Optional,
   isFunction,
@@ -60,7 +55,7 @@ const isInputPending = (): boolean =>
   supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);
 
 const scheduleImmediateWithSetImmediate = (
-  scheduler: TProperties & PrioritySchedulerImplementationLike,
+  scheduler: PrioritySchedulerImplementationLike,
   continuation: ContinuationLike,
 ) => {
   const disposable = pipe(
@@ -77,7 +72,7 @@ const scheduleImmediateWithSetImmediate = (
 };
 
 const scheduleDelayed = (
-  scheduler: TProperties & PrioritySchedulerImplementationLike,
+  scheduler: PrioritySchedulerImplementationLike,
   continuation: ContinuationLike,
   delay: number,
 ) => {
@@ -97,7 +92,7 @@ const scheduleDelayed = (
 };
 
 const scheduleImmediate = (
-  scheduler: TProperties & PrioritySchedulerImplementationLike,
+  scheduler: PrioritySchedulerImplementationLike,
   continuation: ContinuationLike,
 ) => {
   if (supportsSetImmediate) {
@@ -108,20 +103,13 @@ const scheduleImmediate = (
 };
 
 const runContinuation = (
-  scheduler: TProperties & PrioritySchedulerImplementationLike,
+  scheduler: PrioritySchedulerImplementationLike,
   continuation: ContinuationLike,
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
   // clear the immediateOrTimer disposable
   immmediateOrTimerDisposable[DisposableLike_dispose]();
-  scheduler[HostScheduler_startTime] = scheduler[SchedulerLike_now];
-
   scheduler[PrioritySchedulerImplementationLike_runContinuation](continuation);
-};
-
-type TProperties = {
-  [HostScheduler_startTime]: number;
-  readonly [HostScheduler_maxYieldInterval]: number;
 };
 
 const createHostSchedulerInstance = /*@__PURE__*/ (() =>
@@ -134,20 +122,14 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           | typeof SchedulerLike_now
           | typeof PrioritySchedulerImplementationLike_shouldYield
           | typeof ContinuationSchedulerLike_schedule
-        > &
-          Mutable<TProperties>,
+        >,
         maxYieldInterval: number,
       ): SchedulerLike {
-        init(PriorityScheduler_mixin, instance);
-
-        instance[HostScheduler_maxYieldInterval] = maxYieldInterval;
+        init(PriorityScheduler_mixin, instance, maxYieldInterval);
 
         return instance;
       },
-      props<TProperties>({
-        [HostScheduler_startTime]: 0,
-        [HostScheduler_maxYieldInterval]: 0,
-      }),
+      props({}),
       {
         get [SchedulerLike_now](): number {
           if (supportsPerformanceNow) {
@@ -161,16 +143,12 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
         },
 
         get [PrioritySchedulerImplementationLike_shouldYield](): boolean {
-          unsafeCast<TProperties & SchedulerLike>(this);
-          return (
-            this[SchedulerLike_now] >
-              this[HostScheduler_startTime] +
-                this[HostScheduler_maxYieldInterval] || isInputPending()
-          );
+          unsafeCast<SchedulerLike>(this);
+          return isInputPending();
         },
 
         [ContinuationSchedulerLike_schedule](
-          this: TProperties & PrioritySchedulerImplementationLike,
+          this: PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
           delay: number,
         ) {
