@@ -90,6 +90,7 @@
 - [throttle](rx_Observable.md#throttle)
 - [throwIfEmpty](rx_Observable.md#throwifempty)
 - [timeout](rx_Observable.md#timeout)
+- [withCurrentTime](rx_Observable.md#withcurrenttime)
 - [withLatestFrom](rx_Observable.md#withlatestfrom)
 - [zipWith](rx_Observable.md#zipwith)
 - [zipWithLatestFrom](rx_Observable.md#zipwithlatestfrom)
@@ -3719,6 +3720,29 @@ does not emit a value in given time span.
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### withCurrentTime
+
+▸ **withCurrentTime**<`T`, `TOut`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TOut`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TOut` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function2`](functions.md#function2)<`number`, `T`, `TOut`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TOut`\>
 
 ___
 

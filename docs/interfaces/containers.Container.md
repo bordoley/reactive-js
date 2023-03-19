@@ -170,6 +170,8 @@
 
   ↳ [`ToRunnable`](rx.ToRunnable.md)
 
+  ↳ [`WithCurrentTime`](rx.WithCurrentTime.md)
+
   ↳ [`WithLatestFrom`](rx.WithLatestFrom.md)
 
   ↳ [`ZipLatest`](rx.ZipLatest.md)

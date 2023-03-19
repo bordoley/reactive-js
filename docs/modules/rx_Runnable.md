@@ -66,6 +66,7 @@
 - [throttle](rx_Runnable.md#throttle)
 - [throwIfEmpty](rx_Runnable.md#throwifempty)
 - [timeout](rx_Runnable.md#timeout)
+- [withCurrentTime](rx_Runnable.md#withcurrenttime)
 - [withLatestFrom](rx_Runnable.md#withlatestfrom)
 - [zipWith](rx_Runnable.md#zipwith)
 - [zipWithLatestFrom](rx_Runnable.md#zipwithlatestfrom)
@@ -2525,6 +2526,29 @@ does not emit a value in given time span.
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### withCurrentTime
+
+▸ **withCurrentTime**<`T`, `TOut`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TOut`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TOut` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function2`](functions.md#function2)<`number`, `T`, `TOut`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TOut`\>
 
 ___
 

@@ -853,3 +853,8 @@ export const IndexedQueueLike_pop = /*@__PURE__*/ symbol(
 export const IteratorEnumerator_iterator = /*@__PURE__*/ symbol(
   "IteratorEnumerator_iterator",
 );
+
+/** @type {unique symbol} */
+export const WithCurrentTimeObserver_selector = /*@__PURE__*/ symbol(
+  "WithCurrentTimeObserver_selector",
+);

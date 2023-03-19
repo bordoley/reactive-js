@@ -367,3 +367,5 @@ export declare const IndexedQueueLike_set: unique symbol;
 export declare const IndexedQueueLike_pop: unique symbol;
 
 export declare const IteratorEnumerator_iterator: unique symbol;
+
+export declare const WithCurrentTimeObserver_selector: unique symbol;

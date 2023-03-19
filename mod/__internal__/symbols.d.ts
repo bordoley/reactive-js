@@ -368,3 +368,5 @@ export const IndexedQueueLike_set: unique symbol;
 export const IndexedQueueLike_pop: unique symbol;
 /** @type {unique symbol} */
 export const IteratorEnumerator_iterator: unique symbol;
+/** @type {unique symbol} */
+export const WithCurrentTimeObserver_selector: unique symbol;

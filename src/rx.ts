@@ -683,6 +683,16 @@ export interface ToRunnable<C extends ContainerLike, O = never>
   toRunnable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
+export interface WithCurrentTime<C extends ObservableLike>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  withCurrentTime<T, TOut>(
+    selector: Function2<number, T, TOut>,
+  ): ContainerOperator<C, T, TOut>;
+}
+
 /**
  * @noInheritDoc
  * @category TypeClass

@@ -69,6 +69,7 @@ import {
   ToEnumerable,
   ToObservable,
   ToRunnable,
+  WithCurrentTime,
   WithLatestFrom,
   ZipLatest,
   ZipWithLatestFrom,
@@ -113,6 +114,7 @@ import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwI
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
+import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
@@ -346,6 +348,9 @@ export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
 
 export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
   /*@__PURE__*/ returns(identity);
+
+export const withCurrentTime: WithCurrentTime<RunnableLike>["withCurrentTime"] =
+  Observable_withCurrentTime;
 
 export const withLatestFrom: WithLatestFrom<RunnableLike>["withLatestFrom"] =
   Observable_withLatestFrom as WithLatestFrom<RunnableLike>["withLatestFrom"];

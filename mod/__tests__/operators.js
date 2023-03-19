@@ -155,17 +155,7 @@ export const toObservableTests = (m) => testAsync("toObservable", async () => {
 });
 const toRunnableTest = (m) => test("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])));
 export const toRunnableWithDelayTests = (m) => describe("toRunnable", toRunnableTest(m), test("with delay", () => {
-    // FIXME: __now() was removed.
-    /*
-      pipeLazy(
-        [9, 9, 9, 9],
-        m.fromReadonlyArray(),
-        m.toRunnable({ delay: 1 }),
-        Runnable.map(_ => __now()),
-        Runnable.toReadonlyArray(),
-        
-        expectArrayEquals([0, 1, 2, 3]),
-      ),*/
+    pipeLazy([9, 9, 9, 9], m.fromReadonlyArray(), m.toRunnable({ delay: 2 }), Runnable.withCurrentTime(t => t), Runnable.toReadonlyArray(), expectArrayEquals([0, 2, 4, 6]));
 }));
 export const toRunnableTests = (m) => describe("toRunnable", toRunnableTest(m));
 export const zipTests = (m) => describe("zip", test("when all inputs are the same length", pipeLazy(m.zip(pipe([1, 2, 3, 4, 5], m.fromReadonlyArray()), pipe([5, 4, 3, 2, 1], m.fromReadonlyArray())), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([

@@ -1219,17 +1219,14 @@ export const toRunnableWithDelayTests = <C extends ContainerLike>(
     "toRunnable",
     toRunnableTest(m),
     test("with delay", () => {
-      // FIXME: __now() was removed.
-      /*
-        pipeLazy(
-          [9, 9, 9, 9],
-          m.fromReadonlyArray(),
-          m.toRunnable({ delay: 1 }),
-          Runnable.map(_ => __now()),
-          Runnable.toReadonlyArray(),
-          
-          expectArrayEquals([0, 1, 2, 3]),
-        ),*/
+      pipeLazy(
+        [9, 9, 9, 9],
+        m.fromReadonlyArray(),
+        m.toRunnable({ delay: 2 }),
+        Runnable.withCurrentTime(t => t),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([0, 2, 4, 6]),
+      );
     }),
   );
 

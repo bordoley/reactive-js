@@ -88,6 +88,7 @@ import {
   Timeout,
   ToEnumerable,
   ToRunnable,
+  WithCurrentTime,
   WithLatestFrom,
   ZipLatest,
   ZipWithLatestFrom,
@@ -176,6 +177,7 @@ import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
 import Observable_toRunnable from "./Observable/__internal__/Observable.toRunnable.js";
+import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
@@ -595,6 +597,9 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 
 export const toRunnable: ToRunnable<ObservableLike>["toRunnable"] =
   Observable_toRunnable;
+
+export const withCurrentTime: WithCurrentTime<ObservableLike>["withCurrentTime"] =
+  Observable_withCurrentTime;
 
 export const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"] =
   Observable_withLatestFrom;

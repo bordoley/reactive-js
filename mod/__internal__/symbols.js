@@ -376,3 +376,5 @@ export const IndexedQueueLike_set = /*@__PURE__*/ symbol("IndexedQueueLike_set")
 export const IndexedQueueLike_pop = /*@__PURE__*/ symbol("IndexedQueueLike_pop");
 /** @type {unique symbol} */
 export const IteratorEnumerator_iterator = /*@__PURE__*/ symbol("IteratorEnumerator_iterator");
+/** @type {unique symbol} */
+export const WithCurrentTimeObserver_selector = /*@__PURE__*/ symbol("WithCurrentTimeObserver_selector");
