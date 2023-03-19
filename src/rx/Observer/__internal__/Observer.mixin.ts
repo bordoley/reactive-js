@@ -43,7 +43,6 @@ import {
   DisposableLike_isDisposed,
   QueueableLike_push,
 } from "../../../util.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_schedule from "./Observer.schedule.js";
@@ -87,7 +86,6 @@ const Observer_mixin: <T>() => Mixin2<
       observer[ObserverMixin_dispatchSubscription] = pipe(
         observer,
         Observer_schedule(continuation),
-        Disposable_addTo(observer),
       );
     }
   };

@@ -7,17 +7,16 @@ import {
   ToObservable,
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
+import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import {
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
-  SchedulerLike_schedule,
 } from "../../../scheduling.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_push,
 } from "../../../util.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 const AsyncIterable_toObservable: ToObservable<AsyncIterableLike>["toObservable"] =
 
@@ -55,18 +54,10 @@ const AsyncIterable_toObservable: ToObservable<AsyncIterableLike>["toObservable"
             observer[DisposableLike_dispose](error(e));
           }
 
-          if (!observer[DisposableLike_isDisposed]) {
-            pipe(
-              scheduler[SchedulerLike_schedule](continuation),
-              Disposable_addTo(observer),
-            );
-          }
+          pipe(observer, Observer_schedule(continuation));
         };
 
-        pipe(
-          scheduler[SchedulerLike_schedule](continuation),
-          Disposable_addTo(observer),
-        );
+        pipe(observer, Observer_schedule(continuation));
       });
 
 export default AsyncIterable_toObservable;

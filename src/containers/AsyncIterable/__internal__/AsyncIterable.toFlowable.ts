@@ -9,10 +9,10 @@ import {
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
+import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import {
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
-  SchedulerLike_schedule,
 } from "../../../scheduling.js";
 import {
   FlowableState,
@@ -68,11 +68,8 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
             observer[DisposableLike_dispose](error(e));
           }
 
-          if (!observer[DisposableLike_isDisposed] && !isPaused) {
-            pipe(
-              scheduler[SchedulerLike_schedule](continuation),
-              Disposable_addTo(observer),
-            );
+          if (!isPaused) {
+            pipe(observer, Observer_schedule(continuation));
           }
         };
 
@@ -84,10 +81,7 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
               isPaused = mode === FlowableState_paused;
 
               if (!isPaused && wasPaused) {
-                pipe(
-                  scheduler[SchedulerLike_schedule](continuation),
-                  Disposable_addTo(observer),
-                );
+                pipe(observer, Observer_schedule(continuation));
               }
             },
           ),

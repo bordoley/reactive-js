@@ -7,7 +7,6 @@ import { call, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_schedule from "./Observer.schedule.js";
@@ -29,7 +28,7 @@ const Observer_mixin = /*@__PURE__*/ (() => {
                 }
             });
             observer[ObserverMixin_continuation] = continuation;
-            observer[ObserverMixin_dispatchSubscription] = pipe(observer, Observer_schedule(continuation), Disposable_addTo(observer));
+            observer[ObserverMixin_dispatchSubscription] = pipe(observer, Observer_schedule(continuation));
         }
     };
     const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin());
