@@ -1218,7 +1218,8 @@ export const toRunnableWithDelayTests = <C extends ContainerLike>(
   describe(
     "toRunnable",
     toRunnableTest(m),
-    test("with delay", () => {
+    test(
+      "with delay",
       pipeLazy(
         [9, 9, 9, 9],
         m.fromReadonlyArray(),
@@ -1226,8 +1227,8 @@ export const toRunnableWithDelayTests = <C extends ContainerLike>(
         Runnable.withCurrentTime(t => t),
         Runnable.toReadonlyArray(),
         expectArrayEquals([0, 2, 4, 6]),
-      );
-    }),
+      ),
+    ),
   );
 
 export const toRunnableTests = <C extends ContainerLike>(
