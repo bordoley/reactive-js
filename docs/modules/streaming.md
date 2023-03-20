@@ -12,7 +12,6 @@
 
 ### Other Interfaces
 
-- [FlowableStreamLike](../interfaces/streaming.FlowableStreamLike.md)
 - [StreamLike](../interfaces/streaming.StreamLike.md)
 
 ### TypeClass Interfaces

@@ -34,14 +34,9 @@ export interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T
 export type FlowableState = typeof FlowableState_running | typeof FlowableState_paused;
 /**
  * @noInheritDoc
- */
-export interface FlowableStreamLike<T = unknown> extends StreamLike<FlowableState | Updater<FlowableState>, T> {
-}
-/**
- * @noInheritDoc
  * @category Container
  */
-export interface FlowableLike<T = unknown> extends StreamableLike<FlowableState | Updater<FlowableState>, T, FlowableStreamLike<T>>, ContainerLike {
+export interface FlowableLike<T = unknown> extends StreamableLike<FlowableState | Updater<FlowableState>, T>, ContainerLike {
     readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
     readonly [StreamableLike_isEnumerable]: false;
     readonly [StreamableLike_isInteractive]: false;

@@ -74,20 +74,10 @@ export type FlowableState =
 
 /**
  * @noInheritDoc
- */
-export interface FlowableStreamLike<T = unknown>
-  extends StreamLike<FlowableState | Updater<FlowableState>, T> {}
-
-/**
- * @noInheritDoc
  * @category Container
  */
 export interface FlowableLike<T = unknown>
-  extends StreamableLike<
-      FlowableState | Updater<FlowableState>,
-      T,
-      FlowableStreamLike<T>
-    >,
+  extends StreamableLike<FlowableState | Updater<FlowableState>, T>,
     ContainerLike {
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
   readonly [StreamableLike_isEnumerable]: false;

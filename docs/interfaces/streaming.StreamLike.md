@@ -22,5 +22,3 @@ Represents a duplex stream
   ↳ **`StreamLike`**
 
   ↳↳ [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
-
-  ↳↳ [`FlowableStreamLike`](streaming.FlowableStreamLike.md)
