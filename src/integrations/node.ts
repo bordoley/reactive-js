@@ -41,11 +41,10 @@ import * as Observable from "../rx/Observable.js";
 import { SchedulerLike_requestYield } from "../scheduling.js";
 import {
   FlowableLike,
-  FlowableState,
   FlowableState_paused,
   FlowableState_running,
-  StreamableLike,
   StreamableLike_stream,
+  FlowableSinkLike
 } from "../streaming.js";
 import * as Flowable from "../streaming/Flowable.js";
 import * as FlowableSink from "../streaming/FlowableSink.js";
@@ -231,7 +230,7 @@ export const readFile = (
 export const createWritableSink = /*@__PURE__*/ (() => {
   return (
     factory: Factory<Writable> | Writable,
-  ): StreamableLike<Uint8Array, FlowableState> =>
+  ): FlowableSinkLike<Uint8Array> =>
     FlowableSink.create<Uint8Array>((events: ObservableLike<Uint8Array>) =>
       Observable.create(observer => {
         const dispatchDisposable = pipe(
