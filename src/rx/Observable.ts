@@ -128,8 +128,8 @@ import Observable_everySatisfy from "./Observable/__internal__/Observable.everyS
 import Observable_exhaust from "./Observable/__internal__/Observable.exhaust.js";
 import Observable_exhaustMap from "./Observable/__internal__/Observable.exhaustMap.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
+import Observable_flatMapAsync from "./Observable/__internal__/Observable.flatMapAsync.js";
 import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
-import Observable_flatMapPromise from "./Observable/__internal__/Observable.flatMapPromise.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkCombineLatest from "./Observable/__internal__/Observable.forkCombineLatest.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
@@ -393,13 +393,13 @@ export const firstAsync: FirstAsync<
   { scheduler?: SchedulerLike; maxBufferSize?: number }
 >["firstAsync"] = Observable_firstAsync;
 
-export const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"] =
-  Observable_flatMapIterable;
-
 /**
  * @category Operator
  */
-export const flatMapPromise = Observable_flatMapPromise;
+export const flatMapAsync = Observable_flatMapAsync;
+
+export const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"] =
+  Observable_flatMapIterable;
 
 export const forEach: ForEach<ObservableLike>["forEach"] = Observable_forEach;
 

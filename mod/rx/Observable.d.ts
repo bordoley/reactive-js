@@ -110,11 +110,11 @@ export declare const firstAsync: FirstAsync<ObservableLike, {
     scheduler?: SchedulerLike;
     maxBufferSize?: number;
 }>["firstAsync"];
-export declare const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"];
 /**
  * @category Operator
  */
-export declare const flatMapPromise: <TA, TB>(f: Function1<TA, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
+export declare const flatMapAsync: <TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
+export declare const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"];
 export declare const forEach: ForEach<ObservableLike>["forEach"];
 export declare const forkCombineLatest: ForkCombineLatest<ObservableLike>["forkCombineLatest"];
 export declare const forkConcat: ForkConcat<ObservableLike>["forkConcat"];

@@ -53,8 +53,8 @@
 - [everySatisfy](rx_Observable.md#everysatisfy)
 - [exhaust](rx_Observable.md#exhaust)
 - [exhaustMap](rx_Observable.md#exhaustmap)
+- [flatMapAsync](rx_Observable.md#flatmapasync)
 - [flatMapIterable](rx_Observable.md#flatmapiterable)
-- [flatMapPromise](rx_Observable.md#flatmappromise)
 - [forEach](rx_Observable.md#foreach)
 - [forkCombineLatest](rx_Observable.md#forkcombinelatest)
 - [forkConcat](rx_Observable.md#forkconcat)
@@ -2088,6 +2088,29 @@ ___
 
 ___
 
+### flatMapAsync
+
+▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Function2`](functions.md#function2)<`TA`, `AbortSignal`, `Promise`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
 ### flatMapIterable
 
 ▸ **flatMapIterable**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
@@ -2105,29 +2128,6 @@ ___
 | :------ | :------ |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, [`IterableLike`](../interfaces/containers.IterableLike.md)<`TB`\>\> |
 | `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-___
-
-### flatMapPromise
-
-▸ **flatMapPromise**<`TA`, `TB`\>(`f`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`Function1`](functions.md#function1)<`TA`, `Promise`<`TB`\>\> |
 
 #### Returns
 
