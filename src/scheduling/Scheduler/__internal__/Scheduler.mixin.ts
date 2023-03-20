@@ -196,7 +196,9 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
               const shouldYield =
                 scheduler[ContinuationSchedulerLike_shouldYield];
 
-              if (shouldYield && !this[DisposableLike_isDisposed]) {
+              if (this[DisposableLike_isDisposed]) {
+                return;
+              } else if (shouldYield) {
                 scheduler[ContinuationSchedulerLike_schedule](this, 0);
                 return;
               }
