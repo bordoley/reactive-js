@@ -8,6 +8,7 @@
 
 - [createComponent](integrations_react.md#createcomponent)
 - [useObservable](integrations_react.md#useobservable)
+- [useStreamable](integrations_react.md#usestreamable)
 
 ## Functions
 
@@ -58,3 +59,28 @@ Returns the current value, if defined, of `observable`.
 #### Returns
 
 [`Optional`](functions.md#optional)<`T`\>
+
+___
+
+### useStreamable
+
+▸ **useStreamable**<`TReq`, `T`\>(`streamable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TReq` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\> |
+| `options?` | `Object` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+
+#### Returns
+
+readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]

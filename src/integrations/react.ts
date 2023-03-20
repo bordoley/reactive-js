@@ -1,24 +1,37 @@
 import {
   ComponentType,
   ReactElement,
+  useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import {
   Factory,
   Optional,
+  SideEffect1,
   isFunction,
   isSome,
   none,
   pipe,
   raiseError,
 } from "../functions.js";
-import { ObservableLike, SubjectLike, SubjectLike_publish } from "../rx.js";
+import {
+  DispatcherLike,
+  ObservableLike,
+  SubjectLike,
+  SubjectLike_publish,
+} from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import * as Subject from "../rx/Subject.js";
 import { SchedulerLike } from "../scheduling.js";
-import { DisposableLike_dispose } from "../util.js";
+import {
+  StreamLike,
+  StreamableLike,
+  StreamableLike_stream,
+} from "../streaming.js";
+import { DisposableLike_dispose, QueueableLike_push } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import { createSchedulerWithNormalPriority } from "./scheduler.js";
 
@@ -58,6 +71,58 @@ export const useObservable = <T>(
   }, [observable, updateState, updateError, schedulerOption]);
 
   return isSome(error) ? raiseError<T>(error) : state;
+};
+
+export const useStreamable = <TReq, T>(
+  streamable: StreamableLike<TReq, T>,
+  options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
+): readonly [Optional<T>, SideEffect1<TReq>] => {
+  const [state, updateState] = useState<Optional<T>>(none);
+  const [error, updateError] = useState<Optional<Error>>(none);
+
+  const { scheduler: schedulerOption } = options;
+
+  const dispatcherRef: React.MutableRefObject<Optional<DispatcherLike<TReq>>> =
+    useRef();
+
+  useEffect(() => {
+    const scheduler = isFunction(schedulerOption)
+      ? schedulerOption()
+      : schedulerOption ?? createSchedulerWithNormalPriority();
+
+    const stream: StreamLike<TReq, T> =
+      streamable[StreamableLike_stream](scheduler);
+
+    dispatcherRef.current = stream;
+
+    const subscription = pipe(
+      stream,
+      Observable.forEach<T>(v => updateState(_ => v)),
+      Observable.subscribe(scheduler),
+      Disposable.onError(updateError),
+      Disposable.addTo(stream),
+    );
+
+    const disposable = scheduler === schedulerOption ? subscription : scheduler;
+
+    return () => {
+      disposable[DisposableLike_dispose]();
+    };
+  }, [streamable, updateState, updateError, schedulerOption, dispatcherRef]);
+
+  const dispatch = useCallback(
+    (req: TReq) => {
+      const dispatcher = dispatcherRef.current;
+      if (isSome(dispatcher)) {
+        dispatcher[QueueableLike_push](req);
+      }
+    },
+    [dispatcherRef],
+  );
+
+  return isSome(error)
+    ? raiseError<readonly [Optional<T>, SideEffect1<TReq>]>(error)
+    : [state, dispatch];
 };
 
 const createReplaySubject = <TProps>() => Subject.create<TProps>({ replay: 1 });
