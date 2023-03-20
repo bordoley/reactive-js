@@ -7,6 +7,7 @@
 ### Functions
 
 - [createComponent](integrations_react.md#createcomponent)
+- [useFlowable](integrations_react.md#useflowable)
 - [useObservable](integrations_react.md#useobservable)
 - [useStreamable](integrations_react.md#usestreamable)
 
@@ -33,6 +34,30 @@
 #### Returns
 
 `ComponentType`<`TProps`\>
+
+___
+
+### useFlowable
+
+▸ **useFlowable**<`T`\>(`flowable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, { `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `flowable` | [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\> |
+| `options?` | `Object` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+
+#### Returns
+
+readonly [[`Optional`](functions.md#optional)<`T`\>, { `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }]
 
 ___
 

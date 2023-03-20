@@ -10,6 +10,7 @@ import {
 import {
   Factory,
   Optional,
+  SideEffect,
   SideEffect1,
   isFunction,
   isSome,
@@ -27,6 +28,9 @@ import * as Observable from "../rx/Observable.js";
 import * as Subject from "../rx/Subject.js";
 import { SchedulerLike } from "../scheduling.js";
 import {
+  FlowableLike,
+  FlowableState_paused,
+  FlowableState_running,
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
@@ -123,6 +127,23 @@ export const useStreamable = <TReq, T>(
   return isSome(error)
     ? raiseError<readonly [Optional<T>, SideEffect1<TReq>]>(error)
     : [state, dispatch];
+};
+
+export const useFlowable = <T>(
+  flowable: FlowableLike<T>,
+  options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
+): readonly [Optional<T>, { pause: SideEffect; resume: SideEffect }] => {
+  const [result, dispatch] = useStreamable(flowable, options);
+
+  const actions = useMemo(
+    () => ({
+      pause: () => dispatch(FlowableState_paused),
+      resume: () => dispatch(FlowableState_running),
+    }),
+    [dispatch],
+  );
+
+  return [result, actions];
 };
 
 const createReplaySubject = <TProps>() => Subject.create<TProps>({ replay: 1 });
