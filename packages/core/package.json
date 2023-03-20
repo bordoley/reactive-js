@@ -67,6 +67,7 @@
     "./streaming": "./streaming.js",
     "./streaming/AsyncEnumerable": "./streaming/AsyncEnumerable.js",
     "./streaming/Flowable": "./streaming/Flowable.js",
+    "./streaming/FlowableSink": "./streaming/FlowableSink.js",
     "./streaming/Stream": "./streaming/Stream.js",
     "./streaming/Streamable": "./streaming/Streamable.js",
     "./util": "./util.js",

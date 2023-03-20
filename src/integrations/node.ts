@@ -48,8 +48,8 @@ import {
   StreamableLike_stream,
 } from "../streaming.js";
 import * as Flowable from "../streaming/Flowable.js";
+import * as FlowableSink from "../streaming/FlowableSink.js";
 import * as Stream from "../streaming/Stream.js";
-import Streamable_createLifted from "../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -232,60 +232,56 @@ export const createWritableSink = /*@__PURE__*/ (() => {
   return (
     factory: Factory<Writable> | Writable,
   ): StreamableLike<Uint8Array, FlowableState> =>
-    Streamable_createLifted<Uint8Array, FlowableState>(
-      events =>
-        Observable.create(observer => {
-          const dispatchDisposable = pipe(
-            Disposable.create(),
-            Disposable.onError(Disposable.toErrorHandler(observer)),
-            Disposable.onComplete(() => {
-              observer[DispatcherLike_complete]();
-            }),
-          );
+    FlowableSink.create<Uint8Array>((events: ObservableLike<Uint8Array>) =>
+      Observable.create(observer => {
+        const dispatchDisposable = pipe(
+          Disposable.create(),
+          Disposable.onError(Disposable.toErrorHandler(observer)),
+          Disposable.onComplete(() => {
+            observer[DispatcherLike_complete]();
+          }),
+        );
 
-          const writable = isFunction(factory)
-            ? pipe(
-                factory(),
-                addToDisposable(observer),
-                addDisposable(dispatchDisposable),
-              )
-            : pipe(factory, addDisposable(dispatchDisposable));
+        const writable = isFunction(factory)
+          ? pipe(
+              factory(),
+              addToDisposable(observer),
+              addDisposable(dispatchDisposable),
+            )
+          : pipe(factory, addDisposable(dispatchDisposable));
 
-          pipe(
-            events,
-            Observable.forEach<Uint8Array>(ev => {
-              // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
-              // node throws a type Error regarding expecting a Buffer, though the docs
-              // say a UInt8Array should be accepted. Need to file a bug.
-              if (!writable.write(Buffer.from(ev))) {
-                // Hack in a custom event here for pause request
-                writable.emit(NODE_JS_PAUSE_EVENT);
-              }
-            }),
-            Observable.subscribe(observer[DispatcherLike_scheduler]),
-            addToNodeStream(writable),
-            Disposable.onComplete(() => {
-              writable.end();
-            }),
-          );
+        pipe(
+          events,
+          Observable.forEach<Uint8Array>(ev => {
+            // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
+            // node throws a type Error regarding expecting a Buffer, though the docs
+            // say a UInt8Array should be accepted. Need to file a bug.
+            if (!writable.write(Buffer.from(ev))) {
+              // Hack in a custom event here for pause request
+              writable.emit(NODE_JS_PAUSE_EVENT);
+            }
+          }),
+          Observable.subscribe(observer[DispatcherLike_scheduler]),
+          addToNodeStream(writable),
+          Disposable.onComplete(() => {
+            writable.end();
+          }),
+        );
 
-          const onDrain = () => {
-            observer[QueueableLike_push](FlowableState_running);
-          };
-          const onFinish = () => observer[DispatcherLike_complete]();
-          const onPause = () => {
-            observer[QueueableLike_push](FlowableState_paused);
-          };
-
-          writable.on("drain", onDrain);
-          writable.on("finish", onFinish);
-          writable.on(NODE_JS_PAUSE_EVENT, onPause);
-
+        const onDrain = () => {
           observer[QueueableLike_push](FlowableState_running);
-        }),
-      false,
-      false,
-      false,
+        };
+        const onFinish = () => observer[DispatcherLike_complete]();
+        const onPause = () => {
+          observer[QueueableLike_push](FlowableState_paused);
+        };
+
+        writable.on("drain", onDrain);
+        writable.on("finish", onFinish);
+        writable.on(NODE_JS_PAUSE_EVENT, onPause);
+
+        observer[QueueableLike_push](FlowableState_running);
+      }),
     );
 })();
 

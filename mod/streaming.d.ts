@@ -43,6 +43,13 @@ export interface FlowableLike<T = unknown> extends StreamableLike<FlowableState 
 }
 /**
  * @noInheritDoc
+ * @category Container
+ */
+export interface FlowableSinkLike<T = unknown> extends StreamableLike<T, FlowableState | Updater<FlowableState>>, ContainerLike {
+    readonly [ContainerLike_type]?: FlowableSinkLike<this[typeof ContainerLike_T]>;
+}
+/**
+ * @noInheritDoc
  * @category TypeClass
  */
 export interface FromAsyncEnumerable<C extends ContainerLike, O = never> extends Container<C> {

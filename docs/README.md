@@ -28,6 +28,7 @@ Reactive-JS
 - [streaming](modules/streaming.md)
 - [streaming/AsyncEnumerable](modules/streaming_AsyncEnumerable.md)
 - [streaming/Flowable](modules/streaming_Flowable.md)
+- [streaming/FlowableSink](modules/streaming_FlowableSink.md)
 - [streaming/Stream](modules/streaming_Stream.md)
 - [streaming/Streamable](modules/streaming_Streamable.md)
 - [util](modules/util.md)

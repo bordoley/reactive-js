@@ -20,6 +20,8 @@
 
   ↳ [`FlowableLike`](streaming.FlowableLike.md)
 
+  ↳ [`FlowableSinkLike`](streaming.FlowableSinkLike.md)
+
 ## Table of contents
 
 ### Properties
