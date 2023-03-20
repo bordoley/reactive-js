@@ -144,8 +144,14 @@ const Enumerable_enumerate: <T>() => (
             QueueLike<ContinuationLike> &
             PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
-          _delay: number,
+          delay: number,
         ): void {
+          if (delay > 0) {
+            raiseWithDebugMessage(
+              "Enumerable scheduling continuation with delay",
+            );
+          }
+
           pipe(this, Disposable_add(continuation));
 
           if (continuation[DisposableLike_isDisposed]) {

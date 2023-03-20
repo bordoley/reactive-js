@@ -41,10 +41,10 @@ import * as Observable from "../rx/Observable.js";
 import { SchedulerLike_requestYield } from "../scheduling.js";
 import {
   FlowableLike,
+  FlowableSinkLike,
   FlowableState_paused,
   FlowableState_running,
   StreamableLike_stream,
-  FlowableSinkLike
 } from "../streaming.js";
 import * as Flowable from "../streaming/Flowable.js";
 import * as FlowableSink from "../streaming/FlowableSink.js";

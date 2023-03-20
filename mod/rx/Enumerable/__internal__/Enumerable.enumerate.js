@@ -51,7 +51,10 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             }
             return this[EnumeratorLike_hasCurrent];
         },
-        [ContinuationSchedulerLike_schedule](continuation, _delay) {
+        [ContinuationSchedulerLike_schedule](continuation, delay) {
+            if (delay > 0) {
+                raiseWithDebugMessage("Enumerable scheduling continuation with delay");
+            }
             pipe(this, Disposable_add(continuation));
             if (continuation[DisposableLike_isDisposed]) {
                 return;
