@@ -5,10 +5,11 @@ import { floor, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationLike_run, ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, Continuation_childContinuation, Continuation_effect, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, SchedulerMixin_currentContinuation, SchedulerMixin_startTime, SchedulerMixin_yieldRequested, } from "../../../__internal__/symbols.js";
 import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
-import { error, isNone, isSome, newInstance, none, unsafeCast, } from "../../../functions.js";
+import { error, isNone, isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 export { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, };
 class YieldError {
@@ -24,6 +25,14 @@ export const PriorityScheduler_mixin =
         instance[ContinuationLike_continuationScheduler] = scheduler;
         instance[Continuation_effect] = effect;
         instance[ContinuationLike_priority] = priority;
+        pipe(instance, Disposable_onDisposed(_ => {
+            let head = none;
+            while (((head = instance[QueueLike_pull]()), isSome(head))) {
+                if (!head[DisposableLike_isDisposed]) {
+                    scheduler[ContinuationSchedulerLike_schedule](head, 0);
+                }
+            }
+        }));
         return instance;
     }, props({
         [ContinuationLike_continuationScheduler]: none,
@@ -78,19 +87,19 @@ export const PriorityScheduler_mixin =
             }
             if (isSome(yieldError) && !this[DisposableLike_isDisposed]) {
                 scheduler[ContinuationSchedulerLike_schedule](this, yieldError.delay);
+                if (yieldError.delay > 0) {
+                    let head = none;
+                    // If the current continuation is being rescheduled with delay,
+                    // reschedule all its children on the parent.
+                    while (((head = this[QueueLike_pull]()), isSome(head))) {
+                        if (!head[DisposableLike_isDisposed]) {
+                            scheduler[ContinuationSchedulerLike_schedule](head, 0);
+                        }
+                    }
+                }
             }
             else {
                 this[DisposableLike_dispose](err);
-            }
-            // If the current continuation is being rescheduled with delay,
-            // reschedule all its children on the parent.
-            if ((isSome(yieldError) && yieldError.delay > 0) ||
-                this[DisposableLike_isDisposed]) {
-                while (((head = this[QueueLike_pull]()), isSome(head))) {
-                    if (!head[DisposableLike_isDisposed]) {
-                        scheduler[ContinuationSchedulerLike_schedule](head, 0);
-                    }
-                }
             }
         },
         [ContinuationSchedulerLike_schedule](continuation, delay) {

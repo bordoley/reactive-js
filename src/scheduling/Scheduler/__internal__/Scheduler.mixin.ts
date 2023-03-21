@@ -36,6 +36,7 @@ import {
   isSome,
   newInstance,
   none,
+  pipe,
   unsafeCast,
 } from "../../../functions.js";
 import {
@@ -57,6 +58,7 @@ import {
   QueueableLike_push,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 
 export {
@@ -146,6 +148,18 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           instance[Continuation_effect] = effect;
           instance[ContinuationLike_priority] = priority;
 
+          pipe(
+            instance,
+            Disposable_onDisposed(_ => {
+              let head: Optional<ContinuationLike> = none;
+              while (((head = instance[QueueLike_pull]()), isSome(head))) {
+                if (!head[DisposableLike_isDisposed]) {
+                  scheduler[ContinuationSchedulerLike_schedule](head, 0);
+                }
+              }
+            }),
+          );
+
           return instance;
         },
         props<TContinuationProperties>({
@@ -222,21 +236,19 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
                 this,
                 yieldError.delay,
               );
-            } else {
-              this[DisposableLike_dispose](err);
-            }
 
-            // If the current continuation is being rescheduled with delay,
-            // reschedule all its children on the parent.
-            if (
-              (isSome(yieldError) && yieldError.delay > 0) ||
-              this[DisposableLike_isDisposed]
-            ) {
-              while (((head = this[QueueLike_pull]()), isSome(head))) {
-                if (!head[DisposableLike_isDisposed]) {
-                  scheduler[ContinuationSchedulerLike_schedule](head, 0);
+              if (yieldError.delay > 0) {
+                let head: Optional<ContinuationLike> = none;
+                // If the current continuation is being rescheduled with delay,
+                // reschedule all its children on the parent.
+                while (((head = this[QueueLike_pull]()), isSome(head))) {
+                  if (!head[DisposableLike_isDisposed]) {
+                    scheduler[ContinuationSchedulerLike_schedule](head, 0);
+                  }
                 }
               }
+            } else {
+              this[DisposableLike_dispose](err);
             }
           },
           [ContinuationSchedulerLike_schedule](

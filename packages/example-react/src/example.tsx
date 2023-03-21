@@ -25,11 +25,11 @@ import { Updater, increment, pipe, returns } from "@reactive-js/core/functions";
 import { DispatcherLike } from "@reactive-js/core/rx";
 import { QueueableLike_push } from "@reactive-js/core/util";
 import {
-  FlowableStreamLike,
   FlowableState,
   FlowableState_paused,
   FlowableState_running,
   StreamableLike_stream,
+  StreamLike,
 } from "@reactive-js/core/streaming";
 
 const normalPriorityScheduler = createSchedulerWithNormalPriority();
@@ -49,7 +49,7 @@ const counterFlowable = pipe(
 
 const createActions = (
   stateDispatcher: DispatcherLike<FlowableState | Updater<FlowableState>>,
-  counterDispatcher: FlowableStreamLike,
+  counterDispatcher: StreamLike<number, FlowableState | Updater<FlowableState>>,
 ) => ({
   onValueChanged: (value: number) => {
     historyStream[QueueableLike_push](
