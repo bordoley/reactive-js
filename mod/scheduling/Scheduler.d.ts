@@ -1,5 +1,6 @@
 import { Function1 } from "../functions.js";
 import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.js";
+export declare const createAnimationFrameScheduler: import("../functions.js").Factory<SchedulerLike>;
 export declare const createHostScheduler: (options?: {
     readonly maxYieldInterval?: number | undefined;
 }) => SchedulerLike;

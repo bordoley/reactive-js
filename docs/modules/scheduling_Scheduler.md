@@ -6,12 +6,23 @@
 
 ### Functions
 
+- [createAnimationFrameScheduler](scheduling_Scheduler.md#createanimationframescheduler)
 - [createHostScheduler](scheduling_Scheduler.md#createhostscheduler)
 - [createVirtualTimeScheduler](scheduling_Scheduler.md#createvirtualtimescheduler)
 - [toPausableScheduler](scheduling_Scheduler.md#topausablescheduler)
 - [toPriorityScheduler](scheduling_Scheduler.md#topriorityscheduler)
 
 ## Functions
+
+### createAnimationFrameScheduler
+
+▸ **createAnimationFrameScheduler**(): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+___
 
 ### createHostScheduler
 
