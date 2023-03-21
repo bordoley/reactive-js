@@ -68,6 +68,7 @@ import {
 } from "../functions.js";
 import {
   CombineLatest,
+  CurrentTime,
   Exhaust,
   ExhaustMap,
   ForkCombineLatest,
@@ -118,6 +119,7 @@ import Observable_concatMap from "./Observable/__internal__/Observable.concatMap
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
+import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_defer from "./Observable/__internal__/Observable.defer.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
@@ -363,6 +365,9 @@ export const contains: Contains<ObservableLike>["contains"] =
  */
 export const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T> =
   Observable_create;
+
+export const currentTime: CurrentTime<ObservableLike>["currentTime"] =
+  Observable_currentTime;
 
 export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
   Observable_decodeWithCharset;

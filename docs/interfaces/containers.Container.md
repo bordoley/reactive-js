@@ -124,6 +124,8 @@
 
   ↳ [`CombineLatest`](rx.CombineLatest.md)
 
+  ↳ [`CurrentTime`](rx.CurrentTime.md)
+
   ↳ [`Exhaust`](rx.Exhaust.md)
 
   ↳ [`ExhaustMap`](rx.ExhaustMap.md)

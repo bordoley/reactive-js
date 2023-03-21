@@ -50,6 +50,7 @@ import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__
 import { identity, returns } from "../functions.js";
 import {
   CombineLatest,
+  CurrentTime,
   Exhaust,
   ExhaustMap,
   ForkMerge,
@@ -80,6 +81,7 @@ import Observable_combineLatest from "./Observable/__internal__/Observable.combi
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
+import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
@@ -165,6 +167,9 @@ export const concatWith: ConcatWith<RunnableLike>["concatWith"] =
 
 export const contains: Contains<RunnableLike>["contains"] =
   Observable_contains as Contains<RunnableLike>["contains"];
+
+export const currentTime: CurrentTime<RunnableLike>["currentTime"] =
+  Observable_currentTime as CurrentTime<RunnableLike>["currentTime"];
 
 export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
   Observable_decodeWithCharset as DecodeWithCharset<RunnableLike>["decodeWithCharset"];

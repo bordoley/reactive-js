@@ -198,6 +198,13 @@ export interface CombineLatest<C extends ObservableLike> extends Container<C> {
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
 
+export interface CurrentTime<C extends ObservableLike> extends Container<C> {
+  /**
+   * @category Constructor
+   */
+  currentTime(): ContainerOf<C, number>;
+}
+
 /**
  * @noInheritDoc
  * @category TypeClass

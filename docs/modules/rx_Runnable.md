@@ -8,6 +8,7 @@
 
 - [combineLatest](rx_Runnable.md#combinelatest)
 - [concat](rx_Runnable.md#concat)
+- [currentTime](rx_Runnable.md#currenttime)
 - [defer](rx_Runnable.md#defer)
 - [empty](rx_Runnable.md#empty)
 - [fromEnumerable](rx_Runnable.md#fromenumerable)
@@ -330,6 +331,16 @@ Returns a ContainerLike which emits all values from each source sequentially.
 #### Returns
 
 [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
+### currentTime
+
+▸ **currentTime**(): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
 
 ___
 

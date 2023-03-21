@@ -9,6 +9,7 @@ import Observable_combineLatest from "./Observable/__internal__/Observable.combi
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
+import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
@@ -75,6 +76,7 @@ export const concatAll = Runnable_concatAll;
 export const concatMap = Runnable_concatMap;
 export const concatWith = Observable_concatWith;
 export const contains = Observable_contains;
+export const currentTime = Observable_currentTime;
 export const decodeWithCharset = Observable_decodeWithCharset;
 export const defer = Runnable_defer;
 export const distinctUntilChanged = Observable_distinctUntilChanged;

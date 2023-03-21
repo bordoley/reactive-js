@@ -1,7 +1,11 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
-import { useFlowable } from "@reactive-js/core/integrations/react";
+import * as Observable from "@reactive-js/core/rx/Observable";
+import {
+  useFlowable,
+  useStreamable,
+} from "@reactive-js/core/integrations/react";
 import {
   useWindowLocation,
   WindowLocationProvider,
@@ -16,6 +20,9 @@ import {
   returns,
 } from "@reactive-js/core/functions";
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
+import * as Streamable from "@reactive-js/core/streaming/Streamable";
+
+const animationScheduler = createAnimationFrameScheduler();
 
 const Root = () => {
   const history = useWindowLocation();
@@ -42,14 +49,12 @@ const Root = () => {
   }, [counter.isPaused, counter.resume, counter.pause]);
 
   const animatedDivRef = useRef<HTMLDivElement>(null);
-  const animationFlowable = useMemo(
+  const animationStreamable = useMemo(
     () =>
-      pipe(
-        Runnable.generate(identity, returns(none), { delay: 2000 }),
-        Runnable.switchMap(
+      Streamable.create(
+        Observable.exhaustMap(
           pipeLazy(
-            Runnable.generate(identity, returns(none)),
-            Runnable.withCurrentTime(identity),
+            Runnable.currentTime(),
             Runnable.scan(
               ({ startTime }, time) => {
                 startTime = Math.min(time, startTime);
@@ -69,9 +74,8 @@ const Root = () => {
                 size: 50,
               }),
             ),
-            Runnable.takeWhile(({ size }) => size > 0),
+            Runnable.takeWhile(({ size }) => size > 0, { inclusive: true }),
             Runnable.forEach(({ size }) => {
-              console.log(size);
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {
                 animatedDiv.style.margin = `${50 - size}px`;
@@ -81,22 +85,13 @@ const Root = () => {
                 animatedDiv.style.display = "inline-block";
               }
             }),
+            Observable.subscribeOn(animationScheduler),
           ),
         ),
-        Runnable.toFlowable(),
       ),
     [animatedDivRef],
   );
-  const animation = useFlowable(animationFlowable, {
-    scheduler: createAnimationFrameScheduler,
-  });
-
-  const animationLabel = animation.isPaused
-    ? "Resume Animation"
-    : "Pause Animation";
-  const toggleAnimationMode = useCallback(() => {
-    animation.isPaused ? animation.resume() : animation.pause();
-  }, [animation.isPaused, animation.resume, animation.pause]);
+  const [animationState, dispatch] = useStreamable(animationStreamable);
 
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +123,9 @@ const Root = () => {
       </div>
       <div ref={animatedDivRef} style={{ height: "100px", width: "100px" }} />
       <div>
-        <button onClick={toggleAnimationMode}>{animationLabel}</button>
+        <button onClick={dispatch} disabled={(animationState?.size ?? 0) > 0}>
+          Run Animation
+        </button>
       </div>
     </div>
   );

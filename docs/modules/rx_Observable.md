@@ -21,6 +21,7 @@
 - [compute](rx_Observable.md#compute)
 - [concat](rx_Observable.md#concat)
 - [create](rx_Observable.md#create)
+- [currentTime](rx_Observable.md#currenttime)
 - [defer](rx_Observable.md#defer)
 - [empty](rx_Observable.md#empty)
 - [fromAsyncEnumerable](rx_Observable.md#fromasyncenumerable)
@@ -1010,6 +1011,16 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
+### currentTime
+
+▸ **currentTime**(): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
 
 ___
 

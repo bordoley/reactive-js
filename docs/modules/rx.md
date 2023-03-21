@@ -14,6 +14,7 @@
 
 ### Other Interfaces
 
+- [CurrentTime](../interfaces/rx.CurrentTime.md)
 - [DispatcherLike](../interfaces/rx.DispatcherLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 - [WithCurrentTime](../interfaces/rx.WithCurrentTime.md)
