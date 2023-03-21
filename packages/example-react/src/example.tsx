@@ -21,17 +21,18 @@ const Root = () => {
   const history = useWindowLocation();
 
   const counterFlowable = useMemo(
-    () => pipe(
-      Runnable.generate(increment, returns(-1), { delay: 500 }),
-      Runnable.forEach(value => {
-        history.replace((uri: WindowLocationURI) => ({
-          ...uri,
-          query: `v=${value}`,
-        }));
-      }),
-      Runnable.toFlowable(),
-    ),
-    [history.replace]
+    () =>
+      pipe(
+        Runnable.generate(increment, returns(-1), { delay: 500 }),
+        Runnable.forEach(value => {
+          history.replace((uri: WindowLocationURI) => ({
+            ...uri,
+            query: `v=${value}`,
+          }));
+        }),
+        Runnable.toFlowable(),
+      ),
+    [history.replace],
   );
   const counter = useFlowable(counterFlowable);
 

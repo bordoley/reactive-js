@@ -1,5 +1,6 @@
 import { Equality, Factory, Reducer, Updater } from "../functions.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
+export declare const create: <TReq, T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableLike<unknown>, TReq, T>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
  * over the notified actions, emitting each intermediate result.

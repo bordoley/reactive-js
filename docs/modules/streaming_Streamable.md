@@ -6,11 +6,35 @@
 
 ### Functions
 
+- [create](streaming_Streamable.md#create)
 - [createActionReducer](streaming_Streamable.md#createactionreducer)
 - [createStateStore](streaming_Streamable.md#createstatestore)
 - [sinkInto](streaming_Streamable.md#sinkinto)
 
 ## Functions
+
+### create
+
+▸ **create**<`TReq`, `T`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TReq` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TReq`, `T`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
+
+___
 
 ### createActionReducer
 

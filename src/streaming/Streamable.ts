@@ -1,9 +1,11 @@
 import { Equality, Factory, Reducer, Updater } from "../functions.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
-
+import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
 import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
+
+export const create = Streamable_create;
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
