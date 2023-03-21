@@ -7,11 +7,13 @@ import {
   useRef,
   useState,
 } from "react";
+import { FlowableStreamLike_isPaused } from "../__internal__/symbols.js";
 import {
   Factory,
   Optional,
   SideEffect,
   SideEffect1,
+  ignore,
   isFunction,
   isSome,
   none,
@@ -20,6 +22,7 @@ import {
 } from "../functions.js";
 import {
   DispatcherLike,
+  DispatcherLike_scheduler,
   ObservableLike,
   SubjectLike,
   SubjectLike_publish,
@@ -77,42 +80,64 @@ export const useObservable = <T>(
   return isSome(error) ? raiseError<T>(error) : state;
 };
 
-export const useStreamable = <TReq, T>(
-  streamable: StreamableLike<TReq, T>,
+const useStreamableInternal = <
+  TReq,
+  T,
+  TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
+>(
+  streamable: StreamableLike<TReq, T, TStream>,
   options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
-): readonly [Optional<T>, SideEffect1<TReq>] => {
-  const [state, updateState] = useState<Optional<T>>(none);
-  const [error, updateError] = useState<Optional<Error>>(none);
+): Optional<TStream> => {
+  const [stream, setStream] = useState<Optional<TStream>>(none);
 
   const { scheduler: schedulerOption } = options;
-
-  const dispatcherRef: React.MutableRefObject<Optional<DispatcherLike<TReq>>> =
-    useRef();
 
   useEffect(() => {
     const scheduler = isFunction(schedulerOption)
       ? schedulerOption()
       : schedulerOption ?? createSchedulerWithNormalPriority();
 
-    const stream: StreamLike<TReq, T> =
-      streamable[StreamableLike_stream](scheduler);
+    const stream: TStream = streamable[StreamableLike_stream](scheduler);
 
-    dispatcherRef.current = stream;
+    setStream(stream);
 
-    const subscription = pipe(
-      stream,
-      Observable.forEach<T>(v => updateState(_ => v)),
-      Observable.subscribe(scheduler),
-      Disposable.onError(updateError),
-      Disposable.addTo(stream),
-    );
-
-    const disposable = scheduler === schedulerOption ? subscription : scheduler;
+    const disposable = scheduler === schedulerOption ? stream : scheduler;
 
     return () => {
       disposable[DisposableLike_dispose]();
     };
-  }, [streamable, updateState, updateError, schedulerOption, dispatcherRef]);
+  }, [streamable, setStream, schedulerOption]);
+
+  return stream;
+};
+
+const useStream = <TReq, T>(
+  stream: Optional<StreamLike<TReq, T>>,
+): readonly [Optional<T>, SideEffect1<TReq>] => {
+  const [state, updateState] = useState<Optional<T>>(none);
+  const [error, updateError] = useState<Optional<Error>>(none);
+
+  const dispatcherRef: React.MutableRefObject<Optional<DispatcherLike<TReq>>> =
+    useRef();
+
+  useEffect(() => {
+    dispatcherRef.current = stream;
+
+    if (isSome(stream)) {
+      const subscription = pipe(
+        stream,
+        Observable.forEach<T>(v => updateState(_ => v)),
+        Observable.subscribe(stream[DispatcherLike_scheduler]),
+        Disposable.onError(updateError),
+        Disposable.addTo(stream),
+      );
+      return () => {
+        subscription[DisposableLike_dispose]();
+      };
+    } else {
+      return ignore;
+    }
+  }, [stream, updateState, updateError, dispatcherRef]);
 
   const dispatch = useCallback(
     (req: TReq) => {
@@ -129,6 +154,17 @@ export const useStreamable = <TReq, T>(
     : [state, dispatch];
 };
 
+export const useStreamable = <TReq, T>(
+  streamable: StreamableLike<TReq, T>,
+  options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
+): readonly [Optional<T>, SideEffect1<TReq>] => {
+  const stream = useStreamableInternal(streamable, options);
+  return useStream(stream);
+};
+
+const emptyWindowLocationURIObservable =
+  /*@__PURE__*/ Observable.empty<boolean>();
+
 export const useFlowable = <T>(
   flowable: FlowableLike<T>,
   options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
@@ -138,24 +174,21 @@ export const useFlowable = <T>(
   value: Optional<T>;
   isPaused: boolean;
 } => {
-  const [value, dispatch] = useStreamable(flowable, options);
-  const [isPaused, setIsPaused] = useState(true);
+  const stream = useStreamableInternal(flowable, options);
+  const [value, dispatch] = useStream(stream);
 
-  useEffect(() => {
-    if (isPaused) {
-      dispatch(FlowableState_paused);
-    } else {
-      dispatch(FlowableState_running);
-    }
-  }, [isPaused, dispatch]);
+  const isPaused =
+    useObservable(
+      stream?.[FlowableStreamLike_isPaused] ?? emptyWindowLocationURIObservable,
+    ) ?? true;
 
   const pause = useCallback(() => {
-    setIsPaused(true);
-  }, [setIsPaused]);
+    dispatch(FlowableState_paused);
+  }, [dispatch]);
 
   const resume = useCallback(() => {
-    setIsPaused(false);
-  }, [setIsPaused]);
+    dispatch(FlowableState_running);
+  }, [dispatch]);
 
   return { resume, pause, value, isPaused };
 };

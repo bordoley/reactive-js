@@ -800,6 +800,11 @@ export const FlowableState_paused = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const FlowableStreamLike_isPaused = /*@__PURE__*/ symbol(
+  "FlowableStreamLike_isPaused",
+);
+
+/** @type {unique symbol} */
 export const DisposableLike_add = /*@__PURE__*/ symbol("DisposableLike_add");
 
 /** @type {unique symbol} */
