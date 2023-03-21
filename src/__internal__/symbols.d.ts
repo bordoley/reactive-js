@@ -342,6 +342,8 @@ export declare const FlowableState_running: unique symbol;
 
 export declare const FlowableState_paused: unique symbol;
 
+export declare const FlowableStreamLike_isPaused: unique symbol;
+
 export declare const DisposableLike_add: unique symbol;
 
 export declare const DisposableLike_dispose: unique symbol;

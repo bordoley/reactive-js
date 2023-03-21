@@ -351,6 +351,8 @@ export const FlowableState_running = /*@__PURE__*/ symbol("FlowableState_running
 /** @type {unique symbol} */
 export const FlowableState_paused = /*@__PURE__*/ symbol("FlowableState_paused");
 /** @type {unique symbol} */
+export const FlowableStreamLike_isPaused = /*@__PURE__*/ symbol("FlowableStreamLike_isPaused");
+/** @type {unique symbol} */
 export const DisposableLike_add = /*@__PURE__*/ symbol("DisposableLike_add");
 /** @type {unique symbol} */
 export const DisposableLike_dispose = /*@__PURE__*/ symbol("DisposableLike_dispose");

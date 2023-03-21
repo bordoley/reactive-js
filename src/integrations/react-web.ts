@@ -31,8 +31,9 @@ import {
 } from "./web.js";
 
 const WindowLocationContext =
-  React.createContext<Optional<WindowLocationStreamLike>>(none);
-const emptyWindowLocationURIObservable = Observable.empty<WindowLocationURI>();
+  /*@__PURE__*/ React.createContext<Optional<WindowLocationStreamLike>>(none);
+const emptyWindowLocationURIObservable =
+  /*@__PURE__*/ Observable.empty<WindowLocationURI>();
 
 export const useWindowLocation = (): {
   uri: Optional<WindowLocationURI>;

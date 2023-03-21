@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import { useFlowable } from "@reactive-js/core/integrations/react";
@@ -31,7 +26,7 @@ const Root = () => {
   const history = useWindowLocation();
   const counter = useFlowable(counterFlowable);
 
-  const label = counter.isPaused  ? "Resume Counter" : "Pause Counter";
+  const label = counter.isPaused ? "Resume Counter" : "Pause Counter";
   const toggleMode = useCallback(() => {
     counter.isPaused ? counter.resume() : counter.pause();
   }, [counter.isPaused, counter.resume, counter.pause]);
@@ -108,7 +103,7 @@ const Root = () => {
   useEffect(() => {
     history.replace((uri: WindowLocationURI) => ({
       ...uri,
-      query: `v=${counter.value}`,
+      query: `v=${counter.value ?? 0}`,
     }));
   }, [history.replace, counter.value]);
 
@@ -124,7 +119,7 @@ const Root = () => {
           Back
         </button>
       </div>
-      <div>{counter.value}</div>
+      <div>{counter.value ?? 0}</div>
       <div>
         <button onClick={toggleMode}>{label}</button>
       </div>
