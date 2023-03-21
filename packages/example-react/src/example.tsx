@@ -1,17 +1,8 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
-import {
-  __await,
-  __do,
-  __memo,
-  __observe,
-  __state,
-  __stream,
-} from "@reactive-js/core/rx/Observable";
-import * as Observable from "@reactive-js/core/rx/Observable";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import {
-  createComponent,
+  useFlowable,
   useObservable,
 } from "@reactive-js/core/integrations/react";
 import { createSchedulerWithNormalPriority } from "@reactive-js/core/integrations/scheduler";
@@ -21,15 +12,13 @@ import {
   WindowLocationStreamLike_canGoBack,
   WindowLocationStreamLike_goBack,
 } from "@reactive-js/core/integrations/web";
-import { Updater, increment, pipe, returns } from "@reactive-js/core/functions";
-import { DispatcherLike } from "@reactive-js/core/rx";
+import { increment, pipe, returns } from "@reactive-js/core/functions";
 import { QueueableLike_push } from "@reactive-js/core/util";
 import {
   FlowableState,
   FlowableState_paused,
   FlowableState_running,
   StreamableLike_stream,
-  StreamLike,
 } from "@reactive-js/core/streaming";
 
 const normalPriorityScheduler = createSchedulerWithNormalPriority();
@@ -43,61 +32,8 @@ const historyStream = windowLocation[StreamableLike_stream](
 );
 
 const counterFlowable = pipe(
-  Runnable.generate(increment, returns(0), { delay: 100 }),
+  Runnable.generate(increment, returns(-1), { delay: 500 }),
   Runnable.toFlowable(),
-);
-
-const createActions = (
-  stateDispatcher: DispatcherLike<FlowableState | Updater<FlowableState>>,
-  counterDispatcher: StreamLike<number, FlowableState | Updater<FlowableState>>,
-) => ({
-  onValueChanged: (value: number) => {
-    historyStream[QueueableLike_push](
-      (uri: WindowLocationURI) => ({
-        ...uri,
-        query: `v=${value}`,
-      }),
-      { replace: true },
-    );
-  },
-  toggleStateMode: () =>
-    stateDispatcher[QueueableLike_push]((mode: FlowableState) =>
-      mode === FlowableState_paused
-        ? FlowableState_running
-        : FlowableState_paused,
-    ),
-  setCounterMode: (mode: FlowableState) =>
-    counterDispatcher[QueueableLike_push](mode),
-});
-
-const initialFlowModeState = (): FlowableState => FlowableState_paused;
-
-const StreamPauseResume = createComponent(() =>
-  Observable.compute(() => {
-    const counter = __stream(counterFlowable);
-    const state = __state(initialFlowModeState);
-
-    const { onValueChanged, toggleStateMode, setCounterMode } = __memo(
-      createActions,
-      state,
-      counter,
-    );
-
-    const mode = __await(state);
-    __do(setCounterMode, mode);
-
-    const value = __observe(counter) ?? 0;
-    __do(onValueChanged, value);
-
-    const label = mode === FlowableState_running ? "PAUSE" : "RESUME";
-
-    return (
-      <>
-        <div>{value}</div>
-        <button onClick={toggleStateMode}>{label}</button>
-      </>
-    );
-  }),
 );
 
 const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,6 +54,36 @@ const Root = () => {
 
   const canGoBack = historyStream[WindowLocationStreamLike_canGoBack];
 
+  const [mode, updateMode] = useState<FlowableState>(FlowableState_paused);
+  const [counter = 0, { pause, resume }] = useFlowable(counterFlowable);
+
+  const label = mode === FlowableState_running ? "PAUSE" : "RESUME";
+  const toggleMode = useCallback(() => {
+    updateMode(mode =>
+      mode === FlowableState_paused
+        ? FlowableState_running
+        : FlowableState_paused,
+    );
+  }, [updateMode]);
+
+  useEffect(() => {
+    if (mode === FlowableState_running) {
+      resume();
+    } else {
+      pause();
+    }
+  }, [mode, pause, resume]);
+
+  useEffect(() => {
+    historyStream[QueueableLike_push](
+      (uri: WindowLocationURI) => ({
+        ...uri,
+        query: `v=${counter}`,
+      }),
+      { replace: true },
+    );
+  }, [counter]);
+
   return (
     <div>
       <div>
@@ -130,7 +96,8 @@ const Root = () => {
           Back
         </button>
       </div>
-      <StreamPauseResume />
+      <div>{counter}</div>
+      <button onClick={toggleMode}>{label}</button>
     </div>
   );
 };

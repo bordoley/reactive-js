@@ -7,7 +7,9 @@
 ### Functions
 
 - [createComponent](integrations_react.md#createcomponent)
+- [useFlowable](integrations_react.md#useflowable)
 - [useObservable](integrations_react.md#useobservable)
+- [useStreamable](integrations_react.md#usestreamable)
 
 ## Functions
 
@@ -35,6 +37,30 @@
 
 ___
 
+### useFlowable
+
+▸ **useFlowable**<`T`\>(`flowable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, { `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `flowable` | [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\> |
+| `options?` | `Object` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+
+#### Returns
+
+readonly [[`Optional`](functions.md#optional)<`T`\>, { `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }]
+
+___
+
 ### useObservable
 
 ▸ **useObservable**<`T`\>(`observable`, `options?`): [`Optional`](functions.md#optional)<`T`\>
@@ -58,3 +84,28 @@ Returns the current value, if defined, of `observable`.
 #### Returns
 
 [`Optional`](functions.md#optional)<`T`\>
+
+___
+
+### useStreamable
+
+▸ **useStreamable**<`TReq`, `T`\>(`streamable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TReq` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\> |
+| `options?` | `Object` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+
+#### Returns
+
+readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
