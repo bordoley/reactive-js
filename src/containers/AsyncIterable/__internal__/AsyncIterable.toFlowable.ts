@@ -14,11 +14,7 @@ import {
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
 } from "../../../scheduling.js";
-import {
-  FlowableState,
-  FlowableState_paused,
-  ToFlowable,
-} from "../../../streaming.js";
+import { ToFlowable } from "../../../streaming.js";
 import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.create.js";
 import {
   DisposableLike_dispose,
@@ -32,7 +28,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
   <T>() =>
   (iterable: AsyncIterableLike<T>) =>
-    Flowable_create((modeObs: ObservableLike<FlowableState>) =>
+    Flowable_create((modeObs: ObservableLike<boolean>) =>
       Observable_create<T>((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();
         const scheduler = observer[DispatcherLike_scheduler];
@@ -75,16 +71,14 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
 
         pipe(
           modeObs,
-          Observable_forEach<ObservableLike, FlowableState>(
-            (mode: FlowableState) => {
-              const wasPaused = isPaused;
-              isPaused = mode === FlowableState_paused;
+          Observable_forEach<ObservableLike, boolean>((mode: boolean) => {
+            const wasPaused = isPaused;
+            isPaused = mode;
 
-              if (!isPaused && wasPaused) {
-                pipe(observer, Observer_schedule(continuation));
-              }
-            },
-          ),
+            if (!isPaused && wasPaused) {
+              pipe(observer, Observer_schedule(continuation));
+            }
+          }),
           Observable_subscribeWithMaxBufferSize(
             scheduler,
             observer[QueueableLike_maxBufferSize],

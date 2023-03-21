@@ -790,16 +790,6 @@ export const StreamableLike_isRunnable = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const FlowableState_running = /*@__PURE__*/ symbol(
-  "FlowableState_running",
-);
-
-/** @type {unique symbol} */
-export const FlowableState_paused = /*@__PURE__*/ symbol(
-  "FlowableState_paused",
-);
-
-/** @type {unique symbol} */
 export const FlowableStreamLike_isPaused = /*@__PURE__*/ symbol(
   "FlowableStreamLike_isPaused",
 );

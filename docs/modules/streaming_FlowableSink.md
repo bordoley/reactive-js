@@ -24,7 +24,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, [`FlowableState`](streaming.md#flowablestate) \| [`Updater`](functions.md#updater)<[`FlowableState`](streaming.md#flowablestate)\>\> |
+| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean` \| [`Updater`](functions.md#updater)<`boolean`\>\> |
 
 #### Returns
 

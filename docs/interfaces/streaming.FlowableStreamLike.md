@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamLike`](streaming.StreamLike.md)<[`FlowableState`](../modules/streaming.md#flowablestate) \| [`Updater`](../modules/functions.md#updater)<[`FlowableState`](../modules/streaming.md#flowablestate)\>, `T`\>
+- [`StreamLike`](streaming.StreamLike.md)<`boolean` \| [`Updater`](../modules/functions.md#updater)<`boolean`\>, `T`\>
 
   ↳ **`FlowableStreamLike`**
 

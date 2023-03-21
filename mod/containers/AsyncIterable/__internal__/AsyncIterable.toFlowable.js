@@ -7,7 +7,6 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../../../scheduling.js";
-import { FlowableState_paused, } from "../../../streaming.js";
 import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.create.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -48,7 +47,7 @@ const AsyncIterable_toFlowable = () => (iterable) => Flowable_create((modeObs) =
     };
     pipe(modeObs, Observable_forEach((mode) => {
         const wasPaused = isPaused;
-        isPaused = mode === FlowableState_paused;
+        isPaused = mode;
         if (!isPaused && wasPaused) {
             pipe(observer, Observer_schedule(continuation));
         }

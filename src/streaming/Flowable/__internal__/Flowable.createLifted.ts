@@ -2,7 +2,6 @@ import { ContainerOperator } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
 import {
   FlowableLike,
-  FlowableState,
   StreamableLike_isEnumerable,
   StreamableLike_isInteractive,
   StreamableLike_isRunnable,
@@ -11,7 +10,7 @@ import {
 import FlowableStream_create from "./FlowableStream.create.js";
 
 const Flowable_createLifted = <T>(
-  op: ContainerOperator<ObservableLike, FlowableState, T>,
+  op: ContainerOperator<ObservableLike, boolean, T>,
   isRunnable: boolean,
 ): FlowableLike<T> => ({
   [StreamableLike_isEnumerable]: false,
