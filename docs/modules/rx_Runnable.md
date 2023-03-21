@@ -336,7 +336,15 @@ ___
 
 ### currentTime
 
-▸ **currentTime**(): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
+▸ **currentTime**(`options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 

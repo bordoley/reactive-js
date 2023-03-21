@@ -3,9 +3,12 @@ import { ObservableLike } from "../../../rx.js";
 import Observable_generate from "./Observable.generate.js";
 import Observable_withCurrentTime from "./Observable.withCurrentTime.js";
 
-const Observable_currentTime = (): ObservableLike<number> =>
+const Observable_currentTime = (options?: {
+  readonly delay?: number;
+  readonly delayStart?: boolean;
+}): ObservableLike<number> =>
   pipe(
-    Observable_generate<unknown>(identity, returns(none)),
+    Observable_generate<unknown>(identity, returns(none), options),
     Observable_withCurrentTime<ObservableLike, unknown, number>(identity),
   );
 

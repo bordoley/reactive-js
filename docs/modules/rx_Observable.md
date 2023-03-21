@@ -1016,7 +1016,15 @@ ___
 
 ### currentTime
 
-▸ **currentTime**(): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
+▸ **currentTime**(`options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 

@@ -40,7 +40,15 @@
 
 ### currentTime
 
-▸ **currentTime**(): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `number`\>
+▸ **currentTime**(`options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 

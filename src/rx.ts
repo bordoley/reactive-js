@@ -202,7 +202,10 @@ export interface CurrentTime<C extends ObservableLike> extends Container<C> {
   /**
    * @category Constructor
    */
-  currentTime(): ContainerOf<C, number>;
+  currentTime(options?: {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }): ContainerOf<C, number>;
 }
 
 /**
