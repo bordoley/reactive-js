@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import { useFlowable } from "@reactive-js/core/integrations/react";
@@ -17,13 +17,22 @@ import {
 } from "@reactive-js/core/functions";
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
 
-const counterFlowable = pipe(
-  Runnable.generate(increment, returns(-1), { delay: 500 }),
-  Runnable.toFlowable(),
-);
-
 const Root = () => {
   const history = useWindowLocation();
+
+  const counterFlowable = useMemo(
+    () => pipe(
+      Runnable.generate(increment, returns(-1), { delay: 500 }),
+      Runnable.forEach(value => {
+        history.replace((uri: WindowLocationURI) => ({
+          ...uri,
+          query: `v=${value}`,
+        }));
+      }),
+      Runnable.toFlowable(),
+    ),
+    [history.replace]
+  );
   const counter = useFlowable(counterFlowable);
 
   const label = counter.isPaused ? "Resume Counter" : "Pause Counter";
@@ -99,13 +108,6 @@ const Root = () => {
     },
     [history.push],
   );
-
-  useEffect(() => {
-    history.replace((uri: WindowLocationURI) => ({
-      ...uri,
-      query: `v=${counter.value ?? 0}`,
-    }));
-  }, [history.replace, counter.value]);
 
   return (
     <div>
