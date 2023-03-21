@@ -309,7 +309,7 @@ ___
 
 ### createWritableSink
 
-▸ **createWritableSink**(`factory`): [`FlowableSinkLike`](../interfaces/streaming.FlowableSinkLike.md)<`Uint8Array`\>
+▸ **createWritableSink**(`factory`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`Uint8Array`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`Uint8Array`, `boolean`\>\>
 
 #### Parameters
 
@@ -319,7 +319,7 @@ ___
 
 #### Returns
 
-[`FlowableSinkLike`](../interfaces/streaming.FlowableSinkLike.md)<`Uint8Array`\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`Uint8Array`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`Uint8Array`, `boolean`\>\>
 
 ___
 

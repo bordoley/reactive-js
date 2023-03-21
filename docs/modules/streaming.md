@@ -8,7 +8,6 @@
 
 - [AsyncEnumerableLike](../interfaces/streaming.AsyncEnumerableLike.md)
 - [FlowableLike](../interfaces/streaming.FlowableLike.md)
-- [FlowableSinkLike](../interfaces/streaming.FlowableSinkLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)
 
 ### Other Interfaces
