@@ -1,8 +1,10 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import ReactDOMClient from "react-dom/client";
+import * as Enumerable from "@reactive-js/core/rx/Enumerable";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import * as Observable from "@reactive-js/core/rx/Observable";
 import {
+  useEnumerable,
   useFlowable,
   useStreamable,
 } from "@reactive-js/core/integrations/react";
@@ -12,9 +14,7 @@ import {
 } from "@reactive-js/core/integrations/react-web";
 import { WindowLocationURI } from "@reactive-js/core/integrations/web";
 import {
-  identity,
   increment,
-  none,
   pipe,
   pipeLazy,
   returns,
@@ -105,6 +105,13 @@ const Root = () => {
     [history.push],
   );
 
+  const enumerable = useMemo(
+    () => Enumerable.generate(increment, () => -1),
+    [],
+  );
+
+  const enumerator = useEnumerable(enumerable);
+
   return (
     <div>
       <div>
@@ -117,9 +124,15 @@ const Root = () => {
           Back
         </button>
       </div>
-      <div>{counter.value ?? 0}</div>
+      
+      <div>
+      <button onClick={enumerator.move}>Move the Enumerator</button>
+      <span> {enumerator.hasCurrent ? enumerator.current : "no value" }</span>
+      </div>
+      
       <div>
         <button onClick={toggleMode}>{label}</button>
+        <span>{counter.value ?? 0}</span>
       </div>
       <div ref={animatedDivRef} style={{ height: "100px", width: "100px" }} />
       <div>

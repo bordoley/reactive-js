@@ -8,6 +8,11 @@ import {
   useState,
 } from "react";
 import {
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_move,
+} from "../containers.js";
+import {
   Factory,
   Optional,
   SideEffect,
@@ -22,10 +27,12 @@ import {
 import {
   DispatcherLike,
   DispatcherLike_scheduler,
+  EnumerableLike,
   ObservableLike,
   SubjectLike,
   SubjectLike_publish,
 } from "../rx.js";
+import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Subject from "../rx/Subject.js";
 import { SchedulerLike } from "../scheduling.js";
@@ -165,8 +172,7 @@ export const useStreamable = <TReq, T>(
   return useStream(stream);
 };
 
-const emptyWindowLocationURIObservable =
-  /*@__PURE__*/ Observable.empty<boolean>();
+const emptyObservable = /*@__PURE__*/ Observable.empty<boolean>();
 
 /**
  * @category Hook
@@ -184,9 +190,8 @@ export const useFlowable = <T>(
   const [value, dispatch] = useStream(stream);
 
   const isPaused =
-    useObservable(
-      stream?.[FlowableStreamLike_isPaused] ?? emptyWindowLocationURIObservable,
-    ) ?? true;
+    useObservable(stream?.[FlowableStreamLike_isPaused] ?? emptyObservable) ??
+    true;
 
   const pause = useCallback(() => {
     dispatch(true);
@@ -197,6 +202,57 @@ export const useFlowable = <T>(
   }, [dispatch]);
 
   return { resume, pause, value, isPaused };
+};
+
+const defaultEnumeratorState = {
+  current: none,
+  hasCurrent: false,
+};
+
+/**
+ * @category Hook
+ */
+export const useEnumerable = <T>(
+  enumerable: EnumerableLike<T>,
+): {
+  current: T;
+  hasCurrent: boolean;
+  move: () => boolean;
+} => {
+  const enumeratorRef = useRef<Optional<EnumeratorLike<T>>>(none);
+  const [{ current, hasCurrent }, setState] = useState<{
+    current: Optional<T>;
+    hasCurrent: boolean;
+  }>(defaultEnumeratorState);
+
+  useEffect(() => {
+    const enumerator = pipe(enumerable, Enumerable.enumerate());
+    enumeratorRef.current = enumerator;
+
+    return () => enumerator[DisposableLike_dispose]();
+  }, [enumerable]);
+
+  const move = useCallback(() => {
+    const enumerator = enumeratorRef.current;
+    const hasCurrent = isSome(enumerator)
+      ? enumerator[EnumeratorLike_move]()
+      : false;
+
+    const state =
+      isSome(enumerator) && hasCurrent
+        ? { current: enumerator[EnumeratorLike_current], hasCurrent }
+        : defaultEnumeratorState;
+
+    setState(state);
+
+    return hasCurrent;
+  }, [enumeratorRef]);
+
+  return {
+    current: current as T,
+    hasCurrent,
+    move,
+  };
 };
 
 const createReplaySubject = <TProps>() => Subject.create<TProps>({ replay: 1 });

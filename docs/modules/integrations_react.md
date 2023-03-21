@@ -6,6 +6,7 @@
 
 ### Hook Functions
 
+- [useEnumerable](integrations_react.md#useenumerable)
 - [useFlowable](integrations_react.md#useflowable)
 - [useObservable](integrations_react.md#useobservable)
 - [useStreamable](integrations_react.md#usestreamable)
@@ -15,6 +16,34 @@
 - [createComponent](integrations_react.md#createcomponent)
 
 ## Hook Functions
+
+### useEnumerable
+
+▸ **useEnumerable**<`T`\>(`enumerable`): `Object`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `enumerable` | [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\> |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `current` | `T` |
+| `hasCurrent` | `boolean` |
+| `move` | () => `boolean` |
+
+___
 
 ### useFlowable
 
