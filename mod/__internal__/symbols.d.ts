@@ -341,6 +341,10 @@ export const StreamableLike_isRunnable: unique symbol;
 /** @type {unique symbol} */
 export const FlowableStreamLike_isPaused: unique symbol;
 /** @type {unique symbol} */
+export const FlowableStreamLike_pause: unique symbol;
+/** @type {unique symbol} */
+export const FlowableStreamLike_resume: unique symbol;
+/** @type {unique symbol} */
 export const DisposableLike_add: unique symbol;
 /** @type {unique symbol} */
 export const DisposableLike_dispose: unique symbol;

@@ -169,6 +169,8 @@ StreamableLike_isEnumerable
 StreamableLike_isInteractive
 StreamableLike_isRunnable
 FlowableStreamLike_isPaused
+FlowableStreamLike_pause
+FlowableStreamLike_resume
 DisposableLike_add
 DisposableLike_dispose
 DisposableLike_error

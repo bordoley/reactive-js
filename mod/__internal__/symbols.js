@@ -349,6 +349,10 @@ export const StreamableLike_isRunnable = /*@__PURE__*/ symbol("StreamableLike_is
 /** @type {unique symbol} */
 export const FlowableStreamLike_isPaused = /*@__PURE__*/ symbol("FlowableStreamLike_isPaused");
 /** @type {unique symbol} */
+export const FlowableStreamLike_pause = /*@__PURE__*/ symbol("FlowableStreamLike_pause");
+/** @type {unique symbol} */
+export const FlowableStreamLike_resume = /*@__PURE__*/ symbol("FlowableStreamLike_resume");
+/** @type {unique symbol} */
 export const DisposableLike_add = /*@__PURE__*/ symbol("DisposableLike_add");
 /** @type {unique symbol} */
 export const DisposableLike_dispose = /*@__PURE__*/ symbol("DisposableLike_dispose");

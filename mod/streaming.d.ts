@@ -1,9 +1,9 @@
-import { FlowableStreamLike_isPaused, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream } from "./__internal__/symbols.js";
+import { FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
 import { Function1, Updater } from "./functions.js";
 import { DispatcherLike, MulticastObservableLike, ObservableLike } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
-export { StreamableLike_stream, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, FlowableStreamLike_isPaused, };
+export { StreamableLike_stream, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, };
 /**
  * Represents a duplex stream
  *
@@ -36,6 +36,8 @@ export interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T
  */
 export interface FlowableStreamLike<T = unknown> extends StreamLike<boolean | Updater<boolean>, T> {
     readonly [FlowableStreamLike_isPaused]: ObservableLike<boolean>;
+    [FlowableStreamLike_pause](): void;
+    [FlowableStreamLike_resume](): void;
 }
 /**
  * @noInheritDoc
