@@ -4,30 +4,15 @@
 
 ## Table of contents
 
-### Functions
+### Hook Functions
 
-- [WindowLocationProvider](integrations_react_web.md#windowlocationprovider)
 - [useWindowLocation](integrations_react_web.md#usewindowlocation)
 
-## Functions
+### Other Functions
 
-### WindowLocationProvider
+- [WindowLocationProvider](integrations_react_web.md#windowlocationprovider)
 
-▸ **WindowLocationProvider**(`props`, `context?`): ``null`` \| `ReactElement`<`any`, `any`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `props` | `Object` |
-| `props.children` | `ReactNode` |
-| `context?` | `any` |
-
-#### Returns
-
-``null`` \| `ReactElement`<`any`, `any`\>
-
-___
+## Hook Functions
 
 ### useWindowLocation
 
@@ -44,3 +29,23 @@ ___
 | `push` | [`SideEffect1`](functions.md#sideeffect1)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) \| [`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\>\> |
 | `replace` | [`SideEffect1`](functions.md#sideeffect1)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) \| [`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\>\> |
 | `uri` | [`Optional`](functions.md#optional)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\> |
+
+___
+
+## Other Functions
+
+### WindowLocationProvider
+
+▸ **WindowLocationProvider**(`props`, `context?`): ``null`` \| `ReactElement`<`any`, `any`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `props` | `Object` |
+| `props.children` | `ReactNode` |
+| `context?` | `any` |
+
+#### Returns
+
+``null`` \| `ReactElement`<`any`, `any`\>

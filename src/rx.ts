@@ -198,6 +198,10 @@ export interface CombineLatest<C extends ObservableLike> extends Container<C> {
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
 
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface CurrentTime<C extends ObservableLike> extends Container<C> {
   /**
    * @category Constructor
@@ -693,6 +697,10 @@ export interface ToRunnable<C extends ContainerLike, O = never>
   toRunnable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface WithCurrentTime<C extends ObservableLike>
   extends Container<C> {
   /**

@@ -93,6 +93,10 @@ export interface CombineLatest<C extends ObservableLike> extends Container<C> {
     combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ContainerOf<C, TA>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ContainerOf<C, TA>, b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface CurrentTime<C extends ObservableLike> extends Container<C> {
     /**
      * @category Constructor
@@ -395,6 +399,10 @@ export interface ToRunnable<C extends ContainerLike, O = never> extends Containe
      */
     toRunnable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface WithCurrentTime<C extends ObservableLike> extends Container<C> {
     /**
      * @category Operator

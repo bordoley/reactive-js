@@ -14,14 +14,13 @@
 
 ### Other Interfaces
 
-- [CurrentTime](../interfaces/rx.CurrentTime.md)
 - [DispatcherLike](../interfaces/rx.DispatcherLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
-- [WithCurrentTime](../interfaces/rx.WithCurrentTime.md)
 
 ### TypeClass Interfaces
 
 - [CombineLatest](../interfaces/rx.CombineLatest.md)
+- [CurrentTime](../interfaces/rx.CurrentTime.md)
 - [Exhaust](../interfaces/rx.Exhaust.md)
 - [ExhaustMap](../interfaces/rx.ExhaustMap.md)
 - [ForkCombineLatest](../interfaces/rx.ForkCombineLatest.md)
@@ -45,6 +44,7 @@
 - [ToEnumerable](../interfaces/rx.ToEnumerable.md)
 - [ToObservable](../interfaces/rx.ToObservable.md)
 - [ToRunnable](../interfaces/rx.ToRunnable.md)
+- [WithCurrentTime](../interfaces/rx.WithCurrentTime.md)
 - [WithLatestFrom](../interfaces/rx.WithLatestFrom.md)
 - [ZipLatest](../interfaces/rx.ZipLatest.md)
 - [ZipWithLatestFrom](../interfaces/rx.ZipWithLatestFrom.md)

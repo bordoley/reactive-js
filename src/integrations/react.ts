@@ -46,6 +46,8 @@ import { createSchedulerWithNormalPriority } from "./scheduler.js";
  * @param observable The `ObservableLike` to subscribe to.
  * @param scheduler An optional scheduler used when subscribing to `observable`. The default
  * is React's normal priority scheduler.
+ *
+ * @category Hook
  */
 export const useObservable = <T>(
   observable: ObservableLike<T>,
@@ -152,6 +154,9 @@ const useStream = <TReq, T>(
     : [state, dispatch];
 };
 
+/**
+ * @category Hook
+ */
 export const useStreamable = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
   options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
@@ -163,6 +168,9 @@ export const useStreamable = <TReq, T>(
 const emptyWindowLocationURIObservable =
   /*@__PURE__*/ Observable.empty<boolean>();
 
+/**
+ * @category Hook
+ */
 export const useFlowable = <T>(
   flowable: FlowableLike<T>,
   options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},

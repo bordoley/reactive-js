@@ -4,38 +4,17 @@
 
 ## Table of contents
 
-### Functions
+### Hook Functions
 
-- [createComponent](integrations_react.md#createcomponent)
 - [useFlowable](integrations_react.md#useflowable)
 - [useObservable](integrations_react.md#useobservable)
 - [useStreamable](integrations_react.md#usestreamable)
 
-## Functions
+### Other Functions
 
-### createComponent
+- [createComponent](integrations_react.md#createcomponent)
 
-▸ **createComponent**<`TProps`\>(`fn`, `options?`): `ComponentType`<`TProps`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TProps` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fn` | (`props`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TProps`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
-| `options?` | `Object` |
-| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
-
-#### Returns
-
-`ComponentType`<`TProps`\>
-
-___
+## Hook Functions
 
 ### useFlowable
 
@@ -116,3 +95,29 @@ ___
 #### Returns
 
 readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
+
+___
+
+## Other Functions
+
+### createComponent
+
+▸ **createComponent**<`TProps`\>(`fn`, `options?`): `ComponentType`<`TProps`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TProps` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fn` | (`props`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TProps`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
+| `options?` | `Object` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+
+#### Returns
+
+`ComponentType`<`TProps`\>

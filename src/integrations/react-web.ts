@@ -35,6 +35,9 @@ const WindowLocationContext =
 const emptyWindowLocationURIObservable =
   /*@__PURE__*/ Observable.empty<WindowLocationURI>();
 
+/**
+ * @category Hook
+ */
 export const useWindowLocation = (): {
   uri: Optional<WindowLocationURI>;
   push: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
