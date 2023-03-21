@@ -1,5 +1,7 @@
 import {
   FlowableStreamLike_isPaused,
+  FlowableStreamLike_pause,
+  FlowableStreamLike_resume,
   StreamableLike_isEnumerable,
   StreamableLike_isInteractive,
   StreamableLike_isRunnable,
@@ -26,6 +28,8 @@ export {
   StreamableLike_isInteractive,
   StreamableLike_isRunnable,
   FlowableStreamLike_isPaused,
+  FlowableStreamLike_pause,
+  FlowableStreamLike_resume,
 };
 
 /**
@@ -76,6 +80,9 @@ export interface AsyncEnumerableLike<T = unknown>
 export interface FlowableStreamLike<T = unknown>
   extends StreamLike<boolean | Updater<boolean>, T> {
   readonly [FlowableStreamLike_isPaused]: ObservableLike<boolean>;
+
+  [FlowableStreamLike_pause](): void;
+  [FlowableStreamLike_resume](): void;
 }
 
 /**

@@ -340,6 +340,10 @@ export declare const StreamableLike_isRunnable: unique symbol;
 
 export declare const FlowableStreamLike_isPaused: unique symbol;
 
+export declare const FlowableStreamLike_pause: unique symbol;
+
+export declare const FlowableStreamLike_resume: unique symbol;
+
 export declare const DisposableLike_add: unique symbol;
 
 export declare const DisposableLike_dispose: unique symbol;

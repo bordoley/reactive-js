@@ -8,7 +8,8 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Subject_create from "../../../rx/Subject/__internal__/Subject.create.js";
 import Subject_publishTo from "../../../rx/Subject/__internal__/Subject.publishTo.js";
-import { FlowableStreamLike_isPaused, } from "../../../streaming.js";
+import { FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, } from "../../../streaming.js";
+import { QueueableLike_push } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Stream_mixin from "../../Stream/__internal__/Stream.mixin.js";
 const FlowableStream_create = /*@__PURE__*/ (() => {
@@ -21,7 +22,14 @@ const FlowableStream_create = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [FlowableStreamLike_isPaused]: none,
-    }), {}));
+    }), {
+        [FlowableStreamLike_pause]() {
+            this[QueueableLike_push](true);
+        },
+        [FlowableStreamLike_resume]() {
+            this[QueueableLike_push](false);
+        },
+    }));
     return (op, scheduler, options) => {
         const { maxBufferSize = MAX_SAFE_INTEGER, replay = 0 } = options !== null && options !== void 0 ? options : {};
         return createStreamInternal(op, scheduler, replay, maxBufferSize);

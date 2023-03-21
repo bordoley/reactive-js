@@ -25,7 +25,10 @@ import { SchedulerLike } from "../../../scheduling.js";
 import {
   FlowableStreamLike,
   FlowableStreamLike_isPaused,
+  FlowableStreamLike_pause,
+  FlowableStreamLike_resume,
 } from "../../../streaming.js";
+import { QueueableLike_push } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Stream_mixin from "../../Stream/__internal__/Stream.mixin.js";
 
@@ -43,7 +46,11 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
     mix(
       include(Stream_mixin<boolean, T>()),
       function FlowableStream(
-        instance: TProperties,
+        instance: TProperties &
+          Pick<
+            FlowableStreamLike<T>,
+            typeof FlowableStreamLike_pause | typeof FlowableStreamLike_resume
+          >,
         op: ContainerOperator<ObservableLike, boolean, T>,
         scheduler: SchedulerLike,
         replay: number,
@@ -81,7 +88,14 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
       props<TProperties>({
         [FlowableStreamLike_isPaused]: none,
       }),
-      {},
+      {
+        [FlowableStreamLike_pause](this: FlowableStreamLike<T>) {
+          this[QueueableLike_push](true);
+        },
+        [FlowableStreamLike_resume](this: FlowableStreamLike<T>) {
+          this[QueueableLike_push](false);
+        },
+      },
     ),
   );
 

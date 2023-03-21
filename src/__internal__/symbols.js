@@ -795,6 +795,16 @@ export const FlowableStreamLike_isPaused = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const FlowableStreamLike_pause = /*@__PURE__*/ symbol(
+  "FlowableStreamLike_pause",
+);
+
+/** @type {unique symbol} */
+export const FlowableStreamLike_resume = /*@__PURE__*/ symbol(
+  "FlowableStreamLike_resume",
+);
+
+/** @type {unique symbol} */
 export const DisposableLike_add = /*@__PURE__*/ symbol("DisposableLike_add");
 
 /** @type {unique symbol} */
