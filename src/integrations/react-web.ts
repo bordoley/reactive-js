@@ -34,18 +34,16 @@ const WindowLocationContext =
   React.createContext<Optional<WindowLocationStreamLike>>(none);
 const emptyWindowLocationURIObservable = Observable.empty<WindowLocationURI>();
 
-export const useWindowLocation = (): readonly [
-  Optional<WindowLocationURI>,
-  {
-    push: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
-    replace: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
-    canGoBack: boolean;
-    goBack: () => boolean;
-  },
-] => {
+export const useWindowLocation = (): {
+  uri: Optional<WindowLocationURI>;
+  push: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
+  replace: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
+  canGoBack: boolean;
+  goBack: () => boolean;
+} => {
   const windowLocationStream = useContext(WindowLocationContext);
 
-  const currentLocation = useObservable(
+  const uri = useObservable(
     windowLocationStream ?? emptyWindowLocationURIObservable,
   );
 
@@ -85,15 +83,13 @@ export const useWindowLocation = (): readonly [
   const canGoBack =
     windowLocationStream?.[WindowLocationStreamLike_canGoBack] ?? false;
 
-  return [
-    currentLocation,
-    {
-      push,
-      replace,
-      goBack,
-      canGoBack,
-    },
-  ];
+  return {
+    uri,
+    push,
+    replace,
+    goBack,
+    canGoBack,
+  };
 };
 
 export const WindowLocationProvider: React.FunctionComponent<{

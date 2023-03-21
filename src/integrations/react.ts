@@ -132,18 +132,14 @@ export const useStreamable = <TReq, T>(
 export const useFlowable = <T>(
   flowable: FlowableLike<T>,
   options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
-): readonly [Optional<T>, { pause: SideEffect; resume: SideEffect }] => {
-  const [result, dispatch] = useStreamable(flowable, options);
+): { pause: SideEffect; resume: SideEffect; value: Optional<T> } => {
+  const [value, dispatch] = useStreamable(flowable, options);
 
-  const actions = useMemo(
-    () => ({
-      pause: () => dispatch(FlowableState_paused),
-      resume: () => dispatch(FlowableState_running),
-    }),
-    [dispatch],
-  );
+  const pause = useCallback(() => dispatch(FlowableState_paused), [dispatch]);
 
-  return [result, actions];
+  const resume = useCallback(() => dispatch(FlowableState_running), [dispatch]);
+
+  return { resume, pause, value };
 };
 
 const createReplaySubject = <TProps>() => Subject.create<TProps>({ replay: 1 });

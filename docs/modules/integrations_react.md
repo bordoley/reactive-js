@@ -39,7 +39,7 @@ ___
 
 ### useFlowable
 
-▸ **useFlowable**<`T`\>(`flowable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, { `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }]
+▸ **useFlowable**<`T`\>(`flowable`, `options?`): `Object`
 
 #### Type parameters
 
@@ -57,7 +57,13 @@ ___
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<`T`\>, { `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }]
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `pause` | [`SideEffect`](functions.md#sideeffect) |
+| `resume` | [`SideEffect`](functions.md#sideeffect) |
+| `value` | [`Optional`](functions.md#optional)<`T`\> |
 
 ___
 

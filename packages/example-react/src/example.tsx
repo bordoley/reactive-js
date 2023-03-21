@@ -20,9 +20,9 @@ const counterFlowable = pipe(
 );
 
 const Root = () => {
-  const [uri, history] = useWindowLocation();
+  const history = useWindowLocation();
   const [mode, updateMode] = useState<FlowableState>(FlowableState_paused);
-  const [counter = 0, { pause, resume }] = useFlowable(counterFlowable);
+  const counter = useFlowable(counterFlowable);
 
   const label = mode === FlowableState_running ? "PAUSE" : "RESUME";
   const toggleMode = useCallback(() => {
@@ -47,18 +47,18 @@ const Root = () => {
 
   useEffect(() => {
     if (mode === FlowableState_running) {
-      resume();
+      counter.resume();
     } else {
-      pause();
+      counter.pause();
     }
-  }, [mode, pause, resume]);
+  }, [mode, counter.pause, counter.resume]);
 
   useEffect(() => {
     history.replace((uri: WindowLocationURI) => ({
       ...uri,
-      query: `v=${counter}`,
+      query: `v=${counter.value}`,
     }));
-  }, [history.replace, counter]);
+  }, [history.replace, counter.value]);
 
   return (
     <div>
@@ -66,13 +66,13 @@ const Root = () => {
         <input
           type="text"
           onChange={onChange}
-          value={String(uri?.path ?? "")}
+          value={String(history.uri?.path ?? "")}
         ></input>
         <button onClick={history.goBack} disabled={!history.canGoBack}>
           Back
         </button>
       </div>
-      <div>{counter}</div>
+      <div>{counter.value}</div>
       <button onClick={toggleMode}>{label}</button>
     </div>
   );
