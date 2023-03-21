@@ -181,11 +181,11 @@ export const useFlowable = <T>(
     ) ?? true;
 
   const pause = useCallback(() => {
-    dispatch(false);
+    dispatch(true);
   }, [dispatch]);
 
   const resume = useCallback(() => {
-    dispatch(true);
+    dispatch(false);
   }, [dispatch]);
 
   return { resume, pause, value, isPaused };
