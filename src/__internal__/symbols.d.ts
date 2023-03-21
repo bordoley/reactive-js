@@ -16,6 +16,8 @@ export declare const WindowLocationStreamLike_canGoBack: unique symbol;
 
 export declare const WindowLocationStream_historyCounter: unique symbol;
 
+export declare const WindowLocationStreamLike_replace: unique symbol;
+
 export declare const EnumerableEnumerator_continuationQueue: unique symbol;
 
 export declare const MergeAllObserver_activeCount: unique symbol;

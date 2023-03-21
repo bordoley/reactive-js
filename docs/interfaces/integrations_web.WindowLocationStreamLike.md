@@ -18,8 +18,8 @@
 
 ### Methods
 
-- [[QueueableLike\_push]](integrations_web.WindowLocationStreamLike.md#[queueablelike_push])
 - [[WindowLocationStreamLike\_goBack]](integrations_web.WindowLocationStreamLike.md#[windowlocationstreamlike_goback])
+- [[WindowLocationStreamLike\_replace]](integrations_web.WindowLocationStreamLike.md#[windowlocationstreamlike_replace])
 
 ## Properties
 
@@ -29,31 +29,25 @@
 
 ## Methods
 
-### [QueueableLike\_push]
+### [WindowLocationStreamLike\_goBack]
 
-▸ **[QueueableLike_push]**(`stateOrUpdater`, `options?`): `boolean`
+▸ **[WindowLocationStreamLike_goBack]**(): `boolean`
+
+#### Returns
+
+`boolean`
+
+___
+
+### [WindowLocationStreamLike\_replace]
+
+▸ **[WindowLocationStreamLike_replace]**(`stateOrUpdater`): `boolean`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `stateOrUpdater` | [`WindowLocationURI`](integrations_web.WindowLocationURI.md) \| [`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\> |
-| `options?` | `Object` |
-| `options.replace?` | `boolean` |
-
-#### Returns
-
-`boolean`
-
-#### Overrides
-
-StreamLike.\_\_@QueueableLike\_push@22291
-
-___
-
-### [WindowLocationStreamLike\_goBack]
-
-▸ **[WindowLocationStreamLike_goBack]**(): `boolean`
 
 #### Returns
 

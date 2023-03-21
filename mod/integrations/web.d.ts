@@ -1,9 +1,8 @@
-import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack } from "../__internal__/symbols.js";
+import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamLike_replace } from "../__internal__/symbols.js";
 import { Function1, Updater } from "../functions.js";
 import { ObservableLike } from "../rx.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
-import { QueueableLike_push } from "../util.js";
-export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack };
+export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
 /**
  * @noInheritDoc
  */
@@ -18,11 +17,9 @@ export interface WindowLocationURI {
  * @category Container
  */
 export interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
-    [QueueableLike_push](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
-        readonly replace?: boolean;
-    }): boolean;
     readonly [WindowLocationStreamLike_canGoBack]: boolean;
     [WindowLocationStreamLike_goBack](): boolean;
+    [WindowLocationStreamLike_replace](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI): boolean;
 }
 export declare const createEventSource: (url: string | URL, options?: EventSourceInit & {
     readonly events?: readonly string[];

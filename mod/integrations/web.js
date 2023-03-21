@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
-import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStream_historyCounter, } from "../__internal__/symbols.js";
+import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamLike_replace, WindowLocationStream_historyCounter, } from "../__internal__/symbols.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { compose, error, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
@@ -11,7 +11,7 @@ import * as Streamable from "../streaming/Streamable.js";
 import { DisposableLike_dispose, QueueableLike_maxBufferSize, QueueableLike_push, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack };
+export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
 const errorEvent = "error";
 const reservedEvents = [errorEvent, "open"];
 export const createEventSource = (url, options = {}) => {
@@ -113,10 +113,16 @@ export const windowLocation = /*@__PURE__*/ (() => {
         [DispatcherLike_complete]() {
             this[DelegatingLike_delegate][DispatcherLike_complete]();
         },
-        [QueueableLike_push](stateOrUpdater, { replace } = { replace: false }) {
+        [QueueableLike_push](stateOrUpdater) {
             return this[DelegatingLike_delegate][QueueableLike_push]({
                 stateOrUpdater,
-                replace,
+                replace: false,
+            });
+        },
+        [WindowLocationStreamLike_replace](stateOrUpdater) {
+            return this[DelegatingLike_delegate][QueueableLike_push]({
+                stateOrUpdater,
+                replace: true,
             });
         },
         [WindowLocationStreamLike_goBack]() {
@@ -176,7 +182,7 @@ export const windowLocation = /*@__PURE__*/ (() => {
             return { counter, uri };
         }), Observable.forEach(({ counter, uri }) => {
             windowLocationStream[WindowLocationStream_historyCounter] = counter;
-            windowLocationStream[QueueableLike_push](uri, { replace: true });
+            windowLocationStream[WindowLocationStreamLike_replace](uri);
         }), Observable.subscribe(scheduler), Disposable.addTo(windowLocationStream));
         return windowLocationStream;
     };

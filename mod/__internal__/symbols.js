@@ -20,6 +20,8 @@ export const WindowLocationStreamLike_canGoBack = /*@__PURE__*/ symbol("WindowLo
 /** @type {unique symbol} */
 export const WindowLocationStream_historyCounter = /*@__PURE__*/ symbol("WindowLocationStream_historyCounter");
 /** @type {unique symbol} */
+export const WindowLocationStreamLike_replace = /*@__PURE__*/ symbol("WindowLocationStreamLike_replace");
+/** @type {unique symbol} */
 export const EnumerableEnumerator_continuationQueue = /*@__PURE__*/ symbol("EnumerableEnumerator_continuationQueue");
 /** @type {unique symbol} */
 export const MergeAllObserver_activeCount = /*@__PURE__*/ symbol("MergeAllObserver_activeCount");

@@ -11,6 +11,7 @@
     "./src/integrations/__tests__/node.test.ts",
     "./src/integrations/node.ts",
     "./src/integrations/react.ts",
+    "./src/integrations/react-web.ts",
     "./src/integrations/scheduler.ts"
   ]
 }

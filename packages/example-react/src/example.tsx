@@ -1,59 +1,26 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
+import { useFlowable } from "@reactive-js/core/integrations/react";
 import {
-  useFlowable,
-  useObservable,
-} from "@reactive-js/core/integrations/react";
-import { createSchedulerWithNormalPriority } from "@reactive-js/core/integrations/scheduler";
-import {
-  windowLocation,
-  WindowLocationURI,
-  WindowLocationStreamLike_canGoBack,
-  WindowLocationStreamLike_goBack,
-} from "@reactive-js/core/integrations/web";
+  useWindowLocation,
+  WindowLocationProvider,
+} from "@reactive-js/core/integrations/react-web";
+import { WindowLocationURI } from "@reactive-js/core/integrations/web";
 import { increment, pipe, returns } from "@reactive-js/core/functions";
-import { QueueableLike_push } from "@reactive-js/core/util";
 import {
   FlowableState,
   FlowableState_paused,
   FlowableState_running,
-  StreamableLike_stream,
 } from "@reactive-js/core/streaming";
-
-const normalPriorityScheduler = createSchedulerWithNormalPriority();
-
-// History must be globally unique to an application
-const historyStream = windowLocation[StreamableLike_stream](
-  normalPriorityScheduler,
-  {
-    replay: 1,
-  },
-);
 
 const counterFlowable = pipe(
   Runnable.generate(increment, returns(-1), { delay: 500 }),
   Runnable.toFlowable(),
 );
 
-const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-  const { value: path } = ev.target;
-
-  historyStream[QueueableLike_push]((uri: WindowLocationURI) => ({
-    ...uri,
-    path,
-  }));
-};
-
-const onGoBack = () => {
-  historyStream[WindowLocationStreamLike_goBack]();
-};
-
 const Root = () => {
-  const uri = useObservable(historyStream);
-
-  const canGoBack = historyStream[WindowLocationStreamLike_canGoBack];
-
+  const [uri, history] = useWindowLocation();
   const [mode, updateMode] = useState<FlowableState>(FlowableState_paused);
   const [counter = 0, { pause, resume }] = useFlowable(counterFlowable);
 
@@ -66,6 +33,18 @@ const Root = () => {
     );
   }, [updateMode]);
 
+  const onChange = useCallback(
+    (ev: React.ChangeEvent<HTMLInputElement>) => {
+      const { value: path } = ev.target;
+
+      history.push((uri: WindowLocationURI) => ({
+        ...uri,
+        path,
+      }));
+    },
+    [history.push],
+  );
+
   useEffect(() => {
     if (mode === FlowableState_running) {
       resume();
@@ -75,14 +54,11 @@ const Root = () => {
   }, [mode, pause, resume]);
 
   useEffect(() => {
-    historyStream[QueueableLike_push](
-      (uri: WindowLocationURI) => ({
-        ...uri,
-        query: `v=${counter}`,
-      }),
-      { replace: true },
-    );
-  }, [counter]);
+    history.replace((uri: WindowLocationURI) => ({
+      ...uri,
+      query: `v=${counter}`,
+    }));
+  }, [history.replace, counter]);
 
   return (
     <div>
@@ -92,7 +68,7 @@ const Root = () => {
           onChange={onChange}
           value={String(uri?.path ?? "")}
         ></input>
-        <button onClick={onGoBack} disabled={!canGoBack}>
+        <button onClick={history.goBack} disabled={!history.canGoBack}>
           Back
         </button>
       </div>
@@ -103,4 +79,8 @@ const Root = () => {
 };
 
 const rootElement = document.getElementById("root");
-ReactDOMClient.createRoot(rootElement as any).render(<Root />);
+ReactDOMClient.createRoot(rootElement as any).render(
+  <WindowLocationProvider>
+    <Root />
+  </WindowLocationProvider>,
+);

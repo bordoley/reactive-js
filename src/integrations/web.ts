@@ -11,6 +11,7 @@ import {
 import {
   WindowLocationStreamLike_canGoBack,
   WindowLocationStreamLike_goBack,
+  WindowLocationStreamLike_replace,
   WindowLocationStream_historyCounter,
 } from "../__internal__/symbols.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
@@ -57,7 +58,11 @@ import {
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
-export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack };
+export {
+  WindowLocationStreamLike_goBack,
+  WindowLocationStreamLike_canGoBack,
+  WindowLocationStreamLike_replace,
+};
 
 /**
  * @noInheritDoc
@@ -81,14 +86,13 @@ export interface WindowLocationStreamLike
     Updater<WindowLocationURI> | WindowLocationURI,
     WindowLocationURI
   > {
-  [QueueableLike_push](
-    stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI,
-    options?: { readonly replace?: boolean },
-  ): boolean;
-
   readonly [WindowLocationStreamLike_canGoBack]: boolean;
 
   [WindowLocationStreamLike_goBack](): boolean;
+
+  [WindowLocationStreamLike_replace](
+    stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI,
+  ): boolean;
 }
 const errorEvent = "error";
 
@@ -265,6 +269,7 @@ export const windowLocation: StreamableLike<
           | typeof QueueableLike_maxBufferSize
           | typeof WindowLocationStreamLike_canGoBack
           | typeof WindowLocationStreamLike_goBack
+          | typeof WindowLocationStreamLike_replace
           | typeof ObservableLike_observe
         > &
           Mutable<TProperties>,
@@ -313,11 +318,20 @@ export const windowLocation: StreamableLike<
         [QueueableLike_push](
           this: DelegatingLike<StreamLike<TAction, TState>>,
           stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
-          { replace }: { replace: boolean } = { replace: false },
         ): boolean {
           return this[DelegatingLike_delegate][QueueableLike_push]({
             stateOrUpdater,
-            replace,
+            replace: false,
+          });
+        },
+
+        [WindowLocationStreamLike_replace](
+          this: DelegatingLike<StreamLike<TAction, TState>>,
+          stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
+        ): boolean {
+          return this[DelegatingLike_delegate][QueueableLike_push]({
+            stateOrUpdater,
+            replace: true,
           });
         },
 
@@ -441,7 +455,7 @@ export const windowLocation: StreamableLike<
       }),
       Observable.forEach(({ counter, uri }) => {
         windowLocationStream[WindowLocationStream_historyCounter] = counter;
-        windowLocationStream[QueueableLike_push](uri, { replace: true });
+        windowLocationStream[WindowLocationStreamLike_replace](uri);
       }),
       Observable.subscribe(scheduler),
       Disposable.addTo(windowLocationStream),

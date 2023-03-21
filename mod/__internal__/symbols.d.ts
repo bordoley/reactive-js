@@ -17,6 +17,8 @@ export const WindowLocationStreamLike_canGoBack: unique symbol;
 /** @type {unique symbol} */
 export const WindowLocationStream_historyCounter: unique symbol;
 /** @type {unique symbol} */
+export const WindowLocationStreamLike_replace: unique symbol;
+/** @type {unique symbol} */
 export const EnumerableEnumerator_continuationQueue: unique symbol;
 /** @type {unique symbol} */
 export const MergeAllObserver_activeCount: unique symbol;

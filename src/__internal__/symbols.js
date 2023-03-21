@@ -44,6 +44,11 @@ export const WindowLocationStream_historyCounter = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const WindowLocationStreamLike_replace = /*@__PURE__*/ symbol(
+  "WindowLocationStreamLike_replace",
+);
+
+/** @type {unique symbol} */
 export const EnumerableEnumerator_continuationQueue = /*@__PURE__*/ symbol(
   "EnumerableEnumerator_continuationQueue",
 );
