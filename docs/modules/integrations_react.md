@@ -61,6 +61,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
+| `isPaused` | `boolean` |
 | `pause` | [`SideEffect`](functions.md#sideeffect) |
 | `resume` | [`SideEffect`](functions.md#sideeffect) |
 | `value` | [`Optional`](functions.md#optional)<`T`\> |

@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
@@ -21,11 +20,6 @@ import {
   pipeLazy,
   returns,
 } from "@reactive-js/core/functions";
-import {
-  FlowableState,
-  FlowableState_paused,
-  FlowableState_running,
-} from "@reactive-js/core/streaming";
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
 
 const counterFlowable = pipe(
@@ -35,23 +29,18 @@ const counterFlowable = pipe(
 
 const Root = () => {
   const history = useWindowLocation();
-  const [mode, updateMode] = useState<FlowableState>(FlowableState_paused);
   const counter = useFlowable(counterFlowable);
 
-  const label = mode === FlowableState_running ? "PAUSE" : "RESUME";
+  const label = counter.isPaused  ? "Resume Counter" : "Pause Counter";
   const toggleMode = useCallback(() => {
-    updateMode(mode =>
-      mode === FlowableState_paused
-        ? FlowableState_running
-        : FlowableState_paused,
-    );
-  }, [updateMode]);
+    counter.isPaused ? counter.resume() : counter.pause();
+  }, [counter.isPaused, counter.resume, counter.pause]);
 
   const animatedDivRef = useRef<HTMLDivElement>(null);
   const animationFlowable = useMemo(
     () =>
       pipe(
-        Runnable.generate(identity, returns(none), { delay: 5000 }),
+        Runnable.generate(identity, returns(none), { delay: 2000 }),
         Runnable.switchMap(
           pipeLazy(
             Runnable.generate(identity, returns(none)),
@@ -96,19 +85,13 @@ const Root = () => {
   const animation = useFlowable(animationFlowable, {
     scheduler: createAnimationFrameScheduler,
   });
-  const [animationMode, updateAnimationMode] =
-    useState<FlowableState>(FlowableState_paused);
-  const animationLabel =
-    animationMode === FlowableState_running
-      ? "Pause Animation"
-      : "Resume Animation";
+
+  const animationLabel = animation.isPaused
+    ? "Resume Animation"
+    : "Pause Animation";
   const toggleAnimationMode = useCallback(() => {
-    updateAnimationMode(mode =>
-      mode === FlowableState_paused
-        ? FlowableState_running
-        : FlowableState_paused,
-    );
-  }, [updateAnimationMode]);
+    animation.isPaused ? animation.resume() : animation.pause();
+  }, [animation.isPaused, animation.resume, animation.pause]);
 
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,22 +104,6 @@ const Root = () => {
     },
     [history.push],
   );
-
-  useEffect(() => {
-    if (mode === FlowableState_running) {
-      counter.resume();
-    } else {
-      counter.pause();
-    }
-  }, [mode, counter.pause, counter.resume]);
-
-  useEffect(() => {
-    if (animationMode === FlowableState_running) {
-      animation.resume();
-    } else {
-      animation.pause();
-    }
-  }, [animationMode, animation.pause, animation.resume]);
 
   useEffect(() => {
     history.replace((uri: WindowLocationURI) => ({
