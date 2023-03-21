@@ -25,17 +25,15 @@ export default [
     plugins: [
       typescript(typescriptConfig),
       resolve(),
-      /*
      replace({
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
-      }),*/
-      /*
+      }),
       terser({
         compress: {
           unsafe: true,
         },
-      }),*/
+      }),
     ],
   },
 ];

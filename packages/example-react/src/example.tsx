@@ -32,7 +32,7 @@ const historyStream = windowLocation[StreamableLike_stream](
 );
 
 const counterFlowable = pipe(
-  Runnable.generate(increment, returns(0), { delay: 100 }),
+  Runnable.generate(increment, returns(-1), { delay: 500 }),
   Runnable.toFlowable(),
 );
 
@@ -58,38 +58,31 @@ const Root = () => {
   const [counter = 0, { pause, resume }] = useFlowable(counterFlowable);
 
   const label = mode === FlowableState_running ? "PAUSE" : "RESUME";
-  const toggleMode = useCallback(
-    () => {
-      updateMode(mode =>
-        mode === FlowableState_paused
+  const toggleMode = useCallback(() => {
+    updateMode(mode =>
+      mode === FlowableState_paused
         ? FlowableState_running
-        : FlowableState_paused
-      );
-    },
-    [updateMode]
-  );
+        : FlowableState_paused,
+    );
+  }, [updateMode]);
 
-  useEffect(
-    () => {
-      if(mode === FlowableState_running) {
-        resume();
-      } else {
-        pause();
-      }
-    }, [mode, pause, resume]
-  );
+  useEffect(() => {
+    if (mode === FlowableState_running) {
+      resume();
+    } else {
+      pause();
+    }
+  }, [mode, pause, resume]);
 
-  useEffect(
-    () => {
-        historyStream[QueueableLike_push](
-          (uri: WindowLocationURI) => ({
-            ...uri,
-            query: `v=${counter}`,
-          }),
-          { replace: true },
-        );
-    }, [counter]
-  )
+  useEffect(() => {
+    historyStream[QueueableLike_push](
+      (uri: WindowLocationURI) => ({
+        ...uri,
+        query: `v=${counter}`,
+      }),
+      { replace: true },
+    );
+  }, [counter]);
 
   return (
     <div>
