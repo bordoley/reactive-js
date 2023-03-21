@@ -25,7 +25,7 @@ export default [
     plugins: [
       typescript(typescriptConfig),
       resolve(),
-     replace({
+      replace({
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
       }),
