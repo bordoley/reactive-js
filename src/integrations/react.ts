@@ -7,7 +7,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { FlowableStreamLike_isPaused } from "../__internal__/symbols.js";
 import {
   Factory,
   Optional,
@@ -32,8 +31,7 @@ import * as Subject from "../rx/Subject.js";
 import { SchedulerLike } from "../scheduling.js";
 import {
   FlowableLike,
-  FlowableState_paused,
-  FlowableState_running,
+  FlowableStreamLike_isPaused,
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
@@ -183,11 +181,11 @@ export const useFlowable = <T>(
     ) ?? true;
 
   const pause = useCallback(() => {
-    dispatch(FlowableState_paused);
+    dispatch(false);
   }, [dispatch]);
 
   const resume = useCallback(() => {
-    dispatch(FlowableState_running);
+    dispatch(true);
   }, [dispatch]);
 
   return { resume, pause, value, isPaused };

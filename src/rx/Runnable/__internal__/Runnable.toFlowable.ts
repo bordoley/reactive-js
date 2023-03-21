@@ -9,12 +9,7 @@ import {
   PauseableSchedulerLike_resume,
 } from "../../../scheduling.js";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
-import {
-  FlowableState,
-  FlowableState_paused,
-  FlowableState_running,
-  ToFlowable,
-} from "../../../streaming.js";
+import { ToFlowable } from "../../../streaming.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
 import { QueueableLike_maxBufferSize } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
@@ -30,7 +25,7 @@ import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom
 const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
   () => observable =>
     Flowable_createLifted(
-      (modeObs: ObservableLike<FlowableState>) =>
+      (modeObs: ObservableLike<boolean>) =>
         Observable_create(observer => {
           const pauseableScheduler = Scheduler_toPausableScheduler(
             observer[DispatcherLike_scheduler],
@@ -50,14 +45,11 @@ const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
             Disposable_add(
               pipe(
                 modeObs,
-                Observable_forEach<ObservableLike, FlowableState>(mode => {
-                  switch (mode) {
-                    case FlowableState_paused:
-                      pauseableScheduler[PauseableSchedulerLike_pause]();
-                      break;
-                    case FlowableState_running:
-                      pauseableScheduler[PauseableSchedulerLike_resume]();
-                      break;
+                Observable_forEach<ObservableLike, boolean>(isPaused => {
+                  if (isPaused) {
+                    pauseableScheduler[PauseableSchedulerLike_pause]();
+                  } else {
+                    pauseableScheduler[PauseableSchedulerLike_resume]();
                   }
                 }),
                 Observable_subscribeWithMaxBufferSize(

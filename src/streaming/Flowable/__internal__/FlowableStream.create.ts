@@ -6,9 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { FlowableStreamLike_isPaused } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
-
 import {
   Updater,
   compose,
@@ -20,15 +18,13 @@ import {
 import { ObservableLike } from "../../../rx.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Subject_create from "../../../rx/Subject/__internal__/Subject.create.js";
 import Subject_publishTo from "../../../rx/Subject/__internal__/Subject.publishTo.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
-  FlowableState,
-  FlowableState_paused,
   FlowableStreamLike,
+  FlowableStreamLike_isPaused,
 } from "../../../streaming.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Stream_mixin from "../../Stream/__internal__/Stream.mixin.js";
@@ -39,16 +35,16 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
   };
 
   const createStreamInternal: (
-    op: ContainerOperator<ObservableLike, FlowableState, T>,
+    op: ContainerOperator<ObservableLike, boolean, T>,
     scheduler: SchedulerLike,
     replay: number,
     maxBufferSize: number,
   ) => FlowableStreamLike<T> = createInstanceFactory(
     mix(
-      include(Stream_mixin<FlowableState, T>()),
+      include(Stream_mixin<boolean, T>()),
       function FlowableStream(
         instance: TProperties,
-        op: ContainerOperator<ObservableLike, FlowableState, T>,
+        op: ContainerOperator<ObservableLike, boolean, T>,
         scheduler: SchedulerLike,
         replay: number,
         maxBufferSize: number,
@@ -56,23 +52,19 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
         const subject = Subject_create({ replay: 1 });
 
         const liftedOp = compose(
-          Observable_scan<
-            ObservableLike,
-            FlowableState | Updater<FlowableState>,
-            FlowableState
-          >(
+          Observable_scan<ObservableLike, boolean | Updater<boolean>, boolean>(
             (acc, next) => (isFunction(next) ? next(acc) : next),
-            returns(FlowableState_paused),
+            returns(true),
           ),
-          Observable_distinctUntilChanged<FlowableState>(),
-          Observable_forEach<ObservableLike, FlowableState>(
+          Observable_distinctUntilChanged<boolean>(),
+          Observable_forEach<ObservableLike, boolean>(
             Subject_publishTo(subject),
           ),
           op,
         );
 
         init(
-          Stream_mixin<FlowableState, T>(),
+          Stream_mixin<boolean, T>(),
           instance,
           liftedOp,
           scheduler,
@@ -82,13 +74,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
 
         pipe(instance, Disposable_add(subject));
 
-        instance[FlowableStreamLike_isPaused] = pipe(
-          subject,
-          Observable_map<ObservableLike, FlowableState, boolean>(
-            state => state === FlowableState_paused,
-          ),
-          Observable_distinctUntilChanged<boolean>(),
-        );
+        instance[FlowableStreamLike_isPaused] = subject;
 
         return instance;
       },
@@ -100,7 +86,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
   );
 
   return (
-    op: ContainerOperator<ObservableLike, FlowableState, T>,
+    op: ContainerOperator<ObservableLike, boolean, T>,
     scheduler: SchedulerLike,
     options?: { readonly replay?: number; readonly maxBufferSize?: number },
   ): FlowableStreamLike<T> => {

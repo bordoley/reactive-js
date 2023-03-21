@@ -338,10 +338,6 @@ export declare const StreamableLike_isInteractive: unique symbol;
 
 export declare const StreamableLike_isRunnable: unique symbol;
 
-export declare const FlowableState_running: unique symbol;
-
-export declare const FlowableState_paused: unique symbol;
-
 export declare const FlowableStreamLike_isPaused: unique symbol;
 
 export declare const DisposableLike_add: unique symbol;

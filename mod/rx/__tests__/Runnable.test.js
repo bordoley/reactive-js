@@ -7,7 +7,7 @@ import { arrayEquality, identity, increment, incrementBy, newInstance, none, pip
 import { ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../rx.js";
 import { SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { FlowableState_paused, FlowableState_running, StreamableLike_stream, } from "../../streaming.js";
+import { StreamableLike_stream } from "../../streaming.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
@@ -39,11 +39,11 @@ const toFlowableTests = describe("toFlowable", test("flow a generating source", 
         delayStart: true,
     }), Runnable.toFlowable());
     const generateStream = streamableSrc[StreamableLike_stream](scheduler);
-    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](FlowableState_running)),
-        scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](FlowableState_paused), {
+    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](false)),
+        scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](true), {
             delay: 2,
         });
-    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](FlowableState_running), {
+    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_push](false), {
         delay: 4,
     });
     scheduler[SchedulerLike_schedule](() => generateStream[DisposableLike_dispose](), {

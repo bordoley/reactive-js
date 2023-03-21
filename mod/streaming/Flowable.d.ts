@@ -4,7 +4,7 @@ import { FlowableLike } from "../streaming.js";
 /**
  * @category Constructor
  */
-export declare const create: <T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableLike<unknown>, import("../streaming.js").FlowableState, T>) => FlowableLike<T>;
+export declare const create: <T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableLike<unknown>, boolean, T>) => FlowableLike<T>;
 export declare const fromAsyncIterable: FromAsyncIterable<FlowableLike>["fromAsyncIterable"];
 export declare const fromEnumerable: FromEnumerable<FlowableLike>["fromEnumerable"];
 export declare const fromIterable: FromIterable<FlowableLike>["fromIterable"];

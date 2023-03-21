@@ -66,11 +66,7 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import {
-  FlowableState_paused,
-  FlowableState_running,
-  StreamableLike_stream,
-} from "../../streaming.js";
+import { StreamableLike_stream } from "../../streaming.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -324,10 +320,10 @@ const toFlowableTests = describe(
     const generateStream = streamableSrc[StreamableLike_stream](scheduler);
 
     scheduler[SchedulerLike_schedule](() =>
-      generateStream[QueueableLike_push](FlowableState_running),
+      generateStream[QueueableLike_push](false),
     ),
       scheduler[SchedulerLike_schedule](
-        () => generateStream[QueueableLike_push](FlowableState_paused),
+        () => generateStream[QueueableLike_push](true),
 
         {
           delay: 2,
@@ -335,7 +331,7 @@ const toFlowableTests = describe(
       );
 
     scheduler[SchedulerLike_schedule](
-      () => generateStream[QueueableLike_push](FlowableState_running),
+      () => generateStream[QueueableLike_push](false),
       {
         delay: 4,
       },

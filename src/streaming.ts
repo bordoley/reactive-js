@@ -1,6 +1,4 @@
 import {
-  FlowableState_paused,
-  FlowableState_running,
   FlowableStreamLike_isPaused,
   StreamableLike_isEnumerable,
   StreamableLike_isInteractive,
@@ -27,8 +25,7 @@ export {
   StreamableLike_isEnumerable,
   StreamableLike_isInteractive,
   StreamableLike_isRunnable,
-  FlowableState_running,
-  FlowableState_paused,
+  FlowableStreamLike_isPaused,
 };
 
 /**
@@ -73,15 +70,11 @@ export interface AsyncEnumerableLike<T = unknown>
   readonly [StreamableLike_isInteractive]: true;
 }
 
-export type FlowableState =
-  | typeof FlowableState_running
-  | typeof FlowableState_paused;
-
 /**
  * @noInheritDoc
  */
 export interface FlowableStreamLike<T = unknown>
-  extends StreamLike<FlowableState | Updater<FlowableState>, T> {
+  extends StreamLike<boolean | Updater<boolean>, T> {
   readonly [FlowableStreamLike_isPaused]: ObservableLike<boolean>;
 }
 
@@ -90,11 +83,7 @@ export interface FlowableStreamLike<T = unknown>
  * @category Container
  */
 export interface FlowableLike<T = unknown>
-  extends StreamableLike<
-      FlowableState | Updater<FlowableState>,
-      T,
-      FlowableStreamLike<T>
-    >,
+  extends StreamableLike<boolean | Updater<boolean>, T, FlowableStreamLike<T>>,
     ContainerLike {
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
   readonly [StreamableLike_isEnumerable]: false;
@@ -106,7 +95,7 @@ export interface FlowableLike<T = unknown>
  * @category Container
  */
 export interface FlowableSinkLike<T = unknown>
-  extends StreamableLike<T, FlowableState | Updater<FlowableState>>,
+  extends StreamableLike<T, boolean | Updater<boolean>>,
     ContainerLike {
   readonly [ContainerLike_type]?: FlowableSinkLike<
     this[typeof ContainerLike_T]

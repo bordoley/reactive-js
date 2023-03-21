@@ -42,8 +42,6 @@ import { SchedulerLike_requestYield } from "../scheduling.js";
 import {
   FlowableLike,
   FlowableSinkLike,
-  FlowableState_paused,
-  FlowableState_running,
   StreamableLike_stream,
 } from "../streaming.js";
 import * as Flowable from "../streaming/Flowable.js";
@@ -190,14 +188,11 @@ export const createReadableSource = (
 
       pipe(
         mode,
-        Observable.forEach(ev => {
-          switch (ev) {
-            case FlowableState_paused:
-              readable.pause();
-              break;
-            case FlowableState_running:
-              readable.resume();
-              break;
+        Observable.forEach(isPaused => {
+          if (isPaused) {
+            readable.pause();
+          } else {
+            readable.resume();
           }
         }),
         Observable.subscribe(observer[DispatcherLike_scheduler]),
@@ -268,18 +263,18 @@ export const createWritableSink = /*@__PURE__*/ (() => {
         );
 
         const onDrain = () => {
-          observer[QueueableLike_push](FlowableState_running);
+          observer[QueueableLike_push](false);
         };
         const onFinish = () => observer[DispatcherLike_complete]();
         const onPause = () => {
-          observer[QueueableLike_push](FlowableState_paused);
+          observer[QueueableLike_push](true);
         };
 
         writable.on("drain", onDrain);
         writable.on("finish", onFinish);
         writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-        observer[QueueableLike_push](FlowableState_running);
+        observer[QueueableLike_push](false);
       }),
     );
 })();

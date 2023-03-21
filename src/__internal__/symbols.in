@@ -168,8 +168,6 @@ StreamableLike_stream
 StreamableLike_isEnumerable
 StreamableLike_isInteractive
 StreamableLike_isRunnable
-FlowableState_running
-FlowableState_paused
 FlowableStreamLike_isPaused
 DisposableLike_add
 DisposableLike_dispose
