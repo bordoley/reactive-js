@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  createContext,
   createElement,
   useCallback,
   useContext,
@@ -31,7 +32,7 @@ import {
 } from "./web.js";
 
 const WindowLocationContext =
-  /*@__PURE__*/ React.createContext<Optional<WindowLocationStreamLike>>(none);
+  /*@__PURE__*/ createContext<Optional<WindowLocationStreamLike>>(none);
 const emptyWindowLocationURIObservable =
   /*@__PURE__*/ Observable.empty<WindowLocationURI>();
 
