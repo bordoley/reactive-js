@@ -22,8 +22,6 @@ import {
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 
-const animationScheduler = createAnimationFrameScheduler();
-
 const Root = () => {
   const history = useWindowLocation();
   const onChange = useCallback(
@@ -91,7 +89,7 @@ const Root = () => {
                 animatedDiv.style.display = "inline-block";
               }
             }),
-            Observable.subscribeOn(animationScheduler),
+            Observable.subscribeOn(createAnimationFrameScheduler),
           ),
         ),
       ),

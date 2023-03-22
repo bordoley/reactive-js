@@ -215,7 +215,7 @@ export declare const subscribe: <T>(scheduler: SchedulerLike, options?: {
 /**
  * @category Operator
  */
-export declare const subscribeOn: <T>(scheduler: SchedulerLike, options?: {
+export declare const subscribeOn: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
     readonly maxBufferSize?: number | undefined;
 } | undefined) => (observable: ObservableLike<T>) => ObservableLike<T>;
 export declare const takeFirst: TakeFirst<ObservableLike>["takeFirst"];

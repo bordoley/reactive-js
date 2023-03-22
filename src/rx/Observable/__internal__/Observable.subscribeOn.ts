@@ -1,4 +1,4 @@
-import { pipe } from "../../../functions.js";
+import { Factory, isFunction, pipe } from "../../../functions.js";
 import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
 import {
   SchedulerLike,
@@ -16,12 +16,16 @@ import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMax
 
 const Observable_subscribeOn =
   <T>(
-    scheduler: SchedulerLike,
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>,
     options?: { readonly maxBufferSize?: number },
   ) =>
   (observable: ObservableLike<T>): ObservableLike<T> =>
     // FIXME: type test for VTS
-    Observable_create<T>(observer =>
+    Observable_create<T>(observer => {
+      const scheduler = isFunction(schedulerOrFactory)
+        ? pipe(schedulerOrFactory(), Disposable_addTo(observer))
+        : schedulerOrFactory;
+
       pipe(
         observable,
         Observable_forEach<ObservableLike, T>(v => {
@@ -35,7 +39,7 @@ const Observable_subscribeOn =
         ),
         Disposable_onComplete(() => observer[DispatcherLike_complete]()),
         Disposable_addTo(observer),
-      ),
-    );
+      );
+    });
 
 export default Observable_subscribeOn;

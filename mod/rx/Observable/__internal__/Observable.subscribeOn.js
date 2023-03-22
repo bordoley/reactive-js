@@ -1,6 +1,6 @@
 /// <reference types="./Observable.subscribeOn.d.ts" />
 
-import { pipe } from "../../../functions.js";
+import { isFunction, pipe } from "../../../functions.js";
 import { DispatcherLike_complete } from "../../../rx.js";
 import { SchedulerLike_requestYield, } from "../../../scheduling.js";
 import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
@@ -9,11 +9,14 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Observable_create from "./Observable.create.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
-const Observable_subscribeOn = (scheduler, options) => (observable) => 
+const Observable_subscribeOn = (schedulerOrFactory, options) => (observable) => 
 // FIXME: type test for VTS
 Observable_create(observer => {
     var _a;
-    return pipe(observable, Observable_forEach(v => {
+    const scheduler = isFunction(schedulerOrFactory)
+        ? pipe(schedulerOrFactory(), Disposable_addTo(observer))
+        : schedulerOrFactory;
+    pipe(observable, Observable_forEach(v => {
         if (!observer[QueueableLike_push](v)) {
             scheduler[SchedulerLike_requestYield]();
         }
