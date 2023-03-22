@@ -65,5 +65,8 @@ export declare const Observable_compute__stream: <TReq, T, TStream extends Strea
 }) => TStream;
 export declare const Observable_compute__state: <T>(initialState: () => T, options?: {
     readonly equality?: Optional<Equality<T>>;
+    readonly replay?: number | undefined;
+    readonly scheduler?: SchedulerLike | undefined;
+    readonly maxBufferSize?: number | undefined;
 }) => StreamLike<Updater<T>, T>;
 export {};

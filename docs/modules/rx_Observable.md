@@ -514,6 +514,9 @@ ___
 | `initialState` | () => `T` |
 | `options?` | `Object` |
 | `options.equality?` | [`Optional`](functions.md#optional)<[`Equality`](functions.md#equality)<`T`\>\> |
+| `options.maxBufferSize?` | `number` |
+| `options.replay?` | `number` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 

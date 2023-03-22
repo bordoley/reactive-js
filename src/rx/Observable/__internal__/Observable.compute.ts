@@ -534,6 +534,9 @@ export const Observable_compute__state = /*@__PURE__*/ (() => {
     initialState: () => T,
     options: {
       readonly equality?: Optional<Equality<T>>;
+      readonly replay?: number;
+      readonly scheduler?: SchedulerLike;
+      readonly maxBufferSize?: number;
     } = {},
   ): StreamLike<Updater<T>, T> => {
     const { equality } = options;
@@ -543,6 +546,9 @@ export const Observable_compute__state = /*@__PURE__*/ (() => {
       initialState,
       optionsMemo,
     );
-    return Observable_compute__stream(streamable) as StreamLike<Updater<T>, T>;
+    return Observable_compute__stream(streamable, options) as StreamLike<
+      Updater<T>,
+      T
+    >;
   };
 })();

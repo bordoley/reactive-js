@@ -263,6 +263,6 @@ export const Observable_compute__state = /*@__PURE__*/ (() => {
         const { equality } = options;
         const optionsMemo = Observable_compute__memo(createStateOptions, equality);
         const streamable = Observable_compute__memo(Streamable_createStateStore, initialState, optionsMemo);
-        return Observable_compute__stream(streamable);
+        return Observable_compute__stream(streamable, options);
     };
 })();

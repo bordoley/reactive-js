@@ -48,6 +48,9 @@ export declare const __observe: <T>(observable: ObservableLike<T>) => import("..
  */
 export declare const __state: <T>(initialState: () => T, options?: {
     readonly equality?: import("../functions.js").Optional<import("../functions.js").Equality<T>>;
+    readonly replay?: number | undefined;
+    readonly scheduler?: SchedulerLike | undefined;
+    readonly maxBufferSize?: number | undefined;
 }) => import("../streaming.js").StreamLike<import("../functions.js").Updater<T>, T>;
 /**
  * @category ComputationalEffect
