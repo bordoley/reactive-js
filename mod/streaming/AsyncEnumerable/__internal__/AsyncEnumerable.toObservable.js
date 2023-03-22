@@ -9,7 +9,7 @@ import Observable_observeWith from "../../../rx/Observable/__internal__/Observab
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { StreamableLike_isEnumerable, StreamableLike_isRunnable, StreamableLike_stream, } from "../../../streaming.js";
-import { QueueableLike_push } from "../../../util.js";
+import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 const AsyncEnumerable_toObservable = () => (enumerable) => {
     const create = enumerable[StreamableLike_isEnumerable]
@@ -18,7 +18,9 @@ const AsyncEnumerable_toObservable = () => (enumerable) => {
             ? Runnable_create
             : Observable_create;
     return create((observer) => {
-        const enumerator = pipe(enumerable[StreamableLike_stream](observer[DispatcherLike_scheduler]), Disposable_addTo(observer));
+        const scheduler = observer[DispatcherLike_scheduler];
+        const maxBufferSize = observer[QueueableLike_maxBufferSize];
+        const enumerator = pipe(enumerable[StreamableLike_stream](scheduler, { maxBufferSize }), Disposable_addTo(observer));
         pipe(enumerator, Observable_forEach(_ => {
             enumerator[QueueableLike_push](none);
         }), Observable_onSubscribe(() => {

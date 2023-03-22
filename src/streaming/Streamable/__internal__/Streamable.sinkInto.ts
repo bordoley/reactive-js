@@ -25,8 +25,9 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 const Streamable_sinkInto =
   <TReq, T>(dest: StreamLike<T, TReq>) =>
   (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
-    const { [DispatcherLike_scheduler]: scheduler } = dest;
-    const srcStream = src[StreamableLike_stream](scheduler);
+    const scheduler = dest[DispatcherLike_scheduler];
+    const maxBufferSize = dest[QueueableLike_maxBufferSize];
+    const srcStream = src[StreamableLike_stream](scheduler, { maxBufferSize });
 
     pipe(
       Observable_merge(

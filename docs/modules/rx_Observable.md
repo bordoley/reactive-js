@@ -539,6 +539,7 @@ ___
 | :------ | :------ |
 | `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
 | `«destructured»` | `Object` |
+| › `maxBufferSize?` | `number` |
 | › `replay?` | `number` |
 | › `scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 

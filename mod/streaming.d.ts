@@ -21,6 +21,7 @@ export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = S
     readonly [StreamableLike_isRunnable]: boolean;
     [StreamableLike_stream](scheduler: SchedulerLike, options?: {
         readonly replay?: number;
+        readonly maxBufferSize?: number;
     }): TStream;
 }
 /**

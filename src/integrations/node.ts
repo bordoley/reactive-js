@@ -10,7 +10,10 @@ import {
   createGzip,
   createInflate,
 } from "zlib";
-import { NODE_JS_PAUSE_EVENT } from "../__internal__/symbols.js";
+import {
+  NODE_JS_PAUSE_EVENT,
+  QueueableLike_maxBufferSize,
+} from "../__internal__/symbols.js";
 import { ContainerOperator } from "../containers.js";
 import {
   Factory,
@@ -287,18 +290,20 @@ export const transform =
     Flowable.create(modeObs =>
       Observable.create(observer => {
         const transform = pipe(factory(), addToDisposable(observer));
+        const maxBufferSize = observer[QueueableLike_maxBufferSize];
+        const scheduler = observer[DispatcherLike_scheduler];
 
         pipe(
-          createWritableSink(transform)[StreamableLike_stream](
-            observer[DispatcherLike_scheduler],
-          ),
+          createWritableSink(transform)[StreamableLike_stream](scheduler, {
+            maxBufferSize,
+          }),
           Stream.sourceFrom(src),
           Disposable.addTo(observer),
         );
 
         const transformReadableStream = createReadableSource(transform)[
           StreamableLike_stream
-        ](observer[DispatcherLike_scheduler]);
+        ](scheduler, { maxBufferSize });
 
         transformReadableStream[ObservableLike_observe](observer);
 

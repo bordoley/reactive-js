@@ -13,7 +13,10 @@ import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import { FlowableLike, StreamableLike_isRunnable } from "../../../streaming.js";
-import { QueueableLike_push } from "../../../util.js";
+import {
+  QueueableLike_maxBufferSize,
+  QueueableLike_push,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
@@ -28,6 +31,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
 
     return create(observer => {
       const scheduler = observer[DispatcherLike_scheduler];
+      const maxBufferSize = observer[QueueableLike_maxBufferSize];
 
       const op = compose(
         Observable_forEach(v => {
@@ -44,7 +48,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
       );
 
       pipe(
-        Stream_create<T, boolean>(op, scheduler),
+        Stream_create<T, boolean>(op, scheduler, { maxBufferSize }),
         Stream_sourceFrom(src),
         Disposable_addTo(observer),
         Disposable_onComplete(() => observer[DispatcherLike_complete]()),

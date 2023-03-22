@@ -56,7 +56,7 @@ export interface StreamableLike<
 
   [StreamableLike_stream](
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
+    options?: { readonly replay?: number; readonly maxBufferSize?: number },
   ): TStream;
 }
 

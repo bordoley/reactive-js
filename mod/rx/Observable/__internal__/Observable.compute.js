@@ -1,6 +1,7 @@
 /// <reference types="./Observable.compute.d.ts" />
 
 var _a, _b, _c, _d;
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { AwaitOrObserveEffect_hasValue, AwaitOrObserveEffect_observable, AwaitOrObserveEffect_subscription, AwaitOrObserveEffect_value, ComputeContext_awaitOrObserve, ComputeContext_cleanup, ComputeContext_effects, ComputeContext_index, ComputeContext_memoOrUse, ComputeContext_mode, ComputeContext_observer, ComputeContext_runComputation, ComputeContext_scheduledComputationSubscription, ComputeEffect_type, MemoOrUsingEffect_args, MemoOrUsingEffect_func, MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
@@ -250,10 +251,10 @@ export function Observable_compute__currentScheduler() {
     return ctx[ComputeContext_observer][DispatcherLike_scheduler];
 }
 export const Observable_compute__stream = /*@__PURE__*/ (() => {
-    const streamOnSchedulerFactory = (streamable, scheduler, replay) => streamable[StreamableLike_stream](scheduler, { replay });
-    return (streamable, { replay = 0, scheduler, } = {}) => {
+    const streamOnSchedulerFactory = (streamable, scheduler, replay, maxBufferSize) => streamable[StreamableLike_stream](scheduler, { replay, maxBufferSize });
+    return (streamable, { replay = 0, maxBufferSize = MAX_SAFE_INTEGER, scheduler, } = {}) => {
         const currentScheduler = Observable_compute__currentScheduler();
-        return Observable_compute__using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay);
+        return Observable_compute__using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay, maxBufferSize);
     };
 })();
 export const Observable_compute__state = /*@__PURE__*/ (() => {

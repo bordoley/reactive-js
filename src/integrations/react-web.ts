@@ -107,6 +107,7 @@ export const WindowLocationProvider: React.FunctionComponent<{
     const scheduler = createSchedulerWithNormalPriority();
 
     const stream: WindowLocationStreamLike = pipe(
+      // FIXME: Should we have pass a maxBufferSize?
       windowLocation[StreamableLike_stream](scheduler, { replay: 1 }),
       Disposable.addTo(scheduler),
     );

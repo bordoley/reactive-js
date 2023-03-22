@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -93,18 +94,24 @@ const useStreamableInternal = <
   TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
 >(
   streamable: StreamableLike<TReq, T, TStream>,
-  options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
+  options: {
+    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly maxBufferSize?: number;
+  } = {},
 ): Optional<TStream> => {
   const [stream, setStream] = useState<Optional<TStream>>(none);
 
-  const { scheduler: schedulerOption } = options;
+  const { maxBufferSize = MAX_SAFE_INTEGER, scheduler: schedulerOption } =
+    options;
 
   useEffect(() => {
     const scheduler = isFunction(schedulerOption)
       ? schedulerOption()
       : schedulerOption ?? createSchedulerWithNormalPriority();
 
-    const stream: TStream = streamable[StreamableLike_stream](scheduler);
+    const stream: TStream = streamable[StreamableLike_stream](scheduler, {
+      maxBufferSize,
+    });
 
     setStream(stream);
 
@@ -113,7 +120,7 @@ const useStreamableInternal = <
     return () => {
       disposable[DisposableLike_dispose]();
     };
-  }, [streamable, setStream, schedulerOption]);
+  }, [streamable, setStream, schedulerOption, maxBufferSize]);
 
   return stream;
 };

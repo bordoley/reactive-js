@@ -52,9 +52,10 @@ export declare const __state: <T>(initialState: () => T, options?: {
 /**
  * @category ComputationalEffect
  */
-export declare const __stream: <TReq, T, TStream extends import("../streaming.js").StreamLike<TReq, T>>(streamable: import("../streaming.js").StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
+export declare const __stream: <TReq, T, TStream extends import("../streaming.js").StreamLike<TReq, T>>(streamable: import("../streaming.js").StreamableLike<TReq, T, TStream>, { replay, maxBufferSize, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
+    readonly maxBufferSize?: number | undefined;
 }) => TStream;
 interface __Using {
     <T extends DisposableLike>(fn: Factory<T>): T;

@@ -13,8 +13,9 @@ import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 const Streamable_sinkInto = (dest) => (src) => {
-    const { [DispatcherLike_scheduler]: scheduler } = dest;
-    const srcStream = src[StreamableLike_stream](scheduler);
+    const scheduler = dest[DispatcherLike_scheduler];
+    const maxBufferSize = dest[QueueableLike_maxBufferSize];
+    const srcStream = src[StreamableLike_stream](scheduler, { maxBufferSize });
     pipe(Observable_merge(pipe(srcStream, Observable_forEach(v => {
         if (!dest[QueueableLike_push](v)) {
             scheduler[SchedulerLike_requestYield]();

@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   AwaitOrObserveEffect_hasValue,
   AwaitOrObserveEffect_observable,
@@ -499,14 +500,20 @@ export const Observable_compute__stream = /*@__PURE__*/ (() => {
     streamable: StreamableLike<TReq, T, TStream>,
     scheduler: SchedulerLike,
     replay: number,
-  ) => streamable[StreamableLike_stream](scheduler, { replay });
+    maxBufferSize: number,
+  ) => streamable[StreamableLike_stream](scheduler, { replay, maxBufferSize });
 
   return <TReq, T, TStream extends StreamLike<TReq, T>>(
     streamable: StreamableLike<TReq, T, TStream>,
     {
       replay = 0,
+      maxBufferSize = MAX_SAFE_INTEGER,
       scheduler,
-    }: { readonly replay?: number; readonly scheduler?: SchedulerLike } = {},
+    }: {
+      readonly replay?: number;
+      readonly scheduler?: SchedulerLike;
+      readonly maxBufferSize?: number;
+    } = {},
   ): TStream => {
     const currentScheduler = Observable_compute__currentScheduler();
     return Observable_compute__using(
@@ -514,6 +521,7 @@ export const Observable_compute__stream = /*@__PURE__*/ (() => {
       streamable,
       scheduler ?? currentScheduler,
       replay,
+      maxBufferSize,
     ) as TStream;
   };
 })();

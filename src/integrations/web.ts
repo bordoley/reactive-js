@@ -365,7 +365,7 @@ export const windowLocation: StreamableLike<
 
   const stream = (
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
+    options?: { readonly replay?: number; readonly maxBufferSize?: number },
   ): WindowLocationStreamLike => {
     if (isSome(currentWindowLocationStream)) {
       raiseWithDebugMessage("Cannot stream more than once");

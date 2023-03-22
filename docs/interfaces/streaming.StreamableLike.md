@@ -62,6 +62,7 @@ ___
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) |
 | `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
 | `options.replay?` | `number` |
 
 #### Returns
