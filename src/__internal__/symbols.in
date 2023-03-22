@@ -150,9 +150,6 @@ ObservableLike_observe
 ObservableLike_isEnumerable
 ObservableLike_isRunnable
 SubjectLike_publish
-ThrottleMode_first
-ThrottleMode_last
-ThrottleMode_interval
 SchedulerLike_inContinuation
 SchedulerLike_now
 SchedulerLike_requestYield

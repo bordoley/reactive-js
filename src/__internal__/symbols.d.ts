@@ -302,12 +302,6 @@ export declare const ObservableLike_isRunnable: unique symbol;
 
 export declare const SubjectLike_publish: unique symbol;
 
-export declare const ThrottleMode_first: unique symbol;
-
-export declare const ThrottleMode_last: unique symbol;
-
-export declare const ThrottleMode_interval: unique symbol;
-
 export declare const SchedulerLike_inContinuation: unique symbol;
 
 export declare const SchedulerLike_now: unique symbol;

@@ -4,7 +4,6 @@ import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes,
 import { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, containsTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, reduceTests, retryTests, scanLastTests, scanTests, skipFirstTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests as zipOperatorTests, zipWithTests, } from "../../__tests__/operators.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { arrayEquality, identity, increment, incrementBy, newInstance, none, pipe, pipeLazy, returns, } from "../../functions.js";
-import { ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../rx.js";
 import { SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { StreamableLike_stream } from "../../streaming.js";
@@ -23,13 +22,13 @@ const takeUntilTests = describe("takeUntil", test("takes until the notifier noti
 const throttleTests = describe("throttle", test("first", pipeLazy(Runnable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
-}), Runnable.takeFirst({ count: 100 }), Runnable.throttle(50, { mode: ThrottleMode_first }), Runnable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(Runnable.generate(increment, returns(-1), {
+}), Runnable.takeFirst({ count: 100 }), Runnable.throttle(50, { mode: "first" }), Runnable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(Runnable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
-}), Runnable.takeFirst({ count: 200 }), Runnable.throttle(50, { mode: ThrottleMode_last }), Runnable.toReadonlyArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", pipeLazy(Runnable.generate(increment, returns(-1), {
+}), Runnable.takeFirst({ count: 200 }), Runnable.throttle(50, { mode: "last" }), Runnable.toReadonlyArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", pipeLazy(Runnable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
-}), Runnable.takeFirst({ count: 200 }), Runnable.throttle(75, { mode: ThrottleMode_interval }), Runnable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199]))));
+}), Runnable.takeFirst({ count: 200 }), Runnable.throttle(75, { mode: "interval" }), Runnable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199]))));
 const timeoutTests = describe("timeout", test("throws when a timeout occurs", pipeLazy(pipeLazy([1], ReadonlyArray.toRunnable({ delay: 2, delayStart: true }), Runnable.timeout(1), Runnable.toReadonlyArray()), expectToThrow)), test("when timeout is greater than observed time", pipeLazy([1], ReadonlyArray.toRunnable({ delay: 2, delayStart: true }), Runnable.timeout(3), Runnable.toReadonlyArray(), expectArrayEquals([1]))));
 // FIXME Move these tests into container?
 const toFlowableTests = describe("toFlowable", test("flow a generating source", () => {

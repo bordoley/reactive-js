@@ -54,12 +54,7 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
-import {
-  RunnableLike,
-  ThrottleMode_first,
-  ThrottleMode_interval,
-  ThrottleMode_last,
-} from "../../rx.js";
+import { RunnableLike } from "../../rx.js";
 import {
   SchedulerLike_now,
   SchedulerLike_schedule,
@@ -226,7 +221,7 @@ const throttleTests = describe(
         delayStart: true,
       }),
       Runnable.takeFirst({ count: 100 }),
-      Runnable.throttle(50, { mode: ThrottleMode_first }),
+      Runnable.throttle(50, { mode: "first" }),
       Runnable.toReadonlyArray(),
       expectArrayEquals([0, 49, 99]),
     ),
@@ -240,7 +235,7 @@ const throttleTests = describe(
         delayStart: true,
       }),
       Runnable.takeFirst({ count: 200 }),
-      Runnable.throttle(50, { mode: ThrottleMode_last }),
+      Runnable.throttle(50, { mode: "last" }),
       Runnable.toReadonlyArray(),
       expectArrayEquals([49, 99, 149, 199]),
     ),
@@ -254,7 +249,7 @@ const throttleTests = describe(
         delayStart: true,
       }),
       Runnable.takeFirst({ count: 200 }),
-      Runnable.throttle(75, { mode: ThrottleMode_interval }),
+      Runnable.throttle(75, { mode: "interval" }),
       Runnable.toReadonlyArray(),
       expectArrayEquals([0, 74, 149, 199]),
     ),

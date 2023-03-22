@@ -311,12 +311,6 @@ export const ObservableLike_isRunnable = /*@__PURE__*/ symbol("ObservableLike_is
 /** @type {unique symbol} */
 export const SubjectLike_publish = /*@__PURE__*/ symbol("SubjectLike_publish");
 /** @type {unique symbol} */
-export const ThrottleMode_first = /*@__PURE__*/ symbol("ThrottleMode_first");
-/** @type {unique symbol} */
-export const ThrottleMode_last = /*@__PURE__*/ symbol("ThrottleMode_last");
-/** @type {unique symbol} */
-export const ThrottleMode_interval = /*@__PURE__*/ symbol("ThrottleMode_interval");
-/** @type {unique symbol} */
 export const SchedulerLike_inContinuation = /*@__PURE__*/ symbol("SchedulerLike_inContinuation");
 /** @type {unique symbol} */
 export const SchedulerLike_now = /*@__PURE__*/ symbol("SchedulerLike_now");

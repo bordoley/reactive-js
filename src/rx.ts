@@ -7,9 +7,6 @@ import {
   ObservableLike_observe,
   ObserverLike_notify,
   SubjectLike_publish,
-  ThrottleMode_first,
-  ThrottleMode_interval,
-  ThrottleMode_last,
 } from "./__internal__/symbols.js";
 import {
   Container,
@@ -32,9 +29,6 @@ export {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   SubjectLike_publish,
-  ThrottleMode_first,
-  ThrottleMode_last,
-  ThrottleMode_interval,
 };
 
 /**
@@ -596,11 +590,6 @@ export interface TakeUntil<C extends ObservableLike> extends Container<C> {
   takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
 }
 
-export type ThrottleMode =
-  | typeof ThrottleMode_first
-  | typeof ThrottleMode_last
-  | typeof ThrottleMode_interval;
-
 /**
  * @noInheritDoc
  * @category TypeClass
@@ -616,7 +605,7 @@ export interface Throttle<C extends ObservableLike> extends Container<C> {
    */
   throttle<T>(
     duration: Function1<T, C>,
-    options?: { readonly mode?: ThrottleMode },
+    options?: { readonly mode?: "first" | "last" | "interval" },
   ): ContainerOperator<C, T, T>;
 
   /**
@@ -631,7 +620,7 @@ export interface Throttle<C extends ObservableLike> extends Container<C> {
    */
   throttle<T>(
     duration: number,
-    options?: { readonly mode?: ThrottleMode },
+    options?: { readonly mode?: "first" | "last" | "interval" },
   ): ContainerOperator<C, T, T>;
 }
 

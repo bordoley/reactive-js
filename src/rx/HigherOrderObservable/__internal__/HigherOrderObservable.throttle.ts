@@ -38,10 +38,6 @@ import {
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
-  ThrottleMode,
-  ThrottleMode_first,
-  ThrottleMode_interval,
-  ThrottleMode_last,
 } from "../../../rx.js";
 import {
   DisposableLike_isDisposed,
@@ -62,7 +58,7 @@ import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 const createThrottleObserver: <T>(
   delegate: ObserverLike<T>,
   durationFunction: Function1<T, ObservableLike>,
-  mode: ThrottleMode,
+  mode: "first" | "last" | "interval",
 ) => ObserverLike<T> = (<T>() => {
   const typedObserverMixin = Observer_mixin<T>();
 
@@ -71,7 +67,7 @@ const createThrottleObserver: <T>(
     [ThrottleObserver_hasValue]: boolean;
     readonly [ThrottleObserver_durationSubscription]: SerialDisposableLike;
     readonly [ThrottleObserver_durationFunction]: Function1<T, ObservableLike>;
-    readonly [ThrottleObserver_mode]: ThrottleMode;
+    readonly [ThrottleObserver_mode]: "first" | "last" | "interval";
     readonly [ThrottleObserver_onNotify]: SideEffect;
   };
 
@@ -99,7 +95,7 @@ const createThrottleObserver: <T>(
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         durationFunction: Function1<T, ObservableLike>,
-        mode: ThrottleMode,
+        mode: "first" | "last" | "interval",
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
         init(
@@ -134,7 +130,7 @@ const createThrottleObserver: <T>(
           Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             if (
-              instance[ThrottleObserver_mode] !== ThrottleMode_first &&
+              instance[ThrottleObserver_mode] !== "first" &&
               instance[ThrottleObserver_hasValue] &&
               !delegate[DisposableLike_isDisposed]
             ) {
@@ -154,7 +150,7 @@ const createThrottleObserver: <T>(
         [ThrottleObserver_hasValue]: false,
         [ThrottleObserver_durationSubscription]: none,
         [ThrottleObserver_durationFunction]: none,
-        [ThrottleObserver_mode]: ThrottleMode_interval,
+        [ThrottleObserver_mode]: "interval",
         [ThrottleObserver_onNotify]: none,
       }),
       {
@@ -171,7 +167,7 @@ const createThrottleObserver: <T>(
 
           if (
             durationSubscriptionDisposableIsDisposed &&
-            this[ThrottleObserver_mode] !== ThrottleMode_last
+            this[ThrottleObserver_mode] !== "last"
           ) {
             this[ThrottleObserver_onNotify]();
           } else if (durationSubscriptionDisposableIsDisposed) {
@@ -188,14 +184,14 @@ const throttleImpl = <C extends ObservableLike, T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
   ) => ContainerOperator<C, T, T>,
   duration: Function1<T, ContainerOf<C, unknown>>,
-  mode: ThrottleMode,
+  mode: "first" | "last" | "interval",
 ): ContainerOperator<C, T, T> => {
   return pipe(
     createThrottleObserver,
     partial<
       ObserverLike<T>,
       Function1<T, ObservableLike>,
-      ThrottleMode,
+      "first" | "last" | "interval",
       ObserverLike<T>
     >(duration, mode),
     lift,
@@ -214,9 +210,9 @@ const HigherOrderObservable_throttle =
   ) =>
   (
     duration: Function1<T, ContainerOf<C, unknown>> | number,
-    options: { readonly mode?: ThrottleMode } = {},
+    options: { readonly mode?: "first" | "last" | "interval" } = {},
   ): ContainerOperator<C, T, T> => {
-    const { mode = ThrottleMode_interval } = options;
+    const { mode = "interval" } = options;
 
     const durationFunction = isNumber(duration)
       ? (_: T) =>

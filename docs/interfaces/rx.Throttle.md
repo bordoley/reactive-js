@@ -42,7 +42,7 @@ Emits a value from the source, then ignores subsequent source values for a durat
 | :------ | :------ | :------ |
 | `duration` | [`Function1`](../modules/functions.md#function1)<`T`, `C`\> | Function function that is used to determine the silence duration in between emitted values. |
 | `options?` | `Object` | - |
-| `options.mode?` | [`ThrottleMode`](../modules/rx.md#throttlemode) | - |
+| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` | - |
 
 #### Returns
 
@@ -65,7 +65,7 @@ then ignores subsequent source values for `duration` milliseconds.
 | :------ | :------ | :------ |
 | `duration` | `number` | Time to wait before emitting another value after emitting the last value, measured in milliseconds. |
 | `options?` | `Object` | - |
-| `options.mode?` | [`ThrottleMode`](../modules/rx.md#throttlemode) | - |
+| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` | - |
 
 #### Returns
 

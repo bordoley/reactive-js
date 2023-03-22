@@ -303,12 +303,6 @@ export const ObservableLike_isRunnable: unique symbol;
 /** @type {unique symbol} */
 export const SubjectLike_publish: unique symbol;
 /** @type {unique symbol} */
-export const ThrottleMode_first: unique symbol;
-/** @type {unique symbol} */
-export const ThrottleMode_last: unique symbol;
-/** @type {unique symbol} */
-export const ThrottleMode_interval: unique symbol;
-/** @type {unique symbol} */
 export const SchedulerLike_inContinuation: unique symbol;
 /** @type {unique symbol} */
 export const SchedulerLike_now: unique symbol;

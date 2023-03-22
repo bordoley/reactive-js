@@ -1,9 +1,9 @@
-import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, SubjectLike_publish, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last } from "./__internal__/symbols.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, SubjectLike_publish } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import { DisposableLike, QueueableLike } from "./util.js";
-export { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, SubjectLike_publish, ThrottleMode_first, ThrottleMode_last, ThrottleMode_interval, };
+export { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, SubjectLike_publish, };
 /**
  * @noInheritDoc
  */
@@ -316,7 +316,6 @@ export interface TakeUntil<C extends ObservableLike> extends Container<C> {
      */
     takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
 }
-export type ThrottleMode = typeof ThrottleMode_first | typeof ThrottleMode_last | typeof ThrottleMode_interval;
 /**
  * @noInheritDoc
  * @category TypeClass
@@ -331,7 +330,7 @@ export interface Throttle<C extends ObservableLike> extends Container<C> {
      * @category Operator
      */
     throttle<T>(duration: Function1<T, C>, options?: {
-        readonly mode?: ThrottleMode;
+        readonly mode?: "first" | "last" | "interval";
     }): ContainerOperator<C, T, T>;
     /**
      * Returns an `ObservableLike` which emits a value from the source,
@@ -344,7 +343,7 @@ export interface Throttle<C extends ObservableLike> extends Container<C> {
      * @category Operator
      */
     throttle<T>(duration: number, options?: {
-        readonly mode?: ThrottleMode;
+        readonly mode?: "first" | "last" | "interval";
     }): ContainerOperator<C, T, T>;
 }
 /**

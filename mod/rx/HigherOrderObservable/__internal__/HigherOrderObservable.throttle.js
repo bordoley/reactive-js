@@ -5,7 +5,7 @@ import { ThrottleObserver_durationFunction, ThrottleObserver_durationSubscriptio
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { isNumber, none, partial, pipe, } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObserverLike_notify, ThrottleMode_first, ThrottleMode_interval, ThrottleMode_last, } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_isDisposed, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -39,7 +39,7 @@ const createThrottleObserver = (() => {
             }
         };
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            if (instance[ThrottleObserver_mode] !== ThrottleMode_first &&
+            if (instance[ThrottleObserver_mode] !== "first" &&
                 instance[ThrottleObserver_hasValue] &&
                 !delegate[DisposableLike_isDisposed]) {
                 pipe(instance[ThrottleObserver_value], Optional_toObservable(), Observable_observeWith(delegate));
@@ -51,7 +51,7 @@ const createThrottleObserver = (() => {
         [ThrottleObserver_hasValue]: false,
         [ThrottleObserver_durationSubscription]: none,
         [ThrottleObserver_durationFunction]: none,
-        [ThrottleObserver_mode]: ThrottleMode_interval,
+        [ThrottleObserver_mode]: "interval",
         [ThrottleObserver_onNotify]: none,
     }), {
         [ObserverLike_notify](next) {
@@ -60,7 +60,7 @@ const createThrottleObserver = (() => {
             this[ThrottleObserver_hasValue] = true;
             const durationSubscriptionDisposableIsDisposed = this[ThrottleObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed];
             if (durationSubscriptionDisposableIsDisposed &&
-                this[ThrottleObserver_mode] !== ThrottleMode_last) {
+                this[ThrottleObserver_mode] !== "last") {
                 this[ThrottleObserver_onNotify]();
             }
             else if (durationSubscriptionDisposableIsDisposed) {
@@ -73,7 +73,7 @@ const throttleImpl = (lift, duration, mode) => {
     return pipe(createThrottleObserver, partial(duration, mode), lift);
 };
 const HigherOrderObservable_throttle = (fromReadonlyArray, lift) => (duration, options = {}) => {
-    const { mode = ThrottleMode_interval } = options;
+    const { mode = "interval" } = options;
     const durationFunction = isNumber(duration)
         ? (_) => pipe([none], fromReadonlyArray({
             delay: duration,
