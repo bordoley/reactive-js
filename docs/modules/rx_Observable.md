@@ -3346,7 +3346,7 @@ ___
 
 ### share
 
-▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **share**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 Returns an `ObservableLike` backed by a shared refcounted subscription to the
 source. When the refcount goes to 0, the underlying subscription
@@ -3360,12 +3360,12 @@ to the source is disposed.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
-| `options?` | `Object` | - |
-| `options.maxBufferSize?` | `number` | - |
-| `options.replay?` | `number` | - |
+| Name | Type |
+| :------ | :------ |
+| `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+| `options.replay?` | `number` |
 
 #### Returns
 
@@ -4129,7 +4129,7 @@ ___
 
 ### multicast
 
-▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
+▸ **multicast**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\>\>
 
 Returns a `MulticastObservableLike` backed by a single subscription to the source.
 
@@ -4141,12 +4141,12 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
-| `options?` | `Object` | - |
-| `options.maxBufferSize?` | `number` | - |
-| `options.replay?` | `number` | - |
+| Name | Type |
+| :------ | :------ |
+| `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+| `options.replay?` | `number` |
 
 #### Returns
 

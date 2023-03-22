@@ -1,4 +1,5 @@
 import {
+  Factory,
   Function1,
   Optional,
   isNone,
@@ -20,7 +21,7 @@ import Observable_multicast from "./Observable.multicast.js";
 
 const Observable_share =
   <T>(
-    scheduler: SchedulerLike,
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>,
     options?: { readonly replay?: number; readonly maxBufferSize?: number },
   ): Function1<ObservableLike<T>, ObservableLike<T>> =>
   (source: ObservableLike<T>) => {
@@ -29,7 +30,10 @@ const Observable_share =
     // FIXME: Type test scheduler for VTS
     return Observable_create<T>(observer => {
       if (isNone(multicasted)) {
-        multicasted = pipe(source, Observable_multicast(scheduler, options));
+        multicasted = pipe(
+          source,
+          Observable_multicast(schedulerOrFactory, options),
+        );
       }
 
       pipe(

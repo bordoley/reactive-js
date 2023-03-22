@@ -173,7 +173,7 @@ export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
  *
  * @category Transform
  */
-export declare const multicast: <T>(scheduler: SchedulerLike, options?: {
+export declare const multicast: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
     readonly replay?: number | undefined;
     readonly maxBufferSize?: number | undefined;
 }) => Function1<ObservableLike<T>, import("../rx.js").MulticastObservableLike<T>>;
@@ -200,7 +200,7 @@ export declare const scanLast: ScanLast<ObservableLike, ObservableLike>["scanLas
  *
  * @category Operator
  */
-export declare const share: <T>(scheduler: SchedulerLike, options?: {
+export declare const share: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
     readonly replay?: number | undefined;
     readonly maxBufferSize?: number | undefined;
 } | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
