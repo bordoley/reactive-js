@@ -59,12 +59,16 @@ import { createSchedulerWithNormalPriority } from "./scheduler.js";
  */
 export const useObservable = <T>(
   observable: ObservableLike<T>,
-  options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
+  options: {
+    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly maxBufferSize?: number;
+  } = {},
 ): Optional<T> => {
   const [state, updateState] = useState<Optional<T>>(none);
   const [error, updateError] = useState<Optional<Error>>(none);
 
-  const { scheduler: schedulerOption } = options;
+  const { maxBufferSize = MAX_SAFE_INTEGER, scheduler: schedulerOption } =
+    options;
 
   useEffect(() => {
     const scheduler = isFunction(schedulerOption)
@@ -74,7 +78,7 @@ export const useObservable = <T>(
     const subscription = pipe(
       observable,
       Observable.forEach<T>(v => updateState(_ => v)),
-      Observable.subscribe(scheduler),
+      Observable.subscribe(scheduler, { maxBufferSize }),
       Disposable.onError(updateError),
     );
 
@@ -83,7 +87,7 @@ export const useObservable = <T>(
     return () => {
       disposable[DisposableLike_dispose]();
     };
-  }, [observable, updateState, updateError, schedulerOption]);
+  }, [observable, updateState, updateError, schedulerOption, maxBufferSize]);
 
   return isSome(error) ? raiseError<T>(error) : state;
 };
@@ -173,7 +177,10 @@ const useStream = <TReq, T>(
  */
 export const useStreamable = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
-  options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
+  options: {
+    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly maxBufferSize?: number;
+  } = {},
 ): readonly [Optional<T>, SideEffect1<TReq>] => {
   const stream = useStreamableInternal(streamable, options);
   return useStream(stream);
@@ -186,7 +193,10 @@ const emptyObservable = /*@__PURE__*/ Observable.empty<boolean>();
  */
 export const useFlowable = <T>(
   flowable: FlowableLike<T>,
-  options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
+  options: {
+    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly maxBufferSize?: number;
+  } = {},
 ): {
   pause: SideEffect;
   resume: SideEffect;
@@ -197,8 +207,10 @@ export const useFlowable = <T>(
   const [value, dispatch] = useStream(stream);
 
   const isPaused =
-    useObservable(stream?.[FlowableStreamLike_isPaused] ?? emptyObservable) ??
-    true;
+    useObservable(
+      stream?.[FlowableStreamLike_isPaused] ?? emptyObservable,
+      options,
+    ) ?? true;
 
   const pause = useCallback(() => {
     dispatch(true);

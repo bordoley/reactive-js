@@ -61,6 +61,7 @@ ___
 | :------ | :------ |
 | `flowable` | [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\> |
 | `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 
 #### Returns
@@ -94,6 +95,7 @@ Returns the current value, if defined, of `observable`.
 | :------ | :------ | :------ |
 | `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> | The `ObservableLike` to subscribe to. |
 | `options?` | `Object` | - |
+| `options.maxBufferSize?` | `number` | - |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> | - |
 
 #### Returns
@@ -119,6 +121,7 @@ ___
 | :------ | :------ |
 | `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\> |
 | `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 
 #### Returns
