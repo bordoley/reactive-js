@@ -4095,7 +4095,7 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.maxBufferSize?` | `number` |
-| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 
 #### Returns
 
@@ -4119,7 +4119,7 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.maxBufferSize?` | `number` |
-| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 
 #### Returns
 

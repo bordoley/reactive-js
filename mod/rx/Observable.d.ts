@@ -109,7 +109,7 @@ export declare const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"];
 export declare const exhaust: Exhaust<ObservableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"];
 export declare const firstAsync: FirstAsync<ObservableLike, {
-    scheduler?: SchedulerLike;
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
     maxBufferSize?: number;
 }>["firstAsync"];
 /**
@@ -152,7 +152,7 @@ export declare const ignoreElements: IgnoreElements<ObservableLike>["ignoreEleme
 export declare const keep: Keep<ObservableLike>["keep"];
 export declare const keepType: KeepType<ObservableLike>["keepType"];
 export declare const lastAsync: LastAsync<ObservableLike, {
-    scheduler?: SchedulerLike;
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
     maxBufferSize?: number;
 }>["lastAsync"];
 export declare const map: Map<ObservableLike>["map"];

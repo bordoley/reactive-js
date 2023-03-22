@@ -1,6 +1,7 @@
 import {
+  Factory,
   Optional,
-  isNone,
+  isFunction,
   newInstance,
   none,
   pipe,
@@ -15,11 +16,17 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_lastAsync =
-  <T>(options?: { scheduler?: SchedulerLike; maxBufferSize?: number }) =>
+  <T>(options?: {
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    maxBufferSize?: number;
+  }) =>
   async (observable: ObservableLike<T>): Promise<Optional<T>> => {
-    const { scheduler: schedulerOption } = options ?? {};
-
-    const scheduler = schedulerOption ?? Scheduler_createHostScheduler();
+    const schedulerOrFactory =
+      options?.scheduler ?? Scheduler_createHostScheduler;
+    const isSchedulerFactory = isFunction(schedulerOrFactory);
+    const scheduler = isSchedulerFactory
+      ? schedulerOrFactory()
+      : schedulerOrFactory;
 
     try {
       return await newInstance<
@@ -44,7 +51,7 @@ const Observable_lastAsync =
         );
       });
     } finally {
-      if (isNone(schedulerOption)) {
+      if (isSchedulerFactory) {
         scheduler[DisposableLike_dispose]();
       }
     }

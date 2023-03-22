@@ -395,7 +395,7 @@ export const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"] =
 
 export const firstAsync: FirstAsync<
   ObservableLike,
-  { scheduler?: SchedulerLike; maxBufferSize?: number }
+  { scheduler?: SchedulerLike | Factory<SchedulerLike>; maxBufferSize?: number }
 >["firstAsync"] = Observable_firstAsync;
 
 /**
@@ -477,7 +477,7 @@ export const keepType: KeepType<ObservableLike>["keepType"] =
 
 export const lastAsync: LastAsync<
   ObservableLike,
-  { scheduler?: SchedulerLike; maxBufferSize?: number }
+  { scheduler?: SchedulerLike | Factory<SchedulerLike>; maxBufferSize?: number }
 >["lastAsync"] = Observable_lastAsync;
 
 export const map: Map<ObservableLike>["map"] = Observable_map;
