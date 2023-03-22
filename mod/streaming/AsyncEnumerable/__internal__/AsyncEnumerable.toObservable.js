@@ -6,7 +6,6 @@ import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.cr
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
-import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { StreamableLike_isEnumerable, StreamableLike_isRunnable, StreamableLike_stream, } from "../../../streaming.js";
 import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
@@ -23,9 +22,8 @@ const AsyncEnumerable_toObservable = () => (enumerable) => {
         const enumerator = pipe(enumerable[StreamableLike_stream](scheduler, { maxBufferSize }), Disposable_addTo(observer));
         pipe(enumerator, Observable_forEach(_ => {
             enumerator[QueueableLike_push](none);
-        }), Observable_onSubscribe(() => {
-            enumerator[QueueableLike_push](none);
         }), Observable_observeWith(observer));
+        enumerator[QueueableLike_push](none);
     });
 };
 export default AsyncEnumerable_toObservable;

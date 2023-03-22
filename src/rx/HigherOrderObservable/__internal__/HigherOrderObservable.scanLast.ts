@@ -9,7 +9,6 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
-import Observable_onSubscribe from "../../Observable/__internal__/Observable.onSubscribe.js";
 import Observable_switchAll from "../../Observable/__internal__/Observable.switchAll.js";
 import Observable_takeLast from "../../Observable/__internal__/Observable.takeLast.js";
 import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom.js";
@@ -40,11 +39,10 @@ const HigherOrderObservable_scanLast =
         Observable_forEach<ObservableLike, TAcc>(
           Subject_publishTo(accFeedbackStream),
         ),
-        Observable_onSubscribe(() =>
-          accFeedbackStream[SubjectLike_publish](initialValue()),
-        ),
         Observable_observeWith(observer),
       );
+
+      accFeedbackStream[SubjectLike_publish](initialValue());
     };
 
     return createObservable(onSubscribe);
