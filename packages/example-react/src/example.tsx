@@ -26,6 +26,17 @@ const animationScheduler = createAnimationFrameScheduler();
 
 const Root = () => {
   const history = useWindowLocation();
+  const onChange = useCallback(
+    (ev: React.ChangeEvent<HTMLInputElement>) => {
+      const { value: path } = ev.target;
+
+      history.push((uri: WindowLocationURI) => ({
+        ...uri,
+        path,
+      }));
+    },
+    [history.push],
+  );
 
   const counterFlowable = useMemo(
     () =>
@@ -42,11 +53,6 @@ const Root = () => {
     [history.replace],
   );
   const counter = useFlowable(counterFlowable);
-
-  const label = counter.isPaused ? "Resume Counter" : "Pause Counter";
-  const toggleMode = useCallback(() => {
-    counter.isPaused ? counter.resume() : counter.pause();
-  }, [counter.isPaused, counter.resume, counter.pause]);
 
   const animatedDivRef = useRef<HTMLDivElement>(null);
   const animationStreamable = useMemo(
@@ -93,23 +99,10 @@ const Root = () => {
   );
   const [animationState, dispatch] = useStreamable(animationStreamable);
 
-  const onChange = useCallback(
-    (ev: React.ChangeEvent<HTMLInputElement>) => {
-      const { value: path } = ev.target;
-
-      history.push((uri: WindowLocationURI) => ({
-        ...uri,
-        path,
-      }));
-    },
-    [history.push],
-  );
-
   const enumerable = useMemo(
     () => Enumerable.generate(increment, () => -1),
     [],
   );
-
   const enumerator = useEnumerable(enumerable);
 
   return (
@@ -124,14 +117,16 @@ const Root = () => {
           Back
         </button>
       </div>
-      
+
       <div>
-      <button onClick={enumerator.move}>Move the Enumerator</button>
-      <span> {enumerator.hasCurrent ? enumerator.current : "no value" }</span>
+        <button onClick={enumerator.move}>Move the Enumerator</button>
+        <span> {enumerator.hasCurrent ? enumerator.current : "no value"}</span>
       </div>
-      
+
       <div>
-        <button onClick={toggleMode}>{label}</button>
+        <button onClick={counter.isPaused ? counter.resume : counter.pause}>
+          {counter.isPaused ? "Resume Counter" : "Pause Counter"}
+        </button>
         <span>{counter.value ?? 0}</span>
       </div>
       <div ref={animatedDivRef} style={{ height: "100px", width: "100px" }} />
