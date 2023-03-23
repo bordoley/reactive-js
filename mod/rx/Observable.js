@@ -203,6 +203,7 @@ export const repeat = Observable_repeat;
 export const retry = Observable_retry;
 export const scan = Observable_scan;
 export const scanLast = Observable_scanLast;
+export const scanMany = Observable_scanLast;
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription

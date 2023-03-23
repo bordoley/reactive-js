@@ -82,6 +82,7 @@ import {
   ObserverLike,
   Retry,
   ScanLast,
+  ScanMany,
   SwitchAll,
   SwitchMap,
   TakeUntil,
@@ -540,6 +541,9 @@ export const retry: Retry<ObservableLike>["retry"] = Observable_retry;
 export const scan: Scan<ObservableLike>["scan"] = Observable_scan;
 
 export const scanLast: ScanLast<ObservableLike, ObservableLike>["scanLast"] =
+  Observable_scanLast;
+
+export const scanMany: ScanMany<ObservableLike, ObservableLike>["scanMany"] =
   Observable_scanLast;
 
 /**

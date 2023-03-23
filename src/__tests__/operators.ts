@@ -23,6 +23,7 @@ import {
   FlatMapIterable,
   ForEach,
   FromReadonlyArray,
+  Generate,
   IgnoreElements,
   Keep,
   Map,
@@ -46,6 +47,7 @@ import {
   alwaysFalse,
   alwaysTrue,
   arrayEquality,
+  identity,
   increment,
   none,
   pipe,
@@ -56,6 +58,7 @@ import {
   ObservableLike,
   Retry,
   ScanLast,
+  ScanMany,
   ToEnumerable,
   ToObservable,
   ToRunnable,
@@ -801,7 +804,7 @@ export const scanLastTests = <
   describe(
     "scanLast",
     test(
-      "fast lib, slow acc",
+      "fast src, slow acc",
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray(),
@@ -816,7 +819,7 @@ export const scanLastTests = <
     ),
 
     test(
-      "slow lib, fast acc",
+      "slow src, fast acc",
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray({ delay: 4 }),
@@ -831,7 +834,7 @@ export const scanLastTests = <
     ),
 
     test(
-      "slow lib, slow acc",
+      "slow src, slow acc",
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray({ delay: 4 }),
@@ -846,7 +849,7 @@ export const scanLastTests = <
     ),
 
     test(
-      "fast lib, fast acc",
+      "fast src, fast acc",
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray(),
@@ -857,6 +860,72 @@ export const scanLastTests = <
         m.toRunnable(),
         Runnable.toReadonlyArray(),
         expectArrayEquals([1, 3, 6]),
+      ),
+    ),
+  );
+
+export const scanManyTests = <
+  C extends ContainerLike,
+  CInner extends ObservableLike,
+>(
+  m: ScanMany<C, CInner> &
+    FromReadonlyArray<
+      C,
+      {
+        readonly start?: number;
+        readonly count?: number;
+        delay?: number;
+      }
+    > &
+    ToRunnable<C>,
+  mInner: Generate<
+    CInner,
+    {
+      delay?: number;
+    }
+  > &
+    TakeFirst<CInner>,
+) =>
+  describe(
+    "scanMany",
+    test(
+      "slow src, fast acc",
+      pipeLazy(
+        [1, 1, 1],
+        m.fromReadonlyArray({ delay: 10 }),
+        m.scanMany<number, number>(
+          (acc, next) =>
+            pipe(
+              mInner.generate<number>(identity, returns(next + acc), {
+                delay: 1,
+              }),
+              mInner.takeFirst({ count: 3 }),
+            ),
+          returns(0),
+        ),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+      ),
+    ),
+    test(
+      "fast src, slow acc",
+      pipeLazy(
+        [1, 1, 1],
+        m.fromReadonlyArray({ delay: 1 }),
+        m.scanMany<number, number>(
+          (acc, next) =>
+            pipe(
+              mInner.generate<number>(identity, returns(next + acc), {
+                delay: 10,
+              }),
+              mInner.takeFirst({ count: 3 }),
+            ),
+          returns(0),
+        ),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
       ),
     ),
   );

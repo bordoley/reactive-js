@@ -36,6 +36,7 @@
 - [MergeWith](../interfaces/rx.MergeWith.md)
 - [Retry](../interfaces/rx.Retry.md)
 - [ScanLast](../interfaces/rx.ScanLast.md)
+- [ScanMany](../interfaces/rx.ScanMany.md)
 - [SwitchAll](../interfaces/rx.SwitchAll.md)
 - [SwitchMap](../interfaces/rx.SwitchMap.md)
 - [TakeUntil](../interfaces/rx.TakeUntil.md)

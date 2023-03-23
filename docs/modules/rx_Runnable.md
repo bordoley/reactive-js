@@ -55,6 +55,7 @@
 - [retry](rx_Runnable.md#retry)
 - [scan](rx_Runnable.md#scan)
 - [scanLast](rx_Runnable.md#scanlast)
+- [scanMany](rx_Runnable.md#scanmany)
 - [skipFirst](rx_Runnable.md#skipfirst)
 - [someSatisfy](rx_Runnable.md#somesatisfy)
 - [startWith](rx_Runnable.md#startwith)
@@ -2193,6 +2194,30 @@ ___
 ### scanLast
 
 ▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+
+___
+
+### scanMany
+
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 

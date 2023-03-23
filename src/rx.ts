@@ -555,6 +555,23 @@ export interface ScanLast<
  * @noInheritDoc
  * @category TypeClass
  */
+export interface ScanMany<
+  C extends ContainerLike,
+  CInner extends ObservableLike,
+> extends Container<C> {
+  /**
+   * @category Operator
+   */
+  scanMany: <T, TAcc>(
+    scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
+    initialValue: Factory<TAcc>,
+  ) => ContainerOperator<C, T, TAcc>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface SwitchAll<C extends ObservableLike, O = never>
   extends Container<C> {
   /**

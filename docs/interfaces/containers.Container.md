@@ -156,6 +156,8 @@
 
   ↳ [`ScanLast`](rx.ScanLast.md)
 
+  ↳ [`ScanMany`](rx.ScanMany.md)
+
   ↳ [`SwitchAll`](rx.SwitchAll.md)
 
   ↳ [`SwitchMap`](rx.SwitchMap.md)
