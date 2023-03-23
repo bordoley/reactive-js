@@ -359,6 +359,16 @@ export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
 export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
   /*@__PURE__*/ returns(identity);
 
+/*
+// FIXME
+export const tweening: (
+  duration: number,
+  initialValue: Factory<number>,
+  options?: {
+    easing?: Function1<number, number>;
+  },
+) => ContainerOperator<ObservableLike, number, number> = Observable_tweening;*/
+
 export const withCurrentTime: WithCurrentTime<RunnableLike>["withCurrentTime"] =
   Observable_withCurrentTime;
 

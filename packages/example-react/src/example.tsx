@@ -66,28 +66,10 @@ const Root = () => {
       Streamable.create(
         Observable.exhaustMap(
           pipeLazy(
-            Runnable.currentTime(),
-            Runnable.scan(
-              ({ startTime }, time) => {
-                startTime = Math.min(time, startTime);
-
-                const elapsed = Math.max(time - startTime, 0);
-                const size = 50 - 0.1 * elapsed;
-
-                return {
-                  elapsed,
-                  startTime,
-                  size,
-                };
-              },
-              () => ({
-                elapsed: 0,
-                startTime: Number.MAX_SAFE_INTEGER,
-                size: 50,
-              }),
-            ),
-            Runnable.takeWhile(({ size }) => size > 0, { inclusive: true }),
-            Runnable.forEach(({ size }) => {
+            0,
+            Observable.fromOptional(),
+            Observable.tweening(1000, returns(50)),
+            Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {
                 animatedDiv.style.margin = `${50 - size}px`;
@@ -137,7 +119,7 @@ const Root = () => {
       </div>
       <div ref={animatedDivRef} style={{ height: "100px", width: "100px" }} />
       <div>
-        <button onClick={dispatch} disabled={(animationState?.size ?? 0) > 0}>
+        <button onClick={dispatch} disabled={(animationState ?? 0) > 0}>
           Run Animation
         </button>
       </div>
@@ -161,38 +143,13 @@ const RxComponent = createComponent(
     const createAnimationStream = (animatedDivRef: {
       current: HTMLElement | null;
     }) =>
-      Streamable.create<
-        void,
-        {
-          elapsed: number;
-          startTime: number;
-          size: number;
-        }
-      >(
+      Streamable.create<void, number>(
         Observable.exhaustMap(
           pipeLazy(
-            Runnable.currentTime(),
-            Runnable.scan(
-              ({ startTime }, time) => {
-                startTime = Math.min(time, startTime);
-
-                const elapsed = Math.max(time - startTime, 0);
-                const size = 50 - 0.1 * elapsed;
-
-                return {
-                  elapsed,
-                  startTime,
-                  size,
-                };
-              },
-              () => ({
-                elapsed: 0,
-                startTime: Number.MAX_SAFE_INTEGER,
-                size: 50,
-              }),
-            ),
-            Runnable.takeWhile(({ size }) => size > 0, { inclusive: true }),
-            Runnable.forEach(({ size }) => {
+            0,
+            Observable.fromOptional(),
+            Observable.tweening(1000, returns(50)),
+            Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {
                 animatedDiv.style.margin = `${50 - size}px`;
@@ -245,10 +202,7 @@ const RxComponent = createComponent(
             style={{ height: "100px", width: "100px" }}
           />
           <div>
-            <button
-              onClick={runAnimation}
-              disabled={(animationState?.size ?? 0) > 0}
-            >
+            <button onClick={runAnimation} disabled={(animationState ?? 0) > 0}>
               Run Animation
             </button>
           </div>

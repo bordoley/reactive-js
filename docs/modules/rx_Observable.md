@@ -102,6 +102,7 @@
 
 - [observeWith](rx_Observable.md#observewith)
 - [subscribe](rx_Observable.md#subscribe)
+- [tweening](rx_Observable.md#tweening)
 
 ### Transform Functions
 
@@ -4126,6 +4127,25 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+___
+
+### tweening
+
+▸ **tweening**(`duration`, `initialValue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `number`, `number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `duration` | `number` |
+| `initialValue` | [`Factory`](functions.md#factory)<`number`\> |
+| `options?` | `Object` |
+| `options.easing?` | [`Function1`](functions.md#function1)<`number`, `number`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `number`, `number`\>
 
 ___
 

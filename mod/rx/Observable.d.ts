@@ -238,6 +238,9 @@ export declare const throws: Throws<ObservableLike, {
 export declare const timeout: Timeout<ObservableLike>["timeout"];
 export declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
 export declare const toRunnable: ToRunnable<ObservableLike>["toRunnable"];
+export declare const tweening: (duration: number, initialValue: Factory<number>, options?: {
+    easing?: Function1<number, number>;
+}) => ContainerOperator<ObservableLike, number, number>;
 export declare const withCurrentTime: WithCurrentTime<ObservableLike>["withCurrentTime"];
 export declare const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"];
 export declare const zip: Zip<ObservableLike>["zip"];
