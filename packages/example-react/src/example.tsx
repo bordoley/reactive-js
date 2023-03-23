@@ -77,13 +77,16 @@ const Root = () => {
                 animatedDiv.style.display = "inline-block";
               }
             }),
+            Observable.ignoreElements(),
             Observable.subscribeOn(createAnimationFrameScheduler),
+            Observable.startWith(true),
+            Observable.endWith(false),
           ),
         ),
       ),
     [animatedDivRef],
   );
-  const [animationState, dispatch] = useStreamable(animationStreamable);
+  const [animationRunning, dispatch] = useStreamable(animationStreamable);
 
   const enumerable = useMemo(
     () => Enumerable.generate(increment, () => -1),
@@ -117,7 +120,7 @@ const Root = () => {
       </div>
       <div ref={animatedDivRef} style={{ height: "100px", width: "100px" }} />
       <div>
-        <button onClick={dispatch} disabled={(animationState ?? 0) > 0}>
+        <button onClick={dispatch} disabled={animationRunning}>
           Run Animation
         </button>
       </div>
@@ -141,7 +144,7 @@ const RxComponent = createComponent(
     const createAnimationStream = (animatedDivRef: {
       current: HTMLElement | null;
     }) =>
-      Streamable.create<void, number>(
+      Streamable.create<void, boolean>(
         Observable.exhaustMap(
           pipeLazy(
             Observable.spring(50, 0, {
@@ -158,7 +161,10 @@ const RxComponent = createComponent(
                 animatedDiv.style.display = "inline-block";
               }
             }),
+            Observable.ignoreElements(),
             Observable.subscribeOn(createAnimationFrameScheduler),
+            Observable.startWith(true),
+            Observable.endWith(false),
           ),
         ),
       );
@@ -183,7 +189,7 @@ const RxComponent = createComponent(
         animationStream,
       );
 
-      const animationState = Observable.__observe(animationStream);
+      const animationIsRunning = Observable.__observe(animationStream);
 
       const value = Observable.__observe<number>(enumerator) ?? "no value";
 
@@ -201,10 +207,7 @@ const RxComponent = createComponent(
             style={{ height: "100px", width: "100px" }}
           />
           <div>
-            <button
-              onClick={runAnimation}
-              disabled={(animationState ?? 0) !== 0}
-            >
+            <button onClick={runAnimation} disabled={animationIsRunning}>
               Run Animation
             </button>
           </div>
