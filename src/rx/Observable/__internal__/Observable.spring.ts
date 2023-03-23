@@ -1,5 +1,5 @@
 import { MAX_VALUE, __DEV__ } from "../../../__internal__/constants.js";
-import { abs } from "../../../__internal__/math.js";
+import { abs, min } from "../../../__internal__/math.js";
 import { pipe, returns } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_generate from "./Observable.generate.js";
@@ -24,23 +24,21 @@ const Observable_spring = (
   return pipe(
     Observable_generate<[number, number, number]>(
       ([lastTime, last, value], now) => {
-        if (lastTime > now) {
-          return [now, last, value];
-        } else {
-          const delta = finish - value;
-          const dt = ((now - lastTime) * 60) / 1000;
-          const velocity = (value - last) / (dt || 1 / 60);
+        lastTime = min(now, lastTime);
 
-          const spring = stiffness * delta;
-          const damper = damping * velocity;
-          const acceleration = spring - damper;
-          const d = (velocity + acceleration) * dt;
+        const delta = finish - value;
+        const dt = ((now - lastTime) * 60) / 1000;
+        const velocity = (value - last) / (dt || 1 / 60);
 
-          const newValue =
-            abs(d) < precision && abs(delta) < precision ? finish : value + d;
+        const spring = stiffness * delta;
+        const damper = damping * velocity;
+        const acceleration = spring - damper;
+        const d = (velocity + acceleration) * dt;
 
-          return [now, value, newValue];
-        }
+        const newValue =
+          abs(d) < precision && abs(delta) < precision ? finish : value + d;
+
+        return [now, value, newValue];
       },
       returns([MAX_VALUE, start, start]),
     ),

@@ -1,4 +1,5 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
+import { min } from "../../../__internal__/math.js";
 import { Function1, identity, pipe, returns } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_generate from "./Observable.generate.js";
@@ -16,17 +17,15 @@ const Observable_tween = (
   const { duration = 400, easing = identity } = options ?? {};
 
   return pipe(
-    Observable_generate<[number, number]>(([start, prev], now) => {
-      if (start > now) {
-        return [now, prev];
-      } else {
-        const elapsed = now - start;
-        const next =
-          elapsed > duration
-            ? finish
-            : prev + (finish - prev) * easing(elapsed / duration);
-        return [start, next];
-      }
+    Observable_generate<[number, number]>(([startTime, _], now) => {
+      startTime = min(now, startTime);
+
+      const elapsed = now - startTime;
+      const next =
+        elapsed > duration
+          ? finish
+          : start + (finish - start) * easing(elapsed / duration);
+      return [startTime, next];
     }, returns([MAX_VALUE, start])),
     Observable_map<ObservableLike, [number, number], number>(
       ([, value]) => value,

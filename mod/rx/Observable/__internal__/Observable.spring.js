@@ -1,7 +1,7 @@
 /// <reference types="./Observable.spring.d.ts" />
 
 import { MAX_VALUE, __DEV__ } from "../../../__internal__/constants.js";
-import { abs } from "../../../__internal__/math.js";
+import { abs, min } from "../../../__internal__/math.js";
 import { pipe, returns } from "../../../functions.js";
 import Observable_generate from "./Observable.generate.js";
 import Observable_map from "./Observable.map.js";
@@ -12,20 +12,16 @@ const Observable_spring = (start, finish, options) => {
         // FIXME: Validate stiffness, damping, precision are within range.
     }
     return pipe(Observable_generate(([lastTime, last, value], now) => {
-        if (lastTime > now) {
-            return [now, last, value];
-        }
-        else {
-            const delta = finish - value;
-            const dt = ((now - lastTime) * 60) / 1000;
-            const velocity = (value - last) / (dt || 1 / 60);
-            const spring = stiffness * delta;
-            const damper = damping * velocity;
-            const acceleration = spring - damper;
-            const d = (velocity + acceleration) * dt;
-            const newValue = abs(d) < precision && abs(delta) < precision ? finish : value + d;
-            return [now, value, newValue];
-        }
+        lastTime = min(now, lastTime);
+        const delta = finish - value;
+        const dt = ((now - lastTime) * 60) / 1000;
+        const velocity = (value - last) / (dt || 1 / 60);
+        const spring = stiffness * delta;
+        const damper = damping * velocity;
+        const acceleration = spring - damper;
+        const d = (velocity + acceleration) * dt;
+        const newValue = abs(d) < precision && abs(delta) < precision ? finish : value + d;
+        return [now, value, newValue];
     }, returns([MAX_VALUE, start, start])), Observable_map(([, , value]) => value), Observable_takeWhile(value => value !== finish, {
         inclusive: true,
     }));
