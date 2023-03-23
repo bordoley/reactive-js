@@ -66,7 +66,9 @@ export const windowLocation = /*@__PURE__*/ (() => {
             return newInstance(URL, uri, location.href).toString();
         },
     };
-    const createWindowLocationURIWithPrototype = (uri) => Object.create(windowLocationPrototype, Object.getOwnPropertyDescriptors(uri));
+    const createWindowLocationURIWithPrototype = (uri) => uri.toString === windowLocationPrototype.toString
+        ? uri
+        : Object.create(windowLocationPrototype, Object.getOwnPropertyDescriptors(uri));
     const getCurrentWindowLocationURI = () => {
         const { pathname: path, search: query, hash: fragment, } = newInstance(URL, location.href);
         return createWindowLocationURIWithPrototype({

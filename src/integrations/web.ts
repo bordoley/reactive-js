@@ -193,10 +193,12 @@ export const windowLocation: StreamableLike<
   const createWindowLocationURIWithPrototype = (
     uri: WindowLocationURI,
   ): WindowLocationURI =>
-    Object.create(
-      windowLocationPrototype,
-      Object.getOwnPropertyDescriptors(uri),
-    );
+    uri.toString === windowLocationPrototype.toString
+      ? uri
+      : Object.create(
+          windowLocationPrototype,
+          Object.getOwnPropertyDescriptors(uri),
+        );
 
   const getCurrentWindowLocationURI = (): WindowLocationURI => {
     const {
