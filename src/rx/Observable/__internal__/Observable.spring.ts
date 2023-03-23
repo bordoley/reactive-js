@@ -1,14 +1,10 @@
-import { __DEV__ } from "../../../__internal__/constants.js";
+import { MAX_VALUE, __DEV__ } from "../../../__internal__/constants.js";
 import { abs } from "../../../__internal__/math.js";
-import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { pipe, returns } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import Observable_currentTime from "./Observable.currentTime.js";
+import Observable_generate from "./Observable.generate.js";
 import Observable_map from "./Observable.map.js";
-import Observable_scan from "./Observable.scan.js";
-import Observable_scanMany from "./Observable.scanMany.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
-import Observable_withCurrentTime from "./Observable.withCurrentTime.js";
 
 const Observable_spring = (
   start: number,
@@ -26,42 +22,34 @@ const Observable_spring = (
   }
 
   return pipe(
-    finish,
-    Optional_toObservable(),
-    Observable_withCurrentTime<ObservableLike, number, [number, number]>(
-      (time, next) => [time, next],
+    Observable_generate<[number, number, number]>(
+      ([lastTime, last, value], now) => {
+        if (lastTime > now) {
+          return [now, last, value];
+        } else {
+          const delta = finish - value;
+          const dt = ((now - lastTime) * 60) / 1000;
+          const velocity = (value - last) / (dt || 1 / 60);
+
+          const spring = stiffness * delta;
+          const damper = damping * velocity;
+          const acceleration = spring - damper;
+          const d = (velocity + acceleration) * dt;
+
+          const newValue =
+            abs(d) < precision && abs(delta) < precision ? finish : value + d;
+
+          return [now, value, newValue];
+        }
+      },
+      returns([MAX_VALUE, start, start]),
     ),
-    Observable_scanMany(
-      (prev, [start, next]) =>
-        pipe(
-          Observable_currentTime(),
-          Observable_scan<ObservableLike, number, [number, number, number]>(
-            ([lastTime, last, value], now) => {
-              const delta = next - value;
-              const dt = ((now - lastTime) * 60) / 1000;
-              const velocity = (value - last) / (dt || 1 / 60);
-
-              const spring = stiffness * delta;
-              const damper = damping * velocity;
-              const acceleration = spring - damper;
-              const d = (velocity + acceleration) * dt;
-
-              const newValue =
-                abs(d) < precision && abs(delta) < precision ? next : value + d;
-
-              return [now, value, newValue];
-            },
-            returns([start, prev, prev]),
-          ),
-          Observable_map<ObservableLike, [number, number, number], number>(
-            ([, , value]) => value,
-          ),
-          Observable_takeWhile<number>(value => value !== next, {
-            inclusive: true,
-          }),
-        ),
-      returns(start),
+    Observable_map<ObservableLike, [number, number, number], number>(
+      ([, , value]) => value,
     ),
+    Observable_takeWhile<number>(value => value !== finish, {
+      inclusive: true,
+    }),
   );
 };
 

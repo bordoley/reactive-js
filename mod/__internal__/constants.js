@@ -1,6 +1,6 @@
 /// <reference types="./constants.d.ts" />
 
-export const { MAX_SAFE_INTEGER } = Number;
+export const { MAX_SAFE_INTEGER, MAX_VALUE } = Number;
 const process = typeof global === "object"
     ? global.process
     : {

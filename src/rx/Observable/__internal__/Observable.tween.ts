@@ -1,11 +1,9 @@
-import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
+import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { Function1, identity, pipe, returns } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import Observable_currentTime from "./Observable.currentTime.js";
+import Observable_generate from "./Observable.generate.js";
 import Observable_map from "./Observable.map.js";
-import Observable_scanMany from "./Observable.scanMany.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
-import Observable_withCurrentTime from "./Observable.withCurrentTime.js";
 
 const Observable_tween = (
   start: number,
@@ -18,27 +16,24 @@ const Observable_tween = (
   const { duration = 400, easing = identity } = options ?? {};
 
   return pipe(
-    finish,
-    Optional_toObservable(),
-    Observable_withCurrentTime<ObservableLike, number, [number, number]>(
-      (time, next) => [time, next],
+    Observable_generate<[number, number]>(([start, prev], now) => {
+      if (start > now) {
+        return [now, prev];
+      } else {
+        const elapsed = now - start;
+        const next =
+          elapsed > duration
+            ? finish
+            : prev + (finish - prev) * easing(elapsed / duration);
+        return [start, next];
+      }
+    }, returns([MAX_VALUE, start])),
+    Observable_map<ObservableLike, [number, number], number>(
+      ([, value]) => value,
     ),
-    Observable_scanMany(
-      (prev, [start, next]) =>
-        pipe(
-          Observable_currentTime(),
-          Observable_map<ObservableLike, number, number>(now => {
-            const elapsed = now - start;
-            return elapsed > duration
-              ? next
-              : prev + (next - prev) * easing(elapsed / duration);
-          }),
-          Observable_takeWhile<number>(value => value !== next, {
-            inclusive: true,
-          }),
-        ),
-      returns(start),
-    ),
+    Observable_takeWhile<number>(value => value !== finish, {
+      inclusive: true,
+    }),
   );
 };
 
