@@ -7,7 +7,6 @@ const Observable_spring = (
   start: number,
   finish: number,
   options?: {
-    delay?: number;
     stiffness?: number;
     damping?: number;
     precision?: number;
@@ -15,7 +14,7 @@ const Observable_spring = (
 ): ObservableLike<number> =>
   pipe(
     finish,
-    Optional_toObservable(options),
+    Optional_toObservable(),
     Observable_scanWithSpring(returns(start), options),
   );
 

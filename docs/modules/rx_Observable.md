@@ -1381,7 +1381,6 @@ ___
 | `finish` | `number` |
 | `options?` | `Object` |
 | `options.damping?` | `number` |
-| `options.delay?` | `number` |
 | `options.precision?` | `number` |
 | `options.stiffness?` | `number` |
 
@@ -1424,7 +1423,6 @@ ___
 | `start` | `number` |
 | `finish` | `number` |
 | `options?` | `Object` |
-| `options.delay?` | `number` |
 | `options.duration?` | `number` |
 | `options.easing?` | [`Function1`](functions.md#function1)<`number`, `number`\> |
 

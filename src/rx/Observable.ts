@@ -574,7 +574,6 @@ export const spring: (
   start: number,
   finish: number,
   options?: {
-    delay?: number;
     stiffness?: number;
     damping?: number;
     precision?: number;
@@ -636,7 +635,6 @@ export const tween: (
   start: number,
   finish: number,
   options?: {
-    delay?: number;
     duration?: number;
     easing?: Function1<number, number>;
   },

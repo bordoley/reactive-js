@@ -218,7 +218,6 @@ export declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];
  * @category Constructor
  */
 export declare const spring: (start: number, finish: number, options?: {
-    delay?: number;
     stiffness?: number;
     damping?: number;
     precision?: number;
@@ -251,7 +250,6 @@ export declare const toRunnable: ToRunnable<ObservableLike>["toRunnable"];
  * @category Constructor
  */
 export declare const tween: (start: number, finish: number, options?: {
-    delay?: number;
     duration?: number;
     easing?: Function1<number, number>;
 }) => ObservableLike<number>;

@@ -7,14 +7,13 @@ const Observable_tween = (
   start: number,
   finish: number,
   options?: {
-    delay?: number;
     duration?: number;
     easing?: Function1<number, number>;
   },
 ): ObservableLike<number> =>
   pipe(
     finish,
-    Optional_toObservable(options),
+    Optional_toObservable(),
     Observable_scanTweening(returns(start), options),
   );
 
