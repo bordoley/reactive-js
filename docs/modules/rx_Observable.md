@@ -36,7 +36,9 @@
 - [generate](rx_Observable.md#generate)
 - [merge](rx_Observable.md#merge)
 - [never](rx_Observable.md#never)
+- [spring](rx_Observable.md#spring)
 - [throws](rx_Observable.md#throws)
+- [tween](rx_Observable.md#tween)
 - [zip](rx_Observable.md#zip)
 - [zipLatest](rx_Observable.md#ziplatest)
 
@@ -101,9 +103,7 @@
 ### Other Functions
 
 - [observeWith](rx_Observable.md#observewith)
-- [spring](rx_Observable.md#spring)
 - [subscribe](rx_Observable.md#subscribe)
-- [tweening](rx_Observable.md#tweening)
 
 ### Transform Functions
 
@@ -1369,6 +1369,28 @@ Returns a ContainerLike instance that emits no items and never disposes its stat
 
 ___
 
+### spring
+
+▸ **spring**(`start`, `finish`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `start` | `number` |
+| `finish` | `number` |
+| `options?` | `Object` |
+| `options.damping?` | `number` |
+| `options.delay?` | `number` |
+| `options.precision?` | `number` |
+| `options.stiffness?` | `number` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
+
+___
+
 ### throws
 
 ▸ **throws**<`T`\>(`options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
@@ -1388,6 +1410,27 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
+
+### tween
+
+▸ **tween**(`start`, `finish`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `start` | `number` |
+| `finish` | `number` |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.duration?` | `number` |
+| `options.easing?` | [`Function1`](functions.md#function1)<`number`, `number`\> |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
 
 ___
 
@@ -4107,26 +4150,6 @@ ___
 
 ___
 
-### spring
-
-▸ **spring**(`initialValue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `number`, `number`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `initialValue` | [`Factory`](functions.md#factory)<`number`\> |
-| `options?` | `Object` |
-| `options.damping?` | `number` |
-| `options.precision?` | `number` |
-| `options.stiffness?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `number`, `number`\>
-
-___
-
 ### subscribe
 
 ▸ **subscribe**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
@@ -4148,25 +4171,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-___
-
-### tweening
-
-▸ **tweening**(`initialValue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `number`, `number`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `initialValue` | [`Factory`](functions.md#factory)<`number`\> |
-| `options?` | `Object` |
-| `options.duration?` | `number` |
-| `options.easing?` | [`Function1`](functions.md#function1)<`number`, `number`\> |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `number`, `number`\>
 
 ___
 

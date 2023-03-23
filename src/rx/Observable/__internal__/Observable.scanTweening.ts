@@ -13,7 +13,7 @@ import Observable_scanMany from "./Observable.scanMany.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 import Observable_withCurrentTime from "./Observable.withCurrentTime.js";
 
-const Observable_tweening = (
+const Observable_scanTweening = (
   initialValue: Factory<number>,
   options?: {
     duration?: number;
@@ -45,4 +45,4 @@ const Observable_tweening = (
   );
 };
 
-export default Observable_tweening;
+export default Observable_scanTweening;

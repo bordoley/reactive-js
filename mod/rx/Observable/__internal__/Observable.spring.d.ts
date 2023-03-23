@@ -1,9 +1,8 @@
-import { ContainerOperator } from "../../../containers.js";
-import { Factory } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-declare const Observable_spring: (initialValue: Factory<number>, options?: {
+declare const Observable_spring: (start: number, finish: number, options?: {
+    delay?: number;
     stiffness?: number;
     damping?: number;
     precision?: number;
-}) => ContainerOperator<ObservableLike, number, number>;
+}) => ObservableLike<number>;
 export default Observable_spring;

@@ -66,9 +66,7 @@ const Root = () => {
       Streamable.create(
         Observable.exhaustMap(
           pipeLazy(
-            0,
-            Observable.fromOptional(),
-            Observable.tweening(returns(50), {duration: 1000}),
+            Observable.tween(50, 0, { duration: 1000 }),
             Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {
@@ -146,9 +144,7 @@ const RxComponent = createComponent(
       Streamable.create<void, number>(
         Observable.exhaustMap(
           pipeLazy(
-            0,
-            Observable.fromOptional(),
-            Observable.spring(returns(50), {
+            Observable.spring(50, 0, {
               stiffness: 0.01,
               damping: 0.1,
             }),

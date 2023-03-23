@@ -136,15 +136,6 @@ export const toObservable =
 export const toReadonlyArray = Runnable_toReadonlyArray;
 export const toRunnable = 
 /*@__PURE__*/ returns(identity);
-/*
-// FIXME
-export const tweening: (
-  initialValue: Factory<number>,
-  duration: number,
-  options?: {
-    easing?: Function1<number, number>;
-  },
-) => ContainerOperator<ObservableLike, number, number> = Observable_tweening;*/
 export const withCurrentTime = Observable_withCurrentTime;
 export const withLatestFrom = Observable_withLatestFrom;
 export const zip = Observable_zip;

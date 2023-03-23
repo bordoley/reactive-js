@@ -77,7 +77,7 @@ import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
 import Observable_toRunnable from "./Observable/__internal__/Observable.toRunnable.js";
-import Observable_tweening from "./Observable/__internal__/Observable.tweening.js";
+import Observable_tween from "./Observable/__internal__/Observable.tween.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -220,6 +220,9 @@ export const scanMany = Observable_scanLast;
 export const share = Observable_share;
 export const skipFirst = Observable_skipFirst;
 export const someSatisfy = Observable_someSatisfy;
+/**
+ * @category Constructor
+ */
 export const spring = Observable_spring;
 export const startWith = Observable_startWith;
 export const switchAll = Observable_switchAll;
@@ -239,7 +242,10 @@ export const throws = Observable_throws;
 export const timeout = Observable_timeout;
 export const toEnumerable = Observable_toEnumerable;
 export const toRunnable = Observable_toRunnable;
-export const tweening = Observable_tweening;
+/**
+ * @category Constructor
+ */
+export const tween = Observable_tween;
 export const withCurrentTime = Observable_withCurrentTime;
 export const withLatestFrom = Observable_withLatestFrom;
 export const zip = Observable_zip;

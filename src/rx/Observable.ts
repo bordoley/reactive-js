@@ -182,7 +182,7 @@ import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
 import Observable_toRunnable from "./Observable/__internal__/Observable.toRunnable.js";
-import Observable_tweening from "./Observable/__internal__/Observable.tweening.js";
+import Observable_tween from "./Observable/__internal__/Observable.tween.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -567,14 +567,19 @@ export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
 export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
   Observable_someSatisfy;
 
+/**
+ * @category Constructor
+ */
 export const spring: (
-  initialValue: Factory<number>,
+  start: number,
+  finish: number,
   options?: {
+    delay?: number;
     stiffness?: number;
     damping?: number;
     precision?: number;
   },
-) => ContainerOperator<ObservableLike, number, number> = Observable_spring;
+) => ObservableLike<number> = Observable_spring;
 
 export const startWith: StartWith<ObservableLike>["startWith"] =
   Observable_startWith;
@@ -624,13 +629,18 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
 export const toRunnable: ToRunnable<ObservableLike>["toRunnable"] =
   Observable_toRunnable;
 
-export const tweening: (
-  initialValue: Factory<number>,
+/**
+ * @category Constructor
+ */
+export const tween: (
+  start: number,
+  finish: number,
   options?: {
+    delay?: number;
     duration?: number;
     easing?: Function1<number, number>;
   },
-) => ContainerOperator<ObservableLike, number, number> = Observable_tweening;
+) => ObservableLike<number> = Observable_tween;
 
 export const withCurrentTime: WithCurrentTime<ObservableLike>["withCurrentTime"] =
   Observable_withCurrentTime;
