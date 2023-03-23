@@ -26,6 +26,6 @@ const Observable_scanWithSpring = (initialValue, options) => {
         return [now, value, newValue];
     }, returns([start, prev, prev])), Observable_map(([, , value]) => value), Observable_takeWhile(value => value !== next, {
         inclusive: true,
-    })), initialValue));
+    })), returns(initialValue)));
 };
 export default Observable_scanWithSpring;

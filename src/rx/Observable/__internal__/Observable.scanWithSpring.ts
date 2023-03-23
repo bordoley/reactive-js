@@ -1,7 +1,7 @@
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { abs } from "../../../__internal__/math.js";
 import { ContainerOperator } from "../../../containers.js";
-import { Factory, compose, pipe, returns } from "../../../functions.js";
+import { compose, pipe, returns } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
@@ -11,7 +11,7 @@ import Observable_takeWhile from "./Observable.takeWhile.js";
 import Observable_withCurrentTime from "./Observable.withCurrentTime.js";
 
 const Observable_scanWithSpring = (
-  initialValue: Factory<number>,
+  initialValue: number,
   options?: {
     stiffness?: number;
     damping?: number;
@@ -57,7 +57,7 @@ const Observable_scanWithSpring = (
             inclusive: true,
           }),
         ),
-      initialValue,
+      returns(initialValue),
     ),
   );
 };

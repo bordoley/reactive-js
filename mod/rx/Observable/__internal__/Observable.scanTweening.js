@@ -1,6 +1,6 @@
 /// <reference types="./Observable.scanTweening.d.ts" />
 
-import { compose, identity, pipe, } from "../../../functions.js";
+import { compose, identity, pipe, returns, } from "../../../functions.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scanMany from "./Observable.scanMany.js";
@@ -15,6 +15,6 @@ const Observable_scanTweening = (initialValue, options) => {
             : prev + (next - prev) * easing(elapsed / duration);
     }), Observable_takeWhile(value => value !== next, {
         inclusive: true,
-    })), initialValue));
+    })), returns(initialValue)));
 };
 export default Observable_scanTweening;

@@ -1,10 +1,10 @@
 import { ContainerOperator } from "../../../containers.js";
 import {
-  Factory,
   Function1,
   compose,
   identity,
   pipe,
+  returns,
 } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_currentTime from "./Observable.currentTime.js";
@@ -14,7 +14,7 @@ import Observable_takeWhile from "./Observable.takeWhile.js";
 import Observable_withCurrentTime from "./Observable.withCurrentTime.js";
 
 const Observable_scanTweening = (
-  initialValue: Factory<number>,
+  initialValue: number,
   options?: {
     duration?: number;
     easing?: Function1<number, number>;
@@ -40,7 +40,7 @@ const Observable_scanTweening = (
             inclusive: true,
           }),
         ),
-      initialValue,
+      returns(initialValue),
     ),
   );
 };
