@@ -68,7 +68,7 @@ const Root = () => {
           pipeLazy(
             0,
             Observable.fromOptional(),
-            Observable.tweening(1000, returns(50)),
+            Observable.tweening(returns(50), {duration: 1000}),
             Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {
@@ -148,7 +148,10 @@ const RxComponent = createComponent(
           pipeLazy(
             0,
             Observable.fromOptional(),
-            Observable.tweening(1000, returns(50)),
+            Observable.spring(returns(50), {
+              stiffness: 0.01,
+              damping: 0.1,
+            }),
             Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {
@@ -202,7 +205,10 @@ const RxComponent = createComponent(
             style={{ height: "100px", width: "100px" }}
           />
           <div>
-            <button onClick={runAnimation} disabled={(animationState ?? 0) > 0}>
+            <button
+              onClick={runAnimation}
+              disabled={(animationState ?? 0) !== 0}
+            >
               Run Animation
             </button>
           </div>

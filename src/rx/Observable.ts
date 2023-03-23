@@ -166,6 +166,7 @@ import Observable_scanLast from "./Observable/__internal__/Observable.scanLast.j
 import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
+import Observable_spring from "./Observable/__internal__/Observable.spring.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
@@ -566,6 +567,15 @@ export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
 export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
   Observable_someSatisfy;
 
+export const spring: (
+  initialValue: Factory<number>,
+  options?: {
+    stiffness?: number;
+    damping?: number;
+    precision?: number;
+  },
+) => ContainerOperator<ObservableLike, number, number> = Observable_spring;
+
 export const startWith: StartWith<ObservableLike>["startWith"] =
   Observable_startWith;
 
@@ -615,9 +625,9 @@ export const toRunnable: ToRunnable<ObservableLike>["toRunnable"] =
   Observable_toRunnable;
 
 export const tweening: (
-  duration: number,
   initialValue: Factory<number>,
   options?: {
+    duration?: number;
     easing?: Function1<number, number>;
   },
 ) => ContainerOperator<ObservableLike, number, number> = Observable_tweening;

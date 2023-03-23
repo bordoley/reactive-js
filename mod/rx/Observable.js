@@ -61,6 +61,7 @@ import Observable_scanLast from "./Observable/__internal__/Observable.scanLast.j
 import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
+import Observable_spring from "./Observable/__internal__/Observable.spring.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
@@ -219,6 +220,7 @@ export const scanMany = Observable_scanLast;
 export const share = Observable_share;
 export const skipFirst = Observable_skipFirst;
 export const someSatisfy = Observable_someSatisfy;
+export const spring = Observable_spring;
 export const startWith = Observable_startWith;
 export const switchAll = Observable_switchAll;
 export const switchMap = Observable_switchMap;

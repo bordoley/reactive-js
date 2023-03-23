@@ -101,6 +101,7 @@
 ### Other Functions
 
 - [observeWith](rx_Observable.md#observewith)
+- [spring](rx_Observable.md#spring)
 - [subscribe](rx_Observable.md#subscribe)
 - [tweening](rx_Observable.md#tweening)
 
@@ -4106,6 +4107,26 @@ ___
 
 ___
 
+### spring
+
+▸ **spring**(`initialValue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `number`, `number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `initialValue` | [`Factory`](functions.md#factory)<`number`\> |
+| `options?` | `Object` |
+| `options.damping?` | `number` |
+| `options.precision?` | `number` |
+| `options.stiffness?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `number`, `number`\>
+
+___
+
 ### subscribe
 
 ▸ **subscribe**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
@@ -4132,15 +4153,15 @@ ___
 
 ### tweening
 
-▸ **tweening**(`duration`, `initialValue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `number`, `number`\>
+▸ **tweening**(`initialValue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `number`, `number`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `duration` | `number` |
 | `initialValue` | [`Factory`](functions.md#factory)<`number`\> |
 | `options?` | `Object` |
+| `options.duration?` | `number` |
 | `options.easing?` | [`Function1`](functions.md#function1)<`number`, `number`\> |
 
 #### Returns

@@ -14,13 +14,14 @@ import Observable_takeWhile from "./Observable.takeWhile.js";
 import Observable_withCurrentTime from "./Observable.withCurrentTime.js";
 
 const Observable_tweening = (
-  duration: number,
   initialValue: Factory<number>,
   options?: {
+    duration?: number;
     easing?: Function1<number, number>;
   },
 ): ContainerOperator<ObservableLike, number, number> => {
-  const easing = options?.easing ?? identity;
+  const { duration = 400, easing = identity } = options ?? {};
+
   return compose(
     Observable_withCurrentTime<ObservableLike, number, [number, number]>(
       (time, next) => [time, next],

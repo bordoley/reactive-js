@@ -214,6 +214,11 @@ export declare const share: <T>(schedulerOrFactory: SchedulerLike | Factory<Sche
 } | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
 export declare const skipFirst: SkipFirst<ObservableLike>["skipFirst"];
 export declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];
+export declare const spring: (initialValue: Factory<number>, options?: {
+    stiffness?: number;
+    damping?: number;
+    precision?: number;
+}) => ContainerOperator<ObservableLike, number, number>;
 export declare const startWith: StartWith<ObservableLike>["startWith"];
 export declare const switchAll: SwitchAll<ObservableLike>["switchAll"];
 export declare const switchMap: SwitchMap<ObservableLike>["switchMap"];
@@ -238,7 +243,8 @@ export declare const throws: Throws<ObservableLike, {
 export declare const timeout: Timeout<ObservableLike>["timeout"];
 export declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
 export declare const toRunnable: ToRunnable<ObservableLike>["toRunnable"];
-export declare const tweening: (duration: number, initialValue: Factory<number>, options?: {
+export declare const tweening: (initialValue: Factory<number>, options?: {
+    duration?: number;
     easing?: Function1<number, number>;
 }) => ContainerOperator<ObservableLike, number, number>;
 export declare const withCurrentTime: WithCurrentTime<ObservableLike>["withCurrentTime"];

@@ -362,8 +362,8 @@ export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
 /*
 // FIXME
 export const tweening: (
-  duration: number,
   initialValue: Factory<number>,
+  duration: number,
   options?: {
     easing?: Function1<number, number>;
   },
