@@ -3,7 +3,9 @@ import ReactDOMClient from "react-dom/client";
 import * as Enumerable from "@reactive-js/core/rx/Enumerable";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import * as Observable from "@reactive-js/core/rx/Observable";
+import * as AsyncEnumerable from "@reactive-js/core/streaming/AsyncEnumerable";
 import {
+  createComponent,
   useEnumerable,
   useFlowable,
   useStreamable,
@@ -15,12 +17,18 @@ import {
 import { WindowLocationURI } from "@reactive-js/core/integrations/web";
 import {
   increment,
+  Optional,
   pipe,
   pipeLazy,
   returns,
+  SideEffect,
+  SideEffect1,
+  Updater,
 } from "@reactive-js/core/functions";
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
+import { ObservableLike } from "@reactive-js/core/rx";
+import { QueueableLike_push } from "@reactive-js/core/util";
 
 const Root = () => {
   const history = useWindowLocation();
@@ -137,9 +145,129 @@ const Root = () => {
   );
 };
 
+const RxComponent = createComponent(
+  (
+    props: ObservableLike<{
+      uri: Optional<WindowLocationURI>;
+      push: SideEffect1<WindowLocationURI | Updater<WindowLocationURI>>;
+      replace: SideEffect1<WindowLocationURI | Updater<WindowLocationURI>>;
+      canGoBack: boolean;
+      goBack: () => boolean;
+    }>,
+  ) => {
+    const asyncEnumerable = AsyncEnumerable.generate(increment, () => -1);
+    const createRef = () => ({ current: null });
+
+    const createAnimationStream = (animatedDivRef: {
+      current: HTMLElement | null;
+    }) =>
+      Streamable.create<
+        void,
+        {
+          elapsed: number;
+          startTime: number;
+          size: number;
+        }
+      >(
+        Observable.exhaustMap(
+          pipeLazy(
+            Runnable.currentTime(),
+            Runnable.scan(
+              ({ startTime }, time) => {
+                startTime = Math.min(time, startTime);
+
+                const elapsed = Math.max(time - startTime, 0);
+                const size = 50 - 0.1 * elapsed;
+
+                return {
+                  elapsed,
+                  startTime,
+                  size,
+                };
+              },
+              () => ({
+                elapsed: 0,
+                startTime: Number.MAX_SAFE_INTEGER,
+                size: 50,
+              }),
+            ),
+            Runnable.takeWhile(({ size }) => size > 0, { inclusive: true }),
+            Runnable.forEach(({ size }) => {
+              const animatedDiv = animatedDivRef.current;
+              if (animatedDiv != null) {
+                animatedDiv.style.margin = `${50 - size}px`;
+                animatedDiv.style.padding = `${size}px`;
+                animatedDiv.style.backgroundColor = "#bbb";
+                animatedDiv.style.borderRadius = "50%";
+                animatedDiv.style.display = "inline-block";
+              }
+            }),
+            Observable.subscribeOn(createAnimationFrameScheduler),
+          ),
+        ),
+      );
+
+    return Observable.compute(() => {
+      const history = Observable.__await(props);
+      const enumerator = Observable.__stream(asyncEnumerable);
+      const move: SideEffect = Observable.__bind(
+        enumerator[QueueableLike_push],
+        enumerator,
+      );
+
+      const animatedDivRef = Observable.__memo(createRef);
+      const animationStreamable = Observable.__memo(
+        createAnimationStream,
+        animatedDivRef,
+      );
+      const animationStream = Observable.__stream(animationStreamable);
+
+      const runAnimation: SideEffect = Observable.__bind(
+        animationStream[QueueableLike_push],
+        animationStream,
+      );
+
+      const animationState = Observable.__observe(animationStream);
+
+      const value = Observable.__observe<number>(enumerator) ?? "no value";
+
+      return (
+        <div>
+          <div>This is not actually a React Component</div>
+          <div>{String(history.uri) ?? ""}</div>
+          <div>
+            <button onClick={move}>Move the Enumerator</button>
+            <span>{value}</span>
+          </div>
+
+          <div
+            ref={animatedDivRef}
+            style={{ height: "100px", width: "100px" }}
+          />
+          <div>
+            <button
+              onClick={runAnimation}
+              disabled={(animationState?.size ?? 0) > 0}
+            >
+              Run Animation
+            </button>
+          </div>
+        </div>
+      );
+    });
+  },
+);
+
+const RootRxComponent = () => {
+  const history = useWindowLocation();
+
+  return <RxComponent {...history} />;
+};
+
 const rootElement = document.getElementById("root");
 ReactDOMClient.createRoot(rootElement as any).render(
   <WindowLocationProvider>
     <Root />
+    <RootRxComponent />
   </WindowLocationProvider>,
 );

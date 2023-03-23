@@ -1,5 +1,6 @@
 /// <reference types="./web.d.ts" />
 
+import * as Object from "../__internal__/Object.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
 import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamLike_replace, WindowLocationStream_historyCounter, } from "../__internal__/symbols.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
@@ -56,20 +57,24 @@ export const addEventListener = (eventName, selector) => target => Observable.cr
 });
 export const windowLocation = /*@__PURE__*/ (() => {
     const { history, location } = window;
-    const windowLocationURIToString = ({ path, query, fragment, }) => {
-        let uri = path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;
-        uri = query.length > 0 ? `${uri}?${query}` : uri;
-        uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
-        return newInstance(URL, uri, location.href).toString();
+    const windowLocationPrototype = {
+        toString() {
+            const { path, query, fragment } = this;
+            let uri = path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;
+            uri = query.length > 0 ? `${uri}?${query}` : uri;
+            uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
+            return newInstance(URL, uri, location.href).toString();
+        },
     };
+    const createWindowLocationURIWithPrototype = (uri) => Object.create(windowLocationPrototype, Object.getOwnPropertyDescriptors(uri));
     const getCurrentWindowLocationURI = () => {
         const { pathname: path, search: query, hash: fragment, } = newInstance(URL, location.href);
-        return {
-            title: document.title,
+        return createWindowLocationURIWithPrototype({
             path,
             query: query.slice(1),
             fragment: fragment.slice(1),
-        };
+            title: document.title,
+        });
     };
     const areWindowLocationStatesEqual = ({ uri: a }, { uri: b }) => 
     // Intentionally ignore the replace flag.
@@ -142,9 +147,9 @@ export const windowLocation = /*@__PURE__*/ (() => {
             raiseWithDebugMessage("Cannot stream more than once");
         }
         const actionReducer = Streamable.createActionReducer(({ uri: stateURI }, { replace, stateOrUpdater }) => {
-            const uri = isFunction(stateOrUpdater)
+            const uri = createWindowLocationURIWithPrototype(isFunction(stateOrUpdater)
                 ? stateOrUpdater(stateURI)
-                : stateOrUpdater;
+                : stateOrUpdater);
             return { uri, replace };
         }, () => ({
             replace: true,
@@ -152,7 +157,7 @@ export const windowLocation = /*@__PURE__*/ (() => {
         }), { equality: areWindowLocationStatesEqual })[StreamableLike_stream](scheduler, options);
         const windowLocationStream = createWindowLocationStream(actionReducer);
         pipe(actionReducer, Observable.map(({ uri, replace }) => ({
-            uri: windowLocationURIToString(uri),
+            uri: String(uri),
             title: uri.title,
             replace,
         })), Observable.forkCombineLatest(compose(Observable.takeWhile(_ => windowLocationStream[WindowLocationStream_historyCounter] === -1), Observable.forEach(({ uri, title }) => {

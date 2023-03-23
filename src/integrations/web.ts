@@ -1,3 +1,4 @@
+import * as Object from "../__internal__/Object.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -178,17 +179,24 @@ export const windowLocation: StreamableLike<
 > = /*@__PURE__*/ (() => {
   const { history, location } = window;
 
-  const windowLocationURIToString = ({
-    path,
-    query,
-    fragment,
-  }: WindowLocationURI): string => {
-    let uri =
-      path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;
-    uri = query.length > 0 ? `${uri}?${query}` : uri;
-    uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
-    return newInstance(URL, uri, location.href).toString();
+  const windowLocationPrototype = {
+    toString(this: WindowLocationURI) {
+      const { path, query, fragment } = this;
+      let uri =
+        path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;
+      uri = query.length > 0 ? `${uri}?${query}` : uri;
+      uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
+      return newInstance(URL, uri, location.href).toString();
+    },
   };
+
+  const createWindowLocationURIWithPrototype = (
+    uri: WindowLocationURI,
+  ): WindowLocationURI =>
+    Object.create(
+      windowLocationPrototype,
+      Object.getOwnPropertyDescriptors(uri),
+    );
 
   const getCurrentWindowLocationURI = (): WindowLocationURI => {
     const {
@@ -196,12 +204,13 @@ export const windowLocation: StreamableLike<
       search: query,
       hash: fragment,
     } = newInstance(URL, location.href);
-    return {
-      title: document.title,
+
+    return createWindowLocationURIWithPrototype({
       path,
       query: query.slice(1),
       fragment: fragment.slice(1),
-    };
+      title: document.title,
+    });
   };
 
   type TState = {
@@ -373,9 +382,12 @@ export const windowLocation: StreamableLike<
 
     const actionReducer = Streamable.createActionReducer(
       ({ uri: stateURI }, { replace, stateOrUpdater }: TAction) => {
-        const uri = isFunction(stateOrUpdater)
-          ? stateOrUpdater(stateURI)
-          : stateOrUpdater;
+        const uri = createWindowLocationURIWithPrototype(
+          isFunction(stateOrUpdater)
+            ? stateOrUpdater(stateURI)
+            : stateOrUpdater,
+        );
+
         return { uri, replace };
       },
       () => ({
@@ -390,7 +402,7 @@ export const windowLocation: StreamableLike<
     pipe(
       actionReducer,
       Observable.map(({ uri, replace }) => ({
-        uri: windowLocationURIToString(uri),
+        uri: String(uri),
         title: uri.title,
         replace,
       })),
