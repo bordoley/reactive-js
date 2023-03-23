@@ -3,7 +3,11 @@
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
 import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
+import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
+/**
+ * @category Constructor
+ */
 export const create = Streamable_create;
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -13,6 +17,8 @@ export const create = Streamable_create;
  * @param initialState The initial accumulation value.
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
+ *
+ * @category Constructor
  */
 export const createActionReducer = Streamable_createActionReducer;
 /**
@@ -23,6 +29,12 @@ export const createActionReducer = Streamable_createActionReducer;
  * @param initialState The initial accumulation value.
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
+ *
+ * @category Constructor
  */
 export const createStateStore = Streamable_createStateStore;
+/**
+ * @category Constructor
+ */
+export const identity = Streamable_identity;
 export const sinkInto = Streamable_sinkInto;

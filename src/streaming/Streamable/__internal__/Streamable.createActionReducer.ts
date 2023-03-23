@@ -33,8 +33,8 @@ const Streamable_createActionReducer = <TAction, T>(
         );
       }),
     true,
-    false,
-    false,
+    true,
+    true,
   );
 
 export default Streamable_createActionReducer;

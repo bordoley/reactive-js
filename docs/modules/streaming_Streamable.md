@@ -4,14 +4,18 @@
 
 ## Table of contents
 
-### Functions
+### Constructor Functions
 
 - [create](streaming_Streamable.md#create)
 - [createActionReducer](streaming_Streamable.md#createactionreducer)
 - [createStateStore](streaming_Streamable.md#createstatestore)
+- [identity](streaming_Streamable.md#identity)
+
+### Other Functions
+
 - [sinkInto](streaming_Streamable.md#sinkinto)
 
-## Functions
+## Constructor Functions
 
 ### create
 
@@ -92,6 +96,24 @@ new state based upon the previous state.
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
 
 ___
+
+### identity
+
+▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`\>\>
+
+___
+
+## Other Functions
 
 ### sinkInto
 

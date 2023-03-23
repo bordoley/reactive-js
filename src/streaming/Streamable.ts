@@ -3,8 +3,12 @@ import { StreamLike, StreamableLike } from "../streaming.js";
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
 import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
+import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
 
+/**
+ * @category Constructor
+ */
 export const create = Streamable_create;
 
 /**
@@ -15,6 +19,8 @@ export const create = Streamable_create;
  * @param initialState The initial accumulation value.
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
+ *
+ * @category Constructor
  */
 export const createActionReducer: <TAction, T>(
   reducer: Reducer<TAction, T>,
@@ -30,11 +36,18 @@ export const createActionReducer: <TAction, T>(
  * @param initialState The initial accumulation value.
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
+ *
+ * @category Constructor
  */
 export const createStateStore: <T>(
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
 ) => StreamableLike<Updater<T>, T> = Streamable_createStateStore;
+
+/**
+ * @category Constructor
+ */
+export const identity = Streamable_identity;
 
 export const sinkInto: <TReq, T>(
   dest: StreamLike<T, TReq>,
