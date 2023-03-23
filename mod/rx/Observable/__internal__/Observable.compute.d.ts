@@ -69,4 +69,5 @@ export declare const Observable_compute__state: <T>(initialState: () => T, optio
     readonly scheduler?: SchedulerLike | undefined;
     readonly maxBufferSize?: number | undefined;
 }) => StreamLike<Updater<T>, T>;
+export declare const Observable_compute__bind: <F extends Function>(f: F, thiz: unknown) => F;
 export {};

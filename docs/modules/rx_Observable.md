@@ -7,6 +7,7 @@
 ### ComputationalEffect Functions
 
 - [\_\_await](rx_Observable.md#__await)
+- [\_\_bind](rx_Observable.md#__bind)
 - [\_\_currentScheduler](rx_Observable.md#__currentscheduler)
 - [\_\_do](rx_Observable.md#__do)
 - [\_\_memo](rx_Observable.md#__memo)
@@ -130,6 +131,29 @@
 #### Returns
 
 `T`
+
+___
+
+### \_\_bind
+
+▸ **__bind**<`F`\>(`f`, `thiz`): `F`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `F` | extends `Function` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | `F` |
+| `thiz` | `unknown` |
+
+#### Returns
+
+`F`
 
 ___
 

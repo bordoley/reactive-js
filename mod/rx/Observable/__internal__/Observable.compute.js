@@ -266,3 +266,7 @@ export const Observable_compute__state = /*@__PURE__*/ (() => {
         return Observable_compute__stream(streamable, options);
     };
 })();
+// eslint-disable-next-line @typescript-eslint/ban-types
+const bind = (f, thiz) => f.bind(thiz);
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const Observable_compute__bind = (f, thiz) => Observable_compute__memo(bind, f, thiz);

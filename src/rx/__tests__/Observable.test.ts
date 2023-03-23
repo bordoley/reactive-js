@@ -22,7 +22,8 @@ import {
 import { ObservableLike } from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { DisposableLike_error } from "../../util.js";
+import * as Streamable from "../../streaming/Streamable.js";
+import { DisposableLike_error, QueueableLike_push } from "../../util.js";
 import * as Observable from "../Observable.js";
 import { __await, __memo } from "../Observable.js";
 
@@ -191,6 +192,24 @@ const computeTests = describe(
       result,
       expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]),
     );
+  }),
+  testAsync("__stream", async () => {
+    const result = await pipe(
+      Observable.compute(() => {
+        const stream = Observable.__stream(Streamable.identity<number>());
+        const push = Observable.__bind(stream[QueueableLike_push], stream);
+
+        const result = Observable.__observe(stream) ?? 0;
+        Observable.__do(push, result + 1);
+
+        return result;
+      }),
+      Observable.takeFirst({ count: 10 }),
+      Observable.buffer(),
+      Observable.lastAsync(),
+    );
+
+    pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
   }),
 );
 

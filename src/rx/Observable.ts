@@ -105,6 +105,7 @@ import Observable_combineLatest from "./Observable/__internal__/Observable.combi
 import {
   Observable_compute,
   Observable_compute__await,
+  Observable_compute__bind,
   Observable_compute__currentScheduler,
   Observable_compute__do,
   Observable_compute__memo,
@@ -272,6 +273,11 @@ export const __do: __Do = Observable_compute__do;
  * @category ComputationalEffect
  */
 export const __observe = Observable_compute__observe;
+
+/**
+ * @category ComputationalEffect
+ */
+export const __bind = Observable_compute__bind;
 
 /**
  * @category ComputationalEffect

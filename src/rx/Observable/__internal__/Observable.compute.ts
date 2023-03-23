@@ -552,3 +552,12 @@ export const Observable_compute__state = /*@__PURE__*/ (() => {
     >;
   };
 })();
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+const bind = <F extends Function>(f: F, thiz: unknown): F => f.bind(thiz);
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const Observable_compute__bind = <F extends Function>(
+  f: F,
+  thiz: unknown,
+): F => Observable_compute__memo(bind, f, thiz);
