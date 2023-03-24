@@ -12,6 +12,7 @@
     "./src/integrations/node.ts",
     "./src/integrations/react.ts",
     "./src/integrations/react-web.ts",
-    "./src/integrations/scheduler.ts"
+    "./src/integrations/scheduler.ts",
+    "./src/integrations/svelte.ts"
   ]
 }

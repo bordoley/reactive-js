@@ -16,6 +16,7 @@ Reactive-JS
 - [integrations/react](modules/integrations_react.md)
 - [integrations/react-web](modules/integrations_react_web.md)
 - [integrations/scheduler](modules/integrations_scheduler.md)
+- [integrations/svelte](modules/integrations_svelte.md)
 - [integrations/web](modules/integrations_web.md)
 - [rx](modules/rx.md)
 - [rx/Enumerable](modules/rx_Enumerable.md)

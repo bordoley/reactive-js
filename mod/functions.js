@@ -16,6 +16,8 @@ export const alwaysTrue = (..._args) => true;
  */
 export const arrayEquality = (valuesEquality = strictEquality) => (a, b) => ReadonlyArray_getLength(a) === ReadonlyArray_getLength(b) &&
     a.every((v, i) => valuesEquality(b[i], v));
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const bind = (f, thiz) => f.bind(thiz);
 export const call = (f, self, ...args) => f.call(self, ...args);
 /**
  * A function operator that invokes a function with a given list of arguments.

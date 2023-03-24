@@ -55,6 +55,7 @@
     "./integrations/react": "./integrations/react.js",
     "./integrations/react-web": "./integrations/react-web.js",
     "./integrations/scheduler": "./integrations/scheduler.js",
+    "./integrations/svelte": "./integrations/svelte.js",
     "./integrations/web": "./integrations/web.js",
     "./rx": "./rx.js",
     "./rx/Enumerable": "./rx/Enumerable.js",

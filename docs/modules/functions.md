@@ -46,6 +46,7 @@
 - [alwaysFalse](functions.md#alwaysfalse)
 - [alwaysTrue](functions.md#alwaystrue)
 - [arrayEquality](functions.md#arrayequality)
+- [bind](functions.md#bind)
 - [call](functions.md#call)
 - [callWith](functions.md#callwith)
 - [compose](functions.md#compose)
@@ -961,6 +962,29 @@ comparing their values using `valuesEquality`.
 #### Returns
 
 [`Equality`](functions.md#equality)<readonly `T`[]\>
+
+___
+
+### bind
+
+▸ **bind**<`F`\>(`f`, `thiz`): `F`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `F` | extends `Function` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | `F` |
+| `thiz` | `unknown` |
+
+#### Returns
+
+`F`
 
 ___
 

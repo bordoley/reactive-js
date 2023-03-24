@@ -159,6 +159,10 @@ export const arrayEquality =
     ReadonlyArray_getLength(a) === ReadonlyArray_getLength(b) &&
     a.every((v, i) => valuesEquality(b[i], v));
 
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const bind = <F extends Function>(f: F, thiz: unknown): F =>
+  f.bind(thiz);
+
 interface Call {
   <TInstance, T>(f: () => T, self: TInstance): T;
 

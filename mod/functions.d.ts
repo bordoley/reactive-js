@@ -73,6 +73,7 @@ export declare const alwaysTrue: (..._args: unknown[]) => boolean;
  * comparing their values using `valuesEquality`.
  */
 export declare const arrayEquality: <T>(valuesEquality?: Equality<T>) => Equality<readonly T[]>;
+export declare const bind: <F extends Function>(f: F, thiz: unknown) => F;
 interface Call {
     <TInstance, T>(f: () => T, self: TInstance): T;
     <TInstance, T, TA>(f: (a: TA) => T, self: TInstance, a: TA): T;
