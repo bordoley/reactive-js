@@ -35,6 +35,7 @@ import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
+import Observable_spring from "./Observable/__internal__/Observable.spring.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
@@ -44,6 +45,7 @@ import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwI
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
+import Observable_tween from "./Observable/__internal__/Observable.tween.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -118,6 +120,10 @@ export const scanLast = Runnable_scanLast;
 export const scanMany = Runnable_scanMany;
 export const skipFirst = Observable_skipFirst;
 export const someSatisfy = Observable_someSatisfy;
+/**
+ * @category Constructor
+ */
+export const spring = Observable_spring;
 export const startWith = Observable_startWith;
 export const switchAll = Runnable_switchAll;
 export const switchMap = Runnable_switchMap;
@@ -136,6 +142,10 @@ export const toObservable =
 export const toReadonlyArray = Runnable_toReadonlyArray;
 export const toRunnable = 
 /*@__PURE__*/ returns(identity);
+/**
+ * @category Constructor
+ */
+export const tween = Observable_tween;
 export const withCurrentTime = Observable_withCurrentTime;
 export const withLatestFrom = Observable_withLatestFrom;
 export const zip = Observable_zip;

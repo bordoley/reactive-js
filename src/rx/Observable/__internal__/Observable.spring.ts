@@ -1,7 +1,7 @@
 import { MAX_VALUE, __DEV__ } from "../../../__internal__/constants.js";
 import { abs, min } from "../../../__internal__/math.js";
 import { pipe, returns } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import { RunnableLike } from "../../../rx.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
@@ -15,7 +15,7 @@ const Observable_spring = (
     damping?: number;
     precision?: number;
   },
-): ObservableLike<number> => {
+): RunnableLike<number> => {
   const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = options ?? {};
 
   if (__DEV__) {
@@ -24,7 +24,7 @@ const Observable_spring = (
 
   return pipe(
     Observable_currentTime(),
-    Observable_scan<ObservableLike, number, [number, number, number]>(
+    Observable_scan<RunnableLike, number, [number, number, number]>(
       ([lastTime, last, value], now) => {
         lastTime = min(now, lastTime);
 
@@ -44,10 +44,10 @@ const Observable_spring = (
       },
       returns([MAX_VALUE, start, start]),
     ),
-    Observable_map<ObservableLike, [number, number, number], number>(
+    Observable_map<RunnableLike, [number, number, number], number>(
       ([, , value]) => value,
     ),
-    Observable_takeWhile<number>(value => value !== finish, {
+    Observable_takeWhile<RunnableLike, number>(value => value !== finish, {
       inclusive: true,
     }),
   );

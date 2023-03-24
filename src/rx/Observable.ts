@@ -83,6 +83,7 @@ import {
   Retry,
   ScanLast,
   ScanMany,
+  Spring,
   SwitchAll,
   SwitchMap,
   TakeUntil,
@@ -90,6 +91,7 @@ import {
   Timeout,
   ToEnumerable,
   ToRunnable,
+  Tween,
   WithCurrentTime,
   WithLatestFrom,
   ZipLatest,
@@ -570,15 +572,7 @@ export const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"] =
 /**
  * @category Constructor
  */
-export const spring: (
-  start: number,
-  finish: number,
-  options?: {
-    stiffness?: number;
-    damping?: number;
-    precision?: number;
-  },
-) => ObservableLike<number> = Observable_spring;
+export const spring: Spring<ObservableLike>["spring"] = Observable_spring;
 
 export const startWith: StartWith<ObservableLike>["startWith"] =
   Observable_startWith;
@@ -631,14 +625,7 @@ export const toRunnable: ToRunnable<ObservableLike>["toRunnable"] =
 /**
  * @category Constructor
  */
-export const tween: (
-  start: number,
-  finish: number,
-  options?: {
-    duration?: number;
-    easing?: Function1<number, number>;
-  },
-) => ObservableLike<number> = Observable_tween;
+export const tween: Tween<ObservableLike>["tween"] = Observable_tween;
 
 export const withCurrentTime: WithCurrentTime<ObservableLike>["withCurrentTime"] =
   Observable_withCurrentTime;

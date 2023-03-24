@@ -1,7 +1,7 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { min } from "../../../__internal__/math.js";
 import { Function1, identity, pipe, returns } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import { RunnableLike } from "../../../rx.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
@@ -14,12 +14,12 @@ const Observable_tween = (
     duration?: number;
     easing?: Function1<number, number>;
   },
-): ObservableLike<number> => {
+): RunnableLike<number> => {
   const { duration = 400, easing = identity } = options ?? {};
 
   return pipe(
     Observable_currentTime(),
-    Observable_scan<ObservableLike, number, [number, number]>(
+    Observable_scan<RunnableLike, number, [number, number]>(
       ([startTime, _], now) => {
         startTime = min(now, startTime);
 
@@ -32,10 +32,10 @@ const Observable_tween = (
       },
       returns([MAX_VALUE, start]),
     ),
-    Observable_map<ObservableLike, [number, number], number>(
+    Observable_map<RunnableLike, [number, number], number>(
       ([, value]) => value,
     ),
-    Observable_takeWhile<number>(value => value !== finish, {
+    Observable_takeWhile<RunnableLike, number>(value => value !== finish, {
       inclusive: true,
     }),
   );

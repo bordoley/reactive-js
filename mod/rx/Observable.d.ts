@@ -1,6 +1,6 @@
 import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
-import { CombineLatest, CurrentTime, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, CurrentTime, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
@@ -217,11 +217,7 @@ export declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];
 /**
  * @category Constructor
  */
-export declare const spring: (start: number, finish: number, options?: {
-    stiffness?: number;
-    damping?: number;
-    precision?: number;
-}) => ObservableLike<number>;
+export declare const spring: Spring<ObservableLike>["spring"];
 export declare const startWith: StartWith<ObservableLike>["startWith"];
 export declare const switchAll: SwitchAll<ObservableLike>["switchAll"];
 export declare const switchMap: SwitchMap<ObservableLike>["switchMap"];
@@ -249,10 +245,7 @@ export declare const toRunnable: ToRunnable<ObservableLike>["toRunnable"];
 /**
  * @category Constructor
  */
-export declare const tween: (start: number, finish: number, options?: {
-    duration?: number;
-    easing?: Function1<number, number>;
-}) => ObservableLike<number>;
+export declare const tween: Tween<ObservableLike>["tween"];
 export declare const withCurrentTime: WithCurrentTime<ObservableLike>["withCurrentTime"];
 export declare const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"];
 export declare const zip: Zip<ObservableLike>["zip"];

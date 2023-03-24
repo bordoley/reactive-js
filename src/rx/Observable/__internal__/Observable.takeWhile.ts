@@ -12,7 +12,7 @@ import {
   TakeWhileObserverMixin_predicate,
 } from "../../../__internal__/symbols.js";
 import { DelegatingDisposableLike } from "../../../__internal__/util.internal.js";
-import { TakeWhile } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
@@ -29,91 +29,94 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
-const Observable_takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
-  /*@__PURE__*/ (<T>() => {
-    const createTakeWhileObserver: (
-      delegate: ObserverLike<T>,
-      predicate: Predicate<T>,
-      inclusive: boolean,
-    ) => ObserverLike<T> = (<T>() => {
-      type TProperties = {
-        readonly [TakeWhileObserverMixin_predicate]: Predicate<T>;
-        readonly [TakeWhileObserverMixin_inclusive]: boolean;
-      };
+type ObservableTakeWhile = <C extends ObservableLike, T>(
+  predicate: Predicate<T>,
+  options?: {
+    readonly inclusive?: boolean | undefined;
+  },
+) => ContainerOperator<C, T, T>;
 
-      return createInstanceFactory(
-        mix(
-          include(
-            Disposable_delegatingMixin<ObserverLike<T>>(),
-            Observer_mixin<T>(),
-          ),
-          function TakeWhileObserverMixin(
-            instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-              Mutable<TProperties>,
-            delegate: ObserverLike<T>,
-            predicate: Predicate<T>,
-            inclusive: boolean,
-          ): ObserverLike<T> {
-            init(
-              Disposable_delegatingMixin<ObserverLike<T>>(),
-              instance,
-              delegate,
-            );
-            init(
-              Observer_mixin<T>(),
-              instance,
-              delegate[DispatcherLike_scheduler],
-              delegate[QueueableLike_maxBufferSize],
-            );
-
-            instance[TakeWhileObserverMixin_predicate] = predicate;
-            instance[TakeWhileObserverMixin_inclusive] = inclusive;
-
-            return instance;
-          },
-          props<TProperties>({
-            [TakeWhileObserverMixin_predicate]: none,
-            [TakeWhileObserverMixin_inclusive]: none,
-          }),
-          {
-            [ObserverLike_notify](
-              this: TProperties &
-                DelegatingDisposableLike<ObserverLike<T>> &
-                ObserverLike<T>,
-              next: T,
-            ) {
-              Observer_assertState(this);
-
-              const satisfiesPredicate =
-                this[TakeWhileObserverMixin_predicate](next);
-
-              if (
-                satisfiesPredicate ||
-                this[TakeWhileObserverMixin_inclusive]
-              ) {
-                this[DelegatingLike_delegate][ObserverLike_notify](next);
-              }
-
-              if (!satisfiesPredicate) {
-                this[DisposableLike_dispose]();
-              }
-            },
-          },
-        ),
-      );
-    })();
-
-    return (
-      predicate: Predicate<T>,
-      options: { readonly inclusive?: boolean } = {},
-    ) => {
-      const { inclusive = false } = options;
-      return pipe(
-        createTakeWhileObserver,
-        partial(predicate, inclusive),
-        Observable_liftEnumerableOperator,
-      );
+const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
+  const createTakeWhileObserver: (
+    delegate: ObserverLike<T>,
+    predicate: Predicate<T>,
+    inclusive: boolean,
+  ) => ObserverLike<T> = (<T>() => {
+    type TProperties = {
+      readonly [TakeWhileObserverMixin_predicate]: Predicate<T>;
+      readonly [TakeWhileObserverMixin_inclusive]: boolean;
     };
+
+    return createInstanceFactory(
+      mix(
+        include(
+          Disposable_delegatingMixin<ObserverLike<T>>(),
+          Observer_mixin<T>(),
+        ),
+        function TakeWhileObserverMixin(
+          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+            Mutable<TProperties>,
+          delegate: ObserverLike<T>,
+          predicate: Predicate<T>,
+          inclusive: boolean,
+        ): ObserverLike<T> {
+          init(
+            Disposable_delegatingMixin<ObserverLike<T>>(),
+            instance,
+            delegate,
+          );
+          init(
+            Observer_mixin<T>(),
+            instance,
+            delegate[DispatcherLike_scheduler],
+            delegate[QueueableLike_maxBufferSize],
+          );
+
+          instance[TakeWhileObserverMixin_predicate] = predicate;
+          instance[TakeWhileObserverMixin_inclusive] = inclusive;
+
+          return instance;
+        },
+        props<TProperties>({
+          [TakeWhileObserverMixin_predicate]: none,
+          [TakeWhileObserverMixin_inclusive]: none,
+        }),
+        {
+          [ObserverLike_notify](
+            this: TProperties &
+              DelegatingDisposableLike<ObserverLike<T>> &
+              ObserverLike<T>,
+            next: T,
+          ) {
+            Observer_assertState(this);
+
+            const satisfiesPredicate =
+              this[TakeWhileObserverMixin_predicate](next);
+
+            if (satisfiesPredicate || this[TakeWhileObserverMixin_inclusive]) {
+              this[DelegatingLike_delegate][ObserverLike_notify](next);
+            }
+
+            if (!satisfiesPredicate) {
+              this[DisposableLike_dispose]();
+            }
+          },
+        },
+      ),
+    );
   })();
+
+  return (
+    predicate: Predicate<T>,
+    options: { readonly inclusive?: boolean } = {},
+  ) => {
+    const { inclusive = false } = options;
+    return pipe(
+      createTakeWhileObserver,
+      partial(predicate, inclusive),
+      Observable_liftEnumerableOperator,
+    );
+  };
+})() as ObservableTakeWhile;
 
 export default Observable_takeWhile;

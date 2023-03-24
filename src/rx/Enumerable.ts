@@ -188,7 +188,7 @@ export const fromReadonlyArray: FromReadonlyArray<EnumerableLike>["fromReadonlyA
   ReadonlyArray_toObservable;
 
 export const generate: Generate<EnumerableLike>["generate"] =
-  Observable_generate as Generate<EnumerableLike>["generate"];
+  Observable_generate;
 
 export const ignoreElements: IgnoreElements<EnumerableLike>["ignoreElements"] =
   Observable_ignoreElements as IgnoreElements<EnumerableLike>["ignoreElements"];
@@ -235,7 +235,7 @@ export const takeLast: TakeLast<EnumerableLike>["takeLast"] =
   Observable_takeLast;
 
 export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
-  Observable_takeWhile as TakeWhile<EnumerableLike>["takeWhile"];
+  Observable_takeWhile;
 
 export const throws: Throws<EnumerableLike>["throws"] = Observable_throws;
 

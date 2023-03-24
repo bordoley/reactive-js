@@ -7,7 +7,7 @@ import { ContinuationContextLike_yield, } from "../../../scheduling.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
-const Observable_generate = (generator, initialValue, options) => {
+const Observable_generate = ((generator, initialValue, options) => {
     const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
     const onSubscribe = (observer) => {
         let acc = initialValue();
@@ -23,5 +23,5 @@ const Observable_generate = (generator, initialValue, options) => {
     return delay > 0
         ? Runnable_create(onSubscribe)
         : Enumerable_create(onSubscribe);
-};
+});
 export default Observable_generate;

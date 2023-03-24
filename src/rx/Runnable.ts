@@ -63,6 +63,7 @@ import {
   RunnableLike,
   ScanLast,
   ScanMany,
+  Spring,
   SwitchAll,
   SwitchMap,
   TakeUntil,
@@ -71,6 +72,7 @@ import {
   ToEnumerable,
   ToObservable,
   ToRunnable,
+  Tween,
   WithCurrentTime,
   WithLatestFrom,
   ZipLatest,
@@ -108,6 +110,7 @@ import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
+import Observable_spring from "./Observable/__internal__/Observable.spring.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
@@ -117,6 +120,7 @@ import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwI
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
+import Observable_tween from "./Observable/__internal__/Observable.tween.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -171,7 +175,7 @@ export const contains: Contains<RunnableLike>["contains"] =
   Observable_contains as Contains<RunnableLike>["contains"];
 
 export const currentTime: CurrentTime<RunnableLike>["currentTime"] =
-  Observable_currentTime as CurrentTime<RunnableLike>["currentTime"];
+  Observable_currentTime;
 
 export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
   Observable_decodeWithCharset as DecodeWithCharset<RunnableLike>["decodeWithCharset"];
@@ -255,10 +259,7 @@ export const fromReadonlyArray: FromReadonlyArray<
 export const generate: Generate<
   RunnableLike,
   { readonly delay?: number; readonly delayStart?: boolean }
->["generate"] = Observable_generate as Generate<
-  RunnableLike,
-  { readonly delay?: number; readonly delayStart?: boolean }
->["generate"];
+>["generate"] = Observable_generate;
 
 export const ignoreElements: IgnoreElements<RunnableLike>["ignoreElements"] =
   Observable_ignoreElements as IgnoreElements<RunnableLike>["ignoreElements"];
@@ -313,6 +314,11 @@ export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] =
 export const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"] =
   Observable_someSatisfy as SomeSatisfy<RunnableLike>["someSatisfy"];
 
+/**
+ * @category Constructor
+ */
+export const spring: Spring<RunnableLike>["spring"] = Observable_spring;
+
 export const startWith: StartWith<RunnableLike>["startWith"] =
   Observable_startWith as StartWith<RunnableLike>["startWith"];
 
@@ -331,7 +337,7 @@ export const takeUntil: TakeUntil<RunnableLike>["takeUntil"] =
   Observable_takeUntil as TakeUntil<RunnableLike>["takeUntil"];
 
 export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] =
-  Observable_takeWhile as TakeWhile<RunnableLike>["takeWhile"];
+  Observable_takeWhile;
 
 export const throttle: Throttle<RunnableLike>["throttle"] = Runnable_throttle;
 
@@ -358,6 +364,11 @@ export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
 
 export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
   /*@__PURE__*/ returns(identity);
+
+/**
+ * @category Constructor
+ */
+export const tween: Tween<RunnableLike>["tween"] = Observable_tween;
 
 export const withCurrentTime: WithCurrentTime<RunnableLike>["withCurrentTime"] =
   Observable_withCurrentTime;

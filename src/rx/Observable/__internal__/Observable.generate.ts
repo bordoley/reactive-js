@@ -1,8 +1,9 @@
 import { Factory, Updater, none, pipe } from "../../../functions.js";
 import {
-  ObservableLike,
+  EnumerableLike,
   ObserverLike,
   ObserverLike_notify,
+  RunnableLike,
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import {
@@ -13,11 +14,24 @@ import { DisposableLike_isDisposed } from "../../../util.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 
-const Observable_generate = <T>(
+interface ObservableGenerate {
+  <T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
+  <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options: { readonly delay: number; readonly delayStart?: boolean },
+  ): RunnableLike<T>;
+  <T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options?: { readonly delay?: number; readonly delayStart?: boolean },
+  ): RunnableLike<T>;
+}
+const Observable_generate: ObservableGenerate = (<T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options?: { readonly delay?: number; readonly delayStart?: boolean },
-): ObservableLike<T> => {
+): RunnableLike<T> => {
   const { delay = 0, delayStart = false } = options ?? {};
 
   const onSubscribe = (observer: ObserverLike<T>) => {
@@ -39,6 +53,6 @@ const Observable_generate = <T>(
   return delay > 0
     ? Runnable_create(onSubscribe)
     : Enumerable_create(onSubscribe);
-};
+}) as ObservableGenerate;
 
 export default Observable_generate;

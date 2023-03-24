@@ -18,7 +18,9 @@
 - [fromReadonlyArray](rx_Runnable.md#fromreadonlyarray)
 - [generate](rx_Runnable.md#generate)
 - [merge](rx_Runnable.md#merge)
+- [spring](rx_Runnable.md#spring)
 - [throws](rx_Runnable.md#throws)
+- [tween](rx_Runnable.md#tween)
 - [zip](rx_Runnable.md#zip)
 - [zipLatest](rx_Runnable.md#ziplatest)
 
@@ -571,6 +573,27 @@ ___
 
 ___
 
+### spring
+
+▸ **spring**(`start`, `finish`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `start` | `number` |
+| `finish` | `number` |
+| `options?` | `Object` |
+| `options.damping?` | `number` |
+| `options.precision?` | `number` |
+| `options.stiffness?` | `number` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
+
+___
+
 ### throws
 
 ▸ **throws**<`T`\>(`options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
@@ -590,6 +613,26 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
+### tween
+
+▸ **tween**(`start`, `finish`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `start` | `number` |
+| `finish` | `number` |
+| `options?` | `Object` |
+| `options.duration?` | `number` |
+| `options.easing?` | [`Function1`](functions.md#function1)<`number`, `number`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
 
 ___
 

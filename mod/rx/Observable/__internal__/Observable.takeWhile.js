@@ -9,8 +9,7 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-const Observable_takeWhile = 
-/*@__PURE__*/ (() => {
+const Observable_takeWhile = /*@__PURE__*/ (() => {
     const createTakeWhileObserver = (() => {
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function TakeWhileObserverMixin(instance, delegate, predicate, inclusive) {
             init(Disposable_delegatingMixin(), instance, delegate);
@@ -25,8 +24,7 @@ const Observable_takeWhile =
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
                 const satisfiesPredicate = this[TakeWhileObserverMixin_predicate](next);
-                if (satisfiesPredicate ||
-                    this[TakeWhileObserverMixin_inclusive]) {
+                if (satisfiesPredicate || this[TakeWhileObserverMixin_inclusive]) {
                     this[DelegatingLike_delegate][ObserverLike_notify](next);
                 }
                 if (!satisfiesPredicate) {

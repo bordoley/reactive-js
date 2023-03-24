@@ -16,6 +16,7 @@
 
 - [DispatcherLike](../interfaces/rx.DispatcherLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
+- [Tween](../interfaces/rx.Tween.md)
 
 ### TypeClass Interfaces
 
@@ -37,6 +38,7 @@
 - [Retry](../interfaces/rx.Retry.md)
 - [ScanLast](../interfaces/rx.ScanLast.md)
 - [ScanMany](../interfaces/rx.ScanMany.md)
+- [Spring](../interfaces/rx.Spring.md)
 - [SwitchAll](../interfaces/rx.SwitchAll.md)
 - [SwitchMap](../interfaces/rx.SwitchMap.md)
 - [TakeUntil](../interfaces/rx.TakeUntil.md)

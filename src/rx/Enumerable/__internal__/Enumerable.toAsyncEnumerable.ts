@@ -42,7 +42,9 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
               Observable_forEach<ObservableLike, void>(_ => {
                 enumerator[EnumeratorLike_move]();
               }),
-              Observable_takeWhile(_ => enumerator[EnumeratorLike_hasCurrent]),
+              Observable_takeWhile<ObservableLike, void>(
+                _ => enumerator[EnumeratorLike_hasCurrent],
+              ),
               delay > 0
                 ? Observable_concatMap(_ =>
                     pipe(
