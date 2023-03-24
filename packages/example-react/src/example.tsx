@@ -19,7 +19,6 @@ import {
   increment,
   Optional,
   pipe,
-  pipeLazy,
   returns,
   SideEffect,
   SideEffect1,
@@ -65,7 +64,7 @@ const Root = () => {
     () =>
       Streamable.create(
         Observable.exhaustMap(
-          pipeLazy(
+          pipe(
             Observable.tween(50, 0, { duration: 1000 }),
             Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
@@ -81,6 +80,7 @@ const Root = () => {
             Observable.subscribeOn(createAnimationFrameScheduler),
             Observable.startWith(true),
             Observable.endWith(false),
+            returns,
           ),
         ),
       ),
@@ -146,7 +146,7 @@ const RxComponent = createComponent(
     }) =>
       Streamable.create<void, boolean>(
         Observable.exhaustMap(
-          pipeLazy(
+          pipe(
             Observable.spring(50, 0, {
               stiffness: 0.01,
               damping: 0.1,
@@ -166,6 +166,7 @@ const RxComponent = createComponent(
             Observable.subscribeOn(createAnimationFrameScheduler),
             Observable.startWith(true),
             Observable.endWith(false),
+            returns,
           ),
         ),
       );
