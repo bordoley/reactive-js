@@ -18,4 +18,5 @@ packages/core/**/*.mjs
 packages/core/README.md
 packages/example-react/build
 packages/example-node/build
+packages/example-svelte/build
 packages/perf/build/
