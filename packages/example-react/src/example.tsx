@@ -65,8 +65,10 @@ const Root = () => {
       Streamable.create(
         Observable.exhaustMap(
           pipe(
-            Observable.tween(0, 50, { duration: 1000 }),
-            Observable.concatWith(Observable.tween(50, 0, { duration: 1000 })),
+            Observable.concat(
+              Observable.tween(0, 50, { duration: 1000 }),
+              Observable.tween(50, 0, { duration: 1000 }),
+            ),
             Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {
@@ -148,11 +150,14 @@ const RxComponent = createComponent(
       Streamable.create<void, boolean>(
         Observable.exhaustMap(
           pipe(
-            Observable.spring(50, 0, {
-              stiffness: 0.01,
-              damping: 0.1,
-              precision: 1,
-            }),
+            Observable.concat(
+              Observable.tween(0, 50, { duration: 1000 }),
+              Observable.spring(50, 0, {
+                stiffness: 0.01,
+                damping: 0.1,
+                precision: 1,
+              }),
+            ),
             Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {
