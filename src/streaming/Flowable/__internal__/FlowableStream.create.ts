@@ -7,6 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import {
   Updater,
   compose,
@@ -18,6 +19,7 @@ import {
 import { ObservableLike } from "../../../rx.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
+import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Subject_create from "../../../rx/Subject/__internal__/Subject.create.js";
 import Subject_publishTo from "../../../rx/Subject/__internal__/Subject.publishTo.js";
@@ -62,6 +64,10 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
           Observable_scan<ObservableLike, boolean | Updater<boolean>, boolean>(
             (acc, next) => (isFunction(next) ? next(acc) : next),
             returns(true),
+          ),
+          Observable_mergeWith<ObservableLike, boolean>(
+            // Initialize to paused state
+            pipe(true, Optional_toObservable()),
           ),
           Observable_distinctUntilChanged<ObservableLike, boolean>(),
           Observable_forEach<ObservableLike, boolean>(

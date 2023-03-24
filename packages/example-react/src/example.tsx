@@ -65,7 +65,8 @@ const Root = () => {
       Streamable.create(
         Observable.exhaustMap(
           pipe(
-            Observable.tween(50, 0, { duration: 1000 }),
+            Observable.tween(0, 50, { duration: 1000 }),
+            Observable.concatWith(Observable.tween(50, 0, { duration: 1000 })),
             Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {

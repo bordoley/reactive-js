@@ -39,5 +39,5 @@ import {
 
 <main>
 	<h1>{$counterValue ?? 0}</h1>
-   <button on:click={$isPaused ?? true ? resume : pause}>{$isPaused ?? true ? "Resume" : "Pause"}</button>
+   <button on:click={$isPaused ? resume : pause}>{$isPaused ? "Resume" : "Pause"}</button>
 </main>
