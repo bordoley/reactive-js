@@ -1,12 +1,12 @@
 /// <reference types="./Enumerable.test.d.ts" />
 
 import { describe, expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
-import { bufferTests, concatAllTests, concatMapTests, concatTests, concatWithTests, distinctUntilChangedTests, endWithTests, flatMapIterableTests, forEachTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, 
+import { bufferTests, concatAllTests, concatMapTests, concatTests, concatWithTests, distinctUntilChangedTests, endWithTests, flatMapIterableTests, forEachTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, pickTests, 
 //repeatTests,
 scanTests, skipFirstTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, toObservableTests, zipTests, zipWithTests, } from "../../__tests__/operators.js";
 import { pipe, returns } from "../../functions.js";
 import * as Enumerable from "../Enumerable.js";
-testModule("Enumerable", bufferTests(Enumerable), concatTests(Enumerable), concatAllTests(Enumerable), concatMapTests(Enumerable), concatWithTests(Enumerable), distinctUntilChangedTests(Enumerable), endWithTests(Enumerable), forEachTests(Enumerable), fromReadonlyArrayTests(Enumerable), flatMapIterableTests(Enumerable), ignoreElementsTests(Enumerable), keepTests(Enumerable), mapTests(Enumerable), mapToTests(Enumerable), pairwiseTests(Enumerable), 
+testModule("Enumerable", bufferTests(Enumerable), concatTests(Enumerable), concatAllTests(Enumerable), concatMapTests(Enumerable), concatWithTests(Enumerable), distinctUntilChangedTests(Enumerable), endWithTests(Enumerable), forEachTests(Enumerable), fromReadonlyArrayTests(Enumerable), flatMapIterableTests(Enumerable), ignoreElementsTests(Enumerable), keepTests(Enumerable), mapTests(Enumerable), mapToTests(Enumerable), pairwiseTests(Enumerable), pickTests(Enumerable), 
 // FIXME
 //repeatTests(Enumerable),
 scanTests(Enumerable), skipFirstTests(Enumerable), startWithTests(Enumerable), takeFirstTests(Enumerable), takeLastTests(Enumerable), takeWhileTests(Enumerable), throwIfEmptyTests(Enumerable), toObservableTests(Enumerable), zipTests(Enumerable), zipWithTests(Enumerable), describe("enumerate", test("with higher order observable and no delay", () => {

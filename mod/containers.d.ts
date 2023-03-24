@@ -517,6 +517,19 @@ export interface Pairwise<C extends ContainerLike, O = never> extends Container<
  * @noInheritDoc
  * @category TypeClass
  */
+export interface Pick<C extends ContainerLike> extends Container<C> {
+    /**
+     * @category Operator
+     */
+    pick<T>(key: keyof T): ContainerOperator<C, T, T[typeof key]>;
+    pick<T>(keyA: keyof T, keyB: keyof T[typeof keyA]): ContainerOperator<C, T, T[typeof keyA][typeof keyB]>;
+    pick<T>(keyA: keyof T, keyB: keyof T[typeof keyA]): ContainerOperator<C, T, T[typeof keyA][typeof keyB]>;
+    pick<T>(keyA: keyof T, keyB: keyof T[typeof keyA], keyC: keyof T[typeof keyA][typeof keyB]): ContainerOperator<C, T, T[typeof keyA][typeof keyB][typeof keyC]>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface Reduce<C extends ContainerLike, O = never> extends Container<C> {
     /**
      * @category Operator

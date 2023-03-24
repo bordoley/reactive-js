@@ -75,6 +75,7 @@
 - [mergeWith](rx_Observable.md#mergewith)
 - [onSubscribe](rx_Observable.md#onsubscribe)
 - [pairwise](rx_Observable.md#pairwise)
+- [pick](rx_Observable.md#pick)
 - [reduce](rx_Observable.md#reduce)
 - [repeat](rx_Observable.md#repeat)
 - [retry](rx_Observable.md#retry)
@@ -3229,6 +3230,86 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+
+___
+
+### pick
+
+▸ **pick**<`T`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`[keyof `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | keyof `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`[keyof `T`]\>
+
+▸ **pick**<`T`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | keyof `T` |
+| `keyB` | keyof `T`[keyof `T`] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+▸ **pick**<`T`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | keyof `T` |
+| `keyB` | keyof `T`[keyof `T`] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+▸ **pick**<`T`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]][keyof `T`[keyof `T`][keyof `T`[keyof `T`]]]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | keyof `T` |
+| `keyB` | keyof `T`[keyof `T`] |
+| `keyC` | keyof `T`[keyof `T`][keyof `T`[keyof `T`]] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]][keyof `T`[keyof `T`][keyof `T`[keyof `T`]]]\>
 
 ___
 

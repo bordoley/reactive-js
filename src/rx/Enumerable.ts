@@ -34,6 +34,7 @@ import {
   Map,
   MapTo,
   Pairwise,
+  Pick,
   Reduce,
   Scan,
   SkipFirst,
@@ -106,6 +107,7 @@ import { DisposableLike } from "../util.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
+import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 
@@ -203,6 +205,8 @@ export const mapTo: MapTo<EnumerableLike>["mapTo"] = Observable_mapTo;
 
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
   Observable_pairwise;
+
+export const pick: Pick<EnumerableLike>["pick"] = Observable_pick;
 
 export const reduce: Reduce<EnumerableLike>["reduce"] = Observable_reduce;
 

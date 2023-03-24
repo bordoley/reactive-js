@@ -30,6 +30,7 @@ import {
   Map,
   MapTo,
   Pairwise,
+  Pick,
   Reduce,
   Scan,
   SkipFirst,
@@ -105,6 +106,7 @@ import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeWith from "./Observable/__internal__/Observable.mergeWith.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
+import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
@@ -285,6 +287,8 @@ export const mergeWith: MergeWith<RunnableLike>["mergeWith"] =
   Observable_mergeWith as MergeWith<RunnableLike>["mergeWith"];
 
 export const pairwise: Pairwise<RunnableLike>["pairwise"] = Observable_pairwise;
+
+export const pick: Pick<RunnableLike>["pick"] = Observable_pick;
 
 export const reduce: Reduce<RunnableLike>["reduce"] = Observable_reduce;
 

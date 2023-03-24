@@ -40,6 +40,7 @@
 - [map](rx_Enumerable.md#map)
 - [mapTo](rx_Enumerable.md#mapto)
 - [pairwise](rx_Enumerable.md#pairwise)
+- [pick](rx_Enumerable.md#pick)
 - [reduce](rx_Enumerable.md#reduce)
 - [retry](rx_Enumerable.md#retry)
 - [scan](rx_Enumerable.md#scan)
@@ -1214,6 +1215,86 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+
+___
+
+### pick
+
+▸ **pick**<`T`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`[keyof `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | keyof `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`[keyof `T`]\>
+
+▸ **pick**<`T`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | keyof `T` |
+| `keyB` | keyof `T`[keyof `T`] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+▸ **pick**<`T`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | keyof `T` |
+| `keyB` | keyof `T`[keyof `T`] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+▸ **pick**<`T`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]][keyof `T`[keyof `T`][keyof `T`[keyof `T`]]]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | keyof `T` |
+| `keyB` | keyof `T`[keyof `T`] |
+| `keyC` | keyof `T`[keyof `T`][keyof `T`[keyof `T`]] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]][keyof `T`[keyof `T`][keyof `T`[keyof `T`]]]\>
 
 ___
 

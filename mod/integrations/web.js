@@ -140,7 +140,7 @@ export const windowLocation = /*@__PURE__*/ (() => {
             return canGoBack;
         },
         [ObservableLike_observe](observer) {
-            pipe(this[DelegatingLike_delegate], Observable.map(({ uri }) => uri), Observable.observeWith(observer));
+            pipe(this[DelegatingLike_delegate], Observable.pick("uri"), Observable.observeWith(observer));
         },
     }));
     let currentWindowLocationStream = none;

@@ -54,6 +54,7 @@
 - [Never](../interfaces/containers.Never.md)
 - [NoneSatisfy](../interfaces/containers.NoneSatisfy.md)
 - [Pairwise](../interfaces/containers.Pairwise.md)
+- [Pick](../interfaces/containers.Pick.md)
 - [Reduce](../interfaces/containers.Reduce.md)
 - [Repeat](../interfaces/containers.Repeat.md)
 - [Scan](../interfaces/containers.Scan.md)

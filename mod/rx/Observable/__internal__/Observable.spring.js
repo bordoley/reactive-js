@@ -4,7 +4,7 @@ import { MAX_VALUE, __DEV__ } from "../../../__internal__/constants.js";
 import { abs, min } from "../../../__internal__/math.js";
 import { pipe, returns } from "../../../functions.js";
 import Observable_currentTime from "./Observable.currentTime.js";
-import Observable_map from "./Observable.map.js";
+import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 const Observable_spring = (start, finish, options) => {
@@ -23,7 +23,7 @@ const Observable_spring = (start, finish, options) => {
         const d = (velocity + acceleration) * dt;
         const newValue = abs(d) < precision && abs(delta) < precision ? finish : value + d;
         return [now, value, newValue];
-    }, returns([MAX_VALUE, start, start])), Observable_map(([, , value]) => value), Observable_takeWhile(value => value !== finish, {
+    }, returns([MAX_VALUE, start, start])), Observable_pick(2), Observable_takeWhile(value => value !== finish, {
         inclusive: true,
     }));
 };

@@ -53,6 +53,7 @@ import Observable_never from "./Observable/__internal__/Observable.never.js";
 import Observable_observeWith from "./Observable/__internal__/Observable.observeWith.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
+import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
@@ -200,6 +201,7 @@ export const observeWith = Observable_observeWith;
  */
 export const onSubscribe = Observable_onSubscribe;
 export const pairwise = Observable_pairwise;
+export const pick = Observable_pick;
 export const reduce = Observable_reduce;
 export const repeat = Observable_repeat;
 export const retry = Observable_retry;

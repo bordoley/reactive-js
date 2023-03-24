@@ -90,6 +90,8 @@
 
   ↳ [`Pairwise`](containers.Pairwise.md)
 
+  ↳ [`Pick`](containers.Pick.md)
+
   ↳ [`Reduce`](containers.Reduce.md)
 
   ↳ [`Repeat`](containers.Repeat.md)

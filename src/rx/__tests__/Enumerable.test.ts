@@ -20,6 +20,7 @@ import {
   mapTests,
   mapToTests,
   pairwiseTests,
+  pickTests,
   //repeatTests,
   scanTests,
   skipFirstTests,
@@ -53,6 +54,7 @@ testModule(
   mapTests(Enumerable),
   mapToTests(Enumerable),
   pairwiseTests(Enumerable),
+  pickTests(Enumerable),
   // FIXME
   //repeatTests(Enumerable),
   scanTests(Enumerable),

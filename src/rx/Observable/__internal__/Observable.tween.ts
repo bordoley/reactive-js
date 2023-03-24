@@ -3,7 +3,7 @@ import { min } from "../../../__internal__/math.js";
 import { Function1, identity, pipe, returns } from "../../../functions.js";
 import { RunnableLike } from "../../../rx.js";
 import Observable_currentTime from "./Observable.currentTime.js";
-import Observable_map from "./Observable.map.js";
+import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
@@ -32,9 +32,7 @@ const Observable_tween = (
       },
       returns([MAX_VALUE, start]),
     ),
-    Observable_map<RunnableLike, [number, number], number>(
-      ([, value]) => value,
-    ),
+    Observable_pick<RunnableLike, [unknown, number]>(1),
     Observable_takeWhile<RunnableLike, number>(value => value !== finish, {
       inclusive: true,
     }),

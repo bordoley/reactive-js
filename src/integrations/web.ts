@@ -364,7 +364,7 @@ export const windowLocation: StreamableLike<
         ): void {
           pipe(
             this[DelegatingLike_delegate],
-            Observable.map(({ uri }) => uri),
+            Observable.pick("uri"),
             Observable.observeWith(observer),
           );
         },

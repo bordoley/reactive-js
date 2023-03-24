@@ -53,6 +53,7 @@
 - [mergeAll](rx_Runnable.md#mergeall)
 - [mergeWith](rx_Runnable.md#mergewith)
 - [pairwise](rx_Runnable.md#pairwise)
+- [pick](rx_Runnable.md#pick)
 - [reduce](rx_Runnable.md#reduce)
 - [retry](rx_Runnable.md#retry)
 - [scan](rx_Runnable.md#scan)
@@ -2138,6 +2139,86 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+
+___
+
+### pick
+
+▸ **pick**<`T`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | keyof `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`]\>
+
+▸ **pick**<`T`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | keyof `T` |
+| `keyB` | keyof `T`[keyof `T`] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+▸ **pick**<`T`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | keyof `T` |
+| `keyB` | keyof `T`[keyof `T`] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+
+▸ **pick**<`T`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]][keyof `T`[keyof `T`][keyof `T`[keyof `T`]]]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | keyof `T` |
+| `keyB` | keyof `T`[keyof `T`] |
+| `keyC` | keyof `T`[keyof `T`][keyof `T`[keyof `T`]] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]][keyof `T`[keyof `T`][keyof `T`[keyof `T`]]]\>
 
 ___
 

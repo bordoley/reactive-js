@@ -22,6 +22,7 @@ import {
   EverySatisfy,
   FlatMapIterable,
   ForEach,
+  FromOptional,
   FromReadonlyArray,
   Generate,
   IgnoreElements,
@@ -29,6 +30,7 @@ import {
   Map,
   MapTo,
   Pairwise,
+  Pick,
   Reduce,
   Repeat,
   Scan,
@@ -44,6 +46,7 @@ import {
 } from "../containers.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import {
+  Optional,
   alwaysFalse,
   alwaysTrue,
   arrayEquality,
@@ -626,6 +629,60 @@ export const pairwiseTests = <C extends ContainerLike>(
         expectArrayEquals<readonly [number, number]>([], arrayEquality()),
       ),
     ),
+  );
+
+export const pickTests = <C extends ContainerLike>(
+  m: Pick<C> & FromOptional<C> & ToRunnable<C>,
+) =>
+  describe(
+    "pick",
+    test("with object and symbol keys", () => {
+      const keyA = Symbol();
+      const keyB = Symbol();
+
+      const obj = {
+        [keyA]: {
+          [keyB]: "value",
+        },
+      };
+
+      pipe(
+        obj,
+        m.fromOptional(),
+        m.pick(keyA, keyB),
+        m.toRunnable(),
+        Runnable.first(),
+        expectEquals<Optional<string>>("value"),
+      );
+    }),
+    test("with object and string keys", () => {
+      const obj = {
+        keyA: {
+          keyB: "value",
+        },
+      };
+
+      pipe(
+        obj,
+        m.fromOptional(),
+        m.pick("keyA", "keyB"),
+        m.toRunnable(),
+        Runnable.first(),
+        expectEquals<Optional<string>>("value"),
+      );
+    }),
+    test("with array", () => {
+      const obj = [1, 2, 3, 4, 5, 6];
+
+      pipe(
+        obj,
+        m.fromOptional(),
+        m.pick(3),
+        m.toRunnable(),
+        Runnable.first(),
+        expectEquals<Optional<number>>(4),
+      );
+    }),
   );
 
 export const reduceTests = <C extends ContainerLike>(

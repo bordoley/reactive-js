@@ -49,6 +49,7 @@ import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
+import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 export const buffer = Observable_buffer;
@@ -83,6 +84,7 @@ export const last = Runnable_last;
 export const map = Observable_map;
 export const mapTo = Observable_mapTo;
 export const pairwise = Observable_pairwise;
+export const pick = Observable_pick;
 export const reduce = Observable_reduce;
 export const retry = Observable_retry;
 export const scan = Observable_scan;

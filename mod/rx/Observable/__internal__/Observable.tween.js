@@ -4,7 +4,7 @@ import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { min } from "../../../__internal__/math.js";
 import { identity, pipe, returns } from "../../../functions.js";
 import Observable_currentTime from "./Observable.currentTime.js";
-import Observable_map from "./Observable.map.js";
+import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 const Observable_tween = (start, finish, options) => {
@@ -16,7 +16,7 @@ const Observable_tween = (start, finish, options) => {
             ? finish
             : start + (finish - start) * easing(elapsed / duration);
         return [startTime, next];
-    }, returns([MAX_VALUE, start])), Observable_map(([, value]) => value), Observable_takeWhile(value => value !== finish, {
+    }, returns([MAX_VALUE, start])), Observable_pick(1), Observable_takeWhile(value => value !== finish, {
         inclusive: true,
     }));
 };
