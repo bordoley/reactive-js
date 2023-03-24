@@ -1,3 +1,4 @@
+import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { compose, pipe } from "../../../functions.js";
 import {
@@ -33,18 +34,20 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
       const scheduler = observer[DispatcherLike_scheduler];
       const maxBufferSize = observer[QueueableLike_maxBufferSize];
 
-      const op = compose(
-        Observable_forEach(v => {
+      const op: ContainerOperator<ObservableLike, T, boolean> = compose(
+        Observable_forEach<ObservableLike, T>(v => {
           if (!observer[QueueableLike_push](v)) {
             scheduler[SchedulerLike_requestYield]();
           }
         }),
-        Observable_ignoreElements(),
+        Observable_ignoreElements<ObservableLike, boolean>(),
         // Intentionally use mergeWith here. The stream observer
         // needs to be immediately subscribed to when created
         // otherwise it will have no observer to queue events onto.
         // Observable.startWith uses concatenation.
-        Observable_mergeWith(pipe(false, Optional_toObservable())),
+        Observable_mergeWith<ObservableLike, boolean>(
+          pipe(false, Optional_toObservable()),
+        ),
       );
 
       pipe(

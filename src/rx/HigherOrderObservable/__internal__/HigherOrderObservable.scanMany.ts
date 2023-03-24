@@ -50,7 +50,7 @@ const HigherOrderObservable_scanMany =
             Observable_forEach<ObservableLike, TAcc>(
               Subject_publishTo(accFeedbackStream),
             ),
-            Observable_ignoreElements(),
+            Observable_ignoreElements<ObservableLike, TAcc>(),
           ),
           Observable_concatAll<TAcc>(),
         ),

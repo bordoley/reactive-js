@@ -63,7 +63,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
             (acc, next) => (isFunction(next) ? next(acc) : next),
             returns(true),
           ),
-          Observable_distinctUntilChanged<boolean>(),
+          Observable_distinctUntilChanged<ObservableLike, boolean>(),
           Observable_forEach<ObservableLike, boolean>(
             Subject_publishTo(subject),
           ),

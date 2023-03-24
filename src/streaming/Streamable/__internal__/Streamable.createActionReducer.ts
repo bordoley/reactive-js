@@ -27,8 +27,10 @@ const Streamable_createActionReducer = <TAction, T>(
         pipe(
           obs,
           Observable_scan<ObservableLike, TAction, T>(reducer, returns(acc)),
-          Observable_mergeWith<T>(pipe(acc, Optional_toObservable())),
-          Observable_distinctUntilChanged<T>(options),
+          Observable_mergeWith<ObservableLike, T>(
+            pipe(acc, Optional_toObservable()),
+          ),
+          Observable_distinctUntilChanged<ObservableLike, T>(options),
           Observable_observeWith(observer),
         );
       }),

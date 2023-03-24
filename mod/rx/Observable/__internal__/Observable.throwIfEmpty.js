@@ -11,8 +11,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-const Observable_throwIfEmpty = 
-/*@__PURE__*/ (() => {
+const Observable_throwIfEmpty = /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (() => {
         return createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function ThrowIfEmptyObserverMixin(instance, delegate, factory) {
             init(Disposable_mixin, instance);
@@ -41,6 +40,6 @@ const Observable_throwIfEmpty =
             },
         }));
     })();
-    return ((factory) => pipe(createThrowIfEmptyObserver, partial(factory), Observable_liftEnumerableOperator));
+    return (factory) => pipe(createThrowIfEmptyObserver, partial(factory), Observable_liftEnumerableOperator);
 })();
 export default Observable_throwIfEmpty;

@@ -1,8 +1,15 @@
-import { isNone, isSome } from "../../../functions.js";
-import { ObservableLike, Retry } from "../../../rx.js";
+import { ContainerOperator } from "../../../containers.js";
+import { Function2, isNone, isSome } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
 import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
 
-const Observable_retry: Retry<ObservableLike>["retry"] = /*@__PURE__*/ (() => {
+interface ObservableRetry {
+  <C extends ObservableLike, T>(): ContainerOperator<C, T, T>;
+  <C extends ObservableLike, T>(
+    predicate: Function2<number, unknown, boolean>,
+  ): ContainerOperator<C, T, T>;
+}
+const Observable_retry: ObservableRetry = /*@__PURE__*/ (() => {
   const defaultRetryPredicate = (_: number, error?: Error): boolean =>
     isSome(error);
 

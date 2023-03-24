@@ -114,8 +114,7 @@ export const buffer: Buffer<EnumerableLike>["buffer"] = Observable_buffer;
 export const catchError: CatchError<EnumerableLike>["catchError"] =
   Enumerable_catchError;
 
-export const concat: Concat<EnumerableLike>["concat"] =
-  Observable_concat as Concat<EnumerableLike>["concat"];
+export const concat: Concat<EnumerableLike>["concat"] = Observable_concat;
 
 export const concatAll: ConcatAll<
   EnumerableLike,
@@ -131,24 +130,22 @@ export const concatWith: ConcatWith<EnumerableLike>["concatWith"] =
   Observable_concatWith as ConcatWith<EnumerableLike>["concatWith"];
 
 export const contains: Contains<EnumerableLike>["contains"] =
-  Observable_contains as Contains<EnumerableLike>["contains"];
+  Observable_contains;
 
 export const decodeWithCharset: DecodeWithCharset<EnumerableLike>["decodeWithCharset"] =
-  Observable_decodeWithCharset as DecodeWithCharset<EnumerableLike>["decodeWithCharset"];
+  Observable_decodeWithCharset;
 
 export const defer: Defer<EnumerableLike>["defer"] = Enumerable_defer;
 
 export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"] =
-  Observable_distinctUntilChanged as DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"];
+  Observable_distinctUntilChanged;
 
-export const empty: Empty<EnumerableLike>["empty"] =
-  Observable_empty as Empty<EnumerableLike>["empty"];
+export const empty: Empty<EnumerableLike>["empty"] = Observable_empty;
 
 export const encodeUtf8: EncodeUtf8<EnumerableLike>["encodeUtf8"] =
   Enumerable_encodeUtf8;
 
-export const endWith: EndWith<EnumerableLike>["endWith"] =
-  Observable_endWith as EndWith<EnumerableLike>["endWith"];
+export const endWith: EndWith<EnumerableLike>["endWith"] = Observable_endWith;
 
 interface EnumerableEnumerator<T = unknown> extends EnumeratorLike<T> {
   readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]> &
@@ -176,7 +173,7 @@ export const forkZip: ForkZip<EnumerableLike>["forkZip"] =
   Observable_forkZip as ForkZip<EnumerableLike>["forkZip"];
 
 export const fromFactory: FromFactory<EnumerableLike>["fromFactory"] =
-  Observable_fromFactory as FromFactory<EnumerableLike>["fromFactory"];
+  Observable_fromFactory;
 
 export const fromIterable: FromIterable<EnumerableLike>["fromIterable"] =
   Iterable_toObservable;
@@ -191,10 +188,9 @@ export const generate: Generate<EnumerableLike>["generate"] =
   Observable_generate;
 
 export const ignoreElements: IgnoreElements<EnumerableLike>["ignoreElements"] =
-  Observable_ignoreElements as IgnoreElements<EnumerableLike>["ignoreElements"];
+  Observable_ignoreElements;
 
-export const keep: Keep<EnumerableLike>["keep"] =
-  Observable_keep as Keep<EnumerableLike>["keep"];
+export const keep: Keep<EnumerableLike>["keep"] = Observable_keep;
 
 export const keepType: KeepType<EnumerableLike>["keepType"] =
   Observable_keepType as KeepType<EnumerableLike>["keepType"];
@@ -203,16 +199,14 @@ export const last: Last<EnumerableLike>["last"] = Runnable_last;
 
 export const map: Map<EnumerableLike>["map"] = Observable_map;
 
-export const mapTo: MapTo<EnumerableLike>["mapTo"] =
-  Observable_mapTo as MapTo<EnumerableLike>["mapTo"];
+export const mapTo: MapTo<EnumerableLike>["mapTo"] = Observable_mapTo;
 
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
   Observable_pairwise;
 
 export const reduce: Reduce<EnumerableLike>["reduce"] = Observable_reduce;
 
-export const retry: Retry<EnumerableLike>["retry"] =
-  Observable_retry as Retry<EnumerableLike>["retry"];
+export const retry: Retry<EnumerableLike>["retry"] = Observable_retry;
 
 export const scan: Scan<EnumerableLike>["scan"] = Observable_scan;
 
@@ -223,10 +217,10 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
   Observable_skipFirst;
 
 export const someSatisfy: SomeSatisfy<EnumerableLike>["someSatisfy"] =
-  Observable_someSatisfy as SomeSatisfy<EnumerableLike>["someSatisfy"];
+  Observable_someSatisfy;
 
 export const startWith: StartWith<EnumerableLike>["startWith"] =
-  Observable_startWith as StartWith<EnumerableLike>["startWith"];
+  Observable_startWith;
 
 export const takeFirst: TakeFirst<EnumerableLike>["takeFirst"] =
   Observable_takeFirst;
@@ -240,7 +234,7 @@ export const takeWhile: TakeWhile<EnumerableLike>["takeWhile"] =
 export const throws: Throws<EnumerableLike>["throws"] = Observable_throws;
 
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
-  Observable_throwIfEmpty as ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
+  Observable_throwIfEmpty;
 
 export const toAsyncEnumerable: ToAsyncEnumerable<
   EnumerableLike,

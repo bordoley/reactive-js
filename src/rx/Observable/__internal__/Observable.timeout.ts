@@ -16,6 +16,7 @@ import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../__internal__/util.internal.js";
+import { ContainerOperator } from "../../../containers.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
@@ -23,7 +24,7 @@ import {
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
-  Timeout,
+  RunnableLike,
 } from "../../../rx.js";
 import {
   DisposableLike,
@@ -40,14 +41,18 @@ import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 import Observable_throws from "./Observable.throws.js";
 
-const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
-  T,
->() => {
+interface ObservableTimeout {
+  <C extends ObservableLike, T>(duration: number): ContainerOperator<C, T, T>;
+  <T>(duration: RunnableLike): ContainerOperator<RunnableLike, T, T>;
+  <T>(duration: ObservableLike): ContainerOperator<ObservableLike, T, T>;
+}
+
+const Observable_timeout: ObservableTimeout = /*@__PURE__*/ (<T>() => {
   const typedSerialDisposableMixin = SerialDisposable_mixin();
   const typedObserverMixin = Observer_mixin();
 
   type TProperties = {
-    readonly [TimeoutObserver_duration]: ObservableLike<unknown>;
+    readonly [TimeoutObserver_duration]: ObservableLike;
   };
 
   const setupDurationSubscription = (
@@ -73,7 +78,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
-        duration: ObservableLike<unknown>,
+        duration: ObservableLike,
       ): ObserverLike<T> {
         init(
           typedObserverMixin,
@@ -112,7 +117,7 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
 
   const raise = returns(timeoutError);
 
-  return (duration: number | ObservableLike<unknown>) => {
+  return (duration: number | ObservableLike) => {
     const durationObs = isNumber(duration)
       ? Observable_throws({ delay: duration, raise })
       : Observable_concat(duration, Observable_throws({ raise }));
@@ -126,6 +131,6 @@ const Observable_timeout: Timeout<ObservableLike>["timeout"] = /*@__PURE__*/ (<
       ),
     );
   };
-})();
+})() as ObservableTimeout;
 
 export default Observable_timeout;

@@ -155,8 +155,7 @@ export const catchError: CatchError<RunnableLike>["catchError"] =
 export const combineLatest: CombineLatest<RunnableLike>["combineLatest"] =
   Observable_combineLatest;
 
-export const concat: Concat<RunnableLike>["concat"] =
-  Observable_concat as Concat<RunnableLike>["concat"];
+export const concat: Concat<RunnableLike>["concat"] = Observable_concat;
 
 export const concatAll: ConcatAll<
   RunnableLike,
@@ -171,28 +170,26 @@ export const concatMap: ConcatMap<RunnableLike>["concatMap"] =
 export const concatWith: ConcatWith<RunnableLike>["concatWith"] =
   Observable_concatWith as ConcatWith<RunnableLike>["concatWith"];
 
-export const contains: Contains<RunnableLike>["contains"] =
-  Observable_contains as Contains<RunnableLike>["contains"];
+export const contains: Contains<RunnableLike>["contains"] = Observable_contains;
 
 export const currentTime: CurrentTime<RunnableLike>["currentTime"] =
   Observable_currentTime;
 
 export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"] =
-  Observable_decodeWithCharset as DecodeWithCharset<RunnableLike>["decodeWithCharset"];
+  Observable_decodeWithCharset;
 
 export const defer: Defer<RunnableLike>["defer"] = Runnable_defer;
 
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
-  Observable_distinctUntilChanged as DistinctUntilChanged<RunnableLike>["distinctUntilChanged"];
+  Observable_distinctUntilChanged;
 
-export const empty: Empty<RunnableLike, { delay: number }>["empty"] =
-  Observable_empty as Empty<RunnableLike, { delay: number }>["empty"];
+export const empty: Empty<RunnableLike, { delay?: number }>["empty"] =
+  Observable_empty;
 
 export const encodeUtf8: EncodeUtf8<RunnableLike>["encodeUtf8"] =
   Runnable_encodeUtf8;
 
-export const endWith: EndWith<RunnableLike>["endWith"] =
-  Observable_endWith as EndWith<RunnableLike>["endWith"];
+export const endWith: EndWith<RunnableLike>["endWith"] = Observable_endWith;
 
 export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
   Observable_everySatisfy;
@@ -232,8 +229,7 @@ export const fromEnumerable: FromEnumerable<
 export const fromFactory: FromFactory<
   RunnableLike,
   { delay: number }
->["fromFactory"] =
-  Observable_fromFactory as FromFactory<RunnableLike>["fromFactory"];
+>["fromFactory"] = Observable_fromFactory;
 
 export const fromIterable: FromIterable<
   RunnableLike,
@@ -262,10 +258,9 @@ export const generate: Generate<
 >["generate"] = Observable_generate;
 
 export const ignoreElements: IgnoreElements<RunnableLike>["ignoreElements"] =
-  Observable_ignoreElements as IgnoreElements<RunnableLike>["ignoreElements"];
+  Observable_ignoreElements;
 
-export const keep: Keep<RunnableLike>["keep"] =
-  Observable_keep as Keep<RunnableLike>["keep"];
+export const keep: Keep<RunnableLike>["keep"] = Observable_keep;
 
 export const keepType: KeepType<RunnableLike>["keepType"] =
   Observable_keepType as KeepType<RunnableLike>["keepType"];
@@ -274,11 +269,9 @@ export const last: Last<RunnableLike>["last"] = Runnable_last;
 
 export const map: Map<RunnableLike>["map"] = Observable_map;
 
-export const mapTo: MapTo<RunnableLike>["mapTo"] =
-  Observable_mapTo as MapTo<RunnableLike>["mapTo"];
+export const mapTo: MapTo<RunnableLike>["mapTo"] = Observable_mapTo;
 
-export const merge: Merge<RunnableLike>["merge"] =
-  Observable_merge as Merge<RunnableLike>["merge"];
+export const merge: Merge<RunnableLike>["merge"] = Observable_merge;
 
 export const mergeAll: MergeAll<
   RunnableLike,
@@ -295,8 +288,7 @@ export const pairwise: Pairwise<RunnableLike>["pairwise"] = Observable_pairwise;
 
 export const reduce: Reduce<RunnableLike>["reduce"] = Observable_reduce;
 
-export const retry: Retry<RunnableLike>["retry"] =
-  Observable_retry as Retry<RunnableLike>["retry"];
+export const retry: Retry<RunnableLike>["retry"] = Observable_retry;
 
 export const run = Runnable_run;
 
@@ -312,7 +304,7 @@ export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] =
   Observable_skipFirst;
 
 export const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"] =
-  Observable_someSatisfy as SomeSatisfy<RunnableLike>["someSatisfy"];
+  Observable_someSatisfy;
 
 /**
  * @category Constructor
@@ -320,7 +312,7 @@ export const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"] =
 export const spring: Spring<RunnableLike>["spring"] = Observable_spring;
 
 export const startWith: StartWith<RunnableLike>["startWith"] =
-  Observable_startWith as StartWith<RunnableLike>["startWith"];
+  Observable_startWith;
 
 export const switchAll: SwitchAll<RunnableLike>["switchAll"] =
   Runnable_switchAll;
@@ -334,7 +326,7 @@ export const takeFirst: TakeFirst<RunnableLike>["takeFirst"] =
 export const takeLast: TakeLast<RunnableLike>["takeLast"] = Observable_takeLast;
 
 export const takeUntil: TakeUntil<RunnableLike>["takeUntil"] =
-  Observable_takeUntil as TakeUntil<RunnableLike>["takeUntil"];
+  Observable_takeUntil;
 
 export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] =
   Observable_takeWhile;
@@ -342,13 +334,12 @@ export const takeWhile: TakeWhile<RunnableLike>["takeWhile"] =
 export const throttle: Throttle<RunnableLike>["throttle"] = Runnable_throttle;
 
 export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
-  Observable_throwIfEmpty as ThrowIfEmpty<RunnableLike>["throwIfEmpty"];
+  Observable_throwIfEmpty;
 
 export const throws: Throws<RunnableLike, { delay?: number }>["throws"] =
   Observable_throws;
 
-export const timeout: Timeout<RunnableLike>["timeout"] =
-  Observable_timeout as Timeout<RunnableLike>["timeout"];
+export const timeout: Timeout<RunnableLike>["timeout"] = Observable_timeout;
 
 export const toEnumerable: ToEnumerable<RunnableLike>["toEnumerable"] =
   Observable_toEnumerable;

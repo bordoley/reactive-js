@@ -4,8 +4,7 @@ import { createInstanceFactory, include, init, mix, } from "../../../__internal_
 import { partial, pipe } from "../../../functions.js";
 import Observer_satisfyMixin from "../../Observer/__internal__/Observer.satisfyMixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-const Observable_someSatisfy = 
-/*@__PURE__*/ (() => {
+const Observable_someSatisfy = /*@__PURE__*/ (() => {
     const typedSatisfyObserverMixin = Observer_satisfyMixin(false);
     const someSatisfyObserverMixin = mix(include(typedSatisfyObserverMixin), function EverySatisfyObserver(instance, delegate, predicate) {
         init(typedSatisfyObserverMixin, instance, delegate, predicate);

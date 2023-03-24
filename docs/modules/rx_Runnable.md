@@ -395,7 +395,7 @@ Return an ContainerLike that emits no items.
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.delay` | `number` |
+| `options.delay?` | `number` |
 
 #### Returns
 

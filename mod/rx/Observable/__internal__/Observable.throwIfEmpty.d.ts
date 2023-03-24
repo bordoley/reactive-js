@@ -1,4 +1,6 @@
-import { ThrowIfEmpty } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
+import { Factory } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-declare const Observable_throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"];
+type ObservableThrowIfEmpty = <C extends ObservableLike, T>(factory: Factory<unknown>, options?: undefined) => ContainerOperator<C, T, T>;
+declare const Observable_throwIfEmpty: ObservableThrowIfEmpty;
 export default Observable_throwIfEmpty;

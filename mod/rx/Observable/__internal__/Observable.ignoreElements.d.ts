@@ -1,4 +1,5 @@
-import { IgnoreElements } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
-declare const Observable_ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"];
+type ObservableIgnoreElements = <C extends ObservableLike, T>() => ContainerOperator<C, unknown, T>;
+declare const Observable_ignoreElements: ObservableIgnoreElements;
 export default Observable_ignoreElements;

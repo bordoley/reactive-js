@@ -9,7 +9,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { KeepObserverMixin_predicate } from "../../../__internal__/symbols.js";
-import { Keep } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
@@ -23,7 +23,11 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
-const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
+type ObservableKeep = <C extends ObservableLike, T>(
+  predicate: Predicate<T>,
+  options?: undefined,
+) => ContainerOperator<C, T, T>;
+const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
   const createKeepObserver: <T>(
     delegate: ObserverLike<T>,
     predicate: Predicate<T>,
@@ -74,12 +78,12 @@ const Observable_keep: Keep<ObservableLike>["keep"] = /*@__PURE__*/ (<T>() => {
     );
   })();
 
-  return ((predicate: Predicate<T>) =>
+  return (predicate: Predicate<T>) =>
     pipe(
       createKeepObserver,
       partial(predicate),
       Observable_liftEnumerableOperator,
-    )) as Keep<ObservableLike>["keep"];
-})();
+    );
+})() as ObservableKeep;
 
 export default Observable_keep;

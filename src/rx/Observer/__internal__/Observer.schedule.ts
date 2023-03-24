@@ -11,7 +11,7 @@ const Observer_schedule =
   (
     f: SideEffect1<ContinuationContextLike>,
     options?: { readonly delay?: number },
-  ): Function1<ObserverLike<unknown>, DisposableLike> =>
+  ): Function1<ObserverLike, DisposableLike> =>
   observer =>
     pipe(
       observer[DispatcherLike_scheduler][SchedulerLike_schedule](f, options),

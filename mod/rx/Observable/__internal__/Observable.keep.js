@@ -27,6 +27,6 @@ const Observable_keep = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return ((predicate) => pipe(createKeepObserver, partial(predicate), Observable_liftEnumerableOperator));
+    return (predicate) => pipe(createKeepObserver, partial(predicate), Observable_liftEnumerableOperator);
 })();
 export default Observable_keep;

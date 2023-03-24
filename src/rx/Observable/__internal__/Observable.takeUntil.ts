@@ -1,11 +1,13 @@
+import { ContainerOperator } from "../../../containers.js";
 import { pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
+  EnumerableLike,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
-  TakeUntil,
+  RunnableLike,
 } from "../../../rx.js";
 import { QueueableLike_maxBufferSize } from "../../../util.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
@@ -14,7 +16,12 @@ import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
 
-const Observable_takeUntil: TakeUntil<ObservableLike>["takeUntil"] = <T>(
+interface ObservableTakeUntil {
+  <T>(notifier: EnumerableLike): ContainerOperator<EnumerableLike, T, T>;
+  <T>(notifier: RunnableLike): ContainerOperator<RunnableLike, T, T>;
+  <T>(notifier: ObservableLike): ContainerOperator<ObservableLike, T, T>;
+}
+const Observable_takeUntil: ObservableTakeUntil = (<T>(
   notifier: ObservableLike,
 ) => {
   const operator = (delegate: ObserverLike<T>) =>
@@ -39,6 +46,6 @@ const Observable_takeUntil: TakeUntil<ObservableLike>["takeUntil"] = <T>(
       notifier[ObservableLike_isRunnable],
     ),
   );
-};
+}) as ObservableTakeUntil;
 
 export default Observable_takeUntil;

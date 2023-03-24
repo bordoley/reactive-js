@@ -21,7 +21,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = <T>(
               delegate[QueueableLike_push](none);
             }
           }),
-          Observable_keep(predicate),
+          Observable_keep<ObservableLike, T>(predicate),
         ),
       ),
     AsyncEnumerable_lift(true, true),

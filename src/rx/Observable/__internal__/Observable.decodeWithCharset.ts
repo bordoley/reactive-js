@@ -10,7 +10,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { DecodeWithCharsetObserverMixin_textDecoder } from "../../../__internal__/symbols.js";
-import { DecodeWithCharset } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
@@ -30,7 +31,15 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 import Observable_observeWith from "./Observable.observeWith.js";
 
-const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
+type ObservableDecodeWithCharset = <C extends ObservableLike>(
+  options?:
+    | {
+        charset?: string | undefined;
+      }
+    | undefined,
+) => ContainerOperator<C, ArrayBuffer, string>;
+
+const Observable_decodeWithCharset: ObservableDecodeWithCharset =
   /*@__PURE__*/ (() => {
     type TProperties = {
       readonly [DecodeWithCharsetObserverMixin_textDecoder]: TextDecoder;
@@ -119,12 +128,6 @@ const Observable_decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWit
         Observable_liftEnumerableOperator,
       );
     };
-  })();
+  })() as ObservableDecodeWithCharset;
 
 export default Observable_decodeWithCharset;
-function Optional_toObservable(): import("../../../functions.js").Function1<
-  string,
-  ObservableLike<unknown>
-> {
-  throw new Error("Function not implemented.");
-}

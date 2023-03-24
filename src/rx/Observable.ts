@@ -366,7 +366,7 @@ export const concatMap: ConcatMap<ObservableLike>["concatMap"] =
   Observable_concatMap;
 
 export const concatWith: ConcatWith<ObservableLike>["concatWith"] =
-  Observable_concatWith;
+  Observable_concatWith as ConcatWith<ObservableLike>["concatWith"];
 
 export const contains: Contains<ObservableLike>["contains"] =
   Observable_contains;
@@ -484,7 +484,7 @@ export const ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"] =
 export const keep: Keep<ObservableLike>["keep"] = Observable_keep;
 
 export const keepType: KeepType<ObservableLike>["keepType"] =
-  Observable_keepType;
+  Observable_keepType as KeepType<ObservableLike>["keepType"];
 
 export const lastAsync: LastAsync<
   ObservableLike,
@@ -509,7 +509,7 @@ export const mergeMap: MergeMap<ObservableLike>["mergeMap"] =
   Observable_mergeMap;
 
 export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =
-  Observable_mergeWith;
+  Observable_mergeWith as MergeWith<ObservableLike>["mergeWith"];
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -631,7 +631,7 @@ export const withCurrentTime: WithCurrentTime<ObservableLike>["withCurrentTime"]
   Observable_withCurrentTime;
 
 export const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"] =
-  Observable_withLatestFrom;
+  Observable_withLatestFrom as WithLatestFrom<ObservableLike>["withLatestFrom"];
 
 export const zip: Zip<ObservableLike>["zip"] = Observable_zip;
 

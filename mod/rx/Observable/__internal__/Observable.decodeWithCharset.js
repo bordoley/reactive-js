@@ -2,6 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DecodeWithCharsetObserverMixin_textDecoder } from "../../../__internal__/symbols.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
@@ -52,6 +53,3 @@ const Observable_decodeWithCharset =
     };
 })();
 export default Observable_decodeWithCharset;
-function Optional_toObservable() {
-    throw new Error("Function not implemented.");
-}

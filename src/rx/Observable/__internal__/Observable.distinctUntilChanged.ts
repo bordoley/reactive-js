@@ -13,7 +13,10 @@ import {
   DistinctUntilChangedObserverMixin_hasValue,
   DistinctUntilChangedObserverMixin_prev,
 } from "../../../__internal__/symbols.js";
-import { DistinctUntilChanged } from "../../../containers.js";
+import {
+  ContainerOperator,
+  DistinctUntilChanged,
+} from "../../../containers.js";
 import {
   Equality,
   none,
@@ -33,7 +36,11 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
-const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
+type ObservableDistinctUntilChanged = <C extends ObservableLike, T>(options?: {
+  readonly equality?: Equality<T>;
+}) => ContainerOperator<C, T, T>;
+
+const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
   /*@__PURE__*/ (<T>() => {
     const createDistinctUntilChangedObserver: <T>(
       delegate: ObserverLike<T>,
@@ -106,6 +113,6 @@ const Observable_distinctUntilChanged: DistinctUntilChanged<ObservableLike>["dis
         Observable_liftEnumerableOperator,
       );
     }) as DistinctUntilChanged<ObservableLike>["distinctUntilChanged"];
-  })();
+  })() as ObservableDistinctUntilChanged;
 
 export default Observable_distinctUntilChanged;

@@ -1,4 +1,6 @@
-import { Keep } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
+import { Predicate } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-declare const Observable_keep: Keep<ObservableLike>["keep"];
+type ObservableKeep = <C extends ObservableLike, T>(predicate: Predicate<T>, options?: undefined) => ContainerOperator<C, T, T>;
+declare const Observable_keep: ObservableKeep;
 export default Observable_keep;

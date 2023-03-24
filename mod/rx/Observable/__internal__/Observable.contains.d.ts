@@ -1,4 +1,8 @@
-import { Contains } from "../../../containers.js";
+import { ContainerOperator } from "../../../containers.js";
+import { Equality } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-declare const Observable_contains: Contains<ObservableLike>["contains"];
+type ObservableContains = <C extends ObservableLike, T>(value: T, options?: {
+    readonly equality?: Equality<T> | undefined;
+} | undefined) => ContainerOperator<C, T, boolean>;
+declare const Observable_contains: ObservableContains;
 export default Observable_contains;

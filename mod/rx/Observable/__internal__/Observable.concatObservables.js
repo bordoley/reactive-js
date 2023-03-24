@@ -11,7 +11,8 @@ import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
-const Observable_concatObservables = /*@__PURE__*/ (() => {
+const Observable_concatObservables = 
+/*@__PURE__*/ (() => {
     const createConcatObserver = (delegate, observables, next) => pipe(Observer_createWithDelegate(delegate), Disposable_addTo(delegate), Disposable_onComplete(() => {
         if (next < ReadonlyArray_getLength(observables)) {
             pipe(createConcatObserver(delegate, observables, next + 1), Observer_sourceFrom(observables[next]));

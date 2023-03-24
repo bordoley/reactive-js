@@ -1,7 +1,12 @@
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import { pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike } from "../../../rx.js";
+import {
+  EnumerableLike,
+  ObservableLike,
+  ObserverLike,
+  RunnableLike,
+} from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -11,44 +16,50 @@ import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
 
-const Observable_concatObservables = /*@__PURE__*/ (<T>() => {
-  const createConcatObserver = <T>(
-    delegate: ObserverLike<T>,
-    observables: readonly ObservableLike<T>[],
-    next: number,
-  ) =>
-    pipe(
-      Observer_createWithDelegate(delegate),
-      Disposable_addTo(delegate),
-      Disposable_onComplete(() => {
-        if (next < ReadonlyArray_getLength(observables)) {
+interface ObservableConcatObservables {
+  <T>(observables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
+  <T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
+  <T>(observables: readonly ObservableLike<T>[]): ObservableLike<T>;
+}
+const Observable_concatObservables: ObservableConcatObservables =
+  /*@__PURE__*/ (<T>() => {
+    const createConcatObserver = <T>(
+      delegate: ObserverLike<T>,
+      observables: readonly ObservableLike<T>[],
+      next: number,
+    ) =>
+      pipe(
+        Observer_createWithDelegate(delegate),
+        Disposable_addTo(delegate),
+        Disposable_onComplete(() => {
+          if (next < ReadonlyArray_getLength(observables)) {
+            pipe(
+              createConcatObserver(delegate, observables, next + 1),
+              Observer_sourceFrom(observables[next]),
+            );
+          } else {
+            delegate[DisposableLike_dispose]();
+          }
+        }),
+      );
+
+    return (observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
+      const onSubscribe = (observer: ObserverLike<T>) => {
+        if (!ReadonlyArray_isEmpty(observables)) {
           pipe(
-            createConcatObserver(delegate, observables, next + 1),
-            Observer_sourceFrom(observables[next]),
+            createConcatObserver(observer, observables, 1),
+            Observer_sourceFrom(observables[0]),
           );
         } else {
-          delegate[DisposableLike_dispose]();
+          observer[DisposableLike_dispose]();
         }
-      }),
-    );
+      };
 
-  return (observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
-    const onSubscribe = (observer: ObserverLike<T>) => {
-      if (!ReadonlyArray_isEmpty(observables)) {
-        pipe(
-          createConcatObserver(observer, observables, 1),
-          Observer_sourceFrom(observables[0]),
-        );
-      } else {
-        observer[DisposableLike_dispose]();
-      }
+      const isEnumerable = Observable_allAreEnumerable(observables);
+      const isRunnable = Observable_allAreRunnable(observables);
+
+      return Observable_create(onSubscribe, isEnumerable, isRunnable);
     };
-
-    const isEnumerable = Observable_allAreEnumerable(observables);
-    const isRunnable = Observable_allAreRunnable(observables);
-
-    return Observable_create(onSubscribe, isEnumerable, isRunnable);
-  };
-})();
+  })() as ObservableConcatObservables;
 
 export default Observable_concatObservables;

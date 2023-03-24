@@ -38,7 +38,7 @@ const Streamable_sinkInto =
               scheduler[SchedulerLike_requestYield]();
             }
           }),
-          Observable_ignoreElements(),
+          Observable_ignoreElements<ObservableLike, unknown>(),
           Observable_onSubscribe(
             returns(bind(dest[DispatcherLike_complete], dest)),
           ),
@@ -50,10 +50,10 @@ const Streamable_sinkInto =
               scheduler[SchedulerLike_requestYield]();
             }
           }),
-          Observable_ignoreElements(),
+          Observable_ignoreElements<ObservableLike, unknown>(),
         ),
       ),
-      Observable_ignoreElements(),
+      Observable_ignoreElements<ObservableLike, unknown>(),
       Observable_subscribeWithMaxBufferSize(
         scheduler,
         dest[QueueableLike_maxBufferSize],

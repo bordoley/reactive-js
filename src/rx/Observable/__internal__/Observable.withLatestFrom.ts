@@ -13,7 +13,7 @@ import {
   WithLatestFromObserver_otherLatest,
   WithLatestFromObserver_selector,
 } from "../../../__internal__/symbols.js";
-import { ContainerOperator } from "../../../containers.js";
+import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import {
   Function2,
   Optional,
@@ -28,7 +28,6 @@ import {
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
-  WithLatestFrom,
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
@@ -44,7 +43,11 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 
-const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"] =
+type ObservableWithLastestFrom = <C extends ObservableLike, TA, TB, T>(
+  other: ContainerOf<C, TB>,
+  selector: Function2<TA, TB, T>,
+) => ContainerOperator<C, TA, T>;
+const Observable_withLatestFrom: ObservableWithLastestFrom =
   /*@__PURE__*/ (() => {
     const createWithLatestObserver: <TA, TB, T>(
       delegate: ObserverLike<T>,
@@ -140,7 +143,7 @@ const Observable_withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"
           other[ObservableLike_isEnumerable],
           other[ObservableLike_isRunnable],
         ),
-      ) as ContainerOperator<ObservableLike, TA, T>;
-  })();
+      );
+  })() as ObservableWithLastestFrom;
 
 export default Observable_withLatestFrom;

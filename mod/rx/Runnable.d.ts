@@ -16,7 +16,7 @@ export declare const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeW
 export declare const defer: Defer<RunnableLike>["defer"];
 export declare const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"];
 export declare const empty: Empty<RunnableLike, {
-    delay: number;
+    delay?: number;
 }>["empty"];
 export declare const encodeUtf8: EncodeUtf8<RunnableLike>["encodeUtf8"];
 export declare const endWith: EndWith<RunnableLike>["endWith"];
