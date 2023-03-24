@@ -1,4 +1,4 @@
-import { pipe } from "../../../functions.js";
+import { bind, pipe, returns } from "../../../functions.js";
 import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
@@ -39,7 +39,9 @@ const Streamable_sinkInto =
             }
           }),
           Observable_ignoreElements(),
-          Observable_onSubscribe(() => () => dest[DispatcherLike_complete]()),
+          Observable_onSubscribe(
+            returns(bind(dest[DispatcherLike_complete], dest)),
+          ),
         ),
         pipe(
           dest,

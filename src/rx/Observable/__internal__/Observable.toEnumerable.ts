@@ -10,6 +10,6 @@ const throwOptions = {
 const Observable_toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   <T>() =>
   (obs: ObservableLike<T>) =>
-    Observable_isEnumerable(obs) ? obs : Observable_throws(throwOptions);
+    Observable_isEnumerable(obs) ? obs : Observable_throws<T>(throwOptions);
 
 export default Observable_toEnumerable;
