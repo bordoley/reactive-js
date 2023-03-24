@@ -58,9 +58,7 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
           pipe(
             instance,
             Disposable_addToIgnoringChildErrors(delegate),
-            Disposable_onComplete(() => {
-              delegate[DisposableLike_dispose]();
-            }),
+            Disposable_onComplete(delegate[DisposableLike_dispose], delegate),
             Disposable_onError((err: Error) => {
               try {
                 const result = errorHandler(err) as ContainerOf<C, T>;

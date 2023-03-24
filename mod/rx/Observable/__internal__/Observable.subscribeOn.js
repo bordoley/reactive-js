@@ -20,6 +20,6 @@ Observable_create(observer => {
         if (!observer[QueueableLike_push](v)) {
             scheduler[SchedulerLike_requestYield]();
         }
-    }), Observable_subscribeWithMaxBufferSize(scheduler, (_a = options === null || options === void 0 ? void 0 : options.maxBufferSize) !== null && _a !== void 0 ? _a : observer[QueueableLike_maxBufferSize]), Disposable_onComplete(() => observer[DispatcherLike_complete]()), Disposable_addTo(observer));
+    }), Observable_subscribeWithMaxBufferSize(scheduler, (_a = options === null || options === void 0 ? void 0 : options.maxBufferSize) !== null && _a !== void 0 ? _a : observer[QueueableLike_maxBufferSize]), Disposable_onComplete(observer[DispatcherLike_complete], observer), Disposable_addTo(observer));
 });
 export default Observable_subscribeOn;

@@ -1,12 +1,12 @@
 import { newInstance, pipe } from "../../../functions.js";
 import { DisposableLike } from "../../../util.js";
-import onDisposed from "./Disposable.onDisposed.js";
+import Disposable_onDisposed from "./Disposable.onDisposed.js";
 
 const Disposable_toAbortSignal = (disposable: DisposableLike): AbortSignal => {
   const abortController: AbortController = newInstance(AbortController);
   pipe(
     disposable,
-    onDisposed(e => abortController.abort(e)),
+    Disposable_onDisposed(abortController.abort, abortController),
   );
   return abortController.signal;
 };

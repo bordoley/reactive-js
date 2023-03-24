@@ -97,7 +97,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
           pipe(
             instance,
             Disposable_addTo(delegate),
-            Disposable_onComplete(onDispose),
+            Disposable_onComplete(onDispose, instance),
           );
 
           return instance;

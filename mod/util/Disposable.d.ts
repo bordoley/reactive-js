@@ -6,9 +6,9 @@ export declare const addToIgnoringChildErrors: <T extends DisposableLike>(parent
 export declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => import("../functions.js").Updater<T>;
 export declare const create: import("../functions.js").Factory<DisposableLike>;
 export declare const disposed: DisposableLike;
-export declare const onComplete: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect) => import("../functions.js").Updater<T>;
-export declare const onDisposed: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect1<import("../functions.js").Optional<Error>>) => import("../functions.js").Updater<T>;
-export declare const onError: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect1<Error>) => import("../functions.js").Updater<T>;
+export declare const onComplete: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect, ctx?: unknown) => import("../functions.js").Updater<T>;
+export declare const onDisposed: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect1<import("../functions.js").Optional<Error>>, ctx?: unknown) => import("../functions.js").Updater<T>;
+export declare const onError: <T extends DisposableLike>(teardown: import("../functions.js").SideEffect1<Error>, ctx?: unknown) => import("../functions.js").Updater<T>;
 export declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.

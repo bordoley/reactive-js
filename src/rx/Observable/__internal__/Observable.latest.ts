@@ -143,10 +143,6 @@ const Observable_latest = /*@__PURE__*/ (() => {
         [LatestCtx_mode]: mode,
       };
 
-      const onCompleteCb = () => {
-        onCompleted(ctx);
-      };
-
       for (const observable of observables) {
         const innerObserver = pipe(
           createLatestObserver(
@@ -155,7 +151,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
             delegate[QueueableLike_maxBufferSize],
           ),
           Disposable_addTo(delegate),
-          Disposable_onComplete(onCompleteCb),
+          Disposable_onComplete(() => {
+            onCompleted(ctx);
+          }),
           Observer_sourceFrom(observable),
         );
 

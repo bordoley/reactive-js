@@ -51,6 +51,6 @@ const AsyncIterable_toFlowable = () => (iterable) => Flowable_create((modeObs) =
         if (!isPaused && wasPaused) {
             pipe(observer, Observer_schedule(continuation));
         }
-    }), Observable_subscribeWithMaxBufferSize(scheduler, observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(() => observer[DispatcherLike_complete]()));
+    }), Observable_subscribeWithMaxBufferSize(scheduler, observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(observer[DispatcherLike_complete], observer));
 }));
 export default AsyncIterable_toFlowable;

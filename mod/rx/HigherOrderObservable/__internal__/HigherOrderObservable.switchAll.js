@@ -29,7 +29,7 @@ const HigherOrderObservable_switchAll = (lift) => {
             init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
             init(delegatingMixin(), instance, delegate);
             instance[HigherOrderObservable_currentRef] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));
-            pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(onDispose));
+            pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(onDispose, instance));
             return instance;
         }, props({
             [HigherOrderObservable_currentRef]: none,

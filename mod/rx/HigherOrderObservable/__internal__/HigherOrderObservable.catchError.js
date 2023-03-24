@@ -16,9 +16,7 @@ const HigherOrderObservable_catchError = (lift) => {
             init(Disposable_mixin, instance);
             init(delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
-            pipe(instance, Disposable_addToIgnoringChildErrors(delegate), Disposable_onComplete(() => {
-                delegate[DisposableLike_dispose]();
-            }), Disposable_onError((err) => {
+            pipe(instance, Disposable_addToIgnoringChildErrors(delegate), Disposable_onComplete(delegate[DisposableLike_dispose], delegate), Disposable_onError((err) => {
                 try {
                     const result = errorHandler(err);
                     if (isSome(result)) {

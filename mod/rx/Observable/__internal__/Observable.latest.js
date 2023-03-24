@@ -69,11 +69,10 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 [LatestCtx_delegate]: delegate,
                 [LatestCtx_mode]: mode,
             };
-            const onCompleteCb = () => {
-                onCompleted(ctx);
-            };
             for (const observable of observables) {
-                const innerObserver = pipe(createLatestObserver(ctx, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]), Disposable_addTo(delegate), Disposable_onComplete(onCompleteCb), Observer_sourceFrom(observable));
+                const innerObserver = pipe(createLatestObserver(ctx, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]), Disposable_addTo(delegate), Disposable_onComplete(() => {
+                    onCompleted(ctx);
+                }), Observer_sourceFrom(observable));
                 add(ctx, innerObserver);
             }
         };

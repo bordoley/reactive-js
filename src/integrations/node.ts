@@ -174,9 +174,7 @@ export const createReadableSource = (
       const dispatchDisposable = pipe(
         Disposable.create(),
         Disposable.onError(Disposable.toErrorHandler(observer)),
-        Disposable.onComplete(() => {
-          observer[DispatcherLike_complete]();
-        }),
+        Disposable.onComplete(observer[DispatcherLike_complete], observer),
       );
 
       const readable = isFunction(factory)
@@ -234,9 +232,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
         const dispatchDisposable = pipe(
           Disposable.create(),
           Disposable.onError(Disposable.toErrorHandler(observer)),
-          Disposable.onComplete(() => {
-            observer[DispatcherLike_complete]();
-          }),
+          Disposable.onComplete(observer[DispatcherLike_complete], observer),
         );
 
         const writable = isFunction(factory)
@@ -260,9 +256,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
           }),
           Observable.subscribe(observer[DispatcherLike_scheduler]),
           addToNodeStream(writable),
-          Disposable.onComplete(() => {
-            writable.end();
-          }),
+          Disposable.onComplete(writable.end, writable),
         );
 
         const onDrain = () => {

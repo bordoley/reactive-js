@@ -1,10 +1,10 @@
 /// <reference types="./Disposable.toAbortSignal.d.ts" />
 
 import { newInstance, pipe } from "../../../functions.js";
-import onDisposed from "./Disposable.onDisposed.js";
+import Disposable_onDisposed from "./Disposable.onDisposed.js";
 const Disposable_toAbortSignal = (disposable) => {
     const abortController = newInstance(AbortController);
-    pipe(disposable, onDisposed(e => abortController.abort(e)));
+    pipe(disposable, Disposable_onDisposed(abortController.abort, abortController));
     return abortController.signal;
 };
 export default Disposable_toAbortSignal;

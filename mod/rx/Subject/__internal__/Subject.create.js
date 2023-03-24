@@ -57,9 +57,7 @@ const Subject_create =
                 const next = this[IndexedQueueLike_get](i);
                 observer[QueueableLike_push](next);
             }
-            pipe(this, Disposable_onError(Disposable_toErrorHandler(observer)), Disposable_onComplete(() => {
-                observer[DispatcherLike_complete]();
-            }));
+            pipe(this, Disposable_onError(Disposable_toErrorHandler(observer)), Disposable_onComplete(observer[DispatcherLike_complete], observer));
         },
     }));
     return (options) => {

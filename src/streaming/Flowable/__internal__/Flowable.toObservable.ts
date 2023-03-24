@@ -51,7 +51,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
         Stream_create<T, boolean>(op, scheduler, { maxBufferSize }),
         Stream_sourceFrom(src),
         Disposable_addTo(observer),
-        Disposable_onComplete(() => observer[DispatcherLike_complete]()),
+        Disposable_onComplete(observer[DispatcherLike_complete], observer),
       );
     });
   };

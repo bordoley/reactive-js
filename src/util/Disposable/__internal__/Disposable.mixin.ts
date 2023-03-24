@@ -2,7 +2,6 @@ import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import { DisposableMixin_disposables } from "../../../__internal__/symbols.js";
 import {
   Optional,
-  call,
   isFunction,
   isSome,
   newInstance,
@@ -24,7 +23,7 @@ const doDispose = (
   const error = instance[DisposableLike_error];
   if (isFunction(disposable)) {
     try {
-      call(disposable, instance, error);
+      disposable(error);
     } catch (_) {
       /* Proactively catch Errors thrown in teardown logic. Teardown functions
        * shouldn't throw, so this is to prevent unexpected Errors.

@@ -125,9 +125,10 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             pipe(
               this,
               Disposable_onError(Disposable_toErrorHandler(observer)),
-              Disposable_onComplete(() => {
-                observer[DispatcherLike_complete]();
-              }),
+              Disposable_onComplete(
+                observer[DispatcherLike_complete],
+                observer,
+              ),
             );
           },
         },

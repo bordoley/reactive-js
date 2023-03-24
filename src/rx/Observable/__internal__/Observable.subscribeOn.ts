@@ -37,7 +37,7 @@ const Observable_subscribeOn =
           scheduler,
           options?.maxBufferSize ?? observer[QueueableLike_maxBufferSize],
         ),
-        Disposable_onComplete(() => observer[DispatcherLike_complete]()),
+        Disposable_onComplete(observer[DispatcherLike_complete], observer),
         Disposable_addTo(observer),
       );
     });

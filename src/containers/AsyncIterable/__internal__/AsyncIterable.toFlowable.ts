@@ -84,7 +84,7 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
             observer[QueueableLike_maxBufferSize],
           ),
           Disposable_addTo(observer),
-          Disposable_onComplete(() => observer[DispatcherLike_complete]()),
+          Disposable_onComplete(observer[DispatcherLike_complete], observer),
         );
       }),
     );

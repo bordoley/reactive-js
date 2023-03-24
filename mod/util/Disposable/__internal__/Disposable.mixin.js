@@ -2,13 +2,13 @@
 
 import { mix, props } from "../../../__internal__/mixins.js";
 import { DisposableMixin_disposables } from "../../../__internal__/symbols.js";
-import { call, isFunction, isSome, newInstance, none, } from "../../../functions.js";
+import { isFunction, isSome, newInstance, none, } from "../../../functions.js";
 import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../../util.js";
 const doDispose = (instance, disposable) => {
     const error = instance[DisposableLike_error];
     if (isFunction(disposable)) {
         try {
-            call(disposable, instance, error);
+            disposable(error);
         }
         catch (_) {
             /* Proactively catch Errors thrown in teardown logic. Teardown functions

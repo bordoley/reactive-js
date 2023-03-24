@@ -177,7 +177,7 @@ ___
 
 ### onComplete
 
-▸ **onComplete**<`T`\>(`teardown`): [`Updater`](functions.md#updater)<`T`\>
+▸ **onComplete**<`T`\>(`teardown`, `ctx?`): [`Updater`](functions.md#updater)<`T`\>
 
 #### Type parameters
 
@@ -190,6 +190,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `teardown` | [`SideEffect`](functions.md#sideeffect) |
+| `ctx?` | `unknown` |
 
 #### Returns
 
@@ -199,7 +200,7 @@ ___
 
 ### onDisposed
 
-▸ **onDisposed**<`T`\>(`teardown`): [`Updater`](functions.md#updater)<`T`\>
+▸ **onDisposed**<`T`\>(`teardown`, `ctx?`): [`Updater`](functions.md#updater)<`T`\>
 
 #### Type parameters
 
@@ -212,6 +213,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<`Error`\>\> |
+| `ctx?` | `unknown` |
 
 #### Returns
 
@@ -221,7 +223,7 @@ ___
 
 ### onError
 
-▸ **onError**<`T`\>(`teardown`): [`Updater`](functions.md#updater)<`T`\>
+▸ **onError**<`T`\>(`teardown`, `ctx?`): [`Updater`](functions.md#updater)<`T`\>
 
 #### Type parameters
 
@@ -234,6 +236,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `teardown` | [`SideEffect1`](functions.md#sideeffect1)<`Error`\> |
+| `ctx?` | `unknown` |
 
 #### Returns
 

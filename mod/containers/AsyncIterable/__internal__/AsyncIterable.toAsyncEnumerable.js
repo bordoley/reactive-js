@@ -26,6 +26,6 @@ const AsyncIterable_toAsyncEnumerable =
         catch (e) {
             observer[DisposableLike_dispose](error(e));
         }
-    }), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(() => observer[DispatcherLike_complete]()));
+    }), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(observer[DispatcherLike_complete], observer));
 }), true, false, false));
 export default AsyncIterable_toAsyncEnumerable;

@@ -32,7 +32,7 @@ const Flowable_toObservable = () => (src) => {
         // otherwise it will have no observer to queue events onto.
         // Observable.startWith uses concatenation.
         Observable_mergeWith(pipe(false, Optional_toObservable())));
-        pipe(Stream_create(op, scheduler, { maxBufferSize }), Stream_sourceFrom(src), Disposable_addTo(observer), Disposable_onComplete(() => observer[DispatcherLike_complete]()));
+        pipe(Stream_create(op, scheduler, { maxBufferSize }), Stream_sourceFrom(src), Disposable_addTo(observer), Disposable_onComplete(observer[DispatcherLike_complete], observer));
     });
 };
 export default Flowable_toObservable;
