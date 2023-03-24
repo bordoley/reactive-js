@@ -16,7 +16,6 @@
 
 - [DispatcherLike](../interfaces/rx.DispatcherLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
-- [Tween](../interfaces/rx.Tween.md)
 
 ### TypeClass Interfaces
 
@@ -47,6 +46,7 @@
 - [ToEnumerable](../interfaces/rx.ToEnumerable.md)
 - [ToObservable](../interfaces/rx.ToObservable.md)
 - [ToRunnable](../interfaces/rx.ToRunnable.md)
+- [Tween](../interfaces/rx.Tween.md)
 - [WithCurrentTime](../interfaces/rx.WithCurrentTime.md)
 - [WithLatestFrom](../interfaces/rx.WithLatestFrom.md)
 - [ZipLatest](../interfaces/rx.ZipLatest.md)

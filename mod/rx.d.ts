@@ -422,6 +422,10 @@ export interface ToRunnable<C extends ContainerLike, O = never> extends Containe
      */
     toRunnable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface Tween<C extends ObservableLike> extends Container<C> {
     /**
      * @category Constructor
