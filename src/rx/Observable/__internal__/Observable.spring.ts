@@ -2,8 +2,9 @@ import { MAX_VALUE, __DEV__ } from "../../../__internal__/constants.js";
 import { abs, min } from "../../../__internal__/math.js";
 import { pipe, returns } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import Observable_generate from "./Observable.generate.js";
+import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
+import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
 const Observable_spring = (
@@ -22,7 +23,8 @@ const Observable_spring = (
   }
 
   return pipe(
-    Observable_generate<[number, number, number]>(
+    Observable_currentTime(),
+    Observable_scan<ObservableLike, number, [number, number, number]>(
       ([lastTime, last, value], now) => {
         lastTime = min(now, lastTime);
 

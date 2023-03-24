@@ -3,15 +3,16 @@
 import { MAX_VALUE, __DEV__ } from "../../../__internal__/constants.js";
 import { abs, min } from "../../../__internal__/math.js";
 import { pipe, returns } from "../../../functions.js";
-import Observable_generate from "./Observable.generate.js";
+import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
+import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 const Observable_spring = (start, finish, options) => {
     const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = options !== null && options !== void 0 ? options : {};
     if (__DEV__) {
         // FIXME: Validate stiffness, damping, precision are within range.
     }
-    return pipe(Observable_generate(([lastTime, last, value], now) => {
+    return pipe(Observable_currentTime(), Observable_scan(([lastTime, last, value], now) => {
         lastTime = min(now, lastTime);
         const delta = finish - value;
         const dt = ((now - lastTime) * 60) / 1000;

@@ -1,6 +1,5 @@
-import { Factory, Function2, Updater, none, pipe } from "../../../functions.js";
+import { Factory, Updater, none, pipe } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
@@ -9,14 +8,13 @@ import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.cr
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
-  SchedulerLike_now,
 } from "../../../scheduling.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 
 const Observable_generate = <T>(
-  generator: Updater<T> | Function2<T, number, T>,
+  generator: Updater<T>,
   initialValue: Factory<T>,
   options?: { readonly delay?: number; readonly delayStart?: boolean },
 ): ObservableLike<T> => {
@@ -24,11 +22,9 @@ const Observable_generate = <T>(
 
   const onSubscribe = (observer: ObserverLike<T>) => {
     let acc = initialValue();
-    const scheduler = observer[DispatcherLike_scheduler];
-
     const continuation = (ctx: ContinuationContextLike) => {
       while (!observer[DisposableLike_isDisposed]) {
-        acc = generator(acc, scheduler[SchedulerLike_now]);
+        acc = generator(acc);
         observer[ObserverLike_notify](acc);
         ctx[ContinuationContextLike_yield](delay);
       }

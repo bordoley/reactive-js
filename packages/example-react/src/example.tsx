@@ -150,6 +150,7 @@ const RxComponent = createComponent(
             Observable.spring(50, 0, {
               stiffness: 0.01,
               damping: 0.1,
+              precision: 1,
             }),
             Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
