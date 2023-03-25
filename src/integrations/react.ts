@@ -330,7 +330,7 @@ export const useEnumerable = <T>(
     const enumerator = pipe(enumerable, Enumerable.enumerate());
     enumeratorRef.current = enumerator;
 
-    return () => enumerator[DisposableLike_dispose]();
+    return bind(enumerator[DisposableLike_dispose], enumerator);
   }, [enumerable]);
 
   const move = useCallback(() => {
