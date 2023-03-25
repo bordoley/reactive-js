@@ -24,3 +24,66 @@ scheduler[SchedulerLike_schedule](
   },
   { delay: 20000 },
 );
+
+
+import relay from "relay-runtime";
+import { fetchQuery } from "@reactive-js/core/integrations/relay";
+
+const {
+  Environment,
+  Network,
+  RecordSource,
+  Store,
+  graphql,
+} = relay
+
+const network = Network.create((operation, variables) => {
+  return fetch("https://swapi-graphql.netlify.app/.netlify/functions/index", {
+    method: "POST",
+    headers: {
+      // Add authentication and other headers here
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      query: operation.text, // GraphQL text from input
+      variables,
+    }),
+  }).then(response => {
+    return response.json();
+  });
+});
+const store = new Store(new RecordSource());
+
+const environment = new Environment({
+  network,
+  store,
+});
+
+pipe(
+  fetchQuery(
+    environment,
+    graphql`
+      query Query {
+        allFilms {
+          films {
+            title
+            director
+            releaseDate
+            speciesConnection {
+              species {
+                name
+                classification
+                homeworld {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+    {},
+  ),
+  Observable.forEach(console.log),
+  Observable.subscribe(Scheduler.createHostScheduler()),
+);

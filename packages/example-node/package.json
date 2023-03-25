@@ -4,7 +4,11 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "@reactive-js/core": "^0.43.0"
+    "@reactive-js/core": "^0.43.0",
+    "relay-runtime": "^15.0.0"
+  },
+  "devDependencies": {
+    "@types/relay-runtime": "14.1.9"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json && node ./build/index.js",

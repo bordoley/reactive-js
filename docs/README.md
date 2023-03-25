@@ -15,6 +15,7 @@ Reactive-JS
 - [integrations/node](modules/integrations_node.md)
 - [integrations/react](modules/integrations_react.md)
 - [integrations/react-web](modules/integrations_react_web.md)
+- [integrations/relay](modules/integrations_relay.md)
 - [integrations/svelte](modules/integrations_svelte.md)
 - [integrations/web](modules/integrations_web.md)
 - [rx](modules/rx.md)
