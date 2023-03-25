@@ -36,6 +36,9 @@
     "type": "git",
     "url": "https://github.com/bordoley/reactive-js.git"
   },
+  "dependencies": {
+    "@types/react": "^18.0.28"
+  },
   "peerDependencies": {
     "react": "^18.2.0",
     "scheduler": "^0.22.0"
