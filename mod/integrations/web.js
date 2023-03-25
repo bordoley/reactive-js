@@ -171,18 +171,21 @@ export const windowLocation = /*@__PURE__*/ (() => {
             counter: 0,
             replace: true,
             uri: state.uri,
-        }), Observable.map(returns)), (_, state) => pipe(state, Observable.fromOptional(), Observable.forEach(state => {
-            const { uri, replace } = state;
-            const { title } = uri;
-            const locationChanged = String(uri) !== location.href;
-            const titleChanged = document.title !== title;
-            if (replace || (titleChanged && !locationChanged)) {
-                replaceState[QueueableLike_push](state);
-            }
-            else if (!replace && locationChanged) {
-                pushState[QueueableLike_push](state);
-            }
-        }), Observable.ignoreElements()), { equality: areWindowLocationStatesEqual })[StreamableLike_stream](scheduler, options), createWindowLocationStream, Disposable.add(pushState), Disposable.add(replaceState));
+        }), Observable.map(returns)), (oldState, state) => {
+            const locationChanged = String(state.uri) !== String(oldState.uri);
+            const titleChanged = oldState.uri.title !== state.uri.title;
+            let { replace } = state;
+            const push = !replace && locationChanged;
+            replace = replace || (titleChanged && !locationChanged);
+            return pipe(state, Observable.fromOptional(), Observable.forEach(state => {
+                if (replace) {
+                    replaceState[QueueableLike_push](state);
+                }
+                else if (push) {
+                    pushState[QueueableLike_push](state);
+                }
+            }), Observable.ignoreElements());
+        }, { equality: areWindowLocationStatesEqual })[StreamableLike_stream](scheduler, options), createWindowLocationStream, Disposable.add(pushState), Disposable.add(replaceState));
         return currentWindowLocationStream;
     };
     return {
