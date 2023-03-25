@@ -25,17 +25,17 @@
 
 ### [WindowLocationStreamLike\_canGoBack]
 
-• `Readonly` **[WindowLocationStreamLike\_canGoBack]**: `boolean`
+• `Readonly` **[WindowLocationStreamLike\_canGoBack]**: [`ObservableLike`](rx.ObservableLike.md)<`boolean`\>
 
 ## Methods
 
 ### [WindowLocationStreamLike\_goBack]
 
-▸ **[WindowLocationStreamLike_goBack]**(): `boolean`
+▸ **[WindowLocationStreamLike_goBack]**(): `void`
 
 #### Returns
 
-`boolean`
+`void`
 
 ___
 

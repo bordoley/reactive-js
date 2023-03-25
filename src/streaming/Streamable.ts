@@ -5,6 +5,7 @@ import Streamable_createActionReducer from "./Streamable/__internal__/Streamable
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
+import Streamable_createWriteThroughCache from "./Streamable/__internal__/Streamable.createWriteThroughCache.js";
 
 /**
  * @category Constructor
@@ -53,3 +54,8 @@ export const sinkInto: <TReq, T>(
   dest: StreamLike<T, TReq>,
 ) => (src: StreamableLike<TReq, T>) => StreamableLike<TReq, T> =
   Streamable_sinkInto;
+
+/**
+ * @category Constructor
+ */
+export const createWriteThroughCache = Streamable_createWriteThroughCache;

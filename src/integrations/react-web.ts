@@ -38,7 +38,7 @@ export const useWindowLocation = (): {
   push: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
   replace: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
   canGoBack: boolean;
-  goBack: () => boolean;
+  goBack: () => void;
 } => {
   const windowLocationStream = useWindowLocationStream();
 
@@ -78,7 +78,8 @@ export const useWindowLocation = (): {
   }, [stableWindowLocationStreamRef]);
 
   const canGoBack =
-    windowLocationStream?.[WindowLocationStreamLike_canGoBack] ?? false;
+    useObservable(windowLocationStream[WindowLocationStreamLike_canGoBack]) ??
+    false;
 
   return {
     uri,

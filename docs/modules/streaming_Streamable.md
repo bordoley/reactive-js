@@ -9,6 +9,7 @@
 - [create](streaming_Streamable.md#create)
 - [createActionReducer](streaming_Streamable.md#createactionreducer)
 - [createStateStore](streaming_Streamable.md#createstatestore)
+- [createWriteThroughCache](streaming_Streamable.md#createwritethroughcache)
 - [identity](streaming_Streamable.md#identity)
 
 ### Other Functions
@@ -90,6 +91,33 @@ new state based upon the previous state.
 | `initialState` | [`Factory`](functions.md#factory)<`T`\> | The initial accumulation value. |
 | `options?` | `Object` | - |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> | - |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+
+___
+
+### createWriteThroughCache
+
+▸ **createWriteThroughCache**<`T`\>(`initialState`, `onInit`, `onChange`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `initialState` | [`Factory`](functions.md#factory)<`T`\> |
+| `onInit` | (`initialValue`: `T`) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`Updater`](functions.md#updater)<`T`\>\> |
+| `onChange` | (`oldValue`: `T`, `newValue`: `T`) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`Updater`](functions.md#updater)<`T`\>\> |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+| `options.throttleDuration?` | `number` |
 
 #### Returns
 
