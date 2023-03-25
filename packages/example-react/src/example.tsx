@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Enumerable from "@reactive-js/core/rx/Enumerable";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
@@ -17,6 +23,8 @@ import {
 import { WindowLocationURI } from "@reactive-js/core/integrations/web";
 import {
   increment,
+  isNone,
+  isSome,
   Optional,
   pipe,
   returns,
@@ -43,10 +51,23 @@ const Root = () => {
     [history.push],
   );
 
+  const [counterInitialValue, setCounterInitialValue] =
+    useState<Optional<number>>();
+  useEffect(() => {
+    if (isSome(history.uri?.query) && isNone(counterInitialValue)) {
+      const counterHistoryValue = new URLSearchParams(history.uri?.query);
+      setCounterInitialValue(
+        Number.parseInt(counterHistoryValue.get("v") ?? "-1"),
+      );
+    }
+  }, [history.uri, counterInitialValue, setCounterInitialValue]);
+
   const counterFlowable = useMemo(
     () =>
       pipe(
-        Runnable.generate(increment, returns(-1), { delay: 500 }),
+        Runnable.generate(increment, returns(counterInitialValue ?? -1), {
+          delay: 500,
+        }),
         Runnable.forEach(value => {
           history.replace((uri: WindowLocationURI) => ({
             ...uri,
@@ -55,7 +76,7 @@ const Root = () => {
         }),
         Runnable.toFlowable(),
       ),
-    [history.replace],
+    [history.replace, counterInitialValue],
   );
   const counter = useFlowable(counterFlowable);
 
@@ -119,7 +140,7 @@ const Root = () => {
         <button onClick={counter.isPaused ? counter.resume : counter.pause}>
           {counter.isPaused ? "Resume Counter" : "Pause Counter"}
         </button>
-        <span>{counter.value ?? 0}</span>
+        <span>{counter.value ?? counterInitialValue}</span>
       </div>
       <div ref={animatedDivRef} style={{ height: "100px", width: "100px" }} />
       <div>
