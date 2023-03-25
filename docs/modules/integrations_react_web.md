@@ -7,11 +7,11 @@
 ### Hook Functions
 
 - [useWindowLocation](integrations_react_web.md#usewindowlocation)
+- [useWindowLocationStream](integrations_react_web.md#usewindowlocationstream)
 
 ### Other Functions
 
 - [WindowLocationProvider](integrations_react_web.md#windowlocationprovider)
-- [useWindowLocationStream](integrations_react_web.md#usewindowlocationstream)
 
 ## Hook Functions
 
@@ -33,6 +33,16 @@
 
 ___
 
+### useWindowLocationStream
+
+▸ **useWindowLocationStream**(): [`Optional`](functions.md#optional)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
+
+#### Returns
+
+[`Optional`](functions.md#optional)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
+
+___
+
 ## Other Functions
 
 ### WindowLocationProvider
@@ -50,13 +60,3 @@ ___
 #### Returns
 
 ``null`` \| `ReactElement`<`any`, `any`\>
-
-___
-
-### useWindowLocationStream
-
-▸ **useWindowLocationStream**(): [`Optional`](functions.md#optional)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
-
-#### Returns
-
-[`Optional`](functions.md#optional)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
