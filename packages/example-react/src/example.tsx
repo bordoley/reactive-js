@@ -18,9 +18,13 @@ import {
 } from "@reactive-js/core/integrations/react";
 import {
   useWindowLocation,
+  useWindowLocationStream,
   WindowLocationProvider,
 } from "@reactive-js/core/integrations/react-web";
-import { WindowLocationURI } from "@reactive-js/core/integrations/web";
+import {
+  WindowLocationStreamLike,
+  WindowLocationURI,
+} from "@reactive-js/core/integrations/web";
 import {
   increment,
   isNone,
@@ -29,8 +33,6 @@ import {
   pipe,
   returns,
   SideEffect,
-  SideEffect1,
-  Updater,
 } from "@reactive-js/core/functions";
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
@@ -155,11 +157,7 @@ const Root = () => {
 const RxComponent = createComponent(
   (
     props: ObservableLike<{
-      uri: Optional<WindowLocationURI>;
-      push: SideEffect1<WindowLocationURI | Updater<WindowLocationURI>>;
-      replace: SideEffect1<WindowLocationURI | Updater<WindowLocationURI>>;
-      canGoBack: boolean;
-      goBack: () => boolean;
+      windowLocationStream: WindowLocationStreamLike;
     }>,
   ) => {
     const asyncEnumerable = AsyncEnumerable.generate(increment, () => -1);
@@ -199,7 +197,9 @@ const RxComponent = createComponent(
       );
 
     return Observable.compute(() => {
-      const history = Observable.__await(props);
+      const {windowLocationStream} = Observable.__await(props);
+      const uri = Observable.__await(windowLocationStream);
+
       const enumerator = Observable.__stream(asyncEnumerable);
       const move: SideEffect = Observable.__bind(
         enumerator[QueueableLike_push],
@@ -225,7 +225,7 @@ const RxComponent = createComponent(
       return (
         <div>
           <div>This is not actually a React Component</div>
-          <div>{String(history.uri) ?? ""}</div>
+          <div>{String(uri) ?? ""}</div>
           <div>
             <button onClick={move}>Move the Enumerator</button>
             <span>{value}</span>
@@ -247,9 +247,11 @@ const RxComponent = createComponent(
 );
 
 const RootRxComponent = () => {
-  const history = useWindowLocation();
+  const windowLocationStream = useWindowLocationStream();
 
-  return <RxComponent {...history} />;
+  return isSome(windowLocationStream) ? (
+    <RxComponent windowLocationStream={windowLocationStream} />
+  ) : null;
 };
 
 const rootElement = document.getElementById("root");

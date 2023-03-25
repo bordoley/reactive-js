@@ -36,6 +36,9 @@ const WindowLocationContext =
 const emptyWindowLocationURIObservable =
   /*@__PURE__*/ Observable.empty<WindowLocationURI>();
 
+export const useWindowLocationStream = (): Optional<WindowLocationStreamLike> =>
+  useContext(WindowLocationContext);
+
 /**
  * @category Hook
  */
@@ -46,7 +49,7 @@ export const useWindowLocation = (): {
   canGoBack: boolean;
   goBack: () => boolean;
 } => {
-  const windowLocationStream = useContext(WindowLocationContext);
+  const windowLocationStream = useWindowLocationStream();
 
   const uri = useObservable(
     windowLocationStream ?? emptyWindowLocationURIObservable,
