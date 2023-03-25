@@ -7,21 +7,35 @@ import {
   useRef,
   useState,
 } from "react";
+import {
+  unstable_NormalPriority,
+  unstable_cancelCallback,
+  unstable_now,
+  unstable_scheduleCallback,
+  unstable_shouldYield,
+} from "scheduler";
 import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
+import {
+  createInstanceFactory,
+  include,
+  init,
+  mix,
+  props,
+} from "../__internal__/mixins.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
 } from "../containers.js";
 import {
-  Factory,
   Optional,
   SideEffect,
   SideEffect1,
-  isFunction,
+  bind,
   isSome,
   none,
   pipe,
+  pipeLazy,
   raiseError,
 } from "../functions.js";
 import {
@@ -34,7 +48,22 @@ import {
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Subject from "../rx/Subject.js";
-import { SchedulerLike } from "../scheduling.js";
+import {
+  PrioritySchedulerLike,
+  SchedulerLike,
+  SchedulerLike_now,
+} from "../scheduling.js";
+import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
+import {
+  ContinuationLike,
+  ContinuationLike_continuationScheduler,
+  ContinuationLike_priority,
+  ContinuationSchedulerLike_schedule,
+  PrioritySchedulerImplementationLike,
+  PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_shouldYield,
+  PriorityScheduler_mixin,
+} from "../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import {
   FlowableLike,
   FlowableStreamLike_isPaused,
@@ -42,9 +71,83 @@ import {
   StreamableLike,
   StreamableLike_stream,
 } from "../streaming.js";
-import { DisposableLike_dispose, QueueableLike_push } from "../util.js";
+import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+  QueueableLike_push,
+} from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-import { createSchedulerWithNormalPriority } from "./scheduler.js";
+
+const createSchedulerWithPriority = /*@__PURE__*/ (() => {
+  type TProperties = unknown;
+
+  const createPriorityScheduler = createInstanceFactory(
+    mix(
+      include(PriorityScheduler_mixin),
+      function ReactPriorityScheduler(
+        instance: Pick<
+          PrioritySchedulerImplementationLike,
+          | typeof SchedulerLike_now
+          | typeof PrioritySchedulerImplementationLike_shouldYield
+          | typeof ContinuationSchedulerLike_schedule
+        >,
+      ): PrioritySchedulerLike {
+        init(PriorityScheduler_mixin, instance, 300);
+        return instance;
+      },
+      props<TProperties>({}),
+      {
+        get [SchedulerLike_now](): number {
+          return unstable_now();
+        },
+
+        get [PrioritySchedulerImplementationLike_shouldYield](): boolean {
+          return unstable_shouldYield();
+        },
+
+        [ContinuationSchedulerLike_schedule](
+          this: PrioritySchedulerImplementationLike,
+          continuation: ContinuationLike,
+          delay: number,
+        ) {
+          const priority = continuation[ContinuationLike_priority];
+
+          pipe(this, Disposable.addIgnoringChildErrors(continuation));
+
+          if (continuation[DisposableLike_isDisposed]) {
+            return;
+          }
+
+          continuation[ContinuationLike_continuationScheduler] = this;
+
+          const callback = () => {
+            callbackNodeDisposable[DisposableLike_dispose]();
+            this[PrioritySchedulerImplementationLike_runContinuation](
+              continuation,
+            );
+          };
+
+          const callbackNode = unstable_scheduleCallback(
+            priority,
+            callback,
+            delay > 0 ? { delay } : none,
+          );
+
+          const callbackNodeDisposable = pipe(
+            Disposable.create(),
+            Disposable.onDisposed(
+              pipeLazy(callbackNode, unstable_cancelCallback),
+            ),
+            Disposable.addTo(continuation),
+          );
+        },
+      },
+    ),
+  );
+
+  return (priority: number): SchedulerLike =>
+    pipe(createPriorityScheduler(), PriorityScheduler.toScheduler(priority));
+})();
 
 /**
  * Returns the current value, if defined, of `observable`.
@@ -58,71 +161,66 @@ import { createSchedulerWithNormalPriority } from "./scheduler.js";
 export const useObservable = <T>(
   observable: ObservableLike<T>,
   options: {
-    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly maxBufferSize?: number;
   } = {},
 ): Optional<T> => {
   const [state, updateState] = useState<Optional<T>>(none);
   const [error, updateError] = useState<Optional<Error>>(none);
 
-  const { maxBufferSize = MAX_SAFE_INTEGER, scheduler: schedulerOption } =
-    options;
+  const {
+    maxBufferSize = MAX_SAFE_INTEGER,
+    priority = unstable_NormalPriority,
+  } = options;
 
   useEffect(() => {
-    const scheduler = isFunction(schedulerOption)
-      ? schedulerOption()
-      : schedulerOption ?? createSchedulerWithNormalPriority();
+    const scheduler = createSchedulerWithPriority(priority);
 
-    const subscription = pipe(
+    pipe(
       observable,
       Observable.forEach<T>(v => updateState(_ => v)),
       Observable.subscribe(scheduler, { maxBufferSize }),
       Disposable.onError(updateError),
     );
 
-    const disposable = scheduler === schedulerOption ? subscription : scheduler;
-
-    return () => {
-      disposable[DisposableLike_dispose]();
-    };
-  }, [observable, updateState, updateError, schedulerOption, maxBufferSize]);
+    return bind(scheduler[DisposableLike_dispose], scheduler);
+  }, [observable, updateState, updateError, priority, maxBufferSize]);
 
   return isSome(error) ? raiseError<T>(error) : state;
 };
 
-const useStreamableInternal = <
+export const useStream = <
   TReq,
   T,
   TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
 >(
   streamable: StreamableLike<TReq, T, TStream>,
   options: {
-    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly maxBufferSize?: number;
+    readonly replay?: number;
   } = {},
 ): Optional<TStream> => {
   const [stream, setStream] = useState<Optional<TStream>>(none);
 
-  const { maxBufferSize = MAX_SAFE_INTEGER, scheduler: schedulerOption } =
-    options;
+  const {
+    maxBufferSize = MAX_SAFE_INTEGER,
+    priority = unstable_NormalPriority,
+    replay = 1,
+  } = options;
 
   useEffect(() => {
-    const scheduler = isFunction(schedulerOption)
-      ? schedulerOption()
-      : schedulerOption ?? createSchedulerWithNormalPriority();
+    const scheduler = createSchedulerWithPriority(priority);
 
     const stream: TStream = streamable[StreamableLike_stream](scheduler, {
+      replay,
       maxBufferSize,
     });
 
     setStream(stream);
 
-    const disposable = scheduler === schedulerOption ? stream : scheduler;
-
-    return () => {
-      disposable[DisposableLike_dispose]();
-    };
-  }, [streamable, setStream, schedulerOption, maxBufferSize]);
+    return bind(scheduler[DisposableLike_dispose], scheduler);
+  }, [streamable, setStream, priority, maxBufferSize]);
 
   return stream;
 };
@@ -156,11 +254,12 @@ const emptyObservable = /*@__PURE__*/ Observable.empty<unknown>();
 export const useStreamable = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
   options: {
-    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly maxBufferSize?: number;
+    readonly replay?: number;
   } = {},
 ): readonly [Optional<T>, SideEffect1<TReq>] => {
-  const stream = useStreamableInternal(streamable, options);
+  const stream = useStream(streamable, options);
   const dispatch = useDispatcher(stream);
   const value = useObservable<T>(stream ?? emptyObservable);
   return [value, dispatch];
@@ -172,8 +271,9 @@ export const useStreamable = <TReq, T>(
 export const useFlowable = <T>(
   flowable: FlowableLike<T>,
   options: {
-    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly maxBufferSize?: number;
+    readonly replay?: number;
   } = {},
 ): {
   pause: SideEffect;
@@ -181,7 +281,7 @@ export const useFlowable = <T>(
   value: Optional<T>;
   isPaused: boolean;
 } => {
-  const stream = useStreamableInternal(flowable, options);
+  const stream = useStream(flowable, options);
   const dispatch = useDispatcher(stream);
   const value = useObservable<T>(stream ?? emptyObservable);
 
@@ -257,7 +357,7 @@ const createReplaySubject = <TProps>() => Subject.create<TProps>({ replay: 1 });
 
 export const createComponent = <TProps>(
   fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>,
-  options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
+  options: { readonly priority?: 1 | 2 | 3 | 4 | 5 } = {},
 ): ComponentType<TProps> => {
   const ObservableComponent = (props: TProps) => {
     const propsSubject = useMemo<SubjectLike<TProps>>(createReplaySubject, [
@@ -267,7 +367,7 @@ export const createComponent = <TProps>(
     propsSubject[SubjectLike_publish](props);
 
     const elementObservable = useMemo(
-      () => pipe(propsSubject, Observable.distinctUntilChanged<TProps>(), fn),
+      () => pipe(propsSubject, fn),
       [propsSubject],
     );
     return useObservable(elementObservable, options) ?? null;

@@ -35,11 +35,11 @@ ___
 
 ### useWindowLocationStream
 
-▸ **useWindowLocationStream**(): [`Optional`](functions.md#optional)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
+▸ **useWindowLocationStream**(): [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)
 
 #### Returns
 
-[`Optional`](functions.md#optional)<[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
+[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)
 
 ___
 
@@ -55,6 +55,7 @@ ___
 | :------ | :------ |
 | `props` | `Object` |
 | `props.children` | `ReactNode` |
+| `props.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 | `context?` | `any` |
 
 #### Returns

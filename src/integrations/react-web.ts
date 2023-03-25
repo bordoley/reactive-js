@@ -6,22 +6,10 @@ import {
   useContext,
   useEffect,
   useRef,
-  useState,
 } from "react";
-import {
-  Optional,
-  SideEffect1,
-  Updater,
-  isSome,
-  none,
-  pipe,
-} from "../functions.js";
-import * as Observable from "../rx/Observable.js";
-import { StreamableLike_stream } from "../streaming.js";
-import { DisposableLike_dispose, QueueableLike_push } from "../util.js";
-import * as Disposable from "../util/Disposable.js";
-import { useObservable } from "./react.js";
-import { createSchedulerWithNormalPriority } from "./scheduler.js";
+import { Optional, SideEffect1, Updater, isSome, none } from "../functions.js";
+import { QueueableLike_push } from "../util.js";
+import { useObservable, useStream } from "./react.js";
 import {
   WindowLocationStreamLike,
   WindowLocationStreamLike_canGoBack,
@@ -32,14 +20,14 @@ import {
 } from "./web.js";
 
 const WindowLocationContext =
-  /*@__PURE__*/ createContext<Optional<WindowLocationStreamLike>>(none);
-const emptyWindowLocationURIObservable =
-  /*@__PURE__*/ Observable.empty<WindowLocationURI>();
+  /*@__PURE__*/ createContext<WindowLocationStreamLike>(
+    none as unknown as WindowLocationStreamLike,
+  );
 
 /**
  * @category Hook
  */
-export const useWindowLocationStream = (): Optional<WindowLocationStreamLike> =>
+export const useWindowLocationStream = (): WindowLocationStreamLike =>
   useContext(WindowLocationContext);
 
 /**
@@ -54,9 +42,7 @@ export const useWindowLocation = (): {
 } => {
   const windowLocationStream = useWindowLocationStream();
 
-  const uri = useObservable(
-    windowLocationStream ?? emptyWindowLocationURIObservable,
-  );
+  const uri = useObservable(windowLocationStream);
 
   const stableWindowLocationStreamRef =
     useRef<Optional<WindowLocationStreamLike>>(none);
@@ -104,32 +90,24 @@ export const useWindowLocation = (): {
 };
 
 export const WindowLocationProvider: React.FunctionComponent<{
+  priority?: 1 | 2 | 3 | 4 | 5;
   children: React.ReactNode;
-}> = ({ children }: { children: React.ReactNode }) => {
-  const [windowLocationStream, setWindowLocationStream] =
-    useState<Optional<WindowLocationStreamLike>>(undefined);
+}> = ({
+  priority,
+  children,
+}: {
+  priority?: 1 | 2 | 3 | 4 | 5;
+  children: React.ReactNode;
+}) => {
+  const value = useStream(windowLocation, { priority, replay: 1 });
 
-  useEffect(() => {
-    const scheduler = createSchedulerWithNormalPriority();
-
-    const stream: WindowLocationStreamLike = pipe(
-      // FIXME: Should we have pass a maxBufferSize?
-      windowLocation[StreamableLike_stream](scheduler, { replay: 1 }),
-      Disposable.addTo(scheduler),
-    );
-
-    setWindowLocationStream(stream);
-
-    return () => {
-      scheduler[DisposableLike_dispose]();
-    };
-  }, []);
-
-  return createElement(
-    WindowLocationContext.Provider,
-    {
-      value: windowLocationStream,
-    },
-    children,
-  );
+  return isSome(value)
+    ? createElement(
+        WindowLocationContext.Provider,
+        {
+          value,
+        },
+        children,
+      )
+    : null;
 };

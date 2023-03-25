@@ -249,9 +249,7 @@ const RxComponent = createComponent(
 const RootRxComponent = () => {
   const windowLocationStream = useWindowLocationStream();
 
-  return isSome(windowLocationStream) ? (
-    <RxComponent windowLocationStream={windowLocationStream} />
-  ) : null;
+  return <RxComponent windowLocationStream={windowLocationStream} />;
 };
 
 const rootElement = document.getElementById("root");

@@ -14,6 +14,7 @@
 ### Other Functions
 
 - [createComponent](integrations_react.md#createcomponent)
+- [useStream](integrations_react.md#usestream)
 
 ## Hook Functions
 
@@ -62,7 +63,8 @@ ___
 | `flowable` | [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\> |
 | `options?` | `Object` |
 | `options.maxBufferSize?` | `number` |
-| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `options.replay?` | `number` |
 
 #### Returns
 
@@ -96,7 +98,7 @@ Returns the current value, if defined, of `observable`.
 | `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> | The `ObservableLike` to subscribe to. |
 | `options?` | `Object` | - |
 | `options.maxBufferSize?` | `number` | - |
-| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> | - |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` | - |
 
 #### Returns
 
@@ -122,7 +124,8 @@ ___
 | `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\> |
 | `options?` | `Object` |
 | `options.maxBufferSize?` | `number` |
-| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `options.replay?` | `number` |
 
 #### Returns
 
@@ -148,8 +151,36 @@ ___
 | :------ | :------ |
 | `fn` | (`props`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TProps`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
 | `options?` | `Object` |
-| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
 #### Returns
 
 `ComponentType`<`TProps`\>
+
+___
+
+### useStream
+
+▸ **useStream**<`TReq`, `T`, `TStream`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<`TStream`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `T` | `T` |
+| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Optional`](functions.md#optional)<`TStream`\>
