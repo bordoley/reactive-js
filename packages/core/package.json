@@ -38,7 +38,8 @@
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "scheduler": "^0.22.0"
+    "scheduler": "^0.22.0",
+    "relay-runtime": "^15.0.0"
   },
   "publishConfig": {
     "access": "public"
