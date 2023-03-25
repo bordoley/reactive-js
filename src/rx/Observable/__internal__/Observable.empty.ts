@@ -9,6 +9,10 @@ interface ObservableEmpty {
   <T>(): EnumerableLike<T>;
   <T>(options: { delay: number }): RunnableLike<T>;
 }
+const emptyEnumerable = /*@__PURE__*/ Enumerable_create(observer => {
+  observer[DisposableLike_dispose]();
+});
+
 const Observable_empty: ObservableEmpty = (<T>(options?: { delay: number }) =>
   (options?.delay ?? 0) > 0
     ? Runnable_create<T>(observer => {
@@ -17,8 +21,6 @@ const Observable_empty: ObservableEmpty = (<T>(options?: { delay: number }) =>
           Observer_schedule(() => observer[DisposableLike_dispose](), options),
         );
       })
-    : Enumerable_create<T>(observer => {
-        observer[DisposableLike_dispose]();
-      })) as ObservableEmpty;
+    : emptyEnumerable) as ObservableEmpty;
 
 export default Observable_empty;

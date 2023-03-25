@@ -17,8 +17,8 @@ export interface WindowLocationURI {
  * @category Container
  */
 export interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
-    readonly [WindowLocationStreamLike_canGoBack]: boolean;
-    [WindowLocationStreamLike_goBack](): boolean;
+    readonly [WindowLocationStreamLike_canGoBack]: ObservableLike<boolean>;
+    [WindowLocationStreamLike_goBack](): void;
     [WindowLocationStreamLike_replace](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI): boolean;
 }
 export declare const createEventSource: (url: string | URL, options?: EventSourceInit & {
