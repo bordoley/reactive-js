@@ -18,7 +18,6 @@ import {
   Optional,
   SideEffect,
   SideEffect1,
-  ignore,
   isFunction,
   isSome,
   none,
@@ -27,7 +26,6 @@ import {
 } from "../functions.js";
 import {
   DispatcherLike,
-  DispatcherLike_scheduler,
   EnumerableLike,
   ObservableLike,
   SubjectLike,
@@ -129,35 +127,17 @@ const useStreamableInternal = <
   return stream;
 };
 
-const useStream = <TReq, T>(
-  stream: Optional<StreamLike<TReq, T>>,
-): readonly [Optional<T>, SideEffect1<TReq>] => {
-  const [state, updateState] = useState<Optional<T>>(none);
-  const [error, updateError] = useState<Optional<Error>>(none);
-
+const useDispatcher = <TReq>(
+  dispatcher: Optional<DispatcherLike<TReq>>,
+): SideEffect1<TReq> => {
   const dispatcherRef: React.MutableRefObject<Optional<DispatcherLike<TReq>>> =
     useRef();
 
   useEffect(() => {
-    dispatcherRef.current = stream;
+    dispatcherRef.current = dispatcher;
+  }, [dispatcher, dispatcherRef]);
 
-    if (isSome(stream)) {
-      const subscription = pipe(
-        stream,
-        Observable.forEach<T>(v => updateState(_ => v)),
-        Observable.subscribe(stream[DispatcherLike_scheduler]),
-        Disposable.onError(updateError),
-        Disposable.addTo(stream),
-      );
-      return () => {
-        subscription[DisposableLike_dispose]();
-      };
-    } else {
-      return ignore;
-    }
-  }, [stream, updateState, updateError, dispatcherRef]);
-
-  const dispatch = useCallback(
+  return useCallback(
     (req: TReq) => {
       const dispatcher = dispatcherRef.current;
       if (isSome(dispatcher)) {
@@ -166,11 +146,9 @@ const useStream = <TReq, T>(
     },
     [dispatcherRef],
   );
-
-  return isSome(error)
-    ? raiseError<readonly [Optional<T>, SideEffect1<TReq>]>(error)
-    : [state, dispatch];
 };
+
+const emptyObservable = /*@__PURE__*/ Observable.empty<unknown>();
 
 /**
  * @category Hook
@@ -183,10 +161,10 @@ export const useStreamable = <TReq, T>(
   } = {},
 ): readonly [Optional<T>, SideEffect1<TReq>] => {
   const stream = useStreamableInternal(streamable, options);
-  return useStream(stream);
+  const dispatch = useDispatcher(stream);
+  const value = useObservable<T>(stream ?? emptyObservable);
+  return [value, dispatch];
 };
-
-const emptyObservable = /*@__PURE__*/ Observable.empty<boolean>();
 
 /**
  * @category Hook
@@ -204,10 +182,11 @@ export const useFlowable = <T>(
   isPaused: boolean;
 } => {
   const stream = useStreamableInternal(flowable, options);
-  const [value, dispatch] = useStream(stream);
+  const dispatch = useDispatcher(stream);
+  const value = useObservable<T>(stream ?? emptyObservable);
 
   const isPaused =
-    useObservable(
+    useObservable<boolean>(
       stream?.[FlowableStreamLike_isPaused] ?? emptyObservable,
       options,
     ) ?? true;

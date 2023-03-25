@@ -197,7 +197,7 @@ const RxComponent = createComponent(
       );
 
     return Observable.compute(() => {
-      const {windowLocationStream} = Observable.__await(props);
+      const { windowLocationStream } = Observable.__await(props);
       const uri = Observable.__await(windowLocationStream);
 
       const enumerator = Observable.__stream(asyncEnumerable);
