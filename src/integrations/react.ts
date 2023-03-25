@@ -189,6 +189,9 @@ export const useObservable = <T>(
   return isSome(error) ? raiseError<T>(error) : state;
 };
 
+/**
+ * @category Hook
+ */
 export const useStream = <
   TReq,
   T,

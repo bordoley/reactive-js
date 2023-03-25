@@ -9,12 +9,12 @@
 - [useEnumerable](integrations_react.md#useenumerable)
 - [useFlowable](integrations_react.md#useflowable)
 - [useObservable](integrations_react.md#useobservable)
+- [useStream](integrations_react.md#usestream)
 - [useStreamable](integrations_react.md#usestreamable)
 
 ### Other Functions
 
 - [createComponent](integrations_react.md#createcomponent)
-- [useStream](integrations_react.md#usestream)
 
 ## Hook Functions
 
@@ -106,6 +106,34 @@ Returns the current value, if defined, of `observable`.
 
 ___
 
+### useStream
+
+▸ **useStream**<`TReq`, `T`, `TStream`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<`TStream`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `T` | `T` |
+| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Optional`](functions.md#optional)<`TStream`\>
+
+___
+
 ### useStreamable
 
 ▸ **useStreamable**<`TReq`, `T`\>(`streamable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
@@ -156,31 +184,3 @@ ___
 #### Returns
 
 `ComponentType`<`TProps`\>
-
-___
-
-### useStream
-
-▸ **useStream**<`TReq`, `T`, `TStream`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<`TStream`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TReq` | `TReq` |
-| `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
-| `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`Optional`](functions.md#optional)<`TStream`\>
