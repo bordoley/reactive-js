@@ -1,11 +1,11 @@
 /// <reference types="./Disposable.onError.d.ts" />
 
-import { call, isSome } from "../../../functions.js";
+import { isSome } from "../../../functions.js";
 import Disposable_addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown.js";
-const Disposable_onError = (teardown, ctx) => disposable => {
+const Disposable_onError = (teardown) => disposable => {
     Disposable_addDisposableOrTeardown(disposable, e => {
         if (isSome(e)) {
-            call(teardown, ctx, e);
+            teardown(e);
         }
     });
     return disposable;

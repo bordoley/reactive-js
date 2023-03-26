@@ -19,7 +19,7 @@ import {
   ContainerOf,
   ContainerOperator,
 } from "../../../containers.js";
-import { Function1, bindMethod, none, pipe } from "../../../functions.js";
+import { Function1, bind, bindMethod, none, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
   ObservableLike,
@@ -96,7 +96,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
           pipe(
             instance,
             Disposable_addTo(delegate),
-            Disposable_onComplete(onDispose, instance),
+            Disposable_onComplete(bind(onDispose, instance)),
           );
 
           return instance;

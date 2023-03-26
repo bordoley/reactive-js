@@ -1,6 +1,6 @@
 /// <reference types="./AsyncIterable.toFlowable.d.ts" />
 
-import { error, pipe } from "../../../functions.js";
+import { bindMethod, error, pipe } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
@@ -51,6 +51,6 @@ const AsyncIterable_toFlowable = () => (iterable) => Flowable_create((modeObs) =
         if (!isPaused && wasPaused) {
             pipe(observer, Observer_schedule(continuation));
         }
-    }), Observable_subscribeWithMaxBufferSize(scheduler, observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(observer[DispatcherLike_complete], observer));
+    }), Observable_subscribeWithMaxBufferSize(scheduler, observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
 }));
 export default AsyncIterable_toFlowable;

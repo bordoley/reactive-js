@@ -3,7 +3,7 @@
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { HigherOrderObservable_currentRef } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
-import { bindMethod, none, pipe } from "../../../functions.js";
+import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -28,7 +28,7 @@ const HigherOrderObservable_switchAll = (lift) => {
             init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
             init(delegatingMixin(), instance, delegate);
             instance[HigherOrderObservable_currentRef] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));
-            pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(onDispose, instance));
+            pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(bind(onDispose, instance)));
             return instance;
         }, props({
             [HigherOrderObservable_currentRef]: none,

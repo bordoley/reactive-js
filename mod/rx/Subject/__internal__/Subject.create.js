@@ -4,7 +4,7 @@ import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { Subject_observers } from "../../../__internal__/symbols.js";
 import { IndexedQueueLike_get, QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
-import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
+import { bindMethod, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_publish, } from "../../../rx.js";
 import { DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -57,7 +57,7 @@ const Subject_create =
                 const next = this[IndexedQueueLike_get](i);
                 observer[QueueableLike_push](next);
             }
-            pipe(this, Disposable_onError(Disposable_toErrorHandler(observer)), Disposable_onComplete(observer[DispatcherLike_complete], observer));
+            pipe(this, Disposable_onError(Disposable_toErrorHandler(observer)), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
         },
     }));
     return (options) => {

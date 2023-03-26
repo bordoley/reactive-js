@@ -1,5 +1,5 @@
 import { AsyncIterableLike } from "../../../containers.js";
-import { pipe, returns } from "../../../functions.js";
+import { bindMethod, pipe, returns } from "../../../functions.js";
 import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
@@ -47,8 +47,7 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
               ),
               Disposable_addTo(observer),
               Disposable_onComplete(
-                observer[DispatcherLike_complete],
-                observer,
+                bindMethod(observer, DispatcherLike_complete),
               ),
             );
           }),

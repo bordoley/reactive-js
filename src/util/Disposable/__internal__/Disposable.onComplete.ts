@@ -1,13 +1,13 @@
-import { SideEffect, Updater, call, isNone } from "../../../functions.js";
+import { SideEffect, Updater, isNone } from "../../../functions.js";
 import { DisposableLike } from "../../../util.js";
 import Disposable_addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown.js";
 
 const Disposable_onComplete =
-  <T extends DisposableLike>(teardown: SideEffect, ctx?: unknown): Updater<T> =>
+  <T extends DisposableLike>(teardown: SideEffect): Updater<T> =>
   disposable => {
     Disposable_addDisposableOrTeardown(disposable, e => {
       if (isNone(e)) {
-        call(teardown, ctx);
+        teardown();
       }
     });
     return disposable;

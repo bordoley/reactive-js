@@ -1,7 +1,7 @@
 /// <reference types="./HigherOrderObservable.catchError.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { error, isSome, partial, pipe } from "../../../functions.js";
+import { bindMethod, error, isSome, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -16,7 +16,7 @@ const HigherOrderObservable_catchError = (lift) => {
             init(Disposable_mixin, instance);
             init(delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
-            pipe(instance, Disposable_addToIgnoringChildErrors(delegate), Disposable_onComplete(delegate[DisposableLike_dispose], delegate), Disposable_onError((err) => {
+            pipe(instance, Disposable_addToIgnoringChildErrors(delegate), Disposable_onComplete(bindMethod(delegate, DisposableLike_dispose)), Disposable_onError((err) => {
                 try {
                     const result = errorHandler(err);
                     if (isSome(result)) {

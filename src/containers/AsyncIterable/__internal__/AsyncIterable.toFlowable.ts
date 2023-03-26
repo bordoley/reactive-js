@@ -1,5 +1,5 @@
 import { AsyncIterableLike } from "../../../containers.js";
-import { error, pipe } from "../../../functions.js";
+import { bindMethod, error, pipe } from "../../../functions.js";
 import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
@@ -84,7 +84,7 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
             observer[QueueableLike_maxBufferSize],
           ),
           Disposable_addTo(observer),
-          Disposable_onComplete(observer[DispatcherLike_complete], observer),
+          Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
         );
       }),
     );

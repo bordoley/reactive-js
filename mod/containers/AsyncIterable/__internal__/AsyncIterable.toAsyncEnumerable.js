@@ -1,6 +1,6 @@
 /// <reference types="./AsyncIterable.toAsyncEnumerable.d.ts" />
 
-import { pipe, returns } from "../../../functions.js";
+import { bindMethod, pipe, returns } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, } from "../../../rx.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
@@ -21,6 +21,6 @@ const AsyncIterable_toAsyncEnumerable =
         else {
             observer[DispatcherLike_complete]();
         }
-    }), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(observer[DispatcherLike_complete], observer));
+    }), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
 }), true, false, false));
 export default AsyncIterable_toAsyncEnumerable;

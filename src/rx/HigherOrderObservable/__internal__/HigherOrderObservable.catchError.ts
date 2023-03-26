@@ -13,7 +13,14 @@ import {
   ContainerOf,
   ContainerOperator,
 } from "../../../containers.js";
-import { Function1, error, isSome, partial, pipe } from "../../../functions.js";
+import {
+  Function1,
+  bindMethod,
+  error,
+  isSome,
+  partial,
+  pipe,
+} from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
   ObservableLike,
@@ -58,7 +65,7 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
           pipe(
             instance,
             Disposable_addToIgnoringChildErrors(delegate),
-            Disposable_onComplete(delegate[DisposableLike_dispose], delegate),
+            Disposable_onComplete(bindMethod(delegate, DisposableLike_dispose)),
             Disposable_onError((err: Error) => {
               try {
                 const result = errorHandler(err) as ContainerOf<C, T>;

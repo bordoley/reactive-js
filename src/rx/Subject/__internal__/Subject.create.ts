@@ -15,7 +15,13 @@ import {
   QueueLike_count,
   QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
-import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
+import {
+  bindMethod,
+  newInstance,
+  none,
+  pipe,
+  unsafeCast,
+} from "../../../functions.js";
 import {
   DispatcherLike_complete,
   MulticastObservableLike_observerCount,
@@ -126,8 +132,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               this,
               Disposable_onError(Disposable_toErrorHandler(observer)),
               Disposable_onComplete(
-                observer[DispatcherLike_complete],
-                observer,
+                bindMethod(observer, DispatcherLike_complete),
               ),
             );
           },

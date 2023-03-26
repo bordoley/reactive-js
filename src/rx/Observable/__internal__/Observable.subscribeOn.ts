@@ -1,4 +1,4 @@
-import { Factory, isFunction, pipe } from "../../../functions.js";
+import { Factory, bindMethod, isFunction, pipe } from "../../../functions.js";
 import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
 import {
   SchedulerLike,
@@ -37,7 +37,7 @@ const Observable_subscribeOn =
           scheduler,
           options?.maxBufferSize ?? observer[QueueableLike_maxBufferSize],
         ),
-        Disposable_onComplete(observer[DispatcherLike_complete], observer),
+        Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
         Disposable_addTo(observer),
       );
     });

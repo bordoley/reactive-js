@@ -1,7 +1,7 @@
 /// <reference types="./Flowable.toObservable.d.ts" />
 
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
-import { compose, pipe } from "../../../functions.js";
+import { bindMethod, compose, pipe } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
@@ -32,7 +32,7 @@ const Flowable_toObservable = () => (src) => {
         // otherwise it will have no observer to queue events onto.
         // Observable.startWith uses concatenation.
         Observable_mergeWith(pipe(false, Optional_toObservable())));
-        pipe(Stream_create(op, scheduler, { maxBufferSize }), Stream_sourceFrom(src), Disposable_addTo(observer), Disposable_onComplete(observer[DispatcherLike_complete], observer));
+        pipe(Stream_create(op, scheduler, { maxBufferSize }), Stream_sourceFrom(src), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
     });
 };
 export default Flowable_toObservable;
