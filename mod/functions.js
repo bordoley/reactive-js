@@ -19,13 +19,6 @@ export const arrayEquality = (valuesEquality = strictEquality) => (a, b) => Read
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const bind = (f, thiz) => f.bind(thiz);
 export const call = (f, self, ...args) => f.call(self, ...args);
-/**
- * A function operator that invokes a function with a given list of arguments.
- *
- * @returns A function that takes a function `f` as an argument
- * and invokes it with the provided arguments, returning the result.
- */
-export const callWith = (...args) => (f) => f(...args);
 export const composeUnsafe = (...operators) => source => pipeUnsafe(source, ...operators);
 /**
  * Composes a series of unary functions.

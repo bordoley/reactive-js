@@ -181,28 +181,6 @@ export const call: Call = <T>(
   ...args: readonly any[]
 ) => f.call(self, ...args);
 
-interface CallWith {
-  <T>(): Function1<Factory<T>, T>;
-  <TA, T>(a: TA): Function1<Function1<TA, T>, T>;
-  <TA, TB, T>(a: TA, b: TB): Function1<Function2<TA, TB, T>, T>;
-  <TA, TB, TC, T>(a: TA, b: TB, c: TC): Function1<Function3<TA, TB, TC, T>, T>;
-  <TA, TB, TC, TD, T>(a: TA, b: TB, c: TC, d: TD): Function1<
-    Function4<TA, TB, TC, TD, T>,
-    T
-  >;
-}
-
-/**
- * A function operator that invokes a function with a given list of arguments.
- *
- * @returns A function that takes a function `f` as an argument
- * and invokes it with the provided arguments, returning the result.
- */
-export const callWith: CallWith =
-  <T>(...args: readonly unknown[]) =>
-  (f: (...args: readonly any[]) => T) =>
-    f(...args);
-
 export const composeUnsafe =
   (...operators: Function1<any, unknown>[]): Function1<any, unknown> =>
   source =>

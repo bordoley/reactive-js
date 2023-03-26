@@ -80,20 +80,6 @@ interface Call {
     <TInstance, T, TA, TB>(f: (a: TA, b: TB) => T, self: TInstance, a: TA, b: TB): T;
 }
 export declare const call: Call;
-interface CallWith {
-    <T>(): Function1<Factory<T>, T>;
-    <TA, T>(a: TA): Function1<Function1<TA, T>, T>;
-    <TA, TB, T>(a: TA, b: TB): Function1<Function2<TA, TB, T>, T>;
-    <TA, TB, TC, T>(a: TA, b: TB, c: TC): Function1<Function3<TA, TB, TC, T>, T>;
-    <TA, TB, TC, TD, T>(a: TA, b: TB, c: TC, d: TD): Function1<Function4<TA, TB, TC, TD, T>, T>;
-}
-/**
- * A function operator that invokes a function with a given list of arguments.
- *
- * @returns A function that takes a function `f` as an argument
- * and invokes it with the provided arguments, returning the result.
- */
-export declare const callWith: CallWith;
 export declare const composeUnsafe: (...operators: Function1<any, unknown>[]) => Function1<any, unknown>;
 interface Compose {
     <T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
