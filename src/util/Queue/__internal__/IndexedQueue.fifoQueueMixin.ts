@@ -7,13 +7,14 @@ import {
   FifoQueue_values,
 } from "../../../__internal__/symbols.js";
 import {
+  IndexedLike_get,
+  IndexedLike_set,
   IndexedQueueLike,
-  IndexedQueueLike_get,
-  IndexedQueueLike_pop,
-  IndexedQueueLike_set,
   QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
+  StackLike_head,
+  StackLike_pop,
 } from "../../../__internal__/util.internal.js";
 import {
   Optional,
@@ -155,6 +156,16 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
           return head === this[FifoQueue_tail] ? none : values[head];
         },
 
+        get [StackLike_head]() {
+          unsafeCast<TProperties>(this);
+          const head = this[FifoQueue_head];
+          const tail = this[FifoQueue_tail];
+          const values = this[FifoQueue_values] ?? [];
+          const index = tail > 0 ? tail - 1 : values.length - 1;
+
+          return head === tail ? none : values[index];
+        },
+
         [QueueLike_dequeue](this: TProperties & QueueableLike) {
           const tail = this[FifoQueue_tail];
           const values = this[FifoQueue_values] ?? [];
@@ -175,7 +186,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
           return item;
         },
 
-        [IndexedQueueLike_pop](this: TProperties & QueueableLike): Optional<T> {
+        [StackLike_pop](this: TProperties & QueueableLike): Optional<T> {
           const head = this[FifoQueue_head];
           const values = this[FifoQueue_values] ?? [];
           const capacity = values.length;
@@ -197,10 +208,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
           return item;
         },
 
-        [IndexedQueueLike_get](
-          this: TProperties & QueueableLike,
-          index: number,
-        ): T {
+        [IndexedLike_get](this: TProperties & QueueableLike, index: number): T {
           const count = this[QueueLike_count];
           const capacity = this[FifoQueue_values]?.length ?? 0;
           const head = this[FifoQueue_head];
@@ -219,7 +227,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
           return values[computedIndex] as T;
         },
 
-        [IndexedQueueLike_set](
+        [IndexedLike_set](
           this: TProperties & QueueableLike,
           index: number,
           value: T,

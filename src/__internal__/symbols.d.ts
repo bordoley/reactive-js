@@ -358,11 +358,13 @@ export declare const QueueLike_dequeue: unique symbol;
 
 export declare const QueueLike_count: unique symbol;
 
-export declare const IndexedQueueLike_get: unique symbol;
+export declare const IndexedLike_get: unique symbol;
 
-export declare const IndexedQueueLike_set: unique symbol;
+export declare const IndexedLike_set: unique symbol;
 
-export declare const IndexedQueueLike_pop: unique symbol;
+export declare const StackLike_pop: unique symbol;
+
+export declare const StackLike_head: unique symbol;
 
 export declare const IteratorEnumerator_iterator: unique symbol;
 

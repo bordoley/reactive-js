@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { mix, props } from "../../../__internal__/mixins.js";
 import { FifoQueue_capacityMask, FifoQueue_head, FifoQueue_tail, FifoQueue_values, } from "../../../__internal__/symbols.js";
-import { IndexedQueueLike_get, IndexedQueueLike_pop, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, } from "../../../__internal__/util.internal.js";
+import { IndexedLike_get, IndexedLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
@@ -85,6 +85,15 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
             return head === this[FifoQueue_tail] ? none : values[head];
         },
+        get [StackLike_head]() {
+            var _a;
+            unsafeCast(this);
+            const head = this[FifoQueue_head];
+            const tail = this[FifoQueue_tail];
+            const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
+            const index = tail > 0 ? tail - 1 : values.length - 1;
+            return head === tail ? none : values[index];
+        },
         [QueueLike_dequeue]() {
             var _a;
             const tail = this[FifoQueue_tail];
@@ -100,7 +109,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             shrink(this);
             return item;
         },
-        [IndexedQueueLike_pop]() {
+        [StackLike_pop]() {
             var _a;
             const head = this[FifoQueue_head];
             const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
@@ -116,7 +125,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             shrink(this);
             return item;
         },
-        [IndexedQueueLike_get](index) {
+        [IndexedLike_get](index) {
             var _a, _b, _c;
             const count = this[QueueLike_count];
             const capacity = (_b = (_a = this[FifoQueue_values]) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0;
@@ -131,7 +140,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                     : tailOffsetIndex;
             return values[computedIndex];
         },
-        [IndexedQueueLike_set](index, value) {
+        [IndexedLike_set](index, value) {
             var _a, _b, _c;
             const count = this[QueueLike_count];
             const capacity = (_b = (_a = this[FifoQueue_values]) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0;

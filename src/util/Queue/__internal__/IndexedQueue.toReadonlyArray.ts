@@ -1,6 +1,6 @@
 import {
+  IndexedLike_get,
   IndexedQueueLike,
-  IndexedQueueLike_get,
   QueueLike_count,
 } from "../../../__internal__/util.internal.js";
 import { newInstance } from "../../../functions.js";
@@ -12,7 +12,7 @@ const IndexedQueue_toReadonlyArray =
     const result = newInstance<Array<T>, number>(Array, count);
 
     for (let i = 0; i < count; i++) {
-      result[i] = queue[IndexedQueueLike_get](i);
+      result[i] = queue[IndexedLike_get](i);
     }
 
     return result;

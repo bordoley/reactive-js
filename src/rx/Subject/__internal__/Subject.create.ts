@@ -9,8 +9,8 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Subject_observers } from "../../../__internal__/symbols.js";
 import {
+  IndexedLike_get,
   IndexedQueueLike,
-  IndexedQueueLike_get,
   QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
@@ -124,7 +124,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             // So we marshall those events back to the scheduler.
             const count = this[QueueLike_count];
             for (let i = 0; i < count; i++) {
-              const next = this[IndexedQueueLike_get](i);
+              const next = this[IndexedLike_get](i);
               observer[QueueableLike_enqueue](next);
             }
 

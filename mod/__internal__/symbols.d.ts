@@ -359,11 +359,13 @@ export const QueueLike_dequeue: unique symbol;
 /** @type {unique symbol} */
 export const QueueLike_count: unique symbol;
 /** @type {unique symbol} */
-export const IndexedQueueLike_get: unique symbol;
+export const IndexedLike_get: unique symbol;
 /** @type {unique symbol} */
-export const IndexedQueueLike_set: unique symbol;
+export const IndexedLike_set: unique symbol;
 /** @type {unique symbol} */
-export const IndexedQueueLike_pop: unique symbol;
+export const StackLike_pop: unique symbol;
+/** @type {unique symbol} */
+export const StackLike_head: unique symbol;
 /** @type {unique symbol} */
 export const IteratorEnumerator_iterator: unique symbol;
 /** @type {unique symbol} */

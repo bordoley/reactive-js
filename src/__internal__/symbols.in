@@ -178,8 +178,9 @@ SerialDisposableLike_current
 QueueLike_head
 QueueLike_dequeue
 QueueLike_count
-IndexedQueueLike_get
-IndexedQueueLike_set
-IndexedQueueLike_pop
+IndexedLike_get
+IndexedLike_set
+StackLike_pop
+StackLike_head
 IteratorEnumerator_iterator
 WithCurrentTimeObserver_selector

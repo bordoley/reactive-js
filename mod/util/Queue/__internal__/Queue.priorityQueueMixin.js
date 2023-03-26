@@ -3,7 +3,7 @@
 import { floor } from "../../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
-import { IndexedQueueLike_get, IndexedQueueLike_pop, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { IndexedLike_get, IndexedLike_set, QueueLike_count, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { call, none, pipe, returns, } from "../../../functions.js";
 import { QueueableLike_enqueue } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
@@ -17,23 +17,23 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
             const rightIndex = leftIndex + 1;
             const hasLeft = leftIndex >= 0 && leftIndex < count;
             const hasRight = rightIndex >= 0 && rightIndex < count;
-            const left = hasLeft ? queue[IndexedQueueLike_get](leftIndex) : none;
-            const right = hasRight ? queue[IndexedQueueLike_get](rightIndex) : none;
+            const left = hasLeft ? queue[IndexedLike_get](leftIndex) : none;
+            const right = hasRight ? queue[IndexedLike_get](rightIndex) : none;
             if (hasLeft && compare(left, item) < 0) {
                 if (hasRight && compare(right, left) < 0) {
-                    queue[IndexedQueueLike_set](index, right);
-                    queue[IndexedQueueLike_set](rightIndex, item);
+                    queue[IndexedLike_set](index, right);
+                    queue[IndexedLike_set](rightIndex, item);
                     index = rightIndex;
                 }
                 else {
-                    queue[IndexedQueueLike_set](index, left);
-                    queue[IndexedQueueLike_set](leftIndex, item);
+                    queue[IndexedLike_set](index, left);
+                    queue[IndexedLike_set](leftIndex, item);
                     index = leftIndex;
                 }
             }
             else if (hasRight && compare(right, item) < 0) {
-                queue[IndexedQueueLike_set](index, right);
-                queue[IndexedQueueLike_set](rightIndex, item);
+                queue[IndexedLike_set](index, right);
+                queue[IndexedLike_set](rightIndex, item);
                 index = rightIndex;
             }
             else {
@@ -46,10 +46,10 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
         const count = queue[QueueLike_count];
         for (let index = count - 1, parentIndex = floor((index - 1) / 2); parentIndex >= 0 &&
             parentIndex <= count &&
-            compare(queue[IndexedQueueLike_get](parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
-            const parent = queue[IndexedQueueLike_get](parentIndex);
-            queue[IndexedQueueLike_set](parentIndex, item);
-            queue[IndexedQueueLike_set](index, parent);
+            compare(queue[IndexedLike_get](parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
+            const parent = queue[IndexedLike_get](parentIndex);
+            queue[IndexedLike_set](parentIndex, item);
+            queue[IndexedLike_set](index, parent);
         }
     };
     return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function PriorityQueue(instance, comparator, maxBufferSize) {
@@ -68,9 +68,9 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
                 return call(IndexedQueuePrototype[QueueLike_dequeue], this);
             }
             else {
-                const first = this[IndexedQueueLike_get](0);
-                const last = this[IndexedQueueLike_pop]();
-                this[IndexedQueueLike_set](0, last);
+                const first = this[IndexedLike_get](0);
+                const last = this[StackLike_pop]();
+                this[IndexedLike_set](0, last);
                 siftDown(this, last);
                 return first;
             }

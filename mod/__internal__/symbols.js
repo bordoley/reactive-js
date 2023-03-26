@@ -367,11 +367,13 @@ export const QueueLike_dequeue = /*@__PURE__*/ symbol("QueueLike_dequeue");
 /** @type {unique symbol} */
 export const QueueLike_count = /*@__PURE__*/ symbol("QueueLike_count");
 /** @type {unique symbol} */
-export const IndexedQueueLike_get = /*@__PURE__*/ symbol("IndexedQueueLike_get");
+export const IndexedLike_get = /*@__PURE__*/ symbol("IndexedLike_get");
 /** @type {unique symbol} */
-export const IndexedQueueLike_set = /*@__PURE__*/ symbol("IndexedQueueLike_set");
+export const IndexedLike_set = /*@__PURE__*/ symbol("IndexedLike_set");
 /** @type {unique symbol} */
-export const IndexedQueueLike_pop = /*@__PURE__*/ symbol("IndexedQueueLike_pop");
+export const StackLike_pop = /*@__PURE__*/ symbol("StackLike_pop");
+/** @type {unique symbol} */
+export const StackLike_head = /*@__PURE__*/ symbol("StackLike_head");
 /** @type {unique symbol} */
 export const IteratorEnumerator_iterator = /*@__PURE__*/ symbol("IteratorEnumerator_iterator");
 /** @type {unique symbol} */

@@ -3,7 +3,7 @@
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { Subject_observers } from "../../../__internal__/symbols.js";
-import { IndexedQueueLike_get, QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { IndexedLike_get, QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { bindMethod, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_publish, } from "../../../rx.js";
 import { DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
@@ -54,7 +54,7 @@ const Subject_create =
             // So we marshall those events back to the scheduler.
             const count = this[QueueLike_count];
             for (let i = 0; i < count; i++) {
-                const next = this[IndexedQueueLike_get](i);
+                const next = this[IndexedLike_get](i);
                 observer[QueueableLike_enqueue](next);
             }
             pipe(this, Disposable_onError(Disposable_toErrorHandler(observer)), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
