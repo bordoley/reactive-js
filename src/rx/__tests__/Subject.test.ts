@@ -5,8 +5,11 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
-import { pipe } from "../../functions.js";
-import { MulticastObservableLike_observerCount } from "../../rx.js";
+import { bindMethod, pipe } from "../../functions.js";
+import {
+  MulticastObservableLike_observerCount,
+  SubjectLike_publish,
+} from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { DisposableLike_dispose } from "../../util.js";
@@ -19,7 +22,10 @@ testModule(
     const scheduler = Scheduler.createVirtualTimeScheduler();
 
     const subject = Subject.create<number>({ replay: 2 });
-    pipe([1, 2, 3, 4], ReadonlyArray.forEach(Subject.publishTo(subject)));
+    pipe(
+      [1, 2, 3, 4],
+      ReadonlyArray.forEach(bindMethod(subject, SubjectLike_publish)),
+    );
     subject[DisposableLike_dispose]();
 
     const result: number[] = [];

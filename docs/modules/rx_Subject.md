@@ -7,7 +7,6 @@
 ### Functions
 
 - [create](rx_Subject.md#create)
-- [publishTo](rx_Subject.md#publishto)
 
 ## Functions
 
@@ -31,25 +30,3 @@
 #### Returns
 
 [`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\>
-
-___
-
-### publishTo
-
-▸ **publishTo**<`T`\>(`subject`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `subject` | [`SubjectLike`](../interfaces/rx.SubjectLike.md)<`T`\> |
-
-#### Returns
-
-[`SideEffect1`](functions.md#sideeffect1)<`T`\>

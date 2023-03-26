@@ -3,6 +3,7 @@ import {
   Factory,
   Function2,
   SideEffect1,
+  bindMethod,
   compose,
   pipe,
 } from "../../../functions.js";
@@ -22,7 +23,6 @@ import Observable_observeWith from "../../Observable/__internal__/Observable.obs
 import Observable_takeLast from "../../Observable/__internal__/Observable.takeLast.js";
 import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Subject_create from "../../Subject/__internal__/Subject.create.js";
-import Subject_publishTo from "../../Subject/__internal__/Subject.publishTo.js";
 
 const HigherOrderObservable_scanMany =
   <C extends ObservableLike, CInner extends ObservableLike>(
@@ -48,7 +48,7 @@ const HigherOrderObservable_scanMany =
           compose(
             Observable_concatMap(Observable_takeLast<CInner, TAcc>()),
             Observable_forEach<ObservableLike, TAcc>(
-              Subject_publishTo(accFeedbackStream),
+              bindMethod(accFeedbackStream, SubjectLike_publish),
             ),
             Observable_ignoreElements<ObservableLike, TAcc>(),
           ),

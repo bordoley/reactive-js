@@ -1,5 +1,11 @@
 import { ContainerOf, ContainerOperator } from "../../../containers.js";
-import { Factory, Function2, SideEffect1, pipe } from "../../../functions.js";
+import {
+  Factory,
+  Function2,
+  SideEffect1,
+  bindMethod,
+  pipe,
+} from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -13,7 +19,6 @@ import Observable_observeWith from "../../Observable/__internal__/Observable.obs
 import Observable_takeLast from "../../Observable/__internal__/Observable.takeLast.js";
 import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Subject_create from "../../Subject/__internal__/Subject.create.js";
-import Subject_publishTo from "../../Subject/__internal__/Subject.publishTo.js";
 
 const HigherOrderObservable_scanLast =
   <C extends ObservableLike, CInner extends ObservableLike>(
@@ -37,7 +42,7 @@ const HigherOrderObservable_scanLast =
         ),
         Observable_concatAll(),
         Observable_forEach<ObservableLike, TAcc>(
-          Subject_publishTo(accFeedbackStream),
+          bindMethod(accFeedbackStream, SubjectLike_publish),
         ),
         Observable_observeWith(observer),
       );
