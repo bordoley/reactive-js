@@ -9,7 +9,7 @@ import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.t
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
-import { Observable_compute, Observable_compute__await, Observable_compute__bind, Observable_compute__currentScheduler, Observable_compute__do, Observable_compute__memo, Observable_compute__observe, Observable_compute__state, Observable_compute__stream, Observable_compute__using, } from "./Observable/__internal__/Observable.compute.js";
+import { Observable_compute, Observable_compute__await, Observable_compute__bind, Observable_compute__bindMethod, Observable_compute__currentScheduler, Observable_compute__do, Observable_compute__memo, Observable_compute__observe, Observable_compute__state, Observable_compute__stream, Observable_compute__using, } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatAll from "./Observable/__internal__/Observable.concatAll.js";
 import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
@@ -109,6 +109,10 @@ export const __observe = Observable_compute__observe;
  * @category ComputationalEffect
  */
 export const __bind = Observable_compute__bind;
+/**
+ * @category ComputationalEffect
+ */
+export const __bindMethod = Observable_compute__bindMethod;
 /**
  * @category ComputationalEffect
  */

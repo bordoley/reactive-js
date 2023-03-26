@@ -47,6 +47,7 @@
 - [alwaysTrue](functions.md#alwaystrue)
 - [arrayEquality](functions.md#arrayequality)
 - [bind](functions.md#bind)
+- [bindMethod](functions.md#bindmethod)
 - [call](functions.md#call)
 - [compose](functions.md#compose)
 - [composeUnsafe](functions.md#composeunsafe)
@@ -984,6 +985,30 @@ ___
 #### Returns
 
 `F`
+
+___
+
+### bindMethod
+
+▸ **bindMethod**<`T`, `TKey`\>(`thiz`, `key`): `T`[`TKey`]
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Record`<`TKey`, (...`args`: `any`[]) => `any`\> |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `thiz` | `T` |
+| `key` | `TKey` |
+
+#### Returns
+
+`T`[`TKey`]
 
 ___
 

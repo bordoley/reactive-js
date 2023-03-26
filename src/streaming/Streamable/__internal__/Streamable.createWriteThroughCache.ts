@@ -2,7 +2,7 @@ import {
   Equality,
   Factory,
   Updater,
-  bind,
+  bindMethod,
   compose,
   identity,
   pipe,
@@ -63,7 +63,7 @@ const Streamable_createWriteThroughCache = <T>(
         ),
       ),
       Observable_forEach<ObservableLike, Updater<T>>(
-        bind(state[QueueableLike_push], state),
+        bindMethod(state, QueueableLike_push),
       ),
       Observable_subscribe(scheduler, options),
       Disposable_addTo(state),

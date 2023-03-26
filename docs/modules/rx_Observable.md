@@ -8,6 +8,7 @@
 
 - [\_\_await](rx_Observable.md#__await)
 - [\_\_bind](rx_Observable.md#__bind)
+- [\_\_bindMethod](rx_Observable.md#__bindmethod)
 - [\_\_currentScheduler](rx_Observable.md#__currentscheduler)
 - [\_\_do](rx_Observable.md#__do)
 - [\_\_memo](rx_Observable.md#__memo)
@@ -158,6 +159,31 @@ ___
 #### Returns
 
 `F`
+
+___
+
+### \_\_bindMethod
+
+▸ **__bindMethod**<`T`, `TKey`, `TFunction`\>(`thiz`, `key`): `TFunction`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends { [K in string \| number \| symbol]: Function } |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+| `TFunction` | extends `Function` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `thiz` | `T` |
+| `key` | `TKey` |
+
+#### Returns
+
+`TFunction`
 
 ___
 

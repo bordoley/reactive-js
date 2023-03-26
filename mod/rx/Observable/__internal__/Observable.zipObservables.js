@@ -8,7 +8,7 @@ import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/
 import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
-import { bind, compose, isTrue, none, pipe } from "../../../functions.js";
+import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
@@ -107,7 +107,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         const enumerators = pipe(observables, ReadonlyArray_map(Enumerable_enumerate()), ReadonlyArray_forEach(Disposable_addTo(observer)));
         const continuation = (ctx) => {
             while ((moveAll(enumerators), allHaveCurrent(enumerators))) {
-                pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent), bind(observer[ObserverLike_notify], observer));
+                pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent), bindMethod(observer, ObserverLike_notify));
                 ctx[ContinuationContextLike_yield]();
             }
             observer[DisposableLike_dispose]();

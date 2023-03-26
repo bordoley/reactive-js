@@ -4,7 +4,7 @@ import * as Object from "../__internal__/Object.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
 import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamLike_replace, } from "../__internal__/symbols.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
-import { bind, compose, error, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
+import { bindMethod, compose, error, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
@@ -143,8 +143,8 @@ export const windowLocation = /*@__PURE__*/ (() => {
             raiseWithDebugMessage("Cannot stream more than once");
         }
         const { maxBufferSize } = options !== null && options !== void 0 ? options : {};
-        const replaceState = createSyncToHistoryStream(bind(history.replaceState, history), scheduler, { maxBufferSize });
-        const pushState = createSyncToHistoryStream(bind(history.pushState, history), scheduler, {
+        const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { maxBufferSize });
+        const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, {
             maxBufferSize,
         });
         currentWindowLocationStream = pipe(Streamable.createWriteThroughCache(() => ({

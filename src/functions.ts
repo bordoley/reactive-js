@@ -163,6 +163,15 @@ export const arrayEquality =
 export const bind = <F extends Function>(f: F, thiz: unknown): F =>
   f.bind(thiz);
 
+export const bindMethod = <
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  T extends Record<TKey, (...args: any[]) => any>,
+  TKey extends number | string | symbol,
+>(
+  thiz: T,
+  key: TKey,
+): T[TKey] => bind<T[TKey]>(thiz[key], thiz);
+
 interface Call {
   <TInstance, T>(f: () => T, self: TInstance): T;
 

@@ -31,7 +31,7 @@ import {
   Optional,
   SideEffect,
   SideEffect1,
-  bind,
+  bindMethod,
   isSome,
   none,
   pipe,
@@ -183,7 +183,7 @@ export const useObservable = <T>(
       Disposable.onError(updateError),
     );
 
-    return bind(scheduler[DisposableLike_dispose], scheduler);
+    return bindMethod(scheduler, DisposableLike_dispose);
   }, [observable, updateState, updateError, priority, maxBufferSize]);
 
   return isSome(error) ? raiseError<T>(error) : state;
@@ -222,7 +222,7 @@ export const useStream = <
 
     setStream(stream);
 
-    return bind(scheduler[DisposableLike_dispose], scheduler);
+    return bindMethod(scheduler, DisposableLike_dispose);
   }, [streamable, setStream, priority, maxBufferSize]);
 
   return stream;
@@ -330,7 +330,7 @@ export const useEnumerable = <T>(
     const enumerator = pipe(enumerable, Enumerable.enumerate());
     enumeratorRef.current = enumerator;
 
-    return bind(enumerator[DisposableLike_dispose], enumerator);
+    return bindMethod(enumerator, DisposableLike_dispose);
   }, [enumerable]);
 
   const move = useCallback(() => {

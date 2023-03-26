@@ -18,6 +18,7 @@ export const arrayEquality = (valuesEquality = strictEquality) => (a, b) => Read
     a.every((v, i) => valuesEquality(b[i], v));
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const bind = (f, thiz) => f.bind(thiz);
+export const bindMethod = (thiz, key) => bind(thiz[key], thiz);
 export const call = (f, self, ...args) => f.call(self, ...args);
 export const composeUnsafe = (...operators) => source => pipeUnsafe(source, ...operators);
 /**

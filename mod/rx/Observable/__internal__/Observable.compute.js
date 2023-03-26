@@ -4,7 +4,7 @@ var _a, _b, _c, _d;
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { AwaitOrObserveEffect_hasValue, AwaitOrObserveEffect_observable, AwaitOrObserveEffect_subscription, AwaitOrObserveEffect_value, ComputeContext_awaitOrObserve, ComputeContext_cleanup, ComputeContext_effects, ComputeContext_index, ComputeContext_memoOrUse, ComputeContext_mode, ComputeContext_observer, ComputeContext_runComputation, ComputeContext_scheduledComputationSubscription, ComputeEffect_type, MemoOrUsingEffect_args, MemoOrUsingEffect_func, MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import { arrayEquality, bind, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
+import { arrayEquality, bind, bindMethod, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
@@ -268,3 +268,5 @@ export const Observable_compute__state = /*@__PURE__*/ (() => {
 })();
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const Observable_compute__bind = (f, thiz) => Observable_compute__memo(bind, f, thiz);
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const Observable_compute__bindMethod = (thiz, key) => Observable_compute__memo(bindMethod, thiz, key);

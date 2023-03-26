@@ -2,7 +2,7 @@ import {
   Factory,
   Function1,
   Optional,
-  bind,
+  bindMethod,
   newInstance,
   none,
   pipe,
@@ -29,7 +29,7 @@ class ObservableSvelteStore<T> {
 
     callback(none);
 
-    return bind(subscription[DisposableLike_dispose], subscription);
+    return bindMethod(subscription, DisposableLike_dispose);
   }
 }
 

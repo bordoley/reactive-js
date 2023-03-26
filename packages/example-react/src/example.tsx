@@ -201,9 +201,9 @@ const RxComponent = createComponent(
       const uri = Observable.__await(windowLocationStream);
 
       const enumerator = Observable.__stream(asyncEnumerable);
-      const move: SideEffect = Observable.__bind(
-        enumerator[QueueableLike_push],
+      const move: SideEffect = Observable.__bindMethod(
         enumerator,
+        QueueableLike_push,
       );
 
       const animatedDivRef = Observable.__memo(createRef);
@@ -213,9 +213,9 @@ const RxComponent = createComponent(
       );
       const animationStream = Observable.__stream(animationStreamable);
 
-      const runAnimation: SideEffect = Observable.__bind(
-        animationStream[QueueableLike_push],
+      const runAnimation: SideEffect = Observable.__bindMethod(
         animationStream,
+        QueueableLike_push,
       );
 
       const animationIsRunning = Observable.__observe(animationStream);

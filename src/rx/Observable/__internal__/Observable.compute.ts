@@ -26,6 +26,7 @@ import {
   Updater,
   arrayEquality,
   bind,
+  bindMethod,
   error,
   ignore,
   isNone,
@@ -559,3 +560,14 @@ export const Observable_compute__bind = <F extends Function>(
   f: F,
   thiz: unknown,
 ): F => Observable_compute__memo(bind, f, thiz);
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const Observable_compute__bindMethod = <
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  T extends { [K in TKey]: Function },
+  TKey extends number | string | symbol,
+  TFunction extends T[TKey],
+>(
+  thiz: T,
+  key: TKey,
+): TFunction => Observable_compute__memo(bindMethod, thiz, key);

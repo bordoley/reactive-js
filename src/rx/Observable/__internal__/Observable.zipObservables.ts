@@ -29,7 +29,7 @@ import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/
 import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
-import { bind, compose, isTrue, none, pipe } from "../../../functions.js";
+import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
   EnumerableLike,
@@ -255,7 +255,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           pipe(
             enumerators,
             ReadonlyArray_map(Enumerator_getCurrent),
-            bind(observer[ObserverLike_notify], observer),
+            bindMethod(observer, ObserverLike_notify),
           );
 
           ctx[ContinuationContextLike_yield]();

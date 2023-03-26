@@ -3,7 +3,7 @@
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { HigherOrderObservable_currentRef } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
-import { bind, none, pipe } from "../../../functions.js";
+import { bindMethod, none, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -35,7 +35,7 @@ const HigherOrderObservable_switchAll = (lift) => {
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bind(this[DelegatingLike_delegate][ObserverLike_notify], this[DelegatingLike_delegate])), Observable_subscribeWithMaxBufferSize(this[DispatcherLike_scheduler], this[QueueableLike_maxBufferSize]), Disposable_onComplete(() => {
+                this[HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(this[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithMaxBufferSize(this[DispatcherLike_scheduler], this[QueueableLike_maxBufferSize]), Disposable_onComplete(() => {
                     if (this[DisposableLike_isDisposed]) {
                         this[DelegatingLike_delegate][DisposableLike_dispose]();
                     }

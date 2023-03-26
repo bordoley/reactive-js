@@ -197,7 +197,7 @@ const computeTests = describe(
     const result = await pipe(
       Observable.compute(() => {
         const stream = Observable.__stream(Streamable.identity<number>());
-        const push = Observable.__bind(stream[QueueableLike_push], stream);
+        const push = Observable.__bindMethod(stream, QueueableLike_push);
 
         const result = Observable.__observe(stream) ?? 0;
         Observable.__do(push, result + 1);

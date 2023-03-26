@@ -70,4 +70,5 @@ export declare const Observable_compute__state: <T>(initialState: () => T, optio
     readonly maxBufferSize?: number | undefined;
 }) => StreamLike<Updater<T>, T>;
 export declare const Observable_compute__bind: <F extends Function>(f: F, thiz: unknown) => F;
+export declare const Observable_compute__bindMethod: <T extends { [K in TKey]: Function; }, TKey extends string | number | symbol, TFunction extends T[TKey]>(thiz: T, key: TKey) => TFunction;
 export {};

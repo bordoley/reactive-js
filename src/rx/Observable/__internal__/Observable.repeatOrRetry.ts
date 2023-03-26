@@ -1,5 +1,5 @@
 import { ContainerOperator } from "../../../containers.js";
-import { bind, error, partial, pipe } from "../../../functions.js";
+import { bindMethod, error, partial, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
   ObservableLike,
@@ -44,7 +44,7 @@ const Observable_repeatOrRetry: <T>(
         pipe(
           observable,
           Observable_forEach<ObservableLike, T>(
-            bind(delegate[ObserverLike_notify], delegate),
+            bindMethod(delegate, ObserverLike_notify),
           ),
           Observable_subscribeWithMaxBufferSize(
             delegate[DispatcherLike_scheduler],

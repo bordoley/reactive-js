@@ -28,7 +28,7 @@ import {
   SideEffect4,
   SideEffect5,
   SideEffect6,
-  bind,
+  bindMethod,
   error,
   ignore,
   isFunction,
@@ -152,7 +152,7 @@ const addDisposable =
   ): Function1<TNodeStream, TNodeStream> =>
   stream => {
     stream.on("error", Disposable.toErrorHandler(disposable));
-    stream.once("close", bind(disposable[DisposableLike_dispose], disposable));
+    stream.once("close", bindMethod(disposable, DisposableLike_dispose));
     pipe(disposable, Disposable.onError(disposeStream(stream)));
     return stream;
   };

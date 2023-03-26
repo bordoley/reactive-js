@@ -1,6 +1,6 @@
 /// <reference types="./Streamable.createWriteThroughCache.d.ts" />
 
-import { bind, compose, identity, pipe, } from "../../../functions.js";
+import { bindMethod, compose, identity, pipe, } from "../../../functions.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_forkMerge from "../../../rx/Observable/__internal__/Observable.forkMerge.js";
@@ -20,7 +20,7 @@ const Streamable_createWriteThroughCache = (initialState, onInit, onChange, opti
         const state = stateStore[StreamableLike_stream](scheduler, options);
         pipe(state, Observable_forkMerge(compose(Observable_takeFirst(), Observable_concatMap(onInit)), compose(throttleDuration > 0
             ? Observable_throttle(throttleDuration)
-            : identity, Observable_pairwise(), Observable_concatMap(([oldValue, newValue]) => onChange(oldValue, newValue)))), Observable_forEach(bind(state[QueueableLike_push], state)), Observable_subscribe(scheduler, options), Disposable_addTo(state));
+            : identity, Observable_pairwise(), Observable_concatMap(([oldValue, newValue]) => onChange(oldValue, newValue)))), Observable_forEach(bindMethod(state, QueueableLike_push)), Observable_subscribe(scheduler, options), Disposable_addTo(state));
         return state;
     };
     return {

@@ -1,6 +1,6 @@
 /// <reference types="./Observable.repeatOrRetry.d.ts" />
 
-import { bind, error, partial, pipe } from "../../../functions.js";
+import { bindMethod, error, partial, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -26,7 +26,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bind(delegate[ObserverLike_notify], delegate)), Observable_subscribeWithMaxBufferSize(delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithMaxBufferSize(delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
             }
         };
         return pipe(Observer_createWithDelegate(delegate), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));

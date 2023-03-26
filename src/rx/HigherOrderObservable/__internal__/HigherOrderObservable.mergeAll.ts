@@ -32,7 +32,7 @@ import {
 import {
   Function1,
   SideEffect,
-  bind,
+  bindMethod,
   isSome,
   none,
   partial,
@@ -103,9 +103,9 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           pipe(
             nextObs,
             Observable_forEach<ObservableLike, T>(
-              bind(
-                observer[DelegatingLike_delegate][ObserverLike_notify],
+              bindMethod(
                 observer[DelegatingLike_delegate],
+                ObserverLike_notify,
               ),
             ),
             Observable_subscribeWithMaxBufferSize(

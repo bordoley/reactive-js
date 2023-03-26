@@ -89,7 +89,7 @@ const computeTests = describe("compute", test("batch mode", () => {
     const result = await pipe(Observable.compute(() => {
         var _a;
         const stream = Observable.__stream(Streamable.identity());
-        const push = Observable.__bind(stream[QueueableLike_push], stream);
+        const push = Observable.__bindMethod(stream, QueueableLike_push);
         const result = (_a = Observable.__observe(stream)) !== null && _a !== void 0 ? _a : 0;
         Observable.__do(push, result + 1);
         return result;

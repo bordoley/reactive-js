@@ -50,6 +50,10 @@ export declare const __bind: <F extends Function>(f: F, thiz: unknown) => F;
 /**
  * @category ComputationalEffect
  */
+export declare const __bindMethod: <T extends { [K in TKey]: Function; }, TKey extends string | number | symbol, TFunction extends T[TKey]>(thiz: T, key: TKey) => TFunction;
+/**
+ * @category ComputationalEffect
+ */
 export declare const __state: <T>(initialState: () => T, options?: {
     readonly equality?: import("../functions.js").Optional<import("../functions.js").Equality<T>>;
     readonly replay?: number | undefined;

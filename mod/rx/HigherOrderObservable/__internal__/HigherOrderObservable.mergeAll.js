@@ -5,7 +5,7 @@ import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { MergeAllObserver_activeCount, MergeAllObserver_maxBufferSize, MergeAllObserver_maxConcurrency, MergeAllObserver_observablesQueue, MergeAllObserver_onDispose, } from "../../../__internal__/symbols.js";
 import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
-import { bind, isSome, none, partial, pipe, } from "../../../functions.js";
+import { bindMethod, isSome, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -25,7 +25,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 const nextObs = observer[MergeAllObserver_observablesQueue][QueueLike_pull]();
                 if (isSome(nextObs)) {
                     observer[MergeAllObserver_activeCount]++;
-                    pipe(nextObs, Observable_forEach(bind(observer[DelegatingLike_delegate][ObserverLike_notify], observer[DelegatingLike_delegate])), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
+                    pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
                 }
                 else if (observer[DisposableLike_isDisposed]) {
                     observer[DelegatingLike_delegate][DisposableLike_dispose]();

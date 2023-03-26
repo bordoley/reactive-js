@@ -18,7 +18,7 @@ import {
   Function1,
   Optional,
   Updater,
-  bind,
+  bindMethod,
   compose,
   error,
   isFunction,
@@ -377,13 +377,13 @@ export const windowLocation: StreamableLike<
     const { maxBufferSize } = options ?? {};
 
     const replaceState = createSyncToHistoryStream(
-      bind(history.replaceState, history),
+      bindMethod(history, "replaceState"),
       scheduler,
       { maxBufferSize },
     );
 
     const pushState = createSyncToHistoryStream(
-      bind(history.pushState, history),
+      bindMethod(history, "pushState"),
       scheduler,
       {
         maxBufferSize,
