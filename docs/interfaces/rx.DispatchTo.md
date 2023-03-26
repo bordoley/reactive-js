@@ -21,13 +21,13 @@
 
 ### Operator Methods
 
-- [dispachTo](rx.DispatchTo.md#dispachto)
+- [dispatchTo](rx.DispatchTo.md#dispatchto)
 
 ## Operator Methods
 
-### dispachTo
+### dispatchTo
 
-▸ **dispachTo**<`T`\>(`dispatcher`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **dispatchTo**<`T`\>(`dispatcher`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 

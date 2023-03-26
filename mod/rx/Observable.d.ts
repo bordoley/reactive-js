@@ -110,7 +110,7 @@ export declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableL
 export declare const currentTime: CurrentTime<ObservableLike>["currentTime"];
 export declare const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"];
 export declare const defer: Defer<ObservableLike>["defer"];
-export declare const dispatchTo: DispatchTo<ObservableLike>["dispachTo"];
+export declare const dispatchTo: DispatchTo<ObservableLike>["dispatchTo"];
 export declare const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"];
 export declare const empty: Empty<ObservableLike, {
     delay?: number;

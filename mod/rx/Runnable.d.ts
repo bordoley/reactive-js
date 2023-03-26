@@ -14,7 +14,7 @@ export declare const contains: Contains<RunnableLike>["contains"];
 export declare const currentTime: CurrentTime<RunnableLike>["currentTime"];
 export declare const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"];
 export declare const defer: Defer<RunnableLike>["defer"];
-export declare const dispatchTo: DispatchTo<RunnableLike>["dispachTo"];
+export declare const dispatchTo: DispatchTo<RunnableLike>["dispatchTo"];
 export declare const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"];
 export declare const empty: Empty<RunnableLike, {
     delay?: number;

@@ -395,7 +395,7 @@ export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCha
 
 export const defer: Defer<ObservableLike>["defer"] = Observable_defer;
 
-export const dispatchTo: DispatchTo<ObservableLike>["dispachTo"] =
+export const dispatchTo: DispatchTo<ObservableLike>["dispatchTo"] =
   Observable_dispatchTo;
 
 export const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =

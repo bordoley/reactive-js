@@ -115,7 +115,7 @@ export interface DispatchTo<C extends ObservableLike, O = never> extends Contain
      *
      * @category Operator
      */
-    dispachTo<T>(dispatcher: QueueableLike<T> | Function1<T, boolean>, options?: O): ContainerOperator<C, T, T>;
+    dispatchTo<T>(dispatcher: QueueableLike<T> | Function1<T, boolean>, options?: O): ContainerOperator<C, T, T>;
 }
 /**
  * @noInheritDoc

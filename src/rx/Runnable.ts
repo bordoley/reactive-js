@@ -184,7 +184,7 @@ export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithChars
 
 export const defer: Defer<RunnableLike>["defer"] = Runnable_defer;
 
-export const dispatchTo: DispatchTo<RunnableLike>["dispachTo"] =
+export const dispatchTo: DispatchTo<RunnableLike>["dispatchTo"] =
   Observable_dispatchTo;
 
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
