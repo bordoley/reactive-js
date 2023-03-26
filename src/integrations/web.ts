@@ -224,17 +224,15 @@ export const windowLocation: StreamableLike<
   };
 
   const areURIsEqual = (a: WindowLocationURI, b: WindowLocationURI) =>
-    a.title === b.title &&
-    a.path === b.path &&
-    a.query === b.query &&
-    a.fragment === b.fragment;
+    a.path === b.path && a.query === b.query && a.fragment === b.fragment;
 
   const areWindowLocationStatesEqual = (
     { uri: a, counter: counterA }: TState,
     { uri: b, counter: counterB }: TState,
   ) =>
     // Intentionally ignore the replace flag.
-    (a === b || areURIsEqual(a, b)) && counterA === counterB;
+    (a === b || (a.title === b.title && areURIsEqual(a, b))) &&
+    counterA === counterB;
 
   const createWindowLocationStream = createInstanceFactory(
     mix(

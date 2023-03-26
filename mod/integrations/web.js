@@ -79,13 +79,11 @@ export const windowLocation = /*@__PURE__*/ (() => {
             title: document.title,
         });
     };
-    const areURIsEqual = (a, b) => a.title === b.title &&
-        a.path === b.path &&
-        a.query === b.query &&
-        a.fragment === b.fragment;
+    const areURIsEqual = (a, b) => a.path === b.path && a.query === b.query && a.fragment === b.fragment;
     const areWindowLocationStatesEqual = ({ uri: a, counter: counterA }, { uri: b, counter: counterB }) => 
     // Intentionally ignore the replace flag.
-    (a === b || areURIsEqual(a, b)) && counterA === counterB;
+    (a === b || (a.title === b.title && areURIsEqual(a, b))) &&
+        counterA === counterB;
     const createWindowLocationStream = createInstanceFactory(mix(include(Disposable_delegatingMixin()), function WindowLocationStream(instance, delegate) {
         init(Disposable_delegatingMixin(), instance, delegate);
         return instance;
