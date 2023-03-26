@@ -128,6 +128,8 @@
 
   ↳ [`CurrentTime`](rx.CurrentTime.md)
 
+  ↳ [`DispatchTo`](rx.DispatchTo.md)
+
   ↳ [`Exhaust`](rx.Exhaust.md)
 
   ↳ [`ExhaustMap`](rx.ExhaustMap.md)

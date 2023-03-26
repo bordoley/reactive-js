@@ -2,14 +2,13 @@ import {
   Equality,
   Factory,
   Updater,
-  bindMethod,
   compose,
   identity,
   pipe,
 } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
-import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
+import Observable_dispatchTo from "../../../rx/Observable/__internal__/Observable.dispatchTo.js";
 import Observable_forkMerge from "../../../rx/Observable/__internal__/Observable.forkMerge.js";
 import Observable_pairwise from "../../../rx/Observable/__internal__/Observable.pairwise.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
@@ -23,7 +22,6 @@ import {
   StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../../../streaming.js";
-import { QueueableLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Streamable_createStateStore from "./Streamable.createStateStore.js";
 
@@ -62,9 +60,7 @@ const Streamable_createWriteThroughCache = <T>(
           ),
         ),
       ),
-      Observable_forEach<ObservableLike, Updater<T>>(
-        bindMethod(state, QueueableLike_push),
-      ),
+      Observable_dispatchTo<ObservableLike, Updater<T>>(state),
       Observable_subscribe(scheduler, options),
       Disposable_addTo(state),
     );

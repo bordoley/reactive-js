@@ -434,13 +434,13 @@ export const windowLocation: StreamableLike<
           return pipe(
             state,
             Observable.fromOptional(),
-            Observable.forEach(state => {
-              if (replace) {
-                replaceState[QueueableLike_push](state);
-              } else if (push) {
-                pushState[QueueableLike_push](state);
-              }
-            }),
+            Observable.dispatchTo(state =>
+              replace
+                ? replaceState[QueueableLike_push](state)
+                : push
+                ? pushState[QueueableLike_push](state)
+                : false,
+            ),
             Observable.ignoreElements(),
           );
         },

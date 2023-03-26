@@ -1,15 +1,14 @@
 /// <reference types="./Streamable.createWriteThroughCache.d.ts" />
 
-import { bindMethod, compose, identity, pipe, } from "../../../functions.js";
+import { compose, identity, pipe, } from "../../../functions.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
-import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
+import Observable_dispatchTo from "../../../rx/Observable/__internal__/Observable.dispatchTo.js";
 import Observable_forkMerge from "../../../rx/Observable/__internal__/Observable.forkMerge.js";
 import Observable_pairwise from "../../../rx/Observable/__internal__/Observable.pairwise.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
 import Observable_throttle from "../../../rx/Observable/__internal__/Observable.throttle.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../../../streaming.js";
-import { QueueableLike_push } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Streamable_createStateStore from "./Streamable.createStateStore.js";
 const Streamable_createWriteThroughCache = (initialState, onInit, onChange, options) => {
@@ -20,7 +19,7 @@ const Streamable_createWriteThroughCache = (initialState, onInit, onChange, opti
         const state = stateStore[StreamableLike_stream](scheduler, options);
         pipe(state, Observable_forkMerge(compose(Observable_takeFirst(), Observable_concatMap(onInit)), compose(throttleDuration > 0
             ? Observable_throttle(throttleDuration)
-            : identity, Observable_pairwise(), Observable_concatMap(([oldValue, newValue]) => onChange(oldValue, newValue)))), Observable_forEach(bindMethod(state, QueueableLike_push)), Observable_subscribe(scheduler, options), Disposable_addTo(state));
+            : identity, Observable_pairwise(), Observable_concatMap(([oldValue, newValue]) => onChange(oldValue, newValue)))), Observable_dispatchTo(state), Observable_subscribe(scheduler, options), Disposable_addTo(state));
         return state;
     };
     return {

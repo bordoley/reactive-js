@@ -7,7 +7,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { Optional, SideEffect1, Updater, isSome, none } from "../functions.js";
+import { Function1, Optional, Updater, isSome, none } from "../functions.js";
 import { QueueableLike_push } from "../util.js";
 import { useObservable, useStream } from "./react.js";
 import {
@@ -35,8 +35,8 @@ export const useWindowLocationStream = (): WindowLocationStreamLike =>
  */
 export const useWindowLocation = (): {
   uri: Optional<WindowLocationURI>;
-  push: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
-  replace: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
+  push: Function1<Updater<WindowLocationURI> | WindowLocationURI, boolean>;
+  replace: Function1<Updater<WindowLocationURI> | WindowLocationURI, boolean>;
   canGoBack: boolean;
   goBack: () => void;
 } => {
@@ -53,9 +53,9 @@ export const useWindowLocation = (): {
   const push = useCallback(
     (action: Updater<WindowLocationURI> | WindowLocationURI) => {
       const windowLocationStream = stableWindowLocationStreamRef.current;
-      if (isSome(windowLocationStream)) {
-        windowLocationStream[QueueableLike_push](action);
-      }
+      return isSome(windowLocationStream)
+        ? windowLocationStream[QueueableLike_push](action)
+        : false;
     },
     [stableWindowLocationStreamRef],
   );
@@ -63,9 +63,9 @@ export const useWindowLocation = (): {
   const replace = useCallback(
     (action: Updater<WindowLocationURI> | WindowLocationURI) => {
       const windowLocationStream = stableWindowLocationStreamRef.current;
-      if (isSome(windowLocationStream)) {
-        windowLocationStream[WindowLocationStreamLike_replace](action);
-      }
+      return isSome(windowLocationStream)
+        ? windowLocationStream[WindowLocationStreamLike_replace](action)
+        : false;
     },
     [stableWindowLocationStreamRef],
   );
@@ -100,7 +100,11 @@ export const WindowLocationProvider: React.FunctionComponent<{
   priority?: 1 | 2 | 3 | 4 | 5;
   children: React.ReactNode;
 }) => {
-  const value = useStream(windowLocation, { priority, replay: 1 });
+  const value = useStream(windowLocation, {
+    priority,
+    replay: 1,
+    maxBufferSize: 1, // Prevent a hot source from queueing up dispatch events.
+  });
 
   return isSome(value)
     ? createElement(

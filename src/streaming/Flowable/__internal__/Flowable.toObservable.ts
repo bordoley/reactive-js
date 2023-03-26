@@ -8,16 +8,12 @@ import {
   ToObservable,
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
-import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
+import Observable_dispatchTo from "../../../rx/Observable/__internal__/Observable.dispatchTo.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
-import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import { FlowableLike, StreamableLike_isRunnable } from "../../../streaming.js";
-import {
-  QueueableLike_maxBufferSize,
-  QueueableLike_push,
-} from "../../../util.js";
+import { QueueableLike_maxBufferSize } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
@@ -35,11 +31,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
       const maxBufferSize = observer[QueueableLike_maxBufferSize];
 
       const op: ContainerOperator<ObservableLike, T, boolean> = compose(
-        Observable_forEach<ObservableLike, T>(v => {
-          if (!observer[QueueableLike_push](v)) {
-            scheduler[SchedulerLike_requestYield]();
-          }
-        }),
+        Observable_dispatchTo<ObservableLike, T>(observer),
         Observable_ignoreElements<ObservableLike, boolean>(),
         // Intentionally use mergeWith here. The stream observer
         // needs to be immediately subscribed to when created

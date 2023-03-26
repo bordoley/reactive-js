@@ -33,6 +33,7 @@
 - [concatWith](rx_Runnable.md#concatwith)
 - [contains](rx_Runnable.md#contains)
 - [decodeWithCharset](rx_Runnable.md#decodewithcharset)
+- [dispatchTo](rx_Runnable.md#dispatchto)
 - [distinctUntilChanged](rx_Runnable.md#distinctuntilchanged)
 - [encodeUtf8](rx_Runnable.md#encodeutf8)
 - [endWith](rx_Runnable.md#endwith)
@@ -1249,6 +1250,29 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+
+___
+
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> \| [`Function1`](functions.md#function1)<`T`, `boolean`\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

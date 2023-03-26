@@ -4,21 +4,17 @@ import {
   DispatcherLike_scheduler,
   ObservableLike,
 } from "../../../rx.js";
-import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
+import Observable_dispatchTo from "../../../rx/Observable/__internal__/Observable.dispatchTo.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
-import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import {
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../streaming.js";
-import {
-  QueueableLike_maxBufferSize,
-  QueueableLike_push,
-} from "../../../util.js";
+import { QueueableLike_maxBufferSize } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
@@ -33,11 +29,7 @@ const Streamable_sinkInto =
       Observable_merge(
         pipe(
           srcStream,
-          Observable_forEach<ObservableLike, T>(v => {
-            if (!dest[QueueableLike_push](v)) {
-              scheduler[SchedulerLike_requestYield]();
-            }
-          }),
+          Observable_dispatchTo<ObservableLike, T>(dest),
           Observable_ignoreElements<ObservableLike, unknown>(),
           Observable_onSubscribe(
             returns(bindMethod(dest, DispatcherLike_complete)),
@@ -45,11 +37,7 @@ const Streamable_sinkInto =
         ),
         pipe(
           dest,
-          Observable_forEach<ObservableLike, TReq>(v => {
-            if (!srcStream[QueueableLike_push](v)) {
-              scheduler[SchedulerLike_requestYield]();
-            }
-          }),
+          Observable_dispatchTo<ObservableLike, TReq>(srcStream),
           Observable_ignoreElements<ObservableLike, unknown>(),
         ),
       ),
