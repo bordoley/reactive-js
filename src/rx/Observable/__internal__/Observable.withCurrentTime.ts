@@ -44,7 +44,7 @@ const Observable_withCurrentTime: ObservableWithCurrentTime = /*@__PURE__*/ (<
     return createInstanceFactory(
       mix(
         include(Disposable_delegatingMixin(), Observer_mixin<TA>()),
-        function WithCurrentTimeObserverMixin(
+        function WithCurrentTimeObserver(
           instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<TB>,

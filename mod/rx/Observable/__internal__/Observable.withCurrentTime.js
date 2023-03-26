@@ -11,7 +11,7 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_withCurrentTime = /*@__PURE__*/ (() => {
     const createWithCurrentTimeObserver = (() => {
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function WithCurrentTimeObserverMixin(instance, delegate, selector) {
+        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function WithCurrentTimeObserver(instance, delegate, selector) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
             instance[WithCurrentTimeObserver_selector] = selector;

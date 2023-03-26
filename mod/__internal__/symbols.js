@@ -93,17 +93,17 @@ export const ComputeContext_memoOrUse = /*@__PURE__*/ symbol("ComputeContext_mem
 /** @type {unique symbol} */
 export const CreateObservable_effect = /*@__PURE__*/ symbol("CreateObservable_effect");
 /** @type {unique symbol} */
-export const DecodeWithCharsetObserverMixin_textDecoder = /*@__PURE__*/ symbol("DecodeWithCharsetObserverMixin_textDecoder");
+export const DecodeWithCharsetObserver_textDecoder = /*@__PURE__*/ symbol("DecodeWithCharsetObserver_textDecoder");
 /** @type {unique symbol} */
-export const DistinctUntilChangedObserverMixin_equality = /*@__PURE__*/ symbol("DistinctUntilChangedObserverMixin_equality");
+export const DistinctUntilChangedObserver_equality = /*@__PURE__*/ symbol("DistinctUntilChangedObserver_equality");
 /** @type {unique symbol} */
-export const DistinctUntilChangedObserverMixin_prev = /*@__PURE__*/ symbol("DistinctUntilChangedObserverMixin_prev");
+export const DistinctUntilChangedObserver_prev = /*@__PURE__*/ symbol("DistinctUntilChangedObserver_prev");
 /** @type {unique symbol} */
-export const DistinctUntilChangedObserverMixin_hasValue = /*@__PURE__*/ symbol("DistinctUntilChangedObserverMixin_hasValue");
+export const DistinctUntilChangedObserver_hasValue = /*@__PURE__*/ symbol("DistinctUntilChangedObserver_hasValue");
 /** @type {unique symbol} */
 export const EnqueueObserver_effect = /*@__PURE__*/ symbol("EnqueueObserver_effect");
 /** @type {unique symbol} */
-export const KeepObserverMixin_predicate = /*@__PURE__*/ symbol("KeepObserverMixin_predicate");
+export const KeepObserver_predicate = /*@__PURE__*/ symbol("KeepObserver_predicate");
 /** @type {unique symbol} */
 export const LatestCtx_delegate = /*@__PURE__*/ symbol("LatestCtx_delegate");
 /** @type {unique symbol} */
@@ -123,37 +123,37 @@ export const LiftedObservable_source = /*@__PURE__*/ symbol("LiftedObservable_so
 /** @type {unique symbol} */
 export const LiftedObservable_operators = /*@__PURE__*/ symbol("LiftedObservable_operators");
 /** @type {unique symbol} */
-export const MapObserverMixin_mapper = /*@__PURE__*/ symbol("MapObserverMixin_mapper");
+export const MapObserver_mapper = /*@__PURE__*/ symbol("MapObserver_mapper");
 /** @type {unique symbol} */
 export const MergeObserverCtx_completedCount = /*@__PURE__*/ symbol("MergeObserverCtx_completedCount");
 /** @type {unique symbol} */
-export const PairwiseObserverMixin_prev = /*@__PURE__*/ symbol("PairwiseObserverMixin_prev");
+export const PairwiseObserver_prev = /*@__PURE__*/ symbol("PairwiseObserver_prev");
 /** @type {unique symbol} */
-export const PairwiseObserverMixin_hasPrev = /*@__PURE__*/ symbol("PairwiseObserverMixin_hasPrev");
+export const PairwiseObserver_hasPrev = /*@__PURE__*/ symbol("PairwiseObserver_hasPrev");
 /** @type {unique symbol} */
-export const ReduceObserverMixin_reducer = /*@__PURE__*/ symbol("ReduceObserverMixin_reducer");
+export const ReduceObserver_reducer = /*@__PURE__*/ symbol("ReduceObserver_reducer");
 /** @type {unique symbol} */
-export const ReduceObserverMixin_acc = /*@__PURE__*/ symbol("ReduceObserverMixin_acc");
+export const ReduceObserver_acc = /*@__PURE__*/ symbol("ReduceObserver_acc");
 /** @type {unique symbol} */
-export const ScanObserverMixin_reducer = /*@__PURE__*/ symbol("ScanObserverMixin_reducer");
+export const ScanObserver_reducer = /*@__PURE__*/ symbol("ScanObserver_reducer");
 /** @type {unique symbol} */
-export const ScanObserverMixin_acc = /*@__PURE__*/ symbol("ScanObserverMixin_acc");
+export const ScanObserver_acc = /*@__PURE__*/ symbol("ScanObserver_acc");
 /** @type {unique symbol} */
-export const SkipFirstObserverMixin_skipCount = /*@__PURE__*/ symbol("SkipFirstObserverMixin_skipCount");
+export const SkipFirstObserver_skipCount = /*@__PURE__*/ symbol("SkipFirstObserver_skipCount");
 /** @type {unique symbol} */
-export const SkipFirstObserverMixin_count = /*@__PURE__*/ symbol("SkipFirstObserverMixin_count");
+export const SkipFirstObserver_count = /*@__PURE__*/ symbol("SkipFirstObserver_count");
 /** @type {unique symbol} */
-export const TakeFirstObserverMixin_takeCount = /*@__PURE__*/ symbol("TakeFirstObserverMixin_takeCount");
+export const TakeFirstObserver_takeCount = /*@__PURE__*/ symbol("TakeFirstObserver_takeCount");
 /** @type {unique symbol} */
-export const TakeFirstObserverMixin_count = /*@__PURE__*/ symbol("TakeFirstObserverMixin_count");
+export const TakeFirstObserver_count = /*@__PURE__*/ symbol("TakeFirstObserver_count");
 /** @type {unique symbol} */
-export const TakeLastObserverMixin_takeLastQueue = /*@__PURE__*/ symbol("TakeLastObserverMixin_takeLastQueue");
+export const TakeLastObserver_takeLastQueue = /*@__PURE__*/ symbol("TakeLastObserver_takeLastQueue");
 /** @type {unique symbol} */
-export const TakeWhileObserverMixin_predicate = /*@__PURE__*/ symbol("TakeWhileObserverMixin_predicate");
+export const TakeWhileObserver_predicate = /*@__PURE__*/ symbol("TakeWhileObserver_predicate");
 /** @type {unique symbol} */
-export const TakeWhileObserverMixin_inclusive = /*@__PURE__*/ symbol("TakeWhileObserverMixin_inclusive");
+export const TakeWhileObserver_inclusive = /*@__PURE__*/ symbol("TakeWhileObserver_inclusive");
 /** @type {unique symbol} */
-export const ThrowIfEmptyObserverMixin_isEmpty = /*@__PURE__*/ symbol("ThrowIfEmptyObserverMixin_isEmpty");
+export const ThrowIfEmptyObserver_isEmpty = /*@__PURE__*/ symbol("ThrowIfEmptyObserver_isEmpty");
 /** @type {unique symbol} */
 export const timeoutError = /*@__PURE__*/ symbol("timeoutError");
 /** @type {unique symbol} */
@@ -183,7 +183,7 @@ export const ObserverMixin_isCompleted = /*@__PURE__*/ symbol("ObserverMixin_isC
 /** @type {unique symbol} */
 export const ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol("ObserverMixin_dispatchSubscription");
 /** @type {unique symbol} */
-export const SatisfyObserverMixin_predicate = /*@__PURE__*/ symbol("SatisfyObserverMixin_predicate");
+export const SatisfyObserver_predicate = /*@__PURE__*/ symbol("SatisfyObserver_predicate");
 /** @type {unique symbol} */
 export const Subject_observers = /*@__PURE__*/ symbol("Subject_observers");
 /** @type {unique symbol} */

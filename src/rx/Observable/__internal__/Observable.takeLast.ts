@@ -7,7 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { TakeLastObserverMixin_takeLastQueue } from "../../../__internal__/symbols.js";
+import { TakeLastObserver_takeLastQueue } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
   QueueLike,
@@ -41,13 +41,13 @@ type ObservableTakeLast = <C extends ObservableLike, T>(options?: {
 }) => ContainerOperator<C, T, T>;
 const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    readonly [TakeLastObserverMixin_takeLastQueue]: IndexedQueueLike<T>;
+    readonly [TakeLastObserver_takeLastQueue]: IndexedQueueLike<T>;
   };
 
   const createTakeLastObserver = createInstanceFactory(
     mix(
       include(Disposable_mixin, Observer_mixin<T>()),
-      function TakeLastObserverMixin(
+      function TakeLastObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
@@ -61,15 +61,16 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           delegate[QueueableLike_maxBufferSize],
         );
 
-        instance[TakeLastObserverMixin_takeLastQueue] =
-          IndexedQueue_createFifoQueue({ maxBufferSize: takeLastCount });
+        instance[TakeLastObserver_takeLastQueue] = IndexedQueue_createFifoQueue(
+          { maxBufferSize: takeLastCount },
+        );
 
         pipe(
           instance,
           Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             pipe(
-              instance[TakeLastObserverMixin_takeLastQueue],
+              instance[TakeLastObserver_takeLastQueue],
               IndexedQueue_toReadonlyArray<T>(),
               ReadonlyArray_toObservable(),
               Observable_observeWith(delegate),
@@ -80,7 +81,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
         return instance;
       },
       props<TProperties>({
-        [TakeLastObserverMixin_takeLastQueue]: none,
+        [TakeLastObserver_takeLastQueue]: none,
       }),
       {
         [ObserverLike_notify](
@@ -88,11 +89,9 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           next: T,
         ) {
           if (
-            !this[TakeLastObserverMixin_takeLastQueue][QueueableLike_enqueue](
-              next,
-            )
+            !this[TakeLastObserver_takeLastQueue][QueueableLike_enqueue](next)
           ) {
-            this[TakeLastObserverMixin_takeLastQueue][QueueLike_dequeue]();
+            this[TakeLastObserver_takeLastQueue][QueueLike_dequeue]();
           }
         },
       },

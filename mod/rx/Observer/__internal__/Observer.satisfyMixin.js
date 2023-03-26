@@ -1,7 +1,7 @@
 /// <reference types="./Observer.satisfyMixin.d.ts" />
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { SatisfyObserverMixin_predicate } from "../../../__internal__/symbols.js";
+import { SatisfyObserver_predicate } from "../../../__internal__/symbols.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { none, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
@@ -13,11 +13,11 @@ import Observable_observeWith from "../../Observable/__internal__/Observable.obs
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
 const Observer_satisfyMixin = (defaultResult) => {
-    return mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function SatisfyObserverMixin(instance, delegate, predicate) {
+    return mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function SatisfyObserver(instance, delegate, predicate) {
         init(Disposable_mixin, instance);
         init(delegatingMixin(), instance, delegate);
         init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
-        instance[SatisfyObserverMixin_predicate] = predicate;
+        instance[SatisfyObserver_predicate] = predicate;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             if (!delegate[DisposableLike_isDisposed]) {
                 pipe(defaultResult, Optional_toObservable(), Observable_observeWith(delegate));
@@ -25,11 +25,11 @@ const Observer_satisfyMixin = (defaultResult) => {
         }));
         return instance;
     }, props({
-        [SatisfyObserverMixin_predicate]: none,
+        [SatisfyObserver_predicate]: none,
     }), {
         [ObserverLike_notify](next) {
             Observer_assertState(this);
-            if (this[SatisfyObserverMixin_predicate](next)) {
+            if (this[SatisfyObserver_predicate](next)) {
                 this[DelegatingLike_delegate][ObserverLike_notify](!defaultResult);
                 this[DelegatingLike_delegate][DisposableLike_dispose]();
             }

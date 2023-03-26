@@ -9,9 +9,9 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  DistinctUntilChangedObserverMixin_equality,
-  DistinctUntilChangedObserverMixin_hasValue,
-  DistinctUntilChangedObserverMixin_prev,
+  DistinctUntilChangedObserver_equality,
+  DistinctUntilChangedObserver_hasValue,
+  DistinctUntilChangedObserver_prev,
 } from "../../../__internal__/symbols.js";
 import {
   ContainerOperator,
@@ -47,15 +47,15 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
       equality: Equality<T>,
     ) => ObserverLike<T> = (<T>() => {
       type TProperties = {
-        readonly [DistinctUntilChangedObserverMixin_equality]: Equality<T>;
-        [DistinctUntilChangedObserverMixin_prev]: T;
-        [DistinctUntilChangedObserverMixin_hasValue]: boolean;
+        readonly [DistinctUntilChangedObserver_equality]: Equality<T>;
+        [DistinctUntilChangedObserver_prev]: T;
+        [DistinctUntilChangedObserver_hasValue]: boolean;
       };
 
       return createInstanceFactory(
         mix(
           include(Disposable_delegatingMixin(), Observer_mixin()),
-          function DistinctUntilChangedObserverMixin(
+          function DistinctUntilChangedObserver(
             instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
               Mutable<TProperties>,
             delegate: ObserverLike<T>,
@@ -69,14 +69,14 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
               delegate[QueueableLike_maxBufferSize],
             );
 
-            instance[DistinctUntilChangedObserverMixin_equality] = equality;
+            instance[DistinctUntilChangedObserver_equality] = equality;
 
             return instance;
           },
           props<TProperties>({
-            [DistinctUntilChangedObserverMixin_equality]: none,
-            [DistinctUntilChangedObserverMixin_prev]: none,
-            [DistinctUntilChangedObserverMixin_hasValue]: false,
+            [DistinctUntilChangedObserver_equality]: none,
+            [DistinctUntilChangedObserver_prev]: none,
+            [DistinctUntilChangedObserver_hasValue]: false,
           }),
           {
             [ObserverLike_notify](
@@ -88,15 +88,15 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
               Observer_assertState(this);
 
               const shouldEmit =
-                !this[DistinctUntilChangedObserverMixin_hasValue] ||
-                !this[DistinctUntilChangedObserverMixin_equality](
-                  this[DistinctUntilChangedObserverMixin_prev],
+                !this[DistinctUntilChangedObserver_hasValue] ||
+                !this[DistinctUntilChangedObserver_equality](
+                  this[DistinctUntilChangedObserver_prev],
                   next,
                 );
 
               if (shouldEmit) {
-                this[DistinctUntilChangedObserverMixin_prev] = next;
-                this[DistinctUntilChangedObserverMixin_hasValue] = true;
+                this[DistinctUntilChangedObserver_prev] = next;
+                this[DistinctUntilChangedObserver_hasValue] = true;
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
               }
             },

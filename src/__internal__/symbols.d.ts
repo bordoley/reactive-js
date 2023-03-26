@@ -88,17 +88,17 @@ export declare const ComputeContext_memoOrUse: unique symbol;
 
 export declare const CreateObservable_effect: unique symbol;
 
-export declare const DecodeWithCharsetObserverMixin_textDecoder: unique symbol;
+export declare const DecodeWithCharsetObserver_textDecoder: unique symbol;
 
-export declare const DistinctUntilChangedObserverMixin_equality: unique symbol;
+export declare const DistinctUntilChangedObserver_equality: unique symbol;
 
-export declare const DistinctUntilChangedObserverMixin_prev: unique symbol;
+export declare const DistinctUntilChangedObserver_prev: unique symbol;
 
-export declare const DistinctUntilChangedObserverMixin_hasValue: unique symbol;
+export declare const DistinctUntilChangedObserver_hasValue: unique symbol;
 
 export declare const EnqueueObserver_effect: unique symbol;
 
-export declare const KeepObserverMixin_predicate: unique symbol;
+export declare const KeepObserver_predicate: unique symbol;
 
 export declare const LatestCtx_delegate: unique symbol;
 
@@ -118,37 +118,37 @@ export declare const LiftedObservable_source: unique symbol;
 
 export declare const LiftedObservable_operators: unique symbol;
 
-export declare const MapObserverMixin_mapper: unique symbol;
+export declare const MapObserver_mapper: unique symbol;
 
 export declare const MergeObserverCtx_completedCount: unique symbol;
 
-export declare const PairwiseObserverMixin_prev: unique symbol;
+export declare const PairwiseObserver_prev: unique symbol;
 
-export declare const PairwiseObserverMixin_hasPrev: unique symbol;
+export declare const PairwiseObserver_hasPrev: unique symbol;
 
-export declare const ReduceObserverMixin_reducer: unique symbol;
+export declare const ReduceObserver_reducer: unique symbol;
 
-export declare const ReduceObserverMixin_acc: unique symbol;
+export declare const ReduceObserver_acc: unique symbol;
 
-export declare const ScanObserverMixin_reducer: unique symbol;
+export declare const ScanObserver_reducer: unique symbol;
 
-export declare const ScanObserverMixin_acc: unique symbol;
+export declare const ScanObserver_acc: unique symbol;
 
-export declare const SkipFirstObserverMixin_skipCount: unique symbol;
+export declare const SkipFirstObserver_skipCount: unique symbol;
 
-export declare const SkipFirstObserverMixin_count: unique symbol;
+export declare const SkipFirstObserver_count: unique symbol;
 
-export declare const TakeFirstObserverMixin_takeCount: unique symbol;
+export declare const TakeFirstObserver_takeCount: unique symbol;
 
-export declare const TakeFirstObserverMixin_count: unique symbol;
+export declare const TakeFirstObserver_count: unique symbol;
 
-export declare const TakeLastObserverMixin_takeLastQueue: unique symbol;
+export declare const TakeLastObserver_takeLastQueue: unique symbol;
 
-export declare const TakeWhileObserverMixin_predicate: unique symbol;
+export declare const TakeWhileObserver_predicate: unique symbol;
 
-export declare const TakeWhileObserverMixin_inclusive: unique symbol;
+export declare const TakeWhileObserver_inclusive: unique symbol;
 
-export declare const ThrowIfEmptyObserverMixin_isEmpty: unique symbol;
+export declare const ThrowIfEmptyObserver_isEmpty: unique symbol;
 
 export declare const timeoutError: unique symbol;
 
@@ -178,7 +178,7 @@ export declare const ObserverMixin_isCompleted: unique symbol;
 
 export declare const ObserverMixin_dispatchSubscription: unique symbol;
 
-export declare const SatisfyObserverMixin_predicate: unique symbol;
+export declare const SatisfyObserver_predicate: unique symbol;
 
 export declare const Subject_observers: unique symbol;
 

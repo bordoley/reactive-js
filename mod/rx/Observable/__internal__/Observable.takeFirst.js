@@ -2,7 +2,7 @@
 
 import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { TakeFirstObserverMixin_count, TakeFirstObserverMixin_takeCount, } from "../../../__internal__/symbols.js";
+import { TakeFirstObserver_count, TakeFirstObserver_takeCount, } from "../../../__internal__/symbols.js";
 import { partial, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
@@ -12,24 +12,23 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeFirst = /*@__PURE__*/ (() => {
     const createTakeFirstObserver = (() => {
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function TakeFirstObserverMixin(instance, delegate, takeCount) {
+        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function TakeFirstObserver(instance, delegate, takeCount) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
-            instance[TakeFirstObserverMixin_takeCount] = takeCount;
+            instance[TakeFirstObserver_takeCount] = takeCount;
             if (takeCount === 0) {
                 instance[DisposableLike_dispose]();
             }
             return instance;
         }, props({
-            [TakeFirstObserverMixin_count]: 0,
-            [TakeFirstObserverMixin_takeCount]: 0,
+            [TakeFirstObserver_count]: 0,
+            [TakeFirstObserver_takeCount]: 0,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[TakeFirstObserverMixin_count]++;
+                this[TakeFirstObserver_count]++;
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
-                if (this[TakeFirstObserverMixin_count] >=
-                    this[TakeFirstObserverMixin_takeCount]) {
+                if (this[TakeFirstObserver_count] >= this[TakeFirstObserver_takeCount]) {
                     this[DisposableLike_dispose]();
                 }
             },

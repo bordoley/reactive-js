@@ -10,8 +10,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  SkipFirstObserverMixin_count,
-  SkipFirstObserverMixin_skipCount,
+  SkipFirstObserver_count,
+  SkipFirstObserver_skipCount,
 } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { partial, pipe } from "../../../functions.js";
@@ -37,14 +37,14 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
     count: number,
   ) => ObserverLike<T> = (<T>() => {
     type TProperties = {
-      readonly [SkipFirstObserverMixin_skipCount]: number;
-      [SkipFirstObserverMixin_count]: number;
+      readonly [SkipFirstObserver_skipCount]: number;
+      [SkipFirstObserver_count]: number;
     };
 
     return createInstanceFactory(
       mix(
         include(Disposable_delegatingMixin(), Observer_mixin<T>()),
-        function SkipFirstObserverMixin(
+        function SkipFirstObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -58,13 +58,13 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
             delegate[QueueableLike_maxBufferSize],
           );
 
-          instance[SkipFirstObserverMixin_skipCount] = skipCount;
+          instance[SkipFirstObserver_skipCount] = skipCount;
 
           return instance;
         },
         props<TProperties>({
-          [SkipFirstObserverMixin_skipCount]: 0,
-          [SkipFirstObserverMixin_count]: 0,
+          [SkipFirstObserver_skipCount]: 0,
+          [SkipFirstObserver_count]: 0,
         }),
         {
           [ObserverLike_notify](
@@ -75,10 +75,9 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
           ) {
             Observer_assertState(this);
 
-            this[SkipFirstObserverMixin_count]++;
+            this[SkipFirstObserver_count]++;
             if (
-              this[SkipFirstObserverMixin_count] >
-              this[SkipFirstObserverMixin_skipCount]
+              this[SkipFirstObserver_count] > this[SkipFirstObserver_skipCount]
             ) {
               this[DelegatingLike_delegate][ObserverLike_notify](next);
             }

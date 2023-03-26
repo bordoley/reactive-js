@@ -9,7 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { DecodeWithCharsetObserverMixin_textDecoder } from "../../../__internal__/symbols.js";
+import { DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { newInstance, none, partial, pipe } from "../../../functions.js";
@@ -42,7 +42,7 @@ type ObservableDecodeWithCharset = <C extends ObservableLike>(
 const Observable_decodeWithCharset: ObservableDecodeWithCharset =
   /*@__PURE__*/ (() => {
     type TProperties = {
-      readonly [DecodeWithCharsetObserverMixin_textDecoder]: TextDecoder;
+      readonly [DecodeWithCharsetObserver_textDecoder]: TextDecoder;
     };
 
     const createDecodeWithCharsetObserver = createInstanceFactory(
@@ -52,7 +52,7 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           delegatingMixin(),
           Observer_mixin<ArrayBuffer>(),
         ),
-        function DecodeWithCharsetObserverMixin(
+        function DecodeWithCharsetObserver(
           instance: Pick<
             ObserverLike<ArrayBuffer>,
             typeof ObserverLike_notify
@@ -73,7 +73,7 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           const textDecoder = newInstance(TextDecoder, charset, {
             fatal: true,
           });
-          instance[DecodeWithCharsetObserverMixin_textDecoder] = textDecoder;
+          instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
 
           pipe(
             instance,
@@ -96,7 +96,7 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           return instance;
         },
         props<TProperties>({
-          [DecodeWithCharsetObserverMixin_textDecoder]: none,
+          [DecodeWithCharsetObserver_textDecoder]: none,
         }),
         {
           [ObserverLike_notify](
@@ -107,11 +107,12 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           ) {
             Observer_assertState(this);
 
-            const data = this[
-              DecodeWithCharsetObserverMixin_textDecoder
-            ].decode(next, {
-              stream: true,
-            });
+            const data = this[DecodeWithCharsetObserver_textDecoder].decode(
+              next,
+              {
+                stream: true,
+              },
+            );
             if (data.length > 0) {
               this[DelegatingLike_delegate][ObserverLike_notify](data);
             }

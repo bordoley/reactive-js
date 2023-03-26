@@ -1,7 +1,7 @@
 /// <reference types="./Observable.throwIfEmpty.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ThrowIfEmptyObserverMixin_isEmpty } from "../../../__internal__/symbols.js";
+import { ThrowIfEmptyObserver_isEmpty } from "../../../__internal__/symbols.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
@@ -13,13 +13,13 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_throwIfEmpty = /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (() => {
-        return createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function ThrowIfEmptyObserverMixin(instance, delegate, factory) {
+        return createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
             init(Disposable_mixin, instance);
             init(delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
                 let err = none;
-                if (instance[ThrowIfEmptyObserverMixin_isEmpty]) {
+                if (instance[ThrowIfEmptyObserver_isEmpty]) {
                     try {
                         err = error(factory());
                     }
@@ -31,11 +31,11 @@ const Observable_throwIfEmpty = /*@__PURE__*/ (() => {
             }));
             return instance;
         }, props({
-            [ThrowIfEmptyObserverMixin_isEmpty]: true,
+            [ThrowIfEmptyObserver_isEmpty]: true,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[ThrowIfEmptyObserverMixin_isEmpty] = false;
+                this[ThrowIfEmptyObserver_isEmpty] = false;
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
             },
         }));

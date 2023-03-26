@@ -9,8 +9,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PairwiseObserverMixin_hasPrev,
-  PairwiseObserverMixin_prev,
+  PairwiseObserver_hasPrev,
+  PairwiseObserver_prev,
 } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { none, pipe, returns } from "../../../functions.js";
@@ -36,14 +36,14 @@ const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
     delegate: ObserverLike<readonly [T, T]>,
   ) => ObserverLike<T> = (<T>() => {
     type TProperties = {
-      [PairwiseObserverMixin_prev]: T;
-      [PairwiseObserverMixin_hasPrev]: boolean;
+      [PairwiseObserver_prev]: T;
+      [PairwiseObserver_hasPrev]: boolean;
     };
 
     return createInstanceFactory(
       mix(
         include(Disposable_delegatingMixin(), Observer_mixin<T>()),
-        function PairwiseObserverMixin(
+        function PairwiseObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<readonly [T, T]>,
@@ -59,8 +59,8 @@ const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
           return instance;
         },
         props<TProperties>({
-          [PairwiseObserverMixin_prev]: none,
-          [PairwiseObserverMixin_hasPrev]: false,
+          [PairwiseObserver_prev]: none,
+          [PairwiseObserver_hasPrev]: false,
         }),
         {
           [ObserverLike_notify](
@@ -71,14 +71,14 @@ const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
           ) {
             Observer_assertState(this);
 
-            const prev = this[PairwiseObserverMixin_prev];
+            const prev = this[PairwiseObserver_prev];
 
-            if (this[PairwiseObserverMixin_hasPrev]) {
+            if (this[PairwiseObserver_hasPrev]) {
               this[DelegatingLike_delegate][ObserverLike_notify]([prev, next]);
             }
 
-            this[PairwiseObserverMixin_hasPrev] = true;
-            this[PairwiseObserverMixin_prev] = next;
+            this[PairwiseObserver_hasPrev] = true;
+            this[PairwiseObserver_prev] = next;
           },
         },
       ),

@@ -9,8 +9,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  ScanObserverMixin_acc,
-  ScanObserverMixin_reducer,
+  ScanObserver_acc,
+  ScanObserver_reducer,
 } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
@@ -47,8 +47,8 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
     initialValue: Factory<TAcc>,
   ) => ObserverLike<T> = (() => {
     type TProperties = {
-      readonly [ScanObserverMixin_reducer]: Reducer<T, TAcc>;
-      [ScanObserverMixin_acc]: TAcc;
+      readonly [ScanObserver_reducer]: Reducer<T, TAcc>;
+      [ScanObserver_acc]: TAcc;
     };
 
     return createInstanceFactory(
@@ -57,7 +57,7 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
           Disposable_delegatingMixin<ObserverLike<TAcc>>(),
           Observer_mixin<T>(),
         ),
-        function ScanObserverMixin(
+        function ScanObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<TAcc>,
@@ -76,11 +76,11 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
             delegate[QueueableLike_maxBufferSize],
           );
 
-          instance[ScanObserverMixin_reducer] = reducer;
+          instance[ScanObserver_reducer] = reducer;
 
           try {
             const acc = initialValue();
-            instance[ScanObserverMixin_acc] = acc;
+            instance[ScanObserver_acc] = acc;
           } catch (e) {
             instance[DisposableLike_dispose](error(e));
           }
@@ -88,8 +88,8 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
           return instance;
         },
         props<TProperties>({
-          [ScanObserverMixin_reducer]: none,
-          [ScanObserverMixin_acc]: none,
+          [ScanObserver_reducer]: none,
+          [ScanObserver_acc]: none,
         }),
         {
           [ObserverLike_notify](
@@ -100,11 +100,11 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
           ) {
             Observer_assertState(this);
 
-            const nextAcc = this[ScanObserverMixin_reducer](
-              this[ScanObserverMixin_acc],
+            const nextAcc = this[ScanObserver_reducer](
+              this[ScanObserver_acc],
               next,
             );
-            this[ScanObserverMixin_acc] = nextAcc;
+            this[ScanObserver_acc] = nextAcc;
             this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
           },
         },

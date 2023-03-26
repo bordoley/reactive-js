@@ -7,8 +7,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  ReduceObserverMixin_acc,
-  ReduceObserverMixin_reducer,
+  ReduceObserver_acc,
+  ReduceObserver_reducer,
 } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -44,14 +44,14 @@ type ObservableReduce = <C extends ObservableLike, T, TAcc>(
 ) => ContainerOperator<C, T, TAcc>;
 const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
   type TProperties = {
-    readonly [ReduceObserverMixin_reducer]: Reducer<T, TAcc>;
-    [ReduceObserverMixin_acc]: TAcc;
+    readonly [ReduceObserver_reducer]: Reducer<T, TAcc>;
+    [ReduceObserver_acc]: TAcc;
   };
 
   const createReduceObserver = createInstanceFactory(
     mix(
       include(Disposable_mixin, Observer_mixin<T>()),
-      function ReduceObserverMixin(
+      function ReduceObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<TAcc>,
@@ -66,11 +66,11 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
           delegate[QueueableLike_maxBufferSize],
         );
 
-        instance[ReduceObserverMixin_reducer] = reducer;
+        instance[ReduceObserver_reducer] = reducer;
 
         try {
           const acc = initialValue();
-          instance[ReduceObserverMixin_acc] = acc;
+          instance[ReduceObserver_acc] = acc;
         } catch (e) {
           instance[DisposableLike_dispose](error(e));
         }
@@ -80,7 +80,7 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
           Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             pipe(
-              [instance[ReduceObserverMixin_acc]],
+              [instance[ReduceObserver_acc]],
               ReadonlyArray_toObservable(),
               Observable_observeWith(delegate),
             );
@@ -90,18 +90,18 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
         return instance;
       },
       props<TProperties>({
-        [ReduceObserverMixin_reducer]: none,
-        [ReduceObserverMixin_acc]: none,
+        [ReduceObserver_reducer]: none,
+        [ReduceObserver_acc]: none,
       }),
       {
         [ObserverLike_notify](this: TProperties & ObserverLike<T>, next: T) {
           Observer_assertState(this);
 
-          const nextAcc = this[ReduceObserverMixin_reducer](
-            this[ReduceObserverMixin_acc],
+          const nextAcc = this[ReduceObserver_reducer](
+            this[ReduceObserver_acc],
             next,
           );
-          this[ReduceObserverMixin_acc] = nextAcc;
+          this[ReduceObserver_acc] = nextAcc;
         },
       },
     ),

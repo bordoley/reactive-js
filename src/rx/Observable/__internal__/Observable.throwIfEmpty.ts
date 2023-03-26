@@ -9,7 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ThrowIfEmptyObserverMixin_isEmpty } from "../../../__internal__/symbols.js";
+import { ThrowIfEmptyObserver_isEmpty } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Factory,
@@ -44,13 +44,13 @@ type ObservableThrowIfEmpty = <C extends ObservableLike, T>(
 const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
   const createThrowIfEmptyObserver = (<T>() => {
     type TProperties = {
-      [ThrowIfEmptyObserverMixin_isEmpty]: boolean;
+      [ThrowIfEmptyObserver_isEmpty]: boolean;
     };
 
     return createInstanceFactory(
       mix(
         include(Disposable_mixin, delegatingMixin(), Observer_mixin<T>()),
-        function ThrowIfEmptyObserverMixin(
+        function ThrowIfEmptyObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -71,7 +71,7 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
             Disposable_onComplete(() => {
               let err: Optional<Error> = none;
 
-              if (instance[ThrowIfEmptyObserverMixin_isEmpty]) {
+              if (instance[ThrowIfEmptyObserver_isEmpty]) {
                 try {
                   err = error(factory());
                 } catch (e) {
@@ -85,7 +85,7 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
           return instance;
         },
         props<TProperties>({
-          [ThrowIfEmptyObserverMixin_isEmpty]: true,
+          [ThrowIfEmptyObserver_isEmpty]: true,
         }),
         {
           [ObserverLike_notify](
@@ -97,7 +97,7 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
           ) {
             Observer_assertState(this);
 
-            this[ThrowIfEmptyObserverMixin_isEmpty] = false;
+            this[ThrowIfEmptyObserver_isEmpty] = false;
             this[DelegatingLike_delegate][ObserverLike_notify](next);
           },
         },

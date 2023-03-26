@@ -9,8 +9,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  TakeFirstObserverMixin_count,
-  TakeFirstObserverMixin_takeCount,
+  TakeFirstObserver_count,
+  TakeFirstObserver_takeCount,
 } from "../../../__internal__/symbols.js";
 import { DelegatingDisposableLike } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
@@ -39,8 +39,8 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
     count: number,
   ) => ObserverLike<T> = (<T>() => {
     type TProperties = {
-      readonly [TakeFirstObserverMixin_takeCount]: number;
-      [TakeFirstObserverMixin_count]: number;
+      readonly [TakeFirstObserver_takeCount]: number;
+      [TakeFirstObserver_count]: number;
     };
 
     return createInstanceFactory(
@@ -49,7 +49,7 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
           Disposable_delegatingMixin<ObserverLike<T>>(),
           Observer_mixin<T>(),
         ),
-        function TakeFirstObserverMixin(
+        function TakeFirstObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -67,7 +67,7 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
             delegate[QueueableLike_maxBufferSize],
           );
 
-          instance[TakeFirstObserverMixin_takeCount] = takeCount;
+          instance[TakeFirstObserver_takeCount] = takeCount;
 
           if (takeCount === 0) {
             instance[DisposableLike_dispose]();
@@ -76,8 +76,8 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
           return instance;
         },
         props<TProperties>({
-          [TakeFirstObserverMixin_count]: 0,
-          [TakeFirstObserverMixin_takeCount]: 0,
+          [TakeFirstObserver_count]: 0,
+          [TakeFirstObserver_takeCount]: 0,
         }),
         {
           [ObserverLike_notify](
@@ -88,11 +88,10 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
           ) {
             Observer_assertState(this);
 
-            this[TakeFirstObserverMixin_count]++;
+            this[TakeFirstObserver_count]++;
             this[DelegatingLike_delegate][ObserverLike_notify](next);
             if (
-              this[TakeFirstObserverMixin_count] >=
-              this[TakeFirstObserverMixin_takeCount]
+              this[TakeFirstObserver_count] >= this[TakeFirstObserver_takeCount]
             ) {
               this[DisposableLike_dispose]();
             }

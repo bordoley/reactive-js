@@ -1,7 +1,7 @@
 /// <reference types="./Observable.distinctUntilChanged.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DistinctUntilChangedObserverMixin_equality, DistinctUntilChangedObserverMixin_hasValue, DistinctUntilChangedObserverMixin_prev, } from "../../../__internal__/symbols.js";
+import { DistinctUntilChangedObserver_equality, DistinctUntilChangedObserver_hasValue, DistinctUntilChangedObserver_prev, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { QueueableLike_maxBufferSize } from "../../../util.js";
@@ -12,23 +12,23 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 const Observable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const createDistinctUntilChangedObserver = (() => {
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function DistinctUntilChangedObserverMixin(instance, delegate, equality) {
+        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function DistinctUntilChangedObserver(instance, delegate, equality) {
             init(Disposable_delegatingMixin(), instance, delegate);
             init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
-            instance[DistinctUntilChangedObserverMixin_equality] = equality;
+            instance[DistinctUntilChangedObserver_equality] = equality;
             return instance;
         }, props({
-            [DistinctUntilChangedObserverMixin_equality]: none,
-            [DistinctUntilChangedObserverMixin_prev]: none,
-            [DistinctUntilChangedObserverMixin_hasValue]: false,
+            [DistinctUntilChangedObserver_equality]: none,
+            [DistinctUntilChangedObserver_prev]: none,
+            [DistinctUntilChangedObserver_hasValue]: false,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                const shouldEmit = !this[DistinctUntilChangedObserverMixin_hasValue] ||
-                    !this[DistinctUntilChangedObserverMixin_equality](this[DistinctUntilChangedObserverMixin_prev], next);
+                const shouldEmit = !this[DistinctUntilChangedObserver_hasValue] ||
+                    !this[DistinctUntilChangedObserver_equality](this[DistinctUntilChangedObserver_prev], next);
                 if (shouldEmit) {
-                    this[DistinctUntilChangedObserverMixin_prev] = next;
-                    this[DistinctUntilChangedObserverMixin_hasValue] = true;
+                    this[DistinctUntilChangedObserver_prev] = next;
+                    this[DistinctUntilChangedObserver_hasValue] = true;
                     this[DelegatingLike_delegate][ObserverLike_notify](next);
                 }
             },
