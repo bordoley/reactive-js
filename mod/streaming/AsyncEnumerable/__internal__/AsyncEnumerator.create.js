@@ -5,7 +5,7 @@ import { AsyncEnumeratorDelegatingMixin_src } from "../../../__internal__/symbol
 import { none, pipe, unsafeCast } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const AsyncEnumerator_create = /*@__PURE__*/ (() => {
@@ -36,8 +36,8 @@ const AsyncEnumerator_create = /*@__PURE__*/ (() => {
         [DispatcherLike_complete]() {
             this[AsyncEnumeratorDelegatingMixin_src][DispatcherLike_complete]();
         },
-        [QueueableLike_push](next) {
-            return this[AsyncEnumeratorDelegatingMixin_src][QueueableLike_push](next);
+        [QueueableLike_enqueue](next) {
+            return this[AsyncEnumeratorDelegatingMixin_src][QueueableLike_enqueue](next);
         },
         [ObservableLike_observe](observer) {
             this[DelegatingLike_delegate][ObservableLike_observe](observer);

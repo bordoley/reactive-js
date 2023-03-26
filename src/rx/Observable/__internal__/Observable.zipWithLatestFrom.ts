@@ -19,7 +19,7 @@ import {
   IndexedQueueLike,
   QueueLike,
   QueueLike_count,
-  QueueLike_pull,
+  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
@@ -41,8 +41,8 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -81,7 +81,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
         ) {
           observer[ZipWithLatestFromObserver_hasLatest] = false;
           const next = observer[ZipWithLatestFromObserver_TAQueue][
-            QueueLike_pull
+            QueueLike_dequeue
           ]() as TA;
           const result = observer[ZipWithLatestFromObserver_selector](
             next,
@@ -171,7 +171,9 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
               next: TA,
             ) {
               Observer_assertState(this);
-              this[ZipWithLatestFromObserver_TAQueue][QueueableLike_push](next);
+              this[ZipWithLatestFromObserver_TAQueue][QueueableLike_enqueue](
+                next,
+              );
               notifyDelegate(this);
             },
           },

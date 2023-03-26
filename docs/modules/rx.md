@@ -21,7 +21,7 @@
 
 - [CombineLatest](../interfaces/rx.CombineLatest.md)
 - [CurrentTime](../interfaces/rx.CurrentTime.md)
-- [DispatchTo](../interfaces/rx.DispatchTo.md)
+- [Enqueue](../interfaces/rx.Enqueue.md)
 - [Exhaust](../interfaces/rx.Exhaust.md)
 - [ExhaustMap](../interfaces/rx.ExhaustMap.md)
 - [ForkCombineLatest](../interfaces/rx.ForkCombineLatest.md)

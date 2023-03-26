@@ -19,8 +19,8 @@ import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.c
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -50,7 +50,7 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
               if (next.done) {
                 observer[DispatcherLike_complete]();
                 break;
-              } else if (!observer[QueueableLike_push](next.value)) {
+              } else if (!observer[QueueableLike_enqueue](next.value)) {
                 // An async iterable can produce resolved promises which are immediately
                 // scheduled on the microtask queue. This prevents the observer's scheduler
                 // from running and draining dispatched events.

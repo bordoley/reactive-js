@@ -4,10 +4,10 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { max } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { MergeAllObserver_activeCount, MergeAllObserver_maxBufferSize, MergeAllObserver_maxConcurrency, MergeAllObserver_observablesQueue, MergeAllObserver_onDispose, } from "../../../__internal__/symbols.js";
-import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { bindMethod, isSome, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -22,7 +22,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
         const subscribeNext = (observer) => {
             if (observer[MergeAllObserver_activeCount] <
                 observer[MergeAllObserver_maxConcurrency]) {
-                const nextObs = observer[MergeAllObserver_observablesQueue][QueueLike_pull]();
+                const nextObs = observer[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
                 if (isSome(nextObs)) {
                     observer[MergeAllObserver_activeCount]++;
                     pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
@@ -65,12 +65,12 @@ const HigherOrderObservable_mergeAll = (lift) => {
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[MergeAllObserver_observablesQueue][QueueableLike_push](next);
+                this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
                 // Drop old events if the maxBufferSize has been exceeded
                 if (this[MergeAllObserver_observablesQueue][QueueLike_count] +
                     this[MergeAllObserver_activeCount] >
                     this[MergeAllObserver_maxBufferSize]) {
-                    this[MergeAllObserver_observablesQueue][QueueLike_pull]();
+                    this[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
                 }
                 subscribeNext(this);
             },

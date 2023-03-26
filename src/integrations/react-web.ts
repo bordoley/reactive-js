@@ -8,7 +8,7 @@ import {
   useRef,
 } from "react";
 import { Function1, Optional, Updater, isSome, none } from "../functions.js";
-import { QueueableLike_push } from "../util.js";
+import { QueueableLike_enqueue } from "../util.js";
 import { useObservable, useStream } from "./react.js";
 import {
   WindowLocationStreamLike,
@@ -54,7 +54,7 @@ export const useWindowLocation = (): {
     (action: Updater<WindowLocationURI> | WindowLocationURI) => {
       const windowLocationStream = stableWindowLocationStreamRef.current;
       return isSome(windowLocationStream)
-        ? windowLocationStream[QueueableLike_push](action)
+        ? windowLocationStream[QueueableLike_enqueue](action)
         : false;
     },
     [stableWindowLocationStreamRef],

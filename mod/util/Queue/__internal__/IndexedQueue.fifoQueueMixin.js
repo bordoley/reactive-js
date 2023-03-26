@@ -3,9 +3,9 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { mix, props } from "../../../__internal__/mixins.js";
 import { FifoQueue_capacityMask, FifoQueue_head, FifoQueue_tail, FifoQueue_values, } from "../../../__internal__/symbols.js";
-import { IndexedQueueLike_get, IndexedQueueLike_pop, IndexedQueueLike_set, QueueLike_count, QueueLike_head, QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { IndexedQueueLike_get, IndexedQueueLike_pop, IndexedQueueLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;
@@ -85,7 +85,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
             return head === this[FifoQueue_tail] ? none : values[head];
         },
-        [QueueLike_pull]() {
+        [QueueLike_dequeue]() {
             var _a;
             const tail = this[FifoQueue_tail];
             const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
@@ -148,7 +148,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             values[computedIndex] = value;
             return oldValue;
         },
-        [QueueableLike_push](item) {
+        [QueueableLike_enqueue](item) {
             var _a;
             const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : ((this[FifoQueue_capacityMask] = 31),
                 (this[FifoQueue_values] = newInstance(Array, 32)),

@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER, __DEV__ } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
-import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
@@ -13,7 +13,7 @@ import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js"
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
 import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
@@ -40,7 +40,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
         [EnumeratorLike_move]() {
             this[MutableEnumeratorLike_reset]();
             while (!this[EnumeratorLike_hasCurrent]) {
-                const continuation = this[EnumerableEnumerator_continuationQueue][QueueLike_pull]();
+                const continuation = this[EnumerableEnumerator_continuationQueue][QueueLike_dequeue]();
                 if (isSome(continuation)) {
                     this[PrioritySchedulerImplementationLike_runContinuation](continuation);
                 }
@@ -60,7 +60,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
                 return;
             }
             continuation[ContinuationLike_continuationScheduler] = this;
-            this[EnumerableEnumerator_continuationQueue][QueueableLike_push](continuation);
+            this[EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](continuation);
         },
         [ObserverLike_notify](next) {
             Observer_assertState(this);

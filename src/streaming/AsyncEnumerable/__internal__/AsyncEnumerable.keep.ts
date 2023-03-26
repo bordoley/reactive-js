@@ -4,7 +4,7 @@ import { ObservableLike } from "../../../rx.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep.js";
 import { AsyncEnumerableLike, StreamLike } from "../../../streaming.js";
-import { QueueableLike_push } from "../../../util.js";
+import { QueueableLike_enqueue } from "../../../util.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 import AsyncEnumerator_create from "./AsyncEnumerator.create.js";
 
@@ -18,7 +18,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = <T>(
         compose(
           Observable_forEach<ObservableLike, T>(x => {
             if (!predicate(x)) {
-              delegate[QueueableLike_push](none);
+              delegate[QueueableLike_enqueue](none);
             }
           }),
           Observable_keep<ObservableLike, T>(predicate),

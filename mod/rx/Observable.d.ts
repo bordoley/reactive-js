@@ -1,6 +1,6 @@
 import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
-import { CombineLatest, CurrentTime, DispatchTo, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
@@ -110,12 +110,12 @@ export declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableL
 export declare const currentTime: CurrentTime<ObservableLike>["currentTime"];
 export declare const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"];
 export declare const defer: Defer<ObservableLike>["defer"];
-export declare const dispatchTo: DispatchTo<ObservableLike>["dispatchTo"];
 export declare const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"];
 export declare const empty: Empty<ObservableLike, {
     delay?: number;
 }>["empty"];
 export declare const encodeUtf8: EncodeUtf8<ObservableLike>["encodeUtf8"];
+export declare const enqueue: Enqueue<ObservableLike>["enqueue"];
 export declare const endWith: EndWith<ObservableLike>["endWith"];
 export declare const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"];
 export declare const exhaust: Exhaust<ObservableLike>["exhaust"];

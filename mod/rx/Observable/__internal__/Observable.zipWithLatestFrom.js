@@ -2,10 +2,10 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ZipWithLatestFromObserver_TAQueue, ZipWithLatestFromObserver_hasLatest, ZipWithLatestFromObserver_otherLatest, ZipWithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
-import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -23,7 +23,7 @@ const Observable_zipWithLatestFrom =
             if (observer[ZipWithLatestFromObserver_TAQueue][QueueLike_count] > 0 &&
                 observer[ZipWithLatestFromObserver_hasLatest]) {
                 observer[ZipWithLatestFromObserver_hasLatest] = false;
-                const next = observer[ZipWithLatestFromObserver_TAQueue][QueueLike_pull]();
+                const next = observer[ZipWithLatestFromObserver_TAQueue][QueueLike_dequeue]();
                 const result = observer[ZipWithLatestFromObserver_selector](next, observer[ZipWithLatestFromObserver_otherLatest]);
                 observer[DelegatingLike_delegate][ObserverLike_notify](result);
             }
@@ -60,7 +60,7 @@ const Observable_zipWithLatestFrom =
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[ZipWithLatestFromObserver_TAQueue][QueueableLike_push](next);
+                this[ZipWithLatestFromObserver_TAQueue][QueueableLike_enqueue](next);
                 notifyDelegate(this);
             },
         }));

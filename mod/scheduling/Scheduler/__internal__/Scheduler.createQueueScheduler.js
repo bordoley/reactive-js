@@ -4,12 +4,12 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueScheduler_delayed, QueueScheduler_dueTime, QueueScheduler_hostContinuation, QueueScheduler_hostScheduler, QueueScheduler_queue, QueueScheduler_taskIDCounter, QueueTask_continuation, QueueTask_dueTime, QueueTask_priority, QueueTask_taskID, } from "../../../__internal__/symbols.js";
-import { QueueLike_head, QueueLike_pull, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
+import { QueueLike_dequeue, QueueLike_head, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
 import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
@@ -34,9 +34,9 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
             if (task[QueueTask_dueTime] > now && !taskIsDispose) {
                 break;
             }
-            delayed[QueueLike_pull]();
+            delayed[QueueLike_dequeue]();
             if (!taskIsDispose) {
-                queue[QueueableLike_push](task);
+                queue[QueueableLike_enqueue](task);
             }
         }
         let task = none;
@@ -48,7 +48,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
             if (!task[QueueTask_continuation][DisposableLike_isDisposed]) {
                 break;
             }
-            queue[QueueLike_pull]();
+            queue[QueueLike_dequeue]();
         }
         return task !== null && task !== void 0 ? task : delayed[QueueLike_head];
     };
@@ -134,7 +134,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
         [EnumeratorLike_move]() {
             // First fast forward through disposed tasks.
             peek(this);
-            const task = this[QueueScheduler_queue][QueueLike_pull]();
+            const task = this[QueueScheduler_queue][QueueLike_dequeue]();
             if (isSome(task)) {
                 this[EnumeratorLike_current] = task;
             }
@@ -165,7 +165,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
                 };
             const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue, } = this;
             const targetQueue = dueTime > now ? delayed : queue;
-            targetQueue[QueueableLike_push](task);
+            targetQueue[QueueableLike_enqueue](task);
             scheduleOnHost(this);
         },
     }));

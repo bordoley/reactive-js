@@ -96,7 +96,7 @@ export declare const DistinctUntilChangedObserverMixin_prev: unique symbol;
 
 export declare const DistinctUntilChangedObserverMixin_hasValue: unique symbol;
 
-export declare const ForEachObserverMixin_effect: unique symbol;
+export declare const EnqueueObserver_effect: unique symbol;
 
 export declare const KeepObserverMixin_predicate: unique symbol;
 
@@ -346,7 +346,7 @@ export declare const DisposableLike_error: unique symbol;
 
 export declare const DisposableLike_isDisposed: unique symbol;
 
-export declare const QueueableLike_push: unique symbol;
+export declare const QueueableLike_enqueue: unique symbol;
 
 export declare const QueueableLike_maxBufferSize: unique symbol;
 
@@ -354,7 +354,7 @@ export declare const SerialDisposableLike_current: unique symbol;
 
 export declare const QueueLike_head: unique symbol;
 
-export declare const QueueLike_pull: unique symbol;
+export declare const QueueLike_dequeue: unique symbol;
 
 export declare const QueueLike_count: unique symbol;
 

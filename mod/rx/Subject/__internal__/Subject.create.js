@@ -3,10 +3,10 @@
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { Subject_observers } from "../../../__internal__/symbols.js";
-import { IndexedQueueLike_get, QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { IndexedQueueLike_get, QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { bindMethod, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_publish, } from "../../../rx.js";
-import { DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -34,11 +34,11 @@ const Subject_create =
                 return;
             }
             const replay = this[QueueableLike_maxBufferSize];
-            if (replay > 0 && !this[QueueableLike_push](next)) {
-                this[QueueLike_pull]();
+            if (replay > 0 && !this[QueueableLike_enqueue](next)) {
+                this[QueueLike_dequeue]();
             }
             for (const observer of this[Subject_observers]) {
-                observer[QueueableLike_push](next);
+                observer[QueueableLike_enqueue](next);
             }
         },
         [ObservableLike_observe](observer) {
@@ -55,7 +55,7 @@ const Subject_create =
             const count = this[QueueLike_count];
             for (let i = 0; i < count; i++) {
                 const next = this[IndexedQueueLike_get](i);
-                observer[QueueableLike_push](next);
+                observer[QueueableLike_enqueue](next);
             }
             pipe(this, Disposable_onError(Disposable_toErrorHandler(observer)), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
         },

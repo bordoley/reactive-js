@@ -53,7 +53,7 @@ import * as Streamable from "../streaming/Streamable.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
-  QueueableLike_push,
+  QueueableLike_enqueue,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 
@@ -113,7 +113,7 @@ export const bindNodeCallback: BindNodeCallback = <T>(
         if (err) {
           observer[DisposableLike_dispose](error(err));
         } else {
-          observer[QueueableLike_push](arg);
+          observer[QueueableLike_enqueue](arg);
           observer[DispatcherLike_complete]();
         }
       };
@@ -201,7 +201,7 @@ export const createReadableSource = (
       );
 
       const onData = (v: Uint8Array) => {
-        observer[QueueableLike_push](v);
+        observer[QueueableLike_enqueue](v);
       };
       const onEnd = () => {
         observer[DispatcherLike_complete]();
@@ -260,18 +260,18 @@ export const createWritableSink = /*@__PURE__*/ (() => {
         );
 
         const onDrain = () => {
-          observer[QueueableLike_push](false);
+          observer[QueueableLike_enqueue](false);
         };
         const onFinish = () => observer[DispatcherLike_complete]();
         const onPause = () => {
-          observer[QueueableLike_push](true);
+          observer[QueueableLike_enqueue](true);
         };
 
         writable.on("drain", onDrain);
         writable.on("finish", onFinish);
         writable.on(NODE_JS_PAUSE_EVENT, onPause);
 
-        observer[QueueableLike_push](false);
+        observer[QueueableLike_enqueue](false);
       }),
     );
 })();
@@ -303,7 +303,7 @@ export const transform =
 
         pipe(
           modeObs,
-          Observable.dispatchTo(transformReadableStream),
+          Observable.enqueue(transformReadableStream),
           Observable.subscribe(observer[DispatcherLike_scheduler]),
           addToNodeStream(transform),
         );

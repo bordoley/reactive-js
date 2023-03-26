@@ -51,8 +51,8 @@ import { StreamLike } from "../../../streaming.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
@@ -74,7 +74,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             | typeof ObservableLike_observe
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
-            | typeof QueueableLike_push
+            | typeof QueueableLike_enqueue
             | typeof QueueableLike_maxBufferSize
             | typeof DispatcherLike_complete
             | typeof DispatcherLike_scheduler
@@ -109,7 +109,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             return observer[DispatcherLike_scheduler];
           },
 
-          [QueueableLike_push](
+          [QueueableLike_enqueue](
             this: TProperties & DispatchedObservableLike<T>,
             next: T,
           ): boolean {
@@ -139,7 +139,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
               observer[ObserverLike_notify](next);
               return true;
             } else if (!isDisposed) {
-              return observer[QueueableLike_push](next);
+              return observer[QueueableLike_enqueue](next);
             } else {
               return true;
             }
@@ -200,7 +200,7 @@ const Stream_mixin: <TReq, T>() => Mixin4<
         instance: Pick<
           StreamLike<TReq, T>,
           | typeof MulticastObservableLike_observerCount
-          | typeof QueueableLike_push
+          | typeof QueueableLike_enqueue
           | typeof QueueableLike_maxBufferSize
           | typeof DispatcherLike_complete
           | typeof ObservableLike_observe
@@ -253,8 +253,8 @@ const Stream_mixin: <TReq, T>() => Mixin4<
 
         [ObservableLike_isRunnable]: false as const,
 
-        [QueueableLike_push](this: TProperties, req: TReq): boolean {
-          return this[StreamMixin_dispatcher][QueueableLike_push](req);
+        [QueueableLike_enqueue](this: TProperties, req: TReq): boolean {
+          return this[StreamMixin_dispatcher][QueueableLike_enqueue](req);
         },
 
         [DispatcherLike_complete](this: TProperties) {

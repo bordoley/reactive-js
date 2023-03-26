@@ -8,7 +8,7 @@ import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__inte
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../../../scheduling.js";
 import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.create.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 const AsyncIterable_toFlowable = () => (iterable) => Flowable_create((modeObs) => Observable_create((observer) => {
@@ -27,7 +27,7 @@ const AsyncIterable_toFlowable = () => (iterable) => Flowable_create((modeObs) =
                     observer[DispatcherLike_complete]();
                     break;
                 }
-                else if (!observer[QueueableLike_push](next.value)) {
+                else if (!observer[QueueableLike_enqueue](next.value)) {
                     // An async iterable can produce resolved promises which are immediately
                     // scheduled on the microtask queue. This prevents the observer's scheduler
                     // from running and draining dispatched events.

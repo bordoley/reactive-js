@@ -17,7 +17,7 @@ import {
 } from "../../../__internal__/symbols.js";
 import {
   QueueLike,
-  QueueLike_pull,
+  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
   EnumeratorLike,
@@ -38,7 +38,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_push,
+  QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
@@ -155,7 +155,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           if (!continuation[DisposableLike_isDisposed]) {
             continuation[ContinuationLike_continuationScheduler] = this;
 
-            this[QueueableLike_push]({
+            this[QueueableLike_enqueue]({
               [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
               [VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
               [VirtualTask_continuation]: continuation,
@@ -168,7 +168,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             QueueLike<VirtualTask> &
             DisposableLike,
         ): boolean {
-          const task = this[QueueLike_pull]();
+          const task = this[QueueLike_dequeue]();
 
           if (isSome(task)) {
             this[EnumeratorLike_current] = task;

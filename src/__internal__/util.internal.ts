@@ -6,15 +6,15 @@ import {
   IndexedQueueLike_pop,
   IndexedQueueLike_set,
   QueueLike_count,
+  QueueLike_dequeue,
   QueueLike_head,
-  QueueLike_pull,
   SerialDisposableLike_current,
 } from "./symbols.js";
 
 export {
   SerialDisposableLike_current,
   QueueLike_head,
-  QueueLike_pull,
+  QueueLike_dequeue,
   QueueLike_count,
   IndexedQueueLike_get,
   IndexedQueueLike_set,
@@ -37,7 +37,7 @@ export interface QueueLike<T> extends QueueableLike<T> {
   readonly [QueueLike_count]: number;
   readonly [QueueLike_head]: Optional<T>;
 
-  [QueueLike_pull](): Optional<T>;
+  [QueueLike_dequeue](): Optional<T>;
 }
 
 export interface IndexedQueueLike<T> extends QueueLike<T> {

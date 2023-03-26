@@ -239,8 +239,8 @@ export const DistinctUntilChangedObserverMixin_hasValue = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const ForEachObserverMixin_effect = /*@__PURE__*/ symbol(
-  "ForEachObserverMixin_effect",
+export const EnqueueObserver_effect = /*@__PURE__*/ symbol(
+  "EnqueueObserver_effect",
 );
 
 /** @type {unique symbol} */
@@ -812,7 +812,9 @@ export const DisposableLike_isDisposed = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const QueueableLike_push = /*@__PURE__*/ symbol("QueueableLike_push");
+export const QueueableLike_enqueue = /*@__PURE__*/ symbol(
+  "QueueableLike_enqueue",
+);
 
 /** @type {unique symbol} */
 export const QueueableLike_maxBufferSize = /*@__PURE__*/ symbol(
@@ -828,7 +830,7 @@ export const SerialDisposableLike_current = /*@__PURE__*/ symbol(
 export const QueueLike_head = /*@__PURE__*/ symbol("QueueLike_head");
 
 /** @type {unique symbol} */
-export const QueueLike_pull = /*@__PURE__*/ symbol("QueueLike_pull");
+export const QueueLike_dequeue = /*@__PURE__*/ symbol("QueueLike_dequeue");
 
 /** @type {unique symbol} */
 export const QueueLike_count = /*@__PURE__*/ symbol("QueueLike_count");

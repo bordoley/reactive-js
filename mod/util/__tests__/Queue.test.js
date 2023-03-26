@@ -2,9 +2,9 @@
 
 import { floor, random } from "../../__internal__/math.js";
 import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../../__internal__/testing.js";
-import { QueueLike_count, QueueLike_head, QueueLike_pull, } from "../../__internal__/util.internal.js";
+import { QueueLike_count, QueueLike_dequeue, QueueLike_head, } from "../../__internal__/util.internal.js";
 import { newInstance, none, pipe } from "../../functions.js";
-import { QueueableLike_push } from "../../util.js";
+import { QueueableLike_enqueue } from "../../util.js";
 import IndexedQueue_createFifoQueue from "../Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Queue_createPriorityQueue from "../Queue/__internal__/Queue.createPriorityQueue.js";
 const createPriorityQueue = /*@__PURE__*/ (() => {
@@ -31,61 +31,61 @@ const makeShuffledArray = (n) => {
 testModule("Queue", describe("fifoQueueMixin", test("push/pull/count", () => {
     const queue = IndexedQueue_createFifoQueue();
     pipe(queue[QueueLike_head], expectEquals(none));
-    pipe(queue[QueueLike_pull](), expectEquals(none));
+    pipe(queue[QueueLike_dequeue](), expectEquals(none));
     for (let i = 0; i < 8; i++) {
-        queue[QueueableLike_push](i);
+        queue[QueueableLike_enqueue](i);
         pipe(queue[QueueLike_head], expectEquals(0));
     }
     pipe(queue[QueueLike_count], expectEquals(8));
-    pipe(queue[QueueLike_pull](), expectEquals(0));
+    pipe(queue[QueueLike_dequeue](), expectEquals(0));
     pipe(queue[QueueLike_head], expectEquals(1));
-    pipe(queue[QueueLike_pull](), expectEquals(1));
+    pipe(queue[QueueLike_dequeue](), expectEquals(1));
     pipe(queue[QueueLike_head], expectEquals(2));
-    pipe(queue[QueueLike_pull](), expectEquals(2));
+    pipe(queue[QueueLike_dequeue](), expectEquals(2));
     pipe(queue[QueueLike_head], expectEquals(3));
     for (let i = 8; i < 16; i++) {
-        queue[QueueableLike_push](i);
+        queue[QueueableLike_enqueue](i);
         pipe(queue[QueueLike_head], expectEquals(3));
     }
-    pipe(queue[QueueLike_pull](), expectEquals(3));
+    pipe(queue[QueueLike_dequeue](), expectEquals(3));
     pipe(queue[QueueLike_head], expectEquals(4));
-    pipe(queue[QueueLike_pull](), expectEquals(4));
+    pipe(queue[QueueLike_dequeue](), expectEquals(4));
     pipe(queue[QueueLike_head], expectEquals(5));
-    pipe(queue[QueueLike_pull](), expectEquals(5));
+    pipe(queue[QueueLike_dequeue](), expectEquals(5));
     pipe(queue[QueueLike_head], expectEquals(6));
     for (let i = 16; i < 32; i++) {
-        queue[QueueableLike_push](i);
+        queue[QueueableLike_enqueue](i);
         pipe(queue[QueueLike_head], expectEquals(6));
     }
     for (let i = 0; i < 20; i++) {
-        queue[QueueLike_pull]();
+        queue[QueueLike_dequeue]();
     }
     pipe(queue[QueueLike_head], expectEquals(26));
 }), test("shrink", () => {
     const queue = IndexedQueue_createFifoQueue();
     for (let i = 0; i < 300; i++) {
-        queue[QueueableLike_push](i);
+        queue[QueueableLike_enqueue](i);
     }
     for (let i = 0; i < 50; i++) {
-        queue[QueueLike_pull]();
+        queue[QueueLike_dequeue]();
     }
     pipe(queue[QueueLike_head], expectEquals(50));
     for (let i = 300; i < 500; i++) {
-        queue[QueueableLike_push](i);
+        queue[QueueableLike_enqueue](i);
     }
     for (let i = 0; i < 200; i++) {
-        queue[QueueLike_pull]();
+        queue[QueueLike_dequeue]();
     }
     pipe(queue[QueueLike_head], expectEquals(250));
 })), describe("priorityQueueMixin", test("push", () => {
     const queue = createPriorityQueue();
     const shuffledArray = makeShuffledArray(100);
     for (let i = 0; i < shuffledArray.length; i++) {
-        queue[QueueableLike_push](shuffledArray[i]);
+        queue[QueueableLike_enqueue](shuffledArray[i]);
     }
     const acc = [];
     while (queue[QueueLike_count] > 0) {
-        acc.push(queue[QueueLike_pull]());
+        acc.push(queue[QueueLike_dequeue]());
     }
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
 })));

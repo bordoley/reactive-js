@@ -8,7 +8,7 @@ import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast,
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
@@ -31,7 +31,7 @@ const DispatchedObservable_create =
             const observer = this[DispatchedObservable_observer];
             return observer[DispatcherLike_scheduler];
         },
-        [QueueableLike_push](next) {
+        [QueueableLike_enqueue](next) {
             const observer = this[DispatchedObservable_observer];
             // Practically the observer can never be none,
             // unless the stream operator uses fromFactory subscriptions
@@ -50,7 +50,7 @@ const DispatchedObservable_create =
                 return true;
             }
             else if (!isDisposed) {
-                return observer[QueueableLike_push](next);
+                return observer[QueueableLike_enqueue](next);
             }
             else {
                 return true;
@@ -96,8 +96,8 @@ const Stream_mixin = /*@__PURE__*/ (() => {
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
-        [QueueableLike_push](req) {
-            return this[StreamMixin_dispatcher][QueueableLike_push](req);
+        [QueueableLike_enqueue](req) {
+            return this[StreamMixin_dispatcher][QueueableLike_enqueue](req);
         },
         [DispatcherLike_complete]() {
             this[StreamMixin_dispatcher][DispatcherLike_complete]();

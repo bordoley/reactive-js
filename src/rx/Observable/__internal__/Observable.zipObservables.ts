@@ -16,7 +16,7 @@ import {
 import {
   QueueLike,
   QueueLike_count,
-  QueueLike_pull,
+  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
   EnumeratorLike,
@@ -48,8 +48,8 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike,
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -110,7 +110,7 @@ const QueuedEnumerator_create: <T>(
           this: DisposableLike & TProperties & QueueLike<T>,
         ) {
           if (this[QueueLike_count] > 0) {
-            const next = this[QueueLike_pull]() as T;
+            const next = this[QueueLike_dequeue]() as T;
             this[EnumeratorLike_current] = next;
             this[EnumeratorLike_hasCurrent] = true;
           } else {
@@ -209,7 +209,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           next: unknown,
         ) {
           Observer_assertState(this);
-          this[ZipObserver_queuedEnumerator][QueueableLike_push](next);
+          this[ZipObserver_queuedEnumerator][QueueableLike_enqueue](next);
 
           const enumerators = this[ZipObserver_enumerators];
 

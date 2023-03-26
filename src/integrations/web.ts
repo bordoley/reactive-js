@@ -53,8 +53,8 @@ import {
 import * as Streamable from "../streaming/Streamable.js";
 import {
   DisposableLike_dispose,
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -131,7 +131,7 @@ export const createEventSource = (
 
     const eventSource = newInstance(EventSource, requestURL, options);
     const listener = (ev: MessageEvent) => {
-      observer[QueueableLike_push]({
+      observer[QueueableLike_enqueue]({
         id: ev.lastEventId ?? "",
         type: ev.type ?? "",
         data: ev.data ?? "",
@@ -166,7 +166,7 @@ export const addEventListener =
 
       const listener = (event: Event) => {
         const result = selector(event);
-        observer[QueueableLike_push](result);
+        observer[QueueableLike_enqueue](result);
       };
 
       target.addEventListener(eventName, listener, { passive: true });
@@ -245,7 +245,7 @@ export const windowLocation: StreamableLike<
           | typeof DispatcherLike_complete
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
-          | typeof QueueableLike_push
+          | typeof QueueableLike_enqueue
           | typeof QueueableLike_maxBufferSize
           | typeof WindowLocationStreamLike_canGoBack
           | typeof WindowLocationStreamLike_goBack
@@ -294,11 +294,11 @@ export const windowLocation: StreamableLike<
           this[DelegatingLike_delegate][DispatcherLike_complete]();
         },
 
-        [QueueableLike_push](
+        [QueueableLike_enqueue](
           this: DelegatingLike<StreamLike<Updater<TState>, TState>>,
           stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
         ): boolean {
-          return this[DelegatingLike_delegate][QueueableLike_push](
+          return this[DelegatingLike_delegate][QueueableLike_enqueue](
             prevState => {
               const uri = createWindowLocationURIWithPrototype(
                 isFunction(stateOrUpdater)
@@ -315,7 +315,7 @@ export const windowLocation: StreamableLike<
           this: DelegatingLike<StreamLike<Updater<TState>, TState>>,
           stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
         ): boolean {
-          return this[DelegatingLike_delegate][QueueableLike_push](
+          return this[DelegatingLike_delegate][QueueableLike_enqueue](
             prevState => {
               const uri = createWindowLocationURIWithPrototype(
                 isFunction(stateOrUpdater)
@@ -434,11 +434,11 @@ export const windowLocation: StreamableLike<
           return pipe(
             state,
             Observable.fromOptional(),
-            Observable.dispatchTo(state =>
+            Observable.enqueue(state =>
               replace
-                ? replaceState[QueueableLike_push](state)
+                ? replaceState[QueueableLike_enqueue](state)
                 : push
-                ? pushState[QueueableLike_push](state)
+                ? pushState[QueueableLike_enqueue](state)
                 : false,
             ),
             Observable.ignoreElements(),

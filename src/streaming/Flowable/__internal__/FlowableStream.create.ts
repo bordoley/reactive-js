@@ -30,7 +30,7 @@ import {
   FlowableStreamLike_pause,
   FlowableStreamLike_resume,
 } from "../../../streaming.js";
-import { QueueableLike_push } from "../../../util.js";
+import { QueueableLike_enqueue } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Stream_mixin from "../../Stream/__internal__/Stream.mixin.js";
 
@@ -96,10 +96,10 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
       }),
       {
         [FlowableStreamLike_pause](this: FlowableStreamLike<T>) {
-          this[QueueableLike_push](true);
+          this[QueueableLike_enqueue](true);
         },
         [FlowableStreamLike_resume](this: FlowableStreamLike<T>) {
-          this[QueueableLike_push](false);
+          this[QueueableLike_enqueue](false);
         },
       },
     ),

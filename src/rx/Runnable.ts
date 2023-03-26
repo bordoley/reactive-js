@@ -52,7 +52,7 @@ import { identity, returns } from "../functions.js";
 import {
   CombineLatest,
   CurrentTime,
-  DispatchTo,
+  Enqueue,
   Exhaust,
   ExhaustMap,
   ForkMerge,
@@ -88,10 +88,10 @@ import Observable_concatWith from "./Observable/__internal__/Observable.concatWi
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
 import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
-import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
+import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
@@ -184,9 +184,6 @@ export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithChars
 
 export const defer: Defer<RunnableLike>["defer"] = Runnable_defer;
 
-export const dispatchTo: DispatchTo<RunnableLike>["dispatchTo"] =
-  Observable_dispatchTo;
-
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
@@ -195,6 +192,8 @@ export const empty: Empty<RunnableLike, { delay?: number }>["empty"] =
 
 export const encodeUtf8: EncodeUtf8<RunnableLike>["encodeUtf8"] =
   Runnable_encodeUtf8;
+
+export const enqueue: Enqueue<RunnableLike>["enqueue"] = Observable_enqueue;
 
 export const endWith: EndWith<RunnableLike>["endWith"] = Observable_endWith;
 

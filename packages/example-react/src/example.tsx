@@ -37,7 +37,7 @@ import {
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 import { ObservableLike } from "@reactive-js/core/rx";
-import { QueueableLike_push } from "@reactive-js/core/util";
+import { QueueableLike_enqueue } from "@reactive-js/core/util";
 
 const Root = () => {
   const history = useWindowLocation();
@@ -68,7 +68,7 @@ const Root = () => {
     () =>
       pipe(
         Runnable.generate(increment, returns(counterInitialValue ?? -1)),
-        Runnable.dispatchTo<number>(value =>
+        Runnable.enqueue<number>(value =>
           history.replace((uri: WindowLocationURI) => ({
             ...uri,
             query: `v=${value}`,
@@ -201,7 +201,7 @@ const RxComponent = createComponent(
       const enumerator = Observable.__stream(asyncEnumerable);
       const move: SideEffect = Observable.__bindMethod(
         enumerator,
-        QueueableLike_push,
+        QueueableLike_enqueue,
       );
 
       const animatedDivRef = Observable.__memo(createRef);
@@ -213,7 +213,7 @@ const RxComponent = createComponent(
 
       const runAnimation: SideEffect = Observable.__bindMethod(
         animationStream,
-        QueueableLike_push,
+        QueueableLike_enqueue,
       );
 
       const animationIsRunning = Observable.__observe(animationStream);

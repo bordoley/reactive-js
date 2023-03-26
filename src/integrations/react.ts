@@ -74,7 +74,7 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_push,
+  QueueableLike_enqueue,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 
@@ -242,7 +242,7 @@ const useDispatcher = <TReq>(
     (req: TReq) => {
       const dispatcher = dispatcherRef.current;
       if (isSome(dispatcher)) {
-        dispatcher[QueueableLike_push](req);
+        dispatcher[QueueableLike_enqueue](req);
       }
     },
     [dispatcherRef],

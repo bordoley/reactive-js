@@ -16,7 +16,7 @@ import {
   IndexedQueueLike_set,
   QueueLike,
   QueueLike_count,
-  QueueLike_pull,
+  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
   Comparator,
@@ -26,7 +26,7 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
-import { QueueableLike_push } from "../../../util.js";
+import { QueueableLike_enqueue } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
 
 const Queue_priorityQueueMixin: <T>() => Mixin2<
@@ -97,7 +97,7 @@ const Queue_priorityQueueMixin: <T>() => Mixin2<
       function PriorityQueue(
         instance: Pick<
           QueueLike<T>,
-          typeof QueueLike_pull | typeof QueueableLike_push
+          typeof QueueLike_dequeue | typeof QueueableLike_enqueue
         > &
           Mutable<TProperties>,
         comparator: Comparator<T>,
@@ -111,14 +111,16 @@ const Queue_priorityQueueMixin: <T>() => Mixin2<
         [PriorityQueueImpl_comparator]: none,
       }),
       {
-        [QueueLike_pull](this: TProperties & IndexedQueueLike<T>): Optional<T> {
+        [QueueLike_dequeue](
+          this: TProperties & IndexedQueueLike<T>,
+        ): Optional<T> {
           const count = this[QueueLike_count];
 
           if (count === 0) {
             return none;
           } else if (count === 1) {
             return call(
-              IndexedQueuePrototype[QueueLike_pull],
+              IndexedQueuePrototype[QueueLike_dequeue],
               this,
             ) as Optional<T>;
           } else {
@@ -132,12 +134,12 @@ const Queue_priorityQueueMixin: <T>() => Mixin2<
           }
         },
 
-        [QueueableLike_push](
+        [QueueableLike_enqueue](
           this: TProperties & IndexedQueueLike<T>,
           item: T,
         ): boolean {
           const result = call(
-            IndexedQueuePrototype[QueueableLike_push],
+            IndexedQueuePrototype[QueueableLike_enqueue],
             this,
             item,
           );

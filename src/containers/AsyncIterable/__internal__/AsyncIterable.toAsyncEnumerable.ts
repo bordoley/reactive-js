@@ -12,8 +12,8 @@ import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__inte
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import {
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -35,7 +35,7 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
               Observable_forEach<ObservableLike, IteratorResult<unknown, any>>(
                 result => {
                   if (!result.done) {
-                    observer[QueueableLike_push](result.value);
+                    observer[QueueableLike_enqueue](result.value);
                   } else {
                     observer[DispatcherLike_complete]();
                   }

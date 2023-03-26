@@ -11,7 +11,7 @@ import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Subject_create from "../../../rx/Subject/__internal__/Subject.create.js";
 import { FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, } from "../../../streaming.js";
-import { QueueableLike_push } from "../../../util.js";
+import { QueueableLike_enqueue } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Stream_mixin from "../../Stream/__internal__/Stream.mixin.js";
 const FlowableStream_create = /*@__PURE__*/ (() => {
@@ -28,10 +28,10 @@ const FlowableStream_create = /*@__PURE__*/ (() => {
         [FlowableStreamLike_isPaused]: none,
     }), {
         [FlowableStreamLike_pause]() {
-            this[QueueableLike_push](true);
+            this[QueueableLike_enqueue](true);
         },
         [FlowableStreamLike_resume]() {
-            this[QueueableLike_push](false);
+            this[QueueableLike_enqueue](false);
         },
     }));
     return (op, scheduler, options) => {

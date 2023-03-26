@@ -4,10 +4,10 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { floor, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationLike_run, ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, Continuation_childContinuation, Continuation_effect, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, SchedulerMixin_currentContinuation, SchedulerMixin_startTime, SchedulerMixin_yieldRequested, } from "../../../__internal__/symbols.js";
-import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { error, isNone, isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -27,7 +27,7 @@ export const PriorityScheduler_mixin =
         instance[ContinuationLike_priority] = priority;
         pipe(instance, Disposable_onDisposed(_ => {
             let head = none;
-            while (((head = instance[QueueLike_pull]()), isSome(head))) {
+            while (((head = instance[QueueLike_dequeue]()), isSome(head))) {
                 if (!head[DisposableLike_isDisposed]) {
                     scheduler[ContinuationSchedulerLike_schedule](head, 0);
                 }
@@ -59,7 +59,7 @@ export const PriorityScheduler_mixin =
             const scheduler = this[ContinuationLike_continuationScheduler];
             // Run any inner continuations first.
             let head = none;
-            while (((head = this[QueueLike_pull]()), isSome(head))) {
+            while (((head = this[QueueLike_dequeue]()), isSome(head))) {
                 this[Continuation_childContinuation] = head;
                 head[ContinuationLike_run]();
                 this[Continuation_childContinuation] = none;
@@ -91,7 +91,7 @@ export const PriorityScheduler_mixin =
                     let head = none;
                     // If the current continuation is being rescheduled with delay,
                     // reschedule all its children on the parent.
-                    while (((head = this[QueueLike_pull]()), isSome(head))) {
+                    while (((head = this[QueueLike_dequeue]()), isSome(head))) {
                         if (!head[DisposableLike_isDisposed]) {
                             scheduler[ContinuationSchedulerLike_schedule](head, 0);
                         }
@@ -117,7 +117,7 @@ export const PriorityScheduler_mixin =
                 childContinuation[ContinuationSchedulerLike_schedule](continuation, 0);
             }
             else {
-                this[QueueableLike_push](continuation);
+                this[QueueableLike_enqueue](continuation);
             }
         },
     }));

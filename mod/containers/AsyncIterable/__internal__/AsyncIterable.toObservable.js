@@ -5,7 +5,7 @@ import { DispatcherLike_complete, DispatcherLike_scheduler, } from "../../../rx.
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
 const AsyncIterable_toObservable = () => (iterable) => Observable_create((observer) => {
     const iterator = iterable[Symbol.asyncIterator]();
     const scheduler = observer[DispatcherLike_scheduler];
@@ -20,7 +20,7 @@ const AsyncIterable_toObservable = () => (iterable) => Observable_create((observ
                     observer[DispatcherLike_complete]();
                     break;
                 }
-                else if (!observer[QueueableLike_push](next.value)) {
+                else if (!observer[QueueableLike_enqueue](next.value)) {
                     // An async iterable can produce resolved promises which are immediately
                     // scheduled on the microtask queue. This prevents the observer's scheduler
                     // from running and draining dispatched events.

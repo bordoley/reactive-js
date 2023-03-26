@@ -2,11 +2,11 @@
 
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ObserverMixin_continuation, ObserverMixin_dispatchSubscription, ObserverMixin_isCompleted, } from "../../../__internal__/symbols.js";
-import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { call, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_schedule from "./Observer.schedule.js";
@@ -17,7 +17,7 @@ const Observer_mixin = /*@__PURE__*/ (() => {
             const continuation = (_a = observer[ObserverMixin_continuation]) !== null && _a !== void 0 ? _a : ((ctx) => {
                 unsafeCast(observer);
                 while (observer[QueueLike_count] > 0) {
-                    const next = observer[QueueLike_pull]();
+                    const next = observer[QueueLike_dequeue]();
                     observer[ObserverLike_notify](next);
                     if (observer[QueueLike_count] > 0) {
                         ctx[ContinuationContextLike_yield]();
@@ -42,10 +42,10 @@ const Observer_mixin = /*@__PURE__*/ (() => {
         [ObserverMixin_isCompleted]: false,
         [ObserverMixin_dispatchSubscription]: Disposable_disposed,
     }), {
-        [QueueableLike_push](next) {
+        [QueueableLike_enqueue](next) {
             if (!this[ObserverMixin_isCompleted] &&
                 !this[DisposableLike_isDisposed]) {
-                const result = call(fifoQueueProtoype[QueueableLike_push], this, next);
+                const result = call(fifoQueueProtoype[QueueableLike_enqueue], this, next);
                 scheduleDrainQueue(this);
                 return result;
             }

@@ -6,7 +6,7 @@ import { increment, isSome, pipe, raise, returns, } from "../../functions.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as Streamable from "../../streaming/Streamable.js";
-import { DisposableLike_error, QueueableLike_push } from "../../util.js";
+import { DisposableLike_error, QueueableLike_enqueue } from "../../util.js";
 import * as Observable from "../Observable.js";
 import { __await, __memo } from "../Observable.js";
 const onSubscribeTests = describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
@@ -89,7 +89,7 @@ const computeTests = describe("compute", test("batch mode", () => {
     const result = await pipe(Observable.compute(() => {
         var _a;
         const stream = Observable.__stream(Streamable.identity());
-        const push = Observable.__bindMethod(stream, QueueableLike_push);
+        const push = Observable.__bindMethod(stream, QueueableLike_enqueue);
         const result = (_a = Observable.__observe(stream)) !== null && _a !== void 0 ? _a : 0;
         Observable.__do(push, result + 1);
         return result;

@@ -67,7 +67,7 @@ import { StreamableLike_stream } from "../../streaming.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_push,
+  QueueableLike_enqueue,
 } from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
@@ -317,10 +317,10 @@ const toFlowableTests = describe(
     const generateStream = streamableSrc[StreamableLike_stream](scheduler);
 
     scheduler[SchedulerLike_schedule](() =>
-      generateStream[QueueableLike_push](false),
+      generateStream[QueueableLike_enqueue](false),
     ),
       scheduler[SchedulerLike_schedule](
-        () => generateStream[QueueableLike_push](true),
+        () => generateStream[QueueableLike_enqueue](true),
 
         {
           delay: 2,
@@ -328,7 +328,7 @@ const toFlowableTests = describe(
       );
 
     scheduler[SchedulerLike_schedule](
-      () => generateStream[QueueableLike_push](false),
+      () => generateStream[QueueableLike_enqueue](false),
       {
         delay: 4,
       },

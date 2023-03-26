@@ -3,11 +3,11 @@
 import { max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { TakeLastObserverMixin_takeLastQueue } from "../../../__internal__/symbols.js";
-import { QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -30,8 +30,8 @@ const Observable_takeLast = /*@__PURE__*/ (() => {
         [TakeLastObserverMixin_takeLastQueue]: none,
     }), {
         [ObserverLike_notify](next) {
-            if (!this[TakeLastObserverMixin_takeLastQueue][QueueableLike_push](next)) {
-                this[TakeLastObserverMixin_takeLastQueue][QueueLike_pull]();
+            if (!this[TakeLastObserverMixin_takeLastQueue][QueueableLike_enqueue](next)) {
+                this[TakeLastObserverMixin_takeLastQueue][QueueLike_dequeue]();
             }
         },
     }));

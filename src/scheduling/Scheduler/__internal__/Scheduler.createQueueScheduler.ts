@@ -22,8 +22,8 @@ import {
 } from "../../../__internal__/symbols.js";
 import {
   QueueLike,
+  QueueLike_dequeue,
   QueueLike_head,
-  QueueLike_pull,
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../__internal__/util.internal.js";
@@ -65,7 +65,7 @@ import {
 import {
   DisposableLike,
   DisposableLike_isDisposed,
-  QueueableLike_push,
+  QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -119,10 +119,10 @@ const Scheduler_createQueueScheduler: Function2<
         break;
       }
 
-      delayed[QueueLike_pull]();
+      delayed[QueueLike_dequeue]();
 
       if (!taskIsDispose) {
-        queue[QueueableLike_push](task);
+        queue[QueueableLike_enqueue](task);
       }
     }
 
@@ -138,7 +138,7 @@ const Scheduler_createQueueScheduler: Function2<
         break;
       }
 
-      queue[QueueLike_pull]();
+      queue[QueueLike_dequeue]();
     }
 
     return task ?? delayed[QueueLike_head];
@@ -327,7 +327,7 @@ const Scheduler_createQueueScheduler: Function2<
           // First fast forward through disposed tasks.
           peek(this);
 
-          const task = this[QueueScheduler_queue][QueueLike_pull]();
+          const task = this[QueueScheduler_queue][QueueLike_dequeue]();
 
           if (isSome(task)) {
             this[EnumeratorLike_current] = task;
@@ -377,7 +377,7 @@ const Scheduler_createQueueScheduler: Function2<
             [QueueScheduler_queue]: queue,
           } = this;
           const targetQueue = dueTime > now ? delayed : queue;
-          targetQueue[QueueableLike_push](task);
+          targetQueue[QueueableLike_enqueue](task);
 
           scheduleOnHost(this);
         },

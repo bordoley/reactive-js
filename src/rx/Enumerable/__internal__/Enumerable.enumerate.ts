@@ -11,7 +11,7 @@ import { EnumerableEnumerator_continuationQueue } from "../../../__internal__/sy
 import {
   IndexedQueueLike,
   QueueLike,
-  QueueLike_pull,
+  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
   EnumeratorLike,
@@ -54,7 +54,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_push,
+  QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -125,7 +125,7 @@ const Enumerable_enumerate: <T>() => (
 
           while (!this[EnumeratorLike_hasCurrent]) {
             const continuation =
-              this[EnumerableEnumerator_continuationQueue][QueueLike_pull]();
+              this[EnumerableEnumerator_continuationQueue][QueueLike_dequeue]();
             if (isSome(continuation)) {
               this[PrioritySchedulerImplementationLike_runContinuation](
                 continuation,
@@ -160,7 +160,7 @@ const Enumerable_enumerate: <T>() => (
 
           continuation[ContinuationLike_continuationScheduler] = this;
 
-          this[EnumerableEnumerator_continuationQueue][QueueableLike_push](
+          this[EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](
             continuation,
           );
         },

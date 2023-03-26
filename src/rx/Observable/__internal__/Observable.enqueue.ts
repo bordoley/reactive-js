@@ -8,9 +8,11 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { EnqueueObserver_effect } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Function1,
+  SideEffect1,
   bindMethod,
   isFunction,
   none,
@@ -26,34 +28,34 @@ import {
 import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import {
   QueueableLike,
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
-type ObservableDispatchTo = <C extends ObservableLike, T = unknown>(
-  effect: QueueableLike<T> | Function1<T, boolean>,
+type ObservableEnqueue = <C extends ObservableLike, T = unknown>(
+  queue: QueueableLike<T> | Function1<T, boolean> | SideEffect1<T>,
 ) => ContainerOperator<C, T, T>;
-const Observable_dispatchTo: ObservableDispatchTo = /*@__PURE__*/ (<T>() => {
-  const createDispatchToObserver: <T>(
+const Observable_enqueue: ObservableEnqueue = /*@__PURE__*/ (<T>() => {
+  const createEnqueueObserver: <T>(
     delegate: ObserverLike<T>,
-    effect: Function1<T, boolean>,
+    effect: Function1<T, boolean> | SideEffect1<T>,
   ) => ObserverLike<T> = (<T>() => {
     type TProperties = {
-      readonly d: Function1<T, boolean>;
+      readonly [EnqueueObserver_effect]: Function1<T, boolean> | SideEffect1<T>;
     };
 
     return createInstanceFactory(
       mix(
         include(Disposable_delegatingMixin(), Observer_mixin<T>()),
-        function DispatchToObserver(
+        function EnqueueObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
-          effect: Function1<T, boolean>,
+          effect: Function1<T, boolean> | SideEffect1<T>,
         ): ObserverLike<T> {
           init(Disposable_delegatingMixin(), instance, delegate);
           init(
@@ -63,12 +65,12 @@ const Observable_dispatchTo: ObservableDispatchTo = /*@__PURE__*/ (<T>() => {
             delegate[QueueableLike_maxBufferSize],
           );
 
-          instance.d = effect;
+          instance[EnqueueObserver_effect] = effect;
 
           return instance;
         },
         props<TProperties>({
-          d: none,
+          [EnqueueObserver_effect]: none,
         }),
         {
           [ObserverLike_notify](
@@ -79,7 +81,7 @@ const Observable_dispatchTo: ObservableDispatchTo = /*@__PURE__*/ (<T>() => {
           ) {
             Observer_assertState(this);
 
-            if (!this.d(next)) {
+            if (!(this[EnqueueObserver_effect](next) ?? true)) {
               this[DispatcherLike_scheduler][SchedulerLike_requestYield]();
             }
             this[DelegatingLike_delegate][ObserverLike_notify](next);
@@ -89,16 +91,18 @@ const Observable_dispatchTo: ObservableDispatchTo = /*@__PURE__*/ (<T>() => {
     );
   })();
 
-  return ((push: QueueableLike<T> | Function1<T, boolean>) => {
-    const effect = isFunction(push)
-      ? push
-      : bindMethod(push, QueueableLike_push);
+  return ((
+    queue: QueueableLike<T> | Function1<T, boolean> | SideEffect1<T>,
+  ) => {
+    const effect = isFunction(queue)
+      ? queue
+      : bindMethod(queue, QueueableLike_enqueue);
     return pipe(
-      createDispatchToObserver,
+      createEnqueueObserver,
       partial(effect),
       Observable_liftEnumerableOperator,
     );
-  }) as ObservableDispatchTo;
+  }) as ObservableEnqueue;
 })();
 
-export default Observable_dispatchTo;
+export default Observable_enqueue;

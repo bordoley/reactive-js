@@ -2,7 +2,7 @@
 
 import { compose, identity, pipe, } from "../../../functions.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
-import Observable_dispatchTo from "../../../rx/Observable/__internal__/Observable.dispatchTo.js";
+import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.enqueue.js";
 import Observable_forkMerge from "../../../rx/Observable/__internal__/Observable.forkMerge.js";
 import Observable_pairwise from "../../../rx/Observable/__internal__/Observable.pairwise.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
@@ -19,7 +19,7 @@ const Streamable_createWriteThroughCache = (initialState, onInit, onChange, opti
         const state = stateStore[StreamableLike_stream](scheduler, options);
         pipe(state, Observable_forkMerge(compose(Observable_takeFirst(), Observable_concatMap(onInit)), compose(throttleDuration > 0
             ? Observable_throttle(throttleDuration)
-            : identity, Observable_pairwise(), Observable_concatMap(([oldValue, newValue]) => onChange(oldValue, newValue)))), Observable_dispatchTo(state), Observable_subscribe(scheduler, options), Disposable_addTo(state));
+            : identity, Observable_pairwise(), Observable_concatMap(([oldValue, newValue]) => onChange(oldValue, newValue)))), Observable_enqueue(state), Observable_subscribe(scheduler, options), Disposable_addTo(state));
         return state;
     };
     return {

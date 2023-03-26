@@ -5,7 +5,7 @@ import { QueueableLike_maxBufferSize } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "./Observable.create.js";
-import Observable_dispatchTo from "./Observable.dispatchTo.js";
+import Observable_enqueue from "./Observable.enqueue.js";
 import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 
 const Observable_subscribeOn =
@@ -22,7 +22,7 @@ const Observable_subscribeOn =
 
       pipe(
         observable,
-        Observable_dispatchTo<ObservableLike, T>(observer),
+        Observable_enqueue<ObservableLike, T>(observer),
         Observable_subscribeWithMaxBufferSize(
           scheduler,
           options?.maxBufferSize ?? observer[QueueableLike_maxBufferSize],

@@ -12,8 +12,8 @@ import {
   IndexedQueueLike_pop,
   IndexedQueueLike_set,
   QueueLike_count,
+  QueueLike_dequeue,
   QueueLike_head,
-  QueueLike_pull,
 } from "../../../__internal__/util.internal.js";
 import {
   Optional,
@@ -26,8 +26,8 @@ import {
 } from "../../../functions.js";
 import {
   QueueableLike,
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../../../util.js";
 
 const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
@@ -155,7 +155,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
           return head === this[FifoQueue_tail] ? none : values[head];
         },
 
-        [QueueLike_pull](this: TProperties & QueueableLike) {
+        [QueueLike_dequeue](this: TProperties & QueueableLike) {
           const tail = this[FifoQueue_tail];
           const values = this[FifoQueue_values] ?? [];
 
@@ -246,7 +246,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
           return oldValue;
         },
 
-        [QueueableLike_push](
+        [QueueableLike_enqueue](
           this: TProperties & QueueableLike,
           item: T,
         ): boolean {

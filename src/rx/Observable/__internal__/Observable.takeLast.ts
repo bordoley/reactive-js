@@ -11,7 +11,7 @@ import { TakeLastObserverMixin_takeLastQueue } from "../../../__internal__/symbo
 import {
   IndexedQueueLike,
   QueueLike,
-  QueueLike_pull,
+  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -24,8 +24,8 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike,
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -88,9 +88,11 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           next: T,
         ) {
           if (
-            !this[TakeLastObserverMixin_takeLastQueue][QueueableLike_push](next)
+            !this[TakeLastObserverMixin_takeLastQueue][QueueableLike_enqueue](
+              next,
+            )
           ) {
-            this[TakeLastObserverMixin_takeLastQueue][QueueLike_pull]();
+            this[TakeLastObserverMixin_takeLastQueue][QueueLike_dequeue]();
           }
         },
       },

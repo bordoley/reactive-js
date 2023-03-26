@@ -128,7 +128,7 @@
 
   ↳ [`CurrentTime`](rx.CurrentTime.md)
 
-  ↳ [`DispatchTo`](rx.DispatchTo.md)
+  ↳ [`Enqueue`](rx.Enqueue.md)
 
   ↳ [`Exhaust`](rx.Exhaust.md)
 

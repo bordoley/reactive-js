@@ -22,7 +22,7 @@ import {
   IndexedQueueLike,
   QueueLike,
   QueueLike_count,
-  QueueLike_pull,
+  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
   ConcatAll,
@@ -47,8 +47,8 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -95,7 +95,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
         observer[MergeAllObserver_maxConcurrency]
       ) {
         const nextObs =
-          observer[MergeAllObserver_observablesQueue][QueueLike_pull]();
+          observer[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
 
         if (isSome(nextObs)) {
           observer[MergeAllObserver_activeCount]++;
@@ -188,7 +188,9 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             next: ContainerOf<C, T>,
           ) {
             Observer_assertState(this);
-            this[MergeAllObserver_observablesQueue][QueueableLike_push](next);
+            this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](
+              next,
+            );
 
             // Drop old events if the maxBufferSize has been exceeded
             if (
@@ -196,7 +198,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
                 this[MergeAllObserver_activeCount] >
               this[MergeAllObserver_maxBufferSize]
             ) {
-              this[MergeAllObserver_observablesQueue][QueueLike_pull]();
+              this[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
             }
             subscribeNext(this);
           },

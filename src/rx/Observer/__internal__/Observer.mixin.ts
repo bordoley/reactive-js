@@ -15,7 +15,7 @@ import {
 import {
   QueueLike,
   QueueLike_count,
-  QueueLike_pull,
+  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
   Optional,
@@ -41,7 +41,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_push,
+  QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -69,7 +69,7 @@ const Observer_mixin: <T>() => Mixin2<
           unsafeCast<TProperties & ObserverLike<T>>(observer);
 
           while (observer[QueueLike_count] > 0) {
-            const next = observer[QueueLike_pull]() as T;
+            const next = observer[QueueLike_dequeue]() as T;
             observer[ObserverLike_notify](next);
 
             if (observer[QueueLike_count] > 0) {
@@ -126,7 +126,7 @@ const Observer_mixin: <T>() => Mixin2<
         [ObserverMixin_dispatchSubscription]: Disposable_disposed,
       }),
       {
-        [QueueableLike_push](
+        [QueueableLike_enqueue](
           this: TProperties & ObserverLike<T> & QueueLike<T>,
           next: T,
         ): boolean {
@@ -135,7 +135,7 @@ const Observer_mixin: <T>() => Mixin2<
             !this[DisposableLike_isDisposed]
           ) {
             const result = call(
-              fifoQueueProtoype[QueueableLike_push],
+              fifoQueueProtoype[QueueableLike_enqueue],
               this,
               next,
             );

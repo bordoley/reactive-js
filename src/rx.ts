@@ -210,14 +210,14 @@ export interface CurrentTime<C extends ObservableLike> extends Container<C> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface DispatchTo<C extends ObservableLike, O = never>
+export interface Enqueue<C extends ObservableLike, O = never>
   extends Container<C> {
   /**
    *
    * @category Operator
    */
-  dispatchTo<T>(
-    dispatcher: QueueableLike<T> | Function1<T, boolean>,
+  enqueue<T>(
+    queue: QueueableLike<T> | Function1<T, boolean>,
     options?: O,
   ): ContainerOperator<C, T, T>;
 }

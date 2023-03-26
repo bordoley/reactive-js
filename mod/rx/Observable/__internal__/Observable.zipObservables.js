@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ZipObserver_enumerators, ZipObserver_queuedEnumerator, } from "../../../__internal__/symbols.js";
-import { QueueLike_count, QueueLike_pull, } from "../../../__internal__/util.internal.js";
+import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
 import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
@@ -13,7 +13,7 @@ import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, QueueableLike_push, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -44,7 +44,7 @@ const QueuedEnumerator_create = /*@__PURE__*/ (() => {
     }), {
         [EnumeratorLike_move]() {
             if (this[QueueLike_count] > 0) {
-                const next = this[QueueLike_pull]();
+                const next = this[QueueLike_dequeue]();
                 this[EnumeratorLike_current] = next;
                 this[EnumeratorLike_hasCurrent] = true;
             }
@@ -85,7 +85,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     }), {
         [ObserverLike_notify](next) {
             Observer_assertState(this);
-            this[ZipObserver_queuedEnumerator][QueueableLike_push](next);
+            this[ZipObserver_queuedEnumerator][QueueableLike_enqueue](next);
             const enumerators = this[ZipObserver_enumerators];
             if (!shouldEmit(enumerators)) {
                 return;

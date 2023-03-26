@@ -52,10 +52,10 @@
 - [concatWith](rx_Observable.md#concatwith)
 - [contains](rx_Observable.md#contains)
 - [decodeWithCharset](rx_Observable.md#decodewithcharset)
-- [dispatchTo](rx_Observable.md#dispatchto)
 - [distinctUntilChanged](rx_Observable.md#distinctuntilchanged)
 - [encodeUtf8](rx_Observable.md#encodeutf8)
 - [endWith](rx_Observable.md#endwith)
+- [enqueue](rx_Observable.md#enqueue)
 - [everySatisfy](rx_Observable.md#everysatisfy)
 - [exhaust](rx_Observable.md#exhaust)
 - [exhaustMap](rx_Observable.md#exhaustmap)
@@ -2073,29 +2073,6 @@ ___
 
 ___
 
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> \| [`Function1`](functions.md#function1)<`T`, `boolean`\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
@@ -2154,6 +2131,29 @@ ___
 | :------ | :------ |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> \| [`Function1`](functions.md#function1)<`T`, `boolean`\> |
+| `options?` | `undefined` |
 
 #### Returns
 

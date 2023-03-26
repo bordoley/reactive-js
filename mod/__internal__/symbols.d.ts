@@ -97,7 +97,7 @@ export const DistinctUntilChangedObserverMixin_prev: unique symbol;
 /** @type {unique symbol} */
 export const DistinctUntilChangedObserverMixin_hasValue: unique symbol;
 /** @type {unique symbol} */
-export const ForEachObserverMixin_effect: unique symbol;
+export const EnqueueObserver_effect: unique symbol;
 /** @type {unique symbol} */
 export const KeepObserverMixin_predicate: unique symbol;
 /** @type {unique symbol} */
@@ -347,7 +347,7 @@ export const DisposableLike_error: unique symbol;
 /** @type {unique symbol} */
 export const DisposableLike_isDisposed: unique symbol;
 /** @type {unique symbol} */
-export const QueueableLike_push: unique symbol;
+export const QueueableLike_enqueue: unique symbol;
 /** @type {unique symbol} */
 export const QueueableLike_maxBufferSize: unique symbol;
 /** @type {unique symbol} */
@@ -355,7 +355,7 @@ export const SerialDisposableLike_current: unique symbol;
 /** @type {unique symbol} */
 export const QueueLike_head: unique symbol;
 /** @type {unique symbol} */
-export const QueueLike_pull: unique symbol;
+export const QueueLike_dequeue: unique symbol;
 /** @type {unique symbol} */
 export const QueueLike_count: unique symbol;
 /** @type {unique symbol} */

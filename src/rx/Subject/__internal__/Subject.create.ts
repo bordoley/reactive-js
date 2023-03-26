@@ -13,7 +13,7 @@ import {
   IndexedQueueLike_get,
   QueueLike,
   QueueLike_count,
-  QueueLike_pull,
+  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
   bindMethod,
@@ -34,8 +34,8 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_isDisposed,
+  QueueableLike_enqueue,
   QueueableLike_maxBufferSize,
-  QueueableLike_push,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -94,12 +94,12 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
 
             const replay = this[QueueableLike_maxBufferSize];
 
-            if (replay > 0 && !this[QueueableLike_push](next)) {
-              this[QueueLike_pull]();
+            if (replay > 0 && !this[QueueableLike_enqueue](next)) {
+              this[QueueLike_dequeue]();
             }
 
             for (const observer of this[Subject_observers]) {
-              observer[QueueableLike_push](next);
+              observer[QueueableLike_enqueue](next);
             }
           },
 
@@ -125,7 +125,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
             const count = this[QueueLike_count];
             for (let i = 0; i < count; i++) {
               const next = this[IndexedQueueLike_get](i);
-              observer[QueueableLike_push](next);
+              observer[QueueableLike_enqueue](next);
             }
 
             pipe(

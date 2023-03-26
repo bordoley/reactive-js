@@ -1,87 +1,12 @@
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-  Mutable,
-  createInstanceFactory,
-  include,
-  init,
-  mix,
-  props,
-} from "../../../__internal__/mixins.js";
-import { ForEachObserverMixin_effect } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
-import { SideEffect1, none, partial, pipe } from "../../../functions.js";
-import {
-  DispatcherLike_scheduler,
-  ObservableLike,
-  ObserverLike,
-  ObserverLike_notify,
-} from "../../../rx.js";
-import { QueueableLike_maxBufferSize } from "../../../util.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
+import { SideEffect1 } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
+import Observable_enqueue from "./Observable.enqueue.js";
 
 type ObservableForEach = <C extends ObservableLike, T = unknown>(
   effect: SideEffect1<T>,
 ) => ContainerOperator<C, T, T>;
-const Observable_forEach: ObservableForEach = /*@__PURE__*/ (<T>() => {
-  const createForEachObserver: <T>(
-    delegate: ObserverLike<T>,
-    effect: SideEffect1<T>,
-  ) => ObserverLike<T> = (<T>() => {
-    type TProperties = {
-      readonly [ForEachObserverMixin_effect]: SideEffect1<T>;
-    };
-
-    return createInstanceFactory(
-      mix(
-        include(Disposable_delegatingMixin(), Observer_mixin<T>()),
-        function ForEachObserverMixin(
-          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-            Mutable<TProperties>,
-          delegate: ObserverLike<T>,
-          effect: SideEffect1<T>,
-        ): ObserverLike<T> {
-          init(Disposable_delegatingMixin(), instance, delegate);
-          init(
-            Observer_mixin<T>(),
-            instance,
-            delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_maxBufferSize],
-          );
-
-          instance[ForEachObserverMixin_effect] = effect;
-
-          return instance;
-        },
-        props<TProperties>({
-          [ForEachObserverMixin_effect]: none,
-        }),
-        {
-          [ObserverLike_notify](
-            this: TProperties &
-              DelegatingLike<ObserverLike<T>> &
-              ObserverLike<T>,
-            next: T,
-          ) {
-            Observer_assertState(this);
-
-            this[ForEachObserverMixin_effect](next);
-            this[DelegatingLike_delegate][ObserverLike_notify](next);
-          },
-        },
-      ),
-    );
-  })();
-
-  return ((effect: SideEffect1<T>) =>
-    pipe(
-      createForEachObserver,
-      partial(effect),
-      Observable_liftEnumerableOperator,
-    )) as ObservableForEach;
-})();
+const Observable_forEach: ObservableForEach = <T>(effect: SideEffect1<T>) =>
+  Observable_enqueue(effect);
 
 export default Observable_forEach;

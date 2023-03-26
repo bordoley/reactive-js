@@ -9,7 +9,7 @@ import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableL
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { DisposableLike_dispose, QueueableLike_maxBufferSize, QueueableLike_push, } from "../util.js";
+import { DisposableLike_dispose, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
@@ -30,7 +30,7 @@ export const createEventSource = (url, options = {}) => {
         const eventSource = newInstance(EventSource, requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;
-            observer[QueueableLike_push]({
+            observer[QueueableLike_enqueue]({
                 id: (_a = ev.lastEventId) !== null && _a !== void 0 ? _a : "",
                 type: (_b = ev.type) !== null && _b !== void 0 ? _b : "",
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
@@ -51,7 +51,7 @@ export const addEventListener = (eventName, selector) => target => Observable.cr
     }));
     const listener = (event) => {
         const result = selector(event);
-        observer[QueueableLike_push](result);
+        observer[QueueableLike_enqueue](result);
     };
     target.addEventListener(eventName, listener, { passive: true });
 });
@@ -109,8 +109,8 @@ export const windowLocation = /*@__PURE__*/ (() => {
         [DispatcherLike_complete]() {
             this[DelegatingLike_delegate][DispatcherLike_complete]();
         },
-        [QueueableLike_push](stateOrUpdater) {
-            return this[DelegatingLike_delegate][QueueableLike_push](prevState => {
+        [QueueableLike_enqueue](stateOrUpdater) {
+            return this[DelegatingLike_delegate][QueueableLike_enqueue](prevState => {
                 const uri = createWindowLocationURIWithPrototype(isFunction(stateOrUpdater)
                     ? stateOrUpdater(prevState.uri)
                     : stateOrUpdater);
@@ -118,7 +118,7 @@ export const windowLocation = /*@__PURE__*/ (() => {
             });
         },
         [WindowLocationStreamLike_replace](stateOrUpdater) {
-            return this[DelegatingLike_delegate][QueueableLike_push](prevState => {
+            return this[DelegatingLike_delegate][QueueableLike_enqueue](prevState => {
                 const uri = createWindowLocationURIWithPrototype(isFunction(stateOrUpdater)
                     ? stateOrUpdater(prevState.uri)
                     : stateOrUpdater);
@@ -172,10 +172,10 @@ export const windowLocation = /*@__PURE__*/ (() => {
             let { replace } = state;
             const push = !replace && locationChanged;
             replace = replace || (titleChanged && !locationChanged);
-            return pipe(state, Observable.fromOptional(), Observable.dispatchTo(state => replace
-                ? replaceState[QueueableLike_push](state)
+            return pipe(state, Observable.fromOptional(), Observable.enqueue(state => replace
+                ? replaceState[QueueableLike_enqueue](state)
                 : push
-                    ? pushState[QueueableLike_push](state)
+                    ? pushState[QueueableLike_enqueue](state)
                     : false), Observable.ignoreElements());
         }, { equality: areWindowLocationStatesEqual })[StreamableLike_stream](scheduler, options), createWindowLocationStream, Disposable.add(pushState), Disposable.add(replaceState));
         return currentWindowLocationStream;

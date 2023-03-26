@@ -4,7 +4,7 @@ import {
   DispatcherLike_scheduler,
   ObservableLike,
 } from "../../../rx.js";
-import Observable_dispatchTo from "../../../rx/Observable/__internal__/Observable.dispatchTo.js";
+import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.enqueue.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
@@ -29,7 +29,7 @@ const Streamable_sinkInto =
       Observable_merge(
         pipe(
           srcStream,
-          Observable_dispatchTo<ObservableLike, T>(dest),
+          Observable_enqueue<ObservableLike, T>(dest),
           Observable_ignoreElements<ObservableLike, unknown>(),
           Observable_onSubscribe(
             returns(bindMethod(dest, DispatcherLike_complete)),
@@ -37,7 +37,7 @@ const Streamable_sinkInto =
         ),
         pipe(
           dest,
-          Observable_dispatchTo<ObservableLike, TReq>(srcStream),
+          Observable_enqueue<ObservableLike, TReq>(srcStream),
           Observable_ignoreElements<ObservableLike, unknown>(),
         ),
       ),

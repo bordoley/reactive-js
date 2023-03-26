@@ -10,7 +10,7 @@ import * as Observable from "../../rx/Observable.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { StreamableLike_stream } from "../../streaming.js";
-import { QueueableLike_push } from "../../util.js";
+import { QueueableLike_enqueue } from "../../util.js";
 import * as Streamable from "../Streamable.js";
 
 testModule(
@@ -22,8 +22,8 @@ testModule(
       const streamable = Streamable.createStateStore(returns(1));
       const stateStream = streamable[StreamableLike_stream](scheduler);
 
-      stateStream[QueueableLike_push](returns(2));
-      stateStream[QueueableLike_push](returns(3));
+      stateStream[QueueableLike_enqueue](returns(2));
+      stateStream[QueueableLike_enqueue](returns(3));
       stateStream[DispatcherLike_complete]();
 
       let result: number[] = [];

@@ -23,7 +23,7 @@ import { ObservableLike } from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as Streamable from "../../streaming/Streamable.js";
-import { DisposableLike_error, QueueableLike_push } from "../../util.js";
+import { DisposableLike_error, QueueableLike_enqueue } from "../../util.js";
 import * as Observable from "../Observable.js";
 import { __await, __memo } from "../Observable.js";
 
@@ -197,7 +197,7 @@ const computeTests = describe(
     const result = await pipe(
       Observable.compute(() => {
         const stream = Observable.__stream(Streamable.identity<number>());
-        const push = Observable.__bindMethod(stream, QueueableLike_push);
+        const push = Observable.__bindMethod(stream, QueueableLike_enqueue);
 
         const result = Observable.__observe(stream) ?? 0;
         Observable.__do(push, result + 1);

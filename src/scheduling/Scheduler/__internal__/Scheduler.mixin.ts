@@ -26,7 +26,7 @@ import {
 import {
   QueueLike,
   QueueLike_count,
-  QueueLike_pull,
+  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
   Optional,
@@ -55,7 +55,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike,
-  QueueableLike_push,
+  QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -152,7 +152,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
             instance,
             Disposable_onDisposed(_ => {
               let head: Optional<ContinuationLike> = none;
-              while (((head = instance[QueueLike_pull]()), isSome(head))) {
+              while (((head = instance[QueueLike_dequeue]()), isSome(head))) {
                 if (!head[DisposableLike_isDisposed]) {
                   scheduler[ContinuationSchedulerLike_schedule](head, 0);
                 }
@@ -202,7 +202,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
 
             // Run any inner continuations first.
             let head: Optional<ContinuationLike> = none;
-            while (((head = this[QueueLike_pull]()), isSome(head))) {
+            while (((head = this[QueueLike_dequeue]()), isSome(head))) {
               this[Continuation_childContinuation] = head;
               head[ContinuationLike_run]();
               this[Continuation_childContinuation] = none;
@@ -241,7 +241,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
                 let head: Optional<ContinuationLike> = none;
                 // If the current continuation is being rescheduled with delay,
                 // reschedule all its children on the parent.
-                while (((head = this[QueueLike_pull]()), isSome(head))) {
+                while (((head = this[QueueLike_dequeue]()), isSome(head))) {
                   if (!head[DisposableLike_isDisposed]) {
                     scheduler[ContinuationSchedulerLike_schedule](head, 0);
                   }
@@ -277,7 +277,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
                 0,
               );
             } else {
-              this[QueueableLike_push](continuation);
+              this[QueueableLike_enqueue](continuation);
             }
           },
         },

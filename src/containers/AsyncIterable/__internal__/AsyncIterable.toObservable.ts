@@ -15,7 +15,7 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_push,
+  QueueableLike_enqueue,
 } from "../../../util.js";
 
 const AsyncIterable_toObservable: ToObservable<AsyncIterableLike>["toObservable"] =
@@ -40,7 +40,7 @@ const AsyncIterable_toObservable: ToObservable<AsyncIterableLike>["toObservable"
               if (next.done) {
                 observer[DispatcherLike_complete]();
                 break;
-              } else if (!observer[QueueableLike_push](next.value)) {
+              } else if (!observer[QueueableLike_enqueue](next.value)) {
                 // An async iterable can produce resolved promises which are immediately
                 // scheduled on the microtask queue. This prevents the observer's scheduler
                 // from running and draining dispatched events.

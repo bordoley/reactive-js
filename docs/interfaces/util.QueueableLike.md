@@ -24,7 +24,7 @@
 
 ### Methods
 
-- [[QueueableLike\_push]](util.QueueableLike.md#[queueablelike_push])
+- [[QueueableLike\_enqueue]](util.QueueableLike.md#[queueablelike_enqueue])
 
 ## Properties
 
@@ -34,9 +34,9 @@
 
 ## Methods
 
-### [QueueableLike\_push]
+### [QueueableLike\_enqueue]
 
-▸ **[QueueableLike_push]**(`req`): `boolean`
+▸ **[QueueableLike_enqueue]**(`req`): `boolean`
 
 Push an item onto the queue
 
