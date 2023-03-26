@@ -6,33 +6,10 @@
 
 ### Functions
 
-- [notifyObserver](rx_Observer.md#notifyobserver)
 - [schedule](rx_Observer.md#schedule)
 - [sourceFrom](rx_Observer.md#sourcefrom)
 
 ## Functions
-
-### notifyObserver
-
-▸ **notifyObserver**<`T`\>(`observer`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observer` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
-
-#### Returns
-
-[`SideEffect1`](functions.md#sideeffect1)<`T`\>
-
-___
 
 ### schedule
 

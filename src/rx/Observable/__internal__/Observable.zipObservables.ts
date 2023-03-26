@@ -29,7 +29,7 @@ import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/
 import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
-import { compose, isTrue, none, pipe } from "../../../functions.js";
+import { bind, compose, isTrue, none, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
   EnumerableLike,
@@ -58,7 +58,6 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
@@ -256,7 +255,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           pipe(
             enumerators,
             ReadonlyArray_map(Enumerator_getCurrent),
-            Observer_notifyObserver(observer),
+            bind(observer[ObserverLike_notify], observer),
           );
 
           ctx[ContinuationContextLike_yield]();

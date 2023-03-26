@@ -65,21 +65,19 @@ const createFilterMapFusionPerfTest = <C extends ContainerLike>(
   name: string,
   m: FromReadonlyArray<C> & Keep<C> & Map<C> & ToRunnable<C>,
 ) =>
-  benchmarkTest(
-    name,
-    async (src: readonly number[]) =>
-      pipeLazy(
-        src,
-        m.fromReadonlyArray(),
-        m.map(increment),
-        m.keep(isOdd),
-        m.map(increment),
-        m.map(increment),
-        m.keep(isEven),
-        m.toRunnable(),
-        Runnable.reduce(sum, returns(0)),
-        Runnable.first(),
-      ),
+  benchmarkTest(name, async (src: readonly number[]) =>
+    pipeLazy(
+      src,
+      m.fromReadonlyArray(),
+      m.map(increment),
+      m.keep(isOdd),
+      m.map(increment),
+      m.map(increment),
+      m.keep(isEven),
+      m.toRunnable(),
+      Runnable.reduce(sum, returns(0)),
+      Runnable.first(),
+    ),
   );
 
 export const filterMapFusion = (n: number) =>

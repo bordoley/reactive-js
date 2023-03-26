@@ -1,9 +1,10 @@
 import { ContainerOperator } from "../../../containers.js";
-import { error, partial, pipe } from "../../../functions.js";
+import { bind, error, partial, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
+  ObserverLike_notify,
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
@@ -12,7 +13,6 @@ import {
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
-import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
@@ -44,7 +44,7 @@ const Observable_repeatOrRetry: <T>(
         pipe(
           observable,
           Observable_forEach<ObservableLike, T>(
-            Observer_notifyObserver(delegate),
+            bind(delegate[ObserverLike_notify], delegate),
           ),
           Observable_subscribeWithMaxBufferSize(
             delegate[DispatcherLike_scheduler],

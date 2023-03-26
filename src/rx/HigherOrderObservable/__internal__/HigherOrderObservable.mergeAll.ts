@@ -32,6 +32,7 @@ import {
 import {
   Function1,
   SideEffect,
+  bind,
   isSome,
   none,
   partial,
@@ -57,7 +58,6 @@ import Observable_forEach from "../../Observable/__internal__/Observable.forEach
 import Observable_subscribeWithMaxBufferSize from "../../Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 
 const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
   lift: <T>(
@@ -103,7 +103,10 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           pipe(
             nextObs,
             Observable_forEach<ObservableLike, T>(
-              Observer_notifyObserver(observer[DelegatingLike_delegate]),
+              bind(
+                observer[DelegatingLike_delegate][ObserverLike_notify],
+                observer[DelegatingLike_delegate],
+              ),
             ),
             Observable_subscribeWithMaxBufferSize(
               observer[DispatcherLike_scheduler],

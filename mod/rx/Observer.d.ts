@@ -1,4 +1,3 @@
-export declare const notifyObserver: <T>(observer: import("../rx.js").ObserverLike<T>) => import("../functions.js").SideEffect1<T>;
 export declare const schedule: (f: import("../functions.js").SideEffect1<import("../scheduling.js").ContinuationContextLike>, options?: {
     readonly delay?: number | undefined;
 } | undefined) => import("../functions.js").Function1<import("../rx.js").ObserverLike<unknown>, import("../util.js").DisposableLike>;

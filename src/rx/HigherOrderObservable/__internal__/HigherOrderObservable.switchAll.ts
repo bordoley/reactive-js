@@ -19,7 +19,7 @@ import {
   ContainerOf,
   ContainerOperator,
 } from "../../../containers.js";
-import { Function1, none, pipe } from "../../../functions.js";
+import { Function1, bind, none, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
   ObservableLike,
@@ -41,7 +41,6 @@ import Observable_forEach from "../../Observable/__internal__/Observable.forEach
 import Observable_subscribeWithMaxBufferSize from "../../Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_notifyObserver from "../../Observer/__internal__/Observer.notifyObserver.js";
 
 const HigherOrderObservable_switchAll = <C extends ObservableLike>(
   lift: <T>(
@@ -119,7 +118,10 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
             ] = pipe(
               next,
               Observable_forEach(
-                Observer_notifyObserver(this[DelegatingLike_delegate]),
+                bind(
+                  this[DelegatingLike_delegate][ObserverLike_notify],
+                  this[DelegatingLike_delegate],
+                ),
               ),
               Observable_subscribeWithMaxBufferSize(
                 this[DispatcherLike_scheduler],
