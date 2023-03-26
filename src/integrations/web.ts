@@ -331,11 +331,7 @@ export const windowLocation: StreamableLike<
         [WindowLocationStreamLike_goBack](
           this: WindowLocationStreamLike,
         ): void {
-          const canGoBack = this[WindowLocationStreamLike_canGoBack];
-
-          if (canGoBack) {
-            history.back();
-          }
+          history.back();
         },
 
         [ObservableLike_observe](

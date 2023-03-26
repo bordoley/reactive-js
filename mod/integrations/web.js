@@ -126,10 +126,7 @@ export const windowLocation = /*@__PURE__*/ (() => {
             });
         },
         [WindowLocationStreamLike_goBack]() {
-            const canGoBack = this[WindowLocationStreamLike_canGoBack];
-            if (canGoBack) {
-                history.back();
-            }
+            history.back();
         },
         [ObservableLike_observe](observer) {
             pipe(this[DelegatingLike_delegate], Observable.pick("uri"), Observable.observeWith(observer));
