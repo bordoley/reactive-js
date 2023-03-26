@@ -1,17 +1,11 @@
 import { Factory, bindMethod, isFunction, pipe } from "../../../functions.js";
 import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
-import {
-  SchedulerLike,
-  SchedulerLike_requestYield,
-} from "../../../scheduling.js";
-import {
-  QueueableLike_maxBufferSize,
-  QueueableLike_push,
-} from "../../../util.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import { QueueableLike_maxBufferSize } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "./Observable.create.js";
-import Observable_forEach from "./Observable.forEach.js";
+import Observable_dispatchTo from "./Observable.dispatchTo.js";
 import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 
 const Observable_subscribeOn =
@@ -28,11 +22,7 @@ const Observable_subscribeOn =
 
       pipe(
         observable,
-        Observable_forEach<ObservableLike, T>(v => {
-          if (!observer[QueueableLike_push](v)) {
-            scheduler[SchedulerLike_requestYield]();
-          }
-        }),
+        Observable_dispatchTo<ObservableLike, T>(observer),
         Observable_subscribeWithMaxBufferSize(
           scheduler,
           options?.maxBufferSize ?? observer[QueueableLike_maxBufferSize],

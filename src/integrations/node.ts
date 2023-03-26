@@ -42,7 +42,6 @@ import {
   ObservableLike_observe,
 } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import { SchedulerLike_requestYield } from "../scheduling.js";
 import {
   FlowableLike,
   StreamableLike,
@@ -304,11 +303,7 @@ export const transform =
 
         pipe(
           modeObs,
-          Observable.forEach(v => {
-            if (!transformReadableStream[QueueableLike_push](v)) {
-              observer[DispatcherLike_scheduler][SchedulerLike_requestYield]();
-            }
-          }),
+          Observable.dispatchTo(transformReadableStream),
           Observable.subscribe(observer[DispatcherLike_scheduler]),
           addToNodeStream(transform),
         );

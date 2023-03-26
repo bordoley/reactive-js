@@ -172,14 +172,11 @@ export const windowLocation = /*@__PURE__*/ (() => {
             let { replace } = state;
             const push = !replace && locationChanged;
             replace = replace || (titleChanged && !locationChanged);
-            return pipe(state, Observable.fromOptional(), Observable.forEach(state => {
-                if (replace) {
-                    replaceState[QueueableLike_push](state);
-                }
-                else if (push) {
-                    pushState[QueueableLike_push](state);
-                }
-            }), Observable.ignoreElements());
+            return pipe(state, Observable.fromOptional(), Observable.dispatchTo(state => replace
+                ? replaceState[QueueableLike_push](state)
+                : push
+                    ? pushState[QueueableLike_push](state)
+                    : false), Observable.ignoreElements());
         }, { equality: areWindowLocationStatesEqual })[StreamableLike_stream](scheduler, options), createWindowLocationStream, Disposable.add(pushState), Disposable.add(replaceState));
         return currentWindowLocationStream;
     };

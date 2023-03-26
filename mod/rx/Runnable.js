@@ -11,6 +11,7 @@ import Observable_concatWith from "./Observable/__internal__/Observable.concatWi
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
 import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
+import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
@@ -83,6 +84,7 @@ export const contains = Observable_contains;
 export const currentTime = Observable_currentTime;
 export const decodeWithCharset = Observable_decodeWithCharset;
 export const defer = Runnable_defer;
+export const dispatchTo = Observable_dispatchTo;
 export const distinctUntilChanged = Observable_distinctUntilChanged;
 export const empty = Observable_empty;
 export const encodeUtf8 = Runnable_encodeUtf8;

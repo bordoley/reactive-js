@@ -67,15 +67,13 @@ const Root = () => {
   const counterFlowable = useMemo(
     () =>
       pipe(
-        Runnable.generate(increment, returns(counterInitialValue ?? -1), {
-          delay: 500,
-        }),
-        Runnable.forEach(value => {
+        Runnable.generate(increment, returns(counterInitialValue ?? -1)),
+        Runnable.dispatchTo<number>(value =>
           history.replace((uri: WindowLocationURI) => ({
             ...uri,
             query: `v=${value}`,
-          }));
-        }),
+          })),
+        ),
         Runnable.toFlowable(),
       ),
     [history.replace, counterInitialValue],

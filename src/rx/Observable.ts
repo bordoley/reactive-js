@@ -70,6 +70,7 @@ import {
 import {
   CombineLatest,
   CurrentTime,
+  DispatchTo,
   Exhaust,
   ExhaustMap,
   ForkCombineLatest,
@@ -128,6 +129,7 @@ import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_defer from "./Observable/__internal__/Observable.defer.js";
+import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
@@ -392,6 +394,9 @@ export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCha
   Observable_decodeWithCharset;
 
 export const defer: Defer<ObservableLike>["defer"] = Observable_defer;
+
+export const dispatchTo: DispatchTo<ObservableLike>["dispachTo"] =
+  Observable_dispatchTo;
 
 export const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
