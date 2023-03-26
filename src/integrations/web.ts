@@ -183,10 +183,12 @@ export const windowLocation: StreamableLike<
     toString(this: WindowLocationURI) {
       const { path, query, fragment } = this;
       let uri =
-        path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;
+        path.length === 0 ? "" : !path.startsWith("/") ? `/${path}` : path;
       uri = query.length > 0 ? `${uri}?${query}` : uri;
       uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
-      return newInstance(URL, uri, location.href).toString();
+
+      const base = newInstance(URL, location.href);
+      return String(newInstance(URL, base.origin + uri));
     },
   };
 
@@ -221,17 +223,18 @@ export const windowLocation: StreamableLike<
     counter: number;
   };
 
+  const areURIsEqual = (a: WindowLocationURI, b: WindowLocationURI) =>
+    a.title === b.title &&
+    a.path === b.path &&
+    a.query === b.query &&
+    a.fragment === b.fragment;
+
   const areWindowLocationStatesEqual = (
     { uri: a, counter: counterA }: TState,
     { uri: b, counter: counterB }: TState,
   ) =>
     // Intentionally ignore the replace flag.
-    (a === b && counterA === counterB) ||
-    (a.title === b.title &&
-      a.path === b.path &&
-      a.query === b.query &&
-      a.fragment === b.fragment &&
-      counterA === counterB);
+    (a === b || areURIsEqual(a, b)) && counterA === counterB;
 
   const createWindowLocationStream = createInstanceFactory(
     mix(
@@ -427,7 +430,7 @@ export const windowLocation: StreamableLike<
             Observable.map(returns),
           ),
         (oldState, state) => {
-          const locationChanged = String(state.uri) !== String(oldState.uri);
+          const locationChanged = !areURIsEqual(state.uri, oldState.uri);
           const titleChanged = oldState.uri.title !== state.uri.title;
 
           let { replace } = state;

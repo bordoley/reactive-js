@@ -60,10 +60,11 @@ export const windowLocation = /*@__PURE__*/ (() => {
     const windowLocationPrototype = {
         toString() {
             const { path, query, fragment } = this;
-            let uri = path.length === 0 ? "/" : !path.startsWith("/") ? `/_{path}` : path;
+            let uri = path.length === 0 ? "" : !path.startsWith("/") ? `/${path}` : path;
             uri = query.length > 0 ? `${uri}?${query}` : uri;
             uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
-            return newInstance(URL, uri, location.href).toString();
+            const base = newInstance(URL, location.href);
+            return String(newInstance(URL, base.origin + uri));
         },
     };
     const createWindowLocationURIWithPrototype = (uri) => uri.toString === windowLocationPrototype.toString
@@ -78,14 +79,13 @@ export const windowLocation = /*@__PURE__*/ (() => {
             title: document.title,
         });
     };
+    const areURIsEqual = (a, b) => a.title === b.title &&
+        a.path === b.path &&
+        a.query === b.query &&
+        a.fragment === b.fragment;
     const areWindowLocationStatesEqual = ({ uri: a, counter: counterA }, { uri: b, counter: counterB }) => 
     // Intentionally ignore the replace flag.
-    (a === b && counterA === counterB) ||
-        (a.title === b.title &&
-            a.path === b.path &&
-            a.query === b.query &&
-            a.fragment === b.fragment &&
-            counterA === counterB);
+    (a === b || areURIsEqual(a, b)) && counterA === counterB;
     const createWindowLocationStream = createInstanceFactory(mix(include(Disposable_delegatingMixin()), function WindowLocationStream(instance, delegate) {
         init(Disposable_delegatingMixin(), instance, delegate);
         return instance;
@@ -172,7 +172,7 @@ export const windowLocation = /*@__PURE__*/ (() => {
             replace: true,
             uri: state.uri,
         }), Observable.map(returns)), (oldState, state) => {
-            const locationChanged = String(state.uri) !== String(oldState.uri);
+            const locationChanged = !areURIsEqual(state.uri, oldState.uri);
             const titleChanged = oldState.uri.title !== state.uri.title;
             let { replace } = state;
             const push = !replace && locationChanged;

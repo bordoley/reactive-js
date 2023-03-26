@@ -367,7 +367,10 @@ export const createComponent = <TProps>(
       createReplaySubject,
     ]);
 
-    propsSubject[SubjectLike_publish](props);
+    useEffect(
+      () => propsSubject[SubjectLike_publish](props),
+      [propsSubject, props],
+    );
 
     const elementObservable = useMemo(
       () => pipe(propsSubject, fn),
