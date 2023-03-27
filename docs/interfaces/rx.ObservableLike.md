@@ -4,7 +4,7 @@
 
 [rx](../modules/rx.md).ObservableLike
 
-The source of notifications which notifies a `ObserverLike` instance.
+The source of notifications which can be consumed by an `ObserverLike` instance.
 
 ## Type parameters
 
@@ -50,11 +50,16 @@ ___
 
 • `Readonly` **[ObservableLike\_isEnumerable]**: `boolean`
 
+Indicates if the `ObservableLike` supports interactive enumeration.
+
 ___
 
 ### [ObservableLike\_isRunnable]
 
 • `Readonly` **[ObservableLike\_isRunnable]**: `boolean`
+
+Indicates if the `ObservableLike` supports being subscribed to
+on a VirtualTimeScheduler.
 
 ## Methods
 
@@ -62,11 +67,13 @@ ___
 
 ▸ **[ObservableLike_observe]**(`observer`): `void`
 
+Subscribes the given `ObserverLike` to the `ObservableLike` source.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `observer` | [`ObserverLike`](rx.ObserverLike.md)<`T`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `observer` | [`ObserverLike`](rx.ObserverLike.md)<`T`\> | The observer. |
 
 #### Returns
 

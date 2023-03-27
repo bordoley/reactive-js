@@ -4,7 +4,7 @@
 
 [rx](../modules/rx.md).EnumerableLike
 
-Interface for iterating a Container of items.
+An `ObservableLike` that supports interactive enumeration.
 
 ## Type parameters
 

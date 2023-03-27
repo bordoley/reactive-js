@@ -2,6 +2,8 @@ import { ContainerLike_T, ContainerLike_type, EnumeratorLike_current, Enumerator
 import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1, TypePredicate, Updater } from "./functions.js";
 export { ContainerLike_T, ContainerLike_type, EnumeratorLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent, };
 /**
+ * Base type for all Containers.
+ *
  * @noInheritDoc
  * @category Container
  */
@@ -10,6 +12,8 @@ export interface ContainerLike {
     readonly [ContainerLike_type]?: unknown;
 }
 /**
+ * A compile time only type for using a Javascript `Iterable` as a `ContainerLike`.
+ *
  * @noInheritDoc
  * @category Container
  */
@@ -17,6 +21,8 @@ export interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
     readonly [ContainerLike_type]?: IterableLike<this[typeof ContainerLike_T]>;
 }
 /**
+ * A compile time only type for using a Javascript `AsyncIterable` as a `ContainerLike`.
+ *
  * @noInheritDoc
  * @category Container
  */
@@ -24,6 +30,8 @@ export interface AsyncIterableLike<T = unknown> extends ContainerLike, AsyncIter
     readonly [ContainerLike_type]?: AsyncIterableLike<this[typeof ContainerLike_T]>;
 }
 /**
+ * A compile time only type for using a Javascript `PromiseLike` as a `ContainerLike`.
+ *
  * @noInheritDoc
  * @category Container
  */
@@ -31,6 +39,8 @@ export interface PromiseableLike<T = unknown> extends ContainerLike, PromiseLike
     readonly [ContainerLike_type]?: PromiseableLike<this[typeof ContainerLike_T]>;
 }
 /**
+ * A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
+ *
  * @noInheritDoc
  * @category Container
  */
@@ -38,15 +48,32 @@ export interface ReadonlyArrayLike<T = unknown> extends ContainerLike, ReadonlyA
     readonly [ContainerLike_type]?: ReadonlyArrayLike<this[typeof ContainerLike_T]>;
 }
 /**
+ * An interactive mutable `ContainerLike` that can be used to iterate
+ * over an underlying source of data.
+ *
  * @noInheritDoc
  * @category Container
  */
 export interface EnumeratorLike<T = unknown> extends ContainerLike {
     readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]>;
+    /**
+     * Returns the element if present.
+     */
     readonly [EnumeratorLike_current]: T;
+    /**
+     * Indicates if the `EnumeratorLike` has a current value.
+     */
     readonly [EnumeratorLike_hasCurrent]: boolean;
+    /**
+     * Advances the enumerator to the next value, if present.
+     *
+     * @returns true if successful, otherwise false.
+     */
     [EnumeratorLike_move](): boolean;
 }
+/**
+ * Utility type for higher order programming with Containers.
+ */
 export type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly [ContainerLike_type]?: unknown;
 } ? NonNullable<(C & {
@@ -55,8 +82,13 @@ export type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly _C: C;
     readonly _T: () => T;
 };
+/**
+ * Utility type for a generic operator function that transforms a Container's inner value type.
+ */
 export type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 /**
+ * Base type for Container type classes.
+ *
  * @noInheritDoc
  * @category TypeClass
  */
@@ -88,7 +120,7 @@ export interface CatchError<C extends ContainerLike, O = never> extends Containe
      * the ContainerLike returned from the `onError` callback or swallows the error if
      * void is returned.
      *
-     * @param onError a function that takes source error and either returns a ContainerLike
+     * @param onError - A function that takes source error and either returns a ContainerLike
      * to continue with or void if the error should be propagated.
      *
      * @category Operator
@@ -391,8 +423,8 @@ export interface Generate<C extends ContainerLike, O = never> extends Container<
      * Generates a ContainerLike from a generator function
      * that is applied to an accumulator value between emitted items.
      *
-     * @param generator the generator function.
-     * @param initialValue Factory function used to generate the initial accumulator.
+     * @param generator - The generator function.
+     * @param initialValue - Factory function used to generate the initial accumulator.
      *
      * @category Constructor
      */
@@ -573,8 +605,8 @@ export interface Scan<C extends ContainerLike, O = never> extends Container<C> {
      * Returns a ContainerLike that applies an accumulator function over the source,
      * and emits each intermediate result.
      *
-     * @param scanner The accumulator function called on each source value.
-     * @param initialValue The initial accumulation value.
+     * @param scanner - The accumulator function called on each source value.
+     * @param initialValue - The initial accumulation value.
      *
      * @category Operator
      */
@@ -666,7 +698,7 @@ export interface TakeWhile<C extends ContainerLike, O = unknown> extends Contain
      * as each value satisfies the given predicate, and then completes as soon as
      * this predicate is not satisfied.
      *
-     * @param predicate The predicate function.
+     * @param predicate - The predicate function.
      *
      * @category Operator
      */
@@ -682,7 +714,7 @@ export interface ThrowIfEmpty<C extends ContainerLike, O = never> extends Contai
     /**
      * Returns a ContainerLike that emits an error if the source completes without emitting a value.
      *
-     * @param factory A factory function invoked to produce the error to be thrown.
+     * @param factory - A factory function invoked to produce the error to be thrown.
      *
      * @category Operator
      */

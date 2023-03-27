@@ -54,10 +54,10 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `disposable` | [`DisposableOrTeardown`](../modules/util.md#disposableorteardown) |
-| `ignoreChildErrors` | `boolean` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `disposable` | [`DisposableOrTeardown`](../modules/util.md#disposableorteardown) | The disposable to add. |
+| `ignoreChildErrors` | `boolean` | Indicates that the parent should not auto dispose if the child disposed with an error. |
 
 #### Returns
 

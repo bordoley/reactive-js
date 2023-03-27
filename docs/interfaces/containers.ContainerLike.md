@@ -4,6 +4,8 @@
 
 [containers](../modules/containers.md).ContainerLike
 
+Base type for all Containers.
+
 ## Hierarchy
 
 - **`ContainerLike`**

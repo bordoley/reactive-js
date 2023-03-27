@@ -42,7 +42,7 @@ that is applied to an accumulator value between emitted items.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> | the generator function. |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> | The generator function. |
 | `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
 | `options?` | `O` | - |
 

@@ -4,6 +4,8 @@
 
 [rx](../modules/rx.md).SubjectLike
 
+A MulticastObservable that can be used to publish notifications to 1 or more observers.
+
 ## Type parameters
 
 | Name | Type |
@@ -42,11 +44,13 @@
 
 ▸ **[SubjectLike_publish]**(`next`): `void`
 
+Publishes a notification to any observers.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `next` | `T` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `next` | `T` | The notification to publish. |
 
 #### Returns
 

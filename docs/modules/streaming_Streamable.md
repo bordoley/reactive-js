@@ -110,14 +110,14 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `initialState` | [`Factory`](functions.md#factory)<`T`\> | - |
-| `onInit` | (`initialValue`: `T`) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`Updater`](functions.md#updater)<`T`\>\> | - |
-| `onChange` | (`oldValue`: `T`, `newValue`: `T`) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`Updater`](functions.md#updater)<`T`\>\> | - |
-| `options?` | `Object` | - |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> | Returns a new `StateStoreLike` instance that stores state which can be updated by notifying the instance with a `StateUpdater` that computes a new state based upon the previous state. **`Param`** The initial accumulation value. **`Param`** Optional equality function that is used to compare if a state value is distinct from the previous one. |
-| `options.throttleDuration?` | `number` | - |
+| Name | Type |
+| :------ | :------ |
+| `initialState` | [`Factory`](functions.md#factory)<`T`\> |
+| `onInit` | (`initialValue`: `T`) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`Updater`](functions.md#updater)<`T`\>\> |
+| `onChange` | (`oldValue`: `T`, `newValue`: `T`) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`Updater`](functions.md#updater)<`T`\>\> |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+| `options.throttleDuration?` | `number` |
 
 #### Returns
 

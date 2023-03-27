@@ -4,6 +4,8 @@
 
 [containers](../modules/containers.md).PromiseableLike
 
+A compile time only type for using a Javascript `PromiseLike` as a `ContainerLike`.
+
 ## Type parameters
 
 | Name | Type |

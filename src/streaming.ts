@@ -42,6 +42,12 @@ export interface StreamLike<TReq, T>
     MulticastObservableLike<T> {}
 
 /**
+ * A container that supports bi-directional streaming.
+ *
+ * @typeparam TReq
+ * @typeparam T
+ * @typeparam TStream
+ *
  * @noInheritDoc
  * @category Container
  */
@@ -50,17 +56,52 @@ export interface StreamableLike<
   T,
   TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
 > {
+  /**
+   * Indicates if the resulting is stream is enumerable,
+   * producting exactly one value synchronously for every
+   * enqueued request.
+   */
   readonly [StreamableLike_isEnumerable]: boolean;
+
+  /**
+   * Indicates if the resulting is stream is interactive,
+   * producing exactly one value for every enqueued request.
+   */
   readonly [StreamableLike_isInteractive]: boolean;
+
+  /**
+   * Indicates if subscriptions on a VirtualTimeScheduler
+   * are supported.
+   */
   readonly [StreamableLike_isRunnable]: boolean;
 
+  /**
+   * Subscribe to the Streamable.
+   *
+   * @param scheduler - The scheduler to subscribe to the stream with.
+   * @param options
+   */
   [StreamableLike_stream](
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number; readonly capacity?: number },
+    options?: {
+      /**
+       * The number of items to buffer for replay when an observer subscribes
+       * to the stream.
+       */
+      readonly replay?: number;
+
+      /**
+       * The capacity of the stream's request queue.
+       */
+      readonly capacity?: number;
+    },
   ): TStream;
 }
 
 /**
+ * A container that returns an interactive stream that produces
+ * exactly one value for every enqueued void request.
+ *
  * @noInheritDoc
  * @category Container
  */
@@ -75,17 +116,33 @@ export interface AsyncEnumerableLike<T = unknown>
 }
 
 /**
+ * An `ObservableLike` that supports imperative flow control
+ * via the pause and resume methods.
+ *
  * @noInheritDoc
  */
 export interface FlowableStreamLike<T = unknown>
   extends StreamLike<boolean | Updater<boolean>, T> {
+  /**
+   * Reactive property indicating if the stream is paused or not.
+   */
   readonly [FlowableStreamLike_isPaused]: ObservableLike<boolean>;
 
+  /**
+   * Imperatively pause the stream.
+   */
   [FlowableStreamLike_pause](): void;
+
+  /**
+   * Imperatively resume the stream.
+   */
   [FlowableStreamLike_resume](): void;
 }
 
 /**
+ * A container that returns an `ObservableLike` which supports
+ * imperative flow control when subscribed to.
+ *
  * @noInheritDoc
  * @category Container
  */

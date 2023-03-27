@@ -4,6 +4,8 @@
 
 [containers](../modules/containers.md).Container
 
+Base type for Container type classes.
+
 ## Type parameters
 
 | Name | Type |

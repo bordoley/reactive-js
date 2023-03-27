@@ -4,6 +4,9 @@
 
 [containers](../modules/containers.md).EnumeratorLike
 
+An interactive mutable `ContainerLike` that can be used to iterate
+over an underlying source of data.
+
 ## Type parameters
 
 | Name | Type |
@@ -44,11 +47,15 @@ ___
 
 • `Readonly` **[EnumeratorLike\_current]**: `T`
 
+Returns the element if present.
+
 ___
 
 ### [EnumeratorLike\_hasCurrent]
 
 • `Readonly` **[EnumeratorLike\_hasCurrent]**: `boolean`
+
+Indicates if the `EnumeratorLike` has a current value.
 
 ## Methods
 
@@ -56,6 +63,10 @@ ___
 
 ▸ **[EnumeratorLike_move]**(): `boolean`
 
+Advances the enumerator to the next value, if present.
+
 #### Returns
 
 `boolean`
+
+true if successful, otherwise false.

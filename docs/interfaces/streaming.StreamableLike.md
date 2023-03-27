@@ -4,6 +4,20 @@
 
 [streaming](../modules/streaming.md).StreamableLike
 
+A container that supports bi-directional streaming.
+
+**`Typeparam`**
+
+TReq
+
+**`Typeparam`**
+
+T
+
+**`Typeparam`**
+
+TStream
+
 ## Type parameters
 
 | Name | Type |
@@ -38,11 +52,18 @@
 
 • `Readonly` **[StreamableLike\_isEnumerable]**: `boolean`
 
+Indicates if the resulting is stream is enumerable,
+producting exactly one value synchronously for every
+enqueued request.
+
 ___
 
 ### [StreamableLike\_isInteractive]
 
 • `Readonly` **[StreamableLike\_isInteractive]**: `boolean`
+
+Indicates if the resulting is stream is interactive,
+producing exactly one value for every enqueued request.
 
 ___
 
@@ -50,20 +71,25 @@ ___
 
 • `Readonly` **[StreamableLike\_isRunnable]**: `boolean`
 
+Indicates if subscriptions on a VirtualTimeScheduler
+are supported.
+
 ## Methods
 
 ### [StreamableLike\_stream]
 
 ▸ **[StreamableLike_stream]**(`scheduler`, `options?`): `TStream`
 
+Subscribe to the Streamable.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.capacity?` | `number` |
-| `options.replay?` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) | The scheduler to subscribe to the stream with. |
+| `options?` | `Object` |  |
+| `options.capacity?` | `number` | The capacity of the stream's request queue. |
+| `options.replay?` | `number` | The number of items to buffer for replay when an observer subscribes to the stream. |
 
 #### Returns
 

@@ -8,9 +8,9 @@ export declare const create: <TReq, T>(op: import("../containers.js").ContainerO
  * Returns a new `StreamableLike` instance that applies an accumulator function
  * over the notified actions, emitting each intermediate result.
  *
- * @param reducer The accumulator function called on each notified action.
- * @param initialState The initial accumulation value.
- * @param equals Optional equality function that is used to compare
+ * @param reducer - The accumulator function called on each notified action.
+ * @param initialState - The initial accumulation value.
+ * @param equals - Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  *
  * @category Constructor
@@ -23,8 +23,8 @@ export declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction,
  * be updated by notifying the instance with a `StateUpdater` that computes a
  * new state based upon the previous state.
  *
- * @param initialState The initial accumulation value.
- * @param equals Optional equality function that is used to compare
+ * @param initialState - The initial accumulation value.
+ * @param equals - Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  *
  * @category Constructor
@@ -41,17 +41,6 @@ export declare const sinkInto: <TReq, T>(dest: StreamLike<T, TReq>) => (src: Str
  * @category Constructor
  */
 export declare const createWriteThroughCache: <T>(initialState: Factory<T>, onInit: (initialValue: T) => import("../rx.js").ObservableLike<Updater<T>>, onChange: (oldValue: T, newValue: T) => import("../rx.js").ObservableLike<Updater<T>>, options?: {
-    /**
-     * Returns a new `StateStoreLike` instance that stores state which can
-     * be updated by notifying the instance with a `StateUpdater` that computes a
-     * new state based upon the previous state.
-     *
-     * @param initialState The initial accumulation value.
-     * @param equals Optional equality function that is used to compare
-     * if a state value is distinct from the previous one.
-     *
-     * @category Constructor
-     */
     equality?: Equality<T> | undefined;
     throttleDuration?: number | undefined;
 } | undefined) => StreamableLike<Updater<T>, T, StreamLike<Updater<T>, T>>;

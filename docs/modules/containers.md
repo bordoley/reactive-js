@@ -83,6 +83,8 @@
 
 Ƭ **ContainerOf**<`C`, `T`\>: `C` extends { `[ContainerLike_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[ContainerLike_T]`: `T`  }[typeof `ContainerLike_type`]\> : { `_C`: `C` ; `_T`: () => `T`  }
 
+Utility type for higher order programming with Containers.
+
 #### Type parameters
 
 | Name | Type |
@@ -95,6 +97,8 @@ ___
 ### ContainerOperator
 
 Ƭ **ContainerOperator**<`C`, `TA`, `TB`\>: [`Function1`](functions.md#function1)<[`ContainerOf`](containers.md#containerof)<`C`, `TA`\>, [`ContainerOf`](containers.md#containerof)<`C`, `TB`\>\>
+
+Utility type for a generic operator function that transforms a Container's inner value type.
 
 #### Type parameters
 

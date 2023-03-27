@@ -4,6 +4,8 @@
 
 [rx](../modules/rx.md).RunnableLike
 
+An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
+
 ## Type parameters
 
 | Name | Type |
@@ -40,6 +42,9 @@ ___
 ### [ObservableLike\_isRunnable]
 
 • `Readonly` **[ObservableLike\_isRunnable]**: ``true``
+
+Indicates if the `ObservableLike` supports being subscribed to
+on a VirtualTimeScheduler.
 
 #### Overrides
 

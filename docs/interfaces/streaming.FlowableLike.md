@@ -4,6 +4,9 @@
 
 [streaming](../modules/streaming.md).FlowableLike
 
+A container that returns an `ObservableLike` which supports
+imperative flow control when subscribed to.
+
 ## Type parameters
 
 | Name | Type |
@@ -42,6 +45,10 @@ ___
 
 • `Readonly` **[StreamableLike\_isEnumerable]**: ``false``
 
+Indicates if the resulting is stream is enumerable,
+producting exactly one value synchronously for every
+enqueued request.
+
 #### Overrides
 
 [StreamableLike](streaming.StreamableLike.md).[[StreamableLike_isEnumerable]](streaming.StreamableLike.md#[streamablelike_isenumerable])
@@ -51,6 +58,9 @@ ___
 ### [StreamableLike\_isInteractive]
 
 • `Readonly` **[StreamableLike\_isInteractive]**: ``false``
+
+Indicates if the resulting is stream is interactive,
+producing exactly one value for every enqueued request.
 
 #### Overrides
 

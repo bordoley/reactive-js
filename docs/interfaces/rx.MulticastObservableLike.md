@@ -4,6 +4,8 @@
 
 [rx](../modules/rx.md).MulticastObservableLike
 
+A stateful ObservableLike resource.
+
 ## Type parameters
 
 | Name | Type |
@@ -47,13 +49,15 @@ ___
 
 • `Readonly` **[MulticastObservableLike\_observerCount]**: `number`
 
-The number of observers currently observing.
+The number of observers currently observing the `ObservableLike`.
 
 ___
 
 ### [ObservableLike\_isEnumerable]
 
 • `Readonly` **[ObservableLike\_isEnumerable]**: ``false``
+
+Indicates if the `ObservableLike` supports interactive enumeration.
 
 #### Overrides
 
@@ -64,6 +68,9 @@ ___
 ### [ObservableLike\_isRunnable]
 
 • `Readonly` **[ObservableLike\_isRunnable]**: ``false``
+
+Indicates if the `ObservableLike` supports being subscribed to
+on a VirtualTimeScheduler.
 
 #### Overrides
 

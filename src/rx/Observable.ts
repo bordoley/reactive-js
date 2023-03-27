@@ -522,8 +522,8 @@ export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
- * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
- * @param replay The number of events that should be replayed when the `MulticastObservableLike`
+ * @param scheduler - A `SchedulerLike` that is used to subscribe to the source observable.
+ * @param replay - The number of events that should be replayed when the `MulticastObservableLike`
  * is subscribed to.
  *
  * @category Transform
@@ -565,8 +565,8 @@ export const scanMany: ScanMany<ObservableLike, ObservableLike>["scanMany"] =
  * source. When the refcount goes to 0, the underlying subscription
  * to the source is disposed.
  *
- * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
- * @param replay The number of events that should be replayed when the `ObservableLike`
+ * @param scheduler - A `SchedulerLike` that is used to subscribe to the source.
+ * @param replay - The number of events that should be replayed when the `ObservableLike`
  * is subscribed to.
  *
  * @category Operator

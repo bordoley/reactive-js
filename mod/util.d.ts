@@ -19,23 +19,33 @@ export interface DisposableLike {
     /**
      * Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
      *
-     * @param disposable
-     * @param ignoreChildErrors
+     * @param disposable - The disposable to add.
+     * @param ignoreChildErrors - Indicates that the parent should not auto dispose if the child disposed with an error.
      */
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     /**
      * Dispose the resource.
      *
-     * @param error An optional error that signals the resource is being disposed due to an error.
+     * @param error - An optional error that signals the resource is being disposed due to an error.
      */
     [DisposableLike_dispose](error?: Error): void;
 }
+/**
+ * An interface for types that support buffering items with backpressure.
+ *
+ * The exact behaviors of a `QueueableLike` such as FIFO vs. LIFO processing,
+ * and backpressure strategies are implementation specific.
+ */
 export interface QueueableLike<T = unknown> {
+    /**
+     * The number of items the queue is capable of efficiently buffering.
+     */
     readonly [QueueableLike_capacity]: number;
     /**
      * Enqueue an item onto the queue.
+     *
      * @param req - The value to enqueue.
-     * @returns `true` if the queue has additional capacity otherwise false.
+     * @returns `true` if the queue has additional remaining capacity otherwise `false`.
      */
     [QueueableLike_enqueue](req: T): boolean;
 }

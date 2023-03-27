@@ -4,6 +4,9 @@
 
 [streaming](../modules/streaming.md).AsyncEnumerableLike
 
+A container that returns an interactive stream that produces
+exactly one value for every enqueued void request.
+
 ## Type parameters
 
 | Name | Type |
@@ -40,6 +43,9 @@ ___
 ### [StreamableLike\_isInteractive]
 
 • `Readonly` **[StreamableLike\_isInteractive]**: ``true``
+
+Indicates if the resulting is stream is interactive,
+producing exactly one value for every enqueued request.
 
 #### Overrides
 

@@ -4,6 +4,8 @@
 
 [containers](../modules/containers.md).AsyncIterableLike
 
+A compile time only type for using a Javascript `AsyncIterable` as a `ContainerLike`.
+
 ## Type parameters
 
 | Name | Type |

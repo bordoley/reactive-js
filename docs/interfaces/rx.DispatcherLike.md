@@ -4,6 +4,9 @@
 
 [rx](../modules/rx.md).DispatcherLike
 
+A `QueueableLike` type that consumes enqueued events on a scheduler continuation.
+Events may be enqueud from any execution context.
+
 ## Type parameters
 
 | Name | Type |
@@ -36,11 +39,16 @@
 
 • `Readonly` **[DispatcherLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)
 
+The scheduler that the dispatcher schedules it's event consumer on.
+
 ## Methods
 
 ### [DispatcherLike\_complete]
 
 ▸ **[DispatcherLike_complete]**(): `void`
+
+Communicates to the dispatcher that no more events will be enqueued
+on the dispatcher.
 
 #### Returns
 

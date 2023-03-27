@@ -43,7 +43,7 @@ void is returned.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `onError` | [`Function1`](../modules/functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\> | a function that takes source error and either returns a ContainerLike to continue with or void if the error should be propagated. |
+| `onError` | [`Function1`](../modules/functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\> | A function that takes source error and either returns a ContainerLike to continue with or void if the error should be propagated. |
 | `options?` | `O` | - |
 
 #### Returns

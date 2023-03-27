@@ -4,6 +4,9 @@
 
 [streaming](../modules/streaming.md).FlowableStreamLike
 
+An `ObservableLike` that supports imperative flow control
+via the pause and resume methods.
+
 ## Type parameters
 
 | Name | Type |
@@ -33,11 +36,15 @@
 
 • `Readonly` **[FlowableStreamLike\_isPaused]**: [`ObservableLike`](rx.ObservableLike.md)<`boolean`\>
 
+Reactive property indicating if the stream is paused or not.
+
 ## Methods
 
 ### [FlowableStreamLike\_pause]
 
 ▸ **[FlowableStreamLike_pause]**(): `void`
+
+Imperatively pause the stream.
 
 #### Returns
 
@@ -48,6 +55,8 @@ ___
 ### [FlowableStreamLike\_resume]
 
 ▸ **[FlowableStreamLike_resume]**(): `void`
+
+Imperatively resume the stream.
 
 #### Returns
 

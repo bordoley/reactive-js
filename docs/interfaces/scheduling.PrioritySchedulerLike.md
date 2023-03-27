@@ -4,6 +4,10 @@
 
 [scheduling](../modules/scheduling.md).PrioritySchedulerLike
 
+A scheduler that support priority scheduling based upon priority.
+
+Lower priority values indicate higher priority.
+
 ## Hierarchy
 
 - [`SchedulerLike`](scheduling.SchedulerLike.md)
@@ -22,14 +26,16 @@
 
 ▸ **[SchedulerLike_schedule]**(`continuation`, `options?`): [`DisposableLike`](util.DisposableLike.md)
 
+Schedule a continuation on the Scheduler.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `continuation` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`ContinuationContextLike`](scheduling.ContinuationContextLike.md)\> |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-| `options.priority?` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `continuation` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`ContinuationContextLike`](scheduling.ContinuationContextLike.md)\> | The continuation to run on the scheduler. |
+| `options?` | `Object` |  |
+| `options.delay?` | `number` | The amount of time in ms to delay execution of the continuation. |
+| `options.priority?` | `number` | The priority to execute the continuation with. The default behavior is implementation specific. |
 
 #### Returns
 

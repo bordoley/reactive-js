@@ -4,6 +4,8 @@
 
 [rx](../modules/rx.md).ObserverLike
 
+A consumer of push-based notifications.
+
 ## Type parameters
 
 | Name | Type |

@@ -151,8 +151,8 @@ const createSchedulerWithPriority = /*@__PURE__*/ (() => {
 /**
  * Returns the current value, if defined, of `observable`.
  *
- * @param observable The `ObservableLike` to subscribe to.
- * @param scheduler An optional scheduler used when subscribing to `observable`. The default
+ * @param observable - The `ObservableLike` to subscribe to.
+ * @param scheduler - An optional scheduler used when subscribing to `observable`. The default
  * is React's normal priority scheduler.
  *
  * @category Hook

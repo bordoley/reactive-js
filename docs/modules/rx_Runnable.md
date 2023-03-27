@@ -539,7 +539,7 @@ that is applied to an accumulator value between emitted items.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> | the generator function. |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> | The generator function. |
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
 | `options?` | `Object` | - |
 | `options.delay?` | `number` | - |
@@ -1130,7 +1130,7 @@ void is returned.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> | a function that takes source error and either returns a ContainerLike to continue with or void if the error should be propagated. |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> | A function that takes source error and either returns a ContainerLike to continue with or void if the error should be propagated. |
 | `options?` | `undefined` | - |
 
 #### Returns

@@ -4,6 +4,8 @@
 
 [containers](../modules/containers.md).ReadonlyArrayLike
 
+A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
+
 ## Type parameters
 
 | Name | Type |

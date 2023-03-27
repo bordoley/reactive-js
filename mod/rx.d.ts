@@ -5,13 +5,25 @@ import { SchedulerLike } from "./scheduling.js";
 import { DisposableLike, QueueableLike } from "./util.js";
 export { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, SubjectLike_publish, };
 /**
+ * A `QueueableLike` type that consumes enqueued events on a scheduler continuation.
+ * Events may be enqueud from any execution context.
+ *
  * @noInheritDoc
  */
 export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
+    /**
+     * The scheduler that the dispatcher schedules it's event consumer on.
+     */
     readonly [DispatcherLike_scheduler]: SchedulerLike;
+    /**
+     * Communicates to the dispatcher that no more events will be enqueued
+     * on the dispatcher.
+     */
     [DispatcherLike_complete](): void;
 }
 /**
+ * A consumer of push-based notifications.
+ *
  * @noInheritDoc
  */
 export interface ObserverLike<T = unknown> extends DispatcherLike<T>, DisposableLike {
@@ -21,23 +33,37 @@ export interface ObserverLike<T = unknown> extends DispatcherLike<T>, Disposable
      * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
      * scheduled using the observer's `schedule` method.
      *
-     * @param next The next notification value.
+     * @param next - The next notification value.
      */
     [ObserverLike_notify](next: T): void;
 }
 /**
- * The source of notifications which notifies a `ObserverLike` instance.
+ * The source of notifications which can be consumed by an `ObserverLike` instance.
  *
  * @noInheritDoc
  * @category Container
  */
 export interface ObservableLike<T = unknown> extends ContainerLike {
     readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
+    /**
+     * Indicates if the `ObservableLike` supports interactive enumeration.
+     */
     readonly [ObservableLike_isEnumerable]: boolean;
+    /**
+     * Indicates if the `ObservableLike` supports being subscribed to
+     * on a VirtualTimeScheduler.
+     */
     readonly [ObservableLike_isRunnable]: boolean;
+    /**
+     * Subscribes the given `ObserverLike` to the `ObservableLike` source.
+     *
+     * @param observer - The observer.
+     */
     [ObservableLike_observe](observer: ObserverLike<T>): void;
 }
 /**
+ * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
+ *
  * @noInheritDoc
  * @category Container
  */
@@ -46,7 +72,7 @@ export interface RunnableLike<T = unknown> extends ObservableLike<T> {
     readonly [ObservableLike_isRunnable]: true;
 }
 /**
- * Interface for iterating a Container of items.
+ * An `ObservableLike` that supports interactive enumeration.
  *
  * @noInheritDoc
  * @category Container
@@ -56,6 +82,8 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
     readonly [ObservableLike_isEnumerable]: true;
 }
 /**
+ * A stateful ObservableLike resource.
+ *
  * @noInheritDoc
  * @category Container
  */
@@ -64,16 +92,23 @@ export interface MulticastObservableLike<T = unknown> extends ObservableLike<T>,
     readonly [ObservableLike_isEnumerable]: false;
     readonly [ObservableLike_isRunnable]: false;
     /**
-     * The number of observers currently observing.
+     * The number of observers currently observing the `ObservableLike`.
      */
     readonly [MulticastObservableLike_observerCount]: number;
 }
 /**
+ * A MulticastObservable that can be used to publish notifications to 1 or more observers.
+ *
  * @noInheritDoc
  * @category Container
  */
 export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
     readonly [ContainerLike_type]?: SubjectLike<this[typeof ContainerLike_T]>;
+    /**
+     * Publishes a notification to any observers.
+     *
+     * @param next - The notification to publish.
+     */
     [SubjectLike_publish](next: T): void;
 }
 /**
@@ -359,8 +394,8 @@ export interface Throttle<C extends ObservableLike> extends Container<C> {
     /**
      * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
      *
-     * @param duration Function function that is used to determine the silence duration in between emitted values.
-     * @param mode The throttle mode.
+     * @param duration - Function function that is used to determine the silence duration in between emitted values.
+     * @param mode - The throttle mode.
      *
      * @category Operator
      */
@@ -371,9 +406,9 @@ export interface Throttle<C extends ObservableLike> extends Container<C> {
      * Returns an `ObservableLike` which emits a value from the source,
      * then ignores subsequent source values for `duration` milliseconds.
      *
-     * @param duration Time to wait before emitting another value after
+     * @param duration - Time to wait before emitting another value after
      * emitting the last value, measured in milliseconds.
-     * @param mode The throttle mode.
+     * @param mode - The throttle mode.
      *
      * @category Operator
      */
@@ -390,7 +425,7 @@ export interface Timeout<C extends ObservableLike> extends Container<C> {
      * Returns an `ObservableLike` that completes with an error if the source
      * does not emit a value in given time span.
      *
-     * @param duration Time in ms within which the source must emit values.
+     * @param duration - Time in ms within which the source must emit values.
      *
      * @category Operator
      */

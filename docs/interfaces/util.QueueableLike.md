@@ -4,6 +4,11 @@
 
 [util](../modules/util.md).QueueableLike
 
+An interface for types that support buffering items with backpressure.
+
+The exact behaviors of a `QueueableLike` such as FIFO vs. LIFO processing,
+and backpressure strategies are implementation specific.
+
 ## Type parameters
 
 | Name | Type |
@@ -32,6 +37,8 @@
 
 • `Readonly` **[QueueableLike\_capacity]**: `number`
 
+The number of items the queue is capable of efficiently buffering.
+
 ## Methods
 
 ### [QueueableLike\_enqueue]
@@ -50,4 +57,4 @@ Enqueue an item onto the queue.
 
 `boolean`
 
-`true` if the queue has additional capacity otherwise false.
+`true` if the queue has additional remaining capacity otherwise `false`.
