@@ -27,9 +27,9 @@ import {
   EnumeratorLike_move,
 } from "../containers.js";
 import {
+  Function1,
   Optional,
   SideEffect,
-  SideEffect1,
   bindMethod,
   isSome,
   none,
@@ -222,7 +222,7 @@ export const useStream = <
 
 const useDispatcher = <TReq>(
   dispatcher: Optional<DispatcherLike<TReq>>,
-): SideEffect1<TReq> => {
+): Function1<TReq, boolean> => {
   const dispatcherRef: React.MutableRefObject<Optional<DispatcherLike<TReq>>> =
     useRef();
 
@@ -233,9 +233,9 @@ const useDispatcher = <TReq>(
   return useCallback(
     (req: TReq) => {
       const dispatcher = dispatcherRef.current;
-      if (isSome(dispatcher)) {
-        dispatcher[QueueableLike_enqueue](req);
-      }
+      return isSome(dispatcher)
+        ? dispatcher[QueueableLike_enqueue](req)
+        : false;
     },
     [dispatcherRef],
   );
@@ -253,7 +253,7 @@ export const useStreamable = <TReq, T>(
     readonly capacity?: number;
     readonly replay?: number;
   } = {},
-): readonly [Optional<T>, SideEffect1<TReq>] => {
+): readonly [Optional<T>, Function1<TReq, boolean>] => {
   const stream = useStream(streamable, options);
   const dispatch = useDispatcher(stream);
   const value = useObservable<T>(stream ?? emptyObservable);

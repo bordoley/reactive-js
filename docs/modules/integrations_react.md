@@ -136,7 +136,7 @@ ___
 
 ### useStreamable
 
-▸ **useStreamable**<`TReq`, `T`\>(`streamable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
+▸ **useStreamable**<`TReq`, `T`\>(`streamable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`Function1`](functions.md#function1)<`TReq`, `boolean`\>]
 
 #### Type parameters
 
@@ -157,7 +157,7 @@ ___
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
+readonly [[`Optional`](functions.md#optional)<`T`\>, [`Function1`](functions.md#function1)<`TReq`, `boolean`\>]
 
 ___
 
