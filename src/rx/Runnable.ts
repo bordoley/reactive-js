@@ -161,12 +161,8 @@ export const combineLatest: CombineLatest<RunnableLike>["combineLatest"] =
 
 export const concat: Concat<RunnableLike>["concat"] = Observable_concat;
 
-export const concatAll: ConcatAll<
-  RunnableLike,
-  {
-    maxBufferSize?: number;
-  }
->["concatAll"] = Runnable_concatAll;
+export const concatAll: ConcatAll<RunnableLike>["concatAll"] =
+  Runnable_concatAll;
 
 export const concatMap: ConcatMap<RunnableLike>["concatMap"] =
   Runnable_concatMap;

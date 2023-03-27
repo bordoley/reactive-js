@@ -97,9 +97,7 @@ export declare const compute: <T>(computation: Factory<T>, { mode }?: {
     mode?: "batched" | "combine-latest" | undefined;
 }) => ObservableLike<T>;
 export declare const concat: Concat<ObservableLike>["concat"];
-export declare const concatAll: ConcatAll<ObservableLike, {
-    maxBufferSize?: number;
-}>["concatAll"];
+export declare const concatAll: ConcatAll<ObservableLike>["concatAll"];
 export declare const concatMap: ConcatMap<ObservableLike>["concatMap"];
 export declare const concatWith: ConcatWith<ObservableLike>["concatWith"];
 export declare const contains: Contains<ObservableLike>["contains"];

@@ -118,12 +118,8 @@ export const catchError: CatchError<EnumerableLike>["catchError"] =
 
 export const concat: Concat<EnumerableLike>["concat"] = Observable_concat;
 
-export const concatAll: ConcatAll<
-  EnumerableLike,
-  {
-    maxBufferSize?: number;
-  }
->["concatAll"] = Enumerable_concatAll;
+export const concatAll: ConcatAll<EnumerableLike>["concatAll"] =
+  Enumerable_concatAll;
 
 export const concatMap: ConcatMap<EnumerableLike>["concatMap"] =
   Enumerable_concatMap;

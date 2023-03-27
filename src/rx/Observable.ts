@@ -365,12 +365,8 @@ export const compute = Observable_compute;
 
 export const concat: Concat<ObservableLike>["concat"] = Observable_concat;
 
-export const concatAll: ConcatAll<
-  ObservableLike,
-  {
-    maxBufferSize?: number;
-  }
->["concatAll"] = Observable_concatAll;
+export const concatAll: ConcatAll<ObservableLike>["concatAll"] =
+  Observable_concatAll;
 
 export const concatMap: ConcatMap<ObservableLike>["concatMap"] =
   Observable_concatMap;

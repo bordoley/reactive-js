@@ -577,8 +577,7 @@ ContainerLike by concatenating the inner sources in order.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
+| `options?` | `undefined` |
 
 #### Returns
 

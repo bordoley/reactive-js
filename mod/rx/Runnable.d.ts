@@ -5,9 +5,7 @@ export declare const buffer: Buffer<RunnableLike>["buffer"];
 export declare const catchError: CatchError<RunnableLike>["catchError"];
 export declare const combineLatest: CombineLatest<RunnableLike>["combineLatest"];
 export declare const concat: Concat<RunnableLike>["concat"];
-export declare const concatAll: ConcatAll<RunnableLike, {
-    maxBufferSize?: number;
-}>["concatAll"];
+export declare const concatAll: ConcatAll<RunnableLike>["concatAll"];
 export declare const concatMap: ConcatMap<RunnableLike>["concatMap"];
 export declare const concatWith: ConcatWith<RunnableLike>["concatWith"];
 export declare const contains: Contains<RunnableLike>["contains"];

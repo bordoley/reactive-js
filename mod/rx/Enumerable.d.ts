@@ -5,9 +5,7 @@ import { DisposableLike } from "../util.js";
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
 export declare const catchError: CatchError<EnumerableLike>["catchError"];
 export declare const concat: Concat<EnumerableLike>["concat"];
-export declare const concatAll: ConcatAll<EnumerableLike, {
-    maxBufferSize?: number;
-}>["concatAll"];
+export declare const concatAll: ConcatAll<EnumerableLike>["concatAll"];
 export declare const concatMap: ConcatMap<EnumerableLike>["concatMap"];
 export declare const concatWith: ConcatWith<EnumerableLike>["concatWith"];
 export declare const contains: Contains<EnumerableLike>["contains"];
