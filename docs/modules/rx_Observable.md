@@ -568,8 +568,8 @@ ___
 | :------ | :------ |
 | `initialState` | () => `T` |
 | `options?` | `Object` |
+| `options.capacity?` | `number` |
 | `options.equality?` | [`Optional`](functions.md#optional)<[`Equality`](functions.md#equality)<`T`\>\> |
-| `options.maxBufferSize?` | `number` |
 | `options.replay?` | `number` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
@@ -597,7 +597,7 @@ ___
 | :------ | :------ |
 | `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
 | `«destructured»` | `Object` |
-| › `maxBufferSize?` | `number` |
+| › `capacity?` | `number` |
 | › `replay?` | `number` |
 | › `scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
@@ -1923,8 +1923,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
+| `options.count?` | `number` |
 | `options.duration?` | `number` \| [`Function1`](functions.md#function1)<`T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
-| `options.maxBufferSize?` | `number` |
 
 #### Returns
 
@@ -3590,7 +3590,7 @@ to the source is disposed.
 | :------ | :------ |
 | `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 | `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
+| `options.capacity?` | `number` |
 | `options.replay?` | `number` |
 
 #### Returns
@@ -3686,7 +3686,7 @@ ___
 | :------ | :------ |
 | `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 | `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
+| `options.capacity?` | `number` |
 
 #### Returns
 
@@ -4295,7 +4295,7 @@ ___
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 | `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
+| `options.capacity?` | `number` |
 
 #### Returns
 
@@ -4320,7 +4320,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
+| `options.capacity?` | `number` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 
 #### Returns
@@ -4344,7 +4344,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
+| `options.capacity?` | `number` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 
 #### Returns
@@ -4371,7 +4371,7 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 | :------ | :------ |
 | `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 | `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
+| `options.capacity?` | `number` |
 | `options.replay?` | `number` |
 
 #### Returns

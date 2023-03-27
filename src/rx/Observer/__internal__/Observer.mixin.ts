@@ -111,9 +111,9 @@ const Observer_mixin: <T>() => Mixin2<
         > &
           Mutable<TProperties>,
         scheduler: SchedulerLike,
-        maxBufferSize: number,
+        capacity: number,
       ): TObserverMixinReturn<T> {
-        init(IndexedQueue_fifoQueueMixin<T>(), instance, maxBufferSize);
+        init(IndexedQueue_fifoQueueMixin<T>(), instance, capacity);
 
         instance[DispatcherLike_scheduler] = scheduler;
 

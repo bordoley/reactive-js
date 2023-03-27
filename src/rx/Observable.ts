@@ -349,7 +349,7 @@ export const __using: __Using = Observable_compute__using;
  */
 export const buffer: <T>(options?: {
   readonly duration?: number | Function1<T, ObservableLike>;
-  readonly maxBufferSize?: number;
+  readonly count?: number;
 }) => ContainerOperator<ObservableLike, T, readonly T[]> = Observable_buffer;
 
 export const catchError: CatchError<ObservableLike>["catchError"] =
@@ -418,7 +418,7 @@ export const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"] =
 
 export const firstAsync: FirstAsync<
   ObservableLike,
-  { scheduler?: SchedulerLike | Factory<SchedulerLike>; maxBufferSize?: number }
+  { scheduler?: SchedulerLike | Factory<SchedulerLike>; capacity?: number }
 >["firstAsync"] = Observable_firstAsync;
 
 /**
@@ -500,7 +500,7 @@ export const keepType: KeepType<ObservableLike>["keepType"] =
 
 export const lastAsync: LastAsync<
   ObservableLike,
-  { scheduler?: SchedulerLike | Factory<SchedulerLike>; maxBufferSize?: number }
+  { scheduler?: SchedulerLike | Factory<SchedulerLike>; capacity?: number }
 >["lastAsync"] = Observable_lastAsync;
 
 export const map: Map<ObservableLike>["map"] = Observable_map;
@@ -599,7 +599,7 @@ export const switchMap: SwitchMap<ObservableLike>["switchMap"] =
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,
-  options?: { maxBufferSize?: number },
+  options?: { capacity?: number },
 ) => Function1<ObservableLike<T>, DisposableLike> = Observable_subscribe;
 
 /**

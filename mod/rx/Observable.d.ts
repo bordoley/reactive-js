@@ -58,15 +58,15 @@ export declare const __state: <T>(initialState: () => T, options?: {
     readonly equality?: import("../functions.js").Optional<import("../functions.js").Equality<T>>;
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
-    readonly maxBufferSize?: number | undefined;
+    readonly capacity?: number | undefined;
 }) => import("../streaming.js").StreamLike<import("../functions.js").Updater<T>, T>;
 /**
  * @category ComputationalEffect
  */
-export declare const __stream: <TReq, T, TStream extends import("../streaming.js").StreamLike<TReq, T>>(streamable: import("../streaming.js").StreamableLike<TReq, T, TStream>, { replay, maxBufferSize, scheduler, }?: {
+export declare const __stream: <TReq, T, TStream extends import("../streaming.js").StreamLike<TReq, T>>(streamable: import("../streaming.js").StreamableLike<TReq, T, TStream>, { replay, capacity, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
-    readonly maxBufferSize?: number | undefined;
+    readonly capacity?: number | undefined;
 }) => TStream;
 interface __Using {
     <T extends DisposableLike>(fn: Factory<T>): T;
@@ -86,7 +86,7 @@ export declare const __using: __Using;
  */
 export declare const buffer: <T>(options?: {
     readonly duration?: number | Function1<T, ObservableLike>;
-    readonly maxBufferSize?: number;
+    readonly count?: number;
 }) => ContainerOperator<ObservableLike, T, readonly T[]>;
 export declare const catchError: CatchError<ObservableLike>["catchError"];
 export declare const combineLatest: CombineLatest<ObservableLike>["combineLatest"];
@@ -122,7 +122,7 @@ export declare const exhaust: Exhaust<ObservableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"];
 export declare const firstAsync: FirstAsync<ObservableLike, {
     scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    maxBufferSize?: number;
+    capacity?: number;
 }>["firstAsync"];
 /**
  * @category Operator
@@ -165,7 +165,7 @@ export declare const keep: Keep<ObservableLike>["keep"];
 export declare const keepType: KeepType<ObservableLike>["keepType"];
 export declare const lastAsync: LastAsync<ObservableLike, {
     scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    maxBufferSize?: number;
+    capacity?: number;
 }>["lastAsync"];
 export declare const map: Map<ObservableLike>["map"];
 export declare const mapTo: MapTo<ObservableLike>["mapTo"];
@@ -187,7 +187,7 @@ export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
  */
 export declare const multicast: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
     readonly replay?: number | undefined;
-    readonly maxBufferSize?: number | undefined;
+    readonly capacity?: number | undefined;
 }) => Function1<ObservableLike<T>, import("../rx.js").MulticastObservableLike<T>>;
 export declare const never: Never<ObservableLike>["never"];
 export declare const observeWith: <C extends ObservableLike<unknown>, T>(observer: ObserverLike<T>) => Function1<C, C>;
@@ -216,7 +216,7 @@ export declare const scanMany: ScanMany<ObservableLike, ObservableLike>["scanMan
  */
 export declare const share: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
     readonly replay?: number | undefined;
-    readonly maxBufferSize?: number | undefined;
+    readonly capacity?: number | undefined;
 } | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
 export declare const skipFirst: SkipFirst<ObservableLike>["skipFirst"];
 export declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];
@@ -228,13 +228,13 @@ export declare const startWith: StartWith<ObservableLike>["startWith"];
 export declare const switchAll: SwitchAll<ObservableLike>["switchAll"];
 export declare const switchMap: SwitchMap<ObservableLike>["switchMap"];
 export declare const subscribe: <T>(scheduler: SchedulerLike, options?: {
-    maxBufferSize?: number;
+    capacity?: number;
 }) => Function1<ObservableLike<T>, DisposableLike>;
 /**
  * @category Operator
  */
 export declare const subscribeOn: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
-    readonly maxBufferSize?: number | undefined;
+    readonly capacity?: number | undefined;
 } | undefined) => (observable: ObservableLike<T>) => ObservableLike<T>;
 export declare const takeFirst: TakeFirst<ObservableLike>["takeFirst"];
 export declare const takeLast: TakeLast<ObservableLike>["takeLast"];

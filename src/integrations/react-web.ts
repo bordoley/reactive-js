@@ -103,7 +103,7 @@ export const WindowLocationProvider: React.FunctionComponent<{
   const value = useStream(windowLocation, {
     priority,
     replay: 1,
-    maxBufferSize: 1, // Prevent a hot source from queueing up dispatch events.
+    capacity: 1, // Prevent a hot source from queueing up dispatch events.
   });
 
   return isSome(value)

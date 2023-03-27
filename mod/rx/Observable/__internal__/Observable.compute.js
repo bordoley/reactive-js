@@ -17,7 +17,7 @@ import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
-import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 const Memo = 1;
 const Await = 2;
 const Observe = 3;
@@ -112,7 +112,7 @@ class ComputeContext {
                             ? pipe(observer, Observer_schedule(runComputation))
                             : scheduledComputationSubscription;
                 }
-            }), Observable_subscribeWithMaxBufferSize(scheduler, observer[QueueableLike_capacity]), Disposable_addTo(observer), Disposable_onComplete(this[ComputeContext_cleanup]));
+            }), Observable_subscribeWithCapacity(scheduler, observer[QueueableLike_capacity]), Disposable_addTo(observer), Disposable_onComplete(this[ComputeContext_cleanup]));
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_subscription] = subscription;
             effect[AwaitOrObserveEffect_value] = none;
@@ -251,10 +251,10 @@ export function Observable_compute__currentScheduler() {
     return ctx[ComputeContext_observer][DispatcherLike_scheduler];
 }
 export const Observable_compute__stream = /*@__PURE__*/ (() => {
-    const streamOnSchedulerFactory = (streamable, scheduler, replay, maxBufferSize) => streamable[StreamableLike_stream](scheduler, { replay, maxBufferSize });
-    return (streamable, { replay = 0, maxBufferSize = MAX_SAFE_INTEGER, scheduler, } = {}) => {
+    const streamOnSchedulerFactory = (streamable, scheduler, replay, capacity) => streamable[StreamableLike_stream](scheduler, { replay, capacity });
+    return (streamable, { replay = 0, capacity = MAX_SAFE_INTEGER, scheduler, } = {}) => {
         const currentScheduler = Observable_compute__currentScheduler();
-        return Observable_compute__using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay, maxBufferSize);
+        return Observable_compute__using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay, capacity);
     };
 })();
 export const Observable_compute__state = /*@__PURE__*/ (() => {

@@ -15,12 +15,12 @@ import { QueueableLike_enqueue } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Stream_mixin from "../../Stream/__internal__/Stream.mixin.js";
 const FlowableStream_create = /*@__PURE__*/ (() => {
-    const createStreamInternal = createInstanceFactory(mix(include(Stream_mixin()), function FlowableStream(instance, op, scheduler, replay, maxBufferSize) {
+    const createStreamInternal = createInstanceFactory(mix(include(Stream_mixin()), function FlowableStream(instance, op, scheduler, replay, capacity) {
         const subject = Subject_create({ replay: 1 });
         const liftedOp = compose(Observable_scan((acc, next) => (isFunction(next) ? next(acc) : next), returns(true)), Observable_mergeWith(
         // Initialize to paused state
         pipe(true, Optional_toObservable())), Observable_distinctUntilChanged(), Observable_forEach(bindMethod(subject, SubjectLike_publish)), op);
-        init(Stream_mixin(), instance, liftedOp, scheduler, replay, maxBufferSize);
+        init(Stream_mixin(), instance, liftedOp, scheduler, replay, capacity);
         pipe(instance, Disposable_add(subject));
         instance[FlowableStreamLike_isPaused] = subject;
         return instance;
@@ -35,8 +35,8 @@ const FlowableStream_create = /*@__PURE__*/ (() => {
         },
     }));
     return (op, scheduler, options) => {
-        const { maxBufferSize = MAX_SAFE_INTEGER, replay = 0 } = options !== null && options !== void 0 ? options : {};
-        return createStreamInternal(op, scheduler, replay, maxBufferSize);
+        const { capacity = MAX_SAFE_INTEGER, replay = 0 } = options !== null && options !== void 0 ? options : {};
+        return createStreamInternal(op, scheduler, replay, capacity);
     };
 })();
 export default FlowableStream_create;

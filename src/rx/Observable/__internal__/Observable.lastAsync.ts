@@ -18,7 +18,7 @@ import Observable_subscribe from "./Observable.subscribe.js";
 const Observable_lastAsync =
   <T>(options?: {
     scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    maxBufferSize?: number;
+    capacity?: number;
   }) =>
   async (observable: ObservableLike<T>): Promise<Optional<T>> => {
     const schedulerOrFactory =

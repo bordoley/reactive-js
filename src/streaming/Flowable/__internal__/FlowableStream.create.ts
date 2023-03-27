@@ -43,7 +43,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
     op: ContainerOperator<ObservableLike, boolean, T>,
     scheduler: SchedulerLike,
     replay: number,
-    maxBufferSize: number,
+    capacity: number,
   ) => FlowableStreamLike<T> = createInstanceFactory(
     mix(
       include(Stream_mixin<boolean, T>()),
@@ -56,7 +56,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
         op: ContainerOperator<ObservableLike, boolean, T>,
         scheduler: SchedulerLike,
         replay: number,
-        maxBufferSize: number,
+        capacity: number,
       ): FlowableStreamLike<T> {
         const subject = Subject_create({ replay: 1 });
 
@@ -82,7 +82,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
           liftedOp,
           scheduler,
           replay,
-          maxBufferSize,
+          capacity,
         );
 
         pipe(instance, Disposable_add(subject));
@@ -108,10 +108,10 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
   return (
     op: ContainerOperator<ObservableLike, boolean, T>,
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number; readonly maxBufferSize?: number },
+    options?: { readonly replay?: number; readonly capacity?: number },
   ): FlowableStreamLike<T> => {
-    const { maxBufferSize = MAX_SAFE_INTEGER, replay = 0 } = options ?? {};
-    return createStreamInternal(op, scheduler, replay, maxBufferSize);
+    const { capacity = MAX_SAFE_INTEGER, replay = 0 } = options ?? {};
+    return createStreamInternal(op, scheduler, replay, capacity);
   };
 })();
 

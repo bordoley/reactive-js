@@ -70,7 +70,7 @@ export declare const pick: Pick<RunnableLike>["pick"];
 export declare const reduce: Reduce<RunnableLike>["reduce"];
 export declare const retry: Retry<RunnableLike>["retry"];
 export declare const run: <T>(options?: {
-    maxBufferSize?: number | undefined;
+    capacity?: number | undefined;
 } | undefined) => (observable: RunnableLike<T>) => void;
 export declare const scan: Scan<RunnableLike>["scan"];
 export declare const scanLast: ScanLast<RunnableLike, RunnableLike>["scanLast"];

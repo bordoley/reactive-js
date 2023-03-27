@@ -6,15 +6,15 @@ import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__inte
 import Observer_create from "../../Observer/__internal__/Observer.create.js";
 import sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
-const Observable_subscribeWithMaxBufferSize: <T>(
+const Observable_subscribeWithCapacity: <T>(
   scheduler: SchedulerLike,
-  maxBufferSize: number,
+  capacity: number,
 ) => Function1<ObservableLike<T>, DisposableLike> =
-  (scheduler, maxBufferSize) => observable =>
+  (scheduler, capacity) => observable =>
     pipe(
-      Observer_create(scheduler, maxBufferSize),
+      Observer_create(scheduler, capacity),
       Disposable_addToIgnoringChildErrors(scheduler),
       sourceFrom(observable),
     );
 
-export default Observable_subscribeWithMaxBufferSize;
+export default Observable_subscribeWithCapacity;

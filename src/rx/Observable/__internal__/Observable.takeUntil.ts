@@ -13,7 +13,7 @@ import { QueueableLike_capacity } from "../../../util.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
 
 interface ObservableTakeUntil {
@@ -32,7 +32,7 @@ const Observable_takeUntil: ObservableTakeUntil = (<T>(
         pipe(
           notifier,
           Observable_takeFirst<ObservableLike, T>(),
-          Observable_subscribeWithMaxBufferSize(
+          Observable_subscribeWithCapacity(
             delegate[DispatcherLike_scheduler],
             delegate[QueueableLike_capacity],
           ),

@@ -211,7 +211,7 @@ const Stream_mixin: <TReq, T>() => Mixin4<
         op: ContainerOperator<ObservableLike, TReq, T>,
         scheduler: SchedulerLike,
         replay: number,
-        maxBufferSize: number,
+        capacity: number,
       ): StreamLike<TReq, T> {
         instance[DispatcherLike_scheduler] = scheduler;
 
@@ -221,7 +221,7 @@ const Stream_mixin: <TReq, T>() => Mixin4<
         const delegate = pipe(
           dispatchedObservable,
           op,
-          Observable_multicast<T>(scheduler, { replay, maxBufferSize }),
+          Observable_multicast<T>(scheduler, { replay, capacity }),
         );
 
         init(

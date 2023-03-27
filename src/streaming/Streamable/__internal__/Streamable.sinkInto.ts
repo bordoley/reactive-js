@@ -8,7 +8,7 @@ import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.e
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
-import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacity.js";
 import {
   StreamLike,
   StreamableLike,
@@ -22,8 +22,8 @@ const Streamable_sinkInto =
   <TReq, T>(dest: StreamLike<T, TReq>) =>
   (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
     const scheduler = dest[DispatcherLike_scheduler];
-    const maxBufferSize = dest[QueueableLike_capacity];
-    const srcStream = src[StreamableLike_stream](scheduler, { maxBufferSize });
+    const capacity = dest[QueueableLike_capacity];
+    const srcStream = src[StreamableLike_stream](scheduler, { capacity });
 
     pipe(
       Observable_merge(
@@ -42,10 +42,7 @@ const Streamable_sinkInto =
         ),
       ),
       Observable_ignoreElements<ObservableLike, unknown>(),
-      Observable_subscribeWithMaxBufferSize(
-        scheduler,
-        dest[QueueableLike_capacity],
-      ),
+      Observable_subscribeWithCapacity(scheduler, dest[QueueableLike_capacity]),
       Disposable_addTo(dest),
       Disposable_add(srcStream),
     );

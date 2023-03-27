@@ -6,12 +6,12 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "./Observable.create.js";
 import Observable_enqueue from "./Observable.enqueue.js";
-import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 
 const Observable_subscribeOn =
   <T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>,
-    options?: { readonly maxBufferSize?: number },
+    options?: { readonly capacity?: number },
   ) =>
   (observable: ObservableLike<T>): ObservableLike<T> =>
     // FIXME: type test for VTS
@@ -23,9 +23,9 @@ const Observable_subscribeOn =
       pipe(
         observable,
         Observable_enqueue<ObservableLike, T>(observer),
-        Observable_subscribeWithMaxBufferSize(
+        Observable_subscribeWithCapacity(
           scheduler,
-          options?.maxBufferSize ?? observer[QueueableLike_capacity],
+          options?.capacity ?? observer[QueueableLike_capacity],
         ),
         Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
         Disposable_addTo(observer),

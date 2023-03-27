@@ -18,8 +18,8 @@ const AsyncEnumerable_toObservable = () => (enumerable) => {
             : Observable_create;
     return create((observer) => {
         const scheduler = observer[DispatcherLike_scheduler];
-        const maxBufferSize = observer[QueueableLike_capacity];
-        const enumerator = pipe(enumerable[StreamableLike_stream](scheduler, { maxBufferSize }), Disposable_addTo(observer));
+        const capacity = observer[QueueableLike_capacity];
+        const enumerator = pipe(enumerable[StreamableLike_stream](scheduler, { capacity }), Disposable_addTo(observer));
         pipe(enumerator, Observable_forEach(_ => {
             enumerator[QueueableLike_enqueue](none);
         }), Observable_observeWith(observer));

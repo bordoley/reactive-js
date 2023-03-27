@@ -41,7 +41,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 
 type ObservableWithLastestFrom = <C extends ObservableLike, TA, TB, T>(
   other: ContainerOf<C, TB>,
@@ -88,7 +88,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom =
                 instance[WithLatestFromObserver_hasLatest] = true;
                 instance[WithLatestFromObserver_otherLatest] = next;
               }),
-              Observable_subscribeWithMaxBufferSize(
+              Observable_subscribeWithCapacity(
                 delegate[DispatcherLike_scheduler],
                 delegate[QueueableLike_capacity],
               ),

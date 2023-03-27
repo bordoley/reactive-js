@@ -29,9 +29,9 @@ import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 const QueuedEnumerator_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function QueuedEnumerator(instance, maxBufferSize) {
+    return createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function QueuedEnumerator(instance, capacity) {
         init(Disposable_mixin, instance);
-        init(IndexedQueue_fifoQueueMixin(), instance, maxBufferSize);
+        init(IndexedQueue_fifoQueueMixin(), instance, capacity);
         pipe(instance, Disposable_onDisposed(() => {
             // FIXME: Maybe should clear the queue here as well to early
             // release references?

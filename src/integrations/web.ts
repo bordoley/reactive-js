@@ -352,7 +352,7 @@ export const windowLocation: StreamableLike<
   const createSyncToHistoryStream = (
     f: typeof history.pushState,
     scheduler: SchedulerLike,
-    options: { readonly replay?: number; readonly maxBufferSize?: number },
+    options: { readonly replay?: number; readonly capacity?: number },
   ) =>
     Streamable.create<TState, TState>(
       compose(
@@ -367,26 +367,24 @@ export const windowLocation: StreamableLike<
 
   const stream = (
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number; readonly maxBufferSize?: number },
+    options?: { readonly replay?: number; readonly capacity?: number },
   ): WindowLocationStreamLike => {
     if (isSome(currentWindowLocationStream)) {
       raiseWithDebugMessage("Cannot stream more than once");
     }
 
-    const { maxBufferSize } = options ?? {};
+    const { capacity } = options ?? {};
 
     const replaceState = createSyncToHistoryStream(
       bindMethod(history, "replaceState"),
       scheduler,
-      { maxBufferSize },
+      { capacity },
     );
 
     const pushState = createSyncToHistoryStream(
       bindMethod(history, "pushState"),
       scheduler,
-      {
-        maxBufferSize,
-      },
+      { capacity },
     );
 
     currentWindowLocationStream = pipe(

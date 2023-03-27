@@ -11,7 +11,7 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 const AsyncEnumerator_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_delegatingMixin()), function AsyncEnumeratorDelegatingMixin(instance, delegate, operator) {
         const observable = pipe(delegate, operator, Observable_multicast(delegate[DispatcherLike_scheduler], {
-            maxBufferSize: delegate[QueueableLike_capacity],
+            capacity: delegate[QueueableLike_capacity],
         }), Disposable_add(delegate));
         init(Disposable_delegatingMixin(), instance, observable);
         instance[AsyncEnumeratorDelegatingMixin_src] = delegate;

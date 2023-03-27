@@ -283,12 +283,12 @@ export const transform =
     Flowable.create(modeObs =>
       Observable.create(observer => {
         const transform = pipe(factory(), addToDisposable(observer));
-        const maxBufferSize = observer[QueueableLike_capacity];
+        const capacity = observer[QueueableLike_capacity];
         const scheduler = observer[DispatcherLike_scheduler];
 
         pipe(
           createWritableSink(transform)[StreamableLike_stream](scheduler, {
-            maxBufferSize,
+            capacity,
           }),
           Stream.sourceFrom(src),
           Disposable.addTo(observer),
@@ -296,7 +296,7 @@ export const transform =
 
         const transformReadableStream = createReadableSource(transform)[
           StreamableLike_stream
-        ](scheduler, { maxBufferSize });
+        ](scheduler, { capacity });
 
         transformReadableStream[ObservableLike_observe](observer);
 

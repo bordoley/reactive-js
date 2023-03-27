@@ -64,7 +64,7 @@ import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
-import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 
 type EffectsMode = "batched" | "combine-latest";
 
@@ -255,7 +255,7 @@ class ComputeContext {
                 : scheduledComputationSubscription;
           }
         }),
-        Observable_subscribeWithMaxBufferSize(
+        Observable_subscribeWithCapacity(
           scheduler,
           observer[QueueableLike_capacity],
         ),
@@ -502,19 +502,19 @@ export const Observable_compute__stream = /*@__PURE__*/ (() => {
     streamable: StreamableLike<TReq, T, TStream>,
     scheduler: SchedulerLike,
     replay: number,
-    maxBufferSize: number,
-  ) => streamable[StreamableLike_stream](scheduler, { replay, maxBufferSize });
+    capacity: number,
+  ) => streamable[StreamableLike_stream](scheduler, { replay, capacity });
 
   return <TReq, T, TStream extends StreamLike<TReq, T>>(
     streamable: StreamableLike<TReq, T, TStream>,
     {
       replay = 0,
-      maxBufferSize = MAX_SAFE_INTEGER,
+      capacity = MAX_SAFE_INTEGER,
       scheduler,
     }: {
       readonly replay?: number;
       readonly scheduler?: SchedulerLike;
-      readonly maxBufferSize?: number;
+      readonly capacity?: number;
     } = {},
   ): TStream => {
     const currentScheduler = Observable_compute__currentScheduler();
@@ -523,7 +523,7 @@ export const Observable_compute__stream = /*@__PURE__*/ (() => {
       streamable,
       scheduler ?? currentScheduler,
       replay,
-      maxBufferSize,
+      capacity,
     ) as TStream;
   };
 })();
@@ -538,7 +538,7 @@ export const Observable_compute__state = /*@__PURE__*/ (() => {
       readonly equality?: Optional<Equality<T>>;
       readonly replay?: number;
       readonly scheduler?: SchedulerLike;
-      readonly maxBufferSize?: number;
+      readonly capacity?: number;
     } = {},
   ): StreamLike<Updater<T>, T> => {
     const { equality } = options;

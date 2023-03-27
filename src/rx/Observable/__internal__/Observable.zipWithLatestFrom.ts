@@ -52,7 +52,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 
 const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"] =
   /*@__PURE__*/ (() => {
@@ -140,7 +140,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
                   instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
               }),
-              Observable_subscribeWithMaxBufferSize(
+              Observable_subscribeWithCapacity(
                 delegate[DispatcherLike_scheduler],
                 delegate[QueueableLike_capacity],
               ),

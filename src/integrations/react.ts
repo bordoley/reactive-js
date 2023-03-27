@@ -161,13 +161,13 @@ export const useObservable = <T>(
   observable: ObservableLike<T>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly maxBufferSize?: number;
+    readonly capacity?: number;
   } = {},
 ): Optional<T> => {
   const [state, updateState] = useState<Optional<T>>(none);
   const [error, updateError] = useState<Optional<Error>>(none);
 
-  const { maxBufferSize, priority = unstable_NormalPriority } = options;
+  const { capacity, priority = unstable_NormalPriority } = options;
 
   useEffect(() => {
     const scheduler = createSchedulerWithPriority(priority);
@@ -175,12 +175,12 @@ export const useObservable = <T>(
     pipe(
       observable,
       Observable.forEach<T>(v => updateState(_ => v)),
-      Observable.subscribe(scheduler, { maxBufferSize }),
+      Observable.subscribe(scheduler, { capacity }),
       Disposable.onError(updateError),
     );
 
     return bindMethod(scheduler, DisposableLike_dispose);
-  }, [observable, updateState, updateError, priority, maxBufferSize]);
+  }, [observable, updateState, updateError, priority, capacity]);
 
   return isSome(error) ? raiseError<T>(error) : state;
 };
@@ -196,30 +196,26 @@ export const useStream = <
   streamable: StreamableLike<TReq, T, TStream>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly maxBufferSize?: number;
+    readonly capacity?: number;
     readonly replay?: number;
   } = {},
 ): Optional<TStream> => {
   const [stream, setStream] = useState<Optional<TStream>>(none);
 
-  const {
-    maxBufferSize,
-    priority = unstable_NormalPriority,
-    replay = 1,
-  } = options;
+  const { capacity, priority = unstable_NormalPriority, replay = 1 } = options;
 
   useEffect(() => {
     const scheduler = createSchedulerWithPriority(priority);
 
     const stream: TStream = streamable[StreamableLike_stream](scheduler, {
       replay,
-      maxBufferSize,
+      capacity,
     });
 
     setStream(stream);
 
     return bindMethod(scheduler, DisposableLike_dispose);
-  }, [streamable, setStream, priority, maxBufferSize]);
+  }, [streamable, setStream, priority, capacity]);
 
   return stream;
 };
@@ -254,7 +250,7 @@ export const useStreamable = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly maxBufferSize?: number;
+    readonly capacity?: number;
     readonly replay?: number;
   } = {},
 ): readonly [Optional<T>, SideEffect1<TReq>] => {
@@ -271,7 +267,7 @@ export const useFlowable = <T>(
   flowable: FlowableLike<T>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly maxBufferSize?: number;
+    readonly capacity?: number;
     readonly replay?: number;
   } = {},
 ): {

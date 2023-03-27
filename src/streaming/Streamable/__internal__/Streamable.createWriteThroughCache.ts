@@ -39,7 +39,7 @@ const Streamable_createWriteThroughCache = <T>(
 
   const stream = (
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number; readonly maxBufferSize?: number },
+    options?: { readonly replay?: number; readonly capacity?: number },
   ) => {
     const state = stateStore[StreamableLike_stream](scheduler, options);
 

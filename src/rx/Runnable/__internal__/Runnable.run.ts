@@ -12,7 +12,7 @@ import { DisposableLike_error } from "../../../util.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 
 const Runnable_run =
-  <T>(options?: { maxBufferSize?: number }) =>
+  <T>(options?: { capacity?: number }) =>
   (observable: RunnableLike<T>) => {
     if (__DEV__ && !observable[ObservableLike_isRunnable]) {
       raiseWithDebugMessage(

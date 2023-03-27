@@ -8,7 +8,7 @@ import {
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacity.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import {
@@ -41,7 +41,7 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
                   }
                 },
               ),
-              Observable_subscribeWithMaxBufferSize(
+              Observable_subscribeWithCapacity(
                 observer[DispatcherLike_scheduler],
                 observer[QueueableLike_capacity],
               ),

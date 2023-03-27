@@ -12,7 +12,7 @@ import Disposable_toObservable from "../../../util/Disposable/__internal__/Dispo
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
-import Observable_subscribeWithMaxBufferSize from "../../Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "../../Observable/__internal__/Observable.subscribeWithCapacity.js";
 import Observable_takeUntil from "../../Observable/__internal__/Observable.takeUntil.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 const Runnable_toFlowable = () => observable => Flowable_createLifted((modeObs) => Observable_create(observer => {
@@ -24,6 +24,6 @@ const Runnable_toFlowable = () => observable => Flowable_createLifted((modeObs) 
         else {
             pauseableScheduler[PauseableSchedulerLike_resume]();
         }
-    }), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_capacity]), Disposable_bindTo(pauseableScheduler))), Disposable_add(pauseableScheduler));
+    }), Observable_subscribeWithCapacity(observer[DispatcherLike_scheduler], observer[QueueableLike_capacity]), Disposable_bindTo(pauseableScheduler))), Disposable_add(pauseableScheduler));
 }), true);
 export default Runnable_toFlowable;

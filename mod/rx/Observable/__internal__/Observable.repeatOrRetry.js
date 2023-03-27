@@ -8,7 +8,7 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
     const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         let count = 1;
@@ -26,7 +26,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithMaxBufferSize(delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithCapacity(delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
             }
         };
         return pipe(Observer_createWithDelegate(delegate), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));

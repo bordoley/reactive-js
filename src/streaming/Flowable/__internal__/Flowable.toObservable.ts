@@ -28,7 +28,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
 
     return create(observer => {
       const scheduler = observer[DispatcherLike_scheduler];
-      const maxBufferSize = observer[QueueableLike_capacity];
+      const capacity = observer[QueueableLike_capacity];
 
       const op: ContainerOperator<ObservableLike, T, boolean> = compose(
         Observable_enqueue<ObservableLike, T>(observer),
@@ -43,7 +43,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
       );
 
       pipe(
-        Stream_create<T, boolean>(op, scheduler, { maxBufferSize }),
+        Stream_create<T, boolean>(op, scheduler, { capacity }),
         Stream_sourceFrom(src),
         Disposable_addTo(observer),
         Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),

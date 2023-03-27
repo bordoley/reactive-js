@@ -42,7 +42,7 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
 
   [StreamableLike_stream](
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number; readonly maxBufferSize?: number },
+    options?: { readonly replay?: number; readonly capacity?: number },
   ): StreamLike<void, T> {
     const src = this[LiftedAsyncEnumerable_src][StreamableLike_stream](
       scheduler,

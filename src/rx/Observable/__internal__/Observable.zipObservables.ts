@@ -72,7 +72,7 @@ interface QueuedEnumeratorLike<T = unknown>
     DisposableLike {}
 
 const QueuedEnumerator_create: <T>(
-  maxBufferSize: number,
+  capacity: number,
 ) => QueuedEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [EnumeratorLike_current]: T;
@@ -85,10 +85,10 @@ const QueuedEnumerator_create: <T>(
       function QueuedEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
           Mutable<TProperties>,
-        maxBufferSize: number,
+        capacity: number,
       ): EnumeratorLike<T> & QueueableLike<T> & DisposableLike {
         init(Disposable_mixin, instance);
-        init(IndexedQueue_fifoQueueMixin<T>(), instance, maxBufferSize);
+        init(IndexedQueue_fifoQueueMixin<T>(), instance, capacity);
 
         pipe(
           instance,

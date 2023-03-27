@@ -62,7 +62,7 @@ const AsyncEnumerator_create: <TA, TB>(
           delegate,
           operator,
           Observable_multicast(delegate[DispatcherLike_scheduler], {
-            maxBufferSize: delegate[QueueableLike_capacity],
+            capacity: delegate[QueueableLike_capacity],
           }),
           Disposable_add(delegate),
         );

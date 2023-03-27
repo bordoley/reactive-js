@@ -3023,7 +3023,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
+| `options.capacity?` | `number` |
 
 #### Returns
 

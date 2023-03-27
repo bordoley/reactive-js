@@ -142,11 +142,9 @@ export const windowLocation = /*@__PURE__*/ (() => {
         if (isSome(currentWindowLocationStream)) {
             raiseWithDebugMessage("Cannot stream more than once");
         }
-        const { maxBufferSize } = options !== null && options !== void 0 ? options : {};
-        const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { maxBufferSize });
-        const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, {
-            maxBufferSize,
-        });
+        const { capacity } = options !== null && options !== void 0 ? options : {};
+        const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { capacity });
+        const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { capacity });
         currentWindowLocationStream = pipe(Streamable.createWriteThroughCache(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),

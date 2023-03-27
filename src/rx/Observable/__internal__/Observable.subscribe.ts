@@ -3,15 +3,15 @@ import { Function1 } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { DisposableLike } from "../../../util.js";
-import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 
 const Observable_subscribe: <T>(
   scheduler: SchedulerLike,
-  options?: { maxBufferSize?: number },
+  options?: { capacity?: number },
 ) => Function1<ObservableLike<T>, DisposableLike> = (scheduler, options) =>
-  Observable_subscribeWithMaxBufferSize(
+  Observable_subscribeWithCapacity(
     scheduler,
-    options?.maxBufferSize ?? MAX_SAFE_INTEGER,
+    options?.capacity ?? MAX_SAFE_INTEGER,
   );
 
 export default Observable_subscribe;

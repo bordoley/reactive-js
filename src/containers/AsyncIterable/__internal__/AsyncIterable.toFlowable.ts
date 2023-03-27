@@ -8,7 +8,7 @@ import {
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacity.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import {
   SchedulerLike_maxYieldInterval,
@@ -79,7 +79,7 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
               pipe(observer, Observer_schedule(continuation));
             }
           }),
-          Observable_subscribeWithMaxBufferSize(
+          Observable_subscribeWithCapacity(
             scheduler,
             observer[QueueableLike_capacity],
           ),

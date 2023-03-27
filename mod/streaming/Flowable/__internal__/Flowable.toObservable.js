@@ -20,14 +20,14 @@ const Flowable_toObservable = () => (src) => {
         : Observable_create;
     return create(observer => {
         const scheduler = observer[DispatcherLike_scheduler];
-        const maxBufferSize = observer[QueueableLike_capacity];
+        const capacity = observer[QueueableLike_capacity];
         const op = compose(Observable_enqueue(observer), Observable_ignoreElements(), 
         // Intentionally use mergeWith here. The stream observer
         // needs to be immediately subscribed to when created
         // otherwise it will have no observer to queue events onto.
         // Observable.startWith uses concatenation.
         Observable_mergeWith(pipe(false, Optional_toObservable())));
-        pipe(Stream_create(op, scheduler, { maxBufferSize }), Stream_sourceFrom(src), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
+        pipe(Stream_create(op, scheduler, { capacity }), Stream_sourceFrom(src), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
     });
 };
 export default Flowable_toObservable;

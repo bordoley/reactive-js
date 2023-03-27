@@ -12,7 +12,7 @@ import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_create: <T>(
   scheduler: SchedulerLike,
-  maxBufferSize: number,
+  capacity: number,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   const typedObserverMixin = Observer_mixin<T>();
 
@@ -22,10 +22,10 @@ const Observer_create: <T>(
       function Observer(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
         scheduler: SchedulerLike,
-        maxBufferSize: number,
+        capacity: number,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, scheduler, maxBufferSize);
+        init(typedObserverMixin, instance, scheduler, capacity);
 
         return instance;
       },

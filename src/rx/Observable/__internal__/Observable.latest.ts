@@ -103,10 +103,10 @@ const Observable_latest = /*@__PURE__*/ (() => {
           Mutable<TProperties>,
         ctx: LatestCtx,
         scheduler: SchedulerLike,
-        maxBufferSize: number,
+        capacity: number,
       ): ObserverLike & TProperties {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, scheduler, maxBufferSize);
+        init(typedObserverMixin, instance, scheduler, capacity);
 
         instance[LatestObserver_ctx] = ctx;
 

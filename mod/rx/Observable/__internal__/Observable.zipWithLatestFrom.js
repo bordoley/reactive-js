@@ -14,7 +14,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 const Observable_zipWithLatestFrom = 
 /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
@@ -49,7 +49,7 @@ const Observable_zipWithLatestFrom =
                     instance[ZipWithLatestFromObserver_TAQueue][QueueLike_count] === 0) {
                     instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
-            }), Observable_subscribeWithMaxBufferSize(delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
+            }), Observable_subscribeWithCapacity(delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({

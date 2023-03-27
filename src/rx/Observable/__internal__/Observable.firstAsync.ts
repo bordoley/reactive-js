@@ -7,7 +7,7 @@ import Observable_takeFirst from "./Observable.takeFirst.js";
 const Observable_firstAsync =
   <T>(options?: {
     scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    maxBufferSize?: number;
+    capacity?: number;
   }) =>
   (observable: ObservableLike<T>): Promise<Optional<T>> =>
     pipe(

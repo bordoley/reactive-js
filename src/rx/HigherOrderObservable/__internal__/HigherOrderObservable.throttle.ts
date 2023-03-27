@@ -50,7 +50,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
-import Observable_subscribeWithMaxBufferSize from "../../Observable/__internal__/Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "../../Observable/__internal__/Observable.subscribeWithCapacity.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
@@ -80,7 +80,7 @@ const createThrottleObserver: <T>(
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
       Observable_forEach<ObservableLike>(observer[ThrottleObserver_onNotify]),
-      Observable_subscribeWithMaxBufferSize(
+      Observable_subscribeWithCapacity(
         observer[DispatcherLike_scheduler],
         observer[QueueableLike_capacity],
       ),

@@ -35,9 +35,9 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
 
       return create<T>((observer: ObserverLike<T>) => {
         const scheduler = observer[DispatcherLike_scheduler];
-        const maxBufferSize = observer[QueueableLike_capacity];
+        const capacity = observer[QueueableLike_capacity];
         const enumerator: StreamLike<void, T> = pipe(
-          enumerable[StreamableLike_stream](scheduler, { maxBufferSize }),
+          enumerable[StreamableLike_stream](scheduler, { capacity }),
           Disposable_addTo<StreamLike<void, T>>(observer),
         );
 

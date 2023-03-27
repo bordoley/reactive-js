@@ -15,7 +15,7 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
+import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 
 const Observable_repeatOrRetry: <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
@@ -46,7 +46,7 @@ const Observable_repeatOrRetry: <T>(
           Observable_forEach<ObservableLike, T>(
             bindMethod(delegate, ObserverLike_notify),
           ),
-          Observable_subscribeWithMaxBufferSize(
+          Observable_subscribeWithCapacity(
             delegate[DispatcherLike_scheduler],
             delegate[QueueableLike_capacity],
           ),

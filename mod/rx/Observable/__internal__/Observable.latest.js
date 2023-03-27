@@ -43,9 +43,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
             instance[LatestCtx_delegate][DisposableLike_dispose]();
         }
     };
-    const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin), function LatestObserver(instance, ctx, scheduler, maxBufferSize) {
+    const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin), function LatestObserver(instance, ctx, scheduler, capacity) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, scheduler, maxBufferSize);
+        init(typedObserverMixin, instance, scheduler, capacity);
         instance[LatestObserver_ctx] = ctx;
         return instance;
     }, props({
