@@ -200,10 +200,7 @@ export const createReadableSource = (
         addToNodeStream(readable),
       );
 
-      const onData = (v: Uint8Array) => {
-        observer[QueueableLike_enqueue](v);
-      };
-
+      const onData = bindMethod(observer, QueueableLike_enqueue);
       const onEnd = bindMethod(observer, DispatcherLike_complete);
 
       readable.on("data", onData);

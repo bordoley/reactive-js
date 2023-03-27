@@ -5,8 +5,9 @@ import Observable_create from "./Observable.create.js";
 const Observable_scanLast: ScanLast<
   ObservableLike,
   ObservableLike
->["scanLast"] = /*@__PURE__*/ HigherOrderObservable_scanLast<ObservableLike, ObservableLike>(
-  Observable_create,
-);
+>["scanLast"] = /*@__PURE__*/ HigherOrderObservable_scanLast<
+  ObservableLike,
+  ObservableLike
+>(Observable_create);
 
 export default Observable_scanLast;
