@@ -34,6 +34,7 @@
 - [forEach](rx_Enumerable.md#foreach)
 - [forkConcat](rx_Enumerable.md#forkconcat)
 - [forkZip](rx_Enumerable.md#forkzip)
+- [identity](rx_Enumerable.md#identity)
 - [ignoreElements](rx_Enumerable.md#ignoreelements)
 - [keep](rx_Enumerable.md#keep)
 - [keepType](rx_Enumerable.md#keeptype)
@@ -1061,6 +1062,22 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+### identity
+
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

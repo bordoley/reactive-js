@@ -67,6 +67,7 @@
 - [forkMerge](rx_Observable.md#forkmerge)
 - [forkZip](rx_Observable.md#forkzip)
 - [forkZipLatest](rx_Observable.md#forkziplatest)
+- [identity](rx_Observable.md#identity)
 - [ignoreElements](rx_Observable.md#ignoreelements)
 - [keep](rx_Observable.md#keep)
 - [keepType](rx_Observable.md#keeptype)
@@ -114,6 +115,7 @@
 - [lastAsync](rx_Observable.md#lastasync)
 - [multicast](rx_Observable.md#multicast)
 - [toEnumerable](rx_Observable.md#toenumerable)
+- [toObservable](rx_Observable.md#toobservable)
 - [toRunnable](rx_Observable.md#torunnable)
 
 ## ComputationalEffect Functions
@@ -3036,6 +3038,22 @@ ___
 
 ___
 
+### identity
+
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
 ### ignoreElements
 
 ▸ **ignoreElements**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `unknown`, `T`\>
@@ -4398,6 +4416,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 

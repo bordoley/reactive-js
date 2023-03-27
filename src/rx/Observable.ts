@@ -24,6 +24,7 @@ import {
   FromOptional,
   FromReadonlyArray,
   Generate,
+  Identity,
   IgnoreElements,
   Keep,
   KeepType,
@@ -48,6 +49,7 @@ import {
   ZipWith,
 } from "../containers.js";
 import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
+import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -92,6 +94,7 @@ import {
   Throttle,
   Timeout,
   ToEnumerable,
+  ToObservable,
   ToRunnable,
   Tween,
   WithCurrentTime,
@@ -486,6 +489,9 @@ export const generate: Generate<
   { readonly delay?: number; readonly delayStart?: boolean }
 >["generate"] = Observable_generate;
 
+export const identity: Identity<ObservableLike>["identity"] =
+  Container_identity;
+
 export const ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"] =
   Observable_ignoreElements;
 
@@ -628,6 +634,9 @@ export const timeout: Timeout<ObservableLike>["timeout"] = Observable_timeout;
 
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   Observable_toEnumerable;
+
+export const toObservable: ToObservable<ObservableLike>["toObservable"] =
+  identity;
 
 export const toRunnable: ToRunnable<ObservableLike>["toRunnable"] =
   Observable_toRunnable;

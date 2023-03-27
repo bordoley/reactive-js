@@ -1,6 +1,7 @@
 /// <reference types="./ReadonlyArray.d.ts" />
 
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
+import Container_identity from "./Container/__internal__/Container.identity.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import Optional_toReadonlyArray from "./Optional/__internal__/Optional.toReadonlyArray.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
@@ -30,6 +31,7 @@ export const fromOptional = Optional_toReadonlyArray;
 export const fromReadonlyArray = ReadonlyArray_toReadonlyArray;
 export const fromRunnable = Runnable_toReadonlyArray;
 export const getLength = ReadonlyArray_getLength;
+export const identity = Container_identity;
 export const isEmpty = ReadonlyArray_isEmpty;
 export const keep = ReadonlyArray_keep;
 export const keepType = ReadonlyArray_keepType;

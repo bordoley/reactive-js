@@ -1,6 +1,6 @@
-import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
+import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
-import { CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
@@ -158,6 +158,7 @@ export declare const generate: Generate<ObservableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["generate"];
+export declare const identity: Identity<ObservableLike>["identity"];
 export declare const ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"];
 export declare const keep: Keep<ObservableLike>["keep"];
 export declare const keepType: KeepType<ObservableLike>["keepType"];
@@ -245,6 +246,7 @@ export declare const throws: Throws<ObservableLike, {
 }>["throws"];
 export declare const timeout: Timeout<ObservableLike>["timeout"];
 export declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
+export declare const toObservable: ToObservable<ObservableLike>["toObservable"];
 export declare const toRunnable: ToRunnable<ObservableLike>["toRunnable"];
 /**
  * @category Constructor

@@ -11,7 +11,6 @@
 - [currentTime](rx_Runnable.md#currenttime)
 - [defer](rx_Runnable.md#defer)
 - [empty](rx_Runnable.md#empty)
-- [fromEnumerable](rx_Runnable.md#fromenumerable)
 - [fromFactory](rx_Runnable.md#fromfactory)
 - [fromIterable](rx_Runnable.md#fromiterable)
 - [fromOptional](rx_Runnable.md#fromoptional)
@@ -46,6 +45,7 @@
 - [forkMerge](rx_Runnable.md#forkmerge)
 - [forkZip](rx_Runnable.md#forkzip)
 - [forkZipLatest](rx_Runnable.md#forkziplatest)
+- [identity](rx_Runnable.md#identity)
 - [ignoreElements](rx_Runnable.md#ignoreelements)
 - [keep](rx_Runnable.md#keep)
 - [keepType](rx_Runnable.md#keeptype)
@@ -402,30 +402,6 @@ Return an ContainerLike that emits no items.
 #### Returns
 
 [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-___
-
-### fromEnumerable
-
-▸ **fromEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-| `options.delayStart?` | `boolean` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 ___
 
@@ -1962,6 +1938,22 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+### identity
+
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

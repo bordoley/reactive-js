@@ -72,6 +72,8 @@ Base type for Container type classes.
 
   ↳ [`Generate`](containers.Generate.md)
 
+  ↳ [`Identity`](containers.Identity.md)
+
   ↳ [`IgnoreElements`](containers.IgnoreElements.md)
 
   ↳ [`Keep`](containers.Keep.md)

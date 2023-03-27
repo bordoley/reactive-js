@@ -16,6 +16,7 @@
 ### Operator Functions
 
 - [forEach](containers_ReadonlyArray.md#foreach)
+- [identity](containers_ReadonlyArray.md#identity)
 - [keep](containers_ReadonlyArray.md#keep)
 - [keepType](containers_ReadonlyArray.md#keeptype)
 - [map](containers_ReadonlyArray.md#map)
@@ -199,6 +200,22 @@ value emitted by the source.
 | :------ | :------ |
 | `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
 | `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### identity
+
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 #### Returns
 

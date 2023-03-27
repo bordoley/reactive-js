@@ -8,13 +8,16 @@
 
 - [fromReadonlyArray](containers_Iterable.md#fromreadonlyarray)
 
+### Operator Functions
+
+- [identity](containers_Iterable.md#identity)
+
 ### Transform Functions
 
 - [enumerate](containers_Iterable.md#enumerate)
 - [toAsyncEnumerable](containers_Iterable.md#toasyncenumerable)
 - [toEnumerable](containers_Iterable.md#toenumerable)
 - [toFlowable](containers_Iterable.md#toflowable)
-- [toIterable](containers_Iterable.md#toiterable)
 - [toObservable](containers_Iterable.md#toobservable)
 - [toReadonlyArray](containers_Iterable.md#toreadonlyarray)
 - [toRunnable](containers_Iterable.md#torunnable)
@@ -42,6 +45,24 @@
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
+
+___
+
+## Operator Functions
+
+### identity
+
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -129,30 +150,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-___
-
-### toIterable
-
-▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
-
-Converts the ContainerLike to a `IterableLike`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
 
 ___
 

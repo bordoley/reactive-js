@@ -1,9 +1,9 @@
 /// <reference types="./Runnable.d.ts" />
 
+import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { identity, returns } from "../functions.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
@@ -99,12 +99,12 @@ export const forkConcat = Observable_forkConcat;
 export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
-export const fromEnumerable = /*@__PURE__*/ returns(identity);
 export const fromFactory = Observable_fromFactory;
 export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toObservable;
 export const generate = Observable_generate;
+export const identity = Container_identity;
 export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;
 export const keepType = Observable_keepType;
@@ -141,11 +141,9 @@ export const throws = Observable_throws;
 export const timeout = Observable_timeout;
 export const toEnumerable = Observable_toEnumerable;
 export const toFlowable = Runnable_toFlowable;
-export const toObservable = 
-/*@__PURE__*/ returns(identity);
+export const toObservable = Container_identity;
 export const toReadonlyArray = Runnable_toReadonlyArray;
-export const toRunnable = 
-/*@__PURE__*/ returns(identity);
+export const toRunnable = Container_identity;
 /**
  * @category Constructor
  */

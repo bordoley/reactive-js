@@ -430,6 +430,12 @@ export interface Generate<C extends ContainerLike, O = never> extends Container<
      */
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: O): ContainerOf<C, T>;
 }
+export interface Identity<C extends ContainerLike> extends Container<C> {
+    /**
+     * @category Operator
+     */
+    identity<T>(): ContainerOperator<C, T, T>;
+}
 /**
  * @noInheritDoc
  * @category TypeClass

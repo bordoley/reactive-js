@@ -1,5 +1,5 @@
-import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Pick, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, FromEnumerable, Merge, MergeAll, MergeWith, Retry, RunnableLike, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Pick, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeWith, Retry, RunnableLike, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<RunnableLike>["buffer"];
 export declare const catchError: CatchError<RunnableLike>["catchError"];
@@ -29,10 +29,6 @@ export declare const forkConcat: ForkConcat<RunnableLike>["forkConcat"];
 export declare const forkMerge: ForkMerge<RunnableLike>["forkMerge"];
 export declare const forkZip: ForkZip<RunnableLike>["forkZip"];
 export declare const forkZipLatest: ForkZipLatest<RunnableLike>["forkZipLatest"];
-export declare const fromEnumerable: FromEnumerable<RunnableLike, {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-}>["fromEnumerable"];
 export declare const fromFactory: FromFactory<RunnableLike, {
     delay: number;
 }>["fromFactory"];
@@ -51,6 +47,7 @@ export declare const generate: Generate<RunnableLike, {
     readonly delay?: number;
     readonly delayStart?: boolean;
 }>["generate"];
+export declare const identity: Identity<RunnableLike>["identity"];
 export declare const ignoreElements: IgnoreElements<RunnableLike>["ignoreElements"];
 export declare const keep: Keep<RunnableLike>["keep"];
 export declare const keepType: KeepType<RunnableLike>["keepType"];

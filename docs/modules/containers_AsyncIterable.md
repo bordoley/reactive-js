@@ -4,11 +4,33 @@
 
 ## Table of contents
 
+### Operator Functions
+
+- [identity](containers_AsyncIterable.md#identity)
+
 ### Transform Functions
 
 - [toAsyncEnumerable](containers_AsyncIterable.md#toasyncenumerable)
 - [toFlowable](containers_AsyncIterable.md#toflowable)
 - [toObservable](containers_AsyncIterable.md#toobservable)
+
+## Operator Functions
+
+### identity
+
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
 
 ## Transform Functions
 

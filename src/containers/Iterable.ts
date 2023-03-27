@@ -1,13 +1,13 @@
 import {
   Enumerate,
   FromReadonlyArray,
+  Identity,
   IterableLike,
-  ToIterable,
   ToReadonlyArray,
 } from "../containers.js";
-import { identity, returns } from "../functions.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import Container_identity from "./Container/__internal__/Container.identity.js";
 import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
 import Iterable_toAsyncEnumerable from "./Iterable/__internal__/Iterable.toAsyncEnumerable.js";
 import Iterable_toFlowable from "./Iterable/__internal__/Iterable.toFlowable.js";
@@ -20,6 +20,8 @@ export const enumerate: Enumerate<IterableLike>["enumerate"] =
 
 export const fromReadonlyArray: FromReadonlyArray<IterableLike>["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
+
+export const identity: Identity<IterableLike>["identity"] = Container_identity;
 
 export const toAsyncEnumerable: ToAsyncEnumerable<
   IterableLike,
@@ -36,9 +38,6 @@ export const toFlowable: ToFlowable<
     readonly delayStart?: boolean;
   }
 >["toFlowable"] = Iterable_toFlowable;
-
-export const toIterable: ToIterable<IterableLike>["toIterable"] =
-  /*@__PURE__*/ returns(identity) as ToIterable<IterableLike>["toIterable"];
 
 export const toObservable: ToObservable<
   IterableLike,

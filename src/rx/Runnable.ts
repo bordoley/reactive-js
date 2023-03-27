@@ -23,6 +23,7 @@ import {
   FromOptional,
   FromReadonlyArray,
   Generate,
+  Identity,
   IgnoreElements,
   Keep,
   KeepType,
@@ -45,10 +46,10 @@ import {
   Zip,
   ZipWith,
 } from "../containers.js";
+import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { identity, returns } from "../functions.js";
 import {
   CombineLatest,
   CurrentTime,
@@ -57,7 +58,6 @@ import {
   ExhaustMap,
   ForkMerge,
   ForkZipLatest,
-  FromEnumerable,
   Merge,
   MergeAll,
   MergeWith,
@@ -220,14 +220,6 @@ export const forkZip: ForkZip<RunnableLike>["forkZip"] =
 export const forkZipLatest: ForkZipLatest<RunnableLike>["forkZipLatest"] =
   Observable_forkZipLatest as ForkZipLatest<RunnableLike>["forkZipLatest"];
 
-export const fromEnumerable: FromEnumerable<
-  RunnableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["fromEnumerable"] = /*@__PURE__*/ returns(identity);
-
 export const fromFactory: FromFactory<
   RunnableLike,
   { delay: number }
@@ -258,6 +250,8 @@ export const generate: Generate<
   RunnableLike,
   { readonly delay?: number; readonly delayStart?: boolean }
 >["generate"] = Observable_generate;
+
+export const identity: Identity<RunnableLike>["identity"] = Container_identity;
 
 export const ignoreElements: IgnoreElements<RunnableLike>["ignoreElements"] =
   Observable_ignoreElements;
@@ -352,13 +346,13 @@ export const toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
   Runnable_toFlowable;
 
 export const toObservable: ToObservable<RunnableLike>["toObservable"] =
-  /*@__PURE__*/ returns(identity);
+  Container_identity as ToObservable<RunnableLike>["toObservable"];
 
 export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
   Runnable_toReadonlyArray;
 
 export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
-  /*@__PURE__*/ returns(identity);
+  Container_identity as ToRunnable<RunnableLike>["toRunnable"];
 
 /**
  * @category Constructor

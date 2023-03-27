@@ -1,6 +1,7 @@
 /// <reference types="./Observable.d.ts" />
 
 import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
+import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -180,6 +181,7 @@ export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toObservable;
 export const generate = Observable_generate;
+export const identity = Container_identity;
 export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;
 export const keepType = Observable_keepType;
@@ -249,6 +251,7 @@ export const throwIfEmpty = Observable_throwIfEmpty;
 export const throws = Observable_throws;
 export const timeout = Observable_timeout;
 export const toEnumerable = Observable_toEnumerable;
+export const toObservable = identity;
 export const toRunnable = Observable_toRunnable;
 /**
  * @category Constructor

@@ -13,6 +13,10 @@
 - [PromiseableLike](../interfaces/containers.PromiseableLike.md)
 - [ReadonlyArrayLike](../interfaces/containers.ReadonlyArrayLike.md)
 
+### Other Interfaces
+
+- [Identity](../interfaces/containers.Identity.md)
+
 ### TypeClass Interfaces
 
 - [Buffer](../interfaces/containers.Buffer.md)

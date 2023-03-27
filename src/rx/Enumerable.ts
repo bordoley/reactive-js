@@ -27,6 +27,7 @@ import {
   FromOptional,
   FromReadonlyArray,
   Generate,
+  Identity,
   IgnoreElements,
   Keep,
   KeepType,
@@ -49,10 +50,10 @@ import {
   Zip,
   ZipWith,
 } from "../containers.js";
+import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { identity, returns } from "../functions.js";
 import {
   EnumerableLike,
   Retry,
@@ -185,6 +186,9 @@ export const fromReadonlyArray: FromReadonlyArray<EnumerableLike>["fromReadonlyA
 export const generate: Generate<EnumerableLike>["generate"] =
   Observable_generate;
 
+export const identity: Identity<EnumerableLike>["identity"] =
+  Container_identity;
+
 export const ignoreElements: IgnoreElements<EnumerableLike>["ignoreElements"] =
   Observable_ignoreElements;
 
@@ -242,19 +246,18 @@ export const toAsyncEnumerable: ToAsyncEnumerable<
 >["toAsyncEnumerable"] = Enumerable_toAsyncEnumerable;
 
 export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
-  /*@__PURE__*/ returns(identity);
+  identity;
 
 export const toFlowable: ToFlowable<EnumerableLike>["toFlowable"] =
   Runnable_toFlowable;
 
 export const toObservable: ToObservable<EnumerableLike>["toObservable"] =
-  /*@__PURE__*/ returns(identity);
+  identity;
 
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
   Enumerable_toReadonlyArray;
 
-export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] =
-  /*@__PURE__*/ returns(identity);
+export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] = identity;
 
 export const zip: Zip<EnumerableLike>["zip"] =
   Observable_zip as Zip<EnumerableLike>["zip"];

@@ -1,4 +1,4 @@
-import { Empty, Enumerate, Every, First, ForEach, FromIterable, FromOptional, FromReadonlyArray, Keep, KeepType, Last, Map, ReadonlyArrayLike, Some, ToIterable, ToReadonlyArray } from "../containers.js";
+import { Empty, Enumerate, Every, First, ForEach, FromIterable, FromOptional, FromReadonlyArray, Identity, Keep, KeepType, Last, Map, ReadonlyArrayLike, Some, ToIterable, ToReadonlyArray } from "../containers.js";
 import { FromEnumerable, FromRunnable, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 export declare const empty: Empty<ReadonlyArrayLike>["empty"];
@@ -12,6 +12,7 @@ export declare const fromOptional: FromOptional<ReadonlyArrayLike>["fromOptional
 export declare const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayLike>["fromReadonlyArray"];
 export declare const fromRunnable: FromRunnable<ReadonlyArrayLike>["fromRunnable"];
 export declare const getLength: (arr: readonly unknown[]) => number;
+export declare const identity: Identity<ReadonlyArrayLike>["identity"];
 export declare const isEmpty: (arr: readonly unknown[]) => boolean;
 export declare const keep: Keep<ReadonlyArrayLike>["keep"];
 export declare const keepType: KeepType<ReadonlyArrayLike>["keepType"];
