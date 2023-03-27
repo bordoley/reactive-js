@@ -180,7 +180,7 @@ export declare const ObserverMixin_dispatchSubscription: unique symbol;
 
 export declare const SatisfyObserver_predicate: unique symbol;
 
-export declare const Subject_observers: unique symbol;
+export declare const Publisher_observers: unique symbol;
 
 export declare const ContinuationSchedulerLike_schedule: unique symbol;
 
@@ -300,7 +300,7 @@ export declare const ObservableLike_isEnumerable: unique symbol;
 
 export declare const ObservableLike_isRunnable: unique symbol;
 
-export declare const SubjectLike_publish: unique symbol;
+export declare const PublisherLike_publish: unique symbol;
 
 export declare const SchedulerLike_inContinuation: unique symbol;
 

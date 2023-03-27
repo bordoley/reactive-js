@@ -9,8 +9,8 @@ import {
 import {
   ObservableLike,
   ObserverLike,
+  PublisherLike_publish,
   ScanLast,
-  SubjectLike_publish,
 } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Observable_concatAll from "../../Observable/__internal__/Observable.concatAll.js";
@@ -18,7 +18,7 @@ import Observable_forEach from "../../Observable/__internal__/Observable.forEach
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observable_takeLast from "../../Observable/__internal__/Observable.takeLast.js";
 import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom.js";
-import Subject_create from "../../Subject/__internal__/Subject.create.js";
+import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
 const HigherOrderObservable_scanLast =
   <C extends ObservableLike, CInner extends ObservableLike>(
@@ -31,7 +31,7 @@ const HigherOrderObservable_scanLast =
   observable =>
     createObservable((observer: ObserverLike<TAcc>) => {
       const accFeedbackStream = pipe(
-        Subject_create(),
+        Publisher_create(),
         Disposable_addTo(observer),
       );
 
@@ -42,12 +42,12 @@ const HigherOrderObservable_scanLast =
         ),
         Observable_concatAll(),
         Observable_forEach<ObservableLike, TAcc>(
-          bindMethod(accFeedbackStream, SubjectLike_publish),
+          bindMethod(accFeedbackStream, PublisherLike_publish),
         ),
         Observable_observeWith(observer),
       );
 
-      accFeedbackStream[SubjectLike_publish](initialValue());
+      accFeedbackStream[PublisherLike_publish](initialValue());
     });
 
 export default HigherOrderObservable_scanLast;

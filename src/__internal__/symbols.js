@@ -433,7 +433,7 @@ export const SatisfyObserver_predicate = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const Subject_observers = /*@__PURE__*/ symbol("Subject_observers");
+export const Publisher_observers = /*@__PURE__*/ symbol("Publisher_observers");
 
 /** @type {unique symbol} */
 export const ContinuationSchedulerLike_schedule = /*@__PURE__*/ symbol(
@@ -697,7 +697,9 @@ export const ObservableLike_isRunnable = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const SubjectLike_publish = /*@__PURE__*/ symbol("SubjectLike_publish");
+export const PublisherLike_publish = /*@__PURE__*/ symbol(
+  "PublisherLike_publish",
+);
 
 /** @type {unique symbol} */
 export const SchedulerLike_inContinuation = /*@__PURE__*/ symbol(

@@ -6,7 +6,7 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike_notify,
-  SubjectLike_publish,
+  PublisherLike_publish,
 } from "./__internal__/symbols.js";
 import {
   Container,
@@ -28,7 +28,7 @@ export {
   ObservableLike_observe,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
-  SubjectLike_publish,
+  PublisherLike_publish,
 };
 
 /**
@@ -143,20 +143,23 @@ export interface MulticastObservableLike<T = unknown>
 }
 
 /**
- * A MulticastObservable that can be used to publish notifications to 1 or more observers.
+ * An `ObservableLike` that can be used to publish notifications to one or more observers.
  *
  * @noInheritDoc
  * @category Container
  */
-export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
-  readonly [ContainerLike_type]?: SubjectLike<this[typeof ContainerLike_T]>;
+export interface PublisherLike<T = unknown> extends MulticastObservableLike<T> {
+  readonly [ObservableLike_isEnumerable]: false;
+  readonly [ObservableLike_isRunnable]: false;
+
+  readonly [ContainerLike_type]?: PublisherLike<this[typeof ContainerLike_T]>;
 
   /**
    * Publishes a notification to any observers.
    *
    * @param next - The notification to publish.
    */
-  [SubjectLike_publish](next: T): void;
+  [PublisherLike_publish](next: T): void;
 }
 
 /**

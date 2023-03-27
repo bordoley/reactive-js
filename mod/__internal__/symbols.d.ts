@@ -181,7 +181,7 @@ export const ObserverMixin_dispatchSubscription: unique symbol;
 /** @type {unique symbol} */
 export const SatisfyObserver_predicate: unique symbol;
 /** @type {unique symbol} */
-export const Subject_observers: unique symbol;
+export const Publisher_observers: unique symbol;
 /** @type {unique symbol} */
 export const ContinuationSchedulerLike_schedule: unique symbol;
 /** @type {unique symbol} */
@@ -301,7 +301,7 @@ export const ObservableLike_isEnumerable: unique symbol;
 /** @type {unique symbol} */
 export const ObservableLike_isRunnable: unique symbol;
 /** @type {unique symbol} */
-export const SubjectLike_publish: unique symbol;
+export const PublisherLike_publish: unique symbol;
 /** @type {unique symbol} */
 export const SchedulerLike_inContinuation: unique symbol;
 /** @type {unique symbol} */

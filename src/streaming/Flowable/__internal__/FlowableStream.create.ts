@@ -17,12 +17,12 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
-import { ObservableLike, SubjectLike_publish } from "../../../rx.js";
+import { ObservableLike, PublisherLike_publish } from "../../../rx.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
-import Subject_create from "../../../rx/Subject/__internal__/Subject.create.js";
+import Publisher_create from "../../../rx/Publisher/__internal__/Publisher.create.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   FlowableStreamLike,
@@ -58,7 +58,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
         replay: number,
         capacity: number,
       ): FlowableStreamLike<T> {
-        const subject = Subject_create({ replay: 1 });
+        const publisher = Publisher_create({ replay: 1 });
 
         const liftedOp = compose(
           Observable_scan<ObservableLike, boolean | Updater<boolean>, boolean>(
@@ -71,7 +71,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
           ),
           Observable_distinctUntilChanged<ObservableLike, boolean>(),
           Observable_forEach<ObservableLike, boolean>(
-            bindMethod(subject, SubjectLike_publish),
+            bindMethod(publisher, PublisherLike_publish),
           ),
           op,
         );
@@ -85,9 +85,9 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
           capacity,
         );
 
-        pipe(instance, Disposable_add(subject));
+        pipe(instance, Disposable_add(publisher));
 
-        instance[FlowableStreamLike_isPaused] = subject;
+        instance[FlowableStreamLike_isPaused] = publisher;
 
         return instance;
       },
