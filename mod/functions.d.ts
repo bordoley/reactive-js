@@ -132,6 +132,9 @@ export declare const incrementBy: (incr: number) => Updater<number>;
 export declare const isEqualTo: <T>(b: T, options?: {
     equality?: Equality<T> | undefined;
 }) => Predicate<T>;
+export declare const isNotEqualTo: <T>(b: T, options?: {
+    equality?: Equality<T> | undefined;
+}) => Predicate<T>;
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.
  */

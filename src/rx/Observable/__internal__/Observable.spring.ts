@@ -1,6 +1,6 @@
 import { MAX_VALUE, __DEV__ } from "../../../__internal__/constants.js";
 import { abs, min } from "../../../__internal__/math.js";
-import { pipe, returns } from "../../../functions.js";
+import { isNotEqualTo, pipe, returns } from "../../../functions.js";
 import { RunnableLike } from "../../../rx.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_pick from "./Observable.pick.js";
@@ -45,7 +45,7 @@ const Observable_spring = (
       returns([MAX_VALUE, start, start]),
     ),
     Observable_pick<RunnableLike, [unknown, unknown, number]>(2),
-    Observable_takeWhile<RunnableLike, number>(value => value !== finish, {
+    Observable_takeWhile<RunnableLike, number>(isNotEqualTo(finish), {
       inclusive: true,
     }),
   );

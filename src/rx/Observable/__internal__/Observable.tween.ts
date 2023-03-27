@@ -1,6 +1,12 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { min } from "../../../__internal__/math.js";
-import { Function1, identity, pipe, returns } from "../../../functions.js";
+import {
+  Function1,
+  identity,
+  isNotEqualTo,
+  pipe,
+  returns,
+} from "../../../functions.js";
 import { RunnableLike } from "../../../rx.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_pick from "./Observable.pick.js";
@@ -33,7 +39,7 @@ const Observable_tween = (
       returns([MAX_VALUE, start]),
     ),
     Observable_pick<RunnableLike, [unknown, number]>(1),
-    Observable_takeWhile<RunnableLike, number>(value => value !== finish, {
+    Observable_takeWhile<RunnableLike, number>(isNotEqualTo(finish), {
       inclusive: true,
     }),
   );

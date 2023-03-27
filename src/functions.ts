@@ -357,6 +357,23 @@ export const isEqualTo = /*@__PURE__*/ (() => {
   };
 })();
 
+export const isNotEqualTo = /*@__PURE__*/ (() => {
+  const isStrictlyNotEqualTo =
+    <T>(b: T): Predicate<T> =>
+    a =>
+      a !== b;
+
+  return <T>(
+    b: T,
+    options: { equality?: Equality<T> } = { equality: strictEquality },
+  ): Predicate<T> => {
+    const equality = options.equality ?? strictEquality;
+    return equality === strictEquality
+      ? isStrictlyNotEqualTo(b)
+      : (a: T) => !equality(a, b);
+  };
+})();
+
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.
  */

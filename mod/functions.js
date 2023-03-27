@@ -65,6 +65,16 @@ export const isEqualTo = /*@__PURE__*/ (() => {
             : (a) => equality(a, b);
     };
 })();
+export const isNotEqualTo = /*@__PURE__*/ (() => {
+    const isStrictlyNotEqualTo = (b) => a => a !== b;
+    return (b, options = { equality: strictEquality }) => {
+        var _a;
+        const equality = (_a = options.equality) !== null && _a !== void 0 ? _a : strictEquality;
+        return equality === strictEquality
+            ? isStrictlyNotEqualTo(b)
+            : (a) => !equality(a, b);
+    };
+})();
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.
  */

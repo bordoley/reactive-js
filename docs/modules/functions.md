@@ -64,6 +64,7 @@
 - [isFalse](functions.md#isfalse)
 - [isFunction](functions.md#isfunction)
 - [isNone](functions.md#isnone)
+- [isNotEqualTo](functions.md#isnotequalto)
 - [isNumber](functions.md#isnumber)
 - [isObject](functions.md#isobject)
 - [isOdd](functions.md#isodd)
@@ -1711,6 +1712,30 @@ Returns true if `option` is `none`.
 #### Returns
 
 option is undefined
+
+___
+
+### isNotEqualTo
+
+▸ **isNotEqualTo**<`T`\>(`b`, `options?`): [`Predicate`](functions.md#predicate)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`Predicate`](functions.md#predicate)<`T`\>
 
 ___
 

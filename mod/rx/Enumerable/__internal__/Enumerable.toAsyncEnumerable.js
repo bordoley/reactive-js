@@ -2,7 +2,7 @@
 
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
-import { pipe } from "../../../functions.js";
+import { bindMethod, pipe } from "../../../functions.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
@@ -18,9 +18,7 @@ const Enumerable_toAsyncEnumerable =
     const { delay = 0 } = options !== null && options !== void 0 ? options : {};
     return Streamable_createLifted(observable => Observable_create(observer => {
         const enumerator = pipe(enumerable, Enumerable_enumerate(), Disposable_addTo(observer));
-        pipe(observable, Observable_forEach(_ => {
-            enumerator[EnumeratorLike_move]();
-        }), Observable_takeWhile(_ => enumerator[EnumeratorLike_hasCurrent]), delay > 0
+        pipe(observable, Observable_forEach(bindMethod(enumerator, EnumeratorLike_move)), Observable_takeWhile(_ => enumerator[EnumeratorLike_hasCurrent]), delay > 0
             ? Observable_concatMap(_ => pipe(enumerator[EnumeratorLike_current], Optional_toObservable({ delay })))
             : Observable_map(_ => enumerator[EnumeratorLike_current]), Observable_observeWith(observer));
     }), true, delay <= 0, true);

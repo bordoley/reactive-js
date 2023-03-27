@@ -4,7 +4,7 @@ import {
   EnumeratorLike_move,
 } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
-import { pipe } from "../../../functions.js";
+import { bindMethod, pipe } from "../../../functions.js";
 import { EnumerableLike, ObservableLike } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
@@ -39,9 +39,9 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
 
             pipe(
               observable,
-              Observable_forEach<ObservableLike, void>(_ => {
-                enumerator[EnumeratorLike_move]();
-              }),
+              Observable_forEach<ObservableLike, void>(
+                bindMethod(enumerator, EnumeratorLike_move),
+              ),
               Observable_takeWhile<ObservableLike, void>(
                 _ => enumerator[EnumeratorLike_hasCurrent],
               ),
