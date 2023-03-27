@@ -1104,7 +1104,7 @@ number of items reaches the specified maximum buffer size.
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
+| `options.count?` | `number` |
 
 #### Returns
 

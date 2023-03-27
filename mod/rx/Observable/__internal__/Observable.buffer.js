@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { BufferObserver_buffer, BufferObserver_durationFunction, BufferObserver_durationSubscription, BufferObserver_maxBufferSize, } from "../../../__internal__/symbols.js";
+import { BufferObserver_buffer, BufferObserver_count, BufferObserver_durationFunction, BufferObserver_durationSubscription, } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
@@ -26,7 +26,7 @@ import Observable_never from "./Observable.never.js";
 import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMaxBufferSize.js";
 const Observable_buffer = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
-    const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin, delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, maxBufferSize) {
+    const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin, delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, count) {
         init(Disposable_mixin, instance);
         init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
         init(delegatingMixin(), instance, delegate);
@@ -34,7 +34,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         instance[BufferObserver_durationFunction] = durationFunction;
         instance[BufferObserver_durationSubscription] =
             SerialDisposable_create(Disposable_disposed);
-        instance[BufferObserver_maxBufferSize] = maxBufferSize;
+        instance[BufferObserver_count] = count;
         pipe(instance, Disposable_onComplete(() => {
             const { [BufferObserver_buffer]: buffer } = instance;
             instance[BufferObserver_buffer] = [];
@@ -50,11 +50,11 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         [BufferObserver_buffer]: none,
         [BufferObserver_durationFunction]: none,
         [BufferObserver_durationSubscription]: none,
-        [BufferObserver_maxBufferSize]: 0,
+        [BufferObserver_count]: 0,
     }), {
         [ObserverLike_notify](next) {
             Observer_assertState(this);
-            const { [BufferObserver_buffer]: buffer, [BufferObserver_maxBufferSize]: maxBufferSize, } = this;
+            const { [BufferObserver_buffer]: buffer, [BufferObserver_count]: count, } = this;
             buffer.push(next);
             const doOnNotify = () => {
                 this[BufferObserver_durationSubscription][SerialDisposableLike_current] = Disposable_disposed;
@@ -62,7 +62,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                 this[BufferObserver_buffer] = [];
                 this[DelegatingLike_delegate][ObserverLike_notify](buffer);
             };
-            if (ReadonlyArray_getLength(buffer) === maxBufferSize) {
+            if (ReadonlyArray_getLength(buffer) === count) {
                 doOnNotify();
             }
             else if (this[BufferObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed]) {
@@ -80,9 +80,9 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                     delay: clampPositiveNonZeroInteger(durationOption),
                 }))
                 : durationOption;
-        const maxBufferSize = clampPositiveNonZeroInteger((_b = options === null || options === void 0 ? void 0 : options.maxBufferSize) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER);
+        const count = clampPositiveNonZeroInteger((_b = options === null || options === void 0 ? void 0 : options.count) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER);
         const operator = (delegate) => {
-            return pipe(createBufferObserver(delegate, durationFunction, maxBufferSize), Disposable_addTo(delegate));
+            return pipe(createBufferObserver(delegate, durationFunction, count), Disposable_addTo(delegate));
         };
         return pipe(operator, Observable_lift(durationOption === MAX_SAFE_INTEGER, isNumber(durationOption)));
     });

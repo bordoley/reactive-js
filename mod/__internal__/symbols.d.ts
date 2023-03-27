@@ -51,7 +51,7 @@ export const BufferObserver_durationFunction: unique symbol;
 /** @type {unique symbol} */
 export const BufferObserver_durationSubscription: unique symbol;
 /** @type {unique symbol} */
-export const BufferObserver_maxBufferSize: unique symbol;
+export const BufferObserver_count: unique symbol;
 /** @type {unique symbol} */
 export const ComputeEffect_type: unique symbol;
 /** @type {unique symbol} */

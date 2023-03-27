@@ -50,7 +50,7 @@ export declare const BufferObserver_durationFunction: unique symbol;
 
 export declare const BufferObserver_durationSubscription: unique symbol;
 
-export declare const BufferObserver_maxBufferSize: unique symbol;
+export declare const BufferObserver_count: unique symbol;
 
 export declare const ComputeEffect_type: unique symbol;
 

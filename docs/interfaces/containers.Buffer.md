@@ -27,7 +27,7 @@
 
 ### buffer
 
-• **buffer**: <T\>(`options?`: `O` & { `maxBufferSize?`: `number`  }) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+• **buffer**: <T\>(`options?`: `O` & { `count?`: `number`  }) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>
 
 #### Type declaration
 
@@ -46,7 +46,7 @@ number of items reaches the specified maximum buffer size.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `O` & { `maxBufferSize?`: `number`  } |
+| `options?` | `O` & { `count?`: `number`  } |
 
 ##### Returns
 

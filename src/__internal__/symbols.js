@@ -129,8 +129,8 @@ export const BufferObserver_durationSubscription = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const BufferObserver_maxBufferSize = /*@__PURE__*/ symbol(
-  "BufferObserver_maxBufferSize",
+export const BufferObserver_count = /*@__PURE__*/ symbol(
+  "BufferObserver_count",
 );
 
 /** @type {unique symbol} */

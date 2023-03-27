@@ -75,7 +75,7 @@ export interface Buffer<C extends ContainerLike, O = unknown> extends Container<
      * @category Operator
      */
     buffer: <T>(options?: O & {
-        readonly maxBufferSize?: number;
+        readonly count?: number;
     }) => ContainerOperator<C, T, readonly T[]>;
 }
 /**

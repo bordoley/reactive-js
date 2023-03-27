@@ -13,9 +13,9 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   BufferObserver_buffer,
+  BufferObserver_count,
   BufferObserver_durationFunction,
   BufferObserver_durationSubscription,
-  BufferObserver_maxBufferSize,
 } from "../../../__internal__/symbols.js";
 import {
   SerialDisposableLike,
@@ -53,7 +53,7 @@ import Observable_subscribeWithMaxBufferSize from "./Observable.subscribeWithMax
 
 type ObservableBuffer = <C extends ObservableLike, T>(options?: {
   readonly duration?: number | Function1<T, C>;
-  readonly maxBufferSize?: number;
+  readonly count?: number;
 }) => ContainerOperator<C, T, readonly T[]>;
 
 const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
@@ -63,7 +63,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
     [BufferObserver_buffer]: T[];
     readonly [BufferObserver_durationFunction]: Function1<T, ObservableLike>;
     readonly [BufferObserver_durationSubscription]: SerialDisposableLike;
-    readonly [BufferObserver_maxBufferSize]: number;
+    readonly [BufferObserver_count]: number;
   };
 
   const createBufferObserver = createInstanceFactory(
@@ -74,7 +74,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
           Mutable<TProperties>,
         delegate: ObserverLike<readonly T[]>,
         durationFunction: Function1<T, ObservableLike>,
-        maxBufferSize: number,
+        count: number,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
         init(
@@ -89,7 +89,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
         instance[BufferObserver_durationFunction] = durationFunction;
         instance[BufferObserver_durationSubscription] =
           SerialDisposable_create(Disposable_disposed);
-        instance[BufferObserver_maxBufferSize] = maxBufferSize;
+        instance[BufferObserver_count] = count;
 
         pipe(
           instance,
@@ -115,7 +115,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
         [BufferObserver_buffer]: none,
         [BufferObserver_durationFunction]: none,
         [BufferObserver_durationSubscription]: none,
-        [BufferObserver_maxBufferSize]: 0,
+        [BufferObserver_count]: 0,
       }),
       {
         [ObserverLike_notify](
@@ -128,7 +128,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
 
           const {
             [BufferObserver_buffer]: buffer,
-            [BufferObserver_maxBufferSize]: maxBufferSize,
+            [BufferObserver_count]: count,
           } = this;
 
           buffer.push(next);
@@ -144,7 +144,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
             this[DelegatingLike_delegate][ObserverLike_notify](buffer);
           };
 
-          if (ReadonlyArray_getLength(buffer) === maxBufferSize) {
+          if (ReadonlyArray_getLength(buffer) === count) {
             doOnNotify();
           } else if (
             this[BufferObserver_durationSubscription][
@@ -171,7 +171,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
   return ((
     options: {
       readonly duration?: Function1<T, ObservableLike> | number;
-      readonly maxBufferSize?: number;
+      readonly count?: number;
     } = {},
   ) => {
     const durationOption = options.duration ?? MAX_SAFE_INTEGER;
@@ -188,13 +188,13 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
             )
         : durationOption;
 
-    const maxBufferSize = clampPositiveNonZeroInteger(
-      options?.maxBufferSize ?? MAX_SAFE_INTEGER,
+    const count = clampPositiveNonZeroInteger(
+      options?.count ?? MAX_SAFE_INTEGER,
     );
 
     const operator = (delegate: ObserverLike<readonly T[]>) => {
       return pipe(
-        createBufferObserver(delegate, durationFunction, maxBufferSize),
+        createBufferObserver(delegate, durationFunction, count),
         Disposable_addTo(delegate),
       );
     };

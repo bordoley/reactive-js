@@ -24,7 +24,7 @@ ThrottleObserver_onNotify
 BufferObserver_buffer
 BufferObserver_durationFunction
 BufferObserver_durationSubscription
-BufferObserver_maxBufferSize
+BufferObserver_count
 ComputeEffect_type
 MemoOrUsingEffect_func
 MemoOrUsingEffect_args

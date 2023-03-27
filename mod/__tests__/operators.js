@@ -6,11 +6,11 @@ import { alwaysFalse, alwaysTrue, arrayEquality, greaterThan, identity, incremen
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
-export const bufferTests = (m) => describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ maxBufferSize: 3 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([
+export const bufferTests = (m) => describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9],
-], arrayEquality()))), test("last buffer is short", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], m.fromReadonlyArray(), m.buffer({ maxBufferSize: 3 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([
+], arrayEquality()))), test("last buffer is short", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
     [7, 8],

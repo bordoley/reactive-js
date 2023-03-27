@@ -129,7 +129,7 @@ export interface Buffer<C extends ContainerLike, O = unknown>
    */
   buffer: <T>(
     options?: O & {
-      readonly maxBufferSize?: number;
+      readonly count?: number;
     },
   ) => ContainerOperator<C, T, readonly T[]>;
 }

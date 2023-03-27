@@ -82,7 +82,7 @@ export const bufferTests = <C extends ContainerLike>(
       pipeLazy(
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
         m.fromReadonlyArray(),
-        m.buffer({ maxBufferSize: 3 }),
+        m.buffer({ count: 3 }),
         m.toRunnable(),
         Runnable.toReadonlyArray(),
         expectArrayEquals<readonly number[]>(
@@ -101,7 +101,7 @@ export const bufferTests = <C extends ContainerLike>(
       pipeLazy(
         [1, 2, 3, 4, 5, 6, 7, 8],
         m.fromReadonlyArray(),
-        m.buffer({ maxBufferSize: 3 }),
+        m.buffer({ count: 3 }),
         m.toRunnable(),
         Runnable.toReadonlyArray(),
         expectArrayEquals<readonly number[]>(

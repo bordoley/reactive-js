@@ -54,7 +54,7 @@ export const BufferObserver_durationFunction = /*@__PURE__*/ symbol("BufferObser
 /** @type {unique symbol} */
 export const BufferObserver_durationSubscription = /*@__PURE__*/ symbol("BufferObserver_durationSubscription");
 /** @type {unique symbol} */
-export const BufferObserver_maxBufferSize = /*@__PURE__*/ symbol("BufferObserver_maxBufferSize");
+export const BufferObserver_count = /*@__PURE__*/ symbol("BufferObserver_count");
 /** @type {unique symbol} */
 export const ComputeEffect_type = /*@__PURE__*/ symbol("ComputeEffect_type");
 /** @type {unique symbol} */
