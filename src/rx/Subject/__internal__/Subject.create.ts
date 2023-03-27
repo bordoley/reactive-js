@@ -7,7 +7,12 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { Subject_observers } from "../../../__internal__/symbols.js";
+import {
+  DisposableLike_dispose,
+  EnumeratorLike_current,
+  EnumeratorLike_move,
+  Subject_observers,
+} from "../../../__internal__/symbols.js";
 import {
   IndexedLike_get,
   IndexedQueueLike,
@@ -15,8 +20,9 @@ import {
   QueueLike_count,
   QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
+import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import {
-  bindMethod,
+  isSome,
   newInstance,
   none,
   pipe,
@@ -38,10 +44,7 @@ import {
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
-import Disposable_toErrorHandler from "../../../util/Disposable/__internal__/Disposable.toErrorHandler.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 
 const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
@@ -69,6 +72,26 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
           init(IndexedQueue_fifoQueueMixin<T>(), instance, replay);
 
           instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
+
+          pipe(
+            instance,
+            Disposable_onDisposed(e => {
+              const enumerator = pipe(
+                instance[Subject_observers],
+                Iterable_enumerate(),
+              );
+
+              while (enumerator[EnumeratorLike_move]()) {
+                const observer = enumerator[EnumeratorLike_current];
+
+                if (isSome(e)) {
+                  observer[DisposableLike_dispose](e);
+                } else {
+                  observer[DispatcherLike_complete]();
+                }
+              }
+            }),
+          );
 
           return instance;
         },
@@ -127,14 +150,6 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               const next = this[IndexedLike_get](i);
               observer[QueueableLike_enqueue](next);
             }
-
-            pipe(
-              this,
-              Disposable_onError(Disposable_toErrorHandler(observer)),
-              Disposable_onComplete(
-                bindMethod(observer, DispatcherLike_complete),
-              ),
-            );
           },
         },
       ),
