@@ -203,9 +203,8 @@ export const createReadableSource = (
       const onData = (v: Uint8Array) => {
         observer[QueueableLike_enqueue](v);
       };
-      const onEnd = () => {
-        observer[DispatcherLike_complete]();
-      };
+
+      const onEnd = bindMethod(observer, DispatcherLike_complete);
 
       readable.on("data", onData);
       readable.on("end", onEnd);
@@ -262,7 +261,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
         const onDrain = () => {
           observer[QueueableLike_enqueue](false);
         };
-        const onFinish = () => observer[DispatcherLike_complete]();
+        const onFinish = bindMethod(observer, DispatcherLike_complete);
         const onPause = () => {
           observer[QueueableLike_enqueue](true);
         };

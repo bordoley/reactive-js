@@ -11,7 +11,7 @@ const Observable_forkCombineLatest: ForkZip<ObservableLike>["forkZip"] = (<T>(
     Observable_latest(
       pipe(
         ops,
-        ReadonlyArray_map(op => pipe(obs, op)),
+        ReadonlyArray_map(op => op(obs)),
       ),
       1,
     )) as ForkZip<ObservableLike>["forkZip"];

@@ -2,7 +2,7 @@
 
 import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, testAsync, } from "../__internal__/testing.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
-import { alwaysFalse, alwaysTrue, arrayEquality, identity, increment, none, pipe, pipeLazy, returns, } from "../functions.js";
+import { alwaysFalse, alwaysTrue, arrayEquality, greaterThan, identity, increment, lessThan, none, pipe, pipeLazy, returns, } from "../functions.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
@@ -75,7 +75,7 @@ export const flatMapIterableTests = (m) => describe("flatMapIterable", test("map
     yield 3;
 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))));
 export const ignoreElementsTests = (m) => describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.ignoreElements(), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals(ReadonlyArray.empty()))));
-export const keepTests = (m) => describe("keep", test("keeps only values greater than 5", pipeLazy([4, 8, 10, 7], m.fromReadonlyArray(), m.keep(x => x > 5), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([8, 10, 7]))), test("when predicate throws", () => {
+export const keepTests = (m) => describe("keep", test("keeps only values greater than 5", pipeLazy([4, 8, 10, 7], m.fromReadonlyArray(), m.keep(greaterThan(5)), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([8, 10, 7]))), test("when predicate throws", () => {
     const err = new Error();
     const predicate = (_a) => {
         throw err;
@@ -122,7 +122,7 @@ export const pickTests = (m) => describe("pick", test("with object and symbol ke
     pipe(obj, m.fromOptional(), m.pick(3), m.toRunnable(), Runnable.first(), expectEquals(4));
 }));
 export const reduceTests = (m) => describe("reduce", test("summing all values", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.reduce((acc, next) => acc + next, returns(0)), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([6]))));
-export const repeatTests = (m) => describe("repeat", test("when always repeating", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(), m.takeFirst({ count: 6 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when repeating a finite amount of times.", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(3), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(x => x < 1), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the repeat function throws", () => {
+export const repeatTests = (m) => describe("repeat", test("when always repeating", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(), m.takeFirst({ count: 6 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when repeating a finite amount of times.", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(3), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(lessThan(1)), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the repeat function throws", () => {
     const err = new Error();
     pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.repeat(_ => {
         throw err;
@@ -154,10 +154,10 @@ export const startWithTests = (m) => describe("startWith", test("appends the add
 export const takeFirstTests = (m) => describe("takeFirst", test("when taking fewer than the total number of elements in the source", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when taking more than all the items produced by the source", pipeLazy([1, 2], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2]))), test("when source is empty", pipeLazy([], m.fromReadonlyArray(), m.takeFirst({ count: 3 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([]))), test("with default count", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.takeFirst(), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1]))), test("when count is 0", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.takeFirst({ count: 0 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([]))));
 export const takeLastTests = (m) => describe("takeLast", test("when count is less than the total number of elements", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeLast({ count: 3 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([3, 4, 5]))), test("when count is greater than the total number of elements", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeLast({ count: 10 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("with default count", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeLast(), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([5]))));
 export const takeWhileTests = (m) => describe("takeWhile", test("exclusive", () => {
-    pipe([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeWhile(x => x < 4), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
+    pipe([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeWhile(lessThan(4)), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
     pipe([1, 2, 3], m.fromReadonlyArray(), m.takeWhile(alwaysTrue), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
     pipe([], m.fromReadonlyArray(), m.takeWhile(alwaysTrue), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals(ReadonlyArray.empty()));
-}), test("inclusive", pipeLazy([1, 2, 3, 4, 5, 6], m.fromReadonlyArray(), m.takeWhile(x => x < 4, { inclusive: true }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), test("when predicate throws", () => {
+}), test("inclusive", pipeLazy([1, 2, 3, 4, 5, 6], m.fromReadonlyArray(), m.takeWhile(lessThan(4), { inclusive: true }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), test("when predicate throws", () => {
     const err = new Error();
     const predicate = (_) => {
         throw err;

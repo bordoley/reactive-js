@@ -1,5 +1,12 @@
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { ContainerLike, ContainerOf } from "../../../containers.js";
-import { Predicate, alwaysTrue, isNone, isNumber } from "../../../functions.js";
+import {
+  Predicate,
+  alwaysTrue,
+  isNone,
+  isNumber,
+  lessThan,
+} from "../../../functions.js";
 
 const Container_repeat =
   <C extends ContainerLike, T>(
@@ -12,8 +19,8 @@ const Container_repeat =
     const shouldRepeat: Predicate<number> = isNone(predicate)
       ? alwaysTrue
       : isNumber(predicate)
-      ? (count: number) => count < predicate
-      : (count: number) => predicate(count);
+      ? lessThan(clampPositiveInteger(predicate))
+      : predicate;
 
     return (c: ContainerOf<C, T>) => repeat(c, shouldRepeat);
   };

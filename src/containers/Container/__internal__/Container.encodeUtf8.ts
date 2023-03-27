@@ -1,5 +1,5 @@
 import { ContainerLike, Defer, EncodeUtf8, Map } from "../../../containers.js";
-import { newInstance, pipe } from "../../../functions.js";
+import { bindMethod, newInstance, pipe } from "../../../functions.js";
 
 const Container_encodeUtf8 =
   <C extends ContainerLike>(
@@ -10,10 +10,7 @@ const Container_encodeUtf8 =
   container =>
     defer(() => {
       const textEncoder = newInstance(TextEncoder);
-      return pipe(
-        container,
-        map(s => textEncoder.encode(s)),
-      );
+      return pipe(container, map(bindMethod(textEncoder, "encode")));
     });
 
 export default Container_encodeUtf8;

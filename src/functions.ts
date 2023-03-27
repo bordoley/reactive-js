@@ -411,6 +411,16 @@ export const isSome = <T>(option: Optional<T>): option is T => option !== none;
 
 export const isTrue = (v: boolean): v is true => v;
 
+export const greaterThan =
+  (v: number) =>
+  (x: number): boolean =>
+    x > v;
+
+export const lessThan =
+  (v: number) =>
+  (x: number): boolean =>
+    x < v;
+
 /**
  * Applies logical negation to the value `v`.
  */

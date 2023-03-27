@@ -55,6 +55,7 @@
 - [decrementBy](functions.md#decrementby)
 - [error](functions.md#error)
 - [errorWithDebugMessage](functions.md#errorwithdebugmessage)
+- [greaterThan](functions.md#greaterthan)
 - [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
@@ -71,6 +72,7 @@
 - [isSome](functions.md#issome)
 - [isString](functions.md#isstring)
 - [isTrue](functions.md#istrue)
+- [lessThan](functions.md#lessthan)
 - [negate](functions.md#negate)
 - [newInstance](functions.md#newinstance)
 - [partial](functions.md#partial)
@@ -1534,6 +1536,34 @@ ___
 
 ___
 
+### greaterThan
+
+▸ **greaterThan**(`v`): (`x`: `number`) => `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `number` |
+
+#### Returns
+
+`fn`
+
+▸ (`x`): `boolean`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `x` | `number` |
+
+##### Returns
+
+`boolean`
+
+___
+
 ### identity
 
 ▸ **identity**<`T`\>(`v`): `T`
@@ -1842,6 +1872,34 @@ ___
 #### Returns
 
 v is true
+
+___
+
+### lessThan
+
+▸ **lessThan**(`v`): (`x`: `number`) => `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `number` |
+
+#### Returns
+
+`fn`
+
+▸ (`x`): `boolean`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `x` | `number` |
+
+##### Returns
+
+`boolean`
 
 ___
 

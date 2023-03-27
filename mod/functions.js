@@ -98,6 +98,8 @@ export const isNone = (option) => option === none;
  */
 export const isSome = (option) => option !== none;
 export const isTrue = (v) => v;
+export const greaterThan = (v) => (x) => x > v;
+export const lessThan = (v) => (x) => x < v;
 /**
  * Applies logical negation to the value `v`.
  */

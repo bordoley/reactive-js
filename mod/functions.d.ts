@@ -157,6 +157,8 @@ export declare const isNone: <T>(option: Optional<T>) => option is undefined;
  */
 export declare const isSome: <T>(option: Optional<T>) => option is T;
 export declare const isTrue: (v: boolean) => v is true;
+export declare const greaterThan: (v: number) => (x: number) => boolean;
+export declare const lessThan: (v: number) => (x: number) => boolean;
 /**
  * Applies logical negation to the value `v`.
  */

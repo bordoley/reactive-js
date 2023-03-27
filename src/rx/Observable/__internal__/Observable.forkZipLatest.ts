@@ -12,7 +12,7 @@ const Observable_forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"] =
       Observable_latest(
         pipe(
           ops,
-          ReadonlyArray_map(op => pipe(obs, op)),
+          ReadonlyArray_map(op => op(obs)),
         ),
         2,
       )) as ForkZipLatest<ObservableLike>["forkZipLatest"];

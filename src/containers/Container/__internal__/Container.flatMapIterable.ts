@@ -5,7 +5,7 @@ import {
   FromIterable,
   IterableLike,
 } from "../../../containers.js";
-import { Function1, pipe } from "../../../functions.js";
+import { Function1, compose } from "../../../functions.js";
 
 const Container_flatMapIterable =
   <C extends ContainerLike, O = never>(
@@ -16,6 +16,6 @@ const Container_flatMapIterable =
     mapper: Function1<TA, IterableLike<TB>>,
     options?: O,
   ): ContainerOperator<C, TA, TB> =>
-    concatMap(x => pipe(x, mapper, fromIterable<TB>(options)));
+    concatMap(compose(mapper, fromIterable<TB>(options)));
 
 export default Container_flatMapIterable;

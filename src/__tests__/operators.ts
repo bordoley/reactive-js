@@ -50,8 +50,10 @@ import {
   alwaysFalse,
   alwaysTrue,
   arrayEquality,
+  greaterThan,
   identity,
   increment,
+  lessThan,
   none,
   pipe,
   pipeLazy,
@@ -511,7 +513,7 @@ export const keepTests = <C extends ContainerLike>(
       pipeLazy(
         [4, 8, 10, 7],
         m.fromReadonlyArray(),
-        m.keep(x => x > 5),
+        m.keep(greaterThan(5)),
         m.toRunnable(),
         Runnable.toReadonlyArray(),
         expectArrayEquals([8, 10, 7]),
@@ -737,7 +739,7 @@ export const repeatTests = <C extends ContainerLike>(
       pipeLazy(
         [1, 2, 3],
         m.fromReadonlyArray(),
-        m.repeat(x => x < 1),
+        m.repeat(lessThan(1)),
         m.toRunnable(),
         Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
@@ -1185,7 +1187,7 @@ export const takeWhileTests = <C extends ContainerLike>(
       pipe(
         [1, 2, 3, 4, 5],
         m.fromReadonlyArray(),
-        m.takeWhile(x => x < 4),
+        m.takeWhile(lessThan(4)),
         m.toRunnable(),
         Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
@@ -1212,7 +1214,7 @@ export const takeWhileTests = <C extends ContainerLike>(
       pipeLazy(
         [1, 2, 3, 4, 5, 6],
         m.fromReadonlyArray(),
-        m.takeWhile(x => x < 4, { inclusive: true }),
+        m.takeWhile(lessThan(4), { inclusive: true }),
         m.toRunnable(),
         Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4]),
