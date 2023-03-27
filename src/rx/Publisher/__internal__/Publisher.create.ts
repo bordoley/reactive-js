@@ -11,7 +11,7 @@ import {
   DisposableLike_dispose,
   EnumeratorLike_current,
   EnumeratorLike_move,
-  Subject_observers,
+  Publisher_observers,
 } from "../../../__internal__/symbols.js";
 import {
   IndexedLike_get,
@@ -35,8 +35,8 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  SubjectLike,
-  SubjectLike_publish,
+  PublisherLike,
+  PublisherLike_publish,
 } from "../../../rx.js";
 import {
   DisposableLike_isDisposed,
@@ -47,37 +47,37 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 
-const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
+const Publisher_create: <T>(options?: { replay?: number }) => PublisherLike<T> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
-      readonly [Subject_observers]: Set<ObserverLike<T>>;
+      readonly [Publisher_observers]: Set<ObserverLike<T>>;
     };
 
-    const createSubjectInstance = createInstanceFactory(
+    const createPublisherInstance = createInstanceFactory(
       mix(
         include(Disposable_mixin, IndexedQueue_fifoQueueMixin()),
-        function Subject(
+        function Publisher(
           instance: Pick<
-            SubjectLike<T>,
+            PublisherLike<T>,
             | typeof ObservableLike_observe
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof MulticastObservableLike_observerCount
-            | typeof SubjectLike_publish
+            | typeof PublisherLike_publish
           > &
             Mutable<TProperties>,
           replay: number,
-        ): SubjectLike<T> {
+        ): PublisherLike<T> {
           init(Disposable_mixin, instance);
           init(IndexedQueue_fifoQueueMixin<T>(), instance, replay);
 
-          instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
+          instance[Publisher_observers] = newInstance<Set<ObserverLike>>(Set);
 
           pipe(
             instance,
             Disposable_onDisposed(e => {
               const enumerator = pipe(
-                instance[Subject_observers],
+                instance[Publisher_observers],
                 Iterable_enumerate(),
               );
 
@@ -96,7 +96,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
           return instance;
         },
         props<TProperties>({
-          [Subject_observers]: none,
+          [Publisher_observers]: none,
         }),
         {
           [ObservableLike_isEnumerable]: false as const,
@@ -104,11 +104,11 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
 
           get [MulticastObservableLike_observerCount]() {
             unsafeCast<TProperties>(this);
-            return this[Subject_observers].size;
+            return this[Publisher_observers].size;
           },
 
-          [SubjectLike_publish](
-            this: TProperties & SubjectLike<T> & QueueLike<T>,
+          [PublisherLike_publish](
+            this: TProperties & PublisherLike<T> & QueueLike<T>,
             next: T,
           ) {
             if (this[DisposableLike_isDisposed]) {
@@ -121,17 +121,17 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               this[QueueLike_dequeue]();
             }
 
-            for (const observer of this[Subject_observers]) {
+            for (const observer of this[Publisher_observers]) {
               observer[QueueableLike_enqueue](next);
             }
           },
 
           [ObservableLike_observe](
-            this: TProperties & SubjectLike & IndexedQueueLike<T>,
+            this: TProperties & PublisherLike & IndexedQueueLike<T>,
             observer: ObserverLike<T>,
           ) {
             if (!this[DisposableLike_isDisposed]) {
-              const { [Subject_observers]: observers } = this;
+              const { [Publisher_observers]: observers } = this;
               observers.add(observer);
 
               pipe(
@@ -155,10 +155,10 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
       ),
     );
 
-    return (options?: { replay?: number }): SubjectLike<T> => {
+    return (options?: { replay?: number }): PublisherLike<T> => {
       const replay = clampPositiveInteger(options?.replay ?? 0);
-      return createSubjectInstance(replay);
+      return createPublisherInstance(replay);
     };
   })();
 
-export default Subject_create;
+export default Publisher_create;

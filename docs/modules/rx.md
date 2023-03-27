@@ -9,8 +9,8 @@
 - [EnumerableLike](../interfaces/rx.EnumerableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
+- [PublisherLike](../interfaces/rx.PublisherLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
-- [SubjectLike](../interfaces/rx.SubjectLike.md)
 
 ### Other Interfaces
 

@@ -1,9 +1,9 @@
-import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, SubjectLike_publish } from "./__internal__/symbols.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_publish } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import { DisposableLike, QueueableLike } from "./util.js";
-export { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, SubjectLike_publish, };
+export { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, PublisherLike_publish, };
 /**
  * A `QueueableLike` type that consumes enqueued events on a scheduler continuation.
  * Events may be enqueud from any execution context.
@@ -97,19 +97,21 @@ export interface MulticastObservableLike<T = unknown> extends ObservableLike<T>,
     readonly [MulticastObservableLike_observerCount]: number;
 }
 /**
- * A MulticastObservable that can be used to publish notifications to 1 or more observers.
+ * An `ObservableLike` that can be used to publish notifications to one or more observers.
  *
  * @noInheritDoc
  * @category Container
  */
-export interface SubjectLike<T = unknown> extends MulticastObservableLike<T> {
-    readonly [ContainerLike_type]?: SubjectLike<this[typeof ContainerLike_T]>;
+export interface PublisherLike<T = unknown> extends MulticastObservableLike<T> {
+    readonly [ObservableLike_isEnumerable]: false;
+    readonly [ObservableLike_isRunnable]: false;
+    readonly [ContainerLike_type]?: PublisherLike<this[typeof ContainerLike_T]>;
     /**
      * Publishes a notification to any observers.
      *
      * @param next - The notification to publish.
      */
-    [SubjectLike_publish](next: T): void;
+    [PublisherLike_publish](next: T): void;
 }
 /**
  * @noInheritDoc

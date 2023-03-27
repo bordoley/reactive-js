@@ -8,29 +8,29 @@ import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { bindMethod, pipe } from "../../functions.js";
 import {
   MulticastObservableLike_observerCount,
-  SubjectLike_publish,
+  PublisherLike_publish,
 } from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { DisposableLike_dispose } from "../../util.js";
 import * as Observable from "../Observable.js";
-import * as Subject from "../Subject.js";
+import * as Publisher from "../Publisher.js";
 
 testModule(
-  "Subject",
+  "publisher",
   test("with replay", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
 
-    const subject = Subject.create<number>({ replay: 2 });
+    const publisher = Publisher.create<number>({ replay: 2 });
     pipe(
       [1, 2, 3, 4],
-      ReadonlyArray.forEach(bindMethod(subject, SubjectLike_publish)),
+      ReadonlyArray.forEach(bindMethod(publisher, PublisherLike_publish)),
     );
-    subject[DisposableLike_dispose]();
+    publisher[DisposableLike_dispose]();
 
     const result: number[] = [];
     pipe(
-      subject,
+      publisher,
       Observable.forEach<number>(x => {
         result.push(x);
       }),
@@ -45,15 +45,15 @@ testModule(
   test("with multiple observers", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
 
-    const subject = Subject.create();
-    pipe(subject[MulticastObservableLike_observerCount], expectEquals(0));
-    const sub1 = pipe(subject, Observable.subscribe(scheduler));
-    pipe(subject[MulticastObservableLike_observerCount], expectEquals(1));
-    const sub2 = pipe(subject, Observable.subscribe(scheduler));
-    pipe(subject[MulticastObservableLike_observerCount], expectEquals(2));
+    const publisher = Publisher.create();
+    pipe(publisher[MulticastObservableLike_observerCount], expectEquals(0));
+    const sub1 = pipe(publisher, Observable.subscribe(scheduler));
+    pipe(publisher[MulticastObservableLike_observerCount], expectEquals(1));
+    const sub2 = pipe(publisher, Observable.subscribe(scheduler));
+    pipe(publisher[MulticastObservableLike_observerCount], expectEquals(2));
     sub1[DisposableLike_dispose]();
-    pipe(subject[MulticastObservableLike_observerCount], expectEquals(1));
+    pipe(publisher[MulticastObservableLike_observerCount], expectEquals(1));
     sub2[DisposableLike_dispose]();
-    pipe(subject[MulticastObservableLike_observerCount], expectEquals(0));
+    pipe(publisher[MulticastObservableLike_observerCount], expectEquals(0));
   }),
 );

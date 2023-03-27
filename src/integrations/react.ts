@@ -41,12 +41,12 @@ import {
   DispatcherLike,
   EnumerableLike,
   ObservableLike,
-  SubjectLike,
-  SubjectLike_publish,
+  PublisherLike,
+  PublisherLike_publish,
 } from "../rx.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
-import * as Subject from "../rx/Subject.js";
+import * as Publisher from "../rx/Publisher.js";
 import {
   PrioritySchedulerLike,
   SchedulerLike,
@@ -348,25 +348,27 @@ export const useEnumerable = <T>(
   };
 };
 
-const createReplaySubject = <TProps>() => Subject.create<TProps>({ replay: 1 });
+const createReplayPublisher = <TProps>() =>
+  Publisher.create<TProps>({ replay: 1 });
 
 export const createComponent = <TProps>(
   fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>,
   options: { readonly priority?: 1 | 2 | 3 | 4 | 5 } = {},
 ): ComponentType<TProps> => {
   const ObservableComponent = (props: TProps) => {
-    const propsSubject = useMemo<SubjectLike<TProps>>(createReplaySubject, [
-      createReplaySubject,
-    ]);
+    const propsPublisher = useMemo<PublisherLike<TProps>>(
+      createReplayPublisher,
+      [createReplayPublisher],
+    );
 
     useEffect(
-      () => propsSubject[SubjectLike_publish](props),
-      [propsSubject, props],
+      () => propsPublisher[PublisherLike_publish](props),
+      [propsPublisher, props],
     );
 
     const elementObservable = useMemo(
-      () => pipe(propsSubject, fn),
-      [propsSubject],
+      () => pipe(propsPublisher, fn),
+      [propsPublisher],
     );
     return useObservable(elementObservable, options) ?? null;
   };

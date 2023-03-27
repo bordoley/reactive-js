@@ -82,6 +82,7 @@ import {
   MergeAll,
   MergeMap,
   MergeWith,
+  MulticastObservableLike,
   ObservableLike,
   ObserverLike,
   Retry,
@@ -529,12 +530,21 @@ export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
  * @param scheduler - A `SchedulerLike` that is used to subscribe to the source observable.
- * @param replay - The number of events that should be replayed when the `MulticastObservableLike`
- * is subscribed to.
  *
  * @category Transform
  */
-export const multicast = Observable_multicast;
+export const multicast: <T>(
+  schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>,
+  options?: {
+    /**
+     * The number of events that should be replayed when the `MulticastObservableLike`
+     * is subscribed to.
+     */
+    readonly replay?: number;
+    readonly capacity?: number;
+  },
+) => Function1<ObservableLike<T>, MulticastObservableLike<T>> =
+  Observable_multicast;
 
 export const never: Never<ObservableLike>["never"] = Observable_never;
 

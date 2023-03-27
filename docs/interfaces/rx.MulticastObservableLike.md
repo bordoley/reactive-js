@@ -20,7 +20,7 @@ A stateful ObservableLike resource.
 
   ↳ **`MulticastObservableLike`**
 
-  ↳↳ [`SubjectLike`](rx.SubjectLike.md)
+  ↳↳ [`PublisherLike`](rx.PublisherLike.md)
 
   ↳↳ [`StreamLike`](streaming.StreamLike.md)
 

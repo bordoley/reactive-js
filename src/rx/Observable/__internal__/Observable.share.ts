@@ -3,19 +3,17 @@ import {
   Function1,
   Optional,
   isNone,
-  isSome,
   none,
   pipe,
 } from "../../../functions.js";
 import {
   MulticastObservableLike,
-  MulticastObservableLike_observerCount,
   ObservableLike,
+  ObservableLike_observe,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
+import Publisher_createRefCounted from "../../Publisher/__internal__/Publisher.createRefCounted.js";
 import Observable_create from "./Observable.create.js";
 import Observable_multicast from "./Observable.multicast.js";
 
@@ -32,23 +30,17 @@ const Observable_share =
       if (isNone(multicasted)) {
         multicasted = pipe(
           source,
-          Observable_multicast(schedulerOrFactory, options),
+          Observable_multicast(schedulerOrFactory, {
+            ...options,
+            publisherFactory: Publisher_createRefCounted
+          }),
+          Disposable_onDisposed(() => {
+              multicasted = none;
+          }),
         );
       }
-
-      pipe(
-        observer,
-        Observer_sourceFrom(multicasted),
-        Disposable_onDisposed(() => {
-          if (
-            isSome(multicasted) &&
-            multicasted[MulticastObservableLike_observerCount] === 0
-          ) {
-            multicasted[DisposableLike_dispose]();
-            multicasted = none;
-          }
-        }),
-      );
+    
+      multicasted[ObservableLike_observe](observer);
     });
   };
 
