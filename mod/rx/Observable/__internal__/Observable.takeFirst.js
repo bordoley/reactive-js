@@ -1,6 +1,6 @@
 /// <reference types="./Observable.takeFirst.d.ts" />
 
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { TakeFirstObserver_count, TakeFirstObserver_takeCount, } from "../../../__internal__/symbols.js";
 import { partial, pipe } from "../../../functions.js";
@@ -35,8 +35,9 @@ const Observable_takeFirst = /*@__PURE__*/ (() => {
         }));
     })();
     return ((options = {}) => {
-        const { count = 1 } = options;
-        return pipe(createTakeFirstObserver, partial(max(count, 0)), Observable_liftEnumerableOperator);
+        var _a;
+        const count = clampPositiveInteger((_a = options.count) !== null && _a !== void 0 ? _a : 1);
+        return pipe(createTakeFirstObserver, partial(count), Observable_liftEnumerableOperator);
     });
 })();
 export default Observable_takeFirst;

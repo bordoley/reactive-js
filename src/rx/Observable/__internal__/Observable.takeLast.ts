@@ -1,4 +1,4 @@
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -99,10 +99,10 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
   );
 
   return ((options: { readonly count?: number } = {}) => {
-    const { count = 1 } = options;
+    const count = clampPositiveInteger(options.count ?? 1);
     return pipe(
       createTakeLastObserver,
-      partial(max(count, 0)),
+      partial(count),
       Observable_liftEnumerableOperator,
     );
   }) as ObservableTakeLast;

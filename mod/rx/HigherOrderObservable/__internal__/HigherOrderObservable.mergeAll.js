@@ -1,7 +1,7 @@
 /// <reference types="./HigherOrderObservable.mergeAll.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { MergeAllObserver_activeCount, MergeAllObserver_maxBufferSize, MergeAllObserver_maxConcurrency, MergeAllObserver_observablesQueue, MergeAllObserver_onDispose, } from "../../../__internal__/symbols.js";
 import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
@@ -77,8 +77,10 @@ const HigherOrderObservable_mergeAll = (lift) => {
         }));
     })();
     return (options = {}) => {
-        const { maxBufferSize = MAX_SAFE_INTEGER, maxConcurrency = MAX_SAFE_INTEGER, } = options;
-        const f = pipe(createMergeAllObserver, partial(max(maxBufferSize, 0), max(maxConcurrency, 1)));
+        var _a, _b;
+        const maxBufferSize = clampPositiveNonZeroInteger((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER);
+        const maxConcurrency = clampPositiveNonZeroInteger((_b = options.maxConcurrency) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER);
+        const f = pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency));
         return lift(f);
     };
 };

@@ -1,7 +1,7 @@
 /// <reference types="./Observable.buffer.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { BufferObserver_buffer, BufferObserver_durationFunction, BufferObserver_durationSubscription, BufferObserver_maxBufferSize, } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
@@ -76,9 +76,11 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         const durationFunction = durationOption === MAX_SAFE_INTEGER
             ? (_) => Observable_never()
             : isNumber(durationOption)
-                ? (_) => pipe([none], ReadonlyArray_toObservable())
+                ? (_) => pipe([none], ReadonlyArray_toObservable({
+                    delay: clampPositiveNonZeroInteger(durationOption),
+                }))
                 : durationOption;
-        const maxBufferSize = max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER, 1);
+        const maxBufferSize = clampPositiveNonZeroInteger((_b = options === null || options === void 0 ? void 0 : options.maxBufferSize) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER);
         const operator = (delegate) => {
             return pipe(createBufferObserver(delegate, durationFunction, maxBufferSize), Disposable_addTo(delegate));
         };

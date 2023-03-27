@@ -16,8 +16,8 @@ export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, Wi
 const errorEvent = "error";
 const reservedEvents = [errorEvent, "open"];
 export const createEventSource = (url, options = {}) => {
-    const { events: eventsOption = ["message"] } = options;
-    const events = pipe(eventsOption, ReadonlyArray.keep(x => !reservedEvents.includes(x)));
+    var _a;
+    const events = pipe((_a = options.events) !== null && _a !== void 0 ? _a : ["message"], ReadonlyArray.keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
     return Observable.create(observer => {
         pipe(observer, Disposable.onDisposed(_ => {

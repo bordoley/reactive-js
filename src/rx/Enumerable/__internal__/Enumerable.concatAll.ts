@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { ConcatAll } from "../../../containers.js";
 import { EnumerableLike } from "../../../rx.js";
 import Enumerable_mergeAll from "./Enumerable.mergeAll.js";
@@ -9,7 +8,7 @@ const Enumerable_concatAll: ConcatAll<
     maxBufferSize?: number;
   }
 >["concatAll"] = (options: { readonly maxBufferSize?: number } = {}) => {
-  const { maxBufferSize = MAX_SAFE_INTEGER } = options;
+  const { maxBufferSize } = options;
   return Enumerable_mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
 

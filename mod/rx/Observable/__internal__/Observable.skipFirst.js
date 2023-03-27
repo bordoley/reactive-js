@@ -1,6 +1,6 @@
 /// <reference types="./Observable.skipFirst.d.ts" />
 
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { SkipFirstObserver_count, SkipFirstObserver_skipCount, } from "../../../__internal__/symbols.js";
 import { partial, pipe } from "../../../functions.js";
@@ -31,8 +31,9 @@ const Observable_skipFirst = /*@__PURE__*/ (() => {
         }));
     })();
     return ((options = {}) => {
-        const { count = 1 } = options;
-        const op = pipe(createSkipFirstObserver, partial(max(count, 0)), Observable_liftEnumerableOperator);
+        var _a;
+        const count = clampPositiveInteger((_a = options === null || options === void 0 ? void 0 : options.count) !== null && _a !== void 0 ? _a : 1);
+        const op = pipe(createSkipFirstObserver, partial(count), Observable_liftEnumerableOperator);
         return obs => (count > 0 ? op(obs) : obs);
     });
 })();

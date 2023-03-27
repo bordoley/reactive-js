@@ -1,4 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -185,7 +186,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
 const Scheduler_createVirtualTimeScheduler = (
   options: { readonly maxMicroTaskTicks?: number } = {},
 ): VirtualTimeSchedulerLike => {
-  const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
+  const maxMicroTaskTicks = clampPositiveNonZeroInteger(
+    options.maxMicroTaskTicks ?? MAX_SAFE_INTEGER,
+  );
   return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
 };
 

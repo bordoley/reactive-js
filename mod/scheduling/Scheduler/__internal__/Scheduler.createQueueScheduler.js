@@ -1,7 +1,7 @@
 /// <reference types="./Scheduler.createQueueScheduler.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueScheduler_delayed, QueueScheduler_dueTime, QueueScheduler_hostContinuation, QueueScheduler_hostScheduler, QueueScheduler_queue, QueueScheduler_taskIDCounter, QueueTask_continuation, QueueTask_dueTime, QueueTask_priority, QueueTask_taskID, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, QueueLike_head, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
@@ -71,12 +71,12 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
             return;
         }
         const dueTime = task[QueueTask_dueTime];
-        const delay = max(dueTime - instance[QueueScheduler_hostScheduler][SchedulerLike_now], 0);
+        const delay = clampPositiveInteger(dueTime - instance[QueueScheduler_hostScheduler][SchedulerLike_now]);
         instance[QueueScheduler_dueTime] = dueTime;
         const continuation = (_a = instance[QueueScheduler_hostContinuation]) !== null && _a !== void 0 ? _a : ((ctx) => {
             for (let task = peek(instance); isSome(task) && !instance[DisposableLike_isDisposed]; task = peek(instance)) {
                 const { [QueueTask_continuation]: continuation, [QueueTask_dueTime]: dueTime, } = task;
-                const delay = max(dueTime - instance[QueueScheduler_hostScheduler][SchedulerLike_now], 0);
+                const delay = clampPositiveInteger(dueTime - instance[QueueScheduler_hostScheduler][SchedulerLike_now]);
                 if (delay > 0) {
                     instance[QueueScheduler_dueTime] =
                         instance[QueueScheduler_hostScheduler][SchedulerLike_now] + delay;
@@ -159,9 +159,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
                     [QueueTask_taskID]: this[QueueScheduler_taskIDCounter]++,
                     [QueueTask_continuation]: continuation,
                     [QueueTask_dueTime]: dueTime,
-                    [QueueTask_priority]: isSome(priority)
-                        ? max(priority, 0)
-                        : MAX_SAFE_INTEGER,
+                    [QueueTask_priority]: clampPositiveInteger(priority !== null && priority !== void 0 ? priority : MAX_SAFE_INTEGER),
                 };
             const { [QueueScheduler_delayed]: delayed, [QueueScheduler_queue]: queue, } = this;
             const targetQueue = dueTime > now ? delayed : queue;

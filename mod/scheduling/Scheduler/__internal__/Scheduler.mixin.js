@@ -1,7 +1,7 @@
 /// <reference types="./Scheduler.mixin.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { floor, max } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationLike_run, ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, Continuation_childContinuation, Continuation_effect, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, SchedulerMixin_currentContinuation, SchedulerMixin_startTime, SchedulerMixin_yieldRequested, } from "../../../__internal__/symbols.js";
 import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
@@ -123,7 +123,8 @@ export const PriorityScheduler_mixin =
     }));
     return mix(include(Disposable_mixin), function SchedulerMixin(instance, maxYieldInterval) {
         init(Disposable_mixin, instance);
-        instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
+        instance[SchedulerLike_maxYieldInterval] =
+            clampPositiveInteger(maxYieldInterval);
         return instance;
     }, props({
         [SchedulerMixin_currentContinuation]: none,
@@ -159,7 +160,7 @@ export const PriorityScheduler_mixin =
         },
         [SchedulerLike_schedule](effect, options) {
             var _a;
-            const delay = floor(max((_a = options === null || options === void 0 ? void 0 : options.delay) !== null && _a !== void 0 ? _a : 0, 0));
+            const delay = clampPositiveInteger((_a = options === null || options === void 0 ? void 0 : options.delay) !== null && _a !== void 0 ? _a : 0);
             const { priority = 0 } = options !== null && options !== void 0 ? options : {};
             const continuation = createContinuation(this, effect, priority);
             const currentContinuation = this[SchedulerMixin_currentContinuation];

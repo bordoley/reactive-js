@@ -1,6 +1,6 @@
 /// <reference types="./Subject.create.d.ts" />
 
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { Subject_observers } from "../../../__internal__/symbols.js";
 import { IndexedLike_get, QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
@@ -61,8 +61,8 @@ const Subject_create =
         },
     }));
     return (options) => {
-        const { replay: replayOption = 0 } = options !== null && options !== void 0 ? options : {};
-        const replay = max(replayOption, 0);
+        var _a;
+        const replay = clampPositiveInteger((_a = options === null || options === void 0 ? void 0 : options.replay) !== null && _a !== void 0 ? _a : 0);
         return createSubjectInstance(replay);
     };
 })();

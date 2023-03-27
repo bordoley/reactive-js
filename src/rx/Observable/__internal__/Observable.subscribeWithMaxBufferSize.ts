@@ -1,5 +1,4 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { Function1, pipe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
@@ -15,7 +14,7 @@ const Observable_subscribeWithMaxBufferSize: <T>(
   scheduler,
   maxBufferSize,
 ) => {
-  maxBufferSize = max(maxBufferSize ?? MAX_SAFE_INTEGER, 1);
+  maxBufferSize = clampPositiveNonZeroInteger(maxBufferSize);
   return observable =>
     pipe(
       Observer_create(scheduler, maxBufferSize),

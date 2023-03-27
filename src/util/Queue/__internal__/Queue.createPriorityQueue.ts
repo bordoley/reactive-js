@@ -1,5 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import { QueueLike } from "../../../__internal__/util.internal.js";
 import { Comparator } from "../../../functions.js";
@@ -17,7 +17,9 @@ const Queue_createPriorityQueue: <T>(
   ) => QueueLike<T> = createInstanceFactory(Queue_priorityQueueMixin());
 
   return (comparator, options) => {
-    const maxBuffersize = max(options?.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
+    const maxBuffersize = clampPositiveNonZeroInteger(
+      options?.maxBufferSize ?? MAX_SAFE_INTEGER,
+    );
     return factory(comparator, maxBuffersize);
   };
 })();

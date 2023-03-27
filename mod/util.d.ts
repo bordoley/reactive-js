@@ -20,7 +20,7 @@ export interface DisposableLike {
      * Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
      *
      * @param disposable
-     * @returns `this`
+     * @param ignoreChildErrors
      */
     [DisposableLike_add](disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     /**

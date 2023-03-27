@@ -109,9 +109,8 @@ export const createEventSource = (
   readonly type: string;
   readonly data: string;
 }> => {
-  const { events: eventsOption = ["message"] } = options;
   const events = pipe(
-    eventsOption,
+    options.events ?? ["message"],
     ReadonlyArray.keep(x => !reservedEvents.includes(x)),
   );
   const requestURL = url instanceof URL ? url.toString() : url;

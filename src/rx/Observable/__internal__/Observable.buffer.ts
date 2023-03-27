@@ -1,5 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -179,10 +179,18 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
       durationOption === MAX_SAFE_INTEGER
         ? (_: T) => Observable_never()
         : isNumber(durationOption)
-        ? (_: T) => pipe([none], ReadonlyArray_toObservable())
+        ? (_: T) =>
+            pipe(
+              [none],
+              ReadonlyArray_toObservable({
+                delay: clampPositiveNonZeroInteger(durationOption),
+              }),
+            )
         : durationOption;
 
-    const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
+    const maxBufferSize = clampPositiveNonZeroInteger(
+      options?.maxBufferSize ?? MAX_SAFE_INTEGER,
+    );
 
     const operator = (delegate: ObserverLike<readonly T[]>) => {
       return pipe(

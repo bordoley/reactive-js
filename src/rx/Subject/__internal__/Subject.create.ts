@@ -1,4 +1,4 @@
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -141,9 +141,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
     );
 
     return (options?: { replay?: number }): SubjectLike<T> => {
-      const { replay: replayOption = 0 } = options ?? {};
-      const replay = max(replayOption, 0);
-
+      const replay = clampPositiveInteger(options?.replay ?? 0);
       return createSubjectInstance(replay);
     };
   })();

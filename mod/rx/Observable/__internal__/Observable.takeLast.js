@@ -1,6 +1,6 @@
 /// <reference types="./Observable.takeLast.d.ts" />
 
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { TakeLastObserver_takeLastQueue } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
@@ -35,8 +35,9 @@ const Observable_takeLast = /*@__PURE__*/ (() => {
         },
     }));
     return ((options = {}) => {
-        const { count = 1 } = options;
-        return pipe(createTakeLastObserver, partial(max(count, 0)), Observable_liftEnumerableOperator);
+        var _a;
+        const count = clampPositiveInteger((_a = options.count) !== null && _a !== void 0 ? _a : 1);
+        return pipe(createTakeLastObserver, partial(count), Observable_liftEnumerableOperator);
     });
 })();
 export default Observable_takeLast;

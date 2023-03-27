@@ -1,5 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import { IndexedQueueLike } from "../../../__internal__/util.internal.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
@@ -11,7 +11,9 @@ const IndexedQueue_createFifoQueue: <T>(options?: {
     createInstanceFactory(IndexedQueue_fifoQueueMixin());
 
   return options => {
-    const maxBuffersize = max(options?.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
+    const maxBuffersize = clampPositiveNonZeroInteger(
+      options?.maxBufferSize ?? MAX_SAFE_INTEGER,
+    );
     return factory(maxBuffersize);
   };
 })();

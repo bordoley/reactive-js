@@ -1,6 +1,7 @@
 /// <reference types="./Scheduler.createVirtualTimeScheduler.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { VirtualTask_continuation, VirtualTask_dueTime, VirtualTask_id, VirtualTimeScheduler_maxMicroTaskTicks, VirtualTimeScheduler_microTaskTicks, VirtualTimeScheduler_taskIDCount, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
@@ -69,7 +70,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
     },
 })))();
 const Scheduler_createVirtualTimeScheduler = (options = {}) => {
-    const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
+    var _a;
+    const maxMicroTaskTicks = clampPositiveNonZeroInteger((_a = options.maxMicroTaskTicks) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER);
     return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
 };
 export default Scheduler_createVirtualTimeScheduler;

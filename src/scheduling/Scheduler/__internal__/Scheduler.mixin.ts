@@ -1,5 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { floor, max } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import {
   Mixin1,
   Mutable,
@@ -307,7 +307,8 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
         maxYieldInterval: number,
       ): PrioritySchedulerMixin {
         init(Disposable_mixin, instance);
-        instance[SchedulerLike_maxYieldInterval] = maxYieldInterval;
+        instance[SchedulerLike_maxYieldInterval] =
+          clampPositiveInteger(maxYieldInterval);
 
         return instance;
       },
@@ -358,7 +359,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           effect: SideEffect1<ContinuationContextLike>,
           options?: { readonly delay?: number; priority?: number },
         ): DisposableLike {
-          const delay = floor(max(options?.delay ?? 0, 0));
+          const delay = clampPositiveInteger(options?.delay ?? 0);
           const { priority = 0 } = options ?? {};
           const continuation = createContinuation(this, effect, priority);
 

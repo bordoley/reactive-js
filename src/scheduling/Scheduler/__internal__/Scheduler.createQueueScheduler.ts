@@ -1,5 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -180,9 +180,8 @@ const Scheduler_createQueueScheduler: Function2<
     }
 
     const dueTime = task[QueueTask_dueTime];
-    const delay = max(
+    const delay = clampPositiveInteger(
       dueTime - instance[QueueScheduler_hostScheduler][SchedulerLike_now],
-      0,
     );
     instance[QueueScheduler_dueTime] = dueTime;
 
@@ -198,9 +197,8 @@ const Scheduler_createQueueScheduler: Function2<
             [QueueTask_continuation]: continuation,
             [QueueTask_dueTime]: dueTime,
           } = task;
-          const delay = max(
+          const delay = clampPositiveInteger(
             dueTime - instance[QueueScheduler_hostScheduler][SchedulerLike_now],
-            0,
           );
 
           if (delay > 0) {
@@ -367,9 +365,9 @@ const Scheduler_createQueueScheduler: Function2<
                   [QueueTask_taskID]: this[QueueScheduler_taskIDCounter]++,
                   [QueueTask_continuation]: continuation,
                   [QueueTask_dueTime]: dueTime,
-                  [QueueTask_priority]: isSome(priority)
-                    ? max(priority, 0)
-                    : MAX_SAFE_INTEGER,
+                  [QueueTask_priority]: clampPositiveInteger(
+                    priority ?? MAX_SAFE_INTEGER,
+                  ),
                 };
 
           const {

@@ -1,4 +1,4 @@
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import {
   DelegatingLike_delegate,
   Mutable,
@@ -102,10 +102,10 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
   })();
 
   return ((options: { readonly count?: number } = {}) => {
-    const { count = 1 } = options;
+    const count = clampPositiveInteger(options.count ?? 1);
     return pipe(
       createTakeFirstObserver,
-      partial(max(count, 0)),
+      partial(count),
       Observable_liftEnumerableOperator,
     );
   }) as ObservableTakeFirst;

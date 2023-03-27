@@ -1,5 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -213,14 +213,17 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
       readonly maxConcurrency?: number;
     } = {},
   ): ContainerOperator<C, ContainerOf<C, T>, T> => {
-    const {
-      maxBufferSize = MAX_SAFE_INTEGER,
-      maxConcurrency = MAX_SAFE_INTEGER,
-    } = options;
+    const maxBufferSize = clampPositiveNonZeroInteger(
+      options.maxBufferSize ?? MAX_SAFE_INTEGER,
+    );
+
+    const maxConcurrency = clampPositiveNonZeroInteger(
+      options.maxConcurrency ?? MAX_SAFE_INTEGER,
+    );
 
     const f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>> = pipe(
       createMergeAllObserver,
-      partial(max(maxBufferSize, 0), max(maxConcurrency, 1)),
+      partial(maxBufferSize, maxConcurrency),
     );
 
     return lift(f);

@@ -63,8 +63,6 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 `void`
 
-`this`
-
 ___
 
 ### [DisposableLike\_dispose]

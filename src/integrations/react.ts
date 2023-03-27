@@ -14,7 +14,6 @@ import {
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
-import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import {
   createInstanceFactory,
   include,
@@ -168,10 +167,7 @@ export const useObservable = <T>(
   const [state, updateState] = useState<Optional<T>>(none);
   const [error, updateError] = useState<Optional<Error>>(none);
 
-  const {
-    maxBufferSize = MAX_SAFE_INTEGER,
-    priority = unstable_NormalPriority,
-  } = options;
+  const { maxBufferSize, priority = unstable_NormalPriority } = options;
 
   useEffect(() => {
     const scheduler = createSchedulerWithPriority(priority);
@@ -207,7 +203,7 @@ export const useStream = <
   const [stream, setStream] = useState<Optional<TStream>>(none);
 
   const {
-    maxBufferSize = MAX_SAFE_INTEGER,
+    maxBufferSize,
     priority = unstable_NormalPriority,
     replay = 1,
   } = options;

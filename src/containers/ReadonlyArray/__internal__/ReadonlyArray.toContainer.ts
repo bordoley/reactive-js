@@ -1,4 +1,4 @@
-import { max, min } from "../../../__internal__/math.js";
+import { abs, clamp, min } from "../../../__internal__/math.js";
 import {
   ContainerLike,
   ContainerOf,
@@ -28,28 +28,21 @@ const ReadonlyArray_toContainer =
 
     const { start, count } = (() => {
       if (isSome(countOption) && countOption >= 0) {
-        const startOrDefault = startOption ?? 0;
-        const maxStart = max(startOrDefault, 0);
-        const start = min(maxStart, valuesLength - 1);
-
-        const maxCount = min(valuesLength, countOption);
-        const count = min(valuesLength - start, maxCount);
+        const start = clamp(0, startOption ?? 0, valuesLength);
+        const count = clamp(0, countOption, valuesLength - start);
 
         return { start, count };
       } else if (isSome(countOption) && countOption < 0) {
-        const startOrDefault = startOption ?? valuesLength - 1;
-        const maxStart = max(startOrDefault, 0);
-        const start = min(maxStart, valuesLength - 1);
-
-        const maxCount = max(-valuesLength, countOption);
-        const count = max(-start - 1, maxCount);
+        const start = clamp(
+          -1,
+          startOption ?? valuesLength - 1,
+          valuesLength - 1,
+        );
+        const count = -min(abs(countOption), start + 1);
 
         return { start, count };
       } else {
-        // count is none
-        const startOrDefault = startOption ?? 0;
-        const maxStart = max(startOrDefault, 0);
-        const start = min(maxStart, valuesLength);
+        const start = clamp(0, startOption ?? 0, valuesLength);
         const count = valuesLength - start;
 
         return { start, count };

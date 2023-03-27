@@ -1,4 +1,4 @@
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -88,10 +88,10 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
   })();
 
   return ((options: { readonly count?: number } = {}) => {
-    const { count = 1 } = options;
+    const count = clampPositiveInteger(options?.count ?? 1);
     const op = pipe(
       createSkipFirstObserver,
-      partial(max(count, 0)),
+      partial(count),
       Observable_liftEnumerableOperator,
     );
     return obs => (count > 0 ? op(obs) : obs);
