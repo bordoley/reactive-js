@@ -32,14 +32,14 @@ const Observable_share =
           source,
           Observable_multicast(schedulerOrFactory, {
             ...options,
-            publisherFactory: Publisher_createRefCounted
+            publisherFactory: Publisher_createRefCounted,
           }),
           Disposable_onDisposed(() => {
-              multicasted = none;
+            multicasted = none;
           }),
         );
       }
-    
+
       multicasted[ObservableLike_observe](observer);
     });
   };

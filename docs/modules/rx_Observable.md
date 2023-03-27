@@ -4384,12 +4384,12 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
-| `options?` | `Object` |
-| `options.capacity?` | `number` |
-| `options.replay?` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> | - |
+| `options?` | `Object` | - |
+| `options.capacity?` | `number` | - |
+| `options.replay?` | `number` | The number of events that should be replayed when the `MulticastObservableLike` is subscribed to. |
 
 #### Returns
 

@@ -1,6 +1,6 @@
 import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
-import { CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, MulticastObservableLike, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import { DisposableLike, DisposableOrTeardown } from "../util.js";
@@ -179,15 +179,17 @@ export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
  * @param scheduler - A `SchedulerLike` that is used to subscribe to the source observable.
- * @param replay - The number of events that should be replayed when the `MulticastObservableLike`
- * is subscribed to.
  *
  * @category Transform
  */
 export declare const multicast: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
-    readonly replay?: number | undefined;
-    readonly capacity?: number | undefined;
-}) => Function1<ObservableLike<T>, import("../rx.js").MulticastObservableLike<T>>;
+    /**
+     * The number of events that should be replayed when the `MulticastObservableLike`
+     * is subscribed to.
+     */
+    readonly replay?: number;
+    readonly capacity?: number;
+}) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
 export declare const never: Never<ObservableLike>["never"];
 export declare const observeWith: <C extends ObservableLike<unknown>, T>(observer: ObserverLike<T>) => Function1<C, C>;
 /**

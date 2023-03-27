@@ -2,10 +2,10 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   Factory,
   Function1,
+  Optional,
   bindMethod,
   isFunction,
   pipe,
-  Optional,
 } from "../../../functions.js";
 import {
   MulticastObservableLike,

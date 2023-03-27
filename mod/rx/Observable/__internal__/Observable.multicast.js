@@ -9,8 +9,8 @@ import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
 const Observable_multicast = (schedulerOrFactory, options = {}) => observable => {
-    const { capacity = MAX_SAFE_INTEGER, replay = 0 } = options;
-    const publisher = Publisher_create({ replay });
+    const { capacity = MAX_SAFE_INTEGER, replay = 0, publisherFactory = Publisher_create, } = options;
+    const publisher = publisherFactory({ replay });
     const scheduler = isFunction(schedulerOrFactory)
         ? pipe(schedulerOrFactory(), Disposable_addTo(publisher))
         : schedulerOrFactory;
