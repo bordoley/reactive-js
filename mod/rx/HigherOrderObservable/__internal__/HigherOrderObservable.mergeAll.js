@@ -7,7 +7,7 @@ import { MergeAllObserver_activeCount, MergeAllObserver_maxBufferSize, MergeAllO
 import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { bindMethod, isSome, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -25,7 +25,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 const nextObs = observer[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
                 if (isSome(nextObs)) {
                     observer[MergeAllObserver_activeCount]++;
-                    pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
+                    pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_capacity]), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
                 }
                 else if (observer[DisposableLike_isDisposed]) {
                     observer[DelegatingLike_delegate][DisposableLike_dispose]();
@@ -34,7 +34,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
         };
         return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function MergeAllObserver(instance, delegate, maxBufferSize, maxConcurrency) {
             init(Disposable_mixin, instance);
-            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
+            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
             init(delegatingMixin(), instance, delegate);
             instance[MergeAllObserver_observablesQueue] =
                 IndexedQueue_createFifoQueue();

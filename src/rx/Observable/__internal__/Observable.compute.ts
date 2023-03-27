@@ -54,7 +54,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_maxBufferSize,
+  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -257,7 +257,7 @@ class ComputeContext {
         }),
         Observable_subscribeWithMaxBufferSize(
           scheduler,
-          observer[QueueableLike_maxBufferSize],
+          observer[QueueableLike_capacity],
         ),
         Disposable_addTo(observer),
         Disposable_onComplete(this[ComputeContext_cleanup]),

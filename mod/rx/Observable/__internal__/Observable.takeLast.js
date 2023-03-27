@@ -7,7 +7,7 @@ import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -19,8 +19,8 @@ import Observable_observeWith from "./Observable.observeWith.js";
 const Observable_takeLast = /*@__PURE__*/ (() => {
     const createTakeLastObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
         init(Disposable_mixin, instance);
-        init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
-        instance[TakeLastObserver_takeLastQueue] = IndexedQueue_createFifoQueue({ maxBufferSize: takeLastCount });
+        init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
+        instance[TakeLastObserver_takeLastQueue] = IndexedQueue_createFifoQueue({ capacity: takeLastCount });
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             pipe(instance[TakeLastObserver_takeLastQueue], IndexedQueue_toReadonlyArray(), ReadonlyArray_toObservable(), Observable_observeWith(delegate));
         }));

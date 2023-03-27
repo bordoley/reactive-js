@@ -8,8 +8,8 @@ const IndexedQueue_createFifoQueue = /*@__PURE__*/ (() => {
     const factory = createInstanceFactory(IndexedQueue_fifoQueueMixin());
     return options => {
         var _a;
-        const maxBuffersize = clampPositiveNonZeroInteger((_a = options === null || options === void 0 ? void 0 : options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER);
-        return factory(maxBuffersize);
+        const capacity = clampPositiveNonZeroInteger((_a = options === null || options === void 0 ? void 0 : options.capacity) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER);
+        return factory(capacity);
     };
 })();
 export default IndexedQueue_createFifoQueue;

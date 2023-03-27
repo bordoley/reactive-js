@@ -6,7 +6,7 @@ import { Subject_observers } from "../../../__internal__/symbols.js";
 import { IndexedLike_get, QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { bindMethod, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SubjectLike_publish, } from "../../../rx.js";
-import { DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -33,7 +33,7 @@ const Subject_create =
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
-            const replay = this[QueueableLike_maxBufferSize];
+            const replay = this[QueueableLike_capacity];
             if (replay > 0 && !this[QueueableLike_enqueue](next)) {
                 this[QueueLike_dequeue]();
             }

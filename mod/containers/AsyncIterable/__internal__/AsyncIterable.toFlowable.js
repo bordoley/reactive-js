@@ -8,7 +8,7 @@ import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__inte
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../../../scheduling.js";
 import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.create.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 const AsyncIterable_toFlowable = () => (iterable) => Flowable_create((modeObs) => Observable_create((observer) => {
@@ -51,6 +51,6 @@ const AsyncIterable_toFlowable = () => (iterable) => Flowable_create((modeObs) =
         if (!isPaused && wasPaused) {
             pipe(observer, Observer_schedule(continuation));
         }
-    }), Observable_subscribeWithMaxBufferSize(scheduler, observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
+    }), Observable_subscribeWithMaxBufferSize(scheduler, observer[QueueableLike_capacity]), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
 }));
 export default AsyncIterable_toFlowable;

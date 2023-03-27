@@ -53,8 +53,8 @@ import {
 import * as Streamable from "../streaming/Streamable.js";
 import {
   DisposableLike_dispose,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
-  QueueableLike_maxBufferSize,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -245,7 +245,7 @@ export const windowLocation: StreamableLike<
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
           | typeof QueueableLike_enqueue
-          | typeof QueueableLike_maxBufferSize
+          | typeof QueueableLike_capacity
           | typeof WindowLocationStreamLike_canGoBack
           | typeof WindowLocationStreamLike_goBack
           | typeof WindowLocationStreamLike_replace
@@ -266,9 +266,9 @@ export const windowLocation: StreamableLike<
           ];
         },
 
-        get [QueueableLike_maxBufferSize](): number {
+        get [QueueableLike_capacity](): number {
           unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
-          return this[DelegatingLike_delegate][QueueableLike_maxBufferSize];
+          return this[DelegatingLike_delegate][QueueableLike_capacity];
         },
 
         get [DispatcherLike_scheduler](): SchedulerLike {

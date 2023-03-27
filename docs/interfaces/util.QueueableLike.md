@@ -20,7 +20,7 @@
 
 ### Properties
 
-- [[QueueableLike\_maxBufferSize]](util.QueueableLike.md#[queueablelike_maxbuffersize])
+- [[QueueableLike\_capacity]](util.QueueableLike.md#[queueablelike_capacity])
 
 ### Methods
 
@@ -28,9 +28,9 @@
 
 ## Properties
 
-### [QueueableLike\_maxBufferSize]
+### [QueueableLike\_capacity]
 
-• `Readonly` **[QueueableLike\_maxBufferSize]**: `number`
+• `Readonly` **[QueueableLike\_capacity]**: `number`
 
 ## Methods
 
@@ -38,14 +38,16 @@
 
 ▸ **[QueueableLike_enqueue]**(`req`): `boolean`
 
-Push an item onto the queue
+Enqueue an item onto the queue.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `req` | `T` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `req` | `T` | The value to enqueue. |
 
 #### Returns
 
 `boolean`
+
+`true` if the queue has additional capacity otherwise false.

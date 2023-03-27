@@ -29,8 +29,8 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
-  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -62,7 +62,7 @@ const AsyncEnumerator_create: <TA, TB>(
           delegate,
           operator,
           Observable_multicast(delegate[DispatcherLike_scheduler], {
-            maxBufferSize: delegate[QueueableLike_maxBufferSize],
+            maxBufferSize: delegate[QueueableLike_capacity],
           }),
           Disposable_add(delegate),
         );
@@ -91,10 +91,10 @@ const AsyncEnumerator_create: <TA, TB>(
           ];
         },
 
-        get [QueueableLike_maxBufferSize](): number {
+        get [QueueableLike_capacity](): number {
           unsafeCast<TProperties>(this);
           return this[AsyncEnumeratorDelegatingMixin_src][
-            QueueableLike_maxBufferSize
+            QueueableLike_capacity
           ];
         },
 

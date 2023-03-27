@@ -12,8 +12,8 @@ import Observable_subscribeWithMaxBufferSize from "../../../rx/Observable/__inte
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import {
+  QueueableLike_capacity,
   QueueableLike_enqueue,
-  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -43,7 +43,7 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
               ),
               Observable_subscribeWithMaxBufferSize(
                 observer[DispatcherLike_scheduler],
-                observer[QueueableLike_maxBufferSize],
+                observer[QueueableLike_capacity],
               ),
               Disposable_addTo(observer),
               Disposable_onComplete(

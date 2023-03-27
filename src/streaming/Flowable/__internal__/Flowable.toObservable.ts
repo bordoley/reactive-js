@@ -13,7 +13,7 @@ import Observable_ignoreElements from "../../../rx/Observable/__internal__/Obser
 import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { FlowableLike, StreamableLike_isRunnable } from "../../../streaming.js";
-import { QueueableLike_maxBufferSize } from "../../../util.js";
+import { QueueableLike_capacity } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
@@ -28,7 +28,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
 
     return create(observer => {
       const scheduler = observer[DispatcherLike_scheduler];
-      const maxBufferSize = observer[QueueableLike_maxBufferSize];
+      const maxBufferSize = observer[QueueableLike_capacity];
 
       const op: ContainerOperator<ObservableLike, T, boolean> = compose(
         Observable_enqueue<ObservableLike, T>(observer),

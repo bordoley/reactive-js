@@ -11,7 +11,7 @@ import {
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import { ToFlowable } from "../../../streaming.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
-import { QueueableLike_maxBufferSize } from "../../../util.js";
+import { QueueableLike_capacity } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_toObservable from "../../../util/Disposable/__internal__/Disposable.toObservable.js";
@@ -54,7 +54,7 @@ const Runnable_toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
                 }),
                 Observable_subscribeWithMaxBufferSize(
                   observer[DispatcherLike_scheduler],
-                  observer[QueueableLike_maxBufferSize],
+                  observer[QueueableLike_capacity],
                 ),
                 Disposable_bindTo(pauseableScheduler),
               ),

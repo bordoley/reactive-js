@@ -29,7 +29,7 @@ import {
 import {
   DisposableLike,
   DisposableLike_dispose,
-  QueueableLike_maxBufferSize,
+  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -62,7 +62,7 @@ const Observable_timeout: ObservableTimeout = /*@__PURE__*/ (<T>() => {
       observer[TimeoutObserver_duration],
       Observable_subscribeWithMaxBufferSize(
         observer[DispatcherLike_scheduler],
-        observer[QueueableLike_maxBufferSize],
+        observer[QueueableLike_capacity],
       ),
     );
   };
@@ -84,7 +84,7 @@ const Observable_timeout: ObservableTimeout = /*@__PURE__*/ (<T>() => {
           typedObserverMixin,
           instance,
           delegate[DispatcherLike_scheduler],
-          delegate[QueueableLike_maxBufferSize],
+          delegate[QueueableLike_capacity],
         );
         init(Disposable_delegatingMixin<ObserverLike<T>>(), instance, delegate);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);

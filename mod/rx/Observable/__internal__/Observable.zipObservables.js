@@ -13,7 +13,7 @@ import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -67,7 +67,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     const shouldComplete = /*@__PURE__*/ (() => compose(ReadonlyArray_forEach(Enumerator_move()), ReadonlyArray_some(x => x[DisposableLike_isDisposed])))();
     const createZipObserver = createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function ZipObserver(instance, delegate, enumerators, queuedEnumerator) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
         init(delegatingMixin(), instance, delegate);
         instance[ZipObserver_queuedEnumerator] = queuedEnumerator;
         instance[ZipObserver_enumerators] = enumerators;
@@ -123,7 +123,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
                 enumerators.push(enumerator);
             }
             else {
-                const enumerator = pipe(QueuedEnumerator_create(observer[QueueableLike_maxBufferSize]), Disposable_addTo(observer));
+                const enumerator = pipe(QueuedEnumerator_create(observer[QueueableLike_capacity]), Disposable_addTo(observer));
                 enumerators.push(enumerator);
                 pipe(createZipObserver(observer, enumerators, enumerator), Disposable_addTo(observer), Observer_sourceFrom(next));
             }

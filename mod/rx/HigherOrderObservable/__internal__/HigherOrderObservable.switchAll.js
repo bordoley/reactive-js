@@ -5,7 +5,7 @@ import { HigherOrderObservable_currentRef } from "../../../__internal__/symbols.
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -25,7 +25,7 @@ const HigherOrderObservable_switchAll = (lift) => {
         }
         return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function SwitchAllObserver(instance, delegate) {
             init(Disposable_mixin, instance);
-            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
+            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
             init(delegatingMixin(), instance, delegate);
             instance[HigherOrderObservable_currentRef] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(bind(onDispose, instance)));
@@ -35,7 +35,7 @@ const HigherOrderObservable_switchAll = (lift) => {
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(this[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithMaxBufferSize(this[DispatcherLike_scheduler], this[QueueableLike_maxBufferSize]), Disposable_onComplete(() => {
+                this[HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(this[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithMaxBufferSize(this[DispatcherLike_scheduler], this[QueueableLike_capacity]), Disposable_onComplete(() => {
                     if (this[DisposableLike_isDisposed]) {
                         this[DelegatingLike_delegate][DisposableLike_dispose]();
                     }

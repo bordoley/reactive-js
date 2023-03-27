@@ -8,7 +8,7 @@ import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast,
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
@@ -19,11 +19,11 @@ const DispatchedObservable_create =
     }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
-        get [QueueableLike_maxBufferSize]() {
+        get [QueueableLike_capacity]() {
             unsafeCast(this);
             // Practically the observer can never be none.
             const observer = this[DispatchedObservable_observer];
-            return observer[QueueableLike_maxBufferSize];
+            return observer[QueueableLike_capacity];
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
@@ -90,9 +90,9 @@ const Stream_mixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[DelegatingLike_delegate][MulticastObservableLike_observerCount];
         },
-        get [QueueableLike_maxBufferSize]() {
+        get [QueueableLike_capacity]() {
             unsafeCast(this);
-            return this[StreamMixin_dispatcher][QueueableLike_maxBufferSize];
+            return this[StreamMixin_dispatcher][QueueableLike_capacity];
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

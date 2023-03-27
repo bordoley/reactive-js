@@ -28,7 +28,7 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
-  QueueableLike_maxBufferSize,
+  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -63,7 +63,7 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
           Observer_mixin<T>(),
           instance,
           delegate[DispatcherLike_scheduler],
-          delegate[QueueableLike_maxBufferSize],
+          delegate[QueueableLike_capacity],
         );
 
         instance[ReduceObserver_reducer] = reducer;

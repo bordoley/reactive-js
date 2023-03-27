@@ -1,6 +1,6 @@
-import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize } from "./__internal__/symbols.js";
+import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_capacity, QueueableLike_enqueue } from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
-export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_maxBufferSize, };
+export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_capacity, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -31,10 +31,11 @@ export interface DisposableLike {
     [DisposableLike_dispose](error?: Error): void;
 }
 export interface QueueableLike<T = unknown> {
-    readonly [QueueableLike_maxBufferSize]: number;
+    readonly [QueueableLike_capacity]: number;
     /**
-     * Push an item onto the queue
-     * @param req
+     * Enqueue an item onto the queue.
+     * @param req - The value to enqueue.
+     * @returns `true` if the queue has additional capacity otherwise false.
      */
     [QueueableLike_enqueue](req: T): boolean;
 }

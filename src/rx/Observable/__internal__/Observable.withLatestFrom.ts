@@ -32,7 +32,7 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_maxBufferSize,
+  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -77,7 +77,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom =
               typedObserverMixin,
               instance,
               delegate[DispatcherLike_scheduler],
-              delegate[QueueableLike_maxBufferSize],
+              delegate[QueueableLike_capacity],
             );
 
             instance[WithLatestFromObserver_selector] = selector;
@@ -90,7 +90,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom =
               }),
               Observable_subscribeWithMaxBufferSize(
                 delegate[DispatcherLike_scheduler],
-                delegate[QueueableLike_maxBufferSize],
+                delegate[QueueableLike_capacity],
               ),
               Disposable_addTo(instance),
               Disposable_onComplete(() => {

@@ -811,8 +811,8 @@ export const QueueableLike_enqueue = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const QueueableLike_maxBufferSize = /*@__PURE__*/ symbol(
-  "QueueableLike_maxBufferSize",
+export const QueueableLike_capacity = /*@__PURE__*/ symbol(
+  "QueueableLike_capacity",
 );
 
 /** @type {unique symbol} */

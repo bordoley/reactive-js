@@ -12,7 +12,7 @@ import {
 } from "zlib";
 import {
   NODE_JS_PAUSE_EVENT,
-  QueueableLike_maxBufferSize,
+  QueueableLike_capacity,
 } from "../__internal__/symbols.js";
 import { ContainerOperator } from "../containers.js";
 import {
@@ -283,7 +283,7 @@ export const transform =
     Flowable.create(modeObs =>
       Observable.create(observer => {
         const transform = pipe(factory(), addToDisposable(observer));
-        const maxBufferSize = observer[QueueableLike_maxBufferSize];
+        const maxBufferSize = observer[QueueableLike_capacity];
         const scheduler = observer[DispatcherLike_scheduler];
 
         pipe(

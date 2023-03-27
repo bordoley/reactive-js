@@ -24,8 +24,8 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
-  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -58,11 +58,11 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           Observer_mixin<T>(),
           instance,
           delegate[DispatcherLike_scheduler],
-          delegate[QueueableLike_maxBufferSize],
+          delegate[QueueableLike_capacity],
         );
 
         instance[TakeLastObserver_takeLastQueue] = IndexedQueue_createFifoQueue(
-          { maxBufferSize: takeLastCount },
+          { capacity: takeLastCount },
         );
 
         pipe(

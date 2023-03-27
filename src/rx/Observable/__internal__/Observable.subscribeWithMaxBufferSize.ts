@@ -1,4 +1,3 @@
-import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { Function1, pipe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
@@ -10,17 +9,12 @@ import sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 const Observable_subscribeWithMaxBufferSize: <T>(
   scheduler: SchedulerLike,
   maxBufferSize: number,
-) => Function1<ObservableLike<T>, DisposableLike> = (
-  scheduler,
-  maxBufferSize,
-) => {
-  maxBufferSize = clampPositiveNonZeroInteger(maxBufferSize);
-  return observable =>
+) => Function1<ObservableLike<T>, DisposableLike> =
+  (scheduler, maxBufferSize) => observable =>
     pipe(
       Observer_create(scheduler, maxBufferSize),
       Disposable_addToIgnoringChildErrors(scheduler),
       sourceFrom(observable),
     );
-};
 
 export default Observable_subscribeWithMaxBufferSize;

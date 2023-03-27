@@ -357,7 +357,7 @@ export const DisposableLike_isDisposed = /*@__PURE__*/ symbol("DisposableLike_is
 /** @type {unique symbol} */
 export const QueueableLike_enqueue = /*@__PURE__*/ symbol("QueueableLike_enqueue");
 /** @type {unique symbol} */
-export const QueueableLike_maxBufferSize = /*@__PURE__*/ symbol("QueueableLike_maxBufferSize");
+export const QueueableLike_capacity = /*@__PURE__*/ symbol("QueueableLike_capacity");
 /** @type {unique symbol} */
 export const SerialDisposableLike_current = /*@__PURE__*/ symbol("SerialDisposableLike_current");
 /** @type {unique symbol} */

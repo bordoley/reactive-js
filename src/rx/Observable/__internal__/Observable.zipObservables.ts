@@ -48,8 +48,8 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
-  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -175,7 +175,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           typedObserverMixin,
           instance,
           delegate[DispatcherLike_scheduler],
-          delegate[QueueableLike_maxBufferSize],
+          delegate[QueueableLike_capacity],
         );
         init(delegatingMixin(), instance, delegate);
 
@@ -283,7 +283,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           enumerators.push(enumerator);
         } else {
           const enumerator = pipe(
-            QueuedEnumerator_create(observer[QueueableLike_maxBufferSize]),
+            QueuedEnumerator_create(observer[QueueableLike_capacity]),
             Disposable_addTo(observer),
           );
           enumerators.push(enumerator);

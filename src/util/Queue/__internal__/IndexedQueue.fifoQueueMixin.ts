@@ -1,4 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
   FifoQueue_capacityMask,
@@ -27,8 +28,8 @@ import {
 } from "../../../functions.js";
 import {
   QueueableLike,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
-  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 
 const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
@@ -36,12 +37,12 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
   number,
   Omit<
     IndexedQueueLike<T>,
-    typeof QueueLike_count | typeof QueueableLike_maxBufferSize
+    typeof QueueLike_count | typeof QueueableLike_capacity
   >
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [QueueLike_count]: number;
-    readonly [QueueableLike_maxBufferSize]: number;
+    readonly [QueueableLike_capacity]: number;
     [FifoQueue_head]: number;
     [FifoQueue_tail]: number;
     [FifoQueue_capacityMask]: number;
@@ -131,17 +132,18 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
       function FifoQueue(
         instance: Omit<
           IndexedQueueLike<T>,
-          typeof QueueLike_count | typeof QueueableLike_maxBufferSize
+          typeof QueueLike_count | typeof QueueableLike_capacity
         > &
           Mutable<TProperties>,
-        maxBufferSize: number,
+        capacity: number,
       ): IndexedQueueLike<T> {
-        instance[QueueableLike_maxBufferSize] = maxBufferSize;
+        instance[QueueableLike_capacity] =
+          clampPositiveNonZeroInteger(capacity);
         return instance;
       },
       props<TProperties>({
         [QueueLike_count]: 0,
-        [QueueableLike_maxBufferSize]: MAX_SAFE_INTEGER,
+        [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
         [FifoQueue_capacityMask]: 0,
@@ -281,7 +283,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
 
           grow(this);
 
-          return this[QueueLike_count] <= this[QueueableLike_maxBufferSize];
+          return this[QueueLike_count] <= this[QueueableLike_capacity];
         },
       },
     ),

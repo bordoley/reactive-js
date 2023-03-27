@@ -1,11 +1,12 @@
 /// <reference types="./IndexedQueue.fifoQueueMixin.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { mix, props } from "../../../__internal__/mixins.js";
 import { FifoQueue_capacityMask, FifoQueue_head, FifoQueue_tail, FifoQueue_values, } from "../../../__internal__/symbols.js";
 import { IndexedLike_get, IndexedLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;
@@ -67,12 +68,13 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         }
         instance[FifoQueue_capacityMask] = newCapacity - 1;
     };
-    return pipe(mix(function FifoQueue(instance, maxBufferSize) {
-        instance[QueueableLike_maxBufferSize] = maxBufferSize;
+    return pipe(mix(function FifoQueue(instance, capacity) {
+        instance[QueueableLike_capacity] =
+            clampPositiveNonZeroInteger(capacity);
         return instance;
     }, props({
         [QueueLike_count]: 0,
-        [QueueableLike_maxBufferSize]: MAX_SAFE_INTEGER,
+        [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
         [FifoQueue_capacityMask]: 0,
@@ -171,7 +173,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             tail = (tail + 1) & capacityMask;
             this[FifoQueue_tail] = tail;
             grow(this);
-            return this[QueueLike_count] <= this[QueueableLike_maxBufferSize];
+            return this[QueueLike_count] <= this[QueueableLike_capacity];
         },
     }), returns);
 })();

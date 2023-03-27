@@ -349,7 +349,7 @@ export const DisposableLike_isDisposed: unique symbol;
 /** @type {unique symbol} */
 export const QueueableLike_enqueue: unique symbol;
 /** @type {unique symbol} */
-export const QueueableLike_maxBufferSize: unique symbol;
+export const QueueableLike_capacity: unique symbol;
 /** @type {unique symbol} */
 export const SerialDisposableLike_current: unique symbol;
 /** @type {unique symbol} */

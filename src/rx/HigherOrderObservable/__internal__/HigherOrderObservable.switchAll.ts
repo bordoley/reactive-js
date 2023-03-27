@@ -30,7 +30,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_maxBufferSize,
+  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -84,7 +84,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
             typedObserverMixin,
             instance,
             delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_maxBufferSize],
+            delegate[QueueableLike_capacity],
           );
           init(delegatingMixin(), instance, delegate);
 
@@ -122,7 +122,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
               ),
               Observable_subscribeWithMaxBufferSize(
                 this[DispatcherLike_scheduler],
-                this[QueueableLike_maxBufferSize],
+                this[QueueableLike_capacity],
               ),
               Disposable_onComplete(() => {
                 if (this[DisposableLike_isDisposed]) {

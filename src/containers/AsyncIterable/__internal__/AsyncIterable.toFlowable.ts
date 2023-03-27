@@ -19,8 +19,8 @@ import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.c
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
-  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -81,7 +81,7 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
           }),
           Observable_subscribeWithMaxBufferSize(
             scheduler,
-            observer[QueueableLike_maxBufferSize],
+            observer[QueueableLike_capacity],
           ),
           Disposable_addTo(observer),
           Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),

@@ -6,7 +6,7 @@ import { SerialDisposableLike_current, } from "../../../__internal__/util.intern
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { isNumber, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_isDisposed, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -21,11 +21,11 @@ import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 const createThrottleObserver = (() => {
     const typedObserverMixin = Observer_mixin();
     const setupDurationSubscription = (observer, next) => {
-        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(observer[ThrottleObserver_onNotify]), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_maxBufferSize]));
+        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(observer[ThrottleObserver_onNotify]), Observable_subscribeWithMaxBufferSize(observer[DispatcherLike_scheduler], observer[QueueableLike_capacity]));
     };
     return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function ThrottleObserver(instance, delegate, durationFunction, mode) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;
         instance[ThrottleObserver_durationSubscription] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));

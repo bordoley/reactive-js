@@ -28,8 +28,8 @@ import {
 import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import {
   QueueableLike,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
-  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -62,7 +62,7 @@ const Observable_enqueue: ObservableEnqueue = /*@__PURE__*/ (<T>() => {
             Observer_mixin<T>(),
             instance,
             delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_maxBufferSize],
+            delegate[QueueableLike_capacity],
           );
 
           instance[EnqueueObserver_effect] = effect;

@@ -173,7 +173,7 @@ DisposableLike_dispose
 DisposableLike_error
 DisposableLike_isDisposed
 QueueableLike_enqueue
-QueueableLike_maxBufferSize
+QueueableLike_capacity
 SerialDisposableLike_current
 QueueLike_head
 QueueLike_dequeue

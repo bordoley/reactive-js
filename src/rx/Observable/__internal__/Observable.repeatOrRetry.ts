@@ -8,7 +8,7 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
-  QueueableLike_maxBufferSize,
+  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -48,7 +48,7 @@ const Observable_repeatOrRetry: <T>(
           ),
           Observable_subscribeWithMaxBufferSize(
             delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_maxBufferSize],
+            delegate[QueueableLike_capacity],
           ),
           Disposable_addToIgnoringChildErrors(delegate),
           Disposable_onDisposed(doOnDispose),

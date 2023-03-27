@@ -52,8 +52,8 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
             queue[IndexedLike_set](index, parent);
         }
     };
-    return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function PriorityQueue(instance, comparator, maxBufferSize) {
-        init(IndexedQueue_fifoQueueMixin(), instance, maxBufferSize);
+    return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function PriorityQueue(instance, comparator, capacity) {
+        init(IndexedQueue_fifoQueueMixin(), instance, capacity);
         instance[PriorityQueueImpl_comparator] = comparator;
         return instance;
     }, props({

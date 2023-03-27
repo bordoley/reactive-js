@@ -51,8 +51,8 @@ import { StreamLike } from "../../../streaming.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
-  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
@@ -75,7 +75,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof QueueableLike_enqueue
-            | typeof QueueableLike_maxBufferSize
+            | typeof QueueableLike_capacity
             | typeof DispatcherLike_complete
             | typeof DispatcherLike_scheduler
           > &
@@ -90,14 +90,14 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
 
-          get [QueueableLike_maxBufferSize](): number {
+          get [QueueableLike_capacity](): number {
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
             // Practically the observer can never be none.
             const observer = this[
               DispatchedObservable_observer
             ] as ObserverLike<T>;
 
-            return observer[QueueableLike_maxBufferSize];
+            return observer[QueueableLike_capacity];
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
@@ -201,7 +201,7 @@ const Stream_mixin: <TReq, T>() => Mixin4<
           StreamLike<TReq, T>,
           | typeof MulticastObservableLike_observerCount
           | typeof QueueableLike_enqueue
-          | typeof QueueableLike_maxBufferSize
+          | typeof QueueableLike_capacity
           | typeof DispatcherLike_complete
           | typeof ObservableLike_observe
           | typeof ObservableLike_isEnumerable
@@ -244,9 +244,9 @@ const Stream_mixin: <TReq, T>() => Mixin4<
           ];
         },
 
-        get [QueueableLike_maxBufferSize](): number {
+        get [QueueableLike_capacity](): number {
           unsafeCast<TProperties>(this);
-          return this[StreamMixin_dispatcher][QueueableLike_maxBufferSize];
+          return this[StreamMixin_dispatcher][QueueableLike_capacity];
         },
 
         [ObservableLike_isEnumerable]: false as const,

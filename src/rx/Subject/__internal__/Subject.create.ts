@@ -34,8 +34,8 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_isDisposed,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
-  QueueableLike_maxBufferSize,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -92,7 +92,7 @@ const Subject_create: <T>(options?: { replay?: number }) => SubjectLike<T> =
               return;
             }
 
-            const replay = this[QueueableLike_maxBufferSize];
+            const replay = this[QueueableLike_capacity];
 
             if (replay > 0 && !this[QueueableLike_enqueue](next)) {
               this[QueueLike_dequeue]();

@@ -21,7 +21,7 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import { QueueableLike_maxBufferSize } from "../../../util.js";
+import { QueueableLike_capacity } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -55,7 +55,7 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
             Observer_mixin<T>(),
             instance,
             delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_maxBufferSize],
+            delegate[QueueableLike_capacity],
           );
 
           instance[SkipFirstObserver_skipCount] = skipCount;

@@ -2,7 +2,7 @@
 
 import { bindMethod, isFunction, pipe } from "../../../functions.js";
 import { DispatcherLike_complete } from "../../../rx.js";
-import { QueueableLike_maxBufferSize } from "../../../util.js";
+import { QueueableLike_capacity } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "./Observable.create.js";
@@ -15,6 +15,6 @@ Observable_create(observer => {
     const scheduler = isFunction(schedulerOrFactory)
         ? pipe(schedulerOrFactory(), Disposable_addTo(observer))
         : schedulerOrFactory;
-    pipe(observable, Observable_enqueue(observer), Observable_subscribeWithMaxBufferSize(scheduler, (_a = options === null || options === void 0 ? void 0 : options.maxBufferSize) !== null && _a !== void 0 ? _a : observer[QueueableLike_maxBufferSize]), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)), Disposable_addTo(observer));
+    pipe(observable, Observable_enqueue(observer), Observable_subscribeWithMaxBufferSize(scheduler, (_a = options === null || options === void 0 ? void 0 : options.maxBufferSize) !== null && _a !== void 0 ? _a : observer[QueueableLike_capacity]), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)), Disposable_addTo(observer));
 });
 export default Observable_subscribeOn;

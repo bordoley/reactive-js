@@ -101,9 +101,9 @@ const Queue_priorityQueueMixin: <T>() => Mixin2<
         > &
           Mutable<TProperties>,
         comparator: Comparator<T>,
-        maxBufferSize: number,
+        capacity: number,
       ): QueueLike<T> {
-        init(IndexedQueue_fifoQueueMixin<T>(), instance, maxBufferSize);
+        init(IndexedQueue_fifoQueueMixin<T>(), instance, capacity);
         instance[PriorityQueueImpl_comparator] = comparator;
         return instance;
       },

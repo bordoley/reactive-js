@@ -5,13 +5,13 @@ import { AsyncEnumeratorDelegatingMixin_src } from "../../../__internal__/symbol
 import { none, pipe, unsafeCast } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import { QueueableLike_enqueue, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const AsyncEnumerator_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_delegatingMixin()), function AsyncEnumeratorDelegatingMixin(instance, delegate, operator) {
         const observable = pipe(delegate, operator, Observable_multicast(delegate[DispatcherLike_scheduler], {
-            maxBufferSize: delegate[QueueableLike_maxBufferSize],
+            maxBufferSize: delegate[QueueableLike_capacity],
         }), Disposable_add(delegate));
         init(Disposable_delegatingMixin(), instance, observable);
         instance[AsyncEnumeratorDelegatingMixin_src] = delegate;
@@ -25,9 +25,9 @@ const AsyncEnumerator_create = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[AsyncEnumeratorDelegatingMixin_src][DispatcherLike_scheduler];
         },
-        get [QueueableLike_maxBufferSize]() {
+        get [QueueableLike_capacity]() {
             unsafeCast(this);
-            return this[AsyncEnumeratorDelegatingMixin_src][QueueableLike_maxBufferSize];
+            return this[AsyncEnumeratorDelegatingMixin_src][QueueableLike_capacity];
         },
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);

@@ -5,7 +5,7 @@ import { ReduceObserver_acc, ReduceObserver_reducer, } from "../../../__internal
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, QueueableLike_maxBufferSize, } from "../../../util.js";
+import { DisposableLike_dispose, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -16,7 +16,7 @@ import Observable_observeWith from "./Observable.observeWith.js";
 const Observable_reduce = /*@__PURE__*/ (() => {
     const createReduceObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function ReduceObserver(instance, delegate, reducer, initialValue) {
         init(Disposable_mixin, instance);
-        init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_maxBufferSize]);
+        init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
         instance[ReduceObserver_reducer] = reducer;
         try {
             const acc = initialValue();
