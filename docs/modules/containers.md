@@ -13,10 +13,6 @@
 - [PromiseableLike](../interfaces/containers.PromiseableLike.md)
 - [ReadonlyArrayLike](../interfaces/containers.ReadonlyArrayLike.md)
 
-### Other Interfaces
-
-- [Identity](../interfaces/containers.Identity.md)
-
 ### TypeClass Interfaces
 
 - [Buffer](../interfaces/containers.Buffer.md)
@@ -48,6 +44,7 @@
 - [FromOptional](../interfaces/containers.FromOptional.md)
 - [FromReadonlyArray](../interfaces/containers.FromReadonlyArray.md)
 - [Generate](../interfaces/containers.Generate.md)
+- [Identity](../interfaces/containers.Identity.md)
 - [IgnoreElements](../interfaces/containers.IgnoreElements.md)
 - [Keep](../interfaces/containers.Keep.md)
 - [KeepType](../interfaces/containers.KeepType.md)

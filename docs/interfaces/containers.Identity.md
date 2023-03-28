@@ -4,8 +4,6 @@
 
 [containers](../modules/containers.md).Identity
 
-Base type for Container type classes.
-
 ## Type parameters
 
 | Name | Type |
@@ -20,23 +18,9 @@ Base type for Container type classes.
 
 ## Table of contents
 
-### Properties
-
-- [ContainerLike\_type](containers.Identity.md#containerlike_type)
-
 ### Operator Methods
 
 - [identity](containers.Identity.md#identity)
-
-## Properties
-
-### ContainerLike\_type
-
-• `Optional` `Readonly` **ContainerLike\_type**: `C`
-
-#### Inherited from
-
-[Container](containers.Container.md).[ContainerLike_type](containers.Container.md#containerlike_type)
 
 ## Operator Methods
 

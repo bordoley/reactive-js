@@ -633,6 +633,10 @@ export interface Generate<C extends ContainerLike, O = never>
   ): ContainerOf<C, T>;
 }
 
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface Identity<C extends ContainerLike> extends Container<C> {
   /**
    * @category Operator
