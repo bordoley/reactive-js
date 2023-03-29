@@ -8,13 +8,16 @@ import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.e
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
-import Observable_subscribeWithCapacity from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 import {
   StreamLike,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../streaming.js";
-import { QueueableLike_capacity } from "../../../util.js";
+import {
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
+} from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
@@ -23,7 +26,11 @@ const Streamable_sinkInto =
   (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
     const scheduler = dest[DispatcherLike_scheduler];
     const capacity = dest[QueueableLike_capacity];
-    const srcStream = src[StreamableLike_stream](scheduler, { capacity });
+    const backpressureStrategy = dest[QueueableLike_backpressureStrategy];
+    const srcStream = src[StreamableLike_stream](scheduler, {
+      backpressureStrategy,
+      capacity,
+    });
 
     pipe(
       Observable_merge(
@@ -42,7 +49,11 @@ const Streamable_sinkInto =
         ),
       ),
       Observable_ignoreElements<ObservableLike, unknown>(),
-      Observable_subscribeWithCapacity(scheduler, dest[QueueableLike_capacity]),
+      Observable_subscribeWithCapacityAndBackpressureStrategy(
+        scheduler,
+        dest[QueueableLike_capacity],
+        dest[QueueableLike_backpressureStrategy],
+      ),
       Disposable_addTo(dest),
       Disposable_add(srcStream),
     );

@@ -9,7 +9,11 @@ import {
 import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import Scheduler_createHostScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.createHostScheduler.js";
-import { DisposableLike_dispose } from "../../../util.js";
+import {
+  DisposableLike_dispose,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -19,6 +23,7 @@ const Observable_lastAsync =
   <T>(options?: {
     scheduler?: SchedulerLike | Factory<SchedulerLike>;
     capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }) =>
   async (observable: ObservableLike<T>): Promise<Optional<T>> => {
     const schedulerOrFactory =

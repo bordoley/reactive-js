@@ -8,10 +8,11 @@ import {
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithCapacity from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
 import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
 import {
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -41,9 +42,10 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
                   }
                 },
               ),
-              Observable_subscribeWithCapacity(
+              Observable_subscribeWithCapacityAndBackpressureStrategy(
                 observer[DispatcherLike_scheduler],
                 observer[QueueableLike_capacity],
+                observer[QueueableLike_backpressureStrategy],
               ),
               Disposable_addTo(observer),
               Disposable_onComplete(

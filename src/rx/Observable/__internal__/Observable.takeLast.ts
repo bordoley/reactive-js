@@ -11,7 +11,6 @@ import { TakeLastObserver_takeLastQueue } from "../../../__internal__/symbols.js
 import {
   IndexedQueueLike,
   QueueLike,
-  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -24,6 +23,7 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -59,10 +59,12 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           instance,
           delegate[DispatcherLike_scheduler],
           delegate[QueueableLike_capacity],
+          delegate[QueueableLike_backpressureStrategy],
         );
 
         instance[TakeLastObserver_takeLastQueue] = IndexedQueue_createFifoQueue(
-          { capacity: takeLastCount },
+          takeLastCount,
+          "drop-oldest",
         );
 
         pipe(
@@ -88,11 +90,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           this: TProperties & DisposableLike & QueueLike<T>,
           next: T,
         ) {
-          if (
-            !this[TakeLastObserver_takeLastQueue][QueueableLike_enqueue](next)
-          ) {
-            this[TakeLastObserver_takeLastQueue][QueueLike_dequeue]();
-          }
+          this[TakeLastObserver_takeLastQueue][QueueableLike_enqueue](next);
         },
       },
     ),

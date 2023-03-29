@@ -28,6 +28,7 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -64,6 +65,7 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
           instance,
           delegate[DispatcherLike_scheduler],
           delegate[QueueableLike_capacity],
+          delegate[QueueableLike_backpressureStrategy],
         );
 
         instance[ReduceObserver_reducer] = reducer;

@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { floor, random } from "../../__internal__/math.js";
 import {
   describe,
@@ -19,7 +20,7 @@ import Queue_createPriorityQueue from "../Queue/__internal__/Queue.createPriorit
 const createPriorityQueue = /*@__PURE__*/ (() => {
   const compare = (a: number, b: number): number => a - b;
 
-  return () => Queue_createPriorityQueue(compare);
+  return () => Queue_createPriorityQueue(compare, MAX_SAFE_INTEGER, "overflow");
 })();
 
 const makeSortedArray = (n: number) => {
@@ -49,7 +50,10 @@ testModule(
   describe(
     "fifoQueueMixin",
     test("push/pull/count", () => {
-      const queue = IndexedQueue_createFifoQueue<number>();
+      const queue = IndexedQueue_createFifoQueue<number>(
+        MAX_SAFE_INTEGER,
+        "overflow",
+      );
 
       pipe(queue[QueueLike_head], expectEquals(none as Optional<number>));
       pipe(queue[QueueLike_dequeue](), expectEquals(none as Optional<number>));
@@ -96,7 +100,10 @@ testModule(
       pipe(queue[QueueLike_head], expectEquals(26 as Optional<number>));
     }),
     test("shrink", () => {
-      const queue = IndexedQueue_createFifoQueue<number>();
+      const queue = IndexedQueue_createFifoQueue<number>(
+        MAX_SAFE_INTEGER,
+        "overflow",
+      );
 
       for (let i = 0; i < 300; i++) {
         queue[QueueableLike_enqueue](i);

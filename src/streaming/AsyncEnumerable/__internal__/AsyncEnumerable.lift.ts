@@ -13,6 +13,10 @@ import {
   StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../../../streaming.js";
+import {
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../../../util.js";
 
 class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
   readonly [LiftedAsyncEnumerable_src]: AsyncEnumerableLike<any>;
@@ -42,7 +46,11 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
 
   [StreamableLike_stream](
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number; readonly capacity?: number },
+    options?: {
+      readonly replay?: number;
+      readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
   ): StreamLike<void, T> {
     const src = this[LiftedAsyncEnumerable_src][StreamableLike_stream](
       scheduler,

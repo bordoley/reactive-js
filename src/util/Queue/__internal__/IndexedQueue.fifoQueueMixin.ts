@@ -1,6 +1,6 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
-import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
+import { Mixin2, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
   FifoQueue_capacityMask,
   FifoQueue_head,
@@ -11,6 +11,7 @@ import {
   IndexedLike_get,
   IndexedLike_set,
   IndexedQueueLike,
+  QueueLike,
   QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
@@ -28,20 +29,25 @@ import {
 } from "../../../functions.js";
 import {
   QueueableLike,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 
-const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
+const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
   IndexedQueueLike<T>,
   number,
+  QueueableLike[typeof QueueableLike_backpressureStrategy],
   Omit<
     IndexedQueueLike<T>,
-    typeof QueueLike_count | typeof QueueableLike_capacity
+    | typeof QueueableLike_backpressureStrategy
+    | typeof QueueLike_count
+    | typeof QueueableLike_capacity
   >
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [QueueLike_count]: number;
+    readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly [QueueableLike_capacity]: number;
     [FifoQueue_head]: number;
     [FifoQueue_tail]: number;
@@ -136,13 +142,16 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
         > &
           Mutable<TProperties>,
         capacity: number,
+        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): IndexedQueueLike<T> {
+        instance[QueueableLike_backpressureStrategy] = backpressureStrategy;
         instance[QueueableLike_capacity] =
           clampPositiveNonZeroInteger(capacity);
         return instance;
       },
       props<TProperties>({
         [QueueLike_count]: 0,
+        [QueueableLike_backpressureStrategy]: "overflow",
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
@@ -257,9 +266,34 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
         },
 
         [QueueableLike_enqueue](
-          this: TProperties & QueueableLike,
+          this: TProperties & QueueableLike & QueueLike,
           item: T,
         ): boolean {
+          const backpressureStrategy = this[QueueableLike_backpressureStrategy];
+          let count = this[QueueLike_count] + 1;
+          const capacity = this[QueueableLike_capacity];
+
+          if (backpressureStrategy === "drop-latest" && count > capacity) {
+            return false;
+          } else if (
+            backpressureStrategy === "drop-oldest" &&
+            count > capacity
+          ) {
+            // We want to pop off the oldest value first, before enqueuing
+            // to avoid unintentionally growing the queue.
+            this[QueueLike_dequeue]();
+            count = this[QueueLike_count] + 1;
+          } else if (backpressureStrategy === "throw" && count > capacity) {
+            // FIXME: Seems like we should have a known exception (symbol), that
+            // a caller could safely catch in this case and then make its own decisions.
+            // For instance using drop-latest is going to break priority queue,
+            // so it would expect a known exception if it was configured for drop-latest
+            // and handle it accordingly.
+            raiseWithDebugMessage(
+              "attempting to enque a value to a queue that is full",
+            );
+          }
+
           const values =
             this[FifoQueue_values] ??
             ((this[FifoQueue_capacityMask] = 31),
@@ -271,11 +305,9 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin1<
 
           const capacityMask = this[FifoQueue_capacityMask];
 
-          let count = this[QueueLike_count];
           let tail = this[FifoQueue_tail];
 
           values[tail] = item;
-          count++;
           this[QueueLike_count] = count;
 
           tail = (tail + 1) & capacityMask;

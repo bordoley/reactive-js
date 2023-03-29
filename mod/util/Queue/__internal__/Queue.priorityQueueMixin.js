@@ -4,8 +4,8 @@ import { floor } from "../../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
 import { IndexedLike_get, IndexedLike_set, QueueLike_count, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.internal.js";
-import { call, none, pipe, returns, } from "../../../functions.js";
-import { QueueableLike_enqueue } from "../../../util.js";
+import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
 const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(IndexedQueue_fifoQueueMixin());
@@ -52,8 +52,8 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
             queue[IndexedLike_set](index, parent);
         }
     };
-    return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function PriorityQueue(instance, comparator, capacity) {
-        init(IndexedQueue_fifoQueueMixin(), instance, capacity);
+    return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function PriorityQueue(instance, comparator, capacity, backpressureStrategy) {
+        init(IndexedQueue_fifoQueueMixin(), instance, capacity, backpressureStrategy);
         instance[PriorityQueueImpl_comparator] = comparator;
         return instance;
     }, props({
@@ -76,6 +76,20 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
             }
         },
         [QueueableLike_enqueue](item) {
+            const backpressureStrategy = this[QueueableLike_backpressureStrategy];
+            let count = this[QueueLike_count] + 1;
+            const capacity = this[QueueableLike_capacity];
+            if (backpressureStrategy === "drop-latest" && count > capacity) {
+                return false;
+            }
+            else if (backpressureStrategy === "drop-oldest" &&
+                count > capacity) {
+                this[QueueLike_dequeue]();
+                count = this[QueueLike_count] + 1;
+            }
+            else if (backpressureStrategy === "throw" && count > capacity) {
+                raiseWithDebugMessage("attempting to enqueue a value to a queue that is full");
+            }
             const result = call(IndexedQueuePrototype[QueueableLike_enqueue], this, item);
             siftUp(this, item);
             return result;

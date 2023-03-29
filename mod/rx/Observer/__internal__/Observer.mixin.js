@@ -32,8 +32,8 @@ const Observer_mixin = /*@__PURE__*/ (() => {
         }
     };
     const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin());
-    return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function ObserverMixin(instance, scheduler, capacity) {
-        init(IndexedQueue_fifoQueueMixin(), instance, capacity);
+    return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function ObserverMixin(instance, scheduler, capacity, backpressureStrategy) {
+        init(IndexedQueue_fifoQueueMixin(), instance, capacity, backpressureStrategy);
         instance[DispatcherLike_scheduler] = scheduler;
         return instance;
     }, props({

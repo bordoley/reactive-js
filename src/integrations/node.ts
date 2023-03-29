@@ -12,6 +12,7 @@ import {
 } from "zlib";
 import {
   NODE_JS_PAUSE_EVENT,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../__internal__/symbols.js";
 import { ContainerOperator } from "../containers.js";
@@ -280,11 +281,14 @@ export const transform =
     Flowable.create(modeObs =>
       Observable.create(observer => {
         const transform = pipe(factory(), addToDisposable(observer));
+        const backpressureStrategy =
+          observer[QueueableLike_backpressureStrategy];
         const capacity = observer[QueueableLike_capacity];
         const scheduler = observer[DispatcherLike_scheduler];
 
         pipe(
           createWritableSink(transform)[StreamableLike_stream](scheduler, {
+            backpressureStrategy,
             capacity,
           }),
           Stream.sourceFrom(src),

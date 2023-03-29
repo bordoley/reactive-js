@@ -6,7 +6,7 @@ import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__interna
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { none, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, QueueableLike_capacity, } from "../../../util.js";
+import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -43,9 +43,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
             instance[LatestCtx_delegate][DisposableLike_dispose]();
         }
     };
-    const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin), function LatestObserver(instance, ctx, scheduler, capacity) {
+    const createLatestObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin), function LatestObserver(instance, ctx, scheduler, capacity, backpressureStrategy) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, scheduler, capacity);
+        init(typedObserverMixin, instance, scheduler, capacity, backpressureStrategy);
         instance[LatestObserver_ctx] = ctx;
         return instance;
     }, props({
@@ -70,7 +70,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 [LatestCtx_mode]: mode,
             };
             for (const observable of observables) {
-                const innerObserver = pipe(createLatestObserver(ctx, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]), Disposable_addTo(delegate), Disposable_onComplete(() => {
+                const innerObserver = pipe(createLatestObserver(ctx, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]), Disposable_addTo(delegate), Disposable_onComplete(() => {
                     onCompleted(ctx);
                 }), Observer_sourceFrom(observable));
                 add(ctx, innerObserver);

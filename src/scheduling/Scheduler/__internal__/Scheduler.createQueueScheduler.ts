@@ -266,8 +266,11 @@ const Scheduler_createQueueScheduler: Function2<
         init(typedMutableEnumeratorMixin, instance);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
 
-        instance[QueueScheduler_delayed] =
-          Queue_createPriorityQueue(delayedComparator);
+        instance[QueueScheduler_delayed] = Queue_createPriorityQueue(
+          delayedComparator,
+          MAX_SAFE_INTEGER,
+          "overflow",
+        );
         (instance[QueueScheduler_queue] = createImmediateQueue()),
           (instance[QueueScheduler_hostScheduler] = host);
 

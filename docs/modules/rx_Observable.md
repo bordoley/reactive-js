@@ -599,6 +599,7 @@ ___
 | :------ | :------ |
 | `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
 | `«destructured»` | `Object` |
+| › `backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | › `capacity?` | `number` |
 | › `replay?` | `number` |
 | › `scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
@@ -3607,6 +3608,7 @@ to the source is disposed.
 | :------ | :------ |
 | `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 | `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.replay?` | `number` |
 
@@ -3703,6 +3705,7 @@ ___
 | :------ | :------ |
 | `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 | `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 
 #### Returns
@@ -4312,6 +4315,7 @@ ___
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 | `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 
 #### Returns
@@ -4337,6 +4341,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 
@@ -4361,6 +4366,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
 
@@ -4388,6 +4394,7 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 | :------ | :------ | :------ |
 | `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> | - |
 | `options?` | `Object` | - |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
 | `options.capacity?` | `number` | - |
 | `options.replay?` | `number` | The number of events that should be replayed when the `MulticastObservableLike` is subscribed to. |
 

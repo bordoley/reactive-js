@@ -22,7 +22,7 @@ const typedMutableEnumeratorMixin =
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(PriorityScheduler_mixin, typedMutableEnumeratorMixin, Queue_priorityQueueMixin()), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(PriorityScheduler_mixin, instance, 1);
     init(typedMutableEnumeratorMixin, instance);
-    init(Queue_priorityQueueMixin(), instance, comparator, MAX_SAFE_INTEGER);
+    init(Queue_priorityQueueMixin(), instance, comparator, MAX_SAFE_INTEGER, "overflow");
     instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
     return instance;
 }, props({

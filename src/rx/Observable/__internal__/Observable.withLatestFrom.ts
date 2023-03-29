@@ -32,6 +32,7 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -41,7 +42,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 
 type ObservableWithLastestFrom = <C extends ObservableLike, TA, TB, T>(
   other: ContainerOf<C, TB>,
@@ -78,6 +79,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom =
               instance,
               delegate[DispatcherLike_scheduler],
               delegate[QueueableLike_capacity],
+              delegate[QueueableLike_backpressureStrategy],
             );
 
             instance[WithLatestFromObserver_selector] = selector;
@@ -88,9 +90,10 @@ const Observable_withLatestFrom: ObservableWithLastestFrom =
                 instance[WithLatestFromObserver_hasLatest] = true;
                 instance[WithLatestFromObserver_otherLatest] = next;
               }),
-              Observable_subscribeWithCapacity(
+              Observable_subscribeWithCapacityAndBackpressureStrategy(
                 delegate[DispatcherLike_scheduler],
                 delegate[QueueableLike_capacity],
+                delegate[QueueableLike_backpressureStrategy],
               ),
               Disposable_addTo(instance),
               Disposable_onComplete(() => {

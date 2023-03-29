@@ -73,6 +73,8 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
@@ -161,13 +163,18 @@ export const useObservable = <T>(
   observable: ObservableLike<T>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
   } = {},
 ): Optional<T> => {
   const [state, updateState] = useState<Optional<T>>(none);
   const [error, updateError] = useState<Optional<Error>>(none);
 
-  const { capacity, priority = unstable_NormalPriority } = options;
+  const {
+    backpressureStrategy = "overflow",
+    capacity,
+    priority = unstable_NormalPriority,
+  } = options;
 
   useEffect(() => {
     const scheduler = createSchedulerWithPriority(priority);
@@ -175,7 +182,7 @@ export const useObservable = <T>(
     pipe(
       observable,
       Observable.forEach<T>(v => updateState(_ => v)),
-      Observable.subscribe(scheduler, { capacity }),
+      Observable.subscribe(scheduler, { backpressureStrategy, capacity }),
       Disposable.onError(updateError),
     );
 
@@ -196,19 +203,26 @@ export const useStream = <
   streamable: StreamableLike<TReq, T, TStream>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
     readonly replay?: number;
   } = {},
 ): Optional<TStream> => {
   const [stream, setStream] = useState<Optional<TStream>>(none);
 
-  const { capacity, priority = unstable_NormalPriority, replay = 1 } = options;
+  const {
+    backpressureStrategy = "overflow",
+    capacity,
+    priority = unstable_NormalPriority,
+    replay = 1,
+  } = options;
 
   useEffect(() => {
     const scheduler = createSchedulerWithPriority(priority);
 
     const stream: TStream = streamable[StreamableLike_stream](scheduler, {
       replay,
+      backpressureStrategy,
       capacity,
     });
 
@@ -250,13 +264,14 @@ export const useStreamable = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
     readonly replay?: number;
   } = {},
 ): readonly [Optional<T>, Function1<TReq, boolean>] => {
   const stream = useStream(streamable, options);
   const dispatch = useDispatcher(stream);
-  const value = useObservable<T>(stream ?? emptyObservable);
+  const value = useObservable<T>(stream ?? emptyObservable, options);
   return [value, dispatch];
 };
 
@@ -267,6 +282,7 @@ export const useFlowable = <T>(
   flowable: FlowableLike<T>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
     readonly replay?: number;
   } = {},
@@ -278,7 +294,7 @@ export const useFlowable = <T>(
 } => {
   const stream = useStream(flowable, options);
   const dispatch = useDispatcher(stream);
-  const value = useObservable<T>(stream ?? emptyObservable);
+  const value = useObservable<T>(stream ?? emptyObservable, options);
 
   const isPaused =
     useObservable<boolean>(
@@ -353,7 +369,11 @@ const createReplayPublisher = <TProps>() =>
 
 export const createComponent = <TProps>(
   fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>,
-  options: { readonly priority?: 1 | 2 | 3 | 4 | 5 } = {},
+  options: {
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+  } = {},
 ): ComponentType<TProps> => {
   const ObservableComponent = (props: TProps) => {
     const propsPublisher = useMemo<PublisherLike<TProps>>(

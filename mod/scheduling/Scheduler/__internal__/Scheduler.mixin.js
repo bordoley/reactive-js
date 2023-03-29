@@ -21,7 +21,7 @@ export const PriorityScheduler_mixin =
 /*@__PURE__*/ (() => {
     const createContinuation = createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function Continuation(instance, scheduler, effect, priority) {
         init(Disposable_mixin, instance);
-        init(IndexedQueue_fifoQueueMixin(), instance, MAX_SAFE_INTEGER);
+        init(IndexedQueue_fifoQueueMixin(), instance, MAX_SAFE_INTEGER, "overflow");
         instance[ContinuationLike_continuationScheduler] = scheduler;
         instance[Continuation_effect] = effect;
         instance[ContinuationLike_priority] = priority;

@@ -29,6 +29,7 @@ import {
 import {
   DisposableLike,
   DisposableLike_dispose,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -38,7 +39,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 import Observable_throws from "./Observable.throws.js";
 
 interface ObservableTimeout {
@@ -60,9 +61,10 @@ const Observable_timeout: ObservableTimeout = /*@__PURE__*/ (<T>() => {
   ) => {
     observer[SerialDisposableLike_current] = pipe(
       observer[TimeoutObserver_duration],
-      Observable_subscribeWithCapacity(
+      Observable_subscribeWithCapacityAndBackpressureStrategy(
         observer[DispatcherLike_scheduler],
         observer[QueueableLike_capacity],
+        observer[QueueableLike_backpressureStrategy],
       ),
     );
   };
@@ -85,6 +87,7 @@ const Observable_timeout: ObservableTimeout = /*@__PURE__*/ (<T>() => {
           instance,
           delegate[DispatcherLike_scheduler],
           delegate[QueueableLike_capacity],
+          delegate[QueueableLike_backpressureStrategy],
         );
         init(Disposable_delegatingMixin<ObserverLike<T>>(), instance, delegate);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);

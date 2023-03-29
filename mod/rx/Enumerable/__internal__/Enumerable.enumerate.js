@@ -24,9 +24,9 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
         init(Disposable_mixin, instance);
         init(typedMutableEnumeratorMixin, instance);
         init(PriorityScheduler_mixin, instance, 0);
-        init(typedObserverMixin, instance, instance, MAX_SAFE_INTEGER);
+        init(typedObserverMixin, instance, instance, MAX_SAFE_INTEGER, "overflow");
         instance[EnumerableEnumerator_continuationQueue] =
-            IndexedQueue_createFifoQueue();
+            IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
         // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
         return instance;
     }, props({

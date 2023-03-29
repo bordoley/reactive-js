@@ -28,6 +28,7 @@ import {
 import {
   DisposableLike,
   DisposableLike_dispose,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -63,6 +64,7 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
             instance,
             delegate[DispatcherLike_scheduler],
             delegate[QueueableLike_capacity],
+            delegate[QueueableLike_backpressureStrategy],
           );
 
           pipe(

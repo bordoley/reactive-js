@@ -48,6 +48,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -73,6 +74,7 @@ interface QueuedEnumeratorLike<T = unknown>
 
 const QueuedEnumerator_create: <T>(
   capacity: number,
+  backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
 ) => QueuedEnumeratorLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [EnumeratorLike_current]: T;
@@ -86,9 +88,15 @@ const QueuedEnumerator_create: <T>(
         instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
           Mutable<TProperties>,
         capacity: number,
+        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): EnumeratorLike<T> & QueueableLike<T> & DisposableLike {
         init(Disposable_mixin, instance);
-        init(IndexedQueue_fifoQueueMixin<T>(), instance, capacity);
+        init(
+          IndexedQueue_fifoQueueMixin<T>(),
+          instance,
+          capacity,
+          backpressureStrategy,
+        );
 
         pipe(
           instance,
@@ -176,6 +184,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           instance,
           delegate[DispatcherLike_scheduler],
           delegate[QueueableLike_capacity],
+          delegate[QueueableLike_backpressureStrategy],
         );
         init(delegatingMixin(), instance, delegate);
 
@@ -283,7 +292,10 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           enumerators.push(enumerator);
         } else {
           const enumerator = pipe(
-            QueuedEnumerator_create(observer[QueueableLike_capacity]),
+            QueuedEnumerator_create(
+              observer[QueueableLike_capacity],
+              observer[QueueableLike_backpressureStrategy],
+            ),
             Disposable_addTo(observer),
           );
           enumerators.push(enumerator);

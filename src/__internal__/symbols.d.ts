@@ -350,6 +350,8 @@ export declare const QueueableLike_enqueue: unique symbol;
 
 export declare const QueueableLike_capacity: unique symbol;
 
+export declare const QueueableLike_backpressureStrategy: unique symbol;
+
 export declare const SerialDisposableLike_current: unique symbol;
 
 export declare const QueueLike_head: unique symbol;

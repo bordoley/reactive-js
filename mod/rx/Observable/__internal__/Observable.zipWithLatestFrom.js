@@ -5,7 +5,7 @@ import { ZipWithLatestFromObserver_TAQueue, ZipWithLatestFromObserver_hasLatest,
 import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -14,7 +14,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 const Observable_zipWithLatestFrom = 
 /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
@@ -30,11 +30,11 @@ const Observable_zipWithLatestFrom =
         };
         return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
             init(Disposable_mixin, instance);
-            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
+            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]);
             init(delegatingMixin(), instance, delegate);
             instance[ZipWithLatestFromObserver_selector] = selector;
             instance[ZipWithLatestFromObserver_TAQueue] =
-                IndexedQueue_createFifoQueue();
+                IndexedQueue_createFifoQueue(delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]);
             const disposeDelegate = () => {
                 if (instance[DisposableLike_isDisposed] &&
                     otherSubscription[DisposableLike_isDisposed]) {
@@ -49,7 +49,7 @@ const Observable_zipWithLatestFrom =
                     instance[ZipWithLatestFromObserver_TAQueue][QueueLike_count] === 0) {
                     instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
-            }), Observable_subscribeWithCapacity(delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
+            }), Observable_subscribeWithCapacityAndBackpressureStrategy(delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({

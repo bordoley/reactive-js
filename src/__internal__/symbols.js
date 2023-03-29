@@ -818,6 +818,11 @@ export const QueueableLike_capacity = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol(
+  "QueueableLike_backpressureStrategy",
+);
+
+/** @type {unique symbol} */
 export const SerialDisposableLike_current = /*@__PURE__*/ symbol(
   "SerialDisposableLike_current",
 );

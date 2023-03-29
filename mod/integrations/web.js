@@ -9,7 +9,7 @@ import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableL
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { DisposableLike_dispose, QueueableLike_capacity, QueueableLike_enqueue, } from "../util.js";
+import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
@@ -93,6 +93,10 @@ export const windowLocation = /*@__PURE__*/ (() => {
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return this[DelegatingLike_delegate][MulticastObservableLike_observerCount];
+        },
+        get [QueueableLike_backpressureStrategy]() {
+            unsafeCast(this);
+            return this[DelegatingLike_delegate][QueueableLike_backpressureStrategy];
         },
         get [QueueableLike_capacity]() {
             unsafeCast(this);

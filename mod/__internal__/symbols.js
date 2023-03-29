@@ -359,6 +359,8 @@ export const QueueableLike_enqueue = /*@__PURE__*/ symbol("QueueableLike_enqueue
 /** @type {unique symbol} */
 export const QueueableLike_capacity = /*@__PURE__*/ symbol("QueueableLike_capacity");
 /** @type {unique symbol} */
+export const QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol("QueueableLike_backpressureStrategy");
+/** @type {unique symbol} */
 export const SerialDisposableLike_current = /*@__PURE__*/ symbol("SerialDisposableLike_current");
 /** @type {unique symbol} */
 export const QueueLike_head = /*@__PURE__*/ symbol("QueueLike_head");

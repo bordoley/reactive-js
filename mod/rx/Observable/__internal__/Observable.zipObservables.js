@@ -13,7 +13,7 @@ import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -29,9 +29,9 @@ import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 const QueuedEnumerator_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function QueuedEnumerator(instance, capacity) {
+    return createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function QueuedEnumerator(instance, capacity, backpressureStrategy) {
         init(Disposable_mixin, instance);
-        init(IndexedQueue_fifoQueueMixin(), instance, capacity);
+        init(IndexedQueue_fifoQueueMixin(), instance, capacity, backpressureStrategy);
         pipe(instance, Disposable_onDisposed(() => {
             // FIXME: Maybe should clear the queue here as well to early
             // release references?
@@ -67,7 +67,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     const shouldComplete = /*@__PURE__*/ (() => compose(ReadonlyArray_forEach(Enumerator_move()), ReadonlyArray_some(x => x[DisposableLike_isDisposed])))();
     const createZipObserver = createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function ZipObserver(instance, delegate, enumerators, queuedEnumerator) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]);
         init(delegatingMixin(), instance, delegate);
         instance[ZipObserver_queuedEnumerator] = queuedEnumerator;
         instance[ZipObserver_enumerators] = enumerators;
@@ -123,7 +123,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
                 enumerators.push(enumerator);
             }
             else {
-                const enumerator = pipe(QueuedEnumerator_create(observer[QueueableLike_capacity]), Disposable_addTo(observer));
+                const enumerator = pipe(QueuedEnumerator_create(observer[QueueableLike_capacity], observer[QueueableLike_backpressureStrategy]), Disposable_addTo(observer));
                 enumerators.push(enumerator);
                 pipe(createZipObserver(observer, enumerators, enumerator), Disposable_addTo(observer), Observer_sourceFrom(next));
             }

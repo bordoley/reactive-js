@@ -41,6 +41,7 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_isDisposed,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -50,7 +51,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
-import Observable_subscribeWithCapacity from "../../Observable/__internal__/Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
@@ -80,9 +81,10 @@ const createThrottleObserver: <T>(
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
       Observable_forEach<ObservableLike>(observer[ThrottleObserver_onNotify]),
-      Observable_subscribeWithCapacity(
+      Observable_subscribeWithCapacityAndBackpressureStrategy(
         observer[DispatcherLike_scheduler],
         observer[QueueableLike_capacity],
+        observer[QueueableLike_backpressureStrategy],
       ),
     );
   };
@@ -103,6 +105,7 @@ const createThrottleObserver: <T>(
           instance,
           delegate[DispatcherLike_scheduler],
           delegate[QueueableLike_capacity],
+          delegate[QueueableLike_backpressureStrategy],
         );
 
         instance[ThrottleObserver_durationFunction] = durationFunction;

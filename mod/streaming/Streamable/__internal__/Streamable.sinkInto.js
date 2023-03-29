@@ -6,16 +6,20 @@ import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.e
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
-import Observable_subscribeWithCapacity from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
-import { QueueableLike_capacity } from "../../../util.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 const Streamable_sinkInto = (dest) => (src) => {
     const scheduler = dest[DispatcherLike_scheduler];
     const capacity = dest[QueueableLike_capacity];
-    const srcStream = src[StreamableLike_stream](scheduler, { capacity });
-    pipe(Observable_merge(pipe(srcStream, Observable_enqueue(dest), Observable_ignoreElements(), Observable_onSubscribe(returns(bindMethod(dest, DispatcherLike_complete)))), pipe(dest, Observable_enqueue(srcStream), Observable_ignoreElements())), Observable_ignoreElements(), Observable_subscribeWithCapacity(scheduler, dest[QueueableLike_capacity]), Disposable_addTo(dest), Disposable_add(srcStream));
+    const backpressureStrategy = dest[QueueableLike_backpressureStrategy];
+    const srcStream = src[StreamableLike_stream](scheduler, {
+        backpressureStrategy,
+        capacity,
+    });
+    pipe(Observable_merge(pipe(srcStream, Observable_enqueue(dest), Observable_ignoreElements(), Observable_onSubscribe(returns(bindMethod(dest, DispatcherLike_complete)))), pipe(dest, Observable_enqueue(srcStream), Observable_ignoreElements())), Observable_ignoreElements(), Observable_subscribeWithCapacityAndBackpressureStrategy(scheduler, dest[QueueableLike_capacity], dest[QueueableLike_backpressureStrategy]), Disposable_addTo(dest), Disposable_add(srcStream));
     return src;
 };
 export default Streamable_sinkInto;

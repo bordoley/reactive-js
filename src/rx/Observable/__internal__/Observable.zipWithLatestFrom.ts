@@ -41,6 +41,7 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -52,7 +53,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 
 const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"] =
   /*@__PURE__*/ (() => {
@@ -108,12 +109,16 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
               instance,
               delegate[DispatcherLike_scheduler],
               delegate[QueueableLike_capacity],
+              delegate[QueueableLike_backpressureStrategy],
             );
             init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
 
             instance[ZipWithLatestFromObserver_selector] = selector;
             instance[ZipWithLatestFromObserver_TAQueue] =
-              IndexedQueue_createFifoQueue();
+              IndexedQueue_createFifoQueue(
+                delegate[QueueableLike_capacity],
+                delegate[QueueableLike_backpressureStrategy],
+              );
 
             const disposeDelegate = () => {
               if (
@@ -140,9 +145,10 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
                   instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
               }),
-              Observable_subscribeWithCapacity(
+              Observable_subscribeWithCapacityAndBackpressureStrategy(
                 delegate[DispatcherLike_scheduler],
                 delegate[QueueableLike_capacity],
+                delegate[QueueableLike_backpressureStrategy],
               ),
               Disposable_onComplete(disposeDelegate),
               Disposable_addTo(delegate),

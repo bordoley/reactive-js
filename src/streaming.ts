@@ -21,6 +21,7 @@ import {
   ObservableLike,
 } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
+import { QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
 
 export {
   StreamableLike_stream,
@@ -94,6 +95,8 @@ export interface StreamableLike<
        * The capacity of the stream's request queue.
        */
       readonly capacity?: number;
+
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
   ): TStream;
 }

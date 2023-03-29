@@ -1,17 +1,24 @@
 import { Factory, bindMethod, isFunction, pipe } from "../../../functions.js";
 import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import { QueueableLike_capacity } from "../../../util.js";
+import {
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "./Observable.create.js";
 import Observable_enqueue from "./Observable.enqueue.js";
-import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 
 const Observable_subscribeOn =
   <T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>,
-    options?: { readonly capacity?: number },
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
   ) =>
   (observable: ObservableLike<T>): ObservableLike<T> =>
     // FIXME: type test for VTS
@@ -23,9 +30,11 @@ const Observable_subscribeOn =
       pipe(
         observable,
         Observable_enqueue<ObservableLike, T>(observer),
-        Observable_subscribeWithCapacity(
+        Observable_subscribeWithCapacityAndBackpressureStrategy(
           scheduler,
           options?.capacity ?? observer[QueueableLike_capacity],
+          options?.backpressureStrategy ??
+            observer[QueueableLike_backpressureStrategy],
         ),
         Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
         Disposable_addTo(observer),

@@ -5,7 +5,7 @@ import { AsyncEnumeratorDelegatingMixin_src } from "../../../__internal__/symbol
 import { none, pipe, unsafeCast } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import { QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const AsyncEnumerator_create = /*@__PURE__*/ (() => {
@@ -24,6 +24,10 @@ const AsyncEnumerator_create = /*@__PURE__*/ (() => {
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);
             return this[AsyncEnumeratorDelegatingMixin_src][DispatcherLike_scheduler];
+        },
+        get [QueueableLike_backpressureStrategy]() {
+            unsafeCast(this);
+            return this[AsyncEnumeratorDelegatingMixin_src][QueueableLike_backpressureStrategy];
         },
         get [QueueableLike_capacity]() {
             unsafeCast(this);

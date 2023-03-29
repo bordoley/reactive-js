@@ -6,7 +6,7 @@ import { SerialDisposableLike_current, } from "../../../__internal__/util.intern
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { isNumber, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_isDisposed, QueueableLike_capacity, } from "../../../util.js";
+import { DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -14,18 +14,18 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
-import Observable_subscribeWithCapacity from "../../Observable/__internal__/Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 const createThrottleObserver = (() => {
     const typedObserverMixin = Observer_mixin();
     const setupDurationSubscription = (observer, next) => {
-        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(observer[ThrottleObserver_onNotify]), Observable_subscribeWithCapacity(observer[DispatcherLike_scheduler], observer[QueueableLike_capacity]));
+        observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(observer[ThrottleObserver_onNotify]), Observable_subscribeWithCapacityAndBackpressureStrategy(observer[DispatcherLike_scheduler], observer[QueueableLike_capacity], observer[QueueableLike_backpressureStrategy]));
     };
     return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin), function ThrottleObserver(instance, delegate, durationFunction, mode) {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
+        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]);
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;
         instance[ThrottleObserver_durationSubscription] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));
