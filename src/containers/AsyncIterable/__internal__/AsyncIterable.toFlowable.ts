@@ -8,7 +8,7 @@ import {
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
+import Observable_subscribeWithDispatcherConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import {
   SchedulerLike_maxYieldInterval,
@@ -19,8 +19,6 @@ import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.c
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -80,11 +78,7 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
               pipe(observer, Observer_schedule(continuation));
             }
           }),
-          Observable_subscribeWithCapacityAndBackpressureStrategy(
-            scheduler,
-            observer[QueueableLike_capacity],
-            observer[QueueableLike_backpressureStrategy],
-          ),
+          Observable_subscribeWithDispatcherConfig(observer),
           Disposable_addTo(observer),
           Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
         );

@@ -8,7 +8,7 @@ import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.e
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
-import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../../rx/Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
+import Observable_subscribeWithDispatcherConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
 import {
   StreamLike,
   StreamableLike,
@@ -49,11 +49,7 @@ const Streamable_sinkInto =
         ),
       ),
       Observable_ignoreElements<ObservableLike, unknown>(),
-      Observable_subscribeWithCapacityAndBackpressureStrategy(
-        scheduler,
-        dest[QueueableLike_capacity],
-        dest[QueueableLike_backpressureStrategy],
-      ),
+      Observable_subscribeWithDispatcherConfig(dest),
       Disposable_addTo(dest),
       Disposable_add(srcStream),
     );

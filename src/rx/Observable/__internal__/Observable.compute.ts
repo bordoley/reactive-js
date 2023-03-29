@@ -56,7 +56,6 @@ import {
   DisposableLike_isDisposed,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -66,7 +65,7 @@ import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
-import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
+import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
 
 type EffectsMode = "batched" | "combine-latest";
 
@@ -235,7 +234,6 @@ class ComputeContext {
         [ComputeContext_observer]: observer,
         [ComputeContext_runComputation]: runComputation,
       } = this;
-      const scheduler = observer[DispatcherLike_scheduler];
 
       const subscription = pipe(
         observable,
@@ -257,11 +255,7 @@ class ComputeContext {
                 : scheduledComputationSubscription;
           }
         }),
-        Observable_subscribeWithCapacityAndBackpressureStrategy(
-          scheduler,
-          observer[QueueableLike_capacity],
-          observer[QueueableLike_backpressureStrategy],
-        ),
+        Observable_subscribeWithDispatcherConfig(observer),
         Disposable_addTo(observer),
         Disposable_onComplete(this[ComputeContext_cleanup]),
       );

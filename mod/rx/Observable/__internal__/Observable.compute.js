@@ -8,7 +8,7 @@ import { arrayEquality, bind, bindMethod, error, ignore, isNone, isSome, newInst
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -17,7 +17,7 @@ import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
-import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
+import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
 const Memo = 1;
 const Await = 2;
 const Observe = 3;
@@ -98,7 +98,6 @@ class ComputeContext {
         else {
             effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
             const { [ComputeContext_observer]: observer, [ComputeContext_runComputation]: runComputation, } = this;
-            const scheduler = observer[DispatcherLike_scheduler];
             const subscription = pipe(observable, Observable_forEach(next => {
                 effect[AwaitOrObserveEffect_value] = next;
                 effect[AwaitOrObserveEffect_hasValue] = true;
@@ -112,7 +111,7 @@ class ComputeContext {
                             ? pipe(observer, Observer_schedule(runComputation))
                             : scheduledComputationSubscription;
                 }
-            }), Observable_subscribeWithCapacityAndBackpressureStrategy(scheduler, observer[QueueableLike_capacity], observer[QueueableLike_backpressureStrategy]), Disposable_addTo(observer), Disposable_onComplete(this[ComputeContext_cleanup]));
+            }), Observable_subscribeWithDispatcherConfig(observer), Disposable_addTo(observer), Disposable_onComplete(this[ComputeContext_cleanup]));
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_subscription] = subscription;
             effect[AwaitOrObserveEffect_value] = none;

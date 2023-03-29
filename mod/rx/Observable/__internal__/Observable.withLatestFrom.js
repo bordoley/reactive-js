@@ -12,7 +12,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
+import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
 const Observable_withLatestFrom = 
 /*@__PURE__*/ (() => {
     const createWithLatestObserver = (() => {
@@ -24,7 +24,7 @@ const Observable_withLatestFrom =
             pipe(other, Observable_forEach(next => {
                 instance[WithLatestFromObserver_hasLatest] = true;
                 instance[WithLatestFromObserver_otherLatest] = next;
-            }), Observable_subscribeWithCapacityAndBackpressureStrategy(delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]), Disposable_addTo(instance), Disposable_onComplete(() => {
+            }), Observable_subscribeWithDispatcherConfig(delegate), Disposable_addTo(instance), Disposable_onComplete(() => {
                 if (!instance[WithLatestFromObserver_hasLatest]) {
                     instance[DisposableLike_dispose]();
                 }

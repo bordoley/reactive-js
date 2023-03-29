@@ -1,22 +1,17 @@
 import { ContainerOperator } from "../../../containers.js";
 import { bindMethod, error, partial, pipe } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import {
-  DisposableLike_dispose,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-} from "../../../util.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
+import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
 
 const Observable_repeatOrRetry: <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
@@ -47,11 +42,7 @@ const Observable_repeatOrRetry: <T>(
           Observable_forEach<ObservableLike, T>(
             bindMethod(delegate, ObserverLike_notify),
           ),
-          Observable_subscribeWithCapacityAndBackpressureStrategy(
-            delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_capacity],
-            delegate[QueueableLike_backpressureStrategy],
-          ),
+          Observable_subscribeWithDispatcherConfig(delegate),
           Disposable_addToIgnoringChildErrors(delegate),
           Disposable_onDisposed(doOnDispose),
         );

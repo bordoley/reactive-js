@@ -1,7 +1,6 @@
 import { ContainerOperator } from "../../../containers.js";
 import { pipe } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   EnumerableLike,
   ObservableLike,
   ObservableLike_isEnumerable,
@@ -9,14 +8,11 @@ import {
   ObserverLike,
   RunnableLike,
 } from "../../../rx.js";
-import {
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-} from "../../../util.js";
+
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
+import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
 
 interface ObservableTakeUntil {
@@ -35,11 +31,7 @@ const Observable_takeUntil: ObservableTakeUntil = (<T>(
         pipe(
           notifier,
           Observable_takeFirst<ObservableLike, T>(),
-          Observable_subscribeWithCapacityAndBackpressureStrategy(
-            delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_capacity],
-            delegate[QueueableLike_backpressureStrategy],
-          ),
+          Observable_subscribeWithDispatcherConfig(delegate),
         ),
       ),
     );

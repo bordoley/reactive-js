@@ -39,7 +39,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
+import Observable_subscribeWithDispatcherConfig from "../../Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
@@ -122,11 +122,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
               Observable_forEach(
                 bindMethod(this[DelegatingLike_delegate], ObserverLike_notify),
               ),
-              Observable_subscribeWithCapacityAndBackpressureStrategy(
-                this[DispatcherLike_scheduler],
-                this[QueueableLike_capacity],
-                this[QueueableLike_backpressureStrategy],
-              ),
+              Observable_subscribeWithDispatcherConfig(this),
               Disposable_onComplete(() => {
                 if (this[DisposableLike_isDisposed]) {
                   this[DelegatingLike_delegate][DisposableLike_dispose]();

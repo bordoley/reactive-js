@@ -5,14 +5,13 @@ import { DispatcherLike_scheduler, } from "../../../rx.js";
 import { PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, } from "../../../scheduling.js";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import Flowable_createLifted from "../../../streaming/Flowable/__internal__/Flowable.createLifted.js";
-import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_toObservable from "../../../util/Disposable/__internal__/Disposable.toObservable.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
-import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
+import Observable_subscribeWithDispatcherConfig from "../../Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
 import Observable_takeUntil from "../../Observable/__internal__/Observable.takeUntil.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 const Runnable_toFlowable = () => observable => Flowable_createLifted((modeObs) => Observable_create(observer => {
@@ -24,6 +23,6 @@ const Runnable_toFlowable = () => observable => Flowable_createLifted((modeObs) 
         else {
             pauseableScheduler[PauseableSchedulerLike_resume]();
         }
-    }), Observable_subscribeWithCapacityAndBackpressureStrategy(observer[DispatcherLike_scheduler], observer[QueueableLike_capacity], observer[QueueableLike_backpressureStrategy]), Disposable_bindTo(pauseableScheduler))), Disposable_add(pauseableScheduler));
+    }), Observable_subscribeWithDispatcherConfig(observer), Disposable_bindTo(pauseableScheduler))), Disposable_add(pauseableScheduler));
 }), true);
 export default Runnable_toFlowable;
