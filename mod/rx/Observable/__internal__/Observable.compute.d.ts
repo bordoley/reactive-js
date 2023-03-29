@@ -3,7 +3,7 @@ import { Equality, Factory, Optional, Updater } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike, StreamableLike } from "../../../streaming.js";
-import { DisposableLike } from "../../../util.js";
+import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
 type EffectsMode = "batched" | "combine-latest";
 declare const Memo = 1;
 declare const Await = 2;
@@ -58,9 +58,10 @@ export declare const Observable_compute__observe: <T>(observable: ObservableLike
 export declare const Observable_compute__do: (f: (...args: any[]) => void, ...args: unknown[]) => void;
 export declare const Observable_compute__using: <T extends DisposableLike>(f: (...args: any[]) => T, ...args: unknown[]) => T;
 export declare function Observable_compute__currentScheduler(): SchedulerLike;
-export declare const Observable_compute__stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, capacity, scheduler, }?: {
+export declare const Observable_compute__stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, backpressureStrategy, capacity, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
+    readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;
 }) => TStream;
 export declare const Observable_compute__state: <T>(initialState: () => T, options?: {

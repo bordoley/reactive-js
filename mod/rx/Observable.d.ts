@@ -3,7 +3,7 @@ import { Factory, Function1, Function2, Function3, Function4, Function5, Functio
 import { CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, MulticastObservableLike, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
-import { DisposableLike, DisposableOrTeardown } from "../util.js";
+import { DisposableLike, DisposableOrTeardown, QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 import { Observable_compute__currentScheduler } from "./Observable/__internal__/Observable.compute.js";
 interface __Memo {
     <T>(fn: Factory<T>): T;
@@ -63,9 +63,10 @@ export declare const __state: <T>(initialState: () => T, options?: {
 /**
  * @category ComputationalEffect
  */
-export declare const __stream: <TReq, T, TStream extends import("../streaming.js").StreamLike<TReq, T>>(streamable: import("../streaming.js").StreamableLike<TReq, T, TStream>, { replay, capacity, scheduler, }?: {
+export declare const __stream: <TReq, T, TStream extends import("../streaming.js").StreamLike<TReq, T>>(streamable: import("../streaming.js").StreamableLike<TReq, T, TStream>, { replay, backpressureStrategy, capacity, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
+    readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;
 }) => TStream;
 interface __Using {
@@ -121,6 +122,7 @@ export declare const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"];
 export declare const firstAsync: FirstAsync<ObservableLike, {
     scheduler?: SchedulerLike | Factory<SchedulerLike>;
     capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
 }>["firstAsync"];
 /**
  * @category Operator
@@ -165,6 +167,7 @@ export declare const keepType: KeepType<ObservableLike>["keepType"];
 export declare const lastAsync: LastAsync<ObservableLike, {
     scheduler?: SchedulerLike | Factory<SchedulerLike>;
     capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
 }>["lastAsync"];
 export declare const map: Map<ObservableLike>["map"];
 export declare const mapTo: MapTo<ObservableLike>["mapTo"];
@@ -189,6 +192,7 @@ export declare const multicast: <T>(schedulerOrFactory: SchedulerLike | Factory<
      */
     readonly replay?: number;
     readonly capacity?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
 export declare const never: Never<ObservableLike>["never"];
 export declare const observeWith: <C extends ObservableLike<unknown>, T>(observer: ObserverLike<T>) => Function1<C, C>;
@@ -217,6 +221,7 @@ export declare const scanMany: ScanMany<ObservableLike, ObservableLike>["scanMan
  */
 export declare const share: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
     readonly replay?: number | undefined;
+    readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;
 } | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
 export declare const skipFirst: SkipFirst<ObservableLike>["skipFirst"];
@@ -230,11 +235,13 @@ export declare const switchAll: SwitchAll<ObservableLike>["switchAll"];
 export declare const switchMap: SwitchMap<ObservableLike>["switchMap"];
 export declare const subscribe: <T>(scheduler: SchedulerLike, options?: {
     capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
 }) => Function1<ObservableLike<T>, DisposableLike>;
 /**
  * @category Operator
  */
 export declare const subscribeOn: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
+    readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;
 } | undefined) => (observable: ObservableLike<T>) => ObservableLike<T>;
 export declare const takeFirst: TakeFirst<ObservableLike>["takeFirst"];

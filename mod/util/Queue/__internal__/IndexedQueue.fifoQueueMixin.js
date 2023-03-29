@@ -6,7 +6,7 @@ import { mix, props } from "../../../__internal__/mixins.js";
 import { FifoQueue_capacityMask, FifoQueue_head, FifoQueue_tail, FifoQueue_values, } from "../../../__internal__/symbols.js";
 import { IndexedLike_get, IndexedLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;
@@ -68,12 +68,14 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         }
         instance[FifoQueue_capacityMask] = newCapacity - 1;
     };
-    return pipe(mix(function FifoQueue(instance, capacity) {
+    return pipe(mix(function FifoQueue(instance, capacity, backpressureStrategy) {
+        instance[QueueableLike_backpressureStrategy] = backpressureStrategy;
         instance[QueueableLike_capacity] =
             clampPositiveNonZeroInteger(capacity);
         return instance;
     }, props({
         [QueueLike_count]: 0,
+        [QueueableLike_backpressureStrategy]: "overflow",
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
@@ -161,14 +163,33 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         },
         [QueueableLike_enqueue](item) {
             var _a;
+            const backpressureStrategy = this[QueueableLike_backpressureStrategy];
+            let count = this[QueueLike_count] + 1;
+            const capacity = this[QueueableLike_capacity];
+            if (backpressureStrategy === "drop-latest" && count > capacity) {
+                return false;
+            }
+            else if (backpressureStrategy === "drop-oldest" &&
+                count > capacity) {
+                // We want to pop off the oldest value first, before enqueuing
+                // to avoid unintentionally growing the queue.
+                this[QueueLike_dequeue]();
+                count = this[QueueLike_count] + 1;
+            }
+            else if (backpressureStrategy === "throw" && count > capacity) {
+                // FIXME: Seems like we should have a known exception (symbol), that
+                // a caller could safely catch in this case and then make its own decisions.
+                // For instance using drop-latest is going to break priority queue,
+                // so it would expect a known exception if it was configured for drop-latest
+                // and handle it accordingly.
+                raiseWithDebugMessage("attempting to enque a value to a queue that is full");
+            }
             const values = (_a = this[FifoQueue_values]) !== null && _a !== void 0 ? _a : ((this[FifoQueue_capacityMask] = 31),
                 (this[FifoQueue_values] = newInstance(Array, 32)),
                 this[FifoQueue_values]);
             const capacityMask = this[FifoQueue_capacityMask];
-            let count = this[QueueLike_count];
             let tail = this[FifoQueue_tail];
             values[tail] = item;
-            count++;
             this[QueueLike_count] = count;
             tail = (tail + 1) & capacityMask;
             this[FifoQueue_tail] = tail;

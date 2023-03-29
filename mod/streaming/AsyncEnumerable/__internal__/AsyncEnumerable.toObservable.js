@@ -8,7 +8,7 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { StreamableLike_isEnumerable, StreamableLike_isRunnable, StreamableLike_stream, } from "../../../streaming.js";
-import { QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 const AsyncEnumerable_toObservable = () => (enumerable) => {
     const create = enumerable[StreamableLike_isEnumerable]
@@ -19,7 +19,11 @@ const AsyncEnumerable_toObservable = () => (enumerable) => {
     return create((observer) => {
         const scheduler = observer[DispatcherLike_scheduler];
         const capacity = observer[QueueableLike_capacity];
-        const enumerator = pipe(enumerable[StreamableLike_stream](scheduler, { capacity }), Disposable_addTo(observer));
+        const backpressureStrategy = observer[QueueableLike_backpressureStrategy];
+        const enumerator = pipe(enumerable[StreamableLike_stream](scheduler, {
+            backpressureStrategy,
+            capacity,
+        }), Disposable_addTo(observer));
         pipe(enumerator, Observable_forEach(_ => {
             enumerator[QueueableLike_enqueue](none);
         }), Observable_observeWith(observer));

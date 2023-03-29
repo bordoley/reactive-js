@@ -35,24 +35,24 @@ export interface DelegatingDisposableLike<
 > extends DelegatingLike<TDisposable>,
     DisposableLike {}
 
-export interface QueueLike<T> extends QueueableLike<T> {
+export interface QueueLike<T = unknown> extends QueueableLike<T> {
   readonly [QueueLike_count]: number;
   readonly [QueueLike_head]: Optional<T>;
 
   [QueueLike_dequeue](): Optional<T>;
 }
 
-export interface IndexedLike<T> {
+export interface IndexedLike<T = unknown> {
   [IndexedLike_get](index: number): T;
   [IndexedLike_set](index: number, value: T): T;
 }
 
-export interface StackLike<T> {
+export interface StackLike<T = unknown> {
   readonly [StackLike_head]: Optional<T>;
   [StackLike_pop](): Optional<T>;
 }
 
-export interface IndexedQueueLike<T>
+export interface IndexedQueueLike<T = unknown>
   extends QueueLike<T>,
     IndexedLike<T>,
     StackLike<T> {}

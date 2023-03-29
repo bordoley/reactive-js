@@ -8,6 +8,7 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -15,7 +16,7 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 
 const Observable_repeatOrRetry: <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
@@ -46,9 +47,10 @@ const Observable_repeatOrRetry: <T>(
           Observable_forEach<ObservableLike, T>(
             bindMethod(delegate, ObserverLike_notify),
           ),
-          Observable_subscribeWithCapacity(
+          Observable_subscribeWithCapacityAndBackpressureStrategy(
             delegate[DispatcherLike_scheduler],
             delegate[QueueableLike_capacity],
+            delegate[QueueableLike_backpressureStrategy],
           ),
           Disposable_addToIgnoringChildErrors(delegate),
           Disposable_onDisposed(doOnDispose),

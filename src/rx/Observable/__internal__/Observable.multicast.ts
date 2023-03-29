@@ -14,11 +14,15 @@ import {
   PublisherLike_publish,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
+import {
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 
 const Observable_multicast =
   <T>(
@@ -26,6 +30,7 @@ const Observable_multicast =
     options: {
       readonly replay?: number;
       readonly capacity?: number;
+      backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       publisherFactory?: Function1<
         Optional<{
           replay?: number;
@@ -36,6 +41,7 @@ const Observable_multicast =
   ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
   observable => {
     const {
+      backpressureStrategy = "overflow",
       capacity = MAX_SAFE_INTEGER,
       replay = 0,
       publisherFactory = Publisher_create,
@@ -51,7 +57,11 @@ const Observable_multicast =
       Observable_forEach<ObservableLike, T>(
         bindMethod(publisher, PublisherLike_publish),
       ),
-      Observable_subscribeWithCapacity(scheduler, capacity),
+      Observable_subscribeWithCapacityAndBackpressureStrategy(
+        scheduler,
+        capacity,
+        backpressureStrategy,
+      ),
       Disposable_bindTo(publisher),
     );
 

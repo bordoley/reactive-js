@@ -21,6 +21,7 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -68,6 +69,7 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
             instance,
             delegate[DispatcherLike_scheduler],
             delegate[QueueableLike_capacity],
+            delegate[QueueableLike_backpressureStrategy],
           );
 
           const textDecoder = newInstance(TextDecoder, charset, {

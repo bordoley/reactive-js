@@ -23,6 +23,7 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -65,6 +66,7 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
             instance,
             delegate[DispatcherLike_scheduler],
             delegate[QueueableLike_capacity],
+            delegate[QueueableLike_backpressureStrategy],
           );
 
           instance[TakeFirstObserver_takeCount] = takeCount;

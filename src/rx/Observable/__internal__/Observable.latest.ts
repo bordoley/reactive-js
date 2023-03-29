@@ -27,6 +27,8 @@ import {
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   DisposableLike_dispose,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -104,9 +106,16 @@ const Observable_latest = /*@__PURE__*/ (() => {
         ctx: LatestCtx,
         scheduler: SchedulerLike,
         capacity: number,
+        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): ObserverLike & TProperties {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, scheduler, capacity);
+        init(
+          typedObserverMixin,
+          instance,
+          scheduler,
+          capacity,
+          backpressureStrategy,
+        );
 
         instance[LatestObserver_ctx] = ctx;
 
@@ -149,6 +158,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
             ctx,
             delegate[DispatcherLike_scheduler],
             delegate[QueueableLike_capacity],
+            delegate[QueueableLike_backpressureStrategy],
           ),
           Disposable_addTo(delegate),
           Disposable_onComplete(() => {

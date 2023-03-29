@@ -6,9 +6,6 @@
 
 An interface for types that support buffering items with backpressure.
 
-The exact behaviors of a `QueueableLike` such as FIFO vs. LIFO processing,
-and backpressure strategies are implementation specific.
-
 ## Type parameters
 
 | Name | Type |
@@ -25,6 +22,7 @@ and backpressure strategies are implementation specific.
 
 ### Properties
 
+- [[QueueableLike\_backpressureStrategy]](util.QueueableLike.md#[queueablelike_backpressurestrategy])
 - [[QueueableLike\_capacity]](util.QueueableLike.md#[queueablelike_capacity])
 
 ### Methods
@@ -32,6 +30,14 @@ and backpressure strategies are implementation specific.
 - [[QueueableLike\_enqueue]](util.QueueableLike.md#[queueablelike_enqueue])
 
 ## Properties
+
+### [QueueableLike\_backpressureStrategy]
+
+• `Readonly` **[QueueableLike\_backpressureStrategy]**: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"``
+
+The back pressure strategy utilized by the queue when it is at capacity.
+
+___
 
 ### [QueueableLike\_capacity]
 

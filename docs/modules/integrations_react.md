@@ -62,6 +62,7 @@ ___
 | :------ | :------ |
 | `flowable` | [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\> |
 | `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 | `options.replay?` | `number` |
@@ -97,6 +98,7 @@ Returns the current value, if defined, of `observable`.
 | :------ | :------ | :------ |
 | `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> | The `ObservableLike` to subscribe to. |
 | `options?` | `Object` | - |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
 | `options.capacity?` | `number` | - |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` | - |
 
@@ -124,6 +126,7 @@ ___
 | :------ | :------ |
 | `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
 | `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 | `options.replay?` | `number` |
@@ -151,6 +154,7 @@ ___
 | :------ | :------ |
 | `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\> |
 | `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 | `options.replay?` | `number` |
@@ -179,6 +183,8 @@ ___
 | :------ | :------ |
 | `fn` | (`props`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TProps`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
 | `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
 #### Returns

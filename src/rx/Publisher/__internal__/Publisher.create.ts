@@ -18,7 +18,6 @@ import {
   IndexedQueueLike,
   QueueLike,
   QueueLike_count,
-  QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import {
@@ -40,7 +39,6 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_isDisposed,
-  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -69,7 +67,12 @@ const Publisher_create: <T>(options?: { replay?: number }) => PublisherLike<T> =
           replay: number,
         ): PublisherLike<T> {
           init(Disposable_mixin, instance);
-          init(IndexedQueue_fifoQueueMixin<T>(), instance, replay);
+          init(
+            IndexedQueue_fifoQueueMixin<T>(),
+            instance,
+            replay,
+            "drop-oldest",
+          );
 
           instance[Publisher_observers] = newInstance<Set<ObserverLike>>(Set);
 
@@ -115,11 +118,7 @@ const Publisher_create: <T>(options?: { replay?: number }) => PublisherLike<T> =
               return;
             }
 
-            const replay = this[QueueableLike_capacity];
-
-            if (replay > 0 && !this[QueueableLike_enqueue](next)) {
-              this[QueueLike_dequeue]();
-            }
+            this[QueueableLike_enqueue](next);
 
             for (const observer of this[Publisher_observers]) {
               observer[QueueableLike_enqueue](next);

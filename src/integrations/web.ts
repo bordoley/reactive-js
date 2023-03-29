@@ -53,6 +53,8 @@ import {
 import * as Streamable from "../streaming/Streamable.js";
 import {
   DisposableLike_dispose,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../util.js";
@@ -677,6 +679,7 @@ export const windowLocation: StreamableLike<
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
           | typeof QueueableLike_enqueue
+          | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_capacity
           | typeof WindowLocationStreamLike_canGoBack
           | typeof WindowLocationStreamLike_goBack
@@ -695,6 +698,13 @@ export const windowLocation: StreamableLike<
           unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
           return this[DelegatingLike_delegate][
             MulticastObservableLike_observerCount
+          ];
+        },
+
+        get [QueueableLike_backpressureStrategy]() {
+          unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
+          return this[DelegatingLike_delegate][
+            QueueableLike_backpressureStrategy
           ];
         },
 
@@ -784,7 +794,11 @@ export const windowLocation: StreamableLike<
   const createSyncToHistoryStream = (
     f: typeof history.pushState,
     scheduler: SchedulerLike,
-    options: { readonly replay?: number; readonly capacity?: number },
+    options: {
+      readonly replay?: number;
+      readonly capacity?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
   ) =>
     Streamable.create<TState, TState>(
       compose(

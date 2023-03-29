@@ -3014,6 +3014,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
+| `options.backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 
 #### Returns

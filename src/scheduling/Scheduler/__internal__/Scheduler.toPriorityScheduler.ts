@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   QueueTask_priority,
   QueueTask_taskID,
@@ -16,7 +17,8 @@ const taskComparator = (a: QueueTask, b: QueueTask) => {
   return diff;
 };
 
-const createTaskQueue = () => Queue_createPriorityQueue(taskComparator);
+const createTaskQueue = () =>
+  Queue_createPriorityQueue(taskComparator, MAX_SAFE_INTEGER, "overflow");
 
 const Scheduler_toPriorityScheduler: Function1<
   SchedulerLike,

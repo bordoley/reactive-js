@@ -6,6 +6,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
+import {
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
@@ -13,6 +17,7 @@ import Observer_mixin from "./Observer.mixin.js";
 const Observer_create: <T>(
   scheduler: SchedulerLike,
   capacity: number,
+  backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   const typedObserverMixin = Observer_mixin<T>();
 
@@ -23,9 +28,16 @@ const Observer_create: <T>(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
         scheduler: SchedulerLike,
         capacity: number,
+        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(typedObserverMixin, instance, scheduler, capacity);
+        init(
+          typedObserverMixin,
+          instance,
+          scheduler,
+          capacity,
+          backpressureStrategy,
+        );
 
         return instance;
       },

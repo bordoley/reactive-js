@@ -142,6 +142,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
             IndexedQueue_fifoQueueMixin<ContinuationLike>(),
             instance,
             MAX_SAFE_INTEGER,
+            "overflow",
           );
 
           instance[ContinuationLike_continuationScheduler] = scheduler;

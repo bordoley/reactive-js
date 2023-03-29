@@ -3,6 +3,7 @@ import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, Containe
 import { Function1, Updater } from "./functions.js";
 import { DispatcherLike, MulticastObservableLike, ObservableLike } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
+import { QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
 export { StreamableLike_stream, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, };
 /**
  * Represents a duplex stream
@@ -54,6 +55,7 @@ export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = S
          * The capacity of the stream's request queue.
          */
         readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): TStream;
 }
 /**

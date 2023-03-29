@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { Function1 } from "../../../functions.js";
 import {
   PauseableSchedulerLike,
@@ -11,9 +12,8 @@ const Scheduler_toPauseableScheduler: Function1<
   SchedulerLike,
   PauseableSchedulerLike
 > = (hostScheduler: SchedulerLike) => {
-  const scheduler = Scheduler_createQueueScheduler(
-    hostScheduler,
-    IndexedQueue_createFifoQueue,
+  const scheduler = Scheduler_createQueueScheduler(hostScheduler, () =>
+    IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow"),
   );
   scheduler[PauseableSchedulerLike_pause]();
   return scheduler;

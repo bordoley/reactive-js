@@ -8,11 +8,18 @@ import {
 import { ObservableLike_isRunnable, RunnableLike } from "../../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../../scheduling.js";
 import Scheduler_createVirtualTimeScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.createVirtualTimeScheduler.js";
-import { DisposableLike_error } from "../../../util.js";
+import {
+  DisposableLike_error,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../../../util.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 
 const Runnable_run =
-  <T>(options?: { capacity?: number }) =>
+  <T>(options?: {
+    readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    capacity?: number;
+  }) =>
   (observable: RunnableLike<T>) => {
     if (__DEV__ && !observable[ObservableLike_isRunnable]) {
       raiseWithDebugMessage(

@@ -4,7 +4,7 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import { DistinctUntilChangedObserver_equality, DistinctUntilChangedObserver_hasValue, DistinctUntilChangedObserver_prev, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { QueueableLike_capacity } from "../../../util.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -14,7 +14,7 @@ const Observable_distinctUntilChanged =
     const createDistinctUntilChangedObserver = (() => {
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function DistinctUntilChangedObserver(instance, delegate, equality) {
             init(Disposable_delegatingMixin(), instance, delegate);
-            init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
+            init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]);
             instance[DistinctUntilChangedObserver_equality] = equality;
             return instance;
         }, props({

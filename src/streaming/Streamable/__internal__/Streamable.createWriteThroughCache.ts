@@ -22,6 +22,10 @@ import {
   StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../../../streaming.js";
+import {
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Streamable_createStateStore from "./Streamable.createStateStore.js";
 
@@ -39,7 +43,11 @@ const Streamable_createWriteThroughCache = <T>(
 
   const stream = (
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number; readonly capacity?: number },
+    options?: {
+      readonly replay?: number;
+      readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
   ) => {
     const state = stateStore[StreamableLike_stream](scheduler, options);
 

@@ -97,8 +97,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
         init(PriorityScheduler_mixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(typedMutableEnumeratorMixin, instance);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
-        instance[QueueScheduler_delayed] =
-            Queue_createPriorityQueue(delayedComparator);
+        instance[QueueScheduler_delayed] = Queue_createPriorityQueue(delayedComparator, MAX_SAFE_INTEGER, "overflow");
         (instance[QueueScheduler_queue] = createImmediateQueue()),
             (instance[QueueScheduler_hostScheduler] = host);
         return instance;

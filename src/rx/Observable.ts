@@ -107,7 +107,12 @@ import { SchedulerLike } from "../scheduling.js";
 import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import AsyncEnumerable_toObservable from "../streaming/AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
-import { DisposableLike, DisposableOrTeardown } from "../util.js";
+import {
+  DisposableLike,
+  DisposableOrTeardown,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../util.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
@@ -418,7 +423,11 @@ export const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"] =
 
 export const firstAsync: FirstAsync<
   ObservableLike,
-  { scheduler?: SchedulerLike | Factory<SchedulerLike>; capacity?: number }
+  {
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  }
 >["firstAsync"] = Observable_firstAsync;
 
 /**
@@ -503,7 +512,11 @@ export const keepType: KeepType<ObservableLike>["keepType"] =
 
 export const lastAsync: LastAsync<
   ObservableLike,
-  { scheduler?: SchedulerLike | Factory<SchedulerLike>; capacity?: number }
+  {
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  }
 >["lastAsync"] = Observable_lastAsync;
 
 export const map: Map<ObservableLike>["map"] = Observable_map;
@@ -542,6 +555,7 @@ export const multicast: <T>(
      */
     readonly replay?: number;
     readonly capacity?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   },
 ) => Function1<ObservableLike<T>, MulticastObservableLike<T>> =
   Observable_multicast;
@@ -611,7 +625,10 @@ export const switchMap: SwitchMap<ObservableLike>["switchMap"] =
 
 export const subscribe: <T>(
   scheduler: SchedulerLike,
-  options?: { capacity?: number },
+  options?: {
+    capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  },
 ) => Function1<ObservableLike<T>, DisposableLike> = Observable_subscribe;
 
 /**

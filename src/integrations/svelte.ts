@@ -10,21 +10,29 @@ import {
 import { ObservableLike } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { SchedulerLike } from "../scheduling.js";
-import { DisposableLike_dispose } from "../util.js";
+import {
+  DisposableLike_dispose,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../util.js";
 
 class ObservableSvelteStore<T> {
   constructor(
     private readonly observable: ObservableLike<T>,
     private readonly scheduler: SchedulerLike,
+    private readonly options: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
   ) {}
 
   subscribe(callback: (next: Optional<T>) => void): Factory<void> {
-    const { observable, scheduler } = this;
+    const { observable, scheduler, options } = this;
 
     const subscription = pipe(
       observable,
       Observable.forEach(callback),
-      Observable.subscribe(scheduler),
+      Observable.subscribe(scheduler, options),
     );
 
     callback(none);
@@ -36,6 +44,10 @@ class ObservableSvelteStore<T> {
 export const subscribe =
   <T>(
     scheduler: SchedulerLike,
+    options: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    } = {},
   ): Function1<
     ObservableLike<T>,
     {
@@ -43,4 +55,4 @@ export const subscribe =
     }
   > =>
   obs =>
-    newInstance(ObservableSvelteStore, obs, scheduler);
+    newInstance(ObservableSvelteStore, obs, scheduler, options);

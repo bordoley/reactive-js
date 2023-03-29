@@ -8,7 +8,7 @@ import { arrayEquality, bind, bindMethod, error, ignore, isNone, isSome, newInst
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_capacity, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -17,7 +17,7 @@ import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
-import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 const Memo = 1;
 const Await = 2;
 const Observe = 3;
@@ -112,7 +112,7 @@ class ComputeContext {
                             ? pipe(observer, Observer_schedule(runComputation))
                             : scheduledComputationSubscription;
                 }
-            }), Observable_subscribeWithCapacity(scheduler, observer[QueueableLike_capacity]), Disposable_addTo(observer), Disposable_onComplete(this[ComputeContext_cleanup]));
+            }), Observable_subscribeWithCapacityAndBackpressureStrategy(scheduler, observer[QueueableLike_capacity], observer[QueueableLike_backpressureStrategy]), Disposable_addTo(observer), Disposable_onComplete(this[ComputeContext_cleanup]));
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_subscription] = subscription;
             effect[AwaitOrObserveEffect_value] = none;
@@ -251,10 +251,14 @@ export function Observable_compute__currentScheduler() {
     return ctx[ComputeContext_observer][DispatcherLike_scheduler];
 }
 export const Observable_compute__stream = /*@__PURE__*/ (() => {
-    const streamOnSchedulerFactory = (streamable, scheduler, replay, capacity) => streamable[StreamableLike_stream](scheduler, { replay, capacity });
-    return (streamable, { replay = 0, capacity = MAX_SAFE_INTEGER, scheduler, } = {}) => {
+    const streamOnSchedulerFactory = (streamable, scheduler, replay, capacity, backpressureStrategy) => streamable[StreamableLike_stream](scheduler, {
+        replay,
+        backpressureStrategy,
+        capacity,
+    });
+    return (streamable, { replay = 0, backpressureStrategy = "overflow", capacity = MAX_SAFE_INTEGER, scheduler, } = {}) => {
         const currentScheduler = Observable_compute__currentScheduler();
-        return Observable_compute__using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay, capacity);
+        return Observable_compute__using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay, capacity, backpressureStrategy);
     };
 })();
 export const Observable_compute__state = /*@__PURE__*/ (() => {

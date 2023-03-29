@@ -28,6 +28,7 @@ import {
 import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import {
   QueueableLike,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -63,6 +64,7 @@ const Observable_enqueue: ObservableEnqueue = /*@__PURE__*/ (<T>() => {
             instance,
             delegate[DispatcherLike_scheduler],
             delegate[QueueableLike_capacity],
+            delegate[QueueableLike_backpressureStrategy],
           );
 
           instance[EnqueueObserver_effect] = effect;

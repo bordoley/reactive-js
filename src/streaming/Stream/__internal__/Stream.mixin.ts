@@ -51,6 +51,7 @@ import { StreamLike } from "../../../streaming.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -74,6 +75,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             | typeof ObservableLike_observe
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
+            | typeof QueueableLike_backpressureStrategy
             | typeof QueueableLike_enqueue
             | typeof QueueableLike_capacity
             | typeof DispatcherLike_complete
@@ -89,6 +91,16 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
         {
           [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
+
+          get [QueueableLike_backpressureStrategy]() {
+            unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
+
+            const observer = this[
+              DispatchedObservable_observer
+            ] as ObserverLike<T>;
+
+            return observer[QueueableLike_backpressureStrategy];
+          },
 
           get [QueueableLike_capacity](): number {
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
@@ -200,6 +212,7 @@ const Stream_mixin: <TReq, T>() => Mixin4<
         instance: Pick<
           StreamLike<TReq, T>,
           | typeof MulticastObservableLike_observerCount
+          | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_enqueue
           | typeof QueueableLike_capacity
           | typeof DispatcherLike_complete
@@ -241,6 +254,13 @@ const Stream_mixin: <TReq, T>() => Mixin4<
           unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
           return this[DelegatingLike_delegate][
             MulticastObservableLike_observerCount
+          ];
+        },
+
+        get [QueueableLike_backpressureStrategy]() {
+          unsafeCast<TProperties>(this);
+          return this[StreamMixin_dispatcher][
+            QueueableLike_backpressureStrategy
           ];
         },
 

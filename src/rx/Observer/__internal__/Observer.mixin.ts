@@ -1,5 +1,5 @@
 import {
-  Mixin2,
+  Mixin3,
   Mutable,
   getPrototype,
   include,
@@ -41,6 +41,8 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -52,10 +54,11 @@ type TObserverMixinReturn<T> = Omit<
   keyof DisposableLike | typeof ObserverLike_notify
 >;
 
-const Observer_mixin: <T>() => Mixin2<
+const Observer_mixin: <T>() => Mixin3<
   TObserverMixinReturn<T>,
   SchedulerLike,
-  number
+  number,
+  QueueableLike[typeof QueueableLike_backpressureStrategy]
 > = /*@__PURE__*/ (<T>() => {
   const scheduleDrainQueue = (
     observer: TProperties & ObserverLike<T> & QueueLike<T>,
@@ -112,8 +115,14 @@ const Observer_mixin: <T>() => Mixin2<
           Mutable<TProperties>,
         scheduler: SchedulerLike,
         capacity: number,
+        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): TObserverMixinReturn<T> {
-        init(IndexedQueue_fifoQueueMixin<T>(), instance, capacity);
+        init(
+          IndexedQueue_fifoQueueMixin<T>(),
+          instance,
+          capacity,
+          backpressureStrategy,
+        );
 
         instance[DispatcherLike_scheduler] = scheduler;
 

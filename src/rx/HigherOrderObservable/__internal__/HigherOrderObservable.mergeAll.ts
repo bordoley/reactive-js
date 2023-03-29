@@ -47,6 +47,7 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -55,7 +56,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithCapacity from "../../Observable/__internal__/Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
@@ -108,9 +109,10 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
                 ObserverLike_notify,
               ),
             ),
-            Observable_subscribeWithCapacity(
+            Observable_subscribeWithCapacityAndBackpressureStrategy(
               observer[DispatcherLike_scheduler],
               observer[QueueableLike_capacity],
+              observer[QueueableLike_backpressureStrategy],
             ),
             Disposable_addTo(observer[DelegatingLike_delegate]),
             Disposable_onComplete(observer[MergeAllObserver_onDispose]),
@@ -140,11 +142,12 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             instance,
             delegate[DispatcherLike_scheduler],
             delegate[QueueableLike_capacity],
+            delegate[QueueableLike_backpressureStrategy],
           );
           init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
 
           instance[MergeAllObserver_observablesQueue] =
-            IndexedQueue_createFifoQueue();
+            IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
           instance[MergeAllObserver_maxBufferSize] = maxBufferSize;
           instance[MergeAllObserver_maxConcurrency] = maxConcurrency;
 

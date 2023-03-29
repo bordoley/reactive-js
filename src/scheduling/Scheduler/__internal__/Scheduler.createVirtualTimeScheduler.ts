@@ -97,6 +97,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           instance,
           comparator,
           MAX_SAFE_INTEGER,
+          "overflow",
         );
 
         instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;

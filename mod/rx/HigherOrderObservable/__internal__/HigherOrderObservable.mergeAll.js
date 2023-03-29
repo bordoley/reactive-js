@@ -7,13 +7,13 @@ import { MergeAllObserver_activeCount, MergeAllObserver_maxBufferSize, MergeAllO
 import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { bindMethod, isSome, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithCapacity from "../../Observable/__internal__/Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 const HigherOrderObservable_mergeAll = (lift) => {
@@ -25,7 +25,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 const nextObs = observer[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
                 if (isSome(nextObs)) {
                     observer[MergeAllObserver_activeCount]++;
-                    pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithCapacity(observer[DispatcherLike_scheduler], observer[QueueableLike_capacity]), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
+                    pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithCapacityAndBackpressureStrategy(observer[DispatcherLike_scheduler], observer[QueueableLike_capacity], observer[QueueableLike_backpressureStrategy]), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
                 }
                 else if (observer[DisposableLike_isDisposed]) {
                     observer[DelegatingLike_delegate][DisposableLike_dispose]();
@@ -34,10 +34,10 @@ const HigherOrderObservable_mergeAll = (lift) => {
         };
         return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function MergeAllObserver(instance, delegate, maxBufferSize, maxConcurrency) {
             init(Disposable_mixin, instance);
-            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity]);
+            init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]);
             init(delegatingMixin(), instance, delegate);
             instance[MergeAllObserver_observablesQueue] =
-                IndexedQueue_createFifoQueue();
+                IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
             instance[MergeAllObserver_maxBufferSize] = maxBufferSize;
             instance[MergeAllObserver_maxConcurrency] = maxConcurrency;
             instance[MergeAllObserver_activeCount] = 0;

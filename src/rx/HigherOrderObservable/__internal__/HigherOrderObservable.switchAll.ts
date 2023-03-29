@@ -30,6 +30,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -38,7 +39,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithCapacity from "../../Observable/__internal__/Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "../../Observable/__internal__/Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
@@ -85,6 +86,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
             instance,
             delegate[DispatcherLike_scheduler],
             delegate[QueueableLike_capacity],
+            delegate[QueueableLike_backpressureStrategy],
           );
           init(delegatingMixin(), instance, delegate);
 
@@ -120,9 +122,10 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
               Observable_forEach(
                 bindMethod(this[DelegatingLike_delegate], ObserverLike_notify),
               ),
-              Observable_subscribeWithCapacity(
+              Observable_subscribeWithCapacityAndBackpressureStrategy(
                 this[DispatcherLike_scheduler],
                 this[QueueableLike_capacity],
+                this[QueueableLike_backpressureStrategy],
               ),
               Disposable_onComplete(() => {
                 if (this[DisposableLike_isDisposed]) {

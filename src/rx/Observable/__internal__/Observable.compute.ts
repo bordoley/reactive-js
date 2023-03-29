@@ -54,6 +54,8 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -64,7 +66,7 @@ import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
-import Observable_subscribeWithCapacity from "./Observable.subscribeWithCapacity.js";
+import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 
 type EffectsMode = "batched" | "combine-latest";
 
@@ -255,9 +257,10 @@ class ComputeContext {
                 : scheduledComputationSubscription;
           }
         }),
-        Observable_subscribeWithCapacity(
+        Observable_subscribeWithCapacityAndBackpressureStrategy(
           scheduler,
           observer[QueueableLike_capacity],
+          observer[QueueableLike_backpressureStrategy],
         ),
         Disposable_addTo(observer),
         Disposable_onComplete(this[ComputeContext_cleanup]),
@@ -503,17 +506,25 @@ export const Observable_compute__stream = /*@__PURE__*/ (() => {
     scheduler: SchedulerLike,
     replay: number,
     capacity: number,
-  ) => streamable[StreamableLike_stream](scheduler, { replay, capacity });
+    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+  ) =>
+    streamable[StreamableLike_stream](scheduler, {
+      replay,
+      backpressureStrategy,
+      capacity,
+    });
 
   return <TReq, T, TStream extends StreamLike<TReq, T>>(
     streamable: StreamableLike<TReq, T, TStream>,
     {
       replay = 0,
+      backpressureStrategy = "overflow",
       capacity = MAX_SAFE_INTEGER,
       scheduler,
     }: {
       readonly replay?: number;
       readonly scheduler?: SchedulerLike;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     } = {},
   ): TStream => {
@@ -524,6 +535,7 @@ export const Observable_compute__stream = /*@__PURE__*/ (() => {
       scheduler ?? currentScheduler,
       replay,
       capacity,
+      backpressureStrategy,
     ) as TStream;
   };
 })();

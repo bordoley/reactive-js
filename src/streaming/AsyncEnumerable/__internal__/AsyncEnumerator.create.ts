@@ -29,6 +29,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -88,6 +89,13 @@ const AsyncEnumerator_create: <TA, TB>(
           unsafeCast<TProperties>(this);
           return this[AsyncEnumeratorDelegatingMixin_src][
             DispatcherLike_scheduler
+          ];
+        },
+
+        get [QueueableLike_backpressureStrategy]() {
+          unsafeCast<TProperties>(this);
+          return this[AsyncEnumeratorDelegatingMixin_src][
+            QueueableLike_backpressureStrategy
           ];
         },
 

@@ -1,6 +1,6 @@
-import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_capacity, QueueableLike_enqueue } from "./__internal__/symbols.js";
+import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue } from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
-export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, QueueableLike_capacity, };
+export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, QueueableLike_capacity, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -33,10 +33,12 @@ export interface DisposableLike {
 /**
  * An interface for types that support buffering items with backpressure.
  *
- * The exact behaviors of a `QueueableLike` such as FIFO vs. LIFO processing,
- * and backpressure strategies are implementation specific.
  */
 export interface QueueableLike<T = unknown> {
+    /**
+     * The back pressure strategy utilized by the queue when it is at capacity.
+     */
+    readonly [QueueableLike_backpressureStrategy]: "drop-latest" | "drop-oldest" | "overflow" | "throw";
     /**
      * The number of items the queue is capable of efficiently buffering.
      */
