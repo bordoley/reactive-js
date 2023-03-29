@@ -100,11 +100,7 @@ export const WindowLocationProvider: React.FunctionComponent<{
   priority?: 1 | 2 | 3 | 4 | 5;
   children: React.ReactNode;
 }) => {
-  const value = useStream(windowLocation, {
-    priority,
-    replay: 1,
-    capacity: 1, // Prevent a hot source from queueing up dispatch events.
-  });
+  const value = useStream(windowLocation, { priority });
 
   return isSome(value)
     ? createElement(

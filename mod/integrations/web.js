@@ -144,10 +144,8 @@ export const windowLocation = /*@__PURE__*/ (() => {
         document.title = title;
         f({ title, counter }, "", String(uri));
     })))[StreamableLike_stream](scheduler, options);
-    const stream = (scheduler, options = {
-        replay: 1,
-        capacity: 1,
-    }) => {
+    const stream = (scheduler, options) => {
+        var _a, _b, _c;
         if (isSome(currentWindowLocationStream)) {
             raiseWithDebugMessage("Cannot stream more than once");
         }
@@ -183,7 +181,11 @@ export const windowLocation = /*@__PURE__*/ (() => {
                 : push
                     ? pushState[QueueableLike_enqueue](state)
                     : false), Observable.ignoreElements());
-        }, { equality: areWindowLocationStatesEqual }), invoke(StreamableLike_stream, scheduler, options), createWindowLocationStream, Disposable.add(pushState), Disposable.add(replaceState));
+        }, { equality: areWindowLocationStatesEqual }), invoke(StreamableLike_stream, scheduler, {
+            replay: (_a = options === null || options === void 0 ? void 0 : options.replay) !== null && _a !== void 0 ? _a : 1,
+            capacity: (_b = options === null || options === void 0 ? void 0 : options.capacity) !== null && _b !== void 0 ? _b : 1,
+            backpressureStrategy: (_c = options === null || options === void 0 ? void 0 : options.backpressureStrategy) !== null && _c !== void 0 ? _c : "drop-oldest",
+        }), createWindowLocationStream, Disposable.add(pushState), Disposable.add(replaceState));
         return currentWindowLocationStream;
     };
     return {

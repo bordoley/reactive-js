@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   AwaitOrObserveEffect_hasValue,
   AwaitOrObserveEffect_observable,
@@ -498,9 +497,11 @@ export const Observable_compute__stream = /*@__PURE__*/ (() => {
   >(
     streamable: StreamableLike<TReq, T, TStream>,
     scheduler: SchedulerLike,
-    replay: number,
-    capacity: number,
-    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+    replay: Optional<number>,
+    capacity: Optional<number>,
+    backpressureStrategy: Optional<
+      QueueableLike[typeof QueueableLike_backpressureStrategy]
+    >,
   ) =>
     streamable[StreamableLike_stream](scheduler, {
       replay,
@@ -511,9 +512,9 @@ export const Observable_compute__stream = /*@__PURE__*/ (() => {
   return <TReq, T, TStream extends StreamLike<TReq, T>>(
     streamable: StreamableLike<TReq, T, TStream>,
     {
-      replay = 0,
-      backpressureStrategy = "overflow",
-      capacity = MAX_SAFE_INTEGER,
+      replay,
+      backpressureStrategy,
+      capacity,
       scheduler,
     }: {
       readonly replay?: number;

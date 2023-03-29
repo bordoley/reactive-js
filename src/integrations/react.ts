@@ -171,7 +171,7 @@ export const useObservable = <T>(
   const [error, updateError] = useState<Optional<Error>>(none);
 
   const {
-    backpressureStrategy = "overflow",
+    backpressureStrategy,
     capacity,
     priority = unstable_NormalPriority,
   } = options;
@@ -211,7 +211,7 @@ export const useStream = <
   const [stream, setStream] = useState<Optional<TStream>>(none);
 
   const {
-    backpressureStrategy = "overflow",
+    backpressureStrategy,
     capacity,
     priority = unstable_NormalPriority,
     replay = 1,

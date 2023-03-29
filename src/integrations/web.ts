@@ -814,13 +814,10 @@ export const windowLocation: StreamableLike<
 
   const stream = (
     scheduler: SchedulerLike,
-    options: {
+    options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly replay?: number;
       readonly capacity?: number;
-    } = {
-      replay: 1,
-      capacity: 1,
     },
   ): WindowLocationStreamLike => {
     if (isSome(currentWindowLocationStream)) {
@@ -898,7 +895,11 @@ export const windowLocation: StreamableLike<
         },
         { equality: areWindowLocationStatesEqual },
       ),
-      invoke(StreamableLike_stream, scheduler, options),
+      invoke(StreamableLike_stream, scheduler, {
+        replay: options?.replay ?? 1,
+        capacity: options?.capacity ?? 1,
+        backpressureStrategy: options?.backpressureStrategy ?? "drop-oldest",
+      }),
       createWindowLocationStream,
       Disposable.add(pushState),
       Disposable.add(replaceState),
