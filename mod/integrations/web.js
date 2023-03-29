@@ -45,7 +45,7 @@ export const createEventSource = (url, options = {}) => {
         }
     });
 };
-export const addEventListener = (eventName, selector) => target => Observable.create(observer => {
+export const addEventListener = ((eventName, selector) => target => Observable.create(observer => {
     pipe(observer, Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));
@@ -53,8 +53,10 @@ export const addEventListener = (eventName, selector) => target => Observable.cr
         const result = selector(event);
         observer[QueueableLike_enqueue](result);
     };
-    target.addEventListener(eventName, listener, { passive: true });
-});
+    target.addEventListener(eventName, listener, {
+        passive: true,
+    });
+}));
 export const windowLocation = /*@__PURE__*/ (() => {
     const { history, location } = window;
     const windowLocationPrototype = {
