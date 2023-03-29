@@ -866,3 +866,6 @@ export const IteratorEnumerator_iterator = /*@__PURE__*/ symbol(
 export const WithCurrentTimeObserver_selector = /*@__PURE__*/ symbol(
   "WithCurrentTimeObserver_selector",
 );
+
+/** @type {unique symbol} */
+export const CacheStreamLike_get = /*@__PURE__*/ symbol("CacheStreamLike_get");

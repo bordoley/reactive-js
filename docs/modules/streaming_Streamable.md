@@ -8,6 +8,8 @@
 
 - [create](streaming_Streamable.md#create)
 - [createActionReducer](streaming_Streamable.md#createactionreducer)
+- [createInMemoryCache](streaming_Streamable.md#createinmemorycache)
+- [createPersistentCache](streaming_Streamable.md#createpersistentcache)
 - [createStateStore](streaming_Streamable.md#createstatestore)
 - [identity](streaming_Streamable.md#identity)
 
@@ -66,6 +68,57 @@ over the notified actions, emitting each intermediate result.
 #### Returns
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TAction`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TAction`, `T`\>\>
+
+___
+
+### createInMemoryCache
+
+▸ **createInMemoryCache**<`T`\>(`options?`): [`CacheLike`](../interfaces/streaming.CacheLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.capacity?` | `number` |
+| `options.cleanupScheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+
+#### Returns
+
+[`CacheLike`](../interfaces/streaming.CacheLike.md)<`T`\>
+
+___
+
+### createPersistentCache
+
+▸ **createPersistentCache**<`T`\>(`persistentStore`, `options?`): [`CacheLike`](../interfaces/streaming.CacheLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `persistentStore` | `Object` |
+| `persistentStore.load` | (`keys`: `ReadonlySet`<`string`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`Readonly`<`Record`<`string`, [`Optional`](functions.md#optional)<`T`\>\>\>\> |
+| `persistentStore.store` | (`updates`: `Readonly`<`Record`<`string`, `T`\>\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\> |
+| `options?` | `Object` |
+| `options.capacity?` | `number` |
+| `options.cleanupScheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+
+#### Returns
+
+[`CacheLike`](../interfaces/streaming.CacheLike.md)<`T`\>
 
 ___
 
