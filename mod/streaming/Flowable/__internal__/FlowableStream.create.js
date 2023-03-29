@@ -11,16 +11,16 @@ import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Publisher_create from "../../../rx/Publisher/__internal__/Publisher.create.js";
 import { FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, } from "../../../streaming.js";
-import { QueueableLike_enqueue } from "../../../util.js";
+import { QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Stream_mixin from "../../Stream/__internal__/Stream.mixin.js";
 const FlowableStream_create = /*@__PURE__*/ (() => {
-    const createStreamInternal = createInstanceFactory(mix(include(Stream_mixin()), function FlowableStream(instance, op, scheduler, replay, capacity) {
+    const createStreamInternal = createInstanceFactory(mix(include(Stream_mixin()), function FlowableStream(instance, op, scheduler, replay, capacity, backpressureStrategy) {
         const publisher = Publisher_create({ replay: 1 });
         const liftedOp = compose(Observable_scan((acc, next) => (isFunction(next) ? next(acc) : next), returns(true)), Observable_mergeWith(
         // Initialize to paused state
         pipe(true, Optional_toObservable())), Observable_distinctUntilChanged(), Observable_forEach(bindMethod(publisher, PublisherLike_publish)), op);
-        init(Stream_mixin(), instance, liftedOp, scheduler, replay, capacity);
+        init(Stream_mixin(), instance, liftedOp, scheduler, replay, capacity, backpressureStrategy);
         pipe(instance, Disposable_add(publisher));
         instance[FlowableStreamLike_isPaused] = publisher;
         return instance;
@@ -35,8 +35,8 @@ const FlowableStream_create = /*@__PURE__*/ (() => {
         },
     }));
     return (op, scheduler, options) => {
-        const { capacity = MAX_SAFE_INTEGER, replay = 0 } = options !== null && options !== void 0 ? options : {};
-        return createStreamInternal(op, scheduler, replay, capacity);
+        const { backpressureStrategy = "overflow", capacity = MAX_SAFE_INTEGER, replay = 0, } = options !== null && options !== void 0 ? options : {};
+        return createStreamInternal(op, scheduler, replay, capacity, backpressureStrategy);
     };
 })();
 export default FlowableStream_create;

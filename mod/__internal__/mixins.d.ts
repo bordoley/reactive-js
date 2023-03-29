@@ -1,4 +1,4 @@
-import { Factory, Function1, Function2, Function3, Function4, Optional } from "../functions.js";
+import { Factory, Function1, Function2, Function3, Function4, Function5, Optional } from "../functions.js";
 import { DelegatingLike_delegate, Object_init, Object_private_initializedProperties, Object_properties, Object_prototype } from "./symbols.js";
 export { DelegatingLike_delegate };
 type OptionalProperties<T> = T extends object ? {
@@ -34,12 +34,17 @@ export interface Mixin4<TReturn, TA, TB, TC, TD, TPrototype extends object = obj
     [Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD): TReturn;
     [Object_prototype]: TPrototype;
 }
+export interface Mixin5<TReturn, TA, TB, TC, TD, TE, TPrototype extends object = object> extends PartialMixin {
+    [Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD, e: TE): TReturn;
+    [Object_prototype]: TPrototype;
+}
 interface Init {
     <TReturn>(mixin: Mixin<TReturn>, instance: unknown): asserts instance is TReturn;
     <TReturn, TA>(mixin: Mixin1<TReturn, TA>, instance: unknown, a: TA): asserts instance is TReturn;
     <TReturn, TA, TB>(mixin: Mixin2<TReturn, TA, TB>, instance: unknown, a: TA, b: TB): asserts instance is TReturn;
     <TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>, instance: unknown, a: TA, b: TB, c: TC): asserts instance is TReturn;
     <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>, instance: unknown, a: TA, b: TB, c: TC, d: TD): asserts instance is TReturn;
+    <TReturn, TA, TB, TC, TD, TE>(mixin: Mixin5<TReturn, TA, TB, TC, TD, TE>, instance: unknown, a: TA, b: TB, c: TC, d: TD, e: TE): asserts instance is TReturn;
 }
 export declare const init: Init;
 export declare const include: (m0: PartialMixin, ...tail: readonly PartialMixin[]) => PartialMixin;
@@ -67,6 +72,7 @@ interface CreateInstanceFactory {
     <TReturn, TA, TB>(mixin: Mixin2<TReturn, TA, TB>): Function2<TA, TB, TReturn>;
     <TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>): Function3<TA, TB, TC, TReturn>;
     <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>): Function4<TA, TB, TC, TD, TReturn>;
+    <TReturn, TA, TB, TC, TD, TE>(mixin: Mixin5<TReturn, TA, TB, TC, TD, TE>): Function5<TA, TB, TC, TD, TE, TReturn>;
 }
 export declare const createInstanceFactory: CreateInstanceFactory;
 export declare const props: <TProperties>(o: OptionalProperties<TProperties>) => TProperties & {

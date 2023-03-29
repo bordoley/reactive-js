@@ -2,7 +2,7 @@ import { __DEV__ } from "../../../__internal__/constants.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-  Mixin4,
+  Mixin5,
   Mutable,
   createInstanceFactory,
   include,
@@ -51,6 +51,7 @@ import { StreamLike } from "../../../streaming.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,
+  QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
@@ -193,12 +194,13 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
     );
   })();
 
-const Stream_mixin: <TReq, T>() => Mixin4<
+const Stream_mixin: <TReq, T>() => Mixin5<
   StreamLike<TReq, T>,
   ContainerOperator<ObservableLike, TReq, T>,
   SchedulerLike,
   number,
-  number
+  number,
+  QueueableLike[typeof QueueableLike_backpressureStrategy]
 > = /*@__PURE__*/ (<TReq, T>() => {
   type TProperties = {
     readonly [StreamMixin_dispatcher]: DispatcherLike<TReq>;
@@ -225,6 +227,7 @@ const Stream_mixin: <TReq, T>() => Mixin4<
         scheduler: SchedulerLike,
         replay: number,
         capacity: number,
+        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): StreamLike<TReq, T> {
         instance[DispatcherLike_scheduler] = scheduler;
 
@@ -234,7 +237,11 @@ const Stream_mixin: <TReq, T>() => Mixin4<
         const delegate = pipe(
           dispatchedObservable,
           op,
-          Observable_multicast<T>(scheduler, { replay, capacity }),
+          Observable_multicast<T>(scheduler, {
+            replay,
+            capacity,
+            backpressureStrategy,
+          }),
         );
 
         init(

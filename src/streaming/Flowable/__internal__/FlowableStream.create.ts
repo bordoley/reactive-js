@@ -30,7 +30,11 @@ import {
   FlowableStreamLike_pause,
   FlowableStreamLike_resume,
 } from "../../../streaming.js";
-import { QueueableLike_enqueue } from "../../../util.js";
+import {
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_enqueue,
+} from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Stream_mixin from "../../Stream/__internal__/Stream.mixin.js";
 
@@ -44,6 +48,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
     scheduler: SchedulerLike,
     replay: number,
     capacity: number,
+    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
   ) => FlowableStreamLike<T> = createInstanceFactory(
     mix(
       include(Stream_mixin<boolean, T>()),
@@ -57,6 +62,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
         scheduler: SchedulerLike,
         replay: number,
         capacity: number,
+        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): FlowableStreamLike<T> {
         const publisher = Publisher_create({ replay: 1 });
 
@@ -83,6 +89,7 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
           scheduler,
           replay,
           capacity,
+          backpressureStrategy,
         );
 
         pipe(instance, Disposable_add(publisher));
@@ -108,10 +115,24 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
   return (
     op: ContainerOperator<ObservableLike, boolean, T>,
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number; readonly capacity?: number },
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly replay?: number;
+      readonly capacity?: number;
+    },
   ): FlowableStreamLike<T> => {
-    const { capacity = MAX_SAFE_INTEGER, replay = 0 } = options ?? {};
-    return createStreamInternal(op, scheduler, replay, capacity);
+    const {
+      backpressureStrategy = "overflow",
+      capacity = MAX_SAFE_INTEGER,
+      replay = 0,
+    } = options ?? {};
+    return createStreamInternal(
+      op,
+      scheduler,
+      replay,
+      capacity,
+      backpressureStrategy,
+    );
   };
 })();
 

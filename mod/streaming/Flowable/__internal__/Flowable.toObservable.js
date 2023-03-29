@@ -9,7 +9,7 @@ import Observable_ignoreElements from "../../../rx/Observable/__internal__/Obser
 import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { StreamableLike_isRunnable } from "../../../streaming.js";
-import { QueueableLike_capacity } from "../../../util.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
@@ -21,13 +21,17 @@ const Flowable_toObservable = () => (src) => {
     return create(observer => {
         const scheduler = observer[DispatcherLike_scheduler];
         const capacity = observer[QueueableLike_capacity];
+        const backpressureStrategy = observer[QueueableLike_backpressureStrategy];
         const op = compose(Observable_enqueue(observer), Observable_ignoreElements(), 
         // Intentionally use mergeWith here. The stream observer
         // needs to be immediately subscribed to when created
         // otherwise it will have no observer to queue events onto.
         // Observable.startWith uses concatenation.
         Observable_mergeWith(pipe(false, Optional_toObservable())));
-        pipe(Stream_create(op, scheduler, { capacity }), Stream_sourceFrom(src), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
+        pipe(Stream_create(op, scheduler, {
+            backpressureStrategy,
+            capacity,
+        }), Stream_sourceFrom(src), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
     });
 };
 export default Flowable_toObservable;

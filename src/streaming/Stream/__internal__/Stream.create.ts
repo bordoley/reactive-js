@@ -5,6 +5,10 @@ import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 
+import {
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../../../util.js";
 import Stream_mixin from "./Stream.mixin.js";
 
 const Stream_create = /*@__PURE__*/ (() => {
@@ -13,19 +17,29 @@ const Stream_create = /*@__PURE__*/ (() => {
     scheduler: SchedulerLike,
     replay: number,
     capacity: number,
+    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
   ) => StreamLike<TReq, T> = createInstanceFactory(Stream_mixin());
 
   return <TReq, T>(
     op: ContainerOperator<ObservableLike, TReq, T>,
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number; readonly capacity?: number },
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly replay?: number;
+      readonly capacity?: number;
+    },
   ): StreamLike<TReq, T> => {
-    const { capacity = MAX_SAFE_INTEGER, replay = 0 } = options ?? {};
+    const {
+      backpressureStrategy = "overflow",
+      capacity = MAX_SAFE_INTEGER,
+      replay = 0,
+    } = options ?? {};
     return createStreamInternal(
       op as ContainerOperator<ObservableLike, unknown, unknown>,
       scheduler,
       replay,
       capacity,
+      backpressureStrategy,
     );
   };
 })();
