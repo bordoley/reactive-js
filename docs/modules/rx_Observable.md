@@ -99,6 +99,7 @@
 - [throttle](rx_Observable.md#throttle)
 - [throwIfEmpty](rx_Observable.md#throwifempty)
 - [timeout](rx_Observable.md#timeout)
+- [withBackpressureStrategy](rx_Observable.md#withbackpressurestrategy)
 - [withCurrentTime](rx_Observable.md#withcurrenttime)
 - [withLatestFrom](rx_Observable.md#withlatestfrom)
 - [zipWith](rx_Observable.md#zipwith)
@@ -3981,6 +3982,29 @@ does not emit a value in given time span.
 | Name | Type |
 | :------ | :------ |
 | `duration` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### withBackpressureStrategy
+
+▸ **withBackpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `capacity` | `number` |
+| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 
 #### Returns
 

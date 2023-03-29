@@ -144,15 +144,15 @@ export const windowLocation = /*@__PURE__*/ (() => {
         document.title = title;
         f({ title, counter }, "", String(uri));
     })))[StreamableLike_stream](scheduler, options);
-    const stream = (scheduler, options) => {
+    const stream = (scheduler, options = {
+        replay: 1,
+        capacity: 1,
+    }) => {
         if (isSome(currentWindowLocationStream)) {
             raiseWithDebugMessage("Cannot stream more than once");
         }
-        const { backpressureStrategy, capacity } = options !== null && options !== void 0 ? options : {};
-        // FIXME: Make these should have a capacity of 1 and use
-        // the strategy of drop oldest
-        const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { backpressureStrategy, capacity });
-        const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { backpressureStrategy, capacity });
+        const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { backpressureStrategy: "drop-oldest", capacity: 1 });
+        const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { backpressureStrategy: "drop-oldest", capacity: 1 });
         currentWindowLocationStream = pipe(Streamable.createWriteThroughCache(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),

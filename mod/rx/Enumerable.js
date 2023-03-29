@@ -50,6 +50,7 @@ import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
+import Observable_withBackpressureStrategy from "./Observable/__internal__/Observable.withBackpressureStrategy.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 export const buffer = Observable_buffer;
@@ -104,5 +105,6 @@ export const toFlowable = Runnable_toFlowable;
 export const toObservable = identity;
 export const toReadonlyArray = Enumerable_toReadonlyArray;
 export const toRunnable = identity;
+export const withBackpressureStrategy = Observable_withBackpressureStrategy;
 export const zip = Observable_zip;
 export const zipWith = Observable_zipWith;

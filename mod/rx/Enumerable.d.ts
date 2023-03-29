@@ -1,5 +1,5 @@
 import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike_T, ContainerLike_type, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, Enumerate, EnumeratorLike, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Pick, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { EnumerableLike, Retry, ScanLast, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
+import { EnumerableLike, Retry, ScanLast, ToEnumerable, ToObservable, ToRunnable, WithBackpressureStrategy } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import { DisposableLike } from "../util.js";
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
@@ -59,6 +59,7 @@ export declare const toFlowable: ToFlowable<EnumerableLike>["toFlowable"];
 export declare const toObservable: ToObservable<EnumerableLike>["toObservable"];
 export declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
 export declare const toRunnable: ToRunnable<EnumerableLike>["toRunnable"];
+export declare const withBackpressureStrategy: WithBackpressureStrategy<EnumerableLike>["withBackpressureStrategy"];
 export declare const zip: Zip<EnumerableLike>["zip"];
 export declare const zipWith: ZipWith<EnumerableLike>["zipWith"];
 export {};

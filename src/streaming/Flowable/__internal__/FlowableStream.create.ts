@@ -22,6 +22,7 @@ import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
+import Observable_withBackpressureStrategy from "../../../rx/Observable/__internal__/Observable.withBackpressureStrategy.js";
 import Publisher_create from "../../../rx/Publisher/__internal__/Publisher.create.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
@@ -67,6 +68,10 @@ const FlowableStream_create = /*@__PURE__*/ (<T>() => {
         const publisher = Publisher_create({ replay: 1 });
 
         const liftedOp = compose(
+          Observable_withBackpressureStrategy<
+            ObservableLike,
+            boolean | Updater<boolean>
+          >(1, "drop-oldest"),
           Observable_scan<ObservableLike, boolean | Updater<boolean>, boolean>(
             (acc, next) => (isFunction(next) ? next(acc) : next),
             returns(true),

@@ -18,7 +18,11 @@ import {
 } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
-import { DisposableLike, QueueableLike } from "./util.js";
+import {
+  DisposableLike,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "./util.js";
 
 export {
   DispatcherLike_complete,
@@ -794,6 +798,21 @@ export interface Tween<C extends ObservableLike> extends Container<C> {
       easing?: Function1<number, number>;
     },
   ): ContainerOf<C, number>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface WithBackpressureStrategy<C extends ObservableLike>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  withBackpressureStrategy<T>(
+    capacity: number,
+    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+  ): ContainerOperator<C, T, T>;
 }
 
 /**

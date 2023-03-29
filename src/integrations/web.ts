@@ -814,30 +814,29 @@ export const windowLocation: StreamableLike<
 
   const stream = (
     scheduler: SchedulerLike,
-    options?: {
+    options: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly replay?: number;
       readonly capacity?: number;
+    } = {
+      replay: 1,
+      capacity: 1,
     },
   ): WindowLocationStreamLike => {
     if (isSome(currentWindowLocationStream)) {
       raiseWithDebugMessage("Cannot stream more than once");
     }
 
-    const { backpressureStrategy, capacity } = options ?? {};
-
-    // FIXME: Make these should have a capacity of 1 and use
-    // the strategy of drop oldest
     const replaceState = createSyncToHistoryStream(
       bindMethod(history, "replaceState"),
       scheduler,
-      { backpressureStrategy, capacity },
+      { backpressureStrategy: "drop-oldest", capacity: 1 },
     );
 
     const pushState = createSyncToHistoryStream(
       bindMethod(history, "pushState"),
       scheduler,
-      { backpressureStrategy, capacity },
+      { backpressureStrategy: "drop-oldest", capacity: 1 },
     );
 
     currentWindowLocationStream = pipe(

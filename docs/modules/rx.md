@@ -48,6 +48,7 @@
 - [ToObservable](../interfaces/rx.ToObservable.md)
 - [ToRunnable](../interfaces/rx.ToRunnable.md)
 - [Tween](../interfaces/rx.Tween.md)
+- [WithBackpressureStrategy](../interfaces/rx.WithBackpressureStrategy.md)
 - [WithCurrentTime](../interfaces/rx.WithCurrentTime.md)
 - [WithLatestFrom](../interfaces/rx.WithLatestFrom.md)
 - [ZipLatest](../interfaces/rx.ZipLatest.md)

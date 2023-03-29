@@ -1,5 +1,5 @@
 import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Pick, Reduce, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeWith, Retry, RunnableLike, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeWith, Retry, RunnableLike, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, Tween, WithBackpressureStrategy, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 export declare const buffer: Buffer<RunnableLike>["buffer"];
 export declare const catchError: CatchError<RunnableLike>["catchError"];
@@ -99,6 +99,7 @@ export declare const toRunnable: ToRunnable<RunnableLike>["toRunnable"];
  * @category Constructor
  */
 export declare const tween: Tween<RunnableLike>["tween"];
+export declare const withBackpressureStrategy: WithBackpressureStrategy<RunnableLike>["withBackpressureStrategy"];
 export declare const withCurrentTime: WithCurrentTime<RunnableLike>["withCurrentTime"];
 export declare const withLatestFrom: WithLatestFrom<RunnableLike>["withLatestFrom"];
 export declare const zip: Zip<RunnableLike>["zip"];

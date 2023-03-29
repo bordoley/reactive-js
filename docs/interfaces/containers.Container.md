@@ -186,6 +186,8 @@ Base type for Container type classes.
 
   ↳ [`Tween`](rx.Tween.md)
 
+  ↳ [`WithBackpressureStrategy`](rx.WithBackpressureStrategy.md)
+
   ↳ [`WithCurrentTime`](rx.WithCurrentTime.md)
 
   ↳ [`WithLatestFrom`](rx.WithLatestFrom.md)

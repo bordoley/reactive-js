@@ -72,6 +72,7 @@
 - [throttle](rx_Runnable.md#throttle)
 - [throwIfEmpty](rx_Runnable.md#throwifempty)
 - [timeout](rx_Runnable.md#timeout)
+- [withBackpressureStrategy](rx_Runnable.md#withbackpressurestrategy)
 - [withCurrentTime](rx_Runnable.md#withcurrenttime)
 - [withLatestFrom](rx_Runnable.md#withlatestfrom)
 - [zipWith](rx_Runnable.md#zipwith)
@@ -2705,6 +2706,29 @@ does not emit a value in given time span.
 | Name | Type |
 | :------ | :------ |
 | `duration` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### withBackpressureStrategy
+
+▸ **withBackpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `capacity` | `number` |
+| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 
 #### Returns
 

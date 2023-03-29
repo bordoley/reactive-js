@@ -48,6 +48,7 @@ import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
 import Observable_tween from "./Observable/__internal__/Observable.tween.js";
+import Observable_withBackpressureStrategy from "./Observable/__internal__/Observable.withBackpressureStrategy.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -148,6 +149,7 @@ export const toRunnable = Container_identity;
  * @category Constructor
  */
 export const tween = Observable_tween;
+export const withBackpressureStrategy = Observable_withBackpressureStrategy;
 export const withCurrentTime = Observable_withCurrentTime;
 export const withLatestFrom = Observable_withLatestFrom;
 export const zip = Observable_zip;
