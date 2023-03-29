@@ -60,6 +60,7 @@
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
 - [incrementBy](functions.md#incrementby)
+- [invoke](functions.md#invoke)
 - [isEqualTo](functions.md#isequalto)
 - [isEven](functions.md#iseven)
 - [isFalse](functions.md#isfalse)
@@ -1641,6 +1642,33 @@ Returns a function that increments a number `x` by the value `incr`.
 #### Returns
 
 [`Updater`](functions.md#updater)<`number`\>
+
+___
+
+### invoke
+
+▸ **invoke**<`T`, `TKey`\>(`method`, `...args`): [`Function1`](functions.md#function1)<`T`, `ReturnType`<`T`[`TKey`]\>\>
+
+Enables invoking a method on an object as a unary function within
+a pipeline operation.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Record`<`TKey`, (...`args`: `any`[]) => `any`\> |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `method` | `TKey` |
+| `...args` | `Parameters`<`T`[`TKey`]\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `ReturnType`<`T`[`TKey`]\>\>
 
 ___
 

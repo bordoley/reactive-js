@@ -195,7 +195,6 @@ export declare const multicast: <T>(schedulerOrFactory: SchedulerLike | Factory<
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
 export declare const never: Never<ObservableLike>["never"];
-export declare const observeWith: <C extends ObservableLike<unknown>, T>(observer: ObserverLike<T>) => Function1<C, C>;
 /**
  * @category Operator
  */

@@ -14,10 +14,11 @@ import {
 } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { none, partial, pipe } from "../../../functions.js";
+import { invoke, none, partial, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
   ObservableLike,
+  ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -34,7 +35,6 @@ import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/Index
 import IndexedQueue_toReadonlyArray from "../../../util/Queue/__internal__/IndexedQueue.toReadonlyArray.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-import Observable_observeWith from "./Observable.observeWith.js";
 
 type ObservableTakeLast = <C extends ObservableLike, T>(options?: {
   readonly count?: number;
@@ -75,7 +75,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
               instance[TakeLastObserver_takeLastQueue],
               IndexedQueue_toReadonlyArray<T>(),
               ReadonlyArray_toObservable(),
-              Observable_observeWith(delegate),
+              invoke(ObservableLike_observe, delegate),
             );
           }),
         );

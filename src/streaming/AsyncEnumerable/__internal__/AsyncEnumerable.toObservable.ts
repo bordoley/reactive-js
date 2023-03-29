@@ -1,14 +1,14 @@
-import { none, pipe } from "../../../functions.js";
+import { invoke, none, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
   ObservableLike,
+  ObservableLike_observe,
   ObserverLike,
   ToObservable,
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
   AsyncEnumerableLike,
@@ -40,7 +40,8 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
         const backpressureStrategy =
           observer[QueueableLike_backpressureStrategy];
         const enumerator: StreamLike<void, T> = pipe(
-          enumerable[StreamableLike_stream](scheduler, {
+          enumerable,
+          invoke(StreamableLike_stream, scheduler, {
             backpressureStrategy,
             capacity,
           }),
@@ -52,7 +53,7 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
           Observable_forEach<ObservableLike, T>(_ => {
             enumerator[QueueableLike_enqueue](none);
           }),
-          Observable_observeWith(observer),
+          invoke(ObservableLike_observe, observer),
         );
 
         enumerator[QueueableLike_enqueue](none);

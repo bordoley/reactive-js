@@ -21,6 +21,7 @@ import {
   bindMethod,
   compose,
   error,
+  invoke,
   isFunction,
   isSome,
   newInstance,
@@ -782,7 +783,7 @@ export const windowLocation: StreamableLike<
           pipe(
             this[DelegatingLike_delegate],
             Observable.pick("uri"),
-            Observable.observeWith(observer),
+            invoke(ObservableLike_observe, observer),
           );
         },
       },
@@ -891,7 +892,8 @@ export const windowLocation: StreamableLike<
           );
         },
         { equality: areWindowLocationStatesEqual },
-      )[StreamableLike_stream](scheduler, options),
+      ),
+      invoke(StreamableLike_stream, scheduler, options),
       createWindowLocationStream,
       Disposable.add(pushState),
       Disposable.add(replaceState),

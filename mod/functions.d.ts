@@ -126,6 +126,15 @@ export declare const increment: (x: number) => number;
  */
 export declare const incrementBy: (incr: number) => Updater<number>;
 /**
+ * Enables invoking a method on an object as a unary function within
+ * a pipeline operation.
+ *
+ * @param method
+ * @param args
+ * @returns
+ */
+export declare const invoke: <T extends Record<TKey, (...args: any[]) => any>, TKey extends string | number | symbol>(method: TKey, ...args: Parameters<T[TKey]>) => Function1<T, ReturnType<T[TKey]>>;
+/**
  * Returns a predicate function comparing its argument to `b` using the
  * provided `equality` function.
  */

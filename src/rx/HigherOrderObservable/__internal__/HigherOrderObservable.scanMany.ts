@@ -5,10 +5,12 @@ import {
   SideEffect1,
   bindMethod,
   compose,
+  invoke,
   pipe,
 } from "../../../functions.js";
 import {
   ObservableLike,
+  ObservableLike_observe,
   ObserverLike,
   PublisherLike_publish,
   ScanMany,
@@ -19,7 +21,6 @@ import Observable_concatMap from "../../Observable/__internal__/Observable.conca
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_forkMerge from "../../Observable/__internal__/Observable.forkMerge.js";
 import Observable_ignoreElements from "../../Observable/__internal__/Observable.ignoreElements.js";
-import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observable_takeLast from "../../Observable/__internal__/Observable.takeLast.js";
 import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
@@ -54,7 +55,7 @@ const HigherOrderObservable_scanMany =
           ),
           Observable_concatAll<TAcc>(),
         ),
-        Observable_observeWith(observer),
+        invoke(ObservableLike_observe, observer),
       );
 
       accFeedbackStream[PublisherLike_publish](initialValue());

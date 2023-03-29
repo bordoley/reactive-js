@@ -3,14 +3,14 @@ import {
   Equality,
   Factory,
   Reducer,
+  invoke,
   pipe,
   returns,
 } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import { ObservableLike, ObservableLike_observe } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
-import Observable_observeWith from "../../../rx/Observable/__internal__/Observable.observeWith.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import { StreamableLike } from "../../../streaming.js";
 import Streamable_createLifted from "./Streamable.createLifted.js";
@@ -31,7 +31,7 @@ const Streamable_createActionReducer = <TAction, T>(
             pipe(acc, Optional_toObservable()),
           ),
           Observable_distinctUntilChanged<ObservableLike, T>(options),
-          Observable_observeWith(observer),
+          invoke(ObservableLike_observe, observer),
         );
       }),
     true,

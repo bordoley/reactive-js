@@ -4,10 +4,12 @@ import {
   Function2,
   SideEffect1,
   bindMethod,
+  invoke,
   pipe,
 } from "../../../functions.js";
 import {
   ObservableLike,
+  ObservableLike_observe,
   ObserverLike,
   PublisherLike_publish,
   ScanLast,
@@ -15,7 +17,6 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Observable_concatAll from "../../Observable/__internal__/Observable.concatAll.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observable_takeLast from "../../Observable/__internal__/Observable.takeLast.js";
 import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
@@ -44,7 +45,7 @@ const HigherOrderObservable_scanLast =
         Observable_forEach<ObservableLike, TAcc>(
           bindMethod(accFeedbackStream, PublisherLike_publish),
         ),
-        Observable_observeWith(observer),
+        invoke(ObservableLike_observe, observer),
       );
 
       accFeedbackStream[PublisherLike_publish](initialValue());

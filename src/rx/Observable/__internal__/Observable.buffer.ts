@@ -26,10 +26,11 @@ import Optional_toObservable from "../../../containers/Optional/__internal__/Opt
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { Function1, isNumber, none, pipe } from "../../../functions.js";
+import { Function1, invoke, isNumber, none, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
   ObservableLike,
+  ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -44,7 +45,6 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
-import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -105,7 +105,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
               pipe(
                 buffer,
                 Optional_toObservable(),
-                Observable_observeWith(delegate),
+                invoke(ObservableLike_observe, delegate),
               );
             }
           }),

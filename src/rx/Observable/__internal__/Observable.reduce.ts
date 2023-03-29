@@ -16,6 +16,7 @@ import {
   Factory,
   Reducer,
   error,
+  invoke,
   none,
   partial,
   pipe,
@@ -23,6 +24,7 @@ import {
 import {
   DispatcherLike_scheduler,
   ObservableLike,
+  ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -37,7 +39,6 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
-import Observable_observeWith from "./Observable.observeWith.js";
 
 type ObservableReduce = <C extends ObservableLike, T, TAcc>(
   reducer: Reducer<T, TAcc>,
@@ -84,7 +85,7 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
             pipe(
               [instance[ReduceObserver_acc]],
               ReadonlyArray_toObservable(),
-              Observable_observeWith(delegate),
+              invoke(ObservableLike_observe, delegate),
             );
           }),
         );

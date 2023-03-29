@@ -11,9 +11,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import { SatisfyObserver_predicate } from "../../../__internal__/symbols.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
-import { Predicate, none, pipe } from "../../../functions.js";
+import { Predicate, invoke, none, pipe } from "../../../functions.js";
 import {
   DispatcherLike_scheduler,
+  ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -26,7 +27,6 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
 
@@ -70,7 +70,7 @@ const Observer_satisfyMixin: <T>(
             pipe(
               defaultResult,
               Optional_toObservable(),
-              Observable_observeWith(delegate),
+              invoke(ObservableLike_observe, delegate),
             );
           }
         }),

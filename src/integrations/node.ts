@@ -32,6 +32,7 @@ import {
   bindMethod,
   error,
   ignore,
+  invoke,
   isFunction,
   pipe,
   pipeLazy,
@@ -287,7 +288,9 @@ export const transform =
         const scheduler = observer[DispatcherLike_scheduler];
 
         pipe(
-          createWritableSink(transform)[StreamableLike_stream](scheduler, {
+          transform,
+          createWritableSink,
+          invoke(StreamableLike_stream, scheduler, {
             backpressureStrategy,
             capacity,
           }),

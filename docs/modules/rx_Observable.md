@@ -106,7 +106,6 @@
 
 ### Other Functions
 
-- [observeWith](rx_Observable.md#observewith)
 - [subscribe](rx_Observable.md#subscribe)
 
 ### Transform Functions
@@ -4275,29 +4274,6 @@ ___
 ___
 
 ## Other Functions
-
-### observeWith
-
-▸ **observeWith**<`C`, `T`\>(`observer`): [`Function1`](functions.md#function1)<`C`, `C`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`, `C`\> |
-| `T` | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observer` | [`ObserverLike`](../interfaces/rx.ObserverLike.md)<`T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`C`, `C`\>
-
-___
 
 ### subscribe
 

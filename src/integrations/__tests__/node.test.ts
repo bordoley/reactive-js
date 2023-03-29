@@ -7,7 +7,13 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
-import { Optional, newInstance, pipe, returns } from "../../functions.js";
+import {
+  Optional,
+  invoke,
+  newInstance,
+  pipe,
+  returns,
+} from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Runnable from "../../rx/Runnable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
@@ -49,9 +55,10 @@ testModule(
         );
 
         await pipe(
-          createWritableSink(returns(writable))[StreamableLike_stream](
-            scheduler,
-          ),
+          writable,
+          returns,
+          createWritableSink,
+          invoke(StreamableLike_stream, scheduler),
           Stream.sourceFrom(src),
           Observable.lastAsync({ scheduler }),
         );
@@ -86,9 +93,10 @@ testModule(
         );
 
         const promise = pipe(
-          createWritableSink(returns(writable))[StreamableLike_stream](
-            scheduler,
-          ),
+          writable,
+          returns,
+          createWritableSink,
+          invoke(StreamableLike_stream, scheduler),
           Stream.sourceFrom(src),
           Observable.lastAsync({ scheduler }),
         );

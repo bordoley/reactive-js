@@ -52,6 +52,15 @@ export const increment = (x) => x + 1;
  */
 export const incrementBy = (incr) => (x) => x + incr;
 /**
+ * Enables invoking a method on an object as a unary function within
+ * a pipeline operation.
+ *
+ * @param method
+ * @param args
+ * @returns
+ */
+export const invoke = (method, ...args) => (obj) => obj[method](...args);
+/**
  * Returns a predicate function comparing its argument to `b` using the
  * provided `equality` function.
  */

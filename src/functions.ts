@@ -337,6 +337,25 @@ export const incrementBy =
     x + incr;
 
 /**
+ * Enables invoking a method on an object as a unary function within
+ * a pipeline operation.
+ *
+ * @param method
+ * @param args
+ * @returns
+ */
+export const invoke =
+  <
+    T extends Record<TKey, (...args: any[]) => any>,
+    TKey extends number | string | symbol,
+  >(
+    method: TKey,
+    ...args: Parameters<T[TKey]>
+  ): Function1<T, ReturnType<T[TKey]>> =>
+  (obj: T) =>
+    obj[method](...args);
+
+/**
  * Returns a predicate function comparing its argument to `b` using the
  * provided `equality` function.
  */

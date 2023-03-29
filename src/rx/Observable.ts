@@ -170,7 +170,6 @@ import Observable_mergeMap from "./Observable/__internal__/Observable.mergeMap.j
 import Observable_mergeWith from "./Observable/__internal__/Observable.mergeWith.js";
 import Observable_multicast from "./Observable/__internal__/Observable.multicast.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
-import Observable_observeWith from "./Observable/__internal__/Observable.observeWith.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
@@ -561,8 +560,6 @@ export const multicast: <T>(
   Observable_multicast;
 
 export const never: Never<ObservableLike>["never"] = Observable_never;
-
-export const observeWith = Observable_observeWith;
 
 /**
  * @category Operator

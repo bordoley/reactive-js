@@ -4,8 +4,8 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { ThrottleObserver_durationFunction, ThrottleObserver_durationSubscription, ThrottleObserver_hasValue, ThrottleObserver_mode, ThrottleObserver_onNotify, ThrottleObserver_value, } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
-import { isNumber, none, partial, pipe, } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
+import { invoke, isNumber, none, partial, pipe, } from "../../../functions.js";
+import { DispatcherLike_scheduler, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -13,7 +13,6 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_observeWith from "../../Observable/__internal__/Observable.observeWith.js";
 import Observable_subscribeWithDispatcherConfig from "../../Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -42,7 +41,7 @@ const createThrottleObserver = (() => {
             if (instance[ThrottleObserver_mode] !== "first" &&
                 instance[ThrottleObserver_hasValue] &&
                 !delegate[DisposableLike_isDisposed]) {
-                pipe(instance[ThrottleObserver_value], Optional_toObservable(), Observable_observeWith(delegate));
+                pipe(instance[ThrottleObserver_value], Optional_toObservable(), invoke(ObservableLike_observe, delegate));
             }
         }));
         return instance;
