@@ -1,6 +1,6 @@
 {
   "name": "Reactive-JS",
-  "entryPoints": "./packages/core",
+  "entryPoints": ["./packages/core"],
   "entryPointStrategy": "expand",
   "exclude": [
     "./packages/core/__internal__/**/**/*",

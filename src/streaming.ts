@@ -1,4 +1,5 @@
 import {
+  CacheStreamLike_get,
   FlowableStreamLike_isPaused,
   FlowableStreamLike_pause,
   FlowableStreamLike_resume,
@@ -14,7 +15,7 @@ import {
   ContainerLike_type,
   ContainerOf,
 } from "./containers.js";
-import { Function1, Updater } from "./functions.js";
+import { Function1, Optional, Updater } from "./functions.js";
 import {
   DispatcherLike,
   MulticastObservableLike,
@@ -24,6 +25,7 @@ import { SchedulerLike } from "./scheduling.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
 
 export {
+  CacheStreamLike_get,
   StreamableLike_stream,
   StreamableLike_isEnumerable,
   StreamableLike_isInteractive,
@@ -153,6 +155,37 @@ export interface FlowableLike<T = unknown>
   extends StreamableLike<boolean | Updater<boolean>, T, FlowableStreamLike<T>>,
     ContainerLike {
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
+  readonly [StreamableLike_isEnumerable]: false;
+  readonly [StreamableLike_isInteractive]: false;
+}
+
+/**
+ * A cache stream that support transaction updates of a collection of keys
+ * and observing the changing values of individual keys.
+ *
+ * @noInheritDoc
+ */
+export interface CacheStreamLike<T>
+  extends StreamLike<
+    Readonly<Record<string, Function1<Optional<T>, T>>>,
+    never
+  > {
+  [CacheStreamLike_get](key: string): ObservableLike<T>;
+}
+
+/**
+ * A container that returns a CacheStream when subscribed to.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface CacheLike<T>
+  extends StreamableLike<
+    Readonly<Record<string, Function1<Optional<T>, T>>>,
+    never,
+    CacheStreamLike<T>
+  > {
+  readonly [ContainerLike_type]?: CacheLike<never>;
   readonly [StreamableLike_isEnumerable]: false;
   readonly [StreamableLike_isInteractive]: false;
 }

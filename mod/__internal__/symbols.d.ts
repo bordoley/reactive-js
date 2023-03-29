@@ -374,3 +374,5 @@ export const StackLike_head: unique symbol;
 export const IteratorEnumerator_iterator: unique symbol;
 /** @type {unique symbol} */
 export const WithCurrentTimeObserver_selector: unique symbol;
+/** @type {unique symbol} */
+export const CacheStreamLike_get: unique symbol;

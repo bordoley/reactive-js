@@ -14,6 +14,8 @@ import {
   createComponent,
   useEnumerable,
   useFlowable,
+  useObservable,
+  useStream,
   useStreamable,
 } from "@reactive-js/core/integrations/react";
 import {
@@ -38,6 +40,37 @@ import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Sche
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 import { ObservableLike } from "@reactive-js/core/rx";
 import { QueueableLike_enqueue } from "@reactive-js/core/util";
+import {
+  CacheStreamLike_get,
+  CacheStreamLike,
+} from "@reactive-js/core/streaming";
+
+const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
+  const values = cache[CacheStreamLike_get]("a");
+  const value = useObservable(values);
+
+  const onChange = useCallback(
+    (ev: React.ChangeEvent<HTMLInputElement>) => {
+      const next = ev.target.value;
+      cache[QueueableLike_enqueue]({ a: _ => next });
+    },
+    [values],
+  );
+
+  return (
+    <div>
+      <input type="text" onChange={onChange} value={value}></input>
+      <span>{value}</span>
+    </div>
+  );
+};
+
+const CacheComponent = () => {
+  const cache = useMemo(() => Streamable.createInMemoryCache<string>(), []);
+  const cacheStream = useStream(cache);
+
+  return isSome(cacheStream) ? <CacheInner cache={cacheStream} /> : null;
+};
 
 const Root = () => {
   const history = useWindowLocation();
@@ -148,6 +181,7 @@ const Root = () => {
           Run Animation
         </button>
       </div>
+      <CacheComponent />
     </div>
   );
 };

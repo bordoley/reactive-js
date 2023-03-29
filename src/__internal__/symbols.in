@@ -186,3 +186,4 @@ StackLike_pop
 StackLike_head
 IteratorEnumerator_iterator
 WithCurrentTimeObserver_selector
+CacheStreamLike_get

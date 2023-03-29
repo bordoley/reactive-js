@@ -19,6 +19,23 @@ export declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction,
     readonly equality?: Equality<T>;
 }) => StreamableLike<TAction, T>;
 /**
+ * @category Constructor
+ */
+export declare const createInMemoryCache: <T>(options?: {
+    capacity?: number | undefined;
+    cleanupScheduler?: import("../scheduling.js").SchedulerLike | undefined;
+}) => import("../streaming.js").CacheLike<T>;
+/**
+ * @category Constructor
+ */
+export declare const createPersistentCache: <T>(persistentStore: {
+    load(keys: ReadonlySet<string>): import("../rx.js").ObservableLike<Readonly<Record<string, import("../functions.js").Optional<T>>>>;
+    store(updates: Readonly<Record<string, T>>): import("../rx.js").ObservableLike<void>;
+}, options?: {
+    capacity?: number | undefined;
+    cleanupScheduler?: import("../scheduling.js").SchedulerLike | undefined;
+}) => import("../streaming.js").CacheLike<T>;
+/**
  * Returns a new `StateStoreLike` instance that stores state which can
  * be updated by notifying the instance with a `StateUpdater` that computes a
  * new state based upon the previous state.

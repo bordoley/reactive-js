@@ -373,3 +373,5 @@ export declare const StackLike_head: unique symbol;
 export declare const IteratorEnumerator_iterator: unique symbol;
 
 export declare const WithCurrentTimeObserver_selector: unique symbol;
+
+export declare const CacheStreamLike_get: unique symbol;

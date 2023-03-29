@@ -1,10 +1,10 @@
-import { FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream } from "./__internal__/symbols.js";
+import { CacheStreamLike_get, FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
-import { Function1, Updater } from "./functions.js";
+import { Function1, Optional, Updater } from "./functions.js";
 import { DispatcherLike, MulticastObservableLike, ObservableLike } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
-export { StreamableLike_stream, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, };
+export { CacheStreamLike_get, StreamableLike_stream, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, };
 /**
  * Represents a duplex stream
  *
@@ -98,6 +98,26 @@ export interface FlowableStreamLike<T = unknown> extends StreamLike<boolean | Up
  */
 export interface FlowableLike<T = unknown> extends StreamableLike<boolean | Updater<boolean>, T, FlowableStreamLike<T>>, ContainerLike {
     readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
+    readonly [StreamableLike_isEnumerable]: false;
+    readonly [StreamableLike_isInteractive]: false;
+}
+/**
+ * A cache stream that support transaction updates of a collection of keys
+ * and observing the changing values of individual keys.
+ *
+ * @noInheritDoc
+ */
+export interface CacheStreamLike<T> extends StreamLike<Readonly<Record<string, Function1<Optional<T>, T>>>, never> {
+    [CacheStreamLike_get](key: string): ObservableLike<T>;
+}
+/**
+ * A container that returns a CacheStream when subscribed to.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Function1<Optional<T>, T>>>, never, CacheStreamLike<T>> {
+    readonly [ContainerLike_type]?: CacheLike<never>;
     readonly [StreamableLike_isEnumerable]: false;
     readonly [StreamableLike_isInteractive]: false;
 }

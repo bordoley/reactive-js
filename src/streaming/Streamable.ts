@@ -2,6 +2,8 @@ import { Equality, Factory, Reducer, Updater } from "../functions.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
 import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer.js";
+import Streamable_createInMemoryCache from "./Streamable/__internal__/Streamable.createInMemoryCache.js";
+import Streamable_createPersistentCache from "./Streamable/__internal__/Streamable.createPersistentCache.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
@@ -27,6 +29,16 @@ export const createActionReducer: <TAction, T>(
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
 ) => StreamableLike<TAction, T> = Streamable_createActionReducer;
+
+/**
+ * @category Constructor
+ */
+export const createInMemoryCache = Streamable_createInMemoryCache;
+
+/**
+ * @category Constructor
+ */
+export const createPersistentCache = Streamable_createPersistentCache;
 
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
