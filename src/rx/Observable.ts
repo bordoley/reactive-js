@@ -70,6 +70,7 @@ import {
   SideEffect6,
 } from "../functions.js";
 import {
+  BackpressureStrategy,
   CombineLatest,
   CurrentTime,
   Enqueue,
@@ -98,7 +99,6 @@ import {
   ToObservable,
   ToRunnable,
   Tween,
-  WithBackpressureStrategy,
   WithCurrentTime,
   WithLatestFrom,
   ZipLatest,
@@ -114,6 +114,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../util.js";
+import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
@@ -199,7 +200,6 @@ import Observable_timeout from "./Observable/__internal__/Observable.timeout.js"
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
 import Observable_toRunnable from "./Observable/__internal__/Observable.toRunnable.js";
 import Observable_tween from "./Observable/__internal__/Observable.tween.js";
-import Observable_withBackpressureStrategy from "./Observable/__internal__/Observable.withBackpressureStrategy.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -353,6 +353,9 @@ interface __Using {
  * @category ComputationalEffect
  */
 export const __using: __Using = Observable_compute__using;
+
+export const backpressureStrategy: BackpressureStrategy<ObservableLike>["backpressureStrategy"] =
+  Observable_backpressureStrategy;
 
 /**
  * @category Operator
@@ -671,9 +674,6 @@ export const toRunnable: ToRunnable<ObservableLike>["toRunnable"] =
  * @category Constructor
  */
 export const tween: Tween<ObservableLike>["tween"] = Observable_tween;
-
-export const withBackpressureStrategy: WithBackpressureStrategy<ObservableLike>["withBackpressureStrategy"] =
-  Observable_withBackpressureStrategy;
 
 export const withCurrentTime: WithCurrentTime<ObservableLike>["withCurrentTime"] =
   Observable_withCurrentTime;

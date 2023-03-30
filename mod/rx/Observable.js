@@ -7,6 +7,7 @@ import Optional_toObservable from "../containers/Optional/__internal__/Optional.
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import AsyncEnumerable_toObservable from "../streaming/AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
+import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
@@ -80,7 +81,6 @@ import Observable_timeout from "./Observable/__internal__/Observable.timeout.js"
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
 import Observable_toRunnable from "./Observable/__internal__/Observable.toRunnable.js";
 import Observable_tween from "./Observable/__internal__/Observable.tween.js";
-import Observable_withBackpressureStrategy from "./Observable/__internal__/Observable.withBackpressureStrategy.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -127,6 +127,7 @@ export const __stream = Observable_compute__stream;
  * @category ComputationalEffect
  */
 export const __using = Observable_compute__using;
+export const backpressureStrategy = Observable_backpressureStrategy;
 /**
  * @category Operator
  */
@@ -254,7 +255,6 @@ export const toRunnable = Observable_toRunnable;
  * @category Constructor
  */
 export const tween = Observable_tween;
-export const withBackpressureStrategy = Observable_withBackpressureStrategy;
 export const withCurrentTime = Observable_withCurrentTime;
 export const withLatestFrom = Observable_withLatestFrom;
 export const zip = Observable_zip;

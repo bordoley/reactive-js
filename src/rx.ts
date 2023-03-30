@@ -170,6 +170,21 @@ export interface PublisherLike<T = unknown> extends MulticastObservableLike<T> {
  * @noInheritDoc
  * @category TypeClass
  */
+export interface BackpressureStrategy<C extends ObservableLike>
+  extends Container<C> {
+  /**
+   * @category Operator
+   */
+  backpressureStrategy<T>(
+    capacity: number,
+    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+  ): ContainerOperator<C, T, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface CombineLatest<C extends ObservableLike> extends Container<C> {
   /**
    * @category Constructor
@@ -798,21 +813,6 @@ export interface Tween<C extends ObservableLike> extends Container<C> {
       easing?: Function1<number, number>;
     },
   ): ContainerOf<C, number>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface WithBackpressureStrategy<C extends ObservableLike>
-  extends Container<C> {
-  /**
-   * @category Operator
-   */
-  withBackpressureStrategy<T>(
-    capacity: number,
-    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-  ): ContainerOperator<C, T, T>;
 }
 
 /**

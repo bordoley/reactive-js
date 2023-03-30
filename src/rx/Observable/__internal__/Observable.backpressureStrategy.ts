@@ -23,12 +23,12 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
-type ObservableWithBackpressureStrategy = <C extends ObservableLike, T>(
+type ObservableBackpressureStrategy = <C extends ObservableLike, T>(
   capacity: number,
   backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
 ) => ContainerOperator<C, T, T>;
 
-const Observable_withBackpressureStrategy: ObservableWithBackpressureStrategy =
+const Observable_backpressureStrategy: ObservableBackpressureStrategy =
   /*@__PURE__*/ (<T>() => {
     const createBackpressureObserver: (
       delegate: ObserverLike<T>,
@@ -75,7 +75,7 @@ const Observable_withBackpressureStrategy: ObservableWithBackpressureStrategy =
         createBackpressureObserver,
         partial(capacity, backpressureStrategy),
         Observable_liftEnumerableOperator,
-      )) as ObservableWithBackpressureStrategy;
+      )) as ObservableBackpressureStrategy;
   })();
 
-export default Observable_withBackpressureStrategy;
+export default Observable_backpressureStrategy;

@@ -19,6 +19,7 @@
 
 ### TypeClass Interfaces
 
+- [BackpressureStrategy](../interfaces/rx.BackpressureStrategy.md)
 - [CombineLatest](../interfaces/rx.CombineLatest.md)
 - [CurrentTime](../interfaces/rx.CurrentTime.md)
 - [Enqueue](../interfaces/rx.Enqueue.md)
@@ -48,7 +49,6 @@
 - [ToObservable](../interfaces/rx.ToObservable.md)
 - [ToRunnable](../interfaces/rx.ToRunnable.md)
 - [Tween](../interfaces/rx.Tween.md)
-- [WithBackpressureStrategy](../interfaces/rx.WithBackpressureStrategy.md)
 - [WithCurrentTime](../interfaces/rx.WithCurrentTime.md)
 - [WithLatestFrom](../interfaces/rx.WithLatestFrom.md)
 - [ZipLatest](../interfaces/rx.ZipLatest.md)

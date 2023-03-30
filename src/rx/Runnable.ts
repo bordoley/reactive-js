@@ -51,6 +51,7 @@ import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
+  BackpressureStrategy,
   CombineLatest,
   CurrentTime,
   Enqueue,
@@ -75,13 +76,13 @@ import {
   ToObservable,
   ToRunnable,
   Tween,
-  WithBackpressureStrategy,
   WithCurrentTime,
   WithLatestFrom,
   ZipLatest,
   ZipWithLatestFrom,
 } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
+import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
@@ -126,7 +127,6 @@ import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
 import Observable_tween from "./Observable/__internal__/Observable.tween.js";
-import Observable_withBackpressureStrategy from "./Observable/__internal__/Observable.withBackpressureStrategy.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -152,6 +152,9 @@ import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
 import Runnable_toFlowable from "./Runnable/__internal__/Runnable.toFlowable.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
+
+export const backpressureStrategy: BackpressureStrategy<RunnableLike>["backpressureStrategy"] =
+  Observable_backpressureStrategy;
 
 export const buffer: Buffer<RunnableLike>["buffer"] = Observable_buffer;
 
@@ -360,9 +363,6 @@ export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
  * @category Constructor
  */
 export const tween: Tween<RunnableLike>["tween"] = Observable_tween;
-
-export const withBackpressureStrategy: WithBackpressureStrategy<RunnableLike>["withBackpressureStrategy"] =
-  Observable_withBackpressureStrategy;
 
 export const withCurrentTime: WithCurrentTime<RunnableLike>["withCurrentTime"] =
   Observable_withCurrentTime;

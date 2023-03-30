@@ -19,6 +19,7 @@
 
 ### Operator Functions
 
+- [backpressureStrategy](rx_Enumerable.md#backpressurestrategy)
 - [buffer](rx_Enumerable.md#buffer)
 - [catchError](rx_Enumerable.md#catcherror)
 - [concatAll](rx_Enumerable.md#concatall)
@@ -53,7 +54,6 @@
 - [takeLast](rx_Enumerable.md#takelast)
 - [takeWhile](rx_Enumerable.md#takewhile)
 - [throwIfEmpty](rx_Enumerable.md#throwifempty)
-- [withBackpressureStrategy](rx_Enumerable.md#withbackpressurestrategy)
 - [zipWith](rx_Enumerable.md#zipwith)
 
 ### Transform Functions
@@ -508,6 +508,29 @@ in order, of each of its input sources.
 ___
 
 ## Operator Functions
+
+### backpressureStrategy
+
+▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `capacity` | `number` |
+| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
 
 ### buffer
 
@@ -1599,29 +1622,6 @@ Returns a ContainerLike that emits an error if the source completes without emit
 | :------ | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<`unknown`\> | A factory function invoked to produce the error to be thrown. |
 | `options?` | `undefined` | - |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
-### withBackpressureStrategy
-
-▸ **withBackpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `capacity` | `number` |
-| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 
 #### Returns
 

@@ -55,13 +55,13 @@ import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
+  BackpressureStrategy,
   EnumerableLike,
   Retry,
   ScanLast,
   ToEnumerable,
   ToObservable,
   ToRunnable,
-  WithBackpressureStrategy,
 } from "../rx.js";
 import Enumerable_catchError from "../rx/Enumerable/__internal__/Enumerable.catchError.js";
 import Enumerable_concatAll from "../rx/Enumerable/__internal__/Enumerable.concatAll.js";
@@ -109,10 +109,13 @@ import { DisposableLike } from "../util.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
+import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
-import Observable_withBackpressureStrategy from "./Observable/__internal__/Observable.withBackpressureStrategy.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
+
+export const backpressureStrategy: BackpressureStrategy<EnumerableLike>["backpressureStrategy"] =
+  Observable_backpressureStrategy;
 
 export const buffer: Buffer<EnumerableLike>["buffer"] = Observable_buffer;
 
@@ -260,9 +263,6 @@ export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"]
   Enumerable_toReadonlyArray;
 
 export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] = identity;
-
-export const withBackpressureStrategy: WithBackpressureStrategy<EnumerableLike>["withBackpressureStrategy"] =
-  Observable_withBackpressureStrategy;
 
 export const zip: Zip<EnumerableLike>["zip"] =
   Observable_zip as Zip<EnumerableLike>["zip"];

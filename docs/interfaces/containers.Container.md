@@ -128,6 +128,8 @@ Base type for Container type classes.
 
   ↳ [`ZipWith`](containers.ZipWith.md)
 
+  ↳ [`BackpressureStrategy`](rx.BackpressureStrategy.md)
+
   ↳ [`CombineLatest`](rx.CombineLatest.md)
 
   ↳ [`CurrentTime`](rx.CurrentTime.md)
@@ -185,8 +187,6 @@ Base type for Container type classes.
   ↳ [`ToRunnable`](rx.ToRunnable.md)
 
   ↳ [`Tween`](rx.Tween.md)
-
-  ↳ [`WithBackpressureStrategy`](rx.WithBackpressureStrategy.md)
 
   ↳ [`WithCurrentTime`](rx.WithCurrentTime.md)
 
