@@ -32,9 +32,6 @@ import {
   unsafeCast,
 } from "../functions.js";
 import {
-  DispatcherLike_complete,
-  DispatcherLike_scheduler,
-  MulticastObservableLike_observerCount,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -51,16 +48,15 @@ import {
   StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../streaming.js";
+import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
   DisposableLike_dispose,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 export {
   WindowLocationStreamLike_goBack,
@@ -670,18 +666,13 @@ export const windowLocation: StreamableLike<
 
   const createWindowLocationStream = createInstanceFactory(
     mix(
-      include(Disposable_delegatingMixin()),
+      include(Stream_delegatingMixin()),
       function WindowLocationStream(
         instance: Pick<
           WindowLocationStreamLike,
-          | typeof MulticastObservableLike_observerCount
-          | typeof DispatcherLike_scheduler
-          | typeof DispatcherLike_complete
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
           | typeof QueueableLike_enqueue
-          | typeof QueueableLike_backpressureStrategy
-          | typeof QueueableLike_capacity
           | typeof WindowLocationStreamLike_canGoBack
           | typeof WindowLocationStreamLike_goBack
           | typeof WindowLocationStreamLike_replace
@@ -689,36 +680,12 @@ export const windowLocation: StreamableLike<
         >,
         delegate: StreamLike<Updater<TState>, TState>,
       ): WindowLocationStreamLike {
-        init(Disposable_delegatingMixin(), instance, delegate);
+        init(Stream_delegatingMixin(), instance, delegate);
 
         return instance;
       },
       props<unknown>({}),
       {
-        get [MulticastObservableLike_observerCount]() {
-          unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
-          return this[DelegatingLike_delegate][
-            MulticastObservableLike_observerCount
-          ];
-        },
-
-        get [QueueableLike_backpressureStrategy]() {
-          unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
-          return this[DelegatingLike_delegate][
-            QueueableLike_backpressureStrategy
-          ];
-        },
-
-        get [QueueableLike_capacity](): number {
-          unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
-          return this[DelegatingLike_delegate][QueueableLike_capacity];
-        },
-
-        get [DispatcherLike_scheduler](): SchedulerLike {
-          unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
-          return this[DelegatingLike_delegate][DispatcherLike_scheduler];
-        },
-
         get [WindowLocationStreamLike_canGoBack](): ObservableLike<boolean> {
           unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
           return pipe(
@@ -729,12 +696,6 @@ export const windowLocation: StreamableLike<
 
         [ObservableLike_isEnumerable]: false as const,
         [ObservableLike_isRunnable]: false as const,
-
-        [DispatcherLike_complete](
-          this: DelegatingLike<StreamLike<Updater<TState>, TState>>,
-        ) {
-          this[DelegatingLike_delegate][DispatcherLike_complete]();
-        },
 
         [QueueableLike_enqueue](
           this: DelegatingLike<StreamLike<Updater<TState>, TState>>,

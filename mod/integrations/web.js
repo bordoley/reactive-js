@@ -5,13 +5,13 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamLike_replace, } from "../__internal__/symbols.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { bindMethod, compose, error, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
-import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
+import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../util.js";
+import { DisposableLike_dispose, QueueableLike_enqueue, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-import Disposable_delegatingMixin from "../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
 const errorEvent = "error";
 const reservedEvents = [errorEvent, "open"];
@@ -86,35 +86,16 @@ export const windowLocation = /*@__PURE__*/ (() => {
     // Intentionally ignore the replace flag.
     (a === b || (a.title === b.title && areURIsEqual(a, b))) &&
         counterA === counterB;
-    const createWindowLocationStream = createInstanceFactory(mix(include(Disposable_delegatingMixin()), function WindowLocationStream(instance, delegate) {
-        init(Disposable_delegatingMixin(), instance, delegate);
+    const createWindowLocationStream = createInstanceFactory(mix(include(Stream_delegatingMixin()), function WindowLocationStream(instance, delegate) {
+        init(Stream_delegatingMixin(), instance, delegate);
         return instance;
     }, props({}), {
-        get [MulticastObservableLike_observerCount]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][MulticastObservableLike_observerCount];
-        },
-        get [QueueableLike_backpressureStrategy]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][QueueableLike_backpressureStrategy];
-        },
-        get [QueueableLike_capacity]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][QueueableLike_capacity];
-        },
-        get [DispatcherLike_scheduler]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][DispatcherLike_scheduler];
-        },
         get [WindowLocationStreamLike_canGoBack]() {
             unsafeCast(this);
             return pipe(this[DelegatingLike_delegate], Observable.map(({ counter }) => counter > 0));
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
-        [DispatcherLike_complete]() {
-            this[DelegatingLike_delegate][DispatcherLike_complete]();
-        },
         [QueueableLike_enqueue](stateOrUpdater) {
             return this[DelegatingLike_delegate][QueueableLike_enqueue](prevState => {
                 const uri = createWindowLocationURIWithPrototype(isFunction(stateOrUpdater)
