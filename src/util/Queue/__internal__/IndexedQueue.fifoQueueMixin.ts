@@ -270,20 +270,19 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           item: T,
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-          let count = this[QueueLike_count] + 1;
+          let count = this[QueueLike_count];
           const capacity = this[QueueableLike_capacity];
 
-          if (backpressureStrategy === "drop-latest" && count > capacity) {
+          if (backpressureStrategy === "drop-latest" && count >= capacity) {
             return false;
           } else if (
             backpressureStrategy === "drop-oldest" &&
-            count > capacity
+            count >= capacity
           ) {
             // We want to pop off the oldest value first, before enqueuing
             // to avoid unintentionally growing the queue.
             this[QueueLike_dequeue]();
-            count = this[QueueLike_count] + 1;
-          } else if (backpressureStrategy === "throw" && count > capacity) {
+          } else if (backpressureStrategy === "throw" && count >= capacity) {
             // FIXME: Seems like we should have a known exception (symbol), that
             // a caller could safely catch in this case and then make its own decisions.
             // For instance using drop-latest is going to break priority queue,
@@ -308,14 +307,14 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           let tail = this[FifoQueue_tail];
 
           values[tail] = item;
-          this[QueueLike_count] = count;
+          this[QueueLike_count]++;
 
           tail = (tail + 1) & capacityMask;
           this[FifoQueue_tail] = tail;
 
           grow(this);
 
-          return this[QueueLike_count] <= this[QueueableLike_capacity];
+          return this[QueueLike_count] < this[QueueableLike_capacity];
         },
       },
     ),

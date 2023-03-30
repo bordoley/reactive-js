@@ -152,18 +152,17 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
           item: T,
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-          let count = this[QueueLike_count] + 1;
+          const count = this[QueueLike_count];
           const capacity = this[QueueableLike_capacity];
 
-          if (backpressureStrategy === "drop-latest" && count > capacity) {
+          if (backpressureStrategy === "drop-latest" && count >= capacity) {
             return false;
           } else if (
             backpressureStrategy === "drop-oldest" &&
-            count > capacity
+            count >= capacity
           ) {
             this[QueueLike_dequeue]();
-            count = this[QueueLike_count] + 1;
-          } else if (backpressureStrategy === "throw" && count > capacity) {
+          } else if (backpressureStrategy === "throw" && count >= capacity) {
             raiseWithDebugMessage(
               "attempting to enqueue a value to a queue that is full",
             );
