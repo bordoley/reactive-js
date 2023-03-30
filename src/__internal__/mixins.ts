@@ -6,6 +6,7 @@ import {
   Function3,
   Function4,
   Function5,
+  Function6,
   Optional,
   isFunction,
   none,
@@ -90,6 +91,27 @@ export interface Mixin5<
   [Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD, e: TE): TReturn;
   [Object_prototype]: TPrototype;
 }
+export interface Mixin6<
+  TReturn,
+  TA,
+  TB,
+  TC,
+  TD,
+  TE,
+  TF,
+  TPrototype extends object = object,
+> extends PartialMixin {
+  [Object_init](
+    instance: unknown,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): TReturn;
+  [Object_prototype]: TPrototype;
+}
 
 function initUnsafe<TReturn>(
   mixin: MixinAny<TReturn>,
@@ -144,6 +166,17 @@ interface Init {
     c: TC,
     d: TD,
     e: TE,
+  ): asserts instance is TReturn;
+
+  <TReturn, TA, TB, TC, TD, TE, TF>(
+    mixin: Mixin6<TReturn, TA, TB, TC, TD, TE, TF>,
+    instance: unknown,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
   ): asserts instance is TReturn;
 }
 export const init: Init = initUnsafe;
@@ -272,6 +305,10 @@ interface CreateInstanceFactory {
   <TReturn, TA, TB, TC, TD, TE>(
     mixin: Mixin5<TReturn, TA, TB, TC, TD, TE>,
   ): Function5<TA, TB, TC, TD, TE, TReturn>;
+
+  <TReturn, TA, TB, TC, TD, TE, TF>(
+    mixin: Mixin6<TReturn, TA, TB, TC, TD, TE, TF>,
+  ): Function6<TA, TB, TC, TD, TE, TF, TReturn>;
 }
 export const createInstanceFactory: CreateInstanceFactory = <TReturn>(
   mixin: MixinAny<TReturn>,
