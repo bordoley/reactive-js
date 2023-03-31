@@ -8,6 +8,7 @@ import { bindMethod, compose, error, invoke, isFunction, isSome, newInstance, no
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
+import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../util.js";
@@ -132,13 +133,17 @@ export const windowLocation = /*@__PURE__*/ (() => {
         }
         const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { backpressureStrategy: "drop-oldest", capacity: 1 });
         const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { backpressureStrategy: "drop-oldest", capacity: 1 });
-        currentWindowLocationStream = pipe(Streamable.createWriteThroughCache(() => ({
+        currentWindowLocationStream = pipe(Streamable.createStateStore(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
             // Initialize the counter to -1 so that the initized start value
             // get pushed through the updater.
             counter: -1,
-        }), state => 
+        }), { equality: areWindowLocationStatesEqual }), invoke(StreamableLike_stream, scheduler, {
+            replay: (_a = options === null || options === void 0 ? void 0 : options.replay) !== null && _a !== void 0 ? _a : 1,
+            capacity: (_b = options === null || options === void 0 ? void 0 : options.capacity) !== null && _b !== void 0 ? _b : 1,
+            backpressureStrategy: (_c = options === null || options === void 0 ? void 0 : options.backpressureStrategy) !== null && _c !== void 0 ? _c : "drop-oldest",
+        }), Stream.syncState(state => 
         // Initialize the history state on page load
         pipe(window, addEventListener("popstate", (e) => {
             const { counter, title } = e.state;
@@ -162,10 +167,6 @@ export const windowLocation = /*@__PURE__*/ (() => {
                 : push
                     ? pushState[QueueableLike_enqueue](state)
                     : false), Observable.ignoreElements());
-        }, { equality: areWindowLocationStatesEqual }), invoke(StreamableLike_stream, scheduler, {
-            replay: (_a = options === null || options === void 0 ? void 0 : options.replay) !== null && _a !== void 0 ? _a : 1,
-            capacity: (_b = options === null || options === void 0 ? void 0 : options.capacity) !== null && _b !== void 0 ? _b : 1,
-            backpressureStrategy: (_c = options === null || options === void 0 ? void 0 : options.backpressureStrategy) !== null && _c !== void 0 ? _c : "drop-oldest",
         }), createWindowLocationStream, Disposable.add(pushState), Disposable.add(replaceState));
         return currentWindowLocationStream;
     };

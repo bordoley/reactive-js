@@ -1,12 +1,11 @@
 import {
-  Equality,
-  Factory,
+  Function1,
   Updater,
   compose,
   identity,
   pipe,
 } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import { DispatcherLike_scheduler, ObservableLike } from "../../../rx.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.enqueue.js";
 import Observable_forkMerge from "../../../rx/Observable/__internal__/Observable.forkMerge.js";
@@ -15,44 +14,36 @@ import Observable_subscribe from "../../../rx/Observable/__internal__/Observable
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
 import Observable_throttle from "../../../rx/Observable/__internal__/Observable.throttle.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import {
-  StreamableLike,
-  StreamableLike_isEnumerable,
-  StreamableLike_isInteractive,
-  StreamableLike_isRunnable,
-  StreamableLike_stream,
-} from "../../../streaming.js";
+import { StreamLike } from "../../../streaming.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Streamable_createStateStore from "./Streamable.createStateStore.js";
 
-const Streamable_createWriteThroughCache = <T>(
-  initialState: Factory<T>,
+const Stream_syncState = <T>(
   onInit: (initialValue: T) => ObservableLike<Updater<T>>,
   onChange: (oldValue: T, newValue: T) => ObservableLike<Updater<T>>,
   options?: {
-    equality?: Equality<T>;
     throttleDuration?: number;
+    capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    scheduler: SchedulerLike;
   },
-): StreamableLike<Updater<T>, T> => {
-  const stateStore = Streamable_createStateStore(initialState, options);
+): Function1<StreamLike<Updater<T>, T>, StreamLike<Updater<T>, T>> => {
   const throttleDuration = options?.throttleDuration ?? 0;
 
-  const stream = (
-    scheduler: SchedulerLike,
-    options?: {
-      readonly replay?: number;
-      readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ) => {
-    const state = stateStore[StreamableLike_stream](scheduler, options);
+  return (stateStore: StreamLike<Updater<T>, T>) => {
+    const scheduler =
+      options?.scheduler ?? stateStore[DispatcherLike_scheduler];
+    const backpressureStrategy =
+      options?.backpressureStrategy ??
+      stateStore[QueueableLike_backpressureStrategy];
+    const capacity = options?.capacity ?? stateStore[QueueableLike_capacity];
 
     pipe(
-      state,
+      stateStore,
       Observable_forkMerge(
         compose(
           Observable_takeFirst<ObservableLike, T>(),
@@ -68,20 +59,16 @@ const Streamable_createWriteThroughCache = <T>(
           ),
         ),
       ),
-      Observable_enqueue<ObservableLike, Updater<T>>(state),
-      Observable_subscribe(scheduler, options),
-      Disposable_addTo(state),
+      Observable_enqueue<ObservableLike, Updater<T>>(stateStore),
+      Observable_subscribe(scheduler, {
+        backpressureStrategy,
+        capacity,
+      }),
+      Disposable_addTo(stateStore),
     );
 
-    return state;
-  };
-
-  return {
-    [StreamableLike_isEnumerable]: false,
-    [StreamableLike_isInteractive]: false,
-    [StreamableLike_isRunnable]: false,
-    [StreamableLike_stream]: stream,
+    return stateStore;
   };
 };
 
-export default Streamable_createWriteThroughCache;
+export default Stream_syncState;

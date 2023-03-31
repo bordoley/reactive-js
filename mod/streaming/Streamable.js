@@ -3,7 +3,6 @@
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
 import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
-import Streamable_createWriteThroughCache from "./Streamable/__internal__/Streamable.createWriteThroughCache.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
 /**
@@ -39,7 +38,3 @@ export const createStateStore = Streamable_createStateStore;
  */
 export const identity = Streamable_identity;
 export const sinkInto = Streamable_sinkInto;
-/**
- * @category Constructor
- */
-export const createWriteThroughCache = Streamable_createWriteThroughCache;

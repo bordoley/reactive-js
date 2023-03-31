@@ -37,10 +37,3 @@ export declare const createStateStore: <T>(initialState: Factory<T>, options?: {
  */
 export declare const identity: <T>() => StreamableLike<T, T, StreamLike<T, T>>;
 export declare const sinkInto: <TReq, T>(dest: StreamLike<T, TReq>) => (src: StreamableLike<TReq, T>) => StreamableLike<TReq, T>;
-/**
- * @category Constructor
- */
-export declare const createWriteThroughCache: <T>(initialState: Factory<T>, onInit: (initialValue: T) => import("../rx.js").ObservableLike<Updater<T>>, onChange: (oldValue: T, newValue: T) => import("../rx.js").ObservableLike<Updater<T>>, options?: {
-    equality?: Equality<T> | undefined;
-    throttleDuration?: number | undefined;
-} | undefined) => StreamableLike<Updater<T>, T, StreamLike<Updater<T>, T>>;

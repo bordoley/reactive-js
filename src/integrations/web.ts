@@ -48,6 +48,7 @@ import {
   StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../streaming.js";
+import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
@@ -798,7 +799,7 @@ export const windowLocation: StreamableLike<
     );
 
     currentWindowLocationStream = pipe(
-      Streamable.createWriteThroughCache(
+      Streamable.createStateStore(
         () => ({
           replace: true,
           uri: getCurrentWindowLocationURI(),
@@ -806,6 +807,14 @@ export const windowLocation: StreamableLike<
           // get pushed through the updater.
           counter: -1,
         }),
+        { equality: areWindowLocationStatesEqual },
+      ),
+      invoke(StreamableLike_stream, scheduler, {
+        replay: options?.replay ?? 1,
+        capacity: options?.capacity ?? 1,
+        backpressureStrategy: options?.backpressureStrategy ?? "drop-oldest",
+      }),
+      Stream.syncState(
         state =>
           // Initialize the history state on page load
           pipe(
@@ -854,13 +863,7 @@ export const windowLocation: StreamableLike<
             Observable.ignoreElements(),
           );
         },
-        { equality: areWindowLocationStatesEqual },
       ),
-      invoke(StreamableLike_stream, scheduler, {
-        replay: options?.replay ?? 1,
-        capacity: options?.capacity ?? 1,
-        backpressureStrategy: options?.backpressureStrategy ?? "drop-oldest",
-      }),
       createWindowLocationStream,
       Disposable.add(pushState),
       Disposable.add(replaceState),
