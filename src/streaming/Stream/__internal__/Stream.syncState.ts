@@ -18,7 +18,6 @@ import { StreamLike } from "../../../streaming.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
@@ -37,10 +36,6 @@ const Stream_syncState = <T>(
   return (stateStore: StreamLike<Updater<T>, T>) => {
     const scheduler =
       options?.scheduler ?? stateStore[DispatcherLike_scheduler];
-    const backpressureStrategy =
-      options?.backpressureStrategy ??
-      stateStore[QueueableLike_backpressureStrategy];
-    const capacity = options?.capacity ?? stateStore[QueueableLike_capacity];
 
     pipe(
       stateStore,
@@ -61,8 +56,8 @@ const Stream_syncState = <T>(
       ),
       Observable_enqueue<ObservableLike, Updater<T>>(stateStore),
       Observable_subscribe(scheduler, {
-        backpressureStrategy,
-        capacity,
+        backpressureStrategy: options?.backpressureStrategy,
+        capacity: options?.capacity,
       }),
       Disposable_addTo(stateStore),
     );
