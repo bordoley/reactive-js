@@ -8,11 +8,9 @@ import {
   FifoQueue_values,
 } from "../../../__internal__/symbols.js";
 import {
-  IndexedLike_get,
-  IndexedLike_set,
   IndexedQueueLike,
+  MutableIndexedLike_set,
   QueueLike,
-  QueueLike_count,
   QueueLike_dequeue,
   QueueLike_head,
   StackLike_head,
@@ -28,6 +26,8 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
+  CollectionLike_count,
+  IndexedLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -41,12 +41,12 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
   Omit<
     IndexedQueueLike<T>,
     | typeof QueueableLike_backpressureStrategy
-    | typeof QueueLike_count
+    | typeof CollectionLike_count
     | typeof QueueableLike_capacity
   >
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [QueueLike_count]: number;
+    [CollectionLike_count]: number;
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly [QueueableLike_capacity]: number;
     [FifoQueue_head]: number;
@@ -90,7 +90,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
     const values = instance[FifoQueue_values] ?? [];
     const capacity = values.length;
     const capacityMask = instance[FifoQueue_capacityMask];
-    const count = instance[QueueLike_count];
+    const count = instance[CollectionLike_count];
 
     if (head === 0 || (tail === 0 && head < capacity >> 2)) {
       values.length <<= 1;
@@ -110,7 +110,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
   const shrink = (instance: TProperties) => {
     const values = instance[FifoQueue_values] ?? [];
     const capacity = values.length;
-    const count = instance[QueueLike_count];
+    const count = instance[CollectionLike_count];
 
     if (count >= capacity >> 2 || capacity <= 32) {
       return;
@@ -138,7 +138,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
       function FifoQueue(
         instance: Omit<
           IndexedQueueLike<T>,
-          typeof QueueLike_count | typeof QueueableLike_capacity
+          typeof CollectionLike_count | typeof QueueableLike_capacity
         > &
           Mutable<TProperties>,
         capacity: number,
@@ -150,7 +150,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
         return instance;
       },
       props<TProperties>({
-        [QueueLike_count]: 0,
+        [CollectionLike_count]: 0,
         [QueueableLike_backpressureStrategy]: "overflow",
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
@@ -189,7 +189,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
             values[head] = none;
             head = (head + 1) & this[FifoQueue_capacityMask];
             this[FifoQueue_head] = head;
-            this[QueueLike_count]--;
+            this[CollectionLike_count]--;
           }
 
           shrink(this);
@@ -209,7 +209,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
               ? none
               : ((tail = (tail - 1 + capacity) & this[FifoQueue_capacityMask]),
                 (this[FifoQueue_tail] = tail),
-                this[QueueLike_count]--,
+                this[CollectionLike_count]--,
                 values[tail]);
 
           values[tail] = none;
@@ -220,7 +220,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
         },
 
         [IndexedLike_get](this: TProperties & QueueableLike, index: number): T {
-          const count = this[QueueLike_count];
+          const count = this[CollectionLike_count];
           const capacity = this[FifoQueue_values]?.length ?? 0;
           const head = this[FifoQueue_head];
           const values = this[FifoQueue_values] ?? [];
@@ -238,12 +238,12 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           return values[computedIndex] as T;
         },
 
-        [IndexedLike_set](
+        [MutableIndexedLike_set](
           this: TProperties & QueueableLike,
           index: number,
           value: T,
         ): T {
-          const count = this[QueueLike_count];
+          const count = this[CollectionLike_count];
           const capacity = this[FifoQueue_values]?.length ?? 0;
           const head = this[FifoQueue_head];
           const values = this[FifoQueue_values] ?? [];
@@ -270,7 +270,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           item: T,
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-          let count = this[QueueLike_count];
+          let count = this[CollectionLike_count];
           const capacity = this[QueueableLike_capacity];
 
           if (backpressureStrategy === "drop-latest" && count >= capacity) {
@@ -307,14 +307,14 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           let tail = this[FifoQueue_tail];
 
           values[tail] = item;
-          this[QueueLike_count]++;
+          this[CollectionLike_count]++;
 
           tail = (tail + 1) & capacityMask;
           this[FifoQueue_tail] = tail;
 
           grow(this);
 
-          return this[QueueLike_count] < this[QueueableLike_capacity];
+          return this[CollectionLike_count] < this[QueueableLike_capacity];
         },
       },
     ),

@@ -46,7 +46,7 @@ const Observable_multicast =
       replay = 0,
       publisherFactory = Publisher_create,
     } = options;
-    const publisher = publisherFactory({ replay });
+    const publisher = publisherFactory<T>({ replay });
 
     const scheduler = isFunction(schedulerOrFactory)
       ? pipe(schedulerOrFactory(), Disposable_addTo(publisher))

@@ -14,7 +14,7 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] = <
 ) => {
   const { inclusive = false } = options;
   return pipe(
-    AsyncEnumerator_create,
+    AsyncEnumerator_create(),
     partial(Observable_takeWhile<ObservableLike, T>(predicate, { inclusive })),
     AsyncEnumerable_lift(true, true),
   ) as ContainerOperator<AsyncEnumerableLike, T, T>;

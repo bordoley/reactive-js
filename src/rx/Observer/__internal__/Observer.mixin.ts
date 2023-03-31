@@ -14,7 +14,6 @@ import {
 } from "../../../__internal__/symbols.js";
 import {
   QueueLike,
-  QueueLike_count,
   QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
@@ -38,6 +37,7 @@ import {
   SchedulerLike,
 } from "../../../scheduling.js";
 import {
+  CollectionLike_count,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -71,11 +71,11 @@ const Observer_mixin: <T>() => Mixin3<
         ((ctx: ContinuationContextLike) => {
           unsafeCast<TProperties & ObserverLike<T>>(observer);
 
-          while (observer[QueueLike_count] > 0) {
+          while (observer[CollectionLike_count] > 0) {
             const next = observer[QueueLike_dequeue]() as T;
             observer[ObserverLike_notify](next);
 
-            if (observer[QueueLike_count] > 0) {
+            if (observer[CollectionLike_count] > 0) {
               ctx[ContinuationContextLike_yield]();
             }
           }

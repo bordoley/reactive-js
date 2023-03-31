@@ -13,6 +13,7 @@ import {
 import { pipe, unsafeCast } from "../../../functions.js";
 import {
   MulticastObservableLike_observerCount,
+  MulticastObservableLike_replay,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -20,6 +21,7 @@ import {
   PublisherLike,
   PublisherLike_publish,
 } from "../../../rx.js";
+import { CollectionLike_count, IndexedLike_get } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Publisher_create from "./Publisher.create.js";
@@ -33,10 +35,13 @@ const Publisher_createRefCounted: <T>(options?: {
       function RefCountedPublisher(
         instance: Pick<
           PublisherLike<T>,
+          | typeof CollectionLike_count
+          | typeof IndexedLike_get
           | typeof ObservableLike_observe
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
           | typeof MulticastObservableLike_observerCount
+          | typeof MulticastObservableLike_replay
           | typeof PublisherLike_publish
         >,
         delegate: PublisherLike<T>,
@@ -50,11 +55,28 @@ const Publisher_createRefCounted: <T>(options?: {
         [ObservableLike_isEnumerable]: false as const,
         [ObservableLike_isRunnable]: false as const,
 
+        get [CollectionLike_count]() {
+          unsafeCast<DelegatingLike<PublisherLike<T>>>(this);
+          return this[DelegatingLike_delegate][CollectionLike_count];
+        },
+
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<DelegatingLike<PublisherLike<T>>>(this);
           return this[DelegatingLike_delegate][
             MulticastObservableLike_observerCount
           ];
+        },
+
+        get [MulticastObservableLike_replay]() {
+          unsafeCast<DelegatingLike<PublisherLike<T>>>(this);
+          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
+        },
+
+        [IndexedLike_get](
+          this: DelegatingLike<PublisherLike<T>>,
+          index: number,
+        ): T {
+          return this[DelegatingLike_delegate][IndexedLike_get](index);
         },
 
         [PublisherLike_publish](

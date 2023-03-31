@@ -679,6 +679,11 @@ export const MulticastObservableLike_observerCount = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const MulticastObservableLike_replay = /*@__PURE__*/ symbol(
+  "MulticastObservableLike_replay",
+);
+
+/** @type {unique symbol} */
 export const ObserverLike_notify = /*@__PURE__*/ symbol("ObserverLike_notify");
 
 /** @type {unique symbol} */
@@ -834,13 +839,17 @@ export const QueueLike_head = /*@__PURE__*/ symbol("QueueLike_head");
 export const QueueLike_dequeue = /*@__PURE__*/ symbol("QueueLike_dequeue");
 
 /** @type {unique symbol} */
-export const QueueLike_count = /*@__PURE__*/ symbol("QueueLike_count");
+export const CollectionLike_count = /*@__PURE__*/ symbol(
+  "CollectionLike_count",
+);
 
 /** @type {unique symbol} */
 export const IndexedLike_get = /*@__PURE__*/ symbol("IndexedLike_get");
 
 /** @type {unique symbol} */
-export const IndexedLike_set = /*@__PURE__*/ symbol("IndexedLike_set");
+export const MutableIndexedLike_set = /*@__PURE__*/ symbol(
+  "MutableIndexedLike_set",
+);
 
 /** @type {unique symbol} */
 export const StackLike_pop = /*@__PURE__*/ symbol("StackLike_pop");

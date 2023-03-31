@@ -53,6 +53,7 @@ import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.dele
 import * as Streamable from "../streaming/Streamable.js";
 import {
   DisposableLike_dispose,
+  IndexedLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -671,6 +672,7 @@ export const windowLocation: StreamableLike<
       function WindowLocationStream(
         instance: Pick<
           WindowLocationStreamLike,
+          | typeof IndexedLike_get
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
           | typeof QueueableLike_enqueue
@@ -693,6 +695,13 @@ export const windowLocation: StreamableLike<
             this[DelegatingLike_delegate],
             Observable.map<TState, boolean>(({ counter }) => counter > 0),
           );
+        },
+
+        [IndexedLike_get](
+          this: DelegatingLike<StreamLike<Updater<TState>, TState>>,
+          index: number,
+        ): WindowLocationURI {
+          return this[DelegatingLike_delegate][IndexedLike_get](index).uri;
         },
 
         [ObservableLike_isEnumerable]: false as const,

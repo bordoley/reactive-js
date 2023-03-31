@@ -14,10 +14,7 @@ import {
   DispatchedObservable_observer,
   StreamMixin_dispatcher,
 } from "../../../__internal__/symbols.js";
-import {
-  QueueLike,
-  QueueLike_count,
-} from "../../../__internal__/util.internal.js";
+import { QueueLike } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Optional,
@@ -35,6 +32,7 @@ import {
   DispatcherLike_scheduler,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
+  MulticastObservableLike_replay,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -49,8 +47,10 @@ import {
 } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 import {
+  CollectionLike_count,
   DisposableLike,
   DisposableLike_isDisposed,
+  IndexedLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -145,7 +145,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             // Observer only implement Queueable publicly so cast to the implementation interface
             // to enable bypassing the queue
             const observerQueueIsEmpty =
-              (observer as unknown as QueueLike<T>)[QueueLike_count] === 0;
+              (observer as unknown as QueueLike<T>)[CollectionLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
 
             if (inContinuation && observerQueueIsEmpty && !isDisposed) {
@@ -213,7 +213,10 @@ const Stream_mixin: <TReq, T>() => Mixin5<
       function StreamMixin(
         instance: Pick<
           StreamLike<TReq, T>,
+          | typeof CollectionLike_count
+          | typeof IndexedLike_get
           | typeof MulticastObservableLike_observerCount
+          | typeof MulticastObservableLike_replay
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_enqueue
           | typeof QueueableLike_capacity
@@ -257,11 +260,21 @@ const Stream_mixin: <TReq, T>() => Mixin5<
         [DispatcherLike_scheduler]: none,
       }),
       {
+        get [CollectionLike_count]() {
+          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
+          return this[DelegatingLike_delegate][CollectionLike_count];
+        },
+
         get [MulticastObservableLike_observerCount](): number {
           unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
           return this[DelegatingLike_delegate][
             MulticastObservableLike_observerCount
           ];
+        },
+
+        get [MulticastObservableLike_replay]() {
+          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
+          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
         },
 
         get [QueueableLike_backpressureStrategy]() {
@@ -274,6 +287,13 @@ const Stream_mixin: <TReq, T>() => Mixin5<
         get [QueueableLike_capacity](): number {
           unsafeCast<TProperties>(this);
           return this[StreamMixin_dispatcher][QueueableLike_capacity];
+        },
+
+        [IndexedLike_get](
+          this: DelegatingLike<MulticastObservableLike<T>>,
+          index: number,
+        ): T {
+          return this[DelegatingLike_delegate][IndexedLike_get](index);
         },
 
         [ObservableLike_isEnumerable]: false as const,

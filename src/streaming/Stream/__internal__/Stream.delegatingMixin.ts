@@ -12,6 +12,7 @@ import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
   MulticastObservableLike_observerCount,
+  MulticastObservableLike_replay,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -20,6 +21,8 @@ import {
 import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 import {
+  CollectionLike_count,
+  IndexedLike_get,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
@@ -48,8 +51,11 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
       function DelegatingStreamMixin(
         instance: Pick<
           StreamLike<TReq, T>,
+          | typeof CollectionLike_count
           | typeof DispatcherLike_scheduler
+          | typeof IndexedLike_get
           | typeof MulticastObservableLike_observerCount
+          | typeof MulticastObservableLike_replay
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_enqueue
           | typeof QueueableLike_capacity
@@ -70,6 +76,11 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
       },
       props<unknown>({}),
       {
+        get [CollectionLike_count]() {
+          unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);
+          return this[DelegatingLike_delegate][CollectionLike_count];
+        },
+
         get [DispatcherLike_scheduler](): SchedulerLike {
           unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);
           return this[DelegatingLike_delegate][DispatcherLike_scheduler];
@@ -80,6 +91,11 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
           return this[DelegatingLike_delegate][
             MulticastObservableLike_observerCount
           ];
+        },
+
+        get [MulticastObservableLike_replay]() {
+          unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);
+          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
         },
 
         get [QueueableLike_backpressureStrategy]() {
@@ -102,6 +118,13 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
         get [ObservableLike_isRunnable]() {
           unsafeCast<DelegatingLike<StreamLike<TReq, T>>>(this);
           return this[DelegatingLike_delegate][ObservableLike_isRunnable];
+        },
+
+        [IndexedLike_get](
+          this: DelegatingLike<StreamLike<TReq, T>>,
+          index: number,
+        ): T {
+          return this[DelegatingLike_delegate][IndexedLike_get](index);
         },
 
         [QueueableLike_enqueue](

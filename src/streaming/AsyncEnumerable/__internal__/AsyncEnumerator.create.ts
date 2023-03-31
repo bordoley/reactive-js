@@ -10,12 +10,13 @@ import {
 } from "../../../__internal__/mixins.js";
 import { AsyncEnumeratorDelegatingMixin_src } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
-import { none, pipe, unsafeCast } from "../../../functions.js";
+import { none, pipe, returns, unsafeCast } from "../../../functions.js";
 import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
+  MulticastObservableLike_replay,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -25,10 +26,12 @@ import {
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { StreamLike } from "../../../streaming.js";
 import {
+  CollectionLike_count,
   DisposableLike_add,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  IndexedLike_get,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
@@ -36,7 +39,7 @@ import {
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
-const AsyncEnumerator_create: <TA, TB>(
+const AsyncEnumerator_create: <TA, TB>() => (
   stream: StreamLike<void, TA>,
   op: ContainerOperator<ObservableLike, TA, TB>,
 ) => StreamLike<void, TB> = /*@__PURE__*/ (<TA, TB>() => {
@@ -44,7 +47,7 @@ const AsyncEnumerator_create: <TA, TB>(
     readonly [AsyncEnumeratorDelegatingMixin_src]: StreamLike<void, TA>;
   };
 
-  return createInstanceFactory(
+  return pipe(
     mix(
       include(Disposable_delegatingMixin<MulticastObservableLike<TB>>()),
       function AsyncEnumeratorDelegatingMixin(
@@ -85,6 +88,11 @@ const AsyncEnumerator_create: <TA, TB>(
         [ObservableLike_isEnumerable]: false as const,
         [ObservableLike_isRunnable]: false as const,
 
+        get [CollectionLike_count]() {
+          unsafeCast<DelegatingLike<MulticastObservableLike<TB>>>(this);
+          return this[DelegatingLike_delegate][CollectionLike_count];
+        },
+
         get [DispatcherLike_scheduler]() {
           unsafeCast<TProperties>(this);
           return this[AsyncEnumeratorDelegatingMixin_src][
@@ -113,8 +121,20 @@ const AsyncEnumerator_create: <TA, TB>(
           ];
         },
 
+        get [MulticastObservableLike_replay]() {
+          unsafeCast<DelegatingLike<MulticastObservableLike<TB>>>(this);
+          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
+        },
+
         [DispatcherLike_complete](this: TProperties) {
           this[AsyncEnumeratorDelegatingMixin_src][DispatcherLike_complete]();
+        },
+
+        [IndexedLike_get](
+          this: DelegatingLike<MulticastObservableLike<TB>>,
+          index: number,
+        ): TB {
+          return this[DelegatingLike_delegate][IndexedLike_get](index);
         },
 
         [QueueableLike_enqueue](this: TProperties, next: void): boolean {
@@ -131,7 +151,12 @@ const AsyncEnumerator_create: <TA, TB>(
         },
       },
     ),
-  );
+    createInstanceFactory,
+    returns,
+  ) as <TA, TB>() => (
+    stream: StreamLike<void, TA>,
+    op: ContainerOperator<ObservableLike, TA, TB>,
+  ) => StreamLike<void, TB>;
 })();
 
 export default AsyncEnumerator_create;

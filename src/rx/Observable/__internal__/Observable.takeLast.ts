@@ -31,8 +31,8 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Indexed_toReadonlyArray from "../../../util/Indexed/__internal__/Indexed.toReadonlyArray.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
-import IndexedQueue_toReadonlyArray from "../../../util/Queue/__internal__/IndexedQueue.toReadonlyArray.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
@@ -73,7 +73,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           Disposable_onComplete(() => {
             pipe(
               instance[TakeLastObserver_takeLastQueue],
-              IndexedQueue_toReadonlyArray<T>(),
+              Indexed_toReadonlyArray<T>(),
               ReadonlyArray_toObservable(),
               invoke(ObservableLike_observe, delegate),
             );

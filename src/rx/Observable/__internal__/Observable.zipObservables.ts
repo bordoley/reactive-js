@@ -15,7 +15,6 @@ import {
 } from "../../../__internal__/symbols.js";
 import {
   QueueLike,
-  QueueLike_count,
   QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
@@ -44,6 +43,7 @@ import {
   ContinuationContextLike_yield,
 } from "../../../scheduling.js";
 import {
+  CollectionLike_count,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -117,7 +117,7 @@ const QueuedEnumerator_create: <T>(
         [EnumeratorLike_move](
           this: DisposableLike & TProperties & QueueLike<T>,
         ) {
-          if (this[QueueLike_count] > 0) {
+          if (this[CollectionLike_count] > 0) {
             const next = this[QueueLike_dequeue]() as T;
             this[EnumeratorLike_current] = next;
             this[EnumeratorLike_hasCurrent] = true;

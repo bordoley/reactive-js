@@ -1,6 +1,6 @@
-import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue } from "./__internal__/symbols.js";
+import { CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue } from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
-export { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, QueueableLike_capacity, };
+export { CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, QueueableLike_capacity, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -33,6 +33,7 @@ export interface DisposableLike {
 /**
  * An interface for types that support buffering items with backpressure.
  *
+ * @noInheritDoc
  */
 export interface QueueableLike<T = unknown> {
     /**
@@ -50,4 +51,16 @@ export interface QueueableLike<T = unknown> {
      * @returns `true` if the queue has additional remaining capacity otherwise `false`.
      */
     [QueueableLike_enqueue](req: T): boolean;
+}
+/**
+ * @noInheritDoc
+ */
+export interface CollectionLike {
+    readonly [CollectionLike_count]: number;
+}
+/**
+ * @noInheritDoc
+ */
+export interface IndexedLike<T = unknown> extends CollectionLike {
+    [IndexedLike_get](index: number): T;
 }

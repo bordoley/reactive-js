@@ -13,7 +13,7 @@ const AsyncEnumerable_keep: Keep<AsyncEnumerableLike>["keep"] = <T>(
 ) =>
   pipe(
     (delegate: StreamLike<void, T>) =>
-      AsyncEnumerator_create<T, T>(
+      AsyncEnumerator_create<T, T>()(
         delegate,
         compose(
           Observable_forEach<ObservableLike, T>(x => {

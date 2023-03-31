@@ -1,8 +1,10 @@
 import {
+  CollectionLike_count,
   DisposableLike_add,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  IndexedLike_get,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
@@ -10,10 +12,12 @@ import {
 import { Optional, SideEffect1 } from "./functions.js";
 
 export {
+  CollectionLike_count,
   DisposableLike_add,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  IndexedLike_get,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
   QueueableLike_capacity,
@@ -61,6 +65,7 @@ export interface DisposableLike {
 /**
  * An interface for types that support buffering items with backpressure.
  *
+ * @noInheritDoc
  */
 export interface QueueableLike<T = unknown> {
   /**
@@ -84,4 +89,18 @@ export interface QueueableLike<T = unknown> {
    * @returns `true` if the queue has additional remaining capacity otherwise `false`.
    */
   [QueueableLike_enqueue](req: T): boolean;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface CollectionLike {
+  readonly [CollectionLike_count]: number;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface IndexedLike<T = unknown> extends CollectionLike {
+  [IndexedLike_get](index: number): T;
 }

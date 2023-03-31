@@ -2,12 +2,11 @@
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_move, Publisher_observers, } from "../../../__internal__/symbols.js";
-import { IndexedLike_get, QueueLike_count, } from "../../../__internal__/util.internal.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_move, Publisher_observers, QueueableLike_capacity, } from "../../../__internal__/symbols.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PublisherLike_publish, } from "../../../rx.js";
-import { DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
+import { DispatcherLike_complete, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PublisherLike_publish, } from "../../../rx.js";
+import { CollectionLike_count, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -39,6 +38,10 @@ const Publisher_create =
             unsafeCast(this);
             return this[Publisher_observers].size;
         },
+        get [MulticastObservableLike_replay]() {
+            unsafeCast(this);
+            return this[QueueableLike_capacity];
+        },
         [PublisherLike_publish](next) {
             if (this[DisposableLike_isDisposed]) {
                 return;
@@ -59,7 +62,7 @@ const Publisher_create =
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
-            const count = this[QueueLike_count];
+            const count = this[CollectionLike_count];
             for (let i = 0; i < count; i++) {
                 const next = this[IndexedLike_get](i);
                 observer[QueueableLike_enqueue](next);

@@ -1,4 +1,4 @@
-declare const Optional_toAsyncEnumerable: (options?: {
+declare const Optional_toAsyncEnumerable: <T>(options?: {
     delay?: number;
-}) => import("../../../functions.js").Function1<unknown, import("../../../streaming.js").AsyncEnumerableLike<unknown>>;
+}) => import("../../../functions.js").Function1<import("../../../functions.js").Optional<T>, import("../../../streaming.js").AsyncEnumerableLike<T>>;
 export default Optional_toAsyncEnumerable;

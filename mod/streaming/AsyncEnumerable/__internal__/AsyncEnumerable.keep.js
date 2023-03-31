@@ -6,7 +6,7 @@ import Observable_keep from "../../../rx/Observable/__internal__/Observable.keep
 import { QueueableLike_enqueue } from "../../../util.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 import AsyncEnumerator_create from "./AsyncEnumerator.create.js";
-const AsyncEnumerable_keep = (predicate) => pipe((delegate) => AsyncEnumerator_create(delegate, compose(Observable_forEach(x => {
+const AsyncEnumerable_keep = (predicate) => pipe((delegate) => AsyncEnumerator_create()(delegate, compose(Observable_forEach(x => {
     if (!predicate(x)) {
         delegate[QueueableLike_enqueue](none);
     }

@@ -18,7 +18,6 @@ import {
 import {
   IndexedQueueLike,
   QueueLike,
-  QueueLike_count,
   QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
@@ -39,6 +38,7 @@ import {
   ZipWithLatestFrom,
 } from "../../../rx.js";
 import {
+  CollectionLike_count,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_backpressureStrategy,
@@ -77,7 +77,8 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
           DelegatingLike<ObserverLike<T>>,
       ) => {
         if (
-          observer[ZipWithLatestFromObserver_TAQueue][QueueLike_count] > 0 &&
+          observer[ZipWithLatestFromObserver_TAQueue][CollectionLike_count] >
+            0 &&
           observer[ZipWithLatestFromObserver_hasLatest]
         ) {
           observer[ZipWithLatestFromObserver_hasLatest] = false;
@@ -139,7 +140,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
                 if (
                   instance[DisposableLike_isDisposed] &&
                   instance[ZipWithLatestFromObserver_TAQueue][
-                    QueueLike_count
+                    CollectionLike_count
                   ] === 0
                 ) {
                   instance[DelegatingLike_delegate][DisposableLike_dispose]();

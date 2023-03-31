@@ -1,26 +1,24 @@
 import { Optional } from "../functions.js";
-import { DisposableLike, QueueableLike } from "../util.js";
+import { CollectionLike, DisposableLike, IndexedLike, QueueableLike } from "../util.js";
 import { DelegatingLike } from "./mixins.js";
-import { IndexedLike_get, IndexedLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, SerialDisposableLike_current, StackLike_head, StackLike_pop } from "./symbols.js";
-export { SerialDisposableLike_current, QueueLike_head, QueueLike_dequeue, QueueLike_count, IndexedLike_get, IndexedLike_set, StackLike_pop, StackLike_head, };
+import { MutableIndexedLike_set, QueueLike_dequeue, QueueLike_head, SerialDisposableLike_current, StackLike_head, StackLike_pop } from "./symbols.js";
+export { MutableIndexedLike_set, SerialDisposableLike_current, QueueLike_head, QueueLike_dequeue, StackLike_pop, StackLike_head, };
 export interface SerialDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike {
     get [SerialDisposableLike_current](): TDisposable;
     set [SerialDisposableLike_current](v: TDisposable);
 }
 export interface DelegatingDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DelegatingLike<TDisposable>, DisposableLike {
 }
-export interface QueueLike<T = unknown> extends QueueableLike<T> {
-    readonly [QueueLike_count]: number;
+export interface QueueLike<T = unknown> extends QueueableLike<T>, CollectionLike {
     readonly [QueueLike_head]: Optional<T>;
     [QueueLike_dequeue](): Optional<T>;
-}
-export interface IndexedLike<T = unknown> {
-    [IndexedLike_get](index: number): T;
-    [IndexedLike_set](index: number, value: T): T;
 }
 export interface StackLike<T = unknown> {
     readonly [StackLike_head]: Optional<T>;
     [StackLike_pop](): Optional<T>;
 }
-export interface IndexedQueueLike<T = unknown> extends QueueLike<T>, IndexedLike<T>, StackLike<T> {
+export interface MutableIndexedLike<T = unknown> extends IndexedLike<T> {
+    [MutableIndexedLike_set](index: number, value: T): T;
+}
+export interface IndexedQueueLike<T = unknown> extends QueueLike<T>, MutableIndexedLike<T>, StackLike<T> {
 }

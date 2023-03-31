@@ -14,7 +14,7 @@ const AsyncEnumerable_scan: Scan<
   initialValue: Factory<TAcc>,
 ): ContainerOperator<AsyncEnumerableLike, T, TAcc> =>
   pipe(
-    AsyncEnumerator_create,
+    AsyncEnumerator_create(),
     partial(Observable_scan<ObservableLike, T, TAcc>(reducer, initialValue)),
     AsyncEnumerable_lift(true, true),
   ) as ContainerOperator<AsyncEnumerableLike, T, TAcc>;

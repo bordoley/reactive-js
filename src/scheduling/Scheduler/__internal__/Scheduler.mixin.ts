@@ -25,7 +25,6 @@ import {
 } from "../../../__internal__/symbols.js";
 import {
   QueueLike,
-  QueueLike_count,
   QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
@@ -51,6 +50,7 @@ import {
   SchedulerLike_shouldYield,
 } from "../../../scheduling.js";
 import {
+  CollectionLike_count,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -182,7 +182,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           ) {
             const shouldYield =
               delay > 0 ||
-              this[QueueLike_count] > 0 ||
+              this[CollectionLike_count] > 0 ||
               this[ContinuationSchedulerLike_shouldYield];
 
             if (shouldYield) {

@@ -38,7 +38,7 @@ const Observable_share =
       if (isNone(multicasted)) {
         multicasted = pipe(
           source,
-          Observable_multicast(schedulerOrFactory, {
+          Observable_multicast<T>(schedulerOrFactory, {
             ...options,
             publisherFactory: Publisher_createRefCounted,
           }),
