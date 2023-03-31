@@ -3,12 +3,11 @@
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DispatchedObservable_observer, StreamMixin_dispatcher, } from "../../../__internal__/symbols.js";
-import { QueueLike_count, } from "../../../__internal__/util.internal.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
@@ -48,7 +47,7 @@ const DispatchedObservable_create =
             const inContinuation = scheduler[SchedulerLike_inContinuation];
             // Observer only implement Queueable publicly so cast to the implementation interface
             // to enable bypassing the queue
-            const observerQueueIsEmpty = observer[QueueLike_count] === 0;
+            const observerQueueIsEmpty = observer[CollectionLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
             if (inContinuation && observerQueueIsEmpty && !isDisposed) {
                 observer[ObserverLike_notify](next);
@@ -95,9 +94,17 @@ const Stream_mixin = /*@__PURE__*/ (() => {
         [StreamMixin_dispatcher]: none,
         [DispatcherLike_scheduler]: none,
     }), {
+        get [CollectionLike_count]() {
+            unsafeCast(this);
+            return this[DelegatingLike_delegate][CollectionLike_count];
+        },
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
             return this[DelegatingLike_delegate][MulticastObservableLike_observerCount];
+        },
+        get [MulticastObservableLike_replay]() {
+            unsafeCast(this);
+            return this[DelegatingLike_delegate][MulticastObservableLike_replay];
         },
         get [QueueableLike_backpressureStrategy]() {
             unsafeCast(this);
@@ -106,6 +113,9 @@ const Stream_mixin = /*@__PURE__*/ (() => {
         get [QueueableLike_capacity]() {
             unsafeCast(this);
             return this[StreamMixin_dispatcher][QueueableLike_capacity];
+        },
+        [IndexedLike_get](index) {
+            return this[DelegatingLike_delegate][IndexedLike_get](index);
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

@@ -293,6 +293,8 @@ export const DispatcherLike_scheduler: unique symbol;
 /** @type {unique symbol} */
 export const MulticastObservableLike_observerCount: unique symbol;
 /** @type {unique symbol} */
+export const MulticastObservableLike_replay: unique symbol;
+/** @type {unique symbol} */
 export const ObserverLike_notify: unique symbol;
 /** @type {unique symbol} */
 export const ObservableLike_observe: unique symbol;
@@ -359,11 +361,11 @@ export const QueueLike_head: unique symbol;
 /** @type {unique symbol} */
 export const QueueLike_dequeue: unique symbol;
 /** @type {unique symbol} */
-export const QueueLike_count: unique symbol;
+export const CollectionLike_count: unique symbol;
 /** @type {unique symbol} */
 export const IndexedLike_get: unique symbol;
 /** @type {unique symbol} */
-export const IndexedLike_set: unique symbol;
+export const MutableIndexedLike_set: unique symbol;
 /** @type {unique symbol} */
 export const StackLike_pop: unique symbol;
 /** @type {unique symbol} */

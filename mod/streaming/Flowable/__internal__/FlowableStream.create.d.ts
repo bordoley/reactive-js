@@ -2,9 +2,10 @@ import { ContainerOperator } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { FlowableStreamLike } from "../../../streaming.js";
-declare const FlowableStream_create: (op: ContainerOperator<ObservableLike<unknown>, boolean, unknown>, scheduler: SchedulerLike, options?: {
-    readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
-    readonly replay?: number | undefined;
-    readonly capacity?: number | undefined;
-} | undefined) => FlowableStreamLike<unknown>;
+import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
+declare const FlowableStream_create: <T>(op: ContainerOperator<ObservableLike, boolean, T>, scheduler: SchedulerLike, options?: {
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly replay?: number;
+    readonly capacity?: number;
+}) => FlowableStreamLike<T>;
 export default FlowableStream_create;

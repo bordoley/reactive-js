@@ -39,7 +39,15 @@ import {
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Stream_mixin from "../../Stream/__internal__/Stream.mixin.js";
 
-const FlowableStream_create = /*@__PURE__*/ (<T>() => {
+const FlowableStream_create: <T>(
+  op: ContainerOperator<ObservableLike, boolean, T>,
+  scheduler: SchedulerLike,
+  options?: {
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly replay?: number;
+    readonly capacity?: number;
+  },
+) => FlowableStreamLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [FlowableStreamLike_isPaused]: ObservableLike<boolean>;
   };

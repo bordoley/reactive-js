@@ -34,8 +34,8 @@ const Stream_create = /*@__PURE__*/ (() => {
       capacity = MAX_SAFE_INTEGER,
       replay = 0,
     } = options ?? {};
-    return createStreamInternal(
-      op as ContainerOperator<ObservableLike, unknown, unknown>,
+    return createStreamInternal<TReq, T>(
+      op,
       scheduler,
       replay,
       capacity,

@@ -10,7 +10,7 @@ const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = <TA, TB>(
   mapper: Function1<TA, TB>,
 ): ContainerOperator<AsyncEnumerableLike, TA, TB> =>
   pipe(
-    AsyncEnumerator_create,
+    AsyncEnumerator_create(),
     partial(Observable_map<ObservableLike, TA, TB>(mapper)),
     AsyncEnumerable_lift(true, true),
   ) as ContainerOperator<AsyncEnumerableLike, TA, TB>;

@@ -16,6 +16,8 @@ A stateful ObservableLike resource.
 
 - [`ObservableLike`](rx.ObservableLike.md)<`T`\>
 
+- [`IndexedLike`](util.IndexedLike.md)<`T`\>
+
 - [`DisposableLike`](util.DisposableLike.md)
 
   ↳ **`MulticastObservableLike`**
@@ -30,6 +32,7 @@ A stateful ObservableLike resource.
 
 - [[ContainerLike\_type]](rx.MulticastObservableLike.md#[containerlike_type])
 - [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
+- [[MulticastObservableLike\_replay]](rx.MulticastObservableLike.md#[multicastobservablelike_replay])
 - [[ObservableLike\_isEnumerable]](rx.MulticastObservableLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.MulticastObservableLike.md#[observablelike_isrunnable])
 
@@ -49,7 +52,15 @@ ___
 
 • `Readonly` **[MulticastObservableLike\_observerCount]**: `number`
 
-The number of observers currently observing the `ObservableLike`.
+The number of observers currently observing the `MulticastObservableLike`.
+
+___
+
+### [MulticastObservableLike\_replay]
+
+• `Readonly` **[MulticastObservableLike\_replay]**: `number`
+
+The number of events the 'MulticastObservableLike` replays when subscribed to
 
 ___
 

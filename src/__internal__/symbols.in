@@ -145,6 +145,7 @@ DelegatingLike_delegate
 DispatcherLike_complete
 DispatcherLike_scheduler
 MulticastObservableLike_observerCount
+MulticastObservableLike_replay
 ObserverLike_notify
 ObservableLike_observe
 ObservableLike_isEnumerable
@@ -178,9 +179,9 @@ QueueableLike_backpressureStrategy
 SerialDisposableLike_current
 QueueLike_head
 QueueLike_dequeue
-QueueLike_count
+CollectionLike_count
 IndexedLike_get
-IndexedLike_set
+MutableIndexedLike_set
 StackLike_pop
 StackLike_head
 IteratorEnumerator_iterator

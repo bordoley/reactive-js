@@ -2,10 +2,10 @@
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ZipWithLatestFromObserver_TAQueue, ZipWithLatestFromObserver_hasLatest, ZipWithLatestFromObserver_otherLatest, ZipWithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
-import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -20,7 +20,8 @@ const Observable_zipWithLatestFrom =
     const createZipWithLatestFromObserver = (() => {
         const typedObserverMixin = Observer_mixin();
         const notifyDelegate = (observer) => {
-            if (observer[ZipWithLatestFromObserver_TAQueue][QueueLike_count] > 0 &&
+            if (observer[ZipWithLatestFromObserver_TAQueue][CollectionLike_count] >
+                0 &&
                 observer[ZipWithLatestFromObserver_hasLatest]) {
                 observer[ZipWithLatestFromObserver_hasLatest] = false;
                 const next = observer[ZipWithLatestFromObserver_TAQueue][QueueLike_dequeue]();
@@ -46,7 +47,7 @@ const Observable_zipWithLatestFrom =
                 instance[ZipWithLatestFromObserver_otherLatest] = otherLatest;
                 notifyDelegate(instance);
                 if (instance[DisposableLike_isDisposed] &&
-                    instance[ZipWithLatestFromObserver_TAQueue][QueueLike_count] === 0) {
+                    instance[ZipWithLatestFromObserver_TAQueue][CollectionLike_count] === 0) {
                     instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
             }), Observable_subscribeWithDispatcherConfig(delegate), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));

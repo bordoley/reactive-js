@@ -11,7 +11,7 @@ import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLi
 import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { DisposableLike_dispose, QueueableLike_enqueue, } from "../util.js";
+import { DisposableLike_dispose, IndexedLike_get, QueueableLike_enqueue, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
 const errorEvent = "error";
@@ -94,6 +94,9 @@ export const windowLocation = /*@__PURE__*/ (() => {
         get [WindowLocationStreamLike_canGoBack]() {
             unsafeCast(this);
             return pipe(this[DelegatingLike_delegate], Observable.map(({ counter }) => counter > 0));
+        },
+        [IndexedLike_get](index) {
+            return this[DelegatingLike_delegate][IndexedLike_get](index).uri;
         },
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

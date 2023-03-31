@@ -4,10 +4,10 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { MergeAllObserver_activeCount, MergeAllObserver_maxBufferSize, MergeAllObserver_maxConcurrency, MergeAllObserver_observablesQueue, MergeAllObserver_onDispose, } from "../../../__internal__/symbols.js";
-import { QueueLike_count, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { bindMethod, isSome, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -49,7 +49,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 if (delegate[DisposableLike_isDisposed]) {
                     // FIXME: Clear the queue
                 }
-                else if (instance[MergeAllObserver_observablesQueue][QueueLike_count] +
+                else if (instance[MergeAllObserver_observablesQueue][CollectionLike_count] +
                     instance[MergeAllObserver_activeCount] ===
                     0) {
                     delegate[DisposableLike_dispose]();
@@ -67,7 +67,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 Observer_assertState(this);
                 this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
                 // Drop old events if the maxBufferSize has been exceeded
-                if (this[MergeAllObserver_observablesQueue][QueueLike_count] +
+                if (this[MergeAllObserver_observablesQueue][CollectionLike_count] +
                     this[MergeAllObserver_activeCount] >
                     this[MergeAllObserver_maxBufferSize]) {
                     this[MergeAllObserver_observablesQueue][QueueLike_dequeue]();

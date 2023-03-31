@@ -2,12 +2,12 @@ import { compose, none } from "../../../functions.js";
 import ReadonlyArray_toFlowable from "../../ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import Optional_toReadonlyArray from "./Optional.toReadonlyArray.js";
 
-const Optional_toFlowable = (options?: { delay?: number }) => {
+const Optional_toFlowable = <T>(options?: { delay?: number }) => {
   const { delay = 0 } = options ?? {};
   const toFlowableOptions = delay > 0 ? { delay, delayStart: true } : none;
 
   return compose(
-    Optional_toReadonlyArray(),
+    Optional_toReadonlyArray<T>(),
     ReadonlyArray_toFlowable(toFlowableOptions),
   );
 };

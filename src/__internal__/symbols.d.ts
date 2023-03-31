@@ -292,6 +292,8 @@ export declare const DispatcherLike_scheduler: unique symbol;
 
 export declare const MulticastObservableLike_observerCount: unique symbol;
 
+export declare const MulticastObservableLike_replay: unique symbol;
+
 export declare const ObserverLike_notify: unique symbol;
 
 export declare const ObservableLike_observe: unique symbol;
@@ -358,11 +360,11 @@ export declare const QueueLike_head: unique symbol;
 
 export declare const QueueLike_dequeue: unique symbol;
 
-export declare const QueueLike_count: unique symbol;
+export declare const CollectionLike_count: unique symbol;
 
 export declare const IndexedLike_get: unique symbol;
 
-export declare const IndexedLike_set: unique symbol;
+export declare const MutableIndexedLike_set: unique symbol;
 
 export declare const StackLike_pop: unique symbol;
 

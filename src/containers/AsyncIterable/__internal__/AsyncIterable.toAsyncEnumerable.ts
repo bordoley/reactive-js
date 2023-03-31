@@ -45,6 +45,6 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
         false,
         false,
       ),
-  );
+  ) as ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnumerable"];
 
 export default AsyncIterable_toAsyncEnumerable;

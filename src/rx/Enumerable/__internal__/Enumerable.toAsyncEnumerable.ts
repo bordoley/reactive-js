@@ -28,7 +28,7 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
 
 
     <T>(options?: { delay?: number }) =>
-    (enumerable: EnumerableLike): AsyncEnumerableLike => {
+    (enumerable: EnumerableLike<T>): AsyncEnumerableLike<T> => {
       const { delay = 0 } = options ?? {};
 
       return Streamable_createLifted<T>(

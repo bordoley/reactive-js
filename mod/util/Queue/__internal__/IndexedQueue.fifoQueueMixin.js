@@ -4,9 +4,9 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { mix, props } from "../../../__internal__/mixins.js";
 import { FifoQueue_capacityMask, FifoQueue_head, FifoQueue_tail, FifoQueue_values, } from "../../../__internal__/symbols.js";
-import { IndexedLike_get, IndexedLike_set, QueueLike_count, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
+import { MutableIndexedLike_set, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;
@@ -32,7 +32,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         const values = (_a = instance[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
         const capacity = values.length;
         const capacityMask = instance[FifoQueue_capacityMask];
-        const count = instance[QueueLike_count];
+        const count = instance[CollectionLike_count];
         if (head === 0 || (tail === 0 && head < capacity >> 2)) {
             values.length <<= 1;
             instance[FifoQueue_tail] = count + head;
@@ -50,7 +50,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         var _a;
         const values = (_a = instance[FifoQueue_values]) !== null && _a !== void 0 ? _a : [];
         const capacity = values.length;
-        const count = instance[QueueLike_count];
+        const count = instance[CollectionLike_count];
         if (count >= capacity >> 2 || capacity <= 32) {
             return;
         }
@@ -74,7 +74,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             clampPositiveNonZeroInteger(capacity);
         return instance;
     }, props({
-        [QueueLike_count]: 0,
+        [CollectionLike_count]: 0,
         [QueueableLike_backpressureStrategy]: "overflow",
         [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
@@ -108,7 +108,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                 values[head] = none;
                 head = (head + 1) & this[FifoQueue_capacityMask];
                 this[FifoQueue_head] = head;
-                this[QueueLike_count]--;
+                this[CollectionLike_count]--;
             }
             shrink(this);
             return item;
@@ -123,7 +123,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                 ? none
                 : ((tail = (tail - 1 + capacity) & this[FifoQueue_capacityMask]),
                     (this[FifoQueue_tail] = tail),
-                    this[QueueLike_count]--,
+                    this[CollectionLike_count]--,
                     values[tail]);
             values[tail] = none;
             shrink(this);
@@ -131,7 +131,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         },
         [IndexedLike_get](index) {
             var _a, _b, _c;
-            const count = this[QueueLike_count];
+            const count = this[CollectionLike_count];
             const capacity = (_b = (_a = this[FifoQueue_values]) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0;
             const head = this[FifoQueue_head];
             const values = (_c = this[FifoQueue_values]) !== null && _c !== void 0 ? _c : [];
@@ -144,9 +144,9 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                     : tailOffsetIndex;
             return values[computedIndex];
         },
-        [IndexedLike_set](index, value) {
+        [MutableIndexedLike_set](index, value) {
             var _a, _b, _c;
-            const count = this[QueueLike_count];
+            const count = this[CollectionLike_count];
             const capacity = (_b = (_a = this[FifoQueue_values]) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0;
             const head = this[FifoQueue_head];
             const values = (_c = this[FifoQueue_values]) !== null && _c !== void 0 ? _c : [];
@@ -164,7 +164,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         [QueueableLike_enqueue](item) {
             var _a;
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
-            let count = this[QueueLike_count];
+            let count = this[CollectionLike_count];
             const capacity = this[QueueableLike_capacity];
             if (backpressureStrategy === "drop-latest" && count >= capacity) {
                 return false;
@@ -189,11 +189,11 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             const capacityMask = this[FifoQueue_capacityMask];
             let tail = this[FifoQueue_tail];
             values[tail] = item;
-            this[QueueLike_count]++;
+            this[CollectionLike_count]++;
             tail = (tail + 1) & capacityMask;
             this[FifoQueue_tail] = tail;
             grow(this);
-            return this[QueueLike_count] < this[QueueableLike_capacity];
+            return this[CollectionLike_count] < this[QueueableLike_capacity];
         },
     }), returns);
 })();
