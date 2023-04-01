@@ -19,7 +19,7 @@ import {
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Publisher_createRefCounted from "../../Publisher/__internal__/Publisher.createRefCounted.js";
 import Observable_create from "./Observable.create.js";
-import Observable_multicast from "./Observable.multicast.js";
+import Observable_multicastImpl from "./Observable.multicastImpl.js";
 
 const Observable_share =
   <T>(
@@ -38,10 +38,11 @@ const Observable_share =
       if (isNone(multicasted)) {
         multicasted = pipe(
           source,
-          Observable_multicast<T>(schedulerOrFactory, {
-            ...options,
-            publisherFactory: Publisher_createRefCounted,
-          }),
+          Observable_multicastImpl<T>(
+            Publisher_createRefCounted,
+            schedulerOrFactory,
+            options,
+          ),
           Disposable_onDisposed(() => {
             multicasted = none;
           }),
