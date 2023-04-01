@@ -78,7 +78,7 @@ const createCacheStream: <T>(
   type TProperties<T> = {
     scheduleCleanup: SideEffect1<string>;
     store: Map<string, T>;
-    subscriptions: Map<string, PublisherLike<T>>;
+    subscriptions: Map<string, PublisherLike<Optional<T>>>;
   };
 
   return createInstanceFactory(
@@ -197,16 +197,21 @@ const createCacheStream: <T>(
               ),
               Observable.forEach(
                 Obj.forEach((v, key) => {
+                  const oldValue = instance.store.get(key);
+
                   if (isNone(v)) {
                     instance.store.delete(key);
-                    return;
+                  } else {
+                    instance.store.set(key, v);
                   }
 
-                  const oldValue = instance.store.get(key);
-                  instance.store.set(key, v);
                   const observable = instance.subscriptions.get(key);
 
-                  if (isSome(observable) && oldValue !== v) {
+                  // We want to publish none, when the cache does not have the value
+                  // when initially subscribing to the key.
+                  const shouldPublish = isNone(v) || oldValue !== v;
+
+                  if (isSome(observable) && shouldPublish) {
                     observable[PublisherLike_publish](v);
                     return;
                   }

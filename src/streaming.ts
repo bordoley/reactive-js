@@ -170,7 +170,7 @@ export interface CacheStreamLike<T>
     Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>,
     never
   > {
-  [CacheStreamLike_get](key: string): ObservableLike<T>;
+  [CacheStreamLike_get](key: string): ObservableLike<Optional<T>>;
 }
 
 /**

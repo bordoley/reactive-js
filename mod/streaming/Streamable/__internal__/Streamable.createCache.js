@@ -63,14 +63,18 @@ const createCacheStream = /*@__PURE__*/ (() => {
         // This could be the cached value or the value
         // loaded from a persistent store.
         updater(values[k])))), Observable.forEach(Obj.forEach((v, key) => {
+            const oldValue = instance.store.get(key);
             if (isNone(v)) {
                 instance.store.delete(key);
-                return;
             }
-            const oldValue = instance.store.get(key);
-            instance.store.set(key, v);
+            else {
+                instance.store.set(key, v);
+            }
             const observable = instance.subscriptions.get(key);
-            if (isSome(observable) && oldValue !== v) {
+            // We want to publish none, when the cache does not have the value
+            // when initially subscribing to the key.
+            const shouldPublish = isNone(v) || oldValue !== v;
+            if (isSome(observable) && shouldPublish) {
                 observable[PublisherLike_publish](v);
                 return;
             }

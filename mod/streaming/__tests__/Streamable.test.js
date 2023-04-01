@@ -25,7 +25,23 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     }), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([1, 2, 3]));
-})), describe("createInMemoryCache", test("explicitly deleting a key", () => {
+})), describe("createInMemoryCache", test("it publishes none on subscribe when the key is missing", () => {
+    const scheduler = Scheduler.createVirtualTimeScheduler();
+    const cache = Streamable.createInMemoryCache({ capacity: 1 })[StreamableLike_stream](scheduler);
+    const result = [];
+    pipe([
+        [
+            2,
+            () => {
+                pipe(cache[CacheStreamLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result, "push")), Observable.subscribe(scheduler));
+            },
+        ],
+    ], ReadonlyArray.forEach(([time, f]) => {
+        scheduler[SchedulerLike_schedule](f, { delay: time });
+    }));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(result, expectArrayEquals([[2, none]], arrayEquality()));
+}), test("explicitly deleting a key", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const cache = Streamable.createInMemoryCache({ capacity: 1 })[StreamableLike_stream](scheduler);
     const result = [];
@@ -64,7 +80,11 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
         scheduler[SchedulerLike_schedule](f, { delay: time });
     }));
     scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(result, expectArrayEquals([[3, 2]], arrayEquality()));
+    pipe(result, expectArrayEquals([
+        [2, none],
+        [3, 2],
+        [4, none],
+    ], arrayEquality()));
 }), test("integration test", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const cache = Streamable.createInMemoryCache({ capacity: 1 })[StreamableLike_stream](scheduler);
@@ -150,6 +170,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     }));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result1, expectArrayEquals([
+        [0, none],
         [1, 1],
         [3, 2],
         [5, 3],

@@ -56,6 +56,38 @@ testModule(
   ),
   describe(
     "createInMemoryCache",
+    test("it publishes none on subscribe when the key is missing", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+
+      const cache = Streamable.createInMemoryCache<number>({ capacity: 1 })[
+        StreamableLike_stream
+      ](scheduler);
+
+      const result: [number, number][] = [];
+
+      pipe(
+        [
+          [
+            2,
+            () => {
+              pipe(
+                cache[CacheStreamLike_get]("abc"),
+                Observable.withCurrentTime((time, value) => [time, value]),
+                Observable.forEach(bindMethod(result, "push")),
+                Observable.subscribe(scheduler),
+              );
+            },
+          ],
+        ],
+        ReadonlyArray.forEach(([time, f]: [number, SideEffect]) => {
+          scheduler[SchedulerLike_schedule](f, { delay: time });
+        }),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectArrayEquals([[2, none]], arrayEquality()));
+    }),
     test("explicitly deleting a key", () => {
       const scheduler = Scheduler.createVirtualTimeScheduler();
 
@@ -114,7 +146,17 @@ testModule(
 
       scheduler[VirtualTimeSchedulerLike_run]();
 
-      pipe(result, expectArrayEquals([[3, 2]], arrayEquality()));
+      pipe(
+        result,
+        expectArrayEquals(
+          [
+            [2, none],
+            [3, 2],
+            [4, none],
+          ],
+          arrayEquality(),
+        ),
+      );
     }),
     test("integration test", () => {
       const scheduler = Scheduler.createVirtualTimeScheduler();
@@ -233,6 +275,7 @@ testModule(
         result1,
         expectArrayEquals(
           [
+            [0, none],
             [1, 1],
             [3, 2],
             [5, 3],

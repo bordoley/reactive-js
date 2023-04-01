@@ -29,7 +29,7 @@ and observing the changing values of individual keys.
 
 ### [CacheStreamLike\_get]
 
-▸ **[CacheStreamLike_get]**(`key`): [`ObservableLike`](rx.ObservableLike.md)<`T`\>
+▸ **[CacheStreamLike_get]**(`key`): [`ObservableLike`](rx.ObservableLike.md)<[`Optional`](../modules/functions.md#optional)<`T`\>\>
 
 #### Parameters
 
@@ -39,4 +39,4 @@ and observing the changing values of individual keys.
 
 #### Returns
 
-[`ObservableLike`](rx.ObservableLike.md)<`T`\>
+[`ObservableLike`](rx.ObservableLike.md)<[`Optional`](../modules/functions.md#optional)<`T`\>\>
