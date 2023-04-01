@@ -1,14 +1,14 @@
 /// <reference types="./Stream.mixin.d.ts" />
 
 import { __DEV__ } from "../../../__internal__/constants.js";
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DispatchedObservable_observer, StreamMixin_dispatcher, } from "../../../__internal__/symbols.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
+import { DispatcherLike_complete, DispatcherLike_scheduler, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
+import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
-import { CollectionLike_count, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import { CollectionLike_count, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(function DispatchedObservable(instance) {
@@ -79,7 +79,7 @@ const DispatchedObservable_create =
     }));
 })();
 const Stream_mixin = /*@__PURE__*/ (() => {
-    return returns(mix(include(Disposable_delegatingMixin()), function StreamMixin(instance, op, scheduler, replay, capacity, backpressureStrategy) {
+    return returns(mix(include(MulticastObservable_delegatingMixin()), function StreamMixin(instance, op, scheduler, replay, capacity, backpressureStrategy) {
         instance[DispatcherLike_scheduler] = scheduler;
         const dispatchedObservable = DispatchedObservable_create();
         instance[StreamMixin_dispatcher] = dispatchedObservable;
@@ -88,24 +88,12 @@ const Stream_mixin = /*@__PURE__*/ (() => {
             capacity,
             backpressureStrategy,
         }));
-        init(Disposable_delegatingMixin(), instance, delegate);
+        init(MulticastObservable_delegatingMixin(), instance, delegate);
         return instance;
     }, props({
         [StreamMixin_dispatcher]: none,
         [DispatcherLike_scheduler]: none,
     }), {
-        get [CollectionLike_count]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][CollectionLike_count];
-        },
-        get [MulticastObservableLike_observerCount]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][MulticastObservableLike_observerCount];
-        },
-        get [MulticastObservableLike_replay]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][MulticastObservableLike_replay];
-        },
         get [QueueableLike_backpressureStrategy]() {
             unsafeCast(this);
             return this[StreamMixin_dispatcher][QueueableLike_backpressureStrategy];
@@ -114,19 +102,11 @@ const Stream_mixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[StreamMixin_dispatcher][QueueableLike_capacity];
         },
-        [IndexedLike_get](index) {
-            return this[DelegatingLike_delegate][IndexedLike_get](index);
-        },
-        [ObservableLike_isEnumerable]: false,
-        [ObservableLike_isRunnable]: false,
         [QueueableLike_enqueue](req) {
             return this[StreamMixin_dispatcher][QueueableLike_enqueue](req);
         },
         [DispatcherLike_complete]() {
             this[StreamMixin_dispatcher][DispatcherLike_complete]();
-        },
-        [ObservableLike_observe](observer) {
-            this[DelegatingLike_delegate][ObservableLike_observe](observer);
         },
     }));
 })();

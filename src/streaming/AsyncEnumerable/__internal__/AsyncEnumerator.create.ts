@@ -1,6 +1,4 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
   include,
@@ -14,30 +12,17 @@ import { none, pipe, returns, unsafeCast } from "../../../functions.js";
 import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
-  MulticastObservableLike,
-  MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
   ObservableLike,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
-  ObservableLike_observe,
-  ObserverLike,
 } from "../../../rx.js";
+import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { StreamLike } from "../../../streaming.js";
 import {
-  CollectionLike_count,
-  DisposableLike_add,
-  DisposableLike_dispose,
-  DisposableLike_error,
-  DisposableLike_isDisposed,
-  IndexedLike_get,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 const AsyncEnumerator_create: <TA, TB>() => (
   stream: StreamLike<void, TA>,
@@ -49,14 +34,15 @@ const AsyncEnumerator_create: <TA, TB>() => (
 
   return pipe(
     mix(
-      include(Disposable_delegatingMixin<MulticastObservableLike<TB>>()),
+      include(MulticastObservable_delegatingMixin<TB>()),
       function AsyncEnumeratorDelegatingMixin(
-        instance: Omit<
+        instance: Pick<
           StreamLike<void, TB>,
-          | typeof DisposableLike_add
-          | typeof DisposableLike_dispose
-          | typeof DisposableLike_error
-          | typeof DisposableLike_isDisposed
+          | typeof DispatcherLike_scheduler
+          | typeof QueueableLike_backpressureStrategy
+          | typeof QueueableLike_capacity
+          | typeof DispatcherLike_complete
+          | typeof QueueableLike_enqueue
         > &
           Mutable<TProperties>,
         delegate: StreamLike<void, TA>,
@@ -71,11 +57,7 @@ const AsyncEnumerator_create: <TA, TB>() => (
           Disposable_add(delegate),
         );
 
-        init(
-          Disposable_delegatingMixin<MulticastObservableLike<TB>>(),
-          instance,
-          observable,
-        );
+        init(MulticastObservable_delegatingMixin<TB>(), instance, observable);
 
         instance[AsyncEnumeratorDelegatingMixin_src] = delegate;
 
@@ -85,14 +67,6 @@ const AsyncEnumerator_create: <TA, TB>() => (
         [AsyncEnumeratorDelegatingMixin_src]: none,
       }),
       {
-        [ObservableLike_isEnumerable]: false as const,
-        [ObservableLike_isRunnable]: false as const,
-
-        get [CollectionLike_count]() {
-          unsafeCast<DelegatingLike<MulticastObservableLike<TB>>>(this);
-          return this[DelegatingLike_delegate][CollectionLike_count];
-        },
-
         get [DispatcherLike_scheduler]() {
           unsafeCast<TProperties>(this);
           return this[AsyncEnumeratorDelegatingMixin_src][
@@ -114,40 +88,14 @@ const AsyncEnumerator_create: <TA, TB>() => (
           ];
         },
 
-        get [MulticastObservableLike_observerCount]() {
-          unsafeCast<DelegatingLike<MulticastObservableLike<TB>>>(this);
-          return this[DelegatingLike_delegate][
-            MulticastObservableLike_observerCount
-          ];
-        },
-
-        get [MulticastObservableLike_replay]() {
-          unsafeCast<DelegatingLike<MulticastObservableLike<TB>>>(this);
-          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
-        },
-
         [DispatcherLike_complete](this: TProperties) {
           this[AsyncEnumeratorDelegatingMixin_src][DispatcherLike_complete]();
-        },
-
-        [IndexedLike_get](
-          this: DelegatingLike<MulticastObservableLike<TB>>,
-          index: number,
-        ): TB {
-          return this[DelegatingLike_delegate][IndexedLike_get](index);
         },
 
         [QueueableLike_enqueue](this: TProperties, next: void): boolean {
           return this[AsyncEnumeratorDelegatingMixin_src][
             QueueableLike_enqueue
           ](next);
-        },
-
-        [ObservableLike_observe](
-          this: DelegatingLike<MulticastObservableLike<TB>>,
-          observer: ObserverLike<TB>,
-        ): void {
-          this[DelegatingLike_delegate][ObservableLike_observe](observer);
         },
       },
     ),

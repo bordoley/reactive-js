@@ -1,7 +1,5 @@
 import { __DEV__ } from "../../../__internal__/constants.js";
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mixin5,
   Mutable,
   createInstanceFactory,
@@ -30,9 +28,6 @@ import {
   DispatcherLike,
   DispatcherLike_complete,
   DispatcherLike_scheduler,
-  MulticastObservableLike,
-  MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -40,6 +35,7 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
+import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import {
   SchedulerLike,
@@ -50,13 +46,11 @@ import {
   CollectionLike_count,
   DisposableLike,
   DisposableLike_isDisposed,
-  IndexedLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 interface DispatchedObservableLike<T>
   extends ObservableLike<T>,
@@ -209,21 +203,14 @@ const Stream_mixin: <TReq, T>() => Mixin5<
 
   return returns(
     mix(
-      include(Disposable_delegatingMixin<MulticastObservableLike<T>>()),
+      include(MulticastObservable_delegatingMixin<T>()),
       function StreamMixin(
         instance: Pick<
           StreamLike<TReq, T>,
-          | typeof CollectionLike_count
-          | typeof IndexedLike_get
-          | typeof MulticastObservableLike_observerCount
-          | typeof MulticastObservableLike_replay
           | typeof QueueableLike_backpressureStrategy
           | typeof QueueableLike_enqueue
           | typeof QueueableLike_capacity
           | typeof DispatcherLike_complete
-          | typeof ObservableLike_observe
-          | typeof ObservableLike_isEnumerable
-          | typeof ObservableLike_isRunnable
         > &
           Mutable<TProperties>,
         op: ContainerOperator<ObservableLike, TReq, T>,
@@ -247,11 +234,7 @@ const Stream_mixin: <TReq, T>() => Mixin5<
           }),
         );
 
-        init(
-          Disposable_delegatingMixin<MulticastObservableLike<T>>(),
-          instance,
-          delegate,
-        );
+        init(MulticastObservable_delegatingMixin<T>(), instance, delegate);
 
         return instance;
       },
@@ -260,23 +243,6 @@ const Stream_mixin: <TReq, T>() => Mixin5<
         [DispatcherLike_scheduler]: none,
       }),
       {
-        get [CollectionLike_count]() {
-          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
-          return this[DelegatingLike_delegate][CollectionLike_count];
-        },
-
-        get [MulticastObservableLike_observerCount](): number {
-          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
-          return this[DelegatingLike_delegate][
-            MulticastObservableLike_observerCount
-          ];
-        },
-
-        get [MulticastObservableLike_replay]() {
-          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
-          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
-        },
-
         get [QueueableLike_backpressureStrategy]() {
           unsafeCast<TProperties>(this);
           return this[StreamMixin_dispatcher][
@@ -289,30 +255,12 @@ const Stream_mixin: <TReq, T>() => Mixin5<
           return this[StreamMixin_dispatcher][QueueableLike_capacity];
         },
 
-        [IndexedLike_get](
-          this: DelegatingLike<MulticastObservableLike<T>>,
-          index: number,
-        ): T {
-          return this[DelegatingLike_delegate][IndexedLike_get](index);
-        },
-
-        [ObservableLike_isEnumerable]: false as const,
-
-        [ObservableLike_isRunnable]: false as const,
-
         [QueueableLike_enqueue](this: TProperties, req: TReq): boolean {
           return this[StreamMixin_dispatcher][QueueableLike_enqueue](req);
         },
 
         [DispatcherLike_complete](this: TProperties) {
           this[StreamMixin_dispatcher][DispatcherLike_complete]();
-        },
-
-        [ObservableLike_observe](
-          this: DelegatingLike<MulticastObservableLike<T>>,
-          observer: ObserverLike<T>,
-        ) {
-          this[DelegatingLike_delegate][ObservableLike_observe](observer);
         },
       },
     ),

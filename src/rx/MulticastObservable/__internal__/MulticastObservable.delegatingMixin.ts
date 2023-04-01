@@ -1,0 +1,105 @@
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+  Mixin1,
+  include,
+  init,
+  mix,
+  props,
+} from "../../../__internal__/mixins.js";
+import { returns, unsafeCast } from "../../../functions.js";
+import {
+  MulticastObservableLike,
+  MulticastObservableLike_observerCount,
+  MulticastObservableLike_replay,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
+  ObservableLike_observe,
+  ObserverLike,
+} from "../../../rx.js";
+import { CollectionLike_count, IndexedLike_get } from "../../../util.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+
+const MulticastObservable_delegatingMixin: <T>() => Mixin1<
+  MulticastObservableLike<T>,
+  MulticastObservableLike<T>,
+  Pick<
+    MulticastObservableLike<T>,
+    | typeof MulticastObservableLike_observerCount
+    | typeof ObservableLike_observe
+    | typeof ObservableLike_isEnumerable
+    | typeof ObservableLike_isRunnable
+  >
+> = /*@__PURE__*/ (<T>() => {
+  return returns(
+    mix(
+      include(Disposable_delegatingMixin<MulticastObservableLike<T>>()),
+      function DelegatingMulticastObservableMixin(
+        instance: Pick<
+          MulticastObservableLike<T>,
+          | typeof CollectionLike_count
+          | typeof IndexedLike_get
+          | typeof MulticastObservableLike_observerCount
+          | typeof MulticastObservableLike_replay
+          | typeof ObservableLike_observe
+          | typeof ObservableLike_isEnumerable
+          | typeof ObservableLike_isRunnable
+        >,
+        delegate: MulticastObservableLike<T>,
+      ): MulticastObservableLike<T> {
+        init(
+          Disposable_delegatingMixin<MulticastObservableLike<T>>(),
+          instance,
+          delegate,
+        );
+
+        return instance;
+      },
+      props<unknown>({}),
+      {
+        get [CollectionLike_count]() {
+          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
+          return this[DelegatingLike_delegate][CollectionLike_count];
+        },
+
+        get [MulticastObservableLike_observerCount](): number {
+          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
+          return this[DelegatingLike_delegate][
+            MulticastObservableLike_observerCount
+          ];
+        },
+
+        get [MulticastObservableLike_replay]() {
+          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
+          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
+        },
+
+        get [ObservableLike_isEnumerable]() {
+          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
+          return this[DelegatingLike_delegate][ObservableLike_isEnumerable];
+        },
+
+        get [ObservableLike_isRunnable]() {
+          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
+          return this[DelegatingLike_delegate][ObservableLike_isRunnable];
+        },
+
+        [IndexedLike_get](
+          this: DelegatingLike<MulticastObservableLike<T>>,
+          index: number,
+        ): T {
+          return this[DelegatingLike_delegate][IndexedLike_get](index);
+        },
+
+        [ObservableLike_observe](
+          this: DelegatingLike<MulticastObservableLike<T>>,
+          observer: ObserverLike<T>,
+        ) {
+          this[DelegatingLike_delegate][ObservableLike_observe](observer);
+        },
+      },
+    ),
+  );
+})();
+
+export default MulticastObservable_delegatingMixin;
