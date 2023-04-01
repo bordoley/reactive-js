@@ -3,7 +3,7 @@
 import * as Obj from "../../__internal__/Object.js";
 import { describe, expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
-import { arrayEquality, bindMethod, pipe, returns, } from "../../functions.js";
+import { arrayEquality, bindMethod, none, pipe, returns, } from "../../functions.js";
 import { DispatcherLike_complete } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import { SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
@@ -25,7 +25,47 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     }), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([1, 2, 3]));
-})), describe("createInMemoryCache", test("integration test", () => {
+})), describe("createInMemoryCache", test("explicitly deleting a key", () => {
+    const scheduler = Scheduler.createVirtualTimeScheduler();
+    const cache = Streamable.createInMemoryCache({ capacity: 1 })[StreamableLike_stream](scheduler);
+    const result = [];
+    pipe([
+        [
+            0,
+            () => {
+                cache[QueueableLike_enqueue]({ abc: _ => 1 });
+            },
+        ],
+        [
+            1,
+            () => {
+                cache[QueueableLike_enqueue]({ abc: _ => none });
+            },
+        ],
+        [
+            2,
+            () => {
+                pipe(cache[CacheStreamLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result, "push")), Observable.subscribe(scheduler));
+            },
+        ],
+        [
+            3,
+            () => {
+                cache[QueueableLike_enqueue]({ abc: _ => 2 });
+            },
+        ],
+        [
+            4,
+            () => {
+                cache[QueueableLike_enqueue]({ abc: _ => none });
+            },
+        ],
+    ], ReadonlyArray.forEach(([time, f]) => {
+        scheduler[SchedulerLike_schedule](f, { delay: time });
+    }));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(result, expectArrayEquals([[3, 2]], arrayEquality()));
+}), test("integration test", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const cache = Streamable.createInMemoryCache({ capacity: 1 })[StreamableLike_stream](scheduler);
     const result1 = [];

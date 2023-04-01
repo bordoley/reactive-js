@@ -107,7 +107,7 @@ export interface FlowableLike<T = unknown> extends StreamableLike<boolean | Upda
  *
  * @noInheritDoc
  */
-export interface CacheStreamLike<T> extends StreamLike<Readonly<Record<string, Function1<Optional<T>, T>>>, never> {
+export interface CacheStreamLike<T> extends StreamLike<Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>, never> {
     [CacheStreamLike_get](key: string): ObservableLike<T>;
 }
 /**
@@ -116,7 +116,7 @@ export interface CacheStreamLike<T> extends StreamLike<Readonly<Record<string, F
  * @noInheritDoc
  * @category Container
  */
-export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Function1<Optional<T>, T>>>, never, CacheStreamLike<T>> {
+export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>, never, CacheStreamLike<T>> {
     readonly [ContainerLike_type]?: CacheLike<never>;
     readonly [StreamableLike_isEnumerable]: false;
     readonly [StreamableLike_isInteractive]: false;

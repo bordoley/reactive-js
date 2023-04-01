@@ -59,20 +59,18 @@ const createCacheStream = /*@__PURE__*/ (() => {
                     ]))
                     : pipe(next, Observable.fromOptional());
             })
-            : identity, Observable.map(([updaters, values]) => pipe(updaters, Obj.map((updater, k) => {
-            const storedValue = instance.store.get(k);
-            // This could be the cached value or the value
-            // loaded from a persistent store.
-            const value = values[k];
-            const result = updater(value);
-            // Publish the result if it differs from the
-            // stored value, so that it gets dispatched
-            // and stored
-            return result === storedValue ? none : result;
-        }), Obj.keepType(isSome))), Observable.forEach(Obj.forEach((v, key) => {
+            : identity, Observable.map(([updaters, values]) => pipe(updaters, Obj.map((updater, k) => 
+        // This could be the cached value or the value
+        // loaded from a persistent store.
+        updater(values[k])))), Observable.forEach(Obj.forEach((v, key) => {
+            if (isNone(v)) {
+                instance.store.delete(key);
+                return;
+            }
+            const oldValue = instance.store.get(key);
             instance.store.set(key, v);
             const observable = instance.subscriptions.get(key);
-            if (isSome(observable)) {
+            if (isSome(observable) && oldValue !== v) {
                 observable[PublisherLike_publish](v);
                 return;
             }

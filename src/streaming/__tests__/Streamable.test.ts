@@ -10,6 +10,7 @@ import {
   SideEffect,
   arrayEquality,
   bindMethod,
+  none,
   pipe,
   returns,
 } from "../../functions.js";
@@ -55,6 +56,66 @@ testModule(
   ),
   describe(
     "createInMemoryCache",
+    test("explicitly deleting a key", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+
+      const cache = Streamable.createInMemoryCache<number>({ capacity: 1 })[
+        StreamableLike_stream
+      ](scheduler);
+
+      const result: [number, number][] = [];
+
+      pipe(
+        [
+          [
+            0,
+            () => {
+              cache[QueueableLike_enqueue]({ abc: _ => 1 });
+            },
+          ],
+
+          [
+            1,
+            () => {
+              cache[QueueableLike_enqueue]({ abc: _ => none });
+            },
+          ],
+
+          [
+            2,
+            () => {
+              pipe(
+                cache[CacheStreamLike_get]("abc"),
+                Observable.withCurrentTime((time, value) => [time, value]),
+                Observable.forEach(bindMethod(result, "push")),
+                Observable.subscribe(scheduler),
+              );
+            },
+          ],
+
+          [
+            3,
+            () => {
+              cache[QueueableLike_enqueue]({ abc: _ => 2 });
+            },
+          ],
+
+          [
+            4,
+            () => {
+              cache[QueueableLike_enqueue]({ abc: _ => none });
+            },
+          ],
+        ],
+        ReadonlyArray.forEach(([time, f]: [number, SideEffect]) => {
+          scheduler[SchedulerLike_schedule](f, { delay: time });
+        }),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectArrayEquals([[3, 2]], arrayEquality()));
+    }),
     test("integration test", () => {
       const scheduler = Scheduler.createVirtualTimeScheduler();
 

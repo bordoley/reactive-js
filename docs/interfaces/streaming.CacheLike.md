@@ -14,7 +14,7 @@ A container that returns a CacheStream when subscribed to.
 
 ## Hierarchy
 
-- [`StreamableLike`](streaming.StreamableLike.md)<`Readonly`<`Record`<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, `T`\>\>\>, `never`, [`CacheStreamLike`](streaming.CacheStreamLike.md)<`T`\>\>
+- [`StreamableLike`](streaming.StreamableLike.md)<`Readonly`<`Record`<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>\>, `never`, [`CacheStreamLike`](streaming.CacheStreamLike.md)<`T`\>\>
 
   ↳ **`CacheLike`**
 

@@ -15,7 +15,7 @@ and observing the changing values of individual keys.
 
 ## Hierarchy
 
-- [`StreamLike`](streaming.StreamLike.md)<`Readonly`<`Record`<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, `T`\>\>\>, `never`\>
+- [`StreamLike`](streaming.StreamLike.md)<`Readonly`<`Record`<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>\>, `never`\>
 
   ↳ **`CacheStreamLike`**
 
