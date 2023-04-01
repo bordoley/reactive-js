@@ -39,6 +39,7 @@ export {
  * Represents a duplex stream
  *
  * @noInheritDoc
+ * @category Stream
  */
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
@@ -125,6 +126,7 @@ export interface AsyncEnumerableLike<T = unknown>
  * via the pause and resume methods.
  *
  * @noInheritDoc
+ * @category Stream
  */
 export interface FlowableStreamLike<T = unknown>
   extends StreamLike<boolean | Updater<boolean>, T> {
@@ -164,6 +166,7 @@ export interface FlowableLike<T = unknown>
  * and observing the changing values of individual keys.
  *
  * @noInheritDoc
+ * @category Stream
  */
 export interface CacheStreamLike<T>
   extends StreamLike<

@@ -9,6 +9,7 @@ export { CacheStreamLike_get, StreamableLike_stream, StreamableLike_isEnumerable
  * Represents a duplex stream
  *
  * @noInheritDoc
+ * @category Stream
  */
 export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
 }
@@ -74,6 +75,7 @@ export interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T
  * via the pause and resume methods.
  *
  * @noInheritDoc
+ * @category Stream
  */
 export interface FlowableStreamLike<T = unknown> extends StreamLike<boolean | Updater<boolean>, T> {
     /**
@@ -106,6 +108,7 @@ export interface FlowableLike<T = unknown> extends StreamableLike<boolean | Upda
  * and observing the changing values of individual keys.
  *
  * @noInheritDoc
+ * @category Stream
  */
 export interface CacheStreamLike<T> extends StreamLike<Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>, never> {
     [CacheStreamLike_get](key: string): ObservableLike<Optional<T>>;

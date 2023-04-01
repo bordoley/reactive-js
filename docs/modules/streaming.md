@@ -11,7 +11,7 @@
 - [FlowableLike](../interfaces/streaming.FlowableLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)
 
-### Other Interfaces
+### Stream Interfaces
 
 - [CacheStreamLike](../interfaces/streaming.CacheStreamLike.md)
 - [FlowableStreamLike](../interfaces/streaming.FlowableStreamLike.md)
