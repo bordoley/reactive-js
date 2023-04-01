@@ -40,14 +40,14 @@ export const mix = ((initOrParent, propertiesOrInit, prototypeOrParent, nothingO
     if (isFunction(initOrParent)) {
         return {
             [Object_init]: initOrParent,
-            [Object_properties]: propertiesOrInit !== null && propertiesOrInit !== void 0 ? propertiesOrInit : {},
-            [Object_prototype]: prototypeOrParent !== null && prototypeOrParent !== void 0 ? prototypeOrParent : {},
+            [Object_properties]: propertiesOrInit ?? {},
+            [Object_prototype]: prototypeOrParent ?? {},
         };
     }
     else {
         const base = include(initOrParent, {
-            [Object_properties]: prototypeOrParent !== null && prototypeOrParent !== void 0 ? prototypeOrParent : {},
-            [Object_prototype]: nothingOrPrototype !== null && nothingOrPrototype !== void 0 ? nothingOrPrototype : {},
+            [Object_properties]: prototypeOrParent ?? {},
+            [Object_prototype]: nothingOrPrototype ?? {},
         });
         return {
             ...base,

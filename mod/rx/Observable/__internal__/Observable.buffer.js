@@ -70,8 +70,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         },
     }));
     return ((options = {}) => {
-        var _a, _b;
-        const durationOption = (_a = options.duration) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER;
+        const durationOption = options.duration ?? MAX_SAFE_INTEGER;
         const durationFunction = durationOption === MAX_SAFE_INTEGER
             ? (_) => Observable_never()
             : isNumber(durationOption)
@@ -79,7 +78,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                     delay: clampPositiveNonZeroInteger(durationOption),
                 }))
                 : durationOption;
-        const count = clampPositiveNonZeroInteger((_b = options === null || options === void 0 ? void 0 : options.count) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER);
+        const count = clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER);
         const operator = (delegate) => {
             return pipe(createBufferObserver(delegate, durationFunction, count), Disposable_addTo(delegate));
         };

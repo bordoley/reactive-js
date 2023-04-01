@@ -15,7 +15,7 @@ import Enumerable_enumerate from "./Enumerable.enumerate.js";
 const Enumerable_toAsyncEnumerable = 
 /*@__PURE__*/
 (options) => (enumerable) => {
-    const { delay = 0 } = options !== null && options !== void 0 ? options : {};
+    const { delay = 0 } = options ?? {};
     return Streamable_createLifted(observable => Observable_create(observer => {
         const enumerator = pipe(enumerable, Enumerable_enumerate(), Disposable_addTo(observer));
         pipe(observable, Observable_forEach(bindMethod(enumerator, EnumeratorLike_move)), Observable_takeWhile(_ => enumerator[EnumeratorLike_hasCurrent]), delay > 0

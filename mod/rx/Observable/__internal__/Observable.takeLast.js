@@ -31,8 +31,7 @@ const Observable_takeLast = /*@__PURE__*/ (() => {
         },
     }));
     return ((options = {}) => {
-        var _a;
-        const count = clampPositiveInteger((_a = options.count) !== null && _a !== void 0 ? _a : 1);
+        const count = clampPositiveInteger(options.count ?? 1);
         return pipe(createTakeLastObserver, partial(count), Observable_liftEnumerableOperator);
     });
 })();

@@ -87,14 +87,13 @@ const computeTests = describe("compute", test("batch mode", () => {
     pipe(result, expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]));
 }), testAsync("__stream", async () => {
     const result = await pipe(Observable.compute(() => {
-        var _a;
         const stream = Observable.__stream(Streamable.identity());
         const push = Observable.__bindMethod(stream, QueueableLike_enqueue);
-        const result = (_a = Observable.__observe(stream)) !== null && _a !== void 0 ? _a : 0;
+        const result = Observable.__observe(stream) ?? 0;
         Observable.__do(push, result + 1);
         return result;
     }), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync());
-    pipe(result !== null && result !== void 0 ? result : [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
 }));
 const fromAsyncFactoryTests = describe("fromAsyncFactory", testAsync("when promise resolves", async () => {
     const result = await pipe(Observable.fromAsyncFactory(async () => {

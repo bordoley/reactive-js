@@ -11,7 +11,7 @@ import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 const ReadonlyArray_toObservable = 
 /*@__PURE__*/
 ReadonlyArray_toContainer((values, startIndex, count, options) => {
-    const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
+    const { delay = 0, delayStart = false } = options ?? {};
     const onSubscribe = (observer) => {
         let index = startIndex, cnt = count;
         const continuation = (ctx) => {

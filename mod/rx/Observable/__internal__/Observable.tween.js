@@ -8,7 +8,7 @@ import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 const Observable_tween = (start, finish, options) => {
-    const { duration = 400, easing = identity } = options !== null && options !== void 0 ? options : {};
+    const { duration = 400, easing = identity } = options ?? {};
     return pipe(Observable_currentTime(), Observable_scan(([startTime, _], now) => {
         startTime = min(now, startTime);
         const elapsed = now - startTime;

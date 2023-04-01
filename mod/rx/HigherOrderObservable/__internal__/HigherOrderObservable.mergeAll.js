@@ -77,9 +77,8 @@ const HigherOrderObservable_mergeAll = (lift) => {
         }));
     })();
     return (options = {}) => {
-        var _a, _b;
-        const maxBufferSize = clampPositiveNonZeroInteger((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER);
-        const maxConcurrency = clampPositiveNonZeroInteger((_b = options.maxConcurrency) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER);
+        const maxBufferSize = clampPositiveNonZeroInteger(options.maxBufferSize ?? MAX_SAFE_INTEGER);
+        const maxConcurrency = clampPositiveNonZeroInteger(options.maxConcurrency ?? MAX_SAFE_INTEGER);
         const f = pipe(createMergeAllObserver, partial(maxBufferSize, maxConcurrency));
         return lift(f);
     };

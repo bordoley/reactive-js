@@ -1,6 +1,5 @@
 /// <reference types="./Observable.compute.d.ts" />
 
-var _a, _b, _c, _d;
 import { AwaitOrObserveEffect_hasValue, AwaitOrObserveEffect_observable, AwaitOrObserveEffect_subscription, AwaitOrObserveEffect_value, ComputeContext_awaitOrObserve, ComputeContext_cleanup, ComputeContext_effects, ComputeContext_index, ComputeContext_memoOrUse, ComputeContext_mode, ComputeContext_observer, ComputeContext_runComputation, ComputeContext_scheduledComputationSubscription, ComputeEffect_type, MemoOrUsingEffect_args, MemoOrUsingEffect_func, MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { arrayEquality, bind, bindMethod, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
@@ -69,25 +68,28 @@ const validateComputeEffect = ((ctx, type) => {
 const arrayStrictEquality = arrayEquality();
 const awaiting = error();
 class ComputeContext {
+    [ComputeContext_index] = 0;
+    [ComputeContext_effects] = [];
+    [ComputeContext_observer];
+    [ComputeContext_scheduledComputationSubscription] = Disposable_disposed;
+    [ComputeContext_runComputation];
+    [ComputeContext_mode];
+    [ComputeContext_cleanup] = () => {
+        const { [ComputeContext_effects]: effects } = this;
+        const hasOutstandingEffects = effects.findIndex(effect => (effect[ComputeEffect_type] === Await ||
+            effect[ComputeEffect_type] === Observe) &&
+            !effect[AwaitOrObserveEffect_subscription][DisposableLike_isDisposed]) >= 0;
+        if (!hasOutstandingEffects &&
+            this[ComputeContext_scheduledComputationSubscription][DisposableLike_isDisposed]) {
+            this[ComputeContext_observer][DisposableLike_dispose]();
+        }
+    };
     constructor(observer, runComputation, mode) {
-        this[_a] = 0;
-        this[_b] = [];
-        this[_c] = Disposable_disposed;
-        this[_d] = () => {
-            const { [ComputeContext_effects]: effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => (effect[ComputeEffect_type] === Await ||
-                effect[ComputeEffect_type] === Observe) &&
-                !effect[AwaitOrObserveEffect_subscription][DisposableLike_isDisposed]) >= 0;
-            if (!hasOutstandingEffects &&
-                this[ComputeContext_scheduledComputationSubscription][DisposableLike_isDisposed]) {
-                this[ComputeContext_observer][DisposableLike_dispose]();
-            }
-        };
         this[ComputeContext_observer] = observer;
         this[ComputeContext_runComputation] = runComputation;
         this[ComputeContext_mode] = mode;
     }
-    [(_a = ComputeContext_index, _b = ComputeContext_effects, _c = ComputeContext_scheduledComputationSubscription, _d = ComputeContext_cleanup, ComputeContext_awaitOrObserve)](observable, shouldAwait) {
+    [ComputeContext_awaitOrObserve](observable, shouldAwait) {
         const effect = shouldAwait
             ? validateComputeEffect(this, Await)
             : validateComputeEffect(this, Observe);
@@ -256,7 +258,7 @@ export const Observable_compute__stream = /*@__PURE__*/ (() => {
     });
     return (streamable, { replay, backpressureStrategy, capacity, scheduler, } = {}) => {
         const currentScheduler = Observable_compute__currentScheduler();
-        return Observable_compute__using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay, capacity, backpressureStrategy);
+        return Observable_compute__using(streamOnSchedulerFactory, streamable, scheduler ?? currentScheduler, replay, capacity, backpressureStrategy);
     };
 })();
 export const Observable_compute__state = /*@__PURE__*/ (() => {

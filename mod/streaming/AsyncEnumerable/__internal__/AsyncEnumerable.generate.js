@@ -9,7 +9,7 @@ const AsyncEnumerable_generate = /*@__PURE__*/ (() => {
     const generateScanner = (generator) => (acc, _) => generator(acc);
     const asyncGeneratorScanner = (generator, options) => (acc) => pipe(acc, generator, Optional_toObservable(options));
     return (generator, initialValue, options) => {
-        const { delay = 0 } = options !== null && options !== void 0 ? options : {};
+        const { delay = 0 } = options ?? {};
         return delay > 0
             ? AsyncEnumerable_generateLast(asyncGeneratorScanner(generator, options), initialValue)
             : Streamable_createLifted(Observable_scan(generateScanner(generator), initialValue), true, true, true);

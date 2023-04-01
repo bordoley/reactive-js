@@ -31,8 +31,7 @@ const Observable_skipFirst = /*@__PURE__*/ (() => {
         }));
     })();
     return ((options = {}) => {
-        var _a;
-        const count = clampPositiveInteger((_a = options === null || options === void 0 ? void 0 : options.count) !== null && _a !== void 0 ? _a : 1);
+        const count = clampPositiveInteger(options?.count ?? 1);
         const op = pipe(createSkipFirstObserver, partial(count), Observable_liftEnumerableOperator);
         return obs => (count > 0 ? op(obs) : obs);
     });

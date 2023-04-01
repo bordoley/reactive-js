@@ -15,7 +15,7 @@ const supportsProcessHRTime = /*@__PURE__*/ (() => typeof process === "object" &
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== none &&
     navigator.scheduling.isInputPending !== none)();
-const isInputPending = () => { var _a, _b; return supportsIsInputPending && ((_b = (_a = navigator.scheduling) === null || _a === void 0 ? void 0 : _a.isInputPending()) !== null && _b !== void 0 ? _b : false); };
+const isInputPending = () => supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
     const disposable = pipe(Disposable_create(), Disposable_addTo(continuation), Disposable_onDisposed(() => clearImmediate(immmediate)));
     const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);

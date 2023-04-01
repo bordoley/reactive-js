@@ -70,8 +70,7 @@ const Publisher_create =
         },
     }));
     return (options) => {
-        var _a;
-        const replay = clampPositiveInteger((_a = options === null || options === void 0 ? void 0 : options.replay) !== null && _a !== void 0 ? _a : 0);
+        const replay = clampPositiveInteger(options?.replay ?? 0);
         return createPublisherInstance(replay);
     };
 })();

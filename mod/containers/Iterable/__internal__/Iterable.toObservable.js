@@ -8,7 +8,7 @@ import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.j
 import { ContinuationContextLike_yield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 const Iterable_toObservable = ((options) => (iterable) => {
-    const { delay = 0, delayStart = false } = options !== null && options !== void 0 ? options : {};
+    const { delay = 0, delayStart = false } = options ?? {};
     const onSubscribe = (observer) => {
         const iterator = iterable[Symbol.iterator]();
         const continuation = (ctx) => {

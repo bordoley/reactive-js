@@ -36,7 +36,7 @@ const FlowableStream_create = /*@__PURE__*/ (() => {
         },
     }));
     return (op, scheduler, options) => {
-        const { backpressureStrategy = "overflow", capacity = MAX_SAFE_INTEGER, replay = 0, } = options !== null && options !== void 0 ? options : {};
+        const { backpressureStrategy = "overflow", capacity = MAX_SAFE_INTEGER, replay = 0, } = options ?? {};
         return createStreamInternal(op, scheduler, replay, capacity, backpressureStrategy);
     };
 })();

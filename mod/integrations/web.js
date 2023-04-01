@@ -17,8 +17,7 @@ export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, Wi
 const errorEvent = "error";
 const reservedEvents = [errorEvent, "open"];
 export const createEventSource = (url, options = {}) => {
-    var _a;
-    const events = pipe((_a = options.events) !== null && _a !== void 0 ? _a : ["message"], ReadonlyArray.keep(x => !reservedEvents.includes(x)));
+    const events = pipe(options.events ?? ["message"], ReadonlyArray.keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
     return Observable.create(observer => {
         pipe(observer, Disposable.onDisposed(_ => {
@@ -30,11 +29,10 @@ export const createEventSource = (url, options = {}) => {
         }));
         const eventSource = newInstance(EventSource, requestURL, options);
         const listener = (ev) => {
-            var _a, _b, _c;
             observer[QueueableLike_enqueue]({
-                id: (_a = ev.lastEventId) !== null && _a !== void 0 ? _a : "",
-                type: (_b = ev.type) !== null && _b !== void 0 ? _b : "",
-                data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
+                id: ev.lastEventId ?? "",
+                type: ev.type ?? "",
+                data: ev.data ?? "",
             });
         };
         const onError = (e) => {
@@ -130,7 +128,6 @@ export const windowLocation = /*@__PURE__*/ (() => {
         f({ title, counter }, "", String(uri));
     })))[StreamableLike_stream](scheduler, options);
     const stream = (scheduler, options) => {
-        var _a, _b, _c;
         if (isSome(currentWindowLocationStream)) {
             raiseWithDebugMessage("Cannot stream more than once");
         }
@@ -143,9 +140,9 @@ export const windowLocation = /*@__PURE__*/ (() => {
             // get pushed through the updater.
             counter: -1,
         }), { equality: areWindowLocationStatesEqual }), invoke(StreamableLike_stream, scheduler, {
-            replay: (_a = options === null || options === void 0 ? void 0 : options.replay) !== null && _a !== void 0 ? _a : 1,
-            capacity: (_b = options === null || options === void 0 ? void 0 : options.capacity) !== null && _b !== void 0 ? _b : 1,
-            backpressureStrategy: (_c = options === null || options === void 0 ? void 0 : options.backpressureStrategy) !== null && _c !== void 0 ? _c : "drop-oldest",
+            replay: options?.replay ?? 1,
+            capacity: options?.capacity ?? 1,
+            backpressureStrategy: options?.backpressureStrategy ?? "drop-oldest",
         }), Stream.syncState(state => 
         // Initialize the history state on page load
         pipe(window, addEventListener("popstate", (e) => {

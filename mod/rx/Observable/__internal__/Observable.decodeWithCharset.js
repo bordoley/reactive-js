@@ -46,8 +46,7 @@ const Observable_decodeWithCharset =
         },
     }));
     return options => {
-        var _a;
-        const charset = (_a = options === null || options === void 0 ? void 0 : options.charset) !== null && _a !== void 0 ? _a : "utf-8";
+        const charset = options?.charset ?? "utf-8";
         return pipe(createDecodeWithCharsetObserver, partial(charset), Observable_liftEnumerableOperator);
     };
 })();

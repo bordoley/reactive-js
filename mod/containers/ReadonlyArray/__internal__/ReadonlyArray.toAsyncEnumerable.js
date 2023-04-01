@@ -12,8 +12,7 @@ import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 const ReadonlyArray_toAsyncEnumerable = 
 /*@__PURE__*/
 ReadonlyArray_toContainer((array, start, count, options) => {
-    var _a;
-    const delay = (_a = options === null || options === void 0 ? void 0 : options.delay) !== null && _a !== void 0 ? _a : 0;
+    const delay = options?.delay ?? 0;
     return Streamable_createLifted(compose(count >= 0
         ? Observable_scan(increment, returns(start - 1))
         : Observable_scan(decrement, returns(start + 1)), delay > 0

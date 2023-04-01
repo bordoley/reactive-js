@@ -35,7 +35,7 @@ const Observable_distinctUntilChanged =
         }));
     })();
     return ((options) => {
-        const { equality = strictEquality } = options !== null && options !== void 0 ? options : {};
+        const { equality = strictEquality } = options ?? {};
         return pipe(createDistinctUntilChangedObserver, partial(equality), Observable_liftEnumerableOperator);
     });
 })();

@@ -8,7 +8,7 @@ import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 const Observable_spring = (start, finish, options) => {
-    const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = options !== null && options !== void 0 ? options : {};
+    const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = options ?? {};
     if (__DEV__) {
         // FIXME: Validate stiffness, damping, precision are within range.
     }

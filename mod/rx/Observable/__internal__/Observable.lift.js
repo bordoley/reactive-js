@@ -5,6 +5,10 @@ import { newInstance, pipeUnsafe } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 class LiftedObservable {
+    [LiftedObservable_source];
+    [LiftedObservable_operators];
+    [ObservableLike_isEnumerable];
+    [ObservableLike_isRunnable];
     constructor(source, operators, isEnumerable, isRunnable) {
         this[LiftedObservable_source] = source;
         this[LiftedObservable_operators] = operators;

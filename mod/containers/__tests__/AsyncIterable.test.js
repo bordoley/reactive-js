@@ -12,14 +12,14 @@ testModule("AsyncIterable", describe("toFlowable", testAsync("infinite immediate
             yield i++;
         }
     })(), AsyncIterable.toFlowable(), Flowable.toObservable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync({ capacity: 5 }));
-    pipe(result !== null && result !== void 0 ? result : [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
 }), testAsync("iterable that completes", async () => {
     const result = await pipe((async function* foo() {
         yield 1;
         yield 2;
         yield 3;
     })(), AsyncIterable.toFlowable(), Flowable.toObservable(), Observable.buffer(), Observable.lastAsync({ capacity: 5 }));
-    pipe(result !== null && result !== void 0 ? result : [], expectArrayEquals([1, 2, 3]));
+    pipe(result ?? [], expectArrayEquals([1, 2, 3]));
 }), testAsync("iterable that throws", async () => {
     const e = error();
     const result = await pipe((async function* foo() {
@@ -33,14 +33,14 @@ testModule("AsyncIterable", describe("toFlowable", testAsync("infinite immediate
             yield i++;
         }
     })(), AsyncIterable.toObservable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync({ capacity: 5 }));
-    pipe(result !== null && result !== void 0 ? result : [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
 }), testAsync("iterable that completes", async () => {
     const result = await pipe((async function* foo() {
         yield 1;
         yield 2;
         yield 3;
     })(), AsyncIterable.toObservable(), Observable.buffer(), Observable.lastAsync({ capacity: 1 }));
-    pipe(result !== null && result !== void 0 ? result : [], expectArrayEquals([1, 2, 3]));
+    pipe(result ?? [], expectArrayEquals([1, 2, 3]));
 }), testAsync("iterable that throws", async () => {
     const e = error();
     const result = await pipe((async function* foo() {

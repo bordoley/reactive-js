@@ -176,7 +176,7 @@ export const throwIfEmptyTests = (m) => describe("throwIfEmpty", test("when sour
 export const toEnumerableTests = (m) => describe("toEnumerable", test("with an enumerable observable", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray(), m.toEnumerable(), Enumerable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))));
 export const toObservableTests = (m) => testAsync("toObservable", async () => {
     const result = await pipe([0, 1, 2, 3, 4], m.fromReadonlyArray(), m.toObservable(), Observable.buffer(), Observable.lastAsync());
-    pipe(result !== null && result !== void 0 ? result : [], expectArrayEquals([0, 1, 2, 3, 4]));
+    pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4]));
 });
 const toRunnableTest = (m) => test("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])));
 export const toRunnableWithDelayTests = (m) => describe("toRunnable", toRunnableTest(m), test("with delay", pipeLazy([9, 9, 9, 9], m.fromReadonlyArray(), m.toRunnable({ delay: 2 }), Runnable.withCurrentTime(t => t), Runnable.toReadonlyArray(), expectArrayEquals([0, 2, 4, 6]))));

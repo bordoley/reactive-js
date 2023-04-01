@@ -12,21 +12,21 @@ import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/Indexe
 import Observer_schedule from "./Observer.schedule.js";
 const Observer_mixin = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (observer) => {
-        var _a;
         if (observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
-            const continuation = (_a = observer[ObserverMixin_continuation]) !== null && _a !== void 0 ? _a : ((ctx) => {
-                unsafeCast(observer);
-                while (observer[CollectionLike_count] > 0) {
-                    const next = observer[QueueLike_dequeue]();
-                    observer[ObserverLike_notify](next);
-                    if (observer[CollectionLike_count] > 0) {
-                        ctx[ContinuationContextLike_yield]();
+            const continuation = observer[ObserverMixin_continuation] ??
+                ((ctx) => {
+                    unsafeCast(observer);
+                    while (observer[CollectionLike_count] > 0) {
+                        const next = observer[QueueLike_dequeue]();
+                        observer[ObserverLike_notify](next);
+                        if (observer[CollectionLike_count] > 0) {
+                            ctx[ContinuationContextLike_yield]();
+                        }
                     }
-                }
-                if (observer[ObserverMixin_isCompleted]) {
-                    observer[DisposableLike_dispose]();
-                }
-            });
+                    if (observer[ObserverMixin_isCompleted]) {
+                        observer[DisposableLike_dispose]();
+                    }
+                });
             observer[ObserverMixin_continuation] = continuation;
             observer[ObserverMixin_dispatchSubscription] = pipe(observer, Observer_schedule(continuation));
         }

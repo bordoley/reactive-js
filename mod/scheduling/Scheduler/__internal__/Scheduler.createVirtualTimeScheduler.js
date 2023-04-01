@@ -70,8 +70,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
     },
 })))();
 const Scheduler_createVirtualTimeScheduler = (options = {}) => {
-    var _a;
-    const maxMicroTaskTicks = clampPositiveNonZeroInteger((_a = options.maxMicroTaskTicks) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER);
+    const maxMicroTaskTicks = clampPositiveNonZeroInteger(options.maxMicroTaskTicks ?? MAX_SAFE_INTEGER);
     return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
 };
 export default Scheduler_createVirtualTimeScheduler;

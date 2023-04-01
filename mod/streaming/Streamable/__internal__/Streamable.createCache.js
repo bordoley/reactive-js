@@ -88,27 +88,27 @@ const createCacheStream = /*@__PURE__*/ (() => {
         subscriptions: none,
     }), {
         [CacheStreamLike_get](key) {
-            var _a;
             const { scheduleCleanup, store, subscriptions, [DelegatingLike_delegate]: delegate, } = this;
-            return ((_a = subscriptions.get(key)) !== null && _a !== void 0 ? _a : (() => {
-                const subject = Publisher.createRefCounted({ replay: 1 });
-                subscriptions.set(key, subject);
-                pipe(subject, Disposable.onDisposed(_ => {
-                    subscriptions.delete(key);
-                    scheduleCleanup(key);
-                }), Disposable.addToIgnoringChildErrors(this));
-                const initialValue = store.get(key);
-                if (isSome(initialValue)) {
-                    subject[PublisherLike_publish](initialValue);
-                }
-                else {
-                    // Try to load the value from the persistence store
-                    delegate[QueueableLike_enqueue]({
-                        [key]: identity,
-                    });
-                }
-                return subject;
-            })());
+            return (subscriptions.get(key) ??
+                (() => {
+                    const subject = Publisher.createRefCounted({ replay: 1 });
+                    subscriptions.set(key, subject);
+                    pipe(subject, Disposable.onDisposed(_ => {
+                        subscriptions.delete(key);
+                        scheduleCleanup(key);
+                    }), Disposable.addToIgnoringChildErrors(this));
+                    const initialValue = store.get(key);
+                    if (isSome(initialValue)) {
+                        subject[PublisherLike_publish](initialValue);
+                    }
+                    else {
+                        // Try to load the value from the persistence store
+                        delegate[QueueableLike_enqueue]({
+                            [key]: identity,
+                        });
+                    }
+                    return subject;
+                })());
         },
     }));
 })();
@@ -116,9 +116,6 @@ const Streamable_createCache = (persistentStore, options = {}) => ({
     [StreamableLike_isEnumerable]: false,
     [StreamableLike_isInteractive]: false,
     [StreamableLike_isRunnable]: false,
-    [StreamableLike_stream]: (scheduler, streamOptions) => {
-        var _a, _b;
-        return createCacheStream(scheduler, streamOptions, (_a = options.capacity) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER, (_b = options.cleanupScheduler) !== null && _b !== void 0 ? _b : scheduler, persistentStore);
-    },
+    [StreamableLike_stream]: (scheduler, streamOptions) => createCacheStream(scheduler, streamOptions, options.capacity ?? MAX_SAFE_INTEGER, options.cleanupScheduler ?? scheduler, persistentStore),
 });
 export default Streamable_createCache;

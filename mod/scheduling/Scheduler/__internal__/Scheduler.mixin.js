@@ -13,6 +13,7 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 export { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, };
 class YieldError {
+    delay;
     constructor(delay) {
         this.delay = delay;
     }
@@ -159,9 +160,8 @@ export const PriorityScheduler_mixin =
             this[SchedulerMixin_yieldRequested] = true;
         },
         [SchedulerLike_schedule](effect, options) {
-            var _a;
-            const delay = clampPositiveInteger((_a = options === null || options === void 0 ? void 0 : options.delay) !== null && _a !== void 0 ? _a : 0);
-            const { priority = 0 } = options !== null && options !== void 0 ? options : {};
+            const delay = clampPositiveInteger(options?.delay ?? 0);
+            const { priority = 0 } = options ?? {};
             const continuation = createContinuation(this, effect, priority);
             const currentContinuation = this[SchedulerMixin_currentContinuation];
             if (delay > 0 ||
