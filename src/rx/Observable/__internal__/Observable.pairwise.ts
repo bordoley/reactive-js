@@ -15,18 +15,16 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { none, pipe, returns } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import {
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-} from "../../../util.js";
+
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservablePairwise = <C extends ObservableLike, T>() => ContainerOperator<
@@ -52,13 +50,7 @@ const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
           delegate: ObserverLike<readonly [T, T]>,
         ): ObserverLike<T> {
           init(Disposable_delegatingMixin(), instance, delegate);
-          init(
-            Observer_mixin<T>(),
-            instance,
-            delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_capacity],
-            delegate[QueueableLike_backpressureStrategy],
-          );
+          initObserverMixinFromDelegate(instance, delegate);
 
           return instance;
         },

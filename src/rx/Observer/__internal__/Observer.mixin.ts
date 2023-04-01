@@ -43,6 +43,7 @@ import {
   DisposableLike_isDisposed,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -173,5 +174,18 @@ const Observer_mixin: <T>() => Mixin3<
     returns,
   );
 })();
+
+export function initObserverMixinFromDelegate<T>(
+  instance: unknown,
+  delegate: ObserverLike,
+): asserts instance is TObserverMixinReturn<T> {
+  init(
+    Observer_mixin<T>(),
+    instance,
+    delegate[DispatcherLike_scheduler],
+    delegate[QueueableLike_capacity],
+    delegate[QueueableLike_backpressureStrategy],
+  );
+}
 
 export default Observer_mixin;

@@ -13,7 +13,6 @@ import { SatisfyObserver_predicate } from "../../../__internal__/symbols.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { Predicate, invoke, none, pipe } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
@@ -21,14 +20,14 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "./Observer.assertState.js";
-import Observer_mixin from "./Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "./Observer.mixin.js";
 
 const Observer_satisfyMixin: <T>(
   defaultResult: boolean,
@@ -52,13 +51,7 @@ const Observer_satisfyMixin: <T>(
     ): ObserverLike<T> {
       init(Disposable_mixin, instance);
       init(delegatingMixin(), instance, delegate);
-      init(
-        Observer_mixin<T>(),
-        instance,
-        delegate[DispatcherLike_scheduler],
-        delegate[QueueableLike_capacity],
-        delegate[QueueableLike_backpressureStrategy],
-      );
+      initObserverMixinFromDelegate(instance, delegate);
 
       instance[SatisfyObserver_predicate] = predicate;
 

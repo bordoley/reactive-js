@@ -5,16 +5,16 @@ import { EnqueueObserver_effect } from "../../../__internal__/symbols.js";
 import { bindMethod, isFunction, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { SchedulerLike_requestYield } from "../../../scheduling.js";
-import { QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { QueueableLike_enqueue } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_enqueue = /*@__PURE__*/ (() => {
     const createEnqueueObserver = (() => {
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function EnqueueObserver(instance, delegate, effect) {
             init(Disposable_delegatingMixin(), instance, delegate);
-            init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]);
+            initObserverMixinFromDelegate(instance, delegate);
             instance[EnqueueObserver_effect] = effect;
             return instance;
         }, props({

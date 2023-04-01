@@ -16,24 +16,20 @@ import { ContainerOperator } from "../../../containers.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { invoke, none, partial, pipe } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import {
-  DisposableLike,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  QueueableLike_enqueue,
-} from "../../../util.js";
+import { DisposableLike, QueueableLike_enqueue } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Indexed_toReadonlyArray from "../../../util/Indexed/__internal__/Indexed.toReadonlyArray.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableTakeLast = <C extends ObservableLike, T>(options?: {
@@ -54,13 +50,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
         takeLastCount: number,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(
-          Observer_mixin<T>(),
-          instance,
-          delegate[DispatcherLike_scheduler],
-          delegate[QueueableLike_capacity],
-          delegate[QueueableLike_backpressureStrategy],
-        );
+        initObserverMixinFromDelegate(instance, delegate);
 
         instance[TakeLastObserver_takeLastQueue] = IndexedQueue_createFifoQueue(
           takeLastCount,

@@ -22,23 +22,20 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import {
-  DisposableLike_dispose,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-} from "../../../util.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "../../Observer/__internal__/Observer.mixin.js";
 
 const HigherOrderObservable_catchError = <C extends ObservableLike>(
   lift: <T>(
@@ -56,14 +53,7 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
         ): ObserverLike<T> {
           init(Disposable_mixin, instance);
           init(delegatingMixin(), instance, delegate);
-          init(
-            Observer_mixin<T>(),
-            instance,
-            delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_capacity],
-            delegate[QueueableLike_backpressureStrategy],
-          );
-
+          initObserverMixinFromDelegate(instance, delegate);
           pipe(
             instance,
             Disposable_addToIgnoringChildErrors(delegate),

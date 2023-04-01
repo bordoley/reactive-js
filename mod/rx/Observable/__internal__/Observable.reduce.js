@@ -4,18 +4,18 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { ReduceObserver_acc, ReduceObserver_reducer, } from "../../../__internal__/symbols.js";
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { error, invoke, none, partial, pipe, } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
+import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_reduce = /*@__PURE__*/ (() => {
     const createReduceObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function ReduceObserver(instance, delegate, reducer, initialValue) {
         init(Disposable_mixin, instance);
-        init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]);
+        initObserverMixinFromDelegate(instance, delegate);
         instance[ReduceObserver_reducer] = reducer;
         try {
             const acc = initialValue();

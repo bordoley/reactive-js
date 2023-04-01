@@ -8,18 +8,13 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  DispatcherLike_scheduler,
-  ObserverLike,
-  ObserverLike_notify,
-} from "../../../rx.js";
-import {
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-} from "../../../util.js";
+import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
+
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
-import Observer_mixin from "./Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "./Observer.mixin.js";
 
 const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
   /*@__PURE__*/ (<T>() =>
@@ -31,13 +26,7 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
           observer: ObserverLike<T>,
         ): ObserverLike<T> {
           init(Disposable_mixin, instance);
-          init(
-            Observer_mixin<T>(),
-            instance,
-            observer[DispatcherLike_scheduler],
-            observer[QueueableLike_capacity],
-            observer[QueueableLike_backpressureStrategy],
-          );
+          initObserverMixinFromDelegate(instance, observer);
           init(delegatingMixin(), instance, observer);
 
           return instance;
