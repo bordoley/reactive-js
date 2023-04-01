@@ -22,7 +22,6 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -32,14 +31,14 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
@@ -74,13 +73,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom =
             selector: Function2<TA, TB, T>,
           ): ObserverLike<TA> {
             init(Disposable_delegatingMixin(), instance, delegate);
-            init(
-              typedObserverMixin,
-              instance,
-              delegate[DispatcherLike_scheduler],
-              delegate[QueueableLike_capacity],
-              delegate[QueueableLike_backpressureStrategy],
-            );
+            initObserverMixinFromDelegate(instance, delegate);
 
             instance[WithLatestFromObserver_selector] = selector;
 

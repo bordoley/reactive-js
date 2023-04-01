@@ -20,13 +20,12 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import {
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-} from "../../../util.js";
+
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableWithCurrentTime = <C extends ObservableLike, TA, TB>(
@@ -54,13 +53,7 @@ const Observable_withCurrentTime: ObservableWithCurrentTime = /*@__PURE__*/ (<
           selector: Function2<number, TA, TB>,
         ): ObserverLike<TA> {
           init(Disposable_delegatingMixin(), instance, delegate);
-          init(
-            Observer_mixin<TA>(),
-            instance,
-            delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_capacity],
-            delegate[QueueableLike_backpressureStrategy],
-          );
+          initObserverMixinFromDelegate(instance, delegate);
           instance[WithCurrentTimeObserver_selector] = selector;
 
           return instance;

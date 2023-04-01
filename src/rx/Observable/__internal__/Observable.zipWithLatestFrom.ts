@@ -29,7 +29,6 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -50,7 +49,9 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
@@ -105,13 +106,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             selector: Function2<TA, TB, T>,
           ): ObserverLike<TA> {
             init(Disposable_mixin, instance);
-            init(
-              typedObserverMixin,
-              instance,
-              delegate[DispatcherLike_scheduler],
-              delegate[QueueableLike_capacity],
-              delegate[QueueableLike_backpressureStrategy],
-            );
+            initObserverMixinFromDelegate(instance, delegate);
             init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
 
             instance[ZipWithLatestFromObserver_selector] = selector;

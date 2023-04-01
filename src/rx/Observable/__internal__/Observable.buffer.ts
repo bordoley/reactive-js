@@ -28,7 +28,6 @@ import ReadonlyArray_isEmpty from "../../../containers/ReadonlyArray/__internal_
 import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { Function1, invoke, isNumber, none, pipe } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -37,8 +36,6 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -46,7 +43,9 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
@@ -78,13 +77,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
         count: number,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
-        init(
-          typedObserverMixin,
-          instance,
-          delegate[DispatcherLike_scheduler],
-          delegate[QueueableLike_capacity],
-          delegate[QueueableLike_backpressureStrategy],
-        );
+        initObserverMixinFromDelegate(instance, delegate);
         init(delegatingMixin(), instance, delegate);
 
         instance[BufferObserver_buffer] = [];
