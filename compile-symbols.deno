@@ -22,7 +22,7 @@ const makeDTS = async symbols => {
 
 const makeSymbolFiles = async () => {
   const data = await Deno.readTextFile(src + ".in");
-  const symbols = data.split("\n");
+  const symbols = data.split("\n").filter(x => x !== "");
   
   await makeJS(symbols)
   await makeDTS(symbols);

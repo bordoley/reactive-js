@@ -1,6 +1,220 @@
 import symbol from "./symbol.js";
 
 /** @type {unique symbol} */
+export const CacheStreamLike_get = /*@__PURE__*/ symbol("CacheStreamLike_get");
+
+/** @type {unique symbol} */
+export const CollectionLike_count = /*@__PURE__*/ symbol(
+  "CollectionLike_count",
+);
+
+/** @type {unique symbol} */
+export const ContainerLike_T = /*@__PURE__*/ symbol("ContainerLike_T");
+
+/** @type {unique symbol} */
+export const ContainerLike_type = /*@__PURE__*/ symbol("ContainerLike_type");
+
+/** @type {unique symbol} */
+export const ContinuationContextLike_yield = /*@__PURE__*/ symbol(
+  "ContinuationContextLike_yield",
+);
+
+/** @type {unique symbol} */
+export const DispatcherLike_complete = /*@__PURE__*/ symbol(
+  "DispatcherLike_complete",
+);
+
+/** @type {unique symbol} */
+export const DispatcherLike_scheduler = /*@__PURE__*/ symbol(
+  "DispatcherLike_scheduler",
+);
+
+/** @type {unique symbol} */
+export const DisposableLike_add = /*@__PURE__*/ symbol("DisposableLike_add");
+
+/** @type {unique symbol} */
+export const DisposableLike_dispose = /*@__PURE__*/ symbol(
+  "DisposableLike_dispose",
+);
+
+/** @type {unique symbol} */
+export const DisposableLike_error = /*@__PURE__*/ symbol(
+  "DisposableLike_error",
+);
+
+/** @type {unique symbol} */
+export const DisposableLike_isDisposed = /*@__PURE__*/ symbol(
+  "DisposableLike_isDisposed",
+);
+
+/** @type {unique symbol} */
+export const EnumeratorLike_move = /*@__PURE__*/ symbol("EnumeratorLike_move");
+
+/** @type {unique symbol} */
+export const EnumeratorLike_current = /*@__PURE__*/ symbol(
+  "EnumeratorLike_current",
+);
+
+/** @type {unique symbol} */
+export const EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol(
+  "EnumeratorLike_hasCurrent",
+);
+
+/** @type {unique symbol} */
+export const FlowableStreamLike_isPaused = /*@__PURE__*/ symbol(
+  "FlowableStreamLike_isPaused",
+);
+
+/** @type {unique symbol} */
+export const FlowableStreamLike_pause = /*@__PURE__*/ symbol(
+  "FlowableStreamLike_pause",
+);
+
+/** @type {unique symbol} */
+export const FlowableStreamLike_resume = /*@__PURE__*/ symbol(
+  "FlowableStreamLike_resume",
+);
+
+/** @type {unique symbol} */
+export const IndexedLike_get = /*@__PURE__*/ symbol("IndexedLike_get");
+
+/** @type {unique symbol} */
+export const MulticastObservableLike_observerCount = /*@__PURE__*/ symbol(
+  "MulticastObservableLike_observerCount",
+);
+
+/** @type {unique symbol} */
+export const MulticastObservableLike_replay = /*@__PURE__*/ symbol(
+  "MulticastObservableLike_replay",
+);
+
+/** @type {unique symbol} */
+export const ObserverLike_notify = /*@__PURE__*/ symbol("ObserverLike_notify");
+
+/** @type {unique symbol} */
+export const ObservableLike_observe = /*@__PURE__*/ symbol(
+  "ObservableLike_observe",
+);
+
+/** @type {unique symbol} */
+export const ObservableLike_isEnumerable = /*@__PURE__*/ symbol(
+  "ObservableLike_isEnumerable",
+);
+
+/** @type {unique symbol} */
+export const ObservableLike_isRunnable = /*@__PURE__*/ symbol(
+  "ObservableLike_isRunnable",
+);
+
+/** @type {unique symbol} */
+export const PauseableSchedulerLike_isPaused = /*@__PURE__*/ symbol(
+  "PauseableSchedulerLike_isPaused",
+);
+
+/** @type {unique symbol} */
+export const PauseableSchedulerLike_pause = /*@__PURE__*/ symbol(
+  "PauseableSchedulerLike_pause",
+);
+
+/** @type {unique symbol} */
+export const PauseableSchedulerLike_resume = /*@__PURE__*/ symbol(
+  "PauseableSchedulerLike_resume",
+);
+
+/** @type {unique symbol} */
+export const PublisherLike_publish = /*@__PURE__*/ symbol(
+  "PublisherLike_publish",
+);
+
+/** @type {unique symbol} */
+export const SchedulerLike_inContinuation = /*@__PURE__*/ symbol(
+  "SchedulerLike_inContinuation",
+);
+
+/** @type {unique symbol} */
+export const SchedulerLike_maxYieldInterval = /*@__PURE__*/ symbol(
+  "SchedulerLike_maxYieldInterval",
+);
+
+/** @type {unique symbol} */
+export const SchedulerLike_now = /*@__PURE__*/ symbol("SchedulerLike_now");
+
+/** @type {unique symbol} */
+export const SchedulerLike_requestYield = /*@__PURE__*/ symbol(
+  "SchedulerLike_requestYield",
+);
+
+/** @type {unique symbol} */
+export const SchedulerLike_schedule = /*@__PURE__*/ symbol(
+  "SchedulerLike_schedule",
+);
+
+/** @type {unique symbol} */
+export const SchedulerLike_shouldYield = /*@__PURE__*/ symbol(
+  "SchedulerLike_shouldYield",
+);
+
+/** @type {unique symbol} */
+export const StreamableLike_stream = /*@__PURE__*/ symbol(
+  "StreamableLike_stream",
+);
+
+/** @type {unique symbol} */
+export const StreamableLike_isEnumerable = /*@__PURE__*/ symbol(
+  "StreamableLike_isEnumerable",
+);
+
+/** @type {unique symbol} */
+export const StreamableLike_isInteractive = /*@__PURE__*/ symbol(
+  "StreamableLike_isInteractive",
+);
+
+/** @type {unique symbol} */
+export const StreamableLike_isRunnable = /*@__PURE__*/ symbol(
+  "StreamableLike_isRunnable",
+);
+
+/** @type {unique symbol} */
+export const VirtualTimeSchedulerLike_run = /*@__PURE__*/ symbol(
+  "VirtualTimeSchedulerLike_run",
+);
+
+/** @type {unique symbol} */
+export const QueueableLike_enqueue = /*@__PURE__*/ symbol(
+  "QueueableLike_enqueue",
+);
+
+/** @type {unique symbol} */
+export const QueueableLike_capacity = /*@__PURE__*/ symbol(
+  "QueueableLike_capacity",
+);
+
+/** @type {unique symbol} */
+export const QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol(
+  "QueueableLike_backpressureStrategy",
+);
+
+/** @type {unique symbol} */
+export const WindowLocationStreamLike_goBack = /*@__PURE__*/ symbol(
+  "WindowLocationStreamLike_goBack",
+);
+
+/** @type {unique symbol} */
+export const WindowLocationStreamLike_canGoBack = /*@__PURE__*/ symbol(
+  "WindowLocationStreamLike_canGoBack",
+);
+
+/** @type {unique symbol} */
+export const WindowLocationStream_historyCounter = /*@__PURE__*/ symbol(
+  "WindowLocationStream_historyCounter",
+);
+
+/** @type {unique symbol} */
+export const WindowLocationStreamLike_replace = /*@__PURE__*/ symbol(
+  "WindowLocationStreamLike_replace",
+);
+
+/** @type {unique symbol} */
 export const MutableEnumeratorLike_reset = /*@__PURE__*/ symbol(
   "MutableEnumeratorLike_reset",
 );
@@ -27,26 +241,6 @@ export const ReadonlyArrayEnumerator_count = /*@__PURE__*/ symbol(
 
 /** @type {unique symbol} */
 export const NODE_JS_PAUSE_EVENT = /*@__PURE__*/ symbol("NODE_JS_PAUSE_EVENT");
-
-/** @type {unique symbol} */
-export const WindowLocationStreamLike_goBack = /*@__PURE__*/ symbol(
-  "WindowLocationStreamLike_goBack",
-);
-
-/** @type {unique symbol} */
-export const WindowLocationStreamLike_canGoBack = /*@__PURE__*/ symbol(
-  "WindowLocationStreamLike_canGoBack",
-);
-
-/** @type {unique symbol} */
-export const WindowLocationStream_historyCounter = /*@__PURE__*/ symbol(
-  "WindowLocationStream_historyCounter",
-);
-
-/** @type {unique symbol} */
-export const WindowLocationStreamLike_replace = /*@__PURE__*/ symbol(
-  "WindowLocationStreamLike_replace",
-);
 
 /** @type {unique symbol} */
 export const EnumerableEnumerator_continuationQueue = /*@__PURE__*/ symbol(
@@ -626,25 +820,6 @@ export const PriorityQueueImpl_comparator = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const ContainerLike_T = /*@__PURE__*/ symbol("ContainerLike_T");
-
-/** @type {unique symbol} */
-export const ContainerLike_type = /*@__PURE__*/ symbol("ContainerLike_type");
-
-/** @type {unique symbol} */
-export const EnumeratorLike_move = /*@__PURE__*/ symbol("EnumeratorLike_move");
-
-/** @type {unique symbol} */
-export const EnumeratorLike_current = /*@__PURE__*/ symbol(
-  "EnumeratorLike_current",
-);
-
-/** @type {unique symbol} */
-export const EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol(
-  "EnumeratorLike_hasCurrent",
-);
-
-/** @type {unique symbol} */
 export const Object_init = /*@__PURE__*/ symbol("Object_init");
 
 /** @type {unique symbol} */
@@ -664,170 +839,6 @@ export const DelegatingLike_delegate = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const DispatcherLike_complete = /*@__PURE__*/ symbol(
-  "DispatcherLike_complete",
-);
-
-/** @type {unique symbol} */
-export const DispatcherLike_scheduler = /*@__PURE__*/ symbol(
-  "DispatcherLike_scheduler",
-);
-
-/** @type {unique symbol} */
-export const MulticastObservableLike_observerCount = /*@__PURE__*/ symbol(
-  "MulticastObservableLike_observerCount",
-);
-
-/** @type {unique symbol} */
-export const MulticastObservableLike_replay = /*@__PURE__*/ symbol(
-  "MulticastObservableLike_replay",
-);
-
-/** @type {unique symbol} */
-export const ObserverLike_notify = /*@__PURE__*/ symbol("ObserverLike_notify");
-
-/** @type {unique symbol} */
-export const ObservableLike_observe = /*@__PURE__*/ symbol(
-  "ObservableLike_observe",
-);
-
-/** @type {unique symbol} */
-export const ObservableLike_isEnumerable = /*@__PURE__*/ symbol(
-  "ObservableLike_isEnumerable",
-);
-
-/** @type {unique symbol} */
-export const ObservableLike_isRunnable = /*@__PURE__*/ symbol(
-  "ObservableLike_isRunnable",
-);
-
-/** @type {unique symbol} */
-export const PublisherLike_publish = /*@__PURE__*/ symbol(
-  "PublisherLike_publish",
-);
-
-/** @type {unique symbol} */
-export const SchedulerLike_inContinuation = /*@__PURE__*/ symbol(
-  "SchedulerLike_inContinuation",
-);
-
-/** @type {unique symbol} */
-export const SchedulerLike_now = /*@__PURE__*/ symbol("SchedulerLike_now");
-
-/** @type {unique symbol} */
-export const SchedulerLike_requestYield = /*@__PURE__*/ symbol(
-  "SchedulerLike_requestYield",
-);
-
-/** @type {unique symbol} */
-export const SchedulerLike_shouldYield = /*@__PURE__*/ symbol(
-  "SchedulerLike_shouldYield",
-);
-
-/** @type {unique symbol} */
-export const SchedulerLike_schedule = /*@__PURE__*/ symbol(
-  "SchedulerLike_schedule",
-);
-
-/** @type {unique symbol} */
-export const SchedulerLike_maxYieldInterval = /*@__PURE__*/ symbol(
-  "SchedulerLike_maxYieldInterval",
-);
-
-/** @type {unique symbol} */
-export const ContinuationContextLike_yield = /*@__PURE__*/ symbol(
-  "ContinuationContextLike_yield",
-);
-
-/** @type {unique symbol} */
-export const PauseableSchedulerLike_isPaused = /*@__PURE__*/ symbol(
-  "PauseableSchedulerLike_isPaused",
-);
-
-/** @type {unique symbol} */
-export const PauseableSchedulerLike_pause = /*@__PURE__*/ symbol(
-  "PauseableSchedulerLike_pause",
-);
-
-/** @type {unique symbol} */
-export const PauseableSchedulerLike_resume = /*@__PURE__*/ symbol(
-  "PauseableSchedulerLike_resume",
-);
-
-/** @type {unique symbol} */
-export const VirtualTimeSchedulerLike_run = /*@__PURE__*/ symbol(
-  "VirtualTimeSchedulerLike_run",
-);
-
-/** @type {unique symbol} */
-export const StreamableLike_stream = /*@__PURE__*/ symbol(
-  "StreamableLike_stream",
-);
-
-/** @type {unique symbol} */
-export const StreamableLike_isEnumerable = /*@__PURE__*/ symbol(
-  "StreamableLike_isEnumerable",
-);
-
-/** @type {unique symbol} */
-export const StreamableLike_isInteractive = /*@__PURE__*/ symbol(
-  "StreamableLike_isInteractive",
-);
-
-/** @type {unique symbol} */
-export const StreamableLike_isRunnable = /*@__PURE__*/ symbol(
-  "StreamableLike_isRunnable",
-);
-
-/** @type {unique symbol} */
-export const FlowableStreamLike_isPaused = /*@__PURE__*/ symbol(
-  "FlowableStreamLike_isPaused",
-);
-
-/** @type {unique symbol} */
-export const FlowableStreamLike_pause = /*@__PURE__*/ symbol(
-  "FlowableStreamLike_pause",
-);
-
-/** @type {unique symbol} */
-export const FlowableStreamLike_resume = /*@__PURE__*/ symbol(
-  "FlowableStreamLike_resume",
-);
-
-/** @type {unique symbol} */
-export const DisposableLike_add = /*@__PURE__*/ symbol("DisposableLike_add");
-
-/** @type {unique symbol} */
-export const DisposableLike_dispose = /*@__PURE__*/ symbol(
-  "DisposableLike_dispose",
-);
-
-/** @type {unique symbol} */
-export const DisposableLike_error = /*@__PURE__*/ symbol(
-  "DisposableLike_error",
-);
-
-/** @type {unique symbol} */
-export const DisposableLike_isDisposed = /*@__PURE__*/ symbol(
-  "DisposableLike_isDisposed",
-);
-
-/** @type {unique symbol} */
-export const QueueableLike_enqueue = /*@__PURE__*/ symbol(
-  "QueueableLike_enqueue",
-);
-
-/** @type {unique symbol} */
-export const QueueableLike_capacity = /*@__PURE__*/ symbol(
-  "QueueableLike_capacity",
-);
-
-/** @type {unique symbol} */
-export const QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol(
-  "QueueableLike_backpressureStrategy",
-);
-
-/** @type {unique symbol} */
 export const SerialDisposableLike_current = /*@__PURE__*/ symbol(
   "SerialDisposableLike_current",
 );
@@ -837,14 +848,6 @@ export const QueueLike_head = /*@__PURE__*/ symbol("QueueLike_head");
 
 /** @type {unique symbol} */
 export const QueueLike_dequeue = /*@__PURE__*/ symbol("QueueLike_dequeue");
-
-/** @type {unique symbol} */
-export const CollectionLike_count = /*@__PURE__*/ symbol(
-  "CollectionLike_count",
-);
-
-/** @type {unique symbol} */
-export const IndexedLike_get = /*@__PURE__*/ symbol("IndexedLike_get");
 
 /** @type {unique symbol} */
 export const MutableIndexedLike_set = /*@__PURE__*/ symbol(
@@ -866,6 +869,3 @@ export const IteratorEnumerator_iterator = /*@__PURE__*/ symbol(
 export const WithCurrentTimeObserver_selector = /*@__PURE__*/ symbol(
   "WithCurrentTimeObserver_selector",
 );
-
-/** @type {unique symbol} */
-export const CacheStreamLike_get = /*@__PURE__*/ symbol("CacheStreamLike_get");

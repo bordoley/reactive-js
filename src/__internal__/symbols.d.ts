@@ -1,3 +1,95 @@
+export declare const CacheStreamLike_get: unique symbol;
+
+export declare const CollectionLike_count: unique symbol;
+
+export declare const ContainerLike_T: unique symbol;
+
+export declare const ContainerLike_type: unique symbol;
+
+export declare const ContinuationContextLike_yield: unique symbol;
+
+export declare const DispatcherLike_complete: unique symbol;
+
+export declare const DispatcherLike_scheduler: unique symbol;
+
+export declare const DisposableLike_add: unique symbol;
+
+export declare const DisposableLike_dispose: unique symbol;
+
+export declare const DisposableLike_error: unique symbol;
+
+export declare const DisposableLike_isDisposed: unique symbol;
+
+export declare const EnumeratorLike_move: unique symbol;
+
+export declare const EnumeratorLike_current: unique symbol;
+
+export declare const EnumeratorLike_hasCurrent: unique symbol;
+
+export declare const FlowableStreamLike_isPaused: unique symbol;
+
+export declare const FlowableStreamLike_pause: unique symbol;
+
+export declare const FlowableStreamLike_resume: unique symbol;
+
+export declare const IndexedLike_get: unique symbol;
+
+export declare const MulticastObservableLike_observerCount: unique symbol;
+
+export declare const MulticastObservableLike_replay: unique symbol;
+
+export declare const ObserverLike_notify: unique symbol;
+
+export declare const ObservableLike_observe: unique symbol;
+
+export declare const ObservableLike_isEnumerable: unique symbol;
+
+export declare const ObservableLike_isRunnable: unique symbol;
+
+export declare const PauseableSchedulerLike_isPaused: unique symbol;
+
+export declare const PauseableSchedulerLike_pause: unique symbol;
+
+export declare const PauseableSchedulerLike_resume: unique symbol;
+
+export declare const PublisherLike_publish: unique symbol;
+
+export declare const SchedulerLike_inContinuation: unique symbol;
+
+export declare const SchedulerLike_maxYieldInterval: unique symbol;
+
+export declare const SchedulerLike_now: unique symbol;
+
+export declare const SchedulerLike_requestYield: unique symbol;
+
+export declare const SchedulerLike_schedule: unique symbol;
+
+export declare const SchedulerLike_shouldYield: unique symbol;
+
+export declare const StreamableLike_stream: unique symbol;
+
+export declare const StreamableLike_isEnumerable: unique symbol;
+
+export declare const StreamableLike_isInteractive: unique symbol;
+
+export declare const StreamableLike_isRunnable: unique symbol;
+
+export declare const VirtualTimeSchedulerLike_run: unique symbol;
+
+export declare const QueueableLike_enqueue: unique symbol;
+
+export declare const QueueableLike_capacity: unique symbol;
+
+export declare const QueueableLike_backpressureStrategy: unique symbol;
+
+export declare const WindowLocationStreamLike_goBack: unique symbol;
+
+export declare const WindowLocationStreamLike_canGoBack: unique symbol;
+
+export declare const WindowLocationStream_historyCounter: unique symbol;
+
+export declare const WindowLocationStreamLike_replace: unique symbol;
+
 export declare const MutableEnumeratorLike_reset: unique symbol;
 
 export declare const Enumerator_private_current: unique symbol;
@@ -9,14 +101,6 @@ export declare const ReadonlyArrayEnumerator_index: unique symbol;
 export declare const ReadonlyArrayEnumerator_count: unique symbol;
 
 export declare const NODE_JS_PAUSE_EVENT: unique symbol;
-
-export declare const WindowLocationStreamLike_goBack: unique symbol;
-
-export declare const WindowLocationStreamLike_canGoBack: unique symbol;
-
-export declare const WindowLocationStream_historyCounter: unique symbol;
-
-export declare const WindowLocationStreamLike_replace: unique symbol;
 
 export declare const EnumerableEnumerator_continuationQueue: unique symbol;
 
@@ -266,16 +350,6 @@ export declare const FifoQueue_values: unique symbol;
 
 export declare const PriorityQueueImpl_comparator: unique symbol;
 
-export declare const ContainerLike_T: unique symbol;
-
-export declare const ContainerLike_type: unique symbol;
-
-export declare const EnumeratorLike_move: unique symbol;
-
-export declare const EnumeratorLike_current: unique symbol;
-
-export declare const EnumeratorLike_hasCurrent: unique symbol;
-
 export declare const Object_init: unique symbol;
 
 export declare const Object_properties: unique symbol;
@@ -286,83 +360,11 @@ export declare const Object_private_initializedProperties: unique symbol;
 
 export declare const DelegatingLike_delegate: unique symbol;
 
-export declare const DispatcherLike_complete: unique symbol;
-
-export declare const DispatcherLike_scheduler: unique symbol;
-
-export declare const MulticastObservableLike_observerCount: unique symbol;
-
-export declare const MulticastObservableLike_replay: unique symbol;
-
-export declare const ObserverLike_notify: unique symbol;
-
-export declare const ObservableLike_observe: unique symbol;
-
-export declare const ObservableLike_isEnumerable: unique symbol;
-
-export declare const ObservableLike_isRunnable: unique symbol;
-
-export declare const PublisherLike_publish: unique symbol;
-
-export declare const SchedulerLike_inContinuation: unique symbol;
-
-export declare const SchedulerLike_now: unique symbol;
-
-export declare const SchedulerLike_requestYield: unique symbol;
-
-export declare const SchedulerLike_shouldYield: unique symbol;
-
-export declare const SchedulerLike_schedule: unique symbol;
-
-export declare const SchedulerLike_maxYieldInterval: unique symbol;
-
-export declare const ContinuationContextLike_yield: unique symbol;
-
-export declare const PauseableSchedulerLike_isPaused: unique symbol;
-
-export declare const PauseableSchedulerLike_pause: unique symbol;
-
-export declare const PauseableSchedulerLike_resume: unique symbol;
-
-export declare const VirtualTimeSchedulerLike_run: unique symbol;
-
-export declare const StreamableLike_stream: unique symbol;
-
-export declare const StreamableLike_isEnumerable: unique symbol;
-
-export declare const StreamableLike_isInteractive: unique symbol;
-
-export declare const StreamableLike_isRunnable: unique symbol;
-
-export declare const FlowableStreamLike_isPaused: unique symbol;
-
-export declare const FlowableStreamLike_pause: unique symbol;
-
-export declare const FlowableStreamLike_resume: unique symbol;
-
-export declare const DisposableLike_add: unique symbol;
-
-export declare const DisposableLike_dispose: unique symbol;
-
-export declare const DisposableLike_error: unique symbol;
-
-export declare const DisposableLike_isDisposed: unique symbol;
-
-export declare const QueueableLike_enqueue: unique symbol;
-
-export declare const QueueableLike_capacity: unique symbol;
-
-export declare const QueueableLike_backpressureStrategy: unique symbol;
-
 export declare const SerialDisposableLike_current: unique symbol;
 
 export declare const QueueLike_head: unique symbol;
 
 export declare const QueueLike_dequeue: unique symbol;
-
-export declare const CollectionLike_count: unique symbol;
-
-export declare const IndexedLike_get: unique symbol;
 
 export declare const MutableIndexedLike_set: unique symbol;
 
@@ -373,5 +375,3 @@ export declare const StackLike_head: unique symbol;
 export declare const IteratorEnumerator_iterator: unique symbol;
 
 export declare const WithCurrentTimeObserver_selector: unique symbol;
-
-export declare const CacheStreamLike_get: unique symbol;
