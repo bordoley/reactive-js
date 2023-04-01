@@ -30,7 +30,6 @@ import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/Re
 import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   EnumerableLike,
   ObservableLike,
   ObserverLike,
@@ -58,7 +57,9 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
@@ -179,13 +180,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         queuedEnumerator: QueuedEnumeratorLike,
       ): ObserverLike {
         init(Disposable_mixin, instance);
-        init(
-          typedObserverMixin,
-          instance,
-          delegate[DispatcherLike_scheduler],
-          delegate[QueueableLike_capacity],
-          delegate[QueueableLike_backpressureStrategy],
-        );
+        initObserverMixinFromDelegate(instance, delegate);
         init(delegatingMixin(), instance, delegate);
 
         instance[ZipObserver_queuedEnumerator] = queuedEnumerator;

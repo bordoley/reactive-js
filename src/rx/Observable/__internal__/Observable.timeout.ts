@@ -19,24 +19,20 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
   RunnableLike,
 } from "../../../rx.js";
-import {
-  DisposableLike,
-  DisposableLike_dispose,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-} from "../../../util.js";
+import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, {
+  initObserverMixinFromDelegate,
+} from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
@@ -78,13 +74,7 @@ const Observable_timeout: ObservableTimeout = /*@__PURE__*/ (<T>() => {
         delegate: ObserverLike<T>,
         duration: ObservableLike,
       ): ObserverLike<T> {
-        init(
-          typedObserverMixin,
-          instance,
-          delegate[DispatcherLike_scheduler],
-          delegate[QueueableLike_capacity],
-          delegate[QueueableLike_backpressureStrategy],
-        );
+        initObserverMixinFromDelegate(instance, delegate);
         init(Disposable_delegatingMixin<ObserverLike<T>>(), instance, delegate);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
 

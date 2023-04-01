@@ -4,13 +4,13 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import { TimeoutObserver_duration, timeoutError, } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../util.js";
+import { ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
@@ -22,7 +22,7 @@ const Observable_timeout = /*@__PURE__*/ (() => {
         observer[SerialDisposableLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribeWithDispatcherConfig(observer));
     };
     const createTimeoutObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_delegatingMixin(), typedSerialDisposableMixin), function TimeoutObserver(instance, delegate, duration) {
-        init(typedObserverMixin, instance, delegate[DispatcherLike_scheduler], delegate[QueueableLike_capacity], delegate[QueueableLike_backpressureStrategy]);
+        initObserverMixinFromDelegate(instance, delegate);
         init(Disposable_delegatingMixin(), instance, delegate);
         init(typedSerialDisposableMixin, instance, Disposable_disposed);
         instance[TimeoutObserver_duration] = duration;
