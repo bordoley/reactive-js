@@ -22,7 +22,7 @@ const Observable_enqueue = /*@__PURE__*/ (() => {
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                if (!(this[EnqueueObserver_effect](next) ?? true)) {
+                if (!this[EnqueueObserver_effect](next)) {
                     this[DispatcherLike_scheduler][SchedulerLike_requestYield]();
                 }
                 this[DelegatingLike_delegate][ObserverLike_notify](next);

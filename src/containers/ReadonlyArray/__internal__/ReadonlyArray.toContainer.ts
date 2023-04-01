@@ -30,7 +30,7 @@ const ReadonlyArray_toContainer =
       count: countOption = MAX_SAFE_INTEGER,
       ...tail
     } = options ?? {};
-    
+
     const start =
       countOption >= 0
         ? clamp(0, startOption ?? 0, valuesLength)
