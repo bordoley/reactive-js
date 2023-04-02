@@ -47,7 +47,7 @@ import {
 
 const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
   const values = cache[CacheStreamLike_get]("a");
-  const value = useObservable(values);
+  const value = useObservable(values) ?? "";
 
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
