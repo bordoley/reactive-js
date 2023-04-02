@@ -7,15 +7,11 @@ import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
-const Observable_spring = (
-  start: number,
-  finish: number,
-  options?: {
-    stiffness?: number;
-    damping?: number;
-    precision?: number;
-  },
-): RunnableLike<number> => {
+const Observable_spring = (options?: {
+  stiffness?: number;
+  damping?: number;
+  precision?: number;
+}): RunnableLike<number> => {
   const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = options ?? {};
 
   if (__DEV__) {
@@ -28,7 +24,7 @@ const Observable_spring = (
       ([lastTime, last, value], now) => {
         lastTime = min(now, lastTime);
 
-        const delta = finish - value;
+        const delta = 1 - value;
         const dt = ((now - lastTime) * 60) / 1000;
         const velocity = (value - last) / (dt || 1 / 60);
 
@@ -38,14 +34,14 @@ const Observable_spring = (
         const d = (velocity + acceleration) * dt;
 
         const newValue =
-          abs(d) < precision && abs(delta) < precision ? finish : value + d;
+          abs(d) < precision && abs(delta) < precision ? 1 : value + d;
 
         return [now, value, newValue];
       },
-      returns([MAX_VALUE, start, start]),
+      returns([MAX_VALUE, 0, 0]),
     ),
     Observable_pick<RunnableLike, [unknown, unknown, number]>(2),
-    Observable_takeWhile<RunnableLike, number>(isNotEqualTo(finish), {
+    Observable_takeWhile<RunnableLike, number>(isNotEqualTo(1), {
       inclusive: true,
     }),
   );

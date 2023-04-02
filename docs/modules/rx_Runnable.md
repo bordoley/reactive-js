@@ -554,14 +554,12 @@ ___
 
 ### spring
 
-▸ **spring**(`start`, `finish`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
+▸ **spring**(`options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `start` | `number` |
-| `finish` | `number` |
 | `options?` | `Object` |
 | `options.damping?` | `number` |
 | `options.precision?` | `number` |
@@ -597,16 +595,14 @@ ___
 
 ### tween
 
-▸ **tween**(`start`, `finish`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
+▸ **tween**(`duration`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`number`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `start` | `number` |
-| `finish` | `number` |
+| `duration` | `number` |
 | `options?` | `Object` |
-| `options.duration?` | `number` |
 | `options.easing?` | [`Function1`](functions.md#function1)<`number`, `number`\> |
 
 #### Returns

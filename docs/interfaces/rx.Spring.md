@@ -26,14 +26,12 @@
 
 ### spring
 
-▸ **spring**(`start`, `finish`, `options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `number`\>
+▸ **spring**(`options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `number`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `start` | `number` |
-| `finish` | `number` |
 | `options?` | `Object` |
 | `options.damping?` | `number` |
 | `options.precision?` | `number` |

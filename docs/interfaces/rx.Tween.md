@@ -26,16 +26,14 @@
 
 ### tween
 
-▸ **tween**(`start`, `finish`, `options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `number`\>
+▸ **tween**(`duration`, `options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `number`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `start` | `number` |
-| `finish` | `number` |
+| `duration` | `number` |
 | `options?` | `Object` |
-| `options.duration?` | `number` |
 | `options.easing?` | [`Function1`](../modules/functions.md#function1)<`number`, `number`\> |
 
 #### Returns

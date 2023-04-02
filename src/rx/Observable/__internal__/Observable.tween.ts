@@ -14,14 +14,12 @@ import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
 const Observable_tween = (
-  start: number,
-  finish: number,
+  duration: number,
   options?: {
-    duration?: number;
     easing?: Function1<number, number>;
   },
 ): RunnableLike<number> => {
-  const { duration = 400, easing = identity } = options ?? {};
+  const { easing = identity } = options ?? {};
 
   return pipe(
     Observable_currentTime(),
@@ -31,15 +29,13 @@ const Observable_tween = (
 
         const elapsed = now - startTime;
         const next =
-          elapsed > duration
-            ? finish
-            : start + (finish - start) * easing(elapsed / duration);
+          elapsed > duration ? 1 : easing(elapsed / duration);
         return [startTime, next];
       },
-      returns([MAX_VALUE, start]),
+      returns([MAX_VALUE, 0]),
     ),
     Observable_pick<RunnableLike, [unknown, number]>(1),
-    Observable_takeWhile<RunnableLike, number>(isNotEqualTo(finish), {
+    Observable_takeWhile<RunnableLike, number>(isNotEqualTo(1), {
       inclusive: true,
     }),
   );

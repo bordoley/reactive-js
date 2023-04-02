@@ -1,5 +1,5 @@
 import { RunnableLike } from "../../../rx.js";
-declare const Observable_spring: (start: number, finish: number, options?: {
+declare const Observable_spring: (options?: {
     stiffness?: number;
     damping?: number;
     precision?: number;

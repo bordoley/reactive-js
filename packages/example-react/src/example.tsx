@@ -120,14 +120,17 @@ const Root = () => {
         Observable.exhaustMap(
           pipe(
             Observable.concat(
-              Observable.tween(0, 50, { duration: 1000 }),
-              Observable.tween(50, 0, { duration: 1000 }),
+              Observable.tween(1000),
+              pipe(
+                Observable.tween(1000),
+                Observable.map(x => 1 - x),
+              ),
             ),
             Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {
-                animatedDiv.style.margin = `${50 - size}px`;
-                animatedDiv.style.padding = `${size}px`;
+                animatedDiv.style.margin = `${50 - size * 50}px`;
+                animatedDiv.style.padding = `${size * 50}px`;
                 animatedDiv.style.backgroundColor = "#bbb";
                 animatedDiv.style.borderRadius = "50%";
                 animatedDiv.style.display = "inline-block";
@@ -202,18 +205,20 @@ const RxComponent = createComponent(
         Observable.exhaustMap(
           pipe(
             Observable.concat(
-              Observable.tween(0, 50, { duration: 1000 }),
-              Observable.spring(50, 0, {
-                stiffness: 0.01,
-                damping: 0.1,
-                precision: 1,
-              }),
+              Observable.tween(1000),
+              pipe(
+                Observable.spring({
+                  stiffness: 0.01,
+                  damping: 0.1,
+                }),
+                Observable.map(x => 1 - x),
+              ),
             ),
             Observable.forEach(size => {
               const animatedDiv = animatedDivRef.current;
               if (animatedDiv != null) {
-                animatedDiv.style.margin = `${50 - size}px`;
-                animatedDiv.style.padding = `${size}px`;
+                animatedDiv.style.margin = `${50 - size * 50}px`;
+                animatedDiv.style.padding = `${size * 50}px`;
                 animatedDiv.style.backgroundColor = "#bbb";
                 animatedDiv.style.borderRadius = "50%";
                 animatedDiv.style.display = "inline-block";
