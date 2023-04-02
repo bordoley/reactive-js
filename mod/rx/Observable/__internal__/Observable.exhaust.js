@@ -4,7 +4,8 @@ import { returns } from "../../../functions.js";
 import Observable_mergeAll from "./Observable.mergeAll.js";
 const Observable_exhaust = 
 /*@__PURE__*/ (() => returns(Observable_mergeAll({
-    maxBufferSize: 1,
+    capacity: 0,
+    backpressureStrategy: "drop-latest",
     maxConcurrency: 1,
 })))();
 export default Observable_exhaust;

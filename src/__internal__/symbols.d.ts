@@ -106,8 +106,6 @@ export declare const EnumerableEnumerator_continuationQueue: unique symbol;
 
 export declare const MergeAllObserver_activeCount: unique symbol;
 
-export declare const MergeAllObserver_maxBufferSize: unique symbol;
-
 export declare const MergeAllObserver_maxConcurrency: unique symbol;
 
 export declare const MergeAllObserver_onDispose: unique symbol;

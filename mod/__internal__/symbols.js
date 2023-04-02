@@ -110,8 +110,6 @@ export const EnumerableEnumerator_continuationQueue = /*@__PURE__*/ symbol("Enum
 /** @type {unique symbol} */
 export const MergeAllObserver_activeCount = /*@__PURE__*/ symbol("MergeAllObserver_activeCount");
 /** @type {unique symbol} */
-export const MergeAllObserver_maxBufferSize = /*@__PURE__*/ symbol("MergeAllObserver_maxBufferSize");
-/** @type {unique symbol} */
 export const MergeAllObserver_maxConcurrency = /*@__PURE__*/ symbol("MergeAllObserver_maxConcurrency");
 /** @type {unique symbol} */
 export const MergeAllObserver_onDispose = /*@__PURE__*/ symbol("MergeAllObserver_onDispose");

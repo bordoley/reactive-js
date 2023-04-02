@@ -1,6 +1,8 @@
 import { MergeAll, ObservableLike } from "../../../rx.js";
+import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
 declare const Observable_mergeAll: MergeAll<ObservableLike, {
-    readonly maxBufferSize?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
     readonly maxConcurrency?: number;
 }>["mergeAll"];
 export default Observable_mergeAll;

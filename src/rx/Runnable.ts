@@ -82,6 +82,7 @@ import {
   ZipWithLatestFrom,
 } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
+import { QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
@@ -277,7 +278,8 @@ export const merge: Merge<RunnableLike>["merge"] = Observable_merge;
 export const mergeAll: MergeAll<
   RunnableLike,
   {
-    readonly maxBufferSize?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
     readonly maxConcurrency?: number;
   }
 >["mergeAll"] = Runnable_mergeAll;

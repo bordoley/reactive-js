@@ -3220,7 +3220,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
 | `options.maxConcurrency?` | `number` |
 
 #### Returns

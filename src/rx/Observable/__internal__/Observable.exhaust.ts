@@ -6,7 +6,8 @@ const Observable_exhaust: Exhaust<ObservableLike>["exhaust"] =
   /*@__PURE__*/ (() =>
     returns(
       Observable_mergeAll({
-        maxBufferSize: 1,
+        capacity: 0,
+        backpressureStrategy: "drop-latest",
         maxConcurrency: 1,
       }),
     ))();

@@ -532,7 +532,8 @@ export const merge: Merge<ObservableLike>["merge"] = Observable_merge;
 export const mergeAll: MergeAll<
   ObservableLike,
   {
-    readonly maxBufferSize?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
     readonly maxConcurrency?: number;
   }
 >["mergeAll"] = Observable_mergeAll;

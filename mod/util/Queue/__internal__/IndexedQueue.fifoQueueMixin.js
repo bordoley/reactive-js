@@ -1,7 +1,7 @@
 /// <reference types="./IndexedQueue.fifoQueueMixin.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { mix, props } from "../../../__internal__/mixins.js";
 import { FifoQueue_capacityMask, FifoQueue_head, FifoQueue_tail, FifoQueue_values, } from "../../../__internal__/symbols.js";
 import { MutableIndexedLike_set, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
@@ -68,8 +68,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     };
     return pipe(mix(function FifoQueue(instance, capacity, backpressureStrategy) {
         instance[QueueableLike_backpressureStrategy] = backpressureStrategy;
-        instance[QueueableLike_capacity] =
-            clampPositiveNonZeroInteger(capacity);
+        instance[QueueableLike_capacity] = clampPositiveInteger(capacity);
         return instance;
     }, props({
         [CollectionLike_count]: 0,

@@ -1,12 +1,17 @@
 import { ConcatAll } from "../../../containers.js";
 import { EnumerableLike } from "../../../rx.js";
 import HigherOrderObservable_mergeAll from "../../../rx/HigherOrderObservable/__internal__/HigherOrderObservable.mergeAll.js";
+import {
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../../../util.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_mergeAll: ConcatAll<
   EnumerableLike,
   {
-    readonly maxBufferSize?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
     readonly maxConcurrency?: number;
   }
 >["concatAll"] = /*@__PURE__*/ HigherOrderObservable_mergeAll<EnumerableLike>(
@@ -14,7 +19,8 @@ const Enumerable_mergeAll: ConcatAll<
 ) as ConcatAll<
   EnumerableLike,
   {
-    readonly maxBufferSize?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
     readonly maxConcurrency?: number;
   }
 >["concatAll"];

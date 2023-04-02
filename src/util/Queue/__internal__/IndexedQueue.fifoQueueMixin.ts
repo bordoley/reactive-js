@@ -1,5 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
+import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { Mixin2, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
   FifoQueue_capacityMask,
@@ -145,8 +145,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
         backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): IndexedQueueLike<T> {
         instance[QueueableLike_backpressureStrategy] = backpressureStrategy;
-        instance[QueueableLike_capacity] =
-          clampPositiveNonZeroInteger(capacity);
+        instance[QueueableLike_capacity] = clampPositiveInteger(capacity);
         return instance;
       },
       props<TProperties>({

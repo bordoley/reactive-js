@@ -253,11 +253,6 @@ export const MergeAllObserver_activeCount = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const MergeAllObserver_maxBufferSize = /*@__PURE__*/ symbol(
-  "MergeAllObserver_maxBufferSize",
-);
-
-/** @type {unique symbol} */
 export const MergeAllObserver_maxConcurrency = /*@__PURE__*/ symbol(
   "MergeAllObserver_maxConcurrency",
 );

@@ -107,8 +107,6 @@ export const EnumerableEnumerator_continuationQueue: unique symbol;
 /** @type {unique symbol} */
 export const MergeAllObserver_activeCount: unique symbol;
 /** @type {unique symbol} */
-export const MergeAllObserver_maxBufferSize: unique symbol;
-/** @type {unique symbol} */
 export const MergeAllObserver_maxConcurrency: unique symbol;
 /** @type {unique symbol} */
 export const MergeAllObserver_onDispose: unique symbol;

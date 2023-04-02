@@ -71,7 +71,6 @@ ReadonlyArrayEnumerator_count
 NODE_JS_PAUSE_EVENT
 EnumerableEnumerator_continuationQueue
 MergeAllObserver_activeCount
-MergeAllObserver_maxBufferSize
 MergeAllObserver_maxConcurrency
 MergeAllObserver_onDispose
 MergeAllObserver_observablesQueue

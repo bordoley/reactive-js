@@ -28,8 +28,7 @@ const Observable_tween = (
         startTime = min(now, startTime);
 
         const elapsed = now - startTime;
-        const next =
-          elapsed > duration ? 1 : easing(elapsed / duration);
+        const next = elapsed > duration ? 1 : easing(elapsed / duration);
         return [startTime, next];
       },
       returns([MAX_VALUE, 0]),

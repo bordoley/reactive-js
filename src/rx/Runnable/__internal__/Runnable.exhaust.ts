@@ -5,7 +5,8 @@ import Runnable_mergeAll from "./Runnable.mergeAll.js";
 const Runnable_exhaust: Exhaust<RunnableLike>["exhaust"] = /*@__PURE__*/ (() =>
   returns(
     Runnable_mergeAll({
-      maxBufferSize: 1,
+      capacity: 0,
+      backpressureStrategy: "drop-latest",
       maxConcurrency: 1,
     }),
   ))();

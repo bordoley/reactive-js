@@ -174,7 +174,8 @@ export declare const map: Map<ObservableLike>["map"];
 export declare const mapTo: MapTo<ObservableLike>["mapTo"];
 export declare const merge: Merge<ObservableLike>["merge"];
 export declare const mergeAll: MergeAll<ObservableLike, {
-    readonly maxBufferSize?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
     readonly maxConcurrency?: number;
 }>["mergeAll"];
 export declare const mergeMap: MergeMap<ObservableLike>["mergeMap"];
