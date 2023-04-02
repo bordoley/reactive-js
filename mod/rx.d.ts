@@ -88,7 +88,6 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  * @category Container
  */
 export interface MulticastObservableLike<T = unknown> extends ObservableLike<T>, IndexedLike<T>, DisposableLike {
-    readonly [ContainerLike_type]?: MulticastObservableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: false;
     readonly [ObservableLike_isRunnable]: false;
     /**
@@ -105,9 +104,6 @@ export interface MulticastObservableLike<T = unknown> extends ObservableLike<T>,
  * @category Container
  */
 export interface PublisherLike<T = unknown> extends MulticastObservableLike<T> {
-    readonly [ObservableLike_isEnumerable]: false;
-    readonly [ObservableLike_isRunnable]: false;
-    readonly [ContainerLike_type]?: PublisherLike<this[typeof ContainerLike_T]>;
     /**
      * Publishes a notification to any observers.
      *

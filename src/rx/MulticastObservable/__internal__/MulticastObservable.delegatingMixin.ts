@@ -20,17 +20,22 @@ import {
 import { CollectionLike_count, IndexedLike_get } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
-const MulticastObservable_delegatingMixin: <T>() => Mixin1<
-  MulticastObservableLike<T>,
-  MulticastObservableLike<T>,
-  Pick<
-    MulticastObservableLike<T>,
-    | typeof MulticastObservableLike_observerCount
-    | typeof ObservableLike_observe
-    | typeof ObservableLike_isEnumerable
-    | typeof ObservableLike_isRunnable
-  >
-> = /*@__PURE__*/ (<T>() => {
+export interface DelegatingMulticastLike<
+  T,
+  TMulticastObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>,
+> extends DelegatingLike<TMulticastObservable>,
+    MulticastObservableLike<T> {}
+
+const MulticastObservable_delegatingMixin: <
+  T,
+  TMulticastObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>,
+>() => Mixin1<
+  DelegatingMulticastLike<T, TMulticastObservable>,
+  TMulticastObservable
+> = /*@__PURE__*/ (<
+  T,
+  TMulticastObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>,
+>() => {
   return returns(
     mix(
       include(Disposable_delegatingMixin<MulticastObservableLike<T>>()),
@@ -46,9 +51,9 @@ const MulticastObservable_delegatingMixin: <T>() => Mixin1<
           | typeof ObservableLike_isRunnable
         >,
         delegate: MulticastObservableLike<T>,
-      ): MulticastObservableLike<T> {
+      ): DelegatingMulticastLike<T, TMulticastObservable> {
         init(
-          Disposable_delegatingMixin<MulticastObservableLike<T>>(),
+          Disposable_delegatingMixin<TMulticastObservable>(),
           instance,
           delegate,
         );

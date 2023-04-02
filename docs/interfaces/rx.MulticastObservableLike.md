@@ -30,23 +30,12 @@ A stateful ObservableLike resource.
 
 ### Properties
 
-- [[ContainerLike\_type]](rx.MulticastObservableLike.md#[containerlike_type])
 - [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
 - [[MulticastObservableLike\_replay]](rx.MulticastObservableLike.md#[multicastobservablelike_replay])
 - [[ObservableLike\_isEnumerable]](rx.MulticastObservableLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.MulticastObservableLike.md#[observablelike_isrunnable])
 
 ## Properties
-
-### [ContainerLike\_type]
-
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`unknown`\>
-
-#### Overrides
-
-[ObservableLike](rx.ObservableLike.md).[[ContainerLike_type]](rx.ObservableLike.md#[containerlike_type])
-
-___
 
 ### [MulticastObservableLike\_observerCount]
 
