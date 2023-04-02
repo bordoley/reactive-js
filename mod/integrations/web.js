@@ -5,7 +5,7 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamLike_replace, } from "../__internal__/symbols.js";
 import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { bindMethod, compose, error, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../rx.js";
+import { ObservableLike_observe } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
 import * as Stream from "../streaming/Stream.js";
@@ -96,8 +96,6 @@ export const windowLocation = /*@__PURE__*/ (() => {
         [IndexedLike_get](index) {
             return this[DelegatingLike_delegate][IndexedLike_get](index).uri;
         },
-        [ObservableLike_isEnumerable]: false,
-        [ObservableLike_isRunnable]: false,
         [QueueableLike_enqueue](stateOrUpdater) {
             return this[DelegatingLike_delegate][QueueableLike_enqueue](prevState => {
                 const uri = createWindowLocationURIWithPrototype(isFunction(stateOrUpdater)

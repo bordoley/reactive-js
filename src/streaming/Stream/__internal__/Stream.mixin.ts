@@ -8,10 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  DispatchedObservable_observer,
-  StreamMixin_dispatcher,
-} from "../../../__internal__/symbols.js";
+import { DispatchedObservable_observer } from "../../../__internal__/symbols.js";
 import { QueueLike } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
@@ -35,6 +32,7 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
+import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import {
@@ -195,34 +193,22 @@ const Stream_mixin: <TReq, T>() => Mixin5<
   number,
   number,
   QueueableLike[typeof QueueableLike_backpressureStrategy]
-> = /*@__PURE__*/ (<TReq, T>() => {
-  type TProperties = {
-    readonly [StreamMixin_dispatcher]: DispatcherLike<TReq>;
-    readonly [DispatcherLike_scheduler]: SchedulerLike;
-  };
-
-  return returns(
+> = /*@__PURE__*/ (<TReq, T>() =>
+  returns(
     mix(
-      include(MulticastObservable_delegatingMixin<T>()),
+      include(
+        Dispatcher_delegatingMixin(),
+        MulticastObservable_delegatingMixin<T>(),
+      ),
       function StreamMixin(
-        instance: Pick<
-          StreamLike<TReq, T>,
-          | typeof QueueableLike_backpressureStrategy
-          | typeof QueueableLike_enqueue
-          | typeof QueueableLike_capacity
-          | typeof DispatcherLike_complete
-        > &
-          Mutable<TProperties>,
+        instance: unknown,
         op: ContainerOperator<ObservableLike, TReq, T>,
         scheduler: SchedulerLike,
         replay: number,
         capacity: number,
         backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): StreamLike<TReq, T> {
-        instance[DispatcherLike_scheduler] = scheduler;
-
         const dispatchedObservable = DispatchedObservable_create<TReq>();
-        instance[StreamMixin_dispatcher] = dispatchedObservable;
 
         const delegate = pipe(
           dispatchedObservable,
@@ -234,37 +220,18 @@ const Stream_mixin: <TReq, T>() => Mixin5<
           }),
         );
 
+        init(
+          Dispatcher_delegatingMixin<TReq>(),
+          instance,
+          dispatchedObservable,
+        );
         init(MulticastObservable_delegatingMixin<T>(), instance, delegate);
 
         return instance;
       },
-      props<TProperties>({
-        [StreamMixin_dispatcher]: none,
-        [DispatcherLike_scheduler]: none,
-      }),
-      {
-        get [QueueableLike_backpressureStrategy]() {
-          unsafeCast<TProperties>(this);
-          return this[StreamMixin_dispatcher][
-            QueueableLike_backpressureStrategy
-          ];
-        },
-
-        get [QueueableLike_capacity](): number {
-          unsafeCast<TProperties>(this);
-          return this[StreamMixin_dispatcher][QueueableLike_capacity];
-        },
-
-        [QueueableLike_enqueue](this: TProperties, req: TReq): boolean {
-          return this[StreamMixin_dispatcher][QueueableLike_enqueue](req);
-        },
-
-        [DispatcherLike_complete](this: TProperties) {
-          this[StreamMixin_dispatcher][DispatcherLike_complete]();
-        },
-      },
+      props({}),
+      {},
     ),
-  );
-})();
+  ))();
 
 export default Stream_mixin;

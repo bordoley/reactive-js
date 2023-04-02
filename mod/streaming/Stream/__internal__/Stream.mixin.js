@@ -2,9 +2,10 @@
 
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DispatchedObservable_observer, StreamMixin_dispatcher, } from "../../../__internal__/symbols.js";
+import { DispatchedObservable_observer } from "../../../__internal__/symbols.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
+import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
@@ -78,36 +79,15 @@ const DispatchedObservable_create =
         },
     }));
 })();
-const Stream_mixin = /*@__PURE__*/ (() => {
-    return returns(mix(include(MulticastObservable_delegatingMixin()), function StreamMixin(instance, op, scheduler, replay, capacity, backpressureStrategy) {
-        instance[DispatcherLike_scheduler] = scheduler;
-        const dispatchedObservable = DispatchedObservable_create();
-        instance[StreamMixin_dispatcher] = dispatchedObservable;
-        const delegate = pipe(dispatchedObservable, op, Observable_multicast(scheduler, {
-            replay,
-            capacity,
-            backpressureStrategy,
-        }));
-        init(MulticastObservable_delegatingMixin(), instance, delegate);
-        return instance;
-    }, props({
-        [StreamMixin_dispatcher]: none,
-        [DispatcherLike_scheduler]: none,
-    }), {
-        get [QueueableLike_backpressureStrategy]() {
-            unsafeCast(this);
-            return this[StreamMixin_dispatcher][QueueableLike_backpressureStrategy];
-        },
-        get [QueueableLike_capacity]() {
-            unsafeCast(this);
-            return this[StreamMixin_dispatcher][QueueableLike_capacity];
-        },
-        [QueueableLike_enqueue](req) {
-            return this[StreamMixin_dispatcher][QueueableLike_enqueue](req);
-        },
-        [DispatcherLike_complete]() {
-            this[StreamMixin_dispatcher][DispatcherLike_complete]();
-        },
+const Stream_mixin = /*@__PURE__*/ (() => returns(mix(include(Dispatcher_delegatingMixin(), MulticastObservable_delegatingMixin()), function StreamMixin(instance, op, scheduler, replay, capacity, backpressureStrategy) {
+    const dispatchedObservable = DispatchedObservable_create();
+    const delegate = pipe(dispatchedObservable, op, Observable_multicast(scheduler, {
+        replay,
+        capacity,
+        backpressureStrategy,
     }));
-})();
+    init(Dispatcher_delegatingMixin(), instance, dispatchedObservable);
+    init(MulticastObservable_delegatingMixin(), instance, delegate);
+    return instance;
+}, props({}), {})))();
 export default Stream_mixin;

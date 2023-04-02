@@ -776,18 +776,8 @@ export const LiftedAsyncEnumerable_operators = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const AsyncEnumeratorDelegatingMixin_src = /*@__PURE__*/ symbol(
-  "AsyncEnumeratorDelegatingMixin_src",
-);
-
-/** @type {unique symbol} */
 export const DispatchedObservable_observer = /*@__PURE__*/ symbol(
   "DispatchedObservable_observer",
-);
-
-/** @type {unique symbol} */
-export const StreamMixin_dispatcher = /*@__PURE__*/ symbol(
-  "StreamMixin_dispatcher",
 );
 
 /** @type {unique symbol} */
@@ -868,4 +858,9 @@ export const IteratorEnumerator_iterator = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const WithCurrentTimeObserver_selector = /*@__PURE__*/ symbol(
   "WithCurrentTimeObserver_selector",
+);
+
+/** @type {unique symbol} */
+export const DelegatingDispatcherMixin_delegate = /*@__PURE__*/ symbol(
+  "DelegatingDispatcherMixin_delegate",
 );

@@ -330,11 +330,7 @@ export declare const LiftedAsyncEnumerable_src: unique symbol;
 
 export declare const LiftedAsyncEnumerable_operators: unique symbol;
 
-export declare const AsyncEnumeratorDelegatingMixin_src: unique symbol;
-
 export declare const DispatchedObservable_observer: unique symbol;
-
-export declare const StreamMixin_dispatcher: unique symbol;
 
 export declare const DisposableMixin_disposables: unique symbol;
 
@@ -375,3 +371,5 @@ export declare const StackLike_head: unique symbol;
 export declare const IteratorEnumerator_iterator: unique symbol;
 
 export declare const WithCurrentTimeObserver_selector: unique symbol;
+
+export declare const DelegatingDispatcherMixin_delegate: unique symbol;

@@ -1,50 +1,32 @@
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { AsyncEnumeratorDelegatingMixin_src } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
-import { none, pipe, returns, unsafeCast } from "../../../functions.js";
-import {
-  DispatcherLike_complete,
-  DispatcherLike_scheduler,
-  ObservableLike,
-} from "../../../rx.js";
+import { pipe, returns } from "../../../functions.js";
+import { DispatcherLike_scheduler, ObservableLike } from "../../../rx.js";
+import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { StreamLike } from "../../../streaming.js";
-import {
-  QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
-  QueueableLike_enqueue,
-} from "../../../util.js";
+import { QueueableLike_capacity } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 
 const AsyncEnumerator_create: <TA, TB>() => (
   stream: StreamLike<void, TA>,
   op: ContainerOperator<ObservableLike, TA, TB>,
-) => StreamLike<void, TB> = /*@__PURE__*/ (<TA, TB>() => {
-  type TProperties = {
-    readonly [AsyncEnumeratorDelegatingMixin_src]: StreamLike<void, TA>;
-  };
-
-  return pipe(
+) => StreamLike<void, TB> = /*@__PURE__*/ (<TA, TB>() =>
+  pipe(
     mix(
-      include(MulticastObservable_delegatingMixin<TB>()),
+      include(
+        Dispatcher_delegatingMixin(),
+        MulticastObservable_delegatingMixin<TB>(),
+      ),
       function AsyncEnumeratorDelegatingMixin(
-        instance: Pick<
-          StreamLike<void, TB>,
-          | typeof DispatcherLike_scheduler
-          | typeof QueueableLike_backpressureStrategy
-          | typeof QueueableLike_capacity
-          | typeof DispatcherLike_complete
-          | typeof QueueableLike_enqueue
-        > &
-          Mutable<TProperties>,
+        instance: unknown,
         delegate: StreamLike<void, TA>,
         operator: ContainerOperator<ObservableLike, TA, TB>,
       ): StreamLike<void, TB> {
@@ -58,53 +40,18 @@ const AsyncEnumerator_create: <TA, TB>() => (
         );
 
         init(MulticastObservable_delegatingMixin<TB>(), instance, observable);
-
-        instance[AsyncEnumeratorDelegatingMixin_src] = delegate;
+        init(Dispatcher_delegatingMixin(), instance, delegate);
 
         return instance;
       },
-      props<TProperties>({
-        [AsyncEnumeratorDelegatingMixin_src]: none,
-      }),
-      {
-        get [DispatcherLike_scheduler]() {
-          unsafeCast<TProperties>(this);
-          return this[AsyncEnumeratorDelegatingMixin_src][
-            DispatcherLike_scheduler
-          ];
-        },
-
-        get [QueueableLike_backpressureStrategy]() {
-          unsafeCast<TProperties>(this);
-          return this[AsyncEnumeratorDelegatingMixin_src][
-            QueueableLike_backpressureStrategy
-          ];
-        },
-
-        get [QueueableLike_capacity](): number {
-          unsafeCast<TProperties>(this);
-          return this[AsyncEnumeratorDelegatingMixin_src][
-            QueueableLike_capacity
-          ];
-        },
-
-        [DispatcherLike_complete](this: TProperties) {
-          this[AsyncEnumeratorDelegatingMixin_src][DispatcherLike_complete]();
-        },
-
-        [QueueableLike_enqueue](this: TProperties, next: void): boolean {
-          return this[AsyncEnumeratorDelegatingMixin_src][
-            QueueableLike_enqueue
-          ](next);
-        },
-      },
+      props({}),
+      {},
     ),
     createInstanceFactory,
     returns,
   ) as <TA, TB>() => (
     stream: StreamLike<void, TA>,
     op: ContainerOperator<ObservableLike, TA, TB>,
-  ) => StreamLike<void, TB>;
-})();
+  ) => StreamLike<void, TB>)();
 
 export default AsyncEnumerator_create;

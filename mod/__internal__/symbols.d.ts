@@ -331,11 +331,7 @@ export const LiftedAsyncEnumerable_src: unique symbol;
 /** @type {unique symbol} */
 export const LiftedAsyncEnumerable_operators: unique symbol;
 /** @type {unique symbol} */
-export const AsyncEnumeratorDelegatingMixin_src: unique symbol;
-/** @type {unique symbol} */
 export const DispatchedObservable_observer: unique symbol;
-/** @type {unique symbol} */
-export const StreamMixin_dispatcher: unique symbol;
 /** @type {unique symbol} */
 export const DisposableMixin_disposables: unique symbol;
 /** @type {unique symbol} */
@@ -376,3 +372,5 @@ export const StackLike_head: unique symbol;
 export const IteratorEnumerator_iterator: unique symbol;
 /** @type {unique symbol} */
 export const WithCurrentTimeObserver_selector: unique symbol;
+/** @type {unique symbol} */
+export const DelegatingDispatcherMixin_delegate: unique symbol;

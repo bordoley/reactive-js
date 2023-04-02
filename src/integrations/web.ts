@@ -31,13 +31,7 @@ import {
   returns,
   unsafeCast,
 } from "../functions.js";
-import {
-  ObservableLike,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
-  ObservableLike_observe,
-  ObserverLike,
-} from "../rx.js";
+import { ObservableLike, ObservableLike_observe, ObserverLike } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { SchedulerLike } from "../scheduling.js";
 import {
@@ -673,8 +667,6 @@ export const windowLocation: StreamableLike<
         instance: Pick<
           WindowLocationStreamLike,
           | typeof IndexedLike_get
-          | typeof ObservableLike_isEnumerable
-          | typeof ObservableLike_isRunnable
           | typeof QueueableLike_enqueue
           | typeof WindowLocationStreamLike_canGoBack
           | typeof WindowLocationStreamLike_goBack
@@ -703,9 +695,6 @@ export const windowLocation: StreamableLike<
         ): WindowLocationURI {
           return this[DelegatingLike_delegate][IndexedLike_get](index).uri;
         },
-
-        [ObservableLike_isEnumerable]: false as const,
-        [ObservableLike_isRunnable]: false as const,
 
         [QueueableLike_enqueue](
           this: DelegatingLike<StreamLike<Updater<TState>, TState>>,
