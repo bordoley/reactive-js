@@ -13,7 +13,7 @@ const Observable_multicast = <T>(
   options: {
     readonly replay?: number;
     readonly capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   } = {},
 ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
   Observable_multicastImpl<T>(Publisher_create, schedulerOrFactory, options);

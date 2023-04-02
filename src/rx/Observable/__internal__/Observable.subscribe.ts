@@ -12,8 +12,8 @@ import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observabl
 const Observable_subscribe: <T>(
   scheduler: SchedulerLike,
   options?: {
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    capacity?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
   },
 ) => Function1<ObservableLike<T>, DisposableLike> = (scheduler, options) =>
   Observable_subscribeWithCapacityAndBackpressureStrategy(

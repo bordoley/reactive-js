@@ -9,7 +9,7 @@ interface ObservableFromFactory {
   <T>(
     factory: Factory<T>,
     options: {
-      delay: number;
+      readonly delay: number;
     },
   ): RunnableLike<T>;
 }

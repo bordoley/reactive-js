@@ -10,9 +10,9 @@ import Observable_takeFirst from "./Observable.takeFirst.js";
 
 const Observable_firstAsync =
   <T>(options?: {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly capacity?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }) =>
   (observable: ObservableLike<T>): Promise<Optional<T>> =>
     pipe(

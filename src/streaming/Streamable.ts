@@ -1,10 +1,21 @@
-import { Equality, Factory, Reducer, Updater } from "../functions.js";
+import {
+  Equality,
+  Factory,
+  Function1,
+  Reducer,
+  Updater,
+} from "../functions.js";
+import { ObservableLike } from "../rx.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
+import { QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
 import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer.js";
+import Streamable_createBlockingEventHandler from "./Streamable/__internal__/Streamable.createBlockingEventHandler.js";
 import Streamable_createInMemoryCache from "./Streamable/__internal__/Streamable.createInMemoryCache.js";
 import Streamable_createPersistentCache from "./Streamable/__internal__/Streamable.createPersistentCache.js";
+import Streamable_createQueueingEventHandler from "./Streamable/__internal__/Streamable.createQueueingEventHandler.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
+import Streamable_createSwitchingEventHandler from "./Streamable/__internal__/Streamable.createSwitchingEventHandler.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
 
@@ -31,6 +42,17 @@ export const createActionReducer: <TAction, T>(
 ) => StreamableLike<TAction, T> = Streamable_createActionReducer;
 
 /**
+ * Returns an event handler that invokes the observable function,
+ * and blocks, ignoring any subsequent events until the initial eventHandler
+ * disposes.
+ *
+ * @category Constructor
+ */
+export const createBlockingEventHandler: <TEvent>(
+  op: Function1<TEvent, ObservableLike<unknown>>,
+) => StreamableLike<TEvent, boolean> = Streamable_createBlockingEventHandler;
+
+/**
  * @category Constructor
  */
 export const createInMemoryCache = Streamable_createInMemoryCache;
@@ -39,6 +61,23 @@ export const createInMemoryCache = Streamable_createInMemoryCache;
  * @category Constructor
  */
 export const createPersistentCache = Streamable_createPersistentCache;
+
+/**
+ * Returns an event handler that invokes the observable function,
+ * an Observable function, limiting the number of concurrent subscriptions,
+ * and applying the backpressure policy if the number of dispatched events
+ * exceeds the handlers capacity.
+ *
+ * @category Constructor
+ */
+export const createQueueingEventHandler: <TEvent>(
+  op: Function1<TEvent, ObservableLike<unknown>>,
+  options?: {
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly maxConcurrency?: number;
+  },
+) => StreamableLike<TEvent, never> = Streamable_createQueueingEventHandler;
 
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
@@ -55,6 +94,16 @@ export const createStateStore: <T>(
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
 ) => StreamableLike<Updater<T>, T> = Streamable_createStateStore;
+
+/**
+ * Returns an event handler that invokes the observable function,
+ * and cancels any outstanding inner event handlers.
+ *
+ * @category Constructor
+ */
+export const createSwitchingEventHandler: <TEvent>(
+  op: Function1<TEvent, ObservableLike<unknown>>,
+) => StreamableLike<TEvent, never> = Streamable_createSwitchingEventHandler;
 
 /**
  * @category Constructor

@@ -38,13 +38,9 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
-type ObservableDecodeWithCharset = <C extends ObservableLike>(
-  options?:
-    | {
-        charset?: string | undefined;
-      }
-    | undefined,
-) => ContainerOperator<C, ArrayBuffer, string>;
+type ObservableDecodeWithCharset = <C extends ObservableLike>(options?: {
+  readonly charset?: string | undefined;
+}) => ContainerOperator<C, ArrayBuffer, string>;
 
 const Observable_decodeWithCharset: ObservableDecodeWithCharset =
   /*@__PURE__*/ (() => {

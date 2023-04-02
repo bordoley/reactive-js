@@ -61,6 +61,7 @@ import {
   ForkZipLatest,
   Merge,
   MergeAll,
+  MergeMap,
   MergeWith,
   Retry,
   RunnableLike,
@@ -145,6 +146,7 @@ import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_flatMapIterable from "./Runnable/__internal__/Runnable.flatMapIterable.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_mergeAll from "./Runnable/__internal__/Runnable.mergeAll.js";
+import Runnable_mergeMap from "./Runnable/__internal__/Runnable.mergeMap.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_scanLast from "./Runnable/__internal__/Runnable.scanLast.js";
 import Runnable_scanMany from "./Runnable/__internal__/Runnable.scanMany.js";
@@ -283,6 +285,15 @@ export const mergeAll: MergeAll<
     readonly maxConcurrency?: number;
   }
 >["mergeAll"] = Runnable_mergeAll;
+
+export const mergeMap: MergeMap<
+  RunnableLike,
+  {
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly maxConcurrency?: number;
+  }
+>["mergeMap"] = Runnable_mergeMap;
 
 export const mergeWith: MergeWith<RunnableLike>["mergeWith"] =
   Observable_mergeWith as MergeWith<RunnableLike>["mergeWith"];

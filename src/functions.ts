@@ -367,7 +367,9 @@ export const isEqualTo = /*@__PURE__*/ (() => {
 
   return <T>(
     b: T,
-    options: { equality?: Equality<T> } = { equality: strictEquality },
+    options: { readonly equality?: Equality<T> } = {
+      equality: strictEquality,
+    },
   ): Predicate<T> => {
     const equality = options.equality ?? strictEquality;
     return equality === strictEquality
@@ -384,7 +386,9 @@ export const isNotEqualTo = /*@__PURE__*/ (() => {
 
   return <T>(
     b: T,
-    options: { equality?: Equality<T> } = { equality: strictEquality },
+    options: { readonly equality?: Equality<T> } = {
+      equality: strictEquality,
+    },
   ): Predicate<T> => {
     const equality = options.equality ?? strictEquality;
     return equality === strictEquality

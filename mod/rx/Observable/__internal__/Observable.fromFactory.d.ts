@@ -3,7 +3,7 @@ import { EnumerableLike, RunnableLike } from "../../../rx.js";
 interface ObservableFromFactory {
     <T>(factory: Factory<T>): EnumerableLike<T>;
     <T>(factory: Factory<T>, options: {
-        delay: number;
+        readonly delay: number;
     }): RunnableLike<T>;
 }
 declare const Observable_fromFactory: ObservableFromFactory;

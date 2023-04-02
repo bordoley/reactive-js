@@ -23,7 +23,7 @@ import MulticastObservable_delegatingMixin from "../../MulticastObservable/__int
 import Publisher_create from "./Publisher.create.js";
 
 const Publisher_createRefCounted: <T>(options?: {
-  replay?: number;
+  readonly replay?: number;
 }) => PublisherLike<T> = /*@__PURE__*/ (<T>() => {
   const createRefCountedPublisherInstance = createInstanceFactory(
     mix(
@@ -71,7 +71,7 @@ const Publisher_createRefCounted: <T>(options?: {
     ),
   );
 
-  return (options?: { replay?: number }): PublisherLike<T> => {
+  return (options?: { readonly replay?: number }): PublisherLike<T> => {
     const delegate = Publisher_create<T>(options);
     return createRefCountedPublisherInstance(delegate);
   };

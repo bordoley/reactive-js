@@ -5,6 +5,6 @@ import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util
 declare const Observable_multicast: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
     readonly replay?: number;
     readonly capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
 export default Observable_multicast;

@@ -16,7 +16,7 @@ interface OptionalToObservable {
 }
 
 const Optional_toObservable: OptionalToObservable = ((options?: {
-  delay: number;
+  readonly delay: number;
 }) => {
   const { delay = 0 } = options ?? {};
   const toObservableOptions = delay > 0 ? { delay, delayStart: true } : none;

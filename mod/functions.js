@@ -66,7 +66,9 @@ export const invoke = (method, ...args) => (obj) => obj[method](...args);
  */
 export const isEqualTo = /*@__PURE__*/ (() => {
     const isStrictlyEqualTo = (b) => a => a === b;
-    return (b, options = { equality: strictEquality }) => {
+    return (b, options = {
+        equality: strictEquality,
+    }) => {
         const equality = options.equality ?? strictEquality;
         return equality === strictEquality
             ? isStrictlyEqualTo(b)
@@ -75,7 +77,9 @@ export const isEqualTo = /*@__PURE__*/ (() => {
 })();
 export const isNotEqualTo = /*@__PURE__*/ (() => {
     const isStrictlyNotEqualTo = (b) => a => a !== b;
-    return (b, options = { equality: strictEquality }) => {
+    return (b, options = {
+        equality: strictEquality,
+    }) => {
         const equality = options.equality ?? strictEquality;
         return equality === strictEquality
             ? isStrictlyNotEqualTo(b)

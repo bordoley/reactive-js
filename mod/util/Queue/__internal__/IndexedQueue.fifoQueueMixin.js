@@ -161,7 +161,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             }
             else if (backpressureStrategy === "drop-oldest" &&
                 count >= capacity) {
-                // We want to pop off the oldest value first, before enqueuing
+                // We want to pop off the oldest value first, before enqueueing
                 // to avoid unintentionally growing the queue.
                 this[QueueLike_dequeue]();
             }

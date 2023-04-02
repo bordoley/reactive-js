@@ -8,9 +8,9 @@ import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
 const Observable_spring = (options?: {
-  stiffness?: number;
-  damping?: number;
-  precision?: number;
+  readonly stiffness?: number;
+  readonly damping?: number;
+  readonly precision?: number;
 }): RunnableLike<number> => {
   const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = options ?? {};
 

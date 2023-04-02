@@ -16,7 +16,7 @@ import Observable_takeWhile from "./Observable.takeWhile.js";
 const Observable_tween = (
   duration: number,
   options?: {
-    easing?: Function1<number, number>;
+    readonly easing?: Function1<number, number>;
   },
 ): RunnableLike<number> => {
   const { easing = identity } = options ?? {};

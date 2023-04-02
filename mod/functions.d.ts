@@ -139,10 +139,10 @@ export declare const invoke: <T extends Record<TKey, (...args: any[]) => any>, T
  * provided `equality` function.
  */
 export declare const isEqualTo: <T>(b: T, options?: {
-    equality?: Equality<T> | undefined;
+    readonly equality?: Equality<T> | undefined;
 }) => Predicate<T>;
 export declare const isNotEqualTo: <T>(b: T, options?: {
-    equality?: Equality<T> | undefined;
+    readonly equality?: Equality<T> | undefined;
 }) => Predicate<T>;
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.

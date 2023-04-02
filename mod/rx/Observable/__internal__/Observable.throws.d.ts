@@ -3,11 +3,11 @@ import { EnumerableLike, RunnableLike } from "../../../rx.js";
 interface ObservableThrows {
     <T>(): EnumerableLike<T>;
     <T>(options: {
-        raise: Factory<unknown>;
+        readonly raise: Factory<unknown>;
     }): EnumerableLike<T>;
     <T>(options: {
-        delay: number;
-        raise?: Factory<unknown>;
+        readonly delay: number;
+        readonly raise?: Factory<unknown>;
     }): RunnableLike<T>;
 }
 declare const Observable_throws: ObservableThrows;

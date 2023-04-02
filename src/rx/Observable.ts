@@ -538,8 +538,14 @@ export const mergeAll: MergeAll<
   }
 >["mergeAll"] = Observable_mergeAll;
 
-export const mergeMap: MergeMap<ObservableLike>["mergeMap"] =
-  Observable_mergeMap;
+export const mergeMap: MergeMap<
+  ObservableLike,
+  {
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly maxConcurrency?: number;
+  }
+>["mergeMap"] = Observable_mergeMap;
 
 export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =
   Observable_mergeWith as MergeWith<ObservableLike>["mergeWith"];
@@ -629,8 +635,8 @@ export const switchMap: SwitchMap<ObservableLike>["switchMap"] =
 export const subscribe: <T>(
   scheduler: SchedulerLike,
   options?: {
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   },
 ) => Function1<ObservableLike<T>, DisposableLike> = Observable_subscribe;
 

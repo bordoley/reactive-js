@@ -16,14 +16,14 @@ const AsyncEnumerable_generate: Generate<
       generator(acc);
 
   const asyncGeneratorScanner =
-    <T>(generator: Updater<T>, options?: { delay?: number }) =>
+    <T>(generator: Updater<T>, options?: { readonly delay?: number }) =>
     (acc: T) =>
       pipe(acc, generator, Optional_toObservable(options));
 
   return <T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
-    options?: { delay?: number },
+    options?: { readonly delay?: number },
   ): AsyncEnumerableLike<T> => {
     const { delay = 0 } = options ?? {};
 

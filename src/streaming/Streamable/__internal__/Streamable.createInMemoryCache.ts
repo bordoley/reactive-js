@@ -5,8 +5,8 @@ import Streamable_createCache from "./Streamable.createCache.js";
 
 const Streamable_createInMemoryCache = <T>(
   options: {
-    capacity?: number;
-    cleanupScheduler?: SchedulerLike;
+    readonly capacity?: number;
+    readonly cleanupScheduler?: SchedulerLike;
   } = {},
 ): CacheLike<T> => Streamable_createCache<T>(none, options);
 

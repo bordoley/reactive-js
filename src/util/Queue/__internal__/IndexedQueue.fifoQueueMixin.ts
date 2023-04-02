@@ -278,7 +278,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
             backpressureStrategy === "drop-oldest" &&
             count >= capacity
           ) {
-            // We want to pop off the oldest value first, before enqueuing
+            // We want to pop off the oldest value first, before enqueueing
             // to avoid unintentionally growing the queue.
             this[QueueLike_dequeue]();
           } else if (backpressureStrategy === "throw" && count >= capacity) {

@@ -5,8 +5,11 @@ import Observable_fromFactory from "./Observable.fromFactory.js";
 
 interface ObservableThrows {
   <T>(): EnumerableLike<T>;
-  <T>(options: { raise: Factory<unknown> }): EnumerableLike<T>;
-  <T>(options: { delay: number; raise?: Factory<unknown> }): RunnableLike<T>;
+  <T>(options: { readonly raise: Factory<unknown> }): EnumerableLike<T>;
+  <T>(options: {
+    readonly delay: number;
+    readonly raise?: Factory<unknown>;
+  }): RunnableLike<T>;
 }
 const Observable_throws: ObservableThrows = /*@__PURE__*/ Container_throws(
   Observable_fromFactory,

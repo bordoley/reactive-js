@@ -178,7 +178,11 @@ export declare const mergeAll: MergeAll<ObservableLike, {
     readonly capacity?: number;
     readonly maxConcurrency?: number;
 }>["mergeAll"];
-export declare const mergeMap: MergeMap<ObservableLike>["mergeMap"];
+export declare const mergeMap: MergeMap<ObservableLike, {
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly maxConcurrency?: number;
+}>["mergeMap"];
 export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -235,8 +239,8 @@ export declare const startWith: StartWith<ObservableLike>["startWith"];
 export declare const switchAll: SwitchAll<ObservableLike>["switchAll"];
 export declare const switchMap: SwitchMap<ObservableLike>["switchMap"];
 export declare const subscribe: <T>(scheduler: SchedulerLike, options?: {
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
 }) => Function1<ObservableLike<T>, DisposableLike>;
 /**
  * @category Operator

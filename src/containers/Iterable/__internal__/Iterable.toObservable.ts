@@ -22,14 +22,14 @@ import {
 interface IterableToObservable {
   <T>(): Function1<IterableLike<T>, EnumerableLike<T>>;
   <T>(options: unknown): Function1<IterableLike<T>, RunnableLike<T>>;
-  <T>(options: { delay: number; delayStart?: boolean }): Function1<
-    IterableLike<T>,
-    RunnableLike<T>
-  >;
+  <T>(options: {
+    readonly delay: number;
+    readonly delayStart?: boolean;
+  }): Function1<IterableLike<T>, RunnableLike<T>>;
 }
 const Iterable_toObservable: IterableToObservable = (<T>(options?: {
-    delay?: number;
-    delayStart?: boolean;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
   }) =>
   (iterable: IterableLike<T>) => {
     const { delay = 0, delayStart = false } = options ?? {};

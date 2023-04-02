@@ -18,7 +18,7 @@ import Observable_subscribe from "../../Observable/__internal__/Observable.subsc
 const Runnable_run =
   <T>(options?: {
     readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    capacity?: number;
+    readonly capacity?: number;
   }) =>
   (observable: RunnableLike<T>) => {
     if (__DEV__ && !observable[ObservableLike_isRunnable]) {

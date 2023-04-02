@@ -6,7 +6,7 @@ declare const Streamable_createCache: <T>(persistentStore: Optional<{
     load(keys: ReadonlySet<string>): ObservableLike<Readonly<Record<string, Optional<T>>>>;
     store(updates: Readonly<Record<string, T>>): ObservableLike<void>;
 }>, options?: {
-    capacity?: number;
-    cleanupScheduler?: SchedulerLike;
+    readonly capacity?: number;
+    readonly cleanupScheduler?: SchedulerLike;
 }) => CacheLike<T>;
 export default Streamable_createCache;

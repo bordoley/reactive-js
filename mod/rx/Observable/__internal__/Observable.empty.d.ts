@@ -2,7 +2,7 @@ import { EnumerableLike, RunnableLike } from "../../../rx.js";
 interface ObservableEmpty {
     <T>(): EnumerableLike<T>;
     <T>(options: {
-        delay: number;
+        readonly delay: number;
     }): RunnableLike<T>;
 }
 declare const Observable_empty: ObservableEmpty;

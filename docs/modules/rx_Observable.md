@@ -3246,7 +3246,10 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
-| `options?` | `undefined` |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.maxConcurrency?` | `number` |
 
 #### Returns
 

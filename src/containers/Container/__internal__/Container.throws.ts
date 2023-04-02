@@ -11,7 +11,7 @@ const Container_throws =
   ) =>
   <T>(
     options?: O & {
-      raise?: Factory<unknown>;
+      readonly raise?: Factory<unknown>;
     },
   ): ContainerOf<C, T> => {
     const { raise: factory = raise } = options ?? {};

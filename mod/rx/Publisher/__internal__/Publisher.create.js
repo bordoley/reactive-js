@@ -10,8 +10,7 @@ import { CollectionLike_count, DisposableLike_isDisposed, IndexedLike_get, Queue
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
-const Publisher_create = 
-/*@__PURE__*/ (() => {
+const Publisher_create = /*@__PURE__*/ (() => {
     const createPublisherInstance = createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function Publisher(instance, replay) {
         init(Disposable_mixin, instance);
         init(IndexedQueue_fifoQueueMixin(), instance, replay, "drop-oldest");

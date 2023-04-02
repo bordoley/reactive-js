@@ -7,13 +7,15 @@ import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 
 interface ObservableEmpty {
   <T>(): EnumerableLike<T>;
-  <T>(options: { delay: number }): RunnableLike<T>;
+  <T>(options: { readonly delay: number }): RunnableLike<T>;
 }
 const emptyEnumerable = /*@__PURE__*/ Enumerable_create(observer => {
   observer[DisposableLike_dispose]();
 });
 
-const Observable_empty: ObservableEmpty = (<T>(options?: { delay: number }) =>
+const Observable_empty: ObservableEmpty = (<T>(options?: {
+  readonly delay: number;
+}) =>
   (options?.delay ?? 0) > 0
     ? Runnable_create<T>(observer => {
         pipe(

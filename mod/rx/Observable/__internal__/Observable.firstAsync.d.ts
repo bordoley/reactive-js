@@ -3,8 +3,8 @@ import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
 declare const Observable_firstAsync: <T>(options?: {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly capacity?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
 }) => (observable: ObservableLike<T>) => Promise<Optional<T>>;
 export default Observable_firstAsync;

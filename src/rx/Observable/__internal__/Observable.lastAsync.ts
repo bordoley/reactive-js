@@ -21,9 +21,9 @@ import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_lastAsync =
   <T>(options?: {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly capacity?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }) =>
   async (observable: ObservableLike<T>): Promise<Optional<T>> => {
     const schedulerOrFactory =

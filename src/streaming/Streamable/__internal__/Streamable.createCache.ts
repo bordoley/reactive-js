@@ -304,8 +304,8 @@ const Streamable_createCache = <T>(
     store(updates: Readonly<Record<string, T>>): ObservableLike<void>;
   }>,
   options: {
-    capacity?: number;
-    cleanupScheduler?: SchedulerLike;
+    readonly capacity?: number;
+    readonly cleanupScheduler?: SchedulerLike;
   } = {},
 ): CacheLike<T> => ({
   [StreamableLike_isEnumerable]: false,

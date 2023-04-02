@@ -27,7 +27,7 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
   /*@__PURE__*/
 
 
-    <T>(options?: { delay?: number }) =>
+    <T>(options?: { readonly delay?: number }) =>
     (enumerable: EnumerableLike<T>): AsyncEnumerableLike<T> => {
       const { delay = 0 } = options ?? {};
 

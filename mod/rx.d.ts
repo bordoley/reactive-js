@@ -360,9 +360,9 @@ export interface Spring<C extends ObservableLike> extends Container<C> {
      * @category Constructor
      */
     spring(options?: {
-        stiffness?: number;
-        damping?: number;
-        precision?: number;
+        readonly stiffness?: number;
+        readonly damping?: number;
+        readonly precision?: number;
     }): ContainerOf<C, number>;
 }
 /**
@@ -487,7 +487,7 @@ export interface Tween<C extends ObservableLike> extends Container<C> {
      * @category Constructor
      */
     tween(duration: number, options?: {
-        easing?: Function1<number, number>;
+        readonly easing?: Function1<number, number>;
     }): ContainerOf<C, number>;
 }
 /**

@@ -22,23 +22,23 @@ import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 interface ReadonlyArrayToObservable {
   <T>(): Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
   <T>(options: unknown): Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
-  <T>(options: { count: number }): Function1<
+  <T>(options: { readonly count: number }): Function1<
     ReadonlyArrayLike<T>,
     EnumerableLike<T>
   >;
-  <T>(options: { count: number; start: number }): Function1<
+  <T>(options: { readonly count: number; readonly start: number }): Function1<
     ReadonlyArrayLike<T>,
     EnumerableLike<T>
   >;
-  <T>(options: { start: number }): Function1<
+  <T>(options: { readonly start: number }): Function1<
     ReadonlyArrayLike<T>,
     EnumerableLike<T>
   >;
   <T>(options: {
-    delay: number;
-    delayStart?: boolean;
-    count?: number;
-    start?: number;
+    readonly delay: number;
+    readonly delayStart?: boolean;
+    readonly count?: number;
+    readonly start?: number;
   }): Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
 }
 const ReadonlyArray_toObservable: ReadonlyArrayToObservable =
@@ -55,8 +55,8 @@ const ReadonlyArray_toObservable: ReadonlyArrayToObservable =
       startIndex: number,
       count: number,
       options?: {
-        delay?: number;
-        delayStart?: boolean;
+        readonly delay?: number;
+        readonly delayStart?: boolean;
       },
     ) => {
       const { delay = 0, delayStart = false } = options ?? {};
