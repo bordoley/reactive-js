@@ -116,32 +116,27 @@ const Root = () => {
   const animatedDivRef = useRef<HTMLDivElement>(null);
   const animationStreamable = useMemo(
     () =>
-      Streamable.create(
-        Observable.exhaustMap(
-          pipe(
-            Observable.concat(
+      Streamable.createBlockingEventHandler(
+        pipe(
+          Observable.concat(
+            Observable.tween(1000),
+            pipe(
               Observable.tween(1000),
-              pipe(
-                Observable.tween(1000),
-                Observable.map(x => 1 - x),
-              ),
+              Observable.map(x => 1 - x),
             ),
-            Observable.forEach(size => {
-              const animatedDiv = animatedDivRef.current;
-              if (animatedDiv != null) {
-                animatedDiv.style.margin = `${50 - size * 50}px`;
-                animatedDiv.style.padding = `${size * 50}px`;
-                animatedDiv.style.backgroundColor = "#bbb";
-                animatedDiv.style.borderRadius = "50%";
-                animatedDiv.style.display = "inline-block";
-              }
-            }),
-            Observable.ignoreElements(),
-            Observable.subscribeOn(createAnimationFrameScheduler),
-            Observable.startWith(true),
-            Observable.endWith(false),
-            returns,
           ),
+          Observable.forEach(size => {
+            const animatedDiv = animatedDivRef.current;
+            if (animatedDiv != null) {
+              animatedDiv.style.margin = `${50 - size * 50}px`;
+              animatedDiv.style.padding = `${size * 50}px`;
+              animatedDiv.style.backgroundColor = "#bbb";
+              animatedDiv.style.borderRadius = "50%";
+              animatedDiv.style.display = "inline-block";
+            }
+          }),
+          Observable.subscribeOn(createAnimationFrameScheduler),
+          returns,
         ),
       ),
     [animatedDivRef],
@@ -201,35 +196,30 @@ const RxComponent = createComponent(
     const createAnimationStream = (animatedDivRef: {
       current: HTMLElement | null;
     }) =>
-      Streamable.create<void, boolean>(
-        Observable.exhaustMap(
-          pipe(
-            Observable.concat(
-              Observable.tween(1000),
-              pipe(
-                Observable.spring({
-                  stiffness: 0.01,
-                  damping: 0.1,
-                }),
-                Observable.map(x => 1 - x),
-              ),
+      Streamable.createSwitchingEventHandler(
+        pipe(
+          Observable.concat(
+            Observable.tween(1000),
+            pipe(
+              Observable.spring({
+                stiffness: 0.01,
+                damping: 0.1,
+              }),
+              Observable.map(x => 1 - x),
             ),
-            Observable.forEach(size => {
-              const animatedDiv = animatedDivRef.current;
-              if (animatedDiv != null) {
-                animatedDiv.style.margin = `${50 - size * 50}px`;
-                animatedDiv.style.padding = `${size * 50}px`;
-                animatedDiv.style.backgroundColor = "#bbb";
-                animatedDiv.style.borderRadius = "50%";
-                animatedDiv.style.display = "inline-block";
-              }
-            }),
-            Observable.ignoreElements(),
-            Observable.subscribeOn(createAnimationFrameScheduler),
-            Observable.startWith(true),
-            Observable.endWith(false),
-            returns,
           ),
+          Observable.forEach(size => {
+            const animatedDiv = animatedDivRef.current;
+            if (animatedDiv != null) {
+              animatedDiv.style.margin = `${50 - size * 50}px`;
+              animatedDiv.style.padding = `${size * 50}px`;
+              animatedDiv.style.backgroundColor = "#bbb";
+              animatedDiv.style.borderRadius = "50%";
+              animatedDiv.style.display = "inline-block";
+            }
+          }),
+          Observable.subscribeOn(createAnimationFrameScheduler),
+          returns,
         ),
       );
 
@@ -250,12 +240,12 @@ const RxComponent = createComponent(
       );
       const animationStream = Observable.__stream(animationStreamable);
 
-      const runAnimation: SideEffect = Observable.__bindMethod(
+      const runAnimation = Observable.__bindMethod(
         animationStream,
         QueueableLike_enqueue,
       );
 
-      const animationIsRunning = Observable.__observe(animationStream);
+      Observable.__observe(animationStream);
 
       const value = Observable.__observe<number>(enumerator) ?? "no value";
 
@@ -273,9 +263,7 @@ const RxComponent = createComponent(
             style={{ height: "100px", width: "100px" }}
           />
           <div>
-            <button onClick={runAnimation} disabled={animationIsRunning}>
-              Run Animation
-            </button>
+            <button onClick={runAnimation}>Run Animation</button>
           </div>
         </div>
       );
