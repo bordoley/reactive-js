@@ -125,14 +125,15 @@ const Root = () => {
               Observable.map(x => 1 - x),
             ),
           ),
-          Observable.forEach(size => {
+          Observable.map(v => ({
+            margin: `${50 - v * 50}px`,
+            padding: `${v * 50}px`,
+          })),
+          Observable.forEach(({ margin, padding }) => {
             const animatedDiv = animatedDivRef.current;
             if (animatedDiv != null) {
-              animatedDiv.style.margin = `${50 - size * 50}px`;
-              animatedDiv.style.padding = `${size * 50}px`;
-              animatedDiv.style.backgroundColor = "#bbb";
-              animatedDiv.style.borderRadius = "50%";
-              animatedDiv.style.display = "inline-block";
+              animatedDiv.style.margin = margin;
+              animatedDiv.style.padding = padding;
             }
           }),
           Observable.subscribeOn(createAnimationFrameScheduler),
@@ -173,7 +174,18 @@ const Root = () => {
         </button>
         <span>{counter.value ?? counterInitialValue}</span>
       </div>
-      <div ref={animatedDivRef} style={{ height: "100px", width: "100px" }} />
+      <div
+        ref={animatedDivRef}
+        style={{
+          height: "100px",
+          width: "100px",
+          backgroundColor: "#bbb",
+          borderRadius: "50%",
+          display: "inline-block",
+          margin: "50px",
+          padding: "0px",
+        }}
+      />
       <div>
         <button onClick={dispatch} disabled={animationRunning}>
           Run Animation
@@ -208,14 +220,15 @@ const RxComponent = createComponent(
               Observable.map(x => 1 - x),
             ),
           ),
-          Observable.forEach(size => {
+          Observable.map(v => ({
+            margin: `${50 - v * 50}px`,
+            padding: `${v * 50}px`,
+          })),
+          Observable.forEach(({ margin, padding }) => {
             const animatedDiv = animatedDivRef.current;
             if (animatedDiv != null) {
-              animatedDiv.style.margin = `${50 - size * 50}px`;
-              animatedDiv.style.padding = `${size * 50}px`;
-              animatedDiv.style.backgroundColor = "#bbb";
-              animatedDiv.style.borderRadius = "50%";
-              animatedDiv.style.display = "inline-block";
+              animatedDiv.style.margin = margin;
+              animatedDiv.style.padding = padding;
             }
           }),
           Observable.subscribeOn(createAnimationFrameScheduler),
@@ -260,7 +273,15 @@ const RxComponent = createComponent(
 
           <div
             ref={animatedDivRef}
-            style={{ height: "100px", width: "100px" }}
+            style={{
+              height: "100px",
+              width: "100px",
+              backgroundColor: "#bbb",
+              borderRadius: "50%",
+              display: "inline-block",
+              margin: "50px",
+              padding: "0px",
+            }}
           />
           <div>
             <button onClick={runAnimation}>Run Animation</button>
