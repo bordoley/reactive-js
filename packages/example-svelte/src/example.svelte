@@ -3,7 +3,7 @@ import * as Scheduler from "@reactive-js/core/scheduling/Scheduler";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import { subscribe } from "@reactive-js/core/integrations/svelte";
 import {
-  bind,
+  bindMethod,
   increment,
   pipe,
   returns,
@@ -23,10 +23,10 @@ import {
   const scheduler = Scheduler.createHostScheduler();
   const counter = flowableCounter[StreamableLike_stream](scheduler);
 
-  const pause = bind(counter[FlowableStreamLike_pause], counter);
-  const resume = bind(counter[FlowableStreamLike_resume], counter);
+  const pause = bindMethod(counter, FlowableStreamLike_pause);
+  const resume = bindMethod(counter, FlowableStreamLike_resume);
 
-  const isPaused =  pipe(
+  const isPaused = pipe(
     counter[FlowableStreamLike_isPaused],
     subscribe(scheduler),
   );
