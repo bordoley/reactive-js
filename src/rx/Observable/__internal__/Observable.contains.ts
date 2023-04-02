@@ -7,7 +7,7 @@ import Observable_someSatisfy from "./Observable.someSatisfy.js";
 type ObservableContains = <C extends ObservableLike, T>(
   value: T,
   options?: {
-    readonly equality?: Equality<T> | undefined;
+    readonly equality?: Equality<T>;
   },
 ) => ContainerOperator<C, T, boolean>;
 const Observable_contains: ObservableContains =

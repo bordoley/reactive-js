@@ -30,7 +30,7 @@ import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperat
 type ObservableTakeWhile = <C extends ObservableLike, T>(
   predicate: Predicate<T>,
   options?: {
-    readonly inclusive?: boolean | undefined;
+    readonly inclusive?: boolean;
   },
 ) => ContainerOperator<C, T, T>;
 

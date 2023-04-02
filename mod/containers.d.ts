@@ -181,7 +181,7 @@ export interface Contains<C extends ContainerLike, O = unknown> extends Containe
      * @category Operator
      */
     contains: <T>(value: T, options?: O & {
-        readonly equality?: Equality<T> | undefined;
+        readonly equality?: Equality<T>;
     }) => ContainerOperator<C, T, boolean>;
 }
 /**
