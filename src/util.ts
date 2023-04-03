@@ -4,7 +4,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  IndexedLike_get,
+  KeyedCollectionLike_get,
   QueueableLike_backpressureStrategy,
   BufferLike_capacity,
   QueueableLike_enqueue,
@@ -17,7 +17,7 @@ export {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  IndexedLike_get,
+  KeyedCollectionLike_get,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
   BufferLike_capacity,
@@ -62,6 +62,9 @@ export interface DisposableLike {
   [DisposableLike_dispose](error?: Error): void;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface BufferLike {
 
   /**
@@ -104,6 +107,12 @@ export interface CollectionLike {
 /**
  * @noInheritDoc
  */
-export interface IndexedLike<T = unknown> extends CollectionLike {
-  [IndexedLike_get](index: number): T;
+export interface KeyedCollectionLike<TKey = unknown, T = unknown> extends CollectionLike {
+  [KeyedCollectionLike_get](index: TKey): T;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface IndexedCollectionLike<T = unknown> extends KeyedCollectionLike<number, T> {
 }

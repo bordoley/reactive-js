@@ -34,7 +34,7 @@ export declare const FlowableStreamLike_pause: unique symbol;
 
 export declare const FlowableStreamLike_resume: unique symbol;
 
-export declare const IndexedLike_get: unique symbol;
+export declare const KeyedCollectionLike_get: unique symbol;
 
 export declare const KeyedContainerLike_TKey: unique symbol;
 
@@ -362,7 +362,7 @@ export declare const QueueLike_head: unique symbol;
 
 export declare const QueueLike_dequeue: unique symbol;
 
-export declare const MutableIndexedLike_set: unique symbol;
+export declare const MutableIndexedCollectionLike_set: unique symbol;
 
 export declare const StackLike_pop: unique symbol;
 

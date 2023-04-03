@@ -17,7 +17,7 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../../../rx.js";
-import { CollectionLike_count, IndexedLike_get } from "../../../util.js";
+import { CollectionLike_count, KeyedCollectionLike_get } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 export interface DelegatingMulticastLike<
@@ -43,7 +43,7 @@ const MulticastObservable_delegatingMixin: <
         instance: Pick<
           MulticastObservableLike<T>,
           | typeof CollectionLike_count
-          | typeof IndexedLike_get
+          | typeof KeyedCollectionLike_get
           | typeof MulticastObservableLike_observerCount
           | typeof MulticastObservableLike_replay
           | typeof ObservableLike_observe
@@ -89,11 +89,11 @@ const MulticastObservable_delegatingMixin: <
           return this[DelegatingLike_delegate][ObservableLike_isRunnable];
         },
 
-        [IndexedLike_get](
+        [KeyedCollectionLike_get](
           this: DelegatingLike<MulticastObservableLike<T>>,
           index: number,
         ): T {
-          return this[DelegatingLike_delegate][IndexedLike_get](index);
+          return this[DelegatingLike_delegate][KeyedCollectionLike_get](index);
         },
 
         [ObservableLike_observe](

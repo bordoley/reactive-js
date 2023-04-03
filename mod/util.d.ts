@@ -1,6 +1,6 @@
-import { CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue } from "./__internal__/symbols.js";
+import { CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue } from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
-export { CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, BufferLike_capacity, };
+export { CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, BufferLike_capacity, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -30,6 +30,9 @@ export interface DisposableLike {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
+/**
+ * @noInheritDoc
+ */
 export interface BufferLike {
     /**
      * The number of items the queue is capable of efficiently buffering.
@@ -63,6 +66,11 @@ export interface CollectionLike {
 /**
  * @noInheritDoc
  */
-export interface IndexedLike<T = unknown> extends CollectionLike {
-    [IndexedLike_get](index: number): T;
+export interface KeyedCollectionLike<TKey = unknown, T = unknown> extends CollectionLike {
+    [KeyedCollectionLike_get](index: TKey): T;
+}
+/**
+ * @noInheritDoc
+ */
+export interface IndexedCollectionLike<T = unknown> extends KeyedCollectionLike<number, T> {
 }

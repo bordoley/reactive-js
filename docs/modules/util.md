@@ -9,7 +9,8 @@
 - [BufferLike](../interfaces/util.BufferLike.md)
 - [CollectionLike](../interfaces/util.CollectionLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
-- [IndexedLike](../interfaces/util.IndexedLike.md)
+- [IndexedCollectionLike](../interfaces/util.IndexedCollectionLike.md)
+- [KeyedCollectionLike](../interfaces/util.KeyedCollectionLike.md)
 - [QueueableLike](../interfaces/util.QueueableLike.md)
 
 ### Type Aliases

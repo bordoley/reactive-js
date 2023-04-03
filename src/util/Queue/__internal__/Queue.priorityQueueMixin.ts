@@ -11,7 +11,7 @@ import {
 import { PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
-  MutableIndexedLike_set,
+  MutableIndexedCollectionLike_set,
   QueueLike,
   QueueLike_dequeue,
   StackLike_pop,
@@ -27,7 +27,7 @@ import {
 } from "../../../functions.js";
 import {
   CollectionLike_count,
-  IndexedLike_get,
+  KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   BufferLike_capacity,
@@ -58,22 +58,22 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
       const hasLeft = leftIndex >= 0 && leftIndex < count;
       const hasRight = rightIndex >= 0 && rightIndex < count;
 
-      const left = hasLeft ? queue[IndexedLike_get](leftIndex) : none;
-      const right = hasRight ? queue[IndexedLike_get](rightIndex) : none;
+      const left = hasLeft ? queue[KeyedCollectionLike_get](leftIndex) : none;
+      const right = hasRight ? queue[KeyedCollectionLike_get](rightIndex) : none;
 
       if (hasLeft && compare(left as T, item) < 0) {
         if (hasRight && compare(right as T, left as T) < 0) {
-          queue[MutableIndexedLike_set](index, right as T);
-          queue[MutableIndexedLike_set](rightIndex, item);
+          queue[MutableIndexedCollectionLike_set](index, right as T);
+          queue[MutableIndexedCollectionLike_set](rightIndex, item);
           index = rightIndex;
         } else {
-          queue[MutableIndexedLike_set](index, left as T);
-          queue[MutableIndexedLike_set](leftIndex, item);
+          queue[MutableIndexedCollectionLike_set](index, left as T);
+          queue[MutableIndexedCollectionLike_set](leftIndex, item);
           index = leftIndex;
         }
       } else if (hasRight && compare(right as T, item) < 0) {
-        queue[MutableIndexedLike_set](index, right as T);
-        queue[MutableIndexedLike_set](rightIndex, item);
+        queue[MutableIndexedCollectionLike_set](index, right as T);
+        queue[MutableIndexedCollectionLike_set](rightIndex, item);
         index = rightIndex;
       } else {
         break;
@@ -89,12 +89,12 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
       let index = count - 1, parentIndex = floor((index - 1) / 2);
       parentIndex >= 0 &&
       parentIndex <= count &&
-      compare(queue[IndexedLike_get](parentIndex), item) > 0;
+      compare(queue[KeyedCollectionLike_get](parentIndex), item) > 0;
       index = parentIndex, parentIndex = floor((index - 1) / 2)
     ) {
-      const parent = queue[IndexedLike_get](parentIndex);
-      queue[MutableIndexedLike_set](parentIndex, item);
-      queue[MutableIndexedLike_set](index, parent);
+      const parent = queue[KeyedCollectionLike_get](parentIndex);
+      queue[MutableIndexedCollectionLike_set](parentIndex, item);
+      queue[MutableIndexedCollectionLike_set](index, parent);
     }
   };
 
@@ -137,9 +137,9 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
               this,
             ) as Optional<T>;
           } else {
-            const first = this[IndexedLike_get](0);
+            const first = this[KeyedCollectionLike_get](0);
             const last = this[StackLike_pop]() as T;
-            this[MutableIndexedLike_set](0, last);
+            this[MutableIndexedCollectionLike_set](0, last);
 
             siftDown(this, last);
 

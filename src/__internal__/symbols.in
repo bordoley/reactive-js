@@ -25,7 +25,7 @@ FlowableStreamLike_isPaused
 FlowableStreamLike_pause
 FlowableStreamLike_resume
 
-IndexedLike_get
+KeyedCollectionLike_get
 
 KeyedContainerLike_TKey
 
@@ -201,7 +201,7 @@ DelegatingLike_delegate
 SerialDisposableLike_current
 QueueLike_head
 QueueLike_dequeue
-MutableIndexedLike_set
+MutableIndexedCollectionLike_set
 StackLike_pop
 StackLike_head
 IteratorEnumerator_iterator

@@ -6,7 +6,7 @@ import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_move, Pu
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PublisherLike_publish, } from "../../../rx.js";
-import { CollectionLike_count, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, DisposableLike_isDisposed, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
@@ -63,7 +63,7 @@ const Publisher_create = /*@__PURE__*/ (() => {
             // So we marshall those events back to the scheduler.
             const count = this[CollectionLike_count];
             for (let i = 0; i < count; i++) {
-                const next = this[IndexedLike_get](i);
+                const next = this[KeyedCollectionLike_get](i);
                 observer[QueueableLike_enqueue](next);
             }
         },

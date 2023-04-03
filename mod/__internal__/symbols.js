@@ -38,7 +38,7 @@ export const FlowableStreamLike_pause = /*@__PURE__*/ symbol("FlowableStreamLike
 /** @type {unique symbol} */
 export const FlowableStreamLike_resume = /*@__PURE__*/ symbol("FlowableStreamLike_resume");
 /** @type {unique symbol} */
-export const IndexedLike_get = /*@__PURE__*/ symbol("IndexedLike_get");
+export const KeyedCollectionLike_get = /*@__PURE__*/ symbol("KeyedCollectionLike_get");
 /** @type {unique symbol} */
 export const KeyedContainerLike_TKey = /*@__PURE__*/ symbol("KeyedContainerLike_TKey");
 /** @type {unique symbol} */
@@ -366,7 +366,7 @@ export const QueueLike_head = /*@__PURE__*/ symbol("QueueLike_head");
 /** @type {unique symbol} */
 export const QueueLike_dequeue = /*@__PURE__*/ symbol("QueueLike_dequeue");
 /** @type {unique symbol} */
-export const MutableIndexedLike_set = /*@__PURE__*/ symbol("MutableIndexedLike_set");
+export const MutableIndexedCollectionLike_set = /*@__PURE__*/ symbol("MutableIndexedCollectionLike_set");
 /** @type {unique symbol} */
 export const StackLike_pop = /*@__PURE__*/ symbol("StackLike_pop");
 /** @type {unique symbol} */

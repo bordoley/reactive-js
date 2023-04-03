@@ -37,7 +37,7 @@ import {
 import {
   CollectionLike_count,
   DisposableLike_isDisposed,
-  IndexedLike_get,
+  KeyedCollectionLike_get,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -147,7 +147,7 @@ const Publisher_create: <T>(options?: {
           // So we marshall those events back to the scheduler.
           const count = this[CollectionLike_count];
           for (let i = 0; i < count; i++) {
-            const next = this[IndexedLike_get](i);
+            const next = this[KeyedCollectionLike_get](i);
             observer[QueueableLike_enqueue](next);
           }
         },

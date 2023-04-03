@@ -2,7 +2,7 @@ import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableL
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
-import { DisposableLike, IndexedLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
+import { DisposableLike, IndexedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
 export { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, PublisherLike_publish, };
 /**
  * A `QueueableLike` type that consumes enqueued events on a scheduler continuation.
@@ -87,7 +87,7 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  * @noInheritDoc
  * @category Container
  */
-export interface MulticastObservableLike<T = unknown> extends ObservableLike<T>, IndexedLike<T>, DisposableLike {
+export interface MulticastObservableLike<T = unknown> extends ObservableLike<T>, IndexedCollectionLike<T>, DisposableLike {
     readonly [ObservableLike_isEnumerable]: false;
     readonly [ObservableLike_isRunnable]: false;
     /**

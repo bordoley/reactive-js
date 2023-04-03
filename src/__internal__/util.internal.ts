@@ -2,12 +2,12 @@ import { Optional } from "../functions.js";
 import {
   CollectionLike,
   DisposableLike,
-  IndexedLike,
+  IndexedCollectionLike,
   QueueableLike,
 } from "../util.js";
 import { DelegatingLike } from "./mixins.js";
 import {
-  MutableIndexedLike_set,
+  MutableIndexedCollectionLike_set,
   QueueLike_dequeue,
   QueueLike_head,
   SerialDisposableLike_current,
@@ -16,7 +16,7 @@ import {
 } from "./symbols.js";
 
 export {
-  MutableIndexedLike_set,
+  MutableIndexedCollectionLike_set,
   SerialDisposableLike_current,
   QueueLike_head,
   QueueLike_dequeue,
@@ -49,11 +49,11 @@ export interface StackLike<T = unknown> {
   [StackLike_pop](): Optional<T>;
 }
 
-export interface MutableIndexedLike<T = unknown> extends IndexedLike<T> {
-  [MutableIndexedLike_set](index: number, value: T): T;
+export interface MutableIndexedCollectionLike<T = unknown> extends IndexedCollectionLike<T> {
+  [MutableIndexedCollectionLike_set](index: number, value: T): T;
 }
 
 export interface IndexedQueueLike<T = unknown>
   extends QueueLike<T>,
-    MutableIndexedLike<T>,
+    MutableIndexedCollectionLike<T>,
     StackLike<T> {}

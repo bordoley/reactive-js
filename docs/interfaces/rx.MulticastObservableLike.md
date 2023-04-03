@@ -16,7 +16,7 @@ A stateful ObservableLike resource.
 
 - [`ObservableLike`](rx.ObservableLike.md)<`T`\>
 
-- [`IndexedLike`](util.IndexedLike.md)<`T`\>
+- [`IndexedCollectionLike`](util.IndexedCollectionLike.md)<`T`\>
 
 - [`DisposableLike`](util.DisposableLike.md)
 

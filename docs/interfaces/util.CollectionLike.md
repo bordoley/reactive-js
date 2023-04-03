@@ -8,7 +8,7 @@
 
 - **`CollectionLike`**
 
-  ↳ [`IndexedLike`](util.IndexedLike.md)
+  ↳ [`KeyedCollectionLike`](util.KeyedCollectionLike.md)
 
 ## Table of contents
 

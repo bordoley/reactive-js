@@ -35,7 +35,7 @@ export const FlowableStreamLike_pause: unique symbol;
 /** @type {unique symbol} */
 export const FlowableStreamLike_resume: unique symbol;
 /** @type {unique symbol} */
-export const IndexedLike_get: unique symbol;
+export const KeyedCollectionLike_get: unique symbol;
 /** @type {unique symbol} */
 export const KeyedContainerLike_TKey: unique symbol;
 /** @type {unique symbol} */
@@ -363,7 +363,7 @@ export const QueueLike_head: unique symbol;
 /** @type {unique symbol} */
 export const QueueLike_dequeue: unique symbol;
 /** @type {unique symbol} */
-export const MutableIndexedLike_set: unique symbol;
+export const MutableIndexedCollectionLike_set: unique symbol;
 /** @type {unique symbol} */
 export const StackLike_pop: unique symbol;
 /** @type {unique symbol} */

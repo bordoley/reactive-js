@@ -9,7 +9,7 @@ import {
 } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
-  MutableIndexedLike_set,
+  MutableIndexedCollectionLike_set,
   QueueLike,
   QueueLike_dequeue,
   QueueLike_head,
@@ -27,7 +27,7 @@ import {
 } from "../../../functions.js";
 import {
   CollectionLike_count,
-  IndexedLike_get,
+  KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   BufferLike_capacity,
@@ -218,7 +218,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           return item;
         },
 
-        [IndexedLike_get](this: TProperties & QueueableLike, index: number): T {
+        [KeyedCollectionLike_get](this: TProperties & QueueableLike, index: number): T {
           const count = this[CollectionLike_count];
           const capacity = this[FifoQueue_values]?.length ?? 0;
           const head = this[FifoQueue_head];
@@ -237,7 +237,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           return values[computedIndex] as T;
         },
 
-        [MutableIndexedLike_set](
+        [MutableIndexedCollectionLike_set](
           this: TProperties & QueueableLike,
           index: number,
           value: T,

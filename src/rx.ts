@@ -21,7 +21,7 @@ import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
   DisposableLike,
-  IndexedLike,
+  IndexedCollectionLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "./util.js";
@@ -136,7 +136,7 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  */
 export interface MulticastObservableLike<T = unknown>
   extends ObservableLike<T>,
-    IndexedLike<T>,
+    IndexedCollectionLike<T>,
     DisposableLike {
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;

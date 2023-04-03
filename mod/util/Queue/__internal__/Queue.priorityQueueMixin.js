@@ -3,9 +3,9 @@
 import { floor } from "../../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
-import { MutableIndexedLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.internal.js";
+import { MutableIndexedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
-import { CollectionLike_count, IndexedLike_get, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
 const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(IndexedQueue_fifoQueueMixin());
@@ -17,23 +17,23 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
             const rightIndex = leftIndex + 1;
             const hasLeft = leftIndex >= 0 && leftIndex < count;
             const hasRight = rightIndex >= 0 && rightIndex < count;
-            const left = hasLeft ? queue[IndexedLike_get](leftIndex) : none;
-            const right = hasRight ? queue[IndexedLike_get](rightIndex) : none;
+            const left = hasLeft ? queue[KeyedCollectionLike_get](leftIndex) : none;
+            const right = hasRight ? queue[KeyedCollectionLike_get](rightIndex) : none;
             if (hasLeft && compare(left, item) < 0) {
                 if (hasRight && compare(right, left) < 0) {
-                    queue[MutableIndexedLike_set](index, right);
-                    queue[MutableIndexedLike_set](rightIndex, item);
+                    queue[MutableIndexedCollectionLike_set](index, right);
+                    queue[MutableIndexedCollectionLike_set](rightIndex, item);
                     index = rightIndex;
                 }
                 else {
-                    queue[MutableIndexedLike_set](index, left);
-                    queue[MutableIndexedLike_set](leftIndex, item);
+                    queue[MutableIndexedCollectionLike_set](index, left);
+                    queue[MutableIndexedCollectionLike_set](leftIndex, item);
                     index = leftIndex;
                 }
             }
             else if (hasRight && compare(right, item) < 0) {
-                queue[MutableIndexedLike_set](index, right);
-                queue[MutableIndexedLike_set](rightIndex, item);
+                queue[MutableIndexedCollectionLike_set](index, right);
+                queue[MutableIndexedCollectionLike_set](rightIndex, item);
                 index = rightIndex;
             }
             else {
@@ -46,10 +46,10 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
         const count = queue[CollectionLike_count];
         for (let index = count - 1, parentIndex = floor((index - 1) / 2); parentIndex >= 0 &&
             parentIndex <= count &&
-            compare(queue[IndexedLike_get](parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
-            const parent = queue[IndexedLike_get](parentIndex);
-            queue[MutableIndexedLike_set](parentIndex, item);
-            queue[MutableIndexedLike_set](index, parent);
+            compare(queue[KeyedCollectionLike_get](parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
+            const parent = queue[KeyedCollectionLike_get](parentIndex);
+            queue[MutableIndexedCollectionLike_set](parentIndex, item);
+            queue[MutableIndexedCollectionLike_set](index, parent);
         }
     };
     return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function PriorityQueue(instance, comparator, capacity, backpressureStrategy) {
@@ -68,9 +68,9 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
                 return call(IndexedQueuePrototype[QueueLike_dequeue], this);
             }
             else {
-                const first = this[IndexedLike_get](0);
+                const first = this[KeyedCollectionLike_get](0);
                 const last = this[StackLike_pop]();
-                this[MutableIndexedLike_set](0, last);
+                this[MutableIndexedCollectionLike_set](0, last);
                 siftDown(this, last);
                 return first;
             }

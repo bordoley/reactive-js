@@ -4,9 +4,9 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { mix, props } from "../../../__internal__/mixins.js";
 import { FifoQueue_capacityMask, FifoQueue_head, FifoQueue_tail, FifoQueue_values, } from "../../../__internal__/symbols.js";
-import { MutableIndexedLike_set, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
+import { MutableIndexedCollectionLike_set, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { CollectionLike_count, IndexedLike_get, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;
@@ -122,7 +122,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             shrink(this);
             return item;
         },
-        [IndexedLike_get](index) {
+        [KeyedCollectionLike_get](index) {
             const count = this[CollectionLike_count];
             const capacity = this[FifoQueue_values]?.length ?? 0;
             const head = this[FifoQueue_head];
@@ -136,7 +136,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                     : tailOffsetIndex;
             return values[computedIndex];
         },
-        [MutableIndexedLike_set](index, value) {
+        [MutableIndexedCollectionLike_set](index, value) {
             const count = this[CollectionLike_count];
             const capacity = this[FifoQueue_values]?.length ?? 0;
             const head = this[FifoQueue_head];
