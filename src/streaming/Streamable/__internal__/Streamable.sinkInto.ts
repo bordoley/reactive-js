@@ -15,8 +15,8 @@ import {
   StreamableLike_stream,
 } from "../../../streaming.js";
 import {
-  QueueableLike_backpressureStrategy,
   BufferLike_capacity,
+  QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";

@@ -8,7 +8,7 @@ import Observable_merge from "../../../rx/Observable/__internal__/Observable.mer
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_subscribeWithDispatcherConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
-import { QueueableLike_backpressureStrategy, BufferLike_capacity, } from "../../../util.js";
+import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 const Streamable_sinkInto = (dest) => (src) => {

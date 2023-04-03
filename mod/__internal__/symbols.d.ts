@@ -41,7 +41,7 @@ export const KeyedContainerLike_TKey: unique symbol;
 /** @type {unique symbol} */
 export const MulticastObservableLike_observerCount: unique symbol;
 /** @type {unique symbol} */
-export const MulticastObservableLike_replay: unique symbol;
+export const MulticastObservableLike_replayBuffer: unique symbol;
 /** @type {unique symbol} */
 export const ObserverLike_notify: unique symbol;
 /** @type {unique symbol} */

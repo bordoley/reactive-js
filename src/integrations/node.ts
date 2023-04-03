@@ -11,9 +11,9 @@ import {
   createInflate,
 } from "zlib";
 import {
+  BufferLike_capacity,
   NODE_JS_PAUSE_EVENT,
   QueueableLike_backpressureStrategy,
-  BufferLike_capacity,
 } from "../__internal__/symbols.js";
 import { ContainerOperator } from "../containers.js";
 import {

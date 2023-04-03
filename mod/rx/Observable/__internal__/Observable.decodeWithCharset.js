@@ -5,7 +5,7 @@ import { DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/sym
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, newInstance, none, partial, pipe, } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, QueueableLike_backpressureStrategy, BufferLike_capacity, } from "../../../util.js";
+import { BufferLike_capacity, DisposableLike_dispose, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";

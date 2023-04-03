@@ -26,10 +26,10 @@ import {
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
+  BufferLike_capacity,
   DisposableLike_dispose,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  BufferLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";

@@ -15,6 +15,7 @@
 ### Other Interfaces
 
 - [DispatcherLike](../interfaces/rx.DispatcherLike.md)
+- [MulticastObservableReplayBufferLike](../interfaces/rx.MulticastObservableReplayBufferLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 
 ### TypeClass Interfaces

@@ -37,13 +37,13 @@ import {
   SchedulerLike,
 } from "../../../scheduling.js";
 import {
+  BufferLike_capacity,
   CollectionLike_count,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";

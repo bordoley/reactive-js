@@ -5,9 +5,9 @@ import {
   ObservableLike,
 } from "../../../rx.js";
 import {
+  BufferLike_capacity,
   DisposableLike,
   QueueableLike_backpressureStrategy,
-  BufferLike_capacity,
 } from "../../../util.js";
 import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 

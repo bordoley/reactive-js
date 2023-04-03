@@ -26,11 +26,11 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
+  BufferLike_capacity,
   CollectionLike_count,
   KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 
@@ -218,7 +218,10 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           return item;
         },
 
-        [KeyedCollectionLike_get](this: TProperties & QueueableLike, index: number): T {
+        [KeyedCollectionLike_get](
+          this: TProperties & QueueableLike,
+          index: number,
+        ): T {
           const count = this[CollectionLike_count];
           const capacity = this[FifoQueue_values]?.length ?? 0;
           const head = this[FifoQueue_head];

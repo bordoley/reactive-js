@@ -11,13 +11,12 @@ import { returns, unsafeCast } from "../../../functions.js";
 import {
   MulticastObservableLike,
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
+  MulticastObservableLike_replayBuffer,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
 } from "../../../rx.js";
-import { CollectionLike_count, KeyedCollectionLike_get } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 export interface DelegatingMulticastLike<
@@ -42,10 +41,8 @@ const MulticastObservable_delegatingMixin: <
       function DelegatingMulticastObservableMixin(
         instance: Pick<
           MulticastObservableLike<T>,
-          | typeof CollectionLike_count
-          | typeof KeyedCollectionLike_get
           | typeof MulticastObservableLike_observerCount
-          | typeof MulticastObservableLike_replay
+          | typeof MulticastObservableLike_replayBuffer
           | typeof ObservableLike_observe
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
@@ -62,11 +59,6 @@ const MulticastObservable_delegatingMixin: <
       },
       props<unknown>({}),
       {
-        get [CollectionLike_count]() {
-          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
-          return this[DelegatingLike_delegate][CollectionLike_count];
-        },
-
         get [MulticastObservableLike_observerCount](): number {
           unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
           return this[DelegatingLike_delegate][
@@ -74,9 +66,11 @@ const MulticastObservable_delegatingMixin: <
           ];
         },
 
-        get [MulticastObservableLike_replay]() {
+        get [MulticastObservableLike_replayBuffer]() {
           unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
-          return this[DelegatingLike_delegate][MulticastObservableLike_replay];
+          return this[DelegatingLike_delegate][
+            MulticastObservableLike_replayBuffer
+          ];
         },
 
         get [ObservableLike_isEnumerable]() {
@@ -87,13 +81,6 @@ const MulticastObservable_delegatingMixin: <
         get [ObservableLike_isRunnable]() {
           unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
           return this[DelegatingLike_delegate][ObservableLike_isRunnable];
-        },
-
-        [KeyedCollectionLike_get](
-          this: DelegatingLike<MulticastObservableLike<T>>,
-          index: number,
-        ): T {
-          return this[DelegatingLike_delegate][KeyedCollectionLike_get](index);
         },
 
         [ObservableLike_observe](

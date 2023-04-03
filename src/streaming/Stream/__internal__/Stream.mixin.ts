@@ -41,12 +41,12 @@ import {
 } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 import {
+  BufferLike_capacity,
   CollectionLike_count,
   DisposableLike,
   DisposableLike_isDisposed,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 

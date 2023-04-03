@@ -2,9 +2,9 @@ import { Factory, bindMethod, isFunction, pipe } from "../../../functions.js";
 import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
+  BufferLike_capacity,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  BufferLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";

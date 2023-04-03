@@ -37,11 +37,11 @@ import {
   ZipWithLatestFrom,
 } from "../../../rx.js";
 import {
+  BufferLike_capacity,
   CollectionLike_count,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_backpressureStrategy,
-  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";

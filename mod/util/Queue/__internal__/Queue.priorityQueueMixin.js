@@ -5,7 +5,7 @@ import { getPrototype, include, init, mix, props, } from "../../../__internal__/
 import { PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
 import { MutableIndexedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
-import { CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
 const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(IndexedQueue_fifoQueueMixin());
@@ -18,7 +18,9 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
             const hasLeft = leftIndex >= 0 && leftIndex < count;
             const hasRight = rightIndex >= 0 && rightIndex < count;
             const left = hasLeft ? queue[KeyedCollectionLike_get](leftIndex) : none;
-            const right = hasRight ? queue[KeyedCollectionLike_get](rightIndex) : none;
+            const right = hasRight
+                ? queue[KeyedCollectionLike_get](rightIndex)
+                : none;
             if (hasLeft && compare(left, item) < 0) {
                 if (hasRight && compare(right, left) < 0) {
                     queue[MutableIndexedCollectionLike_set](index, right);

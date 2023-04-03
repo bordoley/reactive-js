@@ -16,4 +16,4 @@
 
   ↳ **`IndexedCollectionLike`**
 
-  ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
+  ↳↳ [`MulticastObservableReplayBufferLike`](rx.MulticastObservableReplayBufferLike.md)

@@ -2,7 +2,7 @@ import {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
+  MulticastObservableLike_replayBuffer,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -20,6 +20,7 @@ import {
 import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
+  BufferLike,
   DisposableLike,
   IndexedCollectionLike,
   QueueableLike,
@@ -30,7 +31,7 @@ export {
   DispatcherLike_complete,
   DispatcherLike_scheduler,
   MulticastObservableLike_observerCount,
-  MulticastObservableLike_replay,
+  MulticastObservableLike_replayBuffer,
   ObserverLike_notify,
   ObservableLike_observe,
   ObservableLike_isEnumerable,
@@ -128,6 +129,10 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
   readonly [ObservableLike_isEnumerable]: true;
 }
 
+export interface MulticastObservableReplayBufferLike<T = unknown>
+  extends BufferLike,
+    IndexedCollectionLike<T> {}
+
 /**
  * A stateful ObservableLike resource.
  *
@@ -136,7 +141,6 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  */
 export interface MulticastObservableLike<T = unknown>
   extends ObservableLike<T>,
-    IndexedCollectionLike<T>,
     DisposableLike {
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
@@ -146,8 +150,8 @@ export interface MulticastObservableLike<T = unknown>
    */
   readonly [MulticastObservableLike_observerCount]: number;
 
-  /** The number of events the 'MulticastObservableLike` replays when subscribed to */
-  readonly [MulticastObservableLike_replay]: number;
+  /** The 'MulticastObservableLike`'s replay buffer */
+  readonly [MulticastObservableLike_replayBuffer]: MulticastObservableReplayBufferLike<T>;
 }
 
 /**

@@ -1,4 +1,5 @@
 import {
+  BufferLike_capacity,
   CollectionLike_count,
   DisposableLike_add,
   DisposableLike_dispose,
@@ -6,7 +7,6 @@ import {
   DisposableLike_isDisposed,
   KeyedCollectionLike_get,
   QueueableLike_backpressureStrategy,
-  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
@@ -66,7 +66,6 @@ export interface DisposableLike {
  * @noInheritDoc
  */
 export interface BufferLike {
-
   /**
    * The number of items the queue is capable of efficiently buffering.
    */
@@ -107,12 +106,13 @@ export interface CollectionLike {
 /**
  * @noInheritDoc
  */
-export interface KeyedCollectionLike<TKey = unknown, T = unknown> extends CollectionLike {
+export interface KeyedCollectionLike<TKey = unknown, T = unknown>
+  extends CollectionLike {
   [KeyedCollectionLike_get](index: TKey): T;
 }
 
 /**
  * @noInheritDoc
  */
-export interface IndexedCollectionLike<T = unknown> extends KeyedCollectionLike<number, T> {
-}
+export interface IndexedCollectionLike<T = unknown>
+  extends KeyedCollectionLike<number, T> {}

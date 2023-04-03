@@ -18,8 +18,8 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import {
-  QueueableLike_backpressureStrategy,
   BufferLike_capacity,
+  QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";

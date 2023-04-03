@@ -14,8 +14,8 @@ import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { FlowableLike, StreamableLike_isRunnable } from "../../../streaming.js";
 import {
-  QueueableLike_backpressureStrategy,
   BufferLike_capacity,
+  QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";

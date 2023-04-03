@@ -9,7 +9,7 @@ import Observable_ignoreElements from "../../../rx/Observable/__internal__/Obser
 import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import { StreamableLike_isRunnable } from "../../../streaming.js";
-import { QueueableLike_backpressureStrategy, BufferLike_capacity, } from "../../../util.js";
+import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";

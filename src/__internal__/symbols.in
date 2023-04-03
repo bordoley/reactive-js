@@ -30,7 +30,7 @@ KeyedCollectionLike_get
 KeyedContainerLike_TKey
 
 MulticastObservableLike_observerCount
-MulticastObservableLike_replay
+MulticastObservableLike_replayBuffer
 
 ObserverLike_notify
 

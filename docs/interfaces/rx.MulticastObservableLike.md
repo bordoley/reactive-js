@@ -16,8 +16,6 @@ A stateful ObservableLike resource.
 
 - [`ObservableLike`](rx.ObservableLike.md)<`T`\>
 
-- [`IndexedCollectionLike`](util.IndexedCollectionLike.md)<`T`\>
-
 - [`DisposableLike`](util.DisposableLike.md)
 
   ↳ **`MulticastObservableLike`**
@@ -31,7 +29,7 @@ A stateful ObservableLike resource.
 ### Properties
 
 - [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
-- [[MulticastObservableLike\_replay]](rx.MulticastObservableLike.md#[multicastobservablelike_replay])
+- [[MulticastObservableLike\_replayBuffer]](rx.MulticastObservableLike.md#[multicastobservablelike_replaybuffer])
 - [[ObservableLike\_isEnumerable]](rx.MulticastObservableLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.MulticastObservableLike.md#[observablelike_isrunnable])
 
@@ -45,11 +43,11 @@ The number of observers currently observing the `MulticastObservableLike`.
 
 ___
 
-### [MulticastObservableLike\_replay]
+### [MulticastObservableLike\_replayBuffer]
 
-• `Readonly` **[MulticastObservableLike\_replay]**: `number`
+• `Readonly` **[MulticastObservableLike\_replayBuffer]**: [`MulticastObservableReplayBufferLike`](rx.MulticastObservableReplayBufferLike.md)<`T`\>
 
-The number of events the 'MulticastObservableLike` replays when subscribed to
+The 'MulticastObservableLike`'s replay buffer
 
 ___
 

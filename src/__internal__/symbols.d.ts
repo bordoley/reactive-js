@@ -40,7 +40,7 @@ export declare const KeyedContainerLike_TKey: unique symbol;
 
 export declare const MulticastObservableLike_observerCount: unique symbol;
 
-export declare const MulticastObservableLike_replay: unique symbol;
+export declare const MulticastObservableLike_replayBuffer: unique symbol;
 
 export declare const ObserverLike_notify: unique symbol;
 
@@ -280,7 +280,7 @@ export declare const PrioritySchedulerImplementationLike_runContinuation: unique
 
 export declare const PrioritySchedulerImplementationLike_shouldYield: unique symbol;
 
-export declare const Continuation_childContinuation : unique symbol;
+export declare const Continuation_childContinuation: unique symbol;
 
 export declare const Continuation_effect: unique symbol;
 
@@ -314,17 +314,17 @@ export declare const QueueTask_priority: unique symbol;
 
 export declare const QueueTask_taskID: unique symbol;
 
-export declare const QueueScheduler_delayed : unique symbol;
+export declare const QueueScheduler_delayed: unique symbol;
 
-export declare const QueueScheduler_dueTime : unique symbol;
+export declare const QueueScheduler_dueTime: unique symbol;
 
-export declare const QueueScheduler_hostContinuation : unique symbol;
+export declare const QueueScheduler_hostContinuation: unique symbol;
 
 export declare const QueueScheduler_hostScheduler: unique symbol;
 
-export declare const QueueScheduler_queue : unique symbol;
+export declare const QueueScheduler_queue: unique symbol;
 
-export declare const QueueScheduler_taskIDCounter : unique symbol;
+export declare const QueueScheduler_taskIDCounter: unique symbol;
 
 export declare const LiftedAsyncEnumerable_src: unique symbol;
 
@@ -344,7 +344,7 @@ export declare const FifoQueue_capacityMask: unique symbol;
 
 export declare const FifoQueue_values: unique symbol;
 
-export declare const PriorityQueueImpl_comparator : unique symbol;
+export declare const PriorityQueueImpl_comparator: unique symbol;
 
 export declare const Object_init: unique symbol;
 

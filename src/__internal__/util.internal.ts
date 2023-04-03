@@ -49,7 +49,8 @@ export interface StackLike<T = unknown> {
   [StackLike_pop](): Optional<T>;
 }
 
-export interface MutableIndexedCollectionLike<T = unknown> extends IndexedCollectionLike<T> {
+export interface MutableIndexedCollectionLike<T = unknown>
+  extends IndexedCollectionLike<T> {
   [MutableIndexedCollectionLike_set](index: number, value: T): T;
 }
 

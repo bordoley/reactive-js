@@ -44,7 +44,7 @@ export const KeyedContainerLike_TKey = /*@__PURE__*/ symbol("KeyedContainerLike_
 /** @type {unique symbol} */
 export const MulticastObservableLike_observerCount = /*@__PURE__*/ symbol("MulticastObservableLike_observerCount");
 /** @type {unique symbol} */
-export const MulticastObservableLike_replay = /*@__PURE__*/ symbol("MulticastObservableLike_replay");
+export const MulticastObservableLike_replayBuffer = /*@__PURE__*/ symbol("MulticastObservableLike_replayBuffer");
 /** @type {unique symbol} */
 export const ObserverLike_notify = /*@__PURE__*/ symbol("ObserverLike_notify");
 /** @type {unique symbol} */
@@ -168,7 +168,8 @@ export const ComputeContext_observer = /*@__PURE__*/ symbol("ComputeContext_obse
 /** @type {unique symbol} */
 export const ComputeContext_runComputation = /*@__PURE__*/ symbol("ComputeContext_runComputation");
 /** @type {unique symbol} */
-export const ComputeContext_scheduledComputationSubscription = /*@__PURE__*/ symbol("ComputeContext_scheduledComputationSubscription");
+export const ComputeContext_scheduledComputationSubscription = 
+/*@__PURE__*/ symbol("ComputeContext_scheduledComputationSubscription");
 /** @type {unique symbol} */
 export const ComputeContext_awaitOrObserve = /*@__PURE__*/ symbol("ComputeContext_awaitOrObserve");
 /** @type {unique symbol} */
@@ -280,9 +281,11 @@ export const ContinuationLike_priority = /*@__PURE__*/ symbol("ContinuationLike_
 /** @type {unique symbol} */
 export const ContinuationLike_continuationScheduler = /*@__PURE__*/ symbol("ContinuationLike_continuationScheduler");
 /** @type {unique symbol} */
-export const PrioritySchedulerImplementationLike_runContinuation = /*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_runContinuation");
+export const PrioritySchedulerImplementationLike_runContinuation = 
+/*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_runContinuation");
 /** @type {unique symbol} */
-export const PrioritySchedulerImplementationLike_shouldYield = /*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_shouldYield");
+export const PrioritySchedulerImplementationLike_shouldYield = 
+/*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_shouldYield");
 /** @type {unique symbol} */
 export const Continuation_childContinuation = /*@__PURE__*/ symbol("Continuation_childContinuation ");
 /** @type {unique symbol} */
@@ -294,9 +297,11 @@ export const SchedulerMixin_currentContinuation = /*@__PURE__*/ symbol("Schedule
 /** @type {unique symbol} */
 export const SchedulerMixin_startTime = /*@__PURE__*/ symbol("SchedulerMixin_startTime");
 /** @type {unique symbol} */
-export const PrioritySchedulerDelegatingScheduler_priorityScheduler = /*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priorityScheduler");
+export const PrioritySchedulerDelegatingScheduler_priorityScheduler = 
+/*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priorityScheduler");
 /** @type {unique symbol} */
-export const PrioritySchedulerDelegatingScheduler_priority = /*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priority");
+export const PrioritySchedulerDelegatingScheduler_priority = 
+/*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priority");
 /** @type {unique symbol} */
 export const VirtualTask_continuation = /*@__PURE__*/ symbol("VirtualTask_continuation");
 /** @type {unique symbol} */

@@ -26,11 +26,11 @@ import {
   returns,
 } from "../../../functions.js";
 import {
+  BufferLike_capacity,
   CollectionLike_count,
   KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
@@ -59,7 +59,9 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
       const hasRight = rightIndex >= 0 && rightIndex < count;
 
       const left = hasLeft ? queue[KeyedCollectionLike_get](leftIndex) : none;
-      const right = hasRight ? queue[KeyedCollectionLike_get](rightIndex) : none;
+      const right = hasRight
+        ? queue[KeyedCollectionLike_get](rightIndex)
+        : none;
 
       if (hasLeft && compare(left as T, item) < 0) {
         if (hasRight && compare(right as T, left as T) < 0) {

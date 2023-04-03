@@ -4,7 +4,7 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import { MapObserver_mapper } from "../../../__internal__/symbols.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { QueueableLike_backpressureStrategy, BufferLike_capacity, } from "../../../util.js";
+import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";

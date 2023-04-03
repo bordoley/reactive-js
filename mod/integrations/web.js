@@ -5,13 +5,13 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamLike_replace, } from "../__internal__/symbols.js";
 import { bindMethod, compose, error, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
 import * as ReadonlyArray from "../keyedcontainers/ReadonlyArray.js";
-import { ObservableLike_observe } from "../rx.js";
+import { MulticastObservableLike_replayBuffer, ObservableLike_observe, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
 import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { DisposableLike_dispose, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
 const errorEvent = "error";
@@ -85,16 +85,32 @@ export const windowLocation = /*@__PURE__*/ (() => {
     // Intentionally ignore the replace flag.
     (a === b || (a.title === b.title && areURIsEqual(a, b))) &&
         counterA === counterB;
+    class WindowLocationReplayBuffer {
+        d;
+        constructor(d) {
+            this.d = d;
+        }
+        get [BufferLike_capacity]() {
+            return this.d[BufferLike_capacity];
+        }
+        get [CollectionLike_count]() {
+            return this.d[CollectionLike_count];
+        }
+        [KeyedCollectionLike_get](index) {
+            return this.d[KeyedCollectionLike_get](index).uri;
+        }
+    }
     const createWindowLocationStream = createInstanceFactory(mix(include(Stream_delegatingMixin()), function WindowLocationStream(instance, delegate) {
         init(Stream_delegatingMixin(), instance, delegate);
         return instance;
     }, props({}), {
+        get [MulticastObservableLike_replayBuffer]() {
+            unsafeCast(this);
+            return newInstance(WindowLocationReplayBuffer, this[DelegatingLike_delegate][MulticastObservableLike_replayBuffer]);
+        },
         get [WindowLocationStreamLike_canGoBack]() {
             unsafeCast(this);
             return pipe(this[DelegatingLike_delegate], Observable.map(({ counter }) => counter > 0));
-        },
-        [KeyedCollectionLike_get](index) {
-            return this[DelegatingLike_delegate][KeyedCollectionLike_get](index).uri;
         },
         [QueueableLike_enqueue](stateOrUpdater) {
             return this[DelegatingLike_delegate][QueueableLike_enqueue](prevState => {
