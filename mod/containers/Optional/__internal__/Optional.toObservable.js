@@ -1,7 +1,7 @@
 /// <reference types="./Optional.toObservable.d.ts" />
 
 import { compose, none } from "../../../functions.js";
-import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import ReadonlyArray_toObservable from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import Optional_toReadonlyArray from "./Optional.toReadonlyArray.js";
 const Optional_toObservable = ((options) => {
     const { delay = 0 } = options ?? {};

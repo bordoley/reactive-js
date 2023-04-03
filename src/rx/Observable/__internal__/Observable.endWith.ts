@@ -1,6 +1,6 @@
 import { ContainerOperator } from "../../../containers.js";
 import Container_endWith from "../../../containers/Container/__internal__/Container.endWith.js";
-import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import ReadonlyArray_toObservable from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_concatWith from "./Observable.concatWith.js";
 

@@ -36,6 +36,8 @@ Base type for Container type classes.
 
   ↳ [`DistinctUntilChanged`](containers.DistinctUntilChanged.md)
 
+  ↳ [`Empty`](containers.Empty.md)
+
   ↳ [`EncodeUtf8`](containers.EncodeUtf8.md)
 
   ↳ [`EndWith`](containers.EndWith.md)
@@ -45,8 +47,6 @@ Base type for Container type classes.
   ↳ [`Every`](containers.Every.md)
 
   ↳ [`EverySatisfy`](containers.EverySatisfy.md)
-
-  ↳ [`Empty`](containers.Empty.md)
 
   ↳ [`First`](containers.First.md)
 
@@ -127,6 +127,38 @@ Base type for Container type classes.
   ↳ [`Zip`](containers.Zip.md)
 
   ↳ [`ZipWith`](containers.ZipWith.md)
+
+  ↳ [`Empty`](keyedcontainers.Empty.md)
+
+  ↳ [`Entries`](keyedcontainers.Entries.md)
+
+  ↳ [`ForEach`](keyedcontainers.ForEach.md)
+
+  ↳ [`ForEachWithKey`](keyedcontainers.ForEachWithKey.md)
+
+  ↳ [`FromEntries`](keyedcontainers.FromEntries.md)
+
+  ↳ [`FromReadonlyArray`](keyedcontainers.FromReadonlyArray.md)
+
+  ↳ [`Identity`](keyedcontainers.Identity.md)
+
+  ↳ [`Keep`](keyedcontainers.Keep.md)
+
+  ↳ [`KeepType`](keyedcontainers.KeepType.md)
+
+  ↳ [`KeepWithKey`](keyedcontainers.KeepWithKey.md)
+
+  ↳ [`Keys`](keyedcontainers.Keys.md)
+
+  ↳ [`KeySet`](keyedcontainers.KeySet.md)
+
+  ↳ [`Map`](keyedcontainers.Map.md)
+
+  ↳ [`MapWithKey`](keyedcontainers.MapWithKey.md)
+
+  ↳ [`ToReadonlyArray`](keyedcontainers.ToReadonlyArray.md)
+
+  ↳ [`Values`](keyedcontainers.Values.md)
 
   ↳ [`BackpressureStrategy`](rx.BackpressureStrategy.md)
 

@@ -7,7 +7,7 @@ import {
 import AsyncIterable_toFlowable from "../containers/AsyncIterable/__internal__/AsyncIterable.toFlowable.js";
 import Iterable_toFlowable from "../containers/Iterable/__internal__/Iterable.toFlowable.js";
 import Optional_toFlowable from "../containers/Optional/__internal__/Optional.toFlowable.js";
-import ReadonlyArray_toFlowable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
+import ReadonlyArray_toFlowable from "../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import {
   FromEnumerable,
   FromRunnable,

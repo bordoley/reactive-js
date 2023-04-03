@@ -35,6 +35,8 @@ export const FlowableStreamLike_resume: unique symbol;
 /** @type {unique symbol} */
 export const IndexedLike_get: unique symbol;
 /** @type {unique symbol} */
+export const KeyedContainerLike_TKey: unique symbol;
+/** @type {unique symbol} */
 export const MulticastObservableLike_observerCount: unique symbol;
 /** @type {unique symbol} */
 export const MulticastObservableLike_replay: unique symbol;

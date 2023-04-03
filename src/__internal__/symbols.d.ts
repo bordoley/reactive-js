@@ -34,6 +34,8 @@ export declare const FlowableStreamLike_resume: unique symbol;
 
 export declare const IndexedLike_get: unique symbol;
 
+export declare const KeyedContainerLike_TKey: unique symbol;
+
 export declare const MulticastObservableLike_observerCount: unique symbol;
 
 export declare const MulticastObservableLike_replay: unique symbol;

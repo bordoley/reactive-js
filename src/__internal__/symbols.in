@@ -25,6 +25,8 @@ FlowableStreamLike_resume
 
 IndexedLike_get
 
+KeyedContainerLike_TKey
+
 MulticastObservableLike_observerCount
 MulticastObservableLike_replay
 

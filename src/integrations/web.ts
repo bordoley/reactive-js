@@ -13,7 +13,6 @@ import {
   WindowLocationStreamLike_goBack,
   WindowLocationStreamLike_replace,
 } from "../__internal__/symbols.js";
-import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import {
   Function1,
   Optional,
@@ -31,6 +30,7 @@ import {
   returns,
   unsafeCast,
 } from "../functions.js";
+import * as ReadonlyArray from "../keyedcontainers/ReadonlyArray.js";
 import { ObservableLike, ObservableLike_observe, ObserverLike } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { SchedulerLike } from "../scheduling.js";

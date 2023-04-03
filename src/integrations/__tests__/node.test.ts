@@ -6,7 +6,6 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import {
   Optional,
   invoke,
@@ -14,6 +13,7 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
+import * as ReadonlyArray from "../../keyedcontainers/ReadonlyArray.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Runnable from "../../rx/Runnable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";

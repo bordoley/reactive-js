@@ -1,7 +1,7 @@
 /// <reference types="./testing.d.ts" />
 
-import ReadonlyArray_getLength from "../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { arrayEquality, ignore, isNone, isSome, none, raise, strictEquality, } from "../functions.js";
+import ReadonlyArray_getLength from "../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { __DENO__ } from "./constants.js";
 export const DescribeType = 1;
 export const TestType = 2;

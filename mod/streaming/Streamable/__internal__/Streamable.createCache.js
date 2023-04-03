@@ -1,10 +1,11 @@
 /// <reference types="./Streamable.createCache.d.ts" />
 
-import * as Obj from "../../../__internal__/Object.js";
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_dequeue } from "../../../__internal__/util.internal.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, } from "../../../functions.js";
+import * as ReadonlyRecord from "../../../keyedcontainers/ReadonlyRecord.js";
+import ReadonlyRecord_union from "../../../keyedcontainers/ReadonlyRecord/__internal__/ReadonlyRecord.union.js";
 import { PublisherLike_publish, } from "../../../rx.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
@@ -45,24 +46,24 @@ const createCacheStream = /*@__PURE__*/ (() => {
             cleanupJob =
                 cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
-        const delegate = pipe(Streamable_create(compose(Observable.map(updaters => [
+        const delegate = pipe(Streamable_create(compose(Observable.map((updaters) => [
             updaters,
-            pipe(updaters, Obj.map((_, k) => instance.store.get(k))),
+            pipe(updaters, ReadonlyRecord.mapWithKey((_, k) => instance.store.get(k))),
         ]), isSome(persistentStore)
             ? Observable.concatMap((next) => {
                 const [updaters, values] = next;
-                const keys = pipe(values, Obj.keys(isNone));
+                const keys = pipe(values, ReadonlyRecord.keep(isNone), ReadonlyRecord.keySet());
                 return keys.size > 0
                     ? pipe(persistentStore.load(keys), Observable.map(persistedValues => [
                         updaters,
-                        Obj.union(values, persistedValues),
+                        ReadonlyRecord_union(values, persistedValues),
                     ]))
                     : pipe(next, Observable.fromOptional());
             })
-            : identity, Observable.map(([updaters, values]) => pipe(updaters, Obj.map((updater, k) => 
+            : identity, Observable.map(([updaters, values]) => pipe(updaters, ReadonlyRecord.mapWithKey((updater, k) => 
         // This could be the cached value or the value
         // loaded from a persistent store.
-        updater(values[k])))), Observable.forEach(Obj.forEach((v, key) => {
+        updater(values[k])))), Observable.forEach(ReadonlyRecord.forEachWithKey((v, key) => {
             const oldValue = instance.store.get(key);
             if (isNone(v)) {
                 instance.store.delete(key);

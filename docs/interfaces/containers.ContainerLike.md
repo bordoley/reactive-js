@@ -18,7 +18,13 @@ Base type for all Containers.
 
   ↳ [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)
 
+  ↳ [`ReadonlySetLike`](containers.ReadonlySetLike.md)
+
   ↳ [`EnumeratorLike`](containers.EnumeratorLike.md)
+
+  ↳ [`KeyedContainerLike`](keyedcontainers.KeyedContainerLike.md)
+
+  ↳ [`ReadonlyMapLike`](keyedcontainers.ReadonlyMapLike.md)
 
   ↳ [`ObservableLike`](rx.ObservableLike.md)
 

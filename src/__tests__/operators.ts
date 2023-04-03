@@ -44,7 +44,6 @@ import {
   Zip,
   ZipWith,
 } from "../containers.js";
-import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import {
   Optional,
   alwaysFalse,
@@ -59,6 +58,7 @@ import {
   pipeLazy,
   returns,
 } from "../functions.js";
+import * as ReadonlyArray from "../keyedcontainers/ReadonlyArray.js";
 import {
   ObservableLike,
   Retry,

@@ -1,11 +1,9 @@
-import * as Obj from "../../__internal__/Object.js";
 import {
   describe,
   expectArrayEquals,
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import {
   SideEffect,
   arrayEquality,
@@ -14,6 +12,9 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
+import { ReadonlyRecordLike } from "../../keyedcontainers.js";
+import * as ReadonlyArray from "../../keyedcontainers/ReadonlyArray.js";
+import * as ReadonlyRecord from "../../keyedcontainers/ReadonlyRecord.js";
 import { DispatcherLike_complete } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import {
@@ -309,11 +310,11 @@ testModule(
       const persistentStore = {
         load: (_: ReadonlySet<string>) =>
           pipe({ ...store }, Observable.fromOptional()),
-        store: (updates: Readonly<Record<string, number>>) =>
+        store: (updates: ReadonlyRecordLike<string, number>) =>
           Observable.fromFactory(() => {
             pipe(
               updates,
-              Obj.forEach((v, k) => {
+              ReadonlyRecord.forEachWithKey<number, string>((v, k) => {
                 store[k] = v;
               }),
             );

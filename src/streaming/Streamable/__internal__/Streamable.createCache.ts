@@ -1,4 +1,3 @@
-import * as Obj from "../../../__internal__/Object.js";
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   DelegatingLike,
@@ -23,6 +22,9 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
+import { ReadonlyRecordLike } from "../../../keyedcontainers.js";
+import * as ReadonlyRecord from "../../../keyedcontainers/ReadonlyRecord.js";
+import ReadonlyRecord_union from "../../../keyedcontainers/ReadonlyRecord/__internal__/ReadonlyRecord.union.js";
 import {
   DispatcherLike,
   ObservableLike,
@@ -60,8 +62,8 @@ import Streamable_create from "./Streamable.create.js";
 interface ReactiveCachePersistentStorageLike<T> {
   load(
     keys: ReadonlySet<string>,
-  ): ObservableLike<Readonly<Record<string, Optional<T>>>>;
-  store(updates: Record<string, Optional<T>>): ObservableLike<void>;
+  ): ObservableLike<ReadonlyRecordLike<string, Optional<T>>>;
+  store(updates: ReadonlyRecordLike<string, Optional<T>>): ObservableLike<void>;
 }
 
 const createCacheStream: <T>(
@@ -85,7 +87,7 @@ const createCacheStream: <T>(
     mix(
       include(
         Stream_delegatingMixin<
-          Readonly<Record<string, Function1<Optional<T>, T>>>,
+          ReadonlyRecordLike<string, Function1<Optional<T>, T>>,
           never
         >(),
       ),
@@ -145,36 +147,56 @@ const createCacheStream: <T>(
 
         const delegate = pipe(
           Streamable_create<
-            Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>,
+            ReadonlyRecordLike<string, Function1<Optional<T>, Optional<T>>>,
             never
           >(
             compose(
-              Observable.map(updaters => [
-                updaters,
-                pipe(
+              Observable.map(
+                (
+                  updaters: ReadonlyRecordLike<
+                    string,
+                    Function1<Optional<T>, Optional<T>>
+                  >,
+                ): [
+                  ReadonlyRecordLike<
+                    string,
+                    Function1<Optional<T>, Optional<T>>
+                  >,
+                  ReadonlyRecordLike<string, Optional<T>>,
+                ] => [
                   updaters,
-                  Obj.map((_, k) => instance.store.get(k)),
-                ),
-              ]),
+                  pipe(
+                    updaters,
+                    ReadonlyRecord.mapWithKey<unknown, T, string>(
+                      (_, k: string) => instance.store.get(k) as T,
+                    ),
+                  ),
+                ],
+              ),
               isSome(persistentStore)
                 ? Observable.concatMap(
                     (
                       next: [
-                        Readonly<
-                          Record<string, Function1<Optional<T>, Optional<T>>>
+                        ReadonlyRecordLike<
+                          string,
+                          Function1<Optional<T>, Optional<T>>
                         >,
-                        Readonly<Record<string, Optional<T>>>,
+                        ReadonlyRecordLike<string, Optional<T>>,
                       ],
                     ) => {
                       const [updaters, values] = next;
-                      const keys = pipe(values, Obj.keys(isNone));
+                      const keys = pipe(
+                        values,
+                        ReadonlyRecord.keep<unknown, string>(isNone),
+                        ReadonlyRecord.keySet<string>(),
+                      );
 
                       return keys.size > 0
                         ? pipe(
                             persistentStore.load(keys),
                             Observable.map(persistedValues => [
                               updaters,
-                              Obj.union(values, persistedValues),
+                              ReadonlyRecord_union(values, persistedValues),
                             ]),
                           )
                         : pipe(next, Observable.fromOptional());
@@ -183,20 +205,27 @@ const createCacheStream: <T>(
                 : identity,
               Observable.map(
                 ([updaters, values]: [
-                  Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>,
-                  Readonly<Record<string, Optional<T>>>,
+                  ReadonlyRecordLike<
+                    string,
+                    Function1<Optional<T>, Optional<T>>
+                  >,
+                  ReadonlyRecordLike<string, Optional<T>>,
                 ]) =>
                   pipe(
                     updaters,
-                    Obj.map((updater, k) =>
-                      // This could be the cached value or the value
-                      // loaded from a persistent store.
-                      updater(values[k]),
+                    ReadonlyRecord.mapWithKey(
+                      (
+                        updater: Function1<Optional<T>, Optional<T>>,
+                        k: string,
+                      ) =>
+                        // This could be the cached value or the value
+                        // loaded from a persistent store.
+                        updater(values[k]),
                     ),
                   ),
               ),
               Observable.forEach(
-                Obj.forEach((v, key) => {
+                ReadonlyRecord.forEachWithKey((v: T, key: string) => {
                   const oldValue = instance.store.get(key);
 
                   if (isNone(v)) {
@@ -229,7 +258,7 @@ const createCacheStream: <T>(
 
         init(
           Stream_delegatingMixin<
-            Readonly<Record<string, Function1<Optional<T>, T>>>,
+            ReadonlyRecordLike<string, Function1<Optional<T>, T>>,
             never
           >(),
           instance,
@@ -300,8 +329,8 @@ const Streamable_createCache = <T>(
   persistentStore: Optional<{
     load(
       keys: ReadonlySet<string>,
-    ): ObservableLike<Readonly<Record<string, Optional<T>>>>;
-    store(updates: Readonly<Record<string, T>>): ObservableLike<void>;
+    ): ObservableLike<ReadonlyRecordLike<string, Optional<T>>>;
+    store(updates: ReadonlyRecordLike<string, T>): ObservableLike<void>;
   }>,
   options: {
     readonly capacity?: number;

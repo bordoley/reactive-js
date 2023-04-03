@@ -24,11 +24,11 @@ import {
   EnumeratorLike_move,
   ReadonlyArrayLike,
 } from "../../../containers.js";
-import ReadonlyArray_every from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
-import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import ReadonlyArray_some from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
+import ReadonlyArray_every from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_forEach from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
+import ReadonlyArray_map from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import ReadonlyArray_some from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import {
   EnumerableLike,
   ObservableLike,

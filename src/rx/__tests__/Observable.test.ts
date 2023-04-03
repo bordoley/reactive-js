@@ -10,7 +10,6 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import {
   Optional,
   increment,
@@ -19,6 +18,7 @@ import {
   raise,
   returns,
 } from "../../functions.js";
+import * as ReadonlyArray from "../../keyedcontainers/ReadonlyArray.js";
 import { ObservableLike } from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";

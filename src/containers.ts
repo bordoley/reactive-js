@@ -85,6 +85,15 @@ export interface ReadonlyArrayLike<T = unknown>
     this[typeof ContainerLike_T]
   >;
 }
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface ReadonlySetLike<T = unknown>
+  extends ContainerLike,
+    ReadonlySet<T> {
+  readonly [ContainerLike_type]?: ReadonlySetLike<this[typeof ContainerLike_T]>;
+}
 
 /**
  * An interactive mutable `ContainerLike` that can be used to iterate
@@ -318,6 +327,20 @@ export interface DistinctUntilChanged<C extends ContainerLike, O = unknown>
  * @noInheritDoc
  * @category TypeClass
  */
+export interface Empty<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * Return an ContainerLike that emits no items.
+   *
+   * @category Constructor
+   */
+  empty<T>(options?: O): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface EncodeUtf8<C extends ContainerLike, O = never>
   extends Container<C> {
   /**
@@ -385,20 +408,6 @@ export interface EverySatisfy<C extends ContainerLike, O = never>
     predicate: Predicate<T>,
     options?: O,
   ): ContainerOperator<C, T, boolean>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface Empty<C extends ContainerLike, O = never>
-  extends Container<C> {
-  /**
-   * Return an ContainerLike that emits no items.
-   *
-   * @category Constructor
-   */
-  empty<T>(options?: O): ContainerOf<C, T>;
 }
 
 /**

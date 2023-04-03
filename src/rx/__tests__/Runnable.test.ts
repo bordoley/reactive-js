@@ -44,7 +44,6 @@ import {
   zipTests as zipOperatorTests,
   zipWithTests,
 } from "../../__tests__/operators.js";
-import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import {
   arrayEquality,
   identity,
@@ -56,6 +55,7 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
+import * as ReadonlyArray from "../../keyedcontainers/ReadonlyArray.js";
 import { RunnableLike } from "../../rx.js";
 import {
   SchedulerLike_now,

@@ -1,8 +1,8 @@
 /// <reference types="./operators.d.ts" />
 
 import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, testAsync, } from "../__internal__/testing.js";
-import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { alwaysFalse, alwaysTrue, arrayEquality, greaterThan, identity, increment, lessThan, none, pipe, pipeLazy, returns, } from "../functions.js";
+import * as ReadonlyArray from "../keyedcontainers/ReadonlyArray.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
