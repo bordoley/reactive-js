@@ -11,11 +11,12 @@ import {
   FromReadonlyArray,
   Keep,
   Map,
+  ReadonlyArrayLike,
   Scan,
   ToReadonlyArray,
 } from "@reactive-js/core/containers";
 import * as Enumerable from "@reactive-js/core/rx/Enumerable";
-import * as ReadonlyArray from "@reactive-js/core/containers/ReadonlyArray";
+import * as ReadonlyArray from "@reactive-js/core/keyedcontainers/ReadonlyArray";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import { ToRunnable } from "@reactive-js/core/rx";
 
@@ -55,7 +56,7 @@ export const map = (n: number) =>
     pipeLazy<number, readonly number[]>(n, createArray),
     createMapPerfTest("Enumerable", Enumerable),
     createMapPerfTest("Runnable", Runnable),
-    createMapPerfTest("readonlyArray", ReadonlyArray),
+    createMapPerfTest<ReadonlyArrayLike>("readonlyArray", ReadonlyArray),
     benchmarkTest("array methods", async src => {
       return () => src.map(increment);
     }),
