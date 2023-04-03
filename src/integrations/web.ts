@@ -992,3 +992,16 @@ export const windowLocation: StreamableLike<
     [StreamableLike_stream]: stream,
   };
 })();
+
+export type CSSStyleKey = keyof Omit<
+  CSSStyleDeclaration,
+  | "item"
+  | "length"
+  | "parentRule"
+  | "getPropertyPriority"
+  | "getPropertyValue"
+  | "removeProperty"
+  | "setProperty"
+  | number
+  | typeof Symbol.iterator
+>;

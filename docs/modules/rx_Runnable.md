@@ -110,7 +110,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `...configs` | [`AnimationConfig`](rx.md#animationconfig)<`T`\>[] |
+| `...configs` | readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[] |
 
 #### Returns
 

@@ -38,7 +38,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `...configs` | [`AnimationConfig`](../modules/rx.md#animationconfig)<`T`\>[] |
+| `...configs` | readonly [`AnimationConfig`](../modules/rx.md#animationconfig)<`T`\>[] |
 
 #### Returns
 

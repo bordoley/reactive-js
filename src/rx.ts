@@ -218,7 +218,9 @@ export interface Animate<C extends ObservableLike> extends Container<C> {
   /**
    * @category Constructor
    */
-  animate<T = number>(...configs: AnimationConfig<T>[]): ContainerOf<C, T>;
+  animate<T = number>(
+    ...configs: readonly AnimationConfig<T>[]
+  ): ContainerOf<C, T>;
 }
 
 /**

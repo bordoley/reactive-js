@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Enumerable from "@reactive-js/core/rx/Enumerable";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
@@ -16,9 +10,10 @@ import {
   useFlowable,
   useObservable,
   useStream,
-  useStreamable,
+  useAnimation,
 } from "@reactive-js/core/integrations/react";
 import {
+  useAnimatedValue,
   useWindowLocation,
   useWindowLocationStream,
   WindowLocationProvider,
@@ -44,8 +39,10 @@ import {
   KeyedCollectionLike_get,
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
+import { identity } from "@reactive-js/core/functions";
 import * as Scheduler from "@reactive-js/core/scheduling/Scheduler";
 
+// FIXME: should probably export the react scheduler in its own module for outside of hooks use cases.
 const hostScheduler = Scheduler.createHostScheduler();
 
 const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
@@ -116,36 +113,24 @@ const Root = () => {
   );
   const counter = useFlowable(counterFlowable);
 
-  const animatedDivRef = useRef<HTMLDivElement>(null);
-  const animationStreamable = useMemo(() => {
-    const selector = (v: number) => ({
-      margin: `${50 - v}px`,
-      padding: `${v}px`,
-    });
+  const [animatedValue, dispatch, animationRunning] = useAnimation(
+    () => {
+      const selector = (v: number) => ({
+        margin: `${50 - v}px`,
+        padding: `${v}px`,
+      });
 
-    return Streamable.createEventHandler(
-      pipe(
-        Observable.animate(
-          { type: "tween", duration: 1000, from: 0, to: 50, selector },
-          { type: "delay", duration: 1000 },
-          { type: "tween", duration: 1000, from: 50, to: 0, selector },
-        ),
-        Observable.forEach(({ margin, padding }) => {
-          const animatedDiv = animatedDivRef.current;
-          if (animatedDiv != null) {
-            animatedDiv.style.margin = margin;
-            animatedDiv.style.padding = padding;
-          }
-        }),
-        Observable.subscribeOn(() =>
-          createAnimationFrameScheduler(hostScheduler),
-        ),
-        returns,
-      ),
-      { mode: "blocking" },
-    );
-  }, [animatedDivRef]);
-  const [animationRunning, dispatch] = useStreamable(animationStreamable);
+      return [
+        { type: "tween", duration: 1000, from: 0, to: 50, selector },
+        { type: "delay", duration: 500 },
+        { type: "tween", duration: 1000, from: 50, to: 0, selector },
+      ];
+    },
+    { mode: "blocking" },
+    [],
+  );
+
+  const divRef = useAnimatedValue<HTMLDivElement>(animatedValue, identity);
 
   const enumerable = useMemo(
     () => Enumerable.generate(increment, () => -1),
@@ -178,7 +163,7 @@ const Root = () => {
         <span>{counter.value ?? counterInitialValue}</span>
       </div>
       <div
-        ref={animatedDivRef}
+        ref={divRef}
         style={{
           height: "100px",
           width: "100px",
@@ -316,10 +301,73 @@ const RootRxComponent = () => {
   return <RxComponent windowLocationStream={windowLocationStream} />;
 };
 
+const items = ["W", "O", "R", "D", "L", "E"];
+
+const SharedStyles = {
+  width: "100%",
+  height: "100%",
+  position: "absolute",
+  inset: 0,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontFamily: "Helvetica",
+  fontWeight: 800,
+  backfaceVisibility: "hidden",
+};
+
+const Box = (props: any) => (
+  <div
+    {...{ ...props }}
+    style={{
+      position: "relative",
+      height: 50,
+      width: 50,
+    }}
+  />
+);
+
+const FrontBox = (props: any) => (
+  <div
+    {...{ ...props }}
+    style={{
+      ...SharedStyles,
+      backgroundColor: "#fafafa",
+      border: "solid 2px #1a1a1a",
+    }}
+  />
+);
+
+const BackBox = (props: any) => (
+  <div
+    {...{ ...props }}
+    style={{
+      ...SharedStyles,
+      backgroundColor: "#6cab64",
+      border: "solid 2px #6cab64",
+      color: "#fafafa",
+    }}
+  />
+);
+
+const Wordle = () => {
+  return (
+    <div>
+      {items.map((x, i) => (
+        <Box key={i}>
+          <FrontBox>{"?"}</FrontBox>
+          <BackBox>{x}</BackBox>
+        </Box>
+      ))}
+    </div>
+  );
+};
+
 const rootElement = document.getElementById("root");
 ReactDOMClient.createRoot(rootElement as any).render(
   <WindowLocationProvider>
     <Root />
     <RootRxComponent />
+    <Wordle />
   </WindowLocationProvider>,
 );
