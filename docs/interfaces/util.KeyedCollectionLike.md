@@ -17,6 +17,8 @@
 
   ↳ **`KeyedCollectionLike`**
 
+  ↳↳ [`CacheStreamLike`](streaming.CacheStreamLike.md)
+
   ↳↳ [`IndexedCollectionLike`](util.IndexedCollectionLike.md)
 
 ## Table of contents

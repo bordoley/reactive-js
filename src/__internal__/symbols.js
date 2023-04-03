@@ -4,9 +4,6 @@ import symbol from "./symbol.js";
 export const BufferLike_capacity = /*@__PURE__*/ symbol("BufferLike_capacity");
 
 /** @type {unique symbol} */
-export const CacheStreamLike_get = /*@__PURE__*/ symbol("CacheStreamLike_get");
-
-/** @type {unique symbol} */
 export const CollectionLike_count = /*@__PURE__*/ symbol(
   "CollectionLike_count",
 );

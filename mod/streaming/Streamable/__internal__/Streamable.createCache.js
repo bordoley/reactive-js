@@ -3,16 +3,16 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_dequeue } from "../../../__internal__/util.internal.js";
-import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, } from "../../../functions.js";
+import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
 import * as ReadonlyRecord from "../../../keyedcontainers/ReadonlyRecord.js";
 import ReadonlyRecord_union from "../../../keyedcontainers/ReadonlyRecord/__internal__/ReadonlyRecord.union.js";
 import { PublisherLike_publish, } from "../../../rx.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
 import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
-import { CacheStreamLike_get, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../../../streaming.js";
+import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../../../streaming.js";
 import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
-import { DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, DisposableLike_isDisposed, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
 import * as Disposable from "../../../util/Disposable.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Streamable_create from "./Streamable.create.js";
@@ -90,7 +90,11 @@ const createCacheStream = /*@__PURE__*/ (() => {
         store: none,
         subscriptions: none,
     }), {
-        [CacheStreamLike_get](key) {
+        get [CollectionLike_count]() {
+            unsafeCast(this);
+            return this.store.size;
+        },
+        [KeyedCollectionLike_get](key) {
             const { scheduleCleanup, store, subscriptions, [DelegatingLike_delegate]: delegate, } = this;
             return (subscriptions.get(key) ??
                 (() => {

@@ -8,8 +8,8 @@ import { DispatcherLike_complete } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import { SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { CacheStreamLike_get, StreamableLike_stream } from "../../streaming.js";
-import { DisposableLike_dispose, QueueableLike_enqueue } from "../../util.js";
+import { StreamableLike_stream } from "../../streaming.js";
+import { DisposableLike_dispose, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as Streamable from "../Streamable.js";
 testModule("Streamable", describe("stateStore", test("createStateStore", () => {
@@ -33,7 +33,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
         [
             2,
             () => {
-                pipe(cache[CacheStreamLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result, "push")), Observable.subscribe(scheduler));
+                pipe(cache[KeyedCollectionLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result, "push")), Observable.subscribe(scheduler));
             },
         ],
     ], ReadonlyArray.forEach(([time, f]) => {
@@ -61,7 +61,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
         [
             2,
             () => {
-                pipe(cache[CacheStreamLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result, "push")), Observable.subscribe(scheduler));
+                pipe(cache[KeyedCollectionLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result, "push")), Observable.subscribe(scheduler));
             },
         ],
         [
@@ -89,7 +89,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const cache = Streamable.createInMemoryCache({ capacity: 1 })[StreamableLike_stream](scheduler);
     const result1 = [];
-    const abcSubscription1 = pipe(cache[CacheStreamLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result1, "push")), Observable.subscribe(scheduler));
+    const abcSubscription1 = pipe(cache[KeyedCollectionLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result1, "push")), Observable.subscribe(scheduler));
     const result2 = [];
     let abcSubscription2 = Disposable.disposed;
     const result3 = [];
@@ -104,7 +104,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
         [
             2,
             () => {
-                abcSubscription2 = pipe(cache[CacheStreamLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result2, "push")), Observable.subscribe(scheduler));
+                abcSubscription2 = pipe(cache[KeyedCollectionLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result2, "push")), Observable.subscribe(scheduler));
             },
         ],
         [
@@ -146,7 +146,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
         [
             8,
             () => {
-                abcSubscription3 = pipe(cache[CacheStreamLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result3, "push")), Observable.subscribe(scheduler));
+                abcSubscription3 = pipe(cache[KeyedCollectionLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result3, "push")), Observable.subscribe(scheduler));
             },
         ],
         [
@@ -198,7 +198,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
         capacity: 1,
     })[StreamableLike_stream](scheduler);
     const result1 = [];
-    pipe(cache[CacheStreamLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result1, "push")), Observable.subscribe(scheduler));
+    pipe(cache[KeyedCollectionLike_get]("abc"), Observable.withCurrentTime((time, value) => [time, value]), Observable.forEach(bindMethod(result1, "push")), Observable.subscribe(scheduler));
     pipe([
         [
             2,

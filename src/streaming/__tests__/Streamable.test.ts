@@ -22,8 +22,12 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { CacheStreamLike_get, StreamableLike_stream } from "../../streaming.js";
-import { DisposableLike_dispose, QueueableLike_enqueue } from "../../util.js";
+import { StreamableLike_stream } from "../../streaming.js";
+import {
+  DisposableLike_dispose,
+  KeyedCollectionLike_get,
+  QueueableLike_enqueue,
+} from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as Streamable from "../Streamable.js";
 
@@ -72,7 +76,7 @@ testModule(
             2,
             () => {
               pipe(
-                cache[CacheStreamLike_get]("abc"),
+                cache[KeyedCollectionLike_get]("abc"),
                 Observable.withCurrentTime((time, value) => [time, value]),
                 Observable.forEach(bindMethod(result, "push")),
                 Observable.subscribe(scheduler),
@@ -118,7 +122,7 @@ testModule(
             2,
             () => {
               pipe(
-                cache[CacheStreamLike_get]("abc"),
+                cache[KeyedCollectionLike_get]("abc"),
                 Observable.withCurrentTime((time, value) => [time, value]),
                 Observable.forEach(bindMethod(result, "push")),
                 Observable.subscribe(scheduler),
@@ -168,7 +172,7 @@ testModule(
 
       const result1: [number, number][] = [];
       const abcSubscription1 = pipe(
-        cache[CacheStreamLike_get]("abc"),
+        cache[KeyedCollectionLike_get]("abc"),
         Observable.withCurrentTime((time, value) => [time, value]),
         Observable.forEach(bindMethod(result1, "push")),
         Observable.subscribe(scheduler),
@@ -192,7 +196,7 @@ testModule(
             2,
             () => {
               abcSubscription2 = pipe(
-                cache[CacheStreamLike_get]("abc"),
+                cache[KeyedCollectionLike_get]("abc"),
                 Observable.withCurrentTime((time, value) => [time, value]),
                 Observable.forEach(bindMethod(result2, "push")),
                 Observable.subscribe(scheduler),
@@ -240,7 +244,7 @@ testModule(
             8,
             () => {
               abcSubscription3 = pipe(
-                cache[CacheStreamLike_get]("abc"),
+                cache[KeyedCollectionLike_get]("abc"),
                 Observable.withCurrentTime((time, value) => [time, value]),
                 Observable.forEach(bindMethod(result3, "push")),
                 Observable.subscribe(scheduler),
@@ -329,7 +333,7 @@ testModule(
 
       const result1: [number, number][] = [];
       pipe(
-        cache[CacheStreamLike_get]("abc"),
+        cache[KeyedCollectionLike_get]("abc"),
         Observable.withCurrentTime((time, value) => [time, value]),
         Observable.forEach(bindMethod(result1, "push")),
         Observable.subscribe(scheduler),

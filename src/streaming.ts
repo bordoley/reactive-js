@@ -1,5 +1,4 @@
 import {
-  CacheStreamLike_get,
   FlowableStreamLike_isPaused,
   FlowableStreamLike_pause,
   FlowableStreamLike_resume,
@@ -16,16 +15,20 @@ import {
   ContainerOf,
 } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
+import { ReadonlyRecordLike } from "./keyedcontainers.js";
 import {
   DispatcherLike,
   MulticastObservableLike,
   ObservableLike,
 } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
-import { QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
+import {
+  KeyedCollectionLike,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "./util.js";
 
 export {
-  CacheStreamLike_get,
   StreamableLike_stream,
   StreamableLike_isEnumerable,
   StreamableLike_isInteractive,
@@ -170,11 +173,10 @@ export interface FlowableLike<T = unknown>
  */
 export interface CacheStreamLike<T>
   extends StreamLike<
-    Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>,
-    never
-  > {
-  [CacheStreamLike_get](key: string): ObservableLike<Optional<T>>;
-}
+      ReadonlyRecordLike<string, Function1<Optional<T>, Optional<T>>>,
+      never
+    >,
+    KeyedCollectionLike<string, ObservableLike<T>> {}
 
 /**
  * A container that returns a CacheStream when subscribed to.

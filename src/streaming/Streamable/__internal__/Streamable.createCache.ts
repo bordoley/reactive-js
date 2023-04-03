@@ -21,6 +21,7 @@ import {
   isSome,
   none,
   pipe,
+  unsafeCast,
 } from "../../../functions.js";
 import { ReadonlyRecordLike } from "../../../keyedcontainers.js";
 import * as ReadonlyRecord from "../../../keyedcontainers/ReadonlyRecord.js";
@@ -42,7 +43,6 @@ import {
 import {
   CacheLike,
   CacheStreamLike,
-  CacheStreamLike_get,
   StreamableLike_isEnumerable,
   StreamableLike_isInteractive,
   StreamableLike_isRunnable,
@@ -50,7 +50,9 @@ import {
 } from "../../../streaming.js";
 import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import {
+  CollectionLike_count,
   DisposableLike_isDisposed,
+  KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -93,7 +95,10 @@ const createCacheStream: <T>(
       ),
       function CacheStream(
         instance: TProperties<T> &
-          Pick<CacheStreamLike<T>, typeof CacheStreamLike_get>,
+          Pick<
+            CacheStreamLike<T>,
+            typeof KeyedCollectionLike_get | typeof CollectionLike_count
+          >,
         scheduler: SchedulerLike,
         options: Optional<{
           readonly replay?: number;
@@ -273,7 +278,12 @@ const createCacheStream: <T>(
         subscriptions: none,
       }),
       {
-        [CacheStreamLike_get](
+        get [CollectionLike_count]() {
+          unsafeCast<TProperties<T>>(this);
+          return this.store.size;
+        },
+
+        [KeyedCollectionLike_get](
           this: TProperties<T> &
             CacheStreamLike<T> &
             DelegatingLike<

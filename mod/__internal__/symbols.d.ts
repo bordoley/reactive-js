@@ -1,8 +1,6 @@
 /** @type {unique symbol} */
 export const BufferLike_capacity: unique symbol;
 /** @type {unique symbol} */
-export const CacheStreamLike_get: unique symbol;
-/** @type {unique symbol} */
 export const CollectionLike_count: unique symbol;
 /** @type {unique symbol} */
 export const ContainerLike_T: unique symbol;

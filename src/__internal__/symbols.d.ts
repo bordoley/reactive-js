@@ -1,7 +1,5 @@
 export declare const BufferLike_capacity: unique symbol;
 
-export declare const CacheStreamLike_get: unique symbol;
-
 export declare const CollectionLike_count: unique symbol;
 
 export declare const ContainerLike_T: unique symbol;

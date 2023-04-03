@@ -1,10 +1,11 @@
-import { CacheStreamLike_get, FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream } from "./__internal__/symbols.js";
+import { FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
+import { ReadonlyRecordLike } from "./keyedcontainers.js";
 import { DispatcherLike, MulticastObservableLike, ObservableLike } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
-import { QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
-export { CacheStreamLike_get, StreamableLike_stream, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, };
+import { KeyedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
+export { StreamableLike_stream, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, };
 /**
  * Represents a duplex stream
  *
@@ -110,8 +111,7 @@ export interface FlowableLike<T = unknown> extends StreamableLike<boolean | Upda
  * @noInheritDoc
  * @category Stream
  */
-export interface CacheStreamLike<T> extends StreamLike<Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>, never> {
-    [CacheStreamLike_get](key: string): ObservableLike<Optional<T>>;
+export interface CacheStreamLike<T> extends StreamLike<ReadonlyRecordLike<string, Function1<Optional<T>, Optional<T>>>, never>, KeyedCollectionLike<string, ObservableLike<T>> {
 }
 /**
  * A container that returns a CacheStream when subscribed to.

@@ -1,7 +1,5 @@
 BufferLike_capacity
 
-CacheStreamLike_get
-
 CollectionLike_count
 
 ContainerLike_T
