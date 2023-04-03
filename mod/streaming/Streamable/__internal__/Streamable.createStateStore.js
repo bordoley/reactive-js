@@ -1,6 +1,6 @@
 /// <reference types="./Streamable.createStateStore.d.ts" />
 
-import Streamable_createActionReducer from "./Streamable.createActionReducer.js";
-const updateReducer = (acc, updater) => updater(acc);
-const Streamable_createStateStore = (initialState, options) => Streamable_createActionReducer(updateReducer, initialState, options);
+import Observable_stateStore from "../../../rx/Observable/__internal__/Observable.stateStore.js";
+import Streamable_createLifted from "./Streamable.createLifted.js";
+const Streamable_createStateStore = (initialState, options) => Streamable_createLifted(Observable_stateStore(initialState, options), true, true, true);
 export default Streamable_createStateStore;
