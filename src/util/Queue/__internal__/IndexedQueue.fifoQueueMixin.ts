@@ -30,7 +30,7 @@ import {
   IndexedLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 
@@ -42,13 +42,13 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
     IndexedQueueLike<T>,
     | typeof QueueableLike_backpressureStrategy
     | typeof CollectionLike_count
-    | typeof QueueableLike_capacity
+    | typeof BufferLike_capacity
   >
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [CollectionLike_count]: number;
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly [QueueableLike_capacity]: number;
+    readonly [BufferLike_capacity]: number;
     [FifoQueue_head]: number;
     [FifoQueue_tail]: number;
     [FifoQueue_capacityMask]: number;
@@ -138,20 +138,20 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
       function FifoQueue(
         instance: Omit<
           IndexedQueueLike<T>,
-          typeof CollectionLike_count | typeof QueueableLike_capacity
+          typeof CollectionLike_count | typeof BufferLike_capacity
         > &
           Mutable<TProperties>,
         capacity: number,
         backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): IndexedQueueLike<T> {
         instance[QueueableLike_backpressureStrategy] = backpressureStrategy;
-        instance[QueueableLike_capacity] = clampPositiveInteger(capacity);
+        instance[BufferLike_capacity] = clampPositiveInteger(capacity);
         return instance;
       },
       props<TProperties>({
         [CollectionLike_count]: 0,
         [QueueableLike_backpressureStrategy]: "overflow",
-        [QueueableLike_capacity]: MAX_SAFE_INTEGER,
+        [BufferLike_capacity]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
         [FifoQueue_capacityMask]: 0,
@@ -270,7 +270,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
           let count = this[CollectionLike_count];
-          const capacity = this[QueueableLike_capacity];
+          const capacity = this[BufferLike_capacity];
 
           if (backpressureStrategy === "drop-latest" && count >= capacity) {
             return false;
@@ -313,7 +313,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
 
           grow(this);
 
-          return this[CollectionLike_count] < this[QueueableLike_capacity];
+          return this[CollectionLike_count] < this[BufferLike_capacity];
         },
       },
     ),

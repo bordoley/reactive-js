@@ -19,7 +19,7 @@ import {
 } from "../../../streaming.js";
 import {
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -36,7 +36,7 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
 
       return create<T>((observer: ObserverLike<T>) => {
         const scheduler = observer[DispatcherLike_scheduler];
-        const capacity = observer[QueueableLike_capacity];
+        const capacity = observer[BufferLike_capacity];
         const backpressureStrategy =
           observer[QueueableLike_backpressureStrategy];
         const enumerator: StreamLike<void, T> = pipe(

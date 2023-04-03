@@ -5,7 +5,7 @@ import { getPrototype, include, init, mix, props, } from "../../../__internal__/
 import { PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
 import { MutableIndexedLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
-import { CollectionLike_count, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, IndexedLike_get, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
 const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(IndexedQueue_fifoQueueMixin());
@@ -78,7 +78,7 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
         [QueueableLike_enqueue](item) {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
             const count = this[CollectionLike_count];
-            const capacity = this[QueueableLike_capacity];
+            const capacity = this[BufferLike_capacity];
             if (backpressureStrategy === "drop-latest" && count >= capacity) {
                 return false;
             }

@@ -43,7 +43,7 @@ import {
   DisposableLike_isDisposed,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -183,7 +183,7 @@ export function initObserverMixinFromDelegate<T>(
     Observer_mixin<T>(),
     instance,
     delegate[DispatcherLike_scheduler],
-    delegate[QueueableLike_capacity],
+    delegate[BufferLike_capacity],
     delegate[QueueableLike_backpressureStrategy],
   );
 }

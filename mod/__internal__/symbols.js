@@ -2,6 +2,8 @@
 
 import symbol from "./symbol.js";
 /** @type {unique symbol} */
+export const BufferLike_capacity = /*@__PURE__*/ symbol("BufferLike_capacity");
+/** @type {unique symbol} */
 export const CacheStreamLike_get = /*@__PURE__*/ symbol("CacheStreamLike_get");
 /** @type {unique symbol} */
 export const CollectionLike_count = /*@__PURE__*/ symbol("CollectionLike_count");
@@ -83,8 +85,6 @@ export const StreamableLike_isRunnable = /*@__PURE__*/ symbol("StreamableLike_is
 export const VirtualTimeSchedulerLike_run = /*@__PURE__*/ symbol("VirtualTimeSchedulerLike_run");
 /** @type {unique symbol} */
 export const QueueableLike_enqueue = /*@__PURE__*/ symbol("QueueableLike_enqueue");
-/** @type {unique symbol} */
-export const QueueableLike_capacity = /*@__PURE__*/ symbol("QueueableLike_capacity");
 /** @type {unique symbol} */
 export const QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol("QueueableLike_backpressureStrategy");
 /** @type {unique symbol} */
@@ -168,8 +168,7 @@ export const ComputeContext_observer = /*@__PURE__*/ symbol("ComputeContext_obse
 /** @type {unique symbol} */
 export const ComputeContext_runComputation = /*@__PURE__*/ symbol("ComputeContext_runComputation");
 /** @type {unique symbol} */
-export const ComputeContext_scheduledComputationSubscription = 
-/*@__PURE__*/ symbol("ComputeContext_scheduledComputationSubscription");
+export const ComputeContext_scheduledComputationSubscription = /*@__PURE__*/ symbol("ComputeContext_scheduledComputationSubscription");
 /** @type {unique symbol} */
 export const ComputeContext_awaitOrObserve = /*@__PURE__*/ symbol("ComputeContext_awaitOrObserve");
 /** @type {unique symbol} */
@@ -281,11 +280,9 @@ export const ContinuationLike_priority = /*@__PURE__*/ symbol("ContinuationLike_
 /** @type {unique symbol} */
 export const ContinuationLike_continuationScheduler = /*@__PURE__*/ symbol("ContinuationLike_continuationScheduler");
 /** @type {unique symbol} */
-export const PrioritySchedulerImplementationLike_runContinuation = 
-/*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_runContinuation");
+export const PrioritySchedulerImplementationLike_runContinuation = /*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_runContinuation");
 /** @type {unique symbol} */
-export const PrioritySchedulerImplementationLike_shouldYield = 
-/*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_shouldYield");
+export const PrioritySchedulerImplementationLike_shouldYield = /*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_shouldYield");
 /** @type {unique symbol} */
 export const Continuation_childContinuation = /*@__PURE__*/ symbol("Continuation_childContinuation ");
 /** @type {unique symbol} */
@@ -297,11 +294,9 @@ export const SchedulerMixin_currentContinuation = /*@__PURE__*/ symbol("Schedule
 /** @type {unique symbol} */
 export const SchedulerMixin_startTime = /*@__PURE__*/ symbol("SchedulerMixin_startTime");
 /** @type {unique symbol} */
-export const PrioritySchedulerDelegatingScheduler_priorityScheduler = 
-/*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priorityScheduler");
+export const PrioritySchedulerDelegatingScheduler_priorityScheduler = /*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priorityScheduler");
 /** @type {unique symbol} */
-export const PrioritySchedulerDelegatingScheduler_priority = 
-/*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priority");
+export const PrioritySchedulerDelegatingScheduler_priority = /*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priority");
 /** @type {unique symbol} */
 export const VirtualTask_continuation = /*@__PURE__*/ symbol("VirtualTask_continuation");
 /** @type {unique symbol} */

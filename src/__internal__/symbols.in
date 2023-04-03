@@ -1,3 +1,5 @@
+BufferLike_capacity
+
 CacheStreamLike_get
 
 CollectionLike_count
@@ -57,7 +59,6 @@ StreamableLike_isRunnable
 VirtualTimeSchedulerLike_run
 
 QueueableLike_enqueue
-QueueableLike_capacity
 QueueableLike_backpressureStrategy
 
 WindowLocationStreamLike_goBack

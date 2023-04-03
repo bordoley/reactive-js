@@ -12,7 +12,7 @@ import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Disp
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { StreamLike } from "../../../streaming.js";
-import { QueueableLike_capacity } from "../../../util.js";
+import { BufferLike_capacity } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 
 const AsyncEnumerator_create: <TA, TB>() => (
@@ -34,7 +34,7 @@ const AsyncEnumerator_create: <TA, TB>() => (
           delegate,
           operator,
           Observable_multicast(delegate[DispatcherLike_scheduler], {
-            capacity: delegate[QueueableLike_capacity],
+            capacity: delegate[BufferLike_capacity],
           }),
           Disposable_add(delegate),
         );

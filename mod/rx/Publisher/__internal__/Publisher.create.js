@@ -2,7 +2,7 @@
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_move, Publisher_observers, QueueableLike_capacity, } from "../../../__internal__/symbols.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_move, Publisher_observers, BufferLike_capacity, } from "../../../__internal__/symbols.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, MulticastObservableLike_observerCount, MulticastObservableLike_replay, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PublisherLike_publish, } from "../../../rx.js";
@@ -39,7 +39,7 @@ const Publisher_create = /*@__PURE__*/ (() => {
         },
         get [MulticastObservableLike_replay]() {
             unsafeCast(this);
-            return this[QueueableLike_capacity];
+            return this[BufferLike_capacity];
         },
         [PublisherLike_publish](next) {
             if (this[DisposableLike_isDisposed]) {

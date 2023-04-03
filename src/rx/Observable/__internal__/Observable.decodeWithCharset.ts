@@ -29,7 +29,7 @@ import {
 import {
   DisposableLike_dispose,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -70,7 +70,7 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
             Observer_mixin<ArrayBuffer>(),
             instance,
             delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_capacity],
+            delegate[BufferLike_capacity],
             delegate[QueueableLike_backpressureStrategy],
           );
 

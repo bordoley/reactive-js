@@ -1,4 +1,6 @@
 /** @type {unique symbol} */
+export const BufferLike_capacity: unique symbol;
+/** @type {unique symbol} */
 export const CacheStreamLike_get: unique symbol;
 /** @type {unique symbol} */
 export const CollectionLike_count: unique symbol;
@@ -80,8 +82,6 @@ export const StreamableLike_isRunnable: unique symbol;
 export const VirtualTimeSchedulerLike_run: unique symbol;
 /** @type {unique symbol} */
 export const QueueableLike_enqueue: unique symbol;
-/** @type {unique symbol} */
-export const QueueableLike_capacity: unique symbol;
 /** @type {unique symbol} */
 export const QueueableLike_backpressureStrategy: unique symbol;
 /** @type {unique symbol} */

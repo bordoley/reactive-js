@@ -16,7 +16,7 @@ import {
 } from "../../../streaming.js";
 import {
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -25,7 +25,7 @@ const Streamable_sinkInto =
   <TReq, T>(dest: StreamLike<T, TReq>) =>
   (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
     const scheduler = dest[DispatcherLike_scheduler];
-    const capacity = dest[QueueableLike_capacity];
+    const capacity = dest[BufferLike_capacity];
     const backpressureStrategy = dest[QueueableLike_backpressureStrategy];
     const srcStream = src[StreamableLike_stream](scheduler, {
       backpressureStrategy,

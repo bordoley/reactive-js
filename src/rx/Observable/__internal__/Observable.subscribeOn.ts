@@ -4,7 +4,7 @@ import { SchedulerLike } from "../../../scheduling.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -32,7 +32,7 @@ const Observable_subscribeOn =
         Observable_enqueue<ObservableLike, T>(observer),
         Observable_subscribeWithCapacityAndBackpressureStrategy(
           scheduler,
-          options?.capacity ?? observer[QueueableLike_capacity],
+          options?.capacity ?? observer[BufferLike_capacity],
           options?.backpressureStrategy ??
             observer[QueueableLike_backpressureStrategy],
         ),

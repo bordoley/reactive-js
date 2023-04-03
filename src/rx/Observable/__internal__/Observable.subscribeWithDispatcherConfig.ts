@@ -7,7 +7,7 @@ import {
 import {
   DisposableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
 } from "../../../util.js";
 import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
 
@@ -16,7 +16,7 @@ const Observable_subscribeWithDispatcherConfig: <T>(
 ) => Function1<ObservableLike<T>, DisposableLike> = dispatcher =>
   Observable_subscribeWithCapacityAndBackpressureStrategy(
     dispatcher[DispatcherLike_scheduler],
-    dispatcher[QueueableLike_capacity],
+    dispatcher[BufferLike_capacity],
     dispatcher[QueueableLike_backpressureStrategy],
   );
 

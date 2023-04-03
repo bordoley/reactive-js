@@ -1,6 +1,6 @@
-import { CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue } from "./__internal__/symbols.js";
+import { CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue } from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
-export { CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, QueueableLike_capacity, };
+export { CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, BufferLike_capacity, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -30,20 +30,22 @@ export interface DisposableLike {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
+export interface BufferLike {
+    /**
+     * The number of items the queue is capable of efficiently buffering.
+     */
+    readonly [BufferLike_capacity]: number;
+}
 /**
  * An interface for types that support buffering items with backpressure.
  *
  * @noInheritDoc
  */
-export interface QueueableLike<T = unknown> {
+export interface QueueableLike<T = unknown> extends BufferLike {
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
     readonly [QueueableLike_backpressureStrategy]: "drop-latest" | "drop-oldest" | "overflow" | "throw";
-    /**
-     * The number of items the queue is capable of efficiently buffering.
-     */
-    readonly [QueueableLike_capacity]: number;
     /**
      * Enqueue an item onto the queue.
      *

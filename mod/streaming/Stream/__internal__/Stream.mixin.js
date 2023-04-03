@@ -9,7 +9,7 @@ import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Disp
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { SchedulerLike_inContinuation, } from "../../../scheduling.js";
-import { CollectionLike_count, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(function DispatchedObservable(instance) {
@@ -24,11 +24,11 @@ const DispatchedObservable_create =
             const observer = this[DispatchedObservable_observer];
             return observer[QueueableLike_backpressureStrategy];
         },
-        get [QueueableLike_capacity]() {
+        get [BufferLike_capacity]() {
             unsafeCast(this);
             // Practically the observer can never be none.
             const observer = this[DispatchedObservable_observer];
-            return observer[QueueableLike_capacity];
+            return observer[BufferLike_capacity];
         },
         get [DispatcherLike_scheduler]() {
             unsafeCast(this);

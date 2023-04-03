@@ -12,7 +12,7 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_move,
   Publisher_observers,
-  QueueableLike_capacity,
+  BufferLike_capacity,
 } from "../../../__internal__/symbols.js";
 import { QueueLike } from "../../../__internal__/util.internal.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
@@ -108,7 +108,7 @@ const Publisher_create: <T>(options?: {
 
         get [MulticastObservableLike_replay]() {
           unsafeCast<QueueLike<T>>(this);
-          return this[QueueableLike_capacity];
+          return this[BufferLike_capacity];
         },
 
         [PublisherLike_publish](

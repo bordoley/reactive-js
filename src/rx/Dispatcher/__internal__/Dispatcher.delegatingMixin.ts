@@ -9,7 +9,7 @@ import {
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 
@@ -49,10 +49,10 @@ const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
           ];
         },
 
-        get [QueueableLike_capacity](): number {
+        get [BufferLike_capacity](): number {
           unsafeCast<TProperties>(this);
           return this[DelegatingDispatcherMixin_delegate][
-            QueueableLike_capacity
+            BufferLike_capacity
           ];
         },
 

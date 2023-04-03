@@ -6,7 +6,7 @@ import { mix, props } from "../../../__internal__/mixins.js";
 import { FifoQueue_capacityMask, FifoQueue_head, FifoQueue_tail, FifoQueue_values, } from "../../../__internal__/symbols.js";
 import { MutableIndexedLike_set, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { CollectionLike_count, IndexedLike_get, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, IndexedLike_get, QueueableLike_backpressureStrategy, BufferLike_capacity, QueueableLike_enqueue, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;
@@ -68,12 +68,12 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
     };
     return pipe(mix(function FifoQueue(instance, capacity, backpressureStrategy) {
         instance[QueueableLike_backpressureStrategy] = backpressureStrategy;
-        instance[QueueableLike_capacity] = clampPositiveInteger(capacity);
+        instance[BufferLike_capacity] = clampPositiveInteger(capacity);
         return instance;
     }, props({
         [CollectionLike_count]: 0,
         [QueueableLike_backpressureStrategy]: "overflow",
-        [QueueableLike_capacity]: MAX_SAFE_INTEGER,
+        [BufferLike_capacity]: MAX_SAFE_INTEGER,
         [FifoQueue_head]: 0,
         [FifoQueue_tail]: 0,
         [FifoQueue_capacityMask]: 0,
@@ -155,7 +155,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
         [QueueableLike_enqueue](item) {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
             let count = this[CollectionLike_count];
-            const capacity = this[QueueableLike_capacity];
+            const capacity = this[BufferLike_capacity];
             if (backpressureStrategy === "drop-latest" && count >= capacity) {
                 return false;
             }
@@ -184,7 +184,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             tail = (tail + 1) & capacityMask;
             this[FifoQueue_tail] = tail;
             grow(this);
-            return this[CollectionLike_count] < this[QueueableLike_capacity];
+            return this[CollectionLike_count] < this[BufferLike_capacity];
         },
     }), returns);
 })();

@@ -48,7 +48,7 @@ import {
   DisposableLike_isDisposed,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -288,7 +288,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         } else {
           const enumerator = pipe(
             QueuedEnumerator_create(
-              observer[QueueableLike_capacity],
+              observer[BufferLike_capacity],
               observer[QueueableLike_backpressureStrategy],
             ),
             Disposable_addTo(observer),

@@ -41,7 +41,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -112,7 +112,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             instance[ZipWithLatestFromObserver_selector] = selector;
             instance[ZipWithLatestFromObserver_TAQueue] =
               IndexedQueue_createFifoQueue(
-                delegate[QueueableLike_capacity],
+                delegate[BufferLike_capacity],
                 delegate[QueueableLike_backpressureStrategy],
               );
 

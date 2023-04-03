@@ -15,7 +15,7 @@ import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.j
 import { FlowableLike, StreamableLike_isRunnable } from "../../../streaming.js";
 import {
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -31,7 +31,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
 
     return create(observer => {
       const scheduler = observer[DispatcherLike_scheduler];
-      const capacity = observer[QueueableLike_capacity];
+      const capacity = observer[BufferLike_capacity];
       const backpressureStrategy = observer[QueueableLike_backpressureStrategy];
 
       const op: ContainerOperator<ObservableLike, T, boolean> = compose(

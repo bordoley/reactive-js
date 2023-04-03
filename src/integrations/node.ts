@@ -13,7 +13,7 @@ import {
 import {
   NODE_JS_PAUSE_EVENT,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
 } from "../__internal__/symbols.js";
 import { ContainerOperator } from "../containers.js";
 import {
@@ -284,7 +284,7 @@ export const transform =
         const transform = pipe(factory(), addToDisposable(observer));
         const backpressureStrategy =
           observer[QueueableLike_backpressureStrategy];
-        const capacity = observer[QueueableLike_capacity];
+        const capacity = observer[BufferLike_capacity];
         const scheduler = observer[DispatcherLike_scheduler];
 
         pipe(

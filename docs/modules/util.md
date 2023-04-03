@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+- [BufferLike](../interfaces/util.BufferLike.md)
 - [CollectionLike](../interfaces/util.CollectionLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
 - [IndexedLike](../interfaces/util.IndexedLike.md)

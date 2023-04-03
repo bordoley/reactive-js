@@ -29,7 +29,7 @@ import {
   DisposableLike_dispose,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -157,7 +157,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
           createLatestObserver(
             ctx,
             delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_capacity],
+            delegate[BufferLike_capacity],
             delegate[QueueableLike_backpressureStrategy],
           ),
           Disposable_addTo(delegate),

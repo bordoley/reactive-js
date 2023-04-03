@@ -6,7 +6,7 @@ import {
   DisposableLike_isDisposed,
   IndexedLike_get,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
@@ -20,7 +20,7 @@ export {
   IndexedLike_get,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
-  QueueableLike_capacity,
+  BufferLike_capacity,
 };
 
 export type DisposableOrTeardown =
@@ -62,12 +62,20 @@ export interface DisposableLike {
   [DisposableLike_dispose](error?: Error): void;
 }
 
+export interface BufferLike {
+
+  /**
+   * The number of items the queue is capable of efficiently buffering.
+   */
+  readonly [BufferLike_capacity]: number;
+}
+
 /**
  * An interface for types that support buffering items with backpressure.
  *
  * @noInheritDoc
  */
-export interface QueueableLike<T = unknown> {
+export interface QueueableLike<T = unknown> extends BufferLike {
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
@@ -76,11 +84,6 @@ export interface QueueableLike<T = unknown> {
     | "drop-oldest"
     | "overflow"
     | "throw";
-
-  /**
-   * The number of items the queue is capable of efficiently buffering.
-   */
-  readonly [QueueableLike_capacity]: number;
 
   /**
    * Enqueue an item onto the queue.

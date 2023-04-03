@@ -19,7 +19,7 @@ import {
 } from "../../../rx.js";
 import {
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -52,7 +52,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
             Observer_mixin<TA>(),
             instance,
             delegate[DispatcherLike_scheduler],
-            delegate[QueueableLike_capacity],
+            delegate[BufferLike_capacity],
             delegate[QueueableLike_backpressureStrategy],
           );
           instance[MapObserver_mapper] = mapper;

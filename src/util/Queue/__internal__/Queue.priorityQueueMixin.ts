@@ -30,7 +30,7 @@ import {
   IndexedLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
@@ -153,7 +153,7 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
           const count = this[CollectionLike_count];
-          const capacity = this[QueueableLike_capacity];
+          const capacity = this[BufferLike_capacity];
 
           if (backpressureStrategy === "drop-latest" && count >= capacity) {
             return false;

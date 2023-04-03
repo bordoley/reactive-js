@@ -46,7 +46,7 @@ import {
   DisposableLike_isDisposed,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_capacity,
+  BufferLike_capacity,
   QueueableLike_enqueue,
 } from "../../../util.js";
 
@@ -70,7 +70,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             | typeof ObservableLike_isRunnable
             | typeof QueueableLike_backpressureStrategy
             | typeof QueueableLike_enqueue
-            | typeof QueueableLike_capacity
+            | typeof BufferLike_capacity
             | typeof DispatcherLike_complete
             | typeof DispatcherLike_scheduler
           > &
@@ -95,14 +95,14 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             return observer[QueueableLike_backpressureStrategy];
           },
 
-          get [QueueableLike_capacity](): number {
+          get [BufferLike_capacity](): number {
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
             // Practically the observer can never be none.
             const observer = this[
               DispatchedObservable_observer
             ] as ObserverLike<T>;
 
-            return observer[QueueableLike_capacity];
+            return observer[BufferLike_capacity];
           },
 
           get [DispatcherLike_scheduler](): SchedulerLike {
