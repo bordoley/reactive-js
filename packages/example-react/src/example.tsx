@@ -118,16 +118,13 @@ const Root = () => {
     () =>
       Streamable.createBlockingEventHandler(
         pipe(
-          Observable.concat(
-            Observable.tween(1000),
-            pipe(
-              Observable.tween(1000),
-              Observable.map(x => 1 - x),
-            ),
+          Observable.animate(
+            { type: "tween", duration: 1000, from: 0, to: 50 },
+            { type: "tween", duration: 1000, from: 50, to: 0 },
           ),
           Observable.map(v => ({
-            margin: `${50 - v * 50}px`,
-            padding: `${v * 50}px`,
+            margin: `${50 - v}px`,
+            padding: `${v}px`,
           })),
           Observable.forEach(({ margin, padding }) => {
             const animatedDiv = animatedDivRef.current;
@@ -210,19 +207,13 @@ const RxComponent = createComponent(
     }) =>
       Streamable.createSwitchingEventHandler(
         pipe(
-          Observable.concat(
-            Observable.tween(1000),
-            pipe(
-              Observable.spring({
-                stiffness: 0.01,
-                damping: 0.1,
-              }),
-              Observable.map(x => 1 - x),
-            ),
+          Observable.animate(
+            { type: "tween", duration: 1000, from: 0, to: 50 },
+            { type: "spring", stiffness: 0.01, damping: 0.1, from: 50, to: 0 },
           ),
           Observable.map(v => ({
-            margin: `${50 - v * 50}px`,
-            padding: `${v * 50}px`,
+            margin: `${50 - v}px`,
+            padding: `${v}px`,
           })),
           Observable.forEach(({ margin, padding }) => {
             const animatedDiv = animatedDivRef.current;
