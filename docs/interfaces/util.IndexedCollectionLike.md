@@ -16,4 +16,4 @@
 
   ↳ **`IndexedCollectionLike`**
 
-  ↳↳ [`MulticastObservableReplayBufferLike`](rx.MulticastObservableReplayBufferLike.md)
+  ↳↳ [`IndexedBufferCollectionLike`](util.IndexedBufferCollectionLike.md)

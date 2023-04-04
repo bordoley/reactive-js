@@ -8,9 +8,9 @@
 
 - **`BufferLike`**
 
-  ↳ [`MulticastObservableReplayBufferLike`](rx.MulticastObservableReplayBufferLike.md)
-
   ↳ [`QueueableLike`](util.QueueableLike.md)
+
+  ↳ [`IndexedBufferCollectionLike`](util.IndexedBufferCollectionLike.md)
 
 ## Table of contents
 

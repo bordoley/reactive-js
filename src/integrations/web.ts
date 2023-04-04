@@ -33,7 +33,6 @@ import {
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
 import {
   MulticastObservableLike_replayBuffer,
-  MulticastObservableReplayBufferLike,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -55,6 +54,7 @@ import {
   BufferLike_capacity,
   CollectionLike_count,
   DisposableLike_dispose,
+  IndexedBufferCollectionLike,
   KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -669,9 +669,9 @@ export const windowLocation: StreamableLike<
     counterA === counterB;
 
   class WindowLocationReplayBuffer
-    implements MulticastObservableReplayBufferLike<WindowLocationURI>
+    implements IndexedBufferCollectionLike<WindowLocationURI>
   {
-    constructor(readonly d: MulticastObservableReplayBufferLike<TState>) {}
+    constructor(readonly d: IndexedBufferCollectionLike<TState>) {}
 
     get [BufferLike_capacity](): number {
       return this.d[BufferLike_capacity];
@@ -707,7 +707,7 @@ export const windowLocation: StreamableLike<
       },
       props<unknown>({}),
       {
-        get [MulticastObservableLike_replayBuffer](): MulticastObservableReplayBufferLike<WindowLocationURI> {
+        get [MulticastObservableLike_replayBuffer](): IndexedBufferCollectionLike<WindowLocationURI> {
           unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
           return newInstance(
             WindowLocationReplayBuffer,

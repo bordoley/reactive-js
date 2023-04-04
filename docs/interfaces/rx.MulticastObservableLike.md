@@ -45,7 +45,7 @@ ___
 
 ### [MulticastObservableLike\_replayBuffer]
 
-• `Readonly` **[MulticastObservableLike\_replayBuffer]**: [`MulticastObservableReplayBufferLike`](rx.MulticastObservableReplayBufferLike.md)<`T`\>
+• `Readonly` **[MulticastObservableLike\_replayBuffer]**: [`IndexedBufferCollectionLike`](util.IndexedBufferCollectionLike.md)<`T`\>
 
 The 'MulticastObservableLike`'s replay buffer
 

@@ -20,9 +20,8 @@ import {
 import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
-  BufferLike,
   DisposableLike,
-  IndexedCollectionLike,
+  IndexedBufferCollectionLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "./util.js";
@@ -129,10 +128,6 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
   readonly [ObservableLike_isEnumerable]: true;
 }
 
-export interface MulticastObservableReplayBufferLike<T = unknown>
-  extends BufferLike,
-    IndexedCollectionLike<T> {}
-
 /**
  * A stateful ObservableLike resource.
  *
@@ -151,7 +146,7 @@ export interface MulticastObservableLike<T = unknown>
   readonly [MulticastObservableLike_observerCount]: number;
 
   /** The 'MulticastObservableLike`'s replay buffer */
-  readonly [MulticastObservableLike_replayBuffer]: MulticastObservableReplayBufferLike<T>;
+  readonly [MulticastObservableLike_replayBuffer]: IndexedBufferCollectionLike<T>;
 }
 
 /**

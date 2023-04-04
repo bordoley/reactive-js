@@ -9,6 +9,7 @@
 - [BufferLike](../interfaces/util.BufferLike.md)
 - [CollectionLike](../interfaces/util.CollectionLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
+- [IndexedBufferCollectionLike](../interfaces/util.IndexedBufferCollectionLike.md)
 - [IndexedCollectionLike](../interfaces/util.IndexedCollectionLike.md)
 - [KeyedCollectionLike](../interfaces/util.KeyedCollectionLike.md)
 - [QueueableLike](../interfaces/util.QueueableLike.md)

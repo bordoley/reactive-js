@@ -2,7 +2,7 @@ import { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableL
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator } from "./containers.js";
 import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
-import { BufferLike, DisposableLike, IndexedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
+import { DisposableLike, IndexedBufferCollectionLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
 export { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, MulticastObservableLike_replayBuffer, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, PublisherLike_publish, };
 /**
  * A `QueueableLike` type that consumes enqueued events on a scheduler continuation.
@@ -81,8 +81,6 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
     readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: true;
 }
-export interface MulticastObservableReplayBufferLike<T = unknown> extends BufferLike, IndexedCollectionLike<T> {
-}
 /**
  * A stateful ObservableLike resource.
  *
@@ -97,7 +95,7 @@ export interface MulticastObservableLike<T = unknown> extends ObservableLike<T>,
      */
     readonly [MulticastObservableLike_observerCount]: number;
     /** The 'MulticastObservableLike`'s replay buffer */
-    readonly [MulticastObservableLike_replayBuffer]: MulticastObservableReplayBufferLike<T>;
+    readonly [MulticastObservableLike_replayBuffer]: IndexedBufferCollectionLike<T>;
 }
 /**
  * An `ObservableLike` that can be used to publish notifications to one or more observers.

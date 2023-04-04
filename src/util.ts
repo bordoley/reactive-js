@@ -116,3 +116,7 @@ export interface KeyedCollectionLike<TKey = unknown, T = unknown>
  */
 export interface IndexedCollectionLike<T = unknown>
   extends KeyedCollectionLike<number, T> {}
+
+  export interface IndexedBufferCollectionLike<T = unknown>
+  extends BufferLike,
+    IndexedCollectionLike<T> {}
