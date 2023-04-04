@@ -1,18 +1,7 @@
-import { Factory } from "../../../functions.js";
-import { ObservableLike, ObservableLike_observe } from "../../../rx.js";
+import { ObservableLike } from "../../../rx.js";
+import HigherOrderObservable_defer from "../../HigherOrderObservable/__internal__/HigherOrderObservable.defer.js";
 import Observable_create from "./Observable.create.js";
 
-const Observable_defer = <T>(
-  factory: Factory<ObservableLike<T>>,
-  isEnumerable = false,
-  isRunnable = false,
-): ObservableLike<T> =>
-  Observable_create(
-    observer => {
-      factory()[ObservableLike_observe](observer);
-    },
-    isEnumerable,
-    isRunnable,
-  );
-
+const Observable_defer =
+  /*@__PURE__*/ HigherOrderObservable_defer<ObservableLike>(Observable_create);
 export default Observable_defer;

@@ -45,7 +45,6 @@ export interface ReadonlyArrayLike<T = unknown>
   readonly [KeyedContainerLike_TKey]?: number;
 }
 
-
 /**
  * @noInheritDoc
  * @category Container

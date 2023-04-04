@@ -1,8 +1,7 @@
-import { Defer } from "../../../containers.js";
 import { RunnableLike } from "../../../rx.js";
-import Observable_defer from "../../Observable/__internal__/Observable.defer.js";
+import HigherOrderObservable_defer from "../../HigherOrderObservable/__internal__/HigherOrderObservable.defer.js";
+import Runnable_create from "./Runnable.create.js";
 
-const Runnable_defer: Defer<RunnableLike>["defer"] = (f =>
-  Observable_defer(f, false, true)) as Defer<RunnableLike>["defer"];
-
+const Runnable_defer =
+  /*@__PURE__*/ HigherOrderObservable_defer<RunnableLike>(Runnable_create);
 export default Runnable_defer;

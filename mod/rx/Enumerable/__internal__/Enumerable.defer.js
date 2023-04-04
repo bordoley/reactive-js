@@ -1,5 +1,7 @@
 /// <reference types="./Enumerable.defer.d.ts" />
 
-import Observable_defer from "../../../rx/Observable/__internal__/Observable.defer.js";
-const Enumerable_defer = (f => Observable_defer(f, true, true));
+import HigherOrderObservable_defer from "../../HigherOrderObservable/__internal__/HigherOrderObservable.defer.js";
+import Enumerable_create from "./Enumerable.create.js";
+const Enumerable_defer = 
+/*@__PURE__*/ HigherOrderObservable_defer(Enumerable_create);
 export default Enumerable_defer;

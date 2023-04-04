@@ -1,8 +1,7 @@
-import { Defer } from "../../../containers.js";
 import { EnumerableLike } from "../../../rx.js";
-import Observable_defer from "../../../rx/Observable/__internal__/Observable.defer.js";
+import HigherOrderObservable_defer from "../../HigherOrderObservable/__internal__/HigherOrderObservable.defer.js";
+import Enumerable_create from "./Enumerable.create.js";
 
-const Enumerable_defer: Defer<EnumerableLike>["defer"] = (f =>
-  Observable_defer(f, true, true)) as Defer<EnumerableLike>["defer"];
-
+const Enumerable_defer =
+  /*@__PURE__*/ HigherOrderObservable_defer<EnumerableLike>(Enumerable_create);
 export default Enumerable_defer;
