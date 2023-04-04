@@ -17,7 +17,7 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
-import { ObservableLike, PublisherLike_publish } from "../../../rx.js";
+import { EventListenerLike_notify, ObservableLike } from "../../../rx.js";
 import Observable_backpressureStrategy from "../../../rx/Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
@@ -90,7 +90,7 @@ const FlowableStream_create: <T>(
           ),
           Observable_distinctUntilChanged<ObservableLike, boolean>(),
           Observable_forEach<ObservableLike, boolean>(
-            bindMethod(publisher, PublisherLike_publish),
+            bindMethod(publisher, EventListenerLike_notify),
           ),
           op,
         );

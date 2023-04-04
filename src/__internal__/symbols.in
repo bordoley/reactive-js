@@ -19,6 +19,10 @@ EnumeratorLike_move
 EnumeratorLike_current
 EnumeratorLike_hasCurrent
 
+EventListenerLike_notify
+
+EventSourceLike_addListener
+
 FlowableStreamLike_isPaused
 FlowableStreamLike_pause
 FlowableStreamLike_resume
@@ -27,8 +31,8 @@ KeyedCollectionLike_get
 
 KeyedContainerLike_TKey
 
+MulticastedEventSourceLike_listenerCount
 MulticastObservableLike_observerCount
-MulticastObservableLike_replayBuffer
 
 ObserverLike_notify
 
@@ -40,7 +44,7 @@ PauseableSchedulerLike_isPaused
 PauseableSchedulerLike_pause
 PauseableSchedulerLike_resume
 
-PublisherLike_publish
+ReplayableLike_buffer
 
 SchedulerLike_inContinuation
 SchedulerLike_maxYieldInterval

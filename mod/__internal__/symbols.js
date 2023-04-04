@@ -30,6 +30,10 @@ export const EnumeratorLike_current = /*@__PURE__*/ symbol("EnumeratorLike_curre
 /** @type {unique symbol} */
 export const EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol("EnumeratorLike_hasCurrent");
 /** @type {unique symbol} */
+export const EventListenerLike_notify = /*@__PURE__*/ symbol("EventListenerLike_notify");
+/** @type {unique symbol} */
+export const EventSourceLike_addListener = /*@__PURE__*/ symbol("EventSourceLike_addListener");
+/** @type {unique symbol} */
 export const FlowableStreamLike_isPaused = /*@__PURE__*/ symbol("FlowableStreamLike_isPaused");
 /** @type {unique symbol} */
 export const FlowableStreamLike_pause = /*@__PURE__*/ symbol("FlowableStreamLike_pause");
@@ -40,9 +44,9 @@ export const KeyedCollectionLike_get = /*@__PURE__*/ symbol("KeyedCollectionLike
 /** @type {unique symbol} */
 export const KeyedContainerLike_TKey = /*@__PURE__*/ symbol("KeyedContainerLike_TKey");
 /** @type {unique symbol} */
-export const MulticastObservableLike_observerCount = /*@__PURE__*/ symbol("MulticastObservableLike_observerCount");
+export const MulticastedEventSourceLike_listenerCount = /*@__PURE__*/ symbol("MulticastedEventSourceLike_listenerCount");
 /** @type {unique symbol} */
-export const MulticastObservableLike_replayBuffer = /*@__PURE__*/ symbol("MulticastObservableLike_replayBuffer");
+export const MulticastObservableLike_observerCount = /*@__PURE__*/ symbol("MulticastObservableLike_observerCount");
 /** @type {unique symbol} */
 export const ObserverLike_notify = /*@__PURE__*/ symbol("ObserverLike_notify");
 /** @type {unique symbol} */
@@ -58,7 +62,7 @@ export const PauseableSchedulerLike_pause = /*@__PURE__*/ symbol("PauseableSched
 /** @type {unique symbol} */
 export const PauseableSchedulerLike_resume = /*@__PURE__*/ symbol("PauseableSchedulerLike_resume");
 /** @type {unique symbol} */
-export const PublisherLike_publish = /*@__PURE__*/ symbol("PublisherLike_publish");
+export const ReplayableLike_buffer = /*@__PURE__*/ symbol("ReplayableLike_buffer");
 /** @type {unique symbol} */
 export const SchedulerLike_inContinuation = /*@__PURE__*/ symbol("SchedulerLike_inContinuation");
 /** @type {unique symbol} */

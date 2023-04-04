@@ -27,6 +27,10 @@ export const EnumeratorLike_current: unique symbol;
 /** @type {unique symbol} */
 export const EnumeratorLike_hasCurrent: unique symbol;
 /** @type {unique symbol} */
+export const EventListenerLike_notify: unique symbol;
+/** @type {unique symbol} */
+export const EventSourceLike_addListener: unique symbol;
+/** @type {unique symbol} */
 export const FlowableStreamLike_isPaused: unique symbol;
 /** @type {unique symbol} */
 export const FlowableStreamLike_pause: unique symbol;
@@ -37,9 +41,9 @@ export const KeyedCollectionLike_get: unique symbol;
 /** @type {unique symbol} */
 export const KeyedContainerLike_TKey: unique symbol;
 /** @type {unique symbol} */
-export const MulticastObservableLike_observerCount: unique symbol;
+export const MulticastedEventSourceLike_listenerCount: unique symbol;
 /** @type {unique symbol} */
-export const MulticastObservableLike_replayBuffer: unique symbol;
+export const MulticastObservableLike_observerCount: unique symbol;
 /** @type {unique symbol} */
 export const ObserverLike_notify: unique symbol;
 /** @type {unique symbol} */
@@ -55,7 +59,7 @@ export const PauseableSchedulerLike_pause: unique symbol;
 /** @type {unique symbol} */
 export const PauseableSchedulerLike_resume: unique symbol;
 /** @type {unique symbol} */
-export const PublisherLike_publish: unique symbol;
+export const ReplayableLike_buffer: unique symbol;
 /** @type {unique symbol} */
 export const SchedulerLike_inContinuation: unique symbol;
 /** @type {unique symbol} */

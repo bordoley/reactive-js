@@ -5,22 +5,30 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
+  EventSourceLike_addListener,
   KeyedCollectionLike_get,
+  MulticastedEventSourceLike_listenerCount,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  ReplayableLike_buffer,
 } from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
 
 export {
+  BufferLike_capacity,
   CollectionLike_count,
   DisposableLike_add,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
+  EventSourceLike_addListener,
   KeyedCollectionLike_get,
+  MulticastedEventSourceLike_listenerCount,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
-  BufferLike_capacity,
+  ReplayableLike_buffer,
 };
 
 export type DisposableOrTeardown =
@@ -117,6 +125,46 @@ export interface KeyedCollectionLike<TKey = unknown, T = unknown>
 export interface IndexedCollectionLike<T = unknown>
   extends KeyedCollectionLike<number, T> {}
 
+/**
+ * @noInheritDoc
+ */
 export interface IndexedBufferCollectionLike<T = unknown>
   extends BufferLike,
     IndexedCollectionLike<T> {}
+
+/**
+ * @noInheritDoc
+ */
+export interface ReplayableLike<T = unknown> {
+  readonly [ReplayableLike_buffer]: IndexedBufferCollectionLike<T>;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface EventListenerLike<T = unknown> extends DisposableLike {
+  [EventListenerLike_notify](event: T): void;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface EventSourceLike<T = unknown> extends ReplayableLike<T> {
+  [EventSourceLike_addListener](event: EventListenerLike<T>): void;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface MulticastedEventSourceLike<T = unknown>
+  extends EventSourceLike<T>,
+    DisposableLike {
+  readonly [MulticastedEventSourceLike_listenerCount]: number;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface EventPublisherLike<T = unknown>
+  extends MulticastedEventSourceLike<T>,
+    EventListenerLike<T> {}

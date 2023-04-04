@@ -16,6 +16,10 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`SchedulerLike`](scheduling.SchedulerLike.md)
 
+  ↳ [`EventListenerLike`](util.EventListenerLike.md)
+
+  ↳ [`MulticastedEventSourceLike`](util.MulticastedEventSourceLike.md)
+
 ## Table of contents
 
 ### Properties

@@ -61,6 +61,16 @@ export const EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const EventListenerLike_notify = /*@__PURE__*/ symbol(
+  "EventListenerLike_notify",
+);
+
+/** @type {unique symbol} */
+export const EventSourceLike_addListener = /*@__PURE__*/ symbol(
+  "EventSourceLike_addListener",
+);
+
+/** @type {unique symbol} */
 export const FlowableStreamLike_isPaused = /*@__PURE__*/ symbol(
   "FlowableStreamLike_isPaused",
 );
@@ -86,13 +96,13 @@ export const KeyedContainerLike_TKey = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const MulticastObservableLike_observerCount = /*@__PURE__*/ symbol(
-  "MulticastObservableLike_observerCount",
+export const MulticastedEventSourceLike_listenerCount = /*@__PURE__*/ symbol(
+  "MulticastedEventSourceLike_listenerCount",
 );
 
 /** @type {unique symbol} */
-export const MulticastObservableLike_replayBuffer = /*@__PURE__*/ symbol(
-  "MulticastObservableLike_replayBuffer",
+export const MulticastObservableLike_observerCount = /*@__PURE__*/ symbol(
+  "MulticastObservableLike_observerCount",
 );
 
 /** @type {unique symbol} */
@@ -129,8 +139,8 @@ export const PauseableSchedulerLike_resume = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const PublisherLike_publish = /*@__PURE__*/ symbol(
-  "PublisherLike_publish",
+export const ReplayableLike_buffer = /*@__PURE__*/ symbol(
+  "ReplayableLike_buffer",
 );
 
 /** @type {unique symbol} */

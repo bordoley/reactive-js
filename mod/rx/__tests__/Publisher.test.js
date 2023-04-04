@@ -3,7 +3,7 @@
 import { expectArrayEquals, expectEquals, test, testModule, } from "../../__internal__/testing.js";
 import { bindMethod, pipe } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
-import { MulticastObservableLike_observerCount, PublisherLike_publish, } from "../../rx.js";
+import { EventListenerLike_notify, MulticastObservableLike_observerCount, } from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { DisposableLike_dispose } from "../../util.js";
@@ -12,7 +12,7 @@ import * as Publisher from "../Publisher.js";
 testModule("publisher", test("with replay", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const publisher = Publisher.create({ replay: 2 });
-    pipe([1, 2, 3, 4], ReadonlyArray.forEach(bindMethod(publisher, PublisherLike_publish)));
+    pipe([1, 2, 3, 4], ReadonlyArray.forEach(bindMethod(publisher, EventListenerLike_notify)));
     publisher[DisposableLike_dispose]();
     const result = [];
     pipe(publisher, Observable.forEach(x => {

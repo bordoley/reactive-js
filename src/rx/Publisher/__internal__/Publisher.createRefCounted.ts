@@ -12,11 +12,11 @@ import {
 } from "../../../__internal__/symbols.js";
 import { pipe } from "../../../functions.js";
 import {
+  EventListenerLike_notify,
   MulticastObservableLike_observerCount,
   ObservableLike_observe,
   ObserverLike,
   PublisherLike,
-  PublisherLike_publish,
 } from "../../../rx.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
@@ -31,7 +31,7 @@ const Publisher_createRefCounted: <T>(options?: {
       function RefCountedPublisher(
         instance: Pick<
           PublisherLike<T>,
-          typeof ObservableLike_observe | typeof PublisherLike_publish
+          typeof ObservableLike_observe | typeof EventListenerLike_notify
         >,
         delegate: PublisherLike<T>,
       ): PublisherLike<T> {
@@ -45,11 +45,11 @@ const Publisher_createRefCounted: <T>(options?: {
       },
       props({}),
       {
-        [PublisherLike_publish](
+        [EventListenerLike_notify](
           this: DelegatingLike<PublisherLike<T>>,
           next: T,
         ) {
-          this[DelegatingLike_delegate][PublisherLike_publish](next);
+          this[DelegatingLike_delegate][EventListenerLike_notify](next);
         },
 
         [ObservableLike_observe](

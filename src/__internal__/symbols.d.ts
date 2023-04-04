@@ -26,6 +26,10 @@ export declare const EnumeratorLike_current: unique symbol;
 
 export declare const EnumeratorLike_hasCurrent: unique symbol;
 
+export declare const EventListenerLike_notify: unique symbol;
+
+export declare const EventSourceLike_addListener: unique symbol;
+
 export declare const FlowableStreamLike_isPaused: unique symbol;
 
 export declare const FlowableStreamLike_pause: unique symbol;
@@ -36,9 +40,9 @@ export declare const KeyedCollectionLike_get: unique symbol;
 
 export declare const KeyedContainerLike_TKey: unique symbol;
 
-export declare const MulticastObservableLike_observerCount: unique symbol;
+export declare const MulticastedEventSourceLike_listenerCount: unique symbol;
 
-export declare const MulticastObservableLike_replayBuffer: unique symbol;
+export declare const MulticastObservableLike_observerCount: unique symbol;
 
 export declare const ObserverLike_notify: unique symbol;
 
@@ -54,7 +58,7 @@ export declare const PauseableSchedulerLike_pause: unique symbol;
 
 export declare const PauseableSchedulerLike_resume: unique symbol;
 
-export declare const PublisherLike_publish: unique symbol;
+export declare const ReplayableLike_buffer: unique symbol;
 
 export declare const SchedulerLike_inContinuation: unique symbol;
 

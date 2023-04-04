@@ -8,10 +8,10 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  EventListenerLike_notify,
   MulticastObservableLike,
   ObservableLike,
   PublisherLike,
-  PublisherLike_publish,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
@@ -53,7 +53,7 @@ const Observable_multicastImpl =
     pipe(
       observable,
       Observable_forEach<ObservableLike, T>(
-        bindMethod(publisher, PublisherLike_publish),
+        bindMethod(publisher, EventListenerLike_notify),
       ),
       Observable_subscribeWithCapacityAndBackpressureStrategy(
         scheduler,
