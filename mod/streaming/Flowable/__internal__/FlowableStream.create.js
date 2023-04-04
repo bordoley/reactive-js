@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { bindMethod, compose, isFunction, none, pipe, returns, } from "../../../functions.js";
-import { PublisherLike_publish } from "../../../rx.js";
+import { EventListenerLike_notify } from "../../../rx.js";
 import Observable_backpressureStrategy from "../../../rx/Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
@@ -20,7 +20,7 @@ const FlowableStream_create = /*@__PURE__*/ (() => {
         const publisher = Publisher_create({ replay: 1 });
         const liftedOp = compose(Observable_backpressureStrategy(1, "drop-oldest"), Observable_scan((acc, next) => (isFunction(next) ? next(acc) : next), returns(true)), Observable_mergeWith(
         // Initialize to paused state
-        pipe(true, Optional_toObservable())), Observable_distinctUntilChanged(), Observable_forEach(bindMethod(publisher, PublisherLike_publish)), op);
+        pipe(true, Optional_toObservable())), Observable_distinctUntilChanged(), Observable_forEach(bindMethod(publisher, EventListenerLike_notify)), op);
         init(Stream_mixin(), instance, liftedOp, scheduler, replay, capacity, backpressureStrategy);
         pipe(instance, Disposable_add(publisher));
         instance[FlowableStreamLike_isPaused] = publisher;

@@ -28,9 +28,9 @@ import * as ReadonlyRecord from "../../../keyed-containers/ReadonlyRecord.js";
 import ReadonlyRecord_union from "../../../keyed-containers/ReadonlyRecord/__internal__/ReadonlyRecord.union.js";
 import {
   DispatcherLike,
+  EventListenerLike_notify,
   ObservableLike,
   PublisherLike,
-  PublisherLike_publish,
 } from "../../../rx.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
@@ -246,7 +246,7 @@ const createCacheStream: <T>(
                   const shouldPublish = isNone(v) || oldValue !== v;
 
                   if (isSome(observable) && shouldPublish) {
-                    observable[PublisherLike_publish](v);
+                    observable[EventListenerLike_notify](v);
                     return;
                   }
 
@@ -318,7 +318,7 @@ const createCacheStream: <T>(
               const initialValue = store.get(key);
 
               if (isSome(initialValue)) {
-                subject[PublisherLike_publish](initialValue);
+                subject[EventListenerLike_notify](initialValue);
               } else {
                 // Try to load the value from the persistence store
                 delegate[QueueableLike_enqueue]({

@@ -32,10 +32,10 @@ import {
 } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
 import {
-  MulticastObservableLike_replayBuffer,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
+  ReplayableLike_buffer,
 } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { SchedulerLike } from "../scheduling.js";
@@ -692,7 +692,7 @@ export const windowLocation: StreamableLike<
       function WindowLocationStream(
         instance: Pick<
           WindowLocationStreamLike,
-          | typeof MulticastObservableLike_replayBuffer
+          | typeof ReplayableLike_buffer
           | typeof QueueableLike_enqueue
           | typeof WindowLocationStreamLike_canGoBack
           | typeof WindowLocationStreamLike_goBack
@@ -707,11 +707,11 @@ export const windowLocation: StreamableLike<
       },
       props<unknown>({}),
       {
-        get [MulticastObservableLike_replayBuffer](): IndexedBufferCollectionLike<WindowLocationURI> {
+        get [ReplayableLike_buffer](): IndexedBufferCollectionLike<WindowLocationURI> {
           unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
           return newInstance(
             WindowLocationReplayBuffer,
-            this[DelegatingLike_delegate][MulticastObservableLike_replayBuffer],
+            this[DelegatingLike_delegate][ReplayableLike_buffer],
           );
         },
 

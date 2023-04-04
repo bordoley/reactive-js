@@ -9,10 +9,10 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  EventListenerLike_notify,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
-  PublisherLike_publish,
   ScanMany,
 } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -49,7 +49,7 @@ const HigherOrderObservable_scanMany =
           compose(
             Observable_concatMap(Observable_takeLast<CInner, TAcc>()),
             Observable_forEach<ObservableLike, TAcc>(
-              bindMethod(accFeedbackStream, PublisherLike_publish),
+              bindMethod(accFeedbackStream, EventListenerLike_notify),
             ),
             Observable_ignoreElements<ObservableLike, TAcc>(),
           ),
@@ -58,7 +58,7 @@ const HigherOrderObservable_scanMany =
         invoke(ObservableLike_observe, observer),
       );
 
-      accFeedbackStream[PublisherLike_publish](initialValue());
+      accFeedbackStream[EventListenerLike_notify](initialValue());
     });
 
 export default HigherOrderObservable_scanMany;

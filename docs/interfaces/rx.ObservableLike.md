@@ -20,7 +20,7 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
   ↳↳ [`RunnableLike`](rx.RunnableLike.md)
 
-  ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
+  ↳↳ [`HotObservableLike`](rx.HotObservableLike.md)
 
 ## Table of contents
 

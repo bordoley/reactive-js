@@ -23,6 +23,16 @@
 - [Function7](functions.md#function7)
 - [Function8](functions.md#function8)
 - [Function9](functions.md#function9)
+- [Method](functions.md#method)
+- [Method1](functions.md#method1)
+- [Method2](functions.md#method2)
+- [Method3](functions.md#method3)
+- [Method4](functions.md#method4)
+- [Method5](functions.md#method5)
+- [Method6](functions.md#method6)
+- [Method7](functions.md#method7)
+- [Method8](functions.md#method8)
+- [Method9](functions.md#method9)
 - [Optional](functions.md#optional)
 - [Predicate](functions.md#predicate)
 - [Reducer](functions.md#reducer)
@@ -556,6 +566,366 @@ ___
 
 | Name | Type |
 | :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+| `g` | `TG` |
+| `h` | `TH` |
+| `i` | `TI` |
+
+##### Returns
+
+`T`
+
+___
+
+### Method
+
+Ƭ **Method**<`This`, `T`\>: (`this`: `This`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `This` |
+| `T` |
+
+#### Type declaration
+
+▸ (`this`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `This` |
+
+##### Returns
+
+`T`
+
+___
+
+### Method1
+
+Ƭ **Method1**<`This`, `TA`, `T`\>: (`this`: `This`, `a`: `TA`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `This` |
+| `TA` |
+| `T` |
+
+#### Type declaration
+
+▸ (`this`, `a`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `This` |
+| `a` | `TA` |
+
+##### Returns
+
+`T`
+
+___
+
+### Method2
+
+Ƭ **Method2**<`This`, `TA`, `TB`, `T`\>: (`this`: `This`, `a`: `TA`, `b`: `TB`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `This` |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Type declaration
+
+▸ (`this`, `a`, `b`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `This` |
+| `a` | `TA` |
+| `b` | `TB` |
+
+##### Returns
+
+`T`
+
+___
+
+### Method3
+
+Ƭ **Method3**<`This`, `TA`, `TB`, `TC`, `T`\>: (`this`: `This`, `a`: `TA`, `b`: `TB`, `c`: `TC`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `This` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `T` |
+
+#### Type declaration
+
+▸ (`this`, `a`, `b`, `c`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `This` |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+##### Returns
+
+`T`
+
+___
+
+### Method4
+
+Ƭ **Method4**<`This`, `TA`, `TB`, `TC`, `TD`, `T`\>: (`this`: `This`, `a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `This` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `T` |
+
+#### Type declaration
+
+▸ (`this`, `a`, `b`, `c`, `d`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `This` |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+
+##### Returns
+
+`T`
+
+___
+
+### Method5
+
+Ƭ **Method5**<`This`, `TA`, `TB`, `TC`, `TD`, `TE`, `T`\>: (`this`: `This`, `a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `This` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `T` |
+
+#### Type declaration
+
+▸ (`this`, `a`, `b`, `c`, `d`, `e`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `This` |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+
+##### Returns
+
+`T`
+
+___
+
+### Method6
+
+Ƭ **Method6**<`This`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `T`\>: (`this`: `This`, `a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `This` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `T` |
+
+#### Type declaration
+
+▸ (`this`, `a`, `b`, `c`, `d`, `e`, `f`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `This` |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+
+##### Returns
+
+`T`
+
+___
+
+### Method7
+
+Ƭ **Method7**<`This`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `T`\>: (`this`: `This`, `a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `This` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `T` |
+
+#### Type declaration
+
+▸ (`this`, `a`, `b`, `c`, `d`, `e`, `f`, `g`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `This` |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+| `g` | `TG` |
+
+##### Returns
+
+`T`
+
+___
+
+### Method8
+
+Ƭ **Method8**<`This`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `T`\>: (`this`: `This`, `a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`, `h`: `TH`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `This` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `T` |
+
+#### Type declaration
+
+▸ (`this`, `a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `This` |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+| `g` | `TG` |
+| `h` | `TH` |
+
+##### Returns
+
+`T`
+
+___
+
+### Method9
+
+Ƭ **Method9**<`This`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`, `T`\>: (`this`: `This`, `a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`, `h`: `TH`, `i`: `TI`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `This` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+| `T` |
+
+#### Type declaration
+
+▸ (`this`, `a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `This` |
 | `a` | `TA` |
 | `b` | `TB` |
 | `c` | `TC` |

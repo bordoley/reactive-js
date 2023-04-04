@@ -40,9 +40,9 @@ import {
 import {
   DispatcherLike,
   EnumerableLike,
+  EventListenerLike_notify,
   ObservableLike,
   PublisherLike,
-  PublisherLike_publish,
 } from "../rx.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
@@ -382,7 +382,7 @@ export const createComponent = <TProps>(
     );
 
     useEffect(
-      () => propsPublisher[PublisherLike_publish](props),
+      () => propsPublisher[EventListenerLike_notify](props),
       [propsPublisher, props],
     );
 

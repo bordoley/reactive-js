@@ -9,10 +9,15 @@
 - [BufferLike](../interfaces/util.BufferLike.md)
 - [CollectionLike](../interfaces/util.CollectionLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
+- [EventListenerLike](../interfaces/util.EventListenerLike.md)
+- [EventPublisherLike](../interfaces/util.EventPublisherLike.md)
+- [EventSourceLike](../interfaces/util.EventSourceLike.md)
 - [IndexedBufferCollectionLike](../interfaces/util.IndexedBufferCollectionLike.md)
 - [IndexedCollectionLike](../interfaces/util.IndexedCollectionLike.md)
 - [KeyedCollectionLike](../interfaces/util.KeyedCollectionLike.md)
+- [MulticastedEventSourceLike](../interfaces/util.MulticastedEventSourceLike.md)
 - [QueueableLike](../interfaces/util.QueueableLike.md)
+- [ReplayableLike](../interfaces/util.ReplayableLike.md)
 
 ### Type Aliases
 

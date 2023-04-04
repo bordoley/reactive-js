@@ -80,6 +80,73 @@ export type Comparator<T> = Function2<T, T, number>;
  */
 export type Equality<T> = Function2<T, T, boolean>;
 
+export type Method<This, T> = (this: This) => T;
+export type Method1<This, TA, T> = (this: This, a: TA) => T;
+export type Method2<This, TA, TB, T> = (this: This, a: TA, b: TB) => T;
+export type Method3<This, TA, TB, TC, T> = (
+  this: This,
+  a: TA,
+  b: TB,
+  c: TC,
+) => T;
+export type Method4<This, TA, TB, TC, TD, T> = (
+  this: This,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+) => T;
+export type Method5<This, TA, TB, TC, TD, TE, T> = (
+  this: This,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+) => T;
+export type Method6<This, TA, TB, TC, TD, TE, TF, T> = (
+  this: This,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+) => T;
+export type Method7<This, TA, TB, TC, TD, TE, TF, TG, T> = (
+  this: This,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+) => T;
+export type Method8<This, TA, TB, TC, TD, TE, TF, TG, TH, T> = (
+  this: This,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+  h: TH,
+) => T;
+export type Method9<This, TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (
+  this: This,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+  g: TG,
+  h: TH,
+  i: TI,
+) => T;
+
 /**
  * Represents an unboxed value of type T or undefined.
  */

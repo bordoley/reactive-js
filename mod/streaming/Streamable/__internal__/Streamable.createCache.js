@@ -6,7 +6,7 @@ import { QueueLike_dequeue } from "../../../__internal__/util.internal.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
 import * as ReadonlyRecord from "../../../keyed-containers/ReadonlyRecord.js";
 import ReadonlyRecord_union from "../../../keyed-containers/ReadonlyRecord/__internal__/ReadonlyRecord.union.js";
-import { PublisherLike_publish, } from "../../../rx.js";
+import { EventListenerLike_notify, } from "../../../rx.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
 import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
@@ -76,7 +76,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
             // when initially subscribing to the key.
             const shouldPublish = isNone(v) || oldValue !== v;
             if (isSome(observable) && shouldPublish) {
-                observable[PublisherLike_publish](v);
+                observable[EventListenerLike_notify](v);
                 return;
             }
             instance.scheduleCleanup(key);
@@ -106,7 +106,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                     }), Disposable.addToIgnoringChildErrors(this));
                     const initialValue = store.get(key);
                     if (isSome(initialValue)) {
-                        subject[PublisherLike_publish](initialValue);
+                        subject[EventListenerLike_notify](initialValue);
                     }
                     else {
                         // Try to load the value from the persistence store

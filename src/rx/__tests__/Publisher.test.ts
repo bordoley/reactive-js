@@ -7,8 +7,8 @@ import {
 import { bindMethod, pipe } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import {
+  EventListenerLike_notify,
   MulticastObservableLike_observerCount,
-  PublisherLike_publish,
 } from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
@@ -24,7 +24,7 @@ testModule(
     const publisher = Publisher.create<number>({ replay: 2 });
     pipe(
       [1, 2, 3, 4],
-      ReadonlyArray.forEach(bindMethod(publisher, PublisherLike_publish)),
+      ReadonlyArray.forEach(bindMethod(publisher, EventListenerLike_notify)),
     );
     publisher[DisposableLike_dispose]();
 

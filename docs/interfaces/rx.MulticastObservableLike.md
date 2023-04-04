@@ -14,7 +14,7 @@ A stateful ObservableLike resource.
 
 ## Hierarchy
 
-- [`ObservableLike`](rx.ObservableLike.md)<`T`\>
+- [`HotObservableLike`](rx.HotObservableLike.md)<`T`\>
 
 - [`DisposableLike`](util.DisposableLike.md)
 
@@ -29,9 +29,6 @@ A stateful ObservableLike resource.
 ### Properties
 
 - [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
-- [[MulticastObservableLike\_replayBuffer]](rx.MulticastObservableLike.md#[multicastobservablelike_replaybuffer])
-- [[ObservableLike\_isEnumerable]](rx.MulticastObservableLike.md#[observablelike_isenumerable])
-- [[ObservableLike\_isRunnable]](rx.MulticastObservableLike.md#[observablelike_isrunnable])
 
 ## Properties
 
@@ -40,36 +37,3 @@ A stateful ObservableLike resource.
 • `Readonly` **[MulticastObservableLike\_observerCount]**: `number`
 
 The number of observers currently observing the `MulticastObservableLike`.
-
-___
-
-### [MulticastObservableLike\_replayBuffer]
-
-• `Readonly` **[MulticastObservableLike\_replayBuffer]**: [`IndexedBufferCollectionLike`](util.IndexedBufferCollectionLike.md)<`T`\>
-
-The 'MulticastObservableLike`'s replay buffer
-
-___
-
-### [ObservableLike\_isEnumerable]
-
-• `Readonly` **[ObservableLike\_isEnumerable]**: ``false``
-
-Indicates if the `ObservableLike` supports interactive enumeration.
-
-#### Overrides
-
-[ObservableLike](rx.ObservableLike.md).[[ObservableLike_isEnumerable]](rx.ObservableLike.md#[observablelike_isenumerable])
-
-___
-
-### [ObservableLike\_isRunnable]
-
-• `Readonly` **[ObservableLike\_isRunnable]**: ``false``
-
-Indicates if the `ObservableLike` supports being subscribed to
-on a VirtualTimeScheduler.
-
-#### Overrides
-
-[ObservableLike](rx.ObservableLike.md).[[ObservableLike_isRunnable]](rx.ObservableLike.md#[observablelike_isrunnable])

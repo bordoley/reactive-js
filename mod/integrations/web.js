@@ -5,7 +5,7 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamLike_replace, } from "../__internal__/symbols.js";
 import { bindMethod, compose, error, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
-import { MulticastObservableLike_replayBuffer, ObservableLike_observe, } from "../rx.js";
+import { ObservableLike_observe, ReplayableLike_buffer, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
 import * as Stream from "../streaming/Stream.js";
@@ -104,9 +104,9 @@ export const windowLocation = /*@__PURE__*/ (() => {
         init(Stream_delegatingMixin(), instance, delegate);
         return instance;
     }, props({}), {
-        get [MulticastObservableLike_replayBuffer]() {
+        get [ReplayableLike_buffer]() {
             unsafeCast(this);
-            return newInstance(WindowLocationReplayBuffer, this[DelegatingLike_delegate][MulticastObservableLike_replayBuffer]);
+            return newInstance(WindowLocationReplayBuffer, this[DelegatingLike_delegate][ReplayableLike_buffer]);
         },
         get [WindowLocationStreamLike_canGoBack]() {
             unsafeCast(this);
