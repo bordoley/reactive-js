@@ -160,6 +160,8 @@ Base type for Container type classes.
 
   ↳ [`Values`](keyed_containers.Values.md)
 
+  ↳ [`Animate`](rx.Animate.md)
+
   ↳ [`BackpressureStrategy`](rx.BackpressureStrategy.md)
 
   ↳ [`CombineLatest`](rx.CombineLatest.md)

@@ -4,6 +4,7 @@ import Container_identity from "../containers/Container/__internal__/Container.i
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
@@ -75,6 +76,7 @@ import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
 import Runnable_toFlowable from "./Runnable/__internal__/Runnable.toFlowable.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
+export const animate = Observable_animate;
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const buffer = Observable_buffer;
 export const catchError = Runnable_catchError;

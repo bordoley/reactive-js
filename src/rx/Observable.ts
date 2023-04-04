@@ -70,6 +70,7 @@ import {
 } from "../functions.js";
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
+  Animate,
   BackpressureStrategy,
   CombineLatest,
   CurrentTime,
@@ -114,6 +115,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../util.js";
+import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
@@ -353,6 +355,8 @@ interface __Using {
  * @category ComputationalEffect
  */
 export const __using: __Using = Observable_compute__using;
+
+export const animate: Animate<ObservableLike>["animate"] = Observable_animate;
 
 export const backpressureStrategy: BackpressureStrategy<ObservableLike>["backpressureStrategy"] =
   Observable_backpressureStrategy;

@@ -4,6 +4,11 @@
 
 ## Table of contents
 
+### AnimationConfig Interfaces
+
+- [SpringAnimationConfig](../interfaces/rx.SpringAnimationConfig.md)
+- [TweenAnimationConfig](../interfaces/rx.TweenAnimationConfig.md)
+
 ### Container Interfaces
 
 - [EnumerableLike](../interfaces/rx.EnumerableLike.md)
@@ -19,6 +24,7 @@
 
 ### TypeClass Interfaces
 
+- [Animate](../interfaces/rx.Animate.md)
 - [BackpressureStrategy](../interfaces/rx.BackpressureStrategy.md)
 - [CombineLatest](../interfaces/rx.CombineLatest.md)
 - [CurrentTime](../interfaces/rx.CurrentTime.md)
@@ -53,3 +59,19 @@
 - [WithLatestFrom](../interfaces/rx.WithLatestFrom.md)
 - [ZipLatest](../interfaces/rx.ZipLatest.md)
 - [ZipWithLatestFrom](../interfaces/rx.ZipWithLatestFrom.md)
+
+### Type Aliases
+
+- [AnimationConfig](rx.md#animationconfig)
+
+## Type Aliases
+
+### AnimationConfig
+
+Ƭ **AnimationConfig**<`T`\>: { `type`: ``"tween"``  } & [`TweenAnimationConfig`](../interfaces/rx.TweenAnimationConfig.md) & `AnimationConfigSelector`<`T`\> \| { `type`: ``"spring"``  } & [`SpringAnimationConfig`](../interfaces/rx.SpringAnimationConfig.md) & `AnimationConfigSelector`<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `number` |

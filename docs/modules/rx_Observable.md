@@ -107,6 +107,7 @@
 
 ### Other Functions
 
+- [animate](rx_Observable.md#animate)
 - [subscribe](rx_Observable.md#subscribe)
 
 ### Transform Functions
@@ -4298,6 +4299,28 @@ ___
 ___
 
 ## Other Functions
+
+### animate
+
+▸ **animate**<`T`\>(`...configs`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...configs` | [`AnimationConfig`](rx.md#animationconfig)<`T`\>[] |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
 
 ### subscribe
 

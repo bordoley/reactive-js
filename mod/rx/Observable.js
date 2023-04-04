@@ -7,6 +7,7 @@ import Optional_toObservable from "../containers/Optional/__internal__/Optional.
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import AsyncEnumerable_toObservable from "../streaming/AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
 import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
+import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
@@ -127,6 +128,7 @@ export const __stream = Observable_compute__stream;
  * @category ComputationalEffect
  */
 export const __using = Observable_compute__using;
+export const animate = Observable_animate;
 export const backpressureStrategy = Observable_backpressureStrategy;
 /**
  * @category Operator

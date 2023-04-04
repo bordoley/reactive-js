@@ -114,31 +114,30 @@ const Root = () => {
   const counter = useFlowable(counterFlowable);
 
   const animatedDivRef = useRef<HTMLDivElement>(null);
-  const animationStreamable = useMemo(
-    () =>
-      Streamable.createBlockingEventHandler(
-        pipe(
-          Observable.animate(
-            { type: "tween", duration: 1000, from: 0, to: 50 },
-            { type: "tween", duration: 1000, from: 50, to: 0 },
-          ),
-          Observable.map(v => ({
-            margin: `${50 - v}px`,
-            padding: `${v}px`,
-          })),
-          Observable.forEach(({ margin, padding }) => {
-            const animatedDiv = animatedDivRef.current;
-            if (animatedDiv != null) {
-              animatedDiv.style.margin = margin;
-              animatedDiv.style.padding = padding;
-            }
-          }),
-          Observable.subscribeOn(createAnimationFrameScheduler),
-          returns,
+  const animationStreamable = useMemo(() => {
+    const selector = (v: number) => ({
+      margin: `${50 - v}px`,
+      padding: `${v}px`,
+    });
+
+    return Streamable.createBlockingEventHandler(
+      pipe(
+        Observable.animate(
+          { type: "tween", duration: 1000, from: 0, to: 50, selector },
+          { type: "tween", duration: 1000, from: 50, to: 0, selector },
         ),
+        Observable.forEach(({ margin, padding }) => {
+          const animatedDiv = animatedDivRef.current;
+          if (animatedDiv != null) {
+            animatedDiv.style.margin = margin;
+            animatedDiv.style.padding = padding;
+          }
+        }),
+        Observable.subscribeOn(createAnimationFrameScheduler),
+        returns,
       ),
-    [animatedDivRef],
-  );
+    );
+  }, [animatedDivRef]);
   const [animationRunning, dispatch] = useStreamable(animationStreamable);
 
   const enumerable = useMemo(
@@ -208,16 +207,34 @@ const RxComponent = createComponent(
       Streamable.createSwitchingEventHandler(
         pipe(
           Observable.animate(
-            { type: "tween", duration: 1000, from: 0, to: 50 },
-            { type: "spring", stiffness: 0.01, damping: 0.1, from: 50, to: 0 },
+            {
+              type: "tween",
+              duration: 1000,
+              from: 0,
+              to: 50,
+              selector: (v: number) => ({
+                color: "blue",
+                margin: `${50 - v}px`,
+                padding: `${v}px`,
+              }),
+            },
+            {
+              type: "spring",
+              stiffness: 0.01,
+              damping: 0.1,
+              from: 50,
+              to: 0,
+              selector: (v: number) => ({
+                color: "green",
+                margin: `${50 - v}px`,
+                padding: `${v}px`,
+              }),
+            },
           ),
-          Observable.map(v => ({
-            margin: `${50 - v}px`,
-            padding: `${v}px`,
-          })),
-          Observable.forEach(({ margin, padding }) => {
+          Observable.forEach(({ color, margin, padding }) => {
             const animatedDiv = animatedDivRef.current;
             if (animatedDiv != null) {
+              animatedDiv.style.backgroundColor = color;
               animatedDiv.style.margin = margin;
               animatedDiv.style.padding = padding;
             }

@@ -51,6 +51,7 @@ import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
+  Animate,
   BackpressureStrategy,
   CombineLatest,
   CurrentTime,
@@ -84,6 +85,7 @@ import {
 } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
+import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
@@ -155,6 +157,8 @@ import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
 import Runnable_toFlowable from "./Runnable/__internal__/Runnable.toFlowable.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
+
+export const animate: Animate<RunnableLike>["animate"] = Observable_animate;
 
 export const backpressureStrategy: BackpressureStrategy<RunnableLike>["backpressureStrategy"] =
   Observable_backpressureStrategy;

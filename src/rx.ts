@@ -17,7 +17,7 @@ import {
   ContainerOf,
   ContainerOperator,
 } from "./containers.js";
-import { Factory, Function1, Function2 } from "./functions.js";
+import { Factory, Function1, Function2, none } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
   DisposableLike,
@@ -162,6 +162,48 @@ export interface PublisherLike<T = unknown> extends MulticastObservableLike<T> {
    * @param next - The notification to publish.
    */
   [PublisherLike_publish](next: T): void;
+}
+
+/**
+ * @noInheritDoc
+ * @category AnimationConfig
+ */
+export interface TweenAnimationConfig {
+  readonly from: number;
+  readonly to: number;
+  readonly duration: number;
+  readonly easing?: Function1<number, number>;
+}
+
+/**
+ * @noInheritDoc
+ * @category AnimationConfig
+ */
+export interface SpringAnimationConfig {
+  readonly from: number;
+  readonly to: number;
+  readonly stiffness?: number;
+  readonly damping?: number;
+  readonly precision?: number;
+}
+
+type AnimationConfigSelector<T> = T extends number
+  ? { readonly selector?: typeof none }
+  : { readonly selector: Function1<number, T> };
+
+export type AnimationConfig<T = number> =
+  | ({ readonly type: "tween" } & TweenAnimationConfig &
+      AnimationConfigSelector<T>)
+  | ({ readonly type: "spring" } & SpringAnimationConfig &
+      AnimationConfigSelector<T>);
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+
+export interface Animate<C extends ObservableLike> extends Container<C> {
+  animate<T = number>(...configs: AnimationConfig<T>[]): ContainerOf<C, T>;
 }
 
 /**
