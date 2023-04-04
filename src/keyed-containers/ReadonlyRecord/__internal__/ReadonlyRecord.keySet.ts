@@ -1,6 +1,10 @@
 import { hasOwn } from "../../../__internal__/Object.js";
 import { ReadonlySetLike } from "../../../containers.js";
-import { KeyOf, KeySet, ReadonlyRecordLike } from "../../../keyed-containers.js";
+import {
+  KeyOf,
+  KeySet,
+  ReadonlyRecordLike,
+} from "../../../keyed-containers.js";
 
 const ReadonlyRecord_keySet: KeySet<ReadonlyRecordLike>["keySet"] =
   <TKey extends KeyOf<ReadonlyRecordLike> = KeyOf<ReadonlyRecordLike>>() =>

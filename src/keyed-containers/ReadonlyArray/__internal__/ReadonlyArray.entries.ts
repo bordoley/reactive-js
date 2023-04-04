@@ -1,7 +1,11 @@
 import { EnumeratorLike } from "../../../containers.js";
 import Iterator_enumerate from "../../../containers/Iterator/__internal__/Iterator.enumerate.js";
 import { pipe } from "../../../functions.js";
-import { Entries, KeyOf, ReadonlyArrayLike } from "../../../keyed-containers.js";
+import {
+  Entries,
+  KeyOf,
+  ReadonlyArrayLike,
+} from "../../../keyed-containers.js";
 
 const ReadonlyArray_entries: Entries<ReadonlyArrayLike>["entries"] =
   <T, TKey extends KeyOf<ReadonlyArrayLike> = KeyOf<ReadonlyArrayLike>>() =>
