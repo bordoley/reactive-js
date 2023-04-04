@@ -21,6 +21,10 @@ export interface ReadonlyArrayLike<T = unknown> extends KeyedContainerLike, Read
     readonly [ContainerLike_type]?: ReadonlyArrayLike<this[typeof ContainerLike_T]>;
     readonly [KeyedContainerLike_TKey]?: number;
 }
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface ReadonlyMapLike<TKey = unknown, T = unknown> extends ContainerLike, ReadonlyMap<TKey, T> {
     readonly [ContainerLike_type]?: ReadonlyMap<this[typeof KeyedContainerLike_TKey], this[typeof ContainerLike_T]>;
     readonly [KeyedContainerLike_TKey]?: unknown;
@@ -29,6 +33,12 @@ interface ReadonlyRecord extends ContainerLike {
     readonly [ContainerLike_type]?: ReadonlyRecordLike<NonNullable<this[typeof KeyedContainerLike_TKey]>, this[typeof ContainerLike_T]>;
     readonly [KeyedContainerLike_TKey]?: symbol | number | string;
 }
+/**
+ * A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
 export type ReadonlyRecordLike<TKey extends symbol | number | string = symbol | number | string, T = unknown> = Readonly<Record<TKey, T>> & ReadonlyRecord;
 /**
  * Utility type for higher order programming with keyed-containers.

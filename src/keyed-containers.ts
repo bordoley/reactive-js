@@ -45,6 +45,11 @@ export interface ReadonlyArrayLike<T = unknown>
   readonly [KeyedContainerLike_TKey]?: number;
 }
 
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface ReadonlyMapLike<TKey = unknown, T = unknown>
   extends ContainerLike,
     ReadonlyMap<TKey, T> {
@@ -65,6 +70,12 @@ interface ReadonlyRecord extends ContainerLike {
   readonly [KeyedContainerLike_TKey]?: symbol | number | string;
 }
 
+/**
+ * A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
 export type ReadonlyRecordLike<
   TKey extends symbol | number | string = symbol | number | string,
   T = unknown,

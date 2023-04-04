@@ -4,8 +4,6 @@
 
 [keyed-containers](../modules/keyed_containers.md).ReadonlyMapLike
 
-Base type for all Containers.
-
 ## Type parameters
 
 | Name | Type |
@@ -25,21 +23,10 @@ Base type for all Containers.
 
 ### Properties
 
-- [[ContainerLike\_T]](keyed_containers.ReadonlyMapLike.md#[containerlike_t])
 - [[ContainerLike\_type]](keyed_containers.ReadonlyMapLike.md#[containerlike_type])
 - [[KeyedContainerLike\_TKey]](keyed_containers.ReadonlyMapLike.md#[keyedcontainerlike_tkey])
 
 ## Properties
-
-### [ContainerLike\_T]
-
-• `Optional` `Readonly` **[ContainerLike\_T]**: `unknown`
-
-#### Inherited from
-
-[ContainerLike](containers.ContainerLike.md).[[ContainerLike_T]](containers.ContainerLike.md#[containerlike_t])
-
-___
 
 ### [ContainerLike\_type]
 
