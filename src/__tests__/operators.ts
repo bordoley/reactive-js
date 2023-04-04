@@ -58,7 +58,7 @@ import {
   pipeLazy,
   returns,
 } from "../functions.js";
-import * as ReadonlyArray from "../keyedcontainers/ReadonlyArray.js";
+import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
 import {
   ObservableLike,
   Retry,

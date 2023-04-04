@@ -12,7 +12,7 @@ import {
 import AsyncIterable_toAsyncEnumerable from "../containers/AsyncIterable/__internal__/AsyncIterable.toAsyncEnumerable.js";
 import Iterable_toAsyncEnumerable from "../containers/Iterable/__internal__/Iterable.toAsyncEnumerable.js";
 import Optional_toAsyncEnumerable from "../containers/Optional/__internal__/Optional.toAsyncEnumerable.js";
-import ReadonlyArray_toAsyncEnumerable from "../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
+import ReadonlyArray_toAsyncEnumerable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 import {
   FromEnumerable,
   GenerateLast,

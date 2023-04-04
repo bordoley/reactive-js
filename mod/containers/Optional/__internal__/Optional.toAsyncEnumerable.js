@@ -1,7 +1,7 @@
 /// <reference types="./Optional.toAsyncEnumerable.d.ts" />
 
 import { compose, none } from "../../../functions.js";
-import ReadonlyArray_toAsyncEnumerable from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
+import ReadonlyArray_toAsyncEnumerable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 import Optional_toReadonlyArray from "./Optional.toReadonlyArray.js";
 const Optional_toAsyncEnumerable = (options) => {
     const { delay = 0 } = options ?? {};

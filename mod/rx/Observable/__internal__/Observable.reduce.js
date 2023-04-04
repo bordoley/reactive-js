@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ReduceObserver_acc, ReduceObserver_reducer, } from "../../../__internal__/symbols.js";
 import { error, invoke, none, partial, pipe, } from "../../../functions.js";
-import ReadonlyArray_toObservable from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import ReadonlyArray_toObservable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";

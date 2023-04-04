@@ -4,7 +4,7 @@ import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { TakeLastObserver_takeLastQueue } from "../../../__internal__/symbols.js";
 import { invoke, none, partial, pipe } from "../../../functions.js";
-import ReadonlyArray_toObservable from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import ReadonlyArray_toObservable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { QueueableLike_enqueue } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";

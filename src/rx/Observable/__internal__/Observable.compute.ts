@@ -35,7 +35,7 @@ import {
   raiseError,
   raiseWithDebugMessage,
 } from "../../../functions.js";
-import ReadonlyArray_getLength from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   DispatcherLike_scheduler,
   ObservableLike,

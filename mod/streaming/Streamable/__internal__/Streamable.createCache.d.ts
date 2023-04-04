@@ -1,5 +1,5 @@
 import { Optional } from "../../../functions.js";
-import { ReadonlyRecordLike } from "../../../keyedcontainers.js";
+import { ReadonlyRecordLike } from "../../../keyed-containers.js";
 import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { CacheLike } from "../../../streaming.js";

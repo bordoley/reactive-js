@@ -4,7 +4,7 @@ import { ContainerLike_type, } from "../containers.js";
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
-import ReadonlyArray_toObservable from "../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import Enumerable_catchError from "../rx/Enumerable/__internal__/Enumerable.catchError.js";
 import Enumerable_concatAll from "../rx/Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "../rx/Enumerable/__internal__/Enumerable.concatMap.js";

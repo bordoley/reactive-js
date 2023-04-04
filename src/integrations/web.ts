@@ -30,7 +30,7 @@ import {
   returns,
   unsafeCast,
 } from "../functions.js";
-import * as ReadonlyArray from "../keyedcontainers/ReadonlyArray.js";
+import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
 import {
   MulticastObservableLike_replayBuffer,
   MulticastObservableReplayBufferLike,

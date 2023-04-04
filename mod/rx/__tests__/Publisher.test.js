@@ -2,7 +2,7 @@
 
 import { expectArrayEquals, expectEquals, test, testModule, } from "../../__internal__/testing.js";
 import { bindMethod, pipe } from "../../functions.js";
-import * as ReadonlyArray from "../../keyedcontainers/ReadonlyArray.js";
+import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import { MulticastObservableLike_observerCount, PublisherLike_publish, } from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";

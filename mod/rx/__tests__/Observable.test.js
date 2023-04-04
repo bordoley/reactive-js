@@ -2,7 +2,7 @@
 
 import { describe, expectArrayEquals, expectEquals, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import { increment, isSome, pipe, raise, returns, } from "../../functions.js";
-import * as ReadonlyArray from "../../keyedcontainers/ReadonlyArray.js";
+import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as Streamable from "../../streaming/Streamable.js";

@@ -16,7 +16,7 @@ import {
   ToReadonlyArray,
 } from "@reactive-js/core/containers";
 import * as Enumerable from "@reactive-js/core/rx/Enumerable";
-import * as ReadonlyArray from "@reactive-js/core/keyedcontainers/ReadonlyArray";
+import * as ReadonlyArray from "@reactive-js/core/keyed-containers/ReadonlyArray";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import { ToRunnable } from "@reactive-js/core/rx";
 

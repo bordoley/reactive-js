@@ -1,8 +1,8 @@
 /// <reference types="./Observable.concatObservables.d.ts" />
 
 import { pipe } from "../../../functions.js";
-import ReadonlyArray_getLength from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import ReadonlyArray_isEmpty from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
+import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_isEmpty from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";

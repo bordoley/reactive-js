@@ -128,37 +128,37 @@ Base type for Container type classes.
 
   ↳ [`ZipWith`](containers.ZipWith.md)
 
-  ↳ [`Empty`](keyedcontainers.Empty.md)
+  ↳ [`Empty`](keyed_containers.Empty.md)
 
-  ↳ [`Entries`](keyedcontainers.Entries.md)
+  ↳ [`Entries`](keyed_containers.Entries.md)
 
-  ↳ [`ForEach`](keyedcontainers.ForEach.md)
+  ↳ [`ForEach`](keyed_containers.ForEach.md)
 
-  ↳ [`ForEachWithKey`](keyedcontainers.ForEachWithKey.md)
+  ↳ [`ForEachWithKey`](keyed_containers.ForEachWithKey.md)
 
-  ↳ [`FromEntries`](keyedcontainers.FromEntries.md)
+  ↳ [`FromEntries`](keyed_containers.FromEntries.md)
 
-  ↳ [`FromReadonlyArray`](keyedcontainers.FromReadonlyArray.md)
+  ↳ [`FromReadonlyArray`](keyed_containers.FromReadonlyArray.md)
 
-  ↳ [`Identity`](keyedcontainers.Identity.md)
+  ↳ [`Identity`](keyed_containers.Identity.md)
 
-  ↳ [`Keep`](keyedcontainers.Keep.md)
+  ↳ [`Keep`](keyed_containers.Keep.md)
 
-  ↳ [`KeepType`](keyedcontainers.KeepType.md)
+  ↳ [`KeepType`](keyed_containers.KeepType.md)
 
-  ↳ [`KeepWithKey`](keyedcontainers.KeepWithKey.md)
+  ↳ [`KeepWithKey`](keyed_containers.KeepWithKey.md)
 
-  ↳ [`Keys`](keyedcontainers.Keys.md)
+  ↳ [`Keys`](keyed_containers.Keys.md)
 
-  ↳ [`KeySet`](keyedcontainers.KeySet.md)
+  ↳ [`KeySet`](keyed_containers.KeySet.md)
 
-  ↳ [`Map`](keyedcontainers.Map.md)
+  ↳ [`Map`](keyed_containers.Map.md)
 
-  ↳ [`MapWithKey`](keyedcontainers.MapWithKey.md)
+  ↳ [`MapWithKey`](keyed_containers.MapWithKey.md)
 
-  ↳ [`ToReadonlyArray`](keyedcontainers.ToReadonlyArray.md)
+  ↳ [`ToReadonlyArray`](keyed_containers.ToReadonlyArray.md)
 
-  ↳ [`Values`](keyedcontainers.Values.md)
+  ↳ [`Values`](keyed_containers.Values.md)
 
   ↳ [`BackpressureStrategy`](rx.BackpressureStrategy.md)
 

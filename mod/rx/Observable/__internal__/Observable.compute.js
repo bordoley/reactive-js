@@ -2,7 +2,7 @@
 
 import { AwaitOrObserveEffect_hasValue, AwaitOrObserveEffect_observable, AwaitOrObserveEffect_subscription, AwaitOrObserveEffect_value, ComputeContext_awaitOrObserve, ComputeContext_cleanup, ComputeContext_effects, ComputeContext_index, ComputeContext_memoOrUse, ComputeContext_mode, ComputeContext_observer, ComputeContext_runComputation, ComputeContext_scheduledComputationSubscription, ComputeEffect_type, MemoOrUsingEffect_args, MemoOrUsingEffect_func, MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
 import { arrayEquality, bind, bindMethod, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
-import ReadonlyArray_getLength from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";

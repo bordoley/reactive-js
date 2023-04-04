@@ -1,5 +1,5 @@
 import { compose, none } from "../../../functions.js";
-import ReadonlyArray_toAsyncEnumerable from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
+import ReadonlyArray_toAsyncEnumerable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 import Optional_toReadonlyArray from "./Optional.toReadonlyArray.js";
 
 const Optional_toAsyncEnumerable = <T>(options?: {

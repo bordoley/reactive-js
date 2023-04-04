@@ -25,10 +25,10 @@ import {
   ReadonlyArrayLike,
 } from "../../../containers.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
-import ReadonlyArray_every from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
-import ReadonlyArray_forEach from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_map from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import ReadonlyArray_some from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
+import ReadonlyArray_every from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_forEach from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
+import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import ReadonlyArray_some from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import {
   EnumerableLike,
   ObservableLike,

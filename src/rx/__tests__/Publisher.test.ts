@@ -5,7 +5,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import { bindMethod, pipe } from "../../functions.js";
-import * as ReadonlyArray from "../../keyedcontainers/ReadonlyArray.js";
+import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import {
   MulticastObservableLike_observerCount,
   PublisherLike_publish,

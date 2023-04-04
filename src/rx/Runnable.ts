@@ -49,7 +49,7 @@ import {
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
-import ReadonlyArray_toObservable from "../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   BackpressureStrategy,
   CombineLatest,

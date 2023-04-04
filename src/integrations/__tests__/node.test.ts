@@ -13,7 +13,7 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import * as ReadonlyArray from "../../keyedcontainers/ReadonlyArray.js";
+import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Runnable from "../../rx/Runnable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";

@@ -1,6 +1,6 @@
 /// <reference types="./Iterable.d.ts" />
 
-import ReadonlyArray_toReadonlyArray from "../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
+import ReadonlyArray_toReadonlyArray from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import Container_identity from "./Container/__internal__/Container.identity.js";
 import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
 import Iterable_toAsyncEnumerable from "./Iterable/__internal__/Iterable.toAsyncEnumerable.js";

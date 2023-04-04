@@ -2,8 +2,8 @@
 
 import { describe, expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
 import { arrayEquality, bindMethod, none, pipe, returns, } from "../../functions.js";
-import * as ReadonlyArray from "../../keyedcontainers/ReadonlyArray.js";
-import * as ReadonlyRecord from "../../keyedcontainers/ReadonlyRecord.js";
+import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
+import * as ReadonlyRecord from "../../keyed-containers/ReadonlyRecord.js";
 import { DispatcherLike_complete } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import { SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";

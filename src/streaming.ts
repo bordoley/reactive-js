@@ -15,7 +15,7 @@ import {
   ContainerOf,
 } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
-import { ReadonlyRecordLike } from "./keyedcontainers.js";
+import { ReadonlyRecordLike } from "./keyed-containers.js";
 import {
   DispatcherLike,
   MulticastObservableLike,

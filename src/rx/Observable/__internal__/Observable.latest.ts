@@ -16,8 +16,8 @@ import {
   LatestObserver_ready,
 } from "../../../__internal__/symbols.js";
 import { none, pipe } from "../../../functions.js";
-import ReadonlyArray_getLength from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import ReadonlyArray_map from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import {
   DispatcherLike_scheduler,
   ObservableLike,

@@ -1,6 +1,6 @@
 import { MergeObserverCtx_completedCount } from "../../../__internal__/symbols.js";
 import { pipe } from "../../../functions.js";
-import ReadonlyArray_getLength from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
 import Enumerablee_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";

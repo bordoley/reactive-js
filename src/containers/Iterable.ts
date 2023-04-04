@@ -5,7 +5,7 @@ import {
   IterableLike,
   ToReadonlyArray,
 } from "../containers.js";
-import ReadonlyArray_toReadonlyArray from "../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
+import ReadonlyArray_toReadonlyArray from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import Container_identity from "./Container/__internal__/Container.identity.js";

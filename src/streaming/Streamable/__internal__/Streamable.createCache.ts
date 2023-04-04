@@ -23,9 +23,9 @@ import {
   pipe,
   unsafeCast,
 } from "../../../functions.js";
-import { ReadonlyRecordLike } from "../../../keyedcontainers.js";
-import * as ReadonlyRecord from "../../../keyedcontainers/ReadonlyRecord.js";
-import ReadonlyRecord_union from "../../../keyedcontainers/ReadonlyRecord/__internal__/ReadonlyRecord.union.js";
+import { ReadonlyRecordLike } from "../../../keyed-containers.js";
+import * as ReadonlyRecord from "../../../keyed-containers/ReadonlyRecord.js";
+import ReadonlyRecord_union from "../../../keyed-containers/ReadonlyRecord/__internal__/ReadonlyRecord.union.js";
 import {
   DispatcherLike,
   ObservableLike,

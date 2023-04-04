@@ -12,9 +12,9 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import { ReadonlyRecordLike } from "../../keyedcontainers.js";
-import * as ReadonlyArray from "../../keyedcontainers/ReadonlyArray.js";
-import * as ReadonlyRecord from "../../keyedcontainers/ReadonlyRecord.js";
+import { ReadonlyRecordLike } from "../../keyed-containers.js";
+import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
+import * as ReadonlyRecord from "../../keyed-containers/ReadonlyRecord.js";
 import { DispatcherLike_complete } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import {

@@ -1,5 +1,5 @@
 import { Function1, Optional, compose, none } from "../../../functions.js";
-import ReadonlyArray_toObservable from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import ReadonlyArray_toObservable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { EnumerableLike, ObservableLike, RunnableLike } from "../../../rx.js";
 import Optional_toReadonlyArray from "./Optional.toReadonlyArray.js";
 

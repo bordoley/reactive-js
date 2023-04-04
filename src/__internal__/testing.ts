@@ -12,7 +12,7 @@ import {
   raise,
   strictEquality,
 } from "../functions.js";
-import ReadonlyArray_getLength from "../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_getLength from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { __DENO__ } from "./constants.js";
 
 export const DescribeType = 1;

@@ -1,7 +1,7 @@
 import { ReadonlyArrayLike } from "../../../containers.js";
 import { compose, isTrue } from "../../../functions.js";
-import ReadonlyArray_every from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
-import ReadonlyArray_map from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import ReadonlyArray_every from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { ObservableLike, RunnableLike } from "../../../rx.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
 

@@ -5,10 +5,10 @@ import { ZipObserver_enumerators, ZipObserver_queuedEnumerator, } from "../../..
 import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
-import ReadonlyArray_every from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
-import ReadonlyArray_forEach from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_map from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import ReadonlyArray_some from "../../../keyedcontainers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
+import ReadonlyArray_every from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_forEach from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
+import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import ReadonlyArray_some from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";

@@ -22,9 +22,9 @@ Base type for all Containers.
 
   ↳ [`EnumeratorLike`](containers.EnumeratorLike.md)
 
-  ↳ [`KeyedContainerLike`](keyedcontainers.KeyedContainerLike.md)
+  ↳ [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md)
 
-  ↳ [`ReadonlyMapLike`](keyedcontainers.ReadonlyMapLike.md)
+  ↳ [`ReadonlyMapLike`](keyed_containers.ReadonlyMapLike.md)
 
   ↳ [`ObservableLike`](rx.ObservableLike.md)
 
