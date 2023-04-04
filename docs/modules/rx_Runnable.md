@@ -6,6 +6,7 @@
 
 ### Constructor Functions
 
+- [animate](rx_Runnable.md#animate)
 - [combineLatest](rx_Runnable.md#combinelatest)
 - [concat](rx_Runnable.md#concat)
 - [currentTime](rx_Runnable.md#currenttime)
@@ -81,7 +82,6 @@
 
 ### Other Functions
 
-- [animate](rx_Runnable.md#animate)
 - [run](rx_Runnable.md#run)
 
 ### Transform Functions
@@ -95,6 +95,28 @@
 - [toRunnable](rx_Runnable.md#torunnable)
 
 ## Constructor Functions
+
+### animate
+
+▸ **animate**<`T`\>(`...configs`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...configs` | [`AnimationConfig`](rx.md#animationconfig)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
 
 ### combineLatest
 
@@ -3048,28 +3070,6 @@ ___
 ___
 
 ## Other Functions
-
-### animate
-
-▸ **animate**<`T`\>(`...configs`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...configs` | [`AnimationConfig`](rx.md#animationconfig)<`T`\>[] |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
-
-___
 
 ### run
 

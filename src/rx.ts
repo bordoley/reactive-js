@@ -181,7 +181,7 @@ export interface TweenAnimationConfig {
  * @category AnimationConfig
  */
 export interface SpringAnimationConfig {
-  readonly type: "spring"
+  readonly type: "spring";
   readonly from: number;
   readonly to: number;
   readonly stiffness?: number;
@@ -194,17 +194,17 @@ export type AnimationConfigSelector<T> = T extends number
   : { readonly selector: Function1<number, T> };
 
 export type AnimationConfig<T = number> =
-  |  (TweenAnimationConfig &
-      AnimationConfigSelector<T>)
-  |  (SpringAnimationConfig &
-      AnimationConfigSelector<T>);
+  | (TweenAnimationConfig & AnimationConfigSelector<T>)
+  | (SpringAnimationConfig & AnimationConfigSelector<T>);
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-
 export interface Animate<C extends ObservableLike> extends Container<C> {
+   /**
+   * @category Constructor
+   */
   animate<T = number>(...configs: AnimationConfig<T>[]): ContainerOf<C, T>;
 }
 

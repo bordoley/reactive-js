@@ -18,11 +18,11 @@
 
 ## Table of contents
 
-### Methods
+### Constructor Methods
 
 - [animate](rx.Animate.md#animate)
 
-## Methods
+## Constructor Methods
 
 ### animate
 

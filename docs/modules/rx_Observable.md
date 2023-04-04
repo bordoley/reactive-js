@@ -19,6 +19,7 @@
 
 ### Constructor Functions
 
+- [animate](rx_Observable.md#animate)
 - [combineLatest](rx_Observable.md#combinelatest)
 - [compute](rx_Observable.md#compute)
 - [concat](rx_Observable.md#concat)
@@ -107,7 +108,6 @@
 
 ### Other Functions
 
-- [animate](rx_Observable.md#animate)
 - [subscribe](rx_Observable.md#subscribe)
 
 ### Transform Functions
@@ -784,6 +784,28 @@ ___
 ___
 
 ## Constructor Functions
+
+### animate
+
+▸ **animate**<`T`\>(`...configs`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...configs` | [`AnimationConfig`](rx.md#animationconfig)<`T`\>[] |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+___
 
 ### combineLatest
 
@@ -4299,28 +4321,6 @@ ___
 ___
 
 ## Other Functions
-
-### animate
-
-▸ **animate**<`T`\>(`...configs`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...configs` | [`AnimationConfig`](rx.md#animationconfig)<`T`\>[] |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-___
 
 ### subscribe
 

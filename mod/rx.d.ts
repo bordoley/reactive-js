@@ -145,6 +145,9 @@ export type AnimationConfig<T = number> = (TweenAnimationConfig & AnimationConfi
  * @category TypeClass
  */
 export interface Animate<C extends ObservableLike> extends Container<C> {
+    /**
+    * @category Constructor
+    */
     animate<T = number>(...configs: AnimationConfig<T>[]): ContainerOf<C, T>;
 }
 /**
