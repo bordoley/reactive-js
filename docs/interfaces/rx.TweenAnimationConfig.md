@@ -12,6 +12,7 @@
 - [easing](rx.TweenAnimationConfig.md#easing)
 - [from](rx.TweenAnimationConfig.md#from)
 - [to](rx.TweenAnimationConfig.md#to)
+- [type](rx.TweenAnimationConfig.md#type)
 
 ## Properties
 
@@ -36,3 +37,9 @@ ___
 ### to
 
 • `Readonly` **to**: `number`
+
+___
+
+### type
+
+• `Readonly` **type**: ``"tween"``

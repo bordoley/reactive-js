@@ -13,6 +13,7 @@
 - [precision](rx.SpringAnimationConfig.md#precision)
 - [stiffness](rx.SpringAnimationConfig.md#stiffness)
 - [to](rx.SpringAnimationConfig.md#to)
+- [type](rx.SpringAnimationConfig.md#type)
 
 ## Properties
 
@@ -43,3 +44,9 @@ ___
 ### to
 
 • `Readonly` **to**: `number`
+
+___
+
+### type
+
+• `Readonly` **type**: ``"spring"``

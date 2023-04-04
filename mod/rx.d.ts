@@ -116,6 +116,7 @@ export interface PublisherLike<T = unknown> extends MulticastObservableLike<T> {
  * @category AnimationConfig
  */
 export interface TweenAnimationConfig {
+    readonly type: "tween";
     readonly from: number;
     readonly to: number;
     readonly duration: number;
@@ -126,22 +127,19 @@ export interface TweenAnimationConfig {
  * @category AnimationConfig
  */
 export interface SpringAnimationConfig {
+    readonly type: "spring";
     readonly from: number;
     readonly to: number;
     readonly stiffness?: number;
     readonly damping?: number;
     readonly precision?: number;
 }
-type AnimationConfigSelector<T> = T extends number ? {
+export type AnimationConfigSelector<T> = T extends number ? {
     readonly selector?: typeof none;
 } : {
     readonly selector: Function1<number, T>;
 };
-export type AnimationConfig<T = number> = ({
-    readonly type: "tween";
-} & TweenAnimationConfig & AnimationConfigSelector<T>) | ({
-    readonly type: "spring";
-} & SpringAnimationConfig & AnimationConfigSelector<T>);
+export type AnimationConfig<T = number> = (TweenAnimationConfig & AnimationConfigSelector<T>) | (SpringAnimationConfig & AnimationConfigSelector<T>);
 /**
  * @noInheritDoc
  * @category TypeClass
