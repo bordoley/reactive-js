@@ -2,15 +2,10 @@ import {
   Factory,
   Function1,
   Optional,
-  isNone,
   none,
   pipe,
 } from "../../../functions.js";
-import {
-  MulticastObservableLike,
-  ObservableLike,
-  ObservableLike_observe,
-} from "../../../rx.js";
+import { MulticastObservableLike, ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   QueueableLike,
@@ -18,7 +13,7 @@ import {
 } from "../../../util.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Publisher_createRefCounted from "../../Publisher/__internal__/Publisher.createRefCounted.js";
-import Observable_create from "./Observable.create.js";
+import Observable_defer from "./Observable.defer.js";
 import Observable_multicastImpl from "./Observable.multicastImpl.js";
 
 const Observable_share =
@@ -34,23 +29,24 @@ const Observable_share =
     let multicasted: Optional<MulticastObservableLike<T>> = none;
 
     // FIXME: Type test scheduler for VTS
-    return Observable_create<T>(observer => {
-      if (isNone(multicasted)) {
-        multicasted = pipe(
-          source,
-          Observable_multicastImpl<T>(
-            Publisher_createRefCounted,
-            schedulerOrFactory,
-            options,
-          ),
-          Disposable_onDisposed(() => {
-            multicasted = none;
-          }),
-        );
-      }
-
-      multicasted[ObservableLike_observe](observer);
-    });
+    return Observable_defer<T>(
+      () =>
+        multicasted ??
+        (() => {
+          multicasted = pipe(
+            source,
+            Observable_multicastImpl<T>(
+              Publisher_createRefCounted,
+              schedulerOrFactory,
+              options,
+            ),
+            Disposable_onDisposed(() => {
+              multicasted = none;
+            }),
+          );
+          return multicasted;
+        })(),
+    );
   };
 
 export default Observable_share;
