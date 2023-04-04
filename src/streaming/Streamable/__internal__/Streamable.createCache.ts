@@ -280,7 +280,7 @@ const createCacheStream: <T>(
       {
         get [CollectionLike_count]() {
           unsafeCast<TProperties<T>>(this);
-          return this.store.size;
+          return this.subscriptions.size;
         },
 
         [KeyedCollectionLike_get](

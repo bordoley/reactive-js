@@ -39,10 +39,11 @@ import {
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 import { ObservableLike } from "@reactive-js/core/rx";
-import { QueueableLike_enqueue , KeyedCollectionLike_get} from "@reactive-js/core/util";
 import {
-  CacheStreamLike,
-} from "@reactive-js/core/streaming";
+  QueueableLike_enqueue,
+  KeyedCollectionLike_get,
+} from "@reactive-js/core/util";
+import { CacheStreamLike } from "@reactive-js/core/streaming";
 
 const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
   const values = cache[KeyedCollectionLike_get]("a");

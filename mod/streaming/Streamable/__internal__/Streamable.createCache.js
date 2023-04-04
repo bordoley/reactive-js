@@ -92,7 +92,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
     }), {
         get [CollectionLike_count]() {
             unsafeCast(this);
-            return this.store.size;
+            return this.subscriptions.size;
         },
         [KeyedCollectionLike_get](key) {
             const { scheduleCleanup, store, subscriptions, [DelegatingLike_delegate]: delegate, } = this;
