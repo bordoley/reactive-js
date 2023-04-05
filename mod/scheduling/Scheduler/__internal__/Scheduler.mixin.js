@@ -18,8 +18,7 @@ class YieldError {
         this.delay = delay;
     }
 }
-export const PriorityScheduler_mixin = 
-/*@__PURE__*/ (() => {
+export const PriorityScheduler_mixin = /*@__PURE__*/ (() => {
     const createContinuation = createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function Continuation(instance, scheduler, effect, priority) {
         init(Disposable_mixin, instance);
         init(IndexedQueue_fifoQueueMixin(), instance, MAX_SAFE_INTEGER, "overflow");
@@ -122,8 +121,7 @@ export const PriorityScheduler_mixin =
             }
         },
     }));
-    return mix(include(Disposable_mixin), function SchedulerMixin(instance, maxYieldInterval) {
-        init(Disposable_mixin, instance);
+    return mix(function SchedulerMixin(instance, maxYieldInterval) {
         instance[SchedulerLike_maxYieldInterval] =
             clampPositiveInteger(maxYieldInterval);
         return instance;
@@ -144,8 +142,7 @@ export const PriorityScheduler_mixin =
             const isDisposed = this[DisposableLike_isDisposed];
             const yieldRequested = this[SchedulerMixin_yieldRequested];
             const exceededMaxYieldInterval = this[SchedulerLike_now] >
-                this[SchedulerMixin_startTime] +
-                    this[SchedulerLike_maxYieldInterval];
+                this[SchedulerMixin_startTime] + this[SchedulerLike_maxYieldInterval];
             return (inContinuation &&
                 (isDisposed ||
                     yieldRequested ||

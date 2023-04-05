@@ -42,6 +42,7 @@ import {
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
 import {
   ContinuationLike,
@@ -78,6 +79,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
   createInstanceFactory(
     mix(
       include(
+        Disposable_mixin,
         PriorityScheduler_mixin,
         typedMutableEnumeratorMixin,
         Queue_priorityQueueMixin<VirtualTask>(),
@@ -90,6 +92,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           Mutable<TProperties>,
         maxMicroTaskTicks: number,
       ): VirtualTimeSchedulerLike {
+        init(Disposable_mixin, instance);
         init(PriorityScheduler_mixin, instance, 1);
         init(typedMutableEnumeratorMixin, instance);
         init(

@@ -69,6 +69,7 @@ import {
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
 import {
@@ -239,6 +240,7 @@ const Scheduler_createQueueScheduler: Function2<
   return createInstanceFactory(
     mix(
       include(
+        Disposable_mixin,
         PriorityScheduler_mixin,
         typedMutableEnumeratorMixin,
         typedSerialDisposableMixin,
@@ -258,6 +260,7 @@ const Scheduler_createQueueScheduler: Function2<
         host: SchedulerLike,
         createImmediateQueue: Factory<QueueLike<QueueTask>>,
       ): PauseableSchedulerLike & PrioritySchedulerLike {
+        init(Disposable_mixin, instance);
         init(
           PriorityScheduler_mixin,
           instance,

@@ -78,13 +78,14 @@ import {
   QueueableLike_enqueue,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
+import Disposable_mixin from "../util/Disposable/__internal__/Disposable.mixin.js";
 
 const createSchedulerWithPriority = /*@__PURE__*/ (() => {
   type TProperties = unknown;
 
   const createPriorityScheduler = createInstanceFactory(
     mix(
-      include(PriorityScheduler_mixin),
+      include(Disposable_mixin, PriorityScheduler_mixin),
       function ReactPriorityScheduler(
         instance: Pick<
           PrioritySchedulerImplementationLike,
@@ -93,6 +94,7 @@ const createSchedulerWithPriority = /*@__PURE__*/ (() => {
           | typeof ContinuationSchedulerLike_schedule
         >,
       ): PrioritySchedulerLike {
+        init(Disposable_mixin, instance);
         init(PriorityScheduler_mixin, instance, 300);
         return instance;
       },
