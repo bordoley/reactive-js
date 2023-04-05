@@ -13,7 +13,13 @@ import {
   EnumeratorLike_move,
 } from "../../../containers.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
-import { newInstance, none, pipe, unsafeCast } from "../../../functions.js";
+import {
+  error,
+  newInstance,
+  none,
+  pipe,
+  unsafeCast,
+} from "../../../functions.js";
 import {
   CollectionLike_count,
   DisposableLike_dispose,
@@ -95,7 +101,11 @@ const EventPublisher_create: <T>(options?: {
           this[ReplayableLike_buffer][QueueableLike_enqueue](next);
 
           for (const listener of this.l) {
-            listener[EventListenerLike_notify](next);
+            try {
+              listener[EventListenerLike_notify](next);
+            } catch (e) {
+              listener[DisposableLike_dispose](error(e));
+            }
           }
         },
 
@@ -117,9 +127,13 @@ const EventPublisher_create: <T>(options?: {
 
           const buffer = this[ReplayableLike_buffer];
           const count = buffer[CollectionLike_count];
-          for (let i = 0; i < count; i++) {
-            const next = buffer[KeyedCollectionLike_get](i);
-            listener[EventListenerLike_notify](next);
+          try {
+            for (let i = 0; i < count; i++) {
+              const next = buffer[KeyedCollectionLike_get](i);
+              listener[EventListenerLike_notify](next);
+            }
+          } catch (e) {
+            listener[DisposableLike_dispose](error(e));
           }
         },
       },

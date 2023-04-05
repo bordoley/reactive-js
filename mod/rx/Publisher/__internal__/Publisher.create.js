@@ -5,7 +5,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { Publisher_observers } from "../../../__internal__/symbols.js";
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
-import { isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
+import { error, isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, EventListenerLike_notify, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ReplayableLike_buffer, } from "../../../rx.js";
 import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -45,7 +45,12 @@ const Publisher_create = /*@__PURE__*/ (() => {
             }
             this[ReplayableLike_buffer][QueueableLike_enqueue](next);
             for (const observer of this[Publisher_observers]) {
-                observer[QueueableLike_enqueue](next);
+                try {
+                    observer[QueueableLike_enqueue](next);
+                }
+                catch (e) {
+                    observer[DisposableLike_dispose](error(e));
+                }
             }
         },
         [ObservableLike_observe](observer) {
@@ -61,9 +66,14 @@ const Publisher_create = /*@__PURE__*/ (() => {
             // So we marshall those events back to the scheduler.
             const buffer = this[ReplayableLike_buffer];
             const count = buffer[CollectionLike_count];
-            for (let i = 0; i < count; i++) {
-                const next = buffer[KeyedCollectionLike_get](i);
-                observer[QueueableLike_enqueue](next);
+            try {
+                for (let i = 0; i < count; i++) {
+                    const next = buffer[KeyedCollectionLike_get](i);
+                    observer[QueueableLike_enqueue](next);
+                }
+            }
+            catch (e) {
+                observer[DisposableLike_dispose](error(e));
             }
         },
     }));

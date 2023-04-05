@@ -15,6 +15,7 @@ import {
 } from "../../../containers.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import {
+  error,
   isSome,
   newInstance,
   none,
@@ -121,7 +122,11 @@ const Publisher_create: <T>(options?: {
           this[ReplayableLike_buffer][QueueableLike_enqueue](next);
 
           for (const observer of this[Publisher_observers]) {
-            observer[QueueableLike_enqueue](next);
+            try {
+              observer[QueueableLike_enqueue](next);
+            } catch (e) {
+              observer[DisposableLike_dispose](error(e));
+            }
           }
         },
 
@@ -146,9 +151,14 @@ const Publisher_create: <T>(options?: {
           // So we marshall those events back to the scheduler.
           const buffer = this[ReplayableLike_buffer];
           const count = buffer[CollectionLike_count];
-          for (let i = 0; i < count; i++) {
-            const next = buffer[KeyedCollectionLike_get](i);
-            observer[QueueableLike_enqueue](next);
+
+          try {
+            for (let i = 0; i < count; i++) {
+              const next = buffer[KeyedCollectionLike_get](i);
+              observer[QueueableLike_enqueue](next);
+            }
+          } catch (e) {
+            observer[DisposableLike_dispose](error(e));
           }
         },
       },
