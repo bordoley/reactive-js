@@ -136,7 +136,7 @@ const Root = () => {
     [],
   );
 
-  const divRef = useAnimatedValue<HTMLDivElement>(animatedValue, identity);
+  const divRef = useAnimatedValue<HTMLDivElement>(animatedValue);
 
   const enumerable = useMemo(
     () => Enumerable.generate(increment, () => -1),
@@ -374,6 +374,5 @@ ReactDOMClient.createRoot(rootElement as any).render(
   <WindowLocationProvider>
     <Root />
     <RootRxComponent />
-    <Wordle />
   </WindowLocationProvider>,
 );

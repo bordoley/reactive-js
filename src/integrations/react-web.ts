@@ -12,6 +12,7 @@ import {
   Optional,
   Updater,
   bindMethod,
+  identity,
   isNone,
   isSome,
   none,
@@ -131,15 +132,27 @@ export const WindowLocationProvider: React.FunctionComponent<{
     : null;
 };
 
+interface UseAnimatedValue {
+  useAnimatedValue<TElement extends HTMLElement>(
+    value: Optional<
+      EventSourceLike<Readonly<Partial<Record<CSSStyleKey, Optional<string>>>>>
+    >,
+  ): React.RefObject<TElement>;
+
+  useAnimatedValue<TElement extends HTMLElement, T>(
+    value: Optional<EventSourceLike<T>>,
+    selector: (v: T) => Partial<ReadonlyRecordLike<CSSStyleKey, string>>,
+  ): React.RefObject<TElement>;
+}
 /**
  * @category Hook
  */
-export const useAnimatedValue = <
+export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
   TElement extends HTMLElement,
   T = Readonly<Partial<Record<CSSStyleKey, Optional<string>>>>,
 >(
   value: Optional<EventSourceLike<T>>,
-  selector: (v: T) => Partial<ReadonlyRecordLike<CSSStyleKey, string>>,
+  selector = identity,
 ): React.RefObject<TElement> => {
   const ref = useRef<TElement>(null);
 
@@ -166,4 +179,4 @@ export const useAnimatedValue = <
   }, [value, selector, ref]);
 
   return ref;
-};
+}) as UseAnimatedValue["useAnimatedValue"];
