@@ -44,6 +44,9 @@ import {
   KeyedCollectionLike_get,
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
+import * as Scheduler from "@reactive-js/core/scheduling/Scheduler";
+
+const hostScheduler = Scheduler.createHostScheduler();
 
 const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
   const values = cache[KeyedCollectionLike_get]("a");
@@ -133,7 +136,7 @@ const Root = () => {
             animatedDiv.style.padding = padding;
           }
         }),
-        Observable.subscribeOn(createAnimationFrameScheduler),
+        Observable.subscribeOn(() => createAnimationFrameScheduler(hostScheduler)),
         returns,
       ),
       { mode: "blocking" },
@@ -240,7 +243,7 @@ const RxComponent = createComponent(
               animatedDiv.style.padding = padding;
             }
           }),
-          Observable.subscribeOn(createAnimationFrameScheduler),
+          Observable.subscribeOn(() => createAnimationFrameScheduler(hostScheduler)),
           returns,
         ),
         { mode: "switching" },

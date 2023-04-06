@@ -94,6 +94,8 @@ export declare const WindowLocationStream_historyCounter: unique symbol;
 
 export declare const WindowLocationStreamLike_replace: unique symbol;
 
+export declare const AnimationFrameScheduler_delayScheduler: unique symbol;
+
 export declare const MutableEnumeratorLike_reset: unique symbol;
 
 export declare const Enumerator_private_current: unique symbol;

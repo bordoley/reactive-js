@@ -227,6 +227,11 @@ export const WindowLocationStreamLike_replace = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const AnimationFrameScheduler_delayScheduler = /*@__PURE__*/ symbol(
+  "AnimationFrameScheduler_delayScheduler",
+);
+
+/** @type {unique symbol} */
 export const MutableEnumeratorLike_reset = /*@__PURE__*/ symbol(
   "MutableEnumeratorLike_reset",
 );

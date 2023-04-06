@@ -98,6 +98,8 @@ export const WindowLocationStream_historyCounter = /*@__PURE__*/ symbol("WindowL
 /** @type {unique symbol} */
 export const WindowLocationStreamLike_replace = /*@__PURE__*/ symbol("WindowLocationStreamLike_replace");
 /** @type {unique symbol} */
+export const AnimationFrameScheduler_delayScheduler = /*@__PURE__*/ symbol("AnimationFrameScheduler_delayScheduler");
+/** @type {unique symbol} */
 export const MutableEnumeratorLike_reset = /*@__PURE__*/ symbol("MutableEnumeratorLike_reset");
 /** @type {unique symbol} */
 export const Enumerator_private_current = /*@__PURE__*/ symbol("Enumerator_private_current");

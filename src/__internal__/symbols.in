@@ -68,6 +68,8 @@ WindowLocationStreamLike_canGoBack
 WindowLocationStream_historyCounter
 WindowLocationStreamLike_replace
 
+
+AnimationFrameScheduler_delayScheduler
 MutableEnumeratorLike_reset
 Enumerator_private_current
 ReadonlyArrayEnumerator_values

@@ -16,7 +16,13 @@
 
 ### createAnimationFrameScheduler
 
-▸ **createAnimationFrameScheduler**(): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+▸ **createAnimationFrameScheduler**(`a`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
 
 #### Returns
 

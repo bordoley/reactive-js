@@ -95,6 +95,8 @@ export const WindowLocationStream_historyCounter: unique symbol;
 /** @type {unique symbol} */
 export const WindowLocationStreamLike_replace: unique symbol;
 /** @type {unique symbol} */
+export const AnimationFrameScheduler_delayScheduler: unique symbol;
+/** @type {unique symbol} */
 export const MutableEnumeratorLike_reset: unique symbol;
 /** @type {unique symbol} */
 export const Enumerator_private_current: unique symbol;
