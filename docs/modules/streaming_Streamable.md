@@ -12,6 +12,7 @@
 - [createInMemoryCache](streaming_Streamable.md#createinmemorycache)
 - [createPersistentCache](streaming_Streamable.md#createpersistentcache)
 - [createStateStore](streaming_Streamable.md#createstatestore)
+- [createStatefulEventHandler](streaming_Streamable.md#createstatefuleventhandler)
 - [identity](streaming_Streamable.md#identity)
 
 ### Other Functions
@@ -136,7 +137,6 @@ Returns an event handler that invokes the observable function.
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
-| `options.maxConcurrency?` | `number` |
 | `options.mode` | ``"queueing"`` |
 
 #### Returns
@@ -221,6 +221,78 @@ new state based upon the previous state.
 #### Returns
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+
+___
+
+### createStatefulEventHandler
+
+▸ **createStatefulEventHandler**<`TState`\>(`op`, `initialState`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`TState`\>, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`TState`\>, `never`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TState` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`Function2`](functions.md#function2)<`TState`, `TState`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
+| `options` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`TState`\> |
+| `options.mode` | ``"switching"`` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`TState`\>, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`TState`\>, `never`\>\>
+
+▸ **createStatefulEventHandler**<`TState_1`\>(`op`, `initialState`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`TState_1`\>, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`TState_1`\>, `boolean`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TState_1` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`Function2`](functions.md#function2)<`TState_1`, `TState_1`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `initialState` | [`Factory`](functions.md#factory)<`TState_1`\> |
+| `options` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`TState_1`\> |
+| `options.mode` | ``"blocking"`` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`TState_1`\>, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`TState_1`\>, `boolean`\>\>
+
+▸ **createStatefulEventHandler**<`TState_2`\>(`op`, `initialState`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`TState_2`\>, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`TState_2`\>, `never`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TState_2` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`Function2`](functions.md#function2)<`TState_2`, `TState_2`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `initialState` | [`Factory`](functions.md#factory)<`TState_2`\> |
+| `options` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`TState_2`\> |
+| `options.mode` | ``"queueing"`` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`TState_2`\>, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`TState_2`\>, `never`\>\>
 
 ___
 

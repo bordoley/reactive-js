@@ -98,15 +98,15 @@ const createCacheStream = /*@__PURE__*/ (() => {
             const { scheduleCleanup, store, subscriptions, [DelegatingLike_delegate]: delegate, } = this;
             return (subscriptions.get(key) ??
                 (() => {
-                    const subject = Publisher.createRefCounted({ replay: 1 });
-                    subscriptions.set(key, subject);
-                    pipe(subject, Disposable.onDisposed(_ => {
+                    const publisher = Publisher.createRefCounted({ replay: 1 });
+                    subscriptions.set(key, publisher);
+                    pipe(publisher, Disposable.onDisposed(_ => {
                         subscriptions.delete(key);
                         scheduleCleanup(key);
                     }), Disposable.addToIgnoringChildErrors(this));
                     const initialValue = store.get(key);
                     if (isSome(initialValue)) {
-                        subject[EventListenerLike_notify](initialValue);
+                        publisher[EventListenerLike_notify](initialValue);
                     }
                     else {
                         // Try to load the value from the persistence store
@@ -114,7 +114,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                             [key]: identity,
                         });
                     }
-                    return subject;
+                    return publisher;
                 })());
         },
     }));

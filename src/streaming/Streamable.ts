@@ -6,6 +6,7 @@ import Streamable_createEventHandler from "./Streamable/__internal__/Streamable.
 import Streamable_createInMemoryCache from "./Streamable/__internal__/Streamable.createInMemoryCache.js";
 import Streamable_createPersistentCache from "./Streamable/__internal__/Streamable.createPersistentCache.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
+import Streamable_createStatefulEventHandler from "./Streamable/__internal__/Streamable.createStatefulEventHandler.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
 
@@ -47,6 +48,11 @@ export const createInMemoryCache = Streamable_createInMemoryCache;
  * @category Constructor
  */
 export const createPersistentCache = Streamable_createPersistentCache;
+
+/**
+ * @category Constructor
+ */
+export const createStatefulEventHandler = Streamable_createStatefulEventHandler;
 
 /**
  * Returns a new `StateStoreLike` instance that stores state which can

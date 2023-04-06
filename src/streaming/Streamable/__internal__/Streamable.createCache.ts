@@ -303,11 +303,11 @@ const createCacheStream: <T>(
           return (
             subscriptions.get(key) ??
             (() => {
-              const subject = Publisher.createRefCounted<T>({ replay: 1 });
-              subscriptions.set(key, subject);
+              const publisher = Publisher.createRefCounted<T>({ replay: 1 });
+              subscriptions.set(key, publisher);
 
               pipe(
-                subject,
+                publisher,
                 Disposable.onDisposed(_ => {
                   subscriptions.delete(key);
                   scheduleCleanup(key);
@@ -318,7 +318,7 @@ const createCacheStream: <T>(
               const initialValue = store.get(key);
 
               if (isSome(initialValue)) {
-                subject[EventListenerLike_notify](initialValue);
+                publisher[EventListenerLike_notify](initialValue);
               } else {
                 // Try to load the value from the persistence store
                 delegate[QueueableLike_enqueue]({
@@ -326,7 +326,7 @@ const createCacheStream: <T>(
                 });
               }
 
-              return subject;
+              return publisher;
             })()
           );
         },

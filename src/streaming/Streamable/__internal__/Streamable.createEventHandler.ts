@@ -28,7 +28,6 @@ interface CreateEventHandler {
       readonly mode: "queueing";
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
-      readonly maxConcurrency?: number;
     },
   ): StreamableLike<TEvent, never>;
 }
@@ -40,7 +39,6 @@ const Streamable_createEventHandler: CreateEventHandler["createEventHandler"] =
       readonly mode: "switching" | "blocking" | "queueing";
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
-      readonly maxConcurrency?: number;
     },
   ): StreamableLike<TEvent, unknown> => {
     const { mode } = options;
@@ -63,7 +61,7 @@ const Streamable_createEventHandler: CreateEventHandler["createEventHandler"] =
           )
         : Observable_mergeMap<TEvent, never>(
             compose(op, Observable_ignoreElements<ObservableLike, never>()),
-            options,
+            { ...options, maxConcurrency: 1 },
           ),
     );
   }) as CreateEventHandler["createEventHandler"];

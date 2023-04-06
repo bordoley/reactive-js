@@ -13,7 +13,6 @@ interface CreateEventHandler {
         readonly mode: "queueing";
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-        readonly maxConcurrency?: number;
     }): StreamableLike<TEvent, never>;
 }
 declare const Streamable_createEventHandler: CreateEventHandler["createEventHandler"];

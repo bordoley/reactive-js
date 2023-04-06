@@ -34,7 +34,6 @@ export declare const createEventHandler: {
         readonly mode: "queueing";
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
-        readonly maxConcurrency?: number | undefined;
     }): StreamableLike<TEvent_2, never, StreamLike<TEvent_2, never>>;
 };
 /**
@@ -54,6 +53,25 @@ export declare const createPersistentCache: <T>(persistentStore: {
     readonly capacity?: number | undefined;
     readonly cleanupScheduler?: import("../scheduling.js").SchedulerLike | undefined;
 }) => import("../streaming.js").CacheLike<T>;
+/**
+ * @category Constructor
+ */
+export declare const createStatefulEventHandler: {
+    <TState>(op: import("../functions.js").Function2<TState, TState, import("../rx.js").ObservableLike<unknown>>, initialState: Factory<TState>, options: {
+        readonly mode: "switching";
+        readonly equality?: Equality<TState> | undefined;
+    }): StreamableLike<Updater<TState>, never, StreamLike<Updater<TState>, never>>;
+    <TState_1>(op: import("../functions.js").Function2<TState_1, TState_1, import("../rx.js").ObservableLike<unknown>>, initialState: Factory<TState_1>, options: {
+        readonly mode: "blocking";
+        readonly equality?: Equality<TState_1> | undefined;
+    }): StreamableLike<Updater<TState_1>, boolean, StreamLike<Updater<TState_1>, boolean>>;
+    <TState_2>(op: import("../functions.js").Function2<TState_2, TState_2, import("../rx.js").ObservableLike<unknown>>, initialState: Factory<TState_2>, options: {
+        readonly mode: "queueing";
+        readonly equality?: Equality<TState_2> | undefined;
+        readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
+        readonly capacity?: number | undefined;
+    }): StreamableLike<Updater<TState_2>, never, StreamLike<Updater<TState_2>, never>>;
+};
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
  * be updated by notifying the instance with a `StateUpdater` that computes a
