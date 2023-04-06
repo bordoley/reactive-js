@@ -39,7 +39,6 @@ import {
   KeyedCollectionLike_get,
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
-import { identity } from "@reactive-js/core/functions";
 import * as Scheduler from "@reactive-js/core/scheduling/Scheduler";
 
 // FIXME: should probably export the react scheduler in its own module for outside of hooks use cases.
@@ -115,19 +114,14 @@ const Root = () => {
 
   const [animatedValue, dispatch, animationRunning] = useAnimation(
     () => {
-      const selector = (v: number) => ({
-        margin: `${50 - v}px`,
-        padding: `${v}px`,
-      });
-
       return [
         {
           type: "loop",
           count: 2,
           animation: [
-            { type: "tween", duration: 1000, from: 0, to: 50, selector },
+            { type: "tween", duration: 1000, from: 0, to: 50 },
             { type: "delay", duration: 500 },
-            { type: "tween", duration: 1000, from: 50, to: 0, selector },
+            { type: "tween", duration: 1000, from: 50, to: 0 },
           ],
         },
       ];
@@ -136,7 +130,18 @@ const Root = () => {
     [],
   );
 
-  const divRef = useAnimatedValue<HTMLDivElement>(animatedValue);
+  const selector = useCallback(
+    (v: number) => ({
+      margin: `${50 - v}px`,
+      padding: `${v}px`,
+    }),
+    [],
+  );
+
+  const divRef = useAnimatedValue<HTMLDivElement, number>(
+    animatedValue,
+    selector,
+  );
 
   const enumerable = useMemo(
     () => Enumerable.generate(increment, () => -1),
@@ -307,6 +312,7 @@ const RootRxComponent = () => {
   return <RxComponent windowLocationStream={windowLocationStream} />;
 };
 
+/*
 const items = ["W", "O", "R", "D", "L", "E"];
 
 const SharedStyles = {
@@ -367,7 +373,7 @@ const Wordle = () => {
       ))}
     </div>
   );
-};
+};*/
 
 const rootElement = document.getElementById("root");
 ReactDOMClient.createRoot(rootElement as any).render(

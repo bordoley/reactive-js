@@ -391,7 +391,7 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T>(
+  useAnimation<TEvent, T = number>(
     animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
     eventOptions: { readonly mode: "switching" },
     deps: readonly unknown[],
@@ -405,7 +405,7 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T>(
+  useAnimation<TEvent, T = number>(
     animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
     eventOptions: { readonly mode: "blocking" },
     deps: readonly unknown[],
@@ -423,7 +423,7 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T>(
+  useAnimation<TEvent, T = number>(
     animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
     eventOptions: {
       readonly mode: "queueing";
@@ -442,7 +442,7 @@ interface UseAnimation {
 /**
  * @category Hook
  */
-export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
+export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T = number>(
   animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
   eventOptions: {
     readonly mode: "switching" | "blocking" | "queueing";
@@ -506,7 +506,7 @@ interface UseStatefulAnimation {
   /**
    * @category Hook
    */
-  useStatefulAnimation<TState, T>(
+  useStatefulAnimation<TState, T = number>(
     animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
     initialState: Factory<TState>,
     eventOptions: {
@@ -528,7 +528,7 @@ interface UseStatefulAnimation {
   /**
    * @category Hook
    */
-  useStatefulAnimation<TState, T>(
+  useStatefulAnimation<TState, T = number>(
     animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
     initialState: Factory<TState>,
     eventOptions: {
@@ -550,7 +550,7 @@ interface UseStatefulAnimation {
   /**
    * @category Hook
    */
-  useStatefulAnimation<TState, T>(
+  useStatefulAnimation<TState, T = number>(
     animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
     initialState: Factory<TState>,
     eventOptions: {

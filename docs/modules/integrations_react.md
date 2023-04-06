@@ -26,10 +26,10 @@
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TEvent` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TEvent` | `TEvent` |
+| `T` | `number` |
 
 #### Parameters
 
@@ -52,10 +52,10 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TEvent` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TEvent` | `TEvent` |
+| `T` | `number` |
 
 #### Parameters
 
@@ -78,10 +78,10 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TEvent` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TEvent` | `TEvent` |
+| `T` | `number` |
 
 #### Parameters
 
@@ -200,10 +200,10 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TState` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TState` | `TState` |
+| `T` | `number` |
 
 #### Parameters
 
@@ -228,10 +228,10 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TState` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TState` | `TState` |
+| `T` | `number` |
 
 #### Parameters
 
@@ -256,10 +256,10 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TState` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TState` | `TState` |
+| `T` | `number` |
 
 #### Parameters
 
