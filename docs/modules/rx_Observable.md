@@ -176,7 +176,7 @@ ___
 | :------ | :------ |
 | `T` | extends { [K in string \| number \| symbol]: Function } |
 | `TKey` | extends `string` \| `number` \| `symbol` |
-| `TFunction` | extends `Function` |
+| `TFunction` | extends (...`args`: `any`[]) => `any` |
 
 #### Parameters
 
@@ -234,125 +234,125 @@ ___
 
 `void`
 
-▸ **__do**<`TA`, `TB`\>(`fn`, `a`, `b`): `void`
+▸ **__do**<`TA_1`, `TB`\>(`fn`, `a`, `b`): `void`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
+| `TA_1` |
 | `TB` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`SideEffect2`](functions.md#sideeffect2)<`TA`, `TB`\> |
-| `a` | `TA` |
+| `fn` | [`SideEffect2`](functions.md#sideeffect2)<`TA_1`, `TB`\> |
+| `a` | `TA_1` |
 | `b` | `TB` |
 
 #### Returns
 
 `void`
 
-▸ **__do**<`TA`, `TB`, `TC`\>(`fn`, `a`, `b`, `c`): `void`
+▸ **__do**<`TA_2`, `TB_1`, `TC`\>(`fn`, `a`, `b`, `c`): `void`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
+| `TA_2` |
+| `TB_1` |
 | `TC` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`SideEffect3`](functions.md#sideeffect3)<`TA`, `TB`, `TC`\> |
-| `a` | `TA` |
-| `b` | `TB` |
+| `fn` | [`SideEffect3`](functions.md#sideeffect3)<`TA_2`, `TB_1`, `TC`\> |
+| `a` | `TA_2` |
+| `b` | `TB_1` |
 | `c` | `TC` |
 
 #### Returns
 
 `void`
 
-▸ **__do**<`TA`, `TB`, `TC`, `TD`\>(`fn`, `a`, `b`, `c`, `d`): `void`
+▸ **__do**<`TA_3`, `TB_2`, `TC_1`, `TD`\>(`fn`, `a`, `b`, `c`, `d`): `void`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
+| `TA_3` |
+| `TB_2` |
+| `TC_1` |
 | `TD` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`SideEffect4`](functions.md#sideeffect4)<`TA`, `TB`, `TC`, `TD`\> |
-| `a` | `TA` |
-| `b` | `TB` |
-| `c` | `TC` |
+| `fn` | [`SideEffect4`](functions.md#sideeffect4)<`TA_3`, `TB_2`, `TC_1`, `TD`\> |
+| `a` | `TA_3` |
+| `b` | `TB_2` |
+| `c` | `TC_1` |
 | `d` | `TD` |
 
 #### Returns
 
 `void`
 
-▸ **__do**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`fn`, `a`, `b`, `c`, `d`, `e`): `void`
+▸ **__do**<`TA_4`, `TB_3`, `TC_2`, `TD_1`, `TE`\>(`fn`, `a`, `b`, `c`, `d`, `e`): `void`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
+| `TA_4` |
+| `TB_3` |
+| `TC_2` |
+| `TD_1` |
 | `TE` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`SideEffect5`](functions.md#sideeffect5)<`TA`, `TB`, `TC`, `TD`, `TE`\> |
-| `a` | `TA` |
-| `b` | `TB` |
-| `c` | `TC` |
-| `d` | `TD` |
+| `fn` | [`SideEffect5`](functions.md#sideeffect5)<`TA_4`, `TB_3`, `TC_2`, `TD_1`, `TE`\> |
+| `a` | `TA_4` |
+| `b` | `TB_3` |
+| `c` | `TC_2` |
+| `d` | `TD_1` |
 | `e` | `TE` |
 
 #### Returns
 
 `void`
 
-▸ **__do**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`fn`, `a`, `b`, `c`, `d`, `e`, `f`): `void`
+▸ **__do**<`TA_5`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`\>(`fn`, `a`, `b`, `c`, `d`, `e`, `f`): `void`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
+| `TA_5` |
+| `TB_4` |
+| `TC_3` |
+| `TD_2` |
+| `TE_1` |
 | `TF` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`SideEffect6`](functions.md#sideeffect6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\> |
-| `a` | `TA` |
-| `b` | `TB` |
-| `c` | `TC` |
-| `d` | `TD` |
-| `e` | `TE` |
+| `fn` | [`SideEffect6`](functions.md#sideeffect6)<`TA_5`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`\> |
+| `a` | `TA_5` |
+| `b` | `TB_4` |
+| `c` | `TC_3` |
+| `d` | `TD_2` |
+| `e` | `TE_1` |
 | `f` | `TF` |
 
 #### Returns
@@ -381,155 +381,155 @@ ___
 
 `T`
 
-▸ **__memo**<`TA`, `T`\>(`fn`, `a`): `T`
+▸ **__memo**<`TA`, `T_1`\>(`fn`, `a`): `T_1`
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `TA` |
-| `T` |
+| `T_1` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function1`](functions.md#function1)<`TA`, `T`\> |
+| `fn` | [`Function1`](functions.md#function1)<`TA`, `T_1`\> |
 | `a` | `TA` |
 
 #### Returns
 
-`T`
+`T_1`
 
-▸ **__memo**<`TA`, `TB`, `T`\>(`fn`, `a`, `b`): `T`
+▸ **__memo**<`TA_1`, `TB`, `T_2`\>(`fn`, `a`, `b`): `T_2`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
+| `TA_1` |
 | `TB` |
-| `T` |
+| `T_2` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
-| `a` | `TA` |
+| `fn` | [`Function2`](functions.md#function2)<`TA_1`, `TB`, `T_2`\> |
+| `a` | `TA_1` |
 | `b` | `TB` |
 
 #### Returns
 
-`T`
+`T_2`
 
-▸ **__memo**<`TA`, `TB`, `TC`, `T`\>(`fn`, `a`, `b`, `c`): `T`
+▸ **__memo**<`TA_2`, `TB_1`, `TC`, `T_3`\>(`fn`, `a`, `b`, `c`): `T_3`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
+| `TA_2` |
+| `TB_1` |
 | `TC` |
-| `T` |
+| `T_3` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function3`](functions.md#function3)<`TA`, `TB`, `TC`, `T`\> |
-| `a` | `TA` |
-| `b` | `TB` |
+| `fn` | [`Function3`](functions.md#function3)<`TA_2`, `TB_1`, `TC`, `T_3`\> |
+| `a` | `TA_2` |
+| `b` | `TB_1` |
 | `c` | `TC` |
 
 #### Returns
 
-`T`
+`T_3`
 
-▸ **__memo**<`TA`, `TB`, `TC`, `TD`, `T`\>(`fn`, `a`, `b`, `c`, `d`): `T`
+▸ **__memo**<`TA_3`, `TB_2`, `TC_1`, `TD`, `T_4`\>(`fn`, `a`, `b`, `c`, `d`): `T_4`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
+| `TA_3` |
+| `TB_2` |
+| `TC_1` |
 | `TD` |
-| `T` |
+| `T_4` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function4`](functions.md#function4)<`TA`, `TB`, `TC`, `TD`, `T`\> |
-| `a` | `TA` |
-| `b` | `TB` |
-| `c` | `TC` |
+| `fn` | [`Function4`](functions.md#function4)<`TA_3`, `TB_2`, `TC_1`, `TD`, `T_4`\> |
+| `a` | `TA_3` |
+| `b` | `TB_2` |
+| `c` | `TC_1` |
 | `d` | `TD` |
 
 #### Returns
 
-`T`
+`T_4`
 
-▸ **__memo**<`TA`, `TB`, `TC`, `TD`, `TE`, `T`\>(`fn`, `a`, `b`, `c`, `d`, `e`): `T`
+▸ **__memo**<`TA_4`, `TB_3`, `TC_2`, `TD_1`, `TE`, `T_5`\>(`fn`, `a`, `b`, `c`, `d`, `e`): `T_5`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
+| `TA_4` |
+| `TB_3` |
+| `TC_2` |
+| `TD_1` |
 | `TE` |
-| `T` |
+| `T_5` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function5`](functions.md#function5)<`TA`, `TB`, `TC`, `TD`, `TE`, `T`\> |
-| `a` | `TA` |
-| `b` | `TB` |
-| `c` | `TC` |
-| `d` | `TD` |
+| `fn` | [`Function5`](functions.md#function5)<`TA_4`, `TB_3`, `TC_2`, `TD_1`, `TE`, `T_5`\> |
+| `a` | `TA_4` |
+| `b` | `TB_3` |
+| `c` | `TC_2` |
+| `d` | `TD_1` |
 | `e` | `TE` |
 
 #### Returns
 
-`T`
+`T_5`
 
-▸ **__memo**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `T`\>(`fn`, `a`, `b`, `c`, `d`, `e`, `f`): `T`
+▸ **__memo**<`TA_5`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`, `T_6`\>(`fn`, `a`, `b`, `c`, `d`, `e`, `f`): `T_6`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
-| `TC` |
-| `TD` |
-| `TE` |
+| `TA_5` |
+| `TB_4` |
+| `TC_3` |
+| `TD_2` |
+| `TE_1` |
 | `TF` |
-| `T` |
+| `T_6` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function6`](functions.md#function6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `T`\> |
-| `a` | `TA` |
-| `b` | `TB` |
-| `c` | `TC` |
-| `d` | `TD` |
-| `e` | `TE` |
+| `fn` | [`Function6`](functions.md#function6)<`TA_5`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`, `T_6`\> |
+| `a` | `TA_5` |
+| `b` | `TB_4` |
+| `c` | `TC_3` |
+| `d` | `TD_2` |
+| `e` | `TE_1` |
 | `f` | `TF` |
 
 #### Returns
 
-`T`
+`T_6`
 
 ___
 
@@ -631,155 +631,155 @@ ___
 
 `T`
 
-▸ **__using**<`TA`, `T`\>(`fn`, `a`): `T`
+▸ **__using**<`TA`, `T_1`\>(`fn`, `a`): `T_1`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `TA` | `TA` |
-| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T_1` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function1`](functions.md#function1)<`TA`, `T`\> |
+| `fn` | [`Function1`](functions.md#function1)<`TA`, `T_1`\> |
 | `a` | `TA` |
 
 #### Returns
 
-`T`
+`T_1`
 
-▸ **__using**<`TA`, `TB`, `T`\>(`fn`, `a`, `b`): `T`
+▸ **__using**<`TA_1`, `TB`, `T_2`\>(`fn`, `a`, `b`): `T_2`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TA` | `TA` |
+| `TA_1` | `TA_1` |
 | `TB` | `TB` |
-| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T_2` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
-| `a` | `TA` |
+| `fn` | [`Function2`](functions.md#function2)<`TA_1`, `TB`, `T_2`\> |
+| `a` | `TA_1` |
 | `b` | `TB` |
 
 #### Returns
 
-`T`
+`T_2`
 
-▸ **__using**<`TA`, `TB`, `TC`, `T`\>(`fn`, `a`, `b`, `c`): `T`
+▸ **__using**<`TA_2`, `TB_1`, `TC`, `T_3`\>(`fn`, `a`, `b`, `c`): `T_3`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
+| `TA_2` | `TA_2` |
+| `TB_1` | `TB_1` |
 | `TC` | `TC` |
-| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T_3` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function3`](functions.md#function3)<`TA`, `TB`, `TC`, `T`\> |
-| `a` | `TA` |
-| `b` | `TB` |
+| `fn` | [`Function3`](functions.md#function3)<`TA_2`, `TB_1`, `TC`, `T_3`\> |
+| `a` | `TA_2` |
+| `b` | `TB_1` |
 | `c` | `TC` |
 
 #### Returns
 
-`T`
+`T_3`
 
-▸ **__using**<`TA`, `TB`, `TC`, `TD`, `T`\>(`fn`, `a`, `b`, `c`, `d`): `T`
+▸ **__using**<`TA_3`, `TB_2`, `TC_1`, `TD`, `T_4`\>(`fn`, `a`, `b`, `c`, `d`): `T_4`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TC` | `TC` |
+| `TA_3` | `TA_3` |
+| `TB_2` | `TB_2` |
+| `TC_1` | `TC_1` |
 | `TD` | `TD` |
-| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T_4` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function4`](functions.md#function4)<`TA`, `TB`, `TC`, `TD`, `T`\> |
-| `a` | `TA` |
-| `b` | `TB` |
-| `c` | `TC` |
+| `fn` | [`Function4`](functions.md#function4)<`TA_3`, `TB_2`, `TC_1`, `TD`, `T_4`\> |
+| `a` | `TA_3` |
+| `b` | `TB_2` |
+| `c` | `TC_1` |
 | `d` | `TD` |
 
 #### Returns
 
-`T`
+`T_4`
 
-▸ **__using**<`TA`, `TB`, `TC`, `TD`, `TE`, `T`\>(`fn`, `a`, `b`, `c`, `d`, `e`): `T`
+▸ **__using**<`TA_4`, `TB_3`, `TC_2`, `TD_1`, `TE`, `T_5`\>(`fn`, `a`, `b`, `c`, `d`, `e`): `T_5`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TC` | `TC` |
-| `TD` | `TD` |
+| `TA_4` | `TA_4` |
+| `TB_3` | `TB_3` |
+| `TC_2` | `TC_2` |
+| `TD_1` | `TD_1` |
 | `TE` | `TE` |
-| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T_5` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function5`](functions.md#function5)<`TA`, `TB`, `TC`, `TD`, `TE`, `T`\> |
-| `a` | `TA` |
-| `b` | `TB` |
-| `c` | `TC` |
-| `d` | `TD` |
+| `fn` | [`Function5`](functions.md#function5)<`TA_4`, `TB_3`, `TC_2`, `TD_1`, `TE`, `T_5`\> |
+| `a` | `TA_4` |
+| `b` | `TB_3` |
+| `c` | `TC_2` |
+| `d` | `TD_1` |
 | `e` | `TE` |
 
 #### Returns
 
-`T`
+`T_5`
 
-▸ **__using**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `T`\>(`fn`, `a`, `b`, `c`, `d`, `e`, `f`): `T`
+▸ **__using**<`TA_5`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`, `T_6`\>(`fn`, `a`, `b`, `c`, `d`, `e`, `f`): `T_6`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TC` | `TC` |
-| `TD` | `TD` |
-| `TE` | `TE` |
+| `TA_5` | `TA_5` |
+| `TB_4` | `TB_4` |
+| `TC_3` | `TC_3` |
+| `TD_2` | `TD_2` |
+| `TE_1` | `TE_1` |
 | `TF` | `TF` |
-| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `T_6` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function6`](functions.md#function6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `T`\> |
-| `a` | `TA` |
-| `b` | `TB` |
-| `c` | `TC` |
-| `d` | `TD` |
-| `e` | `TE` |
+| `fn` | [`Function6`](functions.md#function6)<`TA_5`, `TB_4`, `TC_3`, `TD_2`, `TE_1`, `TF`, `T_6`\> |
+| `a` | `TA_5` |
+| `b` | `TB_4` |
+| `c` | `TC_3` |
+| `d` | `TD_2` |
+| `e` | `TE_1` |
 | `f` | `TF` |
 
 #### Returns
 
-`T`
+`T_6`
 
 ___
 

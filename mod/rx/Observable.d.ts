@@ -1,23 +1,22 @@
 import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
-import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6 } from "../functions.js";
+import { Factory, Function1, SideEffect1 } from "../functions.js";
 import { Animate, BackpressureStrategy, CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, MulticastObservableLike, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Spring, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, Tween, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import { DisposableLike, DisposableOrTeardown, QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 import { Observable_compute__currentScheduler } from "./Observable/__internal__/Observable.compute.js";
-interface __Memo {
-    <T>(fn: Factory<T>): T;
-    <TA, T>(fn: Function1<TA, T>, a: TA): T;
-    <TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
-    <TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
-    <TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
-    <TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
-    <TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
-}
 /**
  * @category ComputationalEffect
  */
-export declare const __memo: __Memo;
+export declare const __memo: {
+    <T>(fn: Factory<T>): T;
+    <TA, T_1>(fn: Function1<TA, T_1>, a: TA): T_1;
+    <TA_1, TB, T_2>(fn: import("../functions.js").Function2<TA_1, TB, T_2>, a: TA_1, b: TB): T_2;
+    <TA_2, TB_1, TC, T_3>(fn: import("../functions.js").Function3<TA_2, TB_1, TC, T_3>, a: TA_2, b: TB_1, c: TC): T_3;
+    <TA_3, TB_2, TC_1, TD, T_4>(fn: import("../functions.js").Function4<TA_3, TB_2, TC_1, TD, T_4>, a: TA_3, b: TB_2, c: TC_1, d: TD): T_4;
+    <TA_4, TB_3, TC_2, TD_1, TE, T_5>(fn: import("../functions.js").Function5<TA_4, TB_3, TC_2, TD_1, TE, T_5>, a: TA_4, b: TB_3, c: TC_2, d: TD_1, e: TE): T_5;
+    <TA_5, TB_4, TC_3, TD_2, TE_1, TF, T_6>(fn: import("../functions.js").Function6<TA_5, TB_4, TC_3, TD_2, TE_1, TF, T_6>, a: TA_5, b: TB_4, c: TC_3, d: TD_2, e: TE_1, f: TF): T_6;
+};
 /**
  * @category ComputationalEffect
  */
@@ -26,19 +25,18 @@ export declare const __await: <T>(observable: ObservableLike<T>) => T;
  * @category ComputationalEffect
  */
 export declare const __currentScheduler: typeof Observable_compute__currentScheduler;
-interface __Do {
-    (fn: SideEffect): void;
-    <TA>(fn: SideEffect1<TA>, a: TA): void;
-    <TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
-    <TA, TB, TC>(fn: SideEffect3<TA, TB, TC>, a: TA, b: TB, c: TC): void;
-    <TA, TB, TC, TD>(fn: SideEffect4<TA, TB, TC, TD>, a: TA, b: TB, c: TC, d: TD): void;
-    <TA, TB, TC, TD, TE>(fn: SideEffect5<TA, TB, TC, TD, TE>, a: TA, b: TB, c: TC, d: TD, e: TE): void;
-    <TA, TB, TC, TD, TE, TF>(fn: SideEffect6<TA, TB, TC, TD, TE, TF>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): void;
-}
 /**
  * @category ComputationalEffect
  */
-export declare const __do: __Do;
+export declare const __do: {
+    (fn: import("../functions.js").SideEffect): void;
+    <TA>(fn: SideEffect1<TA>, a: TA): void;
+    <TA_1, TB>(fn: import("../functions.js").SideEffect2<TA_1, TB>, a: TA_1, b: TB): void;
+    <TA_2, TB_1, TC>(fn: import("../functions.js").SideEffect3<TA_2, TB_1, TC>, a: TA_2, b: TB_1, c: TC): void;
+    <TA_3, TB_2, TC_1, TD>(fn: import("../functions.js").SideEffect4<TA_3, TB_2, TC_1, TD>, a: TA_3, b: TB_2, c: TC_1, d: TD): void;
+    <TA_4, TB_3, TC_2, TD_1, TE>(fn: import("../functions.js").SideEffect5<TA_4, TB_3, TC_2, TD_1, TE>, a: TA_4, b: TB_3, c: TC_2, d: TD_1, e: TE): void;
+    <TA_5, TB_4, TC_3, TD_2, TE_1, TF>(fn: import("../functions.js").SideEffect6<TA_5, TB_4, TC_3, TD_2, TE_1, TF>, a: TA_5, b: TB_4, c: TC_3, d: TD_2, e: TE_1, f: TF): void;
+};
 /**
  * @category ComputationalEffect
  */
@@ -50,7 +48,7 @@ export declare const __bind: <F extends Function>(f: F, thiz: unknown) => F;
 /**
  * @category ComputationalEffect
  */
-export declare const __bindMethod: <T extends { [K in TKey]: Function; }, TKey extends string | number | symbol, TFunction extends T[TKey]>(thiz: T, key: TKey) => TFunction;
+export declare const __bindMethod: <T extends { [K in TKey]: (...args: any[]) => any; }, TKey extends string | number | symbol, TFunction extends T[TKey]>(thiz: T, key: TKey) => TFunction;
 /**
  * @category ComputationalEffect
  */
@@ -69,19 +67,18 @@ export declare const __stream: <TReq, T, TStream extends import("../streaming.js
     readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;
 }) => TStream;
-interface __Using {
-    <T extends DisposableLike>(fn: Factory<T>): T;
-    <TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
-    <TA, TB, T extends DisposableLike>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
-    <TA, TB, TC, T extends DisposableLike>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
-    <TA, TB, TC, TD, T extends DisposableLike>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
-    <TA, TB, TC, TD, TE, T extends DisposableLike>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
-    <TA, TB, TC, TD, TE, TF, T extends DisposableLike>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
-}
 /**
  * @category ComputationalEffect
  */
-export declare const __using: __Using;
+export declare const __using: {
+    <T extends DisposableLike>(fn: Factory<T>): T;
+    <TA, T_1 extends DisposableLike>(fn: Function1<TA, T_1>, a: TA): T_1;
+    <TA_1, TB, T_2 extends DisposableLike>(fn: import("../functions.js").Function2<TA_1, TB, T_2>, a: TA_1, b: TB): T_2;
+    <TA_2, TB_1, TC, T_3 extends DisposableLike>(fn: import("../functions.js").Function3<TA_2, TB_1, TC, T_3>, a: TA_2, b: TB_1, c: TC): T_3;
+    <TA_3, TB_2, TC_1, TD, T_4 extends DisposableLike>(fn: import("../functions.js").Function4<TA_3, TB_2, TC_1, TD, T_4>, a: TA_3, b: TB_2, c: TC_1, d: TD): T_4;
+    <TA_4, TB_3, TC_2, TD_1, TE, T_5 extends DisposableLike>(fn: import("../functions.js").Function5<TA_4, TB_3, TC_2, TD_1, TE, T_5>, a: TA_4, b: TB_3, c: TC_2, d: TD_1, e: TE): T_5;
+    <TA_5, TB_4, TC_3, TD_2, TE_1, TF, T_6 extends DisposableLike>(fn: import("../functions.js").Function6<TA_5, TB_4, TC_3, TD_2, TE_1, TF, T_6>, a: TA_5, b: TB_4, c: TC_3, d: TD_2, e: TE_1, f: TF): T_6;
+};
 export declare const animate: Animate<ObservableLike>["animate"];
 export declare const backpressureStrategy: BackpressureStrategy<ObservableLike>["backpressureStrategy"];
 /**
@@ -129,7 +126,7 @@ export declare const firstAsync: FirstAsync<ObservableLike, {
 /**
  * @category Operator
  */
-export declare const flatMapAsync: <TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
+export declare const flatMapAsync: <TA, TB>(f: import("../functions.js").Function2<TA, AbortSignal, Promise<TB>>) => ContainerOperator<ObservableLike<unknown>, TA, TB>;
 export declare const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"];
 export declare const forEach: ForEach<ObservableLike>["forEach"];
 export declare const forkCombineLatest: ForkCombineLatest<ObservableLike>["forkCombineLatest"];
@@ -273,4 +270,3 @@ export declare const zip: Zip<ObservableLike>["zip"];
 export declare const zipLatest: ZipLatest<ObservableLike>["zipLatest"];
 export declare const zipWith: ZipWith<ObservableLike>["zipWith"];
 export declare const zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"];
-export {};

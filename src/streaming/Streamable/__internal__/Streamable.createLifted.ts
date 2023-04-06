@@ -12,13 +12,17 @@ import {
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 
 interface StreamableCreateLifted {
-  <T>(
+  createLifted<T>(
     op: ContainerOperator<ObservableLike, void, T>,
     isInteractive: true,
     isEnumerable: boolean,
     isRunnable: boolean,
   ): AsyncEnumerableLike<T>;
-  <TReq, T, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>>(
+  createLifted<
+    TReq,
+    T,
+    TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
+  >(
     op: ContainerOperator<ObservableLike, TReq, T>,
     isInteractive: boolean,
     isEnumerable: boolean,
@@ -26,7 +30,10 @@ interface StreamableCreateLifted {
   ): StreamableLike<TReq, T, TStream>;
 }
 
-const Streamable_createLifted: StreamableCreateLifted = (<TReq, T>(
+const Streamable_createLifted: StreamableCreateLifted["createLifted"] = (<
+  TReq,
+  T,
+>(
   op: ContainerOperator<ObservableLike, TReq, T>,
   isInteractive: boolean,
   isEnumerable: boolean,
@@ -37,6 +44,6 @@ const Streamable_createLifted: StreamableCreateLifted = (<TReq, T>(
   [StreamableLike_isRunnable]: isRunnable,
   [StreamableLike_stream]: (scheduler, options) =>
     Stream_create(op, scheduler, options),
-})) as StreamableCreateLifted;
+})) as StreamableCreateLifted["createLifted"];
 
 export default Streamable_createLifted;

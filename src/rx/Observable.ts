@@ -52,22 +52,7 @@ import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
-import {
-  Factory,
-  Function1,
-  Function2,
-  Function3,
-  Function4,
-  Function5,
-  Function6,
-  SideEffect,
-  SideEffect1,
-  SideEffect2,
-  SideEffect3,
-  SideEffect4,
-  SideEffect5,
-  SideEffect6,
-} from "../functions.js";
+import { Factory, Function1, SideEffect1 } from "../functions.js";
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   Animate,
@@ -209,41 +194,10 @@ import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
 
-interface __Memo {
-  <T>(fn: Factory<T>): T;
-  <TA, T>(fn: Function1<TA, T>, a: TA): T;
-  <TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
-  <TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
-  <TA, TB, TC, TD, T>(
-    fn: Function4<TA, TB, TC, TD, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-  ): T;
-  <TA, TB, TC, TD, TE, T>(
-    fn: Function5<TA, TB, TC, TD, TE, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-    e: TE,
-  ): T;
-  <TA, TB, TC, TD, TE, TF, T>(
-    fn: Function6<TA, TB, TC, TD, TE, TF, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-    e: TE,
-    f: TF,
-  ): T;
-}
-
 /**
  * @category ComputationalEffect
  */
-export const __memo: __Memo = Observable_compute__memo;
+export const __memo = Observable_compute__memo;
 
 /**
  * @category ComputationalEffect
@@ -255,41 +209,10 @@ export const __await = Observable_compute__await;
  */
 export const __currentScheduler = Observable_compute__currentScheduler;
 
-interface __Do {
-  (fn: SideEffect): void;
-  <TA>(fn: SideEffect1<TA>, a: TA): void;
-  <TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
-  <TA, TB, TC>(fn: SideEffect3<TA, TB, TC>, a: TA, b: TB, c: TC): void;
-  <TA, TB, TC, TD>(
-    fn: SideEffect4<TA, TB, TC, TD>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-  ): void;
-  <TA, TB, TC, TD, TE>(
-    fn: SideEffect5<TA, TB, TC, TD, TE>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-    e: TE,
-  ): void;
-  <TA, TB, TC, TD, TE, TF>(
-    fn: SideEffect6<TA, TB, TC, TD, TE, TF>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-    e: TE,
-    f: TF,
-  ): void;
-}
-
 /**
  * @category ComputationalEffect
  */
-export const __do: __Do = Observable_compute__do;
+export const __do = Observable_compute__do;
 
 /**
  * @category ComputationalEffect
@@ -316,45 +239,10 @@ export const __state = Observable_compute__state;
  */
 export const __stream = Observable_compute__stream;
 
-interface __Using {
-  <T extends DisposableLike>(fn: Factory<T>): T;
-  <TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
-  <TA, TB, T extends DisposableLike>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
-  <TA, TB, TC, T extends DisposableLike>(
-    fn: Function3<TA, TB, TC, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-  ): T;
-  <TA, TB, TC, TD, T extends DisposableLike>(
-    fn: Function4<TA, TB, TC, TD, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-  ): T;
-  <TA, TB, TC, TD, TE, T extends DisposableLike>(
-    fn: Function5<TA, TB, TC, TD, TE, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-    e: TE,
-  ): T;
-  <TA, TB, TC, TD, TE, TF, T extends DisposableLike>(
-    fn: Function6<TA, TB, TC, TD, TE, TF, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-    e: TE,
-    f: TF,
-  ): T;
-}
 /**
  * @category ComputationalEffect
  */
-export const __using: __Using = Observable_compute__using;
+export const __using = Observable_compute__using;
 
 export const animate: Animate<ObservableLike>["animate"] = Observable_animate;
 

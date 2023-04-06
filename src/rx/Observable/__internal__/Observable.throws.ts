@@ -4,15 +4,16 @@ import { EnumerableLike, RunnableLike } from "../../../rx.js";
 import Observable_fromFactory from "./Observable.fromFactory.js";
 
 interface ObservableThrows {
-  <T>(): EnumerableLike<T>;
-  <T>(options: { readonly raise: Factory<unknown> }): EnumerableLike<T>;
-  <T>(options: {
+  throws<T>(): EnumerableLike<T>;
+  throws<T>(options: { readonly raise: Factory<unknown> }): EnumerableLike<T>;
+  throws<T>(options: {
     readonly delay: number;
     readonly raise?: Factory<unknown>;
   }): RunnableLike<T>;
 }
-const Observable_throws: ObservableThrows = /*@__PURE__*/ Container_throws(
-  Observable_fromFactory,
-) as ObservableThrows;
+const Observable_throws: ObservableThrows["throws"] =
+  /*@__PURE__*/ Container_throws(
+    Observable_fromFactory,
+  ) as ObservableThrows["throws"];
 
 export default Observable_throws;

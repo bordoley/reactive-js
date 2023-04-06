@@ -240,18 +240,18 @@ export const bindMethod = <
 ): T[TKey] => bind<T[TKey]>(thiz[key], thiz);
 
 interface Call {
-  <TInstance, T>(f: () => T, self: TInstance): T;
+  call<TInstance, T>(f: () => T, self: TInstance): T;
 
-  <TInstance, T, TA>(f: (a: TA) => T, self: TInstance, a: TA): T;
+  call<TInstance, T, TA>(f: (a: TA) => T, self: TInstance, a: TA): T;
 
-  <TInstance, T, TA, TB>(
+  call<TInstance, T, TA, TB>(
     f: (a: TA, b: TB) => T,
     self: TInstance,
     a: TA,
     b: TB,
   ): T;
 }
-export const call: Call = <T>(
+export const call: Call["call"] = <T>(
   f: (...args: readonly unknown[]) => T,
   self: unknown,
   ...args: readonly any[]
@@ -263,26 +263,26 @@ export const composeUnsafe =
     pipeUnsafe(source, ...operators);
 
 interface Compose {
-  <T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
-  <T, A, B, C>(
+  compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
+  compose<T, A, B, C>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
   ): Function1<T, C>;
-  <T, A, B, C, D>(
+  compose<T, A, B, C, D>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
     op4: Function1<C, D>,
   ): Function1<T, D>;
-  <T, A, B, C, D, E>(
+  compose<T, A, B, C, D, E>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
     op4: Function1<C, D>,
     op5: Function1<D, E>,
   ): Function1<T, E>;
-  <T, A, B, C, D, E, F>(
+  compose<T, A, B, C, D, E, F>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
@@ -290,7 +290,7 @@ interface Compose {
     op5: Function1<D, E>,
     op6: Function1<E, F>,
   ): Function1<T, F>;
-  <T, A, B, C, D, E, F, G>(
+  compose<T, A, B, C, D, E, F, G>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
@@ -299,7 +299,7 @@ interface Compose {
     op6: Function1<E, F>,
     op7: Function1<F, G>,
   ): Function1<T, G>;
-  <T, A, B, C, D, E, F, G, H>(
+  compose<T, A, B, C, D, E, F, G, H>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
@@ -309,7 +309,7 @@ interface Compose {
     op7: Function1<F, G>,
     op8: Function1<G, H>,
   ): Function1<T, H>;
-  <T, A, B, C, D, E, F, G, H, I>(
+  compose<T, A, B, C, D, E, F, G, H, I>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
@@ -320,7 +320,7 @@ interface Compose {
     op8: Function1<G, H>,
     op9: Function1<H, I>,
   ): Function1<T, I>;
-  <T, A, B, C, D, E, F, G, H, I, J>(
+  compose<T, A, B, C, D, E, F, G, H, I, J>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
@@ -332,7 +332,7 @@ interface Compose {
     op9: Function1<H, I>,
     op10: Function1<I, J>,
   ): Function1<T, J>;
-  <T, A, B, C, D, E, F, G, H, I, J, K>(
+  compose<T, A, B, C, D, E, F, G, H, I, J, K>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
@@ -345,7 +345,7 @@ interface Compose {
     op10: Function1<I, J>,
     op11: Function1<J, K>,
   ): Function1<T, K>;
-  <T, A, B, C, D, E, F, G, H, I, J, K, L>(
+  compose<T, A, B, C, D, E, F, G, H, I, J, K, L>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
@@ -363,7 +363,7 @@ interface Compose {
 /**
  * Composes a series of unary functions.
  */
-export const compose: Compose = composeUnsafe;
+export const compose: Compose["compose"] = composeUnsafe;
 
 /**
  * An updater function that returns the result of decrementing `x`.
@@ -517,16 +517,16 @@ export const lessThan =
 export const negate = (v: boolean): boolean => !v;
 
 interface NewInstance {
-  <T>(Constructor: Constructor<T>): T;
-  <T, TA>(Constructor: Constructor1<TA, T>, a: TA): T;
-  <T, TA, TB>(Constructor: Constructor2<TA, TB, T>, a: TA, b: TB): T;
-  <T, TA, TB, TC>(
+  newInstance<T>(Constructor: Constructor<T>): T;
+  newInstance<T, TA>(Constructor: Constructor1<TA, T>, a: TA): T;
+  newInstance<T, TA, TB>(Constructor: Constructor2<TA, TB, T>, a: TA, b: TB): T;
+  newInstance<T, TA, TB, TC>(
     Constructor: Constructor3<TA, TB, TC, T>,
     a: TA,
     b: TB,
     c: TC,
   ): T;
-  <T, TA, TB, TC, TD>(
+  newInstance<T, TA, TB, TC, TD>(
     Constructor: Constructor4<TA, TB, TC, TD, T>,
     a: TA,
     b: TB,
@@ -534,7 +534,7 @@ interface NewInstance {
     d: TD,
   ): T;
 }
-export const newInstance: NewInstance = (
+export const newInstance: NewInstance["newInstance"] = (
   Constructor: new (...args: readonly any[]) => unknown,
   ...args: readonly unknown[]
 ): unknown => new Constructor(...args);
@@ -545,20 +545,20 @@ export const newInstance: NewInstance = (
 export const none = undefined;
 
 interface Partial {
-  <TA, TB, TOut>(b: TB): Function1<
-    Function2<TA, TB, TOut>,
-    Function1<TA, TOut>
-  >;
-  <TA, TB, TC, TOut>(b: TB, c: TC): Function1<
-    Function3<TA, TB, TC, TOut>,
-    Function1<TA, TOut>
-  >;
-  <TA, TB, TC, TD, TOut>(b: TB, c: TC, d: TD): Function1<
-    Function4<TA, TB, TC, TD, TOut>,
-    Function1<TA, TOut>
-  >;
+  partial<TA, TB, TOut>(
+    b: TB,
+  ): Function1<Function2<TA, TB, TOut>, Function1<TA, TOut>>;
+  partial<TA, TB, TC, TOut>(
+    b: TB,
+    c: TC,
+  ): Function1<Function3<TA, TB, TC, TOut>, Function1<TA, TOut>>;
+  partial<TA, TB, TC, TD, TOut>(
+    b: TB,
+    c: TC,
+    d: TD,
+  ): Function1<Function4<TA, TB, TC, TD, TOut>, Function1<TA, TOut>>;
 }
-export const partial: Partial =
+export const partial: Partial["partial"] =
   (...args: readonly unknown[]) =>
   (f: (...args: readonly any[]) => unknown) =>
   (arg0: unknown) =>
@@ -581,22 +581,22 @@ export const pipeUnsafe = (
 };
 
 interface Pipe {
-  <T, A>(src: T, op1: Function1<T, A>): A;
-  <T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
-  <T, A, B, C>(
+  pipe<T, A>(src: T, op1: Function1<T, A>): A;
+  pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
+  pipe<T, A, B, C>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
   ): C;
-  <T, A, B, C, D>(
+  pipe<T, A, B, C, D>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
     op4: Function1<C, D>,
   ): D;
-  <T, A, B, C, D, E>(
+  pipe<T, A, B, C, D, E>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -604,7 +604,7 @@ interface Pipe {
     op4: Function1<C, D>,
     op5: Function1<D, E>,
   ): E;
-  <T, A, B, C, D, E, F>(
+  pipe<T, A, B, C, D, E, F>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -613,7 +613,7 @@ interface Pipe {
     op5: Function1<D, E>,
     op6: Function1<E, F>,
   ): F;
-  <T, A, B, C, D, E, F, G>(
+  pipe<T, A, B, C, D, E, F, G>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -623,7 +623,7 @@ interface Pipe {
     op6: Function1<E, F>,
     op7: Function1<F, G>,
   ): G;
-  <T, A, B, C, D, E, F, G, H>(
+  pipe<T, A, B, C, D, E, F, G, H>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -634,7 +634,7 @@ interface Pipe {
     op7: Function1<F, G>,
     op8: Function1<G, H>,
   ): H;
-  <T, A, B, C, D, E, F, G, H, I>(
+  pipe<T, A, B, C, D, E, F, G, H, I>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -646,7 +646,7 @@ interface Pipe {
     op8: Function1<G, H>,
     op9: Function1<H, I>,
   ): I;
-  <T, A, B, C, D, E, F, G, H, I, J>(
+  pipe<T, A, B, C, D, E, F, G, H, I, J>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -659,7 +659,7 @@ interface Pipe {
     op9: Function1<H, I>,
     op10: Function1<I, J>,
   ): J;
-  <T, A, B, C, D, E, F, G, H, I, J, K>(
+  pipe<T, A, B, C, D, E, F, G, H, I, J, K>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -673,7 +673,7 @@ interface Pipe {
     op10: Function1<I, J>,
     op11: Function1<J, K>,
   ): K;
-  <T, A, B, C, D, E, F, G, H, I, J, K, L>(
+  pipe<T, A, B, C, D, E, F, G, H, I, J, K, L>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -692,25 +692,29 @@ interface Pipe {
 /**
  * Pipes `source` through a series of unary functions.
  */
-export const pipe: Pipe = pipeUnsafe;
+export const pipe: Pipe["pipe"] = pipeUnsafe;
 
 interface PipeLazy {
-  <T, A>(src: T, op1: Function1<T, A>): Factory<A>;
-  <T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): Factory<B>;
-  <T, A, B, C>(
+  pipeLazy<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
+  pipeLazy<T, A, B>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+  ): Factory<B>;
+  pipeLazy<T, A, B, C>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
   ): Factory<C>;
-  <T, A, B, C, D>(
+  pipeLazy<T, A, B, C, D>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
     op3: Function1<B, C>,
     op4: Function1<C, D>,
   ): Factory<D>;
-  <T, A, B, C, D, E>(
+  pipeLazy<T, A, B, C, D, E>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -718,7 +722,7 @@ interface PipeLazy {
     op4: Function1<C, D>,
     op5: Function1<D, E>,
   ): Factory<E>;
-  <T, A, B, C, D, E, F>(
+  pipeLazy<T, A, B, C, D, E, F>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -727,7 +731,7 @@ interface PipeLazy {
     op5: Function1<D, E>,
     op6: Function1<E, F>,
   ): Factory<F>;
-  <T, A, B, C, D, E, F, G>(
+  pipeLazy<T, A, B, C, D, E, F, G>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -737,7 +741,7 @@ interface PipeLazy {
     op6: Function1<E, F>,
     op7: Function1<F, G>,
   ): Factory<G>;
-  <T, A, B, C, D, E, F, G, H>(
+  pipeLazy<T, A, B, C, D, E, F, G, H>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -748,7 +752,7 @@ interface PipeLazy {
     op7: Function1<F, G>,
     op8: Function1<G, H>,
   ): Factory<H>;
-  <T, A, B, C, D, E, F, G, H, I>(
+  pipeLazy<T, A, B, C, D, E, F, G, H, I>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -760,7 +764,7 @@ interface PipeLazy {
     op8: Function1<G, H>,
     op9: Function1<H, I>,
   ): Factory<I>;
-  <T, A, B, C, D, E, F, G, H, I, J>(
+  pipeLazy<T, A, B, C, D, E, F, G, H, I, J>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -773,7 +777,7 @@ interface PipeLazy {
     op9: Function1<H, I>,
     op10: Function1<I, J>,
   ): Factory<J>;
-  <T, A, B, C, D, E, F, G, H, I, J, K>(
+  pipeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -787,7 +791,7 @@ interface PipeLazy {
     op10: Function1<I, J>,
     op11: Function1<J, K>,
   ): Factory<K>;
-  <T, A, B, C, D, E, F, G, H, I, J, K, L>(
+  pipeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(
     src: T,
     op1: Function1<T, A>,
     op2: Function1<A, B>,
@@ -806,7 +810,7 @@ interface PipeLazy {
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
-export const pipeLazy: PipeLazy =
+export const pipeLazy: PipeLazy["pipeLazy"] =
   (
     source: unknown,
     ...operators: Function1<unknown, unknown>[]

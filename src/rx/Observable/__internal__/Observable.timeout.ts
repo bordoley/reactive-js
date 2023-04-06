@@ -39,12 +39,16 @@ import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWith
 import Observable_throws from "./Observable.throws.js";
 
 interface ObservableTimeout {
-  <C extends ObservableLike, T>(duration: number): ContainerOperator<C, T, T>;
-  <T>(duration: RunnableLike): ContainerOperator<RunnableLike, T, T>;
-  <T>(duration: ObservableLike): ContainerOperator<ObservableLike, T, T>;
+  timeout<C extends ObservableLike, T>(
+    duration: number,
+  ): ContainerOperator<C, T, T>;
+  timeout<T>(duration: RunnableLike): ContainerOperator<RunnableLike, T, T>;
+  timeout<T>(duration: ObservableLike): ContainerOperator<ObservableLike, T, T>;
 }
 
-const Observable_timeout: ObservableTimeout = /*@__PURE__*/ (<T>() => {
+const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<
+  T,
+>() => {
   const typedSerialDisposableMixin = SerialDisposable_mixin();
   const typedObserverMixin = Observer_mixin();
 
@@ -120,6 +124,6 @@ const Observable_timeout: ObservableTimeout = /*@__PURE__*/ (<T>() => {
       ),
     );
   };
-})() as ObservableTimeout;
+})() as ObservableTimeout["timeout"];
 
 export default Observable_timeout;

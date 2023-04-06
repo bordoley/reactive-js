@@ -3,29 +3,29 @@ import { ObservableLike } from "../../../rx.js";
 import Observable_latest from "./Observable.latest.js";
 
 interface ObservableCombineLatest {
-  <C extends ObservableLike, TA, TB>(
+  combineLatest<C extends ObservableLike, TA, TB>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
   ): ContainerOf<C, readonly [TA, TB]>;
-  <C extends ObservableLike, TA, TB, TC>(
+  combineLatest<C extends ObservableLike, TA, TB, TC>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
     c: ContainerOf<C, TC>,
   ): ContainerOf<C, readonly [TA, TB, TC]>;
-  <C extends ObservableLike, TA, TB, TC, TD>(
+  combineLatest<C extends ObservableLike, TA, TB, TC, TD>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
     c: ContainerOf<C, TC>,
     d: ContainerOf<C, TD>,
   ): ContainerOf<C, readonly [TA, TB, TC, TD]>;
-  <C extends ObservableLike, TA, TB, TC, TD, TE>(
+  combineLatest<C extends ObservableLike, TA, TB, TC, TD, TE>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
     c: ContainerOf<C, TC>,
     d: ContainerOf<C, TD>,
     e: ContainerOf<C, TE>,
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE]>;
-  <C extends ObservableLike, TA, TB, TC, TD, TE, TF>(
+  combineLatest<C extends ObservableLike, TA, TB, TC, TD, TE, TF>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
     c: ContainerOf<C, TC>,
@@ -33,7 +33,7 @@ interface ObservableCombineLatest {
     e: ContainerOf<C, TE>,
     f: ContainerOf<C, TF>,
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF]>;
-  <C extends ObservableLike, TA, TB, TC, TD, TE, TF, TG>(
+  combineLatest<C extends ObservableLike, TA, TB, TC, TD, TE, TF, TG>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
     c: ContainerOf<C, TC>,
@@ -42,7 +42,7 @@ interface ObservableCombineLatest {
     f: ContainerOf<C, TF>,
     g: ContainerOf<C, TG>,
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG]>;
-  <C extends ObservableLike, TA, TB, TC, TD, TE, TF, TG, TH>(
+  combineLatest<C extends ObservableLike, TA, TB, TC, TD, TE, TF, TG, TH>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
     c: ContainerOf<C, TC>,
@@ -52,7 +52,7 @@ interface ObservableCombineLatest {
     g: ContainerOf<C, TG>,
     h: ContainerOf<C, TH>,
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
-  <C extends ObservableLike, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+  combineLatest<C extends ObservableLike, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
     c: ContainerOf<C, TC>,
@@ -64,7 +64,7 @@ interface ObservableCombineLatest {
     i: ContainerOf<C, TI>,
   ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
-const Observable_combineLatest: ObservableCombineLatest = (
+const Observable_combineLatest: ObservableCombineLatest["combineLatest"] = (
   ...observables: readonly ObservableLike<any>[]
 ): ObservableLike<readonly unknown[]> => Observable_latest(observables, 1);
 

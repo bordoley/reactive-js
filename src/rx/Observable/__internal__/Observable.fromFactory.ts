@@ -5,18 +5,18 @@ import { EnumerableLike, RunnableLike } from "../../../rx.js";
 import Observable_map from "./Observable.map.js";
 
 interface ObservableFromFactory {
-  <T>(factory: Factory<T>): EnumerableLike<T>;
-  <T>(
+  fromFactory<T>(factory: Factory<T>): EnumerableLike<T>;
+  fromFactory<T>(
     factory: Factory<T>,
     options: {
       readonly delay: number;
     },
   ): RunnableLike<T>;
 }
-const Observable_fromFactory: ObservableFromFactory =
+const Observable_fromFactory: ObservableFromFactory["fromFactory"] =
   /*@__PURE__*/ Container_fromFactory(
     Optional_toObservable,
     Observable_map,
-  ) as ObservableFromFactory;
+  ) as ObservableFromFactory["fromFactory"];
 
 export default Observable_fromFactory;

@@ -17,11 +17,17 @@ import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
 
 interface ObservableConcatObservables {
-  <T>(observables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
-  <T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
-  <T>(observables: readonly ObservableLike<T>[]): ObservableLike<T>;
+  concatObservables<T>(
+    observables: readonly EnumerableLike<T>[],
+  ): EnumerableLike<T>;
+  concatObservables<T>(
+    observables: readonly RunnableLike<T>[],
+  ): RunnableLike<T>;
+  concatObservables<T>(
+    observables: readonly ObservableLike<T>[],
+  ): ObservableLike<T>;
 }
-const Observable_concatObservables: ObservableConcatObservables =
+const Observable_concatObservables: ObservableConcatObservables["concatObservables"] =
   /*@__PURE__*/ (<T>() => {
     const createConcatObserver = <T>(
       delegate: ObserverLike<T>,
@@ -60,6 +66,6 @@ const Observable_concatObservables: ObservableConcatObservables =
 
       return Observable_create(onSubscribe, isEnumerable, isRunnable);
     };
-  })() as ObservableConcatObservables;
+  })() as ObservableConcatObservables["concatObservables"];
 
 export default Observable_concatObservables;

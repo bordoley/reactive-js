@@ -4,12 +4,12 @@ import { ObservableLike } from "../../../rx.js";
 import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
 
 interface ObservableRetry {
-  <C extends ObservableLike, T>(): ContainerOperator<C, T, T>;
-  <C extends ObservableLike, T>(
+  retry<C extends ObservableLike, T>(): ContainerOperator<C, T, T>;
+  retry<C extends ObservableLike, T>(
     predicate: Function2<number, unknown, boolean>,
   ): ContainerOperator<C, T, T>;
 }
-const Observable_retry: ObservableRetry = /*@__PURE__*/ (() => {
+const Observable_retry: ObservableRetry["retry"] = /*@__PURE__*/ (() => {
   const defaultRetryPredicate = (_: number, error?: Error): boolean =>
     isSome(error);
 

@@ -16,11 +16,15 @@ import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWith
 import Observable_takeFirst from "./Observable.takeFirst.js";
 
 interface ObservableTakeUntil {
-  <T>(notifier: EnumerableLike): ContainerOperator<EnumerableLike, T, T>;
-  <T>(notifier: RunnableLike): ContainerOperator<RunnableLike, T, T>;
-  <T>(notifier: ObservableLike): ContainerOperator<ObservableLike, T, T>;
+  takeUntil<T>(
+    notifier: EnumerableLike,
+  ): ContainerOperator<EnumerableLike, T, T>;
+  takeUntil<T>(notifier: RunnableLike): ContainerOperator<RunnableLike, T, T>;
+  takeUntil<T>(
+    notifier: ObservableLike,
+  ): ContainerOperator<ObservableLike, T, T>;
 }
-const Observable_takeUntil: ObservableTakeUntil = (<T>(
+const Observable_takeUntil: ObservableTakeUntil["takeUntil"] = (<T>(
   notifier: ObservableLike,
 ) => {
   const operator = (delegate: ObserverLike<T>) =>
@@ -42,6 +46,6 @@ const Observable_takeUntil: ObservableTakeUntil = (<T>(
       notifier[ObservableLike_isRunnable],
     ),
   );
-}) as ObservableTakeUntil;
+}) as ObservableTakeUntil["takeUntil"];
 
 export default Observable_takeUntil;

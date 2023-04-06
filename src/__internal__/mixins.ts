@@ -123,25 +123,25 @@ function initUnsafe<TReturn>(
 }
 
 interface Init {
-  <TReturn>(
+  init<TReturn>(
     mixin: Mixin<TReturn>,
     instance: unknown,
   ): asserts instance is TReturn;
 
-  <TReturn, TA>(
+  init<TReturn, TA>(
     mixin: Mixin1<TReturn, TA>,
     instance: unknown,
     a: TA,
   ): asserts instance is TReturn;
 
-  <TReturn, TA, TB>(
+  init<TReturn, TA, TB>(
     mixin: Mixin2<TReturn, TA, TB>,
     instance: unknown,
     a: TA,
     b: TB,
   ): asserts instance is TReturn;
 
-  <TReturn, TA, TB, TC>(
+  init<TReturn, TA, TB, TC>(
     mixin: Mixin3<TReturn, TA, TB, TC>,
     instance: unknown,
     a: TA,
@@ -149,7 +149,7 @@ interface Init {
     c: TC,
   ): asserts instance is TReturn;
 
-  <TReturn, TA, TB, TC, TD>(
+  init<TReturn, TA, TB, TC, TD>(
     mixin: Mixin4<TReturn, TA, TB, TC, TD>,
     instance: unknown,
     a: TA,
@@ -158,7 +158,7 @@ interface Init {
     d: TD,
   ): asserts instance is TReturn;
 
-  <TReturn, TA, TB, TC, TD, TE>(
+  init<TReturn, TA, TB, TC, TD, TE>(
     mixin: Mixin5<TReturn, TA, TB, TC, TD, TE>,
     instance: unknown,
     a: TA,
@@ -168,7 +168,7 @@ interface Init {
     e: TE,
   ): asserts instance is TReturn;
 
-  <TReturn, TA, TB, TC, TD, TE, TF>(
+  init<TReturn, TA, TB, TC, TD, TE, TF>(
     mixin: Mixin6<TReturn, TA, TB, TC, TD, TE, TF>,
     instance: unknown,
     a: TA,
@@ -179,7 +179,7 @@ interface Init {
     f: TF,
   ): asserts instance is TReturn;
 }
-export const init: Init = initUnsafe;
+export const init: Init["init"] = initUnsafe;
 
 export const include: (
   m0: PartialMixin,
@@ -212,7 +212,7 @@ export const include: (
 };
 
 interface CreateMixin {
-  <
+  create<
     TInit extends (
       instance: TPrototype & Mutable<TProperties>,
       ...args: readonly any[]
@@ -230,7 +230,7 @@ interface CreateMixin {
     [Object_prototype]: TPrototype;
   };
 
-  <
+  create<
     TInit extends (
       instance: TPrototype & Mutable<TProperties>,
       ...args: readonly any[]
@@ -249,14 +249,14 @@ interface CreateMixin {
     [Object_prototype]: TPrototype;
   };
 
-  <TInit extends (instance: unknown, ...args: readonly any[]) => unknown>(
+  create<TInit extends (instance: unknown, ...args: readonly any[]) => unknown>(
     parent: PartialMixin,
     init: TInit,
   ): PartialMixin & {
     [Object_init]: TInit;
   };
 }
-export const mix: CreateMixin = ((
+export const mix: CreateMixin["create"] = ((
   initOrParent: any,
   propertiesOrInit: any,
   prototypeOrParent?: any,
@@ -278,65 +278,61 @@ export const mix: CreateMixin = ((
       [Object_init]: propertiesOrInit,
     };
   }
-}) as CreateMixin;
+}) as CreateMixin["create"];
 
 interface CreateInstanceFactory {
-  <TReturn>(mixin: Mixin<TReturn>): Factory<TReturn>;
+  createInstanceFactory<TReturn>(mixin: Mixin<TReturn>): Factory<TReturn>;
 
-  <TReturn, TA>(mixin: Mixin1<TReturn, TA>): Function1<TA, TReturn>;
+  createInstanceFactory<TReturn, TA>(
+    mixin: Mixin1<TReturn, TA>,
+  ): Function1<TA, TReturn>;
 
-  <TReturn, TA, TB>(mixin: Mixin2<TReturn, TA, TB>): Function2<TA, TB, TReturn>;
+  createInstanceFactory<TReturn, TA, TB>(
+    mixin: Mixin2<TReturn, TA, TB>,
+  ): Function2<TA, TB, TReturn>;
 
-  <TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>): Function3<
-    TA,
-    TB,
-    TC,
-    TReturn
-  >;
+  createInstanceFactory<TReturn, TA, TB, TC>(
+    mixin: Mixin3<TReturn, TA, TB, TC>,
+  ): Function3<TA, TB, TC, TReturn>;
 
-  <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>): Function4<
-    TA,
-    TB,
-    TC,
-    TD,
-    TReturn
-  >;
+  createInstanceFactory<TReturn, TA, TB, TC, TD>(
+    mixin: Mixin4<TReturn, TA, TB, TC, TD>,
+  ): Function4<TA, TB, TC, TD, TReturn>;
 
-  <TReturn, TA, TB, TC, TD, TE>(
+  createInstanceFactory<TReturn, TA, TB, TC, TD, TE>(
     mixin: Mixin5<TReturn, TA, TB, TC, TD, TE>,
   ): Function5<TA, TB, TC, TD, TE, TReturn>;
 
-  <TReturn, TA, TB, TC, TD, TE, TF>(
+  createInstanceFactory<TReturn, TA, TB, TC, TD, TE, TF>(
     mixin: Mixin6<TReturn, TA, TB, TC, TD, TE, TF>,
   ): Function6<TA, TB, TC, TD, TE, TF, TReturn>;
 }
-export const createInstanceFactory: CreateInstanceFactory = <TReturn>(
-  mixin: MixinAny<TReturn>,
-): Factory<TReturn> => {
-  const propertyDescription = Obj.getOwnPropertyDescriptors(
-    mixin[Object_properties],
-  );
+export const createInstanceFactory: CreateInstanceFactory["createInstanceFactory"] =
+  <TReturn>(mixin: MixinAny<TReturn>): Factory<TReturn> => {
+    const propertyDescription = Obj.getOwnPropertyDescriptors(
+      mixin[Object_properties],
+    );
 
-  const prototypeDescription = __DEV__
-    ? {
-        ...Obj.getOwnPropertyDescriptors(mixin[Object_prototype]),
-        constructor: {
-          configurable: true,
-          enumerable: false,
-          value: mixin[Object_init],
-          writable: true,
-        },
-      }
-    : Obj.getOwnPropertyDescriptors(mixin[Object_prototype]);
+    const prototypeDescription = __DEV__
+      ? {
+          ...Obj.getOwnPropertyDescriptors(mixin[Object_prototype]),
+          constructor: {
+            configurable: true,
+            enumerable: false,
+            value: mixin[Object_init],
+            writable: true,
+          },
+        }
+      : Obj.getOwnPropertyDescriptors(mixin[Object_prototype]);
 
-  const prototype = Obj.create(Obj.prototype, prototypeDescription);
+    const prototype = Obj.create(Obj.prototype, prototypeDescription);
 
-  return (...args: readonly any[]) => {
-    const instance: unknown = Obj.create(prototype, propertyDescription);
-    initUnsafe(mixin, instance, ...args);
-    return instance;
+    return (...args: readonly any[]) => {
+      const instance: unknown = Obj.create(prototype, propertyDescription);
+      initUnsafe(mixin, instance, ...args);
+      return instance;
+    };
   };
-};
 
 export const props = <TProperties>(
   o: OptionalProperties<TProperties>,

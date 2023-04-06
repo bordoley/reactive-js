@@ -20,7 +20,20 @@ import {
 import {
   Equality,
   Factory,
+  Function1,
+  Function2,
+  Function3,
+  Function4,
+  Function5,
+  Function6,
   Optional,
+  SideEffect,
+  SideEffect1,
+  SideEffect2,
+  SideEffect3,
+  SideEffect4,
+  SideEffect5,
+  SideEffect6,
   Updater,
   arrayEquality,
   bind,
@@ -112,12 +125,15 @@ type AwaitEffect = {
 type ComputeEffect = AwaitEffect | MemoEffect | ObserveEffect | UsingEffect;
 
 interface ValidateComputeEffect {
-  (ctx: ComputeContext, type: typeof Await): AwaitEffect;
-  (ctx: ComputeContext, type: typeof Memo): MemoEffect;
-  (ctx: ComputeContext, type: typeof Observe): ObserveEffect;
-  (ctx: ComputeContext, type: typeof Using): UsingEffect;
+  validateComputeEffect(ctx: ComputeContext, type: typeof Await): AwaitEffect;
+  validateComputeEffect(ctx: ComputeContext, type: typeof Memo): MemoEffect;
+  validateComputeEffect(
+    ctx: ComputeContext,
+    type: typeof Observe,
+  ): ObserveEffect;
+  validateComputeEffect(ctx: ComputeContext, type: typeof Using): UsingEffect;
 }
-const validateComputeEffect: ValidateComputeEffect = ((
+const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
   ctx: ComputeContext,
   type: ComputeEffectType,
 ): ComputeEffect => {
@@ -170,7 +186,7 @@ const validateComputeEffect: ValidateComputeEffect = ((
     }
     return newEffect;
   }
-}) as ValidateComputeEffect;
+}) as ValidateComputeEffect["validateComputeEffect"];
 
 const arrayStrictEquality = arrayEquality();
 
@@ -423,7 +439,37 @@ export const Observable_compute = <T>(
     pipe(observer, Observer_schedule(runComputation));
   });
 
-export const Observable_compute__memo = <T>(
+interface __Memo {
+  __memo<T>(fn: Factory<T>): T;
+  __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
+  __memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+  __memo<TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+  __memo<TA, TB, TC, TD, T>(
+    fn: Function4<TA, TB, TC, TD, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): T;
+  __memo<TA, TB, TC, TD, TE, T>(
+    fn: Function5<TA, TB, TC, TD, TE, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): T;
+  __memo<TA, TB, TC, TD, TE, TF, T>(
+    fn: Function6<TA, TB, TC, TD, TE, TF, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): T;
+}
+export const Observable_compute__memo: __Memo["__memo"] = <T>(
   f: (...args: any[]) => T,
   ...args: unknown[]
 ): T => {
@@ -445,7 +491,38 @@ export const Observable_compute__observe = <T>(
   return ctx[ComputeContext_awaitOrObserve](observable, false);
 };
 
-export const Observable_compute__do = /*@__PURE__*/ (() => {
+interface __Do {
+  __do(fn: SideEffect): void;
+  __do<TA>(fn: SideEffect1<TA>, a: TA): void;
+  __do<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
+  __do<TA, TB, TC>(fn: SideEffect3<TA, TB, TC>, a: TA, b: TB, c: TC): void;
+  __do<TA, TB, TC, TD>(
+    fn: SideEffect4<TA, TB, TC, TD>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): void;
+  __do<TA, TB, TC, TD, TE>(
+    fn: SideEffect5<TA, TB, TC, TD, TE>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): void;
+  __do<TA, TB, TC, TD, TE, TF>(
+    fn: SideEffect6<TA, TB, TC, TD, TE, TF>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): void;
+}
+
+export const Observable_compute__do: __Do["__do"] = /*@__PURE__*/ (() => {
   const deferSideEffect = (f: (...args: any[]) => void, ...args: unknown[]) =>
     Observable_create(observer => {
       const callback = () => {
@@ -476,7 +553,49 @@ export const Observable_compute__do = /*@__PURE__*/ (() => {
   };
 })();
 
-export const Observable_compute__using = <T extends DisposableLike>(
+interface __Using {
+  __using<T extends DisposableLike>(fn: Factory<T>): T;
+  __using<TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
+  __using<TA, TB, T extends DisposableLike>(
+    fn: Function2<TA, TB, T>,
+    a: TA,
+    b: TB,
+  ): T;
+  __using<TA, TB, TC, T extends DisposableLike>(
+    fn: Function3<TA, TB, TC, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+  ): T;
+  __using<TA, TB, TC, TD, T extends DisposableLike>(
+    fn: Function4<TA, TB, TC, TD, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): T;
+  __using<TA, TB, TC, TD, TE, T extends DisposableLike>(
+    fn: Function5<TA, TB, TC, TD, TE, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): T;
+  __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(
+    fn: Function6<TA, TB, TC, TD, TE, TF, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): T;
+}
+
+export const Observable_compute__using: __Using["__using"] = <
+  T extends DisposableLike,
+>(
   f: (...args: any[]) => T,
   ...args: unknown[]
 ): T => {
@@ -571,10 +690,15 @@ export const Observable_compute__bind = <F extends Function>(
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const Observable_compute__bindMethod = <
   // eslint-disable-next-line @typescript-eslint/ban-types
-  T extends { [K in TKey]: Function },
+  T extends { [K in TKey]: (...args: any[]) => any },
   TKey extends number | string | symbol,
   TFunction extends T[TKey],
 >(
   thiz: T,
   key: TKey,
-): TFunction => Observable_compute__memo(bindMethod, thiz, key);
+): TFunction =>
+  Observable_compute__memo<T, TKey, TFunction>(
+    bindMethod as (...args: any[]) => TFunction,
+    thiz,
+    key,
+  );

@@ -20,14 +20,18 @@ import {
 } from "../../../util.js";
 
 interface IterableToObservable {
-  <T>(): Function1<IterableLike<T>, EnumerableLike<T>>;
-  <T>(options: unknown): Function1<IterableLike<T>, RunnableLike<T>>;
-  <T>(options: {
+  toObservable<T>(): Function1<IterableLike<T>, EnumerableLike<T>>;
+  toObservable<T>(
+    options: unknown,
+  ): Function1<IterableLike<T>, RunnableLike<T>>;
+  toObservable<T>(options: {
     readonly delay: number;
     readonly delayStart?: boolean;
   }): Function1<IterableLike<T>, RunnableLike<T>>;
 }
-const Iterable_toObservable: IterableToObservable = (<T>(options?: {
+const Iterable_toObservable: IterableToObservable["toObservable"] = (<
+    T,
+  >(options?: {
     readonly delay?: number;
     readonly delayStart?: boolean;
   }) =>
@@ -60,6 +64,6 @@ const Iterable_toObservable: IterableToObservable = (<T>(options?: {
       delay > 0 ? Runnable_create(onSubscribe) : Enumerable_create(onSubscribe);
 
     return retval;
-  }) as IterableToObservable;
+  }) as IterableToObservable["toObservable"];
 
 export default Iterable_toObservable;

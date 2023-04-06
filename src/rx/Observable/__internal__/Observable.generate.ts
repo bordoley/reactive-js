@@ -15,19 +15,22 @@ import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js"
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 
 interface ObservableGenerate {
-  <T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
-  <T>(
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): EnumerableLike<T>;
+  generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
     options: { readonly delay: number; readonly delayStart?: boolean },
   ): RunnableLike<T>;
-  <T>(
+  generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
     options?: { readonly delay?: number; readonly delayStart?: boolean },
   ): RunnableLike<T>;
 }
-const Observable_generate: ObservableGenerate = (<T>(
+const Observable_generate: ObservableGenerate["generate"] = (<T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options?: { readonly delay?: number; readonly delayStart?: boolean },
@@ -53,6 +56,6 @@ const Observable_generate: ObservableGenerate = (<T>(
   return delay > 0
     ? Runnable_create(onSubscribe)
     : Enumerable_create(onSubscribe);
-}) as ObservableGenerate;
+}) as ObservableGenerate["generate"];
 
 export default Observable_generate;

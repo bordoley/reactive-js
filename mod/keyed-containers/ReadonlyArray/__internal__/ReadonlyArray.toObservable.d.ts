@@ -2,24 +2,24 @@ import { ReadonlyArrayLike } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
 import { EnumerableLike, RunnableLike } from "../../../rx.js";
 interface ReadonlyArrayToObservable {
-    <T>(): Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
-    <T>(options: unknown): Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
-    <T>(options: {
+    toObservable<T>(): Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
+    toObservable<T>(options: unknown): Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
+    toObservable<T>(options: {
         readonly count: number;
     }): Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
-    <T>(options: {
+    toObservable<T>(options: {
         readonly count: number;
         readonly start: number;
     }): Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
-    <T>(options: {
+    toObservable<T>(options: {
         readonly start: number;
     }): Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
-    <T>(options: {
+    toObservable<T>(options: {
         readonly delay: number;
         readonly delayStart?: boolean;
         readonly count?: number;
         readonly start?: number;
     }): Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
 }
-declare const ReadonlyArray_toObservable: ReadonlyArrayToObservable;
+declare const ReadonlyArray_toObservable: ReadonlyArrayToObservable["toObservable"];
 export default ReadonlyArray_toObservable;
