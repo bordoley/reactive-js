@@ -115,6 +115,14 @@ export interface PublisherLike<T = unknown> extends EventListenerLike<T>, Multic
  * @noInheritDoc
  * @category AnimationConfig
  */
+export interface DelayAnimationConfig {
+    readonly type: "delay";
+    readonly duration: number;
+}
+/**
+ * @noInheritDoc
+ * @category AnimationConfig
+ */
 export interface TweenAnimationConfig {
     readonly type: "tween";
     readonly from: number;
@@ -139,7 +147,7 @@ export type AnimationConfigSelector<T> = T extends number ? {
 } : {
     readonly selector: Function1<number, T>;
 };
-export type AnimationConfig<T = number> = (TweenAnimationConfig & AnimationConfigSelector<T>) | (SpringAnimationConfig & AnimationConfigSelector<T>);
+export type AnimationConfig<T = number> = (TweenAnimationConfig & AnimationConfigSelector<T>) | (SpringAnimationConfig & AnimationConfigSelector<T>) | DelayAnimationConfig;
 /**
  * @noInheritDoc
  * @category TypeClass

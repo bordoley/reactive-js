@@ -6,6 +6,7 @@
 
 ### AnimationConfig Interfaces
 
+- [DelayAnimationConfig](../interfaces/rx.DelayAnimationConfig.md)
 - [SpringAnimationConfig](../interfaces/rx.SpringAnimationConfig.md)
 - [TweenAnimationConfig](../interfaces/rx.TweenAnimationConfig.md)
 
@@ -70,7 +71,7 @@
 
 ### AnimationConfig
 
-Ƭ **AnimationConfig**<`T`\>: [`TweenAnimationConfig`](../interfaces/rx.TweenAnimationConfig.md) & [`AnimationConfigSelector`](rx.md#animationconfigselector)<`T`\> \| [`SpringAnimationConfig`](../interfaces/rx.SpringAnimationConfig.md) & [`AnimationConfigSelector`](rx.md#animationconfigselector)<`T`\>
+Ƭ **AnimationConfig**<`T`\>: [`TweenAnimationConfig`](../interfaces/rx.TweenAnimationConfig.md) & [`AnimationConfigSelector`](rx.md#animationconfigselector)<`T`\> \| [`SpringAnimationConfig`](../interfaces/rx.SpringAnimationConfig.md) & [`AnimationConfigSelector`](rx.md#animationconfigselector)<`T`\> \| [`DelayAnimationConfig`](../interfaces/rx.DelayAnimationConfig.md)
 
 #### Type parameters
 

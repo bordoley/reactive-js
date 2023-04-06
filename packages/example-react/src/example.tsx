@@ -127,6 +127,7 @@ const Root = () => {
       pipe(
         Observable.animate(
           { type: "tween", duration: 1000, from: 0, to: 50, selector },
+          { type: "delay", duration: 1000 },
           { type: "tween", duration: 1000, from: 50, to: 0, selector },
         ),
         Observable.forEach(({ margin, padding }) => {
@@ -136,7 +137,9 @@ const Root = () => {
             animatedDiv.style.padding = padding;
           }
         }),
-        Observable.subscribeOn(() => createAnimationFrameScheduler(hostScheduler)),
+        Observable.subscribeOn(() =>
+          createAnimationFrameScheduler(hostScheduler),
+        ),
         returns,
       ),
       { mode: "blocking" },
@@ -243,7 +246,9 @@ const RxComponent = createComponent(
               animatedDiv.style.padding = padding;
             }
           }),
-          Observable.subscribeOn(() => createAnimationFrameScheduler(hostScheduler)),
+          Observable.subscribeOn(() =>
+            createAnimationFrameScheduler(hostScheduler),
+          ),
           returns,
         ),
         { mode: "switching" },
