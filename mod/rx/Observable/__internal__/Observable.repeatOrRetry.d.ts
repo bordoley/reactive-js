@@ -1,4 +1,5 @@
 import { ContainerOperator } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
-declare const Observable_repeatOrRetry: <T>(shouldRepeat: (count: number, error?: Error) => boolean) => ContainerOperator<ObservableLike, T, T>;
+type ObservableRepeatOrRetry = <C extends ObservableLike, T>(shouldRepeat: (count: number, error?: Error) => boolean) => ContainerOperator<C, T, T>;
+declare const Observable_repeatOrRetry: ObservableRepeatOrRetry;
 export default Observable_repeatOrRetry;

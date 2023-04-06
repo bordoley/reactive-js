@@ -192,6 +192,16 @@ export interface TweenAnimationConfig {
  * @noInheritDoc
  * @category AnimationConfig
  */
+export interface LoopAnimationConfig<T> {
+  readonly type: "loop";
+  readonly animation: readonly AnimationConfig<T>[];
+  readonly count?: number;
+}
+
+/**
+ * @noInheritDoc
+ * @category AnimationConfig
+ */
 export interface SpringAnimationConfig {
   readonly type: "spring";
   readonly from: number;
@@ -208,7 +218,8 @@ export type AnimationConfigSelector<T> = T extends number
 export type AnimationConfig<T = number> =
   | (TweenAnimationConfig & AnimationConfigSelector<T>)
   | (SpringAnimationConfig & AnimationConfigSelector<T>)
-  | DelayAnimationConfig;
+  | DelayAnimationConfig
+  | LoopAnimationConfig<T>;
 
 /**
  * @noInheritDoc

@@ -90,7 +90,7 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
     const op = pipe(
       createSkipFirstObserver,
       partial(count),
-      Observable_lift({
+      Observable_lift<ObservableLike>({
         [ObservableLike_isEnumerable]: true,
         [ObservableLike_isRunnable]: true,
       }),

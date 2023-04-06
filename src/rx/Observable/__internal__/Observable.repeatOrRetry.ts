@@ -1,4 +1,4 @@
-import { ContainerOperator } from "../../../containers.js";
+import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import { bindMethod, error, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
@@ -15,10 +15,15 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-const Observable_repeatOrRetry: <T>(
+type ObservableRepeatOrRetry = <C extends ObservableLike, T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
-) => ContainerOperator<ObservableLike, T, T> = /*@__PURE__*/ (() => {
-  const createRepeatObserver = <T>(
+) => ContainerOperator<C, T, T>;
+
+const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
+  C extends ObservableLike,
+  T,
+>() => {
+  const createRepeatObserver = (
     delegate: ObserverLike<T>,
     observable: ObservableLike<T>,
     shouldRepeat: (count: number, error?: Error) => boolean,
@@ -58,20 +63,20 @@ const Observable_repeatOrRetry: <T>(
     );
   };
 
-  return <T>(shouldRepeat: (count: number, error?: Error) => boolean) =>
-    (observable: ObservableLike<T>) => {
+  return ((shouldRepeat: (count: number, error?: Error) => boolean) =>
+    (observable: ContainerOf<C, T>) => {
       const operator = pipe(
         createRepeatObserver,
         partial(observable, shouldRepeat),
       );
       return pipe(
         observable,
-        Observable_lift({
+        Observable_lift<ObservableLike>({
           [ObservableLike_isEnumerable]: true,
           [ObservableLike_isRunnable]: true,
         })(operator),
       );
-    };
+    }) as ObservableRepeatOrRetry;
 })();
 
 export default Observable_repeatOrRetry;

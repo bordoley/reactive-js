@@ -51,6 +51,7 @@ import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.t
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
+import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 export const backpressureStrategy = Observable_backpressureStrategy;
@@ -89,6 +90,7 @@ export const mapTo = Observable_mapTo;
 export const pairwise = Observable_pairwise;
 export const pick = Observable_pick;
 export const reduce = Observable_reduce;
+export const repeat = Observable_repeat;
 export const retry = Observable_retry;
 export const scan = Observable_scan;
 export const scanLast = Enumerable_scanLast;

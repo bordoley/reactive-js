@@ -121,9 +121,15 @@ const Root = () => {
       });
 
       return [
-        { type: "tween", duration: 1000, from: 0, to: 50, selector },
-        { type: "delay", duration: 500 },
-        { type: "tween", duration: 1000, from: 50, to: 0, selector },
+        {
+          type: "loop",
+          count: 2,
+          animation: [
+            { type: "tween", duration: 1000, from: 0, to: 50, selector },
+            { type: "delay", duration: 500 },
+            { type: "tween", duration: 1000, from: 50, to: 0, selector },
+          ],
+        },
       ];
     },
     { mode: "blocking" },

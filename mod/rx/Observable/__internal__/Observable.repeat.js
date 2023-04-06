@@ -2,8 +2,7 @@
 
 import { isNone, isNumber } from "../../../functions.js";
 import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
-const Observable_repeat = 
-/*@__PURE__*/ (() => {
+const Observable_repeat = /*@__PURE__*/ (() => {
     const defaultRepeatPredicate = (_, e) => isNone(e);
     return (predicate) => {
         const repeatPredicate = isNone(predicate)

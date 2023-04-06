@@ -33,6 +33,7 @@ import {
   Pairwise,
   Pick,
   Reduce,
+  Repeat,
   Scan,
   SkipFirst,
   SomeSatisfy,
@@ -116,6 +117,7 @@ import Observable_mergeWith from "./Observable/__internal__/Observable.mergeWith
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
+import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
@@ -307,6 +309,8 @@ export const pairwise: Pairwise<RunnableLike>["pairwise"] = Observable_pairwise;
 export const pick: Pick<RunnableLike>["pick"] = Observable_pick;
 
 export const reduce: Reduce<RunnableLike>["reduce"] = Observable_reduce;
+
+export const repeat: Repeat<RunnableLike>["repeat"] = Observable_repeat;
 
 export const retry: Retry<RunnableLike>["retry"] = Observable_retry;
 
