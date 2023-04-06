@@ -120,7 +120,7 @@ const Root = () => {
       padding: `${v}px`,
     });
 
-    return Streamable.createBlockingEventHandler(
+    return Streamable.createEventHandler(
       pipe(
         Observable.animate(
           { type: "tween", duration: 1000, from: 0, to: 50, selector },
@@ -136,6 +136,7 @@ const Root = () => {
         Observable.subscribeOn(createAnimationFrameScheduler),
         returns,
       ),
+      { mode: "blocking" },
     );
   }, [animatedDivRef]);
   const [animationRunning, dispatch] = useStreamable(animationStreamable);
@@ -204,7 +205,7 @@ const RxComponent = createComponent(
     const createAnimationStream = (animatedDivRef: {
       current: HTMLElement | null;
     }) =>
-      Streamable.createSwitchingEventHandler(
+      Streamable.createEventHandler(
         pipe(
           Observable.animate(
             {
@@ -242,6 +243,7 @@ const RxComponent = createComponent(
           Observable.subscribeOn(createAnimationFrameScheduler),
           returns,
         ),
+        { mode: "switching" },
       );
 
     return Observable.compute(() => {

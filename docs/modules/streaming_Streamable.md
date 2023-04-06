@@ -8,12 +8,10 @@
 
 - [create](streaming_Streamable.md#create)
 - [createActionReducer](streaming_Streamable.md#createactionreducer)
-- [createBlockingEventHandler](streaming_Streamable.md#createblockingeventhandler)
+- [createEventHandler](streaming_Streamable.md#createeventhandler)
 - [createInMemoryCache](streaming_Streamable.md#createinmemorycache)
 - [createPersistentCache](streaming_Streamable.md#createpersistentcache)
-- [createQueueingEventHandler](streaming_Streamable.md#createqueueingeventhandler)
 - [createStateStore](streaming_Streamable.md#createstatestore)
-- [createSwitchingEventHandler](streaming_Streamable.md#createswitchingeventhandler)
 - [identity](streaming_Streamable.md#identity)
 
 ### Other Functions
@@ -74,13 +72,11 @@ over the notified actions, emitting each intermediate result.
 
 ___
 
-### createBlockingEventHandler
+### createEventHandler
 
-▸ **createBlockingEventHandler**<`TEvent`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `boolean`\>\>
+▸ **createEventHandler**<`TEvent`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `never`\>\>
 
-Returns an event handler that invokes the observable function,
-and blocks, ignoring any subsequent events until the initial eventHandler
-disposes.
+Returns an event handler that invokes the observable function.
 
 #### Type parameters
 
@@ -93,10 +89,59 @@ disposes.
 | Name | Type |
 | :------ | :------ |
 | `op` | [`Function1`](functions.md#function1)<`TEvent`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `options` | `Object` |
+| `options.mode` | ``"switching"`` |
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `boolean`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `never`\>\>
+
+▸ **createEventHandler**<`TEvent_1`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_1`, `boolean`\>\>
+
+Returns an event handler that invokes the observable function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TEvent_1` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`Function1`](functions.md#function1)<`TEvent_1`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `options` | `Object` |
+| `options.mode` | ``"blocking"`` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_1`, `boolean`\>\>
+
+▸ **createEventHandler**<`TEvent_2`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_2`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_2`, `never`\>\>
+
+Returns an event handler that invokes the observable function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TEvent_2` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`Function1`](functions.md#function1)<`TEvent_2`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `options` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.maxConcurrency?` | `number` |
+| `options.mode` | ``"queueing"`` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_2`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_2`, `never`\>\>
 
 ___
 
@@ -151,37 +196,6 @@ ___
 
 ___
 
-### createQueueingEventHandler
-
-▸ **createQueueingEventHandler**<`TEvent`\>(`op`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `never`\>\>
-
-Returns an event handler that invokes the observable function,
-an Observable function, limiting the number of concurrent subscriptions,
-and applying the backpressure policy if the number of dispatched events
-exceeds the handlers capacity.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TEvent` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEvent`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.maxConcurrency?` | `number` |
-
-#### Returns
-
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `never`\>\>
-
-___
-
 ### createStateStore
 
 ▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
@@ -207,31 +221,6 @@ new state based upon the previous state.
 #### Returns
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
-
-___
-
-### createSwitchingEventHandler
-
-▸ **createSwitchingEventHandler**<`TEvent`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `never`\>\>
-
-Returns an event handler that invokes the observable function,
-and cancels any outstanding inner event handlers.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TEvent` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEvent`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
-
-#### Returns
-
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `never`\>\>
 
 ___
 

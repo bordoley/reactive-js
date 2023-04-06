@@ -1,11 +1,9 @@
-import { Equality, Factory, Function1, Reducer, Updater } from "../functions.js";
-import { ObservableLike } from "../rx.js";
+import { Equality, Factory, Reducer, Updater } from "../functions.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
-import { QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 /**
  * @category Constructor
  */
-export declare const create: <TReq, T>(op: import("../containers.js").ContainerOperator<ObservableLike<unknown>, TReq, T>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
+export declare const create: <TReq, T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableLike<unknown>, TReq, T>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
  * over the notified actions, emitting each intermediate result.
@@ -21,13 +19,24 @@ export declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction,
     readonly equality?: Equality<T>;
 }) => StreamableLike<TAction, T>;
 /**
- * Returns an event handler that invokes the observable function,
- * and blocks, ignoring any subsequent events until the initial eventHandler
- * disposes.
+ * Returns an event handler that invokes the observable function.
  *
  * @category Constructor
  */
-export declare const createBlockingEventHandler: <TEvent>(op: Function1<TEvent, ObservableLike<unknown>>) => StreamableLike<TEvent, boolean>;
+export declare const createEventHandler: {
+    <TEvent>(op: import("../functions.js").Function1<TEvent, import("../rx.js").ObservableLike<unknown>>, options: {
+        readonly mode: "switching";
+    }): StreamableLike<TEvent, never, StreamLike<TEvent, never>>;
+    <TEvent_1>(op: import("../functions.js").Function1<TEvent_1, import("../rx.js").ObservableLike<unknown>>, options: {
+        readonly mode: "blocking";
+    }): StreamableLike<TEvent_1, boolean, StreamLike<TEvent_1, boolean>>;
+    <TEvent_2>(op: import("../functions.js").Function1<TEvent_2, import("../rx.js").ObservableLike<unknown>>, options: {
+        readonly mode: "queueing";
+        readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
+        readonly capacity?: number | undefined;
+        readonly maxConcurrency?: number | undefined;
+    }): StreamableLike<TEvent_2, never, StreamLike<TEvent_2, never>>;
+};
 /**
  * @category Constructor
  */
@@ -39,25 +48,12 @@ export declare const createInMemoryCache: <T>(options?: {
  * @category Constructor
  */
 export declare const createPersistentCache: <T>(persistentStore: {
-    load(keys: ReadonlySet<string>): ObservableLike<Readonly<Record<string, import("../functions.js").Optional<T>>>>;
-    store(updates: Readonly<Record<string, T>>): ObservableLike<void>;
+    load(keys: ReadonlySet<string>): import("../rx.js").ObservableLike<Readonly<Record<string, import("../functions.js").Optional<T>>>>;
+    store(updates: Readonly<Record<string, T>>): import("../rx.js").ObservableLike<void>;
 }, options?: {
     readonly capacity?: number | undefined;
     readonly cleanupScheduler?: import("../scheduling.js").SchedulerLike | undefined;
 }) => import("../streaming.js").CacheLike<T>;
-/**
- * Returns an event handler that invokes the observable function,
- * an Observable function, limiting the number of concurrent subscriptions,
- * and applying the backpressure policy if the number of dispatched events
- * exceeds the handlers capacity.
- *
- * @category Constructor
- */
-export declare const createQueueingEventHandler: <TEvent>(op: Function1<TEvent, ObservableLike<unknown>>, options?: {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly maxConcurrency?: number;
-}) => StreamableLike<TEvent, never>;
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
  * be updated by notifying the instance with a `StateUpdater` that computes a
@@ -72,13 +68,6 @@ export declare const createQueueingEventHandler: <TEvent>(op: Function1<TEvent, 
 export declare const createStateStore: <T>(initialState: Factory<T>, options?: {
     readonly equality?: Equality<T>;
 }) => StreamableLike<Updater<T>, T>;
-/**
- * Returns an event handler that invokes the observable function,
- * and cancels any outstanding inner event handlers.
- *
- * @category Constructor
- */
-export declare const createSwitchingEventHandler: <TEvent>(op: Function1<TEvent, ObservableLike<unknown>>) => StreamableLike<TEvent, never>;
 /**
  * @category Constructor
  */
