@@ -31,12 +31,12 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
         };
         return pipe(Observer_createWithDelegate(delegate), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
     };
-    return (shouldRepeat) => (observable) => {
+    return ((shouldRepeat) => (observable) => {
         const operator = pipe(createRepeatObserver, partial(observable, shouldRepeat));
         return pipe(observable, Observable_lift({
             [ObservableLike_isEnumerable]: true,
             [ObservableLike_isRunnable]: true,
         })(operator));
-    };
+    });
 })();
 export default Observable_repeatOrRetry;

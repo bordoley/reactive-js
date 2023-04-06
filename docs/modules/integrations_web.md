@@ -12,6 +12,10 @@
 
 - [WindowLocationURI](../interfaces/integrations_web.WindowLocationURI.md)
 
+### Type Aliases
+
+- [CSSStyleKey](integrations_web.md#cssstylekey)
+
 ### Variables
 
 - [windowLocation](integrations_web.md#windowlocation)
@@ -20,6 +24,12 @@
 
 - [addEventListener](integrations_web.md#addeventlistener)
 - [createEventSource](integrations_web.md#createeventsource)
+
+## Type Aliases
+
+### CSSStyleKey
+
+Ƭ **CSSStyleKey**: keyof `Omit`<`CSSStyleDeclaration`, ``"item"`` \| ``"length"`` \| ``"parentRule"`` \| ``"getPropertyPriority"`` \| ``"getPropertyValue"`` \| ``"removeProperty"`` \| ``"setProperty"`` \| `number` \| typeof `Symbol.iterator`\>
 
 ## Variables
 

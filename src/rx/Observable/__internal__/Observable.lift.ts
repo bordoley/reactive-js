@@ -45,22 +45,40 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
 }
 
 interface ObservableLift {
-  lift(config: {
+  lift<C extends EnumerableLike>(config: {
     [ObservableLike_isEnumerable]: true;
     [ObservableLike_isRunnable]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => Function1<EnumerableLike<TA>, EnumerableLike<TB>> &
-    Function1<RunnableLike<TA>, RunnableLike<TB>> &
-    Function1<ObservableLike<TA>, ObservableLike<TB>>;
+  ) => Function1<EnumerableLike<TA>, EnumerableLike<TB>>;
 
-  lift(config: {
+  lift<C extends RunnableLike>(config: {
+    [ObservableLike_isEnumerable]: true;
+    [ObservableLike_isRunnable]: true;
+  }): <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ) => Function1<RunnableLike<TA>, RunnableLike<TB>>;
+
+  lift<C extends ObservableLike>(config: {
+    [ObservableLike_isEnumerable]: true;
+    [ObservableLike_isRunnable]: true;
+  }): <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
+
+  lift<C extends RunnableLike>(config: {
     [ObservableLike_isEnumerable]: false;
     [ObservableLike_isRunnable]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => Function1<RunnableLike<TA>, RunnableLike<TB>> &
-    Function1<ObservableLike<TA>, ObservableLike<TB>>;
+  ) => Function1<RunnableLike<TA>, RunnableLike<TB>>;
+
+  lift<C extends ObservableLike>(config: {
+    [ObservableLike_isEnumerable]: false;
+    [ObservableLike_isRunnable]: true;
+  }): <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
 
   lift(config: {
     [ObservableLike_isEnumerable]: false;

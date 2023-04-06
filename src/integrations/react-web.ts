@@ -7,10 +7,29 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { Function1, Optional, Updater, isSome, none } from "../functions.js";
-import { QueueableLike_enqueue } from "../util.js";
+import {
+  Function1,
+  Optional,
+  Updater,
+  bindMethod,
+  identity,
+  isNone,
+  isSome,
+  none,
+  pipe,
+} from "../functions.js";
+import { ReadonlyRecordLike } from "../keyed-containers.js";
+import * as ReadonlyRecord from "../keyed-containers/ReadonlyRecord.js";
+import {
+  DisposableLike_dispose,
+  EventSourceLike,
+  EventSourceLike_addListener,
+  QueueableLike_enqueue,
+} from "../util.js";
+import * as EventListener from "../util/EventListener.js";
 import { useObservable, useStream } from "./react.js";
 import {
+  CSSStyleKey,
   WindowLocationStreamLike,
   WindowLocationStreamLike_canGoBack,
   WindowLocationStreamLike_goBack,
@@ -112,3 +131,52 @@ export const WindowLocationProvider: React.FunctionComponent<{
       )
     : null;
 };
+
+interface UseAnimatedValue {
+  useAnimatedValue<TElement extends HTMLElement>(
+    value: Optional<
+      EventSourceLike<Readonly<Partial<Record<CSSStyleKey, Optional<string>>>>>
+    >,
+  ): React.RefObject<TElement>;
+
+  useAnimatedValue<TElement extends HTMLElement, T>(
+    value: Optional<EventSourceLike<T>>,
+    selector: (v: T) => Partial<ReadonlyRecordLike<CSSStyleKey, string>>,
+  ): React.RefObject<TElement>;
+}
+/**
+ * @category Hook
+ */
+export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
+  TElement extends HTMLElement,
+  T = Readonly<Partial<Record<CSSStyleKey, Optional<string>>>>,
+>(
+  value: Optional<EventSourceLike<T>>,
+  selector = identity,
+): React.RefObject<TElement> => {
+  const ref = useRef<TElement>(null);
+
+  useEffect(() => {
+    if (isNone(value)) {
+      return;
+    }
+
+    const listener = EventListener.create((v: T) => {
+      const element = ref.current;
+      if (element != null) {
+        pipe(
+          selector(v) as ReadonlyRecordLike<CSSStyleKey, string>,
+          ReadonlyRecord.forEachWithKey<string, CSSStyleKey>((v, key) => {
+            element.style[key] = v ?? "";
+          }),
+        );
+      }
+    });
+
+    value[EventSourceLike_addListener](listener);
+
+    return bindMethod(listener, DisposableLike_dispose);
+  }, [value, selector, ref]);
+
+  return ref;
+}) as UseAnimatedValue["useAnimatedValue"];
