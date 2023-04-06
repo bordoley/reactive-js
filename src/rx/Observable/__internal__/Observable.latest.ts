@@ -14,6 +14,8 @@ import {
   LatestObserver_ctx,
   LatestObserver_latest,
   LatestObserver_ready,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
 } from "../../../__internal__/symbols.js";
 import { none, pipe } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
@@ -39,7 +41,7 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
-import Observable_create from "./Observable.create.js";
+import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
 type LatestMode = 1 | 2;
 const zipMode = 2;
@@ -174,7 +176,10 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const isEnumerable = Observable_allAreEnumerable(observables);
     const isRunnable = Observable_allAreRunnable(observables);
 
-    return Observable_create(onSubscribe, isEnumerable, isRunnable);
+    return Observable_createWithConfig(onSubscribe, {
+      [ObservableLike_isEnumerable]: isEnumerable,
+      [ObservableLike_isRunnable]: isRunnable,
+    });
   };
 })();
 

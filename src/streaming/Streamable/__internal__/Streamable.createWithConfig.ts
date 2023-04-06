@@ -14,9 +14,11 @@ import Stream_create from "../../Stream/__internal__/Stream.create.js";
 interface StreamableCreateLifted {
   createLifted<T>(
     op: ContainerOperator<ObservableLike, void, T>,
-    isInteractive: true,
-    isEnumerable: boolean,
-    isRunnable: boolean,
+    config: {
+      [StreamableLike_isEnumerable]: boolean;
+      [StreamableLike_isInteractive]: true;
+      [StreamableLike_isRunnable]: boolean;
+    },
   ): AsyncEnumerableLike<T>;
   createLifted<
     TReq,
@@ -24,26 +26,28 @@ interface StreamableCreateLifted {
     TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
   >(
     op: ContainerOperator<ObservableLike, TReq, T>,
-    isInteractive: boolean,
-    isEnumerable: boolean,
-    isRunnable: boolean,
+    config: {
+      [StreamableLike_isEnumerable]: boolean;
+      [StreamableLike_isInteractive]: boolean;
+      [StreamableLike_isRunnable]: boolean;
+    },
   ): StreamableLike<TReq, T, TStream>;
 }
 
-const Streamable_createLifted: StreamableCreateLifted["createLifted"] = (<
+const Streamable_createWithConfig: StreamableCreateLifted["createLifted"] = (<
   TReq,
   T,
 >(
   op: ContainerOperator<ObservableLike, TReq, T>,
-  isInteractive: boolean,
-  isEnumerable: boolean,
-  isRunnable: boolean,
+  config: {
+    [StreamableLike_isEnumerable]: boolean;
+    [StreamableLike_isInteractive]: boolean;
+    [StreamableLike_isRunnable]: boolean;
+  },
 ): StreamableLike<TReq, T> => ({
-  [StreamableLike_isEnumerable]: isEnumerable,
-  [StreamableLike_isInteractive]: isInteractive,
-  [StreamableLike_isRunnable]: isRunnable,
+  ...config,
   [StreamableLike_stream]: (scheduler, options) =>
     Stream_create(op, scheduler, options),
 })) as StreamableCreateLifted["createLifted"];
 
-export default Streamable_createLifted;
+export default Streamable_createWithConfig;

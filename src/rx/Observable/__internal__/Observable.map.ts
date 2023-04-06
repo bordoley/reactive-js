@@ -22,9 +22,9 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableMap = <C extends ObservableLike, TA, TB>(
   mapper: Function1<TA, TB>,
@@ -80,11 +80,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
   })();
 
   return ((mapper: Function1<TA, TB>) =>
-    pipe(
-      createMapObserver,
-      partial(mapper),
-      Observable_liftEnumerableOperator,
-    )) as ObservableMap;
+    pipe(createMapObserver, partial(mapper), Enumerable_lift)) as ObservableMap;
 })();
 
 export default Observable_map;

@@ -8,6 +8,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  DispatcherLike_scheduler,
   EventListenerLike_notify,
   MulticastObservableLike,
   ObservableLike,
@@ -15,13 +16,14 @@ import {
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
+  BufferLike_capacity,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_subscribeWithCapacityAndBackpressureStrategy from "./Observable.subscribeWithCapacityAndBackpressureStrategy.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const Observable_multicastImpl =
   <T>(
@@ -55,11 +57,11 @@ const Observable_multicastImpl =
       Observable_forEach<ObservableLike, T>(
         bindMethod(publisher, EventListenerLike_notify),
       ),
-      Observable_subscribeWithCapacityAndBackpressureStrategy(
-        scheduler,
-        capacity,
-        backpressureStrategy,
-      ),
+      Observable_subscribeWithConfig({
+        [DispatcherLike_scheduler]: scheduler,
+        [BufferLike_capacity]: capacity,
+        [QueueableLike_backpressureStrategy]: backpressureStrategy,
+      }),
       Disposable_bindTo(publisher),
     );
 

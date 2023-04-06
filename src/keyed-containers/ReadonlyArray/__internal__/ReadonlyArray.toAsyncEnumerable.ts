@@ -14,8 +14,14 @@ import Observable_concatMap from "../../../rx/Observable/__internal__/Observable
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
-import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
-import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
+import {
+  AsyncEnumerableLike,
+  StreamableLike_isEnumerable,
+  StreamableLike_isInteractive,
+  StreamableLike_isRunnable,
+  ToAsyncEnumerable,
+} from "../../../streaming.js";
+import Streamable_createWithConfig from "../../../streaming/Streamable/__internal__/Streamable.createWithConfig.js";
 
 const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
   ReadonlyArrayLike,
@@ -42,7 +48,7 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
     ) => {
       const delay = options?.delay ?? 0;
 
-      return Streamable_createLifted<T>(
+      return Streamable_createWithConfig<T>(
         compose(
           count >= 0
             ? Observable_scan<ObservableLike, void, number>(
@@ -62,9 +68,11 @@ const ReadonlyArray_toAsyncEnumerable: ToAsyncEnumerable<
               ),
           Observable_takeFirst<ObservableLike, T>({ count: abs(count) }),
         ),
-        true,
-        delay <= 0,
-        true,
+        {
+          [StreamableLike_isEnumerable]: delay <= 0,
+          [StreamableLike_isInteractive]: true,
+          [StreamableLike_isRunnable]: true,
+        },
       );
     },
   );

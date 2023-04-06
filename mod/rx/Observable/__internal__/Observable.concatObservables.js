@@ -3,6 +3,7 @@
 import { pipe } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -10,7 +11,7 @@ import Observer_createWithDelegate from "../../Observer/__internal__/Observer.cr
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
-import Observable_create from "./Observable.create.js";
+import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const Observable_concatObservables = 
 /*@__PURE__*/ (() => {
     const createConcatObserver = (delegate, observables, next) => pipe(Observer_createWithDelegate(delegate), Disposable_addTo(delegate), Disposable_onComplete(() => {
@@ -32,7 +33,10 @@ const Observable_concatObservables =
         };
         const isEnumerable = Observable_allAreEnumerable(observables);
         const isRunnable = Observable_allAreRunnable(observables);
-        return Observable_create(onSubscribe, isEnumerable, isRunnable);
+        return Observable_createWithConfig(onSubscribe, {
+            [ObservableLike_isEnumerable]: isEnumerable,
+            [ObservableLike_isRunnable]: isRunnable,
+        });
     };
 })();
 export default Observable_concatObservables;

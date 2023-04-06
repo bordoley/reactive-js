@@ -15,7 +15,7 @@ import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
-import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Memo = 1;
 const Await = 2;
 const Observe = 3;
@@ -112,7 +112,7 @@ class ComputeContext {
                             ? pipe(observer, Observer_schedule(runComputation))
                             : scheduledComputationSubscription;
                 }
-            }), Observable_subscribeWithDispatcherConfig(observer), Disposable_addTo(observer), Disposable_onComplete(this[ComputeContext_cleanup]));
+            }), Observable_subscribeWithConfig(observer), Disposable_addTo(observer), Disposable_onComplete(this[ComputeContext_cleanup]));
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_subscription] = subscription;
             effect[AwaitOrObserveEffect_value] = none;

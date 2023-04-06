@@ -28,11 +28,11 @@ import {
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
 } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableScan = <C extends ObservableLike, T, TAcc>(
   scanner: Reducer<T, TAcc>,
@@ -109,7 +109,7 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
     pipe(
       createScanObserver,
       partial(reducer, initialValue),
-      Observable_liftEnumerableOperator,
+      Enumerable_lift,
     )) as ObservableScan;
 })();
 

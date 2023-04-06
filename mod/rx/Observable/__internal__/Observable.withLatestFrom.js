@@ -3,7 +3,7 @@
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { WithLatestFromObserver_hasLatest, WithLatestFromObserver_otherLatest, WithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe, } from "../../../functions.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -12,7 +12,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_withLatestFrom = 
 /*@__PURE__*/ (() => {
     const createWithLatestObserver = (() => {
@@ -24,7 +24,7 @@ const Observable_withLatestFrom =
             pipe(other, Observable_forEach(next => {
                 instance[WithLatestFromObserver_hasLatest] = true;
                 instance[WithLatestFromObserver_otherLatest] = next;
-            }), Observable_subscribeWithDispatcherConfig(delegate), Disposable_addTo(instance), Disposable_onComplete(() => {
+            }), Observable_subscribeWithConfig(delegate), Disposable_addTo(instance), Disposable_onComplete(() => {
                 if (!instance[WithLatestFromObserver_hasLatest]) {
                     instance[DisposableLike_dispose]();
                 }
@@ -45,6 +45,6 @@ const Observable_withLatestFrom =
             },
         }));
     })();
-    return (other, selector) => pipe(createWithLatestObserver, partial(other, selector), Observable_lift(other[ObservableLike_isEnumerable], other[ObservableLike_isRunnable]));
+    return (other, selector) => pipe(createWithLatestObserver, partial(other, selector), Observable_lift(other));
 })();
 export default Observable_withLatestFrom;

@@ -5,9 +5,9 @@ import { SchedulerLike_now, WithCurrentTimeObserver_selector, } from "../../../_
 import { none, partial, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_withCurrentTime = /*@__PURE__*/ (() => {
     const createWithCurrentTimeObserver = (() => {
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function WithCurrentTimeObserver(instance, delegate, selector) {
@@ -26,6 +26,6 @@ const Observable_withCurrentTime = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return ((selector) => pipe(createWithCurrentTimeObserver, partial(selector), Observable_liftEnumerableOperator));
+    return ((selector) => pipe(createWithCurrentTimeObserver, partial(selector), Enumerable_lift));
 })();
 export default Observable_withCurrentTime;

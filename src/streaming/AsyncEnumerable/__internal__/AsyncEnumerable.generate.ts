@@ -2,8 +2,13 @@ import { Generate } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { Factory, Updater, pipe } from "../../../functions.js";
 import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
-import { AsyncEnumerableLike } from "../../../streaming.js";
-import Streamable_createLifted from "../../Streamable/__internal__/Streamable.createLifted.js";
+import {
+  AsyncEnumerableLike,
+  StreamableLike_isEnumerable,
+  StreamableLike_isInteractive,
+  StreamableLike_isRunnable,
+} from "../../../streaming.js";
+import Streamable_createWithConfig from "../../Streamable/__internal__/Streamable.createWithConfig.js";
 import AsyncEnumerable_generateLast from "./AsyncEnumerable.generateLast.js";
 
 const AsyncEnumerable_generate: Generate<
@@ -32,11 +37,13 @@ const AsyncEnumerable_generate: Generate<
           asyncGeneratorScanner(generator, options),
           initialValue,
         )
-      : Streamable_createLifted<T>(
+      : Streamable_createWithConfig<T>(
           Observable_scan(generateScanner(generator), initialValue),
-          true,
-          true,
-          true,
+          {
+            [StreamableLike_isEnumerable]: true,
+            [StreamableLike_isInteractive]: true,
+            [StreamableLike_isRunnable]: true,
+          },
         );
   };
 })();

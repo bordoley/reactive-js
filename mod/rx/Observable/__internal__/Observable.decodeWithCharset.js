@@ -9,9 +9,9 @@ import { BufferLike_capacity, DisposableLike_dispose, QueueableLike_backpressure
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_decodeWithCharset = 
 /*@__PURE__*/ (() => {
     const createDecodeWithCharsetObserver = createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function DecodeWithCharsetObserver(instance, delegate, charset) {
@@ -47,7 +47,7 @@ const Observable_decodeWithCharset =
     }));
     return options => {
         const charset = options?.charset ?? "utf-8";
-        return pipe(createDecodeWithCharsetObserver, partial(charset), Observable_liftEnumerableOperator);
+        return pipe(createDecodeWithCharsetObserver, partial(charset), Enumerable_lift);
     };
 })();
 export default Observable_decodeWithCharset;

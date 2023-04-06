@@ -23,8 +23,6 @@ import {
 } from "../../../functions.js";
 import {
   ObservableLike,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -41,7 +39,7 @@ import Observer_mixin, {
 } from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 type ObservableWithLastestFrom = <C extends ObservableLike, TA, TB, T>(
   other: ContainerOf<C, TB>,
@@ -83,7 +81,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom =
                 instance[WithLatestFromObserver_hasLatest] = true;
                 instance[WithLatestFromObserver_otherLatest] = next;
               }),
-              Observable_subscribeWithDispatcherConfig(delegate),
+              Observable_subscribeWithConfig(delegate),
               Disposable_addTo(instance),
               Disposable_onComplete(() => {
                 if (!instance[WithLatestFromObserver_hasLatest]) {
@@ -131,10 +129,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom =
       pipe(
         createWithLatestObserver,
         partial(other, selector),
-        Observable_lift(
-          other[ObservableLike_isEnumerable],
-          other[ObservableLike_isRunnable],
-        ),
+        Observable_lift(other),
       );
   })() as ObservableWithLastestFrom;
 

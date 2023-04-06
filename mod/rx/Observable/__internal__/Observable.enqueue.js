@@ -7,9 +7,9 @@ import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import { QueueableLike_enqueue } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_enqueue = /*@__PURE__*/ (() => {
     const createEnqueueObserver = (() => {
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function EnqueueObserver(instance, delegate, effect) {
@@ -33,7 +33,7 @@ const Observable_enqueue = /*@__PURE__*/ (() => {
         const effect = isFunction(queue)
             ? queue
             : bindMethod(queue, QueueableLike_enqueue);
-        return pipe(createEnqueueObserver, partial(effect), Observable_liftEnumerableOperator);
+        return pipe(createEnqueueObserver, partial(effect), Enumerable_lift);
     });
 })();
 export default Observable_enqueue;

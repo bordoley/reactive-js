@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { BufferObserver_buffer, BufferObserver_count, BufferObserver_durationFunction, BufferObserver_durationSubscription, } from "../../../__internal__/symbols.js";
+import { BufferObserver_buffer, BufferObserver_count, BufferObserver_durationFunction, BufferObserver_durationSubscription, ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, isNumber, none, pipe } from "../../../functions.js";
@@ -22,7 +22,7 @@ import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/_
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
-import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_buffer = /*@__PURE__*/ (() => {
     const typedObserverMixin = Observer_mixin();
     const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin, delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, count) {
@@ -65,7 +65,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                 doOnNotify();
             }
             else if (this[BufferObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed]) {
-                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribeWithDispatcherConfig(this));
+                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribeWithConfig(this));
             }
         },
     }));
@@ -82,7 +82,10 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         const operator = (delegate) => {
             return pipe(createBufferObserver(delegate, durationFunction, count), Disposable_addTo(delegate));
         };
-        return pipe(operator, Observable_lift(durationOption === MAX_SAFE_INTEGER, isNumber(durationOption)));
+        return pipe(operator, Observable_lift({
+            [ObservableLike_isEnumerable]: durationOption === MAX_SAFE_INTEGER,
+            [ObservableLike_isRunnable]: isNumber(durationOption),
+        }));
     });
 })();
 export default Observable_buffer;

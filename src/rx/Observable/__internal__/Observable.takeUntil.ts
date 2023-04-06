@@ -3,8 +3,6 @@ import { pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   ObservableLike,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
   ObserverLike,
   RunnableLike,
 } from "../../../rx.js";
@@ -12,7 +10,7 @@ import {
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
 
 interface ObservableTakeUntil {
@@ -35,17 +33,11 @@ const Observable_takeUntil: ObservableTakeUntil["takeUntil"] = (<T>(
         pipe(
           notifier,
           Observable_takeFirst<ObservableLike, T>(),
-          Observable_subscribeWithDispatcherConfig(delegate),
+          Observable_subscribeWithConfig(delegate),
         ),
       ),
     );
-  return pipe(
-    operator,
-    Observable_lift(
-      notifier[ObservableLike_isEnumerable],
-      notifier[ObservableLike_isRunnable],
-    ),
-  );
+  return pipe(operator, Observable_lift(notifier));
 }) as ObservableTakeUntil["takeUntil"];
 
 export default Observable_takeUntil;

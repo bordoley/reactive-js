@@ -22,11 +22,11 @@ import {
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
 } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableTakeFirst = <C extends ObservableLike, T>(options?: {
   readonly count?: number;
@@ -96,11 +96,7 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
 
   return ((options: { readonly count?: number } = {}) => {
     const count = clampPositiveInteger(options.count ?? 1);
-    return pipe(
-      createTakeFirstObserver,
-      partial(count),
-      Observable_liftEnumerableOperator,
-    );
+    return pipe(createTakeFirstObserver, partial(count), Enumerable_lift);
   }) as ObservableTakeFirst;
 })();
 

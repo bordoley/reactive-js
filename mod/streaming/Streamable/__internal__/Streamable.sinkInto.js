@@ -6,7 +6,7 @@ import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.e
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
-import Observable_subscribeWithDispatcherConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
@@ -19,7 +19,7 @@ const Streamable_sinkInto = (dest) => (src) => {
         backpressureStrategy,
         capacity,
     });
-    pipe(Observable_merge(pipe(srcStream, Observable_enqueue(dest), Observable_ignoreElements(), Observable_onSubscribe(returns(bindMethod(dest, DispatcherLike_complete)))), pipe(dest, Observable_enqueue(srcStream), Observable_ignoreElements())), Observable_ignoreElements(), Observable_subscribeWithDispatcherConfig(dest), Disposable_addTo(dest), Disposable_add(srcStream));
+    pipe(Observable_merge(pipe(srcStream, Observable_enqueue(dest), Observable_ignoreElements(), Observable_onSubscribe(returns(bindMethod(dest, DispatcherLike_complete)))), pipe(dest, Observable_enqueue(srcStream), Observable_ignoreElements())), Observable_ignoreElements(), Observable_subscribeWithConfig(dest), Disposable_addTo(dest), Disposable_add(srcStream));
     return src;
 };
 export default Streamable_sinkInto;

@@ -4,7 +4,7 @@ import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, includ
 import { ZipWithLatestFromObserver_TAQueue, ZipWithLatestFromObserver_hasLatest, ZipWithLatestFromObserver_otherLatest, ZipWithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { none, partial, pipe, } from "../../../functions.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -14,7 +14,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_zipWithLatestFrom = 
 /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
@@ -50,7 +50,7 @@ const Observable_zipWithLatestFrom =
                     instance[ZipWithLatestFromObserver_TAQueue][CollectionLike_count] === 0) {
                     instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
-            }), Observable_subscribeWithDispatcherConfig(delegate), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
+            }), Observable_subscribeWithConfig(delegate), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({
@@ -66,6 +66,6 @@ const Observable_zipWithLatestFrom =
             },
         }));
     })();
-    return (other, selector) => pipe(createZipWithLatestFromObserver, partial(other, selector), Observable_lift(other[ObservableLike_isEnumerable], other[ObservableLike_isRunnable]));
+    return (other, selector) => pipe(createZipWithLatestFromObserver, partial(other, selector), Observable_lift(other));
 })();
 export default Observable_zipWithLatestFrom;

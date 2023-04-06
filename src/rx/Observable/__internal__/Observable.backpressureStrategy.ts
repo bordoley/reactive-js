@@ -20,8 +20,8 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableBackpressureStrategy = <C extends ObservableLike, T>(
   capacity: number,
@@ -74,7 +74,7 @@ const Observable_backpressureStrategy: ObservableBackpressureStrategy =
       pipe(
         createBackpressureObserver,
         partial(capacity, backpressureStrategy),
-        Observable_liftEnumerableOperator,
+        Enumerable_lift,
       )) as ObservableBackpressureStrategy;
   })();
 

@@ -27,10 +27,10 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Indexed_toReadonlyArray from "../../../util/Indexed/__internal__/Indexed.toReadonlyArray.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
 } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableTakeLast = <C extends ObservableLike, T>(options?: {
   readonly count?: number;
@@ -88,11 +88,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
 
   return ((options: { readonly count?: number } = {}) => {
     const count = clampPositiveInteger(options.count ?? 1);
-    return pipe(
-      createTakeLastObserver,
-      partial(count),
-      Observable_liftEnumerableOperator,
-    );
+    return pipe(createTakeLastObserver, partial(count), Enumerable_lift);
   }) as ObservableTakeLast;
 })();
 

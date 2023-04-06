@@ -13,8 +13,8 @@ import {
   pipe,
 } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_satisfyMixin from "../../Observer/__internal__/Observer.satisfyMixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableEverySatisfy = <C extends ObservableLike, T>(
   predicate: Predicate<T>,
@@ -46,7 +46,7 @@ const Observable_everySatisfy: ObservableEverySatisfy = /*@__PURE__*/ (<
     pipe(
       createInstanceFactory(everySatisfyObserverMixin),
       partial(predicate),
-      Observable_liftEnumerableOperator,
+      Enumerable_lift,
     )) as ObservableEverySatisfy;
 })();
 

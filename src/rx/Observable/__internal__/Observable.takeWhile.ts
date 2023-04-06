@@ -21,11 +21,11 @@ import {
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
 } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableTakeWhile = <C extends ObservableLike, T>(
   predicate: Predicate<T>,
@@ -106,7 +106,7 @@ const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
     return pipe(
       createTakeWhileObserver,
       partial(predicate, inclusive),
-      Observable_liftEnumerableOperator,
+      Enumerable_lift,
     );
   };
 })() as ObservableTakeWhile;

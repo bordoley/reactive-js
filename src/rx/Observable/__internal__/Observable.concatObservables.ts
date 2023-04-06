@@ -4,6 +4,8 @@ import ReadonlyArray_isEmpty from "../../../keyed-containers/ReadonlyArray/__int
 import {
   EnumerableLike,
   ObservableLike,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
   ObserverLike,
   RunnableLike,
 } from "../../../rx.js";
@@ -14,7 +16,7 @@ import Observer_createWithDelegate from "../../Observer/__internal__/Observer.cr
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
-import Observable_create from "./Observable.create.js";
+import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
 interface ObservableConcatObservables {
   concatObservables<T>(
@@ -64,7 +66,10 @@ const Observable_concatObservables: ObservableConcatObservables["concatObservabl
       const isEnumerable = Observable_allAreEnumerable(observables);
       const isRunnable = Observable_allAreRunnable(observables);
 
-      return Observable_create(onSubscribe, isEnumerable, isRunnable);
+      return Observable_createWithConfig(onSubscribe, {
+        [ObservableLike_isEnumerable]: isEnumerable,
+        [ObservableLike_isRunnable]: isRunnable,
+      });
     };
   })() as ObservableConcatObservables["concatObservables"];
 

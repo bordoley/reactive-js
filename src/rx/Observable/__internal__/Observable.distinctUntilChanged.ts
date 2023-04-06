@@ -31,11 +31,11 @@ import {
 } from "../../../rx.js";
 
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
 } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableDistinctUntilChanged = <C extends ObservableLike, T>(options?: {
   readonly equality?: Equality<T>;
@@ -106,7 +106,7 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
       return pipe(
         createDistinctUntilChangedObserver,
         partial(equality),
-        Observable_liftEnumerableOperator,
+        Enumerable_lift,
       );
     }) as DistinctUntilChanged<ObservableLike>["distinctUntilChanged"];
   })() as ObservableDistinctUntilChanged;

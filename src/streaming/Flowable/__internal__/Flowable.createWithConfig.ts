@@ -9,15 +9,17 @@ import {
 } from "../../../streaming.js";
 import FlowableStream_create from "./FlowableStream.create.js";
 
-const Flowable_createLifted = <T>(
+const Flowable_createWithConfig = <T>(
   op: ContainerOperator<ObservableLike, boolean, T>,
-  isRunnable: boolean,
+  config: {
+    [StreamableLike_isRunnable]: boolean;
+  },
 ): FlowableLike<T> => ({
+  ...config,
   [StreamableLike_isEnumerable]: false,
   [StreamableLike_isInteractive]: false,
-  [StreamableLike_isRunnable]: isRunnable,
   [StreamableLike_stream]: (scheduler, options) =>
     FlowableStream_create(op, scheduler, options),
 });
 
-export default Flowable_createLifted;
+export default Flowable_createWithConfig;

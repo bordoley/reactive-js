@@ -47,7 +47,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithDispatcherConfig from "../../Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
@@ -79,7 +79,7 @@ const createThrottleObserver: <T>(
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
       Observable_forEach<ObservableLike>(observer[ThrottleObserver_onNotify]),
-      Observable_subscribeWithDispatcherConfig(observer),
+      Observable_subscribeWithConfig(observer),
     );
   };
 

@@ -19,15 +19,18 @@ class LiftedObservable {
         pipeUnsafe(observer, ...this[LiftedObservable_operators], Observer_sourceFrom(this[LiftedObservable_source]));
     }
 }
-const Observable_lift = (isEnumerable = false, isRunnable = false) => (operator) => source => {
+const Observable_lift = ((config) => (operator) => source => {
     const sourceSource = source instanceof LiftedObservable
         ? source[LiftedObservable_source]
         : source;
     const allFunctions = source instanceof LiftedObservable
         ? [operator, ...source[LiftedObservable_operators]]
         : [operator];
-    const isLiftedEnumerable = isEnumerable && sourceSource[ObservableLike_isEnumerable];
-    const isLiftedRunnable = (isEnumerable || isRunnable) && sourceSource[ObservableLike_isRunnable];
+    const isLiftedEnumerable = config[ObservableLike_isEnumerable] &&
+        sourceSource[ObservableLike_isEnumerable];
+    const isLiftedRunnable = (config[ObservableLike_isEnumerable] ||
+        config[ObservableLike_isRunnable]) &&
+        sourceSource[ObservableLike_isRunnable];
     return newInstance(LiftedObservable, sourceSource, allFunctions, isLiftedEnumerable, isLiftedRunnable);
-};
+});
 export default Observable_lift;

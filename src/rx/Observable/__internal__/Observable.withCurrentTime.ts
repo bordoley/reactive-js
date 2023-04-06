@@ -22,11 +22,11 @@ import {
 } from "../../../rx.js";
 
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
 } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableWithCurrentTime = <C extends ObservableLike, TA, TB>(
   selector: Function2<number, TA, TB>,
@@ -87,7 +87,7 @@ const Observable_withCurrentTime: ObservableWithCurrentTime = /*@__PURE__*/ (<
     pipe(
       createWithCurrentTimeObserver,
       partial(selector),
-      Observable_liftEnumerableOperator,
+      Enumerable_lift,
     )) as ObservableWithCurrentTime;
 })();
 

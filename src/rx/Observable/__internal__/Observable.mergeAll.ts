@@ -1,4 +1,9 @@
-import { MergeAll, ObservableLike } from "../../../rx.js";
+import {
+  MergeAll,
+  ObservableLike,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
+} from "../../../rx.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -14,7 +19,12 @@ const Observable_mergeAll: MergeAll<
     readonly maxConcurrency?: number;
   }
 >["mergeAll"] = /*@__PURE__*/ (() =>
-  HigherOrderObservable_mergeAll<ObservableLike>(Observable_lift()) as MergeAll<
+  HigherOrderObservable_mergeAll<ObservableLike>(
+    Observable_lift({
+      [ObservableLike_isEnumerable]: false,
+      [ObservableLike_isRunnable]: false,
+    }),
+  ) as MergeAll<
     ObservableLike,
     {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

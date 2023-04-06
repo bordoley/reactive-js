@@ -9,9 +9,9 @@ import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_reduce = /*@__PURE__*/ (() => {
     const createReduceObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function ReduceObserver(instance, delegate, reducer, initialValue) {
         init(Disposable_mixin, instance);
@@ -38,6 +38,6 @@ const Observable_reduce = /*@__PURE__*/ (() => {
             this[ReduceObserver_acc] = nextAcc;
         },
     }));
-    return ((reducer, initialValue) => pipe(createReduceObserver, partial(reducer, initialValue), Observable_liftEnumerableOperator));
+    return ((reducer, initialValue) => pipe(createReduceObserver, partial(reducer, initialValue), Enumerable_lift));
 })();
 export default Observable_reduce;

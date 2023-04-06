@@ -13,8 +13,14 @@ import {
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
-import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
-import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
+import {
+  AsyncEnumerableLike,
+  StreamableLike_isEnumerable,
+  StreamableLike_isInteractive,
+  StreamableLike_isRunnable,
+  ToAsyncEnumerable,
+} from "../../../streaming.js";
+import Streamable_createWithConfig from "../../../streaming/Streamable/__internal__/Streamable.createWithConfig.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Observable_concatMap from "../../Observable/__internal__/Observable.concatMap.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -31,7 +37,7 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
     (enumerable: EnumerableLike<T>): AsyncEnumerableLike<T> => {
       const { delay = 0 } = options ?? {};
 
-      return Streamable_createLifted<T>(
+      return Streamable_createWithConfig<T>(
         observable =>
           Observable_create(observer => {
             const enumerator = pipe(
@@ -61,9 +67,12 @@ const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
               invoke(ObservableLike_observe, observer),
             );
           }),
-        true,
-        delay <= 0,
-        true,
+
+        {
+          [StreamableLike_isEnumerable]: delay <= 0,
+          [StreamableLike_isInteractive]: true,
+          [StreamableLike_isRunnable]: true,
+        },
       );
     };
 

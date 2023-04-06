@@ -4,9 +4,15 @@ import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithDispatcherConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
-import { AsyncEnumerableLike, ToAsyncEnumerable } from "../../../streaming.js";
-import Streamable_createLifted from "../../../streaming/Streamable/__internal__/Streamable.createLifted.js";
+import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
+import {
+  AsyncEnumerableLike,
+  StreamableLike_isEnumerable,
+  StreamableLike_isInteractive,
+  StreamableLike_isRunnable,
+  ToAsyncEnumerable,
+} from "../../../streaming.js";
+import Streamable_createWithConfig from "../../../streaming/Streamable/__internal__/Streamable.createWithConfig.js";
 import { QueueableLike_enqueue } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -15,7 +21,7 @@ import Promiseable_toObservable from "../../Promiseable/__internal__/Promiseable
 const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnumerable"] =
   /*@__PURE__*/ returns(
     (iterable: AsyncIterableLike): AsyncEnumerableLike =>
-      Streamable_createLifted(
+      Streamable_createWithConfig(
         observable =>
           Observable_create(observer => {
             const iterator = iterable[Symbol.asyncIterator]();
@@ -34,16 +40,18 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
                   }
                 },
               ),
-              Observable_subscribeWithDispatcherConfig(observer),
+              Observable_subscribeWithConfig(observer),
               Disposable_addTo(observer),
               Disposable_onComplete(
                 bindMethod(observer, DispatcherLike_complete),
               ),
             );
           }),
-        true,
-        false,
-        false,
+        {
+          [StreamableLike_isEnumerable]: false,
+          [StreamableLike_isInteractive]: true,
+          [StreamableLike_isRunnable]: false,
+        },
       ),
   ) as ToAsyncEnumerable<AsyncIterableLike>["toAsyncEnumerable"];
 

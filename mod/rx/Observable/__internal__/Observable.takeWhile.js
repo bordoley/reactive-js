@@ -6,9 +6,9 @@ import { none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeWhile = /*@__PURE__*/ (() => {
     const createTakeWhileObserver = (() => {
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function TakeWhileObserver(instance, delegate, predicate, inclusive) {
@@ -35,7 +35,7 @@ const Observable_takeWhile = /*@__PURE__*/ (() => {
     })();
     return (predicate, options = {}) => {
         const { inclusive = false } = options;
-        return pipe(createTakeWhileObserver, partial(predicate, inclusive), Observable_liftEnumerableOperator);
+        return pipe(createTakeWhileObserver, partial(predicate, inclusive), Enumerable_lift);
     };
 })();
 export default Observable_takeWhile;

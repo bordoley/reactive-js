@@ -1,14 +1,13 @@
 /// <reference types="./Observable.takeUntil.d.ts" />
 
 import { pipe } from "../../../functions.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../rx.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";
 const Observable_takeUntil = ((notifier) => {
-    const operator = (delegate) => pipe(Observer_createWithDelegate(delegate), Disposable_bindTo(delegate), Disposable_bindTo(pipe(notifier, Observable_takeFirst(), Observable_subscribeWithDispatcherConfig(delegate))));
-    return pipe(operator, Observable_lift(notifier[ObservableLike_isEnumerable], notifier[ObservableLike_isRunnable]));
+    const operator = (delegate) => pipe(Observer_createWithDelegate(delegate), Disposable_bindTo(delegate), Disposable_bindTo(pipe(notifier, Observable_takeFirst(), Observable_subscribeWithConfig(delegate))));
+    return pipe(operator, Observable_lift(notifier));
 });
 export default Observable_takeUntil;

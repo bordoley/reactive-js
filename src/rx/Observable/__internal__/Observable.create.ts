@@ -1,62 +1,18 @@
-import {
-  Mutable,
-  createInstanceFactory,
-  mix,
-  props,
-} from "../../../__internal__/mixins.js";
-import { CreateObservable_effect } from "../../../__internal__/symbols.js";
-import { SideEffect1, error, none } from "../../../functions.js";
+import { SideEffect1 } from "../../../functions.js";
 import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
-  ObservableLike_observe,
   ObserverLike,
 } from "../../../rx.js";
-import { DisposableLike_dispose } from "../../../util.js";
+import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
-const Observable_create: <T>(
+const Observable_create = <T>(
   f: SideEffect1<ObserverLike>,
-  isEnumerable?: boolean,
-  isRunnable?: boolean,
-) => ObservableLike<T> = /*@__PURE__*/ (() => {
-  type TProperties = {
-    readonly [CreateObservable_effect]: SideEffect1<ObserverLike>;
-    readonly [ObservableLike_isEnumerable]: boolean;
-    readonly [ObservableLike_isRunnable]: boolean;
-  };
-
-  return createInstanceFactory(
-    mix(
-      function CreateObservable(
-        instance: Pick<ObservableLike, typeof ObservableLike_observe> &
-          Mutable<TProperties>,
-        effect: SideEffect1<ObserverLike>,
-        isEnumerable = false,
-        isRunnable = false,
-      ): ObservableLike {
-        instance[CreateObservable_effect] = effect;
-        instance[ObservableLike_isEnumerable] = isEnumerable;
-        instance[ObservableLike_isRunnable] = isEnumerable || isRunnable;
-
-        return instance;
-      },
-      props<TProperties>({
-        [CreateObservable_effect]: none,
-        [ObservableLike_isRunnable]: false,
-        [ObservableLike_isEnumerable]: false,
-      }),
-      {
-        [ObservableLike_observe](this: TProperties, observer: ObserverLike) {
-          try {
-            this[CreateObservable_effect](observer);
-          } catch (e) {
-            observer[DisposableLike_dispose](error(e));
-          }
-        },
-      },
-    ),
-  );
-})();
+): ObservableLike<T> =>
+  Observable_createWithConfig(f, {
+    [ObservableLike_isEnumerable]: false,
+    [ObservableLike_isRunnable]: false,
+  });
 
 export default Observable_create;

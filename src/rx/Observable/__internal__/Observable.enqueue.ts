@@ -27,11 +27,11 @@ import {
 import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import { QueueableLike, QueueableLike_enqueue } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
 } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableEnqueue = <C extends ObservableLike, T = unknown>(
   queue: QueueableLike<T> | Function1<T, boolean>,
@@ -87,11 +87,7 @@ const Observable_enqueue: ObservableEnqueue = /*@__PURE__*/ (<T>() => {
     const effect = isFunction(queue)
       ? queue
       : bindMethod(queue, QueueableLike_enqueue);
-    return pipe(
-      createEnqueueObserver,
-      partial(effect),
-      Observable_liftEnumerableOperator,
-    );
+    return pipe(createEnqueueObserver, partial(effect), Enumerable_lift);
   }) as ObservableEnqueue;
 })();
 

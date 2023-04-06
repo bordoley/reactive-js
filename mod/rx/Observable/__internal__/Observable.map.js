@@ -6,9 +6,9 @@ import { none, partial, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_map = /*@__PURE__*/ (() => {
     const createMapObserver = (() => {
         return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function MapObserver(instance, delegate, mapper) {
@@ -26,6 +26,6 @@ const Observable_map = /*@__PURE__*/ (() => {
             },
         }));
     })();
-    return ((mapper) => pipe(createMapObserver, partial(mapper), Observable_liftEnumerableOperator));
+    return ((mapper) => pipe(createMapObserver, partial(mapper), Enumerable_lift));
 })();
 export default Observable_map;

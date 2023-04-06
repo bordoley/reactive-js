@@ -5,9 +5,9 @@ import { DistinctUntilChangedObserver_equality, DistinctUntilChangedObserver_has
 import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const createDistinctUntilChangedObserver = (() => {
@@ -35,7 +35,7 @@ const Observable_distinctUntilChanged =
     })();
     return ((options) => {
         const { equality = strictEquality } = options ?? {};
-        return pipe(createDistinctUntilChangedObserver, partial(equality), Observable_liftEnumerableOperator);
+        return pipe(createDistinctUntilChangedObserver, partial(equality), Enumerable_lift);
     });
 })();
 export default Observable_distinctUntilChanged;

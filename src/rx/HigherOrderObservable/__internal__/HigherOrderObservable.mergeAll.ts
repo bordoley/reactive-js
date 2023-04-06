@@ -58,7 +58,7 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithDispatcherConfig from "../../Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
@@ -106,7 +106,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
         Observable_forEach<ObservableLike, T>(
           bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify),
         ),
-        Observable_subscribeWithDispatcherConfig(observer),
+        Observable_subscribeWithConfig(observer),
         Disposable_addTo(observer[DelegatingLike_delegate]),
         Disposable_onComplete(observer[MergeAllObserver_onDispose]),
       );

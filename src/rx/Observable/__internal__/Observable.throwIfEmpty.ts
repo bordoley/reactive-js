@@ -28,11 +28,11 @@ import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
 } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableThrowIfEmpty = <C extends ObservableLike, T>(
   factory: Factory<unknown>,
@@ -98,11 +98,7 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
   })();
 
   return (factory: Factory<unknown>) =>
-    pipe(
-      createThrowIfEmptyObserver,
-      partial(factory),
-      Observable_liftEnumerableOperator,
-    );
+    pipe(createThrowIfEmptyObserver, partial(factory), Enumerable_lift);
 })() as ObservableThrowIfEmpty;
 
 export default Observable_throwIfEmpty;

@@ -10,6 +10,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
   SkipFirstObserver_count,
   SkipFirstObserver_skipCount,
 } from "../../../__internal__/symbols.js";
@@ -26,7 +28,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin, {
   initObserverMixinFromDelegate,
 } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
+import Observable_lift from "./Observable.lift.js";
 
 type ObservableSkipFirst = <C extends ObservableLike, T>(options?: {
   readonly count?: number;
@@ -88,9 +90,12 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
     const op = pipe(
       createSkipFirstObserver,
       partial(count),
-      Observable_liftEnumerableOperator,
+      Observable_lift({
+        [ObservableLike_isEnumerable]: true,
+        [ObservableLike_isRunnable]: true,
+      }),
     );
-    return obs => (count > 0 ? op(obs) : obs);
+    return (obs: ObservableLike) => (count > 0 ? op(obs) : obs);
   }) as ObservableSkipFirst;
 })();
 

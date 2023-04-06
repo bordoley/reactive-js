@@ -18,11 +18,11 @@ import {
 } from "../../../rx.js";
 
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
   initObserverMixinFromDelegate,
 } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableKeep = <C extends ObservableLike, T>(
   predicate: Predicate<T>,
@@ -75,11 +75,7 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
   })();
 
   return (predicate: Predicate<T>) =>
-    pipe(
-      createKeepObserver,
-      partial(predicate),
-      Observable_liftEnumerableOperator,
-    );
+    pipe(createKeepObserver, partial(predicate), Enumerable_lift);
 })() as ObservableKeep;
 
 export default Observable_keep;

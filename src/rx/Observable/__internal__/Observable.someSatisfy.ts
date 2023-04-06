@@ -7,8 +7,8 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { Predicate, partial, pipe } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_satisfyMixin from "../../Observer/__internal__/Observer.satisfyMixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 
 type ObservableSomeSatisfy = <C extends ObservableLike, T>(
   predicate: Predicate<T>,
@@ -32,7 +32,7 @@ const Observable_someSatisfy: ObservableSomeSatisfy = /*@__PURE__*/ (<T>() => {
     pipe(
       createInstanceFactory(someSatisfyObserverMixin),
       partial(predicate),
-      Observable_liftEnumerableOperator,
+      Enumerable_lift,
     );
 })() as ObservableSomeSatisfy;
 

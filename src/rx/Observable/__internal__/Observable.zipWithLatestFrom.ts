@@ -30,8 +30,6 @@ import {
 } from "../../../functions.js";
 import {
   ObservableLike,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
   ZipWithLatestFrom,
@@ -54,7 +52,7 @@ import Observer_mixin, {
 } from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"] =
   /*@__PURE__*/ (() => {
@@ -141,7 +139,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
                   instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
               }),
-              Observable_subscribeWithDispatcherConfig(delegate),
+              Observable_subscribeWithConfig(delegate),
               Disposable_onComplete(disposeDelegate),
               Disposable_addTo(delegate),
             );
@@ -186,10 +184,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
       pipe(
         createZipWithLatestFromObserver,
         partial(other, selector),
-        Observable_lift(
-          other[ObservableLike_isEnumerable],
-          other[ObservableLike_isRunnable],
-        ),
+        Observable_lift(other),
       ) as ContainerOperator<ObservableLike, TA, T>;
   })();
 

@@ -4,7 +4,7 @@ import { bindMethod, error, pipe } from "../../../functions.js";
 import { DispatcherLike_complete, DispatcherLike_scheduler, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithDispatcherConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import { SchedulerLike_maxYieldInterval, SchedulerLike_now, } from "../../../scheduling.js";
 import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.create.js";
@@ -51,6 +51,6 @@ const AsyncIterable_toFlowable = () => (iterable) => Flowable_create((modeObs) =
         if (!isPaused && wasPaused) {
             pipe(observer, Observer_schedule(continuation));
         }
-    }), Observable_subscribeWithDispatcherConfig(observer), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
+    }), Observable_subscribeWithConfig(observer), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
 }));
 export default AsyncIterable_toFlowable;

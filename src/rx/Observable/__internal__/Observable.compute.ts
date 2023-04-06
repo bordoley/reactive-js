@@ -77,7 +77,7 @@ import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
-import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 type EffectsMode = "batched" | "combine-latest";
 
@@ -270,7 +270,7 @@ class ComputeContext {
                 : scheduledComputationSubscription;
           }
         }),
-        Observable_subscribeWithDispatcherConfig(observer),
+        Observable_subscribeWithConfig(observer),
         Disposable_addTo(observer),
         Disposable_onComplete(this[ComputeContext_cleanup]),
       );

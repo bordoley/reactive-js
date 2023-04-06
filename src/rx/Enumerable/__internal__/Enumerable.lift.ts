@@ -1,6 +1,13 @@
-import { EnumerableLike, Lift } from "../../../rx.js";
-import Observable_liftEnumerableOperator from "../../Observable/__internal__/Observable.liftEnumerableOperator.js";
+import {
+  EnumerableLike,
+  Lift,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
+} from "../../../rx.js";
+import Observable_lift from "../../Observable/__internal__/Observable.lift.js";
 
-const Enumerable_lift: Lift<EnumerableLike>["lift"] =
-  Observable_liftEnumerableOperator as Lift<EnumerableLike>["lift"];
+const Enumerable_lift: Lift<EnumerableLike>["lift"] = Observable_lift({
+  [ObservableLike_isEnumerable]: true,
+  [ObservableLike_isRunnable]: true,
+}) as Lift<EnumerableLike>["lift"];
 export default Enumerable_lift;

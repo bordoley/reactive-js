@@ -4,8 +4,8 @@ import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, pro
 import { partial, pipe } from "../../../functions.js";
 import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_backpressureStrategy = 
 /*@__PURE__*/ (() => {
     const createBackpressureObserver = (() => createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function EnqueueObserver(instance, delegate, capacity, backpressureStrategy) {
@@ -17,6 +17,6 @@ const Observable_backpressureStrategy =
             this[DelegatingLike_delegate][ObserverLike_notify](next);
         },
     })))();
-    return ((capacity, backpressureStrategy) => pipe(createBackpressureObserver, partial(capacity, backpressureStrategy), Observable_liftEnumerableOperator));
+    return ((capacity, backpressureStrategy) => pipe(createBackpressureObserver, partial(capacity, backpressureStrategy), Enumerable_lift));
 })();
 export default Observable_backpressureStrategy;

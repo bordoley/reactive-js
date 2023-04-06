@@ -12,8 +12,8 @@ import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.m
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Indexed_toReadonlyArray from "../../../util/Indexed/__internal__/Indexed.toReadonlyArray.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
-import Observable_liftEnumerableOperator from "./Observable.liftEnumerableOperator.js";
 const Observable_takeLast = /*@__PURE__*/ (() => {
     const createTakeLastObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
         init(Disposable_mixin, instance);
@@ -32,7 +32,7 @@ const Observable_takeLast = /*@__PURE__*/ (() => {
     }));
     return ((options = {}) => {
         const count = clampPositiveInteger(options.count ?? 1);
-        return pipe(createTakeLastObserver, partial(count), Observable_liftEnumerableOperator);
+        return pipe(createTakeLastObserver, partial(count), Enumerable_lift);
     });
 })();
 export default Observable_takeLast;

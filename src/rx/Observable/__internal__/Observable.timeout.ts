@@ -9,6 +9,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ObservableLike_isEnumerable,
   TimeoutObserver_duration,
   timeoutError,
 } from "../../../__internal__/symbols.js";
@@ -35,7 +36,7 @@ import Observer_mixin, {
 } from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_lift from "./Observable.lift.js";
-import Observable_subscribeWithDispatcherConfig from "./Observable.subscribeWithDispatcherConfig.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 import Observable_throws from "./Observable.throws.js";
 
 interface ObservableTimeout {
@@ -61,7 +62,7 @@ const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<
   ) => {
     observer[SerialDisposableLike_current] = pipe(
       observer[TimeoutObserver_duration],
-      Observable_subscribeWithDispatcherConfig(observer),
+      Observable_subscribeWithConfig(observer),
     );
   };
 
@@ -118,10 +119,11 @@ const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<
     return pipe(
       createTimeoutObserver,
       partial(durationObs),
-      Observable_lift(
-        false,
-        isNumber(duration) || duration[ObservableLike_isRunnable],
-      ),
+      Observable_lift({
+        [ObservableLike_isEnumerable]: false,
+        [ObservableLike_isRunnable]:
+          isNumber(duration) || duration[ObservableLike_isRunnable],
+      }),
     );
   };
 })() as ObservableTimeout["timeout"];
