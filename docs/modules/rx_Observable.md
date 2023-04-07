@@ -38,9 +38,7 @@
 - [generate](rx_Observable.md#generate)
 - [merge](rx_Observable.md#merge)
 - [never](rx_Observable.md#never)
-- [spring](rx_Observable.md#spring)
 - [throws](rx_Observable.md#throws)
-- [tween](rx_Observable.md#tween)
 - [zip](rx_Observable.md#zip)
 - [zipLatest](rx_Observable.md#ziplatest)
 
@@ -1423,25 +1421,6 @@ Returns a ContainerLike instance that emits no items and never disposes its stat
 
 ___
 
-### spring
-
-▸ **spring**(`options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.damping?` | `number` |
-| `options.precision?` | `number` |
-| `options.stiffness?` | `number` |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
-
-___
-
 ### throws
 
 ▸ **throws**<`T`\>(`options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
@@ -1461,24 +1440,6 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
-
-___
-
-### tween
-
-▸ **tween**(`duration`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `duration` | `number` |
-| `options?` | `Object` |
-| `options.easing?` | [`Function1`](functions.md#function1)<`number`, `number`\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
 
 ___
 

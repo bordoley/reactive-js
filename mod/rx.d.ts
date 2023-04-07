@@ -411,20 +411,6 @@ export interface ScanMany<C extends ContainerLike, CInner extends ObservableLike
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Spring<C extends ObservableLike> extends Container<C> {
-    /**
-     * @category Constructor
-     */
-    spring(options?: {
-        readonly stiffness?: number;
-        readonly damping?: number;
-        readonly precision?: number;
-    }): ContainerOf<C, number>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface SwitchAll<C extends ObservableLike, O = never> extends Container<C> {
     /**
      *
@@ -533,18 +519,6 @@ export interface ToRunnable<C extends ContainerLike, O = never> extends Containe
      * @category Transform
      */
     toRunnable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableLike<T>>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface Tween<C extends ObservableLike> extends Container<C> {
-    /**
-     * @category Constructor
-     */
-    tween(duration: number, options?: {
-        readonly easing?: Function1<number, number>;
-    }): ContainerOf<C, number>;
 }
 /**
  * @noInheritDoc

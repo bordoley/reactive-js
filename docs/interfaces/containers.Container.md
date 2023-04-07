@@ -202,8 +202,6 @@ Base type for Container type classes.
 
   ↳ [`ScanMany`](rx.ScanMany.md)
 
-  ↳ [`Spring`](rx.Spring.md)
-
   ↳ [`SwitchAll`](rx.SwitchAll.md)
 
   ↳ [`SwitchMap`](rx.SwitchMap.md)
@@ -219,8 +217,6 @@ Base type for Container type classes.
   ↳ [`ToObservable`](rx.ToObservable.md)
 
   ↳ [`ToRunnable`](rx.ToRunnable.md)
-
-  ↳ [`Tween`](rx.Tween.md)
 
   ↳ [`WithCurrentTime`](rx.WithCurrentTime.md)
 
