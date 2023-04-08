@@ -81,6 +81,7 @@ BufferObserver_durationSubscription
 BufferObserver_count
 ComputeContext_index
 ComputeContext_cleanup
+ComputeContext_observableConfig
 ComputeContext_effects
 ComputeContext_mode
 ComputeContext_observer

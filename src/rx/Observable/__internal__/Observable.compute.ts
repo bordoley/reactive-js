@@ -9,6 +9,7 @@ import {
   __ComputeContext_index,
   __ComputeContext_memoOrUse,
   __ComputeContext_mode,
+  __ComputeContext_observableConfig,
   __ComputeContext_observer,
   __ComputeContext_runComputation,
   __ComputeContext_scheduledComputationSubscription,
@@ -50,9 +51,13 @@ import {
 } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
+  EnumerableLike,
   ObservableLike,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
+  RunnableLike,
 } from "../../../rx.js";
 import { SchedulerLike, SchedulerLike_schedule } from "../../../scheduling.js";
 import {
@@ -71,7 +76,10 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Observable_create from "./Observable.create.js";
+import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
@@ -195,6 +203,10 @@ const awaiting = error();
 class ComputeContext {
   [__ComputeContext_index] = 0;
   readonly [__ComputeContext_effects]: ComputeEffect[] = [];
+  readonly [__ComputeContext_observableConfig]: {
+    readonly [ObservableLike_isEnumerable]: boolean;
+    readonly [ObservableLike_isRunnable]: boolean;
+  };
   readonly [__ComputeContext_observer]: ObserverLike;
 
   private [__ComputeContext_scheduledComputationSubscription]: DisposableLike =
@@ -228,16 +240,37 @@ class ComputeContext {
     observer: ObserverLike,
     runComputation: () => void,
     mode: EffectsMode,
+    config: {
+      readonly [ObservableLike_isEnumerable]: boolean;
+      readonly [ObservableLike_isRunnable]: boolean;
+    },
   ) {
     this[__ComputeContext_observer] = observer;
     this[__ComputeContext_runComputation] = runComputation;
     this[__ComputeContext_mode] = mode;
+    this[__ComputeContext_observableConfig] = config;
   }
 
   [__ComputeContext_awaitOrObserve]<T>(
     observable: ObservableLike<T>,
     shouldAwait: boolean,
   ): Optional<T> {
+    if (
+      this[__ComputeContext_observableConfig][ObservableLike_isEnumerable] &&
+      !observable[ObservableLike_isEnumerable]
+    ) {
+      raiseWithDebugMessage(
+        "cannot observe a non-enumerable observable in an Enumerable computation",
+      );
+    } else if (
+      this[__ComputeContext_observableConfig][ObservableLike_isRunnable] &&
+      !observable[ObservableLike_isRunnable]
+    ) {
+      raiseWithDebugMessage(
+        "cannot observe a non-runnable observable in a Runnable computation",
+      );
+    }
+
     const effect = shouldAwait
       ? validateComputeEffect(this, Await)
       : validateComputeEffect(this, Observe);
@@ -346,107 +379,191 @@ export const assertCurrentContext = (): ComputeContext =>
       )
     : currentCtx;
 
-export const Observable_compute = <T>(
-  computation: Factory<T>,
-  { mode = "batched" }: { mode?: "batched" | "combine-latest" } = {},
-): ObservableLike<T> =>
-  Observable_create((observer: ObserverLike<T>) => {
-    const runComputation = () => {
-      let result: Optional<T> = none;
-      let err: Optional<Error> = none;
-      let isAwaiting = false;
+interface ObservableComputeWithConfig {
+  computeWithConfig<T>(
+    computation: Factory<T>,
+    config: {
+      readonly [ObservableLike_isEnumerable]: true;
+      readonly [ObservableLike_isRunnable]: true;
+    },
+    options?: { readonly mode?: "batched" | "combine-latest" },
+  ): EnumerableLike<T>;
+  computeWithConfig<T>(
+    computation: Factory<T>,
+    config: {
+      readonly [ObservableLike_isEnumerable]: false;
+      readonly [ObservableLike_isRunnable]: true;
+    },
+    options?: { readonly mode?: "batched" | "combine-latest" },
+  ): RunnableLike<T>;
+  computeWithConfig<T>(
+    computation: Factory<T>,
+    config: {
+      readonly [ObservableLike_isEnumerable]: false;
+      readonly [ObservableLike_isRunnable]: false;
+    },
+    options?: { readonly mode?: "batched" | "combine-latest" },
+  ): ObservableLike<T>;
+  computeWithConfig<T>(
+    computation: Factory<T>,
+    config: {
+      readonly [ObservableLike_isEnumerable]: boolean;
+      readonly [ObservableLike_isRunnable]: boolean;
+    },
+    options?: { readonly mode?: "batched" | "combine-latest" },
+  ): ObservableLike<T>;
+}
+const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConfig"] =
+  (<T>(
+    computation: Factory<T>,
+    config: {
+      readonly [ObservableLike_isEnumerable]: boolean;
+      readonly [ObservableLike_isRunnable]: boolean;
+    },
+    { mode = "batched" }: { readonly mode?: "batched" | "combine-latest" } = {},
+  ) =>
+    Observable_createWithConfig<T>((observer: ObserverLike<T>) => {
+      const runComputation = () => {
+        let result: Optional<T> = none;
+        let err: Optional<Error> = none;
+        let isAwaiting = false;
 
-      currentCtx = ctx;
-      try {
-        result = computation();
-      } catch (e) {
-        isAwaiting = e === awaiting;
-        if (!isAwaiting) {
-          err = error(e);
-        }
-      }
-
-      const { [__ComputeContext_effects]: effects } = ctx;
-
-      if (ReadonlyArray_getLength(effects) > ctx[__ComputeContext_index]) {
-        const effectsLength = effects.length;
-
-        for (let i = ctx[__ComputeContext_index]; i < effectsLength; i++) {
-          const effect = ctx[__ComputeContext_effects][i];
-
-          if (
-            effect[__ComputeEffect_type] === Await ||
-            effect[__ComputeEffect_type] === Observe
-          ) {
-            effect[__AwaitOrObserveEffect_subscription][
-              DisposableLike_dispose
-            ]();
+        currentCtx = ctx;
+        try {
+          result = computation();
+        } catch (e) {
+          isAwaiting = e === awaiting;
+          if (!isAwaiting) {
+            err = error(e);
           }
         }
-      }
-      ctx[__ComputeContext_effects].length = ctx[__ComputeContext_index];
-      currentCtx = none;
-      ctx[__ComputeContext_index] = 0;
 
-      const effectsLength = ReadonlyArray_getLength(effects);
+        const { [__ComputeContext_effects]: effects } = ctx;
 
-      // Inline this for perf
-      let allObserveEffectsHaveValues = true;
-      let hasOutstandingEffects = false;
-      for (let i = 0; i < effectsLength; i++) {
-        const effect = effects[i];
-        const { [__ComputeEffect_type]: type } = effect;
+        if (ReadonlyArray_getLength(effects) > ctx[__ComputeContext_index]) {
+          const effectsLength = effects.length;
 
-        if (
-          (type === Await || type === Observe) &&
-          !(effect as AwaitOrObserveEffect)[__AwaitOrObserveEffect_hasValue]
-        ) {
-          allObserveEffectsHaveValues = false;
+          for (let i = ctx[__ComputeContext_index]; i < effectsLength; i++) {
+            const effect = ctx[__ComputeContext_effects][i];
+
+            if (
+              effect[__ComputeEffect_type] === Await ||
+              effect[__ComputeEffect_type] === Observe
+            ) {
+              effect[__AwaitOrObserveEffect_subscription][
+                DisposableLike_dispose
+              ]();
+            }
+          }
+        }
+        ctx[__ComputeContext_effects].length = ctx[__ComputeContext_index];
+        currentCtx = none;
+        ctx[__ComputeContext_index] = 0;
+
+        const effectsLength = ReadonlyArray_getLength(effects);
+
+        // Inline this for perf
+        let allObserveEffectsHaveValues = true;
+        let hasOutstandingEffects = false;
+        for (let i = 0; i < effectsLength; i++) {
+          const effect = effects[i];
+          const { [__ComputeEffect_type]: type } = effect;
+
+          if (
+            (type === Await || type === Observe) &&
+            !(effect as AwaitOrObserveEffect)[__AwaitOrObserveEffect_hasValue]
+          ) {
+            allObserveEffectsHaveValues = false;
+          }
+
+          if (
+            (type === Await || type === Observe) &&
+            !(effect as ObserveEffect)[__AwaitOrObserveEffect_subscription][
+              DisposableLike_isDisposed
+            ]
+          ) {
+            hasOutstandingEffects = true;
+          }
+
+          if (!allObserveEffectsHaveValues && hasOutstandingEffects) {
+            break;
+          }
         }
 
-        if (
-          (type === Await || type === Observe) &&
-          !(effect as ObserveEffect)[__AwaitOrObserveEffect_subscription][
-            DisposableLike_isDisposed
-          ]
-        ) {
-          hasOutstandingEffects = true;
+        const combineLatestModeShouldNotify =
+          mode === "combine-latest" &&
+          allObserveEffectsHaveValues &&
+          hasOutstandingEffects;
+
+        const hasError = isSome(err);
+
+        const shouldNotify =
+          !hasError &&
+          !isAwaiting &&
+          (combineLatestModeShouldNotify || mode === "batched");
+
+        const shouldDispose = !hasOutstandingEffects || hasError;
+
+        if (shouldNotify) {
+          observer[ObserverLike_notify](result as T);
         }
 
-        if (!allObserveEffectsHaveValues && hasOutstandingEffects) {
-          break;
+        if (shouldDispose) {
+          observer[DisposableLike_dispose](err);
         }
-      }
+      };
 
-      const combineLatestModeShouldNotify =
-        mode === "combine-latest" &&
-        allObserveEffectsHaveValues &&
-        hasOutstandingEffects;
+      const ctx = newInstance(
+        ComputeContext,
+        observer,
+        runComputation,
+        mode,
+        config,
+      );
+      pipe(
+        observer[SchedulerLike_schedule](runComputation),
+        Disposable_addTo(observer),
+      );
+    }, config)) as ObservableComputeWithConfig["computeWithConfig"];
 
-      const hasError = isSome(err);
+export const Observable_compute = <T>(
+  computation: Factory<T>,
+  options: { mode?: "batched" | "combine-latest" } = {},
+): ObservableLike<T> =>
+  Observable_computeWithConfig(
+    computation,
+    {
+      [ObservableLike_isEnumerable]: false,
+      [ObservableLike_isRunnable]: false,
+    },
+    options,
+  );
 
-      const shouldNotify =
-        !hasError &&
-        !isAwaiting &&
-        (combineLatestModeShouldNotify || mode === "batched");
+export const Runnable_compute = <T>(
+  computation: Factory<T>,
+  options: { mode?: "batched" | "combine-latest" } = {},
+): RunnableLike<T> =>
+  Observable_computeWithConfig(
+    computation,
+    {
+      [ObservableLike_isEnumerable]: false,
+      [ObservableLike_isRunnable]: true,
+    },
+    options,
+  );
 
-      const shouldDispose = !hasOutstandingEffects || hasError;
-
-      if (shouldNotify) {
-        observer[ObserverLike_notify](result as T);
-      }
-
-      if (shouldDispose) {
-        observer[DisposableLike_dispose](err);
-      }
-    };
-
-    const ctx = newInstance(ComputeContext, observer, runComputation, mode);
-    pipe(
-      observer[SchedulerLike_schedule](runComputation),
-      Disposable_addTo(observer),
-    );
-  });
+export const Enumerable_compute = <T>(
+  computation: Factory<T>,
+  options: { mode?: "batched" | "combine-latest" } = {},
+): EnumerableLike<T> =>
+  Observable_computeWithConfig(
+    computation,
+    {
+      [ObservableLike_isEnumerable]: true,
+      [ObservableLike_isRunnable]: true,
+    },
+    options,
+  );
 
 interface __Memo {
   __memo<T>(fn: Factory<T>): T;
@@ -532,8 +649,12 @@ interface __Do {
 }
 
 export const Observable_compute__do: __Do["__do"] = /*@__PURE__*/ (() => {
-  const deferSideEffect = (f: (...args: any[]) => void, ...args: unknown[]) =>
-    Observable_create(observer => {
+  const deferSideEffect = (
+    create: (f: SideEffect1<ObserverLike<unknown>>) => ObservableLike,
+    f: (...args: any[]) => void,
+    ...args: unknown[]
+  ) =>
+    create(observer => {
       const callback = () => {
         f(...args);
         observer[ObserverLike_notify](none);
@@ -550,9 +671,15 @@ export const Observable_compute__do: __Do["__do"] = /*@__PURE__*/ (() => {
     const ctx = assertCurrentContext();
 
     const scheduler = ctx[__ComputeContext_observer];
+    const observableConfig = ctx[__ComputeContext_observableConfig];
     const observable = ctx[__ComputeContext_memoOrUse](
       false,
       deferSideEffect,
+      observableConfig[ObservableLike_isEnumerable]
+        ? Enumerable_create
+        : observableConfig[ObservableLike_isRunnable]
+        ? Runnable_create
+        : Observable_create,
       f,
       ...args,
     );

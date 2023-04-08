@@ -382,6 +382,11 @@ export const __ComputeContext_cleanup = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __ComputeContext_observableConfig = /*@__PURE__*/ symbol(
+  "ComputeContext_observableConfig",
+);
+
+/** @type {unique symbol} */
 export const __ComputeContext_effects = /*@__PURE__*/ symbol(
   "ComputeContext_effects",
 );

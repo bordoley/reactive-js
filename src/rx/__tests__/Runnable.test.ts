@@ -48,6 +48,7 @@ import {
   identity,
   increment,
   incrementBy,
+  isSome,
   newInstance,
   none,
   pipe,
@@ -69,6 +70,7 @@ import {
   QueueableLike_enqueue,
 } from "../../util.js";
 import * as Observable from "../Observable.js";
+import { __await, __memo } from "../Observable.js";
 import * as Runnable from "../Runnable.js";
 
 const combineLatestTests = describe(
@@ -93,6 +95,79 @@ const combineLatestTests = describe(
       ),
     ),
   ),
+);
+
+const computeTests = describe(
+  "compute",
+  test("batch mode", () => {
+    const fromValueWithDelay = (
+      delay: number,
+      value: number,
+    ): RunnableLike<number> =>
+      pipe([value], Runnable.fromReadonlyArray({ delay }));
+
+    pipe(
+      Runnable.compute(() => {
+        const obs1 = __memo(fromValueWithDelay, 10, 5);
+        const result1 = __await(obs1);
+        const obs2 = __memo(fromValueWithDelay, 20, 10);
+        const result2 = __await(obs2);
+        const obs3 = __memo(fromValueWithDelay, 30, 7);
+        const result3 = __await(obs3);
+
+        return result1 + result2 + result3;
+      }),
+      Runnable.takeLast<number>(),
+      Runnable.toReadonlyArray(),
+      expectArrayEquals([22]),
+    );
+  }),
+  test("combined-latest mode", () => {
+    const oneTwoThreeDelayed = pipe(
+      [1, 2, 3],
+      Runnable.fromReadonlyArray({ delay: 1 }),
+    );
+    const createOneTwoThree = (_: unknown) =>
+      pipe([1, 2, 3], Runnable.fromReadonlyArray());
+
+    pipe(
+      Runnable.compute(
+        () => {
+          const v = __await(oneTwoThreeDelayed);
+          const next = __memo(createOneTwoThree, v);
+          return __await(next);
+        },
+        { mode: "combine-latest" },
+      ),
+      Runnable.keepType(isSome),
+      Runnable.toReadonlyArray(),
+      expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+    );
+  }),
+  test("conditional hooks", () => {
+    const src = pipe(
+      [0, 1, 2, 3, 4, 5],
+      Runnable.fromReadonlyArray({ delay: 5 }),
+    );
+    const src2 = Runnable.generate(increment, returns(100), {
+      delay: 2,
+      delayStart: false,
+    });
+
+    pipe(
+      Runnable.compute(() => {
+        const v = __await(src);
+
+        if (v % 2 === 0) {
+          __memo(increment, 1);
+          return __await(src2);
+        }
+        return v;
+      }),
+      Runnable.toReadonlyArray(),
+      expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]),
+    );
+  }),
 );
 
 const exhaustTests = describe(
@@ -572,6 +647,7 @@ testModule(
   bufferTests(Runnable),
   catchErrorTests(Runnable),
   combineLatestTests,
+  computeTests,
   concatTests<RunnableLike>(Runnable),
   concatAllTests<RunnableLike>(Runnable),
   concatMapTests(Runnable),

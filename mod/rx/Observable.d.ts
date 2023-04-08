@@ -93,7 +93,7 @@ export declare const combineLatest: CombineLatest<ObservableLike>["combineLatest
 /**
  * @category Constructor
  */
-export declare const compute: <T>(computation: Factory<T>, { mode }?: {
+export declare const compute: <T>(computation: Factory<T>, options?: {
     mode?: "batched" | "combine-latest" | undefined;
 }) => ObservableLike<T>;
 export declare const concat: Concat<ObservableLike>["concat"];

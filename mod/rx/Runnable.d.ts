@@ -7,6 +7,12 @@ export declare const backpressureStrategy: BackpressureStrategy<RunnableLike>["b
 export declare const buffer: Buffer<RunnableLike>["buffer"];
 export declare const catchError: CatchError<RunnableLike>["catchError"];
 export declare const combineLatest: CombineLatest<RunnableLike>["combineLatest"];
+/**
+ * @category Constructor
+ */
+export declare const compute: <T>(computation: import("../functions.js").Factory<T>, options?: {
+    mode?: "batched" | "combine-latest" | undefined;
+}) => RunnableLike<T>;
 export declare const concat: Concat<RunnableLike>["concat"];
 export declare const concatAll: ConcatAll<RunnableLike>["concatAll"];
 export declare const concatMap: ConcatMap<RunnableLike>["concatMap"];

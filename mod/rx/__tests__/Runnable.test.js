@@ -2,15 +2,50 @@
 
 import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, test, testModule, } from "../../__internal__/testing.js";
 import { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, containsTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, pickTests, reduceTests, retryTests, scanLastTests, scanManyTests, scanTests, skipFirstTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests as zipOperatorTests, zipWithTests, } from "../../__tests__/operators.js";
-import { arrayEquality, identity, increment, incrementBy, newInstance, none, pipe, pipeLazy, returns, } from "../../functions.js";
+import { arrayEquality, identity, increment, incrementBy, isSome, newInstance, none, pipe, pipeLazy, returns, } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import { SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { StreamableLike_stream } from "../../streaming.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../util.js";
 import * as Observable from "../Observable.js";
+import { __await, __memo } from "../Observable.js";
 import * as Runnable from "../Runnable.js";
 const combineLatestTests = describe("combineLatest", test("combineLatest", pipeLazy(Runnable.combineLatest(pipe(Runnable.generate(incrementBy(2), returns(1), { delay: 2 }), Runnable.takeFirst({ count: 3 })), pipe(Runnable.generate(incrementBy(2), returns(0), { delay: 3 }), Runnable.takeFirst({ count: 2 }))), Runnable.toReadonlyArray(), expectArrayEquals([[3, 2], [5, 2], [5, 4], [7, 4]], arrayEquality()))));
+const computeTests = describe("compute", test("batch mode", () => {
+    const fromValueWithDelay = (delay, value) => pipe([value], Runnable.fromReadonlyArray({ delay }));
+    pipe(Runnable.compute(() => {
+        const obs1 = __memo(fromValueWithDelay, 10, 5);
+        const result1 = __await(obs1);
+        const obs2 = __memo(fromValueWithDelay, 20, 10);
+        const result2 = __await(obs2);
+        const obs3 = __memo(fromValueWithDelay, 30, 7);
+        const result3 = __await(obs3);
+        return result1 + result2 + result3;
+    }), Runnable.takeLast(), Runnable.toReadonlyArray(), expectArrayEquals([22]));
+}), test("combined-latest mode", () => {
+    const oneTwoThreeDelayed = pipe([1, 2, 3], Runnable.fromReadonlyArray({ delay: 1 }));
+    const createOneTwoThree = (_) => pipe([1, 2, 3], Runnable.fromReadonlyArray());
+    pipe(Runnable.compute(() => {
+        const v = __await(oneTwoThreeDelayed);
+        const next = __memo(createOneTwoThree, v);
+        return __await(next);
+    }, { mode: "combine-latest" }), Runnable.keepType(isSome), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
+}), test("conditional hooks", () => {
+    const src = pipe([0, 1, 2, 3, 4, 5], Runnable.fromReadonlyArray({ delay: 5 }));
+    const src2 = Runnable.generate(increment, returns(100), {
+        delay: 2,
+        delayStart: false,
+    });
+    pipe(Runnable.compute(() => {
+        const v = __await(src);
+        if (v % 2 === 0) {
+            __memo(increment, 1);
+            return __await(src2);
+        }
+        return v;
+    }), Runnable.toReadonlyArray(), expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]));
+}));
 const exhaustTests = describe("exhaust", test("when the initial observable never disposes", pipeLazy([
     pipe([1, 2, 3], ReadonlyArray.toRunnable({ delay: 3 })),
     pipe([4, 5, 6], ReadonlyArray.toRunnable()),
@@ -74,4 +109,4 @@ const zipTests = describe("zip", zipOperatorTests(Runnable), test("with synchron
 const zipLatestTests = describe("zipLatest", test("zipLatestWith", pipeLazy(Runnable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], ReadonlyArray.toRunnable({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], ReadonlyArray.toRunnable({ delay: 2, delayStart: true }))), Runnable.map(([a, b]) => a + b), Runnable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))));
 const zipWithLatestTests = describe("zipWithLatestFrom", test("when source throws", pipeLazy(pipeLazy(Runnable.throws(), Runnable.zipWithLatestFrom(pipe([1], ReadonlyArray.toRunnable()), (_, b) => b), Runnable.toReadonlyArray()), expectToThrow)), test("when other throws", pipeLazy(pipeLazy([1, 2, 3], ReadonlyArray.toRunnable({ delay: 1 }), Runnable.zipWithLatestFrom(Runnable.throws(), (_, b) => b), Runnable.toReadonlyArray()), expectToThrow)), test("when other completes first", pipeLazy([1, 2, 3], ReadonlyArray.toRunnable({ delay: 2 }), Runnable.zipWithLatestFrom(pipe([2, 4], ReadonlyArray.toRunnable({ delay: 1 })), (a, b) => a + b), Runnable.toReadonlyArray(), expectArrayEquals([3, 6]))), test("when this completes first", pipeLazy([1, 2, 3], ReadonlyArray.toRunnable({ delay: 2 }), Runnable.zipWithLatestFrom(pipe([2, 4, 6, 8], ReadonlyArray.toRunnable({ delay: 1 })), (a, b) => a + b), Runnable.toReadonlyArray(), expectArrayEquals([3, 6, 11]))));
 const runTests = describe("run", test("with higher order observable and no delay", pipeLazy(Runnable.generate(_ => pipe(1, Runnable.fromOptional()), returns(Runnable.empty())), Runnable.concatAll(), Runnable.takeFirst({ count: 10 }), Runnable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]))));
-testModule("Runnable", bufferTests(Runnable), catchErrorTests(Runnable), combineLatestTests, concatTests(Runnable), concatAllTests(Runnable), concatMapTests(Runnable), concatWithTests(Runnable), containsTests(Runnable), decodeWithCharsetTests(Runnable), distinctUntilChangedTests(Runnable), endWithTests(Runnable), everySatisfyTests(Runnable), exhaustTests, forEachTests(Runnable), fromReadonlyArrayTests(Runnable), ignoreElementsTests(Runnable), keepTests(Runnable), mapTests(Runnable), mapToTests(Runnable), mergeTests, pairwiseTests(Runnable), pickTests(Runnable), reduceTests(Runnable), retryTests(Runnable), runTests, scanTests(Runnable), scanLastTests(Runnable, Runnable), scanManyTests(Runnable, Runnable), skipFirstTests(Runnable), startWithTests(Runnable), switchAllTests, takeFirstTests(Runnable), takeLastTests(Runnable), takeUntilTests, takeWhileTests(Runnable), throttleTests, throwIfEmptyTests(Runnable), timeoutTests, toFlowableTests, withLatestFromTest, zipWithTests(Runnable), zipTests, zipLatestTests, zipWithLatestTests);
+testModule("Runnable", bufferTests(Runnable), catchErrorTests(Runnable), combineLatestTests, computeTests, concatTests(Runnable), concatAllTests(Runnable), concatMapTests(Runnable), concatWithTests(Runnable), containsTests(Runnable), decodeWithCharsetTests(Runnable), distinctUntilChangedTests(Runnable), endWithTests(Runnable), everySatisfyTests(Runnable), exhaustTests, forEachTests(Runnable), fromReadonlyArrayTests(Runnable), ignoreElementsTests(Runnable), keepTests(Runnable), mapTests(Runnable), mapToTests(Runnable), mergeTests, pairwiseTests(Runnable), pickTests(Runnable), reduceTests(Runnable), retryTests(Runnable), runTests, scanTests(Runnable), scanLastTests(Runnable, Runnable), scanManyTests(Runnable, Runnable), skipFirstTests(Runnable), startWithTests(Runnable), switchAllTests, takeFirstTests(Runnable), takeLastTests(Runnable), takeUntilTests, takeWhileTests(Runnable), throttleTests, throwIfEmptyTests(Runnable), timeoutTests, toFlowableTests, withLatestFromTest, zipWithTests(Runnable), zipTests, zipLatestTests, zipWithLatestTests);

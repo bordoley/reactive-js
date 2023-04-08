@@ -6,6 +6,7 @@
 
 ### Constructor Functions
 
+- [compute](rx_Enumerable.md#compute)
 - [concat](rx_Enumerable.md#concat)
 - [defer](rx_Enumerable.md#defer)
 - [empty](rx_Enumerable.md#empty)
@@ -70,6 +71,30 @@
 - [toRunnable](rx_Enumerable.md#torunnable)
 
 ## Constructor Functions
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>
+
+___
 
 ### concat
 

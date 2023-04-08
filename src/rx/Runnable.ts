@@ -88,6 +88,7 @@ import Observable_animate from "./Observable/__internal__/Observable.animate.js"
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
+import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
@@ -168,6 +169,11 @@ export const catchError: CatchError<RunnableLike>["catchError"] =
 
 export const combineLatest: CombineLatest<RunnableLike>["combineLatest"] =
   Observable_combineLatest;
+
+/**
+ * @category Constructor
+ */
+export const compute = Runnable_compute;
 
 export const concat: Concat<RunnableLike>["concat"] = Observable_concat;
 

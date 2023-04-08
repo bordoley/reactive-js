@@ -165,6 +165,8 @@ export const __ComputeContext_index = /*@__PURE__*/ symbol("ComputeContext_index
 /** @type {unique symbol} */
 export const __ComputeContext_cleanup = /*@__PURE__*/ symbol("ComputeContext_cleanup");
 /** @type {unique symbol} */
+export const __ComputeContext_observableConfig = /*@__PURE__*/ symbol("ComputeContext_observableConfig");
+/** @type {unique symbol} */
 export const __ComputeContext_effects = /*@__PURE__*/ symbol("ComputeContext_effects");
 /** @type {unique symbol} */
 export const __ComputeContext_mode = /*@__PURE__*/ symbol("ComputeContext_mode");

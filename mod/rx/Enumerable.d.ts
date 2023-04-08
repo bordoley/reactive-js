@@ -5,6 +5,12 @@ import { DisposableLike } from "../util.js";
 export declare const backpressureStrategy: BackpressureStrategy<EnumerableLike>["backpressureStrategy"];
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
 export declare const catchError: CatchError<EnumerableLike>["catchError"];
+/**
+ * @category Constructor
+ */
+export declare const compute: <T>(computation: import("../functions.js").Factory<T>, options?: {
+    mode?: "batched" | "combine-latest" | undefined;
+}) => EnumerableLike<T>;
 export declare const concat: Concat<EnumerableLike>["concat"];
 export declare const concatAll: ConcatAll<EnumerableLike>["concatAll"];
 export declare const concatMap: ConcatMap<EnumerableLike>["concatMap"];

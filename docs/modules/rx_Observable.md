@@ -1027,7 +1027,7 @@ ___
 
 ### compute
 
-▸ **compute**<`T`\>(`computation`, `«destructured»?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+▸ **compute**<`T`\>(`computation`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -1040,8 +1040,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `computation` | [`Factory`](functions.md#factory)<`T`\> |
-| `«destructured»` | `Object` |
-| › `mode?` | ``"batched"`` \| ``"combine-latest"`` |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
 
 #### Returns
 

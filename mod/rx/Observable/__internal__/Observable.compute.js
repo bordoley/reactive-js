@@ -1,9 +1,9 @@
 /// <reference types="./Observable.compute.d.ts" />
 
-import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
+import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
 import { arrayEquality, bind, bindMethod, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import { ObserverLike_notify, } from "../../../rx.js";
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { SchedulerLike_schedule } from "../../../scheduling.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
@@ -11,7 +11,10 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../uti
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Observable_create from "./Observable.create.js";
+import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
@@ -70,6 +73,7 @@ const awaiting = error();
 class ComputeContext {
     [__ComputeContext_index] = 0;
     [__ComputeContext_effects] = [];
+    [__ComputeContext_observableConfig];
     [__ComputeContext_observer];
     [__ComputeContext_scheduledComputationSubscription] = Disposable_disposed;
     [__ComputeContext_runComputation];
@@ -84,12 +88,21 @@ class ComputeContext {
             this[__ComputeContext_observer][DisposableLike_dispose]();
         }
     };
-    constructor(observer, runComputation, mode) {
+    constructor(observer, runComputation, mode, config) {
         this[__ComputeContext_observer] = observer;
         this[__ComputeContext_runComputation] = runComputation;
         this[__ComputeContext_mode] = mode;
+        this[__ComputeContext_observableConfig] = config;
     }
     [__ComputeContext_awaitOrObserve](observable, shouldAwait) {
+        if (this[__ComputeContext_observableConfig][ObservableLike_isEnumerable] &&
+            !observable[ObservableLike_isEnumerable]) {
+            raiseWithDebugMessage("cannot observe a non-enumerable observable in an Enumerable computation");
+        }
+        else if (this[__ComputeContext_observableConfig][ObservableLike_isRunnable] &&
+            !observable[ObservableLike_isRunnable]) {
+            raiseWithDebugMessage("cannot observe a non-runnable observable in a Runnable computation");
+        }
         const effect = shouldAwait
             ? validateComputeEffect(this, Await)
             : validateComputeEffect(this, Observe);
@@ -147,7 +160,7 @@ let currentCtx = none;
 export const assertCurrentContext = () => isNone(currentCtx)
     ? raiseWithDebugMessage("effect must be called within a computational expression")
     : currentCtx;
-export const Observable_compute = (computation, { mode = "batched" } = {}) => Observable_create((observer) => {
+const Observable_computeWithConfig = ((computation, config, { mode = "batched" } = {}) => Observable_createWithConfig((observer) => {
     const runComputation = () => {
         let result = none;
         let err = none;
@@ -210,9 +223,21 @@ export const Observable_compute = (computation, { mode = "batched" } = {}) => Ob
             observer[DisposableLike_dispose](err);
         }
     };
-    const ctx = newInstance(ComputeContext, observer, runComputation, mode);
+    const ctx = newInstance(ComputeContext, observer, runComputation, mode, config);
     pipe(observer[SchedulerLike_schedule](runComputation), Disposable_addTo(observer));
-});
+}, config));
+export const Observable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
+    [ObservableLike_isEnumerable]: false,
+    [ObservableLike_isRunnable]: false,
+}, options);
+export const Runnable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
+    [ObservableLike_isEnumerable]: false,
+    [ObservableLike_isRunnable]: true,
+}, options);
+export const Enumerable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
+    [ObservableLike_isEnumerable]: true,
+    [ObservableLike_isRunnable]: true,
+}, options);
 export const Observable_compute__memo = (f, ...args) => {
     const ctx = assertCurrentContext();
     return ctx[__ComputeContext_memoOrUse](false, f, ...args);
@@ -226,7 +251,7 @@ export const Observable_compute__observe = (observable) => {
     return ctx[__ComputeContext_awaitOrObserve](observable, false);
 };
 export const Observable_compute__do = /*@__PURE__*/ (() => {
-    const deferSideEffect = (f, ...args) => Observable_create(observer => {
+    const deferSideEffect = (create, f, ...args) => create(observer => {
         const callback = () => {
             f(...args);
             observer[ObserverLike_notify](none);
@@ -237,7 +262,12 @@ export const Observable_compute__do = /*@__PURE__*/ (() => {
     return (f, ...args) => {
         const ctx = assertCurrentContext();
         const scheduler = ctx[__ComputeContext_observer];
-        const observable = ctx[__ComputeContext_memoOrUse](false, deferSideEffect, f, ...args);
+        const observableConfig = ctx[__ComputeContext_observableConfig];
+        const observable = ctx[__ComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ObservableLike_isEnumerable]
+            ? Enumerable_create
+            : observableConfig[ObservableLike_isRunnable]
+                ? Runnable_create
+                : Observable_create, f, ...args);
         const subscribeOnScheduler = ctx[__ComputeContext_memoOrUse](false, Observable_subscribe, scheduler);
         ctx[__ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
     };

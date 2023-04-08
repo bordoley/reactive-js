@@ -8,6 +8,7 @@
 
 - [animate](rx_Runnable.md#animate)
 - [combineLatest](rx_Runnable.md#combinelatest)
+- [compute](rx_Runnable.md#compute)
 - [concat](rx_Runnable.md#concat)
 - [currentTime](rx_Runnable.md#currenttime)
 - [defer](rx_Runnable.md#defer)
@@ -334,6 +335,30 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/rx.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 ___
 

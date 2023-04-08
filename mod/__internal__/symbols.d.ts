@@ -159,6 +159,8 @@ export const __ComputeContext_index: unique symbol;
 /** @type {unique symbol} */
 export const __ComputeContext_cleanup: unique symbol;
 /** @type {unique symbol} */
+export const __ComputeContext_observableConfig: unique symbol;
+/** @type {unique symbol} */
 export const __ComputeContext_effects: unique symbol;
 /** @type {unique symbol} */
 export const __ComputeContext_mode: unique symbol;

@@ -50,6 +50,7 @@ import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
+import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
@@ -57,6 +58,10 @@ import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const buffer = Observable_buffer;
 export const catchError = Enumerable_catchError;
+/**
+ * @category Constructor
+ */
+export const compute = Enumerable_compute;
 export const concat = Observable_concat;
 export const concatAll = Enumerable_concatAll;
 export const concatMap = Enumerable_concatMap;
