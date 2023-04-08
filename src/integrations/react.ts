@@ -342,7 +342,7 @@ const defaultEnumeratorState = {
 /**
  * @category Hook
  */
-export const useEnumerable = <T>(
+export const useEnumerate = <T>(
   enumerable: EnumerableLike<T>,
 ): {
   current: T;

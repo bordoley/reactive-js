@@ -6,7 +6,7 @@ import * as Observable from "@reactive-js/core/rx/Observable";
 import * as AsyncEnumerable from "@reactive-js/core/streaming/AsyncEnumerable";
 import {
   createComponent,
-  useEnumerable,
+  useEnumerate,
   useFlowable,
   useObservable,
   useStream,
@@ -17,7 +17,7 @@ import {
   useWindowLocation,
   useWindowLocationStream,
   WindowLocationProvider,
-} from "@reactive-js/core/integrations/react-web";
+} from "@reactive-js/core/integrations/react/web";
 import {
   WindowLocationStreamLike,
   WindowLocationURI,
@@ -147,7 +147,7 @@ const Root = () => {
     () => Enumerable.generate(increment, () => -1),
     [],
   );
-  const enumerator = useEnumerable(enumerable);
+  const enumerator = useEnumerate(enumerable);
 
   return (
     <div>

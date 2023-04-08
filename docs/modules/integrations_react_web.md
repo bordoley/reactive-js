@@ -1,6 +1,6 @@
-[Reactive-JS](../README.md) / integrations/react-web
+[Reactive-JS](../README.md) / integrations/react/web
 
-# Module: integrations/react-web
+# Module: integrations/react/web
 
 ## Table of contents
 

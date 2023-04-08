@@ -7,7 +7,7 @@
 ### Hook Functions
 
 - [useAnimation](integrations_react.md#useanimation)
-- [useEnumerable](integrations_react.md#useenumerable)
+- [useEnumerate](integrations_react.md#useenumerate)
 - [useFlowable](integrations_react.md#useflowable)
 - [useObservable](integrations_react.md#useobservable)
 - [useStatefulAnimation](integrations_react.md#usestatefulanimation)
@@ -104,9 +104,9 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 ___
 
-### useEnumerable
+### useEnumerate
 
-▸ **useEnumerable**<`T`\>(`enumerable`): `Object`
+▸ **useEnumerate**<`T`\>(`enumerable`): `Object`
 
 #### Type parameters
 

@@ -17,17 +17,17 @@ import {
   isSome,
   none,
   pipe,
-} from "../functions.js";
-import { ReadonlyRecordLike } from "../keyed-containers.js";
-import * as ReadonlyRecord from "../keyed-containers/ReadonlyRecord.js";
+} from "../../functions.js";
+import { ReadonlyRecordLike } from "../../keyed-containers.js";
+import * as ReadonlyRecord from "../../keyed-containers/ReadonlyRecord.js";
 import {
   DisposableLike_dispose,
   EventSourceLike,
   EventSourceLike_addListener,
   QueueableLike_enqueue,
-} from "../util.js";
-import * as EventListener from "../util/EventListener.js";
-import { useObservable, useStream } from "./react.js";
+} from "../../util.js";
+import * as EventListener from "../../util/EventListener.js";
+import { useObservable, useStream } from "../react.js";
 import {
   CSSStyleKey,
   WindowLocationStreamLike,
@@ -36,7 +36,7 @@ import {
   WindowLocationStreamLike_replace,
   WindowLocationURI,
   windowLocation,
-} from "./web.js";
+} from "../web.js";
 
 const WindowLocationContext =
   /*@__PURE__*/ createContext<WindowLocationStreamLike>(

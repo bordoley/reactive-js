@@ -55,7 +55,7 @@
     "./functions": "./functions.js",
     "./integrations/node": "./integrations/node.js",
     "./integrations/react": "./integrations/react.js",
-    "./integrations/react-web": "./integrations/react-web.js",
+    "./integrations/react/web": "./integrations/react/web.js",
     "./integrations/svelte": "./integrations/svelte.js",
     "./integrations/web": "./integrations/web.js",
     "./keyed-containers": "./keyed-containers.js",
