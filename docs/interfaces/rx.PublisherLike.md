@@ -16,7 +16,7 @@ An `EventListener` that can be used to publish notifications to one or more obse
 
 - [`EventListenerLike`](util.EventListenerLike.md)<`T`\>
 
-- [`HotObservableLike`](rx.HotObservableLike.md)<`T`\>
+- [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`T`\>
 
 - [`DisposableLike`](util.DisposableLike.md)
 

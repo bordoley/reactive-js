@@ -1,9 +1,9 @@
-import { DispatcherLike_complete, HotObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, ReplayableLike_buffer } from "./__internal__/symbols.js";
+import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, ReplayableLike_buffer } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator } from "./containers.js";
 import { Factory, Function1, Function2, none } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import { DisposableLike, EventListenerLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayableLike } from "./util.js";
-export { DispatcherLike_complete, HotObservableLike_observerCount, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReplayableLike_buffer, };
+export { DispatcherLike_complete, MulticastObservableLike_observerCount, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReplayableLike_buffer, };
 /**
  * A `QueueableLike` type that consumes enqueued events to
  * be dispatched from any execution context.
@@ -82,21 +82,13 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  * @noInheritDoc
  * @category Container
  */
-export interface HotObservableLike<T> extends ObservableLike<T>, ReplayableLike<T> {
+export interface MulticastObservableLike<T> extends ObservableLike<T>, ReplayableLike<T> {
     readonly [ObservableLike_isEnumerable]: false;
     readonly [ObservableLike_isRunnable]: false;
     /**
      * The number of observers currently observing the `MulticastObservableLike`.
      */
-    readonly [HotObservableLike_observerCount]: number;
-}
-/**
- * A stateful ObservableLike resource.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface MulticastObservableLike<T = unknown> extends HotObservableLike<T>, DisposableLike {
+    readonly [MulticastObservableLike_observerCount]: number;
 }
 /**
  * An `EventListener` that can be used to publish notifications to one or more observers.
@@ -104,7 +96,7 @@ export interface MulticastObservableLike<T = unknown> extends HotObservableLike<
  * @noInheritDoc
  * @category Container
  */
-export interface PublisherLike<T = unknown> extends EventListenerLike<T>, HotObservableLike<T>, DisposableLike {
+export interface PublisherLike<T = unknown> extends EventListenerLike<T>, MulticastObservableLike<T>, DisposableLike {
 }
 /**
  * @noInheritDoc

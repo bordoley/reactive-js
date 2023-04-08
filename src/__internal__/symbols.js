@@ -86,11 +86,6 @@ export const FlowableStreamLike_resume = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const HotObservableLike_observerCount = /*@__PURE__*/ symbol(
-  "HotObservableLike_observerCount",
-);
-
-/** @type {unique symbol} */
 export const KeyedCollectionLike_get = /*@__PURE__*/ symbol(
   "KeyedCollectionLike_get",
 );
@@ -98,6 +93,11 @@ export const KeyedCollectionLike_get = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const KeyedContainerLike_TKey = /*@__PURE__*/ symbol(
   "KeyedContainerLike_TKey",
+);
+
+/** @type {unique symbol} */
+export const MulticastObservableLike_observerCount = /*@__PURE__*/ symbol(
+  "MulticastObservableLike_observerCount",
 );
 
 /** @type {unique symbol} */
@@ -880,11 +880,6 @@ export const SchedulerDelegatingMixin_delegate = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const QueueableDelegatingMixin_delegate = /*@__PURE__*/ symbol(
   "QueueableDelegatingMixin_delegate",
-);
-
-/** @type {unique symbol} */
-export const DelegatingHotObservableMixin_delegate = /*@__PURE__*/ symbol(
-  "DelegatingHotObservableMixin_delegate",
 );
 
 /** @type {unique symbol} */

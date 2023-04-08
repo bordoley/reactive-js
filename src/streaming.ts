@@ -24,6 +24,7 @@ import {
 } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
+  DisposableLike,
   KeyedCollectionLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -48,7 +49,8 @@ export {
  */
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
-    MulticastObservableLike<T> {
+    MulticastObservableLike<T>,
+    DisposableLike {
   readonly [StreamLike_scheduler]: SchedulerLike;
 }
 

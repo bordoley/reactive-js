@@ -1,8 +1,8 @@
 import { Mixin1 } from "../../../__internal__/mixins.js";
-import { DelegatingHotObservableMixin_delegate } from "../../../__internal__/symbols.js";
+import { DelegatingMulticastObservableMixin_delegate } from "../../../__internal__/symbols.js";
 import { MulticastObservableLike } from "../../../rx.js";
-type TReturn<T, TMulticastObservable extends MulticastObservableLike<T>> = MulticastObservableLike<T> & {
-    [DelegatingHotObservableMixin_delegate]: TMulticastObservable;
+export type TDelegatingMulticastObservableReturn<T, TMulticastObservable extends MulticastObservableLike<T>> = MulticastObservableLike<T> & {
+    [DelegatingMulticastObservableMixin_delegate]: TMulticastObservable;
 };
-declare const MulticastObservable_delegatingMixin: <T, TMulticastObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>>() => Mixin1<TReturn<T, TMulticastObservable>, TMulticastObservable>;
+declare const MulticastObservable_delegatingMixin: <T, TMulticastObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>>() => Mixin1<TDelegatingMulticastObservableReturn<T, TMulticastObservable>, TMulticastObservable>;
 export default MulticastObservable_delegatingMixin;

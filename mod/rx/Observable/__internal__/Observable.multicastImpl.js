@@ -1,15 +1,12 @@
 /// <reference types="./Observable.multicastImpl.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import { bindMethod, isFunction, pipe, } from "../../../functions.js";
 import { BufferLike_capacity, EventListenerLike_notify, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
-import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-const createMulticastObservable = /*@__PURE__*/ (() => createInstanceFactory(MulticastObservable_delegatingMixin()))();
 const Observable_multicastImpl = (publisherFactory, schedulerOrFactory, options = {}) => observable => {
     const { backpressureStrategy = "overflow", capacity = MAX_SAFE_INTEGER, replay = 0, } = options;
     const publisher = publisherFactory({ replay });
@@ -20,6 +17,6 @@ const Observable_multicastImpl = (publisherFactory, schedulerOrFactory, options 
         [BufferLike_capacity]: capacity,
         [QueueableLike_backpressureStrategy]: backpressureStrategy,
     }), Disposable_bindTo(publisher));
-    return createMulticastObservable(publisher, scheduler);
+    return publisher;
 };
 export default Observable_multicastImpl;

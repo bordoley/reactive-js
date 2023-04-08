@@ -27,11 +27,11 @@ FlowableStreamLike_isPaused
 FlowableStreamLike_pause
 FlowableStreamLike_resume
 
-HotObservableLike_observerCount
-
 KeyedCollectionLike_get
 
 KeyedContainerLike_TKey
+
+MulticastObservableLike_observerCount
 
 ObserverLike_notify
 
@@ -213,6 +213,5 @@ IteratorEnumerator_iterator
 WithCurrentTimeObserver_selector
 SchedulerDelegatingMixin_delegate
 QueueableDelegatingMixin_delegate
-DelegatingHotObservableMixin_delegate
 DelegatingMulticastObservableMixin_delegate
 ObserverMixin_scheduler

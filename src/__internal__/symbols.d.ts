@@ -36,11 +36,11 @@ export declare const FlowableStreamLike_pause: unique symbol;
 
 export declare const FlowableStreamLike_resume: unique symbol;
 
-export declare const HotObservableLike_observerCount: unique symbol;
-
 export declare const KeyedCollectionLike_get: unique symbol;
 
 export declare const KeyedContainerLike_TKey: unique symbol;
+
+export declare const MulticastObservableLike_observerCount: unique symbol;
 
 export declare const ObserverLike_notify: unique symbol;
 
@@ -379,8 +379,6 @@ export declare const WithCurrentTimeObserver_selector: unique symbol;
 export declare const SchedulerDelegatingMixin_delegate: unique symbol;
 
 export declare const QueueableDelegatingMixin_delegate: unique symbol;
-
-export declare const DelegatingHotObservableMixin_delegate: unique symbol;
 
 export declare const DelegatingMulticastObservableMixin_delegate: unique symbol;
 

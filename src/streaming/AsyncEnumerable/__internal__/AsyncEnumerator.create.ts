@@ -5,17 +5,19 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { DelegatingHotObservableMixin_delegate } from "../../../__internal__/symbols.js";
+import { DelegatingMulticastObservableMixin_delegate } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
-import { TDelegatingHotObservableReturn } from "../../../rx/HotObservable/__internal__/HotObservable.delegatingMixin.js";
-import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
+import MulticastObservable_delegatingMixin, {
+  TDelegatingMulticastObservableReturn,
+} from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import { BufferLike_capacity } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 const AsyncEnumerator_create: <TA, TB>() => (
   stream: StreamLike<void, TA>,
@@ -26,6 +28,7 @@ const AsyncEnumerator_create: <TA, TB>() => (
       include(
         Dispatcher_delegatingMixin(),
         MulticastObservable_delegatingMixin<TB>(),
+        Disposable_delegatingMixin(),
       ),
       function AsyncEnumeratorDelegatingMixin(
         instance: Pick<StreamLike<void, TA>, typeof StreamLike_scheduler>,
@@ -41,6 +44,7 @@ const AsyncEnumerator_create: <TA, TB>() => (
           Disposable_addIgnoringChildErrors(delegate),
         );
 
+        init(Disposable_delegatingMixin(), instance, observable);
         init(MulticastObservable_delegatingMixin<TB>(), instance, observable);
         init(Dispatcher_delegatingMixin(), instance, delegate);
 
@@ -49,10 +53,10 @@ const AsyncEnumerator_create: <TA, TB>() => (
       props({}),
       {
         get [StreamLike_scheduler]() {
-          unsafeCast<TDelegatingHotObservableReturn<TA, StreamLike<void, TA>>>(
-            this,
-          );
-          return this[DelegatingHotObservableMixin_delegate][
+          unsafeCast<
+            TDelegatingMulticastObservableReturn<TA, StreamLike<void, TA>>
+          >(this);
+          return this[DelegatingMulticastObservableMixin_delegate][
             StreamLike_scheduler
           ];
         },

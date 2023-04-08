@@ -2,6 +2,7 @@ import { Factory, Function1 } from "../../../functions.js";
 import { MulticastObservableLike, ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
+  DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
@@ -15,7 +16,7 @@ const Observable_multicast = <T>(
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   } = {},
-): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
+): Function1<ObservableLike<T>, MulticastObservableLike<T> & DisposableLike> =>
   Observable_multicastImpl<T>(Publisher_create, schedulerOrFactory, options);
 
 export default Observable_multicast;

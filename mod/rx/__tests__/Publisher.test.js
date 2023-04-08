@@ -3,7 +3,7 @@
 import { expectArrayEquals, expectEquals, test, testModule, } from "../../__internal__/testing.js";
 import { bindMethod, pipe } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
-import { HotObservableLike_observerCount } from "../../rx.js";
+import { MulticastObservableLike_observerCount } from "../../rx.js";
 import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { DisposableLike_dispose, EventListenerLike_notify, } from "../../util.js";
@@ -23,13 +23,13 @@ testModule("publisher", test("with replay", () => {
 }), test("with multiple observers", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const publisher = Publisher.create();
-    pipe(publisher[HotObservableLike_observerCount], expectEquals(0));
+    pipe(publisher[MulticastObservableLike_observerCount], expectEquals(0));
     const sub1 = pipe(publisher, Observable.subscribe(scheduler));
-    pipe(publisher[HotObservableLike_observerCount], expectEquals(1));
+    pipe(publisher[MulticastObservableLike_observerCount], expectEquals(1));
     const sub2 = pipe(publisher, Observable.subscribe(scheduler));
-    pipe(publisher[HotObservableLike_observerCount], expectEquals(2));
+    pipe(publisher[MulticastObservableLike_observerCount], expectEquals(2));
     sub1[DisposableLike_dispose]();
-    pipe(publisher[HotObservableLike_observerCount], expectEquals(1));
+    pipe(publisher[MulticastObservableLike_observerCount], expectEquals(1));
     sub2[DisposableLike_dispose]();
-    pipe(publisher[HotObservableLike_observerCount], expectEquals(0));
+    pipe(publisher[MulticastObservableLike_observerCount], expectEquals(0));
 }));

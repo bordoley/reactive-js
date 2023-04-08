@@ -37,11 +37,11 @@ export const FlowableStreamLike_pause: unique symbol;
 /** @type {unique symbol} */
 export const FlowableStreamLike_resume: unique symbol;
 /** @type {unique symbol} */
-export const HotObservableLike_observerCount: unique symbol;
-/** @type {unique symbol} */
 export const KeyedCollectionLike_get: unique symbol;
 /** @type {unique symbol} */
 export const KeyedContainerLike_TKey: unique symbol;
+/** @type {unique symbol} */
+export const MulticastObservableLike_observerCount: unique symbol;
 /** @type {unique symbol} */
 export const ObserverLike_notify: unique symbol;
 /** @type {unique symbol} */
@@ -380,8 +380,6 @@ export const WithCurrentTimeObserver_selector: unique symbol;
 export const SchedulerDelegatingMixin_delegate: unique symbol;
 /** @type {unique symbol} */
 export const QueueableDelegatingMixin_delegate: unique symbol;
-/** @type {unique symbol} */
-export const DelegatingHotObservableMixin_delegate: unique symbol;
 /** @type {unique symbol} */
 export const DelegatingMulticastObservableMixin_delegate: unique symbol;
 /** @type {unique symbol} */

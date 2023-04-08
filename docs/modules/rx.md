@@ -14,7 +14,6 @@
 ### Container Interfaces
 
 - [EnumerableLike](../interfaces/rx.EnumerableLike.md)
-- [HotObservableLike](../interfaces/rx.HotObservableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [PublisherLike](../interfaces/rx.PublisherLike.md)

@@ -14,7 +14,7 @@
 
 - **`ReplayableLike`**
 
-  ↳ [`HotObservableLike`](rx.HotObservableLike.md)
+  ↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
   ↳ [`EventSourceLike`](util.EventSourceLike.md)
 

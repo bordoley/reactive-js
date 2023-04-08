@@ -19,6 +19,8 @@ Represents a duplex stream
 
 - [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`T`\>
 
+- [`DisposableLike`](util.DisposableLike.md)
+
   ↳ **`StreamLike`**
 
   ↳↳ [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)

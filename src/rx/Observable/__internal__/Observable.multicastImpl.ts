@@ -1,5 +1,4 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import {
   Factory,
   Function1,
@@ -16,21 +15,15 @@ import {
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
+  DisposableLike,
   EventListenerLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
-import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
-
-const createMulticastObservable: <T>(
-  delegate: PublisherLike<T>,
-  scheduler: SchedulerLike,
-) => MulticastObservableLike<T> = /*@__PURE__*/ (<T>() =>
-  createInstanceFactory(MulticastObservable_delegatingMixin<T>()))();
 
 const Observable_multicastImpl =
   <T>(
@@ -46,7 +39,10 @@ const Observable_multicastImpl =
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     } = {},
-  ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
+  ): Function1<
+    ObservableLike<T>,
+    MulticastObservableLike<T> & DisposableLike
+  > =>
   observable => {
     const {
       backpressureStrategy = "overflow",
@@ -71,7 +67,7 @@ const Observable_multicastImpl =
       Disposable_bindTo(publisher),
     );
 
-    return createMulticastObservable<T>(publisher, scheduler);
+    return publisher;
   };
 
 export default Observable_multicastImpl;

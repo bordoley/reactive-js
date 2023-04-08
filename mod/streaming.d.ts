@@ -4,7 +4,7 @@ import { Function1, Optional, Updater } from "./functions.js";
 import { ReadonlyRecordLike } from "./keyed-containers.js";
 import { DispatcherLike, MulticastObservableLike, ObservableLike } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
-import { KeyedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
+import { DisposableLike, KeyedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
 export { FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, StreamLike_scheduler, StreamableLike_stream, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, };
 /**
  * Represents a duplex stream
@@ -12,7 +12,7 @@ export { FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLi
  * @noInheritDoc
  * @category Stream
  */
-export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
+export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T>, DisposableLike {
     readonly [StreamLike_scheduler]: SchedulerLike;
 }
 /**
