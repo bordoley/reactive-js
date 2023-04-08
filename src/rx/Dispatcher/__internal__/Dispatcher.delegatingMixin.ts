@@ -5,43 +5,42 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { returns } from "../../../functions.js";
+import { DelegatingDispatcherMixin_delegate } from "../../../__internal__/symbols.js";
+import { none, returns } from "../../../functions.js";
 import { DispatcherLike, DispatcherLike_complete } from "../../../rx.js";
-import { DisposableLike } from "../../../util.js";
-import Queueable_delegatingMixin, {
-  QueueableDelegatingMixin_delegate,
-  TDelegatingQueueableMixinReturn,
-} from "../../../util/Queue/__internal__/Queueable.delegatingMixin.js";
-
-type TDispatcherDelegatingMixin<TReq> = Omit<
-  DispatcherLike<TReq>,
-  keyof DisposableLike
->;
+import Queueable_delegatingMixin from "../../../util/Queue/__internal__/Queueable.delegatingMixin.js";
 
 const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
-  TDispatcherDelegatingMixin<TReq>,
-  Omit<DispatcherLike<TReq>, keyof DisposableLike>
-> = /*@__PURE__*/ (<TReq>() =>
-  returns(
+  DispatcherLike<TReq>,
+  DispatcherLike<TReq>
+> = /*@__PURE__*/ (<TReq>() => {
+  type TProperties = {
+    [DelegatingDispatcherMixin_delegate]: DispatcherLike<TReq>;
+  };
+
+  return returns(
     mix(
       include(Queueable_delegatingMixin()),
-      function DispatcherMixin(
-        instance: Pick<DispatcherLike, typeof DispatcherLike_complete>,
+      function DelegatingDispatcherMixin(
+        instance: Pick<DispatcherLike, typeof DispatcherLike_complete> &
+          TProperties,
         delegate: DispatcherLike<TReq>,
-      ): TDispatcherDelegatingMixin<TReq> {
+      ): DispatcherLike<TReq> {
         init(Queueable_delegatingMixin(), instance, delegate);
+        instance[DelegatingDispatcherMixin_delegate] = delegate;
 
         return instance;
       },
-      props({}),
+      props<TProperties>({
+        [DelegatingDispatcherMixin_delegate]: none,
+      }),
       {
-        [DispatcherLike_complete](
-          this: TDelegatingQueueableMixinReturn<TReq, DispatcherLike<TReq>>,
-        ) {
-          this[QueueableDelegatingMixin_delegate][DispatcherLike_complete]();
+        [DispatcherLike_complete](this: TProperties) {
+          this[DelegatingDispatcherMixin_delegate][DispatcherLike_complete]();
         },
       },
     ),
-  ))();
+  );
+})();
 
 export default Dispatcher_delegatingMixin;

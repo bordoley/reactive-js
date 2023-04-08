@@ -1,7 +1,7 @@
 /// <reference types="./Observable.skipFirst.d.ts" />
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, SkipFirstObserver_count, SkipFirstObserver_skipCount, } from "../../../__internal__/symbols.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
@@ -10,8 +10,9 @@ import Observer_delegatingMixin from "../../Observer/__internal__/Observer.deleg
 import Observable_lift from "./Observable.lift.js";
 const Observable_skipFirst = /*@__PURE__*/ (() => {
     const createSkipFirstObserver = (() => {
-        return createInstanceFactory(mix(include(Observer_delegatingMixin()), function SkipFirstObserver(instance, delegate, skipCount) {
+        return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function SkipFirstObserver(instance, delegate, skipCount) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
+            init(delegatingMixin(), instance, delegate);
             instance[SkipFirstObserver_skipCount] = skipCount;
             return instance;
         }, props({

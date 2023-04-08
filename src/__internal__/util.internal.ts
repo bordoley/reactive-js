@@ -5,7 +5,6 @@ import {
   IndexedCollectionLike,
   QueueableLike,
 } from "../util.js";
-import { DelegatingLike } from "./mixins.js";
 import {
   MutableIndexedCollectionLike_set,
   QueueLike_dequeue,
@@ -30,11 +29,6 @@ export interface SerialDisposableLike<
   get [SerialDisposableLike_current](): TDisposable;
   set [SerialDisposableLike_current](v: TDisposable);
 }
-
-export interface DelegatingDisposableLike<
-  TDisposable extends DisposableLike = DisposableLike,
-> extends DelegatingLike<TDisposable>,
-    DisposableLike {}
 
 export interface QueueLike<T = unknown>
   extends QueueableLike<T>,

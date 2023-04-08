@@ -1,6 +1,7 @@
 import {
   DelegatingLike,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -29,8 +30,9 @@ const Publisher_createRefCounted: <T>(options?: {
   const createRefCountedPublisherInstance = createInstanceFactory(
     mix(
       include(
-        Disposable_delegatingMixin(),
+        Disposable_delegatingMixin,
         MulticastObservable_delegatingMixin(),
+        delegatingMixin(),
       ),
       function RefCountedPublisher(
         instance: Pick<
@@ -39,12 +41,9 @@ const Publisher_createRefCounted: <T>(options?: {
         >,
         delegate: PublisherLike<T>,
       ): PublisherLike<T> {
-        init(Disposable_delegatingMixin(), instance, delegate);
-        init(
-          MulticastObservable_delegatingMixin<T, PublisherLike<T>>(),
-          instance,
-          delegate,
-        );
+        init(Disposable_delegatingMixin, instance, delegate);
+        init(MulticastObservable_delegatingMixin<T>(), instance, delegate);
+        init(delegatingMixin(), instance, delegate);
 
         return instance;
       },

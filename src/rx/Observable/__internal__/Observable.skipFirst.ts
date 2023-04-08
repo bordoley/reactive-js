@@ -4,6 +4,7 @@ import {
   DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -42,7 +43,7 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin()),
+        include(Observer_delegatingMixin(), delegatingMixin()),
         function SkipFirstObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -50,6 +51,7 @@ const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
           skipCount: number,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
+          init(delegatingMixin(), instance, delegate);
           instance[SkipFirstObserver_skipCount] = skipCount;
 
           return instance;

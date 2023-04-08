@@ -3,6 +3,7 @@ import {
   DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -60,7 +61,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
   ) => ObserverLike<TA> = (() =>
     createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin()),
+        include(Observer_delegatingMixin(), delegatingMixin()),
         function WithLatestFromObserver(
           instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -69,6 +70,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
           selector: Function2<TA, TB, T>,
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
+          init(delegatingMixin(), instance, delegate);
           instance[WithLatestFromObserver_selector] = selector;
 
           pipe(

@@ -2,6 +2,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -39,7 +40,11 @@ const Observable_backpressureStrategy: ObservableBackpressureStrategy =
     ) => ObserverLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
-          include(Observer_delegatingMixin<T>()),
+          include(
+            Observer_delegatingMixin<T>(),
+            Disposable_delegatingMixin,
+            delegatingMixin(),
+          ),
           function EnqueueObserver(
             instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
             delegate: ObserverLike<T>,
@@ -48,8 +53,9 @@ const Observable_backpressureStrategy: ObservableBackpressureStrategy =
               readonly [BufferLike_capacity]: number;
             },
           ): ObserverLike<T> {
-            init(Disposable_delegatingMixin(), instance, delegate);
+            init(Disposable_delegatingMixin, instance, delegate);
             init(Observer_delegatingMixin<T>(), instance, delegate, config);
+            init(delegatingMixin(), instance, delegate);
 
             return instance;
           },

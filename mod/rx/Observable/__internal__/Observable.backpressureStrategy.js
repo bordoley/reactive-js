@@ -1,6 +1,6 @@
 /// <reference types="./Observable.backpressureStrategy.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
@@ -9,9 +9,10 @@ import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 const Observable_backpressureStrategy = 
 /*@__PURE__*/ (() => {
-    const createBackpressureObserver = (() => createInstanceFactory(mix(include(Observer_delegatingMixin()), function EnqueueObserver(instance, delegate, config) {
-        init(Disposable_delegatingMixin(), instance, delegate);
+    const createBackpressureObserver = (() => createInstanceFactory(mix(include(Observer_delegatingMixin(), Disposable_delegatingMixin, delegatingMixin()), function EnqueueObserver(instance, delegate, config) {
+        init(Disposable_delegatingMixin, instance, delegate);
         init(Observer_delegatingMixin(), instance, delegate, config);
+        init(delegatingMixin(), instance, delegate);
         return instance;
     }, props({}), {
         [ObserverLike_notify](next) {

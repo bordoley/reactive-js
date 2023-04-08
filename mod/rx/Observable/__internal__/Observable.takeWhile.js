@@ -1,7 +1,7 @@
 /// <reference types="./Observable.takeWhile.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { TakeWhileObserver_inclusive, TakeWhileObserver_predicate, } from "../../../__internal__/symbols.js";
+import { createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, TakeWhileObserver_inclusive, TakeWhileObserver_predicate, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
@@ -10,8 +10,9 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 const Observable_takeWhile = /*@__PURE__*/ (() => {
     const createTakeWhileObserver = (() => {
-        return createInstanceFactory(mix(include(Observer_delegatingMixin()), function TakeWhileObserver(instance, delegate, predicate, inclusive) {
+        return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function TakeWhileObserver(instance, delegate, predicate, inclusive) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
+            init(delegatingMixin(), instance, delegate);
             instance[TakeWhileObserver_predicate] = predicate;
             instance[TakeWhileObserver_inclusive] = inclusive;
             return instance;

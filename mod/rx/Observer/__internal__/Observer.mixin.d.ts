@@ -7,7 +7,7 @@ export { ObserverMixin_scheduler };
 export type TObserverMixin<T, TScheduler extends SchedulerLike = SchedulerLike> = Omit<ObserverLike<T>, typeof ObserverLike_notify> & {
     [ObserverMixin_scheduler]: TScheduler;
 };
-declare const Observer_mixin: <T, TScheduler extends SchedulerLike = SchedulerLike>() => Mixin2<TObserverMixin<T, TScheduler>, SchedulerLike, {
+declare const Observer_mixin: <T, TScheduler extends SchedulerLike = SchedulerLike>() => Mixin2<TObserverMixin<T, TScheduler>, TScheduler, {
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly [BufferLike_capacity]: number;
 }>;

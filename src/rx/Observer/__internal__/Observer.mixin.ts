@@ -48,7 +48,7 @@ const Observer_mixin: <
   TScheduler extends SchedulerLike = SchedulerLike,
 >() => Mixin2<
   TObserverMixin<T, TScheduler>,
-  SchedulerLike,
+  TScheduler,
   {
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly [BufferLike_capacity]: number;

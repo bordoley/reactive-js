@@ -3,6 +3,7 @@ import {
   DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -34,7 +35,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin<TA>()),
+        include(Observer_delegatingMixin<TA>(), delegatingMixin()),
         function MapObserver(
           instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -42,6 +43,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
           mapper: Function1<TA, TB>,
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
+          init(delegatingMixin(), instance, delegate);
           instance[MapObserver_mapper] = mapper;
 
           return instance;

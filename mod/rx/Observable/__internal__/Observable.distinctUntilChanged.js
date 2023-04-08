@@ -1,6 +1,6 @@
 /// <reference types="./Observable.distinctUntilChanged.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DistinctUntilChangedObserver_equality, DistinctUntilChangedObserver_hasValue, DistinctUntilChangedObserver_prev, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
@@ -10,8 +10,9 @@ import Observer_delegatingMixin from "../../Observer/__internal__/Observer.deleg
 const Observable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const createDistinctUntilChangedObserver = (() => {
-        return createInstanceFactory(mix(include(Observer_delegatingMixin()), function DistinctUntilChangedObserver(instance, delegate, equality) {
+        return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function DistinctUntilChangedObserver(instance, delegate, equality) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
+            init(delegatingMixin(), instance, delegate);
             instance[DistinctUntilChangedObserver_equality] = equality;
             return instance;
         }, props({

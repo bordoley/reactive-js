@@ -1,17 +1,18 @@
 import {
-  DelegatingLike_delegate,
+  DelegatingLike,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  DelegatingLike_delegate,
   TakeWhileObserver_inclusive,
   TakeWhileObserver_predicate,
 } from "../../../__internal__/symbols.js";
-import { DelegatingDisposableLike } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
@@ -44,7 +45,7 @@ const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin()),
+        include(Observer_delegatingMixin(), delegatingMixin()),
         function TakeWhileObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -53,6 +54,7 @@ const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
           inclusive: boolean,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
+          init(delegatingMixin(), instance, delegate);
           instance[TakeWhileObserver_predicate] = predicate;
           instance[TakeWhileObserver_inclusive] = inclusive;
 
@@ -65,7 +67,7 @@ const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
         {
           [ObserverLike_notify](
             this: TProperties &
-              DelegatingDisposableLike<ObserverLike<T>> &
+              DelegatingLike<ObserverLike<T>> &
               ObserverLike<T>,
             next: T,
           ) {

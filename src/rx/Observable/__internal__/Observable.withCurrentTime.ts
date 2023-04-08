@@ -3,6 +3,7 @@ import {
   DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -40,7 +41,7 @@ const Observable_withCurrentTime: ObservableWithCurrentTime = /*@__PURE__*/ (<
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin()),
+        include(Observer_delegatingMixin(), delegatingMixin()),
         function WithCurrentTimeObserver(
           instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -48,6 +49,7 @@ const Observable_withCurrentTime: ObservableWithCurrentTime = /*@__PURE__*/ (<
           selector: Function2<number, TA, TB>,
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
+          init(delegatingMixin(), instance, delegate);
           instance[WithCurrentTimeObserver_selector] = selector;
 
           return instance;

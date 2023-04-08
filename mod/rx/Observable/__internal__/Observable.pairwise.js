@@ -1,6 +1,6 @@
 /// <reference types="./Observable.pairwise.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { PairwiseObserver_hasPrev, PairwiseObserver_prev, } from "../../../__internal__/symbols.js";
 import { none, pipe, returns } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
@@ -9,8 +9,9 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 const Observable_pairwise = /*@__PURE__*/ (() => {
     const createPairwiseObserver = (() => {
-        return createInstanceFactory(mix(include(Observer_delegatingMixin()), function PairwiseObserver(instance, delegate) {
+        return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function PairwiseObserver(instance, delegate) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
+            init(delegatingMixin(), instance, delegate);
             return instance;
         }, props({
             [PairwiseObserver_prev]: none,

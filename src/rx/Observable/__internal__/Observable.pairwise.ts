@@ -3,6 +3,7 @@ import {
   DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -39,13 +40,14 @@ const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin<T>()),
+        include(Observer_delegatingMixin<T>(), delegatingMixin()),
         function PairwiseObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<readonly [T, T]>,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
+          init(delegatingMixin(), instance, delegate);
 
           return instance;
         },

@@ -184,7 +184,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
       include(
         Dispatcher_delegatingMixin(),
         MulticastObservable_delegatingMixin<T>(),
-        Disposable_delegatingMixin(),
+        Disposable_delegatingMixin,
       ),
       function StreamMixin(
         instance: TProperties,
@@ -206,7 +206,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           Observable_multicast<T>(scheduler, multicastOptions),
         );
 
-        init(Disposable_delegatingMixin(), instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
         init(
           Dispatcher_delegatingMixin<TReq>(),
           instance,

@@ -34,7 +34,7 @@ const Observer_delegatingMixin: <T>() => Mixin2<
       include(
         Observer_baseMixin(),
         Scheduler_delegatingMixin,
-        Disposable_delegatingMixin(),
+        Disposable_delegatingMixin,
       ),
       function ObserverMixin(
         instance: unknown,
@@ -44,7 +44,7 @@ const Observer_delegatingMixin: <T>() => Mixin2<
           readonly [BufferLike_capacity]: number;
         },
       ): TObserverDelegatingMixin<T> {
-        init(Disposable_delegatingMixin(), instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
         init(Scheduler_delegatingMixin, instance, delegate);
         init(Observer_baseMixin<T>(), instance, config);
 

@@ -1,8 +1,8 @@
 /// <reference types="./Observable.takeFirst.d.ts" />
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { TakeFirstObserver_count, TakeFirstObserver_takeCount, } from "../../../__internal__/symbols.js";
+import { createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, TakeFirstObserver_count, TakeFirstObserver_takeCount, } from "../../../__internal__/symbols.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
@@ -11,8 +11,9 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 const Observable_takeFirst = /*@__PURE__*/ (() => {
     const createTakeFirstObserver = (() => {
-        return createInstanceFactory(mix(include(Observer_delegatingMixin()), function TakeFirstObserver(instance, delegate, takeCount) {
+        return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function TakeFirstObserver(instance, delegate, takeCount) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
+            init(delegatingMixin(), instance, delegate);
             instance[TakeFirstObserver_takeCount] = takeCount;
             if (takeCount === 0) {
                 instance[DisposableLike_dispose]();

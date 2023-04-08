@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.createCache.d.ts" />
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { QueueLike_dequeue } from "../../../__internal__/util.internal.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
 import * as ReadonlyRecord from "../../../keyed-containers/ReadonlyRecord.js";
@@ -16,7 +16,7 @@ import * as Disposable from "../../../util/Disposable.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Streamable_create from "./Streamable.create.js";
 const createCacheStream = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Stream_delegatingMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
+    return createInstanceFactory(mix(include(Stream_delegatingMixin(), delegatingMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
         instance.store = new Map();
         instance.subscriptions = new Map();
         const cleanupQueue = IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
@@ -83,6 +83,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
             ? Observable.concatMap(bindMethod(persistentStore, "store"))
             : Observable.ignoreElements())), invoke(StreamableLike_stream, scheduler, options));
         init(Stream_delegatingMixin(), instance, delegate);
+        init(delegatingMixin(), instance, delegate);
         return instance;
     }, props({
         scheduleCleanup: none,

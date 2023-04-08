@@ -3,6 +3,7 @@ import {
   DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -62,7 +63,11 @@ const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<
 
   const createTimeoutObserver = createInstanceFactory(
     mix(
-      include(Observer_delegatingMixin(), SerialDisposable_mixin()),
+      include(
+        Observer_delegatingMixin(),
+        SerialDisposable_mixin(),
+        delegatingMixin(),
+      ),
       function TimeoutObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
@@ -71,6 +76,7 @@ const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<
       ): ObserverLike<T> {
         init(Observer_delegatingMixin(), instance, delegate, delegate);
         init(SerialDisposable_mixin(), instance, Disposable_disposed);
+        init(delegatingMixin(), instance, delegate);
         instance[TimeoutObserver_duration] = duration;
 
         setupDurationSubscription(instance);

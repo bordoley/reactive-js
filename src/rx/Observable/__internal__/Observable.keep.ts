@@ -3,6 +3,7 @@ import {
   DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -35,7 +36,7 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin()),
+        include(Observer_delegatingMixin(), delegatingMixin()),
         function KeepObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -43,6 +44,7 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
           predicate: Predicate<T>,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
+          init(delegatingMixin(), instance, delegate);
           instance[KeepObserver_predicate] = predicate;
 
           return instance;

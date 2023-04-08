@@ -1,6 +1,6 @@
 /// <reference types="./Observable.withLatestFrom.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { WithLatestFromObserver_hasLatest, WithLatestFromObserver_otherLatest, WithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
@@ -13,8 +13,9 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_withLatestFrom = /*@__PURE__*/ (() => {
-    const createWithLatestObserver = (() => createInstanceFactory(mix(include(Observer_delegatingMixin()), function WithLatestFromObserver(instance, delegate, other, selector) {
+    const createWithLatestObserver = (() => createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function WithLatestFromObserver(instance, delegate, other, selector) {
         init(Observer_delegatingMixin(), instance, delegate, delegate);
+        init(delegatingMixin(), instance, delegate);
         instance[WithLatestFromObserver_selector] = selector;
         pipe(other, Observable_forEach(next => {
             instance[WithLatestFromObserver_hasLatest] = true;

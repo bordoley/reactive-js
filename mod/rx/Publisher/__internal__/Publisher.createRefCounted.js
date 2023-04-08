@@ -1,6 +1,6 @@
 /// <reference types="./Publisher.createRefCounted.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DelegatingLike_delegate, DisposableLike_dispose, } from "../../../__internal__/symbols.js";
 import { pipe } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, ObservableLike_observe, } from "../../../rx.js";
@@ -10,9 +10,10 @@ import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposa
 import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Publisher_create from "./Publisher.create.js";
 const Publisher_createRefCounted = /*@__PURE__*/ (() => {
-    const createRefCountedPublisherInstance = createInstanceFactory(mix(include(Disposable_delegatingMixin(), MulticastObservable_delegatingMixin()), function RefCountedPublisher(instance, delegate) {
-        init(Disposable_delegatingMixin(), instance, delegate);
+    const createRefCountedPublisherInstance = createInstanceFactory(mix(include(Disposable_delegatingMixin, MulticastObservable_delegatingMixin(), delegatingMixin()), function RefCountedPublisher(instance, delegate) {
+        init(Disposable_delegatingMixin, instance, delegate);
         init(MulticastObservable_delegatingMixin(), instance, delegate);
+        init(delegatingMixin(), instance, delegate);
         return instance;
     }, props({}), {
         [EventListenerLike_notify](next) {

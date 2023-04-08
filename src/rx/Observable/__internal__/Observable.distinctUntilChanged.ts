@@ -3,6 +3,7 @@ import {
   DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -51,7 +52,7 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
 
       return createInstanceFactory(
         mix(
-          include(Observer_delegatingMixin()),
+          include(Observer_delegatingMixin(), delegatingMixin()),
           function DistinctUntilChangedObserver(
             instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
               Mutable<TProperties>,
@@ -59,6 +60,7 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
             equality: Equality<T>,
           ): ObserverLike<T> {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
+            init(delegatingMixin(), instance, delegate);
             instance[DistinctUntilChangedObserver_equality] = equality;
 
             return instance;

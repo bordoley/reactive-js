@@ -1,10 +1,4 @@
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-  Mixin1,
-  mix,
-  props,
-} from "../../../__internal__/mixins.js";
+import { Mixin1, mix, props } from "../../../__internal__/mixins.js";
 import { DelegatingMulticastObservableMixin_delegate } from "../../../__internal__/symbols.js";
 import { none, returns, unsafeCast } from "../../../functions.js";
 import {
@@ -17,19 +11,9 @@ import {
   ReplayableLike_buffer,
 } from "../../../rx.js";
 
-export type TDelegatingMulticastObservableReturn<
-  T,
-  TMulticastObservable extends MulticastObservableLike<T>,
-> = MulticastObservableLike<T> & {
-  [DelegatingMulticastObservableMixin_delegate]: TMulticastObservable;
-};
-
-const MulticastObservable_delegatingMixin: <
-  T,
-  TMulticastObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>,
->() => Mixin1<
-  TDelegatingMulticastObservableReturn<T, TMulticastObservable>,
-  TMulticastObservable
+const MulticastObservable_delegatingMixin: <T>() => Mixin1<
+  MulticastObservableLike<T>,
+  MulticastObservableLike<T>
 > = /*@__PURE__*/ (<
   T,
   TMulticastObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>,
@@ -42,7 +26,7 @@ const MulticastObservable_delegatingMixin: <
       function DelegatingMulticastObservableMixin(
         instance: MulticastObservableLike<T> & TProperties,
         delegate: TMulticastObservable,
-      ): TDelegatingMulticastObservableReturn<T, TMulticastObservable> {
+      ): MulticastObservableLike<T> {
         instance[DelegatingMulticastObservableMixin_delegate] = delegate;
 
         return instance;
@@ -52,32 +36,37 @@ const MulticastObservable_delegatingMixin: <
       }),
       {
         get [MulticastObservableLike_observerCount](): number {
-          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
-          return this[DelegatingLike_delegate][
+          unsafeCast<TProperties>(this);
+          return this[DelegatingMulticastObservableMixin_delegate][
             MulticastObservableLike_observerCount
           ];
         },
 
         get [ReplayableLike_buffer]() {
-          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
-          return this[DelegatingLike_delegate][ReplayableLike_buffer];
+          unsafeCast<TProperties>(this);
+          return this[DelegatingMulticastObservableMixin_delegate][
+            ReplayableLike_buffer
+          ];
         },
 
         get [ObservableLike_isEnumerable]() {
-          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
-          return this[DelegatingLike_delegate][ObservableLike_isEnumerable];
+          unsafeCast<TProperties>(this);
+          return this[DelegatingMulticastObservableMixin_delegate][
+            ObservableLike_isEnumerable
+          ];
         },
 
         get [ObservableLike_isRunnable]() {
-          unsafeCast<DelegatingLike<MulticastObservableLike<T>>>(this);
-          return this[DelegatingLike_delegate][ObservableLike_isRunnable];
+          unsafeCast<TProperties>(this);
+          return this[DelegatingMulticastObservableMixin_delegate][
+            ObservableLike_isRunnable
+          ];
         },
 
-        [ObservableLike_observe](
-          this: DelegatingLike<MulticastObservableLike<T>>,
-          observer: ObserverLike<T>,
-        ) {
-          this[DelegatingLike_delegate][ObservableLike_observe](observer);
+        [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
+          this[DelegatingMulticastObservableMixin_delegate][
+            ObservableLike_observe
+          ](observer);
         },
       },
     ),

@@ -1,6 +1,6 @@
 /// <reference types="./Observable.scan.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { ScanObserver_acc, ScanObserver_reducer, } from "../../../__internal__/symbols.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
@@ -10,8 +10,9 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 const Observable_scan = /*@__PURE__*/ (() => {
     const createScanObserver = (() => {
-        return createInstanceFactory(mix(include(Observer_delegatingMixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
+        return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
+            init(delegatingMixin(), instance, delegate);
             instance[ScanObserver_reducer] = reducer;
             try {
                 const acc = initialValue();

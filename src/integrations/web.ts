@@ -3,6 +3,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -776,7 +777,7 @@ export const windowLocation: StreamableLike<
 
   const createWindowLocationStream = createInstanceFactory(
     mix(
-      include(Stream_delegatingMixin()),
+      include(Stream_delegatingMixin(), delegatingMixin()),
       function WindowLocationStream(
         instance: Pick<
           WindowLocationStreamLike,
@@ -790,6 +791,7 @@ export const windowLocation: StreamableLike<
         delegate: StreamLike<Updater<TState>, TState>,
       ): WindowLocationStreamLike {
         init(Stream_delegatingMixin(), instance, delegate);
+        init(delegatingMixin(), instance, delegate);
 
         return instance;
       },

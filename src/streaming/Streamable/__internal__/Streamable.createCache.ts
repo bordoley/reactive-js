@@ -3,6 +3,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -88,6 +89,7 @@ const createCacheStream: <T>(
           ReadonlyRecordLike<string, Function1<Optional<T>, T>>,
           never
         >(),
+        delegatingMixin(),
       ),
       function CacheStream(
         instance: TProperties<T> &
@@ -265,6 +267,7 @@ const createCacheStream: <T>(
           instance,
           delegate,
         );
+        init(delegatingMixin(), instance, delegate);
 
         return instance;
       },

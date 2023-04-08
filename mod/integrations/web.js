@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
 
 import * as Object from "../__internal__/Object.js";
-import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
+import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../__internal__/mixins.js";
 import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamLike_replace, } from "../__internal__/symbols.js";
 import { bindMethod, compose, error, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
@@ -100,8 +100,9 @@ export const windowLocation = /*@__PURE__*/ (() => {
             return this.d[KeyedCollectionLike_get](index).uri;
         }
     }
-    const createWindowLocationStream = createInstanceFactory(mix(include(Stream_delegatingMixin()), function WindowLocationStream(instance, delegate) {
+    const createWindowLocationStream = createInstanceFactory(mix(include(Stream_delegatingMixin(), delegatingMixin()), function WindowLocationStream(instance, delegate) {
         init(Stream_delegatingMixin(), instance, delegate);
+        init(delegatingMixin(), instance, delegate);
         return instance;
     }, props({}), {
         get [ReplayableLike_buffer]() {

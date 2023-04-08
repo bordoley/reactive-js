@@ -3,6 +3,7 @@ import {
   DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -48,7 +49,7 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin()),
+        include(Observer_delegatingMixin(), delegatingMixin()),
         function ScanObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -57,6 +58,7 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
           initialValue: Factory<TAcc>,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
+          init(delegatingMixin(), instance, delegate);
           instance[ScanObserver_reducer] = reducer;
 
           try {
