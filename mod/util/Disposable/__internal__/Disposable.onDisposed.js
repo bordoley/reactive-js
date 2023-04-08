@@ -1,8 +1,8 @@
 /// <reference types="./Disposable.onDisposed.d.ts" />
 
-import Disposable_addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown.js";
+import { DisposableLike_add } from "../../../util.js";
 const Disposable_onDisposed = (teardown) => disposable => {
-    Disposable_addDisposableOrTeardown(disposable, teardown);
+    disposable[DisposableLike_add](teardown);
     return disposable;
 };
 export default Disposable_onDisposed;

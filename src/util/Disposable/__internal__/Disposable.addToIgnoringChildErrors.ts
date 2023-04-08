@@ -1,11 +1,10 @@
 import { Updater } from "../../../functions.js";
-import { DisposableLike } from "../../../util.js";
-import Disposable_addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown.js";
+import { DisposableLike, DisposableLike_add } from "../../../util.js";
 
 const Disposable_addToIgnoringChildErrors =
   <T extends DisposableLike>(parent: DisposableLike): Updater<T> =>
   (child: T): T => {
-    Disposable_addDisposableOrTeardown(parent, child, true);
+    parent[DisposableLike_add](child);
     return child;
   };
 

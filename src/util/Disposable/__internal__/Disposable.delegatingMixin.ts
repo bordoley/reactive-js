@@ -60,17 +60,13 @@ const Disposable_delegatingMixin: <
             unsafeCast<TProperties & DelegatingDisposableLike<TDisposable>>(
               this,
             );
-
-            const delegate = this[DelegatingLike_delegate];
-            return delegate[DisposableLike_error];
+            return this[DelegatingLike_delegate][DisposableLike_error];
           },
           [DisposableLike_add](
             this: TProperties & DelegatingDisposableLike<TDisposable>,
             disposable: DisposableOrTeardown,
-            ignoreChildErrors: boolean,
           ) {
-            const delegate = this[DelegatingLike_delegate];
-            delegate[DisposableLike_add](disposable, ignoreChildErrors);
+            this[DelegatingLike_delegate][DisposableLike_add](disposable);
           },
           [DisposableLike_dispose](
             this: TProperties & DelegatingDisposableLike<TDisposable>,

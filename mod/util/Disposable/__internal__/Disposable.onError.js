@@ -1,9 +1,9 @@
 /// <reference types="./Disposable.onError.d.ts" />
 
 import { isSome } from "../../../functions.js";
-import Disposable_addDisposableOrTeardown from "./Disposable.addDisposableOrTeardown.js";
+import { DisposableLike_add } from "../../../util.js";
 const Disposable_onError = (teardown) => disposable => {
-    Disposable_addDisposableOrTeardown(disposable, e => {
+    disposable[DisposableLike_add](e => {
         if (isSome(e)) {
             teardown(e);
         }
