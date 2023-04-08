@@ -24,8 +24,7 @@ import {
 } from "../../../functions.js";
 import {
   DispatcherLike_complete,
-  EventListenerLike_notify,
-  MulticastObservableLike_observerCount,
+  HotObservableLike_observerCount,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -37,6 +36,7 @@ import {
   CollectionLike_count,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
   KeyedCollectionLike_get,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -61,7 +61,7 @@ const Publisher_create: <T>(options?: {
           | typeof ObservableLike_observe
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
-          | typeof MulticastObservableLike_observerCount
+          | typeof HotObservableLike_observerCount
           | typeof ReplayableLike_buffer
           | typeof EventListenerLike_notify
         > &
@@ -106,7 +106,7 @@ const Publisher_create: <T>(options?: {
         [ObservableLike_isEnumerable]: false as const,
         [ObservableLike_isRunnable]: false as const,
 
-        get [MulticastObservableLike_observerCount]() {
+        get [HotObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
           return this[Publisher_observers].size;
         },

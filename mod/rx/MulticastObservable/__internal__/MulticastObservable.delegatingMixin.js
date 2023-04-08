@@ -1,33 +1,16 @@
 /// <reference types="./MulticastObservable.delegatingMixin.d.ts" />
 
-import { DelegatingLike_delegate, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { returns, unsafeCast } from "../../../functions.js";
-import { MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ReplayableLike_buffer, } from "../../../rx.js";
+import { include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingHotObservableMixin_delegate } from "../../../__internal__/symbols.js";
+import { returns } from "../../../functions.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-const MulticastObservable_delegatingMixin = /*@__PURE__*/ (() => {
-    return returns(mix(include(Disposable_delegatingMixin()), function DelegatingMulticastObservableMixin(instance, delegate) {
+import HotObservable_delegatingMixin from "../../HotObservable/__internal__/HotObservable.delegatingMixin.js";
+const MulticastObservable_delegatingMixin = 
+/*@__PURE__*/ (() => {
+    return returns(mix(include(HotObservable_delegatingMixin(), Disposable_delegatingMixin()), function DelegatingMulticastObservableMixin(instance, delegate) {
         init(Disposable_delegatingMixin(), instance, delegate);
+        init(HotObservable_delegatingMixin(), instance, delegate);
         return instance;
-    }, props({}), {
-        get [MulticastObservableLike_observerCount]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][MulticastObservableLike_observerCount];
-        },
-        get [ReplayableLike_buffer]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][ReplayableLike_buffer];
-        },
-        get [ObservableLike_isEnumerable]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][ObservableLike_isEnumerable];
-        },
-        get [ObservableLike_isRunnable]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][ObservableLike_isRunnable];
-        },
-        [ObservableLike_observe](observer) {
-            this[DelegatingLike_delegate][ObservableLike_observe](observer);
-        },
-    }));
+    }, props({}), {}));
 })();
 export default MulticastObservable_delegatingMixin;

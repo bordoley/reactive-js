@@ -43,13 +43,10 @@ import {
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, {
-  initObserverMixinFromDelegate,
-} from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -61,8 +58,6 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
       other: ObservableLike<TB>,
       selector: Function2<TA, TB, T>,
     ) => ObserverLike<TA> = (<TA, TB, T>() => {
-      const typedObserverMixin = Observer_mixin<TA>();
-
       type TProperties = {
         [ZipWithLatestFromObserver_hasLatest]: boolean;
         [ZipWithLatestFromObserver_otherLatest]: Optional<TB>;
@@ -95,7 +90,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
 
       return createInstanceFactory(
         mix(
-          include(Disposable_mixin, typedObserverMixin, delegatingMixin()),
+          include(Observer_mixin(), delegatingMixin()),
           function ZipWithLatestFromObserver(
             instance: Pick<ObserverLike, typeof ObserverLike_notify> &
               Mutable<TProperties>,
@@ -103,10 +98,8 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             other: ObservableLike<TB>,
             selector: Function2<TA, TB, T>,
           ): ObserverLike<TA> {
-            init(Disposable_mixin, instance);
-            initObserverMixinFromDelegate(instance, delegate);
+            init(Observer_mixin(), instance, delegate, delegate);
             init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
-
             instance[ZipWithLatestFromObserver_selector] = selector;
             instance[ZipWithLatestFromObserver_TAQueue] =
               IndexedQueue_createFifoQueue(
@@ -139,7 +132,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
                   instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
               }),
-              Observable_subscribeWithConfig(delegate),
+              Observable_subscribeWithConfig(delegate, delegate),
               Disposable_onComplete(disposeDelegate),
               Disposable_addTo(delegate),
             );

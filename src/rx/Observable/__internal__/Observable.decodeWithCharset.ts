@@ -20,19 +20,13 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import {
-  BufferLike_capacity,
-  DisposableLike_dispose,
-  QueueableLike_backpressureStrategy,
-} from "../../../util.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -50,11 +44,7 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
 
     const createDecodeWithCharsetObserver = createInstanceFactory(
       mix(
-        include(
-          Disposable_mixin,
-          delegatingMixin(),
-          Observer_mixin<ArrayBuffer>(),
-        ),
+        include(delegatingMixin(), Observer_mixin<ArrayBuffer>()),
         function DecodeWithCharsetObserver(
           instance: Pick<
             ObserverLike<ArrayBuffer>,
@@ -64,15 +54,8 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           delegate: ObserverLike<string>,
           charset: string,
         ): ObserverLike<ArrayBuffer> {
-          init(Disposable_mixin, instance);
           init(delegatingMixin(), instance, delegate);
-          init(
-            Observer_mixin<ArrayBuffer>(),
-            instance,
-            delegate[DispatcherLike_scheduler],
-            delegate[BufferLike_capacity],
-            delegate[QueueableLike_backpressureStrategy],
-          );
+          init(Observer_mixin<ArrayBuffer>(), instance, delegate, delegate);
 
           const textDecoder = newInstance(TextDecoder, charset, {
             fatal: true,

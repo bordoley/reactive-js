@@ -14,20 +14,17 @@ import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_buffer = /*@__PURE__*/ (() => {
-    const typedObserverMixin = Observer_mixin();
-    const createBufferObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_mixin, delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, count) {
-        init(Disposable_mixin, instance);
-        initObserverMixinFromDelegate(instance, delegate);
+    const createBufferObserver = createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, count) {
+        init(Observer_mixin(), instance, delegate, delegate);
         init(delegatingMixin(), instance, delegate);
         instance[BufferObserver_buffer] = [];
         instance[BufferObserver_durationFunction] = durationFunction;
@@ -65,7 +62,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                 doOnNotify();
             }
             else if (this[BufferObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed]) {
-                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribeWithConfig(this));
+                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribeWithConfig(this, this));
             }
         },
     }));

@@ -21,7 +21,6 @@ import {
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import {
   ContinuationLike,
@@ -116,7 +115,7 @@ const runContinuation = (
 const createHostSchedulerInstance = /*@__PURE__*/ (() =>
   createInstanceFactory(
     mix(
-      include(Disposable_mixin, PriorityScheduler_mixin),
+      include(PriorityScheduler_mixin),
       function HostScheduler(
         instance: Pick<
           PrioritySchedulerImplementationLike,
@@ -126,7 +125,6 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
         >,
         maxYieldInterval: number,
       ): SchedulerLike {
-        init(Disposable_mixin, instance);
         init(PriorityScheduler_mixin, instance, maxYieldInterval);
 
         return instance;

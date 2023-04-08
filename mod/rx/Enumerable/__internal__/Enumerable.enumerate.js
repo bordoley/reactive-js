@@ -9,22 +9,21 @@ import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../../
 import { isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObserverLike_notify, } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
 import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
+import { BufferLike_capacity, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Observer_baseMixin from "../../Observer/__internal__/Observer.baseMixin.js";
 const Enumerable_enumerate = /*@__PURE__*/ (() => {
-    const typedMutableEnumeratorMixin = MutableEnumerator_mixin();
-    const typedObserverMixin = Observer_mixin();
-    const createEnumeratorScheduler = createInstanceFactory(mix(include(Disposable_mixin, typedMutableEnumeratorMixin, typedObserverMixin, PriorityScheduler_mixin), function EnumeratorScheduler(instance) {
-        init(Disposable_mixin, instance);
-        init(typedMutableEnumeratorMixin, instance);
+    const createEnumeratorScheduler = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Observer_baseMixin(), PriorityScheduler_mixin), function EnumeratorScheduler(instance) {
+        init(MutableEnumerator_mixin(), instance);
         init(PriorityScheduler_mixin, instance, 0);
-        init(typedObserverMixin, instance, instance, MAX_SAFE_INTEGER, "overflow");
+        init(Observer_baseMixin(), instance, {
+            [QueueableLike_backpressureStrategy]: "overflow",
+            [BufferLike_capacity]: MAX_SAFE_INTEGER,
+        });
         instance[EnumerableEnumerator_continuationQueue] =
             IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
         // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field

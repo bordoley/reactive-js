@@ -10,18 +10,18 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { partial, pipe } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
 import {
+  BufferLike_capacity,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
 type ObservableBackpressureStrategy = <C extends ObservableLike, T>(
   capacity: number,
@@ -32,26 +32,24 @@ const Observable_backpressureStrategy: ObservableBackpressureStrategy =
   /*@__PURE__*/ (<T>() => {
     const createBackpressureObserver: (
       delegate: ObserverLike<T>,
-      capacity: number,
-      backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+      config: {
+        readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly [BufferLike_capacity]: number;
+      },
     ) => ObserverLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
-          include(Disposable_delegatingMixin(), Observer_mixin<T>()),
+          include(Observer_delegatingMixin<T>()),
           function EnqueueObserver(
             instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
             delegate: ObserverLike<T>,
-            capacity: number,
-            backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+            config: {
+              readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+              readonly [BufferLike_capacity]: number;
+            },
           ): ObserverLike<T> {
             init(Disposable_delegatingMixin(), instance, delegate);
-            init(
-              Observer_mixin<T>(),
-              instance,
-              delegate[DispatcherLike_scheduler],
-              capacity,
-              backpressureStrategy,
-            );
+            init(Observer_delegatingMixin<T>(), instance, delegate, config);
 
             return instance;
           },
@@ -73,7 +71,10 @@ const Observable_backpressureStrategy: ObservableBackpressureStrategy =
     ) =>
       pipe(
         createBackpressureObserver,
-        partial(capacity, backpressureStrategy),
+        partial({
+          [QueueableLike_backpressureStrategy]: backpressureStrategy,
+          [BufferLike_capacity]: capacity,
+        }),
         Enumerable_lift,
       )) as ObservableBackpressureStrategy;
   })();

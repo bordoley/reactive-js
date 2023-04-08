@@ -1,6 +1,5 @@
 import { invoke, none, pipe } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -35,13 +34,12 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
         : Observable_create;
 
       return create<T>((observer: ObserverLike<T>) => {
-        const scheduler = observer[DispatcherLike_scheduler];
         const capacity = observer[BufferLike_capacity];
         const backpressureStrategy =
           observer[QueueableLike_backpressureStrategy];
         const enumerator: StreamLike<void, T> = pipe(
           enumerable,
-          invoke(StreamableLike_stream, scheduler, {
+          invoke(StreamableLike_stream, observer, {
             backpressureStrategy,
             capacity,
           }),

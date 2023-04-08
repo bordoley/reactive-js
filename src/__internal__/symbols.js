@@ -25,11 +25,6 @@ export const DispatcherLike_complete = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const DispatcherLike_scheduler = /*@__PURE__*/ symbol(
-  "DispatcherLike_scheduler",
-);
-
-/** @type {unique symbol} */
 export const DisposableLike_add = /*@__PURE__*/ symbol("DisposableLike_add");
 
 /** @type {unique symbol} */
@@ -71,6 +66,11 @@ export const EventSourceLike_addListener = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const EventSourceLike_listenerCount = /*@__PURE__*/ symbol(
+  "EventSourceLike_listenerCount",
+);
+
+/** @type {unique symbol} */
 export const FlowableStreamLike_isPaused = /*@__PURE__*/ symbol(
   "FlowableStreamLike_isPaused",
 );
@@ -86,6 +86,11 @@ export const FlowableStreamLike_resume = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const HotObservableLike_observerCount = /*@__PURE__*/ symbol(
+  "HotObservableLike_observerCount",
+);
+
+/** @type {unique symbol} */
 export const KeyedCollectionLike_get = /*@__PURE__*/ symbol(
   "KeyedCollectionLike_get",
 );
@@ -93,16 +98,6 @@ export const KeyedCollectionLike_get = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const KeyedContainerLike_TKey = /*@__PURE__*/ symbol(
   "KeyedContainerLike_TKey",
-);
-
-/** @type {unique symbol} */
-export const MulticastedEventSourceLike_listenerCount = /*@__PURE__*/ symbol(
-  "MulticastedEventSourceLike_listenerCount",
-);
-
-/** @type {unique symbol} */
-export const MulticastObservableLike_observerCount = /*@__PURE__*/ symbol(
-  "MulticastObservableLike_observerCount",
 );
 
 /** @type {unique symbol} */
@@ -169,6 +164,11 @@ export const SchedulerLike_schedule = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const SchedulerLike_shouldYield = /*@__PURE__*/ symbol(
   "SchedulerLike_shouldYield",
+);
+
+/** @type {unique symbol} */
+export const StreamLike_scheduler = /*@__PURE__*/ symbol(
+  "StreamLike_scheduler",
 );
 
 /** @type {unique symbol} */
@@ -873,6 +873,26 @@ export const WithCurrentTimeObserver_selector = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const DelegatingDispatcherMixin_delegate = /*@__PURE__*/ symbol(
-  "DelegatingDispatcherMixin_delegate",
+export const SchedulerDelegatingMixin_delegate = /*@__PURE__*/ symbol(
+  "SchedulerDelegatingMixin_delegate",
+);
+
+/** @type {unique symbol} */
+export const QueueableDelegatingMixin_delegate = /*@__PURE__*/ symbol(
+  "QueueableDelegatingMixin_delegate",
+);
+
+/** @type {unique symbol} */
+export const DelegatingHotObservableMixin_delegate = /*@__PURE__*/ symbol(
+  "DelegatingHotObservableMixin_delegate",
+);
+
+/** @type {unique symbol} */
+export const DelegatingMulticastObservableMixin_delegate = /*@__PURE__*/ symbol(
+  "DelegatingMulticastObservableMixin_delegate",
+);
+
+/** @type {unique symbol} */
+export const ObserverMixin_scheduler = /*@__PURE__*/ symbol(
+  "ObserverMixin_scheduler",
 );

@@ -7,7 +7,6 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../uti
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "object" && isFunction(performance.now))();
@@ -38,8 +37,7 @@ const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) =
     immmediateOrTimerDisposable[DisposableLike_dispose]();
     scheduler[PrioritySchedulerImplementationLike_runContinuation](continuation);
 };
-const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_mixin, PriorityScheduler_mixin), function HostScheduler(instance, maxYieldInterval) {
-    init(Disposable_mixin, instance);
+const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(PriorityScheduler_mixin), function HostScheduler(instance, maxYieldInterval) {
     init(PriorityScheduler_mixin, instance, maxYieldInterval);
     return instance;
 }, props({}), {

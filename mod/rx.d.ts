@@ -1,23 +1,18 @@
-import { DispatcherLike_complete, DispatcherLike_scheduler, EventListenerLike_notify, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, ReplayableLike_buffer } from "./__internal__/symbols.js";
+import { DispatcherLike_complete, HotObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, ReplayableLike_buffer } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator } from "./containers.js";
 import { Factory, Function1, Function2, none } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import { DisposableLike, EventListenerLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayableLike } from "./util.js";
-export { DispatcherLike_complete, DispatcherLike_scheduler, MulticastObservableLike_observerCount, ReplayableLike_buffer, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, EventListenerLike_notify, };
+export { DispatcherLike_complete, HotObservableLike_observerCount, ObserverLike_notify, ObservableLike_observe, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReplayableLike_buffer, };
 /**
- * A `QueueableLike` type that consumes enqueued events on a scheduler continuation.
- * Events may be enqueud from any execution context.
+ * A `QueueableLike` type that consumes enqueued events to
+ * be dispatched from any execution context.
  *
  * @noInheritDoc
  */
 export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
     /**
-     * The scheduler that the dispatcher schedules it's event consumer on.
-     */
-    readonly [DispatcherLike_scheduler]: SchedulerLike;
-    /**
-     * Communicates to the dispatcher that no more events will be enqueued
-     * on the dispatcher.
+     * Communicates to the dispatcher that no more events will be enqueued.
      */
     [DispatcherLike_complete](): void;
 }
@@ -26,7 +21,7 @@ export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
  *
  * @noInheritDoc
  */
-export interface ObserverLike<T = unknown> extends DispatcherLike<T>, DisposableLike {
+export interface ObserverLike<T = unknown> extends DispatcherLike<T>, DisposableLike, SchedulerLike {
     /**
      * Notifies the the observer of the next notification produced by the observable source.
      *
@@ -90,6 +85,10 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
 export interface HotObservableLike<T> extends ObservableLike<T>, ReplayableLike<T> {
     readonly [ObservableLike_isEnumerable]: false;
     readonly [ObservableLike_isRunnable]: false;
+    /**
+     * The number of observers currently observing the `MulticastObservableLike`.
+     */
+    readonly [HotObservableLike_observerCount]: number;
 }
 /**
  * A stateful ObservableLike resource.
@@ -98,10 +97,6 @@ export interface HotObservableLike<T> extends ObservableLike<T>, ReplayableLike<
  * @category Container
  */
 export interface MulticastObservableLike<T = unknown> extends HotObservableLike<T>, DisposableLike {
-    /**
-     * The number of observers currently observing the `MulticastObservableLike`.
-     */
-    readonly [MulticastObservableLike_observerCount]: number;
 }
 /**
  * An `EventListener` that can be used to publish notifications to one or more observers.
@@ -109,7 +104,7 @@ export interface MulticastObservableLike<T = unknown> extends HotObservableLike<
  * @noInheritDoc
  * @category Container
  */
-export interface PublisherLike<T = unknown> extends EventListenerLike<T>, MulticastObservableLike<T> {
+export interface PublisherLike<T = unknown> extends EventListenerLike<T>, HotObservableLike<T>, DisposableLike {
 }
 /**
  * @noInheritDoc

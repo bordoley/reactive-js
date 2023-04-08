@@ -15,7 +15,6 @@
 - [IndexedBufferCollectionLike](../interfaces/util.IndexedBufferCollectionLike.md)
 - [IndexedCollectionLike](../interfaces/util.IndexedCollectionLike.md)
 - [KeyedCollectionLike](../interfaces/util.KeyedCollectionLike.md)
-- [MulticastedEventSourceLike](../interfaces/util.MulticastedEventSourceLike.md)
 - [QueueableLike](../interfaces/util.QueueableLike.md)
 - [ReplayableLike](../interfaces/util.ReplayableLike.md)
 

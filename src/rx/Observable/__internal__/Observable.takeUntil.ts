@@ -33,7 +33,7 @@ const Observable_takeUntil: ObservableTakeUntil["takeUntil"] = (<T>(
         pipe(
           notifier,
           Observable_takeFirst<ObservableLike, T>(),
-          Observable_subscribeWithConfig(delegate),
+          Observable_subscribeWithConfig(delegate, delegate),
         ),
       ),
     );

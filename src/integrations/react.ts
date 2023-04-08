@@ -46,7 +46,6 @@ import {
   AnimationConfig,
   DispatcherLike,
   EnumerableLike,
-  EventListenerLike_notify,
   ObservableLike,
   PublisherLike,
 } from "../rx.js";
@@ -81,6 +80,7 @@ import * as Streamable from "../streaming/Streamable.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
   QueueableLike,
@@ -88,7 +88,6 @@ import {
   QueueableLike_enqueue,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-import Disposable_mixin from "../util/Disposable/__internal__/Disposable.mixin.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 
 const createSchedulerWithPriority = /*@__PURE__*/ (() => {
@@ -96,7 +95,7 @@ const createSchedulerWithPriority = /*@__PURE__*/ (() => {
 
   const createPriorityScheduler = createInstanceFactory(
     mix(
-      include(Disposable_mixin, PriorityScheduler_mixin),
+      include(PriorityScheduler_mixin),
       function ReactPriorityScheduler(
         instance: Pick<
           PrioritySchedulerImplementationLike,
@@ -105,7 +104,6 @@ const createSchedulerWithPriority = /*@__PURE__*/ (() => {
           | typeof ContinuationSchedulerLike_schedule
         >,
       ): PrioritySchedulerLike {
-        init(Disposable_mixin, instance);
         init(PriorityScheduler_mixin, instance, 300);
         return instance;
       },

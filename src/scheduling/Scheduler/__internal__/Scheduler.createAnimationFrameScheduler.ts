@@ -14,7 +14,6 @@ import { SchedulerLike, SchedulerLike_now } from "../../../scheduling.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import {
   ContinuationLike,
   ContinuationLike_continuationScheduler,
@@ -33,7 +32,7 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(Disposable_mixin, PriorityScheduler_mixin),
+      include(PriorityScheduler_mixin),
       function AnimationFrameScheduler(
         instance: Pick<
           PrioritySchedulerImplementationLike,
@@ -44,7 +43,6 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
           TProperties,
         delayScheduler: SchedulerLike,
       ): SchedulerLike {
-        init(Disposable_mixin, instance);
         init(PriorityScheduler_mixin, instance, 5);
 
         instance[AnimationFrameScheduler_delayScheduler] = delayScheduler;

@@ -42,7 +42,6 @@ import {
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
 import {
   ContinuationLike,
@@ -65,9 +64,6 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff !== 0 ? diff : a[VirtualTask_id] - b[VirtualTask_id];
 };
 
-const typedMutableEnumeratorMixin =
-  /*@__PURE__*/ MutableEnumerator_mixin<VirtualTask>();
-
 type TProperties = {
   [SchedulerLike_now]: number;
   readonly [VirtualTimeScheduler_maxMicroTaskTicks]: number;
@@ -79,9 +75,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
   createInstanceFactory(
     mix(
       include(
-        Disposable_mixin,
         PriorityScheduler_mixin,
-        typedMutableEnumeratorMixin,
+        MutableEnumerator_mixin<VirtualTask>(),
         Queue_priorityQueueMixin<VirtualTask>(),
       ),
       function VirtualTimeScheduler(
@@ -92,9 +87,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           Mutable<TProperties>,
         maxMicroTaskTicks: number,
       ): VirtualTimeSchedulerLike {
-        init(Disposable_mixin, instance);
         init(PriorityScheduler_mixin, instance, 1);
-        init(typedMutableEnumeratorMixin, instance);
+        init(MutableEnumerator_mixin<VirtualTask>(), instance);
         init(
           Queue_priorityQueueMixin<VirtualTask>(),
           instance,

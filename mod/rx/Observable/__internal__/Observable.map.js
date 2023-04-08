@@ -3,17 +3,14 @@
 import { DelegatingLike_delegate, createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { MapObserver_mapper } from "../../../__internal__/symbols.js";
 import { none, partial, pipe } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 const Observable_map = /*@__PURE__*/ (() => {
     const createMapObserver = (() => {
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function MapObserver(instance, delegate, mapper) {
-            init(Disposable_delegatingMixin(), instance, delegate);
-            init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[BufferLike_capacity], delegate[QueueableLike_backpressureStrategy]);
+        return createInstanceFactory(mix(include(Observer_delegatingMixin()), function MapObserver(instance, delegate, mapper) {
+            init(Observer_delegatingMixin(), instance, delegate, delegate);
             instance[MapObserver_mapper] = mapper;
             return instance;
         }, props({

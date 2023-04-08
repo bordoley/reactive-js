@@ -20,12 +20,9 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, {
-  initObserverMixinFromDelegate,
-} from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
 type ObservableTakeWhile = <C extends ObservableLike, T>(
   predicate: Predicate<T>,
@@ -47,10 +44,7 @@ const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
 
     return createInstanceFactory(
       mix(
-        include(
-          Disposable_delegatingMixin<ObserverLike<T>>(),
-          Observer_mixin<T>(),
-        ),
+        include(Observer_delegatingMixin()),
         function TakeWhileObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -58,13 +52,7 @@ const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
           predicate: Predicate<T>,
           inclusive: boolean,
         ): ObserverLike<T> {
-          init(
-            Disposable_delegatingMixin<ObserverLike<T>>(),
-            instance,
-            delegate,
-          );
-          initObserverMixinFromDelegate(instance, delegate);
-
+          init(Observer_delegatingMixin(), instance, delegate, delegate);
           instance[TakeWhileObserver_predicate] = predicate;
           instance[TakeWhileObserver_inclusive] = inclusive;
 

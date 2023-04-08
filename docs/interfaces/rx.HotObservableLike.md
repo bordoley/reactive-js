@@ -22,14 +22,25 @@ A stateful ObservableLike resource.
 
   ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
+  ↳↳ [`PublisherLike`](rx.PublisherLike.md)
+
 ## Table of contents
 
 ### Properties
 
+- [[HotObservableLike\_observerCount]](rx.HotObservableLike.md#[hotobservablelike_observercount])
 - [[ObservableLike\_isEnumerable]](rx.HotObservableLike.md#[observablelike_isenumerable])
 - [[ObservableLike\_isRunnable]](rx.HotObservableLike.md#[observablelike_isrunnable])
 
 ## Properties
+
+### [HotObservableLike\_observerCount]
+
+• `Readonly` **[HotObservableLike\_observerCount]**: `number`
+
+The number of observers currently observing the `MulticastObservableLike`.
+
+___
 
 ### [ObservableLike\_isEnumerable]
 

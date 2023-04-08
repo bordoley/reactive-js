@@ -6,25 +6,21 @@ import { SerialDisposableLike_current, } from "../../../__internal__/util.intern
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import { ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 import Observable_concat from "./Observable.concat.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 import Observable_throws from "./Observable.throws.js";
 const Observable_timeout = /*@__PURE__*/ (() => {
-    const typedSerialDisposableMixin = SerialDisposable_mixin();
-    const typedObserverMixin = Observer_mixin();
     const setupDurationSubscription = (observer) => {
-        observer[SerialDisposableLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribeWithConfig(observer));
+        observer[SerialDisposableLike_current] = pipe(observer[TimeoutObserver_duration], Observable_subscribeWithConfig(observer, observer));
     };
-    const createTimeoutObserver = createInstanceFactory(mix(include(typedObserverMixin, Disposable_delegatingMixin(), typedSerialDisposableMixin), function TimeoutObserver(instance, delegate, duration) {
-        initObserverMixinFromDelegate(instance, delegate);
-        init(Disposable_delegatingMixin(), instance, delegate);
-        init(typedSerialDisposableMixin, instance, Disposable_disposed);
+    const createTimeoutObserver = createInstanceFactory(mix(include(Observer_delegatingMixin(), SerialDisposable_mixin()), function TimeoutObserver(instance, delegate, duration) {
+        init(Observer_delegatingMixin(), instance, delegate, delegate);
+        init(SerialDisposable_mixin(), instance, Disposable_disposed);
         instance[TimeoutObserver_duration] = duration;
         setupDurationSubscription(instance);
         return instance;

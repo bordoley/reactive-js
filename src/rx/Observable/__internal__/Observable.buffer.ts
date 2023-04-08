@@ -41,13 +41,10 @@ import {
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, {
-  initObserverMixinFromDelegate,
-} from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
@@ -59,8 +56,6 @@ type ObservableBuffer = <C extends ObservableLike, T>(options?: {
 }) => ContainerOperator<C, T, readonly T[]>;
 
 const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
-  const typedObserverMixin = Observer_mixin<T>();
-
   type TProperties = {
     [BufferObserver_buffer]: T[];
     readonly [BufferObserver_durationFunction]: Function1<T, ObservableLike>;
@@ -70,7 +65,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
 
   const createBufferObserver = createInstanceFactory(
     mix(
-      include(typedObserverMixin, Disposable_mixin, delegatingMixin()),
+      include(Observer_mixin(), delegatingMixin()),
       function BufferObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
@@ -78,8 +73,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
         durationFunction: Function1<T, ObservableLike>,
         count: number,
       ): ObserverLike<T> {
-        init(Disposable_mixin, instance);
-        initObserverMixinFromDelegate(instance, delegate);
+        init(Observer_mixin(), instance, delegate, delegate);
         init(delegatingMixin(), instance, delegate);
 
         instance[BufferObserver_buffer] = [];
@@ -154,7 +148,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
               next,
               this[BufferObserver_durationFunction],
               Observable_forEach<ObservableLike>(doOnNotify),
-              Observable_subscribeWithConfig(this),
+              Observable_subscribeWithConfig(this, this),
             );
           }
         },

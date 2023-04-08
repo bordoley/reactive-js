@@ -8,16 +8,17 @@ import {
   RunnableLike,
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
-import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
+  SchedulerLike_schedule,
 } from "../../../scheduling.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 interface IterableToObservable {
   toObservable<T>(): Function1<IterableLike<T>, EnumerableLike<T>>;
@@ -55,8 +56,11 @@ const Iterable_toObservable: IterableToObservable["toObservable"] = (<
       };
 
       pipe(
-        observer,
-        Observer_schedule(continuation, delayStart ? options : none),
+        observer[SchedulerLike_schedule](
+          continuation,
+          delayStart ? options : none,
+        ),
+        Disposable_addTo(observer),
       );
     };
 

@@ -1,6 +1,6 @@
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, EventSourceLike_addListener, KeyedCollectionLike_get, MulticastedEventSourceLike_listenerCount, QueueableLike_backpressureStrategy, QueueableLike_enqueue, ReplayableLike_buffer } from "./__internal__/symbols.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, ReplayableLike_buffer } from "./__internal__/symbols.js";
 import { Optional, SideEffect1 } from "./functions.js";
-export { BufferLike_capacity, CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, EventSourceLike_addListener, KeyedCollectionLike_get, MulticastedEventSourceLike_listenerCount, QueueableLike_backpressureStrategy, QueueableLike_enqueue, ReplayableLike_buffer, };
+export { BufferLike_capacity, CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, EventSourceLike_addListener, KeyedCollectionLike_get, EventSourceLike_listenerCount, QueueableLike_backpressureStrategy, QueueableLike_enqueue, ReplayableLike_buffer, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -95,16 +95,11 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
  * @noInheritDoc
  */
 export interface EventSourceLike<T = unknown> extends ReplayableLike<T> {
+    readonly [EventSourceLike_listenerCount]: number;
     [EventSourceLike_addListener](event: EventListenerLike<T>): void;
 }
 /**
  * @noInheritDoc
  */
-export interface MulticastedEventSourceLike<T = unknown> extends EventSourceLike<T>, DisposableLike {
-    readonly [MulticastedEventSourceLike_listenerCount]: number;
-}
-/**
- * @noInheritDoc
- */
-export interface EventPublisherLike<T = unknown> extends MulticastedEventSourceLike<T>, EventListenerLike<T> {
+export interface EventPublisherLike<T = unknown> extends EventSourceLike<T>, EventListenerLike<T>, DisposableLike {
 }

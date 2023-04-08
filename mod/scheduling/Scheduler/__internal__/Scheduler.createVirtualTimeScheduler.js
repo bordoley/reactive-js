@@ -11,19 +11,15 @@ import { isSome, pipe, unsafeCast } from "../../../functions.js";
 import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
 import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const comparator = (a, b) => {
     const diff = a[VirtualTask_dueTime] - b[VirtualTask_dueTime];
     return diff !== 0 ? diff : a[VirtualTask_id] - b[VirtualTask_id];
 };
-const typedMutableEnumeratorMixin = 
-/*@__PURE__*/ MutableEnumerator_mixin();
-const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_mixin, PriorityScheduler_mixin, typedMutableEnumeratorMixin, Queue_priorityQueueMixin()), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
-    init(Disposable_mixin, instance);
+const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(PriorityScheduler_mixin, MutableEnumerator_mixin(), Queue_priorityQueueMixin()), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(PriorityScheduler_mixin, instance, 1);
-    init(typedMutableEnumeratorMixin, instance);
+    init(MutableEnumerator_mixin(), instance);
     init(Queue_priorityQueueMixin(), instance, comparator, MAX_SAFE_INTEGER, "overflow");
     instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
     return instance;

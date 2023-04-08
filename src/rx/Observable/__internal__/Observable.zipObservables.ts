@@ -10,6 +10,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  SchedulerLike_schedule,
   ZipObserver_enumerators,
   ZipObserver_queuedEnumerator,
 } from "../../../__internal__/symbols.js";
@@ -57,10 +58,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, {
-  initObserverMixinFromDelegate,
-} from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
@@ -134,8 +132,6 @@ const QueuedEnumerator_create: <T>(
 })();
 
 const Observable_zipObservables = /*@__PURE__*/ (() => {
-  const typedObserverMixin = Observer_mixin();
-
   const shouldEmit = compose(
     ReadonlyArray_map(
       (x: EnumeratorLike) =>
@@ -171,7 +167,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
 
   const createZipObserver = createInstanceFactory(
     mix(
-      include(Disposable_mixin, typedObserverMixin, delegatingMixin()),
+      include(Observer_mixin(), delegatingMixin()),
       function ZipObserver(
         instance: Pick<ObserverLike, typeof ObserverLike_notify> &
           Mutable<TProperties>,
@@ -179,8 +175,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         enumerators: readonly (EnumeratorLike<any> & DisposableLike)[],
         queuedEnumerator: QueuedEnumeratorLike,
       ): ObserverLike {
-        init(Disposable_mixin, instance);
-        initObserverMixinFromDelegate(instance, delegate);
+        init(Observer_mixin(), instance, delegate, delegate);
         init(delegatingMixin(), instance, delegate);
 
         instance[ZipObserver_queuedEnumerator] = queuedEnumerator;
@@ -267,7 +262,10 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         observer[DisposableLike_dispose]();
       };
 
-      pipe(observer, Observer_schedule(continuation));
+      pipe(
+        observer[SchedulerLike_schedule](continuation),
+        Disposable_addTo(observer),
+      );
     };
 
   const onSubscribe =

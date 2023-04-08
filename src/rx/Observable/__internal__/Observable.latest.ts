@@ -21,7 +21,6 @@ import { none, pipe } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
@@ -34,7 +33,6 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -47,8 +45,6 @@ type LatestMode = 1 | 2;
 const zipMode = 2;
 
 const Observable_latest = /*@__PURE__*/ (() => {
-  const typedObserverMixin = Observer_mixin();
-
   type LatestCtx = {
     [LatestCtx_delegate]: ObserverLike<readonly unknown[]>;
     [LatestCtx_mode]: LatestMode;
@@ -101,24 +97,18 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
   const createLatestObserver = createInstanceFactory(
     mix(
-      include(typedObserverMixin, Disposable_mixin),
+      include(Observer_mixin()),
       function LatestObserver(
         instance: Pick<ObserverLike, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         ctx: LatestCtx,
         scheduler: SchedulerLike,
-        capacity: number,
-        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+        config: {
+          readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly [BufferLike_capacity]: number;
+        },
       ): ObserverLike & TProperties {
-        init(Disposable_mixin, instance);
-        init(
-          typedObserverMixin,
-          instance,
-          scheduler,
-          capacity,
-          backpressureStrategy,
-        );
-
+        init(Observer_mixin(), instance, scheduler, config);
         instance[LatestObserver_ctx] = ctx;
 
         return instance;
@@ -156,12 +146,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
       for (const observable of observables) {
         const innerObserver = pipe(
-          createLatestObserver(
-            ctx,
-            delegate[DispatcherLike_scheduler],
-            delegate[BufferLike_capacity],
-            delegate[QueueableLike_backpressureStrategy],
-          ),
+          createLatestObserver(ctx, delegate, delegate),
           Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             onCompleted(ctx);

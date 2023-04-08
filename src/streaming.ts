@@ -2,6 +2,7 @@ import {
   FlowableStreamLike_isPaused,
   FlowableStreamLike_pause,
   FlowableStreamLike_resume,
+  StreamLike_scheduler,
   StreamableLike_isEnumerable,
   StreamableLike_isInteractive,
   StreamableLike_isRunnable,
@@ -29,13 +30,14 @@ import {
 } from "./util.js";
 
 export {
+  FlowableStreamLike_isPaused,
+  FlowableStreamLike_pause,
+  FlowableStreamLike_resume,
+  StreamLike_scheduler,
   StreamableLike_stream,
   StreamableLike_isEnumerable,
   StreamableLike_isInteractive,
   StreamableLike_isRunnable,
-  FlowableStreamLike_isPaused,
-  FlowableStreamLike_pause,
-  FlowableStreamLike_resume,
 };
 
 /**
@@ -46,7 +48,9 @@ export {
  */
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
-    MulticastObservableLike<T> {}
+    MulticastObservableLike<T> {
+  readonly [StreamLike_scheduler]: SchedulerLike;
+}
 
 /**
  * A container that supports bi-directional streaming.

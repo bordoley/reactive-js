@@ -29,13 +29,10 @@ import {
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, {
-  initObserverMixinFromDelegate,
-} from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
 type ObservableReduce = <C extends ObservableLike, T, TAcc>(
   reducer: Reducer<T, TAcc>,
@@ -49,7 +46,7 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
 
   const createReduceObserver = createInstanceFactory(
     mix(
-      include(Disposable_mixin, Observer_mixin<T>()),
+      include(Observer_mixin<T>()),
       function ReduceObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
@@ -57,9 +54,7 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
       ): ObserverLike<T> {
-        init(Disposable_mixin, instance);
-        initObserverMixinFromDelegate(instance, delegate);
-
+        init(Observer_mixin(), instance, delegate, delegate);
         instance[ReduceObserver_reducer] = reducer;
 
         try {

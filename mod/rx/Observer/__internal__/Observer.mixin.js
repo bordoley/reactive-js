@@ -1,67 +1,46 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
-import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObserverMixin_continuation, ObserverMixin_dispatchSubscription, ObserverMixin_isCompleted, } from "../../../__internal__/symbols.js";
-import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
-import { call, none, pipe, returns, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_complete, DispatcherLike_scheduler, ObserverLike_notify, } from "../../../rx.js";
-import { ContinuationContextLike_yield, } from "../../../scheduling.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
-import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
-import Observer_schedule from "./Observer.schedule.js";
+import { include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { ObserverMixin_scheduler } from "../../../__internal__/symbols.js";
+import { none, pipe, returns, unsafeCast } from "../../../functions.js";
+import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import Scheduler_delegatingMixin from "../../../scheduling/Scheduler/__internal__/Scheduler.delegatingMixin.js";
+import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { BufferLike_capacity, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, } from "../../../util.js";
+import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Observer_baseMixin from "./Observer.baseMixin.js";
+export { ObserverMixin_scheduler };
 const Observer_mixin = /*@__PURE__*/ (() => {
-    const scheduleDrainQueue = (observer) => {
-        if (observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
-            const continuation = observer[ObserverMixin_continuation] ??
-                ((ctx) => {
-                    unsafeCast(observer);
-                    while (observer[CollectionLike_count] > 0) {
-                        const next = observer[QueueLike_dequeue]();
-                        observer[ObserverLike_notify](next);
-                        if (observer[CollectionLike_count] > 0) {
-                            ctx[ContinuationContextLike_yield]();
-                        }
-                    }
-                    if (observer[ObserverMixin_isCompleted]) {
-                        observer[DisposableLike_dispose]();
-                    }
-                });
-            observer[ObserverMixin_continuation] = continuation;
-            observer[ObserverMixin_dispatchSubscription] = pipe(observer, Observer_schedule(continuation));
-        }
-    };
-    const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin());
-    return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function ObserverMixin(instance, scheduler, capacity, backpressureStrategy) {
-        init(IndexedQueue_fifoQueueMixin(), instance, capacity, backpressureStrategy);
-        instance[DispatcherLike_scheduler] = scheduler;
+    return returns(mix(include(Observer_baseMixin(), Scheduler_delegatingMixin, Disposable_mixin), function ObserverMixin(instance, scheduler, config) {
+        init(Disposable_mixin, instance);
+        init(Scheduler_delegatingMixin, instance, scheduler);
+        init(Observer_baseMixin(), instance, config);
+        instance[ObserverMixin_scheduler] = scheduler;
+        pipe(scheduler, Disposable_addIgnoringChildErrors(instance));
         return instance;
     }, props({
-        [DispatcherLike_scheduler]: none,
-        [ObserverMixin_continuation]: none,
-        [ObserverMixin_isCompleted]: false,
-        [ObserverMixin_dispatchSubscription]: Disposable_disposed,
+        [ObserverMixin_scheduler]: none,
     }), {
-        [QueueableLike_enqueue](next) {
-            if (!this[ObserverMixin_isCompleted] &&
-                !this[DisposableLike_isDisposed]) {
-                const result = call(fifoQueueProtoype[QueueableLike_enqueue], this, next);
-                scheduleDrainQueue(this);
-                return result;
-            }
-            return true;
+        get [SchedulerLike_now]() {
+            unsafeCast(this);
+            return this[ObserverMixin_scheduler][SchedulerLike_now];
         },
-        [DispatcherLike_complete]() {
-            const isCompleted = this[ObserverMixin_isCompleted];
-            this[ObserverMixin_isCompleted] = true;
-            if (this[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed] &&
-                !isCompleted) {
-                this[DisposableLike_dispose]();
-            }
+        get [PrioritySchedulerImplementationLike_shouldYield]() {
+            unsafeCast(this);
+            return this[ObserverMixin_scheduler][SchedulerLike_shouldYield];
         },
-    }), returns);
+        [ContinuationSchedulerLike_schedule](continuation, delay) {
+            pipe(this, Disposable_addIgnoringChildErrors(continuation));
+            if (continuation[DisposableLike_isDisposed]) {
+                return;
+            }
+            continuation[ContinuationLike_continuationScheduler] = this;
+            pipe(this[ObserverMixin_scheduler][SchedulerLike_schedule](() => {
+                this[PrioritySchedulerImplementationLike_runContinuation](continuation);
+            }, { delay }), Disposable_addTo(continuation));
+        },
+    }));
 })();
-export function initObserverMixinFromDelegate(instance, delegate) {
-    init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[BufferLike_capacity], delegate[QueueableLike_backpressureStrategy]);
-}
 export default Observer_mixin;

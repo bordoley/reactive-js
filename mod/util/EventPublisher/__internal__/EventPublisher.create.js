@@ -5,7 +5,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { error, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
-import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, EventSourceLike_addListener, KeyedCollectionLike_get, MulticastedEventSourceLike_listenerCount, QueueableLike_enqueue, ReplayableLike_buffer, } from "../../../util.js";
+import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, KeyedCollectionLike_get, QueueableLike_enqueue, ReplayableLike_buffer, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
@@ -26,7 +26,7 @@ const EventPublisher_create = /*@__PURE__*/ (() => {
         l: none,
         [ReplayableLike_buffer]: none,
     }), {
-        get [MulticastedEventSourceLike_listenerCount]() {
+        get [EventSourceLike_listenerCount]() {
             unsafeCast(this);
             return this.l.size;
         },

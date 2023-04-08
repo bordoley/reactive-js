@@ -10,8 +10,6 @@ export declare const ContinuationContextLike_yield: unique symbol;
 
 export declare const DispatcherLike_complete: unique symbol;
 
-export declare const DispatcherLike_scheduler: unique symbol;
-
 export declare const DisposableLike_add: unique symbol;
 
 export declare const DisposableLike_dispose: unique symbol;
@@ -30,19 +28,19 @@ export declare const EventListenerLike_notify: unique symbol;
 
 export declare const EventSourceLike_addListener: unique symbol;
 
+export declare const EventSourceLike_listenerCount: unique symbol;
+
 export declare const FlowableStreamLike_isPaused: unique symbol;
 
 export declare const FlowableStreamLike_pause: unique symbol;
 
 export declare const FlowableStreamLike_resume: unique symbol;
 
+export declare const HotObservableLike_observerCount: unique symbol;
+
 export declare const KeyedCollectionLike_get: unique symbol;
 
 export declare const KeyedContainerLike_TKey: unique symbol;
-
-export declare const MulticastedEventSourceLike_listenerCount: unique symbol;
-
-export declare const MulticastObservableLike_observerCount: unique symbol;
 
 export declare const ObserverLike_notify: unique symbol;
 
@@ -71,6 +69,8 @@ export declare const SchedulerLike_requestYield: unique symbol;
 export declare const SchedulerLike_schedule: unique symbol;
 
 export declare const SchedulerLike_shouldYield: unique symbol;
+
+export declare const StreamLike_scheduler: unique symbol;
 
 export declare const StreamableLike_stream: unique symbol;
 
@@ -376,4 +376,12 @@ export declare const IteratorEnumerator_iterator: unique symbol;
 
 export declare const WithCurrentTimeObserver_selector: unique symbol;
 
-export declare const DelegatingDispatcherMixin_delegate: unique symbol;
+export declare const SchedulerDelegatingMixin_delegate: unique symbol;
+
+export declare const QueueableDelegatingMixin_delegate: unique symbol;
+
+export declare const DelegatingHotObservableMixin_delegate: unique symbol;
+
+export declare const DelegatingMulticastObservableMixin_delegate: unique symbol;
+
+export declare const ObserverMixin_scheduler: unique symbol;

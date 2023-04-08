@@ -2,17 +2,16 @@ import { AsyncIterableLike } from "../../../containers.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
 import {
   DispatcherLike_complete,
-  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
-import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import {
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
+  SchedulerLike_schedule,
 } from "../../../scheduling.js";
 import { ToFlowable } from "../../../streaming.js";
 import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.create.js";
@@ -30,19 +29,18 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
     Flowable_create((modeObs: ObservableLike<boolean>) =>
       Observable_create<T>((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();
-        const scheduler = observer[DispatcherLike_scheduler];
-        const maxYieldInterval = scheduler[SchedulerLike_maxYieldInterval];
+        const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
 
         let isPaused = true;
 
         const continuation = async () => {
-          const startTime = scheduler[SchedulerLike_now];
+          const startTime = observer[SchedulerLike_now];
 
           try {
             while (
               !observer[DisposableLike_isDisposed] &&
               !isPaused &&
-              scheduler[SchedulerLike_now] - startTime < maxYieldInterval
+              observer[SchedulerLike_now] - startTime < maxYieldInterval
             ) {
               const next = await iterator.next();
 
@@ -64,7 +62,10 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
           }
 
           if (!isPaused) {
-            pipe(observer, Observer_schedule(continuation));
+            pipe(
+              observer[SchedulerLike_schedule](continuation),
+              Disposable_addTo(observer),
+            );
           }
         };
 
@@ -75,10 +76,13 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
             isPaused = mode;
 
             if (!isPaused && wasPaused) {
-              pipe(observer, Observer_schedule(continuation));
+              pipe(
+                observer[SchedulerLike_schedule](continuation),
+                Disposable_addTo(observer),
+              );
             }
           }),
-          Observable_subscribeWithConfig(observer),
+          Observable_subscribeWithConfig(observer, observer),
           Disposable_addTo(observer),
           Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
         );

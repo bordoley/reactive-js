@@ -3,7 +3,6 @@ import Optional_toObservable from "../../../containers/Optional/__internal__/Opt
 import { bindMethod, compose, pipe } from "../../../functions.js";
 import {
   DispatcherLike_complete,
-  DispatcherLike_scheduler,
   ObservableLike,
   ToObservable,
 } from "../../../rx.js";
@@ -30,7 +29,6 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
       : Observable_create;
 
     return create(observer => {
-      const scheduler = observer[DispatcherLike_scheduler];
       const capacity = observer[BufferLike_capacity];
       const backpressureStrategy = observer[QueueableLike_backpressureStrategy];
 
@@ -47,7 +45,7 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
       );
 
       pipe(
-        Stream_create<T, boolean>(op, scheduler, {
+        Stream_create<T, boolean>(op, observer, {
           backpressureStrategy,
           capacity,
         }),

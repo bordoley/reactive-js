@@ -8,7 +8,6 @@ ContainerLike_type
 ContinuationContextLike_yield
 
 DispatcherLike_complete
-DispatcherLike_scheduler
 
 DisposableLike_add
 DisposableLike_dispose
@@ -22,17 +21,17 @@ EnumeratorLike_hasCurrent
 EventListenerLike_notify
 
 EventSourceLike_addListener
+EventSourceLike_listenerCount
 
 FlowableStreamLike_isPaused
 FlowableStreamLike_pause
 FlowableStreamLike_resume
 
+HotObservableLike_observerCount
+
 KeyedCollectionLike_get
 
 KeyedContainerLike_TKey
-
-MulticastedEventSourceLike_listenerCount
-MulticastObservableLike_observerCount
 
 ObserverLike_notify
 
@@ -52,6 +51,8 @@ SchedulerLike_now
 SchedulerLike_requestYield
 SchedulerLike_schedule
 SchedulerLike_shouldYield
+
+StreamLike_scheduler
 
 StreamableLike_stream
 StreamableLike_isEnumerable
@@ -210,4 +211,8 @@ StackLike_pop
 StackLike_head
 IteratorEnumerator_iterator
 WithCurrentTimeObserver_selector
-DelegatingDispatcherMixin_delegate
+SchedulerDelegatingMixin_delegate
+QueueableDelegatingMixin_delegate
+DelegatingHotObservableMixin_delegate
+DelegatingMulticastObservableMixin_delegate
+ObserverMixin_scheduler

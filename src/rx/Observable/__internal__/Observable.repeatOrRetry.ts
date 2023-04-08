@@ -49,8 +49,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
           Observable_forEach<ObservableLike, T>(
             bindMethod(delegate, ObserverLike_notify),
           ),
-          Observable_subscribeWithConfig(delegate),
-          Disposable_addToIgnoringChildErrors(delegate),
+          Observable_subscribeWithConfig(delegate, delegate),
           Disposable_onDisposed(doOnDispose),
         );
       }

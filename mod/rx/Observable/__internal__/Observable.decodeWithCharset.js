@@ -4,20 +4,18 @@ import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, includ
 import { DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/symbols.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, newInstance, none, partial, pipe, } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
-import { BufferLike_capacity, DisposableLike_dispose, QueueableLike_backpressureStrategy, } from "../../../util.js";
+import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 const Observable_decodeWithCharset = 
 /*@__PURE__*/ (() => {
-    const createDecodeWithCharsetObserver = createInstanceFactory(mix(include(Disposable_mixin, delegatingMixin(), Observer_mixin()), function DecodeWithCharsetObserver(instance, delegate, charset) {
-        init(Disposable_mixin, instance);
+    const createDecodeWithCharsetObserver = createInstanceFactory(mix(include(delegatingMixin(), Observer_mixin()), function DecodeWithCharsetObserver(instance, delegate, charset) {
         init(delegatingMixin(), instance, delegate);
-        init(Observer_mixin(), instance, delegate[DispatcherLike_scheduler], delegate[BufferLike_capacity], delegate[QueueableLike_backpressureStrategy]);
+        init(Observer_mixin(), instance, delegate, delegate);
         const textDecoder = newInstance(TextDecoder, charset, {
             fatal: true,
         });

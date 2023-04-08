@@ -22,7 +22,7 @@ const AsyncIterable_toAsyncEnumerable =
         else {
             observer[DispatcherLike_complete]();
         }
-    }), Observable_subscribeWithConfig(observer), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
+    }), Observable_subscribeWithConfig(observer, observer), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
 }), {
     [StreamableLike_isEnumerable]: false,
     [StreamableLike_isInteractive]: true,

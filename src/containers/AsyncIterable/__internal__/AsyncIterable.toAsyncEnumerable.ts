@@ -40,7 +40,7 @@ const AsyncIterable_toAsyncEnumerable: ToAsyncEnumerable<AsyncIterableLike>["toA
                   }
                 },
               ),
-              Observable_subscribeWithConfig(observer),
+              Observable_subscribeWithConfig(observer, observer),
               Disposable_addTo(observer),
               Disposable_onComplete(
                 bindMethod(observer, DispatcherLike_complete),

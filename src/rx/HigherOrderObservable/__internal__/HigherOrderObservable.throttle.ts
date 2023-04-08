@@ -7,6 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ObserverMixin_scheduler,
   ThrottleObserver_durationFunction,
   ThrottleObserver_durationSubscription,
   ThrottleObserver_hasValue,
@@ -43,14 +44,13 @@ import {
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin, {
-  initObserverMixinFromDelegate,
+  TObserverMixin,
 } from "../../Observer/__internal__/Observer.mixin.js";
 import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 
@@ -59,8 +59,6 @@ const createThrottleObserver: <T>(
   durationFunction: Function1<T, ObservableLike>,
   mode: "first" | "last" | "interval",
 ) => ObserverLike<T> = (<T>() => {
-  const typedObserverMixin = Observer_mixin<T>();
-
   type TProperties = {
     [ThrottleObserver_value]: Optional<T>;
     [ThrottleObserver_hasValue]: boolean;
@@ -71,7 +69,7 @@ const createThrottleObserver: <T>(
   };
 
   const setupDurationSubscription = (
-    observer: ObserverLike<T> & TProperties,
+    observer: ObserverLike<T> & TProperties & TObserverMixin<T>,
     next: T,
   ) => {
     observer[ThrottleObserver_durationSubscription][
@@ -79,13 +77,16 @@ const createThrottleObserver: <T>(
     ] = pipe(
       observer[ThrottleObserver_durationFunction](next),
       Observable_forEach<ObservableLike>(observer[ThrottleObserver_onNotify]),
-      Observable_subscribeWithConfig(observer),
+      Observable_subscribeWithConfig(
+        observer[ObserverMixin_scheduler],
+        observer,
+      ),
     );
   };
 
   return createInstanceFactory(
     mix(
-      include(Disposable_mixin, typedObserverMixin),
+      include(Observer_mixin()),
       function ThrottleObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
@@ -93,8 +94,7 @@ const createThrottleObserver: <T>(
         durationFunction: Function1<T, ObservableLike>,
         mode: "first" | "last" | "interval",
       ): ObserverLike<T> {
-        init(Disposable_mixin, instance);
-        initObserverMixinFromDelegate(instance, delegate);
+        init(Observer_mixin(), instance, delegate, delegate);
 
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;
@@ -145,7 +145,10 @@ const createThrottleObserver: <T>(
         [ThrottleObserver_onNotify]: none,
       }),
       {
-        [ObserverLike_notify](this: ObserverLike<T> & TProperties, next: T) {
+        [ObserverLike_notify](
+          this: ObserverLike<T> & TProperties & TObserverMixin<T>,
+          next: T,
+        ) {
           Observer_assertState(this);
 
           this[ThrottleObserver_value] = next;
