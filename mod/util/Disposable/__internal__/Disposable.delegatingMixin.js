@@ -17,12 +17,10 @@ const Disposable_delegatingMixin =
     }), {
         get [DisposableLike_error]() {
             unsafeCast(this);
-            const delegate = this[DelegatingLike_delegate];
-            return delegate[DisposableLike_error];
+            return this[DelegatingLike_delegate][DisposableLike_error];
         },
-        [DisposableLike_add](disposable, ignoreChildErrors) {
-            const delegate = this[DelegatingLike_delegate];
-            delegate[DisposableLike_add](disposable, ignoreChildErrors);
+        [DisposableLike_add](disposable) {
+            this[DelegatingLike_delegate][DisposableLike_add](disposable);
         },
         [DisposableLike_dispose](error) {
             this[DelegatingLike_delegate][DisposableLike_dispose](error);

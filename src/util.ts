@@ -57,10 +57,7 @@ export interface DisposableLike {
    * @param disposable - The disposable to add.
    * @param ignoreChildErrors - Indicates that the parent should not auto dispose if the child disposed with an error.
    */
-  [DisposableLike_add](
-    disposable: DisposableOrTeardown,
-    ignoreChildErrors: boolean,
-  ): void;
+  [DisposableLike_add](disposable: DisposableOrTeardown): void;
 
   /**
    * Dispose the resource.

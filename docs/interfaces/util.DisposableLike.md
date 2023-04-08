@@ -52,7 +52,7 @@ ___
 
 ### [DisposableLike\_add]
 
-▸ **[DisposableLike_add]**(`disposable`, `ignoreChildErrors`): `void`
+▸ **[DisposableLike_add]**(`disposable`): `void`
 
 Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
 
@@ -61,7 +61,6 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `disposable` | [`DisposableOrTeardown`](../modules/util.md#disposableorteardown) | The disposable to add. |
-| `ignoreChildErrors` | `boolean` | Indicates that the parent should not auto dispose if the child disposed with an error. |
 
 #### Returns
 

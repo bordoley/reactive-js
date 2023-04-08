@@ -1,12 +1,6 @@
 import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import { DisposableMixin_disposables } from "../../../__internal__/symbols.js";
-import {
-  Optional,
-  isFunction,
-  isSome,
-  newInstance,
-  none,
-} from "../../../functions.js";
+import { Optional, isFunction, newInstance, none } from "../../../functions.js";
 import {
   DisposableLike,
   DisposableLike_add,
@@ -78,7 +72,6 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
     [DisposableLike_add](
       this: TProperties & DisposableLike,
       disposable: DisposableOrTeardown,
-      ignoreChildErrors: boolean,
     ) {
       const disposables = this[DisposableMixin_disposables];
 
@@ -90,13 +83,9 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
         disposables.add(disposable);
 
         if (!isFunction(disposable)) {
-          disposable[DisposableLike_add](e => {
+          disposable[DisposableLike_add](_ => {
             disposables.delete(disposable);
-
-            if (isSome(e) && !ignoreChildErrors) {
-              this[DisposableLike_dispose](e);
-            }
-          }, true);
+          });
         }
       }
     },

@@ -13,22 +13,19 @@ const SerialDisposable_create: <TDisposable extends DisposableLike>(
   initialValue: TDisposable,
 ) => SerialDisposableLike<TDisposable> = /*@__PURE__*/ (<
   TDisposable extends DisposableLike,
->() => {
-  const typedSerialDisposableMixin = SerialDisposable_mixin<TDisposable>();
-
-  return createInstanceFactory(
+>() =>
+  createInstanceFactory(
     mix(
-      include(Disposable_mixin, typedSerialDisposableMixin),
+      include(Disposable_mixin, SerialDisposable_mixin<TDisposable>()),
       function SerialDisposable(
         instance: unknown,
         initialValue: TDisposable,
       ): SerialDisposableLike<TDisposable> {
         init(Disposable_mixin, instance);
-        init(typedSerialDisposableMixin, instance, initialValue);
+        init(SerialDisposable_mixin<TDisposable>(), instance, initialValue);
         return instance;
       },
     ),
-  );
-})();
+  ))();
 
 export default SerialDisposable_create;
