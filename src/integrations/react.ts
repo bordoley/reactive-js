@@ -30,6 +30,7 @@ import {
   Equality,
   Factory,
   Function1,
+  Function2,
   Optional,
   SideEffect,
   Updater,
@@ -40,7 +41,6 @@ import {
   pipe,
   pipeLazy,
   raiseError,
-  returns,
 } from "../functions.js";
 import {
   AnimationConfig,
@@ -385,259 +385,6 @@ export const useEnumerate = <T>(
   };
 };
 
-interface UseAnimation {
-  /**
-   * @category Hook
-   */
-  useAnimation<TEvent, T = number>(
-    animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
-    eventOptions: { readonly mode: "switching" },
-    deps: readonly unknown[],
-    options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [Optional<EventSourceLike<T>>, Function1<TEvent, boolean>, never];
-
-  /**
-   * @category Hook
-   */
-  useAnimation<TEvent, T = number>(
-    animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
-    eventOptions: { readonly mode: "blocking" },
-    deps: readonly unknown[],
-    options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [
-    Optional<EventSourceLike<T>>,
-    Function1<TEvent, boolean>,
-    boolean,
-  ];
-
-  /**
-   * @category Hook
-   */
-  useAnimation<TEvent, T = number>(
-    animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
-    eventOptions: {
-      readonly mode: "queueing";
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-    deps: readonly unknown[],
-    options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [Optional<EventSourceLike<T>>, Function1<TEvent, boolean>, never];
-}
-
-/**
- * @category Hook
- */
-export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T = number>(
-  animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
-  eventOptions: {
-    readonly mode: "switching" | "blocking" | "queueing";
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-  },
-  deps: readonly unknown[],
-  options?: {
-    readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-  },
-): readonly [
-  Optional<EventSourceLike<T>>,
-  Function1<TEvent, boolean>,
-  unknown,
-] => {
-  const [publisher, setPublisher] = useState<Optional<EventPublisherLike<T>>>();
-  useEffect(() => {
-    const publisher = EventPublisher.create<T>();
-    setPublisher(publisher);
-    return bindMethod(publisher, DisposableLike_dispose);
-  }, []);
-
-  const animationConfigs = useMemo(animationConfigFactory, deps);
-
-  const streamable = useMemo(
-    () =>
-      Streamable.createEventHandler(
-        pipe(
-          Observable.animate<T>(...animationConfigs),
-          isSome(publisher)
-            ? Observable.forEach(
-                bindMethod(publisher, EventListenerLike_notify),
-              )
-            : identity,
-          Observable.ignoreElements(),
-          Observable.subscribeOn(
-            createAnimationFrameSchedulerFactory(options?.priority),
-          ),
-          returns,
-        ),
-        eventOptions as any,
-      ),
-    [
-      animationConfigs,
-      eventOptions.mode,
-      eventOptions.backpressureStrategy,
-      eventOptions.capacity,
-      publisher,
-      options?.priority,
-    ],
-  );
-
-  const [value, dispatch] = useStreamable(streamable, { ...options });
-
-  return [publisher, dispatch, value];
-}) as UseAnimation["useAnimation"];
-
-interface UseStatefulAnimation {
-  /**
-   * @category Hook
-   */
-  useStatefulAnimation<TState, T = number>(
-    animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
-    initialState: Factory<TState>,
-    eventOptions: {
-      readonly mode: "switching";
-      readonly equality?: Equality<TState>;
-    },
-    deps: readonly unknown[],
-    options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [
-    Optional<EventSourceLike<T>>,
-    Function1<Updater<TState>, boolean>,
-    never,
-  ];
-
-  /**
-   * @category Hook
-   */
-  useStatefulAnimation<TState, T = number>(
-    animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
-    initialState: Factory<TState>,
-    eventOptions: {
-      readonly mode: "blocking";
-      readonly equality?: Equality<TState>;
-    },
-    deps: readonly unknown[],
-    options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [
-    Optional<EventSourceLike<T>>,
-    Function1<Updater<TState>, boolean>,
-    boolean,
-  ];
-
-  /**
-   * @category Hook
-   */
-  useStatefulAnimation<TState, T = number>(
-    animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
-    initialState: Factory<TState>,
-    eventOptions: {
-      readonly mode: "queueing";
-      readonly equality?: Equality<TState>;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-    deps: readonly unknown[],
-    options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [
-    Optional<EventSourceLike<T>>,
-    Function1<Updater<TState>, boolean>,
-    never,
-  ];
-}
-
-/**
- * @category Hook
- */
-export const useStatefulAnimation: UseStatefulAnimation["useStatefulAnimation"] =
-  (<TState, T>(
-    animationConfigFactory: Factory<readonly AnimationConfig<T>[]>,
-    initialState: Factory<TState>,
-    eventOptions: {
-      readonly mode: "switching" | "blocking" | "queueing";
-      readonly equality?: Equality<TState>;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-    deps: readonly unknown[],
-    options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [
-    Optional<EventSourceLike<T>>,
-    Function1<Updater<TState>, boolean>,
-    unknown,
-  ] => {
-    const [publisher, setPublisher] =
-      useState<Optional<EventPublisherLike<T>>>();
-    useEffect(() => {
-      const publisher = EventPublisher.create<T>();
-      setPublisher(publisher);
-      return bindMethod(publisher, DisposableLike_dispose);
-    }, []);
-
-    const animationConfigs = useMemo(animationConfigFactory, deps);
-
-    const streamable = useMemo(
-      () =>
-        Streamable.createStatefulEventHandler(
-          pipe(
-            Observable.animate<T>(...animationConfigs),
-            isSome(publisher)
-              ? Observable.forEach(
-                  bindMethod(publisher, EventListenerLike_notify),
-                )
-              : identity,
-            Observable.ignoreElements(),
-            Observable.subscribeOn(
-              createAnimationFrameSchedulerFactory(options?.priority),
-            ),
-            returns,
-          ),
-          initialState,
-          eventOptions as any,
-        ),
-      [
-        animationConfigs,
-        eventOptions.mode,
-        eventOptions.backpressureStrategy,
-        eventOptions.capacity,
-        publisher,
-        options?.priority,
-      ],
-    );
-
-    const [value, dispatch] = useStreamable(streamable, options);
-
-    return [publisher, dispatch, value];
-  }) as UseStatefulAnimation["useStatefulAnimation"];
-
 const createReplayPublisher = <TProps>() =>
   Publisher.create<TProps>({ replay: 1 });
 
@@ -669,3 +416,256 @@ export const createComponent = <TProps>(
 
   return ObservableComponent;
 };
+
+interface UseAnimation {
+  /**
+   * @category Hook
+   */
+  useAnimation<TEvent, T = number>(
+    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    eventOptions: { readonly mode: "switching" },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [Optional<EventSourceLike<T>>, Function1<TEvent, boolean>, never];
+
+  /**
+   * @category Hook
+   */
+  useAnimation<TEvent, T = number>(
+    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    eventOptions: { readonly mode: "blocking" },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    Optional<EventSourceLike<T>>,
+    Function1<TEvent, boolean>,
+    boolean,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useAnimation<TEvent, T = number>(
+    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    eventOptions: {
+      readonly mode: "queueing";
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [Optional<EventSourceLike<T>>, Function1<TEvent, boolean>, never];
+}
+
+/**
+ * @category Hook
+ */
+export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T = number>(
+  animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+  eventOptions: {
+    readonly mode: "switching" | "blocking" | "queueing";
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+  },
+  deps: readonly unknown[],
+  options?: {
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+  },
+): readonly [
+  Optional<EventSourceLike<T>>,
+  Function1<TEvent, boolean>,
+  unknown,
+] => {
+  const [publisher, setPublisher] = useState<Optional<EventPublisherLike<T>>>();
+  useEffect(() => {
+    const publisher = EventPublisher.create<T>();
+    setPublisher(publisher);
+    return bindMethod(publisher, DisposableLike_dispose);
+  }, []);
+
+  const animationFactoryMemoized = useCallback(animationFactory, deps);
+
+  const streamable = useMemo(
+    () =>
+      Streamable.createEventHandler<TEvent>(
+        event =>
+          pipe(
+            Observable.animate<T>(...animationFactoryMemoized(event)),
+            isSome(publisher)
+              ? Observable.forEach(
+                  bindMethod(publisher, EventListenerLike_notify),
+                )
+              : identity,
+            Observable.ignoreElements(),
+            Observable.subscribeOn(
+              createAnimationFrameSchedulerFactory(options?.priority),
+            ),
+          ),
+        eventOptions as any,
+      ),
+    [
+      animationFactoryMemoized,
+      eventOptions.mode,
+      eventOptions.backpressureStrategy,
+      eventOptions.capacity,
+      publisher,
+      options?.priority,
+    ],
+  );
+
+  const [value, dispatch] = useStreamable(streamable, { ...options });
+
+  return [publisher, dispatch, value];
+}) as UseAnimation["useAnimation"];
+
+interface UseStatefulAnimation {
+  /**
+   * @category Hook
+   */
+  useStatefulAnimation<TState, T = number>(
+    animationFactory: Function2<TState, TState, readonly AnimationConfig<T>[]>,
+    initialState: Factory<TState>,
+    eventOptions: {
+      readonly mode: "switching";
+      readonly equality?: Equality<TState>;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    Optional<EventSourceLike<T>>,
+    Function1<Updater<TState>, boolean>,
+    never,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useStatefulAnimation<TState, T = number>(
+    animationFactory: Function2<TState, TState, readonly AnimationConfig<T>[]>,
+    initialState: Factory<TState>,
+    eventOptions: {
+      readonly mode: "blocking";
+      readonly equality?: Equality<TState>;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    Optional<EventSourceLike<T>>,
+    Function1<Updater<TState>, boolean>,
+    boolean,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useStatefulAnimation<TState, T = number>(
+    animationFactory: Function2<TState, TState, readonly AnimationConfig<T>[]>,
+    initialState: Factory<TState>,
+    eventOptions: {
+      readonly mode: "queueing";
+      readonly equality?: Equality<TState>;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    Optional<EventSourceLike<T>>,
+    Function1<Updater<TState>, boolean>,
+    never,
+  ];
+}
+
+/**
+ * @category Hook
+ */
+export const useStatefulAnimation: UseStatefulAnimation["useStatefulAnimation"] =
+  (<TState, T>(
+    animationFactory: Function2<TState, TState, readonly AnimationConfig<T>[]>,
+    initialState: Factory<TState>,
+    eventOptions: {
+      readonly mode: "switching" | "blocking" | "queueing";
+      readonly equality?: Equality<TState>;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    Optional<EventSourceLike<T>>,
+    Function1<Updater<TState>, boolean>,
+    unknown,
+  ] => {
+    const [publisher, setPublisher] =
+      useState<Optional<EventPublisherLike<T>>>();
+    useEffect(() => {
+      const publisher = EventPublisher.create<T>();
+      setPublisher(publisher);
+      return bindMethod(publisher, DisposableLike_dispose);
+    }, []);
+
+    const animationFactoryMemoized = useCallback(animationFactory, deps);
+
+    const streamable = useMemo(
+      () =>
+        Streamable.createStatefulEventHandler(
+          (prev, next) =>
+            pipe(
+              Observable.animate<T>(...animationFactoryMemoized(prev, next)),
+              isSome(publisher)
+                ? Observable.forEach(
+                    bindMethod(publisher, EventListenerLike_notify),
+                  )
+                : identity,
+              Observable.ignoreElements(),
+              Observable.subscribeOn(
+                createAnimationFrameSchedulerFactory(options?.priority),
+              ),
+            ),
+          initialState,
+          eventOptions as any,
+        ),
+      [
+        animationFactoryMemoized,
+        eventOptions.mode,
+        eventOptions.backpressureStrategy,
+        eventOptions.capacity,
+        publisher,
+        options?.priority,
+      ],
+    );
+
+    const [value, dispatch] = useStreamable(streamable, options);
+
+    return [publisher, dispatch, value];
+  }) as UseStatefulAnimation["useStatefulAnimation"];

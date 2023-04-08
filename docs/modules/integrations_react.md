@@ -22,7 +22,7 @@
 
 ### useAnimation
 
-▸ **useAnimation**<`TEvent`, `T`\>(`animationConfigFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -35,7 +35,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `animationConfigFactory` | [`Factory`](functions.md#factory)<readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
 | `eventOptions` | `Object` |
 | `eventOptions.mode` | ``"switching"`` |
 | `deps` | readonly `unknown`[] |
@@ -48,7 +48,7 @@
 
 readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
-▸ **useAnimation**<`TEvent`, `T`\>(`animationConfigFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
 
 #### Type parameters
 
@@ -61,7 +61,7 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 | Name | Type |
 | :------ | :------ |
-| `animationConfigFactory` | [`Factory`](functions.md#factory)<readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
 | `eventOptions` | `Object` |
 | `eventOptions.mode` | ``"blocking"`` |
 | `deps` | readonly `unknown`[] |
@@ -74,7 +74,7 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
 
-▸ **useAnimation**<`TEvent`, `T`\>(`animationConfigFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -87,7 +87,7 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 | Name | Type |
 | :------ | :------ |
-| `animationConfigFactory` | [`Factory`](functions.md#factory)<readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
 | `eventOptions` | `Object` |
 | `eventOptions.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `eventOptions.capacity?` | `number` |
@@ -196,7 +196,7 @@ ___
 
 ### useStatefulAnimation
 
-▸ **useStatefulAnimation**<`TState`, `T`\>(`animationConfigFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
+▸ **useStatefulAnimation**<`TState`, `T`\>(`animationFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -209,7 +209,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationConfigFactory` | [`Factory`](functions.md#factory)<readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `animationFactory` | [`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
 | `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
 | `eventOptions` | `Object` |
 | `eventOptions.equality?` | [`Equality`](functions.md#equality)<`TState`\> |
@@ -224,7 +224,7 @@ ___
 
 readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
 
-▸ **useStatefulAnimation**<`TState`, `T`\>(`animationConfigFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `boolean`]
+▸ **useStatefulAnimation**<`TState`, `T`\>(`animationFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `boolean`]
 
 #### Type parameters
 
@@ -237,7 +237,7 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 | Name | Type |
 | :------ | :------ |
-| `animationConfigFactory` | [`Factory`](functions.md#factory)<readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `animationFactory` | [`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
 | `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
 | `eventOptions` | `Object` |
 | `eventOptions.equality?` | [`Equality`](functions.md#equality)<`TState`\> |
@@ -252,7 +252,7 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `boolean`]
 
-▸ **useStatefulAnimation**<`TState`, `T`\>(`animationConfigFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
+▸ **useStatefulAnimation**<`TState`, `T`\>(`animationFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -265,7 +265,7 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 | Name | Type |
 | :------ | :------ |
-| `animationConfigFactory` | [`Factory`](functions.md#factory)<readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `animationFactory` | [`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
 | `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
 | `eventOptions` | `Object` |
 | `eventOptions.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |

@@ -142,6 +142,7 @@ interface UseAnimatedValue {
   useAnimatedValue<TElement extends HTMLElement, T>(
     value: Optional<EventSourceLike<T>>,
     selector: (v: T) => Partial<ReadonlyRecordLike<CSSStyleKey, string>>,
+    deps: readonly unknown[],
   ): React.RefObject<TElement>;
 }
 /**
@@ -153,8 +154,11 @@ export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
 >(
   value: Optional<EventSourceLike<T>>,
   selector = identity,
+  deps = [],
 ): React.RefObject<TElement> => {
   const ref = useRef<TElement>(null);
+
+  const selectorMemoized = useCallback(selector, deps);
 
   useEffect(() => {
     if (isNone(value)) {
@@ -165,7 +169,7 @@ export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
       const element = ref.current;
       if (element != null) {
         pipe(
-          selector(v) as ReadonlyRecordLike<CSSStyleKey, string>,
+          selectorMemoized(v) as ReadonlyRecordLike<CSSStyleKey, string>,
           ReadonlyRecord.forEachWithKey<string, CSSStyleKey>((v, key) => {
             element.style[key] = v ?? "";
           }),
@@ -176,7 +180,7 @@ export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
     value[EventSourceLike_addListener](listener);
 
     return bindMethod(listener, DisposableLike_dispose);
-  }, [value, selector, ref]);
+  }, [value, selectorMemoized, ref]);
 
   return ref;
 }) as UseAnimatedValue["useAnimatedValue"];

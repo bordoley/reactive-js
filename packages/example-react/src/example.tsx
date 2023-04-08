@@ -113,34 +113,28 @@ const Root = () => {
   const counter = useFlowable(counterFlowable);
 
   const [animatedValue, dispatch, animationRunning] = useAnimation(
-    () => {
-      return [
-        {
-          type: "loop",
-          count: 2,
-          animation: [
-            { type: "tween", duration: 1000, from: 0, to: 50 },
-            { type: "delay", duration: 500 },
-            { type: "tween", duration: 1000, from: 50, to: 0 },
-          ],
-        },
-      ];
-    },
+    () => [
+      {
+        type: "loop",
+        count: 2,
+        animation: [
+          { type: "tween", duration: 1000, from: 0, to: 50 },
+          { type: "delay", duration: 500 },
+          { type: "tween", duration: 1000, from: 50, to: 0 },
+        ],
+      },
+    ],
     { mode: "blocking" },
-    [],
-  );
-
-  const selector = useCallback(
-    (v: number) => ({
-      margin: `${50 - v}px`,
-      padding: `${v}px`,
-    }),
     [],
   );
 
   const divRef = useAnimatedValue<HTMLDivElement, number>(
     animatedValue,
-    selector,
+    (v: number) => ({
+      margin: `${50 - v}px`,
+      padding: `${v}px`,
+    }),
+    [],
   );
 
   const enumerable = useMemo(
