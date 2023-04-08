@@ -9,10 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  HigherOrderObservable_currentRef,
-  ObserverMixin_scheduler,
-} from "../../../__internal__/symbols.js";
+import { __HigherOrderObservable_currentRef } from "../../../__internal__/symbols.js";
 import {
   SerialDisposableLike,
   SerialDisposableLike_current,
@@ -40,9 +37,7 @@ import SerialDisposable_create from "../../../util/Disposable/__internal__/Seria
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, {
-  TObserverMixin,
-} from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
 const HigherOrderObservable_switchAll = <C extends ObservableLike>(
   lift: <T>(
@@ -53,16 +48,16 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
     o: ObserverLike<T>,
   ) => ObserverLike<ContainerOf<C, T>> = (<T>() => {
     type TProperties = {
-      readonly [HigherOrderObservable_currentRef]: SerialDisposableLike;
+      readonly [__HigherOrderObservable_currentRef]: SerialDisposableLike;
     };
 
     function onDispose(
       this: TProperties & DisposableLike & DelegatingLike<ObserverLike<T>>,
     ) {
       if (
-        this[HigherOrderObservable_currentRef][SerialDisposableLike_current][
-          DisposableLike_isDisposed
-        ]
+        this[__HigherOrderObservable_currentRef][
+          SerialDisposableLike_current
+        ][DisposableLike_isDisposed]
       ) {
         this[DelegatingLike_delegate][DisposableLike_dispose]();
       }
@@ -82,7 +77,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
           init(Observer_mixin(), instance, delegate, delegate);
           init(delegatingMixin(), instance, delegate);
 
-          instance[HigherOrderObservable_currentRef] = pipe(
+          instance[__HigherOrderObservable_currentRef] = pipe(
             SerialDisposable_create(Disposable_disposed),
             Disposable_addTo(delegate),
           );
@@ -96,7 +91,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
           return instance;
         },
         props<TProperties>({
-          [HigherOrderObservable_currentRef]: none,
+          [__HigherOrderObservable_currentRef]: none,
         }),
         {
           [ObserverLike_notify](
@@ -104,11 +99,11 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
               ObserverLike<ContainerOf<C, T>> &
               SerialDisposableLike &
               DelegatingLike<ObserverLike<T>> &
-              TObserverMixin<T>,
+              DelegatingLike<ObserverLike>,
             next: ContainerOf<C, T>,
           ) {
             Observer_assertState(this);
-            this[HigherOrderObservable_currentRef][
+            this[__HigherOrderObservable_currentRef][
               SerialDisposableLike_current
             ] = pipe(
               next,
@@ -116,7 +111,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
                 bindMethod(this[DelegatingLike_delegate], ObserverLike_notify),
               ),
               Observable_subscribeWithConfig(
-                this[ObserverMixin_scheduler],
+                this[DelegatingLike_delegate],
                 this,
               ),
               Disposable_onComplete(() => {

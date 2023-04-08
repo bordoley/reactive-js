@@ -16,13 +16,13 @@ A non-concurrent scheduler that simulates time but executes synchronously.
 
 ### Methods
 
-- [[VirtualTimeSchedulerLike\_run]](scheduling.VirtualTimeSchedulerLike.md#[virtualtimeschedulerlike_run])
+- [[\_\_\_VirtualTimeSchedulerLike\_run]](scheduling.VirtualTimeSchedulerLike.md#[___virtualtimeschedulerlike_run])
 
 ## Methods
 
-### [VirtualTimeSchedulerLike\_run]
+### [\_\_\_VirtualTimeSchedulerLike\_run]
 
-▸ **[VirtualTimeSchedulerLike_run]**(): `void`
+▸ **[___VirtualTimeSchedulerLike_run]**(): `void`
 
 Runs the scheduler synchronously until it has no more
 enqueued continuations, at which time the scheduler will auto dispose.

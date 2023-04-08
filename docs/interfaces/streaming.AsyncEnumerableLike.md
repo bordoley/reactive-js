@@ -25,28 +25,28 @@ exactly one value for every enqueued void request.
 
 ### Properties
 
-- [[ContainerLike\_type]](streaming.AsyncEnumerableLike.md#[containerlike_type])
-- [[StreamableLike\_isInteractive]](streaming.AsyncEnumerableLike.md#[streamablelike_isinteractive])
+- [[\_\_\_ContainerLike\_type]](streaming.AsyncEnumerableLike.md#[___containerlike_type])
+- [[\_\_\_StreamableLike\_isInteractive]](streaming.AsyncEnumerableLike.md#[___streamablelike_isinteractive])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`AsyncEnumerableLike`](streaming.AsyncEnumerableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`AsyncEnumerableLike`](streaming.AsyncEnumerableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
+[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
 
 ___
 
-### [StreamableLike\_isInteractive]
+### [\_\_\_StreamableLike\_isInteractive]
 
-• `Readonly` **[StreamableLike\_isInteractive]**: ``true``
+• `Readonly` **[\_\_\_StreamableLike\_isInteractive]**: ``true``
 
 Indicates if the resulting is stream is interactive,
 producing exactly one value for every enqueued request.
 
 #### Overrides
 
-[StreamableLike](streaming.StreamableLike.md).[[StreamableLike_isInteractive]](streaming.StreamableLike.md#[streamablelike_isinteractive])
+[StreamableLike](streaming.StreamableLike.md).[[___StreamableLike_isInteractive]](streaming.StreamableLike.md#[___streamablelike_isinteractive])

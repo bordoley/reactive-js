@@ -1,7 +1,7 @@
 /// <reference types="./Observable.enqueue.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { EnqueueObserver_effect } from "../../../__internal__/symbols.js";
+import { __EnqueueObserver_effect } from "../../../__internal__/symbols.js";
 import { bindMethod, isFunction, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { SchedulerLike_requestYield } from "../../../scheduling.js";
@@ -14,14 +14,14 @@ const Observable_enqueue = /*@__PURE__*/ (() => {
         return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function EnqueueObserver(instance, delegate, effect) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
             init(delegatingMixin(), instance, delegate);
-            instance[EnqueueObserver_effect] = effect;
+            instance[__EnqueueObserver_effect] = effect;
             return instance;
         }, props({
-            [EnqueueObserver_effect]: none,
+            [__EnqueueObserver_effect]: none,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                if (!this[EnqueueObserver_effect](next)) {
+                if (!this[__EnqueueObserver_effect](next)) {
                     this[SchedulerLike_requestYield]();
                 }
                 this[DelegatingLike_delegate][ObserverLike_notify](next);

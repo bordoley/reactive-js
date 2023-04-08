@@ -10,9 +10,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  SchedulerLike_schedule,
-  ZipObserver_enumerators,
-  ZipObserver_queuedEnumerator,
+  __ZipObserver_enumerators,
+  __ZipObserver_queuedEnumerator,
 } from "../../../__internal__/symbols.js";
 import {
   QueueLike,
@@ -41,6 +40,7 @@ import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
+  SchedulerLike_schedule,
 } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
@@ -160,9 +160,9 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     ))();
 
   type TProperties = {
-    readonly [ZipObserver_enumerators]: readonly (EnumeratorLike<any> &
+    readonly [__ZipObserver_enumerators]: readonly (EnumeratorLike<any> &
       DisposableLike)[];
-    readonly [ZipObserver_queuedEnumerator]: QueuedEnumeratorLike;
+    readonly [__ZipObserver_queuedEnumerator]: QueuedEnumeratorLike;
   };
 
   const createZipObserver = createInstanceFactory(
@@ -178,8 +178,8 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         init(Observer_mixin(), instance, delegate, delegate);
         init(delegatingMixin(), instance, delegate);
 
-        instance[ZipObserver_queuedEnumerator] = queuedEnumerator;
-        instance[ZipObserver_enumerators] = enumerators;
+        instance[__ZipObserver_queuedEnumerator] = queuedEnumerator;
+        instance[__ZipObserver_enumerators] = enumerators;
 
         pipe(
           instance,
@@ -197,8 +197,8 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         return instance;
       },
       props<TProperties>({
-        [ZipObserver_enumerators]: none,
-        [ZipObserver_queuedEnumerator]: none,
+        [__ZipObserver_enumerators]: none,
+        [__ZipObserver_queuedEnumerator]: none,
       }),
       {
         [ObserverLike_notify](
@@ -208,9 +208,11 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           next: unknown,
         ) {
           Observer_assertState(this);
-          this[ZipObserver_queuedEnumerator][QueueableLike_enqueue](next);
+          this[__ZipObserver_queuedEnumerator][QueueableLike_enqueue](
+            next,
+          );
 
-          const enumerators = this[ZipObserver_enumerators];
+          const enumerators = this[__ZipObserver_enumerators];
 
           if (!shouldEmit(enumerators)) {
             return;

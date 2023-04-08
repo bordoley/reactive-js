@@ -9,7 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ThrowIfEmptyObserver_isEmpty } from "../../../__internal__/symbols.js";
+import { __ThrowIfEmptyObserver_isEmpty } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Factory,
@@ -38,7 +38,7 @@ type ObservableThrowIfEmpty = <C extends ObservableLike, T>(
 const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
   const createThrowIfEmptyObserver = (<T>() => {
     type TProperties = {
-      [ThrowIfEmptyObserver_isEmpty]: boolean;
+      [__ThrowIfEmptyObserver_isEmpty]: boolean;
     };
 
     return createInstanceFactory(
@@ -59,7 +59,7 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
             Disposable_onComplete(() => {
               let err: Optional<Error> = none;
 
-              if (instance[ThrowIfEmptyObserver_isEmpty]) {
+              if (instance[__ThrowIfEmptyObserver_isEmpty]) {
                 try {
                   err = error(factory());
                 } catch (e) {
@@ -73,7 +73,7 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
           return instance;
         },
         props<TProperties>({
-          [ThrowIfEmptyObserver_isEmpty]: true,
+          [__ThrowIfEmptyObserver_isEmpty]: true,
         }),
         {
           [ObserverLike_notify](
@@ -85,7 +85,7 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
           ) {
             Observer_assertState(this);
 
-            this[ThrowIfEmptyObserver_isEmpty] = false;
+            this[__ThrowIfEmptyObserver_isEmpty] = false;
             this[DelegatingLike_delegate][ObserverLike_notify](next);
           },
         },

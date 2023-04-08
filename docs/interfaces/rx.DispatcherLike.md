@@ -27,13 +27,13 @@ be dispatched from any execution context.
 
 ### Methods
 
-- [[DispatcherLike\_complete]](rx.DispatcherLike.md#[dispatcherlike_complete])
+- [[\_\_\_DispatcherLike\_complete]](rx.DispatcherLike.md#[___dispatcherlike_complete])
 
 ## Methods
 
-### [DispatcherLike\_complete]
+### [\_\_\_DispatcherLike\_complete]
 
-▸ **[DispatcherLike_complete]**(): `void`
+▸ **[___DispatcherLike_complete]**(): `void`
 
 Communicates to the dispatcher that no more events will be enqueued.
 

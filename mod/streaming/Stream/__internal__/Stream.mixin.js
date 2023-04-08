@@ -2,7 +2,7 @@
 
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DispatchedObservable_observer } from "../../../__internal__/symbols.js";
+import { __DispatchedObservable_observer } from "../../../__internal__/symbols.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
@@ -17,23 +17,23 @@ const DispatchedObservable_create =
     return createInstanceFactory(mix(function DispatchedObservable(instance) {
         return instance;
     }, props({
-        [DispatchedObservable_observer]: none,
+        [__DispatchedObservable_observer]: none,
     }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         get [QueueableLike_backpressureStrategy]() {
             unsafeCast(this);
-            const observer = this[DispatchedObservable_observer];
+            const observer = this[__DispatchedObservable_observer];
             return observer[QueueableLike_backpressureStrategy];
         },
         get [BufferLike_capacity]() {
             unsafeCast(this);
             // Practically the observer can never be none.
-            const observer = this[DispatchedObservable_observer];
+            const observer = this[__DispatchedObservable_observer];
             return observer[BufferLike_capacity];
         },
         [QueueableLike_enqueue](next) {
-            const observer = this[DispatchedObservable_observer];
+            const observer = this[__DispatchedObservable_observer];
             // Practically the observer can never be none,
             // unless the stream operator uses fromFactory subscriptions
             // eg. concat.
@@ -57,7 +57,7 @@ const DispatchedObservable_create =
             }
         },
         [DispatcherLike_complete]() {
-            const observer = this[DispatchedObservable_observer];
+            const observer = this[__DispatchedObservable_observer];
             // Practically the observer can never be none,
             // unless the stream operator uses fromFactory subscriptions
             // eg. concat.
@@ -67,10 +67,10 @@ const DispatchedObservable_create =
             observer[DispatcherLike_complete]();
         },
         [ObservableLike_observe](observer) {
-            if (isSome(this[DispatchedObservable_observer])) {
+            if (isSome(this[__DispatchedObservable_observer])) {
                 raiseWithDebugMessage("DispatchedObservable already subscribed to");
             }
-            this[DispatchedObservable_observer] = observer;
+            this[__DispatchedObservable_observer] = observer;
         },
     }));
 })();

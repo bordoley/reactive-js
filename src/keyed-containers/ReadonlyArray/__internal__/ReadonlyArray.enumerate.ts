@@ -7,9 +7,9 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  ReadonlyArrayEnumerator_count,
-  ReadonlyArrayEnumerator_index,
-  ReadonlyArrayEnumerator_values,
+  __ReadonlyArrayEnumerator_count,
+  __ReadonlyArrayEnumerator_index,
+  __ReadonlyArrayEnumerator_values,
 } from "../../../__internal__/symbols.js";
 import {
   EnumeratorLike,
@@ -30,9 +30,9 @@ const ReadonlyArray_enumerate: <T>() => Function1<
   EnumeratorLike<T>
 > = /*@__PURE__*/ (<T>() => {
   type TReadonlyArrayEnumeratorProperties = {
-    [ReadonlyArrayEnumerator_values]: ReadonlyArrayLike<T>;
-    [ReadonlyArrayEnumerator_index]: number;
-    [ReadonlyArrayEnumerator_count]: number;
+    [__ReadonlyArrayEnumerator_values]: ReadonlyArrayLike<T>;
+    [__ReadonlyArrayEnumerator_index]: number;
+    [__ReadonlyArrayEnumerator_count]: number;
   };
 
   const createEnumerator: <T>(
@@ -52,16 +52,16 @@ const ReadonlyArray_enumerate: <T>() => Function1<
         _: unknown,
       ): EnumeratorLike<T> {
         init(MutableEnumerator_mixin<T>(), instance);
-        instance[ReadonlyArrayEnumerator_values] = values;
-        instance[ReadonlyArrayEnumerator_index] = start;
-        instance[ReadonlyArrayEnumerator_count] = count;
+        instance[__ReadonlyArrayEnumerator_values] = values;
+        instance[__ReadonlyArrayEnumerator_index] = start;
+        instance[__ReadonlyArrayEnumerator_count] = count;
 
         return instance;
       },
       props<TReadonlyArrayEnumeratorProperties>({
-        [ReadonlyArrayEnumerator_values]: none,
-        [ReadonlyArrayEnumerator_index]: -1,
-        [ReadonlyArrayEnumerator_count]: 0,
+        [__ReadonlyArrayEnumerator_values]: none,
+        [__ReadonlyArrayEnumerator_index]: -1,
+        [__ReadonlyArrayEnumerator_count]: 0,
       }),
       {
         [EnumeratorLike_move](
@@ -69,22 +69,22 @@ const ReadonlyArray_enumerate: <T>() => Function1<
         ) {
           this[MutableEnumeratorLike_reset]();
 
-          const count = this[ReadonlyArrayEnumerator_count];
+          const count = this[__ReadonlyArrayEnumerator_count];
 
           if (count != 0) {
-            const values = this[ReadonlyArrayEnumerator_values];
-            const index = this[ReadonlyArrayEnumerator_index];
+            const values = this[__ReadonlyArrayEnumerator_values];
+            const index = this[__ReadonlyArrayEnumerator_index];
             const value = values[index];
 
             this[EnumeratorLike_current] = value;
           }
 
           if (count > 0) {
-            this[ReadonlyArrayEnumerator_count]--;
-            this[ReadonlyArrayEnumerator_index]++;
+            this[__ReadonlyArrayEnumerator_count]--;
+            this[__ReadonlyArrayEnumerator_index]++;
           } else if (count < 0) {
-            this[ReadonlyArrayEnumerator_count]++;
-            this[ReadonlyArrayEnumerator_index]--;
+            this[__ReadonlyArrayEnumerator_count]++;
+            this[__ReadonlyArrayEnumerator_index]--;
           }
 
           return this[EnumeratorLike_hasCurrent];

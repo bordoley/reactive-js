@@ -23,26 +23,26 @@ via the pause and resume methods.
 
 ### Properties
 
-- [[FlowableStreamLike\_isPaused]](streaming.FlowableStreamLike.md#[flowablestreamlike_ispaused])
+- [[\_\_\_FlowableStreamLike\_isPaused]](streaming.FlowableStreamLike.md#[___flowablestreamlike_ispaused])
 
 ### Methods
 
-- [[FlowableStreamLike\_pause]](streaming.FlowableStreamLike.md#[flowablestreamlike_pause])
-- [[FlowableStreamLike\_resume]](streaming.FlowableStreamLike.md#[flowablestreamlike_resume])
+- [[\_\_\_FlowableStreamLike\_pause]](streaming.FlowableStreamLike.md#[___flowablestreamlike_pause])
+- [[\_\_\_FlowableStreamLike\_resume]](streaming.FlowableStreamLike.md#[___flowablestreamlike_resume])
 
 ## Properties
 
-### [FlowableStreamLike\_isPaused]
+### [\_\_\_FlowableStreamLike\_isPaused]
 
-• `Readonly` **[FlowableStreamLike\_isPaused]**: [`ObservableLike`](rx.ObservableLike.md)<`boolean`\>
+• `Readonly` **[\_\_\_FlowableStreamLike\_isPaused]**: [`ObservableLike`](rx.ObservableLike.md)<`boolean`\>
 
 Reactive property indicating if the stream is paused or not.
 
 ## Methods
 
-### [FlowableStreamLike\_pause]
+### [\_\_\_FlowableStreamLike\_pause]
 
-▸ **[FlowableStreamLike_pause]**(): `void`
+▸ **[___FlowableStreamLike_pause]**(): `void`
 
 Imperatively pause the stream.
 
@@ -52,9 +52,9 @@ Imperatively pause the stream.
 
 ___
 
-### [FlowableStreamLike\_resume]
+### [\_\_\_FlowableStreamLike\_resume]
 
-▸ **[FlowableStreamLike_resume]**(): `void`
+▸ **[___FlowableStreamLike_resume]**(): `void`
 
 Imperatively resume the stream.
 

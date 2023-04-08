@@ -1,7 +1,7 @@
 /// <reference types="./Observer.satisfyMixin.d.ts" />
 
 import { DelegatingLike_delegate, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { SatisfyObserver_predicate } from "../../../__internal__/symbols.js";
+import { __SatisfyObserver_predicate } from "../../../__internal__/symbols.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, none, pipe } from "../../../functions.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
@@ -14,7 +14,7 @@ const Observer_satisfyMixin = (defaultResult) => {
     return mix(include(delegatingMixin(), Observer_mixin()), function SatisfyObserver(instance, delegate, predicate) {
         init(Observer_mixin(), instance, delegate, delegate);
         init(delegatingMixin(), instance, delegate);
-        instance[SatisfyObserver_predicate] = predicate;
+        instance[__SatisfyObserver_predicate] = predicate;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             if (!delegate[DisposableLike_isDisposed]) {
                 pipe(defaultResult, Optional_toObservable(), invoke(ObservableLike_observe, delegate));
@@ -22,11 +22,11 @@ const Observer_satisfyMixin = (defaultResult) => {
         }));
         return instance;
     }, props({
-        [SatisfyObserver_predicate]: none,
+        [__SatisfyObserver_predicate]: none,
     }), {
         [ObserverLike_notify](next) {
             Observer_assertState(this);
-            if (this[SatisfyObserver_predicate](next)) {
+            if (this[__SatisfyObserver_predicate](next)) {
                 this[DelegatingLike_delegate][ObserverLike_notify](!defaultResult);
                 this[DelegatingLike_delegate][DisposableLike_dispose]();
             }

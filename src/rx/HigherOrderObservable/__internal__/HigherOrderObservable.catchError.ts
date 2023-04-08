@@ -1,5 +1,8 @@
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   createInstanceFactory,
+  delegatingMixin,
   include,
   init,
   mix,
@@ -28,10 +31,7 @@ import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, {
-  ObserverMixin_scheduler,
-  TObserverMixin,
-} from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
 const HigherOrderObservable_catchError = <C extends ObservableLike>(
   lift: <T>(
@@ -41,13 +41,14 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
   const createCatchErrorObserver = (<T>() => {
     return createInstanceFactory(
       mix(
-        include(Observer_mixin<T>()),
+        include(Observer_mixin<T>(), delegatingMixin()),
         function CatchErrorObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
           delegate: ObserverLike<T>,
           errorHandler: Function1<unknown, ContainerOf<C, T> | void>,
         ): ObserverLike<T> {
           init(Observer_mixin(), instance, delegate, delegate);
+          init(delegatingMixin(), instance, delegate);
 
           pipe(
             instance,
@@ -71,11 +72,11 @@ const HigherOrderObservable_catchError = <C extends ObservableLike>(
         props({}),
         {
           [ObserverLike_notify](
-            this: TObserverMixin<T, ObserverLike<T>> & ObserverLike<T>,
+            this: DelegatingLike<ObserverLike<T>> & ObserverLike<T>,
             next: T,
           ) {
             Observer_assertState(this);
-            this[ObserverMixin_scheduler][ObserverLike_notify](next);
+            this[DelegatingLike_delegate][ObserverLike_notify](next);
           },
         },
       ),

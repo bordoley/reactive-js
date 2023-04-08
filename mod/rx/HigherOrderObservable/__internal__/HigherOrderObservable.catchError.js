@@ -1,17 +1,18 @@
 /// <reference types="./HigherOrderObservable.catchError.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { bindMethod, error, isSome, partial, pipe, } from "../../../functions.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, { ObserverMixin_scheduler, } from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 const HigherOrderObservable_catchError = (lift) => {
     const createCatchErrorObserver = (() => {
-        return createInstanceFactory(mix(include(Observer_mixin()), function CatchErrorObserver(instance, delegate, errorHandler) {
+        return createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function CatchErrorObserver(instance, delegate, errorHandler) {
             init(Observer_mixin(), instance, delegate, delegate);
+            init(delegatingMixin(), instance, delegate);
             pipe(instance, Disposable_onComplete(bindMethod(delegate, DisposableLike_dispose)), Disposable_onError((err) => {
                 try {
                     const result = errorHandler(err);
@@ -30,7 +31,7 @@ const HigherOrderObservable_catchError = (lift) => {
         }, props({}), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[ObserverMixin_scheduler][ObserverLike_notify](next);
+                this[DelegatingLike_delegate][ObserverLike_notify](next);
             },
         }));
     })();

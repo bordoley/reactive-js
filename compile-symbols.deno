@@ -6,7 +6,7 @@ const makeJS = async symbols => {
     symbols.map(symbol =>
 `
 /** @type {unique symbol} */
-export const ${symbol} = /*@__PURE__*/ symbol("${symbol}");`
+export const __${symbol} = /*@__PURE__*/ symbol("${symbol}");`
     ).join("\n");
 
   await Deno.writeTextFile(src + ".js", output);
@@ -14,7 +14,7 @@ export const ${symbol} = /*@__PURE__*/ symbol("${symbol}");`
 
 const makeDTS = async symbols => {
   const output = symbols.map(
-    symbol => `export declare const ${symbol}: unique symbol;\n`
+    symbol => `export declare const __${symbol}: unique symbol;\n`
   ).join("\n");
 
   await Deno.writeTextFile(src + ".d.ts", output);

@@ -14,10 +14,10 @@
 
 ### Properties
 
-- [[CollectionLike\_count]](util.CollectionLike.md#[collectionlike_count])
+- [[\_\_\_CollectionLike\_count]](util.CollectionLike.md#[___collectionlike_count])
 
 ## Properties
 
-### [CollectionLike\_count]
+### [\_\_\_CollectionLike\_count]
 
-• `Readonly` **[CollectionLike\_count]**: `number`
+• `Readonly` **[\_\_\_CollectionLike\_count]**: `number`

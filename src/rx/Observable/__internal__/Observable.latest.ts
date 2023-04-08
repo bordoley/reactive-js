@@ -7,21 +7,21 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  LatestCtx_completedCount,
-  LatestCtx_delegate,
-  LatestCtx_mode,
-  LatestCtx_observers,
-  LatestObserver_ctx,
-  LatestObserver_latest,
-  LatestObserver_ready,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
+  __LatestCtx_completedCount,
+  __LatestCtx_delegate,
+  __LatestCtx_mode,
+  __LatestCtx_observers,
+  __LatestObserver_ctx,
+  __LatestObserver_latest,
+  __LatestObserver_ready,
 } from "../../../__internal__/symbols.js";
 import { none, pipe } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import {
   ObservableLike,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -46,53 +46,57 @@ const zipMode = 2;
 
 const Observable_latest = /*@__PURE__*/ (() => {
   type LatestCtx = {
-    [LatestCtx_delegate]: ObserverLike<readonly unknown[]>;
-    [LatestCtx_mode]: LatestMode;
-    [LatestCtx_completedCount]: number;
-    [LatestCtx_observers]: TProperties[];
+    [__LatestCtx_delegate]: ObserverLike<readonly unknown[]>;
+    [__LatestCtx_mode]: LatestMode;
+    [__LatestCtx_completedCount]: number;
+    [__LatestCtx_observers]: TProperties[];
   };
 
   const add = (instance: LatestCtx, observer: TProperties): void => {
-    instance[LatestCtx_observers].push(observer);
+    instance[__LatestCtx_observers].push(observer);
   };
 
   const onNotify = (instance: LatestCtx) => {
-    const { [LatestCtx_mode]: mode, [LatestCtx_observers]: observers } =
-      instance;
+    const {
+      [__LatestCtx_mode]: mode,
+      [__LatestCtx_observers]: observers,
+    } = instance;
 
-    const isReady = observers.every(x => x[LatestObserver_ready]);
+    const isReady = observers.every(x => x[__LatestObserver_ready]);
 
     if (isReady) {
       const result = pipe(
         observers,
-        ReadonlyArray_map(observer => observer[LatestObserver_latest]),
+        ReadonlyArray_map(
+          observer => observer[__LatestObserver_latest],
+        ),
       );
-      instance[LatestCtx_delegate][ObserverLike_notify](result);
+      instance[__LatestCtx_delegate][ObserverLike_notify](result);
 
       if (mode === zipMode) {
         for (const sub of observers) {
-          sub[LatestObserver_ready] = false;
-          sub[LatestObserver_latest] = none as any;
+          sub[__LatestObserver_ready] = false;
+          sub[__LatestObserver_latest] = none as any;
         }
       }
     }
   };
 
   const onCompleted = (instance: LatestCtx) => {
-    instance[LatestCtx_completedCount]++;
+    instance[__LatestCtx_completedCount]++;
 
     if (
-      instance[LatestCtx_completedCount] ===
-      ReadonlyArray_getLength(instance[LatestCtx_observers])
+      instance[__LatestCtx_completedCount] ===
+      ReadonlyArray_getLength(instance[__LatestCtx_observers])
     ) {
-      instance[LatestCtx_delegate][DisposableLike_dispose]();
+      instance[__LatestCtx_delegate][DisposableLike_dispose]();
     }
   };
 
   type TProperties = {
-    [LatestObserver_ready]: boolean;
-    [LatestObserver_latest]: unknown;
-    readonly [LatestObserver_ctx]: LatestCtx;
+    [__LatestObserver_ready]: boolean;
+    [__LatestObserver_latest]: unknown;
+    readonly [__LatestObserver_ctx]: LatestCtx;
   };
 
   const createLatestObserver = createInstanceFactory(
@@ -109,22 +113,22 @@ const Observable_latest = /*@__PURE__*/ (() => {
         },
       ): ObserverLike & TProperties {
         init(Observer_mixin(), instance, scheduler, config);
-        instance[LatestObserver_ctx] = ctx;
+        instance[__LatestObserver_ctx] = ctx;
 
         return instance;
       },
       props<TProperties>({
-        [LatestObserver_ready]: false,
-        [LatestObserver_latest]: none,
-        [LatestObserver_ctx]: none,
+        [__LatestObserver_ready]: false,
+        [__LatestObserver_latest]: none,
+        [__LatestObserver_ctx]: none,
       }),
       {
         [ObserverLike_notify](this: TProperties & ObserverLike, next: unknown) {
           Observer_assertState(this);
 
-          const { [LatestObserver_ctx]: ctx } = this;
-          this[LatestObserver_latest] = next;
-          this[LatestObserver_ready] = true;
+          const { [__LatestObserver_ctx]: ctx } = this;
+          this[__LatestObserver_latest] = next;
+          this[__LatestObserver_ready] = true;
 
           onNotify(ctx);
         },
@@ -138,10 +142,10 @@ const Observable_latest = /*@__PURE__*/ (() => {
   ): ObservableLike<readonly unknown[]> => {
     const onSubscribe = (delegate: ObserverLike<readonly unknown[]>) => {
       const ctx: LatestCtx = {
-        [LatestCtx_completedCount]: 0,
-        [LatestCtx_observers]: [],
-        [LatestCtx_delegate]: delegate,
-        [LatestCtx_mode]: mode,
+        [__LatestCtx_completedCount]: 0,
+        [__LatestCtx_observers]: [],
+        [__LatestCtx_delegate]: delegate,
+        [__LatestCtx_mode]: mode,
       };
 
       for (const observable of observables) {

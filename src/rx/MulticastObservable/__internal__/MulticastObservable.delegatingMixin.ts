@@ -1,5 +1,5 @@
 import { Mixin1, mix, props } from "../../../__internal__/mixins.js";
-import { DelegatingMulticastObservableMixin_delegate } from "../../../__internal__/symbols.js";
+import { __DelegatingMulticastObservableMixin_delegate } from "../../../__internal__/symbols.js";
 import { none, returns, unsafeCast } from "../../../functions.js";
 import {
   MulticastObservableLike,
@@ -19,7 +19,7 @@ const MulticastObservable_delegatingMixin: <T>() => Mixin1<
   TMulticastObservable extends MulticastObservableLike<T> = MulticastObservableLike<T>,
 >() => {
   type TProperties = {
-    [DelegatingMulticastObservableMixin_delegate]: TMulticastObservable;
+    [__DelegatingMulticastObservableMixin_delegate]: TMulticastObservable;
   };
   return returns(
     mix(
@@ -27,44 +27,45 @@ const MulticastObservable_delegatingMixin: <T>() => Mixin1<
         instance: MulticastObservableLike<T> & TProperties,
         delegate: TMulticastObservable,
       ): MulticastObservableLike<T> {
-        instance[DelegatingMulticastObservableMixin_delegate] = delegate;
+        instance[__DelegatingMulticastObservableMixin_delegate] =
+          delegate;
 
         return instance;
       },
       props<TProperties>({
-        [DelegatingMulticastObservableMixin_delegate]: none,
+        [__DelegatingMulticastObservableMixin_delegate]: none,
       }),
       {
         get [MulticastObservableLike_observerCount](): number {
           unsafeCast<TProperties>(this);
-          return this[DelegatingMulticastObservableMixin_delegate][
+          return this[__DelegatingMulticastObservableMixin_delegate][
             MulticastObservableLike_observerCount
           ];
         },
 
         get [ReplayableLike_buffer]() {
           unsafeCast<TProperties>(this);
-          return this[DelegatingMulticastObservableMixin_delegate][
+          return this[__DelegatingMulticastObservableMixin_delegate][
             ReplayableLike_buffer
           ];
         },
 
         get [ObservableLike_isEnumerable]() {
           unsafeCast<TProperties>(this);
-          return this[DelegatingMulticastObservableMixin_delegate][
+          return this[__DelegatingMulticastObservableMixin_delegate][
             ObservableLike_isEnumerable
           ];
         },
 
         get [ObservableLike_isRunnable]() {
           unsafeCast<TProperties>(this);
-          return this[DelegatingMulticastObservableMixin_delegate][
+          return this[__DelegatingMulticastObservableMixin_delegate][
             ObservableLike_isRunnable
           ];
         },
 
         [ObservableLike_observe](this: TProperties, observer: ObserverLike<T>) {
-          this[DelegatingMulticastObservableMixin_delegate][
+          this[__DelegatingMulticastObservableMixin_delegate][
             ObservableLike_observe
           ](observer);
         },

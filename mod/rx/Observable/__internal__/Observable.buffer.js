@@ -3,14 +3,14 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { BufferObserver_buffer, BufferObserver_count, BufferObserver_durationFunction, BufferObserver_durationSubscription, ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../__internal__/symbols.js";
+import { __BufferObserver_buffer, __BufferObserver_count, __BufferObserver_durationFunction, __BufferObserver_durationSubscription, } from "../../../__internal__/symbols.js";
 import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, isNumber, none, pipe } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_isEmpty from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_toObservable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -26,14 +26,15 @@ const Observable_buffer = /*@__PURE__*/ (() => {
     const createBufferObserver = createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, count) {
         init(Observer_mixin(), instance, delegate, delegate);
         init(delegatingMixin(), instance, delegate);
-        instance[BufferObserver_buffer] = [];
-        instance[BufferObserver_durationFunction] = durationFunction;
-        instance[BufferObserver_durationSubscription] =
+        instance[__BufferObserver_buffer] = [];
+        instance[__BufferObserver_durationFunction] =
+            durationFunction;
+        instance[__BufferObserver_durationSubscription] =
             SerialDisposable_create(Disposable_disposed);
-        instance[BufferObserver_count] = count;
+        instance[__BufferObserver_count] = count;
         pipe(instance, Disposable_onComplete(() => {
-            const { [BufferObserver_buffer]: buffer } = instance;
-            instance[BufferObserver_buffer] = [];
+            const { [__BufferObserver_buffer]: buffer } = instance;
+            instance[__BufferObserver_buffer] = [];
             if (ReadonlyArray_isEmpty(buffer)) {
                 delegate[DisposableLike_dispose]();
             }
@@ -43,26 +44,26 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         }));
         return instance;
     }, props({
-        [BufferObserver_buffer]: none,
-        [BufferObserver_durationFunction]: none,
-        [BufferObserver_durationSubscription]: none,
-        [BufferObserver_count]: 0,
+        [__BufferObserver_buffer]: none,
+        [__BufferObserver_durationFunction]: none,
+        [__BufferObserver_durationSubscription]: none,
+        [__BufferObserver_count]: 0,
     }), {
         [ObserverLike_notify](next) {
             Observer_assertState(this);
-            const { [BufferObserver_buffer]: buffer, [BufferObserver_count]: count, } = this;
+            const { [__BufferObserver_buffer]: buffer, [__BufferObserver_count]: count, } = this;
             buffer.push(next);
             const doOnNotify = () => {
-                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = Disposable_disposed;
-                const buffer = this[BufferObserver_buffer];
-                this[BufferObserver_buffer] = [];
+                this[__BufferObserver_durationSubscription][SerialDisposableLike_current] = Disposable_disposed;
+                const buffer = this[__BufferObserver_buffer];
+                this[__BufferObserver_buffer] = [];
                 this[DelegatingLike_delegate][ObserverLike_notify](buffer);
             };
             if (ReadonlyArray_getLength(buffer) === count) {
                 doOnNotify();
             }
-            else if (this[BufferObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed]) {
-                this[BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribeWithConfig(this, this));
+            else if (this[__BufferObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed]) {
+                this[__BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[__BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribeWithConfig(this, this));
             }
         },
     }));

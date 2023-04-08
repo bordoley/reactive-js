@@ -62,7 +62,7 @@ ___
 
 ### KeyOf
 
-Ƭ **KeyOf**<`C`\>: `C` extends { `[ContainerLike_type]?`: `unknown`  } ? `NonNullable`<`C`[typeof `KeyedContainerLike_TKey`]\> : {}
+Ƭ **KeyOf**<`C`\>: `C` extends { `[___ContainerLike_type]?`: `unknown`  } ? `NonNullable`<`C`[typeof `KeyedContainerLike_TKey`]\> : {}
 
 #### Type parameters
 
@@ -74,7 +74,7 @@ ___
 
 ### KeyedContainerOf
 
-Ƭ **KeyedContainerOf**<`C`, `TKey`, `T`\>: `C` extends { `[ContainerLike_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[ContainerLike_T]`: `T` ; `[KeyedContainerLike_TKey]`: `TKey`  }[typeof `ContainerLike_type`]\> : { `_C`: `C` ; `_T`: () => `T` ; `_TKey`: () => `TKey`  }
+Ƭ **KeyedContainerOf**<`C`, `TKey`, `T`\>: `C` extends { `[___ContainerLike_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[___ContainerLike_T]`: `T` ; `[___KeyedContainerLike_TKey]`: `TKey`  }[typeof `ContainerLike_type`]\> : { `_C`: `C` ; `_T`: () => `T` ; `_TKey`: () => `TKey`  }
 
 Utility type for higher order programming with keyed-containers.
 

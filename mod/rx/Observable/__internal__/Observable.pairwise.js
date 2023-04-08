@@ -1,7 +1,7 @@
 /// <reference types="./Observable.pairwise.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { PairwiseObserver_hasPrev, PairwiseObserver_prev, } from "../../../__internal__/symbols.js";
+import { __PairwiseObserver_hasPrev, __PairwiseObserver_prev, } from "../../../__internal__/symbols.js";
 import { none, pipe, returns } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
@@ -14,17 +14,17 @@ const Observable_pairwise = /*@__PURE__*/ (() => {
             init(delegatingMixin(), instance, delegate);
             return instance;
         }, props({
-            [PairwiseObserver_prev]: none,
-            [PairwiseObserver_hasPrev]: false,
+            [__PairwiseObserver_prev]: none,
+            [__PairwiseObserver_hasPrev]: false,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                const prev = this[PairwiseObserver_prev];
-                if (this[PairwiseObserver_hasPrev]) {
+                const prev = this[__PairwiseObserver_prev];
+                if (this[__PairwiseObserver_hasPrev]) {
                     this[DelegatingLike_delegate][ObserverLike_notify]([prev, next]);
                 }
-                this[PairwiseObserver_hasPrev] = true;
-                this[PairwiseObserver_prev] = next;
+                this[__PairwiseObserver_hasPrev] = true;
+                this[__PairwiseObserver_prev] = next;
             },
         }));
     })();

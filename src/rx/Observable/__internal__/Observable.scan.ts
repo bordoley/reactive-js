@@ -10,8 +10,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  ScanObserver_acc,
-  ScanObserver_reducer,
+  __ScanObserver_acc,
+  __ScanObserver_reducer,
 } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
@@ -43,8 +43,8 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
     initialValue: Factory<TAcc>,
   ) => ObserverLike<T> = (() => {
     type TProperties = {
-      readonly [ScanObserver_reducer]: Reducer<T, TAcc>;
-      [ScanObserver_acc]: TAcc;
+      readonly [__ScanObserver_reducer]: Reducer<T, TAcc>;
+      [__ScanObserver_acc]: TAcc;
     };
 
     return createInstanceFactory(
@@ -59,11 +59,11 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(delegatingMixin(), instance, delegate);
-          instance[ScanObserver_reducer] = reducer;
+          instance[__ScanObserver_reducer] = reducer;
 
           try {
             const acc = initialValue();
-            instance[ScanObserver_acc] = acc;
+            instance[__ScanObserver_acc] = acc;
           } catch (e) {
             instance[DisposableLike_dispose](error(e));
           }
@@ -71,8 +71,8 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
           return instance;
         },
         props<TProperties>({
-          [ScanObserver_reducer]: none,
-          [ScanObserver_acc]: none,
+          [__ScanObserver_reducer]: none,
+          [__ScanObserver_acc]: none,
         }),
         {
           [ObserverLike_notify](
@@ -83,11 +83,11 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
           ) {
             Observer_assertState(this);
 
-            const nextAcc = this[ScanObserver_reducer](
-              this[ScanObserver_acc],
+            const nextAcc = this[__ScanObserver_reducer](
+              this[__ScanObserver_acc],
               next,
             );
-            this[ScanObserver_acc] = nextAcc;
+            this[__ScanObserver_acc] = nextAcc;
             this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
           },
         },

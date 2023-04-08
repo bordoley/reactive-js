@@ -24,14 +24,14 @@ A compile time only type for using a Javascript `AsyncIterable` as a `ContainerL
 
 ### Properties
 
-- [[ContainerLike\_type]](containers.AsyncIterableLike.md#[containerlike_type])
+- [[\_\_\_ContainerLike\_type]](containers.AsyncIterableLike.md#[___containerlike_type])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`AsyncIterableLike`](containers.AsyncIterableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`AsyncIterableLike`](containers.AsyncIterableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
+[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])

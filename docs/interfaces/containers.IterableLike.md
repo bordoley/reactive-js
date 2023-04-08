@@ -24,14 +24,14 @@ A compile time only type for using a Javascript `Iterable` as a `ContainerLike`.
 
 ### Properties
 
-- [[ContainerLike\_type]](containers.IterableLike.md#[containerlike_type])
+- [[\_\_\_ContainerLike\_type]](containers.IterableLike.md#[___containerlike_type])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`IterableLike`](containers.IterableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`IterableLike`](containers.IterableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
+[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])

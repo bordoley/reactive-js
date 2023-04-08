@@ -36,17 +36,17 @@ Base type for all Containers.
 
 ### Properties
 
-- [[ContainerLike\_T]](containers.ContainerLike.md#[containerlike_t])
-- [[ContainerLike\_type]](containers.ContainerLike.md#[containerlike_type])
+- [[\_\_\_ContainerLike\_T]](containers.ContainerLike.md#[___containerlike_t])
+- [[\_\_\_ContainerLike\_type]](containers.ContainerLike.md#[___containerlike_type])
 
 ## Properties
 
-### [ContainerLike\_T]
+### [\_\_\_ContainerLike\_T]
 
-• `Optional` `Readonly` **[ContainerLike\_T]**: `unknown`
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_T]**: `unknown`
 
 ___
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: `unknown`
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: `unknown`

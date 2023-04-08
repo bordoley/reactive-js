@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER, __DEV__ } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
+import { __EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
@@ -24,12 +24,12 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             [QueueableLike_backpressureStrategy]: "overflow",
             [BufferLike_capacity]: MAX_SAFE_INTEGER,
         });
-        instance[EnumerableEnumerator_continuationQueue] =
+        instance[__EnumerableEnumerator_continuationQueue] =
             IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
         // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
         return instance;
     }, props({
-        [EnumerableEnumerator_continuationQueue]: none,
+        [__EnumerableEnumerator_continuationQueue]: none,
     }), {
         [SchedulerLike_now]: 0,
         get [PrioritySchedulerImplementationLike_shouldYield]() {
@@ -39,7 +39,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
         [EnumeratorLike_move]() {
             this[MutableEnumeratorLike_reset]();
             while (!this[EnumeratorLike_hasCurrent]) {
-                const continuation = this[EnumerableEnumerator_continuationQueue][QueueLike_dequeue]();
+                const continuation = this[__EnumerableEnumerator_continuationQueue][QueueLike_dequeue]();
                 if (isSome(continuation)) {
                     this[PrioritySchedulerImplementationLike_runContinuation](continuation);
                 }
@@ -59,7 +59,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
                 return;
             }
             continuation[ContinuationLike_continuationScheduler] = this;
-            this[EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](continuation);
+            this[__EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](continuation);
         },
         [ObserverLike_notify](next) {
             Observer_assertState(this);

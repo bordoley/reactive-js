@@ -22,25 +22,25 @@ An `ObservableLike` that supports interactive enumeration.
 
 ### Properties
 
-- [[ContainerLike\_type]](rx.EnumerableLike.md#[containerlike_type])
-- [[ObservableLike\_isEnumerable]](rx.EnumerableLike.md#[observablelike_isenumerable])
+- [[\_\_\_ContainerLike\_type]](rx.EnumerableLike.md#[___containerlike_type])
+- [[\_\_\_ObservableLike\_isEnumerable]](rx.EnumerableLike.md#[___observablelike_isenumerable])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`EnumerableLike`](rx.EnumerableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`EnumerableLike`](rx.EnumerableLike.md)<`unknown`\>
 
 #### Overrides
 
-[RunnableLike](rx.RunnableLike.md).[[ContainerLike_type]](rx.RunnableLike.md#[containerlike_type])
+[RunnableLike](rx.RunnableLike.md).[[___ContainerLike_type]](rx.RunnableLike.md#[___containerlike_type])
 
 ___
 
-### [ObservableLike\_isEnumerable]
+### [\_\_\_ObservableLike\_isEnumerable]
 
-• `Readonly` **[ObservableLike\_isEnumerable]**: ``true``
+• `Readonly` **[\_\_\_ObservableLike\_isEnumerable]**: ``true``
 
 #### Overrides
 
-RunnableLike.\_\_@ObservableLike\_isEnumerable@22140
+RunnableLike.\_\_@\_\_\_ObservableLike\_isEnumerable@22140

@@ -1,4 +1,4 @@
-import { MergeObserverCtx_completedCount } from "../../../__internal__/symbols.js";
+import { __MergeObserverCtx_completedCount } from "../../../__internal__/symbols.js";
 import { pipe } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
@@ -18,15 +18,15 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
     delegate: ObserverLike<T>,
     count: number,
     ctx: {
-      [MergeObserverCtx_completedCount]: number;
+      [__MergeObserverCtx_completedCount]: number;
     },
   ) =>
     pipe(
       Observer_createWithDelegate(delegate),
       Disposable_addTo(delegate),
       Disposable_onComplete(() => {
-        ctx[MergeObserverCtx_completedCount]++;
-        if (ctx[MergeObserverCtx_completedCount] >= count) {
+        ctx[__MergeObserverCtx_completedCount]++;
+        if (ctx[__MergeObserverCtx_completedCount] >= count) {
           delegate[DisposableLike_dispose]();
         }
       }),
@@ -35,7 +35,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
   return <T>(observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
     const onSubscribe = (observer: ObserverLike<T>) => {
       const count = ReadonlyArray_getLength(observables);
-      const ctx = { [MergeObserverCtx_completedCount]: 0 };
+      const ctx = { [__MergeObserverCtx_completedCount]: 0 };
 
       for (const observable of observables) {
         pipe(

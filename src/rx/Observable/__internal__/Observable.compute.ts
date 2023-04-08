@@ -1,22 +1,21 @@
 import {
-  AwaitOrObserveEffect_hasValue,
-  AwaitOrObserveEffect_observable,
-  AwaitOrObserveEffect_subscription,
-  AwaitOrObserveEffect_value,
-  ComputeContext_awaitOrObserve,
-  ComputeContext_cleanup,
-  ComputeContext_effects,
-  ComputeContext_index,
-  ComputeContext_memoOrUse,
-  ComputeContext_mode,
-  ComputeContext_observer,
-  ComputeContext_runComputation,
-  ComputeContext_scheduledComputationSubscription,
-  ComputeEffect_type,
-  MemoOrUsingEffect_args,
-  MemoOrUsingEffect_func,
-  MemoOrUsingEffect_value,
-  SchedulerLike_schedule,
+  __AwaitOrObserveEffect_hasValue,
+  __AwaitOrObserveEffect_observable,
+  __AwaitOrObserveEffect_subscription,
+  __AwaitOrObserveEffect_value,
+  __ComputeContext_awaitOrObserve,
+  __ComputeContext_cleanup,
+  __ComputeContext_effects,
+  __ComputeContext_index,
+  __ComputeContext_memoOrUse,
+  __ComputeContext_mode,
+  __ComputeContext_observer,
+  __ComputeContext_runComputation,
+  __ComputeContext_scheduledComputationSubscription,
+  __ComputeEffect_type,
+  __MemoOrUsingEffect_args,
+  __MemoOrUsingEffect_func,
+  __MemoOrUsingEffect_value,
 } from "../../../__internal__/symbols.js";
 import {
   Equality,
@@ -55,7 +54,7 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
+import { SchedulerLike, SchedulerLike_schedule } from "../../../scheduling.js";
 import {
   StreamLike,
   StreamableLike,
@@ -92,33 +91,33 @@ type ComputeEffectType =
   | typeof Using;
 
 type MemoOrUsingEffect<T = unknown> = {
-  [MemoOrUsingEffect_func]: (...args: any[]) => unknown;
-  [MemoOrUsingEffect_args]: unknown[];
-  [MemoOrUsingEffect_value]: T;
+  [__MemoOrUsingEffect_func]: (...args: any[]) => unknown;
+  [__MemoOrUsingEffect_args]: unknown[];
+  [__MemoOrUsingEffect_value]: T;
 };
 
 type MemoEffect = {
-  readonly [ComputeEffect_type]: typeof Memo;
+  readonly [__ComputeEffect_type]: typeof Memo;
 } & MemoOrUsingEffect;
 
 type UsingEffect = {
-  readonly [ComputeEffect_type]: typeof Using;
-  [MemoOrUsingEffect_func]: (...args: any[]) => unknown;
-  [MemoOrUsingEffect_args]: unknown[];
+  readonly [__ComputeEffect_type]: typeof Using;
+  [__MemoOrUsingEffect_func]: (...args: any[]) => unknown;
+  [__MemoOrUsingEffect_args]: unknown[];
 } & MemoOrUsingEffect<DisposableLike>;
 
 type AwaitOrObserveEffect = {
-  [AwaitOrObserveEffect_observable]: ObservableLike;
-  [AwaitOrObserveEffect_subscription]: DisposableLike;
-  [AwaitOrObserveEffect_value]: Optional;
-  [AwaitOrObserveEffect_hasValue]: boolean;
+  [__AwaitOrObserveEffect_observable]: ObservableLike;
+  [__AwaitOrObserveEffect_subscription]: DisposableLike;
+  [__AwaitOrObserveEffect_value]: Optional;
+  [__AwaitOrObserveEffect_hasValue]: boolean;
 };
 type ObserveEffect = {
-  readonly [ComputeEffect_type]: typeof Observe;
+  readonly [__ComputeEffect_type]: typeof Observe;
 } & AwaitOrObserveEffect;
 
 type AwaitEffect = {
-  readonly [ComputeEffect_type]: typeof Await;
+  readonly [__ComputeEffect_type]: typeof Await;
 } & AwaitOrObserveEffect;
 
 type ComputeEffect = AwaitEffect | MemoEffect | ObserveEffect | UsingEffect;
@@ -136,45 +135,50 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
   ctx: ComputeContext,
   type: ComputeEffectType,
 ): ComputeEffect => {
-  const { [ComputeContext_effects]: effects, [ComputeContext_index]: index } =
-    ctx;
-  ctx[ComputeContext_index]++;
+  const {
+    [__ComputeContext_effects]: effects,
+    [__ComputeContext_index]: index,
+  } = ctx;
+  ctx[__ComputeContext_index]++;
 
   const effect = effects[index];
 
-  if (isSome(effect) && effect[ComputeEffect_type] === type) {
+  if (isSome(effect) && effect[__ComputeEffect_type] === type) {
     return effect;
   } else {
     if (
       isSome(effect) &&
-      (effect[ComputeEffect_type] === Await ||
-        effect[ComputeEffect_type] === Observe)
+      (effect[__ComputeEffect_type] === Await ||
+        effect[__ComputeEffect_type] === Observe)
     ) {
-      effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
+      effect[__AwaitOrObserveEffect_subscription][
+        DisposableLike_dispose
+      ]();
     }
 
     const newEffect: ComputeEffect =
       type === Memo
         ? {
-            [ComputeEffect_type]: type,
-            [MemoOrUsingEffect_func]: ignore,
-            [MemoOrUsingEffect_args]: [],
-            [MemoOrUsingEffect_value]: none,
+            [__ComputeEffect_type]: type,
+            [__MemoOrUsingEffect_func]: ignore,
+            [__MemoOrUsingEffect_args]: [],
+            [__MemoOrUsingEffect_value]: none,
           }
         : type === Await || type === Observe
         ? {
-            [ComputeEffect_type]: type,
-            [AwaitOrObserveEffect_observable]: Observable_empty(),
-            [AwaitOrObserveEffect_subscription]: Disposable_disposed,
-            [AwaitOrObserveEffect_value]: none,
-            [AwaitOrObserveEffect_hasValue]: false,
+            [__ComputeEffect_type]: type,
+            [__AwaitOrObserveEffect_observable]: Observable_empty(),
+            [__AwaitOrObserveEffect_subscription]:
+              Disposable_disposed,
+            [__AwaitOrObserveEffect_value]: none,
+            [__AwaitOrObserveEffect_hasValue]: false,
           }
         : type === Using
         ? {
-            [ComputeEffect_type]: type,
-            [MemoOrUsingEffect_func]: ignore,
-            [MemoOrUsingEffect_args]: [],
-            [MemoOrUsingEffect_value]: Disposable_disposed,
+            [__ComputeEffect_type]: type,
+            [__MemoOrUsingEffect_func]: ignore,
+            [__MemoOrUsingEffect_args]: [],
+            [__MemoOrUsingEffect_value]: Disposable_disposed,
           }
         : raiseWithDebugMessage("invalid effect type");
 
@@ -192,32 +196,34 @@ const arrayStrictEquality = arrayEquality();
 const awaiting = error();
 
 class ComputeContext {
-  [ComputeContext_index] = 0;
-  readonly [ComputeContext_effects]: ComputeEffect[] = [];
-  readonly [ComputeContext_observer]: ObserverLike;
+  [__ComputeContext_index] = 0;
+  readonly [__ComputeContext_effects]: ComputeEffect[] = [];
+  readonly [__ComputeContext_observer]: ObserverLike;
 
-  private [ComputeContext_scheduledComputationSubscription]: DisposableLike =
+  private [__ComputeContext_scheduledComputationSubscription]: DisposableLike =
     Disposable_disposed;
-  private readonly [ComputeContext_runComputation]: () => void;
-  private readonly [ComputeContext_mode]: EffectsMode;
-  private readonly [ComputeContext_cleanup] = () => {
-    const { [ComputeContext_effects]: effects } = this;
+  private readonly [__ComputeContext_runComputation]: () => void;
+  private readonly [__ComputeContext_mode]: EffectsMode;
+  private readonly [__ComputeContext_cleanup] = () => {
+    const { [__ComputeContext_effects]: effects } = this;
 
     const hasOutstandingEffects =
       effects.findIndex(
         effect =>
-          (effect[ComputeEffect_type] === Await ||
-            effect[ComputeEffect_type] === Observe) &&
-          !effect[AwaitOrObserveEffect_subscription][DisposableLike_isDisposed],
+          (effect[__ComputeEffect_type] === Await ||
+            effect[__ComputeEffect_type] === Observe) &&
+          !effect[__AwaitOrObserveEffect_subscription][
+            DisposableLike_isDisposed
+          ],
       ) >= 0;
 
     if (
       !hasOutstandingEffects &&
-      this[ComputeContext_scheduledComputationSubscription][
+      this[__ComputeContext_scheduledComputationSubscription][
         DisposableLike_isDisposed
       ]
     ) {
-      this[ComputeContext_observer][DisposableLike_dispose]();
+      this[__ComputeContext_observer][DisposableLike_dispose]();
     }
   };
 
@@ -226,12 +232,12 @@ class ComputeContext {
     runComputation: () => void,
     mode: EffectsMode,
   ) {
-    this[ComputeContext_observer] = observer;
-    this[ComputeContext_runComputation] = runComputation;
-    this[ComputeContext_mode] = mode;
+    this[__ComputeContext_observer] = observer;
+    this[__ComputeContext_runComputation] = runComputation;
+    this[__ComputeContext_mode] = mode;
   }
 
-  [ComputeContext_awaitOrObserve]<T>(
+  [__ComputeContext_awaitOrObserve]<T>(
     observable: ObservableLike<T>,
     shouldAwait: boolean,
   ): Optional<T> {
@@ -239,31 +245,33 @@ class ComputeContext {
       ? validateComputeEffect(this, Await)
       : validateComputeEffect(this, Observe);
 
-    if (effect[AwaitOrObserveEffect_observable] === observable) {
-      return effect[AwaitOrObserveEffect_value] as T;
+    if (effect[__AwaitOrObserveEffect_observable] === observable) {
+      return effect[__AwaitOrObserveEffect_value] as T;
     } else {
-      effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
+      effect[__AwaitOrObserveEffect_subscription][
+        DisposableLike_dispose
+      ]();
 
       const {
-        [ComputeContext_observer]: observer,
-        [ComputeContext_runComputation]: runComputation,
+        [__ComputeContext_observer]: observer,
+        [__ComputeContext_runComputation]: runComputation,
       } = this;
 
       const subscription = pipe(
         observable,
         Observable_forEach<ObservableLike, T>(next => {
-          effect[AwaitOrObserveEffect_value] = next;
-          effect[AwaitOrObserveEffect_hasValue] = true;
+          effect[__AwaitOrObserveEffect_value] = next;
+          effect[__AwaitOrObserveEffect_hasValue] = true;
 
-          if (this[ComputeContext_mode] === "combine-latest") {
+          if (this[__ComputeContext_mode] === "combine-latest") {
             runComputation();
           } else {
             let {
-              [ComputeContext_scheduledComputationSubscription]:
+              [__ComputeContext_scheduledComputationSubscription]:
                 scheduledComputationSubscription,
             } = this;
 
-            this[ComputeContext_scheduledComputationSubscription] =
+            this[__ComputeContext_scheduledComputationSubscription] =
               scheduledComputationSubscription[DisposableLike_isDisposed]
                 ? pipe(
                     observer[SchedulerLike_schedule](runComputation),
@@ -274,29 +282,29 @@ class ComputeContext {
         }),
         Observable_subscribeWithConfig(observer, observer),
         Disposable_addTo(observer),
-        Disposable_onComplete(this[ComputeContext_cleanup]),
+        Disposable_onComplete(this[__ComputeContext_cleanup]),
       );
 
-      effect[AwaitOrObserveEffect_observable] = observable;
-      effect[AwaitOrObserveEffect_subscription] = subscription;
-      effect[AwaitOrObserveEffect_value] = none;
-      effect[AwaitOrObserveEffect_hasValue] = false;
+      effect[__AwaitOrObserveEffect_observable] = observable;
+      effect[__AwaitOrObserveEffect_subscription] = subscription;
+      effect[__AwaitOrObserveEffect_value] = none;
+      effect[__AwaitOrObserveEffect_hasValue] = false;
 
       return shouldAwait ? raiseError(awaiting) : none;
     }
   }
 
-  [ComputeContext_memoOrUse]<T>(
+  [__ComputeContext_memoOrUse]<T>(
     shouldUse: false,
     f: (...args: any[]) => T,
     ...args: unknown[]
   ): T;
-  [ComputeContext_memoOrUse]<T extends DisposableLike>(
+  [__ComputeContext_memoOrUse]<T extends DisposableLike>(
     shouldUse: true,
     f: (...args: any[]) => T,
     ...args: unknown[]
   ): T;
-  [ComputeContext_memoOrUse]<T>(
+  [__ComputeContext_memoOrUse]<T>(
     shouldUse: boolean,
     f: (...args: any[]) => T,
     ...args: unknown[]
@@ -306,26 +314,26 @@ class ComputeContext {
       : validateComputeEffect(this, Memo);
 
     if (
-      f === effect[MemoOrUsingEffect_func] &&
-      arrayStrictEquality(args, effect[MemoOrUsingEffect_args])
+      f === effect[__MemoOrUsingEffect_func] &&
+      arrayStrictEquality(args, effect[__MemoOrUsingEffect_args])
     ) {
-      return effect[MemoOrUsingEffect_value] as T;
+      return effect[__MemoOrUsingEffect_value] as T;
     } else {
       if (shouldUse) {
-        (effect[MemoOrUsingEffect_value] as DisposableLike)[
+        (effect[__MemoOrUsingEffect_value] as DisposableLike)[
           DisposableLike_dispose
         ]();
       }
 
       const value = f(...args);
-      effect[MemoOrUsingEffect_func] = f;
-      effect[MemoOrUsingEffect_args] = args;
-      effect[MemoOrUsingEffect_value] = value;
+      effect[__MemoOrUsingEffect_func] = f;
+      effect[__MemoOrUsingEffect_args] = args;
+      effect[__MemoOrUsingEffect_value] = value;
 
       if (shouldUse) {
         pipe(
           value as DisposableLike,
-          Disposable_addTo(this[ComputeContext_observer]),
+          Disposable_addTo(this[__ComputeContext_observer]),
         );
       }
 
@@ -363,25 +371,34 @@ export const Observable_compute = <T>(
         }
       }
 
-      const { [ComputeContext_effects]: effects } = ctx;
+      const { [__ComputeContext_effects]: effects } = ctx;
 
-      if (ReadonlyArray_getLength(effects) > ctx[ComputeContext_index]) {
+      if (
+        ReadonlyArray_getLength(effects) > ctx[__ComputeContext_index]
+      ) {
         const effectsLength = effects.length;
 
-        for (let i = ctx[ComputeContext_index]; i < effectsLength; i++) {
-          const effect = ctx[ComputeContext_effects][i];
+        for (
+          let i = ctx[__ComputeContext_index];
+          i < effectsLength;
+          i++
+        ) {
+          const effect = ctx[__ComputeContext_effects][i];
 
           if (
-            effect[ComputeEffect_type] === Await ||
-            effect[ComputeEffect_type] === Observe
+            effect[__ComputeEffect_type] === Await ||
+            effect[__ComputeEffect_type] === Observe
           ) {
-            effect[AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
+            effect[__AwaitOrObserveEffect_subscription][
+              DisposableLike_dispose
+            ]();
           }
         }
       }
-      ctx[ComputeContext_effects].length = ctx[ComputeContext_index];
+      ctx[__ComputeContext_effects].length =
+        ctx[__ComputeContext_index];
       currentCtx = none;
-      ctx[ComputeContext_index] = 0;
+      ctx[__ComputeContext_index] = 0;
 
       const effectsLength = ReadonlyArray_getLength(effects);
 
@@ -390,20 +407,22 @@ export const Observable_compute = <T>(
       let hasOutstandingEffects = false;
       for (let i = 0; i < effectsLength; i++) {
         const effect = effects[i];
-        const { [ComputeEffect_type]: type } = effect;
+        const { [__ComputeEffect_type]: type } = effect;
 
         if (
           (type === Await || type === Observe) &&
-          !(effect as AwaitOrObserveEffect)[AwaitOrObserveEffect_hasValue]
+          !(effect as AwaitOrObserveEffect)[
+            __AwaitOrObserveEffect_hasValue
+          ]
         ) {
           allObserveEffectsHaveValues = false;
         }
 
         if (
           (type === Await || type === Observe) &&
-          !(effect as ObserveEffect)[AwaitOrObserveEffect_subscription][
-            DisposableLike_isDisposed
-          ]
+          !(effect as ObserveEffect)[
+            __AwaitOrObserveEffect_subscription
+          ][DisposableLike_isDisposed]
         ) {
           hasOutstandingEffects = true;
         }
@@ -478,21 +497,21 @@ export const Observable_compute__memo: __Memo["__memo"] = <T>(
   ...args: unknown[]
 ): T => {
   const ctx = assertCurrentContext();
-  return ctx[ComputeContext_memoOrUse](false, f, ...args);
+  return ctx[__ComputeContext_memoOrUse](false, f, ...args);
 };
 
 export const Observable_compute__await = <T>(
   observable: ObservableLike<T>,
 ): T => {
   const ctx = assertCurrentContext();
-  return ctx[ComputeContext_awaitOrObserve](observable, true) as T;
+  return ctx[__ComputeContext_awaitOrObserve](observable, true) as T;
 };
 
 export const Observable_compute__observe = <T>(
   observable: ObservableLike<T>,
 ): Optional<T> => {
   const ctx = assertCurrentContext();
-  return ctx[ComputeContext_awaitOrObserve](observable, false);
+  return ctx[__ComputeContext_awaitOrObserve](observable, false);
 };
 
 interface __Do {
@@ -544,19 +563,23 @@ export const Observable_compute__do: __Do["__do"] = /*@__PURE__*/ (() => {
   return (f: (...args: any[]) => void, ...args: unknown[]): void => {
     const ctx = assertCurrentContext();
 
-    const scheduler = ctx[ComputeContext_observer];
-    const observable = ctx[ComputeContext_memoOrUse](
+    const scheduler = ctx[__ComputeContext_observer];
+    const observable = ctx[__ComputeContext_memoOrUse](
       false,
       deferSideEffect,
       f,
       ...args,
     );
-    const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](
+    const subscribeOnScheduler = ctx[__ComputeContext_memoOrUse](
       false,
       Observable_subscribe,
       scheduler,
     );
-    ctx[ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
+    ctx[__ComputeContext_memoOrUse](
+      true,
+      subscribeOnScheduler,
+      observable,
+    );
   };
 })();
 
@@ -607,12 +630,12 @@ export const Observable_compute__using: __Using["__using"] = <
   ...args: unknown[]
 ): T => {
   const ctx = assertCurrentContext();
-  return ctx[ComputeContext_memoOrUse](true, f, ...args);
+  return ctx[__ComputeContext_memoOrUse](true, f, ...args);
 };
 
 export function Observable_compute__currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();
-  return ctx[ComputeContext_observer];
+  return ctx[__ComputeContext_observer];
 }
 
 export const Observable_compute__stream = /*@__PURE__*/ (() => {

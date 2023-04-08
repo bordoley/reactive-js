@@ -17,26 +17,26 @@ of it's run loop.
 
 ### Properties
 
-- [[PauseableSchedulerLike\_isPaused]](scheduling.PauseableSchedulerLike.md#[pauseableschedulerlike_ispaused])
+- [[\_\_\_PauseableSchedulerLike\_isPaused]](scheduling.PauseableSchedulerLike.md#[___pauseableschedulerlike_ispaused])
 
 ### Methods
 
-- [[PauseableSchedulerLike\_pause]](scheduling.PauseableSchedulerLike.md#[pauseableschedulerlike_pause])
-- [[PauseableSchedulerLike\_resume]](scheduling.PauseableSchedulerLike.md#[pauseableschedulerlike_resume])
+- [[\_\_\_PauseableSchedulerLike\_pause]](scheduling.PauseableSchedulerLike.md#[___pauseableschedulerlike_pause])
+- [[\_\_\_PauseableSchedulerLike\_resume]](scheduling.PauseableSchedulerLike.md#[___pauseableschedulerlike_resume])
 
 ## Properties
 
-### [PauseableSchedulerLike\_isPaused]
+### [\_\_\_PauseableSchedulerLike\_isPaused]
 
-• `Readonly` **[PauseableSchedulerLike\_isPaused]**: `boolean`
+• `Readonly` **[\_\_\_PauseableSchedulerLike\_isPaused]**: `boolean`
 
 Boolean flag indicating if the scheduler is currently paused or not.
 
 ## Methods
 
-### [PauseableSchedulerLike\_pause]
+### [\_\_\_PauseableSchedulerLike\_pause]
 
-▸ **[PauseableSchedulerLike_pause]**(): `void`
+▸ **[___PauseableSchedulerLike_pause]**(): `void`
 
 Imperatively pause the scheduler.
 
@@ -46,9 +46,9 @@ Imperatively pause the scheduler.
 
 ___
 
-### [PauseableSchedulerLike\_resume]
+### [\_\_\_PauseableSchedulerLike\_resume]
 
-▸ **[PauseableSchedulerLike_resume]**(): `void`
+▸ **[___PauseableSchedulerLike_resume]**(): `void`
 
 Imperatively resume the scheduler.
 

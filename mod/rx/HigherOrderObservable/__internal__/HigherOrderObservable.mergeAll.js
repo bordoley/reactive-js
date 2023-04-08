@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__internal__/math.js";
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { MergeAllObserver_activeCount, MergeAllObserver_maxConcurrency, MergeAllObserver_observablesQueue, MergeAllObserver_onDispose, } from "../../../__internal__/symbols.js";
+import { __MergeAllObserver_activeCount, __MergeAllObserver_maxConcurrency, __MergeAllObserver_observablesQueue, __MergeAllObserver_onDispose, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { bindMethod, isSome, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
@@ -18,19 +18,20 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 const HigherOrderObservable_mergeAll = (lift) => {
     const createMergeAllObserver = (() => {
         const subscribeToObservable = (observer, nextObs) => {
-            observer[MergeAllObserver_activeCount]++;
-            pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[MergeAllObserver_onDispose]));
+            observer[__MergeAllObserver_activeCount]++;
+            pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[__MergeAllObserver_onDispose]));
         };
         return createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, maxConcurrency) {
             init(Observer_mixin(), instance, delegate, delegate);
             init(delegatingMixin(), instance, delegate);
-            instance[MergeAllObserver_observablesQueue] =
+            instance[__MergeAllObserver_observablesQueue] =
                 IndexedQueue_createFifoQueue(capacity, backpressureStrategy);
-            instance[MergeAllObserver_maxConcurrency] = maxConcurrency;
-            instance[MergeAllObserver_activeCount] = 0;
-            instance[MergeAllObserver_onDispose] = () => {
-                instance[MergeAllObserver_activeCount]--;
-                const nextObs = instance[MergeAllObserver_observablesQueue][QueueLike_dequeue]();
+            instance[__MergeAllObserver_maxConcurrency] =
+                maxConcurrency;
+            instance[__MergeAllObserver_activeCount] = 0;
+            instance[__MergeAllObserver_onDispose] = () => {
+                instance[__MergeAllObserver_activeCount]--;
+                const nextObs = instance[__MergeAllObserver_observablesQueue][QueueLike_dequeue]();
                 if (isSome(nextObs)) {
                     subscribeToObservable(instance, nextObs);
                 }
@@ -42,27 +43,27 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 if (delegate[DisposableLike_isDisposed]) {
                     // FIXME: Clear the queue
                 }
-                else if (instance[MergeAllObserver_observablesQueue][CollectionLike_count] +
-                    instance[MergeAllObserver_activeCount] ===
+                else if (instance[__MergeAllObserver_observablesQueue][CollectionLike_count] +
+                    instance[__MergeAllObserver_activeCount] ===
                     0) {
                     delegate[DisposableLike_dispose]();
                 }
             }));
             return instance;
         }, props({
-            [MergeAllObserver_activeCount]: 0,
-            [MergeAllObserver_maxConcurrency]: 0,
-            [MergeAllObserver_onDispose]: none,
-            [MergeAllObserver_observablesQueue]: none,
+            [__MergeAllObserver_activeCount]: 0,
+            [__MergeAllObserver_maxConcurrency]: 0,
+            [__MergeAllObserver_onDispose]: none,
+            [__MergeAllObserver_observablesQueue]: none,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                if (this[MergeAllObserver_activeCount] <
-                    this[MergeAllObserver_maxConcurrency]) {
+                if (this[__MergeAllObserver_activeCount] <
+                    this[__MergeAllObserver_maxConcurrency]) {
                     subscribeToObservable(this, next);
                 }
                 else {
-                    this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
+                    this[__MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
                 }
             },
         }));

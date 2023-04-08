@@ -2,7 +2,7 @@
 
 import { floor } from "../../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
+import { __PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
 import { MutableIndexedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
 import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
@@ -10,7 +10,7 @@ import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
 const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(IndexedQueue_fifoQueueMixin());
     const siftDown = (queue, item) => {
-        const compare = queue[PriorityQueueImpl_comparator];
+        const compare = queue[__PriorityQueueImpl_comparator];
         const count = queue[CollectionLike_count];
         for (let index = 0; index < count;) {
             const leftIndex = (index + 1) * 2 - 1;
@@ -44,7 +44,7 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
         }
     };
     const siftUp = (queue, item) => {
-        const compare = queue[PriorityQueueImpl_comparator];
+        const compare = queue[__PriorityQueueImpl_comparator];
         const count = queue[CollectionLike_count];
         for (let index = count - 1, parentIndex = floor((index - 1) / 2); parentIndex >= 0 &&
             parentIndex <= count &&
@@ -56,10 +56,10 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
     };
     return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function PriorityQueue(instance, comparator, capacity, backpressureStrategy) {
         init(IndexedQueue_fifoQueueMixin(), instance, capacity, backpressureStrategy);
-        instance[PriorityQueueImpl_comparator] = comparator;
+        instance[__PriorityQueueImpl_comparator] = comparator;
         return instance;
     }, props({
-        [PriorityQueueImpl_comparator]: none,
+        [__PriorityQueueImpl_comparator]: none,
     }), {
         [QueueLike_dequeue]() {
             const count = this[CollectionLike_count];

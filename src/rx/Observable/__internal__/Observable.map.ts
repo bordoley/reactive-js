@@ -9,7 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { MapObserver_mapper } from "../../../__internal__/symbols.js";
+import { __MapObserver_mapper } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
 import {
@@ -30,7 +30,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
     predicate: Function1<TA, TB>,
   ) => ObserverLike<TA> = (<TA, TB>() => {
     type TProperties = {
-      readonly [MapObserver_mapper]: Function1<TA, TB>;
+      readonly [__MapObserver_mapper]: Function1<TA, TB>;
     };
 
     return createInstanceFactory(
@@ -44,12 +44,12 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(delegatingMixin(), instance, delegate);
-          instance[MapObserver_mapper] = mapper;
+          instance[__MapObserver_mapper] = mapper;
 
           return instance;
         },
         props<TProperties>({
-          [MapObserver_mapper]: none,
+          [__MapObserver_mapper]: none,
         }),
         {
           [ObserverLike_notify](
@@ -60,7 +60,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
           ) {
             Observer_assertState(this);
 
-            const mapped = this[MapObserver_mapper](next);
+            const mapped = this[__MapObserver_mapper](next);
             this[DelegatingLike_delegate][ObserverLike_notify](mapped);
           },
         },

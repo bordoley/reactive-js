@@ -8,7 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
+import { __PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
   MutableIndexedCollectionLike_set,
@@ -44,11 +44,11 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
   const IndexedQueuePrototype = getPrototype(IndexedQueue_fifoQueueMixin());
 
   type TProperties = {
-    readonly [PriorityQueueImpl_comparator]: Comparator<T>;
+    readonly [__PriorityQueueImpl_comparator]: Comparator<T>;
   };
 
   const siftDown = (queue: TProperties & IndexedQueueLike<T>, item: T) => {
-    const compare = queue[PriorityQueueImpl_comparator];
+    const compare = queue[__PriorityQueueImpl_comparator];
     const count = queue[CollectionLike_count];
 
     for (let index = 0; index < count; ) {
@@ -84,7 +84,7 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
   };
 
   const siftUp = (queue: TProperties & IndexedQueueLike<T>, item: T) => {
-    const compare = queue[PriorityQueueImpl_comparator];
+    const compare = queue[__PriorityQueueImpl_comparator];
     const count = queue[CollectionLike_count];
 
     for (
@@ -119,11 +119,11 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
           capacity,
           backpressureStrategy,
         );
-        instance[PriorityQueueImpl_comparator] = comparator;
+        instance[__PriorityQueueImpl_comparator] = comparator;
         return instance;
       },
       props<TProperties>({
-        [PriorityQueueImpl_comparator]: none,
+        [__PriorityQueueImpl_comparator]: none,
       }),
       {
         [QueueLike_dequeue](

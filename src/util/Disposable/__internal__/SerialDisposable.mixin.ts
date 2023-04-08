@@ -1,5 +1,5 @@
 import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
-import { SerialDisposableMixin_current } from "../../../__internal__/symbols.js";
+import { __SerialDisposableMixin_current } from "../../../__internal__/symbols.js";
 import {
   SerialDisposableLike,
   SerialDisposableLike_current,
@@ -13,7 +13,7 @@ const SerialDisposable_mixin: <TDisposable extends DisposableLike>() => Mixin1<
   TDisposable
 > = /*@__PURE__*/ (<TDisposable extends DisposableLike>() => {
   type TProperties = {
-    [SerialDisposableMixin_current]: TDisposable;
+    [__SerialDisposableMixin_current]: TDisposable;
   };
 
   return pipe(
@@ -28,25 +28,25 @@ const SerialDisposable_mixin: <TDisposable extends DisposableLike>() => Mixin1<
       ): SerialDisposableLike<TDisposable> {
         unsafeCast<DisposableLike>(instance);
 
-        instance[SerialDisposableMixin_current] = defaultValue;
+        instance[__SerialDisposableMixin_current] = defaultValue;
         pipe(instance, Disposable_add(defaultValue));
 
         return instance;
       },
       props<TProperties>({
-        [SerialDisposableMixin_current]: none,
+        [__SerialDisposableMixin_current]: none,
       }),
       {
         get [SerialDisposableLike_current](): TDisposable {
           unsafeCast<TProperties>(this);
-          return this[SerialDisposableMixin_current];
+          return this[__SerialDisposableMixin_current];
         },
         set [SerialDisposableLike_current](v: TDisposable) {
           unsafeCast<TProperties & DisposableLike>(this);
-          const oldValue = this[SerialDisposableMixin_current];
+          const oldValue = this[__SerialDisposableMixin_current];
           oldValue[DisposableLike_dispose]();
 
-          this[SerialDisposableMixin_current] = v;
+          this[__SerialDisposableMixin_current] = v;
           pipe(this, Disposable_add(v));
         },
       },

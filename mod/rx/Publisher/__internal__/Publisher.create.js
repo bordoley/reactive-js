@@ -2,7 +2,7 @@
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { Publisher_observers } from "../../../__internal__/symbols.js";
+import { __Publisher_observers } from "../../../__internal__/symbols.js";
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { error, isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
@@ -14,10 +14,11 @@ import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/Index
 const Publisher_create = /*@__PURE__*/ (() => {
     const createPublisherInstance = createInstanceFactory(mix(include(Disposable_mixin), function Publisher(instance, replay) {
         init(Disposable_mixin, instance);
-        instance[Publisher_observers] = newInstance(Set);
+        instance[__Publisher_observers] =
+            newInstance(Set);
         instance[ReplayableLike_buffer] = IndexedQueue_createFifoQueue(replay, "drop-oldest");
         pipe(instance, Disposable_onDisposed(e => {
-            const enumerator = pipe(instance[Publisher_observers], Iterable_enumerate());
+            const enumerator = pipe(instance[__Publisher_observers], Iterable_enumerate());
             while (enumerator[EnumeratorLike_move]()) {
                 const observer = enumerator[EnumeratorLike_current];
                 if (isSome(e)) {
@@ -30,21 +31,21 @@ const Publisher_create = /*@__PURE__*/ (() => {
         }));
         return instance;
     }, props({
-        [Publisher_observers]: none,
+        [__Publisher_observers]: none,
         [ReplayableLike_buffer]: none,
     }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         get [MulticastObservableLike_observerCount]() {
             unsafeCast(this);
-            return this[Publisher_observers].size;
+            return this[__Publisher_observers].size;
         },
         [EventListenerLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
             this[ReplayableLike_buffer][QueueableLike_enqueue](next);
-            for (const observer of this[Publisher_observers]) {
+            for (const observer of this[__Publisher_observers]) {
                 try {
                     observer[QueueableLike_enqueue](next);
                 }
@@ -55,7 +56,7 @@ const Publisher_create = /*@__PURE__*/ (() => {
         },
         [ObservableLike_observe](observer) {
             if (!this[DisposableLike_isDisposed]) {
-                const { [Publisher_observers]: observers } = this;
+                const { [__Publisher_observers]: observers } = this;
                 observers.add(observer);
                 pipe(observer, Disposable_onDisposed(_ => {
                     observers.delete(observer);

@@ -1,8 +1,8 @@
 /// <reference types="./Observable.takeFirst.d.ts" />
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
-import { createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DelegatingLike_delegate, TakeFirstObserver_count, TakeFirstObserver_takeCount, } from "../../../__internal__/symbols.js";
+import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { __TakeFirstObserver_count, __TakeFirstObserver_takeCount, } from "../../../__internal__/symbols.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
@@ -14,20 +14,21 @@ const Observable_takeFirst = /*@__PURE__*/ (() => {
         return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function TakeFirstObserver(instance, delegate, takeCount) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
             init(delegatingMixin(), instance, delegate);
-            instance[TakeFirstObserver_takeCount] = takeCount;
+            instance[__TakeFirstObserver_takeCount] = takeCount;
             if (takeCount === 0) {
                 instance[DisposableLike_dispose]();
             }
             return instance;
         }, props({
-            [TakeFirstObserver_count]: 0,
-            [TakeFirstObserver_takeCount]: 0,
+            [__TakeFirstObserver_count]: 0,
+            [__TakeFirstObserver_takeCount]: 0,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[TakeFirstObserver_count]++;
+                this[__TakeFirstObserver_count]++;
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
-                if (this[TakeFirstObserver_count] >= this[TakeFirstObserver_takeCount]) {
+                if (this[__TakeFirstObserver_count] >=
+                    this[__TakeFirstObserver_takeCount]) {
                     this[DisposableLike_dispose]();
                 }
             },

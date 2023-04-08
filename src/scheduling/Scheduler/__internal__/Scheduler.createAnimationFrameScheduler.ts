@@ -5,12 +5,13 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  AnimationFrameScheduler_delayScheduler,
-  SchedulerLike_schedule,
-} from "../../../__internal__/symbols.js";
+import { __AnimationFrameScheduler_delayScheduler } from "../../../__internal__/symbols.js";
 import { invoke, none, pipe, pipeLazy } from "../../../functions.js";
-import { SchedulerLike, SchedulerLike_now } from "../../../scheduling.js";
+import {
+  SchedulerLike,
+  SchedulerLike_now,
+  SchedulerLike_schedule,
+} from "../../../scheduling.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -27,7 +28,7 @@ import {
 const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
   type TProperties = {
     [SchedulerLike_now]: number;
-    [AnimationFrameScheduler_delayScheduler]: SchedulerLike;
+    [__AnimationFrameScheduler_delayScheduler]: SchedulerLike;
   };
 
   return createInstanceFactory(
@@ -45,13 +46,14 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
       ): SchedulerLike {
         init(PriorityScheduler_mixin, instance, 5);
 
-        instance[AnimationFrameScheduler_delayScheduler] = delayScheduler;
+        instance[__AnimationFrameScheduler_delayScheduler] =
+          delayScheduler;
 
         return instance;
       },
       props<TProperties>({
         [SchedulerLike_now]: 0,
-        [AnimationFrameScheduler_delayScheduler]: none,
+        [__AnimationFrameScheduler_delayScheduler]: none,
       }),
       {
         [PrioritySchedulerImplementationLike_shouldYield]: true,
@@ -73,7 +75,7 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
           // if its not more than a frame.
           if (delay > 16) {
             pipe(
-              this[AnimationFrameScheduler_delayScheduler],
+              this[__AnimationFrameScheduler_delayScheduler],
               invoke(
                 SchedulerLike_schedule,
                 pipeLazy(

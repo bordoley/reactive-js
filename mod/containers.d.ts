@@ -1,6 +1,6 @@
-import { ContainerLike_T, ContainerLike_type, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move } from "./__internal__/symbols.js";
+import { __ContainerLike_T as ContainerLike_T, __ContainerLike_type as ContainerLike_type, __EnumeratorLike_current as EnumeratorLike_current, __EnumeratorLike_hasCurrent as EnumeratorLike_hasCurrent, __EnumeratorLike_move as EnumeratorLike_move } from "./__internal__/symbols.js";
 import { Equality, Factory, Function1, Optional, Predicate, Reducer, SideEffect1, TypePredicate, Updater } from "./functions.js";
-export { ContainerLike_T, ContainerLike_type, EnumeratorLike_move, EnumeratorLike_current, EnumeratorLike_hasCurrent, };
+export { ContainerLike_T, ContainerLike_type, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, };
 /**
  * Base type for all Containers.
  *

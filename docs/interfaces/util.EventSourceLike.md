@@ -22,23 +22,23 @@
 
 ### Properties
 
-- [[EventSourceLike\_listenerCount]](util.EventSourceLike.md#[eventsourcelike_listenercount])
+- [[\_\_\_EventSourceLike\_listenerCount]](util.EventSourceLike.md#[___eventsourcelike_listenercount])
 
 ### Methods
 
-- [[EventSourceLike\_addListener]](util.EventSourceLike.md#[eventsourcelike_addlistener])
+- [[\_\_\_EventSourceLike\_addListener]](util.EventSourceLike.md#[___eventsourcelike_addlistener])
 
 ## Properties
 
-### [EventSourceLike\_listenerCount]
+### [\_\_\_EventSourceLike\_listenerCount]
 
-• `Readonly` **[EventSourceLike\_listenerCount]**: `number`
+• `Readonly` **[\_\_\_EventSourceLike\_listenerCount]**: `number`
 
 ## Methods
 
-### [EventSourceLike\_addListener]
+### [\_\_\_EventSourceLike\_addListener]
 
-▸ **[EventSourceLike_addListener]**(`event`): `void`
+▸ **[___EventSourceLike_addListener]**(`event`): `void`
 
 #### Parameters
 

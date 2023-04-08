@@ -24,14 +24,14 @@ A compile time only type for using a Javascript `PromiseLike` as a `ContainerLik
 
 ### Properties
 
-- [[ContainerLike\_type]](containers.PromiseableLike.md#[containerlike_type])
+- [[\_\_\_ContainerLike\_type]](containers.PromiseableLike.md#[___containerlike_type])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`PromiseableLike`](containers.PromiseableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`PromiseableLike`](containers.PromiseableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
+[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])

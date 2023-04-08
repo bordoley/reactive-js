@@ -7,10 +7,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  BufferLike_capacity,
-  ObserverMixin_dispatchSubscription,
-  ObserverMixin_isCompleted,
-  SchedulerLike_schedule,
+  __ObserverMixin_dispatchSubscription,
+  __ObserverMixin_isCompleted,
 } from "../../../__internal__/symbols.js";
 import {
   QueueLike,
@@ -26,8 +24,10 @@ import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
   SchedulerLike,
+  SchedulerLike_schedule,
 } from "../../../scheduling.js";
 import {
+  BufferLike_capacity,
   CollectionLike_count,
   DisposableLike,
   DisposableLike_dispose,
@@ -53,15 +53,17 @@ const Observer_baseMixin: <T>() => Mixin1<
   }
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [ObserverMixin_isCompleted]: boolean;
-    [ObserverMixin_dispatchSubscription]: DisposableLike;
+    [__ObserverMixin_isCompleted]: boolean;
+    [__ObserverMixin_dispatchSubscription]: DisposableLike;
   };
 
   const scheduleDrainQueue = (
     observer: TProperties & ObserverLike<T> & QueueLike<T>,
   ) => {
     if (
-      observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
+      observer[__ObserverMixin_dispatchSubscription][
+        DisposableLike_isDisposed
+      ]
     ) {
       const continuation = (ctx: ContinuationContextLike) => {
         unsafeCast<TProperties & ObserverLike<T>>(observer);
@@ -75,12 +77,12 @@ const Observer_baseMixin: <T>() => Mixin1<
           }
         }
 
-        if (observer[ObserverMixin_isCompleted]) {
+        if (observer[__ObserverMixin_isCompleted]) {
           observer[DisposableLike_dispose]();
         }
       };
 
-      observer[ObserverMixin_dispatchSubscription] = pipe(
+      observer[__ObserverMixin_dispatchSubscription] = pipe(
         observer[SchedulerLike_schedule](continuation),
         Disposable_addTo(observer),
       );
@@ -110,8 +112,8 @@ const Observer_baseMixin: <T>() => Mixin1<
         return instance;
       },
       props<TProperties>({
-        [ObserverMixin_isCompleted]: false,
-        [ObserverMixin_dispatchSubscription]: Disposable_disposed,
+        [__ObserverMixin_isCompleted]: false,
+        [__ObserverMixin_dispatchSubscription]: Disposable_disposed,
       }),
       {
         [QueueableLike_enqueue](
@@ -119,7 +121,7 @@ const Observer_baseMixin: <T>() => Mixin1<
           next: T,
         ): boolean {
           if (
-            !this[ObserverMixin_isCompleted] &&
+            !this[__ObserverMixin_isCompleted] &&
             !this[DisposableLike_isDisposed]
           ) {
             const result = call(
@@ -136,11 +138,11 @@ const Observer_baseMixin: <T>() => Mixin1<
         [DispatcherLike_complete](
           this: TProperties & ObserverLike<T> & QueueLike<T>,
         ) {
-          const isCompleted = this[ObserverMixin_isCompleted];
-          this[ObserverMixin_isCompleted] = true;
+          const isCompleted = this[__ObserverMixin_isCompleted];
+          this[__ObserverMixin_isCompleted] = true;
 
           if (
-            this[ObserverMixin_dispatchSubscription][
+            this[__ObserverMixin_dispatchSubscription][
               DisposableLike_isDisposed
             ] &&
             !isCompleted

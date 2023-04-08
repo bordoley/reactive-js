@@ -1,6 +1,6 @@
 import {
-  LiftedObservable_operators,
-  LiftedObservable_source,
+  __LiftedObservable_operators,
+  __LiftedObservable_source,
 } from "../../../__internal__/symbols.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
@@ -15,8 +15,8 @@ import {
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
-  readonly [LiftedObservable_source]: ObservableLike<TIn>;
-  readonly [LiftedObservable_operators]: readonly Function1<
+  readonly [__LiftedObservable_source]: ObservableLike<TIn>;
+  readonly [__LiftedObservable_operators]: readonly Function1<
     ObserverLike<any>,
     ObserverLike<any>
   >[];
@@ -29,8 +29,8 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
     isEnumerable: boolean,
     isRunnable: boolean,
   ) {
-    this[LiftedObservable_source] = source;
-    this[LiftedObservable_operators] = operators;
+    this[__LiftedObservable_source] = source;
+    this[__LiftedObservable_operators] = operators;
     this[ObservableLike_isEnumerable] = isEnumerable;
     this[ObservableLike_isRunnable] = isRunnable;
   }
@@ -38,8 +38,8 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   [ObservableLike_observe](observer: ObserverLike<TOut>) {
     pipeUnsafe(
       observer,
-      ...this[LiftedObservable_operators],
-      Observer_sourceFrom(this[LiftedObservable_source]),
+      ...this[__LiftedObservable_operators],
+      Observer_sourceFrom(this[__LiftedObservable_source]),
     );
   }
 }
@@ -104,12 +104,12 @@ const Observable_lift: ObservableLift["lift"] = ((config: {
   source => {
     const sourceSource =
       source instanceof LiftedObservable
-        ? source[LiftedObservable_source]
+        ? source[__LiftedObservable_source]
         : source;
 
     const allFunctions =
       source instanceof LiftedObservable
-        ? [operator, ...source[LiftedObservable_operators]]
+        ? [operator, ...source[__LiftedObservable_operators]]
         : [operator];
 
     const isLiftedEnumerable =

@@ -10,9 +10,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  ObservableLike_isEnumerable,
-  TimeoutObserver_duration,
-  timeoutError,
+  __TimeoutObserver_duration,
+  __timeoutError,
 } from "../../../__internal__/symbols.js";
 import {
   SerialDisposableLike,
@@ -22,6 +21,7 @@ import { ContainerOperator } from "../../../containers.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import {
   ObservableLike,
+  ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
@@ -49,14 +49,14 @@ const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<
   T,
 >() => {
   type TProperties = {
-    readonly [TimeoutObserver_duration]: ObservableLike;
+    readonly [__TimeoutObserver_duration]: ObservableLike;
   };
 
   const setupDurationSubscription = (
     observer: SerialDisposableLike<DisposableLike> & TProperties & ObserverLike,
   ) => {
     observer[SerialDisposableLike_current] = pipe(
-      observer[TimeoutObserver_duration],
+      observer[__TimeoutObserver_duration],
       Observable_subscribeWithConfig(observer, observer),
     );
   };
@@ -77,14 +77,14 @@ const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<
         init(Observer_delegatingMixin(), instance, delegate, delegate);
         init(SerialDisposable_mixin(), instance, Disposable_disposed);
         init(delegatingMixin(), instance, delegate);
-        instance[TimeoutObserver_duration] = duration;
+        instance[__TimeoutObserver_duration] = duration;
 
         setupDurationSubscription(instance);
 
         return instance;
       },
       props<TProperties>({
-        [TimeoutObserver_duration]: none,
+        [__TimeoutObserver_duration]: none,
       }),
       {
         [ObserverLike_notify](
@@ -103,7 +103,7 @@ const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<
     ),
   );
 
-  const raise = returns(timeoutError);
+  const raise = returns(__timeoutError);
 
   return (duration: number | ObservableLike) => {
     const durationObs = isNumber(duration)

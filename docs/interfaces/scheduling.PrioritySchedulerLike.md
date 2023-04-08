@@ -18,13 +18,13 @@ Lower priority values indicate higher priority.
 
 ### Methods
 
-- [[SchedulerLike\_schedule]](scheduling.PrioritySchedulerLike.md#[schedulerlike_schedule])
+- [[\_\_\_SchedulerLike\_schedule]](scheduling.PrioritySchedulerLike.md#[___schedulerlike_schedule])
 
 ## Methods
 
-### [SchedulerLike\_schedule]
+### [\_\_\_SchedulerLike\_schedule]
 
-▸ **[SchedulerLike_schedule]**(`continuation`, `options?`): [`DisposableLike`](util.DisposableLike.md)
+▸ **[___SchedulerLike_schedule]**(`continuation`, `options?`): [`DisposableLike`](util.DisposableLike.md)
 
 Schedule a continuation on the Scheduler.
 
@@ -43,4 +43,4 @@ Schedule a continuation on the Scheduler.
 
 #### Overrides
 
-[SchedulerLike](scheduling.SchedulerLike.md).[[SchedulerLike_schedule]](scheduling.SchedulerLike.md#[schedulerlike_schedule])
+[SchedulerLike](scheduling.SchedulerLike.md).[[___SchedulerLike_schedule]](scheduling.SchedulerLike.md#[___schedulerlike_schedule])

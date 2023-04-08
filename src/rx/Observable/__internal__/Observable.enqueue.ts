@@ -9,7 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { EnqueueObserver_effect } from "../../../__internal__/symbols.js";
+import { __EnqueueObserver_effect } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Function1,
@@ -39,7 +39,7 @@ const Observable_enqueue: ObservableEnqueue = /*@__PURE__*/ (<T>() => {
     effect: Function1<T, boolean>,
   ) => ObserverLike<T> = (<T>() => {
     type TProperties = {
-      readonly [EnqueueObserver_effect]: Function1<T, boolean>;
+      readonly [__EnqueueObserver_effect]: Function1<T, boolean>;
     };
 
     return createInstanceFactory(
@@ -53,12 +53,12 @@ const Observable_enqueue: ObservableEnqueue = /*@__PURE__*/ (<T>() => {
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(delegatingMixin(), instance, delegate);
-          instance[EnqueueObserver_effect] = effect;
+          instance[__EnqueueObserver_effect] = effect;
 
           return instance;
         },
         props<TProperties>({
-          [EnqueueObserver_effect]: none,
+          [__EnqueueObserver_effect]: none,
         }),
         {
           [ObserverLike_notify](
@@ -69,7 +69,7 @@ const Observable_enqueue: ObservableEnqueue = /*@__PURE__*/ (<T>() => {
           ) {
             Observer_assertState(this);
 
-            if (!this[EnqueueObserver_effect](next)) {
+            if (!this[__EnqueueObserver_effect](next)) {
               this[SchedulerLike_requestYield]();
             }
             this[DelegatingLike_delegate][ObserverLike_notify](next);

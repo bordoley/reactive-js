@@ -23,21 +23,21 @@
 
 ### Properties
 
-- [[ContainerLike\_type]](keyed_containers.ReadonlyMapLike.md#[containerlike_type])
-- [[KeyedContainerLike\_TKey]](keyed_containers.ReadonlyMapLike.md#[keyedcontainerlike_tkey])
+- [[\_\_\_ContainerLike\_type]](keyed_containers.ReadonlyMapLike.md#[___containerlike_type])
+- [[\_\_\_KeyedContainerLike\_TKey]](keyed_containers.ReadonlyMapLike.md#[___keyedcontainerlike_tkey])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: `ReadonlyMap`<`unknown`, `unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: `ReadonlyMap`<`unknown`, `unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
+[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
 
 ___
 
-### [KeyedContainerLike\_TKey]
+### [\_\_\_KeyedContainerLike\_TKey]
 
-• `Optional` `Readonly` **[KeyedContainerLike\_TKey]**: `unknown`
+• `Optional` `Readonly` **[\_\_\_KeyedContainerLike\_TKey]**: `unknown`

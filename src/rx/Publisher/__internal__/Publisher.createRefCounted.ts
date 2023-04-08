@@ -1,5 +1,6 @@
 import {
   DelegatingLike,
+  DelegatingLike_delegate,
   createInstanceFactory,
   delegatingMixin,
   include,
@@ -7,10 +8,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  DelegatingLike_delegate,
-  DisposableLike_dispose,
-} from "../../../__internal__/symbols.js";
 import { pipe } from "../../../functions.js";
 import {
   MulticastObservableLike_observerCount,
@@ -18,7 +15,10 @@ import {
   ObserverLike,
   PublisherLike,
 } from "../../../rx.js";
-import { EventListenerLike_notify } from "../../../util.js";
+import {
+  DisposableLike_dispose,
+  EventListenerLike_notify,
+} from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";

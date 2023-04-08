@@ -8,7 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { DispatchedObservable_observer } from "../../../__internal__/symbols.js";
+import { __DispatchedObservable_observer } from "../../../__internal__/symbols.js";
 import { QueueLike } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
@@ -57,7 +57,7 @@ interface DispatchedObservableLike<T>
 const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
-      [DispatchedObservable_observer]: Optional<ObserverLike<T>>;
+      [__DispatchedObservable_observer]: Optional<ObserverLike<T>>;
     };
 
     return createInstanceFactory(
@@ -68,7 +68,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           return instance;
         },
         props<TProperties>({
-          [DispatchedObservable_observer]: none,
+          [__DispatchedObservable_observer]: none,
         }),
         {
           [ObservableLike_isEnumerable]: false,
@@ -78,7 +78,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
 
             const observer = this[
-              DispatchedObservable_observer
+              __DispatchedObservable_observer
             ] as ObserverLike<T>;
 
             return observer[QueueableLike_backpressureStrategy];
@@ -88,7 +88,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
             // Practically the observer can never be none.
             const observer = this[
-              DispatchedObservable_observer
+              __DispatchedObservable_observer
             ] as ObserverLike<T>;
 
             return observer[BufferLike_capacity];
@@ -99,7 +99,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             next: T,
           ): boolean {
             const observer = this[
-              DispatchedObservable_observer
+              __DispatchedObservable_observer
             ] as ObserverLike<T>;
 
             // Practically the observer can never be none,
@@ -133,7 +133,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             this: TProperties & DispatchedObservableLike<T>,
           ) {
             const observer = this[
-              DispatchedObservable_observer
+              __DispatchedObservable_observer
             ] as ObserverLike<T>;
 
             // Practically the observer can never be none,
@@ -152,13 +152,13 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             this: TProperties & DispatchedObservableLike<T> & DisposableLike,
             observer: ObserverLike<T>,
           ) {
-            if (isSome(this[DispatchedObservable_observer])) {
+            if (isSome(this[__DispatchedObservable_observer])) {
               raiseWithDebugMessage(
                 "DispatchedObservable already subscribed to",
               );
             }
 
-            this[DispatchedObservable_observer] = observer;
+            this[__DispatchedObservable_observer] = observer;
           },
         },
       ),

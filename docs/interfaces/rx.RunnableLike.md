@@ -24,28 +24,28 @@ An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
 
 ### Properties
 
-- [[ContainerLike\_type]](rx.RunnableLike.md#[containerlike_type])
-- [[ObservableLike\_isRunnable]](rx.RunnableLike.md#[observablelike_isrunnable])
+- [[\_\_\_ContainerLike\_type]](rx.RunnableLike.md#[___containerlike_type])
+- [[\_\_\_ObservableLike\_isRunnable]](rx.RunnableLike.md#[___observablelike_isrunnable])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`RunnableLike`](rx.RunnableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`RunnableLike`](rx.RunnableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ObservableLike](rx.ObservableLike.md).[[ContainerLike_type]](rx.ObservableLike.md#[containerlike_type])
+[ObservableLike](rx.ObservableLike.md).[[___ContainerLike_type]](rx.ObservableLike.md#[___containerlike_type])
 
 ___
 
-### [ObservableLike\_isRunnable]
+### [\_\_\_ObservableLike\_isRunnable]
 
-• `Readonly` **[ObservableLike\_isRunnable]**: ``true``
+• `Readonly` **[\_\_\_ObservableLike\_isRunnable]**: ``true``
 
 Indicates if the `ObservableLike` supports being subscribed to
 on a VirtualTimeScheduler.
 
 #### Overrides
 
-[ObservableLike](rx.ObservableLike.md).[[ObservableLike_isRunnable]](rx.ObservableLike.md#[observablelike_isrunnable])
+[ObservableLike](rx.ObservableLike.md).[[___ObservableLike_isRunnable]](rx.ObservableLike.md#[___observablelike_isrunnable])

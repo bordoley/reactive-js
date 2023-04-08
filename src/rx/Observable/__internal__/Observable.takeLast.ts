@@ -7,7 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { TakeLastObserver_takeLastQueue } from "../../../__internal__/symbols.js";
+import { __TakeLastObserver_takeLastQueue } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
   QueueLike,
@@ -34,7 +34,7 @@ type ObservableTakeLast = <C extends ObservableLike, T>(options?: {
 }) => ContainerOperator<C, T, T>;
 const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    readonly [TakeLastObserver_takeLastQueue]: IndexedQueueLike<T>;
+    readonly [__TakeLastObserver_takeLastQueue]: IndexedQueueLike<T>;
   };
 
   const createTakeLastObserver = createInstanceFactory(
@@ -48,17 +48,15 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
       ): ObserverLike<T> {
         init(Observer_mixin(), instance, delegate, delegate);
 
-        instance[TakeLastObserver_takeLastQueue] = IndexedQueue_createFifoQueue(
-          takeLastCount,
-          "drop-oldest",
-        );
+        instance[__TakeLastObserver_takeLastQueue] =
+          IndexedQueue_createFifoQueue(takeLastCount, "drop-oldest");
 
         pipe(
           instance,
           Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             pipe(
-              instance[TakeLastObserver_takeLastQueue],
+              instance[__TakeLastObserver_takeLastQueue],
               Indexed_toReadonlyArray<T>(),
               ReadonlyArray_toObservable(),
               invoke(ObservableLike_observe, delegate),
@@ -69,14 +67,16 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
         return instance;
       },
       props<TProperties>({
-        [TakeLastObserver_takeLastQueue]: none,
+        [__TakeLastObserver_takeLastQueue]: none,
       }),
       {
         [ObserverLike_notify](
           this: TProperties & DisposableLike & QueueLike<T>,
           next: T,
         ) {
-          this[TakeLastObserver_takeLastQueue][QueueableLike_enqueue](next);
+          this[__TakeLastObserver_takeLastQueue][
+            QueueableLike_enqueue
+          ](next);
         },
       },
     ),

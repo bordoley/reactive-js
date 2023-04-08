@@ -1,4 +1,4 @@
-import { KeyedContainerLike_TKey } from "./__internal__/symbols.js";
+import { __KeyedContainerLike_TKey as KeyedContainerLike_TKey } from "./__internal__/symbols.js";
 import {
   Container,
   ContainerLike,

@@ -7,7 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { Publisher_observers } from "../../../__internal__/symbols.js";
+import { __Publisher_observers } from "../../../__internal__/symbols.js";
 import { IndexedQueueLike } from "../../../__internal__/util.internal.js";
 import {
   EnumeratorLike_current,
@@ -48,7 +48,7 @@ const Publisher_create: <T>(options?: {
   readonly replay?: number;
 }) => PublisherLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    readonly [Publisher_observers]: Set<ObserverLike<T>>;
+    readonly [__Publisher_observers]: Set<ObserverLike<T>>;
     readonly [ReplayableLike_buffer]: IndexedQueueLike<T>;
   };
 
@@ -70,7 +70,8 @@ const Publisher_create: <T>(options?: {
       ): PublisherLike<T> {
         init(Disposable_mixin, instance);
 
-        instance[Publisher_observers] = newInstance<Set<ObserverLike>>(Set);
+        instance[__Publisher_observers] =
+          newInstance<Set<ObserverLike>>(Set);
         instance[ReplayableLike_buffer] = IndexedQueue_createFifoQueue(
           replay,
           "drop-oldest",
@@ -80,7 +81,7 @@ const Publisher_create: <T>(options?: {
           instance,
           Disposable_onDisposed(e => {
             const enumerator = pipe(
-              instance[Publisher_observers],
+              instance[__Publisher_observers],
               Iterable_enumerate(),
             );
 
@@ -99,7 +100,7 @@ const Publisher_create: <T>(options?: {
         return instance;
       },
       props<TProperties>({
-        [Publisher_observers]: none,
+        [__Publisher_observers]: none,
         [ReplayableLike_buffer]: none,
       }),
       {
@@ -108,7 +109,7 @@ const Publisher_create: <T>(options?: {
 
         get [MulticastObservableLike_observerCount]() {
           unsafeCast<TProperties>(this);
-          return this[Publisher_observers].size;
+          return this[__Publisher_observers].size;
         },
 
         [EventListenerLike_notify](
@@ -121,7 +122,7 @@ const Publisher_create: <T>(options?: {
 
           this[ReplayableLike_buffer][QueueableLike_enqueue](next);
 
-          for (const observer of this[Publisher_observers]) {
+          for (const observer of this[__Publisher_observers]) {
             try {
               observer[QueueableLike_enqueue](next);
             } catch (e) {
@@ -135,7 +136,7 @@ const Publisher_create: <T>(options?: {
           observer: ObserverLike<T>,
         ) {
           if (!this[DisposableLike_isDisposed]) {
-            const { [Publisher_observers]: observers } = this;
+            const { [__Publisher_observers]: observers } = this;
             observers.add(observer);
 
             pipe(

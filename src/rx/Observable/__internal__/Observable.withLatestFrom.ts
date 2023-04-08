@@ -10,9 +10,9 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  WithLatestFromObserver_hasLatest,
-  WithLatestFromObserver_otherLatest,
-  WithLatestFromObserver_selector,
+  __WithLatestFromObserver_hasLatest,
+  __WithLatestFromObserver_otherLatest,
+  __WithLatestFromObserver_selector,
 } from "../../../__internal__/symbols.js";
 import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import {
@@ -49,9 +49,13 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
   T,
 >() => {
   type TProperties = {
-    [WithLatestFromObserver_hasLatest]: boolean;
-    [WithLatestFromObserver_otherLatest]: Optional<TB>;
-    readonly [WithLatestFromObserver_selector]: Function2<TA, TB, T>;
+    [__WithLatestFromObserver_hasLatest]: boolean;
+    [__WithLatestFromObserver_otherLatest]: Optional<TB>;
+    readonly [__WithLatestFromObserver_selector]: Function2<
+      TA,
+      TB,
+      T
+    >;
   };
 
   const createWithLatestObserver: (
@@ -71,18 +75,18 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(delegatingMixin(), instance, delegate);
-          instance[WithLatestFromObserver_selector] = selector;
+          instance[__WithLatestFromObserver_selector] = selector;
 
           pipe(
             other,
             Observable_forEach<ObservableLike, TB>(next => {
-              instance[WithLatestFromObserver_hasLatest] = true;
-              instance[WithLatestFromObserver_otherLatest] = next;
+              instance[__WithLatestFromObserver_hasLatest] = true;
+              instance[__WithLatestFromObserver_otherLatest] = next;
             }),
             Observable_subscribeWithConfig(delegate, delegate),
             Disposable_addTo(instance),
             Disposable_onComplete(() => {
-              if (!instance[WithLatestFromObserver_hasLatest]) {
+              if (!instance[__WithLatestFromObserver_hasLatest]) {
                 instance[DisposableLike_dispose]();
               }
             }),
@@ -91,9 +95,9 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
           return instance;
         },
         props<TProperties>({
-          [WithLatestFromObserver_hasLatest]: false,
-          [WithLatestFromObserver_otherLatest]: none,
-          [WithLatestFromObserver_selector]: none,
+          [__WithLatestFromObserver_hasLatest]: false,
+          [__WithLatestFromObserver_otherLatest]: none,
+          [__WithLatestFromObserver_selector]: none,
         }),
         {
           [ObserverLike_notify](
@@ -106,11 +110,11 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
 
             if (
               !this[DisposableLike_isDisposed] &&
-              this[WithLatestFromObserver_hasLatest]
+              this[__WithLatestFromObserver_hasLatest]
             ) {
-              const result = this[WithLatestFromObserver_selector](
+              const result = this[__WithLatestFromObserver_selector](
                 next,
-                this[WithLatestFromObserver_otherLatest] as TB,
+                this[__WithLatestFromObserver_otherLatest] as TB,
               );
               this[DelegatingLike_delegate][ObserverLike_notify](result);
             }

@@ -22,10 +22,10 @@
 
 ### Properties
 
-- [[ReplayableLike\_buffer]](util.ReplayableLike.md#[replayablelike_buffer])
+- [[\_\_\_ReplayableLike\_buffer]](util.ReplayableLike.md#[___replayablelike_buffer])
 
 ## Properties
 
-### [ReplayableLike\_buffer]
+### [\_\_\_ReplayableLike\_buffer]
 
-• `Readonly` **[ReplayableLike\_buffer]**: [`IndexedBufferCollectionLike`](util.IndexedBufferCollectionLike.md)<`T`\>
+• `Readonly` **[\_\_\_ReplayableLike\_buffer]**: [`IndexedBufferCollectionLike`](util.IndexedBufferCollectionLike.md)<`T`\>

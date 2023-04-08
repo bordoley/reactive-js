@@ -10,9 +10,9 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  DistinctUntilChangedObserver_equality,
-  DistinctUntilChangedObserver_hasValue,
-  DistinctUntilChangedObserver_prev,
+  __DistinctUntilChangedObserver_equality,
+  __DistinctUntilChangedObserver_hasValue,
+  __DistinctUntilChangedObserver_prev,
 } from "../../../__internal__/symbols.js";
 import {
   ContainerOperator,
@@ -45,9 +45,9 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
       equality: Equality<T>,
     ) => ObserverLike<T> = (<T>() => {
       type TProperties = {
-        readonly [DistinctUntilChangedObserver_equality]: Equality<T>;
-        [DistinctUntilChangedObserver_prev]: T;
-        [DistinctUntilChangedObserver_hasValue]: boolean;
+        readonly [__DistinctUntilChangedObserver_equality]: Equality<T>;
+        [__DistinctUntilChangedObserver_prev]: T;
+        [__DistinctUntilChangedObserver_hasValue]: boolean;
       };
 
       return createInstanceFactory(
@@ -61,14 +61,15 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
           ): ObserverLike<T> {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
             init(delegatingMixin(), instance, delegate);
-            instance[DistinctUntilChangedObserver_equality] = equality;
+            instance[__DistinctUntilChangedObserver_equality] =
+              equality;
 
             return instance;
           },
           props<TProperties>({
-            [DistinctUntilChangedObserver_equality]: none,
-            [DistinctUntilChangedObserver_prev]: none,
-            [DistinctUntilChangedObserver_hasValue]: false,
+            [__DistinctUntilChangedObserver_equality]: none,
+            [__DistinctUntilChangedObserver_prev]: none,
+            [__DistinctUntilChangedObserver_hasValue]: false,
           }),
           {
             [ObserverLike_notify](
@@ -80,15 +81,15 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
               Observer_assertState(this);
 
               const shouldEmit =
-                !this[DistinctUntilChangedObserver_hasValue] ||
-                !this[DistinctUntilChangedObserver_equality](
-                  this[DistinctUntilChangedObserver_prev],
+                !this[__DistinctUntilChangedObserver_hasValue] ||
+                !this[__DistinctUntilChangedObserver_equality](
+                  this[__DistinctUntilChangedObserver_prev],
                   next,
                 );
 
               if (shouldEmit) {
-                this[DistinctUntilChangedObserver_prev] = next;
-                this[DistinctUntilChangedObserver_hasValue] = true;
+                this[__DistinctUntilChangedObserver_prev] = next;
+                this[__DistinctUntilChangedObserver_hasValue] = true;
                 this[DelegatingLike_delegate][ObserverLike_notify](next);
               }
             },

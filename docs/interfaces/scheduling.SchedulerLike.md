@@ -25,56 +25,56 @@ cooperative multi-tasking.
 
 ### Properties
 
-- [[SchedulerLike\_inContinuation]](scheduling.SchedulerLike.md#[schedulerlike_incontinuation])
-- [[SchedulerLike\_maxYieldInterval]](scheduling.SchedulerLike.md#[schedulerlike_maxyieldinterval])
-- [[SchedulerLike\_now]](scheduling.SchedulerLike.md#[schedulerlike_now])
-- [[SchedulerLike\_shouldYield]](scheduling.SchedulerLike.md#[schedulerlike_shouldyield])
+- [[\_\_\_SchedulerLike\_inContinuation]](scheduling.SchedulerLike.md#[___schedulerlike_incontinuation])
+- [[\_\_\_SchedulerLike\_maxYieldInterval]](scheduling.SchedulerLike.md#[___schedulerlike_maxyieldinterval])
+- [[\_\_\_SchedulerLike\_now]](scheduling.SchedulerLike.md#[___schedulerlike_now])
+- [[\_\_\_SchedulerLike\_shouldYield]](scheduling.SchedulerLike.md#[___schedulerlike_shouldyield])
 
 ### Methods
 
-- [[SchedulerLike\_requestYield]](scheduling.SchedulerLike.md#[schedulerlike_requestyield])
-- [[SchedulerLike\_schedule]](scheduling.SchedulerLike.md#[schedulerlike_schedule])
+- [[\_\_\_SchedulerLike\_requestYield]](scheduling.SchedulerLike.md#[___schedulerlike_requestyield])
+- [[\_\_\_SchedulerLike\_schedule]](scheduling.SchedulerLike.md#[___schedulerlike_schedule])
 
 ## Properties
 
-### [SchedulerLike\_inContinuation]
+### [\_\_\_SchedulerLike\_inContinuation]
 
-• `Readonly` **[SchedulerLike\_inContinuation]**: `boolean`
+• `Readonly` **[\_\_\_SchedulerLike\_inContinuation]**: `boolean`
 
 Boolean flag indicating the scheduler is currently
 running a continuation.
 
 ___
 
-### [SchedulerLike\_maxYieldInterval]
+### [\_\_\_SchedulerLike\_maxYieldInterval]
 
-• `Readonly` **[SchedulerLike\_maxYieldInterval]**: `number`
+• `Readonly` **[\_\_\_SchedulerLike\_maxYieldInterval]**: `number`
 
 The max number of milliseconds the scheduler will run
 before yielding control back to the underlying system scheduler.
 
 ___
 
-### [SchedulerLike\_now]
+### [\_\_\_SchedulerLike\_now]
 
-• `Readonly` **[SchedulerLike\_now]**: `number`
+• `Readonly` **[\_\_\_SchedulerLike\_now]**: `number`
 
 The current time in milliseconds.
 
 ___
 
-### [SchedulerLike\_shouldYield]
+### [\_\_\_SchedulerLike\_shouldYield]
 
-• `Readonly` **[SchedulerLike\_shouldYield]**: `boolean`
+• `Readonly` **[\_\_\_SchedulerLike\_shouldYield]**: `boolean`
 
 Boolean flag indicating whether a running continuation
 should yield control back to the scheduler.
 
 ## Methods
 
-### [SchedulerLike\_requestYield]
+### [\_\_\_SchedulerLike\_requestYield]
 
-▸ **[SchedulerLike_requestYield]**(): `void`
+▸ **[___SchedulerLike_requestYield]**(): `void`
 
 Request the scheduler to yield the current continuation.
 
@@ -84,9 +84,9 @@ Request the scheduler to yield the current continuation.
 
 ___
 
-### [SchedulerLike\_schedule]
+### [\_\_\_SchedulerLike\_schedule]
 
-▸ **[SchedulerLike_schedule]**(`continuation`, `options?`): [`DisposableLike`](util.DisposableLike.md)
+▸ **[___SchedulerLike_schedule]**(`continuation`, `options?`): [`DisposableLike`](util.DisposableLike.md)
 
 Schedule a continuation on the Scheduler.
 

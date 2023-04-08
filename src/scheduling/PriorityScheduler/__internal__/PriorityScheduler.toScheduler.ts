@@ -7,8 +7,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PrioritySchedulerDelegatingScheduler_priority,
-  PrioritySchedulerDelegatingScheduler_priorityScheduler,
+  __PrioritySchedulerDelegatingScheduler_priority,
+  __PrioritySchedulerDelegatingScheduler_priorityScheduler,
 } from "../../../__internal__/symbols.js";
 import {
   Function1,
@@ -34,8 +34,8 @@ import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__inte
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
 type TProperties = {
-  readonly [PrioritySchedulerDelegatingScheduler_priorityScheduler]: PrioritySchedulerLike;
-  readonly [PrioritySchedulerDelegatingScheduler_priority]: number;
+  readonly [__PrioritySchedulerDelegatingScheduler_priorityScheduler]: PrioritySchedulerLike;
+  readonly [__PrioritySchedulerDelegatingScheduler_priority]: number;
 };
 
 const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
@@ -57,45 +57,48 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
     ): SchedulerLike {
       init(Disposable_mixin, instance);
 
-      instance[PrioritySchedulerDelegatingScheduler_priorityScheduler] =
-        scheduler;
-      instance[PrioritySchedulerDelegatingScheduler_priority] = priority;
+      instance[
+        __PrioritySchedulerDelegatingScheduler_priorityScheduler
+      ] = scheduler;
+      instance[__PrioritySchedulerDelegatingScheduler_priority] =
+        priority;
 
       return instance;
     },
     props<TProperties>({
-      [PrioritySchedulerDelegatingScheduler_priorityScheduler]: none,
-      [PrioritySchedulerDelegatingScheduler_priority]: 0,
+      [__PrioritySchedulerDelegatingScheduler_priorityScheduler]:
+        none,
+      [__PrioritySchedulerDelegatingScheduler_priority]: 0,
     }),
     {
       get [SchedulerLike_inContinuation]() {
         unsafeCast<TProperties>(this);
-        return this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
-          SchedulerLike_inContinuation
-        ];
+        return this[
+          __PrioritySchedulerDelegatingScheduler_priorityScheduler
+        ][SchedulerLike_inContinuation];
       },
       get [SchedulerLike_maxYieldInterval]() {
         unsafeCast<TProperties>(this);
-        return this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
-          SchedulerLike_maxYieldInterval
-        ];
+        return this[
+          __PrioritySchedulerDelegatingScheduler_priorityScheduler
+        ][SchedulerLike_maxYieldInterval];
       },
       get [SchedulerLike_now]() {
         unsafeCast<TProperties>(this);
-        return this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
-          SchedulerLike_now
-        ];
+        return this[
+          __PrioritySchedulerDelegatingScheduler_priorityScheduler
+        ][SchedulerLike_now];
       },
       get [SchedulerLike_shouldYield]() {
         unsafeCast<TProperties>(this);
-        return this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
-          SchedulerLike_shouldYield
-        ];
+        return this[
+          __PrioritySchedulerDelegatingScheduler_priorityScheduler
+        ][SchedulerLike_shouldYield];
       },
       [SchedulerLike_requestYield](this: TProperties): void {
-        this[PrioritySchedulerDelegatingScheduler_priorityScheduler][
-          SchedulerLike_requestYield
-        ]();
+        this[
+          __PrioritySchedulerDelegatingScheduler_priorityScheduler
+        ][SchedulerLike_requestYield]();
       },
       [SchedulerLike_schedule](
         this: TProperties & DisposableLike,
@@ -103,11 +106,14 @@ const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(
         options?: { readonly delay?: number },
       ): DisposableLike {
         const scheduler =
-          this[PrioritySchedulerDelegatingScheduler_priorityScheduler];
+          this[
+            __PrioritySchedulerDelegatingScheduler_priorityScheduler
+          ];
         return pipe(
           scheduler[SchedulerLike_schedule](effect, {
             ...options,
-            priority: this[PrioritySchedulerDelegatingScheduler_priority],
+            priority:
+              this[__PrioritySchedulerDelegatingScheduler_priority],
           }),
           Disposable_addToIgnoringChildErrors(this),
         );

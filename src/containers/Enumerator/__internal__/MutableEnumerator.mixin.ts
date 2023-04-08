@@ -1,7 +1,7 @@
 import { Mixin, mix, props } from "../../../__internal__/mixins.js";
 import {
-  Enumerator_private_current,
-  MutableEnumeratorLike_reset,
+  __MutableEnumeratorLike_reset as MutableEnumeratorLike_reset,
+  __Enumerator_private_current,
 } from "../../../__internal__/symbols.js";
 import {
   EnumeratorLike,
@@ -31,7 +31,7 @@ type TEnumeratorMixinReturn<T> = Omit<
 const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
-      [Enumerator_private_current]: T;
+      [__Enumerator_private_current]: T;
       [EnumeratorLike_hasCurrent]: boolean;
     };
 
@@ -49,23 +49,23 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           return instance;
         },
         props<TProperties>({
-          [Enumerator_private_current]: none,
+          [__Enumerator_private_current]: none,
           [EnumeratorLike_hasCurrent]: false,
         }),
         {
           get [EnumeratorLike_current](): T {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
             return this[EnumeratorLike_hasCurrent]
-              ? this[Enumerator_private_current]
+              ? this[__Enumerator_private_current]
               : raiseWithDebugMessage("Enumerator does not have current value");
           },
           set [EnumeratorLike_current](v: T) {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
-            this[Enumerator_private_current] = v;
+            this[__Enumerator_private_current] = v;
             this[EnumeratorLike_hasCurrent] = true;
           },
           [MutableEnumeratorLike_reset](this: TProperties) {
-            this[Enumerator_private_current] = none as T;
+            this[__Enumerator_private_current] = none as T;
             this[EnumeratorLike_hasCurrent] = false;
           },
         },

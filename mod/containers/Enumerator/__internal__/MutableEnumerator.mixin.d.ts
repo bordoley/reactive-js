@@ -1,5 +1,5 @@
 import { Mixin } from "../../../__internal__/mixins.js";
-import { MutableEnumeratorLike_reset } from "../../../__internal__/symbols.js";
+import { __MutableEnumeratorLike_reset as MutableEnumeratorLike_reset } from "../../../__internal__/symbols.js";
 import { EnumeratorLike, EnumeratorLike_current, EnumeratorLike_move } from "../../../containers.js";
 export { MutableEnumeratorLike_reset };
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {

@@ -33,10 +33,10 @@ Represents a duplex stream
 
 ### Properties
 
-- [[StreamLike\_scheduler]](streaming.StreamLike.md#[streamlike_scheduler])
+- [[\_\_\_StreamLike\_scheduler]](streaming.StreamLike.md#[___streamlike_scheduler])
 
 ## Properties
 
-### [StreamLike\_scheduler]
+### [\_\_\_StreamLike\_scheduler]
 
-• `Readonly` **[StreamLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)
+• `Readonly` **[\_\_\_StreamLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)

@@ -10,9 +10,9 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import {
-  WindowLocationStreamLike_canGoBack,
-  WindowLocationStreamLike_goBack,
-  WindowLocationStreamLike_replace,
+  __WindowLocationStreamLike_canGoBack as WindowLocationStreamLike_canGoBack,
+  __WindowLocationStreamLike_goBack as WindowLocationStreamLike_goBack,
+  __WindowLocationStreamLike_replace as WindowLocationStreamLike_replace,
 } from "../__internal__/symbols.js";
 import {
   Function1,

@@ -9,7 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { KeepObserver_predicate } from "../../../__internal__/symbols.js";
+import { __KeepObserver_predicate } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
@@ -31,7 +31,7 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
     predicate: Predicate<T>,
   ) => ObserverLike<T> = (<T>() => {
     type TProperties = {
-      readonly [KeepObserver_predicate]: Predicate<T>;
+      readonly [__KeepObserver_predicate]: Predicate<T>;
     };
 
     return createInstanceFactory(
@@ -45,12 +45,12 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(delegatingMixin(), instance, delegate);
-          instance[KeepObserver_predicate] = predicate;
+          instance[__KeepObserver_predicate] = predicate;
 
           return instance;
         },
         props<TProperties>({
-          [KeepObserver_predicate]: none,
+          [__KeepObserver_predicate]: none,
         }),
         {
           [ObserverLike_notify](
@@ -61,7 +61,7 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
           ) {
             Observer_assertState(this);
 
-            if (this[KeepObserver_predicate](next)) {
+            if (this[__KeepObserver_predicate](next)) {
               this[DelegatingLike_delegate][ObserverLike_notify](next);
             }
           },

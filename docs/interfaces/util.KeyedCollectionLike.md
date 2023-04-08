@@ -25,13 +25,13 @@
 
 ### Methods
 
-- [[KeyedCollectionLike\_get]](util.KeyedCollectionLike.md#[keyedcollectionlike_get])
+- [[\_\_\_KeyedCollectionLike\_get]](util.KeyedCollectionLike.md#[___keyedcollectionlike_get])
 
 ## Methods
 
-### [KeyedCollectionLike\_get]
+### [\_\_\_KeyedCollectionLike\_get]
 
-▸ **[KeyedCollectionLike_get]**(`index`): `T`
+▸ **[___KeyedCollectionLike_get]**(`index`): `T`
 
 #### Parameters
 

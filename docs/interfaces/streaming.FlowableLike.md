@@ -25,25 +25,25 @@ imperative flow control when subscribed to.
 
 ### Properties
 
-- [[ContainerLike\_type]](streaming.FlowableLike.md#[containerlike_type])
-- [[StreamableLike\_isEnumerable]](streaming.FlowableLike.md#[streamablelike_isenumerable])
-- [[StreamableLike\_isInteractive]](streaming.FlowableLike.md#[streamablelike_isinteractive])
+- [[\_\_\_ContainerLike\_type]](streaming.FlowableLike.md#[___containerlike_type])
+- [[\_\_\_StreamableLike\_isEnumerable]](streaming.FlowableLike.md#[___streamablelike_isenumerable])
+- [[\_\_\_StreamableLike\_isInteractive]](streaming.FlowableLike.md#[___streamablelike_isinteractive])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`FlowableLike`](streaming.FlowableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`FlowableLike`](streaming.FlowableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
+[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
 
 ___
 
-### [StreamableLike\_isEnumerable]
+### [\_\_\_StreamableLike\_isEnumerable]
 
-• `Readonly` **[StreamableLike\_isEnumerable]**: ``false``
+• `Readonly` **[\_\_\_StreamableLike\_isEnumerable]**: ``false``
 
 Indicates if the resulting is stream is enumerable,
 producting exactly one value synchronously for every
@@ -51,17 +51,17 @@ enqueued request.
 
 #### Overrides
 
-[StreamableLike](streaming.StreamableLike.md).[[StreamableLike_isEnumerable]](streaming.StreamableLike.md#[streamablelike_isenumerable])
+[StreamableLike](streaming.StreamableLike.md).[[___StreamableLike_isEnumerable]](streaming.StreamableLike.md#[___streamablelike_isenumerable])
 
 ___
 
-### [StreamableLike\_isInteractive]
+### [\_\_\_StreamableLike\_isInteractive]
 
-• `Readonly` **[StreamableLike\_isInteractive]**: ``false``
+• `Readonly` **[\_\_\_StreamableLike\_isInteractive]**: ``false``
 
 Indicates if the resulting is stream is interactive,
 producing exactly one value for every enqueued request.
 
 #### Overrides
 
-[StreamableLike](streaming.StreamableLike.md).[[StreamableLike_isInteractive]](streaming.StreamableLike.md#[streamablelike_isinteractive])
+[StreamableLike](streaming.StreamableLike.md).[[___StreamableLike_isInteractive]](streaming.StreamableLike.md#[___streamablelike_isinteractive])

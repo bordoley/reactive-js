@@ -23,45 +23,45 @@ over an underlying source of data.
 
 ### Properties
 
-- [[ContainerLike\_type]](containers.EnumeratorLike.md#[containerlike_type])
-- [[EnumeratorLike\_current]](containers.EnumeratorLike.md#[enumeratorlike_current])
-- [[EnumeratorLike\_hasCurrent]](containers.EnumeratorLike.md#[enumeratorlike_hascurrent])
+- [[\_\_\_ContainerLike\_type]](containers.EnumeratorLike.md#[___containerlike_type])
+- [[\_\_\_EnumeratorLike\_current]](containers.EnumeratorLike.md#[___enumeratorlike_current])
+- [[\_\_\_EnumeratorLike\_hasCurrent]](containers.EnumeratorLike.md#[___enumeratorlike_hascurrent])
 
 ### Methods
 
-- [[EnumeratorLike\_move]](containers.EnumeratorLike.md#[enumeratorlike_move])
+- [[\_\_\_EnumeratorLike\_move]](containers.EnumeratorLike.md#[___enumeratorlike_move])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`EnumeratorLike`](containers.EnumeratorLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`EnumeratorLike`](containers.EnumeratorLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
+[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
 
 ___
 
-### [EnumeratorLike\_current]
+### [\_\_\_EnumeratorLike\_current]
 
-• `Readonly` **[EnumeratorLike\_current]**: `T`
+• `Readonly` **[\_\_\_EnumeratorLike\_current]**: `T`
 
 Returns the element if present.
 
 ___
 
-### [EnumeratorLike\_hasCurrent]
+### [\_\_\_EnumeratorLike\_hasCurrent]
 
-• `Readonly` **[EnumeratorLike\_hasCurrent]**: `boolean`
+• `Readonly` **[\_\_\_EnumeratorLike\_hasCurrent]**: `boolean`
 
 Indicates if the `EnumeratorLike` has a current value.
 
 ## Methods
 
-### [EnumeratorLike\_move]
+### [\_\_\_EnumeratorLike\_move]
 
-▸ **[EnumeratorLike_move]**(): `boolean`
+▸ **[___EnumeratorLike_move]**(): `boolean`
 
 Advances the enumerator to the next value, if present.
 

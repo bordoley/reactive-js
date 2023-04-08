@@ -1,4 +1,4 @@
-import { KeyedContainerLike_TKey } from "./__internal__/symbols.js";
+import { __KeyedContainerLike_TKey as KeyedContainerLike_TKey } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, EnumeratorLike, ReadonlySetLike } from "./containers.js";
 import { Function1, Function2, Predicate, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
 export { KeyedContainerLike_TKey };

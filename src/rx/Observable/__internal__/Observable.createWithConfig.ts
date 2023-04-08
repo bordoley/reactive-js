@@ -4,7 +4,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { CreateObservable_effect } from "../../../__internal__/symbols.js";
+import { __CreateObservable_effect } from "../../../__internal__/symbols.js";
 import { SideEffect1, error, none } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -53,7 +53,7 @@ interface ObservableCreateWithConfig {
 const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"] =
   /*@__PURE__*/ (() => {
     type TProperties = {
-      readonly [CreateObservable_effect]: SideEffect1<ObserverLike>;
+      readonly [__CreateObservable_effect]: SideEffect1<ObserverLike>;
       readonly [ObservableLike_isEnumerable]: boolean;
       readonly [ObservableLike_isRunnable]: boolean;
     };
@@ -69,7 +69,7 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
             readonly [ObservableLike_isRunnable]: boolean;
           },
         ): ObservableLike {
-          instance[CreateObservable_effect] = effect;
+          instance[__CreateObservable_effect] = effect;
           instance[ObservableLike_isEnumerable] =
             config[ObservableLike_isEnumerable];
           instance[ObservableLike_isRunnable] =
@@ -79,14 +79,14 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
           return instance;
         },
         props<TProperties>({
-          [CreateObservable_effect]: none,
+          [__CreateObservable_effect]: none,
           [ObservableLike_isRunnable]: false,
           [ObservableLike_isEnumerable]: false,
         }),
         {
           [ObservableLike_observe](this: TProperties, observer: ObserverLike) {
             try {
-              this[CreateObservable_effect](observer);
+              this[__CreateObservable_effect](observer);
             } catch (e) {
               observer[DisposableLike_dispose](error(e));
             }

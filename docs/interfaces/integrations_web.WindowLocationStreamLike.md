@@ -14,24 +14,24 @@
 
 ### Properties
 
-- [[WindowLocationStreamLike\_canGoBack]](integrations_web.WindowLocationStreamLike.md#[windowlocationstreamlike_cangoback])
+- [[\_\_\_WindowLocationStreamLike\_canGoBack]](integrations_web.WindowLocationStreamLike.md#[___windowlocationstreamlike_cangoback])
 
 ### Methods
 
-- [[WindowLocationStreamLike\_goBack]](integrations_web.WindowLocationStreamLike.md#[windowlocationstreamlike_goback])
-- [[WindowLocationStreamLike\_replace]](integrations_web.WindowLocationStreamLike.md#[windowlocationstreamlike_replace])
+- [[\_\_\_WindowLocationStreamLike\_goBack]](integrations_web.WindowLocationStreamLike.md#[___windowlocationstreamlike_goback])
+- [[\_\_\_WindowLocationStreamLike\_replace]](integrations_web.WindowLocationStreamLike.md#[___windowlocationstreamlike_replace])
 
 ## Properties
 
-### [WindowLocationStreamLike\_canGoBack]
+### [\_\_\_WindowLocationStreamLike\_canGoBack]
 
-• `Readonly` **[WindowLocationStreamLike\_canGoBack]**: [`ObservableLike`](rx.ObservableLike.md)<`boolean`\>
+• `Readonly` **[\_\_\_WindowLocationStreamLike\_canGoBack]**: [`ObservableLike`](rx.ObservableLike.md)<`boolean`\>
 
 ## Methods
 
-### [WindowLocationStreamLike\_goBack]
+### [\_\_\_WindowLocationStreamLike\_goBack]
 
-▸ **[WindowLocationStreamLike_goBack]**(): `void`
+▸ **[___WindowLocationStreamLike_goBack]**(): `void`
 
 #### Returns
 
@@ -39,9 +39,9 @@
 
 ___
 
-### [WindowLocationStreamLike\_replace]
+### [\_\_\_WindowLocationStreamLike\_replace]
 
-▸ **[WindowLocationStreamLike_replace]**(`stateOrUpdater`): `boolean`
+▸ **[___WindowLocationStreamLike_replace]**(`stateOrUpdater`): `boolean`
 
 #### Parameters
 

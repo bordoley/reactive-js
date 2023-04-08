@@ -10,18 +10,18 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  ContinuationLike_continuationScheduler,
-  ContinuationLike_priority,
-  ContinuationLike_run,
-  ContinuationSchedulerLike_schedule,
-  ContinuationSchedulerLike_shouldYield,
-  Continuation_childContinuation,
-  Continuation_effect,
-  PrioritySchedulerImplementationLike_runContinuation,
-  PrioritySchedulerImplementationLike_shouldYield,
-  SchedulerMixin_currentContinuation,
-  SchedulerMixin_startTime,
-  SchedulerMixin_yieldRequested,
+  __ContinuationLike_continuationScheduler as ContinuationLike_continuationScheduler,
+  __ContinuationLike_priority as ContinuationLike_priority,
+  __ContinuationLike_run as ContinuationLike_run,
+  __ContinuationSchedulerLike_schedule as ContinuationSchedulerLike_schedule,
+  __ContinuationSchedulerLike_shouldYield as ContinuationSchedulerLike_shouldYield,
+  __PrioritySchedulerImplementationLike_runContinuation as PrioritySchedulerImplementationLike_runContinuation,
+  __PrioritySchedulerImplementationLike_shouldYield as PrioritySchedulerImplementationLike_shouldYield,
+  __Continuation_childContinuation,
+  __Continuation_effect,
+  __SchedulerMixin_currentContinuation,
+  __SchedulerMixin_startTime,
+  __SchedulerMixin_yieldRequested,
 } from "../../../__internal__/symbols.js";
 import {
   QueueLike,
@@ -64,7 +64,9 @@ import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/Indexe
 export {
   ContinuationLike_continuationScheduler,
   ContinuationLike_priority,
+  ContinuationLike_run,
   ContinuationSchedulerLike_schedule,
+  ContinuationSchedulerLike_shouldYield,
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
 };
@@ -114,8 +116,8 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
     type TContinuationProperties = {
       [ContinuationLike_continuationScheduler]: ContinuationSchedulerLike;
       [ContinuationLike_priority]: number;
-      [Continuation_childContinuation]: Optional<ContinuationLike>;
-      [Continuation_effect]: SideEffect1<ContinuationContextLike>;
+      [__Continuation_childContinuation]: Optional<ContinuationLike>;
+      [__Continuation_effect]: SideEffect1<ContinuationContextLike>;
     };
 
     const createContinuation = createInstanceFactory(
@@ -146,7 +148,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           );
 
           instance[ContinuationLike_continuationScheduler] = scheduler;
-          instance[Continuation_effect] = effect;
+          instance[__Continuation_effect] = effect;
           instance[ContinuationLike_priority] = priority;
 
           pipe(
@@ -166,8 +168,8 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
         props<TContinuationProperties>({
           [ContinuationLike_continuationScheduler]: none,
           [ContinuationLike_priority]: 0,
-          [Continuation_childContinuation]: none,
-          [Continuation_effect]: none,
+          [__Continuation_childContinuation]: none,
+          [__Continuation_effect]: none,
         }),
         {
           get [ContinuationSchedulerLike_shouldYield](): boolean {
@@ -204,9 +206,9 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
             // Run any inner continuations first.
             let head: Optional<ContinuationLike> = none;
             while (((head = this[QueueLike_dequeue]()), isSome(head))) {
-              this[Continuation_childContinuation] = head;
+              this[__Continuation_childContinuation] = head;
               head[ContinuationLike_run]();
-              this[Continuation_childContinuation] = none;
+              this[__Continuation_childContinuation] = none;
 
               const shouldYield =
                 scheduler[ContinuationSchedulerLike_shouldYield];
@@ -223,7 +225,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
             let yieldError: Optional<YieldError> = none;
 
             try {
-              this[Continuation_effect](this);
+              this[__Continuation_effect](this);
             } catch (e) {
               if (e instanceof YieldError) {
                 yieldError = e;
@@ -257,7 +259,8 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
             continuation: ContinuationLike,
             delay: number,
           ): void {
-            const childContinuation = this[Continuation_childContinuation];
+            const childContinuation =
+              this[__Continuation_childContinuation];
             continuation[ContinuationLike_continuationScheduler] = this;
 
             if (continuation[DisposableLike_isDisposed]) {
@@ -286,10 +289,10 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
     );
 
     type TSchedulerProperties = {
-      [SchedulerMixin_yieldRequested]: boolean;
-      [SchedulerMixin_currentContinuation]: Optional<ContinuationLike>;
+      [__SchedulerMixin_yieldRequested]: boolean;
+      [__SchedulerMixin_currentContinuation]: Optional<ContinuationLike>;
       [SchedulerLike_maxYieldInterval]: number;
-      [SchedulerMixin_startTime]: number;
+      [__SchedulerMixin_startTime]: number;
     };
 
     return mix(
@@ -315,17 +318,18 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
         return instance;
       },
       props<TSchedulerProperties>({
-        [SchedulerMixin_currentContinuation]: none,
-        [SchedulerMixin_yieldRequested]: false,
+        [__SchedulerMixin_currentContinuation]: none,
+        [__SchedulerMixin_yieldRequested]: false,
         [SchedulerLike_maxYieldInterval]: MAX_SAFE_INTEGER,
-        [SchedulerMixin_startTime]: 0,
+        [__SchedulerMixin_startTime]: 0,
       }),
       {
         get [SchedulerLike_inContinuation](): boolean {
           unsafeCast<
             PrioritySchedulerImplementationLike & TSchedulerProperties
           >(this);
-          const currentContinuation = this[SchedulerMixin_currentContinuation];
+          const currentContinuation =
+            this[__SchedulerMixin_currentContinuation];
           return isSome(currentContinuation);
         },
         get [SchedulerLike_shouldYield](): boolean {
@@ -334,11 +338,12 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           >(this);
           const inContinuation = this[SchedulerLike_inContinuation];
           const isDisposed = this[DisposableLike_isDisposed];
-          const yieldRequested = this[SchedulerMixin_yieldRequested];
+          const yieldRequested =
+            this[__SchedulerMixin_yieldRequested];
 
           const exceededMaxYieldInterval =
             this[SchedulerLike_now] >
-            this[SchedulerMixin_startTime] +
+            this[__SchedulerMixin_startTime] +
               this[SchedulerLike_maxYieldInterval];
 
           return (
@@ -354,7 +359,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           return this[SchedulerLike_shouldYield];
         },
         [SchedulerLike_requestYield](this: TSchedulerProperties): void {
-          this[SchedulerMixin_yieldRequested] = true;
+          this[__SchedulerMixin_yieldRequested] = true;
         },
         [SchedulerLike_schedule](
           this: PrioritySchedulerImplementationLike & TSchedulerProperties,
@@ -365,7 +370,8 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           const { priority = 0 } = options ?? {};
           const continuation = createContinuation(this, effect, priority);
 
-          const currentContinuation = this[SchedulerMixin_currentContinuation];
+          const currentContinuation =
+            this[__SchedulerMixin_currentContinuation];
 
           if (
             delay > 0 ||
@@ -386,12 +392,12 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           this: PrioritySchedulerImplementationLike & TSchedulerProperties,
           continuation: ContinuationLike,
         ): void {
-          this[SchedulerMixin_startTime] = this[SchedulerLike_now];
-          this[SchedulerMixin_currentContinuation] = continuation;
-          this[SchedulerMixin_yieldRequested] = false;
+          this[__SchedulerMixin_startTime] = this[SchedulerLike_now];
+          this[__SchedulerMixin_currentContinuation] = continuation;
+          this[__SchedulerMixin_yieldRequested] = false;
           continuation[ContinuationLike_run]();
-          this[SchedulerMixin_yieldRequested] = false;
-          this[SchedulerMixin_currentContinuation] = none;
+          this[__SchedulerMixin_yieldRequested] = false;
+          this[__SchedulerMixin_currentContinuation] = none;
         },
       },
     );

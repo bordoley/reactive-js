@@ -10,11 +10,7 @@ import {
   createGzip,
   createInflate,
 } from "zlib";
-import {
-  BufferLike_capacity,
-  NODE_JS_PAUSE_EVENT,
-  QueueableLike_backpressureStrategy,
-} from "../__internal__/symbols.js";
+import { __NODE_JS_PAUSE_EVENT } from "../__internal__/symbols.js";
 import { ContainerOperator } from "../containers.js";
 import {
   Factory,
@@ -52,8 +48,10 @@ import * as Flowable from "../streaming/Flowable.js";
 import * as Stream from "../streaming/Stream.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
+  BufferLike_capacity,
   DisposableLike,
   DisposableLike_dispose,
+  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
@@ -244,7 +242,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
             // say a UInt8Array should be accepted. Need to file a bug.
             if (!writable.write(Buffer.from(ev))) {
               // Hack in a custom event here for pause request
-              writable.emit(NODE_JS_PAUSE_EVENT);
+              writable.emit(__NODE_JS_PAUSE_EVENT);
             }
           }),
           Observable.subscribe(observer),
@@ -262,7 +260,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
 
         writable.on("drain", onDrain);
         writable.on("finish", onFinish);
-        writable.on(NODE_JS_PAUSE_EVENT, onPause);
+        writable.on(__NODE_JS_PAUSE_EVENT, onPause);
 
         observer[QueueableLike_enqueue](false);
       }),

@@ -1,5 +1,5 @@
 import { Mixin, Mutable, mix, props } from "../../../__internal__/mixins.js";
-import { DisposableMixin_disposables } from "../../../__internal__/symbols.js";
+import { __DisposableMixin_disposables } from "../../../__internal__/symbols.js";
 import { Optional, isFunction, newInstance, none } from "../../../functions.js";
 import {
   DisposableLike,
@@ -31,7 +31,7 @@ const doDispose = (
 type TProperties = {
   [DisposableLike_error]: Optional<Error>;
   [DisposableLike_isDisposed]: boolean;
-  readonly [DisposableMixin_disposables]: Set<DisposableOrTeardown>;
+  readonly [__DisposableMixin_disposables]: Set<DisposableOrTeardown>;
 };
 
 const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
@@ -42,7 +42,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
     > &
       Mutable<TProperties>,
   ): DisposableLike {
-    instance[DisposableMixin_disposables] =
+    instance[__DisposableMixin_disposables] =
       newInstance<Set<DisposableOrTeardown>>(Set);
 
     return instance;
@@ -50,7 +50,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
   props<TProperties>({
     [DisposableLike_error]: none,
     [DisposableLike_isDisposed]: false,
-    [DisposableMixin_disposables]: none,
+    [__DisposableMixin_disposables]: none,
   }),
   {
     [DisposableLike_dispose](
@@ -61,7 +61,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
         this[DisposableLike_error] = error;
         this[DisposableLike_isDisposed] = true;
 
-        const disposables = this[DisposableMixin_disposables];
+        const disposables = this[__DisposableMixin_disposables];
 
         for (const disposable of disposables) {
           disposables.delete(disposable);
@@ -73,7 +73,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
       this: TProperties & DisposableLike,
       disposable: DisposableOrTeardown,
     ) {
-      const disposables = this[DisposableMixin_disposables];
+      const disposables = this[__DisposableMixin_disposables];
 
       if ((this as unknown) === disposable) {
         return;

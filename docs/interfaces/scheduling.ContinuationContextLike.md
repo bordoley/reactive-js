@@ -12,13 +12,13 @@ yield control back to the scheduler.
 
 ### Methods
 
-- [[ContinuationContextLike\_yield]](scheduling.ContinuationContextLike.md#[continuationcontextlike_yield])
+- [[\_\_\_ContinuationContextLike\_yield]](scheduling.ContinuationContextLike.md#[___continuationcontextlike_yield])
 
 ## Methods
 
-### [ContinuationContextLike\_yield]
+### [\_\_\_ContinuationContextLike\_yield]
 
-▸ **[ContinuationContextLike_yield]**(`delay?`): `void`
+▸ **[___ContinuationContextLike_yield]**(`delay?`): `void`
 
 Yields control back to the scheduler.
 

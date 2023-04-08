@@ -1,7 +1,7 @@
 /// <reference types="./Observable.zipWithLatestFrom.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ZipWithLatestFromObserver_TAQueue, ZipWithLatestFromObserver_hasLatest, ZipWithLatestFromObserver_otherLatest, ZipWithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
+import { __ZipWithLatestFromObserver_TAQueue, __ZipWithLatestFromObserver_hasLatest, __ZipWithLatestFromObserver_otherLatest, __ZipWithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
@@ -18,20 +18,19 @@ const Observable_zipWithLatestFrom =
 /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
         const notifyDelegate = (observer) => {
-            if (observer[ZipWithLatestFromObserver_TAQueue][CollectionLike_count] >
-                0 &&
-                observer[ZipWithLatestFromObserver_hasLatest]) {
-                observer[ZipWithLatestFromObserver_hasLatest] = false;
-                const next = observer[ZipWithLatestFromObserver_TAQueue][QueueLike_dequeue]();
-                const result = observer[ZipWithLatestFromObserver_selector](next, observer[ZipWithLatestFromObserver_otherLatest]);
+            if (observer[__ZipWithLatestFromObserver_TAQueue][CollectionLike_count] > 0 &&
+                observer[__ZipWithLatestFromObserver_hasLatest]) {
+                observer[__ZipWithLatestFromObserver_hasLatest] = false;
+                const next = observer[__ZipWithLatestFromObserver_TAQueue][QueueLike_dequeue]();
+                const result = observer[__ZipWithLatestFromObserver_selector](next, observer[__ZipWithLatestFromObserver_otherLatest]);
                 observer[DelegatingLike_delegate][ObserverLike_notify](result);
             }
         };
         return createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
             init(Observer_mixin(), instance, delegate, delegate);
             init(delegatingMixin(), instance, delegate);
-            instance[ZipWithLatestFromObserver_selector] = selector;
-            instance[ZipWithLatestFromObserver_TAQueue] =
+            instance[__ZipWithLatestFromObserver_selector] = selector;
+            instance[__ZipWithLatestFromObserver_TAQueue] =
                 IndexedQueue_createFifoQueue(delegate[BufferLike_capacity], delegate[QueueableLike_backpressureStrategy]);
             const disposeDelegate = () => {
                 if (instance[DisposableLike_isDisposed] &&
@@ -40,25 +39,27 @@ const Observable_zipWithLatestFrom =
                 }
             };
             const otherSubscription = pipe(other, Observable_forEach(otherLatest => {
-                instance[ZipWithLatestFromObserver_hasLatest] = true;
-                instance[ZipWithLatestFromObserver_otherLatest] = otherLatest;
+                instance[__ZipWithLatestFromObserver_hasLatest] =
+                    true;
+                instance[__ZipWithLatestFromObserver_otherLatest] =
+                    otherLatest;
                 notifyDelegate(instance);
                 if (instance[DisposableLike_isDisposed] &&
-                    instance[ZipWithLatestFromObserver_TAQueue][CollectionLike_count] === 0) {
+                    instance[__ZipWithLatestFromObserver_TAQueue][CollectionLike_count] === 0) {
                     instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
             }), Observable_subscribeWithConfig(delegate, delegate), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({
-            [ZipWithLatestFromObserver_hasLatest]: false,
-            [ZipWithLatestFromObserver_otherLatest]: none,
-            [ZipWithLatestFromObserver_selector]: none,
-            [ZipWithLatestFromObserver_TAQueue]: none,
+            [__ZipWithLatestFromObserver_hasLatest]: false,
+            [__ZipWithLatestFromObserver_otherLatest]: none,
+            [__ZipWithLatestFromObserver_selector]: none,
+            [__ZipWithLatestFromObserver_TAQueue]: none,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[ZipWithLatestFromObserver_TAQueue][QueueableLike_enqueue](next);
+                this[__ZipWithLatestFromObserver_TAQueue][QueueableLike_enqueue](next);
                 notifyDelegate(this);
             },
         }));

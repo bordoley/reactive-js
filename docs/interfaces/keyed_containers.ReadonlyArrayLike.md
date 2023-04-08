@@ -24,25 +24,25 @@ A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerL
 
 ### Properties
 
-- [[ContainerLike\_type]](keyed_containers.ReadonlyArrayLike.md#[containerlike_type])
-- [[KeyedContainerLike\_TKey]](keyed_containers.ReadonlyArrayLike.md#[keyedcontainerlike_tkey])
+- [[\_\_\_ContainerLike\_type]](keyed_containers.ReadonlyArrayLike.md#[___containerlike_type])
+- [[\_\_\_KeyedContainerLike\_TKey]](keyed_containers.ReadonlyArrayLike.md#[___keyedcontainerlike_tkey])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`ReadonlyArrayLike`](keyed_containers.ReadonlyArrayLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`ReadonlyArrayLike`](keyed_containers.ReadonlyArrayLike.md)<`unknown`\>
 
 #### Overrides
 
-KeyedContainerLike.\_\_@ContainerLike\_type@22119
+KeyedContainerLike.\_\_@\_\_\_ContainerLike\_type@22119
 
 ___
 
-### [KeyedContainerLike\_TKey]
+### [\_\_\_KeyedContainerLike\_TKey]
 
-• `Optional` `Readonly` **[KeyedContainerLike\_TKey]**: `number`
+• `Optional` `Readonly` **[\_\_\_KeyedContainerLike\_TKey]**: `number`
 
 #### Overrides
 
-[KeyedContainerLike](keyed_containers.KeyedContainerLike.md).[[KeyedContainerLike_TKey]](keyed_containers.KeyedContainerLike.md#[keyedcontainerlike_tkey])
+[KeyedContainerLike](keyed_containers.KeyedContainerLike.md).[[___KeyedContainerLike_TKey]](keyed_containers.KeyedContainerLike.md#[___keyedcontainerlike_tkey])

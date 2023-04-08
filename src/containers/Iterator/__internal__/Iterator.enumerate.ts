@@ -6,7 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { IteratorEnumerator_iterator } from "../../../__internal__/symbols.js";
+import { __IteratorEnumerator_iterator } from "../../../__internal__/symbols.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -22,7 +22,7 @@ import MutableEnumerator_mixin, {
 const Iterator_enumerate: <T>() => Function1<Iterator<T>, EnumeratorLike<T>> =
   /*@__PURE__*/ (<T>() => {
     type TIteratorEnumeratorProperties = {
-      [IteratorEnumerator_iterator]: Iterator<T>;
+      [__IteratorEnumerator_iterator]: Iterator<T>;
     };
 
     const createEnumerator = createInstanceFactory(
@@ -34,19 +34,19 @@ const Iterator_enumerate: <T>() => Function1<Iterator<T>, EnumeratorLike<T>> =
           iterator: Iterator<T>,
         ): EnumeratorLike<T> {
           init(MutableEnumerator_mixin<T>(), instance);
-          instance[IteratorEnumerator_iterator] = iterator;
+          instance[__IteratorEnumerator_iterator] = iterator;
 
           return instance;
         },
         props<TIteratorEnumeratorProperties>({
-          [IteratorEnumerator_iterator]: none,
+          [__IteratorEnumerator_iterator]: none,
         }),
         {
           [EnumeratorLike_move](
             this: TIteratorEnumeratorProperties & MutableEnumeratorLike<T>,
           ) {
             this[MutableEnumeratorLike_reset]();
-            const next = this[IteratorEnumerator_iterator].next();
+            const next = this[__IteratorEnumerator_iterator].next();
             if (!next.done) {
               this[EnumeratorLike_current] = next.value;
             }

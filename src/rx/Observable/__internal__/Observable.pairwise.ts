@@ -10,8 +10,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  PairwiseObserver_hasPrev,
-  PairwiseObserver_prev,
+  __PairwiseObserver_hasPrev,
+  __PairwiseObserver_prev,
 } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { none, pipe, returns } from "../../../functions.js";
@@ -34,8 +34,8 @@ const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
     delegate: ObserverLike<readonly [T, T]>,
   ) => ObserverLike<T> = (<T>() => {
     type TProperties = {
-      [PairwiseObserver_prev]: T;
-      [PairwiseObserver_hasPrev]: boolean;
+      [__PairwiseObserver_prev]: T;
+      [__PairwiseObserver_hasPrev]: boolean;
     };
 
     return createInstanceFactory(
@@ -52,8 +52,8 @@ const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
           return instance;
         },
         props<TProperties>({
-          [PairwiseObserver_prev]: none,
-          [PairwiseObserver_hasPrev]: false,
+          [__PairwiseObserver_prev]: none,
+          [__PairwiseObserver_hasPrev]: false,
         }),
         {
           [ObserverLike_notify](
@@ -64,14 +64,14 @@ const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
           ) {
             Observer_assertState(this);
 
-            const prev = this[PairwiseObserver_prev];
+            const prev = this[__PairwiseObserver_prev];
 
-            if (this[PairwiseObserver_hasPrev]) {
+            if (this[__PairwiseObserver_hasPrev]) {
               this[DelegatingLike_delegate][ObserverLike_notify]([prev, next]);
             }
 
-            this[PairwiseObserver_hasPrev] = true;
-            this[PairwiseObserver_prev] = next;
+            this[__PairwiseObserver_hasPrev] = true;
+            this[__PairwiseObserver_prev] = next;
           },
         },
       ),

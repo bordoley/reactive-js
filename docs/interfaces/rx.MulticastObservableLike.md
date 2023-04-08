@@ -28,39 +28,39 @@ A stateful ObservableLike resource.
 
 ### Properties
 
-- [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
-- [[ObservableLike\_isEnumerable]](rx.MulticastObservableLike.md#[observablelike_isenumerable])
-- [[ObservableLike\_isRunnable]](rx.MulticastObservableLike.md#[observablelike_isrunnable])
+- [[\_\_\_MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[___multicastobservablelike_observercount])
+- [[\_\_\_ObservableLike\_isEnumerable]](rx.MulticastObservableLike.md#[___observablelike_isenumerable])
+- [[\_\_\_ObservableLike\_isRunnable]](rx.MulticastObservableLike.md#[___observablelike_isrunnable])
 
 ## Properties
 
-### [MulticastObservableLike\_observerCount]
+### [\_\_\_MulticastObservableLike\_observerCount]
 
-• `Readonly` **[MulticastObservableLike\_observerCount]**: `number`
+• `Readonly` **[\_\_\_MulticastObservableLike\_observerCount]**: `number`
 
 The number of observers currently observing the `MulticastObservableLike`.
 
 ___
 
-### [ObservableLike\_isEnumerable]
+### [\_\_\_ObservableLike\_isEnumerable]
 
-• `Readonly` **[ObservableLike\_isEnumerable]**: ``false``
+• `Readonly` **[\_\_\_ObservableLike\_isEnumerable]**: ``false``
 
 Indicates if the `ObservableLike` supports interactive enumeration.
 
 #### Overrides
 
-[ObservableLike](rx.ObservableLike.md).[[ObservableLike_isEnumerable]](rx.ObservableLike.md#[observablelike_isenumerable])
+[ObservableLike](rx.ObservableLike.md).[[___ObservableLike_isEnumerable]](rx.ObservableLike.md#[___observablelike_isenumerable])
 
 ___
 
-### [ObservableLike\_isRunnable]
+### [\_\_\_ObservableLike\_isRunnable]
 
-• `Readonly` **[ObservableLike\_isRunnable]**: ``false``
+• `Readonly` **[\_\_\_ObservableLike\_isRunnable]**: ``false``
 
 Indicates if the `ObservableLike` supports being subscribed to
 on a VirtualTimeScheduler.
 
 #### Overrides
 
-[ObservableLike](rx.ObservableLike.md).[[ObservableLike_isRunnable]](rx.ObservableLike.md#[observablelike_isrunnable])
+[ObservableLike](rx.ObservableLike.md).[[___ObservableLike_isRunnable]](rx.ObservableLike.md#[___observablelike_isrunnable])

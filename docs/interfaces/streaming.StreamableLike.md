@@ -40,19 +40,19 @@ TStream
 
 ### Properties
 
-- [[StreamableLike\_isEnumerable]](streaming.StreamableLike.md#[streamablelike_isenumerable])
-- [[StreamableLike\_isInteractive]](streaming.StreamableLike.md#[streamablelike_isinteractive])
-- [[StreamableLike\_isRunnable]](streaming.StreamableLike.md#[streamablelike_isrunnable])
+- [[\_\_\_StreamableLike\_isEnumerable]](streaming.StreamableLike.md#[___streamablelike_isenumerable])
+- [[\_\_\_StreamableLike\_isInteractive]](streaming.StreamableLike.md#[___streamablelike_isinteractive])
+- [[\_\_\_StreamableLike\_isRunnable]](streaming.StreamableLike.md#[___streamablelike_isrunnable])
 
 ### Methods
 
-- [[StreamableLike\_stream]](streaming.StreamableLike.md#[streamablelike_stream])
+- [[\_\_\_StreamableLike\_stream]](streaming.StreamableLike.md#[___streamablelike_stream])
 
 ## Properties
 
-### [StreamableLike\_isEnumerable]
+### [\_\_\_StreamableLike\_isEnumerable]
 
-• `Readonly` **[StreamableLike\_isEnumerable]**: `boolean`
+• `Readonly` **[\_\_\_StreamableLike\_isEnumerable]**: `boolean`
 
 Indicates if the resulting is stream is enumerable,
 producting exactly one value synchronously for every
@@ -60,27 +60,27 @@ enqueued request.
 
 ___
 
-### [StreamableLike\_isInteractive]
+### [\_\_\_StreamableLike\_isInteractive]
 
-• `Readonly` **[StreamableLike\_isInteractive]**: `boolean`
+• `Readonly` **[\_\_\_StreamableLike\_isInteractive]**: `boolean`
 
 Indicates if the resulting is stream is interactive,
 producing exactly one value for every enqueued request.
 
 ___
 
-### [StreamableLike\_isRunnable]
+### [\_\_\_StreamableLike\_isRunnable]
 
-• `Readonly` **[StreamableLike\_isRunnable]**: `boolean`
+• `Readonly` **[\_\_\_StreamableLike\_isRunnable]**: `boolean`
 
 Indicates if subscriptions on a VirtualTimeScheduler
 are supported.
 
 ## Methods
 
-### [StreamableLike\_stream]
+### [\_\_\_StreamableLike\_stream]
 
-▸ **[StreamableLike_stream]**(`scheduler`, `options?`): `TStream`
+▸ **[___StreamableLike_stream]**(`scheduler`, `options?`): `TStream`
 
 Subscribe to the Streamable.
 

@@ -1,4 +1,4 @@
-import { AwaitOrObserveEffect_hasValue, AwaitOrObserveEffect_observable, AwaitOrObserveEffect_subscription, AwaitOrObserveEffect_value, ComputeContext_awaitOrObserve, ComputeContext_cleanup, ComputeContext_effects, ComputeContext_index, ComputeContext_memoOrUse, ComputeContext_mode, ComputeContext_observer, ComputeContext_runComputation, ComputeContext_scheduledComputationSubscription, ComputeEffect_type, MemoOrUsingEffect_args, MemoOrUsingEffect_func, MemoOrUsingEffect_value } from "../../../__internal__/symbols.js";
+import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value } from "../../../__internal__/symbols.js";
 import { Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Optional, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
@@ -10,43 +10,43 @@ declare const Await = 2;
 declare const Observe = 3;
 declare const Using = 4;
 type MemoOrUsingEffect<T = unknown> = {
-    [MemoOrUsingEffect_func]: (...args: any[]) => unknown;
-    [MemoOrUsingEffect_args]: unknown[];
-    [MemoOrUsingEffect_value]: T;
+    [__MemoOrUsingEffect_func]: (...args: any[]) => unknown;
+    [__MemoOrUsingEffect_args]: unknown[];
+    [__MemoOrUsingEffect_value]: T;
 };
 type MemoEffect = {
-    readonly [ComputeEffect_type]: typeof Memo;
+    readonly [__ComputeEffect_type]: typeof Memo;
 } & MemoOrUsingEffect;
 type UsingEffect = {
-    readonly [ComputeEffect_type]: typeof Using;
-    [MemoOrUsingEffect_func]: (...args: any[]) => unknown;
-    [MemoOrUsingEffect_args]: unknown[];
+    readonly [__ComputeEffect_type]: typeof Using;
+    [__MemoOrUsingEffect_func]: (...args: any[]) => unknown;
+    [__MemoOrUsingEffect_args]: unknown[];
 } & MemoOrUsingEffect<DisposableLike>;
 type AwaitOrObserveEffect = {
-    [AwaitOrObserveEffect_observable]: ObservableLike;
-    [AwaitOrObserveEffect_subscription]: DisposableLike;
-    [AwaitOrObserveEffect_value]: Optional;
-    [AwaitOrObserveEffect_hasValue]: boolean;
+    [__AwaitOrObserveEffect_observable]: ObservableLike;
+    [__AwaitOrObserveEffect_subscription]: DisposableLike;
+    [__AwaitOrObserveEffect_value]: Optional;
+    [__AwaitOrObserveEffect_hasValue]: boolean;
 };
 type ObserveEffect = {
-    readonly [ComputeEffect_type]: typeof Observe;
+    readonly [__ComputeEffect_type]: typeof Observe;
 } & AwaitOrObserveEffect;
 type AwaitEffect = {
-    readonly [ComputeEffect_type]: typeof Await;
+    readonly [__ComputeEffect_type]: typeof Await;
 } & AwaitOrObserveEffect;
 type ComputeEffect = AwaitEffect | MemoEffect | ObserveEffect | UsingEffect;
 declare class ComputeContext {
-    [ComputeContext_index]: number;
-    readonly [ComputeContext_effects]: ComputeEffect[];
-    readonly [ComputeContext_observer]: ObserverLike;
-    private [ComputeContext_scheduledComputationSubscription];
-    private readonly [ComputeContext_runComputation];
-    private readonly [ComputeContext_mode];
-    private readonly [ComputeContext_cleanup];
+    [__ComputeContext_index]: number;
+    readonly [__ComputeContext_effects]: ComputeEffect[];
+    readonly [__ComputeContext_observer]: ObserverLike;
+    private [__ComputeContext_scheduledComputationSubscription];
+    private readonly [__ComputeContext_runComputation];
+    private readonly [__ComputeContext_mode];
+    private readonly [__ComputeContext_cleanup];
     constructor(observer: ObserverLike, runComputation: () => void, mode: EffectsMode);
-    [ComputeContext_awaitOrObserve]<T>(observable: ObservableLike<T>, shouldAwait: boolean): Optional<T>;
-    [ComputeContext_memoOrUse]<T>(shouldUse: false, f: (...args: any[]) => T, ...args: unknown[]): T;
-    [ComputeContext_memoOrUse]<T extends DisposableLike>(shouldUse: true, f: (...args: any[]) => T, ...args: unknown[]): T;
+    [__ComputeContext_awaitOrObserve]<T>(observable: ObservableLike<T>, shouldAwait: boolean): Optional<T>;
+    [__ComputeContext_memoOrUse]<T>(shouldUse: false, f: (...args: any[]) => T, ...args: unknown[]): T;
+    [__ComputeContext_memoOrUse]<T extends DisposableLike>(shouldUse: true, f: (...args: any[]) => T, ...args: unknown[]): T;
 }
 export declare const assertCurrentContext: () => ComputeContext;
 export declare const Observable_compute: <T>(computation: Factory<T>, { mode }?: {

@@ -1,7 +1,7 @@
 /// <reference types="./Stream.delegatingMixin.d.ts" />
 
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DelegatingStreamMixin_delegate } from "../../../__internal__/symbols.js";
+import { __DelegatingStreamMixin_delegate } from "../../../__internal__/symbols.js";
 import { none, returns, unsafeCast } from "../../../functions.js";
 import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
@@ -12,14 +12,14 @@ const Stream_delegatingMixin = /*@__PURE__*/ (() => {
         init(Disposable_delegatingMixin, instance, delegate);
         init(MulticastObservable_delegatingMixin(), instance, delegate);
         init(Dispatcher_delegatingMixin(), instance, delegate);
-        instance[DelegatingStreamMixin_delegate] = delegate;
+        instance[__DelegatingStreamMixin_delegate] = delegate;
         return instance;
     }, props({
-        [DelegatingStreamMixin_delegate]: none,
+        [__DelegatingStreamMixin_delegate]: none,
     }), {
         get [StreamLike_scheduler]() {
             unsafeCast(this);
-            return this[DelegatingStreamMixin_delegate][StreamLike_scheduler];
+            return this[__DelegatingStreamMixin_delegate][StreamLike_scheduler];
         },
     }));
 })();

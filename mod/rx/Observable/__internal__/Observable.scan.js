@@ -1,7 +1,7 @@
 /// <reference types="./Observable.scan.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ScanObserver_acc, ScanObserver_reducer, } from "../../../__internal__/symbols.js";
+import { __ScanObserver_acc, __ScanObserver_reducer, } from "../../../__internal__/symbols.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
@@ -13,23 +13,23 @@ const Observable_scan = /*@__PURE__*/ (() => {
         return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
             init(delegatingMixin(), instance, delegate);
-            instance[ScanObserver_reducer] = reducer;
+            instance[__ScanObserver_reducer] = reducer;
             try {
                 const acc = initialValue();
-                instance[ScanObserver_acc] = acc;
+                instance[__ScanObserver_acc] = acc;
             }
             catch (e) {
                 instance[DisposableLike_dispose](error(e));
             }
             return instance;
         }, props({
-            [ScanObserver_reducer]: none,
-            [ScanObserver_acc]: none,
+            [__ScanObserver_reducer]: none,
+            [__ScanObserver_acc]: none,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                const nextAcc = this[ScanObserver_reducer](this[ScanObserver_acc], next);
-                this[ScanObserver_acc] = nextAcc;
+                const nextAcc = this[__ScanObserver_reducer](this[__ScanObserver_acc], next);
+                this[__ScanObserver_acc] = nextAcc;
                 this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
             },
         }));

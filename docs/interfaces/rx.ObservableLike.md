@@ -26,46 +26,46 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
 ### Properties
 
-- [[ContainerLike\_type]](rx.ObservableLike.md#[containerlike_type])
-- [[ObservableLike\_isEnumerable]](rx.ObservableLike.md#[observablelike_isenumerable])
-- [[ObservableLike\_isRunnable]](rx.ObservableLike.md#[observablelike_isrunnable])
+- [[\_\_\_ContainerLike\_type]](rx.ObservableLike.md#[___containerlike_type])
+- [[\_\_\_ObservableLike\_isEnumerable]](rx.ObservableLike.md#[___observablelike_isenumerable])
+- [[\_\_\_ObservableLike\_isRunnable]](rx.ObservableLike.md#[___observablelike_isrunnable])
 
 ### Methods
 
-- [[ObservableLike\_observe]](rx.ObservableLike.md#[observablelike_observe])
+- [[\_\_\_ObservableLike\_observe]](rx.ObservableLike.md#[___observablelike_observe])
 
 ## Properties
 
-### [ContainerLike\_type]
+### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[ContainerLike\_type]**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[[ContainerLike_type]](containers.ContainerLike.md#[containerlike_type])
+[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
 
 ___
 
-### [ObservableLike\_isEnumerable]
+### [\_\_\_ObservableLike\_isEnumerable]
 
-• `Readonly` **[ObservableLike\_isEnumerable]**: `boolean`
+• `Readonly` **[\_\_\_ObservableLike\_isEnumerable]**: `boolean`
 
 Indicates if the `ObservableLike` supports interactive enumeration.
 
 ___
 
-### [ObservableLike\_isRunnable]
+### [\_\_\_ObservableLike\_isRunnable]
 
-• `Readonly` **[ObservableLike\_isRunnable]**: `boolean`
+• `Readonly` **[\_\_\_ObservableLike\_isRunnable]**: `boolean`
 
 Indicates if the `ObservableLike` supports being subscribed to
 on a VirtualTimeScheduler.
 
 ## Methods
 
-### [ObservableLike\_observe]
+### [\_\_\_ObservableLike\_observe]
 
-▸ **[ObservableLike_observe]**(`observer`): `void`
+▸ **[___ObservableLike_observe]**(`observer`): `void`
 
 Subscribes the given `ObserverLike` to the `ObservableLike` source.
 

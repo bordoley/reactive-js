@@ -1,7 +1,7 @@
 /// <reference types="./Observable.distinctUntilChanged.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DistinctUntilChangedObserver_equality, DistinctUntilChangedObserver_hasValue, DistinctUntilChangedObserver_prev, } from "../../../__internal__/symbols.js";
+import { __DistinctUntilChangedObserver_equality, __DistinctUntilChangedObserver_hasValue, __DistinctUntilChangedObserver_prev, } from "../../../__internal__/symbols.js";
 import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
@@ -13,20 +13,21 @@ const Observable_distinctUntilChanged =
         return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function DistinctUntilChangedObserver(instance, delegate, equality) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
             init(delegatingMixin(), instance, delegate);
-            instance[DistinctUntilChangedObserver_equality] = equality;
+            instance[__DistinctUntilChangedObserver_equality] =
+                equality;
             return instance;
         }, props({
-            [DistinctUntilChangedObserver_equality]: none,
-            [DistinctUntilChangedObserver_prev]: none,
-            [DistinctUntilChangedObserver_hasValue]: false,
+            [__DistinctUntilChangedObserver_equality]: none,
+            [__DistinctUntilChangedObserver_prev]: none,
+            [__DistinctUntilChangedObserver_hasValue]: false,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                const shouldEmit = !this[DistinctUntilChangedObserver_hasValue] ||
-                    !this[DistinctUntilChangedObserver_equality](this[DistinctUntilChangedObserver_prev], next);
+                const shouldEmit = !this[__DistinctUntilChangedObserver_hasValue] ||
+                    !this[__DistinctUntilChangedObserver_equality](this[__DistinctUntilChangedObserver_prev], next);
                 if (shouldEmit) {
-                    this[DistinctUntilChangedObserver_prev] = next;
-                    this[DistinctUntilChangedObserver_hasValue] = true;
+                    this[__DistinctUntilChangedObserver_prev] = next;
+                    this[__DistinctUntilChangedObserver_hasValue] = true;
                     this[DelegatingLike_delegate][ObserverLike_notify](next);
                 }
             },

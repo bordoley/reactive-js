@@ -18,10 +18,10 @@ Base type for all Containers.
 
 ### Properties
 
-- [[KeyedContainerLike\_TKey]](keyed_containers.KeyedContainerLike.md#[keyedcontainerlike_tkey])
+- [[\_\_\_KeyedContainerLike\_TKey]](keyed_containers.KeyedContainerLike.md#[___keyedcontainerlike_tkey])
 
 ## Properties
 
-### [KeyedContainerLike\_TKey]
+### [\_\_\_KeyedContainerLike\_TKey]
 
-• `Optional` `Readonly` **[KeyedContainerLike\_TKey]**: `unknown`
+• `Optional` `Readonly` **[\_\_\_KeyedContainerLike\_TKey]**: `unknown`

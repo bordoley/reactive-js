@@ -16,12 +16,12 @@
 
 ### Properties
 
-- [[BufferLike\_capacity]](util.BufferLike.md#[bufferlike_capacity])
+- [[\_\_\_BufferLike\_capacity]](util.BufferLike.md#[___bufferlike_capacity])
 
 ## Properties
 
-### [BufferLike\_capacity]
+### [\_\_\_BufferLike\_capacity]
 
-• `Readonly` **[BufferLike\_capacity]**: `number`
+• `Readonly` **[\_\_\_BufferLike\_capacity]**: `number`
 
 The number of items the queue is capable of efficiently buffering.

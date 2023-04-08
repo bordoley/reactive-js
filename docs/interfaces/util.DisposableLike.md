@@ -26,35 +26,35 @@ Represents an unmanaged resource that can be disposed.
 
 ### Properties
 
-- [[DisposableLike\_error]](util.DisposableLike.md#[disposablelike_error])
-- [[DisposableLike\_isDisposed]](util.DisposableLike.md#[disposablelike_isdisposed])
+- [[\_\_\_DisposableLike\_error]](util.DisposableLike.md#[___disposablelike_error])
+- [[\_\_\_DisposableLike\_isDisposed]](util.DisposableLike.md#[___disposablelike_isdisposed])
 
 ### Methods
 
-- [[DisposableLike\_add]](util.DisposableLike.md#[disposablelike_add])
-- [[DisposableLike\_dispose]](util.DisposableLike.md#[disposablelike_dispose])
+- [[\_\_\_DisposableLike\_add]](util.DisposableLike.md#[___disposablelike_add])
+- [[\_\_\_DisposableLike\_dispose]](util.DisposableLike.md#[___disposablelike_dispose])
 
 ## Properties
 
-### [DisposableLike\_error]
+### [\_\_\_DisposableLike\_error]
 
-• `Readonly` **[DisposableLike\_error]**: [`Optional`](../modules/functions.md#optional)<`Error`\>
+• `Readonly` **[\_\_\_DisposableLike\_error]**: [`Optional`](../modules/functions.md#optional)<`Error`\>
 
 The error the `Disposable` was disposed with if disposed.
 
 ___
 
-### [DisposableLike\_isDisposed]
+### [\_\_\_DisposableLike\_isDisposed]
 
-• `Readonly` **[DisposableLike\_isDisposed]**: `boolean`
+• `Readonly` **[\_\_\_DisposableLike\_isDisposed]**: `boolean`
 
 `true` if this resource has been disposed, otherwise false
 
 ## Methods
 
-### [DisposableLike\_add]
+### [\_\_\_DisposableLike\_add]
 
-▸ **[DisposableLike_add]**(`disposable`): `void`
+▸ **[___DisposableLike_add]**(`disposable`): `void`
 
 Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
 
@@ -70,9 +70,9 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 ___
 
-### [DisposableLike\_dispose]
+### [\_\_\_DisposableLike\_dispose]
 
-▸ **[DisposableLike_dispose]**(`error?`): `void`
+▸ **[___DisposableLike_dispose]**(`error?`): `void`
 
 Dispose the resource.
 

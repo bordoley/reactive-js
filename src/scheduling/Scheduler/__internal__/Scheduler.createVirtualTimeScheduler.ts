@@ -9,12 +9,12 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  VirtualTask_continuation,
-  VirtualTask_dueTime,
-  VirtualTask_id,
-  VirtualTimeScheduler_maxMicroTaskTicks,
-  VirtualTimeScheduler_microTaskTicks,
-  VirtualTimeScheduler_taskIDCount,
+  __VirtualTask_continuation,
+  __VirtualTask_dueTime,
+  __VirtualTask_id,
+  __VirtualTimeScheduler_maxMicroTaskTicks,
+  __VirtualTimeScheduler_microTaskTicks,
+  __VirtualTimeScheduler_taskIDCount,
 } from "../../../__internal__/symbols.js";
 import {
   QueueLike,
@@ -54,21 +54,24 @@ import {
 } from "./Scheduler.mixin.js";
 
 type VirtualTask = {
-  readonly [VirtualTask_continuation]: ContinuationLike;
-  [VirtualTask_dueTime]: number;
-  [VirtualTask_id]: number;
+  readonly [__VirtualTask_continuation]: ContinuationLike;
+  [__VirtualTask_dueTime]: number;
+  [__VirtualTask_id]: number;
 };
 
 const comparator = (a: VirtualTask, b: VirtualTask) => {
-  const diff = a[VirtualTask_dueTime] - b[VirtualTask_dueTime];
-  return diff !== 0 ? diff : a[VirtualTask_id] - b[VirtualTask_id];
+  const diff =
+    a[__VirtualTask_dueTime] - b[__VirtualTask_dueTime];
+  return diff !== 0
+    ? diff
+    : a[__VirtualTask_id] - b[__VirtualTask_id];
 };
 
 type TProperties = {
   [SchedulerLike_now]: number;
-  readonly [VirtualTimeScheduler_maxMicroTaskTicks]: number;
-  [VirtualTimeScheduler_microTaskTicks]: number;
-  [VirtualTimeScheduler_taskIDCount]: number;
+  readonly [__VirtualTimeScheduler_maxMicroTaskTicks]: number;
+  [__VirtualTimeScheduler_microTaskTicks]: number;
+  [__VirtualTimeScheduler_taskIDCount]: number;
 };
 
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
@@ -97,25 +100,26 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           "overflow",
         );
 
-        instance[VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
+        instance[__VirtualTimeScheduler_maxMicroTaskTicks] =
+          maxMicroTaskTicks;
 
         return instance;
       },
       props<TProperties>({
         [SchedulerLike_now]: 0,
-        [VirtualTimeScheduler_maxMicroTaskTicks]: MAX_SAFE_INTEGER,
-        [VirtualTimeScheduler_microTaskTicks]: 0,
-        [VirtualTimeScheduler_taskIDCount]: 0,
+        [__VirtualTimeScheduler_maxMicroTaskTicks]: MAX_SAFE_INTEGER,
+        [__VirtualTimeScheduler_microTaskTicks]: 0,
+        [__VirtualTimeScheduler_taskIDCount]: 0,
       }),
       {
         get [PrioritySchedulerImplementationLike_shouldYield]() {
           unsafeCast<TProperties>(this);
 
-          this[VirtualTimeScheduler_microTaskTicks]++;
+          this[__VirtualTimeScheduler_microTaskTicks]++;
 
           return (
-            this[VirtualTimeScheduler_microTaskTicks] >=
-            this[VirtualTimeScheduler_maxMicroTaskTicks]
+            this[__VirtualTimeScheduler_microTaskTicks] >=
+            this[__VirtualTimeScheduler_maxMicroTaskTicks]
           );
         },
         [VirtualTimeSchedulerLike_run](
@@ -129,11 +133,11 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           ) {
             const task = this[EnumeratorLike_current];
             const {
-              [VirtualTask_dueTime]: dueTime,
-              [VirtualTask_continuation]: continuation,
+              [__VirtualTask_dueTime]: dueTime,
+              [__VirtualTask_continuation]: continuation,
             } = task;
 
-            this[VirtualTimeScheduler_microTaskTicks] = 0;
+            this[__VirtualTimeScheduler_microTaskTicks] = 0;
             this[SchedulerLike_now] = dueTime;
 
             this[PrioritySchedulerImplementationLike_runContinuation](
@@ -155,9 +159,12 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             continuation[ContinuationLike_continuationScheduler] = this;
 
             this[QueueableLike_enqueue]({
-              [VirtualTask_id]: this[VirtualTimeScheduler_taskIDCount]++,
-              [VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
-              [VirtualTask_continuation]: continuation,
+              [__VirtualTask_id]: this[
+                __VirtualTimeScheduler_taskIDCount
+              ]++,
+              [__VirtualTask_dueTime]:
+                this[SchedulerLike_now] + delay,
+              [__VirtualTask_continuation]: continuation,
             });
           }
         },

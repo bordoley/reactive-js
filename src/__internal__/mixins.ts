@@ -16,11 +16,11 @@ import ReadonlyArray_getLength from "../keyed-containers/ReadonlyArray/__interna
 import * as Obj from "./Object.js";
 import { __DEV__ } from "./constants.js";
 import {
-  DelegatingLike_delegate,
-  Object_init,
-  Object_private_initializedProperties,
-  Object_properties,
-  Object_prototype,
+  __DelegatingLike_delegate as DelegatingLike_delegate,
+  __Object_init,
+  __Object_private_initializedProperties,
+  __Object_properties,
+  __Object_prototype,
 } from "./symbols.js";
 
 export { DelegatingLike_delegate };
@@ -36,36 +36,39 @@ export type Mutable<Type> = {
 };
 
 export type PartialMixin = {
-  [Object_properties]: object;
-  [Object_prototype]: object;
+  [__Object_properties]: object;
+  [__Object_prototype]: object;
 };
 
 export interface MixinAny<TReturn> extends PartialMixin {
-  [Object_init]: (instance: unknown, ...args: readonly any[]) => TReturn;
+  [__Object_init]: (
+    instance: unknown,
+    ...args: readonly any[]
+  ) => TReturn;
 }
 
 export interface Mixin<TReturn, TPrototype extends object = object>
   extends PartialMixin {
-  [Object_init](instance: unknown): TReturn;
-  [Object_prototype]: TPrototype;
+  [__Object_init](instance: unknown): TReturn;
+  [__Object_prototype]: TPrototype;
 }
 
 export interface Mixin1<TReturn, TA, TPrototype extends object = object>
   extends PartialMixin {
-  [Object_init](instance: unknown, a: TA): TReturn;
-  [Object_prototype]: TPrototype;
+  [__Object_init](instance: unknown, a: TA): TReturn;
+  [__Object_prototype]: TPrototype;
 }
 
 export interface Mixin2<TReturn, TA, TB, TPrototype extends object = object>
   extends PartialMixin {
-  [Object_init](instance: unknown, a: TA, b: TB): TReturn;
-  [Object_prototype]: TPrototype;
+  [__Object_init](instance: unknown, a: TA, b: TB): TReturn;
+  [__Object_prototype]: TPrototype;
 }
 
 export interface Mixin3<TReturn, TA, TB, TC, TPrototype extends object = object>
   extends PartialMixin {
-  [Object_init](instance: unknown, a: TA, b: TB, c: TC): TReturn;
-  [Object_prototype]: TPrototype;
+  [__Object_init](instance: unknown, a: TA, b: TB, c: TC): TReturn;
+  [__Object_prototype]: TPrototype;
 }
 
 export interface Mixin4<
@@ -76,8 +79,14 @@ export interface Mixin4<
   TD,
   TPrototype extends object = object,
 > extends PartialMixin {
-  [Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD): TReturn;
-  [Object_prototype]: TPrototype;
+  [__Object_init](
+    instance: unknown,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): TReturn;
+  [__Object_prototype]: TPrototype;
 }
 export interface Mixin5<
   TReturn,
@@ -88,8 +97,15 @@ export interface Mixin5<
   TE,
   TPrototype extends object = object,
 > extends PartialMixin {
-  [Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD, e: TE): TReturn;
-  [Object_prototype]: TPrototype;
+  [__Object_init](
+    instance: unknown,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): TReturn;
+  [__Object_prototype]: TPrototype;
 }
 export interface Mixin6<
   TReturn,
@@ -101,7 +117,7 @@ export interface Mixin6<
   TF,
   TPrototype extends object = object,
 > extends PartialMixin {
-  [Object_init](
+  [__Object_init](
     instance: unknown,
     a: TA,
     b: TB,
@@ -110,7 +126,7 @@ export interface Mixin6<
     e: TE,
     f: TF,
   ): TReturn;
-  [Object_prototype]: TPrototype;
+  [__Object_prototype]: TPrototype;
 }
 
 function initUnsafe<TReturn>(
@@ -118,7 +134,7 @@ function initUnsafe<TReturn>(
   instance: unknown,
   ...args: readonly unknown[]
 ): asserts instance is TReturn {
-  const f = mixin[Object_init];
+  const f = mixin[__Object_init];
   f(instance, ...args);
 }
 
@@ -196,17 +212,23 @@ export const include: (
       const mixin = mixins[i];
       propertyDescriptions = {
         ...propertyDescriptions,
-        ...Obj.getOwnPropertyDescriptors(mixin[Object_properties]),
+        ...Obj.getOwnPropertyDescriptors(mixin[__Object_properties]),
       };
       prototypeDescriptions = {
         ...prototypeDescriptions,
-        ...Obj.getOwnPropertyDescriptors(mixin[Object_prototype]),
+        ...Obj.getOwnPropertyDescriptors(mixin[__Object_prototype]),
       };
     }
 
     return {
-      [Object_properties]: Obj.create(Obj.prototype, propertyDescriptions),
-      [Object_prototype]: Obj.create(Obj.prototype, prototypeDescriptions),
+      [__Object_properties]: Obj.create(
+        Obj.prototype,
+        propertyDescriptions,
+      ),
+      [__Object_prototype]: Obj.create(
+        Obj.prototype,
+        prototypeDescriptions,
+      ),
     };
   }
 };
@@ -218,7 +240,7 @@ interface CreateMixin {
       ...args: readonly any[]
     ) => unknown,
     TProperties extends {
-      [Object_private_initializedProperties]?: true;
+      [__Object_private_initializedProperties]?: true;
     },
     TPrototype extends object,
   >(
@@ -226,8 +248,8 @@ interface CreateMixin {
     properties: TProperties,
     prototype: TPrototype,
   ): PartialMixin & {
-    [Object_init]: typeof init;
-    [Object_prototype]: TPrototype;
+    [__Object_init]: typeof init;
+    [__Object_prototype]: TPrototype;
   };
 
   create<
@@ -236,7 +258,7 @@ interface CreateMixin {
       ...args: readonly any[]
     ) => unknown,
     TProperties extends {
-      [Object_private_initializedProperties]?: true;
+      [__Object_private_initializedProperties]?: true;
     },
     TPrototype extends object,
   >(
@@ -245,15 +267,15 @@ interface CreateMixin {
     properties: TProperties,
     prototype: TPrototype,
   ): PartialMixin & {
-    [Object_init]: TInit;
-    [Object_prototype]: TPrototype;
+    [__Object_init]: TInit;
+    [__Object_prototype]: TPrototype;
   };
 
   create<TInit extends (instance: unknown, ...args: readonly any[]) => unknown>(
     parent: PartialMixin,
     init: TInit,
   ): PartialMixin & {
-    [Object_init]: TInit;
+    [__Object_init]: TInit;
   };
 }
 export const mix: CreateMixin["create"] = ((
@@ -264,18 +286,18 @@ export const mix: CreateMixin["create"] = ((
 ) => {
   if (isFunction(initOrParent)) {
     return {
-      [Object_init]: initOrParent,
-      [Object_properties]: propertiesOrInit ?? {},
-      [Object_prototype]: prototypeOrParent ?? {},
+      [__Object_init]: initOrParent,
+      [__Object_properties]: propertiesOrInit ?? {},
+      [__Object_prototype]: prototypeOrParent ?? {},
     };
   } else {
     const base = include(initOrParent, {
-      [Object_properties]: prototypeOrParent ?? {},
-      [Object_prototype]: nothingOrPrototype ?? {},
+      [__Object_properties]: prototypeOrParent ?? {},
+      [__Object_prototype]: nothingOrPrototype ?? {},
     });
     return {
       ...base,
-      [Object_init]: propertiesOrInit,
+      [__Object_init]: propertiesOrInit,
     };
   }
 }) as CreateMixin["create"];
@@ -310,20 +332,20 @@ interface CreateInstanceFactory {
 export const createInstanceFactory: CreateInstanceFactory["createInstanceFactory"] =
   <TReturn>(mixin: MixinAny<TReturn>): Factory<TReturn> => {
     const propertyDescription = Obj.getOwnPropertyDescriptors(
-      mixin[Object_properties],
+      mixin[__Object_properties],
     );
 
     const prototypeDescription = __DEV__
       ? {
-          ...Obj.getOwnPropertyDescriptors(mixin[Object_prototype]),
+          ...Obj.getOwnPropertyDescriptors(mixin[__Object_prototype]),
           constructor: {
             configurable: true,
             enumerable: false,
-            value: mixin[Object_init],
+            value: mixin[__Object_init],
             writable: true,
           },
         }
-      : Obj.getOwnPropertyDescriptors(mixin[Object_prototype]);
+      : Obj.getOwnPropertyDescriptors(mixin[__Object_prototype]);
 
     const prototype = Obj.create(Obj.prototype, prototypeDescription);
 
@@ -337,10 +359,10 @@ export const createInstanceFactory: CreateInstanceFactory["createInstanceFactory
 export const props = <TProperties>(
   o: OptionalProperties<TProperties>,
 ): TProperties & {
-  [Object_private_initializedProperties]?: true;
+  [__Object_private_initializedProperties]?: true;
 } => {
   return o as unknown as TProperties & {
-    [Object_private_initializedProperties]?: true;
+    [__Object_private_initializedProperties]?: true;
   };
 };
 
@@ -375,9 +397,9 @@ export const delegatingMixin: <TDelegate>() => Mixin1<
 })();
 
 export type MixinPrototype<TPrototype> = {
-  [Object_prototype]: TPrototype;
+  [__Object_prototype]: TPrototype;
 };
 
 export const getPrototype = <TPrototype>(
   mixin: MixinPrototype<TPrototype>,
-): TPrototype => mixin[Object_prototype];
+): TPrototype => mixin[__Object_prototype];

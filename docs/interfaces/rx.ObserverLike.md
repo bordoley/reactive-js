@@ -26,13 +26,13 @@ A consumer of push-based notifications.
 
 ### Methods
 
-- [[ObserverLike\_notify]](rx.ObserverLike.md#[observerlike_notify])
+- [[\_\_\_ObserverLike\_notify]](rx.ObserverLike.md#[___observerlike_notify])
 
 ## Methods
 
-### [ObserverLike\_notify]
+### [\_\_\_ObserverLike\_notify]
 
-▸ **[ObserverLike_notify]**(`next`): `void`
+▸ **[___ObserverLike_notify]**(`next`): `void`
 
 Notifies the the observer of the next notification produced by the observable source.
 

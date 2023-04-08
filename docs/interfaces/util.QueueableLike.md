@@ -24,25 +24,25 @@ An interface for types that support buffering items with backpressure.
 
 ### Properties
 
-- [[QueueableLike\_backpressureStrategy]](util.QueueableLike.md#[queueablelike_backpressurestrategy])
+- [[\_\_\_QueueableLike\_backpressureStrategy]](util.QueueableLike.md#[___queueablelike_backpressurestrategy])
 
 ### Methods
 
-- [[QueueableLike\_enqueue]](util.QueueableLike.md#[queueablelike_enqueue])
+- [[\_\_\_QueueableLike\_enqueue]](util.QueueableLike.md#[___queueablelike_enqueue])
 
 ## Properties
 
-### [QueueableLike\_backpressureStrategy]
+### [\_\_\_QueueableLike\_backpressureStrategy]
 
-• `Readonly` **[QueueableLike\_backpressureStrategy]**: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"``
+• `Readonly` **[\_\_\_QueueableLike\_backpressureStrategy]**: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"``
 
 The back pressure strategy utilized by the queue when it is at capacity.
 
 ## Methods
 
-### [QueueableLike\_enqueue]
+### [\_\_\_QueueableLike\_enqueue]
 
-▸ **[QueueableLike_enqueue]**(`req`): `boolean`
+▸ **[___QueueableLike_enqueue]**(`req`): `boolean`
 
 Enqueue an item onto the queue.
 

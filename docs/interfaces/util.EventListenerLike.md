@@ -24,13 +24,13 @@
 
 ### Methods
 
-- [[EventListenerLike\_notify]](util.EventListenerLike.md#[eventlistenerlike_notify])
+- [[\_\_\_EventListenerLike\_notify]](util.EventListenerLike.md#[___eventlistenerlike_notify])
 
 ## Methods
 
-### [EventListenerLike\_notify]
+### [\_\_\_EventListenerLike\_notify]
 
-▸ **[EventListenerLike_notify]**(`event`): `void`
+▸ **[___EventListenerLike_notify]**(`event`): `void`
 
 #### Parameters
 

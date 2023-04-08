@@ -5,7 +5,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { DelegatingDispatcherMixin_delegate } from "../../../__internal__/symbols.js";
+import { __DelegatingDispatcherMixin_delegate } from "../../../__internal__/symbols.js";
 import { none, returns } from "../../../functions.js";
 import { DispatcherLike, DispatcherLike_complete } from "../../../rx.js";
 import Queueable_delegatingMixin from "../../../util/Queue/__internal__/Queueable.delegatingMixin.js";
@@ -15,7 +15,7 @@ const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
   DispatcherLike<TReq>
 > = /*@__PURE__*/ (<TReq>() => {
   type TProperties = {
-    [DelegatingDispatcherMixin_delegate]: DispatcherLike<TReq>;
+    [__DelegatingDispatcherMixin_delegate]: DispatcherLike<TReq>;
   };
 
   return returns(
@@ -27,16 +27,18 @@ const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
         delegate: DispatcherLike<TReq>,
       ): DispatcherLike<TReq> {
         init(Queueable_delegatingMixin(), instance, delegate);
-        instance[DelegatingDispatcherMixin_delegate] = delegate;
+        instance[__DelegatingDispatcherMixin_delegate] = delegate;
 
         return instance;
       },
       props<TProperties>({
-        [DelegatingDispatcherMixin_delegate]: none,
+        [__DelegatingDispatcherMixin_delegate]: none,
       }),
       {
         [DispatcherLike_complete](this: TProperties) {
-          this[DelegatingDispatcherMixin_delegate][DispatcherLike_complete]();
+          this[__DelegatingDispatcherMixin_delegate][
+            DispatcherLike_complete
+          ]();
         },
       },
     ),

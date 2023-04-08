@@ -1,7 +1,7 @@
 /// <reference types="./Observable.zipObservables.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { SchedulerLike_schedule, ZipObserver_enumerators, ZipObserver_queuedEnumerator, } from "../../../__internal__/symbols.js";
+import { __ZipObserver_enumerators, __ZipObserver_queuedEnumerator, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
@@ -12,7 +12,7 @@ import ReadonlyArray_some from "../../../keyed-containers/ReadonlyArray/__intern
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
-import { ContinuationContextLike_yield, } from "../../../scheduling.js";
+import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
@@ -66,8 +66,8 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
     const createZipObserver = createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function ZipObserver(instance, delegate, enumerators, queuedEnumerator) {
         init(Observer_mixin(), instance, delegate, delegate);
         init(delegatingMixin(), instance, delegate);
-        instance[ZipObserver_queuedEnumerator] = queuedEnumerator;
-        instance[ZipObserver_enumerators] = enumerators;
+        instance[__ZipObserver_queuedEnumerator] = queuedEnumerator;
+        instance[__ZipObserver_enumerators] = enumerators;
         pipe(instance, Disposable_onComplete(() => {
             if (queuedEnumerator[DisposableLike_isDisposed] ||
                 (!queuedEnumerator[EnumeratorLike_hasCurrent] &&
@@ -77,13 +77,13 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         }));
         return instance;
     }, props({
-        [ZipObserver_enumerators]: none,
-        [ZipObserver_queuedEnumerator]: none,
+        [__ZipObserver_enumerators]: none,
+        [__ZipObserver_queuedEnumerator]: none,
     }), {
         [ObserverLike_notify](next) {
             Observer_assertState(this);
-            this[ZipObserver_queuedEnumerator][QueueableLike_enqueue](next);
-            const enumerators = this[ZipObserver_enumerators];
+            this[__ZipObserver_queuedEnumerator][QueueableLike_enqueue](next);
+            const enumerators = this[__ZipObserver_enumerators];
             if (!shouldEmit(enumerators)) {
                 return;
             }

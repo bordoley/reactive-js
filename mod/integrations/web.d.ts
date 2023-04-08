@@ -1,4 +1,4 @@
-import { WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_goBack, WindowLocationStreamLike_replace } from "../__internal__/symbols.js";
+import { __WindowLocationStreamLike_canGoBack as WindowLocationStreamLike_canGoBack, __WindowLocationStreamLike_goBack as WindowLocationStreamLike_goBack, __WindowLocationStreamLike_replace as WindowLocationStreamLike_replace } from "../__internal__/symbols.js";
 import { Function1, Updater } from "../functions.js";
 import { ObservableLike } from "../rx.js";
 import { StreamLike, StreamableLike } from "../streaming.js";

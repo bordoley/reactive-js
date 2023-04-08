@@ -5,7 +5,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverMixin_scheduler } from "../../../__internal__/symbols.js";
+import { __ObserverMixin_scheduler } from "../../../__internal__/symbols.js";
 import { none, pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import {
@@ -32,30 +32,19 @@ import {
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Observer_assertState from "./Observer.assertState.js";
 import Observer_baseMixin from "./Observer.baseMixin.js";
 
-export { ObserverMixin_scheduler };
-
-export type TObserverMixin<
-  T,
-  TScheduler extends SchedulerLike = SchedulerLike,
-> = Omit<ObserverLike<T>, typeof ObserverLike_notify> & {
-  [ObserverMixin_scheduler]: TScheduler;
-};
-
-const Observer_mixin: <
-  T,
-  TScheduler extends SchedulerLike = SchedulerLike,
->() => Mixin2<
-  TObserverMixin<T, TScheduler>,
-  TScheduler,
+const Observer_mixin: <T>() => Mixin2<
+  ObserverLike<T>,
+  SchedulerLike,
   {
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly [BufferLike_capacity]: number;
   }
-> = /*@__PURE__*/ (<T, TScheduler extends SchedulerLike = SchedulerLike>() => {
+> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [ObserverMixin_scheduler]: TScheduler;
+    [__ObserverMixin_scheduler]: SchedulerLike;
   };
 
   return returns(
@@ -66,34 +55,40 @@ const Observer_mixin: <
         Disposable_mixin,
       ),
       function ObserverMixin(
-        instance: TProperties & Pick<SchedulerLike, typeof SchedulerLike_now>,
-        scheduler: TScheduler,
+        instance: TProperties &
+          Pick<
+            ObserverLike,
+            typeof SchedulerLike_now | typeof ObserverLike_notify
+          >,
+        scheduler: SchedulerLike,
         config: {
           readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
           readonly [BufferLike_capacity]: number;
         },
-      ): TObserverMixin<T, TScheduler> {
+      ): ObserverLike<T> {
         init(Disposable_mixin, instance);
         init(Scheduler_delegatingMixin, instance, scheduler);
         init(Observer_baseMixin<T>(), instance, config);
 
-        instance[ObserverMixin_scheduler] = scheduler;
+        instance[__ObserverMixin_scheduler] = scheduler;
         pipe(scheduler, Disposable_addIgnoringChildErrors(instance));
 
         return instance;
       },
       props<TProperties>({
-        [ObserverMixin_scheduler]: none,
+        [__ObserverMixin_scheduler]: none,
       }),
       {
         get [SchedulerLike_now]() {
           unsafeCast<TProperties>(this);
-          return this[ObserverMixin_scheduler][SchedulerLike_now];
+          return this[__ObserverMixin_scheduler][SchedulerLike_now];
         },
 
         get [PrioritySchedulerImplementationLike_shouldYield]() {
           unsafeCast<TProperties>(this);
-          return this[ObserverMixin_scheduler][SchedulerLike_shouldYield];
+          return this[__ObserverMixin_scheduler][
+            SchedulerLike_shouldYield
+          ];
         },
 
         [ContinuationSchedulerLike_schedule](
@@ -110,7 +105,7 @@ const Observer_mixin: <
           continuation[ContinuationLike_continuationScheduler] = this;
 
           pipe(
-            this[ObserverMixin_scheduler][SchedulerLike_schedule](
+            this[__ObserverMixin_scheduler][SchedulerLike_schedule](
               () => {
                 this[PrioritySchedulerImplementationLike_runContinuation](
                   continuation,
@@ -120,6 +115,10 @@ const Observer_mixin: <
             ),
             Disposable_addTo(continuation),
           );
+        },
+
+        [ObserverLike_notify](this: ObserverLike, _: T) {
+          Observer_assertState(this);
         },
       },
     ),

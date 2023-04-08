@@ -9,7 +9,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/symbols.js";
+import { __DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import {
@@ -39,7 +39,7 @@ type ObservableDecodeWithCharset = <C extends ObservableLike>(options?: {
 const Observable_decodeWithCharset: ObservableDecodeWithCharset =
   /*@__PURE__*/ (() => {
     type TProperties = {
-      readonly [DecodeWithCharsetObserver_textDecoder]: TextDecoder;
+      readonly [__DecodeWithCharsetObserver_textDecoder]: TextDecoder;
     };
 
     const createDecodeWithCharsetObserver = createInstanceFactory(
@@ -60,7 +60,8 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           const textDecoder = newInstance(TextDecoder, charset, {
             fatal: true,
           });
-          instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
+          instance[__DecodeWithCharsetObserver_textDecoder] =
+            textDecoder;
 
           pipe(
             instance,
@@ -83,7 +84,7 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           return instance;
         },
         props<TProperties>({
-          [DecodeWithCharsetObserver_textDecoder]: none,
+          [__DecodeWithCharsetObserver_textDecoder]: none,
         }),
         {
           [ObserverLike_notify](
@@ -94,12 +95,11 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           ) {
             Observer_assertState(this);
 
-            const data = this[DecodeWithCharsetObserver_textDecoder].decode(
-              next,
-              {
-                stream: true,
-              },
-            );
+            const data = this[
+              __DecodeWithCharsetObserver_textDecoder
+            ].decode(next, {
+              stream: true,
+            });
             if (data.length > 0) {
               this[DelegatingLike_delegate][ObserverLike_notify](data);
             }

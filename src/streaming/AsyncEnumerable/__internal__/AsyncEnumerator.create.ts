@@ -1,5 +1,6 @@
 import {
   DelegatingLike,
+  DelegatingLike_delegate,
   createInstanceFactory,
   delegatingMixin,
   include,
@@ -7,7 +8,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { DelegatingLike_delegate } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";

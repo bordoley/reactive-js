@@ -7,7 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
+import { __EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
   QueueLike,
@@ -65,7 +65,7 @@ const Enumerable_enumerate: <T>() => (
   enumerable: EnumerableLike<T>,
 ) => EnumeratorLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   type TEnumeratorSchedulerProperties = {
-    readonly [EnumerableEnumerator_continuationQueue]: IndexedQueueLike<ContinuationLike>;
+    readonly [__EnumerableEnumerator_continuationQueue]: IndexedQueueLike<ContinuationLike>;
   };
 
   interface EnumeratorScheduler<T> extends EnumeratorLike<T>, ObserverLike<T> {}
@@ -93,14 +93,14 @@ const Enumerable_enumerate: <T>() => (
           [BufferLike_capacity]: MAX_SAFE_INTEGER,
         });
 
-        instance[EnumerableEnumerator_continuationQueue] =
+        instance[__EnumerableEnumerator_continuationQueue] =
           IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
 
         // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
         return instance as EnumeratorScheduler<T>;
       },
       props<TEnumeratorSchedulerProperties>({
-        [EnumerableEnumerator_continuationQueue]: none,
+        [__EnumerableEnumerator_continuationQueue]: none,
       }),
       {
         [SchedulerLike_now]: 0,
@@ -118,7 +118,9 @@ const Enumerable_enumerate: <T>() => (
 
           while (!this[EnumeratorLike_hasCurrent]) {
             const continuation =
-              this[EnumerableEnumerator_continuationQueue][QueueLike_dequeue]();
+              this[__EnumerableEnumerator_continuationQueue][
+                QueueLike_dequeue
+              ]();
             if (isSome(continuation)) {
               this[PrioritySchedulerImplementationLike_runContinuation](
                 continuation,
@@ -153,9 +155,9 @@ const Enumerable_enumerate: <T>() => (
 
           continuation[ContinuationLike_continuationScheduler] = this;
 
-          this[EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](
-            continuation,
-          );
+          this[__EnumerableEnumerator_continuationQueue][
+            QueueableLike_enqueue
+          ](continuation);
         },
         [ObserverLike_notify](
           this: MutableEnumeratorLike<T> & ObserverLike,

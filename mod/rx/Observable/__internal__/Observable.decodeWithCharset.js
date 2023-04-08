@@ -1,7 +1,7 @@
 /// <reference types="./Observable.decodeWithCharset.d.ts" />
 
 import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/symbols.js";
+import { __DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/symbols.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, newInstance, none, partial, pipe, } from "../../../functions.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
@@ -19,7 +19,8 @@ const Observable_decodeWithCharset =
         const textDecoder = newInstance(TextDecoder, charset, {
             fatal: true,
         });
-        instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
+        instance[__DecodeWithCharsetObserver_textDecoder] =
+            textDecoder;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             const data = textDecoder.decode();
             if (data.length > 0) {
@@ -31,11 +32,11 @@ const Observable_decodeWithCharset =
         }));
         return instance;
     }, props({
-        [DecodeWithCharsetObserver_textDecoder]: none,
+        [__DecodeWithCharsetObserver_textDecoder]: none,
     }), {
         [ObserverLike_notify](next) {
             Observer_assertState(this);
-            const data = this[DecodeWithCharsetObserver_textDecoder].decode(next, {
+            const data = this[__DecodeWithCharsetObserver_textDecoder].decode(next, {
                 stream: true,
             });
             if (data.length > 0) {
