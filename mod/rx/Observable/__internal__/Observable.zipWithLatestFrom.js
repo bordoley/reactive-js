@@ -18,7 +18,8 @@ const Observable_zipWithLatestFrom =
 /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
         const notifyDelegate = (observer) => {
-            if (observer[__ZipWithLatestFromObserver_TAQueue][CollectionLike_count] > 0 &&
+            if (observer[__ZipWithLatestFromObserver_TAQueue][CollectionLike_count] >
+                0 &&
                 observer[__ZipWithLatestFromObserver_hasLatest]) {
                 observer[__ZipWithLatestFromObserver_hasLatest] = false;
                 const next = observer[__ZipWithLatestFromObserver_TAQueue][QueueLike_dequeue]();
@@ -39,10 +40,8 @@ const Observable_zipWithLatestFrom =
                 }
             };
             const otherSubscription = pipe(other, Observable_forEach(otherLatest => {
-                instance[__ZipWithLatestFromObserver_hasLatest] =
-                    true;
-                instance[__ZipWithLatestFromObserver_otherLatest] =
-                    otherLatest;
+                instance[__ZipWithLatestFromObserver_hasLatest] = true;
+                instance[__ZipWithLatestFromObserver_otherLatest] = otherLatest;
                 notifyDelegate(instance);
                 if (instance[DisposableLike_isDisposed] &&
                     instance[__ZipWithLatestFromObserver_TAQueue][CollectionLike_count] === 0) {

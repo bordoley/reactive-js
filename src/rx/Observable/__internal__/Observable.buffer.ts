@@ -58,10 +58,7 @@ type ObservableBuffer = <C extends ObservableLike, T>(options?: {
 const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [__BufferObserver_buffer]: T[];
-    readonly [__BufferObserver_durationFunction]: Function1<
-      T,
-      ObservableLike
-    >;
+    readonly [__BufferObserver_durationFunction]: Function1<T, ObservableLike>;
     readonly [__BufferObserver_durationSubscription]: SerialDisposableLike;
     readonly [__BufferObserver_count]: number;
   };
@@ -80,8 +77,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
         init(delegatingMixin(), instance, delegate);
 
         instance[__BufferObserver_buffer] = [];
-        instance[__BufferObserver_durationFunction] =
-          durationFunction;
+        instance[__BufferObserver_durationFunction] = durationFunction;
         instance[__BufferObserver_durationSubscription] =
           SerialDisposable_create(Disposable_disposed);
         instance[__BufferObserver_count] = count;

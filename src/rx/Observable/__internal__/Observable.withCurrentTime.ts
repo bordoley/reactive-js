@@ -34,11 +34,7 @@ const Observable_withCurrentTime: ObservableWithCurrentTime = /*@__PURE__*/ (<
     selector: Function2<number, TA, TB>,
   ) => ObserverLike<TA> = (<TA, TB>() => {
     type TProperties = {
-      readonly [__WithCurrentTimeObserver_selector]: Function2<
-        number,
-        TA,
-        TB
-      >;
+      readonly [__WithCurrentTimeObserver_selector]: Function2<number, TA, TB>;
     };
 
     return createInstanceFactory(

@@ -26,8 +26,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
             init(delegatingMixin(), instance, delegate);
             instance[__MergeAllObserver_observablesQueue] =
                 IndexedQueue_createFifoQueue(capacity, backpressureStrategy);
-            instance[__MergeAllObserver_maxConcurrency] =
-                maxConcurrency;
+            instance[__MergeAllObserver_maxConcurrency] = maxConcurrency;
             instance[__MergeAllObserver_activeCount] = 0;
             instance[__MergeAllObserver_onDispose] = () => {
                 instance[__MergeAllObserver_activeCount]--;

@@ -36,9 +36,7 @@ const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
       }),
       {
         [DispatcherLike_complete](this: TProperties) {
-          this[__DelegatingDispatcherMixin_delegate][
-            DispatcherLike_complete
-          ]();
+          this[__DelegatingDispatcherMixin_delegate][DispatcherLike_complete]();
         },
       },
     ),

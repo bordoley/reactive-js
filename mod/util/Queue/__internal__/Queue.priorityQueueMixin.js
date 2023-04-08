@@ -3,7 +3,7 @@
 import { floor } from "../../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
-import { MutableIndexedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.internal.js";
+import { MutableKeyedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
 import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
@@ -23,19 +23,19 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
                 : none;
             if (hasLeft && compare(left, item) < 0) {
                 if (hasRight && compare(right, left) < 0) {
-                    queue[MutableIndexedCollectionLike_set](index, right);
-                    queue[MutableIndexedCollectionLike_set](rightIndex, item);
+                    queue[MutableKeyedCollectionLike_set](index, right);
+                    queue[MutableKeyedCollectionLike_set](rightIndex, item);
                     index = rightIndex;
                 }
                 else {
-                    queue[MutableIndexedCollectionLike_set](index, left);
-                    queue[MutableIndexedCollectionLike_set](leftIndex, item);
+                    queue[MutableKeyedCollectionLike_set](index, left);
+                    queue[MutableKeyedCollectionLike_set](leftIndex, item);
                     index = leftIndex;
                 }
             }
             else if (hasRight && compare(right, item) < 0) {
-                queue[MutableIndexedCollectionLike_set](index, right);
-                queue[MutableIndexedCollectionLike_set](rightIndex, item);
+                queue[MutableKeyedCollectionLike_set](index, right);
+                queue[MutableKeyedCollectionLike_set](rightIndex, item);
                 index = rightIndex;
             }
             else {
@@ -50,8 +50,8 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
             parentIndex <= count &&
             compare(queue[KeyedCollectionLike_get](parentIndex), item) > 0; index = parentIndex, parentIndex = floor((index - 1) / 2)) {
             const parent = queue[KeyedCollectionLike_get](parentIndex);
-            queue[MutableIndexedCollectionLike_set](parentIndex, item);
-            queue[MutableIndexedCollectionLike_set](index, parent);
+            queue[MutableKeyedCollectionLike_set](parentIndex, item);
+            queue[MutableKeyedCollectionLike_set](index, parent);
         }
     };
     return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function PriorityQueue(instance, comparator, capacity, backpressureStrategy) {
@@ -72,7 +72,7 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
             else {
                 const first = this[KeyedCollectionLike_get](0);
                 const last = this[StackLike_pop]();
-                this[MutableIndexedCollectionLike_set](0, last);
+                this[MutableKeyedCollectionLike_set](0, last);
                 siftDown(this, last);
                 return first;
             }

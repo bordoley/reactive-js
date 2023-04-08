@@ -60,11 +60,8 @@ type VirtualTask = {
 };
 
 const comparator = (a: VirtualTask, b: VirtualTask) => {
-  const diff =
-    a[__VirtualTask_dueTime] - b[__VirtualTask_dueTime];
-  return diff !== 0
-    ? diff
-    : a[__VirtualTask_id] - b[__VirtualTask_id];
+  const diff = a[__VirtualTask_dueTime] - b[__VirtualTask_dueTime];
+  return diff !== 0 ? diff : a[__VirtualTask_id] - b[__VirtualTask_id];
 };
 
 type TProperties = {
@@ -100,8 +97,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           "overflow",
         );
 
-        instance[__VirtualTimeScheduler_maxMicroTaskTicks] =
-          maxMicroTaskTicks;
+        instance[__VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
 
         return instance;
       },
@@ -159,11 +155,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             continuation[ContinuationLike_continuationScheduler] = this;
 
             this[QueueableLike_enqueue]({
-              [__VirtualTask_id]: this[
-                __VirtualTimeScheduler_taskIDCount
-              ]++,
-              [__VirtualTask_dueTime]:
-                this[SchedulerLike_now] + delay,
+              [__VirtualTask_id]: this[__VirtualTimeScheduler_taskIDCount]++,
+              [__VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
               [__VirtualTask_continuation]: continuation,
             });
           }

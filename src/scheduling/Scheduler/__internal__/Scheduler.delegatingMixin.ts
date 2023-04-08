@@ -51,9 +51,7 @@ const Scheduler_delegatingMixin: Mixin1<
 
       get [SchedulerLike_now]() {
         unsafeCast<TProperties>(this);
-        return this[__DelegatingSchedulerMixin_delegate][
-          SchedulerLike_now
-        ];
+        return this[__DelegatingSchedulerMixin_delegate][SchedulerLike_now];
       },
 
       get [SchedulerLike_shouldYield]() {
@@ -64,9 +62,7 @@ const Scheduler_delegatingMixin: Mixin1<
       },
 
       [SchedulerLike_requestYield](this: TProperties) {
-        this[__DelegatingSchedulerMixin_delegate][
-          SchedulerLike_requestYield
-        ]();
+        this[__DelegatingSchedulerMixin_delegate][SchedulerLike_requestYield]();
       },
 
       [SchedulerLike_schedule](
@@ -77,9 +73,10 @@ const Scheduler_delegatingMixin: Mixin1<
         },
       ): DisposableLike {
         return pipe(
-          this[__DelegatingSchedulerMixin_delegate][
-            SchedulerLike_schedule
-          ](continuation, options),
+          this[__DelegatingSchedulerMixin_delegate][SchedulerLike_schedule](
+            continuation,
+            options,
+          ),
           Disposable_addToIgnoringChildErrors(this),
         );
       },

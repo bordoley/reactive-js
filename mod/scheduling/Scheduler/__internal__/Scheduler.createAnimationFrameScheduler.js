@@ -11,8 +11,7 @@ import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_sched
 const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(PriorityScheduler_mixin), function AnimationFrameScheduler(instance, delayScheduler) {
         init(PriorityScheduler_mixin, instance, 5);
-        instance[__AnimationFrameScheduler_delayScheduler] =
-            delayScheduler;
+        instance[__AnimationFrameScheduler_delayScheduler] = delayScheduler;
         return instance;
     }, props({
         [SchedulerLike_now]: 0,

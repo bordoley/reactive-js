@@ -27,8 +27,7 @@ const MulticastObservable_delegatingMixin: <T>() => Mixin1<
         instance: MulticastObservableLike<T> & TProperties,
         delegate: TMulticastObservable,
       ): MulticastObservableLike<T> {
-        instance[__DelegatingMulticastObservableMixin_delegate] =
-          delegate;
+        instance[__DelegatingMulticastObservableMixin_delegate] = delegate;
 
         return instance;
       },

@@ -151,9 +151,7 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
       (effect[__ComputeEffect_type] === Await ||
         effect[__ComputeEffect_type] === Observe)
     ) {
-      effect[__AwaitOrObserveEffect_subscription][
-        DisposableLike_dispose
-      ]();
+      effect[__AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
     }
 
     const newEffect: ComputeEffect =
@@ -168,8 +166,7 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
         ? {
             [__ComputeEffect_type]: type,
             [__AwaitOrObserveEffect_observable]: Observable_empty(),
-            [__AwaitOrObserveEffect_subscription]:
-              Disposable_disposed,
+            [__AwaitOrObserveEffect_subscription]: Disposable_disposed,
             [__AwaitOrObserveEffect_value]: none,
             [__AwaitOrObserveEffect_hasValue]: false,
           }
@@ -248,9 +245,7 @@ class ComputeContext {
     if (effect[__AwaitOrObserveEffect_observable] === observable) {
       return effect[__AwaitOrObserveEffect_value] as T;
     } else {
-      effect[__AwaitOrObserveEffect_subscription][
-        DisposableLike_dispose
-      ]();
+      effect[__AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
 
       const {
         [__ComputeContext_observer]: observer,
@@ -373,16 +368,10 @@ export const Observable_compute = <T>(
 
       const { [__ComputeContext_effects]: effects } = ctx;
 
-      if (
-        ReadonlyArray_getLength(effects) > ctx[__ComputeContext_index]
-      ) {
+      if (ReadonlyArray_getLength(effects) > ctx[__ComputeContext_index]) {
         const effectsLength = effects.length;
 
-        for (
-          let i = ctx[__ComputeContext_index];
-          i < effectsLength;
-          i++
-        ) {
+        for (let i = ctx[__ComputeContext_index]; i < effectsLength; i++) {
           const effect = ctx[__ComputeContext_effects][i];
 
           if (
@@ -395,8 +384,7 @@ export const Observable_compute = <T>(
           }
         }
       }
-      ctx[__ComputeContext_effects].length =
-        ctx[__ComputeContext_index];
+      ctx[__ComputeContext_effects].length = ctx[__ComputeContext_index];
       currentCtx = none;
       ctx[__ComputeContext_index] = 0;
 
@@ -411,18 +399,16 @@ export const Observable_compute = <T>(
 
         if (
           (type === Await || type === Observe) &&
-          !(effect as AwaitOrObserveEffect)[
-            __AwaitOrObserveEffect_hasValue
-          ]
+          !(effect as AwaitOrObserveEffect)[__AwaitOrObserveEffect_hasValue]
         ) {
           allObserveEffectsHaveValues = false;
         }
 
         if (
           (type === Await || type === Observe) &&
-          !(effect as ObserveEffect)[
-            __AwaitOrObserveEffect_subscription
-          ][DisposableLike_isDisposed]
+          !(effect as ObserveEffect)[__AwaitOrObserveEffect_subscription][
+            DisposableLike_isDisposed
+          ]
         ) {
           hasOutstandingEffects = true;
         }
@@ -575,11 +561,7 @@ export const Observable_compute__do: __Do["__do"] = /*@__PURE__*/ (() => {
       Observable_subscribe,
       scheduler,
     );
-    ctx[__ComputeContext_memoOrUse](
-      true,
-      subscribeOnScheduler,
-      observable,
-    );
+    ctx[__ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
   };
 })();
 

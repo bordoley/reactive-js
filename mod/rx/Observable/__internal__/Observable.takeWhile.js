@@ -23,8 +23,7 @@ const Observable_takeWhile = /*@__PURE__*/ (() => {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
                 const satisfiesPredicate = this[__TakeWhileObserver_predicate](next);
-                if (satisfiesPredicate ||
-                    this[__TakeWhileObserver_inclusive]) {
+                if (satisfiesPredicate || this[__TakeWhileObserver_inclusive]) {
                     this[DelegatingLike_delegate][ObserverLike_notify](next);
                 }
                 if (!satisfiesPredicate) {

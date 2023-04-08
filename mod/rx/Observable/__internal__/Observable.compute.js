@@ -173,8 +173,7 @@ export const Observable_compute = (computation, { mode = "batched" } = {}) => Ob
                 }
             }
         }
-        ctx[__ComputeContext_effects].length =
-            ctx[__ComputeContext_index];
+        ctx[__ComputeContext_effects].length = ctx[__ComputeContext_index];
         currentCtx = none;
         ctx[__ComputeContext_index] = 0;
         const effectsLength = ReadonlyArray_getLength(effects);

@@ -19,8 +19,7 @@ const Observable_decodeWithCharset =
         const textDecoder = newInstance(TextDecoder, charset, {
             fatal: true,
         });
-        instance[__DecodeWithCharsetObserver_textDecoder] =
-            textDecoder;
+        instance[__DecodeWithCharsetObserver_textDecoder] = textDecoder;
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
             const data = textDecoder.decode();
             if (data.length > 0) {

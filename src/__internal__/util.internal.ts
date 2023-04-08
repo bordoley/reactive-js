@@ -6,7 +6,7 @@ import {
   QueueableLike,
 } from "../util.js";
 import {
-  __MutableIndexedCollectionLike_set as MutableIndexedCollectionLike_set,
+  __MutableKeyedCollectionLike_set as MutableKeyedCollectionLike_set,
   __QueueLike_dequeue as QueueLike_dequeue,
   __QueueLike_head as QueueLike_head,
   __SerialDisposableLike_current as SerialDisposableLike_current,
@@ -15,7 +15,7 @@ import {
 } from "./symbols.js";
 
 export {
-  MutableIndexedCollectionLike_set,
+  MutableKeyedCollectionLike_set,
   SerialDisposableLike_current,
   QueueLike_head,
   QueueLike_dequeue,
@@ -43,10 +43,14 @@ export interface StackLike<T = unknown> {
   [StackLike_pop](): Optional<T>;
 }
 
-export interface MutableIndexedCollectionLike<T = unknown>
+export interface MutableKeyedCollectionLike<TKey = unknown, T = unknown>
   extends IndexedCollectionLike<T> {
-  [MutableIndexedCollectionLike_set](index: number, value: T): T;
+  [MutableKeyedCollectionLike_set](key: TKey, value: T): T;
 }
+
+export interface MutableIndexedCollectionLike<T = unknown>
+  extends IndexedCollectionLike<T>,
+    MutableKeyedCollectionLike<number, T> {}
 
 export interface IndexedQueueLike<T = unknown>
   extends QueueLike<T>,

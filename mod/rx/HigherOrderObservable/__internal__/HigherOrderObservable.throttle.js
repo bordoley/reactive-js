@@ -23,8 +23,7 @@ const createThrottleObserver = (() => {
     return createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function ThrottleObserver(instance, delegate, durationFunction, mode) {
         init(delegatingMixin(), instance, delegate);
         init(Observer_mixin(), instance, delegate, delegate);
-        instance[__ThrottleObserver_durationFunction] =
-            durationFunction;
+        instance[__ThrottleObserver_durationFunction] = durationFunction;
         instance[__ThrottleObserver_mode] = mode;
         instance[__ThrottleObserver_durationSubscription] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));
         instance[__ThrottleObserver_onNotify] = (_) => {

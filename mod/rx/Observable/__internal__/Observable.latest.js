@@ -21,7 +21,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
         instance[__LatestCtx_observers].push(observer);
     };
     const onNotify = (instance) => {
-        const { [__LatestCtx_mode]: mode, [__LatestCtx_observers]: observers, } = instance;
+        const { [__LatestCtx_mode]: mode, [__LatestCtx_observers]: observers } = instance;
         const isReady = observers.every(x => x[__LatestObserver_ready]);
         if (isReady) {
             const result = pipe(observers, ReadonlyArray_map(observer => observer[__LatestObserver_latest]));

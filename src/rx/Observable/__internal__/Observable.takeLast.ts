@@ -74,9 +74,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           this: TProperties & DisposableLike & QueueLike<T>,
           next: T,
         ) {
-          this[__TakeLastObserver_takeLastQueue][
-            QueueableLike_enqueue
-          ](next);
+          this[__TakeLastObserver_takeLastQueue][QueueableLike_enqueue](next);
         },
       },
     ),

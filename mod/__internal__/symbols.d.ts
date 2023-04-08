@@ -109,7 +109,7 @@ export const __DelegatingLike_delegate: unique symbol;
 /** @type {unique symbol} */
 export const __MutableEnumeratorLike_reset: unique symbol;
 /** @type {unique symbol} */
-export const __MutableIndexedCollectionLike_set: unique symbol;
+export const __MutableKeyedCollectionLike_set: unique symbol;
 /** @type {unique symbol} */
 export const __PrioritySchedulerImplementationLike_runContinuation: unique symbol;
 /** @type {unique symbol} */

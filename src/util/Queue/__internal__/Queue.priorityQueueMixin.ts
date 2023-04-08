@@ -11,7 +11,7 @@ import {
 import { __PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
-  MutableIndexedCollectionLike_set,
+  MutableKeyedCollectionLike_set,
   QueueLike,
   QueueLike_dequeue,
   StackLike_pop,
@@ -65,17 +65,17 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
 
       if (hasLeft && compare(left as T, item) < 0) {
         if (hasRight && compare(right as T, left as T) < 0) {
-          queue[MutableIndexedCollectionLike_set](index, right as T);
-          queue[MutableIndexedCollectionLike_set](rightIndex, item);
+          queue[MutableKeyedCollectionLike_set](index, right as T);
+          queue[MutableKeyedCollectionLike_set](rightIndex, item);
           index = rightIndex;
         } else {
-          queue[MutableIndexedCollectionLike_set](index, left as T);
-          queue[MutableIndexedCollectionLike_set](leftIndex, item);
+          queue[MutableKeyedCollectionLike_set](index, left as T);
+          queue[MutableKeyedCollectionLike_set](leftIndex, item);
           index = leftIndex;
         }
       } else if (hasRight && compare(right as T, item) < 0) {
-        queue[MutableIndexedCollectionLike_set](index, right as T);
-        queue[MutableIndexedCollectionLike_set](rightIndex, item);
+        queue[MutableKeyedCollectionLike_set](index, right as T);
+        queue[MutableKeyedCollectionLike_set](rightIndex, item);
         index = rightIndex;
       } else {
         break;
@@ -95,8 +95,8 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
       index = parentIndex, parentIndex = floor((index - 1) / 2)
     ) {
       const parent = queue[KeyedCollectionLike_get](parentIndex);
-      queue[MutableIndexedCollectionLike_set](parentIndex, item);
-      queue[MutableIndexedCollectionLike_set](index, parent);
+      queue[MutableKeyedCollectionLike_set](parentIndex, item);
+      queue[MutableKeyedCollectionLike_set](index, parent);
     }
   };
 
@@ -141,7 +141,7 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
           } else {
             const first = this[KeyedCollectionLike_get](0);
             const last = this[StackLike_pop]() as T;
-            this[MutableIndexedCollectionLike_set](0, last);
+            this[MutableKeyedCollectionLike_set](0, last);
 
             siftDown(this, last);
 

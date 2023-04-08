@@ -129,8 +129,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
           instance[__MergeAllObserver_observablesQueue] =
             IndexedQueue_createFifoQueue(capacity, backpressureStrategy);
-          instance[__MergeAllObserver_maxConcurrency] =
-            maxConcurrency;
+          instance[__MergeAllObserver_maxConcurrency] = maxConcurrency;
 
           instance[__MergeAllObserver_activeCount] = 0;
           instance[__MergeAllObserver_onDispose] = () => {
@@ -189,9 +188,9 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
             ) {
               subscribeToObservable(this, next);
             } else {
-              this[__MergeAllObserver_observablesQueue][
-                QueueableLike_enqueue
-              ](next);
+              this[__MergeAllObserver_observablesQueue][QueueableLike_enqueue](
+                next,
+              );
             }
           },
         },

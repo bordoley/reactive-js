@@ -70,8 +70,7 @@ const Publisher_create: <T>(options?: {
       ): PublisherLike<T> {
         init(Disposable_mixin, instance);
 
-        instance[__Publisher_observers] =
-          newInstance<Set<ObserverLike>>(Set);
+        instance[__Publisher_observers] = newInstance<Set<ObserverLike>>(Set);
         instance[ReplayableLike_buffer] = IndexedQueue_createFifoQueue(
           replay,
           "drop-oldest",

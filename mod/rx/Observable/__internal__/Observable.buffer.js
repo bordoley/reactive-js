@@ -27,8 +27,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
         init(Observer_mixin(), instance, delegate, delegate);
         init(delegatingMixin(), instance, delegate);
         instance[__BufferObserver_buffer] = [];
-        instance[__BufferObserver_durationFunction] =
-            durationFunction;
+        instance[__BufferObserver_durationFunction] = durationFunction;
         instance[__BufferObserver_durationSubscription] =
             SerialDisposable_create(Disposable_disposed);
         instance[__BufferObserver_count] = count;

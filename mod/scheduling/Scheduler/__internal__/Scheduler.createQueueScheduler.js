@@ -18,14 +18,8 @@ import { ContinuationLike_continuationScheduler, ContinuationLike_priority, Cont
 const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
     const delayedComparator = (a, b) => {
         let diff = 0;
-        diff =
-            diff !== 0
-                ? diff
-                : a[__QueueTask_dueTime] - b[__QueueTask_dueTime];
-        diff =
-            diff !== 0
-                ? diff
-                : b[__QueueTask_taskID] - a[__QueueTask_taskID];
+        diff = diff !== 0 ? diff : a[__QueueTask_dueTime] - b[__QueueTask_dueTime];
+        diff = diff !== 0 ? diff : b[__QueueTask_taskID] - a[__QueueTask_taskID];
         return diff;
     };
     const peek = (instance) => {
@@ -63,23 +57,20 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
         return (current !== next &&
             next[__QueueTask_dueTime] <=
                 instance[__QueueScheduler_hostScheduler][SchedulerLike_now] &&
-            next[__QueueTask_priority] >
-                current[__QueueTask_priority]);
+            next[__QueueTask_priority] > current[__QueueTask_priority]);
     };
     const scheduleOnHost = (instance) => {
         const task = peek(instance);
         const continuationActive = !instance[SerialDisposableLike_current][DisposableLike_isDisposed] &&
             isSome(task) &&
-            instance[__QueueScheduler_dueTime] <=
-                task[__QueueTask_dueTime];
+            instance[__QueueScheduler_dueTime] <= task[__QueueTask_dueTime];
         if (isNone(task) ||
             continuationActive ||
             instance[PauseableSchedulerLike_isPaused]) {
             return;
         }
         const dueTime = task[__QueueTask_dueTime];
-        const delay = clampPositiveInteger(dueTime -
-            instance[__QueueScheduler_hostScheduler][SchedulerLike_now]);
+        const delay = clampPositiveInteger(dueTime - instance[__QueueScheduler_hostScheduler][SchedulerLike_now]);
         instance[__QueueScheduler_dueTime] = dueTime;
         const continuation = instance[__QueueScheduler_hostContinuation] ??
             ((ctx) => {
@@ -89,7 +80,8 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
                         instance[__QueueScheduler_hostScheduler][SchedulerLike_now]);
                     if (delay > 0) {
                         instance[__QueueScheduler_dueTime] =
-                            instance[__QueueScheduler_hostScheduler][SchedulerLike_now] + delay;
+                            instance[__QueueScheduler_hostScheduler][SchedulerLike_now] +
+                                delay;
                     }
                     else {
                         instance[EnumeratorLike_move]();
@@ -105,8 +97,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
         init(PriorityScheduler_mixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(MutableEnumerator_mixin(), instance);
         init(SerialDisposable_mixin(), instance, Disposable_disposed);
-        instance[__QueueScheduler_delayed] =
-            Queue_createPriorityQueue(delayedComparator, MAX_SAFE_INTEGER, "overflow");
+        instance[__QueueScheduler_delayed] = Queue_createPriorityQueue(delayedComparator, MAX_SAFE_INTEGER, "overflow");
         (instance[__QueueScheduler_queue] = createImmediateQueue()),
             (instance[__QueueScheduler_hostScheduler] = host);
         return instance;

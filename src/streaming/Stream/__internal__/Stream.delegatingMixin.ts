@@ -45,9 +45,7 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
       {
         get [StreamLike_scheduler]() {
           unsafeCast<TProperties>(this);
-          return this[__DelegatingStreamMixin_delegate][
-            StreamLike_scheduler
-          ];
+          return this[__DelegatingStreamMixin_delegate][StreamLike_scheduler];
         },
       },
     ),

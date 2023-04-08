@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { mix, props } from "../../../__internal__/mixins.js";
 import { __FifoQueue_capacityMask, __FifoQueue_head, __FifoQueue_tail, __FifoQueue_values, } from "../../../__internal__/symbols.js";
-import { MutableIndexedCollectionLike_set, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
+import { MutableKeyedCollectionLike_set, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.internal.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
 import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
@@ -83,9 +83,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             const head = this[__FifoQueue_head];
             const values = this[__FifoQueue_values] ?? [];
-            return head === this[__FifoQueue_tail]
-                ? none
-                : values[head];
+            return head === this[__FifoQueue_tail] ? none : values[head];
         },
         get [StackLike_head]() {
             unsafeCast(this);
@@ -117,8 +115,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
             const item = head === tail
                 ? none
                 : ((tail =
-                    (tail - 1 + capacity) &
-                        this[__FifoQueue_capacityMask]),
+                    (tail - 1 + capacity) & this[__FifoQueue_capacityMask]),
                     (this[__FifoQueue_tail] = tail),
                     this[CollectionLike_count]--,
                     values[tail]);
@@ -140,7 +137,7 @@ const IndexedQueue_fifoQueueMixin = /*@__PURE__*/ (() => {
                     : tailOffsetIndex;
             return values[computedIndex];
         },
-        [MutableIndexedCollectionLike_set](index, value) {
+        [MutableKeyedCollectionLike_set](index, value) {
             const count = this[CollectionLike_count];
             const capacity = this[__FifoQueue_values]?.length ?? 0;
             const head = this[__FifoQueue_head];

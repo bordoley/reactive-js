@@ -57,19 +57,15 @@ const Observable_latest = /*@__PURE__*/ (() => {
   };
 
   const onNotify = (instance: LatestCtx) => {
-    const {
-      [__LatestCtx_mode]: mode,
-      [__LatestCtx_observers]: observers,
-    } = instance;
+    const { [__LatestCtx_mode]: mode, [__LatestCtx_observers]: observers } =
+      instance;
 
     const isReady = observers.every(x => x[__LatestObserver_ready]);
 
     if (isReady) {
       const result = pipe(
         observers,
-        ReadonlyArray_map(
-          observer => observer[__LatestObserver_latest],
-        ),
+        ReadonlyArray_map(observer => observer[__LatestObserver_latest]),
       );
       instance[__LatestCtx_delegate][ObserverLike_notify](result);
 

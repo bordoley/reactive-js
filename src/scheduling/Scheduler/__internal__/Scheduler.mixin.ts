@@ -259,8 +259,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
             continuation: ContinuationLike,
             delay: number,
           ): void {
-            const childContinuation =
-              this[__Continuation_childContinuation];
+            const childContinuation = this[__Continuation_childContinuation];
             continuation[ContinuationLike_continuationScheduler] = this;
 
             if (continuation[DisposableLike_isDisposed]) {
@@ -338,8 +337,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           >(this);
           const inContinuation = this[SchedulerLike_inContinuation];
           const isDisposed = this[DisposableLike_isDisposed];
-          const yieldRequested =
-            this[__SchedulerMixin_yieldRequested];
+          const yieldRequested = this[__SchedulerMixin_yieldRequested];
 
           const exceededMaxYieldInterval =
             this[SchedulerLike_now] >

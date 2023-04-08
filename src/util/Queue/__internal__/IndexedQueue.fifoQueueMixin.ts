@@ -9,7 +9,7 @@ import {
 } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
-  MutableIndexedCollectionLike_set,
+  MutableKeyedCollectionLike_set,
   QueueLike,
   QueueLike_dequeue,
   QueueLike_head,
@@ -163,9 +163,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           const head = this[__FifoQueue_head];
           const values = this[__FifoQueue_values] ?? [];
 
-          return head === this[__FifoQueue_tail]
-            ? none
-            : values[head];
+          return head === this[__FifoQueue_tail] ? none : values[head];
         },
 
         get [StackLike_head]() {
@@ -209,8 +207,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
             head === tail
               ? none
               : ((tail =
-                  (tail - 1 + capacity) &
-                  this[__FifoQueue_capacityMask]),
+                  (tail - 1 + capacity) & this[__FifoQueue_capacityMask]),
                 (this[__FifoQueue_tail] = tail),
                 this[CollectionLike_count]--,
                 values[tail]);
@@ -244,7 +241,7 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           return values[computedIndex] as T;
         },
 
-        [MutableIndexedCollectionLike_set](
+        [MutableKeyedCollectionLike_set](
           this: TProperties & QueueableLike,
           index: number,
           value: T,
@@ -302,10 +299,10 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
           const values =
             this[__FifoQueue_values] ??
             ((this[__FifoQueue_capacityMask] = 31),
-            (this[__FifoQueue_values] = newInstance<
-              Array<Optional<T>>,
-              number
-            >(Array, 32)),
+            (this[__FifoQueue_values] = newInstance<Array<Optional<T>>, number>(
+              Array,
+              32,
+            )),
             this[__FifoQueue_values]);
 
           const capacityMask = this[__FifoQueue_capacityMask];

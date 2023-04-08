@@ -8,9 +8,9 @@ import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__inte
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 const createSchedulerInstance = /*@__PURE__*/ createInstanceFactory(mix(include(Disposable_mixin), function PrioritySchedulerDelegatingScheduler(instance, scheduler, priority) {
     init(Disposable_mixin, instance);
-    instance[__PrioritySchedulerDelegatingScheduler_priorityScheduler] = scheduler;
-    instance[__PrioritySchedulerDelegatingScheduler_priority] =
-        priority;
+    instance[__PrioritySchedulerDelegatingScheduler_priorityScheduler] =
+        scheduler;
+    instance[__PrioritySchedulerDelegatingScheduler_priority] = priority;
     return instance;
 }, props({
     [__PrioritySchedulerDelegatingScheduler_priorityScheduler]: none,

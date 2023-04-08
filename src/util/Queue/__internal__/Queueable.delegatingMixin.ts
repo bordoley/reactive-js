@@ -38,9 +38,7 @@ const Queueable_delegatingMixin: <T>() => Mixin1<
 
         get [BufferLike_capacity](): number {
           unsafeCast<TProperties>(this);
-          return this[__DelegatingQueueableMixin_delegate][
-            BufferLike_capacity
-          ];
+          return this[__DelegatingQueueableMixin_delegate][BufferLike_capacity];
         },
 
         [QueueableLike_enqueue](this: TProperties, v: T): boolean {

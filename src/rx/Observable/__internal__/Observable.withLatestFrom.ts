@@ -51,11 +51,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
   type TProperties = {
     [__WithLatestFromObserver_hasLatest]: boolean;
     [__WithLatestFromObserver_otherLatest]: Optional<TB>;
-    readonly [__WithLatestFromObserver_selector]: Function2<
-      TA,
-      TB,
-      T
-    >;
+    readonly [__WithLatestFromObserver_selector]: Function2<TA, TB, T>;
   };
 
   const createWithLatestObserver: (

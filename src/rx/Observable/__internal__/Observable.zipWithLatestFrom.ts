@@ -61,11 +61,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
       type TProperties = {
         [__ZipWithLatestFromObserver_hasLatest]: boolean;
         [__ZipWithLatestFromObserver_otherLatest]: Optional<TB>;
-        readonly [__ZipWithLatestFromObserver_selector]: Function2<
-          TA,
-          TB,
-          T
-        >;
+        readonly [__ZipWithLatestFromObserver_selector]: Function2<TA, TB, T>;
         readonly [__ZipWithLatestFromObserver_TAQueue]: IndexedQueueLike<TA>;
       };
 
@@ -75,18 +71,15 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
           DelegatingLike<ObserverLike<T>>,
       ) => {
         if (
-          observer[__ZipWithLatestFromObserver_TAQueue][
-            CollectionLike_count
-          ] > 0 &&
+          observer[__ZipWithLatestFromObserver_TAQueue][CollectionLike_count] >
+            0 &&
           observer[__ZipWithLatestFromObserver_hasLatest]
         ) {
           observer[__ZipWithLatestFromObserver_hasLatest] = false;
           const next = observer[__ZipWithLatestFromObserver_TAQueue][
             QueueLike_dequeue
           ]() as TA;
-          const result = observer[
-            __ZipWithLatestFromObserver_selector
-          ](
+          const result = observer[__ZipWithLatestFromObserver_selector](
             next,
             observer[__ZipWithLatestFromObserver_otherLatest] as TB,
           );
@@ -126,10 +119,8 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             const otherSubscription = pipe(
               other,
               Observable_forEach<ObservableLike, TB>(otherLatest => {
-                instance[__ZipWithLatestFromObserver_hasLatest] =
-                  true;
-                instance[__ZipWithLatestFromObserver_otherLatest] =
-                  otherLatest;
+                instance[__ZipWithLatestFromObserver_hasLatest] = true;
+                instance[__ZipWithLatestFromObserver_otherLatest] = otherLatest;
                 notifyDelegate(instance);
 
                 if (
@@ -169,9 +160,9 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
               next: TA,
             ) {
               Observer_assertState(this);
-              this[__ZipWithLatestFromObserver_TAQueue][
-                QueueableLike_enqueue
-              ](next);
+              this[__ZipWithLatestFromObserver_TAQueue][QueueableLike_enqueue](
+                next,
+              );
               notifyDelegate(this);
             },
           },

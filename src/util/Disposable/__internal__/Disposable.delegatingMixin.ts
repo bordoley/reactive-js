@@ -55,14 +55,14 @@ const Disposable_delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
           this: TProperties,
           disposable: DisposableOrTeardown,
         ) {
-          this[__DelegatingDisposableMixin_delegate][
-            DisposableLike_add
-          ](disposable);
+          this[__DelegatingDisposableMixin_delegate][DisposableLike_add](
+            disposable,
+          );
         },
         [DisposableLike_dispose](this: TProperties, error?: Error) {
-          this[__DelegatingDisposableMixin_delegate][
-            DisposableLike_dispose
-          ](error);
+          this[__DelegatingDisposableMixin_delegate][DisposableLike_dispose](
+            error,
+          );
         },
       },
     );

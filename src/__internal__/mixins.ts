@@ -41,10 +41,7 @@ export type PartialMixin = {
 };
 
 export interface MixinAny<TReturn> extends PartialMixin {
-  [__Object_init]: (
-    instance: unknown,
-    ...args: readonly any[]
-  ) => TReturn;
+  [__Object_init]: (instance: unknown, ...args: readonly any[]) => TReturn;
 }
 
 export interface Mixin<TReturn, TPrototype extends object = object>
@@ -79,13 +76,7 @@ export interface Mixin4<
   TD,
   TPrototype extends object = object,
 > extends PartialMixin {
-  [__Object_init](
-    instance: unknown,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-  ): TReturn;
+  [__Object_init](instance: unknown, a: TA, b: TB, c: TC, d: TD): TReturn;
   [__Object_prototype]: TPrototype;
 }
 export interface Mixin5<
@@ -221,14 +212,8 @@ export const include: (
     }
 
     return {
-      [__Object_properties]: Obj.create(
-        Obj.prototype,
-        propertyDescriptions,
-      ),
-      [__Object_prototype]: Obj.create(
-        Obj.prototype,
-        prototypeDescriptions,
-      ),
+      [__Object_properties]: Obj.create(Obj.prototype, propertyDescriptions),
+      [__Object_prototype]: Obj.create(Obj.prototype, prototypeDescriptions),
     };
   }
 };

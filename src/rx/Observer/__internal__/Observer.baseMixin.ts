@@ -61,9 +61,7 @@ const Observer_baseMixin: <T>() => Mixin1<
     observer: TProperties & ObserverLike<T> & QueueLike<T>,
   ) => {
     if (
-      observer[__ObserverMixin_dispatchSubscription][
-        DisposableLike_isDisposed
-      ]
+      observer[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
     ) {
       const continuation = (ctx: ContinuationContextLike) => {
         unsafeCast<TProperties & ObserverLike<T>>(observer);

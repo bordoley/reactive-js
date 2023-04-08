@@ -55,9 +55,9 @@ const HigherOrderObservable_switchAll = <C extends ObservableLike>(
       this: TProperties & DisposableLike & DelegatingLike<ObserverLike<T>>,
     ) {
       if (
-        this[__HigherOrderObservable_currentRef][
-          SerialDisposableLike_current
-        ][DisposableLike_isDisposed]
+        this[__HigherOrderObservable_currentRef][SerialDisposableLike_current][
+          DisposableLike_isDisposed
+        ]
       ) {
         this[DelegatingLike_delegate][DisposableLike_dispose]();
       }

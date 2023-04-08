@@ -13,8 +13,7 @@ const Observable_distinctUntilChanged =
         return createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function DistinctUntilChangedObserver(instance, delegate, equality) {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
             init(delegatingMixin(), instance, delegate);
-            instance[__DistinctUntilChangedObserver_equality] =
-                equality;
+            instance[__DistinctUntilChangedObserver_equality] = equality;
             return instance;
         }, props({
             [__DistinctUntilChangedObserver_equality]: none,

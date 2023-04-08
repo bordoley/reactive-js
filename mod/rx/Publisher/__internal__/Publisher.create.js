@@ -14,8 +14,7 @@ import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/Index
 const Publisher_create = /*@__PURE__*/ (() => {
     const createPublisherInstance = createInstanceFactory(mix(include(Disposable_mixin), function Publisher(instance, replay) {
         init(Disposable_mixin, instance);
-        instance[__Publisher_observers] =
-            newInstance(Set);
+        instance[__Publisher_observers] = newInstance(Set);
         instance[ReplayableLike_buffer] = IndexedQueue_createFifoQueue(replay, "drop-oldest");
         pipe(instance, Disposable_onDisposed(e => {
             const enumerator = pipe(instance[__Publisher_observers], Iterable_enumerate());

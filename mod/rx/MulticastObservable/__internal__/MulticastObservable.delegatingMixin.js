@@ -6,8 +6,7 @@ import { none, returns, unsafeCast } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ReplayableLike_buffer, } from "../../../rx.js";
 const MulticastObservable_delegatingMixin = /*@__PURE__*/ (() => {
     return returns(mix(function DelegatingMulticastObservableMixin(instance, delegate) {
-        instance[__DelegatingMulticastObservableMixin_delegate] =
-            delegate;
+        instance[__DelegatingMulticastObservableMixin_delegate] = delegate;
         return instance;
     }, props({
         [__DelegatingMulticastObservableMixin_delegate]: none,

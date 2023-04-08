@@ -86,9 +86,7 @@ const Observer_mixin: <T>() => Mixin2<
 
         get [PrioritySchedulerImplementationLike_shouldYield]() {
           unsafeCast<TProperties>(this);
-          return this[__ObserverMixin_scheduler][
-            SchedulerLike_shouldYield
-          ];
+          return this[__ObserverMixin_scheduler][SchedulerLike_shouldYield];
         },
 
         [ContinuationSchedulerLike_schedule](

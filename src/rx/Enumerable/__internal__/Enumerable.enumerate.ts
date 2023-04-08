@@ -155,9 +155,9 @@ const Enumerable_enumerate: <T>() => (
 
           continuation[ContinuationLike_continuationScheduler] = this;
 
-          this[__EnumerableEnumerator_continuationQueue][
-            QueueableLike_enqueue
-          ](continuation);
+          this[__EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](
+            continuation,
+          );
         },
         [ObserverLike_notify](
           this: MutableEnumeratorLike<T> & ObserverLike,

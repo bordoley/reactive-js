@@ -15,16 +15,13 @@ import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.pri
 import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const comparator = (a, b) => {
     const diff = a[__VirtualTask_dueTime] - b[__VirtualTask_dueTime];
-    return diff !== 0
-        ? diff
-        : a[__VirtualTask_id] - b[__VirtualTask_id];
+    return diff !== 0 ? diff : a[__VirtualTask_id] - b[__VirtualTask_id];
 };
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(PriorityScheduler_mixin, MutableEnumerator_mixin(), Queue_priorityQueueMixin()), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(PriorityScheduler_mixin, instance, 1);
     init(MutableEnumerator_mixin(), instance);
     init(Queue_priorityQueueMixin(), instance, comparator, MAX_SAFE_INTEGER, "overflow");
-    instance[__VirtualTimeScheduler_maxMicroTaskTicks] =
-        maxMicroTaskTicks;
+    instance[__VirtualTimeScheduler_maxMicroTaskTicks] = maxMicroTaskTicks;
     return instance;
 }, props({
     [SchedulerLike_now]: 0,

@@ -61,8 +61,7 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
           ): ObserverLike<T> {
             init(Observer_delegatingMixin(), instance, delegate, delegate);
             init(delegatingMixin(), instance, delegate);
-            instance[__DistinctUntilChangedObserver_equality] =
-              equality;
+            instance[__DistinctUntilChangedObserver_equality] = equality;
 
             return instance;
           },

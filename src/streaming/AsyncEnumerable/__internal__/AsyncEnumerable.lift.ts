@@ -52,9 +52,10 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
       readonly capacity?: number;
     },
   ): StreamLike<void, T> {
-    const src = this[__LiftedAsyncEnumerable_src][
-      StreamableLike_stream
-    ](scheduler, options);
+    const src = this[__LiftedAsyncEnumerable_src][StreamableLike_stream](
+      scheduler,
+      options,
+    );
 
     return pipeUnsafe(
       src,

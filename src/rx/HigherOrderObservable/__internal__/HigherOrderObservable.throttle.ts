@@ -79,9 +79,7 @@ const createThrottleObserver: <T>(
       SerialDisposableLike_current
     ] = pipe(
       observer[__ThrottleObserver_durationFunction](next),
-      Observable_forEach<ObservableLike>(
-        observer[__ThrottleObserver_onNotify],
-      ),
+      Observable_forEach<ObservableLike>(observer[__ThrottleObserver_onNotify]),
       Observable_subscribeWithConfig(
         observer[DelegatingLike_delegate],
         observer,
@@ -102,8 +100,7 @@ const createThrottleObserver: <T>(
         init(delegatingMixin<ObserverLike>(), instance, delegate);
         init(Observer_mixin(), instance, delegate, delegate);
 
-        instance[__ThrottleObserver_durationFunction] =
-          durationFunction;
+        instance[__ThrottleObserver_durationFunction] = durationFunction;
         instance[__ThrottleObserver_mode] = mode;
 
         instance[__ThrottleObserver_durationSubscription] = pipe(

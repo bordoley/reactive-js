@@ -208,9 +208,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           next: unknown,
         ) {
           Observer_assertState(this);
-          this[__ZipObserver_queuedEnumerator][QueueableLike_enqueue](
-            next,
-          );
+          this[__ZipObserver_queuedEnumerator][QueueableLike_enqueue](next);
 
           const enumerators = this[__ZipObserver_enumerators];
 

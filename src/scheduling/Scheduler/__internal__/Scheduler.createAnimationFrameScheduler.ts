@@ -46,8 +46,7 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
       ): SchedulerLike {
         init(PriorityScheduler_mixin, instance, 5);
 
-        instance[__AnimationFrameScheduler_delayScheduler] =
-          delayScheduler;
+        instance[__AnimationFrameScheduler_delayScheduler] = delayScheduler;
 
         return instance;
       },

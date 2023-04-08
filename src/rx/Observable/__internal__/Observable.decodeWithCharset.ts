@@ -60,8 +60,7 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           const textDecoder = newInstance(TextDecoder, charset, {
             fatal: true,
           });
-          instance[__DecodeWithCharsetObserver_textDecoder] =
-            textDecoder;
+          instance[__DecodeWithCharsetObserver_textDecoder] = textDecoder;
 
           pipe(
             instance,
@@ -95,11 +94,12 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           ) {
             Observer_assertState(this);
 
-            const data = this[
-              __DecodeWithCharsetObserver_textDecoder
-            ].decode(next, {
-              stream: true,
-            });
+            const data = this[__DecodeWithCharsetObserver_textDecoder].decode(
+              next,
+              {
+                stream: true,
+              },
+            );
             if (data.length > 0) {
               this[DelegatingLike_delegate][ObserverLike_notify](data);
             }
