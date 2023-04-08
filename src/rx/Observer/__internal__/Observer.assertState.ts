@@ -1,13 +1,13 @@
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { raiseWithDebugMessage } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObserverLike } from "../../../rx.js";
+import { ObserverLike } from "../../../rx.js";
 import { SchedulerLike_inContinuation } from "../../../scheduling.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 
 const Observer_assertState = (observer: ObserverLike) => {
   if (
     __DEV__ &&
-    (!observer[DispatcherLike_scheduler][SchedulerLike_inContinuation] ||
+    (!observer[SchedulerLike_inContinuation] ||
       observer[DisposableLike_isDisposed])
   ) {
     raiseWithDebugMessage("Notifying an observer in an invalid state");

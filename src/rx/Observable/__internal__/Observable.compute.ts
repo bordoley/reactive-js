@@ -16,6 +16,7 @@ import {
   MemoOrUsingEffect_args,
   MemoOrUsingEffect_func,
   MemoOrUsingEffect_value,
+  SchedulerLike_schedule,
 } from "../../../__internal__/symbols.js";
 import {
   Equality,
@@ -50,7 +51,6 @@ import {
 } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
-  DispatcherLike_scheduler,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
@@ -72,7 +72,6 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
 import Observable_create from "./Observable.create.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -266,11 +265,14 @@ class ComputeContext {
 
             this[ComputeContext_scheduledComputationSubscription] =
               scheduledComputationSubscription[DisposableLike_isDisposed]
-                ? pipe(observer, Observer_schedule(runComputation))
+                ? pipe(
+                    observer[SchedulerLike_schedule](runComputation),
+                    Disposable_addTo(observer),
+                  )
                 : scheduledComputationSubscription;
           }
         }),
-        Observable_subscribeWithConfig(observer),
+        Observable_subscribeWithConfig(observer, observer),
         Disposable_addTo(observer),
         Disposable_onComplete(this[ComputeContext_cleanup]),
       );
@@ -435,8 +437,10 @@ export const Observable_compute = <T>(
     };
 
     const ctx = newInstance(ComputeContext, observer, runComputation, mode);
-
-    pipe(observer, Observer_schedule(runComputation));
+    pipe(
+      observer[SchedulerLike_schedule](runComputation),
+      Disposable_addTo(observer),
+    );
   });
 
 interface __Memo {
@@ -531,13 +535,16 @@ export const Observable_compute__do: __Do["__do"] = /*@__PURE__*/ (() => {
         observer[DisposableLike_dispose]();
       };
 
-      pipe(observer, Observer_schedule(callback));
+      pipe(
+        observer[SchedulerLike_schedule](callback),
+        Disposable_addTo(observer),
+      );
     });
 
   return (f: (...args: any[]) => void, ...args: unknown[]): void => {
     const ctx = assertCurrentContext();
 
-    const scheduler = ctx[ComputeContext_observer][DispatcherLike_scheduler];
+    const scheduler = ctx[ComputeContext_observer];
     const observable = ctx[ComputeContext_memoOrUse](
       false,
       deferSideEffect,
@@ -605,7 +612,7 @@ export const Observable_compute__using: __Using["__using"] = <
 
 export function Observable_compute__currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();
-  return ctx[ComputeContext_observer][DispatcherLike_scheduler];
+  return ctx[ComputeContext_observer];
 }
 
 export const Observable_compute__stream = /*@__PURE__*/ (() => {

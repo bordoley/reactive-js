@@ -14,11 +14,13 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
+  ↳ [`PublisherLike`](rx.PublisherLike.md)
+
   ↳ [`SchedulerLike`](scheduling.SchedulerLike.md)
 
   ↳ [`EventListenerLike`](util.EventListenerLike.md)
 
-  ↳ [`MulticastedEventSourceLike`](util.MulticastedEventSourceLike.md)
+  ↳ [`EventPublisherLike`](util.EventPublisherLike.md)
 
 ## Table of contents
 

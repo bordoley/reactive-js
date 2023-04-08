@@ -1,6 +1,6 @@
 /// <reference types="./Runnable.test.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, test, testModule, } from "../../__internal__/testing.js";
 import { bufferTests, catchErrorTests, concatAllTests, concatMapTests, concatTests, concatWithTests, containsTests, decodeWithCharsetTests, distinctUntilChangedTests, endWithTests, everySatisfyTests, forEachTests, fromReadonlyArrayTests, ignoreElementsTests, keepTests, mapTests, mapToTests, pairwiseTests, pickTests, reduceTests, retryTests, scanLastTests, scanManyTests, scanTests, skipFirstTests, startWithTests, takeFirstTests, takeLastTests, takeWhileTests, throwIfEmptyTests, zipTests as zipOperatorTests, zipWithTests, } from "../../__tests__/operators.js";
 import { arrayEquality, identity, increment, incrementBy, newInstance, none, pipe, pipeLazy, returns, } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
@@ -38,10 +38,10 @@ const toFlowableTests = describe("toFlowable", test("flow a generating source", 
         delayStart: true,
     }), Runnable.toFlowable());
     const generateStream = streamableSrc[StreamableLike_stream](scheduler);
-    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_enqueue](false)),
-        scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_enqueue](true), {
-            delay: 2,
-        });
+    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_enqueue](false));
+    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_enqueue](true), {
+        delay: 2,
+    });
     scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_enqueue](false), {
         delay: 4,
     });
@@ -54,9 +54,11 @@ const toFlowableTests = describe("toFlowable", test("flow a generating source", 
     }), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(f, expectToHaveBeenCalledTimes(3));
-    pipe(f.calls[0][1], expectEquals(0));
-    pipe(f.calls[1][1], expectEquals(1));
-    pipe(f.calls[2][1], expectEquals(2));
+    pipe(f.calls, expectArrayEquals([
+        [1, 0],
+        [4, 1],
+        [5, 2],
+    ], arrayEquality()));
     pipe(subscription[DisposableLike_isDisposed], expectTrue);
 }));
 const withLatestFromTest = describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], ReadonlyArray.toRunnable({ delay: 1 }), Runnable.withLatestFrom(pipe([0, 1, 2, 3], ReadonlyArray.toRunnable({ delay: 2 })), (a, b) => [a, b]), Runnable.toReadonlyArray(), expectArrayEquals([

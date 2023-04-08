@@ -7,8 +7,8 @@ import {
   DisposableLike_isDisposed,
   EventListenerLike_notify,
   EventSourceLike_addListener,
+  EventSourceLike_listenerCount,
   KeyedCollectionLike_get,
-  MulticastedEventSourceLike_listenerCount,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
   ReplayableLike_buffer,
@@ -25,7 +25,7 @@ export {
   EventListenerLike_notify,
   EventSourceLike_addListener,
   KeyedCollectionLike_get,
-  MulticastedEventSourceLike_listenerCount,
+  EventSourceLike_listenerCount,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
   ReplayableLike_buffer,
@@ -147,21 +147,15 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
  * @noInheritDoc
  */
 export interface EventSourceLike<T = unknown> extends ReplayableLike<T> {
+  readonly [EventSourceLike_listenerCount]: number;
+
   [EventSourceLike_addListener](event: EventListenerLike<T>): void;
 }
 
 /**
  * @noInheritDoc
  */
-export interface MulticastedEventSourceLike<T = unknown>
-  extends EventSourceLike<T>,
-    DisposableLike {
-  readonly [MulticastedEventSourceLike_listenerCount]: number;
-}
-
-/**
- * @noInheritDoc
- */
 export interface EventPublisherLike<T = unknown>
-  extends MulticastedEventSourceLike<T>,
-    EventListenerLike<T> {}
+  extends EventSourceLike<T>,
+    EventListenerLike<T>,
+    DisposableLike {}

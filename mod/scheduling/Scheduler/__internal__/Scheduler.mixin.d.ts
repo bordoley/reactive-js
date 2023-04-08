@@ -16,5 +16,5 @@ export interface PrioritySchedulerImplementationLike extends PrioritySchedulerLi
     readonly [PrioritySchedulerImplementationLike_shouldYield]: boolean;
     [PrioritySchedulerImplementationLike_runContinuation](continuation: ContinuationLike): void;
 }
-type PrioritySchedulerMixin = Omit<PrioritySchedulerImplementationLike, typeof SchedulerLike_now | typeof ContinuationSchedulerLike_schedule | typeof PrioritySchedulerImplementationLike_shouldYield | keyof DisposableLike>;
-export declare const PriorityScheduler_mixin: Mixin1<Omit<PrioritySchedulerMixin, keyof DisposableLike>, number>;
+type PrioritySchedulerMixin = Omit<PrioritySchedulerImplementationLike, typeof SchedulerLike_now | typeof ContinuationSchedulerLike_schedule | typeof PrioritySchedulerImplementationLike_shouldYield>;
+export declare const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number>;

@@ -3,10 +3,10 @@
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
-import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
-import { ContinuationContextLike_yield, } from "../../../scheduling.js";
+import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 const ReadonlyArray_toObservable = 
 /*@__PURE__*/
@@ -30,7 +30,7 @@ ReadonlyArray_toContainer((values, startIndex, count, options) => {
             }
             observer[DisposableLike_dispose]();
         };
-        pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
+        pipe(observer[SchedulerLike_schedule](continuation, delayStart ? options : none), Disposable_addTo(observer));
     };
     return delay > 0
         ? Runnable_create(onSubscribe)

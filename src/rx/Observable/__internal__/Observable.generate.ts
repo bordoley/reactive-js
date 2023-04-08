@@ -9,9 +9,10 @@ import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.cr
 import {
   ContinuationContextLike,
   ContinuationContextLike_yield,
+  SchedulerLike_schedule,
 } from "../../../scheduling.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
-import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 
 interface ObservableGenerate {
@@ -48,8 +49,11 @@ const Observable_generate: ObservableGenerate["generate"] = (<T>(
     };
 
     pipe(
-      observer,
-      Observer_schedule(continuation, delayStart ? options : none),
+      observer[SchedulerLike_schedule](
+        continuation,
+        delayStart ? options : none,
+      ),
+      Disposable_addTo(observer),
     );
   };
 

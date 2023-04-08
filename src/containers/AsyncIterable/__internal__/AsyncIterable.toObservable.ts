@@ -2,21 +2,21 @@ import { AsyncIterableLike } from "../../../containers.js";
 import { error, pipe } from "../../../functions.js";
 import {
   DispatcherLike_complete,
-  DispatcherLike_scheduler,
   ObserverLike,
   ToObservable,
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
-import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import {
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
+  SchedulerLike_schedule,
 } from "../../../scheduling.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_enqueue,
 } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 const AsyncIterable_toObservable: ToObservable<AsyncIterableLike>["toObservable"] =
 
@@ -24,16 +24,15 @@ const AsyncIterable_toObservable: ToObservable<AsyncIterableLike>["toObservable"
     (iterable: AsyncIterableLike<T>) =>
       Observable_create<T>((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();
-        const scheduler = observer[DispatcherLike_scheduler];
-        const maxYieldInterval = scheduler[SchedulerLike_maxYieldInterval];
+        const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
 
         const continuation = async () => {
-          const startTime = scheduler[SchedulerLike_now];
+          const startTime = observer[SchedulerLike_now];
 
           try {
             while (
               !observer[DisposableLike_isDisposed] &&
-              scheduler[SchedulerLike_now] - startTime < maxYieldInterval
+              observer[SchedulerLike_now] - startTime < maxYieldInterval
             ) {
               const next = await iterator.next();
 
@@ -54,10 +53,16 @@ const AsyncIterable_toObservable: ToObservable<AsyncIterableLike>["toObservable"
             observer[DisposableLike_dispose](error(e));
           }
 
-          pipe(observer, Observer_schedule(continuation));
+          pipe(
+            observer[SchedulerLike_schedule](continuation),
+            Disposable_addTo(observer),
+          );
         };
 
-        pipe(observer, Observer_schedule(continuation));
+        pipe(
+          observer[SchedulerLike_schedule](continuation),
+          Disposable_addTo(observer),
+        );
       });
 
 export default AsyncIterable_toObservable;

@@ -21,12 +21,9 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, {
-  initObserverMixinFromDelegate,
-} from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
 type ObservableTakeFirst = <C extends ObservableLike, T>(options?: {
   readonly count?: number;
@@ -43,23 +40,14 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
 
     return createInstanceFactory(
       mix(
-        include(
-          Disposable_delegatingMixin<ObserverLike<T>>(),
-          Observer_mixin<T>(),
-        ),
+        include(Observer_delegatingMixin()),
         function TakeFirstObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
           takeCount: number,
         ): ObserverLike<T> {
-          init(
-            Disposable_delegatingMixin<ObserverLike<T>>(),
-            instance,
-            delegate,
-          );
-          initObserverMixinFromDelegate(instance, delegate);
-
+          init(Observer_delegatingMixin(), instance, delegate, delegate);
           instance[TakeFirstObserver_takeCount] = takeCount;
 
           if (takeCount === 0) {

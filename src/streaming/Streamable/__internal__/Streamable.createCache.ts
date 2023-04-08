@@ -26,12 +26,7 @@ import {
 import { ReadonlyRecordLike } from "../../../keyed-containers.js";
 import * as ReadonlyRecord from "../../../keyed-containers/ReadonlyRecord.js";
 import ReadonlyRecord_union from "../../../keyed-containers/ReadonlyRecord/__internal__/ReadonlyRecord.union.js";
-import {
-  DispatcherLike,
-  EventListenerLike_notify,
-  ObservableLike,
-  PublisherLike,
-} from "../../../rx.js";
+import { DispatcherLike, ObservableLike, PublisherLike } from "../../../rx.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
 import {
@@ -52,6 +47,7 @@ import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Strea
 import {
   CollectionLike_count,
   DisposableLike_isDisposed,
+  EventListenerLike_notify,
   KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,

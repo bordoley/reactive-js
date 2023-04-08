@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   createInstanceFactory,
   include,
@@ -17,7 +16,7 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
-import { EventListenerLike_notify, ObservableLike } from "../../../rx.js";
+import { ObservableLike } from "../../../rx.js";
 import Observable_backpressureStrategy from "../../../rx/Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
@@ -32,6 +31,7 @@ import {
   FlowableStreamLike_resume,
 } from "../../../streaming.js";
 import {
+  EventListenerLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -52,13 +52,7 @@ const FlowableStream_create: <T>(
     [FlowableStreamLike_isPaused]: ObservableLike<boolean>;
   };
 
-  const createStreamInternal: (
-    op: ContainerOperator<ObservableLike, boolean, T>,
-    scheduler: SchedulerLike,
-    replay: number,
-    capacity: number,
-    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-  ) => FlowableStreamLike<T> = createInstanceFactory(
+  return createInstanceFactory(
     mix(
       include(Stream_mixin<boolean, T>()),
       function FlowableStream(
@@ -69,9 +63,11 @@ const FlowableStream_create: <T>(
           >,
         op: ContainerOperator<ObservableLike, boolean, T>,
         scheduler: SchedulerLike,
-        replay: number,
-        capacity: number,
-        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+        multicastOptions?: {
+          replay?: number;
+          capacity?: number;
+          backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        },
       ): FlowableStreamLike<T> {
         const publisher = Publisher_create({ replay: 1 });
 
@@ -100,9 +96,7 @@ const FlowableStream_create: <T>(
           instance,
           liftedOp,
           scheduler,
-          replay,
-          capacity,
-          backpressureStrategy,
+          multicastOptions,
         );
 
         pipe(instance, Disposable_add(publisher));
@@ -124,29 +118,6 @@ const FlowableStream_create: <T>(
       },
     ),
   );
-
-  return (
-    op: ContainerOperator<ObservableLike, boolean, T>,
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly replay?: number;
-      readonly capacity?: number;
-    },
-  ): FlowableStreamLike<T> => {
-    const {
-      backpressureStrategy = "overflow",
-      capacity = MAX_SAFE_INTEGER,
-      replay = 0,
-    } = options ?? {};
-    return createStreamInternal(
-      op,
-      scheduler,
-      replay,
-      capacity,
-      backpressureStrategy,
-    );
-  };
 })();
 
 export default FlowableStream_create;

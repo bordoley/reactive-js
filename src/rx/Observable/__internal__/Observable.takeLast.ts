@@ -23,14 +23,11 @@ import {
 } from "../../../rx.js";
 import { DisposableLike, QueueableLike_enqueue } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Indexed_toReadonlyArray from "../../../util/Indexed/__internal__/Indexed.toReadonlyArray.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
-import Observer_mixin, {
-  initObserverMixinFromDelegate,
-} from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
 type ObservableTakeLast = <C extends ObservableLike, T>(options?: {
   readonly count?: number;
@@ -42,15 +39,14 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
 
   const createTakeLastObserver = createInstanceFactory(
     mix(
-      include(Disposable_mixin, Observer_mixin<T>()),
+      include(Observer_mixin()),
       function TakeLastObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         takeLastCount: number,
       ): ObserverLike<T> {
-        init(Disposable_mixin, instance);
-        initObserverMixinFromDelegate(instance, delegate);
+        init(Observer_mixin(), instance, delegate, delegate);
 
         instance[TakeLastObserver_takeLastQueue] = IndexedQueue_createFifoQueue(
           takeLastCount,

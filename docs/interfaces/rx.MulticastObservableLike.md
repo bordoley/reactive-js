@@ -20,20 +20,4 @@ A stateful ObservableLike resource.
 
   ↳ **`MulticastObservableLike`**
 
-  ↳↳ [`PublisherLike`](rx.PublisherLike.md)
-
   ↳↳ [`StreamLike`](streaming.StreamLike.md)
-
-## Table of contents
-
-### Properties
-
-- [[MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[multicastobservablelike_observercount])
-
-## Properties
-
-### [MulticastObservableLike\_observerCount]
-
-• `Readonly` **[MulticastObservableLike\_observerCount]**: `number`
-
-The number of observers currently observing the `MulticastObservableLike`.

@@ -1,191 +1,129 @@
 import {
-  Mixin3,
-  Mutable,
-  getPrototype,
+  Mixin2,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { ObserverMixin_scheduler } from "../../../__internal__/symbols.js";
+import { none, pipe, returns, unsafeCast } from "../../../functions.js";
+import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import {
-  ObserverMixin_continuation,
-  ObserverMixin_dispatchSubscription,
-  ObserverMixin_isCompleted,
-} from "../../../__internal__/symbols.js";
-import {
-  QueueLike,
-  QueueLike_dequeue,
-} from "../../../__internal__/util.internal.js";
-import {
-  Optional,
-  SideEffect1,
-  call,
-  none,
-  pipe,
-  returns,
-  unsafeCast,
-} from "../../../functions.js";
-import {
-  DispatcherLike_complete,
-  DispatcherLike_scheduler,
-  ObserverLike,
-  ObserverLike_notify,
-} from "../../../rx.js";
-import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
   SchedulerLike,
+  SchedulerLike_now,
+  SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
 } from "../../../scheduling.js";
+import Scheduler_delegatingMixin from "../../../scheduling/Scheduler/__internal__/Scheduler.delegatingMixin.js";
+import {
+  ContinuationLike,
+  ContinuationLike_continuationScheduler,
+  ContinuationSchedulerLike_schedule,
+  PrioritySchedulerImplementationLike,
+  PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_shouldYield,
+} from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import {
   BufferLike_capacity,
-  CollectionLike_count,
-  DisposableLike,
-  DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_enqueue,
 } from "../../../util.js";
-import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
-import Observer_schedule from "./Observer.schedule.js";
+import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Observer_baseMixin from "./Observer.baseMixin.js";
 
-type TObserverMixinReturn<T> = Omit<
-  ObserverLike<T>,
-  keyof DisposableLike | typeof ObserverLike_notify
->;
+export { ObserverMixin_scheduler };
 
-const Observer_mixin: <T>() => Mixin3<
-  TObserverMixinReturn<T>,
+export type TObserverMixin<
+  T,
+  TScheduler extends SchedulerLike = SchedulerLike,
+> = Omit<ObserverLike<T>, typeof ObserverLike_notify> & {
+  [ObserverMixin_scheduler]: TScheduler;
+};
+
+const Observer_mixin: <
+  T,
+  TScheduler extends SchedulerLike = SchedulerLike,
+>() => Mixin2<
+  TObserverMixin<T, TScheduler>,
   SchedulerLike,
-  number,
-  QueueableLike[typeof QueueableLike_backpressureStrategy]
-> = /*@__PURE__*/ (<T>() => {
-  const scheduleDrainQueue = (
-    observer: TProperties & ObserverLike<T> & QueueLike<T>,
-  ) => {
-    if (
-      observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
-    ) {
-      const continuation =
-        observer[ObserverMixin_continuation] ??
-        ((ctx: ContinuationContextLike) => {
-          unsafeCast<TProperties & ObserverLike<T>>(observer);
-
-          while (observer[CollectionLike_count] > 0) {
-            const next = observer[QueueLike_dequeue]() as T;
-            observer[ObserverLike_notify](next);
-
-            if (observer[CollectionLike_count] > 0) {
-              ctx[ContinuationContextLike_yield]();
-            }
-          }
-
-          if (observer[ObserverMixin_isCompleted]) {
-            observer[DisposableLike_dispose]();
-          }
-        });
-      observer[ObserverMixin_continuation] = continuation;
-
-      observer[ObserverMixin_dispatchSubscription] = pipe(
-        observer,
-        Observer_schedule(continuation),
-      );
-    }
-  };
-
-  const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin<T>());
-
+  {
+    readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly [BufferLike_capacity]: number;
+  }
+> = /*@__PURE__*/ (<T, TScheduler extends SchedulerLike = SchedulerLike>() => {
   type TProperties = {
-    readonly [DispatcherLike_scheduler]: SchedulerLike;
-    [ObserverMixin_continuation]: Optional<
-      SideEffect1<ContinuationContextLike>
-    >;
-    [ObserverMixin_isCompleted]: boolean;
-    [ObserverMixin_dispatchSubscription]: DisposableLike;
+    [ObserverMixin_scheduler]: TScheduler;
   };
 
-  return pipe(
+  return returns(
     mix(
-      include(IndexedQueue_fifoQueueMixin()),
+      include(
+        Observer_baseMixin(),
+        Scheduler_delegatingMixin,
+        Disposable_mixin,
+      ),
       function ObserverMixin(
-        instance: Pick<
-          ObserverLike,
-          typeof DispatcherLike_scheduler | typeof DispatcherLike_complete
-        > &
-          Mutable<TProperties>,
-        scheduler: SchedulerLike,
-        capacity: number,
-        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-      ): TObserverMixinReturn<T> {
-        init(
-          IndexedQueue_fifoQueueMixin<T>(),
-          instance,
-          capacity,
-          backpressureStrategy,
-        );
+        instance: TProperties & Pick<SchedulerLike, typeof SchedulerLike_now>,
+        scheduler: TScheduler,
+        config: {
+          readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly [BufferLike_capacity]: number;
+        },
+      ): TObserverMixin<T, TScheduler> {
+        init(Disposable_mixin, instance);
+        init(Scheduler_delegatingMixin, instance, scheduler);
+        init(Observer_baseMixin<T>(), instance, config);
 
-        instance[DispatcherLike_scheduler] = scheduler;
+        instance[ObserverMixin_scheduler] = scheduler;
+        pipe(scheduler, Disposable_addIgnoringChildErrors(instance));
 
         return instance;
       },
       props<TProperties>({
-        [DispatcherLike_scheduler]: none,
-        [ObserverMixin_continuation]: none,
-        [ObserverMixin_isCompleted]: false,
-        [ObserverMixin_dispatchSubscription]: Disposable_disposed,
+        [ObserverMixin_scheduler]: none,
       }),
       {
-        [QueueableLike_enqueue](
-          this: TProperties & ObserverLike<T> & QueueLike<T>,
-          next: T,
-        ): boolean {
-          if (
-            !this[ObserverMixin_isCompleted] &&
-            !this[DisposableLike_isDisposed]
-          ) {
-            const result = call(
-              fifoQueueProtoype[QueueableLike_enqueue],
-              this,
-              next,
-            );
-            scheduleDrainQueue(this);
-            return result;
-          }
-          return true;
+        get [SchedulerLike_now]() {
+          unsafeCast<TProperties>(this);
+          return this[ObserverMixin_scheduler][SchedulerLike_now];
         },
-        [DispatcherLike_complete](
-          this: TProperties & ObserverLike<T> & QueueLike<T>,
-        ) {
-          const isCompleted = this[ObserverMixin_isCompleted];
-          this[ObserverMixin_isCompleted] = true;
 
-          if (
-            this[ObserverMixin_dispatchSubscription][
-              DisposableLike_isDisposed
-            ] &&
-            !isCompleted
-          ) {
-            this[DisposableLike_dispose]();
+        get [PrioritySchedulerImplementationLike_shouldYield]() {
+          unsafeCast<TProperties>(this);
+          return this[ObserverMixin_scheduler][SchedulerLike_shouldYield];
+        },
+
+        [ContinuationSchedulerLike_schedule](
+          this: PrioritySchedulerImplementationLike & TProperties,
+          continuation: ContinuationLike,
+          delay: number,
+        ) {
+          pipe(this, Disposable_addIgnoringChildErrors(continuation));
+
+          if (continuation[DisposableLike_isDisposed]) {
+            return;
           }
+
+          continuation[ContinuationLike_continuationScheduler] = this;
+
+          pipe(
+            this[ObserverMixin_scheduler][SchedulerLike_schedule](
+              () => {
+                this[PrioritySchedulerImplementationLike_runContinuation](
+                  continuation,
+                );
+              },
+              { delay },
+            ),
+            Disposable_addTo(continuation),
+          );
         },
       },
     ),
-    returns,
   );
 })();
-
-export function initObserverMixinFromDelegate<T>(
-  instance: unknown,
-  delegate: ObserverLike,
-): asserts instance is TObserverMixinReturn<T> {
-  init(
-    Observer_mixin<T>(),
-    instance,
-    delegate[DispatcherLike_scheduler],
-    delegate[BufferLike_capacity],
-    delegate[QueueableLike_backpressureStrategy],
-  );
-}
 
 export default Observer_mixin;

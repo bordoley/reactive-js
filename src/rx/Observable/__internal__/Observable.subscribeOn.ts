@@ -1,9 +1,5 @@
 import { Factory, bindMethod, isFunction, pipe } from "../../../functions.js";
-import {
-  DispatcherLike_complete,
-  DispatcherLike_scheduler,
-  ObservableLike,
-} from "../../../rx.js";
+import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
@@ -34,8 +30,7 @@ const Observable_subscribeOn =
       pipe(
         observable,
         Observable_enqueue<ObservableLike, T>(observer),
-        Observable_subscribeWithConfig({
-          [DispatcherLike_scheduler]: scheduler,
+        Observable_subscribeWithConfig(scheduler, {
           [BufferLike_capacity]:
             options?.capacity ?? observer[BufferLike_capacity],
           [QueueableLike_backpressureStrategy]:

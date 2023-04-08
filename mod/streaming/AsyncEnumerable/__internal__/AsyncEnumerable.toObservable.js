@@ -1,7 +1,7 @@
 /// <reference types="./AsyncEnumerable.toObservable.d.ts" />
 
 import { invoke, none, pipe } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObservableLike_observe, } from "../../../rx.js";
+import { ObservableLike_observe, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
@@ -16,10 +16,9 @@ const AsyncEnumerable_toObservable = () => (enumerable) => {
             ? Runnable_create
             : Observable_create;
     return create((observer) => {
-        const scheduler = observer[DispatcherLike_scheduler];
         const capacity = observer[BufferLike_capacity];
         const backpressureStrategy = observer[QueueableLike_backpressureStrategy];
-        const enumerator = pipe(enumerable, invoke(StreamableLike_stream, scheduler, {
+        const enumerator = pipe(enumerable, invoke(StreamableLike_stream, observer, {
             backpressureStrategy,
             capacity,
         }), Disposable_addTo(observer));

@@ -1,7 +1,8 @@
 /// <reference types="./HigherOrderObservable.scanLast.d.ts" />
 
 import { bindMethod, invoke, pipe, } from "../../../functions.js";
-import { EventListenerLike_notify, ObservableLike_observe, } from "../../../rx.js";
+import { ObservableLike_observe, } from "../../../rx.js";
+import { EventListenerLike_notify } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Observable_concatAll from "../../Observable/__internal__/Observable.concatAll.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";

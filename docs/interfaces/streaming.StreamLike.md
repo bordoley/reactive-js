@@ -26,3 +26,15 @@ Represents a duplex stream
   ↳↳ [`FlowableStreamLike`](streaming.FlowableStreamLike.md)
 
   ↳↳ [`CacheStreamLike`](streaming.CacheStreamLike.md)
+
+## Table of contents
+
+### Properties
+
+- [[StreamLike\_scheduler]](streaming.StreamLike.md#[streamlike_scheduler])
+
+## Properties
+
+### [StreamLike\_scheduler]
+
+• `Readonly` **[StreamLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)

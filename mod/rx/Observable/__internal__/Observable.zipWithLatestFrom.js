@@ -7,18 +7,16 @@ import { none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_zipWithLatestFrom = 
 /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver = (() => {
-        const typedObserverMixin = Observer_mixin();
         const notifyDelegate = (observer) => {
             if (observer[ZipWithLatestFromObserver_TAQueue][CollectionLike_count] >
                 0 &&
@@ -29,9 +27,8 @@ const Observable_zipWithLatestFrom =
                 observer[DelegatingLike_delegate][ObserverLike_notify](result);
             }
         };
-        return createInstanceFactory(mix(include(Disposable_mixin, typedObserverMixin, delegatingMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
-            init(Disposable_mixin, instance);
-            initObserverMixinFromDelegate(instance, delegate);
+        return createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
+            init(Observer_mixin(), instance, delegate, delegate);
             init(delegatingMixin(), instance, delegate);
             instance[ZipWithLatestFromObserver_selector] = selector;
             instance[ZipWithLatestFromObserver_TAQueue] =
@@ -50,7 +47,7 @@ const Observable_zipWithLatestFrom =
                     instance[ZipWithLatestFromObserver_TAQueue][CollectionLike_count] === 0) {
                     instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
-            }), Observable_subscribeWithConfig(delegate), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
+            }), Observable_subscribeWithConfig(delegate, delegate), Disposable_onComplete(disposeDelegate), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({

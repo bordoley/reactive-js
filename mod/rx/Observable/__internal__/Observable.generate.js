@@ -3,9 +3,9 @@
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
-import { ContinuationContextLike_yield, } from "../../../scheduling.js";
+import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
-import Observer_schedule from "../../Observer/__internal__/Observer.schedule.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 const Observable_generate = ((generator, initialValue, options) => {
     const { delay = 0, delayStart = false } = options ?? {};
@@ -18,7 +18,7 @@ const Observable_generate = ((generator, initialValue, options) => {
                 ctx[ContinuationContextLike_yield](delay);
             }
         };
-        pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
+        pipe(observer[SchedulerLike_schedule](continuation, delayStart ? options : none), Disposable_addTo(observer));
     };
     return delay > 0
         ? Runnable_create(onSubscribe)

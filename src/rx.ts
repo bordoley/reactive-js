@@ -1,8 +1,6 @@
 import {
   DispatcherLike_complete,
-  DispatcherLike_scheduler,
-  EventListenerLike_notify,
-  MulticastObservableLike_observerCount,
+  HotObservableLike_observerCount,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -29,31 +27,23 @@ import {
 
 export {
   DispatcherLike_complete,
-  DispatcherLike_scheduler,
-  MulticastObservableLike_observerCount,
-  ReplayableLike_buffer,
+  HotObservableLike_observerCount,
   ObserverLike_notify,
   ObservableLike_observe,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
-  EventListenerLike_notify,
+  ReplayableLike_buffer,
 };
 
 /**
- * A `QueueableLike` type that consumes enqueued events on a scheduler continuation.
- * Events may be enqueud from any execution context.
+ * A `QueueableLike` type that consumes enqueued events to 
+ * be dispatched from any execution context.
  *
  * @noInheritDoc
  */
 export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
   /**
-   * The scheduler that the dispatcher schedules it's event consumer on.
-   */
-  readonly [DispatcherLike_scheduler]: SchedulerLike;
-
-  /**
-   * Communicates to the dispatcher that no more events will be enqueued
-   * on the dispatcher.
+   * Communicates to the dispatcher that no more events will be enqueued.
    */
   [DispatcherLike_complete](): void;
 }
@@ -65,7 +55,8 @@ export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
  */
 export interface ObserverLike<T = unknown>
   extends DispatcherLike<T>,
-    DisposableLike {
+    DisposableLike,
+    SchedulerLike {
   /**
    * Notifies the the observer of the next notification produced by the observable source.
    *
@@ -140,6 +131,11 @@ export interface HotObservableLike<T>
     ReplayableLike<T> {
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
+
+  /**
+   * The number of observers currently observing the `MulticastObservableLike`.
+   */
+  readonly [HotObservableLike_observerCount]: number;
 }
 
 /**
@@ -150,12 +146,7 @@ export interface HotObservableLike<T>
  */
 export interface MulticastObservableLike<T = unknown>
   extends HotObservableLike<T>,
-    DisposableLike {
-  /**
-   * The number of observers currently observing the `MulticastObservableLike`.
-   */
-  readonly [MulticastObservableLike_observerCount]: number;
-}
+    DisposableLike {}
 
 /**
  * An `EventListener` that can be used to publish notifications to one or more observers.
@@ -165,7 +156,8 @@ export interface MulticastObservableLike<T = unknown>
  */
 export interface PublisherLike<T = unknown>
   extends EventListenerLike<T>,
-    MulticastObservableLike<T> {}
+    HotObservableLike<T>,
+    DisposableLike {}
 
 /**
  * @noInheritDoc

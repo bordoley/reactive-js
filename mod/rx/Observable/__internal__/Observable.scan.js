@@ -5,15 +5,13 @@ import { ScanObserver_acc, ScanObserver_reducer, } from "../../../__internal__/s
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
-import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_mixin, { initObserverMixinFromDelegate, } from "../../Observer/__internal__/Observer.mixin.js";
+import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 const Observable_scan = /*@__PURE__*/ (() => {
     const createScanObserver = (() => {
-        return createInstanceFactory(mix(include(Disposable_delegatingMixin(), Observer_mixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
-            init(Disposable_delegatingMixin(), instance, delegate);
-            initObserverMixinFromDelegate(instance, delegate);
+        return createInstanceFactory(mix(include(Observer_delegatingMixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
+            init(Observer_delegatingMixin(), instance, delegate, delegate);
             instance[ScanObserver_reducer] = reducer;
             try {
                 const acc = initialValue();

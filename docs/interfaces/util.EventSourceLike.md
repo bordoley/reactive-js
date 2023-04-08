@@ -16,13 +16,23 @@
 
   ↳ **`EventSourceLike`**
 
-  ↳↳ [`MulticastedEventSourceLike`](util.MulticastedEventSourceLike.md)
+  ↳↳ [`EventPublisherLike`](util.EventPublisherLike.md)
 
 ## Table of contents
+
+### Properties
+
+- [[EventSourceLike\_listenerCount]](util.EventSourceLike.md#[eventsourcelike_listenercount])
 
 ### Methods
 
 - [[EventSourceLike\_addListener]](util.EventSourceLike.md#[eventsourcelike_addlistener])
+
+## Properties
+
+### [EventSourceLike\_listenerCount]
+
+• `Readonly` **[EventSourceLike\_listenerCount]**: `number`
 
 ## Methods
 

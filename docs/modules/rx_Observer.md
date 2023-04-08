@@ -6,28 +6,9 @@
 
 ### Functions
 
-- [schedule](rx_Observer.md#schedule)
 - [sourceFrom](rx_Observer.md#sourcefrom)
 
 ## Functions
-
-### schedule
-
-▸ **schedule**(`f`, `options?`): [`Function1`](functions.md#function1)<[`ObserverLike`](../interfaces/rx.ObserverLike.md)<`unknown`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ContinuationContextLike`](../interfaces/scheduling.ContinuationContextLike.md)\> |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObserverLike`](../interfaces/rx.ObserverLike.md)<`unknown`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-___
 
 ### sourceFrom
 

@@ -1,4 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import {
   Factory,
   Function1,
@@ -8,8 +9,6 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  DispatcherLike_scheduler,
-  EventListenerLike_notify,
   MulticastObservableLike,
   ObservableLike,
   PublisherLike,
@@ -17,13 +16,21 @@ import {
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
+  EventListenerLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
+import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
+
+const createMulticastObservable: <T>(
+  delegate: PublisherLike<T>,
+  scheduler: SchedulerLike,
+) => MulticastObservableLike<T> = /*@__PURE__*/ (<T>() =>
+  createInstanceFactory(MulticastObservable_delegatingMixin<T>()))();
 
 const Observable_multicastImpl =
   <T>(
@@ -57,15 +64,14 @@ const Observable_multicastImpl =
       Observable_forEach<ObservableLike, T>(
         bindMethod(publisher, EventListenerLike_notify),
       ),
-      Observable_subscribeWithConfig({
-        [DispatcherLike_scheduler]: scheduler,
+      Observable_subscribeWithConfig(scheduler, {
         [BufferLike_capacity]: capacity,
         [QueueableLike_backpressureStrategy]: backpressureStrategy,
       }),
       Disposable_bindTo(publisher),
     );
 
-    return publisher;
+    return createMulticastObservable<T>(publisher, scheduler);
   };
 
 export default Observable_multicastImpl;

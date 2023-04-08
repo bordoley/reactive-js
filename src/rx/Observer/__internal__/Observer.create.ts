@@ -7,37 +7,32 @@ import {
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
+  BufferLike_capacity,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_create: <T>(
   scheduler: SchedulerLike,
-  capacity: number,
-  backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
-  const typedObserverMixin = Observer_mixin<T>();
-
-  return createInstanceFactory(
+  config: {
+    readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly [BufferLike_capacity]: number;
+  },
+) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
+  createInstanceFactory(
     mix(
-      include(Disposable_mixin, typedObserverMixin),
+      include(Observer_mixin()),
       function Observer(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
         scheduler: SchedulerLike,
-        capacity: number,
-        backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+        config: {
+          readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly [BufferLike_capacity]: number;
+        },
       ): ObserverLike<T> {
-        init(Disposable_mixin, instance);
-        init(
-          typedObserverMixin,
-          instance,
-          scheduler,
-          capacity,
-          backpressureStrategy,
-        );
+        init(Observer_mixin(), instance, scheduler, config);
 
         return instance;
       },
@@ -48,7 +43,6 @@ const Observer_create: <T>(
         },
       },
     ),
-  );
-})();
+  ))();
 
 export default Observer_create;

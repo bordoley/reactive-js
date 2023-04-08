@@ -1,6 +1,6 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { Function1 } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObservableLike } from "../../../rx.js";
+import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
@@ -17,8 +17,7 @@ const Observable_subscribe: <T>(
     readonly capacity?: number;
   },
 ) => Function1<ObservableLike<T>, DisposableLike> = (scheduler, options) =>
-  Observable_subscribeWithConfig({
-    [DispatcherLike_scheduler]: scheduler,
+  Observable_subscribeWithConfig(scheduler, {
     [BufferLike_capacity]: options?.capacity ?? MAX_SAFE_INTEGER,
     [QueueableLike_backpressureStrategy]:
       options?.backpressureStrategy ?? "overflow",

@@ -1,71 +1,47 @@
-import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
-import { DelegatingDispatcherMixin_delegate } from "../../../__internal__/symbols.js";
-import { none, returns, unsafeCast } from "../../../functions.js";
 import {
-  DispatcherLike,
-  DispatcherLike_complete,
-  DispatcherLike_scheduler,
-} from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
-import {
-  BufferLike_capacity,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_enqueue,
-} from "../../../util.js";
+  Mixin1,
+  include,
+  init,
+  mix,
+  props,
+} from "../../../__internal__/mixins.js";
+import { returns } from "../../../functions.js";
+import { DispatcherLike, DispatcherLike_complete } from "../../../rx.js";
+import { DisposableLike } from "../../../util.js";
+import Queueable_delegatingMixin, {
+  QueueableDelegatingMixin_delegate,
+  TDelegatingQueueableMixinReturn,
+} from "../../../util/Queue/__internal__/Queueable.delegatingMixin.js";
+
+type TDispatcherDelegatingMixin<TReq> = Omit<
+  DispatcherLike<TReq>,
+  keyof DisposableLike
+>;
 
 const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
-  DispatcherLike<TReq>,
-  DispatcherLike<TReq>
-> = /*@__PURE__*/ (<TReq>() => {
-  type TProperties = {
-    readonly [DelegatingDispatcherMixin_delegate]: DispatcherLike<TReq>;
-  };
-
-  return returns(
+  TDispatcherDelegatingMixin<TReq>,
+  Omit<DispatcherLike<TReq>, keyof DisposableLike>
+> = /*@__PURE__*/ (<TReq>() =>
+  returns(
     mix(
+      include(Queueable_delegatingMixin()),
       function DispatcherMixin(
-        instance: DispatcherLike<TReq> & Mutable<TProperties>,
+        instance: Pick<DispatcherLike, typeof DispatcherLike_complete>,
         delegate: DispatcherLike<TReq>,
-      ): DispatcherLike<TReq> {
-        instance[DelegatingDispatcherMixin_delegate] = delegate;
+      ): TDispatcherDelegatingMixin<TReq> {
+        init(Queueable_delegatingMixin(), instance, delegate);
 
         return instance;
       },
-      props<TProperties>({
-        [DelegatingDispatcherMixin_delegate]: none,
-      }),
+      props({}),
       {
-        get [DispatcherLike_scheduler](): SchedulerLike {
-          unsafeCast<TProperties>(this);
-          return this[DelegatingDispatcherMixin_delegate][
-            DispatcherLike_scheduler
-          ];
-        },
-
-        get [QueueableLike_backpressureStrategy]() {
-          unsafeCast<TProperties>(this);
-          return this[DelegatingDispatcherMixin_delegate][
-            QueueableLike_backpressureStrategy
-          ];
-        },
-
-        get [BufferLike_capacity](): number {
-          unsafeCast<TProperties>(this);
-          return this[DelegatingDispatcherMixin_delegate][BufferLike_capacity];
-        },
-
-        [QueueableLike_enqueue](this: TProperties, req: TReq): boolean {
-          return this[DelegatingDispatcherMixin_delegate][
-            QueueableLike_enqueue
-          ](req);
-        },
-
-        [DispatcherLike_complete](this: TProperties) {
-          this[DelegatingDispatcherMixin_delegate][DispatcherLike_complete]();
+        [DispatcherLike_complete](
+          this: TDelegatingQueueableMixinReturn<TReq, DispatcherLike<TReq>>,
+        ) {
+          this[QueueableDelegatingMixin_delegate][DispatcherLike_complete]();
         },
       },
     ),
-  );
-})();
+  ))();
 
 export default Dispatcher_delegatingMixin;

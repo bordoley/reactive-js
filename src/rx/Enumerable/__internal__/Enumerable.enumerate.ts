@@ -38,7 +38,6 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
-import Observer_mixin from "../../../rx/Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
 import {
@@ -51,60 +50,48 @@ import {
   PriorityScheduler_mixin,
 } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import {
+  BufferLike_capacity,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Observer_baseMixin from "../../Observer/__internal__/Observer.baseMixin.js";
 
 const Enumerable_enumerate: <T>() => (
   enumerable: EnumerableLike<T>,
 ) => EnumeratorLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
-  const typedMutableEnumeratorMixin = MutableEnumerator_mixin<T>();
-  const typedObserverMixin = Observer_mixin<T>();
-
   type TEnumeratorSchedulerProperties = {
     readonly [EnumerableEnumerator_continuationQueue]: IndexedQueueLike<ContinuationLike>;
   };
 
-  interface EnumeratorScheduler<T>
-    extends EnumeratorLike<T>,
-      DisposableLike,
-      PrioritySchedulerImplementationLike,
-      ObserverLike<T> {}
+  interface EnumeratorScheduler<T> extends EnumeratorLike<T>, ObserverLike<T> {}
 
   const createEnumeratorScheduler = createInstanceFactory(
     mix(
       include(
-        Disposable_mixin,
-        typedMutableEnumeratorMixin,
-        typedObserverMixin,
+        MutableEnumerator_mixin(),
+        Observer_baseMixin(),
         PriorityScheduler_mixin,
       ),
       function EnumeratorScheduler(
         instance: Pick<
           EnumeratorScheduler<T>,
           | typeof SchedulerLike_now
-          | typeof PrioritySchedulerImplementationLike_shouldYield
-          | typeof ContinuationSchedulerLike_schedule
           | typeof EnumeratorLike_move
           | typeof ObserverLike_notify
         > &
           Mutable<TEnumeratorSchedulerProperties>,
       ): EnumeratorScheduler<T> {
-        init(Disposable_mixin, instance);
-        init(typedMutableEnumeratorMixin, instance);
+        init(MutableEnumerator_mixin(), instance);
         init(PriorityScheduler_mixin, instance, 0);
-        init(
-          typedObserverMixin,
-          instance,
-          instance,
-          MAX_SAFE_INTEGER,
-          "overflow",
-        );
+        init(Observer_baseMixin<T>(), instance, {
+          [QueueableLike_backpressureStrategy]: "overflow",
+          [BufferLike_capacity]: MAX_SAFE_INTEGER,
+        });
 
         instance[EnumerableEnumerator_continuationQueue] =
           IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");

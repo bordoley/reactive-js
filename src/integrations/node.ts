@@ -39,7 +39,6 @@ import {
 } from "../functions.js";
 import {
   DispatcherLike_complete,
-  DispatcherLike_scheduler,
   ObservableLike,
   ObservableLike_observe,
 } from "../rx.js";
@@ -194,7 +193,7 @@ export const createReadableSource = (
             readable.resume();
           }
         }),
-        Observable.subscribe(observer[DispatcherLike_scheduler]),
+        Observable.subscribe(observer),
         addToNodeStream(readable),
       );
 
@@ -248,7 +247,7 @@ export const createWritableSink = /*@__PURE__*/ (() => {
               writable.emit(NODE_JS_PAUSE_EVENT);
             }
           }),
-          Observable.subscribe(observer[DispatcherLike_scheduler]),
+          Observable.subscribe(observer),
           addToNodeStream(writable),
           Disposable.onComplete(bindMethod(writable, "end")),
         );
@@ -281,12 +280,11 @@ export const transform =
         const backpressureStrategy =
           observer[QueueableLike_backpressureStrategy];
         const capacity = observer[BufferLike_capacity];
-        const scheduler = observer[DispatcherLike_scheduler];
 
         pipe(
           transform,
           createWritableSink,
-          invoke(StreamableLike_stream, scheduler, {
+          invoke(StreamableLike_stream, observer, {
             backpressureStrategy,
             capacity,
           }),
@@ -294,16 +292,18 @@ export const transform =
           Disposable.addTo(observer),
         );
 
-        const transformReadableStream = createReadableSource(transform)[
-          StreamableLike_stream
-        ](scheduler, { capacity });
+        const transformReadableStream = pipe(
+          transform,
+          createReadableSource,
+          invoke(StreamableLike_stream, observer, { capacity }),
+        );
 
         transformReadableStream[ObservableLike_observe](observer);
 
         pipe(
           modeObs,
           Observable.enqueue(transformReadableStream),
-          Observable.subscribe(observer[DispatcherLike_scheduler]),
+          Observable.subscribe(observer),
           addToNodeStream(transform),
         );
       }),

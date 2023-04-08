@@ -3,10 +3,10 @@
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
-import Observer_schedule from "../../../rx/Observer/__internal__/Observer.schedule.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
-import { ContinuationContextLike_yield, } from "../../../scheduling.js";
+import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 const Iterable_toObservable = ((options) => (iterable) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const onSubscribe = (observer) => {
@@ -23,7 +23,7 @@ const Iterable_toObservable = ((options) => (iterable) => {
                 }
             }
         };
-        pipe(observer, Observer_schedule(continuation, delayStart ? options : none));
+        pipe(observer[SchedulerLike_schedule](continuation, delayStart ? options : none), Disposable_addTo(observer));
     };
     const retval = delay > 0 ? Runnable_create(onSubscribe) : Enumerable_create(onSubscribe);
     return retval;

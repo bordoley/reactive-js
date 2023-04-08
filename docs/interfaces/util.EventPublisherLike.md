@@ -12,8 +12,10 @@
 
 ## Hierarchy
 
-- [`MulticastedEventSourceLike`](util.MulticastedEventSourceLike.md)<`T`\>
+- [`EventSourceLike`](util.EventSourceLike.md)<`T`\>
 
 - [`EventListenerLike`](util.EventListenerLike.md)<`T`\>
+
+- [`DisposableLike`](util.DisposableLike.md)
 
   ↳ **`EventPublisherLike`**

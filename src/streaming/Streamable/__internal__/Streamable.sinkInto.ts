@@ -1,9 +1,5 @@
 import { bindMethod, pipe, returns } from "../../../functions.js";
-import {
-  DispatcherLike_complete,
-  DispatcherLike_scheduler,
-  ObservableLike,
-} from "../../../rx.js";
+import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
 import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.enqueue.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
@@ -11,6 +7,7 @@ import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observab
 import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
 import {
   StreamLike,
+  StreamLike_scheduler,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../streaming.js";
@@ -24,10 +21,9 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 const Streamable_sinkInto =
   <TReq, T>(dest: StreamLike<T, TReq>) =>
   (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
-    const scheduler = dest[DispatcherLike_scheduler];
     const capacity = dest[BufferLike_capacity];
     const backpressureStrategy = dest[QueueableLike_backpressureStrategy];
-    const srcStream = src[StreamableLike_stream](scheduler, {
+    const srcStream = src[StreamableLike_stream](dest[StreamLike_scheduler], {
       backpressureStrategy,
       capacity,
     });
@@ -49,7 +45,7 @@ const Streamable_sinkInto =
         ),
       ),
       Observable_ignoreElements<ObservableLike, unknown>(),
-      Observable_subscribeWithConfig(dest),
+      Observable_subscribeWithConfig(dest[StreamLike_scheduler], dest),
       Disposable_addTo(dest),
       Disposable_add(srcStream),
     );

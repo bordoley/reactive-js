@@ -12,14 +12,15 @@ import {
 } from "../../../__internal__/symbols.js";
 import { pipe } from "../../../functions.js";
 import {
-  EventListenerLike_notify,
-  MulticastObservableLike_observerCount,
+  HotObservableLike_observerCount,
   ObservableLike_observe,
   ObserverLike,
   PublisherLike,
 } from "../../../rx.js";
+import { EventListenerLike_notify } from "../../../util.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
+import HotObservable_delegatingMixin from "../../HotObservable/__internal__/HotObservable.delegatingMixin.js";
 import Publisher_create from "./Publisher.create.js";
 
 const Publisher_createRefCounted: <T>(options?: {
@@ -27,7 +28,7 @@ const Publisher_createRefCounted: <T>(options?: {
 }) => PublisherLike<T> = /*@__PURE__*/ (<T>() => {
   const createRefCountedPublisherInstance = createInstanceFactory(
     mix(
-      include(MulticastObservable_delegatingMixin()),
+      include(Disposable_delegatingMixin(), HotObservable_delegatingMixin()),
       function RefCountedPublisher(
         instance: Pick<
           PublisherLike<T>,
@@ -35,8 +36,9 @@ const Publisher_createRefCounted: <T>(options?: {
         >,
         delegate: PublisherLike<T>,
       ): PublisherLike<T> {
+        init(Disposable_delegatingMixin(), instance, delegate);
         init(
-          MulticastObservable_delegatingMixin<T, PublisherLike<T>>(),
+          HotObservable_delegatingMixin<T, PublisherLike<T>>(),
           instance,
           delegate,
         );
@@ -61,7 +63,7 @@ const Publisher_createRefCounted: <T>(options?: {
           pipe(
             observer,
             Disposable_onDisposed(() => {
-              if (this[MulticastObservableLike_observerCount] === 0) {
+              if (this[HotObservableLike_observerCount] === 0) {
                 this[DisposableLike_dispose]();
               }
             }),

@@ -28,8 +28,8 @@ import {
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike_addListener,
+  EventSourceLike_listenerCount,
   KeyedCollectionLike_get,
-  MulticastedEventSourceLike_listenerCount,
   QueueableLike_enqueue,
   ReplayableLike_buffer,
 } from "../../../util.js";
@@ -53,7 +53,7 @@ const EventPublisher_create: <T>(options?: {
           EventPublisherLike<T>,
           | typeof EventSourceLike_addListener
           | typeof EventListenerLike_notify
-          | typeof MulticastedEventSourceLike_listenerCount
+          | typeof EventSourceLike_listenerCount
         > &
           Mutable<TProperties>,
         replay: number,
@@ -85,7 +85,7 @@ const EventPublisher_create: <T>(options?: {
         [ReplayableLike_buffer]: none,
       }),
       {
-        get [MulticastedEventSourceLike_listenerCount]() {
+        get [EventSourceLike_listenerCount]() {
           unsafeCast<TProperties>(this);
           return this.l.size;
         },

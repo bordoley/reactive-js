@@ -18,6 +18,8 @@ A consumer of push-based notifications.
 
 - [`DisposableLike`](util.DisposableLike.md)
 
+- [`SchedulerLike`](scheduling.SchedulerLike.md)
+
   ↳ **`ObserverLike`**
 
 ## Table of contents

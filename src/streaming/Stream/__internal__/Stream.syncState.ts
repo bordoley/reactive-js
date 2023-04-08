@@ -5,7 +5,7 @@ import {
   identity,
   pipe,
 } from "../../../functions.js";
-import { DispatcherLike_scheduler, ObservableLike } from "../../../rx.js";
+import { ObservableLike } from "../../../rx.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.enqueue.js";
 import Observable_forkMerge from "../../../rx/Observable/__internal__/Observable.forkMerge.js";
@@ -14,7 +14,7 @@ import Observable_subscribe from "../../../rx/Observable/__internal__/Observable
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
 import Observable_throttle from "../../../rx/Observable/__internal__/Observable.throttle.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import { StreamLike } from "../../../streaming.js";
+import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -34,8 +34,7 @@ const Stream_syncState = <T>(
   const throttleDuration = options?.throttleDuration ?? 0;
 
   return (stateStore: StreamLike<Updater<T>, T>) => {
-    const scheduler =
-      options?.scheduler ?? stateStore[DispatcherLike_scheduler];
+    const scheduler = options?.scheduler ?? stateStore[StreamLike_scheduler];
 
     pipe(
       stateStore,
