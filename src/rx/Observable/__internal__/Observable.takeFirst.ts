@@ -1,10 +1,7 @@
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
@@ -14,6 +11,10 @@ import {
   __TakeFirstObserver_count,
   __TakeFirstObserver_takeCount,
 } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import { partial, pipe } from "../../../functions.js";
 import {
@@ -22,6 +23,7 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
@@ -41,7 +43,7 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin(), delegatingMixin()),
+        include(Observer_delegatingMixin(), Delegating_mixin()),
         function TakeFirstObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -49,7 +51,7 @@ const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
           takeCount: number,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
-          init(delegatingMixin(), instance, delegate);
+          init(Delegating_mixin(), instance, delegate);
           instance[__TakeFirstObserver_takeCount] = takeCount;
 
           if (takeCount === 0) {

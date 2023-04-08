@@ -1,9 +1,6 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
@@ -18,6 +15,8 @@ import {
   __ThrottleObserver_value,
 } from "../../../__internal__/symbols.js";
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../__internal__/util.internal.js";
@@ -44,6 +43,7 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -89,7 +89,7 @@ const createThrottleObserver: <T>(
 
   return createInstanceFactory(
     mix(
-      include(Observer_mixin(), delegatingMixin()),
+      include(Observer_mixin(), Delegating_mixin()),
       function ThrottleObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
@@ -97,7 +97,7 @@ const createThrottleObserver: <T>(
         durationFunction: Function1<T, ObservableLike>,
         mode: "first" | "last" | "interval",
       ): ObserverLike<T> {
-        init(delegatingMixin<ObserverLike>(), instance, delegate);
+        init(Delegating_mixin<ObserverLike>(), instance, delegate);
         init(Observer_mixin(), instance, delegate, delegate);
 
         instance[__ThrottleObserver_durationFunction] = durationFunction;

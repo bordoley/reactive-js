@@ -6,6 +6,7 @@ import {
   QueueableLike,
 } from "../util.js";
 import {
+  __DelegatingLike_delegate as DelegatingLike_delegate,
   __MutableKeyedCollectionLike_set as MutableKeyedCollectionLike_set,
   __QueueLike_dequeue as QueueLike_dequeue,
   __QueueLike_head as QueueLike_head,
@@ -15,13 +16,18 @@ import {
 } from "./symbols.js";
 
 export {
+  DelegatingLike_delegate,
   MutableKeyedCollectionLike_set,
-  SerialDisposableLike_current,
-  QueueLike_head,
   QueueLike_dequeue,
+  QueueLike_head,
+  SerialDisposableLike_current,
   StackLike_pop,
   StackLike_head,
 };
+
+export interface DelegatingLike<T> {
+  readonly [DelegatingLike_delegate]: T;
+}
 
 export interface SerialDisposableLike<
   TDisposable extends DisposableLike = DisposableLike,

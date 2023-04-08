@@ -1,9 +1,6 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
@@ -13,6 +10,10 @@ import {
   __PairwiseObserver_hasPrev,
   __PairwiseObserver_prev,
 } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import { none, pipe, returns } from "../../../functions.js";
 import {
@@ -20,6 +21,7 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
@@ -40,14 +42,14 @@ const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin<T>(), delegatingMixin()),
+        include(Observer_delegatingMixin<T>(), Delegating_mixin()),
         function PairwiseObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
           delegate: ObserverLike<readonly [T, T]>,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
-          init(delegatingMixin(), instance, delegate);
+          init(Delegating_mixin(), instance, delegate);
 
           return instance;
         },

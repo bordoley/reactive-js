@@ -1,9 +1,6 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
@@ -14,6 +11,8 @@ import {
   __ZipObserver_queuedEnumerator,
 } from "../../../__internal__/symbols.js";
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   QueueLike,
   QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
@@ -52,6 +51,7 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -167,7 +167,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
 
   const createZipObserver = createInstanceFactory(
     mix(
-      include(Observer_mixin(), delegatingMixin()),
+      include(Observer_mixin(), Delegating_mixin()),
       function ZipObserver(
         instance: Pick<ObserverLike, typeof ObserverLike_notify> &
           Mutable<TProperties>,
@@ -176,7 +176,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         queuedEnumerator: QueuedEnumeratorLike,
       ): ObserverLike {
         init(Observer_mixin(), instance, delegate, delegate);
-        init(delegatingMixin(), instance, delegate);
+        init(Delegating_mixin(), instance, delegate);
 
         instance[__ZipObserver_queuedEnumerator] = queuedEnumerator;
         instance[__ZipObserver_enumerators] = enumerators;

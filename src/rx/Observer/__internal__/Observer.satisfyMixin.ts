@@ -1,15 +1,16 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mixin2,
   Mutable,
-  delegatingMixin,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
 import { __SatisfyObserver_predicate } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { Predicate, invoke, none, pipe } from "../../../functions.js";
 import {
@@ -21,6 +22,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "./Observer.assertState.js";
@@ -39,7 +41,7 @@ const Observer_satisfyMixin: <T>(
   };
 
   return mix(
-    include(delegatingMixin(), Observer_mixin<T>()),
+    include(Delegating_mixin(), Observer_mixin<T>()),
     function SatisfyObserver(
       instance: Mutable<TProperties> &
         Pick<ObserverLike<T>, typeof ObserverLike_notify>,
@@ -47,7 +49,7 @@ const Observer_satisfyMixin: <T>(
       predicate: Predicate<T>,
     ): ObserverLike<T> {
       init(Observer_mixin(), instance, delegate, delegate);
-      init(delegatingMixin(), instance, delegate);
+      init(Delegating_mixin(), instance, delegate);
       instance[__SatisfyObserver_predicate] = predicate;
 
       pipe(

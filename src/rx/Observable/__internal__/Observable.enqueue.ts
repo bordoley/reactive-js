@@ -1,15 +1,16 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
 import { __EnqueueObserver_effect } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Function1,
@@ -26,6 +27,7 @@ import {
 } from "../../../rx.js";
 import { SchedulerLike_requestYield } from "../../../scheduling.js";
 import { QueueableLike, QueueableLike_enqueue } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
@@ -44,7 +46,7 @@ const Observable_enqueue: ObservableEnqueue = /*@__PURE__*/ (<T>() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin(), delegatingMixin()),
+        include(Observer_delegatingMixin(), Delegating_mixin()),
         function EnqueueObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -52,7 +54,7 @@ const Observable_enqueue: ObservableEnqueue = /*@__PURE__*/ (<T>() => {
           effect: Function1<T, boolean>,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
-          init(delegatingMixin(), instance, delegate);
+          init(Delegating_mixin(), instance, delegate);
           instance[__EnqueueObserver_effect] = effect;
 
           return instance;

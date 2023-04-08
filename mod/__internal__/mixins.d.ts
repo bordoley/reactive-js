@@ -1,6 +1,5 @@
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, Optional } from "../functions.js";
-import { __DelegatingLike_delegate as DelegatingLike_delegate, __Object_init, __Object_private_initializedProperties, __Object_properties, __Object_prototype } from "./symbols.js";
-export { DelegatingLike_delegate };
+import { __Object_init, __Object_private_initializedProperties, __Object_properties, __Object_prototype } from "./symbols.js";
 type OptionalProperties<T> = T extends object ? {
     [P in keyof T]: Optional<T[P]>;
 } : T;
@@ -84,11 +83,8 @@ export declare const createInstanceFactory: CreateInstanceFactory["createInstanc
 export declare const props: <TProperties>(o: OptionalProperties<TProperties>) => TProperties & {
     [__Object_private_initializedProperties]?: true | undefined;
 };
-export interface DelegatingLike<T> {
-    readonly [DelegatingLike_delegate]: T;
-}
-export declare const delegatingMixin: <TDelegate>() => Mixin1<DelegatingLike<TDelegate>, TDelegate>;
 export type MixinPrototype<TPrototype> = {
     [__Object_prototype]: TPrototype;
 };
 export declare const getPrototype: <TPrototype>(mixin: MixinPrototype<TPrototype>) => TPrototype;
+export {};

@@ -1,9 +1,6 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
@@ -16,6 +13,8 @@ import {
   __ZipWithLatestFromObserver_selector,
 } from "../../../__internal__/symbols.js";
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   IndexedQueueLike,
   QueueLike,
   QueueLike_dequeue,
@@ -42,6 +41,7 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
@@ -90,7 +90,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
 
       return createInstanceFactory(
         mix(
-          include(Observer_mixin(), delegatingMixin()),
+          include(Observer_mixin(), Delegating_mixin()),
           function ZipWithLatestFromObserver(
             instance: Pick<ObserverLike, typeof ObserverLike_notify> &
               Mutable<TProperties>,
@@ -99,7 +99,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             selector: Function2<TA, TB, T>,
           ): ObserverLike<TA> {
             init(Observer_mixin(), instance, delegate, delegate);
-            init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
+            init(Delegating_mixin<ObserverLike<T>>(), instance, delegate);
             instance[__ZipWithLatestFromObserver_selector] = selector;
             instance[__ZipWithLatestFromObserver_TAQueue] =
               IndexedQueue_createFifoQueue(

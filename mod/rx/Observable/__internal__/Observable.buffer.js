@@ -2,9 +2,9 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
-import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __BufferObserver_buffer, __BufferObserver_count, __BufferObserver_durationFunction, __BufferObserver_durationSubscription, } from "../../../__internal__/symbols.js";
-import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, isNumber, none, pipe } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
@@ -12,6 +12,7 @@ import ReadonlyArray_isEmpty from "../../../keyed-containers/ReadonlyArray/__int
 import ReadonlyArray_toObservable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -23,9 +24,9 @@ import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_buffer = /*@__PURE__*/ (() => {
-    const createBufferObserver = createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function BufferObserver(instance, delegate, durationFunction, count) {
+    const createBufferObserver = createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function BufferObserver(instance, delegate, durationFunction, count) {
         init(Observer_mixin(), instance, delegate, delegate);
-        init(delegatingMixin(), instance, delegate);
+        init(Delegating_mixin(), instance, delegate);
         instance[__BufferObserver_buffer] = [];
         instance[__BufferObserver_durationFunction] = durationFunction;
         instance[__BufferObserver_durationSubscription] =

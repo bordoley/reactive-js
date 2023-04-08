@@ -1,11 +1,12 @@
 /// <reference types="./Observable.zipWithLatestFrom.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __ZipWithLatestFromObserver_TAQueue, __ZipWithLatestFromObserver_hasLatest, __ZipWithLatestFromObserver_otherLatest, __ZipWithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
-import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
@@ -27,9 +28,9 @@ const Observable_zipWithLatestFrom =
                 observer[DelegatingLike_delegate][ObserverLike_notify](result);
             }
         };
-        return createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
+        return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
             init(Observer_mixin(), instance, delegate, delegate);
-            init(delegatingMixin(), instance, delegate);
+            init(Delegating_mixin(), instance, delegate);
             instance[__ZipWithLatestFromObserver_selector] = selector;
             instance[__ZipWithLatestFromObserver_TAQueue] =
                 IndexedQueue_createFifoQueue(delegate[BufferLike_capacity], delegate[QueueableLike_backpressureStrategy]);

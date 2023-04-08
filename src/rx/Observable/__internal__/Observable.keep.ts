@@ -1,15 +1,16 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
 import { __KeepObserver_predicate } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
@@ -17,6 +18,7 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
@@ -36,7 +38,7 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin(), delegatingMixin()),
+        include(Observer_delegatingMixin(), Delegating_mixin()),
         function KeepObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -44,7 +46,7 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
           predicate: Predicate<T>,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
-          init(delegatingMixin(), instance, delegate);
+          init(Delegating_mixin(), instance, delegate);
           instance[__KeepObserver_predicate] = predicate;
 
           return instance;

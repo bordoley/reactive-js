@@ -1,9 +1,6 @@
 import * as Object from "../__internal__/Object.js";
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
@@ -14,6 +11,10 @@ import {
   __WindowLocationStreamLike_goBack as WindowLocationStreamLike_goBack,
   __WindowLocationStreamLike_replace as WindowLocationStreamLike_replace,
 } from "../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../__internal__/util.internal.js";
 import {
   Function1,
   Optional,
@@ -61,6 +62,7 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../util.js";
+import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
 
 export {
@@ -777,7 +779,7 @@ export const windowLocation: StreamableLike<
 
   const createWindowLocationStream = createInstanceFactory(
     mix(
-      include(Stream_delegatingMixin(), delegatingMixin()),
+      include(Stream_delegatingMixin(), Delegating_mixin()),
       function WindowLocationStream(
         instance: Pick<
           WindowLocationStreamLike,
@@ -791,7 +793,7 @@ export const windowLocation: StreamableLike<
         delegate: StreamLike<Updater<TState>, TState>,
       ): WindowLocationStreamLike {
         init(Stream_delegatingMixin(), instance, delegate);
-        init(delegatingMixin(), instance, delegate);
+        init(Delegating_mixin(), instance, delegate);
 
         return instance;
       },
@@ -818,7 +820,7 @@ export const windowLocation: StreamableLike<
           stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
         ): boolean {
           return this[DelegatingLike_delegate][QueueableLike_enqueue](
-            prevState => {
+            (prevState: TState) => {
               const uri = createWindowLocationURIWithPrototype(
                 isFunction(stateOrUpdater)
                   ? stateOrUpdater(prevState.uri)
@@ -835,7 +837,7 @@ export const windowLocation: StreamableLike<
           stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
         ): boolean {
           return this[DelegatingLike_delegate][QueueableLike_enqueue](
-            prevState => {
+            (prevState: TState) => {
               const uri = createWindowLocationURIWithPrototype(
                 isFunction(stateOrUpdater)
                   ? stateOrUpdater(prevState.uri)

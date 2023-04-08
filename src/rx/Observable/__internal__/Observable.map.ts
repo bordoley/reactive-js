@@ -1,15 +1,16 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
 import { __MapObserver_mapper } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
 import {
@@ -17,6 +18,7 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
@@ -35,7 +37,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin<TA>(), delegatingMixin()),
+        include(Observer_delegatingMixin<TA>(), Delegating_mixin()),
         function MapObserver(
           instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -43,7 +45,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
           mapper: Function1<TA, TB>,
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
-          init(delegatingMixin(), instance, delegate);
+          init(Delegating_mixin(), instance, delegate);
           instance[__MapObserver_mapper] = mapper;
 
           return instance;

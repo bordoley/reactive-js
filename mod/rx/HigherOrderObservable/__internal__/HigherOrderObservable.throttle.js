@@ -1,12 +1,13 @@
 /// <reference types="./HigherOrderObservable.throttle.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __ThrottleObserver_durationFunction, __ThrottleObserver_durationSubscription, __ThrottleObserver_hasValue, __ThrottleObserver_mode, __ThrottleObserver_onNotify, __ThrottleObserver_value, } from "../../../__internal__/symbols.js";
-import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, isNumber, none, partial, pipe, } from "../../../functions.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -20,8 +21,8 @@ const createThrottleObserver = (() => {
     const setupDurationSubscription = (observer, next) => {
         observer[__ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[__ThrottleObserver_durationFunction](next), Observable_forEach(observer[__ThrottleObserver_onNotify]), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer));
     };
-    return createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function ThrottleObserver(instance, delegate, durationFunction, mode) {
-        init(delegatingMixin(), instance, delegate);
+    return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function ThrottleObserver(instance, delegate, durationFunction, mode) {
+        init(Delegating_mixin(), instance, delegate);
         init(Observer_mixin(), instance, delegate, delegate);
         instance[__ThrottleObserver_durationFunction] = durationFunction;
         instance[__ThrottleObserver_mode] = mode;

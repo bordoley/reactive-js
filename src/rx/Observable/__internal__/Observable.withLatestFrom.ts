@@ -1,9 +1,6 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
@@ -14,6 +11,10 @@ import {
   __WithLatestFromObserver_otherLatest,
   __WithLatestFromObserver_selector,
 } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.internal.js";
 import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import {
   Function2,
@@ -31,6 +32,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -61,7 +63,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
   ) => ObserverLike<TA> = (() =>
     createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin(), delegatingMixin()),
+        include(Observer_delegatingMixin(), Delegating_mixin()),
         function WithLatestFromObserver(
           instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -70,7 +72,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
           selector: Function2<TA, TB, T>,
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
-          init(delegatingMixin(), instance, delegate);
+          init(Delegating_mixin(), instance, delegate);
           instance[__WithLatestFromObserver_selector] = selector;
 
           pipe(

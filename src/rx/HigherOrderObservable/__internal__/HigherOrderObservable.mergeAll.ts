@@ -4,11 +4,8 @@ import {
   clampPositiveNonZeroInteger,
 } from "../../../__internal__/math.js";
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
@@ -21,6 +18,8 @@ import {
   __MergeAllObserver_onDispose,
 } from "../../../__internal__/symbols.js";
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   IndexedQueueLike,
   QueueLike,
   QueueLike_dequeue,
@@ -53,6 +52,7 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
@@ -112,7 +112,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
     return createInstanceFactory(
       mix(
-        include(Observer_mixin<ContainerOf<C, T>>(), delegatingMixin()),
+        include(Observer_mixin<ContainerOf<C, T>>(), Delegating_mixin()),
         function MergeAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<C, T>>,
@@ -125,7 +125,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           maxConcurrency: number,
         ): ObserverLike<ContainerOf<C, T>> {
           init(Observer_mixin(), instance, delegate, delegate);
-          init(delegatingMixin<ObserverLike<T>>(), instance, delegate);
+          init(Delegating_mixin<ObserverLike<T>>(), instance, delegate);
 
           instance[__MergeAllObserver_observablesQueue] =
             IndexedQueue_createFifoQueue(capacity, backpressureStrategy);

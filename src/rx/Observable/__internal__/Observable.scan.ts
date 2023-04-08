@@ -1,9 +1,6 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
@@ -13,6 +10,10 @@ import {
   __ScanObserver_acc,
   __ScanObserver_reducer,
 } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Factory,
@@ -28,6 +29,7 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
@@ -49,7 +51,7 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
 
     return createInstanceFactory(
       mix(
-        include(Observer_delegatingMixin(), delegatingMixin()),
+        include(Observer_delegatingMixin(), Delegating_mixin()),
         function ScanObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -58,7 +60,7 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
           initialValue: Factory<TAcc>,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
-          init(delegatingMixin(), instance, delegate);
+          init(Delegating_mixin(), instance, delegate);
           instance[__ScanObserver_reducer] = reducer;
 
           try {

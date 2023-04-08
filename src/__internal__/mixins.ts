@@ -8,22 +8,16 @@ import {
   Function6,
   Optional,
   isFunction,
-  none,
-  pipe,
-  returns,
 } from "../functions.js";
 import ReadonlyArray_getLength from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import * as Obj from "./Object.js";
 import { __DEV__ } from "./constants.js";
 import {
-  __DelegatingLike_delegate as DelegatingLike_delegate,
   __Object_init,
   __Object_private_initializedProperties,
   __Object_properties,
   __Object_prototype,
 } from "./symbols.js";
-
-export { DelegatingLike_delegate };
 
 type OptionalProperties<T> = T extends object
   ? {
@@ -350,36 +344,6 @@ export const props = <TProperties>(
     [__Object_private_initializedProperties]?: true;
   };
 };
-
-export interface DelegatingLike<T> {
-  readonly [DelegatingLike_delegate]: T;
-}
-
-export const delegatingMixin: <TDelegate>() => Mixin1<
-  DelegatingLike<TDelegate>,
-  TDelegate
-> = /*@__PURE__*/ (<TDelegate>() => {
-  type TProperties = {
-    readonly [DelegatingLike_delegate]: TDelegate;
-  };
-
-  return pipe(
-    mix(
-      function DelegatingDisposableMixin(
-        instance: Mutable<TProperties>,
-        delegate: TDelegate,
-      ): DelegatingLike<TDelegate> {
-        instance[DelegatingLike_delegate] = delegate;
-        return instance;
-      },
-      props<TProperties>({
-        [DelegatingLike_delegate]: none,
-      }),
-      {},
-    ),
-    returns,
-  );
-})();
 
 export type MixinPrototype<TPrototype> = {
   [__Object_prototype]: TPrototype;

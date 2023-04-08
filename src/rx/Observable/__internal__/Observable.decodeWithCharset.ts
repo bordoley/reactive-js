@@ -1,15 +1,16 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
 import { __DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import {
@@ -26,6 +27,7 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
@@ -44,7 +46,7 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
 
     const createDecodeWithCharsetObserver = createInstanceFactory(
       mix(
-        include(delegatingMixin(), Observer_mixin<ArrayBuffer>()),
+        include(Delegating_mixin(), Observer_mixin<ArrayBuffer>()),
         function DecodeWithCharsetObserver(
           instance: Pick<
             ObserverLike<ArrayBuffer>,
@@ -54,7 +56,7 @@ const Observable_decodeWithCharset: ObservableDecodeWithCharset =
           delegate: ObserverLike<string>,
           charset: string,
         ): ObserverLike<ArrayBuffer> {
-          init(delegatingMixin(), instance, delegate);
+          init(Delegating_mixin(), instance, delegate);
           init(Observer_mixin<ArrayBuffer>(), instance, delegate, delegate);
 
           const textDecoder = newInstance(TextDecoder, charset, {

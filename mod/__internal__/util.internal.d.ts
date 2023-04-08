@@ -1,7 +1,10 @@
 import { Optional } from "../functions.js";
 import { CollectionLike, DisposableLike, IndexedCollectionLike, QueueableLike } from "../util.js";
-import { __MutableKeyedCollectionLike_set as MutableKeyedCollectionLike_set, __QueueLike_dequeue as QueueLike_dequeue, __QueueLike_head as QueueLike_head, __SerialDisposableLike_current as SerialDisposableLike_current, __StackLike_head as StackLike_head, __StackLike_pop as StackLike_pop } from "./symbols.js";
-export { MutableKeyedCollectionLike_set, SerialDisposableLike_current, QueueLike_head, QueueLike_dequeue, StackLike_pop, StackLike_head, };
+import { __DelegatingLike_delegate as DelegatingLike_delegate, __MutableKeyedCollectionLike_set as MutableKeyedCollectionLike_set, __QueueLike_dequeue as QueueLike_dequeue, __QueueLike_head as QueueLike_head, __SerialDisposableLike_current as SerialDisposableLike_current, __StackLike_head as StackLike_head, __StackLike_pop as StackLike_pop } from "./symbols.js";
+export { DelegatingLike_delegate, MutableKeyedCollectionLike_set, QueueLike_dequeue, QueueLike_head, SerialDisposableLike_current, StackLike_pop, StackLike_head, };
+export interface DelegatingLike<T> {
+    readonly [DelegatingLike_delegate]: T;
+}
 export interface SerialDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike {
     get [SerialDisposableLike_current](): TDisposable;
     set [SerialDisposableLike_current](v: TDisposable);

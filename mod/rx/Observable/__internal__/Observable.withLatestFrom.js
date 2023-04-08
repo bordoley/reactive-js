@@ -1,10 +1,12 @@
 /// <reference types="./Observable.withLatestFrom.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __WithLatestFromObserver_hasLatest, __WithLatestFromObserver_otherLatest, __WithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -13,9 +15,9 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_withLatestFrom = /*@__PURE__*/ (() => {
-    const createWithLatestObserver = (() => createInstanceFactory(mix(include(Observer_delegatingMixin(), delegatingMixin()), function WithLatestFromObserver(instance, delegate, other, selector) {
+    const createWithLatestObserver = (() => createInstanceFactory(mix(include(Observer_delegatingMixin(), Delegating_mixin()), function WithLatestFromObserver(instance, delegate, other, selector) {
         init(Observer_delegatingMixin(), instance, delegate, delegate);
-        init(delegatingMixin(), instance, delegate);
+        init(Delegating_mixin(), instance, delegate);
         instance[__WithLatestFromObserver_selector] = selector;
         pipe(other, Observable_forEach(next => {
             instance[__WithLatestFromObserver_hasLatest] = true;

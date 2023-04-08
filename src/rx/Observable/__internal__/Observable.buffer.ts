@@ -1,11 +1,8 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
@@ -18,6 +15,8 @@ import {
   __BufferObserver_durationSubscription,
 } from "../../../__internal__/symbols.js";
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../__internal__/util.internal.js";
@@ -39,6 +38,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -65,7 +65,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
 
   const createBufferObserver = createInstanceFactory(
     mix(
-      include(Observer_mixin(), delegatingMixin()),
+      include(Observer_mixin(), Delegating_mixin()),
       function BufferObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
           Mutable<TProperties>,
@@ -74,7 +74,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
         count: number,
       ): ObserverLike<T> {
         init(Observer_mixin(), instance, delegate, delegate);
-        init(delegatingMixin(), instance, delegate);
+        init(Delegating_mixin(), instance, delegate);
 
         instance[__BufferObserver_buffer] = [];
         instance[__BufferObserver_durationFunction] = durationFunction;

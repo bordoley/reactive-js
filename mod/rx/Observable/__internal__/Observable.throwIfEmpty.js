@@ -1,10 +1,12 @@
 /// <reference types="./Observable.throwIfEmpty.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __ThrowIfEmptyObserver_isEmpty } from "../../../__internal__/symbols.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
 import { error, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
@@ -12,9 +14,9 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 const Observable_throwIfEmpty = /*@__PURE__*/ (() => {
     const createThrowIfEmptyObserver = (() => {
-        return createInstanceFactory(mix(include(delegatingMixin(), Observer_mixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
+        return createInstanceFactory(mix(include(Delegating_mixin(), Observer_mixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
             init(Observer_mixin(), instance, delegate, delegate);
-            init(delegatingMixin(), instance, delegate);
+            init(Delegating_mixin(), instance, delegate);
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
                 let err = none;
                 if (instance[__ThrowIfEmptyObserver_isEmpty]) {

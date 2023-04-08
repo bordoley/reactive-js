@@ -1,11 +1,12 @@
 /// <reference types="./HigherOrderObservable.switchAll.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __HigherOrderObservable_currentRef } from "../../../__internal__/symbols.js";
-import { SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -21,9 +22,9 @@ const HigherOrderObservable_switchAll = (lift) => {
                 this[DelegatingLike_delegate][DisposableLike_dispose]();
             }
         }
-        return createInstanceFactory(mix(include(Observer_mixin(), delegatingMixin()), function SwitchAllObserver(instance, delegate) {
+        return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function SwitchAllObserver(instance, delegate) {
             init(Observer_mixin(), instance, delegate, delegate);
-            init(delegatingMixin(), instance, delegate);
+            init(Delegating_mixin(), instance, delegate);
             instance[__HigherOrderObservable_currentRef] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(bind(onDispose, instance)));
             return instance;

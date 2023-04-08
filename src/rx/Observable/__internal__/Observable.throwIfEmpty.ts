@@ -1,15 +1,16 @@
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   Mutable,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
 import { __ThrowIfEmptyObserver_isEmpty } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Factory,
@@ -25,6 +26,7 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
@@ -43,7 +45,7 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
 
     return createInstanceFactory(
       mix(
-        include(delegatingMixin(), Observer_mixin<T>()),
+        include(Delegating_mixin(), Observer_mixin<T>()),
         function ThrowIfEmptyObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
             Mutable<TProperties>,
@@ -51,7 +53,7 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
           factory: Factory<unknown>,
         ): ObserverLike<T> {
           init(Observer_mixin(), instance, delegate, delegate);
-          init(delegatingMixin(), instance, delegate);
+          init(Delegating_mixin(), instance, delegate);
 
           pipe(
             instance,

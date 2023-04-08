@@ -1,15 +1,16 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
-  DelegatingLike,
-  DelegatingLike_delegate,
   createInstanceFactory,
-  delegatingMixin,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { QueueLike_dequeue } from "../../../__internal__/util.internal.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+  QueueLike_dequeue,
+} from "../../../__internal__/util.internal.js";
 import {
   Function1,
   Optional,
@@ -54,6 +55,7 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../../util/Disposable.js";
 import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
 import Streamable_create from "./Streamable.create.js";
@@ -89,7 +91,7 @@ const createCacheStream: <T>(
           ReadonlyRecordLike<string, Function1<Optional<T>, T>>,
           never
         >(),
-        delegatingMixin(),
+        Delegating_mixin(),
       ),
       function CacheStream(
         instance: TProperties<T> &
@@ -267,7 +269,7 @@ const createCacheStream: <T>(
           instance,
           delegate,
         );
-        init(delegatingMixin(), instance, delegate);
+        init(Delegating_mixin(), instance, delegate);
 
         return instance;
       },

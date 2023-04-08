@@ -1,11 +1,13 @@
 /// <reference types="./Observable.decodeWithCharset.d.ts" />
 
-import { DelegatingLike_delegate, createInstanceFactory, delegatingMixin, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/symbols.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, newInstance, none, partial, pipe, } from "../../../functions.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
@@ -13,8 +15,8 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 const Observable_decodeWithCharset = 
 /*@__PURE__*/ (() => {
-    const createDecodeWithCharsetObserver = createInstanceFactory(mix(include(delegatingMixin(), Observer_mixin()), function DecodeWithCharsetObserver(instance, delegate, charset) {
-        init(delegatingMixin(), instance, delegate);
+    const createDecodeWithCharsetObserver = createInstanceFactory(mix(include(Delegating_mixin(), Observer_mixin()), function DecodeWithCharsetObserver(instance, delegate, charset) {
+        init(Delegating_mixin(), instance, delegate);
         init(Observer_mixin(), instance, delegate, delegate);
         const textDecoder = newInstance(TextDecoder, charset, {
             fatal: true,
