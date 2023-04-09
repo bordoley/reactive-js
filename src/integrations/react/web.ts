@@ -135,13 +135,13 @@ export const WindowLocationProvider: React.FunctionComponent<{
 interface UseAnimatedValue {
   useAnimatedValue<TElement extends HTMLElement>(
     value: Optional<
-      EventSourceLike<Readonly<Partial<Record<CSSStyleKey, Optional<string>>>>>
+      EventSourceLike<ReadonlyRecordLike<string, CSSStyleKey>>
     >,
   ): React.RefObject<TElement>;
 
   useAnimatedValue<TElement extends HTMLElement, T>(
     value: Optional<EventSourceLike<T>>,
-    selector: (v: T) => Partial<ReadonlyRecordLike<CSSStyleKey, string>>,
+    selector: (v: T) => Partial<ReadonlyRecordLike<string, CSSStyleKey>>,
     deps: readonly unknown[],
   ): React.RefObject<TElement>;
 }
@@ -150,7 +150,7 @@ interface UseAnimatedValue {
  */
 export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
   TElement extends HTMLElement,
-  T = Readonly<Partial<Record<CSSStyleKey, Optional<string>>>>,
+  T = Partial<ReadonlyRecordLike<string, CSSStyleKey>>,
 >(
   value: Optional<EventSourceLike<T>>,
   selector = identity,

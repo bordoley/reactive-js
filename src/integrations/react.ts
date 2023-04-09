@@ -544,21 +544,17 @@ export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
             Function1<TEvent, readonly AnimationConfig<T>[]>,
             ObservableLike<T>,
             string
-          >(
-            (
-              factory: Function1<TEvent, readonly AnimationConfig<T>[]>,
-              key: string,
-            ) =>
-              pipe(
-                Observable.animate<T>(...factory(event)),
-                Observable.forEach(v => {
-                  const publisher = publishers?.[key];
-                  if (isSome(publisher)) {
-                    publisher[EventListenerLike_notify](v);
-                  }
-                }),
-                Observable.ignoreElements<T>(),
-              ),
+          >((factory, key) =>
+            pipe(
+              Observable.animate<T>(...factory(event)),
+              Observable.forEach(v => {
+                const publisher = publishers?.[key];
+                if (isSome(publisher)) {
+                  publisher[EventListenerLike_notify](v);
+                }
+              }),
+              Observable.ignoreElements<T>(),
+            ),
           ),
         );
 
@@ -733,25 +729,17 @@ export const useStatefulAnimations: UseStatefulAnimations["useStatefulAnimations
                   Function2<TState, TState, readonly AnimationConfig<T>[]>,
                   ObservableLike<T>,
                   string
-                >(
-                  (
-                    factory: Function2<
-                      TState,
-                      TState,
-                      readonly AnimationConfig<T>[]
-                    >,
-                    key: string,
-                  ) =>
-                    pipe(
-                      Observable.animate<T>(...factory(prev, next)),
-                      Observable.forEach(v => {
-                        const publisher = publishers?.[key];
-                        if (isSome(publisher)) {
-                          publisher[EventListenerLike_notify](v);
-                        }
-                      }),
-                      Observable.ignoreElements<T>(),
-                    ),
+                >((factory, key) =>
+                  pipe(
+                    Observable.animate<T>(...factory(prev, next)),
+                    Observable.forEach(v => {
+                      const publisher = publishers?.[key];
+                      if (isSome(publisher)) {
+                        publisher[EventListenerLike_notify](v);
+                      }
+                    }),
+                    Observable.ignoreElements<T>(),
+                  ),
                 ),
               );
 

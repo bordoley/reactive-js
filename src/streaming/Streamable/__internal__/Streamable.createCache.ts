@@ -168,7 +168,7 @@ const createCacheStream: <T>(
                   updaters,
                   pipe(
                     updaters,
-                    ReadonlyRecord.mapWithKey<unknown, T, string>(
+                    ReadonlyRecord.mapWithKey(
                       (_, k: string) => instance.store.get(k) as T,
                     ),
                   ),
