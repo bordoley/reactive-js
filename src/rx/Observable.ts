@@ -466,7 +466,7 @@ export const multicast: <T>(
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   },
-) => Function1<ObservableLike<T>, MulticastObservableLike<T>> =
+) => Function1<ObservableLike<T>, MulticastObservableLike<T> & DisposableLike> =
   Observable_multicast;
 
 export const never: Never<ObservableLike>["never"] = Observable_never;

@@ -201,7 +201,7 @@ export declare const multicast: <T>(schedulerOrFactory: SchedulerLike | Factory<
     readonly replay?: number;
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-}) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
+}) => Function1<ObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
 export declare const never: Never<ObservableLike>["never"];
 /**
  * @category Operator
