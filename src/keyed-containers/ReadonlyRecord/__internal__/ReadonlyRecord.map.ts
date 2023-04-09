@@ -6,7 +6,7 @@ const ReadonlyRecord_map: Map<ReadonlyRecordLike>["map"] =
   <TA, TB, TKey extends KeyOf<ReadonlyRecordLike> = KeyOf<ReadonlyRecordLike>>(
     mapper: Function1<TA, TB>,
   ) =>
-  (obj: ReadonlyRecordLike<TKey, TA>): ReadonlyRecordLike<TKey, TB> => {
+  (obj: ReadonlyRecordLike<TA, TKey>): ReadonlyRecordLike<TB, TKey> => {
     const result: Record<TKey, TB> = create(null);
 
     for (const key in obj) {

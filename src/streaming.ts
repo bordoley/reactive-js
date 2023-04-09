@@ -179,7 +179,7 @@ export interface FlowableLike<T = unknown>
  */
 export interface CacheStreamLike<T>
   extends StreamLike<
-      ReadonlyRecordLike<string, Function1<Optional<T>, Optional<T>>>,
+      ReadonlyRecordLike<Function1<Optional<T>, Optional<T>>>,
       never
     >,
     KeyedCollectionLike<string, ObservableLike<T>> {}

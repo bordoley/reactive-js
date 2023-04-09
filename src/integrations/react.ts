@@ -425,10 +425,7 @@ interface UseAnimations {
    */
   useAnimations<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyRecordLike<
-        string,
-        Function1<TEvent, readonly AnimationConfig<T>[]>
-      >
+      ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
     eventOptions: {
       readonly mode: "switching";
@@ -441,7 +438,7 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
     Function1<TEvent, boolean>,
     never,
   ];
@@ -451,10 +448,7 @@ interface UseAnimations {
    */
   useAnimations<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyRecordLike<
-        string,
-        Function1<TEvent, readonly AnimationConfig<T>[]>
-      >
+      ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
     eventOptions: {
       readonly mode: "blocking";
@@ -467,7 +461,7 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
     Function1<TEvent, boolean>,
     boolean,
   ];
@@ -477,10 +471,7 @@ interface UseAnimations {
    */
   useAnimations<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyRecordLike<
-        string,
-        Function1<TEvent, readonly AnimationConfig<T>[]>
-      >
+      ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
     eventOptions: {
       readonly mode: "queueing";
@@ -495,14 +486,14 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
     Function1<TEvent, boolean>,
     never,
   ];
 }
 export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
   animationFactory: Factory<
-    ReadonlyRecordLike<string, Function1<TEvent, readonly AnimationConfig<T>[]>>
+    ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
   >,
   eventOptions: {
     readonly mode: "switching" | "blocking" | "queueing";
@@ -517,12 +508,12 @@ export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
     readonly capacity?: number;
   },
 ): readonly [
-  Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+  Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
   Function1<TEvent, boolean>,
   unknown,
 ] => {
   const [publishers, setPublishers] =
-    useState<Optional<ReadonlyRecordLike<string, EventPublisherLike<T>>>>();
+    useState<Optional<ReadonlyRecordLike<EventPublisherLike<T>>>>();
 
   const animations = useMemo(animationFactory, deps);
 
@@ -605,7 +596,6 @@ interface UseStatefulAnimations {
   useStatefulAnimations<TState, T = number>(
     animationFactory: Factory<
       ReadonlyRecordLike<
-        string,
         Function2<TState, TState, readonly AnimationConfig<T>[]>
       >
     >,
@@ -622,7 +612,7 @@ interface UseStatefulAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
     Function1<Updater<TState>, boolean>,
     never,
   ];
@@ -633,7 +623,6 @@ interface UseStatefulAnimations {
   useStatefulAnimations<TState, T = number>(
     animationFactory: Factory<
       ReadonlyRecordLike<
-        string,
         Function2<TState, TState, readonly AnimationConfig<T>[]>
       >
     >,
@@ -650,7 +639,7 @@ interface UseStatefulAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
     Function1<Updater<TState>, boolean>,
     boolean,
   ];
@@ -661,7 +650,6 @@ interface UseStatefulAnimations {
   useStatefulAnimations<TState, T = number>(
     animationFactory: Factory<
       ReadonlyRecordLike<
-        string,
         Function2<TState, TState, readonly AnimationConfig<T>[]>
       >
     >,
@@ -680,7 +668,7 @@ interface UseStatefulAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
     Function1<Updater<TState>, boolean>,
     never,
   ];
@@ -689,7 +677,6 @@ export const useStatefulAnimations: UseStatefulAnimations["useStatefulAnimations
   (<TState, T>(
     animationFactory: Factory<
       ReadonlyRecordLike<
-        string,
         Function2<TState, TState, readonly AnimationConfig<T>[]>
       >
     >,
@@ -708,12 +695,12 @@ export const useStatefulAnimations: UseStatefulAnimations["useStatefulAnimations
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
     Function1<Updater<TState>, boolean>,
     unknown,
   ] => {
     const [publishers, setPublishers] =
-      useState<Optional<ReadonlyRecordLike<string, EventPublisherLike<T>>>>();
+      useState<Optional<ReadonlyRecordLike<EventPublisherLike<T>>>>();
 
     const animations = useMemo(animationFactory, deps);
 

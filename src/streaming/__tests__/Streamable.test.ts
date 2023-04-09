@@ -314,7 +314,7 @@ testModule(
       const persistentStore = {
         load: (_: ReadonlySet<string>) =>
           pipe({ ...store }, Observable.fromOptional()),
-        store: (updates: ReadonlyRecordLike<string, number>) =>
+        store: (updates: ReadonlyRecordLike<number>) =>
           Observable.fromFactory(() => {
             pipe(
               updates,

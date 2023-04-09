@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [keyed-containers](../modules/keyed_containers.md) / ReadonlyMapLike
 
-# Interface: ReadonlyMapLike<TKey, T\>
+# Interface: ReadonlyMapLike<T, TKey\>
 
 [keyed-containers](../modules/keyed_containers.md).ReadonlyMapLike
 
@@ -8,8 +8,8 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | `unknown` |
 | `T` | `unknown` |
+| `TKey` | `unknown` |
 
 ## Hierarchy
 
@@ -30,7 +30,7 @@
 
 ### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: `ReadonlyMap`<`unknown`, `unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`ReadonlyMapLike`](keyed_containers.ReadonlyMapLike.md)<`unknown`, `unknown`\>
 
 #### Overrides
 

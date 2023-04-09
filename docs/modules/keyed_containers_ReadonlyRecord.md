@@ -27,7 +27,7 @@
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(`options?`): `Readonly`<`Record`<`NonNullable`<`Object`\>, `T`\>\> & `ReadonlyRecord`
+▸ **empty**<`T`, `TKey`\>(`options?`): `Readonly`<`Record`<`NonNullable`<`Object`\>, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md)
 
 Return an ContainerLike that emits no items.
 
@@ -46,7 +46,7 @@ Return an ContainerLike that emits no items.
 
 #### Returns
 
-`Readonly`<`Record`<`NonNullable`<`Object`\>, `T`\>\> & `ReadonlyRecord`
+`Readonly`<`Record`<`NonNullable`<`Object`\>, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `T`, `T`\>
 
 Returns a KeyedContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -75,13 +75,13 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -102,13 +102,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -127,13 +127,13 @@ ___
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `TA`, `TB`\>
 
 ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -154,13 +154,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`mapper`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`mapper`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `mapper` function to each
 value emitted by the source.
@@ -190,13 +190,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`mapper`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`mapper`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `mapper` function to each
 value emitted by the source.
@@ -226,7 +226,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string` \| `number` \| `symbol`, `unknown`\>, `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`unknown`, `string`\>, `TKey`, `TA`, `TB`\>
 
 ___
 
@@ -234,7 +234,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(`options?`): [`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`Object`\>, `T`\>\> & `ReadonlyRecord`, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(`options?`): [`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`Object`\>, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md), [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
@@ -251,13 +251,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`Object`\>, `T`\>\> & `ReadonlyRecord`, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+[`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`Object`\>, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md), [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 ___
 
 ### keySet
 
-▸ **keySet**<`TKey`\>(`options?`): [`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`Object`\>, `unknown`\>\> & `ReadonlyRecord`, [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`TKey`\>\>
+▸ **keySet**<`TKey`\>(`options?`): [`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`Object`\>, `unknown`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md), [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`TKey`\>\>
 
 #### Type parameters
 
@@ -273,13 +273,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`Object`\>, `unknown`\>\> & `ReadonlyRecord`, [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`TKey`\>\>
+[`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`Object`\>, `unknown`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md), [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`TKey`\>\>
 
 ___
 
 ### values
 
-▸ **values**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>, `T`\>\> & `ReadonlyRecord`, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+▸ **values**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md), [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -295,4 +295,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>, `T`\>\> & `ReadonlyRecord`, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md), [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>

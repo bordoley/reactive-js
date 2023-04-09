@@ -116,7 +116,9 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             // Observer only implement Queueable publicly so cast to the implementation interface
             // to enable bypassing the queue
             const observerQueueIsEmpty =
-              (observer as unknown as IndexedQueueLike<T>)[CollectionLike_count] === 0;
+              (observer as unknown as IndexedQueueLike<T>)[
+                CollectionLike_count
+              ] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
 
             if (inContinuation && observerQueueIsEmpty && !isDisposed) {

@@ -21,7 +21,7 @@
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(`options?`): `ReadonlyMap`<`TKey`, `T`\>
+▸ **empty**<`T`, `TKey`\>(`options?`): [`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>
 
 Return an ContainerLike that emits no items.
 
@@ -40,7 +40,7 @@ Return an ContainerLike that emits no items.
 
 #### Returns
 
-`ReadonlyMap`<`TKey`, `T`\>
+[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(`options?`): [`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
@@ -139,4 +139,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+[`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>

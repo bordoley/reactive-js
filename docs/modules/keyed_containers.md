@@ -10,6 +10,10 @@
 - [ReadonlyArrayLike](../interfaces/keyed_containers.ReadonlyArrayLike.md)
 - [ReadonlyMapLike](../interfaces/keyed_containers.ReadonlyMapLike.md)
 
+### Other Interfaces
+
+- [ReadonlyRecordContainerLike](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md)
+
 ### TypeClass Interfaces
 
 - [Empty](../interfaces/keyed_containers.Empty.md)
@@ -43,7 +47,7 @@
 
 ### ReadonlyRecordLike
 
-Ƭ **ReadonlyRecordLike**<`TKey`, `T`\>: `Readonly`<`Record`<`TKey`, `T`\>\> & `ReadonlyRecord`
+Ƭ **ReadonlyRecordLike**<`T`, `TKey`\>: `Readonly`<`Record`<`TKey`, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md)
 
 A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
 
@@ -53,8 +57,8 @@ A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerL
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `symbol` \| `number` \| `string` = `symbol` \| `number` \| `string` |
 | `T` | `unknown` |
+| `TKey` | extends `symbol` \| `number` \| `string` = `string` |
 
 ___
 

@@ -44,7 +44,13 @@ import { EventSourceLike } from "@reactive-js/core/util.js";
 import * as ReadonlyRecord from "@reactive-js/core/keyed-containers/ReadonlyRecord";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
 import * as ReadonlyArray from "@reactive-js/core/keyed-containers/ReadonlyArray";
-import { __await, __bindMethod, __memo, __observe, __stream } from "@reactive-js/core/rx/effects";
+import {
+  __await,
+  __bindMethod,
+  __memo,
+  __observe,
+  __stream,
+} from "@reactive-js/core/rx/effects";
 
 // FIXME: should probably export the react scheduler in its own module for outside of hooks use cases.
 const hostScheduler = Scheduler.createHostScheduler();
@@ -276,22 +282,13 @@ const RxComponent = createComponent(
       const uri = __await(windowLocationStream);
 
       const enumerator = __stream(asyncEnumerable);
-      const move: SideEffect = __bindMethod(
-        enumerator,
-        QueueableLike_enqueue,
-      );
+      const move: SideEffect = __bindMethod(enumerator, QueueableLike_enqueue);
 
       const animatedDivRef = __memo(createRef);
-      const animationStreamable = __memo(
-        createAnimationStream,
-        animatedDivRef,
-      );
+      const animationStreamable = __memo(createAnimationStream, animatedDivRef);
       const animationStream = __stream(animationStreamable);
 
-      const runAnimation = __bindMethod(
-        animationStream,
-        QueueableLike_enqueue,
-      );
+      const runAnimation = __bindMethod(animationStream, QueueableLike_enqueue);
 
       __observe(animationStream);
 

@@ -10,8 +10,8 @@ const ReadonlyRecord_keepWithKey: KeepWithKey<ReadonlyRecordLike>["keepWithKey"]
 
     <T, TKey extends KeyOf<ReadonlyRecordLike> = KeyOf<ReadonlyRecordLike>>(
       predicate: Function2<T, TKey, boolean>,
-    ): Function1<ReadonlyRecordLike<TKey, T>, ReadonlyRecordLike<TKey, T>> =>
-    (obj: ReadonlyRecordLike<TKey, T>): ReadonlyRecordLike<TKey, T> => {
+    ): Function1<ReadonlyRecordLike<T, TKey>, ReadonlyRecordLike<T, TKey>> =>
+    (obj: ReadonlyRecordLike<T, TKey>): ReadonlyRecordLike<T, TKey> => {
       const result: Record<TKey, T> = create(null);
 
       for (const key in obj) {

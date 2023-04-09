@@ -10,7 +10,7 @@ const ReadonlyRecord_forEachWithKey: ForEachWithKey<ReadonlyRecordLike>["forEach
 
     <T, TKey extends KeyOf<ReadonlyRecordLike> = KeyOf<ReadonlyRecordLike>>(
       effect: SideEffect2<T, TKey>,
-    ): Function1<ReadonlyRecordLike<TKey, T>, ReadonlyRecordLike<TKey, T>> =>
+    ): Function1<ReadonlyRecordLike<T, TKey>, ReadonlyRecordLike<T, TKey>> =>
     record => {
       for (const key in record) {
         if (hasOwn(record, key)) {

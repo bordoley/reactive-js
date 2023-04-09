@@ -26,6 +26,8 @@ Base type for all Containers.
 
   ↳ [`ReadonlyMapLike`](keyed_containers.ReadonlyMapLike.md)
 
+  ↳ [`ReadonlyRecordContainerLike`](keyed_containers.ReadonlyRecordContainerLike.md)
+
   ↳ [`ObservableLike`](rx.ObservableLike.md)
 
   ↳ [`AsyncEnumerableLike`](streaming.AsyncEnumerableLike.md)

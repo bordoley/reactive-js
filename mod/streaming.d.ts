@@ -112,7 +112,7 @@ export interface FlowableLike<T = unknown> extends StreamableLike<boolean | Upda
  * @noInheritDoc
  * @category Stream
  */
-export interface CacheStreamLike<T> extends StreamLike<ReadonlyRecordLike<string, Function1<Optional<T>, Optional<T>>>, never>, KeyedCollectionLike<string, ObservableLike<T>> {
+export interface CacheStreamLike<T> extends StreamLike<ReadonlyRecordLike<Function1<Optional<T>, Optional<T>>>, never>, KeyedCollectionLike<string, ObservableLike<T>> {
 }
 /**
  * A container that returns a CacheStream when subscribed to.

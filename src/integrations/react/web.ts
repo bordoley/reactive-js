@@ -169,7 +169,7 @@ export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
       const element = ref.current;
       if (element != null) {
         pipe(
-          selectorMemoized(v) as ReadonlyRecordLike<CSSStyleKey, string>,
+          selectorMemoized(v) as ReadonlyRecordLike<string, CSSStyleKey>,
           ReadonlyRecord.forEachWithKey<string, CSSStyleKey>((v, key) => {
             element.style[key] = v ?? "";
           }),

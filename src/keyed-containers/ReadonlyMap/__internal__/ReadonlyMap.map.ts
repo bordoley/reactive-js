@@ -5,7 +5,7 @@ const ReadonlyMap_map: Map<ReadonlyMapLike>["map"] =
   <TA, TB, TKey extends KeyOf<ReadonlyMapLike> = KeyOf<ReadonlyMapLike>>(
     mapper: Function1<TA, TB>,
   ) =>
-  (map: ReadonlyMapLike<TKey, TA>): ReadonlyMapLike<TKey, TB> => {
+  (map: ReadonlyMapLike<TA, TKey>): ReadonlyMapLike<TB, TKey> => {
     const result = new Map<TKey, TB>();
 
     for (let [key, value] of map) {

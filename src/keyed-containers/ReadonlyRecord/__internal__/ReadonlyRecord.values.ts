@@ -10,7 +10,7 @@ import {
 
 const ReadonlyRecord_values: Values<ReadonlyRecordLike>["values"] =
   <T, TKey extends KeyOf<ReadonlyRecordLike> = KeyOf<ReadonlyRecordLike>>() =>
-  (obj: ReadonlyRecordLike<TKey, T>): EnumeratorLike<T> => {
+  (obj: ReadonlyRecordLike<T, TKey>): EnumeratorLike<T> => {
     function* ReadonlyRecordValues(): Iterator<T> {
       for (const key in obj) {
         if (hasOwn(obj, key)) {

@@ -8,7 +8,7 @@ import {
 
 const ReadonlyRecord_keySet: KeySet<ReadonlyRecordLike>["keySet"] =
   <TKey extends KeyOf<ReadonlyRecordLike> = KeyOf<ReadonlyRecordLike>>() =>
-  (obj: ReadonlyRecordLike<TKey, unknown>): ReadonlySetLike<TKey> => {
+  (obj: ReadonlyRecordLike<unknown, TKey>): ReadonlySetLike<TKey> => {
     const keys = new Set<TKey>();
 
     for (const key in obj) {
