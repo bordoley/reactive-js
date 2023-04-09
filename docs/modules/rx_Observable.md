@@ -30,6 +30,7 @@
 - [fromAsyncEnumerable](rx_Observable.md#fromasyncenumerable)
 - [fromAsyncFactory](rx_Observable.md#fromasyncfactory)
 - [fromAsyncIterable](rx_Observable.md#fromasynciterable)
+- [fromEnumeratorFactory](rx_Observable.md#fromenumeratorfactory)
 - [fromFactory](rx_Observable.md#fromfactory)
 - [fromFlowable](rx_Observable.md#fromflowable)
 - [fromIterable](rx_Observable.md#fromiterable)
@@ -1226,6 +1227,31 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### fromEnumeratorFactory
+
+▸ **fromEnumeratorFactory**<`T`\>(`factory`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\> |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 

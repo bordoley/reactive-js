@@ -9,6 +9,7 @@ import {
   Map,
   MapWithKey,
   ReadonlyRecordLike,
+  Values,
 } from "../keyed-containers.js";
 import ReadonlyRecord_empty from "./ReadonlyRecord/__internal__/ReadonlyRecord.empty.js";
 import ReadonlyRecord_entries from "./ReadonlyRecord/__internal__/ReadonlyRecord.entries.js";
@@ -19,6 +20,7 @@ import ReadonlyRecord_keepWithKey from "./ReadonlyRecord/__internal__/ReadonlyRe
 import ReadonlyRecord_keySet from "./ReadonlyRecord/__internal__/ReadonlyRecord.keySet.js";
 import ReadonlyRecord_map from "./ReadonlyRecord/__internal__/ReadonlyRecord.map.js";
 import ReadonlyRecord_mapWithKey from "./ReadonlyRecord/__internal__/ReadonlyRecord.mapWithKey.js";
+import ReadonlyRecord_values from "./ReadonlyRecord/__internal__/ReadonlyRecord.values.js";
 
 export const empty: Empty<ReadonlyRecordLike>["empty"] = ReadonlyRecord_empty;
 export const entries: Entries<ReadonlyRecordLike>["entries"] =
@@ -35,3 +37,5 @@ export const keySet: KeySet<ReadonlyRecordLike>["keySet"] =
 export const map: Map<ReadonlyRecordLike>["map"] = ReadonlyRecord_map;
 export const mapWithKey: MapWithKey<ReadonlyRecordLike>["mapWithKey"] =
   ReadonlyRecord_mapWithKey;
+export const values: Values<ReadonlyRecordLike>["values"] =
+  ReadonlyRecord_values;

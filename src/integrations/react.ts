@@ -36,12 +36,15 @@ import {
   Updater,
   bindMethod,
   identity,
+  ignore,
   isSome,
   none,
   pipe,
   pipeLazy,
   raiseError,
 } from "../functions.js";
+import { ReadonlyRecordLike } from "../keyed-containers.js";
+import * as ReadonlyRecord from "../keyed-containers/ReadonlyRecord.js";
 import {
   AnimationConfig,
   DispatcherLike,
@@ -669,3 +672,371 @@ export const useStatefulAnimation: UseStatefulAnimation["useStatefulAnimation"] 
 
     return [publisher, dispatch, value];
   }) as UseStatefulAnimation["useStatefulAnimation"];
+
+interface UseAnimations {
+  /**
+   * @category Hook
+   */
+  useAnimations<TEvent, T = number>(
+    animationFactory: Factory<
+      ReadonlyRecordLike<
+        string,
+        Function1<TEvent, readonly AnimationConfig<T>[]>
+      >
+    >,
+    eventOptions: {
+      readonly mode: "switching";
+      readonly concurrency?: number;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [Optional<EventSourceLike<T>>, Function1<TEvent, boolean>, never];
+
+  /**
+   * @category Hook
+   */
+  useAnimations<TEvent, T = number>(
+    animationFactory: Factory<
+      ReadonlyRecordLike<
+        string,
+        Function1<TEvent, readonly AnimationConfig<T>[]>
+      >
+    >,
+    eventOptions: {
+      readonly mode: "blocking";
+      readonly concurrency?: number;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    Optional<EventSourceLike<T>>,
+    Function1<TEvent, boolean>,
+    boolean,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useAnimations<TEvent, T = number>(
+    animationFactory: Factory<
+      ReadonlyRecordLike<
+        string,
+        Function1<TEvent, readonly AnimationConfig<T>[]>
+      >
+    >,
+    eventOptions: {
+      readonly mode: "queueing";
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly concurrency?: number;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [Optional<EventSourceLike<T>>, Function1<TEvent, boolean>, never];
+}
+export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
+  animationFactory: Factory<
+    ReadonlyRecordLike<string, Function1<TEvent, readonly AnimationConfig<T>[]>>
+  >,
+  eventOptions: {
+    readonly mode: "switching" | "blocking" | "queueing";
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  },
+  deps: readonly unknown[],
+  options?: {
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+  },
+): readonly [
+  Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+  Function1<TEvent, boolean>,
+  unknown,
+] => {
+  const [publishers, setPublishers] =
+    useState<Optional<ReadonlyRecordLike<string, EventPublisherLike<T>>>>();
+
+  const animations = useMemo(animationFactory, deps);
+
+  useEffect(() => {
+    const publishers = pipe(
+      animations,
+      ReadonlyRecord.map<unknown, EventPublisherLike<T>, string>(_ =>
+        EventPublisher.create<T>(),
+      ),
+    );
+
+    setPublishers(publishers);
+    return pipeLazy(
+      publishers,
+      ReadonlyRecord.forEachWithKey<EventPublisherLike<T>, string>(publisher =>
+        publisher[DisposableLike_dispose](),
+      ),
+      ignore,
+    );
+  }, [animations]);
+
+  const streamable = useMemo(
+    () =>
+      Streamable.createEventHandler((event: TEvent) => {
+        const observables: Readonly<Record<string, ObservableLike<T>>> = pipe(
+          animations,
+          ReadonlyRecord.mapWithKey<
+            Function1<TEvent, readonly AnimationConfig<T>[]>,
+            ObservableLike<T>,
+            string
+          >(
+            (
+              factory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+              key: string,
+            ) =>
+              pipe(
+                Observable.animate<T>(...factory(event)),
+                Observable.forEach(v => {
+                  const publisher = publishers?.[key];
+                  if (isSome(publisher)) {
+                    publisher[EventListenerLike_notify](v);
+                  }
+                }),
+                Observable.ignoreElements<T>(),
+              ),
+          ),
+        );
+
+        return pipe(
+          Observable.fromEnumeratorFactory(
+            pipeLazy(observables, ReadonlyRecord.values()),
+          ),
+          Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
+          Observable.subscribeOn(
+            createAnimationFrameSchedulerFactory(options?.priority),
+          ),
+        );
+      }, eventOptions as any),
+    [
+      animations,
+      eventOptions.mode,
+      eventOptions.backpressureStrategy,
+      eventOptions.capacity,
+      publishers,
+      options?.priority,
+    ],
+  );
+
+  const [value, dispatch] = useStreamable(streamable, options);
+
+  return [publishers, dispatch, value];
+}) as UseAnimations["useAnimations"];
+
+interface UseStatefulAnimations {
+  /**
+   * @category Hook
+   */
+  useStatefulAnimations<TState, T = number>(
+    animationFactory: Factory<
+      ReadonlyRecordLike<
+        string,
+        Function2<TState, TState, readonly AnimationConfig<T>[]>
+      >
+    >,
+    initialState: Factory<TState>,
+    eventOptions: {
+      readonly mode: "switching";
+      readonly equality?: Equality<TState>;
+      readonly concurrency?: number;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    Optional<EventSourceLike<T>>,
+    Function1<Updater<TState>, boolean>,
+    never,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useStatefulAnimations<TState, T = number>(
+    animationFactory: Factory<
+      ReadonlyRecordLike<
+        string,
+        Function2<TState, TState, readonly AnimationConfig<T>[]>
+      >
+    >,
+    initialState: Factory<TState>,
+    eventOptions: {
+      readonly mode: "blocking";
+      readonly equality?: Equality<TState>;
+      readonly concurrency?: number;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    Optional<EventSourceLike<T>>,
+    Function1<Updater<TState>, boolean>,
+    boolean,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useStatefulAnimations<TState, T = number>(
+    animationFactory: Factory<
+      ReadonlyRecordLike<
+        string,
+        Function2<TState, TState, readonly AnimationConfig<T>[]>
+      >
+    >,
+    initialState: Factory<TState>,
+    eventOptions: {
+      readonly mode: "queueing";
+      readonly equality?: Equality<TState>;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly concurrency?: number;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    Optional<EventSourceLike<T>>,
+    Function1<Updater<TState>, boolean>,
+    never,
+  ];
+}
+export const useStatefulAnimations: UseStatefulAnimations["useStatefulAnimations"] =
+  (<TState, T>(
+    animationFactory: Factory<
+      ReadonlyRecordLike<
+        string,
+        Function2<TState, TState, readonly AnimationConfig<T>[]>
+      >
+    >,
+    initialState: Factory<TState>,
+    eventOptions: {
+      readonly mode: "switching" | "blocking" | "queueing";
+      readonly equality?: Equality<TState>;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly concurrency?: number;
+    },
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+    Function1<Updater<TState>, boolean>,
+    unknown,
+  ] => {
+    const [publishers, setPublishers] =
+      useState<Optional<ReadonlyRecordLike<string, EventPublisherLike<T>>>>();
+
+    const animations = useMemo(animationFactory, deps);
+
+    useEffect(() => {
+      const publishers = pipe(
+        animations,
+        ReadonlyRecord.map<unknown, EventPublisherLike<T>, string>(_ =>
+          EventPublisher.create<T>(),
+        ),
+      );
+
+      setPublishers(publishers);
+      return pipeLazy(
+        publishers,
+        ReadonlyRecord.forEachWithKey<EventPublisherLike<T>, string>(
+          publisher => publisher[DisposableLike_dispose](),
+        ),
+        ignore,
+      );
+    }, [animations]);
+
+    const streamable = useMemo(
+      () =>
+        Streamable.createStatefulEventHandler(
+          (prev, next) => {
+            const observables: Readonly<Record<string, ObservableLike<T>>> =
+              pipe(
+                animations,
+                ReadonlyRecord.mapWithKey<
+                  Function2<TState, TState, readonly AnimationConfig<T>[]>,
+                  ObservableLike<T>,
+                  string
+                >(
+                  (
+                    factory: Function2<
+                      TState,
+                      TState,
+                      readonly AnimationConfig<T>[]
+                    >,
+                    key: string,
+                  ) =>
+                    pipe(
+                      Observable.animate<T>(...factory(prev, next)),
+                      Observable.forEach(v => {
+                        const publisher = publishers?.[key];
+                        if (isSome(publisher)) {
+                          publisher[EventListenerLike_notify](v);
+                        }
+                      }),
+                      Observable.ignoreElements<T>(),
+                    ),
+                ),
+              );
+
+            return pipe(
+              Observable.fromEnumeratorFactory(
+                pipeLazy(observables, ReadonlyRecord.values()),
+              ),
+              Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
+              Observable.subscribeOn(
+                createAnimationFrameSchedulerFactory(options?.priority),
+              ),
+            );
+          },
+          initialState,
+          eventOptions as any,
+        ),
+      [
+        animations,
+        eventOptions.mode,
+        eventOptions.backpressureStrategy,
+        eventOptions.capacity,
+        initialState,
+        options?.priority,
+        publishers,
+      ],
+    );
+
+    const [value, dispatch] = useStreamable(streamable, options);
+
+    return [publishers, dispatch, value];
+  }) as UseStatefulAnimations["useStatefulAnimations"];

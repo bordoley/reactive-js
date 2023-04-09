@@ -19,6 +19,7 @@ import {
   ForkConcat,
   ForkZip,
   FromAsyncIterable,
+  FromEnumeratorFactory,
   FromFactory,
   FromIterable,
   FromOptional,
@@ -189,6 +190,7 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
+import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 
 /**
  * @category ComputationalEffect
@@ -356,6 +358,14 @@ export const fromAsyncFactory = Observable_fromAsyncFactory;
 
 export const fromAsyncIterable: FromAsyncIterable<ObservableLike>["fromAsyncIterable"] =
   AsyncIterable_toObservable;
+
+export const fromEnumeratorFactory: FromEnumeratorFactory<
+  ObservableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["fromEnumeratorFactory"] = Runnable_fromEnumeratorFactory;
 
 export const fromFactory: FromFactory<
   ObservableLike,

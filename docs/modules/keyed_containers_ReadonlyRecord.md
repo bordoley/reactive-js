@@ -21,6 +21,7 @@
 
 - [entries](keyed_containers_ReadonlyRecord.md#entries)
 - [keySet](keyed_containers_ReadonlyRecord.md#keyset)
+- [values](keyed_containers_ReadonlyRecord.md#values)
 
 ## Constructor Functions
 
@@ -273,3 +274,25 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`Object`\>, `unknown`\>\> & `ReadonlyRecord`, [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`TKey`\>\>
+
+___
+
+### values
+
+▸ **values**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>, `T`\>\> & `ReadonlyRecord`, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>, `T`\>\> & `ReadonlyRecord`, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>

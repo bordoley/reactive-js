@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike_T, ContainerLike_type, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, Enumerate, EnumeratorLike, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike_T, ContainerLike_type, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, Enumerate, EnumeratorLike, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { BackpressureStrategy, EnumerableLike, Retry, ScanLast, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import { DisposableLike } from "../util.js";
@@ -32,6 +32,7 @@ export declare const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIt
 export declare const forEach: ForEach<EnumerableLike>["forEach"];
 export declare const forkConcat: ForkConcat<EnumerableLike>["forkConcat"];
 export declare const forkZip: ForkZip<EnumerableLike>["forkZip"];
+export declare const fromEnumeratorFactory: FromEnumeratorFactory<EnumerableLike>["fromEnumeratorFactory"];
 export declare const fromFactory: FromFactory<EnumerableLike>["fromFactory"];
 export declare const fromIterable: FromIterable<EnumerableLike>["fromIterable"];
 export declare const fromOptional: FromOptional<EnumerableLike>["fromOptional"];

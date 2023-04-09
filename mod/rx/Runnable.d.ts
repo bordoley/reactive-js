@@ -1,4 +1,4 @@
-import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { Animate, BackpressureStrategy, CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, Retry, RunnableLike, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
@@ -38,6 +38,10 @@ export declare const forkConcat: ForkConcat<RunnableLike>["forkConcat"];
 export declare const forkMerge: ForkMerge<RunnableLike>["forkMerge"];
 export declare const forkZip: ForkZip<RunnableLike>["forkZip"];
 export declare const forkZipLatest: ForkZipLatest<RunnableLike>["forkZipLatest"];
+export declare const fromEnumeratorFactory: FromEnumeratorFactory<RunnableLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+}>["fromEnumeratorFactory"];
 export declare const fromFactory: FromFactory<RunnableLike, {
     delay: number;
 }>["fromFactory"];

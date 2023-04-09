@@ -1,4 +1,4 @@
-import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
+import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, SideEffect1 } from "../functions.js";
 import { Animate, BackpressureStrategy, CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, MulticastObservableLike, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
@@ -140,6 +140,10 @@ export declare const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["f
  */
 export declare const fromAsyncFactory: <T>(f: (abortSignal: AbortSignal) => Promise<T>) => ObservableLike<T>;
 export declare const fromAsyncIterable: FromAsyncIterable<ObservableLike>["fromAsyncIterable"];
+export declare const fromEnumeratorFactory: FromEnumeratorFactory<ObservableLike, {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+}>["fromEnumeratorFactory"];
 export declare const fromFactory: FromFactory<ObservableLike, {
     delay: number;
 }>["fromFactory"];

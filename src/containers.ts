@@ -571,6 +571,21 @@ export interface FromAsyncIterable<C extends ContainerLike, O = never>
  * @noInheritDoc
  * @category TypeClass
  */
+export interface FromEnumeratorFactory<C extends ContainerLike, O = never>
+  extends Container<C> {
+  /**
+   * @category Constructor
+   */
+  fromEnumeratorFactory<T>(
+    factory: Factory<EnumeratorLike<T>>,
+    options?: O,
+  ): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface FromFactory<C extends ContainerLike, O = never>
   extends Container<C> {
   /**

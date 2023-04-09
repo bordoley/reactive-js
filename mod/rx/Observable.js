@@ -86,6 +86,7 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
+import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 /**
  * @category ComputationalEffect
  */
@@ -176,6 +177,7 @@ export const fromAsyncEnumerable = AsyncEnumerable_toObservable;
  */
 export const fromAsyncFactory = Observable_fromAsyncFactory;
 export const fromAsyncIterable = AsyncIterable_toObservable;
+export const fromEnumeratorFactory = Runnable_fromEnumeratorFactory;
 export const fromFactory = Observable_fromFactory;
 export const fromFlowable = Flowable_toObservable;
 export const fromIterable = Iterable_toObservable;

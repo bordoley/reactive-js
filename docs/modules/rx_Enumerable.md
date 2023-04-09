@@ -10,6 +10,7 @@
 - [concat](rx_Enumerable.md#concat)
 - [defer](rx_Enumerable.md#defer)
 - [empty](rx_Enumerable.md#empty)
+- [fromEnumeratorFactory](rx_Enumerable.md#fromenumeratorfactory)
 - [fromFactory](rx_Enumerable.md#fromfactory)
 - [fromIterable](rx_Enumerable.md#fromiterable)
 - [fromOptional](rx_Enumerable.md#fromoptional)
@@ -161,6 +162,29 @@ Return an ContainerLike that emits no items.
 
 | Name | Type |
 | :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>
+
+___
+
+### fromEnumeratorFactory
+
+▸ **fromEnumeratorFactory**<`T`\>(`factory`, `options?`): [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\> |
 | `options?` | `undefined` |
 
 #### Returns

@@ -62,6 +62,8 @@ Base type for Container type classes.
 
   ↳ [`FromAsyncIterable`](containers.FromAsyncIterable.md)
 
+  ↳ [`FromEnumeratorFactory`](containers.FromEnumeratorFactory.md)
+
   ↳ [`FromFactory`](containers.FromFactory.md)
 
   ↳ [`FromIterable`](containers.FromIterable.md)

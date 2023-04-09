@@ -13,6 +13,7 @@
 - [currentTime](rx_Runnable.md#currenttime)
 - [defer](rx_Runnable.md#defer)
 - [empty](rx_Runnable.md#empty)
+- [fromEnumeratorFactory](rx_Runnable.md#fromenumeratorfactory)
 - [fromFactory](rx_Runnable.md#fromfactory)
 - [fromIterable](rx_Runnable.md#fromiterable)
 - [fromOptional](rx_Runnable.md#fromoptional)
@@ -447,6 +448,31 @@ Return an ContainerLike that emits no items.
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+___
+
+### fromEnumeratorFactory
+
+▸ **fromEnumeratorFactory**<`T`\>(`factory`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\> |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 

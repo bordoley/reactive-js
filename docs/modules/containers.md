@@ -40,6 +40,7 @@
 - [ForkConcat](../interfaces/containers.ForkConcat.md)
 - [ForkZip](../interfaces/containers.ForkZip.md)
 - [FromAsyncIterable](../interfaces/containers.FromAsyncIterable.md)
+- [FromEnumeratorFactory](../interfaces/containers.FromEnumeratorFactory.md)
 - [FromFactory](../interfaces/containers.FromFactory.md)
 - [FromIterable](../interfaces/containers.FromIterable.md)
 - [FromOptional](../interfaces/containers.FromOptional.md)

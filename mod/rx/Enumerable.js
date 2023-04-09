@@ -54,6 +54,7 @@ import { Enumerable_compute } from "./Observable/__internal__/Observable.compute
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
+import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const buffer = Observable_buffer;
@@ -80,6 +81,7 @@ export const flatMapIterable = Enumerable_flatMapIterable;
 export const forEach = Observable_forEach;
 export const forkConcat = Observable_forkConcat;
 export const forkZip = Observable_forkZip;
+export const fromEnumeratorFactory = Runnable_fromEnumeratorFactory;
 export const fromFactory = Observable_fromFactory;
 export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;

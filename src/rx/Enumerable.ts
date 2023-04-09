@@ -22,6 +22,7 @@ import {
   ForEach,
   ForkConcat,
   ForkZip,
+  FromEnumeratorFactory,
   FromFactory,
   FromIterable,
   FromOptional,
@@ -115,6 +116,7 @@ import { Enumerable_compute } from "./Observable/__internal__/Observable.compute
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
+import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 
 export const backpressureStrategy: BackpressureStrategy<EnumerableLike>["backpressureStrategy"] =
@@ -183,6 +185,9 @@ export const forkConcat: ForkConcat<EnumerableLike>["forkConcat"] =
 
 export const forkZip: ForkZip<EnumerableLike>["forkZip"] =
   Observable_forkZip as ForkZip<EnumerableLike>["forkZip"];
+
+export const fromEnumeratorFactory: FromEnumeratorFactory<EnumerableLike>["fromEnumeratorFactory"] =
+  Runnable_fromEnumeratorFactory;
 
 export const fromFactory: FromFactory<EnumerableLike>["fromFactory"] =
   Observable_fromFactory;

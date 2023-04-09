@@ -18,6 +18,7 @@ import {
   ForEach,
   ForkConcat,
   ForkZip,
+  FromEnumeratorFactory,
   FromFactory,
   FromIterable,
   FromOptional,
@@ -145,6 +146,7 @@ import Runnable_exhaust from "./Runnable/__internal__/Runnable.exhaust.js";
 import Runnable_exhaustMap from "./Runnable/__internal__/Runnable.exhaustMap.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_flatMapIterable from "./Runnable/__internal__/Runnable.flatMapIterable.js";
+import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_mergeAll from "./Runnable/__internal__/Runnable.mergeAll.js";
 import Runnable_mergeMap from "./Runnable/__internal__/Runnable.mergeMap.js";
@@ -235,6 +237,14 @@ export const forkZip: ForkZip<RunnableLike>["forkZip"] =
 
 export const forkZipLatest: ForkZipLatest<RunnableLike>["forkZipLatest"] =
   Observable_forkZipLatest as ForkZipLatest<RunnableLike>["forkZipLatest"];
+
+export const fromEnumeratorFactory: FromEnumeratorFactory<
+  RunnableLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["fromEnumeratorFactory"] = Runnable_fromEnumeratorFactory;
 
 export const fromFactory: FromFactory<
   RunnableLike,
