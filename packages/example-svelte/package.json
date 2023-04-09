@@ -1,10 +1,10 @@
 {
   "name": "@reactive-js/example-svelte",
-  "version": "0.64.0",
+  "version": "0.64.1",
   "type": "module",
   "private": true,
   "dependencies": {
-    "@reactive-js/core": "^0.64.0"
+    "@reactive-js/core": "^0.64.1"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "15.0.1",
