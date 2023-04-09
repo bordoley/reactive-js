@@ -119,30 +119,24 @@ const Root = () => {
           type: "loop",
           count: 2,
           animation: [
-            { type: "tween", duration: 1000, from: 0, to: 50 },
-            { type: "delay", duration: 500 },
-            { type: "tween", duration: 1000, from: 50, to: 0 },
+            { type: "tween", duration: 500, from: 0, to: 50 },
+            { type: "delay", duration: 250 },
+            { type: "tween", duration: 500, from: 50, to: 0 },
           ],
         },
       ],
       def: _ => [
-        {
-          type: "loop",
-          count: 2,
-          animation: [
-            { type: "tween", duration: 1000, from: 0, to: 50 },
-            { type: "delay", duration: 500 },
-            { type: "tween", duration: 1000, from: 50, to: 0 },
-          ],
-        },
+        { type: "tween", duration: 500, from: 0, to: 50 },
+        { type: "delay", duration: 250 },
+        { type: "spring", stiffness: 0.01, damping: 0.1, from: 50, to: 0 },
       ],
     }),
-    { mode: "blocking", concurrency: 1 },
+    { mode: "blocking" },
     [],
   );
 
   const divRef = useAnimatedValue<HTMLDivElement, number>(
-    animatedValues?.["abc"],
+    animatedValues?.abc,
     (v: number) => ({
       margin: `${50 - v}px`,
       padding: `${v}px`,
@@ -151,7 +145,7 @@ const Root = () => {
   );
 
   const divRefB = useAnimatedValue<HTMLDivElement, number>(
-    animatedValues?.["def"],
+    animatedValues?.def,
     (v: number) => ({
       margin: `${50 - v}px`,
       padding: `${v}px`,

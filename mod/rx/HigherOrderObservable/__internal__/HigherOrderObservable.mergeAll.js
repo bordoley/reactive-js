@@ -35,7 +35,8 @@ const HigherOrderObservable_mergeAll = (lift) => {
                 if (isSome(nextObs)) {
                     subscribeToObservable(instance, nextObs);
                 }
-                else if (instance[DisposableLike_isDisposed]) {
+                else if (instance[DisposableLike_isDisposed] &&
+                    instance[__MergeAllObserver_activeCount] <= 0) {
                     instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
             };
