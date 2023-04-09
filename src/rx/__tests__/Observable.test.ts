@@ -17,6 +17,7 @@ import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as Streamable from "../../streaming/Streamable.js";
 import { DisposableLike_error, QueueableLike_enqueue } from "../../util.js";
 import * as Observable from "../Observable.js";
+import { __bindMethod, __do, __observe, __stream } from "../effects.js";
 
 const computeTests = describe(
   "compute",
@@ -24,11 +25,11 @@ const computeTests = describe(
   testAsync("__stream", async () => {
     const result = await pipe(
       Observable.compute(() => {
-        const stream = Observable.__stream(Streamable.identity<number>());
-        const push = Observable.__bindMethod(stream, QueueableLike_enqueue);
+        const stream = __stream(Streamable.identity<number>());
+        const push = __bindMethod(stream, QueueableLike_enqueue);
 
-        const result = Observable.__observe(stream) ?? 0;
-        Observable.__do(push, result + 1);
+        const result = __observe(stream) ?? 0;
+        __do(push, result + 1);
 
         return result;
       }),

@@ -9,8 +9,8 @@ import * as Scheduler from "../../scheduling/Scheduler.js";
 import { StreamableLike_stream } from "../../streaming.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../util.js";
 import * as Observable from "../Observable.js";
-import { __await, __memo } from "../Observable.js";
 import * as Runnable from "../Runnable.js";
+import { __await, __memo } from "../effects.js";
 const combineLatestTests = describe("combineLatest", test("combineLatest", pipeLazy(Runnable.combineLatest(pipe(Runnable.generate(incrementBy(2), returns(1), { delay: 2 }), Runnable.takeFirst({ count: 3 })), pipe(Runnable.generate(incrementBy(2), returns(0), { delay: 3 }), Runnable.takeFirst({ count: 2 }))), Runnable.toReadonlyArray(), expectArrayEquals([[3, 2], [5, 2], [5, 4], [7, 4]], arrayEquality()))));
 const computeTests = describe("compute", test("batch mode", () => {
     const fromValueWithDelay = (delay, value) => pipe([value], Runnable.fromReadonlyArray({ delay }));

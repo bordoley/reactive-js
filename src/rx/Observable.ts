@@ -104,19 +104,7 @@ import Observable_backpressureStrategy from "./Observable/__internal__/Observabl
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
-import {
-  Observable_compute,
-  Observable_compute__await,
-  Observable_compute__bind,
-  Observable_compute__bindMethod,
-  Observable_compute__currentScheduler,
-  Observable_compute__do,
-  Observable_compute__memo,
-  Observable_compute__observe,
-  Observable_compute__state,
-  Observable_compute__stream,
-  Observable_compute__using,
-} from "./Observable/__internal__/Observable.compute.js";
+import { Observable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatAll from "./Observable/__internal__/Observable.concatAll.js";
 import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
@@ -191,56 +179,6 @@ import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
-
-/**
- * @category ComputationalEffect
- */
-export const __memo = Observable_compute__memo;
-
-/**
- * @category ComputationalEffect
- */
-export const __await = Observable_compute__await;
-
-/**
- * @category ComputationalEffect
- */
-export const __currentScheduler = Observable_compute__currentScheduler;
-
-/**
- * @category ComputationalEffect
- */
-export const __do = Observable_compute__do;
-
-/**
- * @category ComputationalEffect
- */
-export const __observe = Observable_compute__observe;
-
-/**
- * @category ComputationalEffect
- */
-export const __bind = Observable_compute__bind;
-
-/**
- * @category ComputationalEffect
- */
-export const __bindMethod = Observable_compute__bindMethod;
-
-/**
- * @category ComputationalEffect
- */
-export const __state = Observable_compute__state;
-
-/**
- * @category ComputationalEffect
- */
-export const __stream = Observable_compute__stream;
-
-/**
- * @category ComputationalEffect
- */
-export const __using = Observable_compute__using;
 
 export const animate: Animate<ObservableLike>["animate"] = Observable_animate;
 

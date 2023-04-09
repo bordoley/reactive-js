@@ -1,23 +1,17 @@
 /// <reference types="./Observable.compute.d.ts" />
 
 import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
-import { arrayEquality, bind, bindMethod, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
+import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { SchedulerLike_schedule } from "../../../scheduling.js";
-import { StreamableLike_stream, } from "../../../streaming.js";
-import Streamable_createStateStore from "../../../streaming/Streamable/__internal__/Streamable.createStateStore.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
-import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
-import Observable_create from "./Observable.create.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_subscribe from "./Observable.subscribe.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Memo = 1;
 const Await = 2;
@@ -238,69 +232,3 @@ export const Enumerable_compute = (computation, options = {}) => Observable_comp
     [ObservableLike_isEnumerable]: true,
     [ObservableLike_isRunnable]: true,
 }, options);
-export const Observable_compute__memo = (f, ...args) => {
-    const ctx = assertCurrentContext();
-    return ctx[__ComputeContext_memoOrUse](false, f, ...args);
-};
-export const Observable_compute__await = (observable) => {
-    const ctx = assertCurrentContext();
-    return ctx[__ComputeContext_awaitOrObserve](observable, true);
-};
-export const Observable_compute__observe = (observable) => {
-    const ctx = assertCurrentContext();
-    return ctx[__ComputeContext_awaitOrObserve](observable, false);
-};
-export const Observable_compute__do = /*@__PURE__*/ (() => {
-    const deferSideEffect = (create, f, ...args) => create(observer => {
-        const callback = () => {
-            f(...args);
-            observer[ObserverLike_notify](none);
-            observer[DisposableLike_dispose]();
-        };
-        pipe(observer[SchedulerLike_schedule](callback), Disposable_addTo(observer));
-    });
-    return (f, ...args) => {
-        const ctx = assertCurrentContext();
-        const scheduler = ctx[__ComputeContext_observer];
-        const observableConfig = ctx[__ComputeContext_observableConfig];
-        const observable = ctx[__ComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ObservableLike_isEnumerable]
-            ? Enumerable_create
-            : observableConfig[ObservableLike_isRunnable]
-                ? Runnable_create
-                : Observable_create, f, ...args);
-        const subscribeOnScheduler = ctx[__ComputeContext_memoOrUse](false, Observable_subscribe, scheduler);
-        ctx[__ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
-    };
-})();
-export const Observable_compute__using = (f, ...args) => {
-    const ctx = assertCurrentContext();
-    return ctx[__ComputeContext_memoOrUse](true, f, ...args);
-};
-export function Observable_compute__currentScheduler() {
-    const ctx = assertCurrentContext();
-    return ctx[__ComputeContext_observer];
-}
-export const Observable_compute__stream = /*@__PURE__*/ (() => {
-    const streamOnSchedulerFactory = (streamable, scheduler, replay, capacity, backpressureStrategy) => streamable[StreamableLike_stream](scheduler, {
-        replay,
-        backpressureStrategy,
-        capacity,
-    });
-    return (streamable, { replay, backpressureStrategy, capacity, scheduler, } = {}) => {
-        const currentScheduler = Observable_compute__currentScheduler();
-        return Observable_compute__using(streamOnSchedulerFactory, streamable, scheduler ?? currentScheduler, replay, capacity, backpressureStrategy);
-    };
-})();
-export const Observable_compute__state = /*@__PURE__*/ (() => {
-    const createStateOptions = (equality) => isSome(equality) ? { equality } : none;
-    return (initialState, options = {}) => {
-        const { equality } = options;
-        const optionsMemo = Observable_compute__memo(createStateOptions, equality);
-        const streamable = Observable_compute__memo(Streamable_createStateStore, initialState, optionsMemo);
-        return Observable_compute__stream(streamable, options);
-    };
-})();
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const Observable_compute__bind = (f, thiz) => Observable_compute__memo(bind, f, thiz);
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const Observable_compute__bindMethod = (thiz, key) => Observable_compute__memo(bindMethod, thiz, key);

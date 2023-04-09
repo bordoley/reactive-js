@@ -70,8 +70,8 @@ import {
   QueueableLike_enqueue,
 } from "../../util.js";
 import * as Observable from "../Observable.js";
-import { __await, __memo } from "../Observable.js";
 import * as Runnable from "../Runnable.js";
+import { __await, __memo } from "../effects.js";
 
 const combineLatestTests = describe(
   "combineLatest",

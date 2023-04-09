@@ -64,6 +64,7 @@
     "./keyed-containers/ReadonlyMap": "./keyed-containers/ReadonlyMap.js",
     "./keyed-containers/ReadonlyRecord": "./keyed-containers/ReadonlyRecord.js",
     "./rx": "./rx.js",
+    "./rx/effects": "./rx/effects.js",
     "./rx/Enumerable": "./rx/Enumerable.js",
     "./rx/Observable": "./rx/Observable.js",
     "./rx/Observer": "./rx/Observer.js",
