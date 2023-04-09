@@ -40,6 +40,10 @@ import {
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
 import * as Scheduler from "@reactive-js/core/scheduling/Scheduler";
+import { EventSourceLike } from "@reactive-js/core/util.js";
+import * as ReadonlyRecord from "@reactive-js/core/keyed-containers/ReadonlyRecord";
+import * as Enumerator from "@reactive-js/core/containers/Enumerator";
+import * as ReadonlyArray from "@reactive-js/core/keyed-containers/ReadonlyArray";
 
 // FIXME: should probably export the react scheduler in its own module for outside of hooks use cases.
 const hostScheduler = Scheduler.createHostScheduler();
@@ -69,6 +73,32 @@ const CacheComponent = () => {
   const cacheStream = useStream(cache);
 
   return isSome(cacheStream) ? <CacheInner cache={cacheStream} /> : null;
+};
+
+const AnimatedBox = ({ value }: { value: EventSourceLike<number> }) => {
+  const ref = useAnimatedValue<HTMLDivElement, number>(
+    value,
+    (v: number) => ({
+      margin: `${50 - v}px`,
+      padding: `${v}px`,
+    }),
+    [],
+  );
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        height: "100px",
+        width: "100px",
+        backgroundColor: "#bbb",
+        borderRadius: "50%",
+        display: "inline-block",
+        margin: "50px",
+        padding: "0px",
+      }}
+    />
+  );
 };
 
 const Root = () => {
@@ -135,24 +165,6 @@ const Root = () => {
     [],
   );
 
-  const divRef = useAnimatedValue<HTMLDivElement, number>(
-    animatedValues?.abc,
-    (v: number) => ({
-      margin: `${50 - v}px`,
-      padding: `${v}px`,
-    }),
-    [],
-  );
-
-  const divRefB = useAnimatedValue<HTMLDivElement, number>(
-    animatedValues?.def,
-    (v: number) => ({
-      margin: `${50 - v}px`,
-      padding: `${v}px`,
-    }),
-    [],
-  );
-
   const enumerable = useMemo(
     () => Enumerable.generate(increment, () => -1),
     [],
@@ -183,30 +195,16 @@ const Root = () => {
         </button>
         <span>{counter.value ?? counterInitialValue}</span>
       </div>
-      <div
-        ref={divRef}
-        style={{
-          height: "100px",
-          width: "100px",
-          backgroundColor: "#bbb",
-          borderRadius: "50%",
-          display: "inline-block",
-          margin: "50px",
-          padding: "0px",
-        }}
-      />
-      <div
-        ref={divRefB}
-        style={{
-          height: "100px",
-          width: "100px",
-          backgroundColor: "#bbb",
-          borderRadius: "50%",
-          display: "inline-block",
-          margin: "50px",
-          padding: "0px",
-        }}
-      />
+      <div>
+        {pipe(
+          animatedValues ?? {},
+          ReadonlyRecord.entries<EventSourceLike<number>, string>(),
+          Enumerator.toReadonlyArray(),
+          ReadonlyArray.map(([key, value]) => (
+            <AnimatedBox key={key} value={value} />
+          )),
+        )}
+      </div>
       <div>
         <button onClick={dispatch} disabled={animationRunning}>
           Run Animation
