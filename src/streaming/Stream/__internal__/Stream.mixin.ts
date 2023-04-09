@@ -9,7 +9,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { __DispatchedObservable_observer } from "../../../__internal__/symbols.js";
-import { QueueLike } from "../../../__internal__/util.internal.js";
+import { IndexedQueueLike } from "../../../__internal__/util.internal.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Optional,
@@ -116,7 +116,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             // Observer only implement Queueable publicly so cast to the implementation interface
             // to enable bypassing the queue
             const observerQueueIsEmpty =
-              (observer as unknown as QueueLike<T>)[CollectionLike_count] === 0;
+              (observer as unknown as IndexedQueueLike<T>)[CollectionLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
 
             if (inContinuation && observerQueueIsEmpty && !isDisposed) {

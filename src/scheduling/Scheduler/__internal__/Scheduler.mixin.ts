@@ -24,7 +24,7 @@ import {
   __SchedulerMixin_yieldRequested,
 } from "../../../__internal__/symbols.js";
 import {
-  QueueLike,
+  QueueCollectionLike,
   QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
@@ -179,7 +179,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
             ];
           },
           [ContinuationContextLike_yield](
-            this: ContinuationLike & QueueLike<ContinuationLike>,
+            this: ContinuationLike & QueueCollectionLike<ContinuationLike>,
             delay = 0,
           ) {
             const shouldYield =
@@ -193,7 +193,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           },
           [ContinuationLike_run](
             this: ContinuationLike &
-              QueueLike<ContinuationLike> &
+              QueueCollectionLike<ContinuationLike> &
               TContinuationProperties &
               ContinuationContextLike,
           ): void {

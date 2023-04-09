@@ -1,5 +1,5 @@
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
-import { QueueLike } from "../../../__internal__/util.internal.js";
+import { QueueCollectionLike } from "../../../__internal__/util.internal.js";
 import { Comparator } from "../../../functions.js";
 import {
   QueueableLike,
@@ -11,7 +11,7 @@ const Queue_createPriorityQueue: <T>(
   comparator: Comparator<T>,
   capacity: number,
   backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-) => QueueLike<T> = /*@__PURE__*/ (() =>
+) => QueueCollectionLike<T> = /*@__PURE__*/ (() =>
   createInstanceFactory(Queue_priorityQueueMixin()))();
 
 export default Queue_createPriorityQueue;

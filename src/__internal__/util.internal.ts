@@ -3,6 +3,7 @@ import {
   CollectionLike,
   DisposableLike,
   IndexedCollectionLike,
+  KeyedCollectionLike,
   QueueableLike,
 } from "../util.js";
 import {
@@ -36,21 +37,22 @@ export interface SerialDisposableLike<
   set [SerialDisposableLike_current](v: TDisposable);
 }
 
+export interface StackLike<T = unknown> extends QueueableLike<T> {
+  readonly [StackLike_head]: Optional<T>;
+  [StackLike_pop](): Optional<T>;
+}
+
 export interface QueueLike<T = unknown>
-  extends QueueableLike<T>,
-    CollectionLike {
+  extends QueueableLike<T> {
   readonly [QueueLike_head]: Optional<T>;
 
   [QueueLike_dequeue](): Optional<T>;
 }
 
-export interface StackLike<T = unknown> {
-  readonly [StackLike_head]: Optional<T>;
-  [StackLike_pop](): Optional<T>;
-}
+export interface QueueCollectionLike<T = unknown>  extends QueueLike<T>, CollectionLike {}
 
 export interface MutableKeyedCollectionLike<TKey = unknown, T = unknown>
-  extends IndexedCollectionLike<T> {
+  extends KeyedCollectionLike<TKey, T> {
   [MutableKeyedCollectionLike_set](key: TKey, value: T): T;
 }
 

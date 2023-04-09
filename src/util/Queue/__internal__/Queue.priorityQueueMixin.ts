@@ -12,7 +12,7 @@ import { __PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js
 import {
   IndexedQueueLike,
   MutableKeyedCollectionLike_set,
-  QueueLike,
+  QueueCollectionLike,
   QueueLike_dequeue,
   StackLike_pop,
 } from "../../../__internal__/util.internal.js";
@@ -36,7 +36,7 @@ import {
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
 
 const Queue_priorityQueueMixin: <T>() => Mixin3<
-  QueueLike<T>,
+  QueueCollectionLike<T>,
   Comparator<T>,
   number,
   QueueableLike[typeof QueueableLike_backpressureStrategy]
@@ -105,14 +105,14 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
       include(IndexedQueue_fifoQueueMixin<T>()),
       function PriorityQueue(
         instance: Pick<
-          QueueLike<T>,
+          QueueCollectionLike<T>,
           typeof QueueLike_dequeue | typeof QueueableLike_enqueue
         > &
           Mutable<TProperties>,
         comparator: Comparator<T>,
         capacity: number,
         backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-      ): QueueLike<T> {
+      ): QueueCollectionLike<T> {
         init(
           IndexedQueue_fifoQueueMixin<T>(),
           instance,

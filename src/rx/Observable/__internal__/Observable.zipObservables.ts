@@ -13,7 +13,7 @@ import {
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-  QueueLike,
+  IndexedQueueLike,
   QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import {
@@ -114,7 +114,7 @@ const QueuedEnumerator_create: <T>(
       }),
       {
         [EnumeratorLike_move](
-          this: DisposableLike & TProperties & QueueLike<T>,
+          this: DisposableLike & TProperties & IndexedQueueLike<T>,
         ) {
           if (this[CollectionLike_count] > 0) {
             const next = this[QueueLike_dequeue]() as T;

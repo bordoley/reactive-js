@@ -11,7 +11,7 @@ import {
   __ObserverMixin_isCompleted,
 } from "../../../__internal__/symbols.js";
 import {
-  QueueLike,
+  IndexedQueueLike,
   QueueLike_dequeue,
 } from "../../../__internal__/util.internal.js";
 import { call, pipe, returns, unsafeCast } from "../../../functions.js";
@@ -58,7 +58,7 @@ const Observer_baseMixin: <T>() => Mixin1<
   };
 
   const scheduleDrainQueue = (
-    observer: TProperties & ObserverLike<T> & QueueLike<T>,
+    observer: TProperties & ObserverLike<T> & IndexedQueueLike<T>,
   ) => {
     if (
       observer[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
@@ -115,7 +115,7 @@ const Observer_baseMixin: <T>() => Mixin1<
       }),
       {
         [QueueableLike_enqueue](
-          this: TProperties & ObserverLike<T> & QueueLike<T>,
+          this: TProperties & ObserverLike<T> & IndexedQueueLike<T>,
           next: T,
         ): boolean {
           if (
@@ -134,7 +134,7 @@ const Observer_baseMixin: <T>() => Mixin1<
         },
 
         [DispatcherLike_complete](
-          this: TProperties & ObserverLike<T> & QueueLike<T>,
+          this: TProperties & ObserverLike<T> & IndexedQueueLike<T>,
         ) {
           const isCompleted = this[__ObserverMixin_isCompleted];
           this[__ObserverMixin_isCompleted] = true;
