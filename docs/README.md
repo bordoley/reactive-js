@@ -8,6 +8,7 @@ Reactive-JS
 
 - [containers](modules/containers.md)
 - [containers/AsyncIterable](modules/containers_AsyncIterable.md)
+- [containers/Enumerator](modules/containers_Enumerator.md)
 - [containers/Iterable](modules/containers_Iterable.md)
 - [containers/Promiseable](modules/containers_Promiseable.md)
 - [functions](modules/functions.md)

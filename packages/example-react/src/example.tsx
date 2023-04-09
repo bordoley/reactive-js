@@ -10,7 +10,7 @@ import {
   useFlowable,
   useObservable,
   useStream,
-  useAnimation,
+  useAnimations,
 } from "@reactive-js/core/integrations/react";
 import {
   useAnimatedValue,
@@ -112,24 +112,46 @@ const Root = () => {
   );
   const counter = useFlowable(counterFlowable);
 
-  const [animatedValue, dispatch, animationRunning] = useAnimation(
-    () => [
-      {
-        type: "loop",
-        count: 2,
-        animation: [
-          { type: "tween", duration: 1000, from: 0, to: 50 },
-          { type: "delay", duration: 500 },
-          { type: "tween", duration: 1000, from: 50, to: 0 },
-        ],
-      },
-    ],
-    { mode: "blocking" },
+  const [animatedValues, dispatch, animationRunning] = useAnimations(
+    () => ({
+      abc: _ => [
+        {
+          type: "loop",
+          count: 2,
+          animation: [
+            { type: "tween", duration: 1000, from: 0, to: 50 },
+            { type: "delay", duration: 500 },
+            { type: "tween", duration: 1000, from: 50, to: 0 },
+          ],
+        },
+      ],
+      def: _ => [
+        {
+          type: "loop",
+          count: 2,
+          animation: [
+            { type: "tween", duration: 1000, from: 0, to: 50 },
+            { type: "delay", duration: 500 },
+            { type: "tween", duration: 1000, from: 50, to: 0 },
+          ],
+        },
+      ],
+    }),
+    { mode: "blocking", concurrency: 1 },
     [],
   );
 
   const divRef = useAnimatedValue<HTMLDivElement, number>(
-    animatedValue,
+    animatedValues?.["abc"],
+    (v: number) => ({
+      margin: `${50 - v}px`,
+      padding: `${v}px`,
+    }),
+    [],
+  );
+
+  const divRefB = useAnimatedValue<HTMLDivElement, number>(
+    animatedValues?.["def"],
     (v: number) => ({
       margin: `${50 - v}px`,
       padding: `${v}px`,
@@ -169,6 +191,18 @@ const Root = () => {
       </div>
       <div
         ref={divRef}
+        style={{
+          height: "100px",
+          width: "100px",
+          backgroundColor: "#bbb",
+          borderRadius: "50%",
+          display: "inline-block",
+          margin: "50px",
+          padding: "0px",
+        }}
+      />
+      <div
+        ref={divRefB}
         style={{
           height: "100px",
           width: "100px",

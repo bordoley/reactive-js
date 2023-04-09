@@ -49,6 +49,7 @@
   "exports": {
     "./containers": "./containers.js",
     "./containers/AsyncIterable": "./containers/AsyncIterable.js",
+    "./containers/Enumerator": "./containers/Enumerator.js",
     "./containers/Iterable": "./containers/Iterable.js",
     "./containers/Promiseable": "./containers/Promiseable.js",
     "./containers/Sequence": "./containers/Sequence.js",

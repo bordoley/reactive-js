@@ -694,7 +694,11 @@ interface UseAnimations {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): readonly [Optional<EventSourceLike<T>>, Function1<TEvent, boolean>, never];
+  ): readonly [
+    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+    Function1<TEvent, boolean>,
+    never,
+  ];
 
   /**
    * @category Hook
@@ -717,7 +721,7 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<EventSourceLike<T>>,
+    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
     Function1<TEvent, boolean>,
     boolean,
   ];
@@ -744,7 +748,11 @@ interface UseAnimations {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): readonly [Optional<EventSourceLike<T>>, Function1<TEvent, boolean>, never];
+  ): readonly [
+    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
+    Function1<TEvent, boolean>,
+    never,
+  ];
 }
 export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
   animationFactory: Factory<
@@ -821,10 +829,12 @@ export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
           Observable.fromEnumeratorFactory(
             pipeLazy(observables, ReadonlyRecord.values()),
           ),
-          Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
-          Observable.subscribeOn(
-            createAnimationFrameSchedulerFactory(options?.priority),
+          Observable.map(
+            Observable.subscribeOn(
+              createAnimationFrameSchedulerFactory(options?.priority),
+            ),
           ),
+          Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
         );
       }, eventOptions as any),
     [
@@ -866,7 +876,7 @@ interface UseStatefulAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<EventSourceLike<T>>,
+    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
     Function1<Updater<TState>, boolean>,
     never,
   ];
@@ -894,7 +904,7 @@ interface UseStatefulAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<EventSourceLike<T>>,
+    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
     Function1<Updater<TState>, boolean>,
     boolean,
   ];
@@ -924,7 +934,7 @@ interface UseStatefulAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<EventSourceLike<T>>,
+    Optional<ReadonlyRecordLike<string, EventSourceLike<T>>>,
     Function1<Updater<TState>, boolean>,
     never,
   ];
@@ -1016,10 +1026,12 @@ export const useStatefulAnimations: UseStatefulAnimations["useStatefulAnimations
               Observable.fromEnumeratorFactory(
                 pipeLazy(observables, ReadonlyRecord.values()),
               ),
-              Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
-              Observable.subscribeOn(
-                createAnimationFrameSchedulerFactory(options?.priority),
+              Observable.map(
+                Observable.subscribeOn(
+                  createAnimationFrameSchedulerFactory(options?.priority),
+                ),
               ),
+              Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
             );
           },
           initialState,

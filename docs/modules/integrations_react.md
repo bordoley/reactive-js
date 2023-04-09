@@ -108,7 +108,7 @@ ___
 
 ### useAnimations
 
-▸ **useAnimations**<`TEvent`, `T`\>(`animationFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimations**<`TEvent`, `T`\>(`animationFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -133,9 +133,9 @@ ___
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
-▸ **useAnimations**<`TEvent`, `T`\>(`animationFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+▸ **useAnimations**<`TEvent`, `T`\>(`animationFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
 
 #### Type parameters
 
@@ -160,9 +160,9 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
 
-▸ **useAnimations**<`TEvent`, `T`\>(`animationFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimations**<`TEvent`, `T`\>(`animationFactory`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -189,7 +189,7 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 ___
 
@@ -375,7 +375,7 @@ ___
 
 ### useStatefulAnimations
 
-▸ **useStatefulAnimations**<`TState`, `T`\>(`animationFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
+▸ **useStatefulAnimations**<`TState`, `T`\>(`animationFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -402,9 +402,9 @@ ___
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
+readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
 
-▸ **useStatefulAnimations**<`TState`, `T`\>(`animationFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `boolean`]
+▸ **useStatefulAnimations**<`TState`, `T`\>(`animationFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `boolean`]
 
 #### Type parameters
 
@@ -431,9 +431,9 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `boolean`]
+readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `boolean`]
 
-▸ **useStatefulAnimations**<`TState`, `T`\>(`animationFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
+▸ **useStatefulAnimations**<`TState`, `T`\>(`animationFactory`, `initialState`, `eventOptions`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -462,7 +462,7 @@ readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
+readonly [[`Optional`](functions.md#optional)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<`string`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, `never`]
 
 ___
 
