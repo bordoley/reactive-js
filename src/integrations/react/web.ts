@@ -13,6 +13,7 @@ import {
   Updater,
   bindMethod,
   identity,
+  isNone,
   isSome,
   none,
   pipe,
@@ -133,11 +134,11 @@ export const WindowLocationProvider: React.FunctionComponent<{
 
 interface UseAnimatedValue {
   useAnimatedValue<TElement extends HTMLElement>(
-    value: EventSourceLike<ReadonlyRecordLike<string, CSSStyleKey>>,
+    value: Optional<EventSourceLike<ReadonlyRecordLike<string, CSSStyleKey>>>,
   ): React.RefObject<TElement>;
 
   useAnimatedValue<TElement extends HTMLElement, T>(
-    value: EventSourceLike<T>,
+    value: Optional<EventSourceLike<T>>,
     selector: (v: T) => Partial<ReadonlyRecordLike<string, CSSStyleKey>>,
     deps: readonly unknown[],
   ): React.RefObject<TElement>;
@@ -149,7 +150,7 @@ export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
   TElement extends HTMLElement,
   T = Partial<ReadonlyRecordLike<string, CSSStyleKey>>,
 >(
-  value: EventSourceLike<T>,
+  value: Optional<EventSourceLike<T>>,
   selector = identity,
   deps = [],
 ): React.RefObject<TElement> => {
@@ -158,6 +159,10 @@ export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
   const selectorMemoized = useCallback(selector, deps);
 
   useEffect(() => {
+    if (isNone(value)) {
+      return;
+    }
+
     const listener = EventListener.create((v: T) => {
       const element = ref.current;
       if (element != null) {
