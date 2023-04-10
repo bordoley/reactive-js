@@ -1,4 +1,4 @@
-import { Equality, Factory, Reducer, Updater } from "../functions.js";
+import { Equality, Factory, Reducer } from "../functions.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
 import Streamable_createActionReducer from "./Streamable/__internal__/Streamable.createActionReducer.js";
@@ -6,7 +6,6 @@ import Streamable_createEventHandler from "./Streamable/__internal__/Streamable.
 import Streamable_createInMemoryCache from "./Streamable/__internal__/Streamable.createInMemoryCache.js";
 import Streamable_createPersistentCache from "./Streamable/__internal__/Streamable.createPersistentCache.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
-import Streamable_createStatefulEventHandler from "./Streamable/__internal__/Streamable.createStatefulEventHandler.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
 import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
 
@@ -50,11 +49,6 @@ export const createInMemoryCache = Streamable_createInMemoryCache;
 export const createPersistentCache = Streamable_createPersistentCache;
 
 /**
- * @category Constructor
- */
-export const createStatefulEventHandler = Streamable_createStatefulEventHandler;
-
-/**
  * Returns a new `StateStoreLike` instance that stores state which can
  * be updated by notifying the instance with a `StateUpdater` that computes a
  * new state based upon the previous state.
@@ -65,10 +59,7 @@ export const createStatefulEventHandler = Streamable_createStatefulEventHandler;
  *
  * @category Constructor
  */
-export const createStateStore: <T>(
-  initialState: Factory<T>,
-  options?: { readonly equality?: Equality<T> },
-) => StreamableLike<Updater<T>, T> = Streamable_createStateStore;
+export const createStateStore = Streamable_createStateStore;
 
 /**
  * @category Constructor

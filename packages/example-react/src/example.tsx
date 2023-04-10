@@ -10,7 +10,7 @@ import {
   useFlowable,
   useObservable,
   useStream,
-  useAnimations,
+  useAnimation,
 } from "@reactive-js/core/integrations/react";
 import {
   useAnimatedValue,
@@ -82,7 +82,7 @@ const CacheComponent = () => {
   return isSome(cacheStream) ? <CacheInner cache={cacheStream} /> : null;
 };
 
-const AnimatedBox = ({ value }: { value: EventSourceLike<number> }) => {
+const AnimatedBox = ({ value }: { value?: EventSourceLike<number> }) => {
   const ref = useAnimatedValue<HTMLDivElement, number>(
     value,
     (v: number) => ({
@@ -149,7 +149,8 @@ const Root = () => {
   );
   const counter = useFlowable(counterFlowable);
 
-  const [animatedValues, dispatch, animationRunning] = useAnimations(
+  const [animatedValues, dispatch, isAnimationRunning] = useAnimation(
+    { mode: "blocking" },
     () => ({
       abc: () => [
         {
@@ -168,7 +169,6 @@ const Root = () => {
         { type: "spring", stiffness: 0.01, damping: 0.1, from: 50, to: 0 },
       ],
     }),
-    { mode: "blocking" },
     [],
   );
 
@@ -213,7 +213,7 @@ const Root = () => {
         )}
       </div>
       <div>
-        <button onClick={dispatch} disabled={animationRunning}>
+        <button onClick={dispatch} disabled={isAnimationRunning}>
           Run Animation
         </button>
       </div>

@@ -1,4 +1,4 @@
-import { Equality, Factory, Reducer, Updater } from "../functions.js";
+import { Equality, Factory, Reducer } from "../functions.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
 /**
  * @category Constructor
@@ -54,25 +54,6 @@ export declare const createPersistentCache: <T>(persistentStore: {
     readonly cleanupScheduler?: import("../scheduling.js").SchedulerLike | undefined;
 }) => import("../streaming.js").CacheLike<T>;
 /**
- * @category Constructor
- */
-export declare const createStatefulEventHandler: {
-    <TState>(op: import("../functions.js").Function2<TState, TState, import("../rx.js").ObservableLike<unknown>>, initialState: Factory<TState>, options: {
-        readonly mode: "switching";
-        readonly equality?: Equality<TState> | undefined;
-    }): StreamableLike<Updater<TState>, never, StreamLike<Updater<TState>, never>>;
-    <TState_1>(op: import("../functions.js").Function2<TState_1, TState_1, import("../rx.js").ObservableLike<unknown>>, initialState: Factory<TState_1>, options: {
-        readonly mode: "blocking";
-        readonly equality?: Equality<TState_1> | undefined;
-    }): StreamableLike<Updater<TState_1>, boolean, StreamLike<Updater<TState_1>, boolean>>;
-    <TState_2>(op: import("../functions.js").Function2<TState_2, TState_2, import("../rx.js").ObservableLike<unknown>>, initialState: Factory<TState_2>, options: {
-        readonly mode: "queueing";
-        readonly equality?: Equality<TState_2> | undefined;
-        readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
-        readonly capacity?: number | undefined;
-    }): StreamableLike<Updater<TState_2>, never, StreamLike<Updater<TState_2>, never>>;
-};
-/**
  * Returns a new `StateStoreLike` instance that stores state which can
  * be updated by notifying the instance with a `StateUpdater` that computes a
  * new state based upon the previous state.
@@ -83,9 +64,21 @@ export declare const createStatefulEventHandler: {
  *
  * @category Constructor
  */
-export declare const createStateStore: <T>(initialState: Factory<T>, options?: {
-    readonly equality?: Equality<T>;
-}) => StreamableLike<Updater<T>, T>;
+export declare const createStateStore: {
+    <T>(initialState: Factory<T>, onChange: import("../functions.js").Function2<T, T, import("../rx.js").ObservableLike<unknown>>, options?: {
+        readonly mode: "switching";
+        readonly equality?: Equality<T> | undefined;
+    } | undefined): StreamableLike<import("../functions.js").Updater<T>, T, StreamLike<import("../functions.js").Updater<T>, T>>;
+    <T_1>(initialState: Factory<T_1>, onChange: import("../functions.js").Function2<T_1, T_1, import("../rx.js").ObservableLike<unknown>>, options?: {
+        readonly mode: "queueing";
+        readonly equality?: Equality<T_1> | undefined;
+        readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
+        readonly capacity?: number | undefined;
+    } | undefined): StreamableLike<import("../functions.js").Updater<T_1>, T_1, StreamLike<import("../functions.js").Updater<T_1>, T_1>>;
+    <T_2>(initialState: Factory<T_2>, options?: {
+        readonly equality?: Equality<T_2> | undefined;
+    } | undefined): StreamableLike<import("../functions.js").Updater<T_2>, T_2, StreamLike<import("../functions.js").Updater<T_2>, T_2>>;
+};
 /**
  * @category Constructor
  */
