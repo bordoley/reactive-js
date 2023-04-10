@@ -438,7 +438,7 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
+    ReadonlyRecordLike<EventSourceLike<T>>,
     Function1<TEvent, boolean>,
     never,
   ];
@@ -461,7 +461,7 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
+    ReadonlyRecordLike<EventSourceLike<T>>,
     Function1<TEvent, boolean>,
     boolean,
   ];
@@ -486,7 +486,7 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
+    ReadonlyRecordLike<EventSourceLike<T>>,
     Function1<TEvent, boolean>,
     never,
   ];
@@ -508,7 +508,7 @@ export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
     readonly capacity?: number;
   },
 ): readonly [
-  Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
+  ReadonlyRecordLike<EventSourceLike<T>>,
   Function1<TEvent, boolean>,
   unknown,
 ] => {
@@ -582,7 +582,11 @@ export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
 
   const [value, dispatch] = useStreamable(streamable, options);
 
-  return [publishers, dispatch, value];
+  return [
+    publishers ?? ReadonlyRecord.empty<EventSourceLike<T>>(),
+    dispatch,
+    value,
+  ];
 }) as UseAnimations["useAnimations"];
 
 interface UseStatefulAnimations {
@@ -608,7 +612,7 @@ interface UseStatefulAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
+    ReadonlyRecordLike<EventSourceLike<T>>,
     Function1<Updater<TState>, boolean>,
     never,
   ];
@@ -635,7 +639,7 @@ interface UseStatefulAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
+    ReadonlyRecordLike<EventSourceLike<T>>,
     Function1<Updater<TState>, boolean>,
     boolean,
   ];
@@ -664,7 +668,7 @@ interface UseStatefulAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
+    ReadonlyRecordLike<EventSourceLike<T>>,
     Function1<Updater<TState>, boolean>,
     never,
   ];
@@ -691,7 +695,7 @@ export const useStatefulAnimations: UseStatefulAnimations["useStatefulAnimations
       readonly capacity?: number;
     },
   ): readonly [
-    Optional<ReadonlyRecordLike<EventSourceLike<T>>>,
+    ReadonlyRecordLike<EventSourceLike<T>>,
     Function1<Updater<TState>, boolean>,
     unknown,
   ] => {
@@ -771,5 +775,9 @@ export const useStatefulAnimations: UseStatefulAnimations["useStatefulAnimations
 
     const [value, dispatch] = useStreamable(streamable, options);
 
-    return [publishers, dispatch, value];
+    return [
+      publishers ?? ReadonlyRecord.empty<EventSourceLike<T>>(),
+      dispatch,
+      value,
+    ];
   }) as UseStatefulAnimations["useStatefulAnimations"];

@@ -151,7 +151,7 @@ const Root = () => {
 
   const [animatedValues, dispatch, animationRunning] = useAnimations(
     () => ({
-      abc: _ => [
+      abc: () => [
         {
           type: "loop",
           count: 2,
@@ -162,7 +162,7 @@ const Root = () => {
           ],
         },
       ],
-      def: _ => [
+      def: () => [
         { type: "tween", duration: 500, from: 0, to: 50 },
         { type: "delay", duration: 250 },
         { type: "spring", stiffness: 0.01, damping: 0.1, from: 50, to: 0 },
@@ -204,7 +204,7 @@ const Root = () => {
       </div>
       <div>
         {pipe(
-          animatedValues ?? {},
+          animatedValues,
           ReadonlyRecord.entries<EventSourceLike<number>, string>(),
           Enumerator.toReadonlyArray(),
           ReadonlyArray.map(([key, value]) => (
