@@ -1,12 +1,12 @@
+import { PredicatedLike } from "../../../__internal__/containers.js";
 import {
   Mixin2,
-  Mutable,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { __SatisfyObserver_predicate } from "../../../__internal__/symbols.js";
+import { __PredicatedLike_predicate } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -35,22 +35,18 @@ const Observer_satisfyMixin: <T>(
   ObserverLike<boolean>,
   Predicate<T>,
   Pick<ObserverLike<T>, typeof ObserverLike_notify>
-> = <T>(defaultResult: boolean) => {
-  type TProperties = {
-    readonly [__SatisfyObserver_predicate]: Predicate<T>;
-  };
-
-  return mix(
+> = <T>(defaultResult: boolean) =>
+  mix(
     include(Delegating_mixin(), Observer_mixin<T>()),
     function SatisfyObserver(
-      instance: Mutable<TProperties> &
+      instance: PredicatedLike<T> &
         Pick<ObserverLike<T>, typeof ObserverLike_notify>,
       delegate: ObserverLike<boolean>,
       predicate: Predicate<T>,
     ): ObserverLike<T> {
       init(Observer_mixin(), instance, delegate, delegate);
       init(Delegating_mixin(), instance, delegate);
-      instance[__SatisfyObserver_predicate] = predicate;
+      instance[__PredicatedLike_predicate] = predicate;
 
       pipe(
         instance,
@@ -68,25 +64,24 @@ const Observer_satisfyMixin: <T>(
 
       return instance;
     },
-    props<TProperties>({
-      [__SatisfyObserver_predicate]: none,
+    props<PredicatedLike<T>>({
+      [__PredicatedLike_predicate]: none,
     }),
     {
       [ObserverLike_notify](
-        this: TProperties &
+        this: PredicatedLike<T> &
           DelegatingLike<ObserverLike<boolean>> &
           ObserverLike<T>,
         next: T,
       ) {
         Observer_assertState(this);
 
-        if (this[__SatisfyObserver_predicate](next)) {
+        if (this[__PredicatedLike_predicate](next)) {
           this[DelegatingLike_delegate][ObserverLike_notify](!defaultResult);
           this[DelegatingLike_delegate][DisposableLike_dispose]();
         }
       },
     },
   );
-};
 
 export default Observer_satisfyMixin;

@@ -1,5 +1,5 @@
+import { ReducerAccumulatorLike } from "../../../__internal__/containers.js";
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -7,8 +7,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  __ReduceObserver_acc,
-  __ReduceObserver_reducer,
+  __ReducerAccumulatorLike_acc,
+  __ReducerAccumulatorLike_reducer,
 } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
@@ -39,27 +39,22 @@ type ObservableReduce = <C extends ObservableLike, T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => ContainerOperator<C, T, TAcc>;
 const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
-  type TProperties = {
-    readonly [__ReduceObserver_reducer]: Reducer<T, TAcc>;
-    [__ReduceObserver_acc]: TAcc;
-  };
-
   const createReduceObserver = createInstanceFactory(
     mix(
       include(Observer_mixin<T>()),
       function ReduceObserver(
         instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-          Mutable<TProperties>,
+          ReducerAccumulatorLike<T, TAcc>,
         delegate: ObserverLike<TAcc>,
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
       ): ObserverLike<T> {
         init(Observer_mixin(), instance, delegate, delegate);
-        instance[__ReduceObserver_reducer] = reducer;
+        instance[__ReducerAccumulatorLike_reducer] = reducer;
 
         try {
           const acc = initialValue();
-          instance[__ReduceObserver_acc] = acc;
+          instance[__ReducerAccumulatorLike_acc] = acc;
         } catch (e) {
           instance[DisposableLike_dispose](error(e));
         }
@@ -69,7 +64,7 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
           Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             pipe(
-              [instance[__ReduceObserver_acc]],
+              [instance[__ReducerAccumulatorLike_acc]],
               ReadonlyArray_toObservable(),
               invoke(ObservableLike_observe, delegate),
             );
@@ -78,19 +73,22 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
 
         return instance;
       },
-      props<TProperties>({
-        [__ReduceObserver_reducer]: none,
-        [__ReduceObserver_acc]: none,
+      props<ReducerAccumulatorLike<T, TAcc>>({
+        [__ReducerAccumulatorLike_acc]: none,
+        [__ReducerAccumulatorLike_reducer]: none,
       }),
       {
-        [ObserverLike_notify](this: TProperties & ObserverLike<T>, next: T) {
+        [ObserverLike_notify](
+          this: ReducerAccumulatorLike<T, TAcc> & ObserverLike<T>,
+          next: T,
+        ) {
           Observer_assertState(this);
 
-          const nextAcc = this[__ReduceObserver_reducer](
-            this[__ReduceObserver_acc],
+          const nextAcc = this[__ReducerAccumulatorLike_reducer](
+            this[__ReducerAccumulatorLike_acc],
             next,
           );
-          this[__ReduceObserver_acc] = nextAcc;
+          this[__ReducerAccumulatorLike_acc] = nextAcc;
         },
       },
     ),

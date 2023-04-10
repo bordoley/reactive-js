@@ -1,6 +1,6 @@
 import {
-  __LiftedObservable_operators,
-  __LiftedObservable_source,
+  __Lifted_operators,
+  __Lifted_source,
 } from "../../../__internal__/symbols.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
@@ -15,8 +15,8 @@ import {
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
-  readonly [__LiftedObservable_source]: ObservableLike<TIn>;
-  readonly [__LiftedObservable_operators]: readonly Function1<
+  readonly [__Lifted_source]: ObservableLike<TIn>;
+  readonly [__Lifted_operators]: readonly Function1<
     ObserverLike<any>,
     ObserverLike<any>
   >[];
@@ -29,8 +29,8 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
     isEnumerable: boolean,
     isRunnable: boolean,
   ) {
-    this[__LiftedObservable_source] = source;
-    this[__LiftedObservable_operators] = operators;
+    this[__Lifted_source] = source;
+    this[__Lifted_operators] = operators;
     this[ObservableLike_isEnumerable] = isEnumerable;
     this[ObservableLike_isRunnable] = isRunnable;
   }
@@ -38,8 +38,8 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   [ObservableLike_observe](observer: ObserverLike<TOut>) {
     pipeUnsafe(
       observer,
-      ...this[__LiftedObservable_operators],
-      Observer_sourceFrom(this[__LiftedObservable_source]),
+      ...this[__Lifted_operators],
+      Observer_sourceFrom(this[__Lifted_source]),
     );
   }
 }
@@ -102,15 +102,11 @@ const Observable_lift: ObservableLift["lift"] = ((config: {
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ): Function1<ObservableLike<TA>, ObservableLike<TB>> =>
   source => {
-    const sourceSource =
-      source instanceof LiftedObservable
-        ? source[__LiftedObservable_source]
-        : source;
-
-    const allFunctions =
-      source instanceof LiftedObservable
-        ? [operator, ...source[__LiftedObservable_operators]]
-        : [operator];
+    const sourceSource = (source as any)[__Lifted_source] ?? source;
+    const allFunctions = [
+      operator,
+      ...((source as any)[__Lifted_operators] ?? []),
+    ];
 
     const isLiftedEnumerable =
       config[ObservableLike_isEnumerable] &&

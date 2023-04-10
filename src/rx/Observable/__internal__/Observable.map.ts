@@ -1,12 +1,12 @@
+import { MappingLike } from "../../../__internal__/containers.js";
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { __MapObserver_mapper } from "../../../__internal__/symbols.js";
+import { __MappingLike_mapper } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -30,45 +30,40 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
   const createMapObserver: <TA, TB>(
     delegate: ObserverLike<TB>,
     predicate: Function1<TA, TB>,
-  ) => ObserverLike<TA> = (<TA, TB>() => {
-    type TProperties = {
-      readonly [__MapObserver_mapper]: Function1<TA, TB>;
-    };
-
-    return createInstanceFactory(
+  ) => ObserverLike<TA> = (<TA, TB>() =>
+    createInstanceFactory(
       mix(
         include(Observer_delegatingMixin<TA>(), Delegating_mixin()),
         function MapObserver(
           instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
-            Mutable<TProperties>,
+            MappingLike<TA, TB>,
           delegate: ObserverLike<TB>,
           mapper: Function1<TA, TB>,
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
-          instance[__MapObserver_mapper] = mapper;
+          instance[__MappingLike_mapper] = mapper;
 
           return instance;
         },
-        props<TProperties>({
-          [__MapObserver_mapper]: none,
+        props<MappingLike<TA, TB>>({
+          [__MappingLike_mapper]: none,
         }),
         {
           [ObserverLike_notify](
-            this: TProperties &
+            this: MappingLike<TA, TB> &
               DelegatingLike<ObserverLike<TB>> &
               ObserverLike<TA>,
             next: TA,
           ) {
             Observer_assertState(this);
 
-            const mapped = this[__MapObserver_mapper](next);
+            const mapped = this[__MappingLike_mapper](next);
             this[DelegatingLike_delegate][ObserverLike_notify](mapped);
           },
         },
       ),
-    );
-  })();
+    ))();
 
   return ((mapper: Function1<TA, TB>) =>
     pipe(createMapObserver, partial(mapper), Enumerable_lift)) as ObservableMap;

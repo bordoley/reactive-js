@@ -1,3 +1,4 @@
+import { PredicatedLike } from "../../../__internal__/containers.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -7,8 +8,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  __PredicatedLike_predicate,
   __TakeWhileObserver_inclusive,
-  __TakeWhileObserver_predicate,
 } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
@@ -40,8 +41,7 @@ const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
     predicate: Predicate<T>,
     inclusive: boolean,
   ) => ObserverLike<T> = (<T>() => {
-    type TProperties = {
-      readonly [__TakeWhileObserver_predicate]: Predicate<T>;
+    type TProperties = PredicatedLike<T> & {
       readonly [__TakeWhileObserver_inclusive]: boolean;
     };
 
@@ -57,13 +57,13 @@ const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
-          instance[__TakeWhileObserver_predicate] = predicate;
+          instance[__PredicatedLike_predicate] = predicate;
           instance[__TakeWhileObserver_inclusive] = inclusive;
 
           return instance;
         },
         props<TProperties>({
-          [__TakeWhileObserver_predicate]: none,
+          [__PredicatedLike_predicate]: none,
           [__TakeWhileObserver_inclusive]: none,
         }),
         {
@@ -75,8 +75,7 @@ const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
           ) {
             Observer_assertState(this);
 
-            const satisfiesPredicate =
-              this[__TakeWhileObserver_predicate](next);
+            const satisfiesPredicate = this[__PredicatedLike_predicate](next);
 
             if (satisfiesPredicate || this[__TakeWhileObserver_inclusive]) {
               this[DelegatingLike_delegate][ObserverLike_notify](next);

@@ -29,7 +29,7 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
             observer[__ObserverMixin_dispatchSubscription] = pipe(observer[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
         }
     };
-    const fifoQueueProtoype = getPrototype(Queue_indexedQueueMixin());
+    const indexedQueueProtoype = getPrototype(Queue_indexedQueueMixin());
     return returns(mix(include(Queue_indexedQueueMixin()), function ObserverMixin(instance, config) {
         init(
         // FIXME: Change this to take a config
@@ -42,7 +42,7 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
         [QueueableLike_enqueue](next) {
             if (!this[__ObserverMixin_isCompleted] &&
                 !this[DisposableLike_isDisposed]) {
-                const result = call(fifoQueueProtoype[QueueableLike_enqueue], this, next);
+                const result = call(indexedQueueProtoype[QueueableLike_enqueue], this, next);
                 scheduleDrainQueue(this);
                 return result;
             }

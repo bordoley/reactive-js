@@ -1,12 +1,12 @@
+import { PredicatedLike } from "../../../__internal__/containers.js";
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { __KeepObserver_predicate } from "../../../__internal__/symbols.js";
+import { __PredicatedLike_predicate } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -31,46 +31,41 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
   const createKeepObserver: <T>(
     delegate: ObserverLike<T>,
     predicate: Predicate<T>,
-  ) => ObserverLike<T> = (<T>() => {
-    type TProperties = {
-      readonly [__KeepObserver_predicate]: Predicate<T>;
-    };
-
-    return createInstanceFactory(
+  ) => ObserverLike<T> = (<T>() =>
+    createInstanceFactory(
       mix(
         include(Observer_delegatingMixin(), Delegating_mixin()),
         function KeepObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-            Mutable<TProperties>,
+            PredicatedLike<T>,
           delegate: ObserverLike<T>,
           predicate: Predicate<T>,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
-          instance[__KeepObserver_predicate] = predicate;
+          instance[__PredicatedLike_predicate] = predicate;
 
           return instance;
         },
-        props<TProperties>({
-          [__KeepObserver_predicate]: none,
+        props<PredicatedLike<T>>({
+          [__PredicatedLike_predicate]: none,
         }),
         {
           [ObserverLike_notify](
-            this: TProperties &
+            this: PredicatedLike<T> &
               DelegatingLike<ObserverLike<T>> &
               ObserverLike<T>,
             next: T,
           ) {
             Observer_assertState(this);
 
-            if (this[__KeepObserver_predicate](next)) {
+            if (this[__PredicatedLike_predicate](next)) {
               this[DelegatingLike_delegate][ObserverLike_notify](next);
             }
           },
         },
       ),
-    );
-  })();
+    ))();
 
   return (predicate: Predicate<T>) =>
     pipe(createKeepObserver, partial(predicate), Enumerable_lift);

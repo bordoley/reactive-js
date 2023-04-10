@@ -136,6 +136,40 @@ export declare const __DelegatingSchedulerMixin_delegate: unique symbol;
 
 export declare const __DelegatingStreamMixin_delegate: unique symbol;
 
+export declare const __DisposableMixin_disposables: unique symbol;
+
+export declare const __IndexedQueueMixin_head: unique symbol;
+
+export declare const __IndexedQueueMixin_tail: unique symbol;
+
+export declare const __IndexedQueueMixin_capacityMask: unique symbol;
+
+export declare const __IndexedQueueMixin_values: unique symbol;
+
+export declare const __ObserverMixin_continuation: unique symbol;
+
+export declare const __ObserverMixin_dispatchSubscription: unique symbol;
+
+export declare const __ObserverMixin_isCompleted: unique symbol;
+
+export declare const __ObserverMixin_scheduler: unique symbol;
+
+export declare const __SchedulerMixin_yieldRequested: unique symbol;
+
+export declare const __SchedulerMixin_currentContinuation: unique symbol;
+
+export declare const __SchedulerMixin_startTime: unique symbol;
+
+export declare const __SerialDisposableMixin_current: unique symbol;
+
+export declare const __MappingLike_mapper: unique symbol;
+
+export declare const __PredicatedLike_predicate: unique symbol;
+
+export declare const __ReducerAccumulatorLike_acc: unique symbol;
+
+export declare const __ReducerAccumulatorLike_reducer: unique symbol;
+
 export declare const __AnimationFrameScheduler_delayScheduler: unique symbol;
 
 export declare const __AwaitOrObserveEffect_observable: unique symbol;
@@ -186,8 +220,6 @@ export declare const __DecodeWithCharsetObserver_textDecoder: unique symbol;
 
 export declare const __DispatchedObservable_observer: unique symbol;
 
-export declare const __DisposableMixin_disposables: unique symbol;
-
 export declare const __DistinctUntilChangedObserver_equality: unique symbol;
 
 export declare const __DistinctUntilChangedObserver_prev: unique symbol;
@@ -200,19 +232,9 @@ export declare const __Enumerator_private_current: unique symbol;
 
 export declare const __EnumerableEnumerator_continuationQueue: unique symbol;
 
-export declare const __FifoQueue_head: unique symbol;
-
-export declare const __FifoQueue_tail: unique symbol;
-
-export declare const __FifoQueue_capacityMask: unique symbol;
-
-export declare const __FifoQueue_values: unique symbol;
-
 export declare const __HigherOrderObservable_currentRef: unique symbol;
 
 export declare const __IteratorEnumerator_iterator: unique symbol;
-
-export declare const __KeepObserver_predicate: unique symbol;
 
 export declare const __LatestCtx_delegate: unique symbol;
 
@@ -228,15 +250,9 @@ export declare const __LatestObserver_latest: unique symbol;
 
 export declare const __LatestObserver_ctx: unique symbol;
 
-export declare const __LiftedAsyncEnumerable_src: unique symbol;
+export declare const __Lifted_source: unique symbol;
 
-export declare const __LiftedAsyncEnumerable_operators: unique symbol;
-
-export declare const __LiftedObservable_source: unique symbol;
-
-export declare const __LiftedObservable_operators: unique symbol;
-
-export declare const __MapObserver_mapper: unique symbol;
+export declare const __Lifted_operators: unique symbol;
 
 export declare const __MemoOrUsingEffect_func: unique symbol;
 
@@ -263,14 +279,6 @@ export declare const __Object_properties: unique symbol;
 export declare const __Object_prototype: unique symbol;
 
 export declare const __Object_private_initializedProperties: unique symbol;
-
-export declare const __ObserverMixin_continuation: unique symbol;
-
-export declare const __ObserverMixin_dispatchSubscription: unique symbol;
-
-export declare const __ObserverMixin_isCompleted: unique symbol;
-
-export declare const __ObserverMixin_scheduler: unique symbol;
 
 export declare const __PairwiseObserver_prev: unique symbol;
 
@@ -310,24 +318,6 @@ export declare const __ReadonlyArrayEnumerator_index: unique symbol;
 
 export declare const __ReadonlyArrayEnumerator_count: unique symbol;
 
-export declare const __ReduceObserver_reducer: unique symbol;
-
-export declare const __ReduceObserver_acc: unique symbol;
-
-export declare const __SatisfyObserver_predicate: unique symbol;
-
-export declare const __ScanObserver_reducer: unique symbol;
-
-export declare const __ScanObserver_acc: unique symbol;
-
-export declare const __SchedulerMixin_yieldRequested: unique symbol;
-
-export declare const __SchedulerMixin_currentContinuation: unique symbol;
-
-export declare const __SchedulerMixin_startTime: unique symbol;
-
-export declare const __SerialDisposableMixin_current: unique symbol;
-
 export declare const __SkipFirstObserver_skipCount: unique symbol;
 
 export declare const __SkipFirstObserver_count: unique symbol;
@@ -337,8 +327,6 @@ export declare const __TakeFirstObserver_takeCount: unique symbol;
 export declare const __TakeFirstObserver_count: unique symbol;
 
 export declare const __TakeLastObserver_takeLastQueue: unique symbol;
-
-export declare const __TakeWhileObserver_predicate: unique symbol;
 
 export declare const __TakeWhileObserver_inclusive: unique symbol;
 
@@ -374,20 +362,14 @@ export declare const __VirtualTimeScheduler_taskIDCount: unique symbol;
 
 export declare const __WithCurrentTimeObserver_selector: unique symbol;
 
-export declare const __WithLatestFromObserver_hasLatest: unique symbol;
+export declare const __WithLatestLike_hasLatest: unique symbol;
 
-export declare const __WithLatestFromObserver_otherLatest: unique symbol;
+export declare const __WithLatestLike_otherLatest: unique symbol;
 
-export declare const __WithLatestFromObserver_selector: unique symbol;
+export declare const __WithLatestLike_selector: unique symbol;
 
 export declare const __ZipObserver_enumerators: unique symbol;
 
 export declare const __ZipObserver_queuedEnumerator: unique symbol;
-
-export declare const __ZipWithLatestFromObserver_hasLatest: unique symbol;
-
-export declare const __ZipWithLatestFromObserver_otherLatest: unique symbol;
-
-export declare const __ZipWithLatestFromObserver_selector: unique symbol;
 
 export declare const __ZipWithLatestFromObserver_TAQueue: unique symbol;

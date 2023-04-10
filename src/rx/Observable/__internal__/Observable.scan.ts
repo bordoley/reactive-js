@@ -1,5 +1,5 @@
+import { ReducerAccumulatorLike } from "../../../__internal__/containers.js";
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -7,8 +7,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  __ScanObserver_acc,
-  __ScanObserver_reducer,
+  __ReducerAccumulatorLike_acc,
+  __ReducerAccumulatorLike_reducer,
 } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
@@ -44,52 +44,47 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ) => ObserverLike<T> = (() => {
-    type TProperties = {
-      readonly [__ScanObserver_reducer]: Reducer<T, TAcc>;
-      [__ScanObserver_acc]: TAcc;
-    };
-
     return createInstanceFactory(
       mix(
         include(Observer_delegatingMixin(), Delegating_mixin()),
         function ScanObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-            Mutable<TProperties>,
+            ReducerAccumulatorLike<T, TAcc>,
           delegate: ObserverLike<TAcc>,
           reducer: Reducer<T, TAcc>,
           initialValue: Factory<TAcc>,
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
-          instance[__ScanObserver_reducer] = reducer;
+          instance[__ReducerAccumulatorLike_reducer] = reducer;
 
           try {
             const acc = initialValue();
-            instance[__ScanObserver_acc] = acc;
+            instance[__ReducerAccumulatorLike_acc] = acc;
           } catch (e) {
             instance[DisposableLike_dispose](error(e));
           }
 
           return instance;
         },
-        props<TProperties>({
-          [__ScanObserver_reducer]: none,
-          [__ScanObserver_acc]: none,
+        props<ReducerAccumulatorLike<T, TAcc>>({
+          [__ReducerAccumulatorLike_acc]: none,
+          [__ReducerAccumulatorLike_reducer]: none,
         }),
         {
           [ObserverLike_notify](
-            this: TProperties &
+            this: ReducerAccumulatorLike<T, TAcc> &
               DelegatingLike<ObserverLike<TAcc>> &
               ObserverLike<T>,
             next: T,
           ) {
             Observer_assertState(this);
 
-            const nextAcc = this[__ScanObserver_reducer](
-              this[__ScanObserver_acc],
+            const nextAcc = this[__ReducerAccumulatorLike_reducer](
+              this[__ReducerAccumulatorLike_acc],
               next,
             );
-            this[__ScanObserver_acc] = nextAcc;
+            this[__ReducerAccumulatorLike_acc] = nextAcc;
             this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
           },
         },

@@ -44,7 +44,7 @@ const makeShuffledArray = (n: number) => {
 testModule(
   "Queue",
   describe(
-    "fifoQueueMixin",
+    "indexedQueueMixin",
     test("push/pull/count", () => {
       const queue = Queue_createIndexedQueue<number>(
         MAX_SAFE_INTEGER,

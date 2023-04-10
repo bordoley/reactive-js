@@ -1,9 +1,9 @@
 /// <reference types="./Observable.zipWithLatestFrom.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { __ZipWithLatestFromObserver_TAQueue, __ZipWithLatestFromObserver_hasLatest, __ZipWithLatestFromObserver_otherLatest, __ZipWithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
+import { __WithLatestLike_hasLatest, __WithLatestLike_otherLatest, __WithLatestLike_selector, __ZipWithLatestFromObserver_TAQueue, } from "../../../__internal__/symbols.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.js";
-import { none, partial, pipe, } from "../../../functions.js";
+import { none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
@@ -21,17 +21,17 @@ const Observable_zipWithLatestFrom =
         const notifyDelegate = (observer) => {
             if (observer[__ZipWithLatestFromObserver_TAQueue][CollectionLike_count] >
                 0 &&
-                observer[__ZipWithLatestFromObserver_hasLatest]) {
-                observer[__ZipWithLatestFromObserver_hasLatest] = false;
+                observer[__WithLatestLike_hasLatest]) {
+                observer[__WithLatestLike_hasLatest] = false;
                 const next = observer[__ZipWithLatestFromObserver_TAQueue][QueueLike_dequeue]();
-                const result = observer[__ZipWithLatestFromObserver_selector](next, observer[__ZipWithLatestFromObserver_otherLatest]);
+                const result = observer[__WithLatestLike_selector](next, observer[__WithLatestLike_otherLatest]);
                 observer[DelegatingLike_delegate][ObserverLike_notify](result);
             }
         };
         return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function ZipWithLatestFromObserver(instance, delegate, other, selector) {
             init(Observer_mixin(), instance, delegate, delegate);
             init(Delegating_mixin(), instance, delegate);
-            instance[__ZipWithLatestFromObserver_selector] = selector;
+            instance[__WithLatestLike_selector] = selector;
             instance[__ZipWithLatestFromObserver_TAQueue] =
                 Queue_createIndexedQueue(delegate[BufferLike_capacity], delegate[QueueableLike_backpressureStrategy]);
             const disposeDelegate = () => {
@@ -41,8 +41,8 @@ const Observable_zipWithLatestFrom =
                 }
             };
             const otherSubscription = pipe(other, Observable_forEach(otherLatest => {
-                instance[__ZipWithLatestFromObserver_hasLatest] = true;
-                instance[__ZipWithLatestFromObserver_otherLatest] = otherLatest;
+                instance[__WithLatestLike_hasLatest] = true;
+                instance[__WithLatestLike_otherLatest] = otherLatest;
                 notifyDelegate(instance);
                 if (instance[DisposableLike_isDisposed] &&
                     instance[__ZipWithLatestFromObserver_TAQueue][CollectionLike_count] === 0) {
@@ -52,9 +52,9 @@ const Observable_zipWithLatestFrom =
             pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(disposeDelegate));
             return instance;
         }, props({
-            [__ZipWithLatestFromObserver_hasLatest]: false,
-            [__ZipWithLatestFromObserver_otherLatest]: none,
-            [__ZipWithLatestFromObserver_selector]: none,
+            [__WithLatestLike_hasLatest]: false,
+            [__WithLatestLike_otherLatest]: none,
+            [__WithLatestLike_selector]: none,
             [__ZipWithLatestFromObserver_TAQueue]: none,
         }), {
             [ObserverLike_notify](next) {

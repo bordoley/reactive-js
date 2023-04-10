@@ -1,28 +1,22 @@
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { WithLatestLike } from "../../../__internal__/rx.js";
 import {
-  __WithLatestFromObserver_hasLatest,
-  __WithLatestFromObserver_otherLatest,
-  __WithLatestFromObserver_selector,
+  __WithLatestLike_hasLatest,
+  __WithLatestLike_otherLatest,
+  __WithLatestLike_selector,
 } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
 import { ContainerOf, ContainerOperator } from "../../../containers.js";
-import {
-  Function2,
-  Optional,
-  none,
-  partial,
-  pipe,
-} from "../../../functions.js";
+import { Function2, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -50,12 +44,6 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
   TB,
   T,
 >() => {
-  type TProperties = {
-    [__WithLatestFromObserver_hasLatest]: boolean;
-    [__WithLatestFromObserver_otherLatest]: Optional<TB>;
-    readonly [__WithLatestFromObserver_selector]: Function2<TA, TB, T>;
-  };
-
   const createWithLatestObserver: (
     delegate: ObserverLike<T>,
     other: ObservableLike<TB>,
@@ -64,27 +52,27 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
     createInstanceFactory(
       mix(
         include(Observer_delegatingMixin(), Delegating_mixin()),
-        function WithLatestFromObserver(
+        function WithLatestLike(
           instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
-            Mutable<TProperties>,
+            WithLatestLike<TA, TB, T>,
           delegate: ObserverLike<T>,
           other: ObservableLike<TB>,
           selector: Function2<TA, TB, T>,
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
-          instance[__WithLatestFromObserver_selector] = selector;
+          instance[__WithLatestLike_selector] = selector;
 
           pipe(
             other,
             Observable_forEach<ObservableLike, TB>(next => {
-              instance[__WithLatestFromObserver_hasLatest] = true;
-              instance[__WithLatestFromObserver_otherLatest] = next;
+              instance[__WithLatestLike_hasLatest] = true;
+              instance[__WithLatestLike_otherLatest] = next;
             }),
             Observable_subscribeWithConfig(delegate, delegate),
             Disposable_addTo(instance),
             Disposable_onComplete(() => {
-              if (!instance[__WithLatestFromObserver_hasLatest]) {
+              if (!instance[__WithLatestLike_hasLatest]) {
                 instance[DisposableLike_dispose]();
               }
             }),
@@ -92,14 +80,14 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
 
           return instance;
         },
-        props<TProperties>({
-          [__WithLatestFromObserver_hasLatest]: false,
-          [__WithLatestFromObserver_otherLatest]: none,
-          [__WithLatestFromObserver_selector]: none,
+        props<WithLatestLike<TA, TB, T>>({
+          [__WithLatestLike_hasLatest]: false,
+          [__WithLatestLike_otherLatest]: none,
+          [__WithLatestLike_selector]: none,
         }),
         {
           [ObserverLike_notify](
-            this: TProperties &
+            this: WithLatestLike<TA, TB, T> &
               ObserverLike<TA> &
               DelegatingLike<ObserverLike<T>>,
             next: TA,
@@ -108,11 +96,11 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
 
             if (
               !this[DisposableLike_isDisposed] &&
-              this[__WithLatestFromObserver_hasLatest]
+              this[__WithLatestLike_hasLatest]
             ) {
-              const result = this[__WithLatestFromObserver_selector](
+              const result = this[__WithLatestLike_selector](
                 next,
-                this[__WithLatestFromObserver_otherLatest] as TB,
+                this[__WithLatestLike_otherLatest] as TB,
               );
               this[DelegatingLike_delegate][ObserverLike_notify](result);
             }
