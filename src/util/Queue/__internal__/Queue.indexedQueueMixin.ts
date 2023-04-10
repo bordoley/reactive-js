@@ -2,10 +2,10 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { Mixin2, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
-  __FifoQueue_capacityMask,
-  __FifoQueue_head,
-  __FifoQueue_tail,
-  __FifoQueue_values,
+  __IndexedQueueMixin_capacityMask,
+  __IndexedQueueMixin_head,
+  __IndexedQueueMixin_tail,
+  __IndexedQueueMixin_values,
 } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
@@ -49,10 +49,10 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
     [CollectionLike_count]: number;
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly [BufferLike_capacity]: number;
-    [__FifoQueue_head]: number;
-    [__FifoQueue_tail]: number;
-    [__FifoQueue_capacityMask]: number;
-    [__FifoQueue_values]: Optional<Optional<T>[]>;
+    [__IndexedQueueMixin_head]: number;
+    [__IndexedQueueMixin_tail]: number;
+    [__IndexedQueueMixin_capacityMask]: number;
+    [__IndexedQueueMixin_values]: Optional<Optional<T>[]>;
   };
 
   const copyArray = (
@@ -80,35 +80,35 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
   };
 
   const grow = (instance: TProperties) => {
-    const head = instance[__FifoQueue_head];
-    const tail = instance[__FifoQueue_tail];
+    const head = instance[__IndexedQueueMixin_head];
+    const tail = instance[__IndexedQueueMixin_tail];
 
     if (tail !== head && tail !== 0) {
       return;
     }
 
-    const values = instance[__FifoQueue_values] ?? [];
+    const values = instance[__IndexedQueueMixin_values] ?? [];
     const capacity = values.length;
-    const capacityMask = instance[__FifoQueue_capacityMask];
+    const capacityMask = instance[__IndexedQueueMixin_capacityMask];
     const count = instance[CollectionLike_count];
 
     if (head === 0 || (tail === 0 && head < capacity >> 2)) {
       values.length <<= 1;
-      instance[__FifoQueue_tail] = count + head;
+      instance[__IndexedQueueMixin_tail] = count + head;
     } else {
       const newCapacity = capacity << 1;
       const newList = copyArray(values, head, tail, newCapacity);
 
-      instance[__FifoQueue_values] = newList;
-      instance[__FifoQueue_head] = 0;
-      instance[__FifoQueue_tail] = count;
+      instance[__IndexedQueueMixin_values] = newList;
+      instance[__IndexedQueueMixin_head] = 0;
+      instance[__IndexedQueueMixin_tail] = count;
     }
 
-    instance[__FifoQueue_capacityMask] = (capacityMask << 1) | 1;
+    instance[__IndexedQueueMixin_capacityMask] = (capacityMask << 1) | 1;
   };
 
   const shrink = (instance: TProperties) => {
-    const values = instance[__FifoQueue_values] ?? [];
+    const values = instance[__IndexedQueueMixin_values] ?? [];
     const capacity = values.length;
     const count = instance[CollectionLike_count];
 
@@ -116,8 +116,8 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
       return;
     }
 
-    const head = instance[__FifoQueue_head];
-    const tail = instance[__FifoQueue_tail];
+    const head = instance[__IndexedQueueMixin_head];
+    const tail = instance[__IndexedQueueMixin_tail];
     const newCapacity = capacity >> 1;
 
     if (tail >= head && tail < newCapacity) {
@@ -125,17 +125,17 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
     } else {
       const newList = copyArray(values, head, tail, newCapacity);
 
-      instance[__FifoQueue_values] = newList;
-      instance[__FifoQueue_head] = 0;
-      instance[__FifoQueue_tail] = count;
+      instance[__IndexedQueueMixin_values] = newList;
+      instance[__IndexedQueueMixin_head] = 0;
+      instance[__IndexedQueueMixin_tail] = count;
     }
 
-    instance[__FifoQueue_capacityMask] = newCapacity - 1;
+    instance[__IndexedQueueMixin_capacityMask] = newCapacity - 1;
   };
 
   return pipe(
     mix(
-      function FifoQueue(
+      function IndexedQueueMixin(
         instance: Omit<
           IndexedQueueLike<T>,
           typeof CollectionLike_count | typeof BufferLike_capacity
@@ -152,42 +152,42 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
         [CollectionLike_count]: 0,
         [QueueableLike_backpressureStrategy]: "overflow",
         [BufferLike_capacity]: MAX_SAFE_INTEGER,
-        [__FifoQueue_head]: 0,
-        [__FifoQueue_tail]: 0,
-        [__FifoQueue_capacityMask]: 0,
-        [__FifoQueue_values]: none,
+        [__IndexedQueueMixin_head]: 0,
+        [__IndexedQueueMixin_tail]: 0,
+        [__IndexedQueueMixin_capacityMask]: 0,
+        [__IndexedQueueMixin_values]: none,
       }),
       {
         get [QueueLike_head]() {
           unsafeCast<TProperties>(this);
-          const head = this[__FifoQueue_head];
-          const values = this[__FifoQueue_values] ?? [];
+          const head = this[__IndexedQueueMixin_head];
+          const values = this[__IndexedQueueMixin_values] ?? [];
 
-          return head === this[__FifoQueue_tail] ? none : values[head];
+          return head === this[__IndexedQueueMixin_tail] ? none : values[head];
         },
 
         get [StackLike_head]() {
           unsafeCast<TProperties>(this);
-          const head = this[__FifoQueue_head];
-          const tail = this[__FifoQueue_tail];
-          const values = this[__FifoQueue_values] ?? [];
+          const head = this[__IndexedQueueMixin_head];
+          const tail = this[__IndexedQueueMixin_tail];
+          const values = this[__IndexedQueueMixin_values] ?? [];
           const index = tail > 0 ? tail - 1 : values.length - 1;
 
           return head === tail ? none : values[index];
         },
 
         [QueueLike_dequeue](this: TProperties & QueueableLike) {
-          const tail = this[__FifoQueue_tail];
-          const values = this[__FifoQueue_values] ?? [];
+          const tail = this[__IndexedQueueMixin_tail];
+          const values = this[__IndexedQueueMixin_values] ?? [];
 
-          let head = this[__FifoQueue_head];
+          let head = this[__IndexedQueueMixin_head];
 
           const item = head === tail ? none : values[head];
 
           if (head !== tail) {
             values[head] = none;
-            head = (head + 1) & this[__FifoQueue_capacityMask];
-            this[__FifoQueue_head] = head;
+            head = (head + 1) & this[__IndexedQueueMixin_capacityMask];
+            this[__IndexedQueueMixin_head] = head;
             this[CollectionLike_count]--;
           }
 
@@ -197,18 +197,19 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
         },
 
         [StackLike_pop](this: TProperties & QueueableLike): Optional<T> {
-          const head = this[__FifoQueue_head];
-          const values = this[__FifoQueue_values] ?? [];
+          const head = this[__IndexedQueueMixin_head];
+          const values = this[__IndexedQueueMixin_values] ?? [];
           const capacity = values.length;
 
-          let tail = this[__FifoQueue_tail];
+          let tail = this[__IndexedQueueMixin_tail];
 
           const item =
             head === tail
               ? none
               : ((tail =
-                  (tail - 1 + capacity) & this[__FifoQueue_capacityMask]),
-                (this[__FifoQueue_tail] = tail),
+                  (tail - 1 + capacity) &
+                  this[__IndexedQueueMixin_capacityMask]),
+                (this[__IndexedQueueMixin_tail] = tail),
                 this[CollectionLike_count]--,
                 values[tail]);
 
@@ -224,9 +225,9 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
           index: number,
         ): T {
           const count = this[CollectionLike_count];
-          const capacity = this[__FifoQueue_values]?.length ?? 0;
-          const head = this[__FifoQueue_head];
-          const values = this[__FifoQueue_values] ?? [];
+          const capacity = this[__IndexedQueueMixin_values]?.length ?? 0;
+          const head = this[__IndexedQueueMixin_head];
+          const values = this[__IndexedQueueMixin_values] ?? [];
 
           const headOffsetIndex = index + head;
           const tailOffsetIndex = headOffsetIndex - capacity;
@@ -247,9 +248,9 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
           value: T,
         ): T {
           const count = this[CollectionLike_count];
-          const capacity = this[__FifoQueue_values]?.length ?? 0;
-          const head = this[__FifoQueue_head];
-          const values = this[__FifoQueue_values] ?? [];
+          const capacity = this[__IndexedQueueMixin_values]?.length ?? 0;
+          const head = this[__IndexedQueueMixin_head];
+          const values = this[__IndexedQueueMixin_values] ?? [];
 
           const headOffsetIndex = index + head;
           const tailOffsetIndex = headOffsetIndex - capacity;
@@ -297,23 +298,23 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
           }
 
           const values =
-            this[__FifoQueue_values] ??
-            ((this[__FifoQueue_capacityMask] = 31),
-            (this[__FifoQueue_values] = newInstance<Array<Optional<T>>, number>(
-              Array,
-              32,
-            )),
-            this[__FifoQueue_values]);
+            this[__IndexedQueueMixin_values] ??
+            ((this[__IndexedQueueMixin_capacityMask] = 31),
+            (this[__IndexedQueueMixin_values] = newInstance<
+              Array<Optional<T>>,
+              number
+            >(Array, 32)),
+            this[__IndexedQueueMixin_values]);
 
-          const capacityMask = this[__FifoQueue_capacityMask];
+          const capacityMask = this[__IndexedQueueMixin_capacityMask];
 
-          let tail = this[__FifoQueue_tail];
+          let tail = this[__IndexedQueueMixin_tail];
 
           values[tail] = item;
           this[CollectionLike_count]++;
 
           tail = (tail + 1) & capacityMask;
-          this[__FifoQueue_tail] = tail;
+          this[__IndexedQueueMixin_tail] = tail;
 
           grow(this);
 

@@ -1,6 +1,6 @@
 import {
-  __LiftedAsyncEnumerable_operators,
-  __LiftedAsyncEnumerable_src,
+  __Lifted_operators,
+  __Lifted_source,
 } from "../../../__internal__/symbols.js";
 import { ContainerOperator } from "../../../containers.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
@@ -19,8 +19,8 @@ import {
 } from "../../../util.js";
 
 class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
-  readonly [__LiftedAsyncEnumerable_src]: AsyncEnumerableLike<any>;
-  readonly [__LiftedAsyncEnumerable_operators]: readonly Function1<
+  readonly [__Lifted_source]: AsyncEnumerableLike<any>;
+  readonly [__Lifted_operators]: readonly Function1<
     StreamLike<void, any>,
     StreamLike<void, any>
   >[];
@@ -38,8 +38,8 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
     isEnumerable: boolean,
     isRunnable: boolean,
   ) {
-    this[__LiftedAsyncEnumerable_src] = src;
-    this[__LiftedAsyncEnumerable_operators] = operators;
+    this[__Lifted_source] = src;
+    this[__Lifted_operators] = operators;
     this[StreamableLike_isEnumerable] = isEnumerable;
     this[StreamableLike_isRunnable] = isRunnable;
   }
@@ -52,15 +52,12 @@ class LiftedAsyncEnumerable<T> implements AsyncEnumerableLike<T> {
       readonly capacity?: number;
     },
   ): StreamLike<void, T> {
-    const src = this[__LiftedAsyncEnumerable_src][StreamableLike_stream](
+    const src = this[__Lifted_source][StreamableLike_stream](
       scheduler,
       options,
     );
 
-    return pipeUnsafe(
-      src,
-      ...this[__LiftedAsyncEnumerable_operators],
-    ) as StreamLike<void, T>;
+    return pipeUnsafe(src, ...this[__Lifted_operators]) as StreamLike<void, T>;
   }
 }
 
@@ -70,15 +67,11 @@ const AsyncEnumerable_lift =
     operator: Function1<StreamLike<void, TA>, StreamLike<void, TB>>,
   ): ContainerOperator<AsyncEnumerableLike, TA, TB> =>
   enumerable => {
-    const src =
-      enumerable instanceof LiftedAsyncEnumerable
-        ? enumerable[__LiftedAsyncEnumerable_src]
-        : enumerable;
-
-    const allFunctions =
-      enumerable instanceof LiftedAsyncEnumerable
-        ? [...enumerable[__LiftedAsyncEnumerable_operators], operator]
-        : [operator];
+    const src = (enumerable as any)[__Lifted_source] ?? enumerable;
+    const allFunctions = [
+      ...((enumerable as any)[__Lifted_operators] ?? []),
+      operator,
+    ];
 
     const liftedIsEnumerable =
       isEnumerable && enumerable[StreamableLike_isEnumerable];

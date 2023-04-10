@@ -29,7 +29,7 @@ const makeShuffledArray = (n) => {
     }
     return result;
 };
-testModule("Queue", describe("fifoQueueMixin", test("push/pull/count", () => {
+testModule("Queue", describe("indexedQueueMixin", test("push/pull/count", () => {
     const queue = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
     pipe(queue[QueueLike_head], expectEquals(none));
     pipe(queue[QueueLike_dequeue](), expectEquals(none));

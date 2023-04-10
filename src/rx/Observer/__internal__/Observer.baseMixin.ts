@@ -87,7 +87,7 @@ const Observer_baseMixin: <T>() => Mixin1<
     }
   };
 
-  const fifoQueueProtoype = getPrototype(Queue_indexedQueueMixin<T>());
+  const indexedQueueProtoype = getPrototype(Queue_indexedQueueMixin<T>());
 
   return returns(
     mix(
@@ -123,7 +123,7 @@ const Observer_baseMixin: <T>() => Mixin1<
             !this[DisposableLike_isDisposed]
           ) {
             const result = call(
-              fifoQueueProtoype[QueueableLike_enqueue],
+              indexedQueueProtoype[QueueableLike_enqueue],
               this,
               next,
             );

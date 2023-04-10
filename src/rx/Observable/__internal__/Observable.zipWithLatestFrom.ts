@@ -6,11 +6,12 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { WithLatestLike } from "../../../__internal__/rx.js";
 import {
+  __WithLatestLike_hasLatest,
+  __WithLatestLike_otherLatest,
+  __WithLatestLike_selector,
   __ZipWithLatestFromObserver_TAQueue,
-  __ZipWithLatestFromObserver_hasLatest,
-  __ZipWithLatestFromObserver_otherLatest,
-  __ZipWithLatestFromObserver_selector,
 } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
@@ -20,13 +21,7 @@ import {
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
-import {
-  Function2,
-  Optional,
-  none,
-  partial,
-  pipe,
-} from "../../../functions.js";
+import { Function2, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObserverLike,
@@ -58,11 +53,8 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
       other: ObservableLike<TB>,
       selector: Function2<TA, TB, T>,
     ) => ObserverLike<TA> = (<TA, TB, T>() => {
-      type TProperties = {
-        [__ZipWithLatestFromObserver_hasLatest]: boolean;
-        [__ZipWithLatestFromObserver_otherLatest]: Optional<TB>;
-        readonly [__ZipWithLatestFromObserver_selector]: Function2<TA, TB, T>;
-        readonly [__ZipWithLatestFromObserver_TAQueue]: IndexedQueueLike<TA>;
+      type TProperties = WithLatestLike<TA, TB, T> & {
+        [__ZipWithLatestFromObserver_TAQueue]: IndexedQueueLike<TA>;
       };
 
       const notifyDelegate = (
@@ -73,15 +65,15 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
         if (
           observer[__ZipWithLatestFromObserver_TAQueue][CollectionLike_count] >
             0 &&
-          observer[__ZipWithLatestFromObserver_hasLatest]
+          observer[__WithLatestLike_hasLatest]
         ) {
-          observer[__ZipWithLatestFromObserver_hasLatest] = false;
+          observer[__WithLatestLike_hasLatest] = false;
           const next = observer[__ZipWithLatestFromObserver_TAQueue][
             QueueLike_dequeue
           ]() as TA;
-          const result = observer[__ZipWithLatestFromObserver_selector](
+          const result = observer[__WithLatestLike_selector](
             next,
-            observer[__ZipWithLatestFromObserver_otherLatest] as TB,
+            observer[__WithLatestLike_otherLatest] as TB,
           );
 
           observer[DelegatingLike_delegate][ObserverLike_notify](result);
@@ -100,7 +92,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
           ): ObserverLike<TA> {
             init(Observer_mixin(), instance, delegate, delegate);
             init(Delegating_mixin<ObserverLike<T>>(), instance, delegate);
-            instance[__ZipWithLatestFromObserver_selector] = selector;
+            instance[__WithLatestLike_selector] = selector;
             instance[__ZipWithLatestFromObserver_TAQueue] =
               Queue_createIndexedQueue(
                 delegate[BufferLike_capacity],
@@ -119,8 +111,8 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             const otherSubscription = pipe(
               other,
               Observable_forEach<ObservableLike, TB>(otherLatest => {
-                instance[__ZipWithLatestFromObserver_hasLatest] = true;
-                instance[__ZipWithLatestFromObserver_otherLatest] = otherLatest;
+                instance[__WithLatestLike_hasLatest] = true;
+                instance[__WithLatestLike_otherLatest] = otherLatest;
                 notifyDelegate(instance);
 
                 if (
@@ -146,9 +138,9 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             return instance;
           },
           props<TProperties>({
-            [__ZipWithLatestFromObserver_hasLatest]: false,
-            [__ZipWithLatestFromObserver_otherLatest]: none,
-            [__ZipWithLatestFromObserver_selector]: none,
+            [__WithLatestLike_hasLatest]: false,
+            [__WithLatestLike_otherLatest]: none,
+            [__WithLatestLike_selector]: none,
             [__ZipWithLatestFromObserver_TAQueue]: none,
           }),
           {
