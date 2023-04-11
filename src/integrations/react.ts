@@ -472,8 +472,6 @@ interface UseAnimation {
   useAnimation<TEvent, T = number>(
     eventOptions: {
       readonly mode: "queueing";
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
       readonly concurrency?: number;
     },
     animationFactory: Factory<
@@ -494,8 +492,6 @@ interface UseAnimation {
 export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
   eventOptions: {
     readonly mode: "switching" | "blocking" | "queueing";
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
     readonly concurrency?: number;
   },
   animationFactory: Factory<
@@ -570,14 +566,7 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
           Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
         );
       }, eventOptions as any),
-    [
-      animations,
-      eventOptions.mode,
-      eventOptions.backpressureStrategy,
-      eventOptions.capacity,
-      publishers,
-      options?.priority,
-    ],
+    [animations, eventOptions.mode, publishers, options?.priority],
   );
 
   const [value, dispatch] = useStreamable(streamable, options);
@@ -625,8 +614,6 @@ interface UseAnimatedState {
     eventOptions: {
       readonly mode: "queueing";
       readonly equality?: Equality<TState>;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
       readonly concurrency?: number;
     },
     animationFactory: Factory<
@@ -655,8 +642,6 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
   eventOptions: {
     readonly mode: "switching" | "queueing";
     readonly equality?: Equality<TState>;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
     readonly concurrency?: number;
   },
   animationFactory: Factory<
@@ -735,14 +720,7 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
         },
         eventOptions as any,
       ),
-    [
-      animations,
-      eventOptions.mode,
-      eventOptions.backpressureStrategy,
-      eventOptions.capacity,
-      options?.priority,
-      publishers,
-    ],
+    [animations, eventOptions.mode, options?.priority, publishers],
   );
 
   const [value, dispatch] = useStreamable(streamable, options);

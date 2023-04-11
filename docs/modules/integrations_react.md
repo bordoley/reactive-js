@@ -66,8 +66,6 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 | :------ | :------ |
 | `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
 | `eventOptions` | `Object` |
-| `eventOptions.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `eventOptions.capacity?` | `number` |
 | `eventOptions.concurrency?` | `number` |
 | `eventOptions.equality?` | [`Equality`](functions.md#equality)<`TState`\> |
 | `eventOptions.mode` | ``"queueing"`` |
@@ -154,8 +152,6 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 | Name | Type |
 | :------ | :------ |
 | `eventOptions` | `Object` |
-| `eventOptions.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `eventOptions.capacity?` | `number` |
 | `eventOptions.concurrency?` | `number` |
 | `eventOptions.mode` | ``"queueing"`` |
 | `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
