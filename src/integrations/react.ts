@@ -447,6 +447,40 @@ const usePublishers = <T>(
   return publishers ?? ReadonlyRecord.empty<EventPublisherLike<T>>();
 };
 
+const mapAnimationConfigToObservable =
+  <T>(publishers: ReadonlyRecordLike<EventPublisherLike<T>, string>) =>
+  (animations: readonly AnimationConfig<T>[], key: string) =>
+    pipe(
+      Observable.animate<T>(...animations),
+      Observable.forEach(v => {
+        const publisher = publishers[key];
+        if (isSome(publisher)) {
+          publisher[EventListenerLike_notify](v);
+        }
+      }),
+      Observable.ignoreElements<T>(),
+    );
+
+const createTransition = <T>(
+  observables: Readonly<Record<string, ObservableLike<T>>>,
+  options: {
+    readonly concurrency?: number;
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+  } = {},
+) => {
+  return pipe(
+    Observable.fromEnumeratorFactory(
+      pipeLazy(observables, ReadonlyRecord.values()),
+    ),
+    Observable.map(
+      Observable.subscribeOn(
+        createAnimationFrameSchedulerFactory(options?.priority),
+      ),
+    ),
+    Observable.mergeAll({ concurrency: options.concurrency }),
+  );
+};
+
 interface UseAnimation {
   /**
    * @category Hook
@@ -557,33 +591,17 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
           animations,
           ReadonlyRecord.mapWithKey<
             Function1<TEvent, readonly AnimationConfig<T>[]>,
+            readonly AnimationConfig<T>[],
+            string
+          >((factory, _) => factory(event)),
+          ReadonlyRecord.mapWithKey<
+            readonly AnimationConfig<T>[],
             ObservableLike<T>,
             string
-          >((factory, key) =>
-            pipe(
-              Observable.animate<T>(...factory(event)),
-              Observable.forEach(v => {
-                const publisher = publishers?.[key];
-                if (isSome(publisher)) {
-                  publisher[EventListenerLike_notify](v);
-                }
-              }),
-              Observable.ignoreElements<T>(),
-            ),
-          ),
+          >(mapAnimationConfigToObservable(publishers)),
         );
 
-        return pipe(
-          Observable.fromEnumeratorFactory(
-            pipeLazy(observables, ReadonlyRecord.values()),
-          ),
-          Observable.map(
-            Observable.subscribeOn(
-              createAnimationFrameSchedulerFactory(options?.priority),
-            ),
-          ),
-          Observable.mergeAll({ concurrency: options.concurrency }),
-        );
+        return createTransition(observables, options);
       }, options as any),
     [
       animations,
@@ -709,33 +727,17 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
             animations,
             ReadonlyRecord.mapWithKey<
               Function2<TState, TState, readonly AnimationConfig<T>[]>,
+              readonly AnimationConfig<T>[],
+              string
+            >((factory, _) => factory(prev, next)),
+            ReadonlyRecord.mapWithKey<
+              readonly AnimationConfig<T>[],
               ObservableLike<T>,
               string
-            >((factory, key) =>
-              pipe(
-                Observable.animate<T>(...factory(prev, next)),
-                Observable.forEach(v => {
-                  const publisher = publishers?.[key];
-                  if (isSome(publisher)) {
-                    publisher[EventListenerLike_notify](v);
-                  }
-                }),
-                Observable.ignoreElements<T>(),
-              ),
-            ),
+            >(mapAnimationConfigToObservable(publishers)),
           );
 
-          return pipe(
-            Observable.fromEnumeratorFactory(
-              pipeLazy(observables, ReadonlyRecord.values()),
-            ),
-            Observable.map(
-              Observable.subscribeOn(
-                createAnimationFrameSchedulerFactory(options?.priority),
-              ),
-            ),
-            Observable.mergeAll({ concurrency: options.concurrency }),
-          );
+          return createTransition(observables, options);
         },
         options as any,
       ),
