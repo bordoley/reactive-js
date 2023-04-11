@@ -39,7 +39,6 @@ import {
   KeyedCollectionLike_get,
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
-import * as Scheduler from "@reactive-js/core/scheduling/Scheduler";
 import { EventSourceLike } from "@reactive-js/core/util.js";
 import * as ReadonlyRecord from "@reactive-js/core/keyed-containers/ReadonlyRecord";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
@@ -47,13 +46,12 @@ import * as ReadonlyArray from "@reactive-js/core/keyed-containers/ReadonlyArray
 import {
   __await,
   __bindMethod,
+  __currentScheduler,
   __memo,
   __observe,
   __stream,
 } from "@reactive-js/core/rx/effects";
-
-// FIXME: should probably export the react scheduler in its own module for outside of hooks use cases.
-const hostScheduler = Scheduler.createHostScheduler();
+import { SchedulerLike } from "@reactive-js/core/scheduling";
 
 const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
   const values = cache[KeyedCollectionLike_get]("a");
@@ -233,7 +231,7 @@ const RxComponent = createComponent(
 
     const createAnimationStream = (animatedDivRef: {
       current: HTMLElement | null;
-    }) =>
+    }, hostScheduler: SchedulerLike) =>
       Streamable.createEventHandler(
         pipe(
           Observable.animate(
@@ -285,7 +283,8 @@ const RxComponent = createComponent(
       const move: SideEffect = __bindMethod(enumerator, QueueableLike_enqueue);
 
       const animatedDivRef = __memo(createRef);
-      const animationStreamable = __memo(createAnimationStream, animatedDivRef);
+      const scheduler = __currentScheduler();
+      const animationStreamable = __memo(createAnimationStream, animatedDivRef, scheduler);
       const animationStream = __stream(animationStreamable);
 
       const runAnimation = __bindMethod(animationStream, QueueableLike_enqueue);

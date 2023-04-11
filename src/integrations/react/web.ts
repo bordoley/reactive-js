@@ -153,7 +153,7 @@ export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
   value: Optional<EventSourceLike<T>>,
   selector = identity,
   deps = [],
-): React.RefObject<TElement> => {
+): React.Ref<TElement> => {
   const ref = useRef<TElement>(null);
 
   const selectorMemoized = useCallback(selector, deps);

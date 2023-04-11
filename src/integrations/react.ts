@@ -36,6 +36,7 @@ import {
   Updater,
   bindMethod,
   ignore,
+  invoke,
   isSome,
   none,
   pipe,
@@ -566,7 +567,13 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
           Observable.mergeAll({ concurrency: eventOptions.concurrency }),
         );
       }, eventOptions as any),
-    [animations, eventOptions.mode, publishers, options?.priority],
+    [
+      animations,
+      eventOptions.concurrency,
+      eventOptions.mode,
+      publishers,
+      options?.priority,
+    ],
   );
 
   const [value, dispatch] = useStreamable(streamable, options);
@@ -674,8 +681,8 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
     setPublishers(publishers);
     return pipeLazy(
       publishers,
-      ReadonlyRecord.forEachWithKey<EventPublisherLike<T>, string>(publisher =>
-        publisher[DisposableLike_dispose](),
+      ReadonlyRecord.forEachWithKey<EventPublisherLike<T>, string>(
+        invoke(DisposableLike_dispose),
       ),
       ignore,
     );
@@ -720,7 +727,13 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
         },
         eventOptions as any,
       ),
-    [animations, eventOptions.mode, options?.priority, publishers],
+    [
+      animations,
+      eventOptions.concurrency,
+      eventOptions.mode,
+      options?.priority,
+      publishers,
+    ],
   );
 
   const [value, dispatch] = useStreamable(streamable, options);
