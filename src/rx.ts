@@ -15,7 +15,7 @@ import {
   ContainerOf,
   ContainerOperator,
 } from "./containers.js";
-import { Factory, Function1, Function2, none } from "./functions.js";
+import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
   DisposableLike,
@@ -193,15 +193,16 @@ export interface SpringAnimationConfig {
   readonly precision?: number;
 }
 
-export type AnimationConfigSelector<T> = T extends number
-  ? { readonly selector?: typeof none }
-  : { readonly selector: Function1<number, T> };
-
 export type AnimationConfig<T = number> =
-  | (TweenAnimationConfig & AnimationConfigSelector<T>)
-  | (SpringAnimationConfig & AnimationConfigSelector<T>)
   | DelayAnimationConfig
-  | LoopAnimationConfig<T>;
+  | LoopAnimationConfig<T>
+  | (T extends number
+      ? (TweenAnimationConfig | SpringAnimationConfig) & {
+          readonly selector?: never;
+        }
+      : (TweenAnimationConfig | SpringAnimationConfig) & {
+          readonly selector: Function1<number, T>;
+        });
 
 /**
  * @noInheritDoc

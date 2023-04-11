@@ -63,28 +63,15 @@
 ### Type Aliases
 
 - [AnimationConfig](rx.md#animationconfig)
-- [AnimationConfigSelector](rx.md#animationconfigselector)
 
 ## Type Aliases
 
 ### AnimationConfig
 
-Ƭ **AnimationConfig**<`T`\>: [`TweenAnimationConfig`](../interfaces/rx.TweenAnimationConfig.md) & [`AnimationConfigSelector`](rx.md#animationconfigselector)<`T`\> \| [`SpringAnimationConfig`](../interfaces/rx.SpringAnimationConfig.md) & [`AnimationConfigSelector`](rx.md#animationconfigselector)<`T`\> \| [`DelayAnimationConfig`](../interfaces/rx.DelayAnimationConfig.md) \| [`LoopAnimationConfig`](../interfaces/rx.LoopAnimationConfig.md)<`T`\>
+Ƭ **AnimationConfig**<`T`\>: [`DelayAnimationConfig`](../interfaces/rx.DelayAnimationConfig.md) \| [`LoopAnimationConfig`](../interfaces/rx.LoopAnimationConfig.md)<`T`\> \| `T` extends `number` ? [`TweenAnimationConfig`](../interfaces/rx.TweenAnimationConfig.md) \| [`SpringAnimationConfig`](../interfaces/rx.SpringAnimationConfig.md) & { `selector?`: `never`  } : [`TweenAnimationConfig`](../interfaces/rx.TweenAnimationConfig.md) \| [`SpringAnimationConfig`](../interfaces/rx.SpringAnimationConfig.md) & { `selector`: [`Function1`](functions.md#function1)<`number`, `T`\>  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
-
-___
-
-### AnimationConfigSelector
-
-Ƭ **AnimationConfigSelector**<`T`\>: `T` extends `number` ? { `selector?`: typeof [`none`](functions.md#none)  } : { `selector`: [`Function1`](functions.md#function1)<`number`, `T`\>  }
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |

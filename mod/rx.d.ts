@@ -1,6 +1,6 @@
 import { __DispatcherLike_complete as DispatcherLike_complete, __MulticastObservableLike_observerCount as MulticastObservableLike_observerCount, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __ReplayableLike_buffer as ReplayableLike_buffer } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator } from "./containers.js";
-import { Factory, Function1, Function2, none } from "./functions.js";
+import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import { DisposableLike, EventListenerLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayableLike } from "./util.js";
 export { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, ReplayableLike_buffer, };
@@ -138,12 +138,11 @@ export interface SpringAnimationConfig {
     readonly damping?: number;
     readonly precision?: number;
 }
-export type AnimationConfigSelector<T> = T extends number ? {
-    readonly selector?: typeof none;
-} : {
+export type AnimationConfig<T = number> = DelayAnimationConfig | LoopAnimationConfig<T> | (T extends number ? (TweenAnimationConfig | SpringAnimationConfig) & {
+    readonly selector?: never;
+} : (TweenAnimationConfig | SpringAnimationConfig) & {
     readonly selector: Function1<number, T>;
-};
-export type AnimationConfig<T = number> = (TweenAnimationConfig & AnimationConfigSelector<T>) | (SpringAnimationConfig & AnimationConfigSelector<T>) | DelayAnimationConfig | LoopAnimationConfig<T>;
+});
 /**
  * @noInheritDoc
  * @category TypeClass
