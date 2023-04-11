@@ -18,7 +18,7 @@
 
 ### useAnimate
 
-▸ **useAnimate**<`TElement`\>(`value`): `RefObject`<`TElement`\>
+▸ **useAnimate**<`TElement`\>(`value`): `Ref`<`TElement`\>
 
 #### Type parameters
 
@@ -34,9 +34,9 @@
 
 #### Returns
 
-`RefObject`<`TElement`\>
+`Ref`<`TElement`\>
 
-▸ **useAnimate**<`TElement`, `T`\>(`value`, `selector`, `deps`): `RefObject`<`TElement`\>
+▸ **useAnimate**<`TElement`, `T`\>(`value`, `selector`, `deps`): `Ref`<`TElement`\>
 
 #### Type parameters
 
@@ -55,7 +55,7 @@
 
 #### Returns
 
-`RefObject`<`TElement`\>
+`Ref`<`TElement`\>
 
 ___
 

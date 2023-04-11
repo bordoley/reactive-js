@@ -135,13 +135,13 @@ export const WindowLocationProvider: React.FunctionComponent<{
 interface UseAnimate {
   useAnimate<TElement extends HTMLElement>(
     value: Optional<EventSourceLike<ReadonlyRecordLike<string, CSSStyleKey>>>,
-  ): React.RefObject<TElement>;
+  ): React.Ref<TElement>;
 
   useAnimate<TElement extends HTMLElement, T>(
     value: Optional<EventSourceLike<T>>,
     selector: (v: T) => Partial<ReadonlyRecordLike<string, CSSStyleKey>>,
     deps: readonly unknown[],
-  ): React.RefObject<TElement>;
+  ): React.Ref<TElement>;
 }
 /**
  * @category Hook
