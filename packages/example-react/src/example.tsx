@@ -84,7 +84,7 @@ const AnimatedBox = ({ value }: { value?: EventSourceLike<number> }) => {
   const ref = useAnimate<HTMLDivElement, number>(
     value,
     (v: number) => ({
-      margin: `${50 - (v * 50)}px`,
+      margin: `${50 - v * 50}px`,
       padding: `${v * 50}px`,
     }),
     [],
@@ -167,7 +167,7 @@ const Root = () => {
       ],
     }),
     [],
-    { mode: "blocking" }
+    { mode: "blocking" },
   );
 
   const enumerable = useMemo(

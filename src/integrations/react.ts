@@ -420,6 +420,33 @@ export const createComponent = <TProps>(
   return ObservableComponent;
 };
 
+const usePublishers = <T>(
+  keyMap: ReadonlyRecordLike<unknown, string>,
+): ReadonlyRecordLike<EventPublisherLike<T>, string> => {
+  const [publishers, setPublishers] =
+    useState<Optional<ReadonlyRecordLike<EventPublisherLike<T>>>>();
+
+  useEffect(() => {
+    const publishers = pipe(
+      keyMap,
+      ReadonlyRecord.map<unknown, EventPublisherLike<T>, string>(_ =>
+        EventPublisher.create<T>(),
+      ),
+    );
+
+    setPublishers(publishers);
+    return pipeLazy(
+      publishers,
+      ReadonlyRecord.forEachWithKey<EventPublisherLike<T>, string>(
+        invoke(DisposableLike_dispose),
+      ),
+      ignore,
+    );
+  }, [keyMap]);
+
+  return publishers ?? ReadonlyRecord.empty<EventPublisherLike<T>>();
+};
+
 interface UseAnimation {
   /**
    * @category Hook
@@ -520,28 +547,8 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
   Function1<TEvent, boolean>,
   unknown,
 ] => {
-  const [publishers, setPublishers] =
-    useState<Optional<ReadonlyRecordLike<EventPublisherLike<T>>>>();
-
   const animations = useMemo(animationFactory, deps);
-
-  useEffect(() => {
-    const publishers = pipe(
-      animations,
-      ReadonlyRecord.map<unknown, EventPublisherLike<T>, string>(_ =>
-        EventPublisher.create<T>(),
-      ),
-    );
-
-    setPublishers(publishers);
-    return pipeLazy(
-      publishers,
-      ReadonlyRecord.forEachWithKey<EventPublisherLike<T>, string>(publisher =>
-        publisher[DisposableLike_dispose](),
-      ),
-      ignore,
-    );
-  }, [animations]);
+  const publishers = usePublishers<T>(animations);
 
   const streamable = useMemo(
     () =>
@@ -589,11 +596,7 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
 
   const [value, dispatch] = useStreamable(streamable, options);
 
-  return [
-    publishers ?? ReadonlyRecord.empty<EventSourceLike<T>>(),
-    dispatch,
-    value,
-  ];
+  return [publishers, dispatch, value];
 }) as UseAnimation["useAnimation"];
 
 interface UseAnimatedState {
@@ -694,28 +697,8 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
   Function1<Updater<TState>, boolean>,
   Optional<TState>,
 ] => {
-  const [publishers, setPublishers] =
-    useState<Optional<ReadonlyRecordLike<EventPublisherLike<T>>>>();
-
   const animations = useMemo(animationFactory, deps);
-
-  useEffect(() => {
-    const publishers = pipe(
-      animations,
-      ReadonlyRecord.map<unknown, EventPublisherLike<T>, string>(_ =>
-        EventPublisher.create<T>(),
-      ),
-    );
-
-    setPublishers(publishers);
-    return pipeLazy(
-      publishers,
-      ReadonlyRecord.forEachWithKey<EventPublisherLike<T>, string>(
-        invoke(DisposableLike_dispose),
-      ),
-      ignore,
-    );
-  }, [animations]);
+  const publishers = usePublishers<T>(animations);
 
   const streamable = useMemo(
     () =>
@@ -768,9 +751,5 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
 
   const [value, dispatch] = useStreamable(streamable, options);
 
-  return [
-    publishers ?? ReadonlyRecord.empty<EventSourceLike<T>>(),
-    dispatch,
-    value,
-  ];
+  return [publishers, dispatch, value];
 }) as UseAnimatedState["useAnimatedState"];
