@@ -279,7 +279,7 @@ ___
 
 ### values
 
-▸ **values**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md), [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+▸ **values**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`Readonly`<`Record`<`any`, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md), [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -295,4 +295,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Readonly`<`Record`<`NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md), [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`Readonly`<`Record`<`any`, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md), [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>

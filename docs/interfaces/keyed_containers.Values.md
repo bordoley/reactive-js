@@ -27,7 +27,7 @@
 
 ### values
 
-▸ **values**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `unknown`, `T`\>, [`EnumeratorLike`](containers.EnumeratorLike.md)<`T`\>\>
+▸ **values**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `any`, `T`\>, [`EnumeratorLike`](containers.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -43,4 +43,4 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `unknown`, `T`\>, [`EnumeratorLike`](containers.EnumeratorLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `any`, `T`\>, [`EnumeratorLike`](containers.EnumeratorLike.md)<`T`\>\>

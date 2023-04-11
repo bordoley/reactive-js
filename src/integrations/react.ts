@@ -447,27 +447,32 @@ const usePublishers = <T>(
   return publishers ?? ReadonlyRecord.empty<EventPublisherLike<T>>();
 };
 
-const mapAnimationConfigToObservable =
-  <T>(publishers: ReadonlyRecordLike<EventPublisherLike<T>, string>) =>
-  (animations: readonly AnimationConfig<T>[], key: string) =>
-    pipe(
-      Observable.animate<T>(...animations),
-      Observable.forEach(v => {
-        const publisher = publishers[key];
-        if (isSome(publisher)) {
-          publisher[EventListenerLike_notify](v);
-        }
-      }),
-      Observable.ignoreElements<T>(),
-    );
-
-const createTransition = <T>(
-  observables: Readonly<Record<string, ObservableLike<T>>>,
+const createTransition = <T, TAnimationFactory>(
+  animations: ReadonlyRecordLike<TAnimationFactory, string>,
+  f: (factory: TAnimationFactory) => readonly AnimationConfig<T>[],
+  publishers: ReadonlyRecordLike<EventPublisherLike<T>, string>,
   options: {
     readonly concurrency?: number;
     readonly priority?: 1 | 2 | 3 | 4 | 5;
   } = {},
 ) => {
+  const observables: ReadonlyRecordLike<ObservableLike<T>, string> = pipe(
+    animations,
+    ReadonlyRecord.mapWithKey<TAnimationFactory, ObservableLike<T>, string>(
+      (factory: TAnimationFactory, key: string) =>
+        pipe(
+          Observable.animate<T>(...f(factory)),
+          Observable.forEach(v => {
+            const publisher = publishers[key];
+            if (isSome(publisher)) {
+              publisher[EventListenerLike_notify](v);
+            }
+          }),
+          Observable.ignoreElements<T>(),
+        ),
+    ),
+  );
+
   return pipe(
     Observable.fromEnumeratorFactory(
       pipeLazy(observables, ReadonlyRecord.values()),
@@ -586,23 +591,17 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
 
   const streamable = useMemo(
     () =>
-      Streamable.createEventHandler((event: TEvent) => {
-        const observables: Readonly<Record<string, ObservableLike<T>>> = pipe(
-          animations,
-          ReadonlyRecord.mapWithKey<
-            Function1<TEvent, readonly AnimationConfig<T>[]>,
-            readonly AnimationConfig<T>[],
-            string
-          >((factory, _) => factory(event)),
-          ReadonlyRecord.mapWithKey<
-            readonly AnimationConfig<T>[],
-            ObservableLike<T>,
-            string
-          >(mapAnimationConfigToObservable(publishers)),
-        );
-
-        return createTransition(observables, options);
-      }, options as any),
+      Streamable.createEventHandler(
+        (event: TEvent) =>
+          createTransition(
+            animations,
+            (factory: Function1<TEvent, readonly AnimationConfig<T>[]>) =>
+              factory(event),
+            publishers,
+            options,
+          ),
+        options as any,
+      ),
     [
       animations,
       options.concurrency,
@@ -722,23 +721,13 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
     () =>
       Streamable.createStateStore(
         initialState,
-        (prev, next) => {
-          const observables: Readonly<Record<string, ObservableLike<T>>> = pipe(
+        (prev, next) =>
+          createTransition(
             animations,
-            ReadonlyRecord.mapWithKey<
-              Function2<TState, TState, readonly AnimationConfig<T>[]>,
-              readonly AnimationConfig<T>[],
-              string
-            >((factory, _) => factory(prev, next)),
-            ReadonlyRecord.mapWithKey<
-              readonly AnimationConfig<T>[],
-              ObservableLike<T>,
-              string
-            >(mapAnimationConfigToObservable(publishers)),
-          );
-
-          return createTransition(observables, options);
-        },
+            factory => factory(prev, next),
+            publishers,
+            options,
+          ),
         options as any,
       ),
     [

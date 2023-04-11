@@ -386,5 +386,5 @@ export interface Values<C extends KeyedContainerLike, O = never>
    */
   values<T>(
     options?: O,
-  ): Function1<KeyedContainerOf<C, unknown, T>, EnumeratorLike<T>>;
+  ): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
 }
