@@ -254,7 +254,7 @@ export const __MemoOrUsingEffect_value = /*@__PURE__*/ symbol("MemoOrUsingEffect
 /** @type {unique symbol} */
 export const __MergeAllObserver_activeCount = /*@__PURE__*/ symbol("MergeAllObserver_activeCount");
 /** @type {unique symbol} */
-export const __MergeAllObserver_maxConcurrency = /*@__PURE__*/ symbol("MergeAllObserver_maxConcurrency");
+export const __MergeAllObserver_concurrency = /*@__PURE__*/ symbol("MergeAllObserver_concurrency");
 /** @type {unique symbol} */
 export const __MergeAllObserver_onDispose = /*@__PURE__*/ symbol("MergeAllObserver_onDispose");
 /** @type {unique symbol} */

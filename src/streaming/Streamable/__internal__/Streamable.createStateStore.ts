@@ -91,7 +91,7 @@ const Streamable_createStateStore: StreamableCreateStateStore["createStateStore"
                       onChangeOrOptions(prev, next),
                       Observable_endWith<ObservableLike, T>(next),
                     ),
-                  { ...options, maxConcurrency: 1 },
+                  { ...options, concurrency: 1 },
                 ),
           ),
         )

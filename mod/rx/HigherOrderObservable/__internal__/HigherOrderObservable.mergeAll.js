@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { __MergeAllObserver_activeCount, __MergeAllObserver_maxConcurrency, __MergeAllObserver_observablesQueue, __MergeAllObserver_onDispose, } from "../../../__internal__/symbols.js";
+import { __MergeAllObserver_activeCount, __MergeAllObserver_concurrency, __MergeAllObserver_observablesQueue, __MergeAllObserver_onDispose, } from "../../../__internal__/symbols.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
 import { bindMethod, isSome, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
@@ -22,12 +22,12 @@ const HigherOrderObservable_mergeAll = (lift) => {
             observer[__MergeAllObserver_activeCount]++;
             pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[__MergeAllObserver_onDispose]));
         };
-        return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, maxConcurrency) {
+        return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
             init(Observer_mixin(), instance, delegate, delegate);
             init(Delegating_mixin(), instance, delegate);
             instance[__MergeAllObserver_observablesQueue] =
                 IndexedQueue_createFifoQueue(capacity, backpressureStrategy);
-            instance[__MergeAllObserver_maxConcurrency] = maxConcurrency;
+            instance[__MergeAllObserver_concurrency] = concurrency;
             instance[__MergeAllObserver_activeCount] = 0;
             instance[__MergeAllObserver_onDispose] = () => {
                 instance[__MergeAllObserver_activeCount]--;
@@ -53,14 +53,14 @@ const HigherOrderObservable_mergeAll = (lift) => {
             return instance;
         }, props({
             [__MergeAllObserver_activeCount]: 0,
-            [__MergeAllObserver_maxConcurrency]: 0,
+            [__MergeAllObserver_concurrency]: 0,
             [__MergeAllObserver_onDispose]: none,
             [__MergeAllObserver_observablesQueue]: none,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
                 if (this[__MergeAllObserver_activeCount] <
-                    this[__MergeAllObserver_maxConcurrency]) {
+                    this[__MergeAllObserver_concurrency]) {
                     subscribeToObservable(this, next);
                 }
                 else {
@@ -70,9 +70,9 @@ const HigherOrderObservable_mergeAll = (lift) => {
         }));
     })();
     return (options = {}) => {
-        const maxConcurrency = clampPositiveNonZeroInteger(options.maxConcurrency ?? MAX_SAFE_INTEGER);
+        const concurrency = clampPositiveNonZeroInteger(options.concurrency ?? MAX_SAFE_INTEGER);
         const capacity = clampPositiveInteger(options.capacity ?? MAX_SAFE_INTEGER);
-        const f = pipe(createMergeAllObserver, partial(capacity, options.backpressureStrategy ?? "overflow", maxConcurrency));
+        const f = pipe(createMergeAllObserver, partial(capacity, options.backpressureStrategy ?? "overflow", concurrency));
         return lift(f);
     };
 };

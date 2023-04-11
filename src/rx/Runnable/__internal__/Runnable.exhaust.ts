@@ -7,7 +7,7 @@ const Runnable_exhaust: Exhaust<RunnableLike>["exhaust"] = /*@__PURE__*/ (() =>
     Runnable_mergeAll({
       capacity: 0,
       backpressureStrategy: "drop-latest",
-      maxConcurrency: 1,
+      concurrency: 1,
     }),
   ))();
 

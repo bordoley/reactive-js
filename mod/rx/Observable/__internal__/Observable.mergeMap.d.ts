@@ -3,6 +3,6 @@ import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util
 declare const Observable_mergeMap: MergeMap<ObservableLike, {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
 }>["mergeMap"];
 export default Observable_mergeMap;

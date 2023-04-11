@@ -8,7 +8,7 @@ const Observable_exhaust: Exhaust<ObservableLike>["exhaust"] =
       Observable_mergeAll({
         capacity: 0,
         backpressureStrategy: "drop-latest",
-        maxConcurrency: 1,
+        concurrency: 1,
       }),
     ))();
 

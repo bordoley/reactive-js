@@ -61,7 +61,7 @@ const Streamable_createEventHandler: CreateEventHandler["createEventHandler"] =
           )
         : Observable_mergeMap<TEvent, never>(
             compose(op, Observable_ignoreElements<ObservableLike, never>()),
-            { ...options, maxConcurrency: 1 },
+            { ...options, concurrency: 1 },
           ),
     );
   }) as CreateEventHandler["createEventHandler"];

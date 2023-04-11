@@ -12,7 +12,7 @@ const Enumerable_mergeAll: ConcatAll<
   {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
   }
 >["concatAll"] = /*@__PURE__*/ HigherOrderObservable_mergeAll<EnumerableLike>(
   Enumerable_lift,
@@ -21,7 +21,7 @@ const Enumerable_mergeAll: ConcatAll<
   {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
   }
 >["concatAll"];
 

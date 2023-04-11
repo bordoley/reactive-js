@@ -247,7 +247,7 @@ export const __MemoOrUsingEffect_value: unique symbol;
 /** @type {unique symbol} */
 export const __MergeAllObserver_activeCount: unique symbol;
 /** @type {unique symbol} */
-export const __MergeAllObserver_maxConcurrency: unique symbol;
+export const __MergeAllObserver_concurrency: unique symbol;
 /** @type {unique symbol} */
 export const __MergeAllObserver_onDispose: unique symbol;
 /** @type {unique symbol} */

@@ -125,7 +125,7 @@ MemoOrUsingEffect_func
 MemoOrUsingEffect_args
 MemoOrUsingEffect_value
 MergeAllObserver_activeCount
-MergeAllObserver_maxConcurrency
+MergeAllObserver_concurrency
 MergeAllObserver_onDispose
 MergeAllObserver_observablesQueue
 MergeObserverCtx_completedCount

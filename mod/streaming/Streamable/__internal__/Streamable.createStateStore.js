@@ -14,7 +14,7 @@ const Streamable_createStateStore = ((initialState, onChangeOrOptions, options =
 }) => isFunction(onChangeOrOptions)
     ? Streamable_create(compose(Observable_stateStore(initialState, options), Observable_pairwise(), options?.mode === "switching"
         ? Observable_switchMap(([prev, next]) => pipe(onChangeOrOptions(prev, next), Observable_endWith(next)))
-        : Observable_mergeMap(([prev, next]) => pipe(onChangeOrOptions(prev, next), Observable_endWith(next)), { ...options, maxConcurrency: 1 })))
+        : Observable_mergeMap(([prev, next]) => pipe(onChangeOrOptions(prev, next), Observable_endWith(next)), { ...options, concurrency: 1 })))
     : Streamable_createWithConfig(Observable_stateStore(initialState, options), {
         [StreamableLike_isEnumerable]: true,
         [StreamableLike_isInteractive]: true,

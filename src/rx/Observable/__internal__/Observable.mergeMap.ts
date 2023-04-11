@@ -12,7 +12,7 @@ const Observable_mergeMap: MergeMap<
   {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
   }
 >["mergeMap"] = /*@__PURE__*/ Container_concatMap(
   Observable_map,

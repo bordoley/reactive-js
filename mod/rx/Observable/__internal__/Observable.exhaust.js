@@ -6,6 +6,6 @@ const Observable_exhaust =
 /*@__PURE__*/ (() => returns(Observable_mergeAll({
     capacity: 0,
     backpressureStrategy: "drop-latest",
-    maxConcurrency: 1,
+    concurrency: 1,
 })))();
 export default Observable_exhaust;

@@ -585,8 +585,8 @@ export const __MergeAllObserver_activeCount = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __MergeAllObserver_maxConcurrency = /*@__PURE__*/ symbol(
-  "MergeAllObserver_maxConcurrency",
+export const __MergeAllObserver_concurrency = /*@__PURE__*/ symbol(
+  "MergeAllObserver_concurrency",
 );
 
 /** @type {unique symbol} */

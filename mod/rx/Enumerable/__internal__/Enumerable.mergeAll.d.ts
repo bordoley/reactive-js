@@ -4,6 +4,6 @@ import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util
 declare const Enumerable_mergeAll: ConcatAll<EnumerableLike, {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
 }>["concatAll"];
 export default Enumerable_mergeAll;

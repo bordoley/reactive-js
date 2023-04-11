@@ -71,12 +71,12 @@ export declare const merge: Merge<RunnableLike>["merge"];
 export declare const mergeAll: MergeAll<RunnableLike, {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
 }>["mergeAll"];
 export declare const mergeMap: MergeMap<RunnableLike, {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
 }>["mergeMap"];
 export declare const mergeWith: MergeWith<RunnableLike>["mergeWith"];
 export declare const pairwise: Pairwise<RunnableLike>["pairwise"];

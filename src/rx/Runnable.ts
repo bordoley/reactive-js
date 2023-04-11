@@ -300,7 +300,7 @@ export const mergeAll: MergeAll<
   {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
   }
 >["mergeAll"] = Runnable_mergeAll;
 
@@ -309,7 +309,7 @@ export const mergeMap: MergeMap<
   {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
   }
 >["mergeMap"] = Runnable_mergeMap;
 

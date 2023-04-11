@@ -16,7 +16,7 @@ const Observable_mergeAll: MergeAll<
   {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
   }
 >["mergeAll"] = /*@__PURE__*/ (() =>
   HigherOrderObservable_mergeAll<ObservableLike>(
@@ -29,7 +29,7 @@ const Observable_mergeAll: MergeAll<
     {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
-      readonly maxConcurrency?: number;
+      readonly concurrency?: number;
     }
   >["mergeAll"])();
 

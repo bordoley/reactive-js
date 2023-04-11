@@ -11,7 +11,7 @@ const Runnable_mergeAll: MergeAll<
   {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
   }
 >["mergeAll"] =
   /*@__PURE__*/ HigherOrderObservable_mergeAll<RunnableLike>(Runnable_lift);

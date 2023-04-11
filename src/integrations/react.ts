@@ -563,7 +563,7 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
               createAnimationFrameSchedulerFactory(options?.priority),
             ),
           ),
-          Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
+          Observable.mergeAll({ concurrency: eventOptions.concurrency }),
         );
       }, eventOptions as any),
     [animations, eventOptions.mode, publishers, options?.priority],
@@ -715,7 +715,7 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
                 createAnimationFrameSchedulerFactory(options?.priority),
               ),
             ),
-            Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
+            Observable.mergeAll({ concurrency: eventOptions.concurrency }),
           );
         },
         eventOptions as any,

@@ -103,12 +103,12 @@ export declare const merge: Merge<ObservableLike>["merge"];
 export declare const mergeAll: MergeAll<ObservableLike, {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
 }>["mergeAll"];
 export declare const mergeMap: MergeMap<ObservableLike, {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly maxConcurrency?: number;
+    readonly concurrency?: number;
 }>["mergeMap"];
 export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
 /**
