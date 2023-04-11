@@ -13,7 +13,7 @@ import {
   useAnimation,
 } from "@reactive-js/core/integrations/react";
 import {
-  useAnimatedValue,
+  useAnimate,
   useWindowLocation,
   useWindowLocationStream,
   WindowLocationProvider,
@@ -81,11 +81,11 @@ const CacheComponent = () => {
 };
 
 const AnimatedBox = ({ value }: { value?: EventSourceLike<number> }) => {
-  const ref = useAnimatedValue<HTMLDivElement, number>(
+  const ref = useAnimate<HTMLDivElement, number>(
     value,
     (v: number) => ({
-      margin: `${50 - v}px`,
-      padding: `${v}px`,
+      margin: `${50 - (v * 50)}px`,
+      padding: `${v * 50}px`,
     }),
     [],
   );
@@ -154,16 +154,16 @@ const Root = () => {
           type: "loop",
           count: 2,
           animation: [
-            { type: "tween", duration: 500, from: 0, to: 50 },
+            { type: "tween", duration: 500, from: 0, to: 1 },
             { type: "delay", duration: 250 },
-            { type: "tween", duration: 500, from: 50, to: 0 },
+            { type: "tween", duration: 500, from: 1, to: 0 },
           ],
         },
       ],
       def: () => [
-        { type: "tween", duration: 500, from: 0, to: 50 },
+        { type: "tween", duration: 500, from: 0, to: 1 },
         { type: "delay", duration: 250 },
-        { type: "spring", stiffness: 0.01, damping: 0.1, from: 50, to: 0 },
+        { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
       ],
     }),
     [],

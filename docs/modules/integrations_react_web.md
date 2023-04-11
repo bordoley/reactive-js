@@ -6,7 +6,7 @@
 
 ### Hook Functions
 
-- [useAnimatedValue](integrations_react_web.md#useanimatedvalue)
+- [useAnimate](integrations_react_web.md#useanimate)
 - [useWindowLocation](integrations_react_web.md#usewindowlocation)
 - [useWindowLocationStream](integrations_react_web.md#usewindowlocationstream)
 
@@ -16,9 +16,9 @@
 
 ## Hook Functions
 
-### useAnimatedValue
+### useAnimate
 
-▸ **useAnimatedValue**<`TElement`\>(`value`): `RefObject`<`TElement`\>
+▸ **useAnimate**<`TElement`\>(`value`): `RefObject`<`TElement`\>
 
 #### Type parameters
 
@@ -36,7 +36,7 @@
 
 `RefObject`<`TElement`\>
 
-▸ **useAnimatedValue**<`TElement`, `T`\>(`value`, `selector`, `deps`): `RefObject`<`TElement`\>
+▸ **useAnimate**<`TElement`, `T`\>(`value`, `selector`, `deps`): `RefObject`<`TElement`\>
 
 #### Type parameters
 

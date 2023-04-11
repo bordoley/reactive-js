@@ -132,12 +132,12 @@ export const WindowLocationProvider: React.FunctionComponent<{
     : null;
 };
 
-interface UseAnimatedValue {
-  useAnimatedValue<TElement extends HTMLElement>(
+interface UseAnimate {
+  useAnimate<TElement extends HTMLElement>(
     value: Optional<EventSourceLike<ReadonlyRecordLike<string, CSSStyleKey>>>,
   ): React.RefObject<TElement>;
 
-  useAnimatedValue<TElement extends HTMLElement, T>(
+  useAnimate<TElement extends HTMLElement, T>(
     value: Optional<EventSourceLike<T>>,
     selector: (v: T) => Partial<ReadonlyRecordLike<string, CSSStyleKey>>,
     deps: readonly unknown[],
@@ -146,7 +146,7 @@ interface UseAnimatedValue {
 /**
  * @category Hook
  */
-export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
+export const useAnimate: UseAnimate["useAnimate"] = (<
   TElement extends HTMLElement,
   T = Partial<ReadonlyRecordLike<string, CSSStyleKey>>,
 >(
@@ -181,4 +181,4 @@ export const useAnimatedValue: UseAnimatedValue["useAnimatedValue"] = (<
   }, [value, selectorMemoized, ref]);
 
   return ref;
-}) as UseAnimatedValue["useAnimatedValue"];
+}) as UseAnimate["useAnimate"];
