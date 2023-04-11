@@ -30,16 +30,19 @@ interface CreateEventHandler {
       readonly capacity?: number;
     },
   ): StreamableLike<TEvent, never>;
+  createEventHandler<TEvent>(
+    op: Function1<TEvent, ObservableLike<unknown>>,
+  ): StreamableLike<TEvent, never>;
 }
 
 const Streamable_createEventHandler: CreateEventHandler["createEventHandler"] =
   (<TEvent>(
     op: Function1<TEvent, ObservableLike<unknown>>,
     options: {
-      readonly mode: "switching" | "blocking" | "queueing";
+      readonly mode?: "switching" | "blocking" | "queueing";
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
-    },
+    } = {},
   ): StreamableLike<TEvent, unknown> => {
     const { mode } = options;
     return Streamable_create<TEvent, unknown>(

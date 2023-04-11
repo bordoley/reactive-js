@@ -35,6 +35,7 @@ export declare const createEventHandler: {
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
     }): StreamableLike<TEvent_2, never, StreamLike<TEvent_2, never>>;
+    <TEvent_3>(op: import("../functions.js").Function1<TEvent_3, import("../rx.js").ObservableLike<unknown>>): StreamableLike<TEvent_3, never, StreamLike<TEvent_3, never>>;
 };
 /**
  * @category Constructor
@@ -65,16 +66,16 @@ export declare const createPersistentCache: <T>(persistentStore: {
  * @category Constructor
  */
 export declare const createStateStore: {
-    <T>(initialState: Factory<T>, onChange: import("../functions.js").Function2<T, T, import("../rx.js").ObservableLike<unknown>>, options?: {
+    <T>(initialState: Factory<T>, onChange: import("../functions.js").Function2<T, T, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "switching";
         readonly equality?: Equality<T> | undefined;
-    } | undefined): StreamableLike<import("../functions.js").Updater<T>, T, StreamLike<import("../functions.js").Updater<T>, T>>;
-    <T_1>(initialState: Factory<T_1>, onChange: import("../functions.js").Function2<T_1, T_1, import("../rx.js").ObservableLike<unknown>>, options?: {
+    }): StreamableLike<import("../functions.js").Updater<T>, T, StreamLike<import("../functions.js").Updater<T>, T>>;
+    <T_1>(initialState: Factory<T_1>, onChange: import("../functions.js").Function2<T_1, T_1, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "queueing";
         readonly equality?: Equality<T_1> | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
-    } | undefined): StreamableLike<import("../functions.js").Updater<T_1>, T_1, StreamLike<import("../functions.js").Updater<T_1>, T_1>>;
+    }): StreamableLike<import("../functions.js").Updater<T_1>, T_1, StreamLike<import("../functions.js").Updater<T_1>, T_1>>;
     <T_2>(initialState: Factory<T_2>, options?: {
         readonly equality?: Equality<T_2> | undefined;
     } | undefined): StreamableLike<import("../functions.js").Updater<T_2>, T_2, StreamLike<import("../functions.js").Updater<T_2>, T_2>>;

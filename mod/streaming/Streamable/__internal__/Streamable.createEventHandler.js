@@ -8,7 +8,7 @@ import Observable_mergeMap from "../../../rx/Observable/__internal__/Observable.
 import Observable_startWith from "../../../rx/Observable/__internal__/Observable.startWith.js";
 import Observable_switchMap from "../../../rx/Observable/__internal__/Observable.switchMap.js";
 import Streamable_create from "./Streamable.create.js";
-const Streamable_createEventHandler = ((op, options) => {
+const Streamable_createEventHandler = ((op, options = {}) => {
     const { mode } = options;
     return Streamable_create(mode === "switching"
         ? Observable_switchMap(compose(op, Observable_ignoreElements()))

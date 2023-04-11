@@ -148,7 +148,6 @@ const Root = () => {
   const counter = useFlowable(counterFlowable);
 
   const [animatedValues, dispatch, isAnimationRunning] = useAnimation(
-    { mode: "blocking" },
     () => ({
       abc: () => [
         {
@@ -168,6 +167,7 @@ const Root = () => {
       ],
     }),
     [],
+    { mode: "blocking" }
   );
 
   const enumerable = useMemo(
@@ -229,9 +229,12 @@ const RxComponent = createComponent(
     const asyncEnumerable = AsyncEnumerable.generate(increment, () => -1);
     const createRef = () => ({ current: null });
 
-    const createAnimationStream = (animatedDivRef: {
-      current: HTMLElement | null;
-    }, hostScheduler: SchedulerLike) =>
+    const createAnimationStream = (
+      animatedDivRef: {
+        current: HTMLElement | null;
+      },
+      hostScheduler: SchedulerLike,
+    ) =>
       Streamable.createEventHandler(
         pipe(
           Observable.animate(
@@ -284,7 +287,11 @@ const RxComponent = createComponent(
 
       const animatedDivRef = __memo(createRef);
       const scheduler = __currentScheduler();
-      const animationStreamable = __memo(createAnimationStream, animatedDivRef, scheduler);
+      const animationStreamable = __memo(
+        createAnimationStream,
+        animatedDivRef,
+        scheduler,
+      );
       const animationStream = __stream(animationStreamable);
 
       const runAnimation = __bindMethod(animationStream, QueueableLike_enqueue);

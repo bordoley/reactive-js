@@ -30,7 +30,7 @@ interface StreamableCreateStateStore {
   createStateStore<T>(
     initialState: Factory<T>,
     onChange: Function2<T, T, ObservableLike<unknown>>,
-    options?: {
+    options: {
       readonly mode: "switching";
       readonly equality?: Equality<T>;
     },
@@ -39,7 +39,7 @@ interface StreamableCreateStateStore {
   createStateStore<T>(
     initialState: Factory<T>,
     onChange: Function2<T, T, ObservableLike<unknown>>,
-    options?: {
+    options: {
       readonly mode: "queueing";
       readonly equality?: Equality<T>;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -59,19 +59,14 @@ const Streamable_createStateStore: StreamableCreateStateStore["createStateStore"
     onChangeOrOptions?:
       | Function2<T, T, ObservableLike<unknown>>
       | {
-          readonly mode: "queueing" | "switching";
           readonly equality?: Equality<T>;
-          readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          readonly capacity?: number;
         },
     options: {
-      readonly mode: "queueing" | "switching";
+      readonly mode?: "queueing" | "switching";
       readonly equality?: Equality<T>;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
-    } = {
-      mode: "queueing",
-    },
+    } = {},
   ): StreamableLike<Updater<T>, T> =>
     isFunction(onChangeOrOptions)
       ? Streamable_create<Updater<T>, T>(

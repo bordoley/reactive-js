@@ -142,6 +142,26 @@ Returns an event handler that invokes the observable function.
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_2`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_2`, `never`\>\>
 
+▸ **createEventHandler**<`TEvent_3`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_3`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_3`, `never`\>\>
+
+Returns an event handler that invokes the observable function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TEvent_3` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`Function1`](functions.md#function1)<`TEvent_3`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_3`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_3`, `never`\>\>
+
 ___
 
 ### createInMemoryCache
@@ -197,7 +217,7 @@ ___
 
 ### createStateStore
 
-▸ **createStateStore**<`T`\>(`initialState`, `onChange`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+▸ **createStateStore**<`T`\>(`initialState`, `onChange`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -215,7 +235,7 @@ new state based upon the previous state.
 | :------ | :------ | :------ |
 | `initialState` | [`Factory`](functions.md#factory)<`T`\> | The initial accumulation value. |
 | `onChange` | [`Function2`](functions.md#function2)<`T`, `T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> | - |
-| `options?` | `Object` | - |
+| `options` | `Object` | - |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> | - |
 | `options.mode` | ``"switching"`` | - |
 
@@ -223,7 +243,7 @@ new state based upon the previous state.
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
 
-▸ **createStateStore**<`T_1`\>(`initialState`, `onChange`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T_1`\>, `T_1`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T_1`\>, `T_1`\>\>
+▸ **createStateStore**<`T_1`\>(`initialState`, `onChange`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T_1`\>, `T_1`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T_1`\>, `T_1`\>\>
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -241,7 +261,7 @@ new state based upon the previous state.
 | :------ | :------ | :------ |
 | `initialState` | [`Factory`](functions.md#factory)<`T_1`\> | The initial accumulation value. |
 | `onChange` | [`Function2`](functions.md#function2)<`T_1`, `T_1`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> | - |
-| `options?` | `Object` | - |
+| `options` | `Object` | - |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
 | `options.capacity?` | `number` | - |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T_1`\> | - |

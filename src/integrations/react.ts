@@ -425,15 +425,13 @@ interface UseAnimation {
    * @category Hook
    */
   useAnimation<TEvent, T = number>(
-    eventOptions: {
-      readonly mode: "switching";
-      readonly concurrency?: number;
-    },
     animationFactory: Factory<
       ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
     deps: readonly unknown[],
-    options?: {
+    options: {
+      readonly mode: "switching";
+      readonly concurrency?: number;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
@@ -448,15 +446,13 @@ interface UseAnimation {
    * @category Hook
    */
   useAnimation<TEvent, T = number>(
-    eventOptions: {
-      readonly mode: "blocking";
-      readonly concurrency?: number;
-    },
     animationFactory: Factory<
       ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
     deps: readonly unknown[],
-    options?: {
+    options: {
+      readonly mode: "blocking";
+      readonly concurrency?: number;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
@@ -471,10 +467,27 @@ interface UseAnimation {
    * @category Hook
    */
   useAnimation<TEvent, T = number>(
-    eventOptions: {
+    animationFactory: Factory<
+      ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+    >,
+    deps: readonly unknown[],
+    options: {
       readonly mode: "queueing";
       readonly concurrency?: number;
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
     },
+  ): readonly [
+    ReadonlyRecordLike<EventSourceLike<T>>,
+    Function1<TEvent, boolean>,
+    never,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useAnimation<TEvent, T = number>(
     animationFactory: Factory<
       ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
@@ -491,19 +504,17 @@ interface UseAnimation {
   ];
 }
 export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
-  eventOptions: {
-    readonly mode: "switching" | "blocking" | "queueing";
-    readonly concurrency?: number;
-  },
   animationFactory: Factory<
     ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
   >,
   deps: readonly unknown[],
-  options?: {
+  options: {
+    readonly mode?: "switching" | "blocking" | "queueing";
+    readonly concurrency?: number;
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-  },
+  } = {},
 ): readonly [
   ReadonlyRecordLike<EventSourceLike<T>>,
   Function1<TEvent, boolean>,
@@ -564,13 +575,13 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
               createAnimationFrameSchedulerFactory(options?.priority),
             ),
           ),
-          Observable.mergeAll({ concurrency: eventOptions.concurrency }),
+          Observable.mergeAll({ concurrency: options.concurrency }),
         );
-      }, eventOptions as any),
+      }, options as any),
     [
       animations,
-      eventOptions.concurrency,
-      eventOptions.mode,
+      options.concurrency,
+      options.mode,
       publishers,
       options?.priority,
     ],
@@ -591,18 +602,16 @@ interface UseAnimatedState {
    */
   useAnimatedState<TState, T = number>(
     initialState: Factory<TState>,
-    eventOptions: {
-      readonly mode: "switching";
-      readonly equality?: Equality<TState>;
-      readonly concurrency?: number;
-    },
     animationFactory: Factory<
       ReadonlyRecordLike<
         Function2<TState, TState, readonly AnimationConfig<T>[]>
       >
     >,
     deps: readonly unknown[],
-    options?: {
+    options: {
+      readonly mode: "switching";
+      readonly equality?: Equality<TState>;
+      readonly concurrency?: number;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
@@ -618,11 +627,31 @@ interface UseAnimatedState {
    */
   useAnimatedState<TState, T = number>(
     initialState: Factory<TState>,
-    eventOptions: {
+    animationFactory: Factory<
+      ReadonlyRecordLike<
+        Function2<TState, TState, readonly AnimationConfig<T>[]>
+      >
+    >,
+    deps: readonly unknown[],
+    options: {
       readonly mode: "queueing";
       readonly equality?: Equality<TState>;
       readonly concurrency?: number;
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
     },
+  ): readonly [
+    ReadonlyRecordLike<EventSourceLike<T>>,
+    Function1<Updater<TState>, boolean>,
+    Optional<TState>,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useAnimatedState<TState, T = number>(
+    initialState: Factory<TState>,
     animationFactory: Factory<
       ReadonlyRecordLike<
         Function2<TState, TState, readonly AnimationConfig<T>[]>
@@ -630,6 +659,8 @@ interface UseAnimatedState {
     >,
     deps: readonly unknown[],
     options?: {
+      readonly concurrency?: number;
+      readonly equality?: Equality<TState>;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
@@ -646,20 +677,18 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
   T,
 >(
   initialState: Factory<TState>,
-  eventOptions: {
-    readonly mode: "switching" | "queueing";
-    readonly equality?: Equality<TState>;
-    readonly concurrency?: number;
-  },
   animationFactory: Factory<
     ReadonlyRecordLike<Function2<TState, TState, readonly AnimationConfig<T>[]>>
   >,
   deps: readonly unknown[],
-  options?: {
+  options: {
+    readonly mode?: "switching" | "queueing";
+    readonly equality?: Equality<TState>;
+    readonly concurrency?: number;
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-  },
+  } = {},
 ): readonly [
   ReadonlyRecordLike<EventSourceLike<T>>,
   Function1<Updater<TState>, boolean>,
@@ -722,15 +751,16 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
                 createAnimationFrameSchedulerFactory(options?.priority),
               ),
             ),
-            Observable.mergeAll({ concurrency: eventOptions.concurrency }),
+            Observable.mergeAll({ concurrency: options.concurrency }),
           );
         },
-        eventOptions as any,
+        options as any,
       ),
     [
       animations,
-      eventOptions.concurrency,
-      eventOptions.mode,
+      options.concurrency,
+      options.equality,
+      options.mode,
       options?.priority,
       publishers,
     ],

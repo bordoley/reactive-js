@@ -9,9 +9,7 @@ import Observable_switchMap from "../../../rx/Observable/__internal__/Observable
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, } from "../../../streaming.js";
 import Streamable_create from "./Streamable.create.js";
 import Streamable_createWithConfig from "./Streamable.createWithConfig.js";
-const Streamable_createStateStore = ((initialState, onChangeOrOptions, options = {
-    mode: "queueing",
-}) => isFunction(onChangeOrOptions)
+const Streamable_createStateStore = ((initialState, onChangeOrOptions, options = {}) => isFunction(onChangeOrOptions)
     ? Streamable_create(compose(Observable_stateStore(initialState, options), Observable_pairwise(), options?.mode === "switching"
         ? Observable_switchMap(([prev, next]) => pipe(onChangeOrOptions(prev, next), Observable_endWith(next)))
         : Observable_mergeMap(([prev, next]) => pipe(onChangeOrOptions(prev, next), Observable_endWith(next)), { ...options, concurrency: 1 })))
