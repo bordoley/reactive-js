@@ -22,8 +22,8 @@
 
 ### Functions
 
-- [addEventListener](integrations_web.md#addeventlistener)
 - [createEventSource](integrations_web.md#createeventsource)
+- [observeEvent](integrations_web.md#observeevent)
 
 ## Type Aliases
 
@@ -39,9 +39,26 @@
 
 ## Functions
 
-### addEventListener
+### createEventSource
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **createEventSource**(`url`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<{ `data`: `string` ; `id`: `string` ; `type`: `string`  }\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `url` | `string` \| `URL` |
+| `options?` | `EventSourceInit` & { `events?`: readonly `string`[]  } |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<{ `data`: `string` ; `id`: `string` ; `type`: `string`  }\>
+
+___
+
+### observeEvent
+
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -62,7 +79,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -83,7 +100,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -104,7 +121,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -125,7 +142,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -146,7 +163,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -167,7 +184,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -188,7 +205,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -209,7 +226,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -230,7 +247,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -251,7 +268,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -272,7 +289,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -293,7 +310,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -314,7 +331,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -335,7 +352,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -356,7 +373,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -377,7 +394,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -398,7 +415,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -419,7 +436,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -440,7 +457,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -461,7 +478,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -482,7 +499,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -503,7 +520,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -524,7 +541,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -545,7 +562,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -566,7 +583,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -587,7 +604,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -608,7 +625,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -629,7 +646,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -650,7 +667,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -671,7 +688,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -692,7 +709,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -713,7 +730,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -734,7 +751,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -755,7 +772,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -776,7 +793,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -797,7 +814,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -818,7 +835,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -839,7 +856,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -860,7 +877,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -881,7 +898,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -902,7 +919,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -923,7 +940,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -944,7 +961,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -965,7 +982,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -986,7 +1003,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1007,7 +1024,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1028,7 +1045,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1049,7 +1066,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1070,7 +1087,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1091,7 +1108,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1112,7 +1129,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1133,7 +1150,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1154,7 +1171,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1175,7 +1192,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1196,7 +1213,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1217,7 +1234,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1238,7 +1255,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1259,7 +1276,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1280,7 +1297,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1301,7 +1318,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1322,7 +1339,7 @@
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1342,20 +1359,3 @@
 #### Returns
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-___
-
-### createEventSource
-
-▸ **createEventSource**(`url`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<{ `data`: `string` ; `id`: `string` ; `type`: `string`  }\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `url` | `string` \| `URL` |
-| `options?` | `EventSourceInit` & { `events?`: readonly `string`[]  } |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<{ `data`: `string` ; `id`: `string` ; `type`: `string`  }\>

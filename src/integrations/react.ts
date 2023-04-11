@@ -647,110 +647,109 @@ interface UseAnimatedState {
   ];
 }
 
-export const useAnimatedState: UseAnimatedState["useAnimatedState"] =
-  (<TState, T>(
-    initialState: Factory<TState>,
-    eventOptions: {
-      readonly mode: "switching" | "queueing";
-      readonly equality?: Equality<TState>;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-      readonly concurrency?: number;
-    },
-    animationFactory: Factory<
-      ReadonlyRecordLike<
-        Function2<TState, TState, readonly AnimationConfig<T>[]>
-      >
-    >,
-    deps: readonly unknown[],
-    options?: {
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [
-    ReadonlyRecordLike<EventSourceLike<T>>,
-    Function1<Updater<TState>, boolean>,
-    Optional<TState>,
-  ] => {
-    const [publishers, setPublishers] =
-      useState<Optional<ReadonlyRecordLike<EventPublisherLike<T>>>>();
+export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
+  TState,
+  T,
+>(
+  initialState: Factory<TState>,
+  eventOptions: {
+    readonly mode: "switching" | "queueing";
+    readonly equality?: Equality<TState>;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  },
+  animationFactory: Factory<
+    ReadonlyRecordLike<Function2<TState, TState, readonly AnimationConfig<T>[]>>
+  >,
+  deps: readonly unknown[],
+  options?: {
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+  },
+): readonly [
+  ReadonlyRecordLike<EventSourceLike<T>>,
+  Function1<Updater<TState>, boolean>,
+  Optional<TState>,
+] => {
+  const [publishers, setPublishers] =
+    useState<Optional<ReadonlyRecordLike<EventPublisherLike<T>>>>();
 
-    const animations = useMemo(animationFactory, deps);
+  const animations = useMemo(animationFactory, deps);
 
-    useEffect(() => {
-      const publishers = pipe(
-        animations,
-        ReadonlyRecord.map<unknown, EventPublisherLike<T>, string>(_ =>
-          EventPublisher.create<T>(),
-        ),
-      );
-
-      setPublishers(publishers);
-      return pipeLazy(
-        publishers,
-        ReadonlyRecord.forEachWithKey<EventPublisherLike<T>, string>(
-          publisher => publisher[DisposableLike_dispose](),
-        ),
-        ignore,
-      );
-    }, [animations]);
-
-    const streamable = useMemo(
-      () =>
-        Streamable.createStateStore(
-          initialState,
-          (prev, next) => {
-            const observables: Readonly<Record<string, ObservableLike<T>>> =
-              pipe(
-                animations,
-                ReadonlyRecord.mapWithKey<
-                  Function2<TState, TState, readonly AnimationConfig<T>[]>,
-                  ObservableLike<T>,
-                  string
-                >((factory, key) =>
-                  pipe(
-                    Observable.animate<T>(...factory(prev, next)),
-                    Observable.forEach(v => {
-                      const publisher = publishers?.[key];
-                      if (isSome(publisher)) {
-                        publisher[EventListenerLike_notify](v);
-                      }
-                    }),
-                    Observable.ignoreElements<T>(),
-                  ),
-                ),
-              );
-
-            return pipe(
-              Observable.fromEnumeratorFactory(
-                pipeLazy(observables, ReadonlyRecord.values()),
-              ),
-              Observable.map(
-                Observable.subscribeOn(
-                  createAnimationFrameSchedulerFactory(options?.priority),
-                ),
-              ),
-              Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
-            );
-          },
-          eventOptions as any,
-        ),
-      [
-        animations,
-        eventOptions.mode,
-        eventOptions.backpressureStrategy,
-        eventOptions.capacity,
-        options?.priority,
-        publishers,
-      ],
+  useEffect(() => {
+    const publishers = pipe(
+      animations,
+      ReadonlyRecord.map<unknown, EventPublisherLike<T>, string>(_ =>
+        EventPublisher.create<T>(),
+      ),
     );
 
-    const [value, dispatch] = useStreamable(streamable, options);
+    setPublishers(publishers);
+    return pipeLazy(
+      publishers,
+      ReadonlyRecord.forEachWithKey<EventPublisherLike<T>, string>(publisher =>
+        publisher[DisposableLike_dispose](),
+      ),
+      ignore,
+    );
+  }, [animations]);
 
-    return [
-      publishers ?? ReadonlyRecord.empty<EventSourceLike<T>>(),
-      dispatch,
-      value,
-    ];
-  }) as UseAnimatedState["useAnimatedState"];
+  const streamable = useMemo(
+    () =>
+      Streamable.createStateStore(
+        initialState,
+        (prev, next) => {
+          const observables: Readonly<Record<string, ObservableLike<T>>> = pipe(
+            animations,
+            ReadonlyRecord.mapWithKey<
+              Function2<TState, TState, readonly AnimationConfig<T>[]>,
+              ObservableLike<T>,
+              string
+            >((factory, key) =>
+              pipe(
+                Observable.animate<T>(...factory(prev, next)),
+                Observable.forEach(v => {
+                  const publisher = publishers?.[key];
+                  if (isSome(publisher)) {
+                    publisher[EventListenerLike_notify](v);
+                  }
+                }),
+                Observable.ignoreElements<T>(),
+              ),
+            ),
+          );
+
+          return pipe(
+            Observable.fromEnumeratorFactory(
+              pipeLazy(observables, ReadonlyRecord.values()),
+            ),
+            Observable.map(
+              Observable.subscribeOn(
+                createAnimationFrameSchedulerFactory(options?.priority),
+              ),
+            ),
+            Observable.mergeAll({ maxConcurrency: eventOptions.concurrency }),
+          );
+        },
+        eventOptions as any,
+      ),
+    [
+      animations,
+      eventOptions.mode,
+      eventOptions.backpressureStrategy,
+      eventOptions.capacity,
+      options?.priority,
+      publishers,
+    ],
+  );
+
+  const [value, dispatch] = useStreamable(streamable, options);
+
+  return [
+    publishers ?? ReadonlyRecord.empty<EventSourceLike<T>>(),
+    dispatch,
+    value,
+  ];
+}) as UseAnimatedState["useAnimatedState"];

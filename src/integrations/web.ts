@@ -155,8 +155,8 @@ export const createEventSource = (
   });
 };
 
-interface AddEventListener {
-  addEventListener<
+interface ObserveEvent {
+  observeEvent<
     TEventTarget extends AbortSignal,
     K extends keyof AbortSignalEventMap,
     T,
@@ -164,7 +164,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<AbortSignalEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends Animation,
     K extends keyof AnimationEventMap,
     T,
@@ -172,7 +172,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<AnimationEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends AbstractWorker,
     K extends keyof AbstractWorkerEventMap,
     T,
@@ -180,7 +180,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<AbstractWorkerEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends AudioScheduledSourceNode,
     K extends keyof AudioScheduledSourceNodeEventMap,
     T,
@@ -188,7 +188,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<AudioScheduledSourceNodeEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends BaseAudioContext,
     K extends keyof BaseAudioContextEventMap,
     T,
@@ -196,7 +196,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<BaseAudioContextEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends AudioWorkletNode,
     K extends keyof AudioWorkletNodeEventMap,
     T,
@@ -204,7 +204,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<AudioWorkletNodeEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends BroadcastChannel,
     K extends keyof BroadcastChannelEventMap,
     T,
@@ -213,7 +213,7 @@ interface AddEventListener {
     selector: Function1<BroadcastChannelEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
 
-  addEventListener<
+  observeEvent<
     TEventTarget extends Document,
     K extends keyof DocumentEventMap,
     T,
@@ -222,7 +222,7 @@ interface AddEventListener {
     selector: Function1<DocumentEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
 
-  addEventListener<
+  observeEvent<
     TEventTarget extends MediaStreamTrack,
     K extends keyof MediaStreamTrackEventMap,
     T,
@@ -230,7 +230,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<MediaStreamTrackEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends EventSource,
     K extends keyof EventSourceEventMap,
     T,
@@ -238,7 +238,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<EventSourceEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends FileReader,
     K extends keyof FileReaderEventMap,
     T,
@@ -246,7 +246,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<FileReaderEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends FontFaceSet,
     K extends keyof FontFaceSetEventMap,
     T,
@@ -254,7 +254,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<FontFaceSetEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends GlobalEventHandlers,
     K extends keyof GlobalEventHandlersEventMap,
     T,
@@ -262,7 +262,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<GlobalEventHandlersEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends IDBDatabase,
     K extends keyof IDBDatabaseEventMap,
     T,
@@ -271,7 +271,7 @@ interface AddEventListener {
     selector: Function1<IDBDatabaseEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
 
-  addEventListener<
+  observeEvent<
     TEventTarget extends HTMLBodyElement,
     K extends keyof HTMLBodyElementEventMap,
     T,
@@ -280,7 +280,7 @@ interface AddEventListener {
     selector: Function1<HTMLBodyElementEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
 
-  addEventListener<
+  observeEvent<
     TEventTarget extends HTMLElement,
     K extends keyof HTMLElementEventMap,
     T,
@@ -289,7 +289,7 @@ interface AddEventListener {
     selector: Function1<HTMLElementEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
 
-  addEventListener<
+  observeEvent<
     TEventTarget extends HTMLMediaElement,
     K extends keyof HTMLMediaElementEventMap,
     T,
@@ -298,7 +298,7 @@ interface AddEventListener {
     selector: Function1<HTMLMediaElementEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
 
-  addEventListener<
+  observeEvent<
     TEventTarget extends HTMLVideoElement,
     K extends keyof HTMLVideoElementEventMap,
     T,
@@ -307,7 +307,7 @@ interface AddEventListener {
     selector: Function1<HTMLVideoElementEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
 
-  addEventListener<
+  observeEvent<
     TEventTarget extends IDBOpenDBRequest,
     K extends keyof IDBOpenDBRequestEventMap,
     T,
@@ -315,7 +315,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<IDBOpenDBRequestEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends IDBRequest<T>,
     K extends keyof IDBRequestEventMap,
     T,
@@ -323,7 +323,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<IDBRequestEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends IDBTransaction,
     K extends keyof IDBTransactionEventMap,
     T,
@@ -331,7 +331,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<IDBTransactionEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends MathMLElement,
     K extends keyof MathMLElementEventMap,
     T,
@@ -339,7 +339,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<MathMLElementEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends MediaDevices,
     K extends keyof MediaDevicesEventMap,
     T,
@@ -347,7 +347,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<MediaDevicesEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends MediaKeySession,
     K extends keyof MediaKeySessionEventMap,
     T,
@@ -355,7 +355,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<MediaKeySessionEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends MediaQueryList,
     K extends keyof MediaQueryListEventMap,
     T,
@@ -363,7 +363,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<MediaQueryListEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends MediaRecorder,
     K extends keyof MediaRecorderEventMap,
     T,
@@ -371,7 +371,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<MediaRecorderEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends MediaSource | MediaStream,
     K extends keyof MediaSourceEventMap,
     T,
@@ -379,7 +379,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<MediaSourceEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends MediaStream,
     K extends keyof MediaStreamEventMap,
     T,
@@ -387,7 +387,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<MediaStreamEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends MessagePort,
     K extends keyof MessagePortEventMap,
     T,
@@ -395,7 +395,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<MessagePortEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends Notification,
     K extends keyof NotificationEventMap,
     T,
@@ -403,7 +403,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<NotificationEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends OfflineAudioContext,
     K extends keyof OfflineAudioContextEventMap,
     T,
@@ -411,7 +411,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<OfflineAudioContextEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends OffscreenCanvas,
     K extends keyof OffscreenCanvasEventMap,
     T,
@@ -419,7 +419,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<OffscreenCanvasEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends PaymentRequest,
     K extends keyof PaymentRequestEventMap,
     T,
@@ -427,7 +427,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<PaymentRequestEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends Performance,
     K extends keyof PerformanceEventMap,
     T,
@@ -435,7 +435,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<PerformanceEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends PermissionStatus,
     K extends keyof PermissionStatusEventMap,
     T,
@@ -443,7 +443,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<PermissionStatusEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends PictureInPictureWindow,
     K extends keyof PictureInPictureWindowEventMap,
     T,
@@ -451,7 +451,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<PictureInPictureWindowEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends RTCDTMFSender,
     K extends keyof RTCDTMFSenderEventMap,
     T,
@@ -459,7 +459,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<RTCDTMFSenderEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends RTCDataChannel,
     K extends keyof RTCDataChannelEventMap,
     T,
@@ -467,7 +467,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<RTCDataChannelEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends RTCDtlsTransport,
     K extends keyof RTCDtlsTransportEventMap,
     T,
@@ -475,7 +475,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<RTCDtlsTransportEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends RTCIceTransport,
     K extends keyof RTCIceTransportEventMap,
     T,
@@ -483,7 +483,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<RTCIceTransportEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends RTCPeerConnection,
     K extends keyof RTCPeerConnectionEventMap,
     T,
@@ -491,7 +491,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<RTCPeerConnectionEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends RTCSctpTransport,
     K extends keyof RTCSctpTransportEventMap,
     T,
@@ -499,7 +499,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<RTCSctpTransportEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends RemotePlayback,
     K extends keyof RemotePlaybackEventMap,
     T,
@@ -507,7 +507,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<RemotePlaybackEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends SVGSVGElement,
     K extends keyof SVGSVGElementEventMap,
     T,
@@ -515,7 +515,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<SVGSVGElementEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends ScreenOrientation,
     K extends keyof ScreenOrientationEventMap,
     T,
@@ -523,7 +523,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<ScreenOrientationEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends ServiceWorker,
     K extends keyof ServiceWorkerEventMap,
     T,
@@ -531,7 +531,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<ServiceWorkerEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends ServiceWorkerContainer,
     K extends keyof ServiceWorkerContainerEventMap,
     T,
@@ -539,7 +539,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<ServiceWorkerContainerEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends ServiceWorkerRegistration,
     K extends keyof ServiceWorkerRegistrationEventMap,
     T,
@@ -547,7 +547,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<ServiceWorkerRegistrationEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends ShadowRoot,
     K extends keyof ShadowRootEventMap,
     T,
@@ -555,7 +555,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<ShadowRootEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends SourceBuffer,
     K extends keyof SourceBufferEventMap,
     T,
@@ -563,7 +563,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<SourceBufferEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends SourceBufferList,
     K extends keyof SourceBufferListEventMap,
     T,
@@ -571,7 +571,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<SourceBufferListEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends SpeechSynthesis,
     K extends keyof SpeechSynthesisEventMap,
     T,
@@ -579,7 +579,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<SpeechSynthesisEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends SpeechSynthesisUtterance,
     K extends keyof SpeechSynthesisUtteranceEventMap,
     T,
@@ -587,7 +587,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<SpeechSynthesisUtteranceEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends SVGElement,
     K extends keyof SVGElementEventMap,
     T,
@@ -595,7 +595,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<SVGElementEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends TextTrack,
     K extends keyof TextTrackEventMap,
     T,
@@ -603,7 +603,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<TextTrackEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends TextTrackCue,
     K extends keyof TextTrackCueEventMap,
     T,
@@ -611,7 +611,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<TextTrackCueEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends TextTrackList,
     K extends keyof TextTrackListEventMap,
     T,
@@ -619,7 +619,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<TextTrackListEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends VisualViewport,
     K extends keyof VisualViewportEventMap,
     T,
@@ -627,7 +627,7 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<VisualViewportEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends WebSocket,
     K extends keyof WebSocketEventMap,
     T,
@@ -635,23 +635,15 @@ interface AddEventListener {
     eventName: K,
     selector: Function1<WebSocketEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
-    TEventTarget extends Window,
-    K extends keyof WindowEventMap,
-    T,
-  >(
+  observeEvent<TEventTarget extends Window, K extends keyof WindowEventMap, T>(
     eventName: K,
     selector: Function1<WindowEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
-    TEventTarget extends Worker,
-    K extends keyof WorkerEventMap,
-    T,
-  >(
+  observeEvent<TEventTarget extends Worker, K extends keyof WorkerEventMap, T>(
     eventName: K,
     selector: Function1<WorkerEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-  addEventListener<
+  observeEvent<
     TEventTarget extends XMLHttpRequestEventTarget,
     K extends keyof XMLHttpRequestEventTargetEventMap,
     T,
@@ -661,7 +653,7 @@ interface AddEventListener {
   ): Function1<TEventTarget, ObservableLike<T>>;
 }
 
-export const addEventListener: AddEventListener["addEventListener"] = (<T>(
+export const observeEvent: ObserveEvent["observeEvent"] = (<T>(
     eventName: string,
     selector: Function1<unknown, T>,
   ): Function1<
@@ -695,7 +687,7 @@ export const addEventListener: AddEventListener["addEventListener"] = (<T>(
       target.addEventListener(eventName, listener, {
         passive: true,
       } as any);
-    })) as AddEventListener["addEventListener"];
+    })) as ObserveEvent["observeEvent"];
 
 export const windowLocation: StreamableLike<
   Updater<WindowLocationURI> | WindowLocationURI,
@@ -936,7 +928,7 @@ export const windowLocation: StreamableLike<
           // Initialize the history state on page load
           pipe(
             window,
-            addEventListener<Window, "popstate", unknown>(
+            observeEvent<Window, "popstate", unknown>(
               "popstate",
               (e: PopStateEvent) => {
                 const { counter, title } = e.state as {

@@ -46,7 +46,7 @@ export const createEventSource = (url, options = {}) => {
         }
     });
 };
-export const addEventListener = ((eventName, selector) => target => Observable.create(observer => {
+export const observeEvent = ((eventName, selector) => target => Observable.create(observer => {
     pipe(observer, Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));
@@ -162,7 +162,7 @@ export const windowLocation = /*@__PURE__*/ (() => {
             backpressureStrategy: options?.backpressureStrategy ?? "drop-oldest",
         }), Stream.syncState(state => 
         // Initialize the history state on page load
-        pipe(window, addEventListener("popstate", (e) => {
+        pipe(window, observeEvent("popstate", (e) => {
             const { counter, title } = e.state;
             const uri = createWindowLocationURIWithPrototype({
                 ...getCurrentWindowLocationURI(),
