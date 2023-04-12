@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useAnimatedState } from "@reactive-js/core/integrations/react";
 import { AnimationConfig } from "@reactive-js/core/rx";
 import { EventSourceLike } from "@reactive-js/core/util";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
-import { returns } from "@reactive-js/core/functions";
+import { pipeLazy, returns } from "@reactive-js/core/functions";
+import * as EventSource from "@reactive-js/core/util/EventSource";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -43,35 +44,42 @@ const AnimatedBox = ({
   value?: EventSourceLike<[boolean, number]>;
   index: number;
 }) => {
-  const frontBoxRef = useAnimate<HTMLDivElement, [boolean, number]>(
-    value,
-    ([state, val]) => {
-      const v = !state
-        ? clamp(0, val / (index + 1), 180)
-        : 180 - clamp(0, val / (index + 1), 180);
+  const frontBoxValue = useMemo(
+    pipeLazy(
+      value ?? EventSource.empty<[boolean, number]>(),
+      EventSource.map(([state, val]) => {
+        const v = !state
+          ? clamp(0, val / (index + 1), 180)
+          : 180 - clamp(0, val / (index + 1), 180);
 
-      return {
-        transform: `perspective(600px) rotateX(${v}deg)`,
-        transformStyle: "preserve-3d",
-      };
-    },
-    [index],
+        return {
+          transform: `perspective(600px) rotateX(${v}deg)`,
+          transformStyle: "preserve-3d",
+        };
+      }),
+    ),
+    [index, value],
   );
 
-  const backBoxRef = useAnimate<HTMLDivElement, [boolean, number]>(
-    value,
-    ([state, val]) => {
-      const v = state
-        ? clamp(0, val / (index + 1), 180)
-        : 180 - clamp(0, val / (index + 1), 180);
+  const backBoxValue = useMemo(
+    pipeLazy(
+      value ?? EventSource.empty<[boolean, number]>(),
+      EventSource.map(([state, val]) => {
+        const v = state
+          ? clamp(0, val / (index + 1), 180)
+          : 180 - clamp(0, val / (index + 1), 180);
 
-      return {
-        transform: `perspective(600px) rotateX(${v}deg)`,
-        transformStyle: "preserve-3d",
-      };
-    },
-    [index],
+        return {
+          transform: `perspective(600px) rotateX(${v}deg)`,
+          transformStyle: "preserve-3d",
+        };
+      }),
+    ),
+    [index, value],
   );
+
+  const frontBoxRef = useAnimate<HTMLDivElement>(frontBoxValue);
+  const backBoxRef = useAnimate<HTMLDivElement>(backBoxValue);
 
   return (
     <Box>
