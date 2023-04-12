@@ -1,4 +1,8 @@
-import { ReducerAccumulatorLike } from "../../../__internal__/containers.js";
+import {
+  ReducerAccumulatorLike,
+  ReducerAccumulatorLike_acc,
+  ReducerAccumulatorLike_reducer,
+} from "../../../__internal__/containers.js";
 import {
   createInstanceFactory,
   include,
@@ -6,10 +10,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  __ReducerAccumulatorLike_acc,
-  __ReducerAccumulatorLike_reducer,
-} from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -56,11 +56,11 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
-          instance[__ReducerAccumulatorLike_reducer] = reducer;
+          instance[ReducerAccumulatorLike_reducer] = reducer;
 
           try {
             const acc = initialValue();
-            instance[__ReducerAccumulatorLike_acc] = acc;
+            instance[ReducerAccumulatorLike_acc] = acc;
           } catch (e) {
             instance[DisposableLike_dispose](error(e));
           }
@@ -68,8 +68,8 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
           return instance;
         },
         props<ReducerAccumulatorLike<T, TAcc>>({
-          [__ReducerAccumulatorLike_acc]: none,
-          [__ReducerAccumulatorLike_reducer]: none,
+          [ReducerAccumulatorLike_acc]: none,
+          [ReducerAccumulatorLike_reducer]: none,
         }),
         {
           [ObserverLike_notify](
@@ -80,11 +80,11 @@ const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
           ) {
             Observer_assertState(this);
 
-            const nextAcc = this[__ReducerAccumulatorLike_reducer](
-              this[__ReducerAccumulatorLike_acc],
+            const nextAcc = this[ReducerAccumulatorLike_reducer](
+              this[ReducerAccumulatorLike_acc],
               next,
             );
-            this[__ReducerAccumulatorLike_acc] = nextAcc;
+            this[ReducerAccumulatorLike_acc] = nextAcc;
             this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
           },
         },

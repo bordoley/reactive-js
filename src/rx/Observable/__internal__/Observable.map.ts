@@ -1,4 +1,7 @@
-import { MappingLike } from "../../../__internal__/containers.js";
+import {
+  MappingLike,
+  MappingLike_mapper,
+} from "../../../__internal__/containers.js";
 import {
   createInstanceFactory,
   include,
@@ -6,7 +9,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { __MappingLike_mapper } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -42,12 +44,12 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
-          instance[__MappingLike_mapper] = mapper;
+          instance[MappingLike_mapper] = mapper;
 
           return instance;
         },
         props<MappingLike<TA, TB>>({
-          [__MappingLike_mapper]: none,
+          [MappingLike_mapper]: none,
         }),
         {
           [ObserverLike_notify](
@@ -58,7 +60,7 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
           ) {
             Observer_assertState(this);
 
-            const mapped = this[__MappingLike_mapper](next);
+            const mapped = this[MappingLike_mapper](next);
             this[DelegatingLike_delegate][ObserverLike_notify](mapped);
           },
         },

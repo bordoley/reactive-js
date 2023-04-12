@@ -1,8 +1,8 @@
-import { LiftedLike } from "../../../__internal__/containers.js";
 import {
-  __LiftedLike_operators,
-  __LiftedLike_source,
-} from "../../../__internal__/symbols.js";
+  LiftedLike,
+  LiftedLike_operators,
+  LiftedLike_source,
+} from "../../../__internal__/containers.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -20,8 +20,8 @@ class LiftedObservable<TIn, TOut>
     ObservableLike<TOut>,
     LiftedLike<ObservableLike<TIn>, ObserverLike<any>>
 {
-  readonly [__LiftedLike_source]: ObservableLike<TIn>;
-  readonly [__LiftedLike_operators]: readonly Function1<
+  readonly [LiftedLike_source]: ObservableLike<TIn>;
+  readonly [LiftedLike_operators]: readonly Function1<
     ObserverLike<any>,
     ObserverLike<any>
   >[];
@@ -34,8 +34,8 @@ class LiftedObservable<TIn, TOut>
     isEnumerable: boolean,
     isRunnable: boolean,
   ) {
-    this[__LiftedLike_source] = source;
-    this[__LiftedLike_operators] = operators;
+    this[LiftedLike_source] = source;
+    this[LiftedLike_operators] = operators;
     this[ObservableLike_isEnumerable] = isEnumerable;
     this[ObservableLike_isRunnable] = isRunnable;
   }
@@ -43,8 +43,8 @@ class LiftedObservable<TIn, TOut>
   [ObservableLike_observe](observer: ObserverLike<TOut>) {
     pipeUnsafe(
       observer,
-      ...this[__LiftedLike_operators],
-      Observer_sourceFrom(this[__LiftedLike_source]),
+      ...this[LiftedLike_operators],
+      Observer_sourceFrom(this[LiftedLike_source]),
     );
   }
 }
@@ -107,10 +107,10 @@ const Observable_lift: ObservableLift["lift"] = ((config: {
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ): Function1<ObservableLike<TA>, ObservableLike<TB>> =>
   source => {
-    const sourceSource = (source as any)[__LiftedLike_source] ?? source;
+    const sourceSource = (source as any)[LiftedLike_source] ?? source;
     const allFunctions = [
       operator,
-      ...((source as any)[__LiftedLike_operators] ?? []),
+      ...((source as any)[LiftedLike_operators] ?? []),
     ];
 
     const isLiftedEnumerable =

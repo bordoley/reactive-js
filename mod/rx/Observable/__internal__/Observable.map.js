@@ -1,7 +1,7 @@
 /// <reference types="./Observable.map.d.ts" />
 
+import { MappingLike_mapper, } from "../../../__internal__/containers.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { __MappingLike_mapper } from "../../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
@@ -13,14 +13,14 @@ const Observable_map = /*@__PURE__*/ (() => {
     const createMapObserver = (() => createInstanceFactory(mix(include(Observer_delegatingMixin(), Delegating_mixin()), function MapObserver(instance, delegate, mapper) {
         init(Observer_delegatingMixin(), instance, delegate, delegate);
         init(Delegating_mixin(), instance, delegate);
-        instance[__MappingLike_mapper] = mapper;
+        instance[MappingLike_mapper] = mapper;
         return instance;
     }, props({
-        [__MappingLike_mapper]: none,
+        [MappingLike_mapper]: none,
     }), {
         [ObserverLike_notify](next) {
             Observer_assertState(this);
-            const mapped = this[__MappingLike_mapper](next);
+            const mapped = this[MappingLike_mapper](next);
             this[DelegatingLike_delegate][ObserverLike_notify](mapped);
         },
     })))();

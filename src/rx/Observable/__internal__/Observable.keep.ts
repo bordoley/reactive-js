@@ -1,4 +1,7 @@
-import { PredicatedLike } from "../../../__internal__/containers.js";
+import {
+  PredicatedLike,
+  PredicatedLike_predicate,
+} from "../../../__internal__/containers.js";
 import {
   createInstanceFactory,
   include,
@@ -6,7 +9,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { __PredicatedLike_predicate } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -43,12 +45,12 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
         ): ObserverLike<T> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
-          instance[__PredicatedLike_predicate] = predicate;
+          instance[PredicatedLike_predicate] = predicate;
 
           return instance;
         },
         props<PredicatedLike<T>>({
-          [__PredicatedLike_predicate]: none,
+          [PredicatedLike_predicate]: none,
         }),
         {
           [ObserverLike_notify](
@@ -59,7 +61,7 @@ const Observable_keep: ObservableKeep = /*@__PURE__*/ (<T>() => {
           ) {
             Observer_assertState(this);
 
-            if (this[__PredicatedLike_predicate](next)) {
+            if (this[PredicatedLike_predicate](next)) {
               this[DelegatingLike_delegate][ObserverLike_notify](next);
             }
           },
