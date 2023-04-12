@@ -31,7 +31,7 @@ type ObservableMap = <C extends ObservableLike, TA, TB>(
 const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
   const createMapObserver: <TA, TB>(
     delegate: ObserverLike<TB>,
-    predicate: Function1<TA, TB>,
+    selector: Function1<TA, TB>,
   ) => ObserverLike<TA> = (<TA, TB>() =>
     createInstanceFactory(
       mix(
