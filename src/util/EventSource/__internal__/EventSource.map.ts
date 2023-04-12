@@ -92,7 +92,9 @@ class MappingEventSource<TA, TB>
   }
 
   [KeyedCollectionLike_get](index: number): TB {
-    return this.m(this.d[ReplayableLike_buffer][KeyedCollectionLike_get](index));
+    return this.m(
+      this.d[ReplayableLike_buffer][KeyedCollectionLike_get](index),
+    );
   }
 }
 
