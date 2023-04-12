@@ -4,10 +4,40 @@
 
 ## Table of contents
 
+### Constructor Functions
+
+- [empty](util_EventSource.md#empty)
+
 ### Operator Functions
 
 - [keep](util_EventSource.md#keep)
 - [map](util_EventSource.md#map)
+
+## Constructor Functions
+
+### empty
+
+▸ **empty**<`T`\>(`options?`): [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
+
+Return an ContainerLike that emits no items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
+
+___
 
 ## Operator Functions
 

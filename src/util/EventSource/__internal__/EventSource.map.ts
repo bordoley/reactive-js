@@ -35,7 +35,7 @@ const createMappingEventListener: <TA, TB>(
   createInstanceFactory(
     mix(
       include(Disposable_delegatingMixin, Delegating_mixin()),
-      function MapObserver(
+      function MapListener(
         instance: Pick<EventListenerLike<TA>, typeof EventListenerLike_notify> &
           MappingLike<TA, TB>,
         delegate: EventListenerLike<TB>,
