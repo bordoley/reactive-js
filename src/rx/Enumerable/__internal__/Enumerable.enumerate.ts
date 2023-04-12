@@ -12,7 +12,7 @@ import {
   IndexedQueueLike,
   QueueLike,
   QueueLike_dequeue,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,

@@ -10,7 +10,7 @@ import { __DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/s
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import {

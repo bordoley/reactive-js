@@ -7,10 +7,7 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import {
-  QueueLike_dequeue,
-  QueueLike_head,
-} from "../../__internal__/util.internal.js";
+import { QueueLike_dequeue, QueueLike_head } from "../../__internal__/util.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
 import { CollectionLike_count, QueueableLike_enqueue } from "../../util.js";
 import IndexedQueue_createFifoQueue from "../Queue/__internal__/IndexedQueue.createFifoQueue.js";

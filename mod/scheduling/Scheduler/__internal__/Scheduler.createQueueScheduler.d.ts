@@ -1,5 +1,5 @@
 import { __QueueTask_continuation, __QueueTask_dueTime, __QueueTask_priority, __QueueTask_taskID } from "../../../__internal__/symbols.js";
-import { QueueLike } from "../../../__internal__/util.internal.js";
+import { QueueLike } from "../../../__internal__/util.js";
 import { Function2 } from "../../../functions.js";
 import { PauseableSchedulerLike, PrioritySchedulerLike, SchedulerLike } from "../../../scheduling.js";
 import { ContinuationLike } from "./Scheduler.mixin.js";

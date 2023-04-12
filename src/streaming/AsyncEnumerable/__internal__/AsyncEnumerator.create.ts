@@ -8,7 +8,7 @@ import {
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import { pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";

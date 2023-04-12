@@ -2,7 +2,7 @@
 
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __ObserverMixin_dispatchSubscription, __ObserverMixin_isCompleted, } from "../../../__internal__/symbols.js";
-import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { call, pipe, returns, unsafeCast } from "../../../functions.js";
 import { DispatcherLike_complete, ObserverLike_notify, } from "../../../rx.js";
 import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";

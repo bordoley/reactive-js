@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __HigherOrderObservable_currentRef } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../../__internal__/util.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";

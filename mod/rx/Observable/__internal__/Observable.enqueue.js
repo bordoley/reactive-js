@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __EnqueueObserver_effect } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { bindMethod, isFunction, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { SchedulerLike_requestYield } from "../../../scheduling.js";

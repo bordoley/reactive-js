@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER, __DEV__ } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
-import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";

@@ -10,7 +10,7 @@ import { __EnqueueObserver_effect } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Function1,

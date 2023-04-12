@@ -10,7 +10,7 @@ import { __SatisfyObserver_predicate } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { Predicate, invoke, none, pipe } from "../../../functions.js";
 import {

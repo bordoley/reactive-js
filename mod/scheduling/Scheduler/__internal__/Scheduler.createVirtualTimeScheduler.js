@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __VirtualTask_continuation, __VirtualTask_dueTime, __VirtualTask_id, __VirtualTimeScheduler_maxMicroTaskTicks, __VirtualTimeScheduler_microTaskTicks, __VirtualTimeScheduler_taskIDCount, } from "../../../__internal__/symbols.js";
-import { QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { QueueLike_dequeue } from "../../../__internal__/util.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isSome, pipe, unsafeCast } from "../../../functions.js";

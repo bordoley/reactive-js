@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, newInstance, none, partial, pipe, } from "../../../functions.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";

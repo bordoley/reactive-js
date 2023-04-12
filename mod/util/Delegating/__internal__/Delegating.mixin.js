@@ -1,7 +1,7 @@
 /// <reference types="./Delegating.mixin.d.ts" />
 
 import { mix, props } from "../../../__internal__/mixins.js";
-import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { none, pipe, returns } from "../../../functions.js";
 const Delegating_mixin = /*@__PURE__*/ (() => {
     return pipe(mix(function DelegatingDisposableMixin(instance, delegate) {

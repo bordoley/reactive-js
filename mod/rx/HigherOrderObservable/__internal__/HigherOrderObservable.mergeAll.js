@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __MergeAllObserver_activeCount, __MergeAllObserver_concurrency, __MergeAllObserver_observablesQueue, __MergeAllObserver_onDispose, } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { bindMethod, isSome, none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";

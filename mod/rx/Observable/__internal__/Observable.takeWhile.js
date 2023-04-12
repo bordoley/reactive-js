@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __TakeWhileObserver_inclusive, __TakeWhileObserver_predicate, } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";

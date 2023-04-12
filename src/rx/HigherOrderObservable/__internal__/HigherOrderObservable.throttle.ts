@@ -19,7 +19,7 @@ import {
   DelegatingLike_delegate,
   SerialDisposableLike,
   SerialDisposableLike_current,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import {
   ContainerOf,
   ContainerOperator,

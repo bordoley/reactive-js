@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __TimeoutObserver_duration, __timeoutError, } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../../__internal__/util.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";

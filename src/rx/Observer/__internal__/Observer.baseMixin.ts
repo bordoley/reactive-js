@@ -13,7 +13,7 @@ import {
 import {
   IndexedQueueLike,
   QueueLike_dequeue,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import { call, pipe, returns, unsafeCast } from "../../../functions.js";
 import {
   DispatcherLike_complete,

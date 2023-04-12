@@ -16,10 +16,7 @@ import {
   __VirtualTimeScheduler_microTaskTicks,
   __VirtualTimeScheduler_taskIDCount,
 } from "../../../__internal__/symbols.js";
-import {
-  QueueLike,
-  QueueLike_dequeue,
-} from "../../../__internal__/util.internal.js";
+import { QueueLike, QueueLike_dequeue } from "../../../__internal__/util.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,

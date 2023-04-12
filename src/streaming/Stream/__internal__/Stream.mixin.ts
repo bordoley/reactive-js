@@ -9,7 +9,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { __DispatchedObservable_observer } from "../../../__internal__/symbols.js";
-import { IndexedQueueLike } from "../../../__internal__/util.internal.js";
+import { IndexedQueueLike } from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import {
   Optional,

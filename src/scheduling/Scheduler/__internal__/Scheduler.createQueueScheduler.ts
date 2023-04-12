@@ -26,7 +26,7 @@ import {
   QueueLike_head,
   SerialDisposableLike,
   SerialDisposableLike_current,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,

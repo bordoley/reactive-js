@@ -3,7 +3,7 @@
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __SkipFirstObserver_count, __SkipFirstObserver_skipCount, } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";

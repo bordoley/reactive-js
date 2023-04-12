@@ -14,7 +14,7 @@ import {
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import {
   Function2,

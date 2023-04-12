@@ -1,7 +1,7 @@
 /// <reference types="./Publisher.createRefCounted.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { pipe } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, ObservableLike_observe, } from "../../../rx.js";
 import { DisposableLike_dispose, EventListenerLike_notify, } from "../../../util.js";

@@ -15,7 +15,7 @@ import {
   QueueLike_head,
   StackLike_head,
   StackLike_pop,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import {
   Optional,
   newInstance,

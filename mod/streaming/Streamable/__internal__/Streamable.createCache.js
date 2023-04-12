@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
 import * as ReadonlyRecord from "../../../keyed-containers/ReadonlyRecord.js";
 import ReadonlyRecord_union from "../../../keyed-containers/ReadonlyRecord/__internal__/ReadonlyRecord.union.js";

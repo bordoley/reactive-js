@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __ZipObserver_enumerators, __ZipObserver_queuedEnumerator, } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
 import ReadonlyArray_every from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";

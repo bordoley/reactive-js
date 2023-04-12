@@ -3,7 +3,7 @@
 import { floor } from "../../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
-import { MutableKeyedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.internal.js";
+import { MutableKeyedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.js";
 import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
 import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";

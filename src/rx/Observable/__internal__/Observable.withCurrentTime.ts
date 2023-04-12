@@ -10,7 +10,7 @@ import { __WithCurrentTimeObserver_selector } from "../../../__internal__/symbol
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
 import {

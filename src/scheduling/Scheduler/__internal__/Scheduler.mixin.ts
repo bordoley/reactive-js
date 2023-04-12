@@ -26,7 +26,7 @@ import {
 import {
   QueueCollectionLike,
   QueueLike_dequeue,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import {
   Optional,
   SideEffect1,

@@ -15,7 +15,7 @@ import {
   QueueCollectionLike,
   QueueLike_dequeue,
   StackLike_pop,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import {
   Comparator,
   Optional,

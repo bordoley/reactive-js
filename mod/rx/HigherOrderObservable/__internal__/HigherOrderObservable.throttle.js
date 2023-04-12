@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __ThrottleObserver_durationFunction, __ThrottleObserver_durationSubscription, __ThrottleObserver_hasValue, __ThrottleObserver_mode, __ThrottleObserver_onNotify, __ThrottleObserver_value, } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../../__internal__/util.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { invoke, isNumber, none, partial, pipe, } from "../../../functions.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";

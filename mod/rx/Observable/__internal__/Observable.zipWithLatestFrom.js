@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __ZipWithLatestFromObserver_TAQueue, __ZipWithLatestFromObserver_hasLatest, __ZipWithLatestFromObserver_otherLatest, __ZipWithLatestFromObserver_selector, } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { none, partial, pipe, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";

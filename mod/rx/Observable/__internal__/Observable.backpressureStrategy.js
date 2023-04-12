@@ -1,7 +1,7 @@
 /// <reference types="./Observable.backpressureStrategy.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";

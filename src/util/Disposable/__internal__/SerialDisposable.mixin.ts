@@ -3,7 +3,7 @@ import { __SerialDisposableMixin_current } from "../../../__internal__/symbols.j
 import {
   SerialDisposableLike,
   SerialDisposableLike_current,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import { none, pipe, returns, unsafeCast } from "../../../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";

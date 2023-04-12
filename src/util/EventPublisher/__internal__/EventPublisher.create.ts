@@ -7,7 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { IndexedQueueLike } from "../../../__internal__/util.internal.js";
+import { IndexedQueueLike } from "../../../__internal__/util.js";
 import {
   EnumeratorLike_current,
   EnumeratorLike_move,

@@ -2,7 +2,7 @@ import { Mixin1, Mutable, mix, props } from "../../../__internal__/mixins.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import { none, pipe, returns } from "../../../functions.js";
 
 const Delegating_mixin: <TDelegate>() => Mixin1<

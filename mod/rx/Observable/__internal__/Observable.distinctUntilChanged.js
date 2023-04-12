@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __DistinctUntilChangedObserver_equality, __DistinctUntilChangedObserver_hasValue, __DistinctUntilChangedObserver_prev, } from "../../../__internal__/symbols.js";
-import { DelegatingLike_delegate, } from "../../../__internal__/util.internal.js";
+import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { none, partial, pipe, strictEquality, } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";

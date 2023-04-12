@@ -19,7 +19,7 @@ import {
   DelegatingLike_delegate,
   SerialDisposableLike,
   SerialDisposableLike_current,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { Function1, invoke, isNumber, none, pipe } from "../../../functions.js";

@@ -15,7 +15,7 @@ import {
   DelegatingLike_delegate,
   SerialDisposableLike,
   SerialDisposableLike_current,
-} from "../../../__internal__/util.internal.js";
+} from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import {
