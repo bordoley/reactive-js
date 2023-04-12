@@ -14,6 +14,8 @@
 
 - [`ReplayableLike`](util.ReplayableLike.md)<`T`\>
 
+- [`ContainerLike`](containers.ContainerLike.md)
+
   ↳ **`EventSourceLike`**
 
   ↳↳ [`EventPublisherLike`](util.EventPublisherLike.md)
@@ -22,6 +24,7 @@
 
 ### Properties
 
+- [[\_\_\_ContainerLike\_type]](util.EventSourceLike.md#[___containerlike_type])
 - [[\_\_\_EventSourceLike\_listenerCount]](util.EventSourceLike.md#[___eventsourcelike_listenercount])
 
 ### Methods
@@ -29,6 +32,16 @@
 - [[\_\_\_EventSourceLike\_addListener]](util.EventSourceLike.md#[___eventsourcelike_addlistener])
 
 ## Properties
+
+### [\_\_\_ContainerLike\_type]
+
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`EventSourceLike`](util.EventSourceLike.md)<`unknown`\>
+
+#### Overrides
+
+[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
+
+___
 
 ### [\_\_\_EventSourceLike\_listenerCount]
 
@@ -38,13 +51,13 @@
 
 ### [\_\_\_EventSourceLike\_addListener]
 
-▸ **[___EventSourceLike_addListener]**(`event`): `void`
+▸ **[___EventSourceLike_addListener]**(`listener`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `event` | [`EventListenerLike`](util.EventListenerLike.md)<`T`\> |
+| `listener` | [`EventListenerLike`](util.EventListenerLike.md)<`T`\> |
 
 #### Returns
 

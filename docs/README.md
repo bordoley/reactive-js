@@ -40,3 +40,4 @@ Reactive-JS
 - [util/Disposable](modules/util_Disposable.md)
 - [util/EventListener](modules/util_EventListener.md)
 - [util/EventPublisher](modules/util_EventPublisher.md)
+- [util/EventSource](modules/util_EventSource.md)

@@ -1,4 +1,5 @@
 import { __BufferLike_capacity as BufferLike_capacity, __CollectionLike_count as CollectionLike_count, __DisposableLike_add as DisposableLike_add, __DisposableLike_dispose as DisposableLike_dispose, __DisposableLike_error as DisposableLike_error, __DisposableLike_isDisposed as DisposableLike_isDisposed, __EventListenerLike_notify as EventListenerLike_notify, __EventSourceLike_addListener as EventSourceLike_addListener, __EventSourceLike_listenerCount as EventSourceLike_listenerCount, __KeyedCollectionLike_get as KeyedCollectionLike_get, __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy, __QueueableLike_enqueue as QueueableLike_enqueue, __ReplayableLike_buffer as ReplayableLike_buffer } from "./__internal__/symbols.js";
+import { ContainerLike, ContainerLike_T, ContainerLike_type } from "./containers.js";
 import { Optional, SideEffect1 } from "./functions.js";
 export { BufferLike_capacity, CollectionLike_count, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, ReplayableLike_buffer, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
@@ -94,9 +95,10 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
 /**
  * @noInheritDoc
  */
-export interface EventSourceLike<T = unknown> extends ReplayableLike<T> {
+export interface EventSourceLike<T = unknown> extends ReplayableLike<T>, ContainerLike {
+    readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
     readonly [EventSourceLike_listenerCount]: number;
-    [EventSourceLike_addListener](event: EventListenerLike<T>): void;
+    [EventSourceLike_addListener](listener: EventListenerLike<T>): void;
 }
 /**
  * @noInheritDoc

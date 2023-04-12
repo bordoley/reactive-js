@@ -13,6 +13,11 @@ import {
   __QueueableLike_enqueue as QueueableLike_enqueue,
   __ReplayableLike_buffer as ReplayableLike_buffer,
 } from "./__internal__/symbols.js";
+import {
+  ContainerLike,
+  ContainerLike_T,
+  ContainerLike_type,
+} from "./containers.js";
 import { Optional, SideEffect1 } from "./functions.js";
 
 export {
@@ -146,10 +151,13 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
 /**
  * @noInheritDoc
  */
-export interface EventSourceLike<T = unknown> extends ReplayableLike<T> {
+export interface EventSourceLike<T = unknown>
+  extends ReplayableLike<T>,
+    ContainerLike {
+  readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
   readonly [EventSourceLike_listenerCount]: number;
 
-  [EventSourceLike_addListener](event: EventListenerLike<T>): void;
+  [EventSourceLike_addListener](listener: EventListenerLike<T>): void;
 }
 
 /**

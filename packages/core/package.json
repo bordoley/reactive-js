@@ -81,6 +81,7 @@
     "./util": "./util.js",
     "./util/Disposable": "./util/Disposable.js",
     "./util/EventListener": "./util/EventListener.js",
-    "./util/EventPublisher": "./util/EventPublisher.js"
+    "./util/EventPublisher": "./util/EventPublisher.js",
+    "./util/EventSource": "./util/EventSource.js"
   }
 }
