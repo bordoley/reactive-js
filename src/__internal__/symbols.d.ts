@@ -162,6 +162,10 @@ export declare const __SchedulerMixin_startTime: unique symbol;
 
 export declare const __SerialDisposableMixin_current: unique symbol;
 
+export declare const __LiftedLike_source: unique symbol;
+
+export declare const __LiftedLike_operators: unique symbol;
+
 export declare const __MappingLike_mapper: unique symbol;
 
 export declare const __PredicatedLike_predicate: unique symbol;
@@ -249,10 +253,6 @@ export declare const __LatestObserver_ready: unique symbol;
 export declare const __LatestObserver_latest: unique symbol;
 
 export declare const __LatestObserver_ctx: unique symbol;
-
-export declare const __Lifted_source: unique symbol;
-
-export declare const __Lifted_operators: unique symbol;
 
 export declare const __MemoOrUsingEffect_func: unique symbol;
 

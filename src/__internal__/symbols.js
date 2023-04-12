@@ -392,6 +392,14 @@ export const __SerialDisposableMixin_current = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __LiftedLike_source = /*@__PURE__*/ symbol("LiftedLike_source");
+
+/** @type {unique symbol} */
+export const __LiftedLike_operators = /*@__PURE__*/ symbol(
+  "LiftedLike_operators",
+);
+
+/** @type {unique symbol} */
 export const __MappingLike_mapper = /*@__PURE__*/ symbol("MappingLike_mapper");
 
 /** @type {unique symbol} */
@@ -599,12 +607,6 @@ export const __LatestObserver_latest = /*@__PURE__*/ symbol(
 
 /** @type {unique symbol} */
 export const __LatestObserver_ctx = /*@__PURE__*/ symbol("LatestObserver_ctx");
-
-/** @type {unique symbol} */
-export const __Lifted_source = /*@__PURE__*/ symbol("Lifted_source");
-
-/** @type {unique symbol} */
-export const __Lifted_operators = /*@__PURE__*/ symbol("Lifted_operators");
 
 /** @type {unique symbol} */
 export const __MemoOrUsingEffect_func = /*@__PURE__*/ symbol(

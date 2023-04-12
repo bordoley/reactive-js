@@ -163,6 +163,10 @@ export const __SchedulerMixin_startTime: unique symbol;
 /** @type {unique symbol} */
 export const __SerialDisposableMixin_current: unique symbol;
 /** @type {unique symbol} */
+export const __LiftedLike_source: unique symbol;
+/** @type {unique symbol} */
+export const __LiftedLike_operators: unique symbol;
+/** @type {unique symbol} */
 export const __MappingLike_mapper: unique symbol;
 /** @type {unique symbol} */
 export const __PredicatedLike_predicate: unique symbol;
@@ -250,10 +254,6 @@ export const __LatestObserver_ready: unique symbol;
 export const __LatestObserver_latest: unique symbol;
 /** @type {unique symbol} */
 export const __LatestObserver_ctx: unique symbol;
-/** @type {unique symbol} */
-export const __Lifted_source: unique symbol;
-/** @type {unique symbol} */
-export const __Lifted_operators: unique symbol;
 /** @type {unique symbol} */
 export const __MemoOrUsingEffect_func: unique symbol;
 /** @type {unique symbol} */

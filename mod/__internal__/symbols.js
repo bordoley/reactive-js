@@ -169,6 +169,10 @@ export const __SchedulerMixin_startTime = /*@__PURE__*/ symbol("SchedulerMixin_s
 /** @type {unique symbol} */
 export const __SerialDisposableMixin_current = /*@__PURE__*/ symbol("SerialDisposableMixin_current");
 /** @type {unique symbol} */
+export const __LiftedLike_source = /*@__PURE__*/ symbol("LiftedLike_source");
+/** @type {unique symbol} */
+export const __LiftedLike_operators = /*@__PURE__*/ symbol("LiftedLike_operators");
+/** @type {unique symbol} */
 export const __MappingLike_mapper = /*@__PURE__*/ symbol("MappingLike_mapper");
 /** @type {unique symbol} */
 export const __PredicatedLike_predicate = /*@__PURE__*/ symbol("PredicatedLike_predicate");
@@ -257,10 +261,6 @@ export const __LatestObserver_ready = /*@__PURE__*/ symbol("LatestObserver_ready
 export const __LatestObserver_latest = /*@__PURE__*/ symbol("LatestObserver_latest");
 /** @type {unique symbol} */
 export const __LatestObserver_ctx = /*@__PURE__*/ symbol("LatestObserver_ctx");
-/** @type {unique symbol} */
-export const __Lifted_source = /*@__PURE__*/ symbol("Lifted_source");
-/** @type {unique symbol} */
-export const __Lifted_operators = /*@__PURE__*/ symbol("Lifted_operators");
 /** @type {unique symbol} */
 export const __MemoOrUsingEffect_func = /*@__PURE__*/ symbol("MemoOrUsingEffect_func");
 /** @type {unique symbol} */

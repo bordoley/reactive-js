@@ -83,6 +83,8 @@ SchedulerMixin_currentContinuation
 SchedulerMixin_startTime
 SerialDisposableMixin_current
 
+LiftedLike_source
+LiftedLike_operators
 MappingLike_mapper
 PredicatedLike_predicate
 ReducerAccumulatorLike_acc
@@ -128,8 +130,6 @@ LatestCtx_observers
 LatestObserver_ready
 LatestObserver_latest
 LatestObserver_ctx
-Lifted_source
-Lifted_operators
 MemoOrUsingEffect_func
 MemoOrUsingEffect_args
 MemoOrUsingEffect_value
