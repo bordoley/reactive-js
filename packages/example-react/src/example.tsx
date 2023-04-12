@@ -52,6 +52,7 @@ import {
   __stream,
 } from "@reactive-js/core/rx/effects";
 import { SchedulerLike } from "@reactive-js/core/scheduling";
+import { Wordle } from "./wordle";
 
 const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
   const values = cache[KeyedCollectionLike_get]("a");
@@ -336,73 +337,11 @@ const RootRxComponent = () => {
   return <RxComponent windowLocationStream={windowLocationStream} />;
 };
 
-/*
-const items = ["W", "O", "R", "D", "L", "E"];
-
-const SharedStyles = {
-  width: "100%",
-  height: "100%",
-  position: "absolute",
-  inset: 0,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  fontFamily: "Helvetica",
-  fontWeight: 800,
-  backfaceVisibility: "hidden",
-};
-
-const Box = (props: any) => (
-  <div
-    {...{ ...props }}
-    style={{
-      position: "relative",
-      height: 50,
-      width: 50,
-    }}
-  />
-);
-
-const FrontBox = (props: any) => (
-  <div
-    {...{ ...props }}
-    style={{
-      ...SharedStyles,
-      backgroundColor: "#fafafa",
-      border: "solid 2px #1a1a1a",
-    }}
-  />
-);
-
-const BackBox = (props: any) => (
-  <div
-    {...{ ...props }}
-    style={{
-      ...SharedStyles,
-      backgroundColor: "#6cab64",
-      border: "solid 2px #6cab64",
-      color: "#fafafa",
-    }}
-  />
-);
-
-const Wordle = () => {
-  return (
-    <div>
-      {items.map((x, i) => (
-        <Box key={i}>
-          <FrontBox>{"?"}</FrontBox>
-          <BackBox>{x}</BackBox>
-        </Box>
-      ))}
-    </div>
-  );
-};*/
-
 const rootElement = document.getElementById("root");
 ReactDOMClient.createRoot(rootElement as any).render(
   <WindowLocationProvider>
     <Root />
     <RootRxComponent />
+    <Wordle />
   </WindowLocationProvider>,
 );
