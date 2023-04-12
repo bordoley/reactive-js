@@ -61,6 +61,8 @@ const EventPublisher_create: <T>(options?: {
         init(Disposable_mixin, instance);
 
         instance.l = newInstance<Set<EventListenerLike>>(Set);
+
+        // FIXME: use the mixin instead and return this from a getter;
         instance[ReplayableLike_buffer] = Queue_createIndexedQueue(
           replay,
           "drop-oldest",

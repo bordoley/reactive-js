@@ -3,6 +3,7 @@ import { useAnimatedState } from "@reactive-js/core/integrations/react";
 import { AnimationConfig } from "@reactive-js/core/rx";
 import { EventSourceLike } from "@reactive-js/core/util";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
+import { returns } from "@reactive-js/core/functions";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -107,8 +108,8 @@ export const Wordle = () => {
     boolean,
     [boolean, number]
   >(
-    () => false,
-    () => ({
+    returns(false),
+    returns({
       value: (
         _: boolean,
         next: boolean,

@@ -13,6 +13,7 @@ const EventPublisher_create = /*@__PURE__*/ (() => {
     const createPublisherInstance = createInstanceFactory(mix(include(Disposable_mixin), function EventPublisher(instance, replay) {
         init(Disposable_mixin, instance);
         instance.l = newInstance(Set);
+        // FIXME: use the mixin instead and return this from a getter;
         instance[ReplayableLike_buffer] = Queue_createIndexedQueue(replay, "drop-oldest");
         pipe(instance, Disposable_onDisposed(e => {
             const enumerator = pipe(instance.l, Iterable_enumerate());

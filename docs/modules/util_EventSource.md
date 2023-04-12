@@ -6,9 +6,36 @@
 
 ### Operator Functions
 
+- [keep](util_EventSource.md#keep)
 - [map](util_EventSource.md#map)
 
 ## Operator Functions
+
+### keep
+
+▸ **keep**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerOperator that only emits items produced by the
+source that satisfy the specified predicate.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`\>
+
+___
 
 ### map
 
