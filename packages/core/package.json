@@ -79,6 +79,7 @@
     "./streaming/Stream": "./streaming/Stream.js",
     "./streaming/Streamable": "./streaming/Streamable.js",
     "./util": "./util.js",
+    "./util/Disposable": "./util/Disposable.js",
     "./util/EventListener": "./util/EventListener.js",
     "./util/EventPublisher": "./util/EventPublisher.js"
   }
