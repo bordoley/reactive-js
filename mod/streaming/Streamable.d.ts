@@ -1,23 +1,8 @@
-import { Equality, Factory, Reducer } from "../functions.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
 /**
  * @category Constructor
  */
 export declare const create: <TReq, T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableLike<unknown>, TReq, T>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
-/**
- * Returns a new `StreamableLike` instance that applies an accumulator function
- * over the notified actions, emitting each intermediate result.
- *
- * @param reducer - The accumulator function called on each notified action.
- * @param initialState - The initial accumulation value.
- * @param equals - Optional equality function that is used to compare
- * if a state value is distinct from the previous one.
- *
- * @category Constructor
- */
-export declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
-    readonly equality?: Equality<T>;
-}) => StreamableLike<TAction, T>;
 /**
  * Returns an event handler that invokes the observable function.
  *
@@ -66,18 +51,18 @@ export declare const createPersistentCache: <T>(persistentStore: {
  * @category Constructor
  */
 export declare const createStateStore: {
-    <T>(initialState: Factory<T>, onChange: import("../functions.js").Function2<T, T, import("../rx.js").ObservableLike<unknown>>, options: {
+    <T>(initialState: import("../functions.js").Factory<T>, onChange: import("../functions.js").Function2<T, T, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "switching";
-        readonly equality?: Equality<T> | undefined;
+        readonly equality?: import("../functions.js").Equality<T> | undefined;
     }): StreamableLike<import("../functions.js").Updater<T>, T, StreamLike<import("../functions.js").Updater<T>, T>>;
-    <T_1>(initialState: Factory<T_1>, onChange: import("../functions.js").Function2<T_1, T_1, import("../rx.js").ObservableLike<unknown>>, options: {
+    <T_1>(initialState: import("../functions.js").Factory<T_1>, onChange: import("../functions.js").Function2<T_1, T_1, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "queueing";
-        readonly equality?: Equality<T_1> | undefined;
+        readonly equality?: import("../functions.js").Equality<T_1> | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
     }): StreamableLike<import("../functions.js").Updater<T_1>, T_1, StreamLike<import("../functions.js").Updater<T_1>, T_1>>;
-    <T_2>(initialState: Factory<T_2>, options?: {
-        readonly equality?: Equality<T_2> | undefined;
+    <T_2>(initialState: import("../functions.js").Factory<T_2>, options?: {
+        readonly equality?: import("../functions.js").Equality<T_2> | undefined;
     } | undefined): StreamableLike<import("../functions.js").Updater<T_2>, T_2, StreamLike<import("../functions.js").Updater<T_2>, T_2>>;
 };
 /**

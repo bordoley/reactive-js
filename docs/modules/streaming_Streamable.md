@@ -7,7 +7,6 @@
 ### Constructor Functions
 
 - [create](streaming_Streamable.md#create)
-- [createActionReducer](streaming_Streamable.md#createactionreducer)
 - [createEventHandler](streaming_Streamable.md#createeventhandler)
 - [createInMemoryCache](streaming_Streamable.md#createinmemorycache)
 - [createPersistentCache](streaming_Streamable.md#createpersistentcache)
@@ -40,35 +39,6 @@
 #### Returns
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
-
-___
-
-### createActionReducer
-
-▸ **createActionReducer**<`TAction`, `T`\>(`reducer`, `initialState`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TAction`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TAction`, `T`\>\>
-
-Returns a new `StreamableLike` instance that applies an accumulator function
-over the notified actions, emitting each intermediate result.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TAction` |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `reducer` | [`Reducer`](functions.md#reducer)<`TAction`, `T`\> | The accumulator function called on each notified action. |
-| `initialState` | [`Factory`](functions.md#factory)<`T`\> | The initial accumulation value. |
-| `options?` | `Object` | - |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> | - |
-
-#### Returns
-
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TAction`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TAction`, `T`\>\>
 
 ___
 
