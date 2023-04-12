@@ -89,6 +89,9 @@ MappingLike_selector
 PredicatedLike_predicate
 ReducerAccumulatorLike_acc
 ReducerAccumulatorLike_reducer
+WithLatestLike_hasLatest
+WithLatestLike_otherLatest
+WithLatestLike_selector
 
 AnimationFrameScheduler_delayScheduler
 AwaitOrObserveEffect_observable
@@ -184,9 +187,6 @@ VirtualTimeScheduler_maxMicroTaskTicks
 VirtualTimeScheduler_microTaskTicks
 VirtualTimeScheduler_taskIDCount
 WithCurrentTimeObserver_selector
-WithLatestLike_hasLatest
-WithLatestLike_otherLatest
-WithLatestLike_selector
 ZipObserver_enumerators
 ZipObserver_queuedEnumerator
 ZipWithLatestFromObserver_TAQueue
