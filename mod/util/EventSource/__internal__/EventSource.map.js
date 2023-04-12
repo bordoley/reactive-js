@@ -7,7 +7,7 @@ import { newInstance, none } from "../../../functions.js";
 import { BufferLike_capacity, CollectionLike_count, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, KeyedCollectionLike_get, ReplayableLike_buffer, } from "../../../util.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-const createMappingEventListener = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function MapObserver(instance, delegate, mapper) {
+const createMappingEventListener = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function MapListener(instance, delegate, mapper) {
     init(Disposable_delegatingMixin, instance, delegate);
     init(Delegating_mixin(), instance, delegate);
     instance[__MappingLike_mapper] = mapper;
