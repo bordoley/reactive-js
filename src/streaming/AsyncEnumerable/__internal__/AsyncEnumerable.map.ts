@@ -7,11 +7,11 @@ import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 import AsyncEnumerator_create from "./AsyncEnumerator.create.js";
 
 const AsyncEnumerable_map: Map<AsyncEnumerableLike>["map"] = <TA, TB>(
-  mapper: Function1<TA, TB>,
+  selector: Function1<TA, TB>,
 ): ContainerOperator<AsyncEnumerableLike, TA, TB> =>
   pipe(
     AsyncEnumerator_create(),
-    partial(Observable_map<ObservableLike, TA, TB>(mapper)),
+    partial(Observable_map<ObservableLike, TA, TB>(selector)),
     AsyncEnumerable_lift(true, true),
   ) as ContainerOperator<AsyncEnumerableLike, TA, TB>;
 

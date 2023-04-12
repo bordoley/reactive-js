@@ -167,7 +167,7 @@ export const __LiftedLike_source: unique symbol;
 /** @type {unique symbol} */
 export const __LiftedLike_operators: unique symbol;
 /** @type {unique symbol} */
-export const __MappingLike_mapper: unique symbol;
+export const __MappingLike_selector: unique symbol;
 /** @type {unique symbol} */
 export const __PredicatedLike_predicate: unique symbol;
 /** @type {unique symbol} */

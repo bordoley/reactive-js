@@ -13,9 +13,9 @@ const Container_concatMap =
     concatAll: ConcatAll<C, O>["concatAll"],
   ) =>
   <TA, TB>(
-    mapper: Function1<TA, ContainerOf<C, TB>>,
+    selector: Function1<TA, ContainerOf<C, TB>>,
     options?: O,
   ): ContainerOperator<C, TA, TB> =>
-    compose(map(mapper), concatAll(options));
+    compose(map(selector), concatAll(options));
 
 export default Container_concatMap;

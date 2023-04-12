@@ -85,7 +85,7 @@ SerialDisposableMixin_current
 
 LiftedLike_source
 LiftedLike_operators
-MappingLike_mapper
+MappingLike_selector
 PredicatedLike_predicate
 ReducerAccumulatorLike_acc
 ReducerAccumulatorLike_reducer

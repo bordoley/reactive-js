@@ -82,12 +82,12 @@ export const keepTests = (m) => describe("keep", test("keeps only values greater
     };
     pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.keep(predicate), m.toRunnable(), Runnable.toReadonlyArray()), expectToThrowError(err));
 }));
-export const mapTests = (m) => describe("map", test("maps every value", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.map(increment), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([2, 3, 4]))), test("when mapper throws", () => {
+export const mapTests = (m) => describe("map", test("maps every value", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.map(increment), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([2, 3, 4]))), test("when selector throws", () => {
     const err = new Error();
-    const mapper = (_a) => {
+    const selector = (_a) => {
         throw err;
     };
-    pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.map(mapper), m.toRunnable(), Runnable.toReadonlyArray()), expectToThrowError(err));
+    pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.map(selector), m.toRunnable(), Runnable.toReadonlyArray()), expectToThrowError(err));
 }));
 export const mapToTests = (m) => describe("mapTo", test("maps every value in the source to v", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.mapTo(2), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([2, 2, 2]))));
 export const pairwiseTests = (m) => describe("pairwise", test("when there are more than one input value", pipeLazy([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.pairwise(), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([

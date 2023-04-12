@@ -207,16 +207,16 @@ export interface KeySet<C extends KeyedContainerLike, O = never> extends Contain
  */
 export interface Map<C extends KeyedContainerLike, O = never> extends Container<C> {
     /**
-     * Returns a ContainerOperator that applies the `mapper` function to each
+     * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
      *
-     * @param mapper - A pure map function that is applied each value emitted by the source
+     * @param selector - A pure map function that is applied each value emitted by the source
      * @typeparam TA - The inner type of the source container
      * @typeparam TB - The inner type of the mapped container
      *
      * @category Operator
      */
-    map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(mapper: Function1<TA, TB>, options?: O): KeyedContainerOperator<C, TKey, TA, TB>;
+    map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function1<TA, TB>, options?: O): KeyedContainerOperator<C, TKey, TA, TB>;
 }
 /**
  * @noInheritDoc
@@ -224,16 +224,16 @@ export interface Map<C extends KeyedContainerLike, O = never> extends Container<
  */
 export interface MapWithKey<C extends KeyedContainerLike, O = never> extends Container<C> {
     /**
-     * Returns a ContainerOperator that applies the `mapper` function to each
+     * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
      *
-     * @param mapper - A pure map function that is applied each value emitted by the source
+     * @param selector - A pure map function that is applied each value emitted by the source
      * @typeparam TA - The inner type of the source container
      * @typeparam TB - The inner type of the mapped container
      *
      * @category Operator
      */
-    mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(mapper: Function2<TA, TKey, TB>, options?: O): KeyedContainerOperator<C, TKey, TA, TB>;
+    mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function2<TA, TKey, TB>, options?: O): KeyedContainerOperator<C, TKey, TA, TB>;
 }
 /**
  * @noInheritDoc

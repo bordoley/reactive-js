@@ -554,9 +554,9 @@ export const mapTests = <C extends ContainerLike>(
         expectArrayEquals([2, 3, 4]),
       ),
     ),
-    test("when mapper throws", () => {
+    test("when selector throws", () => {
       const err = new Error();
-      const mapper = <T>(_a: T): boolean => {
+      const selector = <T>(_a: T): boolean => {
         throw err;
       };
 
@@ -564,7 +564,7 @@ export const mapTests = <C extends ContainerLike>(
         pipeLazy(
           [1, 1],
           m.fromReadonlyArray(),
-          m.map(mapper),
+          m.map(selector),
           m.toRunnable(),
           Runnable.toReadonlyArray(),
         ),

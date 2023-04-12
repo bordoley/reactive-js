@@ -13,9 +13,9 @@ const Container_flatMapIterable =
     fromIterable: FromIterable<C, O>["fromIterable"],
   ) =>
   <TA, TB>(
-    mapper: Function1<TA, IterableLike<TB>>,
+    selector: Function1<TA, IterableLike<TB>>,
     options?: O,
   ): ContainerOperator<C, TA, TB> =>
-    concatMap(compose(mapper, fromIterable<TB>(options)));
+    concatMap(compose(selector, fromIterable<TB>(options)));
 
 export default Container_flatMapIterable;

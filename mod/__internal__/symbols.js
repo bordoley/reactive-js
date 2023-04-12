@@ -173,7 +173,7 @@ export const __LiftedLike_source = /*@__PURE__*/ symbol("LiftedLike_source");
 /** @type {unique symbol} */
 export const __LiftedLike_operators = /*@__PURE__*/ symbol("LiftedLike_operators");
 /** @type {unique symbol} */
-export const __MappingLike_mapper = /*@__PURE__*/ symbol("MappingLike_mapper");
+export const __MappingLike_selector = /*@__PURE__*/ symbol("MappingLike_selector");
 /** @type {unique symbol} */
 export const __PredicatedLike_predicate = /*@__PURE__*/ symbol("PredicatedLike_predicate");
 /** @type {unique symbol} */

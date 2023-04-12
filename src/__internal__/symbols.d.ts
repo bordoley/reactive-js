@@ -166,7 +166,7 @@ export declare const __LiftedLike_source: unique symbol;
 
 export declare const __LiftedLike_operators: unique symbol;
 
-export declare const __MappingLike_mapper: unique symbol;
+export declare const __MappingLike_selector: unique symbol;
 
 export declare const __PredicatedLike_predicate: unique symbol;
 

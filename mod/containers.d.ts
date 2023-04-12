@@ -167,7 +167,7 @@ export interface ConcatMap<C extends ContainerLike, O = never> extends Container
     /**
      * @category Operator
      */
-    concatMap: <TA, TB>(mapper: Function1<TA, ContainerOf<C, TB>>, options?: O) => ContainerOperator<C, TA, TB>;
+    concatMap: <TA, TB>(selector: Function1<TA, ContainerOf<C, TB>>, options?: O) => ContainerOperator<C, TA, TB>;
 }
 /**
  * @noInheritDoc
@@ -326,7 +326,7 @@ export interface FlatMapIterable<C extends ContainerLike, O = never> extends Con
     /**
      * @category Operator
      */
-    flatMapIterable: <TA, TB>(mapper: Function1<TA, IterableLike<TB>>, options?: O) => ContainerOperator<C, TA, TB>;
+    flatMapIterable: <TA, TB>(selector: Function1<TA, IterableLike<TB>>, options?: O) => ContainerOperator<C, TA, TB>;
 }
 /**
  * @noInheritDoc
@@ -519,16 +519,16 @@ export interface LastAsync<C extends ContainerLike, O = never> extends Container
  */
 export interface Map<C extends ContainerLike, O = never> extends Container<C> {
     /**
-     * Returns a ContainerOperator that applies the `mapper` function to each
+     * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
      *
-     * @param mapper - A pure map function that is applied each value emitted by the source
+     * @param selector - A pure map function that is applied each value emitted by the source
      * @typeparam TA - The inner type of the source container
      * @typeparam TB - The inner type of the mapped container
      *
      * @category Operator
      */
-    map<TA, TB>(mapper: Function1<TA, TB>, options?: O): ContainerOperator<C, TA, TB>;
+    map<TA, TB>(selector: Function1<TA, TB>, options?: O): ContainerOperator<C, TA, TB>;
 }
 /**
  * @noInheritDoc

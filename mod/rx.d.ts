@@ -223,7 +223,7 @@ export interface ExhaustMap<C extends ObservableLike, O = never> extends Contain
     /**
      * @category Operator
      */
-    exhaustMap: <TA, TB>(mapper: Function1<TA, ContainerOf<C, TB>>, options?: O) => ContainerOperator<C, TA, TB>;
+    exhaustMap: <TA, TB>(selector: Function1<TA, ContainerOf<C, TB>>, options?: O) => ContainerOperator<C, TA, TB>;
 }
 /**
  * @noInheritDoc
@@ -339,7 +339,7 @@ export interface MergeMap<C extends ObservableLike, O = never> extends Container
     /**
      * @category Operator
      */
-    mergeMap: <TA, TB>(mapper: Function1<TA, ContainerOf<C, TB>>, options?: O) => ContainerOperator<C, TA, TB>;
+    mergeMap: <TA, TB>(selector: Function1<TA, ContainerOf<C, TB>>, options?: O) => ContainerOperator<C, TA, TB>;
 }
 /**
  * @noInheritDoc
@@ -412,7 +412,7 @@ export interface SwitchMap<C extends ObservableLike, O = never> extends Containe
     /**
      * @category Operator
      */
-    switchMap: <TA, TB>(mapper: Function1<TA, ContainerOf<C, TB>>, options?: O) => ContainerOperator<C, TA, TB>;
+    switchMap: <TA, TB>(selector: Function1<TA, ContainerOf<C, TB>>, options?: O) => ContainerOperator<C, TA, TB>;
 }
 /**
  * @noInheritDoc

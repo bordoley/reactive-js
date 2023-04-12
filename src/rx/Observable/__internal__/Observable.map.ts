@@ -1,6 +1,6 @@
 import {
   MappingLike,
-  MappingLike_mapper,
+  MappingLike_selector,
 } from "../../../__internal__/containers.js";
 import {
   createInstanceFactory,
@@ -26,7 +26,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
 type ObservableMap = <C extends ObservableLike, TA, TB>(
-  mapper: Function1<TA, TB>,
+  selector: Function1<TA, TB>,
 ) => ContainerOperator<C, TA, TB>;
 const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
   const createMapObserver: <TA, TB>(
@@ -40,16 +40,16 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
           instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
             MappingLike<TA, TB>,
           delegate: ObserverLike<TB>,
-          mapper: Function1<TA, TB>,
+          selector: Function1<TA, TB>,
         ): ObserverLike<TA> {
           init(Observer_delegatingMixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
-          instance[MappingLike_mapper] = mapper;
+          instance[MappingLike_selector] = selector;
 
           return instance;
         },
         props<MappingLike<TA, TB>>({
-          [MappingLike_mapper]: none,
+          [MappingLike_selector]: none,
         }),
         {
           [ObserverLike_notify](
@@ -60,15 +60,19 @@ const Observable_map: ObservableMap = /*@__PURE__*/ (<TA, TB>() => {
           ) {
             Observer_assertState(this);
 
-            const mapped = this[MappingLike_mapper](next);
+            const mapped = this[MappingLike_selector](next);
             this[DelegatingLike_delegate][ObserverLike_notify](mapped);
           },
         },
       ),
     ))();
 
-  return ((mapper: Function1<TA, TB>) =>
-    pipe(createMapObserver, partial(mapper), Enumerable_lift)) as ObservableMap;
+  return ((selector: Function1<TA, TB>) =>
+    pipe(
+      createMapObserver,
+      partial(selector),
+      Enumerable_lift,
+    )) as ObservableMap;
 })();
 
 export default Observable_map;

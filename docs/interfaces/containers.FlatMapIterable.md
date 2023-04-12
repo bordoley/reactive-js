@@ -27,11 +27,11 @@
 
 ### flatMapIterable
 
-• **flatMapIterable**: <TA, TB\>(`mapper`: [`Function1`](../modules/functions.md#function1)<`TA`, [`IterableLike`](containers.IterableLike.md)<`TB`\>\>, `options?`: `O`) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
+• **flatMapIterable**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`IterableLike`](containers.IterableLike.md)<`TB`\>\>, `options?`: `O`) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type declaration
 
-▸ <`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
+▸ <`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
 
 ##### Type parameters
 
@@ -44,7 +44,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `mapper` | [`Function1`](../modules/functions.md#function1)<`TA`, [`IterableLike`](containers.IterableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`IterableLike`](containers.IterableLike.md)<`TB`\>\> |
 | `options?` | `O` |
 
 ##### Returns

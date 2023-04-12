@@ -27,9 +27,9 @@
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`mapper`, `options?`): [`KeyedContainerOperator`](../modules/keyed_containers.md#keyedcontaineroperator)<`C`, `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`, `options?`): [`KeyedContainerOperator`](../modules/keyed_containers.md#keyedcontaineroperator)<`C`, `TKey`, `TA`, `TB`\>
 
-Returns a ContainerOperator that applies the `mapper` function to each
+Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -52,7 +52,7 @@ TB - The inner type of the mapped container
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `mapper` | [`Function2`](../modules/functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
+| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
 | `options?` | `O` | - |
 
 #### Returns

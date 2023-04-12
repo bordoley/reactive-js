@@ -3,7 +3,7 @@ import { Function1, Predicate, Reducer } from "../functions.js";
 import {
   __LiftedLike_operators as LiftedLike_operators,
   __LiftedLike_source as LiftedLike_source,
-  __MappingLike_mapper as MappingLike_mapper,
+  __MappingLike_selector as MappingLike_selector,
   __PredicatedLike_predicate as PredicatedLike_predicate,
   __ReducerAccumulatorLike_acc as ReducerAccumulatorLike_acc,
   __ReducerAccumulatorLike_reducer as ReducerAccumulatorLike_reducer,
@@ -12,7 +12,7 @@ import {
 export {
   LiftedLike_operators,
   LiftedLike_source,
-  MappingLike_mapper,
+  MappingLike_selector,
   PredicatedLike_predicate,
   ReducerAccumulatorLike_acc,
   ReducerAccumulatorLike_reducer,
@@ -24,7 +24,7 @@ export interface LiftedLike<C extends ContainerLike, TState> {
 }
 
 export interface MappingLike<TA, TB> {
-  [MappingLike_mapper]: Function1<TA, TB>;
+  [MappingLike_selector]: Function1<TA, TB>;
 }
 
 export interface PredicatedLike<T> {

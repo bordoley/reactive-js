@@ -1,9 +1,9 @@
 /// <reference types="./ReadonlyMap.map.d.ts" />
 
-const ReadonlyMap_map = (mapper) => (map) => {
+const ReadonlyMap_map = (selector) => (map) => {
     const result = new Map();
     for (let [key, value] of map) {
-        result.set(key, mapper(value));
+        result.set(key, selector(value));
     }
     return result;
 };

@@ -7,13 +7,13 @@ import {
 
 const ReadonlyMap_mapWithKey: MapWithKey<ReadonlyMapLike>["mapWithKey"] =
   <TA, TB, TKey extends KeyOf<ReadonlyMapLike> = KeyOf<ReadonlyMapLike>>(
-    mapper: Function2<TA, TKey, TB>,
+    selector: Function2<TA, TKey, TB>,
   ) =>
   (map: ReadonlyMapLike<TA, TKey>): ReadonlyMapLike<TB, TKey> => {
     const result = new Map<TKey, TB>();
 
     for (let [key, value] of map) {
-      result.set(key, mapper(value, key));
+      result.set(key, selector(value, key));
     }
 
     return result;

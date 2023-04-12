@@ -400,7 +400,9 @@ export const __LiftedLike_operators = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __MappingLike_mapper = /*@__PURE__*/ symbol("MappingLike_mapper");
+export const __MappingLike_selector = /*@__PURE__*/ symbol(
+  "MappingLike_selector",
+);
 
 /** @type {unique symbol} */
 export const __PredicatedLike_predicate = /*@__PURE__*/ symbol(

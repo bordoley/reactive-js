@@ -1341,7 +1341,7 @@ ___
 
 ### concatMap
 
-▸ **concatMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **concatMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1354,7 +1354,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
 | `options?` | `undefined` |
 
 #### Returns
@@ -1562,7 +1562,7 @@ ___
 
 ### exhaustMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1575,7 +1575,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
 | `options?` | `undefined` |
 
 #### Returns
@@ -1609,7 +1609,7 @@ ___
 
 ### flatMapIterable
 
-▸ **flatMapIterable**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1622,7 +1622,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`IterableLike`](../interfaces/containers.IterableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`IterableLike`](../interfaces/containers.IterableLike.md)<`TB`\>\> |
 | `options?` | `undefined` |
 
 #### Returns
@@ -2481,9 +2481,9 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
-Returns a ContainerOperator that applies the `mapper` function to each
+Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -2505,7 +2505,7 @@ TB - The inner type of the mapped container
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
 | `options?` | `undefined` | - |
 
 #### Returns
@@ -2565,7 +2565,7 @@ ___
 
 ### mergeMap
 
-▸ **mergeMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2578,7 +2578,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -3106,7 +3106,7 @@ ___
 
 ### switchMap
 
-▸ **switchMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -3119,7 +3119,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
 | `options?` | `undefined` |
 
 #### Returns
