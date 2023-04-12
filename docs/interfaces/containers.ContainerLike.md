@@ -34,6 +34,8 @@ Base type for all Containers.
 
   ↳ [`FlowableLike`](streaming.FlowableLike.md)
 
+  ↳ [`EventSourceLike`](util.EventSourceLike.md)
+
 ## Table of contents
 
 ### Properties
