@@ -175,6 +175,12 @@ export const __ReducerAccumulatorLike_acc: unique symbol;
 /** @type {unique symbol} */
 export const __ReducerAccumulatorLike_reducer: unique symbol;
 /** @type {unique symbol} */
+export const __WithLatestLike_hasLatest: unique symbol;
+/** @type {unique symbol} */
+export const __WithLatestLike_otherLatest: unique symbol;
+/** @type {unique symbol} */
+export const __WithLatestLike_selector: unique symbol;
+/** @type {unique symbol} */
 export const __AnimationFrameScheduler_delayScheduler: unique symbol;
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable: unique symbol;
@@ -362,12 +368,6 @@ export const __VirtualTimeScheduler_microTaskTicks: unique symbol;
 export const __VirtualTimeScheduler_taskIDCount: unique symbol;
 /** @type {unique symbol} */
 export const __WithCurrentTimeObserver_selector: unique symbol;
-/** @type {unique symbol} */
-export const __WithLatestLike_hasLatest: unique symbol;
-/** @type {unique symbol} */
-export const __WithLatestLike_otherLatest: unique symbol;
-/** @type {unique symbol} */
-export const __WithLatestLike_selector: unique symbol;
 /** @type {unique symbol} */
 export const __ZipObserver_enumerators: unique symbol;
 /** @type {unique symbol} */

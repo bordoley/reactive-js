@@ -59,7 +59,8 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
 
 #### Returns
 
@@ -69,9 +70,9 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`mapper`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `TA`, `TB`\>
 
-Returns a ContainerOperator that applies the `mapper` function to each
+Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -93,8 +94,9 @@ TB - The inner type of the mapped container
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-| `options?` | `undefined` | - |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
+| `options?` | `Object` | - |
+| `options.replay?` | `number` | - |
 
 #### Returns
 

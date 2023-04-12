@@ -174,6 +174,12 @@ export declare const __ReducerAccumulatorLike_acc: unique symbol;
 
 export declare const __ReducerAccumulatorLike_reducer: unique symbol;
 
+export declare const __WithLatestLike_hasLatest: unique symbol;
+
+export declare const __WithLatestLike_otherLatest: unique symbol;
+
+export declare const __WithLatestLike_selector: unique symbol;
+
 export declare const __AnimationFrameScheduler_delayScheduler: unique symbol;
 
 export declare const __AwaitOrObserveEffect_observable: unique symbol;
@@ -361,12 +367,6 @@ export declare const __VirtualTimeScheduler_microTaskTicks: unique symbol;
 export declare const __VirtualTimeScheduler_taskIDCount: unique symbol;
 
 export declare const __WithCurrentTimeObserver_selector: unique symbol;
-
-export declare const __WithLatestLike_hasLatest: unique symbol;
-
-export declare const __WithLatestLike_otherLatest: unique symbol;
-
-export declare const __WithLatestLike_selector: unique symbol;
 
 export declare const __ZipObserver_enumerators: unique symbol;
 

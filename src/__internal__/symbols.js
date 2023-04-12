@@ -420,6 +420,21 @@ export const __ReducerAccumulatorLike_reducer = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __WithLatestLike_hasLatest = /*@__PURE__*/ symbol(
+  "WithLatestLike_hasLatest",
+);
+
+/** @type {unique symbol} */
+export const __WithLatestLike_otherLatest = /*@__PURE__*/ symbol(
+  "WithLatestLike_otherLatest",
+);
+
+/** @type {unique symbol} */
+export const __WithLatestLike_selector = /*@__PURE__*/ symbol(
+  "WithLatestLike_selector",
+);
+
+/** @type {unique symbol} */
 export const __AnimationFrameScheduler_delayScheduler = /*@__PURE__*/ symbol(
   "AnimationFrameScheduler_delayScheduler",
 );
@@ -862,21 +877,6 @@ export const __VirtualTimeScheduler_taskIDCount = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __WithCurrentTimeObserver_selector = /*@__PURE__*/ symbol(
   "WithCurrentTimeObserver_selector",
-);
-
-/** @type {unique symbol} */
-export const __WithLatestLike_hasLatest = /*@__PURE__*/ symbol(
-  "WithLatestLike_hasLatest",
-);
-
-/** @type {unique symbol} */
-export const __WithLatestLike_otherLatest = /*@__PURE__*/ symbol(
-  "WithLatestLike_otherLatest",
-);
-
-/** @type {unique symbol} */
-export const __WithLatestLike_selector = /*@__PURE__*/ symbol(
-  "WithLatestLike_selector",
 );
 
 /** @type {unique symbol} */
