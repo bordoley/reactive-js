@@ -58,7 +58,7 @@ import {
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Observer_baseMixin from "../../Observer/__internal__/Observer.baseMixin.js";
 
 const Enumerable_enumerate: <T>() => (
@@ -94,7 +94,7 @@ const Enumerable_enumerate: <T>() => (
         });
 
         instance[__EnumerableEnumerator_continuationQueue] =
-          IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
+          Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
 
         // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
         return instance as EnumeratorScheduler<T>;

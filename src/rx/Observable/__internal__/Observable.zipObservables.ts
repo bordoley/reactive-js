@@ -56,7 +56,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
@@ -82,7 +82,7 @@ const QueuedEnumerator_create: <T>(
 
   return createInstanceFactory(
     mix(
-      include(Disposable_mixin, IndexedQueue_fifoQueueMixin<T>()),
+      include(Disposable_mixin, Queue_indexedQueueMixin<T>()),
       function QueuedEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
           Mutable<TProperties>,
@@ -91,7 +91,7 @@ const QueuedEnumerator_create: <T>(
       ): EnumeratorLike<T> & QueueableLike<T> & DisposableLike {
         init(Disposable_mixin, instance);
         init(
-          IndexedQueue_fifoQueueMixin<T>(),
+          Queue_indexedQueueMixin<T>(),
           instance,
           capacity,
           backpressureStrategy,

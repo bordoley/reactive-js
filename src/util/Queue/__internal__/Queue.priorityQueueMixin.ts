@@ -33,7 +33,7 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
-import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
+import Queue_indexedQueueMixin from "./Queue.indexedQueueMixin.js";
 
 const Queue_priorityQueueMixin: <T>() => Mixin3<
   QueueCollectionLike<T>,
@@ -41,7 +41,7 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
   number,
   QueueableLike[typeof QueueableLike_backpressureStrategy]
 > = /*@__PURE__*/ (<T>() => {
-  const IndexedQueuePrototype = getPrototype(IndexedQueue_fifoQueueMixin());
+  const IndexedQueuePrototype = getPrototype(Queue_indexedQueueMixin());
 
   type TProperties = {
     readonly [__PriorityQueueImpl_comparator]: Comparator<T>;
@@ -102,7 +102,7 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
 
   return pipe(
     mix(
-      include(IndexedQueue_fifoQueueMixin<T>()),
+      include(Queue_indexedQueueMixin<T>()),
       function PriorityQueue(
         instance: Pick<
           QueueCollectionLike<T>,
@@ -114,7 +114,7 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
         backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): QueueCollectionLike<T> {
         init(
-          IndexedQueue_fifoQueueMixin<T>(),
+          Queue_indexedQueueMixin<T>(),
           instance,
           capacity,
           backpressureStrategy,

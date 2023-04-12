@@ -14,7 +14,7 @@ import { SchedulerLike_now } from "../../../scheduling.js";
 import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import { BufferLike_capacity, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Observer_baseMixin from "../../Observer/__internal__/Observer.baseMixin.js";
 const Enumerable_enumerate = /*@__PURE__*/ (() => {
     const createEnumeratorScheduler = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Observer_baseMixin(), PriorityScheduler_mixin), function EnumeratorScheduler(instance) {
@@ -25,7 +25,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             [BufferLike_capacity]: MAX_SAFE_INTEGER,
         });
         instance[__EnumerableEnumerator_continuationQueue] =
-            IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
+            Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
         // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
         return instance;
     }, props({

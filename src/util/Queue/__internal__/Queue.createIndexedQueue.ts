@@ -4,12 +4,12 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
-import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
+import Queue_indexedQueueMixin from "./Queue.indexedQueueMixin.js";
 
-const IndexedQueue_createFifoQueue: <T>(
+const Queue_createIndexedQueue: <T>(
   capacity: number,
   backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
 ) => IndexedQueueLike<T> = /*@__PURE__*/ (() =>
-  createInstanceFactory(IndexedQueue_fifoQueueMixin()))();
+  createInstanceFactory(Queue_indexedQueueMixin()))();
 
-export default IndexedQueue_createFifoQueue;
+export default Queue_createIndexedQueue;

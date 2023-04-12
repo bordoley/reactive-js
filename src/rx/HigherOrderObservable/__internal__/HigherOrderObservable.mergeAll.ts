@@ -55,7 +55,7 @@ import {
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -128,7 +128,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           init(Delegating_mixin<ObserverLike<T>>(), instance, delegate);
 
           instance[__MergeAllObserver_observablesQueue] =
-            IndexedQueue_createFifoQueue(capacity, backpressureStrategy);
+            Queue_createIndexedQueue(capacity, backpressureStrategy);
           instance[__MergeAllObserver_concurrency] = concurrency;
 
           instance[__MergeAllObserver_activeCount] = 0;

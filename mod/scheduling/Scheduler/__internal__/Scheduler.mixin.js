@@ -10,7 +10,7 @@ import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerL
 import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
 export { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationLike_run, ContinuationSchedulerLike_schedule, ContinuationSchedulerLike_shouldYield, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, };
 class YieldError {
     delay;
@@ -20,9 +20,9 @@ class YieldError {
 }
 export const PriorityScheduler_mixin = 
 /*@__PURE__*/ (() => {
-    const createContinuation = createInstanceFactory(mix(include(Disposable_mixin, IndexedQueue_fifoQueueMixin()), function Continuation(instance, scheduler, effect, priority) {
+    const createContinuation = createInstanceFactory(mix(include(Disposable_mixin, Queue_indexedQueueMixin()), function Continuation(instance, scheduler, effect, priority) {
         init(Disposable_mixin, instance);
-        init(IndexedQueue_fifoQueueMixin(), instance, MAX_SAFE_INTEGER, "overflow");
+        init(Queue_indexedQueueMixin(), instance, MAX_SAFE_INTEGER, "overflow");
         instance[ContinuationLike_continuationScheduler] = scheduler;
         instance[__Continuation_effect] = effect;
         instance[ContinuationLike_priority] = priority;

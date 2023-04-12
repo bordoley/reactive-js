@@ -59,7 +59,7 @@ import {
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
 
 export {
   ContinuationLike_continuationScheduler,
@@ -122,10 +122,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
 
     const createContinuation = createInstanceFactory(
       mix(
-        include(
-          Disposable_mixin,
-          IndexedQueue_fifoQueueMixin<ContinuationLike>(),
-        ),
+        include(Disposable_mixin, Queue_indexedQueueMixin<ContinuationLike>()),
         function Continuation(
           instance: Pick<
             ContinuationLike & ContinuationContextLike,
@@ -141,7 +138,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
         ): ContinuationLike & ContinuationContextLike {
           init(Disposable_mixin, instance);
           init(
-            IndexedQueue_fifoQueueMixin<ContinuationLike>(),
+            Queue_indexedQueueMixin<ContinuationLike>(),
             instance,
             MAX_SAFE_INTEGER,
             "overflow",

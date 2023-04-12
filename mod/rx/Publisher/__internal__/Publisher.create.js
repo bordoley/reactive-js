@@ -10,12 +10,12 @@ import { DispatcherLike_complete, MulticastObservableLike_observerCount, Observa
 import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 const Publisher_create = /*@__PURE__*/ (() => {
     const createPublisherInstance = createInstanceFactory(mix(include(Disposable_mixin), function Publisher(instance, replay) {
         init(Disposable_mixin, instance);
         instance[__Publisher_observers] = newInstance(Set);
-        instance[ReplayableLike_buffer] = IndexedQueue_createFifoQueue(replay, "drop-oldest");
+        instance[ReplayableLike_buffer] = Queue_createIndexedQueue(replay, "drop-oldest");
         pipe(instance, Disposable_onDisposed(e => {
             const enumerator = pipe(instance[__Publisher_observers], Iterable_enumerate());
             while (enumerator[EnumeratorLike_move]()) {

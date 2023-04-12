@@ -10,7 +10,7 @@ import {
 import { QueueLike_dequeue, QueueLike_head } from "../../__internal__/util.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
 import { CollectionLike_count, QueueableLike_enqueue } from "../../util.js";
-import IndexedQueue_createFifoQueue from "../Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../Queue/__internal__/Queue.createIndexedQueue.js";
 import Queue_createPriorityQueue from "../Queue/__internal__/Queue.createPriorityQueue.js";
 
 const createPriorityQueue = /*@__PURE__*/ (() => {
@@ -46,7 +46,7 @@ testModule(
   describe(
     "fifoQueueMixin",
     test("push/pull/count", () => {
-      const queue = IndexedQueue_createFifoQueue<number>(
+      const queue = Queue_createIndexedQueue<number>(
         MAX_SAFE_INTEGER,
         "overflow",
       );
@@ -96,7 +96,7 @@ testModule(
       pipe(queue[QueueLike_head], expectEquals(26 as Optional<number>));
     }),
     test("shrink", () => {
-      const queue = IndexedQueue_createFifoQueue<number>(
+      const queue = Queue_createIndexedQueue<number>(
         MAX_SAFE_INTEGER,
         "overflow",
       );

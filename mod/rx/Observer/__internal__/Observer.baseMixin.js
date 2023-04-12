@@ -9,7 +9,7 @@ import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../..
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
 const Observer_baseMixin = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (observer) => {
         if (observer[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
@@ -29,11 +29,11 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
             observer[__ObserverMixin_dispatchSubscription] = pipe(observer[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
         }
     };
-    const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin());
-    return returns(mix(include(IndexedQueue_fifoQueueMixin()), function ObserverMixin(instance, config) {
+    const fifoQueueProtoype = getPrototype(Queue_indexedQueueMixin());
+    return returns(mix(include(Queue_indexedQueueMixin()), function ObserverMixin(instance, config) {
         init(
         // FIXME: Change this to take a config
-        IndexedQueue_fifoQueueMixin(), instance, config[BufferLike_capacity], config[QueueableLike_backpressureStrategy]);
+        Queue_indexedQueueMixin(), instance, config[BufferLike_capacity], config[QueueableLike_backpressureStrategy]);
         return instance;
     }, props({
         [__ObserverMixin_isCompleted]: false,

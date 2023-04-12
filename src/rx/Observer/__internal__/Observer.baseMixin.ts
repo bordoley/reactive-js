@@ -38,7 +38,7 @@ import {
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
-import IndexedQueue_fifoQueueMixin from "../../../util/Queue/__internal__/IndexedQueue.fifoQueueMixin.js";
+import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
 
 type TObserverBaseMixin<T> = Omit<
   ObserverLike<T>,
@@ -87,11 +87,11 @@ const Observer_baseMixin: <T>() => Mixin1<
     }
   };
 
-  const fifoQueueProtoype = getPrototype(IndexedQueue_fifoQueueMixin<T>());
+  const fifoQueueProtoype = getPrototype(Queue_indexedQueueMixin<T>());
 
   return returns(
     mix(
-      include(IndexedQueue_fifoQueueMixin()),
+      include(Queue_indexedQueueMixin()),
       function ObserverMixin(
         instance: Pick<ObserverLike, typeof DispatcherLike_complete>,
         config: {
@@ -101,7 +101,7 @@ const Observer_baseMixin: <T>() => Mixin1<
       ): TObserverBaseMixin<T> {
         init(
           // FIXME: Change this to take a config
-          IndexedQueue_fifoQueueMixin<T>(),
+          Queue_indexedQueueMixin<T>(),
           instance,
           config[BufferLike_capacity],
           config[QueueableLike_backpressureStrategy],

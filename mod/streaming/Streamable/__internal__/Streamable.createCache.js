@@ -14,13 +14,13 @@ import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Strea
 import { CollectionLike_count, DisposableLike_isDisposed, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../../util/Disposable.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Streamable_create from "./Streamable.create.js";
 const createCacheStream = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
         instance.store = new Map();
         instance.subscriptions = new Map();
-        const cleanupQueue = IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
+        const cleanupQueue = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
         const cleanupContinuation = (ctx) => {
             const { store, subscriptions } = instance;
             while (store.size > capacity) {

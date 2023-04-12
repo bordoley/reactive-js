@@ -6,7 +6,7 @@ import { describe, expectArrayEquals, expectEquals, test, testModule, } from "..
 import { QueueLike_dequeue, QueueLike_head } from "../../__internal__/util.js";
 import { newInstance, none, pipe } from "../../functions.js";
 import { CollectionLike_count, QueueableLike_enqueue } from "../../util.js";
-import IndexedQueue_createFifoQueue from "../Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../Queue/__internal__/Queue.createIndexedQueue.js";
 import Queue_createPriorityQueue from "../Queue/__internal__/Queue.createPriorityQueue.js";
 const createPriorityQueue = /*@__PURE__*/ (() => {
     const compare = (a, b) => a - b;
@@ -30,7 +30,7 @@ const makeShuffledArray = (n) => {
     return result;
 };
 testModule("Queue", describe("fifoQueueMixin", test("push/pull/count", () => {
-    const queue = IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
+    const queue = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
     pipe(queue[QueueLike_head], expectEquals(none));
     pipe(queue[QueueLike_dequeue](), expectEquals(none));
     for (let i = 0; i < 8; i++) {
@@ -63,7 +63,7 @@ testModule("Queue", describe("fifoQueueMixin", test("push/pull/count", () => {
     }
     pipe(queue[QueueLike_head], expectEquals(26));
 }), test("shrink", () => {
-    const queue = IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow");
+    const queue = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
     for (let i = 0; i < 300; i++) {
         queue[QueueableLike_enqueue](i);
     }

@@ -5,7 +5,7 @@ import {
   PauseableSchedulerLike_pause,
   SchedulerLike,
 } from "../../../scheduling.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Scheduler_createQueueScheduler from "./Scheduler.createQueueScheduler.js";
 
 const Scheduler_toPauseableScheduler: Function1<
@@ -13,7 +13,7 @@ const Scheduler_toPauseableScheduler: Function1<
   PauseableSchedulerLike
 > = (hostScheduler: SchedulerLike) => {
   const scheduler = Scheduler_createQueueScheduler(hostScheduler, () =>
-    IndexedQueue_createFifoQueue(MAX_SAFE_INTEGER, "overflow"),
+    Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow"),
   );
   scheduler[PauseableSchedulerLike_pause]();
   return scheduler;

@@ -22,7 +22,7 @@ import { DisposableLike, QueueableLike_enqueue } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Indexed_toReadonlyArray from "../../../util/Indexed/__internal__/Indexed.toReadonlyArray.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
@@ -45,8 +45,10 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
       ): ObserverLike<T> {
         init(Observer_mixin(), instance, delegate, delegate);
 
-        instance[__TakeLastObserver_takeLastQueue] =
-          IndexedQueue_createFifoQueue(takeLastCount, "drop-oldest");
+        instance[__TakeLastObserver_takeLastQueue] = Queue_createIndexedQueue(
+          takeLastCount,
+          "drop-oldest",
+        );
 
         pipe(
           instance,

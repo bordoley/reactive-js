@@ -6,9 +6,9 @@ import { __PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js
 import { MutableKeyedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.js";
 import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
 import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
-import IndexedQueue_fifoQueueMixin from "./IndexedQueue.fifoQueueMixin.js";
+import Queue_indexedQueueMixin from "./Queue.indexedQueueMixin.js";
 const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
-    const IndexedQueuePrototype = getPrototype(IndexedQueue_fifoQueueMixin());
+    const IndexedQueuePrototype = getPrototype(Queue_indexedQueueMixin());
     const siftDown = (queue, item) => {
         const compare = queue[__PriorityQueueImpl_comparator];
         const count = queue[CollectionLike_count];
@@ -54,8 +54,8 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
             queue[MutableKeyedCollectionLike_set](index, parent);
         }
     };
-    return pipe(mix(include(IndexedQueue_fifoQueueMixin()), function PriorityQueue(instance, comparator, capacity, backpressureStrategy) {
-        init(IndexedQueue_fifoQueueMixin(), instance, capacity, backpressureStrategy);
+    return pipe(mix(include(Queue_indexedQueueMixin()), function PriorityQueue(instance, comparator, capacity, backpressureStrategy) {
+        init(Queue_indexedQueueMixin(), instance, capacity, backpressureStrategy);
         instance[__PriorityQueueImpl_comparator] = comparator;
         return instance;
     }, props({

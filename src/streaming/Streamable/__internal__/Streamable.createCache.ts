@@ -57,7 +57,7 @@ import {
 } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../../util/Disposable.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Streamable_create from "./Streamable.create.js";
 
 interface ReactiveCachePersistentStorageLike<T> {
@@ -112,7 +112,7 @@ const createCacheStream: <T>(
         instance.store = new Map();
         instance.subscriptions = new Map();
 
-        const cleanupQueue = IndexedQueue_createFifoQueue<string>(
+        const cleanupQueue = Queue_createIndexedQueue<string>(
           MAX_SAFE_INTEGER,
           "overflow",
         );

@@ -8,12 +8,12 @@ import { error, newInstance, none, pipe, unsafeCast, } from "../../../functions.
 import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, KeyedCollectionLike_get, QueueableLike_enqueue, ReplayableLike_buffer, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 const EventPublisher_create = /*@__PURE__*/ (() => {
     const createPublisherInstance = createInstanceFactory(mix(include(Disposable_mixin), function EventPublisher(instance, replay) {
         init(Disposable_mixin, instance);
         instance.l = newInstance(Set);
-        instance[ReplayableLike_buffer] = IndexedQueue_createFifoQueue(replay, "drop-oldest");
+        instance[ReplayableLike_buffer] = Queue_createIndexedQueue(replay, "drop-oldest");
         pipe(instance, Disposable_onDisposed(e => {
             const enumerator = pipe(instance.l, Iterable_enumerate());
             while (enumerator[EnumeratorLike_move]()) {

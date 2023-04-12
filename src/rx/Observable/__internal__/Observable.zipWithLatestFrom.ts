@@ -44,7 +44,7 @@ import {
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -102,7 +102,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             init(Delegating_mixin<ObserverLike<T>>(), instance, delegate);
             instance[__ZipWithLatestFromObserver_selector] = selector;
             instance[__ZipWithLatestFromObserver_TAQueue] =
-              IndexedQueue_createFifoQueue(
+              Queue_createIndexedQueue(
                 delegate[BufferLike_capacity],
                 delegate[QueueableLike_backpressureStrategy],
               );

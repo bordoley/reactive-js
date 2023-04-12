@@ -34,7 +34,7 @@ import {
   QueueableLike_enqueue,
 } from "../../../util.js";
 
-const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
+const Queue_indexedQueueMixin: <T>() => Mixin2<
   IndexedQueueLike<T>,
   number,
   QueueableLike[typeof QueueableLike_backpressureStrategy],
@@ -325,4 +325,4 @@ const IndexedQueue_fifoQueueMixin: <T>() => Mixin2<
   );
 })();
 
-export default IndexedQueue_fifoQueueMixin;
+export default Queue_indexedQueueMixin;

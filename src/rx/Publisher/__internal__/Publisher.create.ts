@@ -42,7 +42,7 @@ import {
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import IndexedQueue_createFifoQueue from "../../../util/Queue/__internal__/IndexedQueue.createFifoQueue.js";
+import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 
 const Publisher_create: <T>(options?: {
   readonly replay?: number;
@@ -71,7 +71,7 @@ const Publisher_create: <T>(options?: {
         init(Disposable_mixin, instance);
 
         instance[__Publisher_observers] = newInstance<Set<ObserverLike>>(Set);
-        instance[ReplayableLike_buffer] = IndexedQueue_createFifoQueue(
+        instance[ReplayableLike_buffer] = Queue_createIndexedQueue(
           replay,
           "drop-oldest",
         );
