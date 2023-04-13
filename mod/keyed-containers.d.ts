@@ -29,8 +29,8 @@ export interface ReadonlyMapLike<T = unknown, TKey = unknown> extends ContainerL
     readonly [ContainerLike_type]?: ReadonlyMapLike<this[typeof ContainerLike_T], this[typeof KeyedContainerLike_TKey]>;
     readonly [KeyedContainerLike_TKey]?: unknown;
 }
-export interface ReadonlyRecordContainerLike extends ContainerLike {
-    readonly [ContainerLike_type]?: ReadonlyRecordLike<this[typeof ContainerLike_T], NonNullable<this[typeof KeyedContainerLike_TKey]>>;
+export interface ReadonlyObjectMapContainerLike extends ContainerLike {
+    readonly [ContainerLike_type]?: ReadonlyObjectMapLike<this[typeof ContainerLike_T], NonNullable<this[typeof KeyedContainerLike_TKey]>>;
     readonly [KeyedContainerLike_TKey]?: symbol | number | string;
 }
 /**
@@ -39,7 +39,9 @@ export interface ReadonlyRecordContainerLike extends ContainerLike {
  * @noInheritDoc
  * @category Container
  */
-export type ReadonlyRecordLike<T = unknown, TKey extends symbol | number | string = string> = Readonly<Record<TKey, T>> & ReadonlyRecordContainerLike;
+export type ReadonlyObjectMapLike<T = unknown, TKey extends symbol | number | string = string> = {
+    readonly [P in TKey]?: T;
+} & ReadonlyObjectMapContainerLike;
 /**
  * Utility type for higher order programming with keyed-containers.
  */

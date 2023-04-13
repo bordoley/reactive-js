@@ -43,8 +43,8 @@ import {
   pipeLazy,
   raiseError,
 } from "../functions.js";
-import { ReadonlyRecordLike } from "../keyed-containers.js";
-import * as ReadonlyRecord from "../keyed-containers/ReadonlyRecord.js";
+import { ReadonlyObjectMapLike } from "../keyed-containers.js";
+import * as ReadonlyObjectMap from "../keyed-containers/ReadonlyObjectMap.js";
 import {
   AnimationConfig,
   DispatcherLike,
@@ -421,15 +421,15 @@ export const createComponent = <TProps>(
 };
 
 const usePublishers = <T>(
-  keyMap: ReadonlyRecordLike<unknown, string>,
-): ReadonlyRecordLike<EventPublisherLike<T>, string> => {
+  keyMap: ReadonlyObjectMapLike<unknown, string>,
+): ReadonlyObjectMapLike<EventPublisherLike<T>, string> => {
   const [publishers, setPublishers] =
-    useState<Optional<ReadonlyRecordLike<EventPublisherLike<T>>>>();
+    useState<Optional<ReadonlyObjectMapLike<EventPublisherLike<T>>>>();
 
   useEffect(() => {
     const publishers = pipe(
       keyMap,
-      ReadonlyRecord.map<unknown, EventPublisherLike<T>, string>(_ =>
+      ReadonlyObjectMap.map<unknown, EventPublisherLike<T>, string>(_ =>
         EventPublisher.create<T>(),
       ),
     );
@@ -437,28 +437,28 @@ const usePublishers = <T>(
     setPublishers(publishers);
     return pipeLazy(
       publishers,
-      ReadonlyRecord.forEachWithKey<EventPublisherLike<T>, string>(
+      ReadonlyObjectMap.forEachWithKey<EventPublisherLike<T>, string>(
         invoke(DisposableLike_dispose),
       ),
       ignore,
     );
   }, [keyMap]);
 
-  return publishers ?? ReadonlyRecord.empty<EventPublisherLike<T>>();
+  return publishers ?? ReadonlyObjectMap.empty<EventPublisherLike<T>>();
 };
 
 const createTransition = <T, TAnimationFactory>(
-  animations: ReadonlyRecordLike<TAnimationFactory, string>,
+  animations: ReadonlyObjectMapLike<TAnimationFactory, string>,
   f: (factory: TAnimationFactory) => readonly AnimationConfig<T>[],
-  publishers: ReadonlyRecordLike<EventPublisherLike<T>, string>,
+  publishers: ReadonlyObjectMapLike<EventPublisherLike<T>, string>,
   options: {
     readonly concurrency?: number;
     readonly priority?: 1 | 2 | 3 | 4 | 5;
   } = {},
 ) => {
-  const observables: ReadonlyRecordLike<ObservableLike<T>, string> = pipe(
+  const observables: ReadonlyObjectMapLike<ObservableLike<T>, string> = pipe(
     animations,
-    ReadonlyRecord.mapWithKey<TAnimationFactory, ObservableLike<T>, string>(
+    ReadonlyObjectMap.mapWithKey<TAnimationFactory, ObservableLike<T>, string>(
       (factory: TAnimationFactory, key: string) =>
         pipe(
           Observable.animate<T>(...f(factory)),
@@ -475,7 +475,7 @@ const createTransition = <T, TAnimationFactory>(
 
   return pipe(
     Observable.fromEnumeratorFactory(
-      pipeLazy(observables, ReadonlyRecord.values()),
+      pipeLazy(observables, ReadonlyObjectMap.values()),
     ),
     Observable.map(
       Observable.subscribeOn(
@@ -492,7 +492,7 @@ interface UseAnimation {
    */
   useAnimation<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+      ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
     deps: readonly unknown[],
     options: {
@@ -503,7 +503,7 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyRecordLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<T>>,
     Function1<TEvent, boolean>,
     never,
   ];
@@ -513,7 +513,7 @@ interface UseAnimation {
    */
   useAnimation<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+      ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
     deps: readonly unknown[],
     options: {
@@ -524,7 +524,7 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyRecordLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<T>>,
     Function1<TEvent, boolean>,
     boolean,
   ];
@@ -534,7 +534,7 @@ interface UseAnimation {
    */
   useAnimation<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+      ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
     deps: readonly unknown[],
     options: {
@@ -545,7 +545,7 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyRecordLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<T>>,
     Function1<TEvent, boolean>,
     never,
   ];
@@ -555,7 +555,7 @@ interface UseAnimation {
    */
   useAnimation<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+      ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
     deps: readonly unknown[],
     options?: {
@@ -564,14 +564,14 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyRecordLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<T>>,
     Function1<TEvent, boolean>,
     never,
   ];
 }
 export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
   animationFactory: Factory<
-    ReadonlyRecordLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+    ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
   >,
   deps: readonly unknown[],
   options: {
@@ -582,7 +582,7 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
     readonly capacity?: number;
   } = {},
 ): readonly [
-  ReadonlyRecordLike<EventSourceLike<T>>,
+  ReadonlyObjectMapLike<EventSourceLike<T>>,
   Function1<TEvent, boolean>,
   unknown,
 ] => {
@@ -623,7 +623,7 @@ interface UseAnimatedState {
   useAnimatedState<TState, T = number>(
     initialState: Factory<TState>,
     animationFactory: Factory<
-      ReadonlyRecordLike<
+      ReadonlyObjectMapLike<
         Function2<TState, TState, readonly AnimationConfig<T>[]>
       >
     >,
@@ -637,7 +637,7 @@ interface UseAnimatedState {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyRecordLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<T>>,
     Function1<Updater<TState>, boolean>,
     Optional<TState>,
   ];
@@ -648,7 +648,7 @@ interface UseAnimatedState {
   useAnimatedState<TState, T = number>(
     initialState: Factory<TState>,
     animationFactory: Factory<
-      ReadonlyRecordLike<
+      ReadonlyObjectMapLike<
         Function2<TState, TState, readonly AnimationConfig<T>[]>
       >
     >,
@@ -662,7 +662,7 @@ interface UseAnimatedState {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyRecordLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<T>>,
     Function1<Updater<TState>, boolean>,
     Optional<TState>,
   ];
@@ -673,7 +673,7 @@ interface UseAnimatedState {
   useAnimatedState<TState, T = number>(
     initialState: Factory<TState>,
     animationFactory: Factory<
-      ReadonlyRecordLike<
+      ReadonlyObjectMapLike<
         Function2<TState, TState, readonly AnimationConfig<T>[]>
       >
     >,
@@ -686,7 +686,7 @@ interface UseAnimatedState {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyRecordLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<T>>,
     Function1<Updater<TState>, boolean>,
     Optional<TState>,
   ];
@@ -698,7 +698,9 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
 >(
   initialState: Factory<TState>,
   animationFactory: Factory<
-    ReadonlyRecordLike<Function2<TState, TState, readonly AnimationConfig<T>[]>>
+    ReadonlyObjectMapLike<
+      Function2<TState, TState, readonly AnimationConfig<T>[]>
+    >
   >,
   deps: readonly unknown[],
   options: {
@@ -710,7 +712,7 @@ export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
     readonly capacity?: number;
   } = {},
 ): readonly [
-  ReadonlyRecordLike<EventSourceLike<T>>,
+  ReadonlyObjectMapLike<EventSourceLike<T>>,
   Function1<Updater<TState>, boolean>,
   Optional<TState>,
 ] => {

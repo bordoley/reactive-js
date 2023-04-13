@@ -40,7 +40,7 @@ import {
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
 import { EventSourceLike } from "@reactive-js/core/util.js";
-import * as ReadonlyRecord from "@reactive-js/core/keyed-containers/ReadonlyRecord";
+import * as ReadonlyObjectMap from "@reactive-js/core/keyed-containers/ReadonlyObjectMap";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
 import * as ReadonlyArray from "@reactive-js/core/keyed-containers/ReadonlyArray";
 import {
@@ -204,7 +204,7 @@ const Root = () => {
       <div>
         {pipe(
           animatedValues,
-          ReadonlyRecord.entries<EventSourceLike<number>, string>(),
+          ReadonlyObjectMap.entries<EventSourceLike<number>, string>(),
           Enumerator.toReadonlyArray(),
           ReadonlyArray.map(([key, value]) => (
             <AnimatedBox key={key} value={value} />

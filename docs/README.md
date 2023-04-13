@@ -20,7 +20,7 @@ Reactive-JS
 - [keyed-containers](modules/keyed_containers.md)
 - [keyed-containers/ReadonlyArray](modules/keyed_containers_ReadonlyArray.md)
 - [keyed-containers/ReadonlyMap](modules/keyed_containers_ReadonlyMap.md)
-- [keyed-containers/ReadonlyRecord](modules/keyed_containers_ReadonlyRecord.md)
+- [keyed-containers/ReadonlyObjectMap](modules/keyed_containers_ReadonlyObjectMap.md)
 - [rx](modules/rx.md)
 - [rx/Enumerable](modules/rx_Enumerable.md)
 - [rx/Observable](modules/rx_Observable.md)

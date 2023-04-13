@@ -1,7 +1,7 @@
 import { __FlowableStreamLike_isPaused as FlowableStreamLike_isPaused, __FlowableStreamLike_pause as FlowableStreamLike_pause, __FlowableStreamLike_resume as FlowableStreamLike_resume, __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_isEnumerable as StreamableLike_isEnumerable, __StreamableLike_isInteractive as StreamableLike_isInteractive, __StreamableLike_isRunnable as StreamableLike_isRunnable, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
 import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
-import { ReadonlyRecordLike } from "./keyed-containers.js";
+import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { DispatcherLike, MulticastObservableLike, ObservableLike } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
 import { DisposableLike, KeyedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
@@ -112,7 +112,7 @@ export interface FlowableLike<T = unknown> extends StreamableLike<boolean | Upda
  * @noInheritDoc
  * @category Stream
  */
-export interface CacheStreamLike<T> extends StreamLike<ReadonlyRecordLike<Function1<Optional<T>, Optional<T>>>, never>, KeyedCollectionLike<string, ObservableLike<T>> {
+export interface CacheStreamLike<T> extends StreamLike<ReadonlyObjectMapLike<Function1<Optional<T>, Optional<T>>>, never>, KeyedCollectionLike<string, ObservableLike<T>> {
 }
 /**
  * A container that returns a CacheStream when subscribed to.

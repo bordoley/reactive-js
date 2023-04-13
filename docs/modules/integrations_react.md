@@ -22,7 +22,7 @@
 
 ### useAnimatedState
 
-▸ **useAnimatedState**<`TState`, `T`\>(`initialState`, `animationFactory`, `deps`, `options`): readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
+▸ **useAnimatedState**<`TState`, `T`\>(`initialState`, `animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
 
 #### Type parameters
 
@@ -36,7 +36,7 @@
 | Name | Type |
 | :------ | :------ |
 | `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -48,9 +48,9 @@
 
 #### Returns
 
-readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
 
-▸ **useAnimatedState**<`TState`, `T`\>(`initialState`, `animationFactory`, `deps`, `options`): readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
+▸ **useAnimatedState**<`TState`, `T`\>(`initialState`, `animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
 
 #### Type parameters
 
@@ -64,7 +64,7 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 | Name | Type |
 | :------ | :------ |
 | `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -76,9 +76,9 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 
 #### Returns
 
-readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
 
-▸ **useAnimatedState**<`TState`, `T`\>(`initialState`, `animationFactory`, `deps`, `options?`): readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
+▸ **useAnimatedState**<`TState`, `T`\>(`initialState`, `animationFactory`, `deps`, `options?`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
 
 #### Type parameters
 
@@ -92,7 +92,7 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 | Name | Type |
 | :------ | :------ |
 | `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -103,13 +103,13 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 
 #### Returns
 
-readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
 
 ___
 
 ### useAnimation
 
-▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -122,7 +122,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -133,9 +133,9 @@ ___
 
 #### Returns
 
-readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
-▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
 
 #### Type parameters
 
@@ -148,7 +148,7 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -159,9 +159,9 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 
 #### Returns
 
-readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
 
-▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -174,7 +174,7 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -185,9 +185,9 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 
 #### Returns
 
-readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
-▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options?`): readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options?`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -200,7 +200,7 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -209,7 +209,7 @@ readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`Event
 
 #### Returns
 
-readonly [[`ReadonlyRecordLike`](keyed_containers.md#readonlyrecordlike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 ___
 

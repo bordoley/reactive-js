@@ -12,9 +12,9 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import { ReadonlyRecordLike } from "../../keyed-containers.js";
+import { ReadonlyObjectMapLike } from "../../keyed-containers.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
-import * as ReadonlyRecord from "../../keyed-containers/ReadonlyRecord.js";
+import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import { DispatcherLike_complete } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import {
@@ -314,11 +314,11 @@ testModule(
       const persistentStore = {
         load: (_: ReadonlySet<string>) =>
           pipe({ ...store }, Observable.fromOptional()),
-        store: (updates: ReadonlyRecordLike<number>) =>
+        store: (updates: ReadonlyObjectMapLike<number>) =>
           Observable.fromFactory(() => {
             pipe(
               updates,
-              ReadonlyRecord.forEachWithKey<number, string>((v, k) => {
+              ReadonlyObjectMap.forEachWithKey<number, string>((v, k) => {
                 store[k] = v;
               }),
             );

@@ -16,7 +16,7 @@ import {
   ContainerOf,
 } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
-import { ReadonlyRecordLike } from "./keyed-containers.js";
+import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import {
   DispatcherLike,
   MulticastObservableLike,
@@ -179,7 +179,7 @@ export interface FlowableLike<T = unknown>
  */
 export interface CacheStreamLike<T>
   extends StreamLike<
-      ReadonlyRecordLike<Function1<Optional<T>, Optional<T>>>,
+      ReadonlyObjectMapLike<Function1<Optional<T>, Optional<T>>>,
       never
     >,
     KeyedCollectionLike<string, ObservableLike<T>> {}

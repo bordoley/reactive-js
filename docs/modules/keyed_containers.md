@@ -12,7 +12,7 @@
 
 ### Other Interfaces
 
-- [ReadonlyRecordContainerLike](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md)
+- [ReadonlyObjectMapContainerLike](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md)
 
 ### TypeClass Interfaces
 
@@ -35,7 +35,7 @@
 
 ### Container Type Aliases
 
-- [ReadonlyRecordLike](keyed_containers.md#readonlyrecordlike)
+- [ReadonlyObjectMapLike](keyed_containers.md#readonlyobjectmaplike)
 
 ### Other Type Aliases
 
@@ -45,9 +45,9 @@
 
 ## Container Type Aliases
 
-### ReadonlyRecordLike
+### ReadonlyObjectMapLike
 
-Ƭ **ReadonlyRecordLike**<`T`, `TKey`\>: `Readonly`<`Record`<`TKey`, `T`\>\> & [`ReadonlyRecordContainerLike`](../interfaces/keyed_containers.ReadonlyRecordContainerLike.md)
+Ƭ **ReadonlyObjectMapLike**<`T`, `TKey`\>: { readonly [P in TKey]?: T } & [`ReadonlyObjectMapContainerLike`](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md)
 
 A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
 

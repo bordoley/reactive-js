@@ -18,8 +18,8 @@ import {
   none,
   pipe,
 } from "../../functions.js";
-import { ReadonlyRecordLike } from "../../keyed-containers.js";
-import * as ReadonlyRecord from "../../keyed-containers/ReadonlyRecord.js";
+import { ReadonlyObjectMapLike } from "../../keyed-containers.js";
+import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import {
   DisposableLike_dispose,
   EventSourceLike,
@@ -135,13 +135,13 @@ export const WindowLocationProvider: React.FunctionComponent<{
 interface UseAnimate {
   useAnimate<TElement extends HTMLElement>(
     value: Optional<
-      EventSourceLike<Partial<ReadonlyRecordLike<string, CSSStyleKey>>>
+      EventSourceLike<ReadonlyObjectMapLike<string, CSSStyleKey>>
     >,
   ): React.Ref<TElement>;
 
   useAnimate<TElement extends HTMLElement, T>(
     value: Optional<EventSourceLike<T>>,
-    selector: (v: T) => Partial<ReadonlyRecordLike<string, CSSStyleKey>>,
+    selector: (v: T) => ReadonlyObjectMapLike<string, CSSStyleKey>,
     deps: readonly unknown[],
   ): React.Ref<TElement>;
 }
@@ -150,7 +150,7 @@ interface UseAnimate {
  */
 export const useAnimate: UseAnimate["useAnimate"] = (<
   TElement extends HTMLElement,
-  T = Partial<ReadonlyRecordLike<string, CSSStyleKey>>,
+  T = ReadonlyObjectMapLike<string, CSSStyleKey>,
 >(
   value: Optional<EventSourceLike<T>>,
   selector = identity,
@@ -169,8 +169,8 @@ export const useAnimate: UseAnimate["useAnimate"] = (<
       const element = ref.current;
       if (element != null) {
         pipe(
-          selectorMemoized(v) as ReadonlyRecordLike<string, CSSStyleKey>,
-          ReadonlyRecord.forEachWithKey<string, CSSStyleKey>((v, key) => {
+          selectorMemoized(v) as ReadonlyObjectMapLike<string, CSSStyleKey>,
+          ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>((v, key) => {
             element.style[key] = v ?? "";
           }),
         );

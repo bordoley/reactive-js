@@ -3,7 +3,7 @@
 import { describe, expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
 import { arrayEquality, bindMethod, none, pipe, returns, } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
-import * as ReadonlyRecord from "../../keyed-containers/ReadonlyRecord.js";
+import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import { DispatcherLike_complete } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import { SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
@@ -188,7 +188,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     const persistentStore = {
         load: (_) => pipe({ ...store }, Observable.fromOptional()),
         store: (updates) => Observable.fromFactory(() => {
-            pipe(updates, ReadonlyRecord.forEachWithKey((v, k) => {
+            pipe(updates, ReadonlyObjectMap.forEachWithKey((v, k) => {
                 store[k] = v;
             }));
         }),

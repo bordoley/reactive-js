@@ -5,20 +5,21 @@ import { EventSourceLike } from "@reactive-js/core/util";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import { pipeLazy, returns } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/util/EventSource";
+import { Property } from "csstype";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
 const SharedStyles = {
   width: "100%",
   height: "100%",
-  position: "absolute",
+  position: "absolute" as Property.Position,
   inset: 0,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   fontFamily: "Helvetica",
   fontWeight: 800,
-  backfaceVisibility: "hidden",
+  backfaceVisibility: "hidden" as Property.BackfaceVisibility,
 };
 
 const Box = (props: any) => (
