@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import {
   Function1,
@@ -34,6 +35,7 @@ import {
   WindowLocationStreamLike_goBack,
   WindowLocationStreamLike_replace,
   WindowLocationURI,
+  addScrollListener,
   windowLocation,
 } from "../web.js";
 
@@ -172,4 +174,41 @@ export const useAnimate = <
   }, [value, selectorMemoized, ref]);
 
   return ref;
+};
+
+export const useScroll = (
+  onScrollEvent: (ev: {
+    event: "scroll";
+    value: {
+      x: {
+        current: number;
+        progress: number;
+        scrollLength: number;
+      };
+      y: {
+        current: number;
+        progress: number;
+        scrollLength: number;
+      };
+    };
+  }) => void,
+  deps: readonly unknown[] = [],
+): React.Ref<HTMLElement> => {
+  const [element, setElement] = useState<Optional<HTMLElement>>();
+
+  const onScrollEventMemoized = useCallback(onScrollEvent, deps);
+
+  useEffect(() => {
+    if (isNone(element)) {
+      return;
+    }
+
+    const listener = EventListener.create(onScrollEventMemoized);
+
+    pipe(element, addScrollListener(listener));
+
+    return bindMethod(listener, DisposableLike_dispose);
+  }, [element, onScrollEventMemoized]);
+
+  return setElement as React.Ref<HTMLElement>;
 };

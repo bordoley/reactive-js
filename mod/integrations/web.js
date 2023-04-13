@@ -15,6 +15,7 @@ import * as Streamable from "../streaming/Streamable.js";
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
+import * as EventListener from "../util/EventListener.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
 const errorEvent = "error";
 const reservedEvents = [errorEvent, "open"];
@@ -56,6 +57,7 @@ export const addEventListener = ((eventName, eventListener) => target => {
     target.addEventListener(eventName, listener, {
         passive: true,
     });
+    return target;
 });
 export const observeEvent = ((eventName, selector) => target => Observable.create(observer => {
     pipe(observer, Disposable.onDisposed(_ => {
@@ -205,3 +207,30 @@ export const windowLocation = /*@__PURE__*/ (() => {
         [StreamableLike_stream]: stream,
     };
 })();
+const calcProgress = (min, max, value) => max - min === 0 ? 1 : (value - min) / (max - min);
+export const addScrollListener = (listener) => (element) => {
+    const eventListener = pipe((_) => {
+        // FIXME: Nearly every production implementation seems to reuse an
+        // event object to avoid memory allocations.
+        const xCurrent = element[`scrollLeft`];
+        const xScrollLength = element["scrollWidth"] - element["clientWidth"];
+        const x = {
+            current: xCurrent,
+            scrollLength: xScrollLength,
+            progress: calcProgress(0, xCurrent, xCurrent),
+        };
+        const yCurrent = element[`scrollTop`];
+        const yScrollLength = element["scrollHeight"] - element["clientHeight"];
+        const y = {
+            current: yCurrent,
+            scrollLength: yScrollLength,
+            progress: calcProgress(0, yCurrent, yCurrent),
+        };
+        listener[EventListenerLike_notify]({
+            event: "scroll",
+            value: { x, y },
+        });
+    }, EventListener.create, Disposable.bindTo(listener));
+    pipe(element, addEventListener("scroll", eventListener), addEventListener("resize", eventListener));
+    return element;
+};

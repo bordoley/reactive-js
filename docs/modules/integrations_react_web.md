@@ -13,6 +13,7 @@
 ### Other Functions
 
 - [WindowLocationProvider](integrations_react_web.md#windowlocationprovider)
+- [useScroll](integrations_react_web.md#usescroll)
 
 ## Hook Functions
 
@@ -88,3 +89,20 @@ ___
 #### Returns
 
 ``null`` \| `ReactElement`<`any`, `any`\>
+
+___
+
+### useScroll
+
+▸ **useScroll**(`onScrollEvent`, `deps?`): `Ref`<`HTMLElement`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onScrollEvent` | (`ev`: { `event`: ``"scroll"`` ; `value`: { `x`: { `current`: `number` ; `progress`: `number` ; `scrollLength`: `number`  } ; `y`: { `current`: `number` ; `progress`: `number` ; `scrollLength`: `number`  }  }  }) => `void` |
+| `deps?` | readonly `unknown`[] |
+
+#### Returns
+
+`Ref`<`HTMLElement`\>
