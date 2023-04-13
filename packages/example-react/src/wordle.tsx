@@ -105,7 +105,10 @@ const AnimatedBox = ({
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const [animatedValue, dispatch, isAnimationRunning] = useAnimation<number, boolean>(
+  const [animatedValue, dispatch, isAnimationRunning] = useAnimation<
+    number,
+    boolean
+  >(
     () => ({
       type: "spring",
       stiffness: 0.0005,
