@@ -22,6 +22,7 @@
 
 ### Functions
 
+- [addEventListener](integrations_web.md#addeventlistener)
 - [createEventSource](integrations_web.md#createeventsource)
 - [observeEvent](integrations_web.md#observeevent)
 
@@ -38,6 +39,1253 @@
 • `Const` **windowLocation**: [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\> \| [`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md), [`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md), [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
 
 ## Functions
+
+### addEventListener
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `AbortSignal`<`TEventTarget`\> |
+| `K` | extends ``"abort"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`AbortSignalEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `Animation`<`TEventTarget`\> |
+| `K` | extends keyof `AnimationEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`AnimationEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `AbstractWorker` |
+| `K` | extends ``"error"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`AbstractWorkerEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `AudioScheduledSourceNode`<`TEventTarget`\> |
+| `K` | extends ``"ended"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`AudioScheduledSourceNodeEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `BaseAudioContext`<`TEventTarget`\> |
+| `K` | extends ``"statechange"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`BaseAudioContextEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `AudioWorkletNode`<`TEventTarget`\> |
+| `K` | extends ``"processorerror"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`AudioWorkletNodeEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `BroadcastChannel`<`TEventTarget`\> |
+| `K` | extends keyof `BroadcastChannelEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`BroadcastChannelEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `Document`<`TEventTarget`\> |
+| `K` | extends keyof `DocumentEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`DocumentEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `MediaStreamTrack`<`TEventTarget`\> |
+| `K` | extends keyof `MediaStreamTrackEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaStreamTrackEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `EventSource`<`TEventTarget`\> |
+| `K` | extends keyof `EventSourceEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`EventSourceEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `FileReader`<`TEventTarget`\> |
+| `K` | extends keyof `FileReaderEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`FileReaderEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `FontFaceSet`<`TEventTarget`\> |
+| `K` | extends keyof `FontFaceSetEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`FontFaceSetEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `GlobalEventHandlers` |
+| `K` | extends keyof `GlobalEventHandlersEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`GlobalEventHandlersEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `IDBDatabase`<`TEventTarget`\> |
+| `K` | extends keyof `IDBDatabaseEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`IDBDatabaseEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `HTMLBodyElement`<`TEventTarget`\> |
+| `K` | extends keyof `HTMLBodyElementEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`HTMLBodyElementEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `HTMLElement`<`TEventTarget`\> |
+| `K` | extends keyof `HTMLElementEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`HTMLElementEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `HTMLMediaElement`<`TEventTarget`\> |
+| `K` | extends keyof `HTMLMediaElementEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`HTMLMediaElementEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `HTMLVideoElement`<`TEventTarget`\> |
+| `K` | extends keyof `HTMLVideoElementEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`HTMLVideoElementEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `IDBOpenDBRequest`<`TEventTarget`\> |
+| `K` | extends keyof `IDBOpenDBRequestEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`IDBOpenDBRequestEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`, `TDBObject`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `IDBRequest`<`TDBObject`, `TEventTarget`\> |
+| `K` | extends keyof `IDBRequestEventMap` |
+| `TDBObject` | `any` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`IDBRequestEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `IDBTransaction`<`TEventTarget`\> |
+| `K` | extends keyof `IDBTransactionEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`IDBTransactionEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `MathMLElement`<`TEventTarget`\> |
+| `K` | extends keyof `MathMLElementEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MathMLElementEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `MediaDevices`<`TEventTarget`\> |
+| `K` | extends ``"devicechange"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaDevicesEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `MediaKeySession`<`TEventTarget`\> |
+| `K` | extends keyof `MediaKeySessionEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaKeySessionEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `MediaQueryList`<`TEventTarget`\> |
+| `K` | extends ``"change"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaQueryListEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `MediaRecorder`<`TEventTarget`\> |
+| `K` | extends keyof `MediaRecorderEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaRecorderEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `MediaStream` \| `MediaSource` |
+| `K` | extends keyof `MediaSourceEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaSourceEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `MediaStream`<`TEventTarget`\> |
+| `K` | extends keyof `MediaStreamEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaStreamEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `MessagePort`<`TEventTarget`\> |
+| `K` | extends keyof `MessagePortEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MessagePortEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `Notification`<`TEventTarget`\> |
+| `K` | extends keyof `NotificationEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`NotificationEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `OfflineAudioContext`<`TEventTarget`\> |
+| `K` | extends keyof `OfflineAudioContextEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`OfflineAudioContextEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `OffscreenCanvas`<`TEventTarget`\> |
+| `K` | extends keyof `OffscreenCanvasEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`OffscreenCanvasEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `PaymentRequest`<`TEventTarget`\> |
+| `K` | extends ``"paymentmethodchange"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`PaymentRequestEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `Performance`<`TEventTarget`\> |
+| `K` | extends ``"resourcetimingbufferfull"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`PerformanceEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `PermissionStatus`<`TEventTarget`\> |
+| `K` | extends ``"change"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`PermissionStatusEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `PictureInPictureWindow`<`TEventTarget`\> |
+| `K` | extends ``"resize"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`PictureInPictureWindowEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `RTCDTMFSender`<`TEventTarget`\> |
+| `K` | extends ``"tonechange"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCDTMFSenderEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `RTCDataChannel`<`TEventTarget`\> |
+| `K` | extends keyof `RTCDataChannelEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCDataChannelEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `RTCDtlsTransport`<`TEventTarget`\> |
+| `K` | extends keyof `RTCDtlsTransportEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCDtlsTransportEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `RTCIceTransport`<`TEventTarget`\> |
+| `K` | extends keyof `RTCIceTransportEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCIceTransportEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `RTCPeerConnection`<`TEventTarget`\> |
+| `K` | extends keyof `RTCPeerConnectionEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCPeerConnectionEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `RTCSctpTransport`<`TEventTarget`\> |
+| `K` | extends ``"statechange"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCSctpTransportEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `RemotePlayback`<`TEventTarget`\> |
+| `K` | extends keyof `RemotePlaybackEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RemotePlaybackEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `SVGSVGElement`<`TEventTarget`\> |
+| `K` | extends keyof `SVGSVGElementEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SVGSVGElementEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `ScreenOrientation`<`TEventTarget`\> |
+| `K` | extends ``"change"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ScreenOrientationEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `ServiceWorker`<`TEventTarget`\> |
+| `K` | extends keyof `ServiceWorkerEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ServiceWorkerEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `ServiceWorkerContainer`<`TEventTarget`\> |
+| `K` | extends keyof `ServiceWorkerContainerEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ServiceWorkerContainerEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `ServiceWorkerRegistration`<`TEventTarget`\> |
+| `K` | extends ``"updatefound"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ServiceWorkerRegistrationEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `ShadowRoot`<`TEventTarget`\> |
+| `K` | extends ``"slotchange"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ShadowRootEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `SourceBuffer`<`TEventTarget`\> |
+| `K` | extends keyof `SourceBufferEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SourceBufferEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `SourceBufferList`<`TEventTarget`\> |
+| `K` | extends keyof `SourceBufferListEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SourceBufferListEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `SpeechSynthesis`<`TEventTarget`\> |
+| `K` | extends ``"voiceschanged"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SpeechSynthesisEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `SpeechSynthesisUtterance`<`TEventTarget`\> |
+| `K` | extends keyof `SpeechSynthesisUtteranceEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SpeechSynthesisUtteranceEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `SVGElement`<`TEventTarget`\> |
+| `K` | extends keyof `SVGElementEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SVGElementEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `TextTrack`<`TEventTarget`\> |
+| `K` | extends ``"cuechange"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`TextTrackEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `TextTrackCue`<`TEventTarget`\> |
+| `K` | extends keyof `TextTrackCueEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`TextTrackCueEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `TextTrackList`<`TEventTarget`\> |
+| `K` | extends keyof `TextTrackListEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`TextTrackListEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `VisualViewport`<`TEventTarget`\> |
+| `K` | extends keyof `VisualViewportEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`VisualViewportEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `WebSocket`<`TEventTarget`\> |
+| `K` | extends keyof `WebSocketEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`WebSocketEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `Window`<`TEventTarget`\> |
+| `K` | extends keyof `WindowEventMap` |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`WindowEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `Worker`<`TEventTarget`\> |
+| `K` | extends keyof `WorkerEventMap` |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`WorkerEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `XMLHttpRequestEventTarget`<`TEventTarget`\> |
+| `K` | extends keyof `XMLHttpRequestEventTargetEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`XMLHttpRequestEventTargetEventMap`[`K`]\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+
+___
 
 ### createEventSource
 
@@ -457,15 +1705,16 @@ ___
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`, `TDBObject`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventTarget` | extends `IDBRequest`<`T`, `TEventTarget`\> |
+| `TEventTarget` | extends `IDBRequest`<`TDBObject`, `TEventTarget`\> |
 | `K` | extends keyof `IDBRequestEventMap` |
 | `T` | `T` |
+| `TDBObject` | `any` |
 
 #### Parameters
 

@@ -18,6 +18,7 @@ import {
 import {
   Function1,
   Optional,
+  SideEffect1,
   Updater,
   bindMethod,
   compose,
@@ -56,6 +57,8 @@ import {
   BufferLike_capacity,
   CollectionLike_count,
   DisposableLike_dispose,
+  EventListenerLike,
+  EventListenerLike_notify,
   IndexedBufferCollectionLike,
   KeyedCollectionLike_get,
   QueueableLike,
@@ -154,6 +157,485 @@ export const createEventSource = (
     }
   });
 };
+
+interface AddEventListener {
+  addEventListener<
+    TEventTarget extends AbortSignal,
+    K extends keyof AbortSignalEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<AbortSignalEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends Animation,
+    K extends keyof AnimationEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<AnimationEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends AbstractWorker,
+    K extends keyof AbstractWorkerEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<AbstractWorkerEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends AudioScheduledSourceNode,
+    K extends keyof AudioScheduledSourceNodeEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<AudioScheduledSourceNodeEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends BaseAudioContext,
+    K extends keyof BaseAudioContextEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<BaseAudioContextEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends AudioWorkletNode,
+    K extends keyof AudioWorkletNodeEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<AudioWorkletNodeEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends BroadcastChannel,
+    K extends keyof BroadcastChannelEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<BroadcastChannelEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+
+  addEventListener<
+    TEventTarget extends Document,
+    K extends keyof DocumentEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<DocumentEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+
+  addEventListener<
+    TEventTarget extends MediaStreamTrack,
+    K extends keyof MediaStreamTrackEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<MediaStreamTrackEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends EventSource,
+    K extends keyof EventSourceEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<EventSourceEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends FileReader,
+    K extends keyof FileReaderEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<FileReaderEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends FontFaceSet,
+    K extends keyof FontFaceSetEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<FontFaceSetEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends GlobalEventHandlers,
+    K extends keyof GlobalEventHandlersEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<GlobalEventHandlersEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends IDBDatabase,
+    K extends keyof IDBDatabaseEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<IDBDatabaseEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+
+  addEventListener<
+    TEventTarget extends HTMLBodyElement,
+    K extends keyof HTMLBodyElementEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<HTMLBodyElementEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+
+  addEventListener<
+    TEventTarget extends HTMLElement,
+    K extends keyof HTMLElementEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<HTMLElementEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+
+  addEventListener<
+    TEventTarget extends HTMLMediaElement,
+    K extends keyof HTMLMediaElementEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<HTMLMediaElementEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+
+  addEventListener<
+    TEventTarget extends HTMLVideoElement,
+    K extends keyof HTMLVideoElementEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<HTMLVideoElementEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+
+  addEventListener<
+    TEventTarget extends IDBOpenDBRequest,
+    K extends keyof IDBOpenDBRequestEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<IDBOpenDBRequestEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends IDBRequest<TDBObject>,
+    K extends keyof IDBRequestEventMap,
+    TDBObject = any,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<IDBRequestEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends IDBTransaction,
+    K extends keyof IDBTransactionEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<IDBTransactionEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends MathMLElement,
+    K extends keyof MathMLElementEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<MathMLElementEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends MediaDevices,
+    K extends keyof MediaDevicesEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<MediaDevicesEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends MediaKeySession,
+    K extends keyof MediaKeySessionEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<MediaKeySessionEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends MediaQueryList,
+    K extends keyof MediaQueryListEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<MediaQueryListEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends MediaRecorder,
+    K extends keyof MediaRecorderEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<MediaRecorderEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends MediaSource | MediaStream,
+    K extends keyof MediaSourceEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<MediaSourceEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends MediaStream,
+    K extends keyof MediaStreamEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<MediaStreamEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends MessagePort,
+    K extends keyof MessagePortEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<MessagePortEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends Notification,
+    K extends keyof NotificationEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<NotificationEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends OfflineAudioContext,
+    K extends keyof OfflineAudioContextEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<OfflineAudioContextEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends OffscreenCanvas,
+    K extends keyof OffscreenCanvasEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<OffscreenCanvasEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends PaymentRequest,
+    K extends keyof PaymentRequestEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<PaymentRequestEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends Performance,
+    K extends keyof PerformanceEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<PerformanceEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends PermissionStatus,
+    K extends keyof PermissionStatusEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<PermissionStatusEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends PictureInPictureWindow,
+    K extends keyof PictureInPictureWindowEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<PictureInPictureWindowEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends RTCDTMFSender,
+    K extends keyof RTCDTMFSenderEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<RTCDTMFSenderEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends RTCDataChannel,
+    K extends keyof RTCDataChannelEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<RTCDataChannelEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends RTCDtlsTransport,
+    K extends keyof RTCDtlsTransportEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<RTCDtlsTransportEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends RTCIceTransport,
+    K extends keyof RTCIceTransportEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<RTCIceTransportEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends RTCPeerConnection,
+    K extends keyof RTCPeerConnectionEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<RTCPeerConnectionEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends RTCSctpTransport,
+    K extends keyof RTCSctpTransportEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<RTCSctpTransportEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends RemotePlayback,
+    K extends keyof RemotePlaybackEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<RemotePlaybackEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends SVGSVGElement,
+    K extends keyof SVGSVGElementEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<SVGSVGElementEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends ScreenOrientation,
+    K extends keyof ScreenOrientationEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<ScreenOrientationEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends ServiceWorker,
+    K extends keyof ServiceWorkerEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<ServiceWorkerEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends ServiceWorkerContainer,
+    K extends keyof ServiceWorkerContainerEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<ServiceWorkerContainerEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends ServiceWorkerRegistration,
+    K extends keyof ServiceWorkerRegistrationEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<ServiceWorkerRegistrationEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends ShadowRoot,
+    K extends keyof ShadowRootEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<ShadowRootEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends SourceBuffer,
+    K extends keyof SourceBufferEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<SourceBufferEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends SourceBufferList,
+    K extends keyof SourceBufferListEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<SourceBufferListEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends SpeechSynthesis,
+    K extends keyof SpeechSynthesisEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<SpeechSynthesisEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends SpeechSynthesisUtterance,
+    K extends keyof SpeechSynthesisUtteranceEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<SpeechSynthesisUtteranceEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends SVGElement,
+    K extends keyof SVGElementEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<SVGElementEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends TextTrack,
+    K extends keyof TextTrackEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<TextTrackEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends TextTrackCue,
+    K extends keyof TextTrackCueEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<TextTrackCueEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends TextTrackList,
+    K extends keyof TextTrackListEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<TextTrackListEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends VisualViewport,
+    K extends keyof VisualViewportEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<VisualViewportEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends WebSocket,
+    K extends keyof WebSocketEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<WebSocketEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends Window,
+    K extends keyof WindowEventMap,
+    T,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<WindowEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends Worker,
+    K extends keyof WorkerEventMap,
+    T,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<WorkerEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+  addEventListener<
+    TEventTarget extends XMLHttpRequestEventTarget,
+    K extends keyof XMLHttpRequestEventTargetEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<XMLHttpRequestEventTargetEventMap[K]>,
+  ): SideEffect1<TEventTarget>;
+}
+
+export const addEventListener: AddEventListener["addEventListener"] = ((
+  eventName: string,
+  eventListener: EventListenerLike<unknown>,
+): SideEffect1<
+  {
+    addEventListener(
+      eventName: string,
+      listener: (ev: unknown) => void,
+      options: unknown,
+    ): void;
+    removeEventListener(
+      eventName: string,
+      listener: (ev: unknown) => void,
+    ): void;
+  }
+> =>
+target => {
+  pipe(
+    eventListener,
+    Disposable.onDisposed(_ => {
+      target.removeEventListener(eventName, listener);
+    }),
+  );
+  const listener = (event: unknown) => {
+    eventListener[EventListenerLike_notify](event);
+  };
+
+  target.addEventListener(eventName, listener, {
+    passive: true,
+  } as any);
+}) as AddEventListener["addEventListener"];
 
 interface ObserveEvent {
   observeEvent<
@@ -316,9 +798,10 @@ interface ObserveEvent {
     selector: Function1<IDBOpenDBRequestEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
-    TEventTarget extends IDBRequest<T>,
+    TEventTarget extends IDBRequest<TDBObject>,
     K extends keyof IDBRequestEventMap,
     T,
+    TDBObject = any,
   >(
     eventName: K,
     selector: Function1<IDBRequestEventMap[K], T>,
