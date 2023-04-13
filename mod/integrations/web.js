@@ -12,7 +12,7 @@ import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLi
 import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
@@ -46,6 +46,17 @@ export const createEventSource = (url, options = {}) => {
         }
     });
 };
+export const addEventListener = ((eventName, eventListener) => target => {
+    pipe(eventListener, Disposable.onDisposed(_ => {
+        target.removeEventListener(eventName, listener);
+    }));
+    const listener = (event) => {
+        eventListener[EventListenerLike_notify](event);
+    };
+    target.addEventListener(eventName, listener, {
+        passive: true,
+    });
+});
 export const observeEvent = ((eventName, selector) => target => Observable.create(observer => {
     pipe(observer, Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
