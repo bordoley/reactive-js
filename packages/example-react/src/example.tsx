@@ -154,17 +154,16 @@ const Root = () => {
 
   const [animatedValues, dispatch, isAnimationRunning] = useAnimations(
     () => ({
-      abc: () => [
-        {
-          type: "loop",
-          count: 2,
-          animation: [
-            { type: "tween", duration: 500, from: 0, to: 1 },
-            { type: "delay", duration: 250 },
-            { type: "tween", duration: 500, from: 1, to: 0 },
-          ],
-        },
-      ],
+      abc: () => ({
+        type: "loop",
+        count: 2,
+        animation: [
+          { type: "tween", duration: 500, from: 0, to: 1 },
+          { type: "delay", duration: 250 },
+          { type: "tween", duration: 500, from: 1, to: 0 },
+        ],
+      }),
+
       def: () => [
         { type: "tween", duration: 500, from: 0, to: 1 },
         { type: "delay", duration: 250 },
@@ -245,7 +244,7 @@ const RxComponent = createComponent(
     ) =>
       Streamable.createEventHandler(
         pipe(
-          Observable.animate(
+          Observable.animate([
             {
               type: "tween",
               duration: 1000,
@@ -269,7 +268,7 @@ const RxComponent = createComponent(
                 padding: `${v}px`,
               }),
             },
-          ),
+          ]),
           Observable.forEach(({ color, margin, padding }) => {
             const animatedDiv = animatedDivRef.current;
             if (animatedDiv != null) {

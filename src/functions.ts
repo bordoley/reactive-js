@@ -422,6 +422,9 @@ export const invoke =
   (obj: T) =>
     obj[method](...args);
 
+export const isReadonlyArray: <T = unknown>(o: unknown) => o is readonly T[] =
+  Array.isArray;
+
 /**
  * Returns a predicate function comparing its argument to `b` using the
  * provided `equality` function.

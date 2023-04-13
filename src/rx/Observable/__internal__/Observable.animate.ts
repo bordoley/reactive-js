@@ -1,5 +1,5 @@
 import { ContainerOperator } from "../../../containers.js";
-import { identity, isSome, pipe } from "../../../functions.js";
+import { identity, isReadonlyArray, isSome, pipe } from "../../../functions.js";
 import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { Animate, AnimationConfig, RunnableLike } from "../../../rx.js";
 import Observable_concatObservables from "./Observable.concatObservables.js";
@@ -19,7 +19,7 @@ const parseAnimationConfig = <T = number>(
 ): RunnableLike<T> =>
   config.type === "loop"
     ? pipe(
-        Observable_animate<T>(...config.animation),
+        Observable_animate<T>(config.animation),
         Observable_repeat<RunnableLike, T>(config.count),
       )
     : config.type === "delay"
@@ -37,8 +37,11 @@ const parseAnimationConfig = <T = number>(
       );
 
 const Observable_animate: Animate<RunnableLike>["animate"] = <T = number>(
-  ...configs: AnimationConfig<T>[]
+  config: AnimationConfig<T> | readonly AnimationConfig<T>[],
 ) => {
+  const configs = isReadonlyArray<AnimationConfig<T>>(config)
+    ? config
+    : [config];
   const observables = pipe(configs, ReadonlyArray_map(parseAnimationConfig));
   return Observable_concatObservables(observables);
 };

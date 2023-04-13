@@ -22,7 +22,7 @@
 
 ### animation
 
-• `Readonly` **animation**: readonly [`AnimationConfig`](../modules/rx.md#animationconfig)<`T`\>[]
+• `Readonly` **animation**: [`AnimationConfig`](../modules/rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](../modules/rx.md#animationconfig)<`T`\>[]
 
 ___
 

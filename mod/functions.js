@@ -60,6 +60,7 @@ export const incrementBy = (incr) => (x) => x + incr;
  * @returns
  */
 export const invoke = (method, ...args) => (obj) => obj[method](...args);
+export const isReadonlyArray = Array.isArray;
 /**
  * Returns a predicate function comparing its argument to `b` using the
  * provided `equality` function.

@@ -1,6 +1,6 @@
 /// <reference types="./Observable.animate.d.ts" />
 
-import { identity, isSome, pipe } from "../../../functions.js";
+import { identity, isReadonlyArray, isSome, pipe } from "../../../functions.js";
 import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import Observable_concatObservables from "./Observable.concatObservables.js";
 import Observable_empty from "./Observable.empty.js";
@@ -13,7 +13,7 @@ const scale = (start, end) => (v) => {
     return start + v * diff;
 };
 const parseAnimationConfig = (config) => config.type === "loop"
-    ? pipe(Observable_animate(...config.animation), Observable_repeat(config.count))
+    ? pipe(Observable_animate(config.animation), Observable_repeat(config.count))
     : config.type === "delay"
         ? Observable_empty({ delay: config.duration })
         : pipe(config.type === "tween"
@@ -21,7 +21,10 @@ const parseAnimationConfig = (config) => config.type === "loop"
             : Observable_spring(config), Observable_map(scale(config.from, config.to)), isSome(config.selector)
             ? Observable_map(config.selector)
             : identity);
-const Observable_animate = (...configs) => {
+const Observable_animate = (config) => {
+    const configs = isReadonlyArray(config)
+        ? config
+        : [config];
     const observables = pipe(configs, ReadonlyArray_map(parseAnimationConfig));
     return Observable_concatObservables(observables);
 };

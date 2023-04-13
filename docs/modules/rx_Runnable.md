@@ -99,7 +99,7 @@
 
 ### animate
 
-▸ **animate**<`T`\>(`...configs`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+▸ **animate**<`T`\>(`configs`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -111,7 +111,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `...configs` | readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[] |
+| `configs` | [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[] |
 
 #### Returns
 

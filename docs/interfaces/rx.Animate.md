@@ -26,7 +26,7 @@
 
 ### animate
 
-▸ **animate**<`T`\>(`...configs`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
+▸ **animate**<`T`\>(`configs`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
 #### Type parameters
 
@@ -38,7 +38,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `...configs` | readonly [`AnimationConfig`](../modules/rx.md#animationconfig)<`T`\>[] |
+| `configs` | [`AnimationConfig`](../modules/rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](../modules/rx.md#animationconfig)<`T`\>[] |
 
 #### Returns
 

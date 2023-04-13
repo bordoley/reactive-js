@@ -452,7 +452,9 @@ interface UseAnimations {
    */
   useAnimations<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+      ReadonlyObjectMapLike<
+        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      >
     >,
     deps: readonly unknown[],
     options: {
@@ -473,7 +475,9 @@ interface UseAnimations {
    */
   useAnimations<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+      ReadonlyObjectMapLike<
+        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      >
     >,
     deps: readonly unknown[],
     options: {
@@ -494,7 +498,9 @@ interface UseAnimations {
    */
   useAnimations<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+      ReadonlyObjectMapLike<
+        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      >
     >,
     deps: readonly unknown[],
     options: {
@@ -515,7 +521,9 @@ interface UseAnimations {
    */
   useAnimations<TEvent, T = number>(
     animationFactory: Factory<
-      ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+      ReadonlyObjectMapLike<
+        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      >
     >,
     deps: readonly unknown[],
     options?: {
@@ -531,7 +539,9 @@ interface UseAnimations {
 }
 export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
   animationFactory: Factory<
-    ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
+    ReadonlyObjectMapLike<
+      Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+    >
   >,
   deps: readonly unknown[],
   options: {
@@ -558,12 +568,15 @@ export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
         > = pipe(
           animations,
           ReadonlyObjectMap.mapWithKey<
-            Function1<TEvent, readonly AnimationConfig<T>[]>,
+            Function1<
+              TEvent,
+              AnimationConfig<T> | readonly AnimationConfig<T>[]
+            >,
             ObservableLike<T>,
             string
           >((factory, key: string) =>
             pipe(
-              Observable.animate<T>(...factory(event)),
+              Observable.animate<T>(factory(event)),
               Observable.forEach(value => {
                 const publisher = publishers[key];
                 if (isSome(publisher)) {
@@ -606,7 +619,10 @@ interface UseAnimation {
    * @category Hook
    */
   useAnimation<TEvent, T = number>(
-    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    animationFactory: Function1<
+      TEvent,
+      AnimationConfig<T> | readonly AnimationConfig<T>[]
+    >,
     deps: readonly unknown[],
     options: {
       readonly mode: "switching";
@@ -624,7 +640,10 @@ interface UseAnimation {
    * @category Hook
    */
   useAnimation<TEvent, T = number>(
-    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    animationFactory: Function1<
+      TEvent,
+      AnimationConfig<T> | readonly AnimationConfig<T>[]
+    >,
     deps: readonly unknown[],
     options: {
       readonly mode: "blocking";
@@ -642,7 +661,10 @@ interface UseAnimation {
    * @category Hook
    */
   useAnimation<TEvent, T = number>(
-    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    animationFactory: Function1<
+      TEvent,
+      AnimationConfig<T> | readonly AnimationConfig<T>[]
+    >,
     deps: readonly unknown[],
     options: {
       readonly mode: "queueing";
@@ -660,7 +682,10 @@ interface UseAnimation {
    * @category Hook
    */
   useAnimation<TEvent, T = number>(
-    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    animationFactory: Function1<
+      TEvent,
+      AnimationConfig<T> | readonly AnimationConfig<T>[]
+    >,
     deps: readonly unknown[],
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -675,7 +700,10 @@ interface UseAnimation {
 }
 
 export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
-  animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+  animationFactory: Function1<
+    TEvent,
+    AnimationConfig<T> | readonly AnimationConfig<T>[]
+  >,
   deps: readonly unknown[],
   options: {
     readonly mode?: "switching" | "blocking" | "queueing";

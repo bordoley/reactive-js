@@ -176,7 +176,7 @@ export interface TweenAnimationConfig {
  */
 export interface LoopAnimationConfig<T> {
   readonly type: "loop";
-  readonly animation: readonly AnimationConfig<T>[];
+  readonly animation: AnimationConfig<T> | readonly AnimationConfig<T>[];
   readonly count?: number;
 }
 
@@ -213,7 +213,7 @@ export interface Animate<C extends ObservableLike> extends Container<C> {
    * @category Constructor
    */
   animate<T = number>(
-    ...configs: readonly AnimationConfig<T>[]
+    configs: AnimationConfig<T> | readonly AnimationConfig<T>[],
   ): ContainerOf<C, T>;
 }
 

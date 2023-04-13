@@ -144,6 +144,7 @@ export declare const incrementBy: (incr: number) => Updater<number>;
  * @returns
  */
 export declare const invoke: <T extends Record<TKey, (...args: any[]) => any>, TKey extends string | number | symbol>(method: TKey, ...args: Parameters<T[TKey]>) => Function1<T, ReturnType<T[TKey]>>;
+export declare const isReadonlyArray: <T = unknown>(o: unknown) => o is readonly T[];
 /**
  * Returns a predicate function comparing its argument to `b` using the
  * provided `equality` function.

@@ -80,6 +80,7 @@
 - [isNumber](functions.md#isnumber)
 - [isObject](functions.md#isobject)
 - [isOdd](functions.md#isodd)
+- [isReadonlyArray](functions.md#isreadonlyarray)
 - [isSome](functions.md#issome)
 - [isString](functions.md#isstring)
 - [isTrue](functions.md#istrue)
@@ -2214,6 +2215,28 @@ Returns `true` if `x` is an odd number, otherwise `false`.
 #### Returns
 
 `boolean`
+
+___
+
+### isReadonlyArray
+
+▸ **isReadonlyArray**<`T`\>(`o`): o is readonly T[]
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `o` | `unknown` |
+
+#### Returns
+
+o is readonly T[]
 
 ___
 

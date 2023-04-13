@@ -115,16 +115,14 @@ export const Wordle = () => {
   const [state, updateState] = useState(false);
 
   const [animatedValue, dispatch, isAnimationRunning] = useAnimation<boolean>(
-    () => [
-      {
-        type: "spring",
-        stiffness: 0.0005,
-        damping: 0.0026,
-        precision: 0.1,
-        from: 0,
-        to: 1080,
-      },
-    ],
+    () => ({
+      type: "spring",
+      stiffness: 0.0005,
+      damping: 0.0026,
+      precision: 0.1,
+      from: 0,
+      to: 1080,
+    }),
     [],
     { mode: "blocking" },
   );
