@@ -41,4 +41,3 @@ Reactive-JS
 - [util/EventListener](modules/util_EventListener.md)
 - [util/EventPublisher](modules/util_EventPublisher.md)
 - [util/EventSource](modules/util_EventSource.md)
-- [util/EventSource/EventSource.toObservable](modules/util_EventSource_EventSource_toObservable.md)
