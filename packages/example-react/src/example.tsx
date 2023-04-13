@@ -84,16 +84,12 @@ const CacheComponent = () => {
 const AnimatedBox = ({
   value,
 }: {
-  value?: EventSourceLike<{ value: number }>;
+  value?: EventSourceLike<{ event: unknown; value: number }>;
 }) => {
-  const ref = useAnimate<HTMLDivElement, { value: number }>(
-    value,
-    ({ value }) => ({
-      margin: `${50 - value * 50}px`,
-      padding: `${value * 50}px`,
-    }),
-    [],
-  );
+  const ref = useAnimate<HTMLDivElement>(value, ({ value }) => ({
+    margin: `${50 - value * 50}px`,
+    padding: `${value * 50}px`,
+  }));
 
   return (
     <div
@@ -208,7 +204,7 @@ const Root = () => {
         {pipe(
           animatedValues,
           ReadonlyObjectMap.entries<
-            EventSourceLike<{ value: number }>,
+            EventSourceLike<{ event: unknown; value: number }>,
             string
           >(),
           Enumerator.toReadonlyArray(),

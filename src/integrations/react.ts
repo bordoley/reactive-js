@@ -450,7 +450,7 @@ interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<TEvent, T = number>(
+  useAnimations<T = number, TEvent = unknown>(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
         Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
@@ -473,7 +473,7 @@ interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<TEvent, T = number>(
+  useAnimations<T = number, TEvent = unknown>(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
         Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
@@ -496,7 +496,7 @@ interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<TEvent, T = number>(
+  useAnimations<T = number, TEvent = unknown>(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
         Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
@@ -519,7 +519,7 @@ interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<TEvent, T = number>(
+  useAnimations<T = number, TEvent = unknown>(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
         Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
@@ -537,7 +537,10 @@ interface UseAnimations {
     never,
   ];
 }
-export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
+export const useAnimations: UseAnimations["useAnimations"] = (<
+  T = number,
+  TEvent = unknown,
+>(
   animationFactory: Factory<
     ReadonlyObjectMapLike<
       Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
@@ -618,7 +621,7 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T = number>(
+  useAnimation<T = number, TEvent = unknown>(
     animationFactory: Function1<
       TEvent,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
@@ -639,7 +642,7 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T = number>(
+  useAnimation<T = number, TEvent = unknown>(
     animationFactory: Function1<
       TEvent,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
@@ -660,7 +663,7 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T = number>(
+  useAnimation<T = number, TEvent = unknown>(
     animationFactory: Function1<
       TEvent,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
@@ -681,7 +684,7 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T = number>(
+  useAnimation<T = number, TEvent = unknown>(
     animationFactory: Function1<
       TEvent,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
@@ -699,7 +702,10 @@ interface UseAnimation {
   ];
 }
 
-export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
+export const useAnimation: UseAnimation["useAnimation"] = (<
+  T = unknown,
+  TEvent = number,
+>(
   animationFactory: Function1<
     TEvent,
     AnimationConfig<T> | readonly AnimationConfig<T>[]
@@ -718,8 +724,8 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
   unknown,
 ] => {
   const [animatedValues, dispatch, isAnimationRunning] = useAnimations<
-    TEvent,
-    T
+    T,
+    TEvent
   >(
     returns({
       value: animationFactory,

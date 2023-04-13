@@ -12,7 +12,6 @@ import {
   Optional,
   Updater,
   bindMethod,
-  identity,
   isNone,
   isSome,
   none,
@@ -132,32 +131,22 @@ export const WindowLocationProvider: React.FunctionComponent<{
     : null;
 };
 
-interface UseAnimate {
-  useAnimate<TElement extends HTMLElement>(
-    value: Optional<
-      EventSourceLike<ReadonlyObjectMapLike<string, CSSStyleKey>>
-    >,
-  ): React.Ref<TElement>;
-
-  useAnimate<TElement extends HTMLElement, T>(
-    value: Optional<EventSourceLike<T>>,
-    selector: (v: T) => ReadonlyObjectMapLike<string, CSSStyleKey>,
-    deps: readonly unknown[],
-  ): React.Ref<TElement>;
-}
 /**
  * @category Hook
  */
-export const useAnimate: UseAnimate["useAnimate"] = (<
+export const useAnimate = <
   TElement extends HTMLElement,
-  T = ReadonlyObjectMapLike<string, CSSStyleKey>,
+  T = number,
+  TEvent = unknown,
 >(
-  value: Optional<EventSourceLike<T>>,
-  selector = identity,
-  deps = [],
+  value: Optional<EventSourceLike<{ event: TEvent; value: T }>>,
+  selector: (ev: {
+    event: TEvent;
+    value: T;
+  }) => ReadonlyObjectMapLike<string, CSSStyleKey>,
+  deps: readonly unknown[] = [],
 ): React.Ref<TElement> => {
   const ref = useRef<TElement>(null);
-
   const selectorMemoized = useCallback(selector, deps);
 
   useEffect(() => {
@@ -165,7 +154,7 @@ export const useAnimate: UseAnimate["useAnimate"] = (<
       return;
     }
 
-    const listener = EventListener.create((v: T) => {
+    const listener = EventListener.create((v: { event: TEvent; value: T }) => {
       const element = ref.current;
       if (element != null) {
         pipe(
@@ -183,4 +172,4 @@ export const useAnimate: UseAnimate["useAnimate"] = (<
   }, [value, selectorMemoized, ref]);
 
   return ref;
-}) as UseAnimate["useAnimate"];
+};
