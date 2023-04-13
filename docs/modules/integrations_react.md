@@ -6,8 +6,7 @@
 
 ### Hook Functions
 
-- [useAnimatedState](integrations_react.md#useanimatedstate)
-- [useAnimation](integrations_react.md#useanimation)
+- [useAnimations](integrations_react.md#useanimations)
 - [useEnumerate](integrations_react.md#useenumerate)
 - [useFlowable](integrations_react.md#useflowable)
 - [useObservable](integrations_react.md#useobservable)
@@ -20,96 +19,9 @@
 
 ## Hook Functions
 
-### useAnimatedState
+### useAnimations
 
-▸ **useAnimatedState**<`TState`, `T`\>(`initialState`, `animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TState` | `TState` |
-| `T` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
-| `deps` | readonly `unknown`[] |
-| `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`TState`\> |
-| `options.mode` | ``"switching"`` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
-
-▸ **useAnimatedState**<`TState`, `T`\>(`initialState`, `animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TState` | `TState` |
-| `T` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
-| `deps` | readonly `unknown`[] |
-| `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`TState`\> |
-| `options.mode` | ``"queueing"`` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
-
-▸ **useAnimatedState**<`TState`, `T`\>(`initialState`, `animationFactory`, `deps`, `options?`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TState` | `TState` |
-| `T` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `initialState` | [`Factory`](functions.md#factory)<`TState`\> |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function2`](functions.md#function2)<`TState`, `TState`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
-| `deps` | readonly `unknown`[] |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`TState`\> |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<[`Updater`](functions.md#updater)<`TState`\>, `boolean`\>, [`Optional`](functions.md#optional)<`TState`\>]
-
-___
-
-### useAnimation
-
-▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimations**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -133,9 +45,9 @@ ___
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
-▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+▸ **useAnimations**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
 
 #### Type parameters
 
@@ -159,9 +71,9 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
 
-▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimations**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -185,9 +97,9 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
-▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options?`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimations**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options?`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 #### Type parameters
 
@@ -209,7 +121,7 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
 
 ___
 

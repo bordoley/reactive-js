@@ -10,7 +10,7 @@ import {
   useFlowable,
   useObservable,
   useStream,
-  useAnimation,
+  useAnimations,
 } from "@reactive-js/core/integrations/react";
 import {
   useAnimate,
@@ -81,12 +81,16 @@ const CacheComponent = () => {
   return isSome(cacheStream) ? <CacheInner cache={cacheStream} /> : null;
 };
 
-const AnimatedBox = ({ value }: { value?: EventSourceLike<number> }) => {
-  const ref = useAnimate<HTMLDivElement, number>(
+const AnimatedBox = ({
+  value,
+}: {
+  value?: EventSourceLike<{ value: number }>;
+}) => {
+  const ref = useAnimate<HTMLDivElement, { value: number }>(
     value,
-    (v: number) => ({
-      margin: `${50 - v * 50}px`,
-      padding: `${v * 50}px`,
+    ({ value }) => ({
+      margin: `${50 - value * 50}px`,
+      padding: `${value * 50}px`,
     }),
     [],
   );
@@ -148,7 +152,7 @@ const Root = () => {
   );
   const counter = useFlowable(counterFlowable);
 
-  const [animatedValues, dispatch, isAnimationRunning] = useAnimation(
+  const [animatedValues, dispatch, isAnimationRunning] = useAnimations(
     () => ({
       abc: () => [
         {
@@ -204,7 +208,10 @@ const Root = () => {
       <div>
         {pipe(
           animatedValues,
-          ReadonlyObjectMap.entries<EventSourceLike<number>, string>(),
+          ReadonlyObjectMap.entries<
+            EventSourceLike<{ value: number }>,
+            string
+          >(),
           Enumerator.toReadonlyArray(),
           ReadonlyArray.map(([key, value]) => (
             <AnimatedBox key={key} value={value} />

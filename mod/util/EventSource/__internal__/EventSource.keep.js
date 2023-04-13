@@ -3,13 +3,12 @@
 import { PredicatedLike_predicate, } from "../../../__internal__/containers.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
-import { none, partial, pipe, } from "../../../functions.js";
+import { none, partial, pipe } from "../../../functions.js";
 import { EventListenerLike_notify, } from "../../../util.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
-const EventSource_keep = 
-/*@__PURE__*/ (() => {
+const EventSource_keep = /*@__PURE__*/ (() => {
     const createKeepEventListener = (() => createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function KeepEventListener(instance, delegate, predicate) {
         init(Delegating_mixin(), instance, delegate);
         init(Disposable_delegatingMixin, instance, delegate);

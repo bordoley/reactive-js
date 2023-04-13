@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { useAnimatedState } from "@reactive-js/core/integrations/react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useAnimations } from "@reactive-js/core/integrations/react";
 import { AnimationConfig } from "@reactive-js/core/rx";
 import { EventSourceLike } from "@reactive-js/core/util";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
@@ -42,16 +42,16 @@ const AnimatedBox = ({
   index,
 }: {
   label: string;
-  value?: EventSourceLike<[boolean, number]>;
+  value?: EventSourceLike<{ event: boolean; value: number }>;
   index: number;
 }) => {
   const frontBoxValue = useMemo(
     pipeLazy(
-      value ?? EventSource.empty<[boolean, number]>(),
-      EventSource.map(([state, val]) => {
+      value ?? EventSource.empty<{ event: boolean; value: number }>(),
+      EventSource.map(({ event: state, value }) => {
         const v = !state
-          ? clamp(0, val / (index + 1), 180)
-          : 180 - clamp(0, val / (index + 1), 180);
+          ? clamp(0, value / (index + 1), 180)
+          : 180 - clamp(0, value / (index + 1), 180);
 
         return {
           transform: `perspective(600px) rotateX(${v}deg)`,
@@ -64,11 +64,11 @@ const AnimatedBox = ({
 
   const backBoxValue = useMemo(
     pipeLazy(
-      value ?? EventSource.empty<[boolean, number]>(),
-      EventSource.map(([state, val]) => {
+      value ?? EventSource.empty<{ event: boolean; value: number }>(),
+      EventSource.map(({ event: state, value }) => {
         const v = state
-          ? clamp(0, val / (index + 1), 180)
-          : 180 - clamp(0, val / (index + 1), 180);
+          ? clamp(0, value / (index + 1), 180)
+          : 180 - clamp(0, value / (index + 1), 180);
 
         return {
           transform: `perspective(600px) rotateX(${v}deg)`,
@@ -113,16 +113,11 @@ const AnimatedBox = ({
 };
 
 export const Wordle = () => {
-  const [animatedValues, dispatch] = useAnimatedState<
-    boolean,
-    [boolean, number]
-  >(
-    returns(false),
+  const [state, updateState] = useState(false);
+
+  const [animatedValues, dispatch, isAnimationRunning] = useAnimations<boolean>(
     returns({
-      value: (
-        _: boolean,
-        next: boolean,
-      ): readonly AnimationConfig<[boolean, number]>[] => [
+      value: (): readonly AnimationConfig[] => [
         {
           type: "spring",
           stiffness: 0.0005,
@@ -130,13 +125,17 @@ export const Wordle = () => {
           precision: 0.1,
           from: 0,
           to: 1080,
-          selector: (v: number) => [next, v],
         },
       ],
     }),
     [],
-    { mode: "switching" },
+    { mode: "blocking" },
   );
+
+  useEffect(() => {
+    dispatch(state);
+  }, [state]);
+
   return (
     <div
       style={{
@@ -145,7 +144,9 @@ export const Wordle = () => {
         marginBottom: 80,
       }}
       onClick={() => {
-        dispatch(x => !x);
+        if (!isAnimationRunning) {
+          updateState(x => !x);
+        }
       }}
     >
       {items.map((x, i) => (

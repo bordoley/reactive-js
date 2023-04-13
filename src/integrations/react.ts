@@ -27,13 +27,10 @@ import {
   EnumeratorLike_move,
 } from "../containers.js";
 import {
-  Equality,
   Factory,
   Function1,
-  Function2,
   Optional,
   SideEffect,
-  Updater,
   bindMethod,
   ignore,
   invoke,
@@ -447,50 +444,11 @@ const usePublishers = <T>(
   return publishers ?? ReadonlyObjectMap.empty<EventPublisherLike<T>>();
 };
 
-const createTransition = <T, TAnimationFactory>(
-  animations: ReadonlyObjectMapLike<TAnimationFactory, string>,
-  f: (factory: TAnimationFactory) => readonly AnimationConfig<T>[],
-  publishers: ReadonlyObjectMapLike<EventPublisherLike<T>, string>,
-  options: {
-    readonly concurrency?: number;
-    readonly priority?: 1 | 2 | 3 | 4 | 5;
-  } = {},
-) => {
-  const observables: ReadonlyObjectMapLike<ObservableLike<T>, string> = pipe(
-    animations,
-    ReadonlyObjectMap.mapWithKey<TAnimationFactory, ObservableLike<T>, string>(
-      (factory: TAnimationFactory, key: string) =>
-        pipe(
-          Observable.animate<T>(...f(factory)),
-          Observable.forEach(v => {
-            const publisher = publishers[key];
-            if (isSome(publisher)) {
-              publisher[EventListenerLike_notify](v);
-            }
-          }),
-          Observable.ignoreElements<T>(),
-        ),
-    ),
-  );
-
-  return pipe(
-    Observable.fromEnumeratorFactory(
-      pipeLazy(observables, ReadonlyObjectMap.values()),
-    ),
-    Observable.map(
-      Observable.subscribeOn(
-        createAnimationFrameSchedulerFactory(options?.priority),
-      ),
-    ),
-    Observable.mergeAll({ concurrency: options.concurrency }),
-  );
-};
-
-interface UseAnimation {
+interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T = number>(
+  useAnimations<TEvent, T = number>(
     animationFactory: Factory<
       ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
@@ -503,7 +461,7 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
     Function1<TEvent, boolean>,
     never,
   ];
@@ -511,7 +469,7 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T = number>(
+  useAnimations<TEvent, T = number>(
     animationFactory: Factory<
       ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
@@ -524,7 +482,7 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
     Function1<TEvent, boolean>,
     boolean,
   ];
@@ -532,7 +490,7 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T = number>(
+  useAnimations<TEvent, T = number>(
     animationFactory: Factory<
       ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
@@ -545,7 +503,7 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
     Function1<TEvent, boolean>,
     never,
   ];
@@ -553,7 +511,7 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<TEvent, T = number>(
+  useAnimations<TEvent, T = number>(
     animationFactory: Factory<
       ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
     >,
@@ -564,12 +522,12 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<T>>,
+    ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
     Function1<TEvent, boolean>,
     never,
   ];
 }
-export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
+export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
   animationFactory: Factory<
     ReadonlyObjectMapLike<Function1<TEvent, readonly AnimationConfig<T>[]>>
   >,
@@ -582,26 +540,51 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
     readonly capacity?: number;
   } = {},
 ): readonly [
-  ReadonlyObjectMapLike<EventSourceLike<T>>,
+  ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
   Function1<TEvent, boolean>,
   unknown,
 ] => {
   const animations = useMemo(animationFactory, deps);
-  const publishers = usePublishers<T>(animations);
+  const publishers = usePublishers<{ event: TEvent; value: T }>(animations);
 
   const streamable = useMemo(
     () =>
-      Streamable.createEventHandler(
-        (event: TEvent) =>
-          createTransition(
-            animations,
-            (factory: Function1<TEvent, readonly AnimationConfig<T>[]>) =>
-              factory(event),
-            publishers,
-            options,
+      Streamable.createEventHandler((event: TEvent) => {
+        const observables: ReadonlyObjectMapLike<
+          ObservableLike<T>,
+          string
+        > = pipe(
+          animations,
+          ReadonlyObjectMap.mapWithKey<
+            Function1<TEvent, readonly AnimationConfig<T>[]>,
+            ObservableLike<T>,
+            string
+          >((factory, key: string) =>
+            pipe(
+              Observable.animate<T>(...factory(event)),
+              Observable.forEach(value => {
+                const publisher = publishers[key];
+                if (isSome(publisher)) {
+                  publisher[EventListenerLike_notify]({ event, value });
+                }
+              }),
+              Observable.ignoreElements<T>(),
+            ),
           ),
-        options as any,
-      ),
+        );
+
+        return pipe(
+          Observable.fromEnumeratorFactory(
+            pipeLazy(observables, ReadonlyObjectMap.values()),
+          ),
+          Observable.map(
+            Observable.subscribeOn(
+              createAnimationFrameSchedulerFactory(options?.priority),
+            ),
+          ),
+          Observable.mergeAll({ concurrency: options.concurrency }),
+        );
+      }, options as any),
     [
       animations,
       options.concurrency,
@@ -614,135 +597,4 @@ export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
   const [value, dispatch] = useStreamable(streamable, options);
 
   return [publishers, dispatch, value];
-}) as UseAnimation["useAnimation"];
-
-interface UseAnimatedState {
-  /**
-   * @category Hook
-   */
-  useAnimatedState<TState, T = number>(
-    initialState: Factory<TState>,
-    animationFactory: Factory<
-      ReadonlyObjectMapLike<
-        Function2<TState, TState, readonly AnimationConfig<T>[]>
-      >
-    >,
-    deps: readonly unknown[],
-    options: {
-      readonly mode: "switching";
-      readonly equality?: Equality<TState>;
-      readonly concurrency?: number;
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<T>>,
-    Function1<Updater<TState>, boolean>,
-    Optional<TState>,
-  ];
-
-  /**
-   * @category Hook
-   */
-  useAnimatedState<TState, T = number>(
-    initialState: Factory<TState>,
-    animationFactory: Factory<
-      ReadonlyObjectMapLike<
-        Function2<TState, TState, readonly AnimationConfig<T>[]>
-      >
-    >,
-    deps: readonly unknown[],
-    options: {
-      readonly mode: "queueing";
-      readonly equality?: Equality<TState>;
-      readonly concurrency?: number;
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<T>>,
-    Function1<Updater<TState>, boolean>,
-    Optional<TState>,
-  ];
-
-  /**
-   * @category Hook
-   */
-  useAnimatedState<TState, T = number>(
-    initialState: Factory<TState>,
-    animationFactory: Factory<
-      ReadonlyObjectMapLike<
-        Function2<TState, TState, readonly AnimationConfig<T>[]>
-      >
-    >,
-    deps: readonly unknown[],
-    options?: {
-      readonly concurrency?: number;
-      readonly equality?: Equality<TState>;
-      readonly priority?: 1 | 2 | 3 | 4 | 5;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<T>>,
-    Function1<Updater<TState>, boolean>,
-    Optional<TState>,
-  ];
-}
-
-export const useAnimatedState: UseAnimatedState["useAnimatedState"] = (<
-  TState,
-  T,
->(
-  initialState: Factory<TState>,
-  animationFactory: Factory<
-    ReadonlyObjectMapLike<
-      Function2<TState, TState, readonly AnimationConfig<T>[]>
-    >
-  >,
-  deps: readonly unknown[],
-  options: {
-    readonly mode?: "switching" | "queueing";
-    readonly equality?: Equality<TState>;
-    readonly concurrency?: number;
-    readonly priority?: 1 | 2 | 3 | 4 | 5;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-  } = {},
-): readonly [
-  ReadonlyObjectMapLike<EventSourceLike<T>>,
-  Function1<Updater<TState>, boolean>,
-  Optional<TState>,
-] => {
-  const animations = useMemo(animationFactory, deps);
-  const publishers = usePublishers<T>(animations);
-
-  const streamable = useMemo(
-    () =>
-      Streamable.createStateStore(
-        initialState,
-        (prev, next) =>
-          createTransition(
-            animations,
-            factory => factory(prev, next),
-            publishers,
-            options,
-          ),
-        options as any,
-      ),
-    [
-      animations,
-      options.concurrency,
-      options.equality,
-      options.mode,
-      options?.priority,
-      publishers,
-    ],
-  );
-
-  const [value, dispatch] = useStreamable(streamable, options);
-
-  return [publishers, dispatch, value];
-}) as UseAnimatedState["useAnimatedState"];
+}) as UseAnimations["useAnimations"];
