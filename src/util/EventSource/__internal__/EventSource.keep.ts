@@ -16,7 +16,6 @@ import {
 import { Keep } from "../../../containers.js";
 import {
   Predicate,
-  identity,
   none,
   partial,
   pipe,
@@ -25,14 +24,12 @@ import {
   EventListenerLike,
   EventListenerLike_notify,
   EventSourceLike,
-  EventSourceLike_addListener,
 } from "../../../util.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import EventPublisher_createWithPredicateAndSelector from "../../EventPublisher/__internal__/EventPublisher.createWithPredicateAndSelector.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_keepUsingLift: Keep<EventSourceLike>["keep"] =
+const EventSource_keep: Keep<EventSourceLike>["keep"] =
   /*@__PURE__*/ (() => {
     const createKeepEventListener: <T>(
       delegate: EventListenerLike<T>,
@@ -78,27 +75,5 @@ const EventSource_keepUsingLift: Keep<EventSourceLike>["keep"] =
       pipe(createKeepEventListener, partial(predicate), EventSource_lift);
   })() as Keep<EventSourceLike>["keep"];
 
-const EventSource_keep: Keep<EventSourceLike, { replay?: number }>["keep"] = <
-  T,
->(
-  predicate: Predicate<T>,
-  options: { replay?: number } = {},
-) => {
-  const { replay = 0 } = options;
-
-  return replay === 0
-    ? EventSource_keepUsingLift(predicate)
-    : (eventSource: EventSourceLike<T>): EventSourceLike<T> => {
-        const publisher = EventPublisher_createWithPredicateAndSelector<T, T>(
-          predicate,
-          identity,
-          options,
-        );
-
-        eventSource[EventSourceLike_addListener](publisher);
-
-        return publisher;
-      };
-};
 
 export default EventSource_keep;

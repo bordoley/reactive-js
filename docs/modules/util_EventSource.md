@@ -63,8 +63,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
+| `options?` | `undefined` |
 
 #### Returns
 
@@ -99,8 +98,7 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-| `options?` | `Object` | - |
-| `options.replay?` | `number` | - |
+| `options?` | `undefined` | - |
 
 #### Returns
 
