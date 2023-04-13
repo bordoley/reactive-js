@@ -13,6 +13,10 @@
 - [keep](util_EventSource.md#keep)
 - [map](util_EventSource.md#map)
 
+### Transform Functions
+
+- [toObservable](util_EventSource.md#toobservable)
+
 ## Constructor Functions
 
 ### empty
@@ -101,3 +105,27 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+## Transform Functions
+
+### toObservable
+
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
