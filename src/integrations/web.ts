@@ -606,10 +606,9 @@ interface AddEventListener {
 }
 
 export const addEventListener: AddEventListener["addEventListener"] = ((
-  eventName: string,
-  eventListener: EventListenerLike<unknown>,
-): SideEffect1<
-  {
+    eventName: string,
+    eventListener: EventListenerLike<unknown>,
+  ): SideEffect1<{
     addEventListener(
       eventName: string,
       listener: (ev: unknown) => void,
@@ -619,23 +618,22 @@ export const addEventListener: AddEventListener["addEventListener"] = ((
       eventName: string,
       listener: (ev: unknown) => void,
     ): void;
-  }
-> =>
-target => {
-  pipe(
-    eventListener,
-    Disposable.onDisposed(_ => {
-      target.removeEventListener(eventName, listener);
-    }),
-  );
-  const listener = (event: unknown) => {
-    eventListener[EventListenerLike_notify](event);
-  };
+  }> =>
+  target => {
+    pipe(
+      eventListener,
+      Disposable.onDisposed(_ => {
+        target.removeEventListener(eventName, listener);
+      }),
+    );
+    const listener = (event: unknown) => {
+      eventListener[EventListenerLike_notify](event);
+    };
 
-  target.addEventListener(eventName, listener, {
-    passive: true,
-  } as any);
-}) as AddEventListener["addEventListener"];
+    target.addEventListener(eventName, listener, {
+      passive: true,
+    } as any);
+  }) as AddEventListener["addEventListener"];
 
 interface ObserveEvent {
   observeEvent<
