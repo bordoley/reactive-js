@@ -583,6 +583,7 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
               Observable.forEach(value => {
                 const publisher = publishers[key];
                 if (isSome(publisher)) {
+                  // FIXME: consider reusing an event object to avoid memory allocations
                   publisher[EventListenerLike_notify]({ event, value });
                 }
               }),

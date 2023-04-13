@@ -17,6 +17,7 @@ const SharedStyles = {
   fontFamily: "Helvetica",
   fontWeight: 800,
   backfaceVisibility: "hidden" as Property.BackfaceVisibility,
+  transformStyle: "preserve-3d" as Property.TransformStyle,
 };
 
 const Box = (props: any) => (
@@ -30,8 +31,13 @@ const Box = (props: any) => (
   />
 );
 
-export const clamp = (min: number, v: number, max: number): number =>
+const clamp = (min: number, v: number, max: number): number =>
   v > max ? max : v < min ? min : v;
+
+const calcXRotation = (state: boolean, value: number, i: number) => {
+  const clamped =  clamp(0, value / (i + 1), 180);
+  return state ? clamped : 180 - clamped;
+}
 
 const AnimatedBox = ({
   label,
@@ -42,33 +48,25 @@ const AnimatedBox = ({
   value: EventSourceLike<{ event: boolean; value: number }>;
   index: number;
 }) => {
-  const frontBox = useAnimate<HTMLDivElement>(
+  const frontBox = useAnimate<HTMLDivElement, number, boolean>(
     value,
-    ({ event: state, value }) => {
-      const v = !state
-        ? clamp(0, value / (index + 1), 180)
-        : 180 - clamp(0, value / (index + 1), 180);
-
-      return {
-        transform: `perspective(600px) rotateX(${v}deg)`,
-        transformStyle: "preserve-3d",
-      };
-    },
+    ({ event, value }) => ({
+      transform: `perspective(600px) rotateX(${
+        180 - calcXRotation(event, value, index)
+      }deg)`,
+    }),
     [index],
   );
 
-  const backBox = useAnimate<HTMLDivElement>(
+  const backBox = useAnimate<HTMLDivElement, number, boolean>(
     value,
-    ({ event: state, value }) => {
-      const v = state
-        ? clamp(0, value / (index + 1), 180)
-        : 180 - clamp(0, value / (index + 1), 180);
-
-      return {
-        transform: `perspective(600px) rotateX(${v}deg)`,
-        transformStyle: "preserve-3d",
-      };
-    },
+    ({ event, value }) => ({
+      transform: `perspective(600px) rotateX(${calcXRotation(
+        event,
+        value,
+        index,
+      )}deg)`,
+    }),
     [index],
   );
 
@@ -80,7 +78,6 @@ const AnimatedBox = ({
           ...SharedStyles,
           backgroundColor: "#fafafa",
           border: "solid 2px #1a1a1a",
-          transform: `perspective(600px) rotateX(180deg)`,
         }}
       >
         {"?"}
@@ -93,7 +90,6 @@ const AnimatedBox = ({
           backgroundColor: "#6cab64",
           border: "solid 2px #6cab64",
           color: "#fafafa",
-          transform: `perspective(600px) rotateX(0deg)`,
         }}
       >
         {label}
@@ -115,7 +111,7 @@ export const Wordle = () => {
       damping: 0.0026,
       precision: 0.1,
       from: 0,
-      to: 1080,
+      to: 180 * items.length,
     }),
     [],
     { mode: "blocking" },

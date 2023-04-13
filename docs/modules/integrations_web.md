@@ -23,6 +23,7 @@
 ### Functions
 
 - [addEventListener](integrations_web.md#addeventlistener)
+- [addScrollListener](integrations_web.md#addscrolllistener)
 - [createEventSource](integrations_web.md#createeventsource)
 - [observeEvent](integrations_web.md#observeevent)
 
@@ -42,7 +43,7 @@
 
 ### addEventListener
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -60,9 +61,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -80,9 +81,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -100,9 +101,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -120,9 +121,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -140,9 +141,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -160,9 +161,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -180,9 +181,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -200,9 +201,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -220,9 +221,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -240,9 +241,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -260,9 +261,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -280,9 +281,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -300,9 +301,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -320,9 +321,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -340,9 +341,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -360,9 +361,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -380,9 +381,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -400,9 +401,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -420,9 +421,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `TDBObject`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`, `TDBObject`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -441,9 +442,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -461,9 +462,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -481,9 +482,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -501,9 +502,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -521,9 +522,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -541,9 +542,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -561,9 +562,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -581,9 +582,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -601,9 +602,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -621,9 +622,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -641,9 +642,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -661,9 +662,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -681,9 +682,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -701,9 +702,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -721,9 +722,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -741,9 +742,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -761,9 +762,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -781,9 +782,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -801,9 +802,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -821,9 +822,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -841,9 +842,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -861,9 +862,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -881,9 +882,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -901,9 +902,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -921,9 +922,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -941,9 +942,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -961,9 +962,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -981,9 +982,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1001,9 +1002,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1021,9 +1022,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1041,9 +1042,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1061,9 +1062,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1081,9 +1082,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1101,9 +1102,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1121,9 +1122,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1141,9 +1142,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1161,9 +1162,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1181,9 +1182,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1201,9 +1202,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1221,9 +1222,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1242,9 +1243,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`, `T`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1263,9 +1264,9 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
-▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
 
 #### Type parameters
 
@@ -1283,7 +1284,41 @@
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`TEventTarget`\>
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
+
+___
+
+### addScrollListener
+
+▸ **addScrollListener**(`listener`): <TElement\>(`element`: `TElement`) => `TElement`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `listener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<{ `event`: ``"scroll"`` ; `value`: { `x`: { `current`: `number` ; `progress`: `number` ; `scrollLength`: `number`  } ; `y`: { `current`: `number` ; `progress`: `number` ; `scrollLength`: `number`  }  }  }\> |
+
+#### Returns
+
+`fn`
+
+▸ <`TElement`\>(`element`): `TElement`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TElement` | extends `HTMLElement`<`TElement`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `element` | `TElement` |
+
+##### Returns
+
+`TElement`
 
 ___
 
