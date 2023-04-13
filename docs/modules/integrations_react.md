@@ -6,6 +6,7 @@
 
 ### Hook Functions
 
+- [useAnimation](integrations_react.md#useanimation)
 - [useAnimations](integrations_react.md#useanimations)
 - [useEnumerate](integrations_react.md#useenumerate)
 - [useFlowable](integrations_react.md#useflowable)
@@ -18,6 +19,109 @@
 - [createComponent](integrations_react.md#createcomponent)
 
 ## Hook Functions
+
+### useAnimation
+
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEvent` | `TEvent` |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `deps` | readonly `unknown`[] |
+| `options` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.mode` | ``"switching"`` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+
+#### Returns
+
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEvent` | `TEvent` |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `deps` | readonly `unknown`[] |
+| `options` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.mode` | ``"blocking"`` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+
+#### Returns
+
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEvent` | `TEvent` |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `deps` | readonly `unknown`[] |
+| `options` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.mode` | ``"queueing"`` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+
+#### Returns
+
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+
+▸ **useAnimation**<`TEvent`, `T`\>(`animationFactory`, `deps`, `options?`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEvent` | `TEvent` |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `deps` | readonly `unknown`[] |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+
+#### Returns
+
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+
+___
 
 ### useAnimations
 

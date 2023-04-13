@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useAnimations } from "@reactive-js/core/integrations/react";
-import { AnimationConfig } from "@reactive-js/core/rx";
+import { useAnimation } from "@reactive-js/core/integrations/react";
 import { EventSourceLike } from "@reactive-js/core/util";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
-import { pipeLazy, returns } from "@reactive-js/core/functions";
+import { pipeLazy } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 import { Property } from "csstype";
 
@@ -42,12 +41,12 @@ const AnimatedBox = ({
   index,
 }: {
   label: string;
-  value?: EventSourceLike<{ event: boolean; value: number }>;
+  value: EventSourceLike<{ event: boolean; value: number }>;
   index: number;
 }) => {
   const frontBoxValue = useMemo(
     pipeLazy(
-      value ?? EventSource.empty<{ event: boolean; value: number }>(),
+      value,
       EventSource.map(({ event: state, value }) => {
         const v = !state
           ? clamp(0, value / (index + 1), 180)
@@ -115,19 +114,17 @@ const AnimatedBox = ({
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const [animatedValues, dispatch, isAnimationRunning] = useAnimations<boolean>(
-    returns({
-      value: (): readonly AnimationConfig[] => [
-        {
-          type: "spring",
-          stiffness: 0.0005,
-          damping: 0.0026,
-          precision: 0.1,
-          from: 0,
-          to: 1080,
-        },
-      ],
-    }),
+  const [animatedValue, dispatch, isAnimationRunning] = useAnimation<boolean>(
+    () => [
+      {
+        type: "spring",
+        stiffness: 0.0005,
+        damping: 0.0026,
+        precision: 0.1,
+        from: 0,
+        to: 1080,
+      },
+    ],
     [],
     { mode: "blocking" },
   );
@@ -150,7 +147,7 @@ export const Wordle = () => {
       }}
     >
       {items.map((x, i) => (
-        <AnimatedBox key={x} label={x} value={animatedValues.value} index={i} />
+        <AnimatedBox key={x} label={x} value={animatedValue} index={i} />
       ))}
     </div>
   );

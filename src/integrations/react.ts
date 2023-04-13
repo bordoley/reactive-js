@@ -39,6 +39,7 @@ import {
   pipe,
   pipeLazy,
   raiseError,
+  returns,
 } from "../functions.js";
 import { ReadonlyObjectMapLike } from "../keyed-containers.js";
 import * as ReadonlyObjectMap from "../keyed-containers/ReadonlyObjectMap.js";
@@ -89,6 +90,7 @@ import {
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 import * as EventPublisher from "../util/EventPublisher.js";
+import * as EventSource from "../util/EventSource.js";
 
 const createSchedulerWithPriority = /*@__PURE__*/ (() => {
   type TProperties = unknown;
@@ -598,3 +600,109 @@ export const useAnimations: UseAnimations["useAnimations"] = (<TEvent, T>(
 
   return [publishers, dispatch, value];
 }) as UseAnimations["useAnimations"];
+
+interface UseAnimation {
+  /**
+   * @category Hook
+   */
+  useAnimation<TEvent, T = number>(
+    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    deps: readonly unknown[],
+    options: {
+      readonly mode: "switching";
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    EventSourceLike<{ event: TEvent; value: T }>,
+    Function1<TEvent, boolean>,
+    never,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useAnimation<TEvent, T = number>(
+    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    deps: readonly unknown[],
+    options: {
+      readonly mode: "blocking";
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    EventSourceLike<{ event: TEvent; value: T }>,
+    Function1<TEvent, boolean>,
+    boolean,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useAnimation<TEvent, T = number>(
+    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    deps: readonly unknown[],
+    options: {
+      readonly mode: "queueing";
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    EventSourceLike<{ event: TEvent; value: T }>,
+    Function1<TEvent, boolean>,
+    never,
+  ];
+
+  /**
+   * @category Hook
+   */
+  useAnimation<TEvent, T = number>(
+    animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): readonly [
+    EventSourceLike<{ event: TEvent; value: T }>,
+    Function1<TEvent, boolean>,
+    never,
+  ];
+}
+
+export const useAnimation: UseAnimation["useAnimation"] = (<TEvent, T>(
+  animationFactory: Function1<TEvent, readonly AnimationConfig<T>[]>,
+  deps: readonly unknown[],
+  options: {
+    readonly mode?: "switching" | "blocking" | "queueing";
+    readonly concurrency?: number;
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+  } = {},
+): readonly [
+  EventSourceLike<{ event: TEvent; value: T }>,
+  Function1<TEvent, boolean>,
+  unknown,
+] => {
+  const [animatedValues, dispatch, isAnimationRunning] = useAnimations<
+    TEvent,
+    T
+  >(
+    returns({
+      value: animationFactory,
+    }),
+    deps,
+    options,
+  );
+
+  return [
+    animatedValues.value ?? EventSource.empty(),
+    dispatch,
+    isAnimationRunning,
+  ];
+}) as UseAnimation["useAnimation"];
