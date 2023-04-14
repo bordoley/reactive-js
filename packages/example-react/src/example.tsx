@@ -13,7 +13,7 @@ import {
   useAnimations,
 } from "@reactive-js/core/integrations/react";
 import {
-  useAnimate,
+  useAnimateEvent,
   useWindowLocation,
   useWindowLocationStream,
   WindowLocationProvider,
@@ -86,7 +86,7 @@ const AnimatedBox = ({
 }: {
   animation?: EventSourceLike<{ event: unknown; value: number }>;
 }) => {
-  const ref = useAnimate<HTMLDivElement>(animation, ({ value }) => ({
+  const ref = useAnimateEvent<HTMLDivElement>(animation, ({ value }) => ({
     margin: `${50 - value * 50}px`,
     padding: `${value * 50}px`,
   }));

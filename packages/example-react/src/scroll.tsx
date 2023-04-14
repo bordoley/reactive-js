@@ -1,26 +1,32 @@
-import React, { useMemo } from "react";
+import React, { useEffect } from "react";
 import ReactDOMClient from "react-dom/client";
 import {
   useAnimate,
   useScroll,
 } from "@reactive-js/core/integrations/react/web";
-import { useEventPublisher } from "@reactive-js/core/integrations/react";
-import { EventSourceLike } from "@reactive-js/core/util";
+import {
+  useAnimation,
+  useEventPublisher,
+} from "@reactive-js/core/integrations/react";
+import {
+  DisposableLike_dispose,
+  EventSourceLike,
+  EventSourceLike_addListener,
+} from "@reactive-js/core/util";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
-import { pipeLazy } from "@reactive-js/core/functions";
+import { bindMethod, invoke, pipe } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/util/EventSource";
+import * as EventListener from "@reactive-js/core/util/EventListener";
+import { EventListenerLike_notify } from "@reactive-js/core/util";
 
 const AnimatedCircle = ({
   animation,
 }: {
   animation: EventSourceLike<number>;
 }) => {
-  const circleRef = useAnimate<HTMLDivElement>(
-    animation,
-    progress => ({
-      clipPath: `circle(${progress * 25 + 5}%)`,
-    }),
-  );
+  const circleRef = useAnimate<HTMLDivElement>(animation, progress => ({
+    clipPath: `circle(${progress * 25 + 5}%)`,
+  }));
 
   return (
     <div
@@ -44,16 +50,55 @@ const ScrollApp = () => {
     event: "scroll";
     value: ScrollValue;
   }>();
-
   const containerRef = useScroll<HTMLDivElement>(scrollAnimation);
 
-  const animation = useMemo(
-    pipeLazy(
+  const [spring, dispatchSpring] = useAnimation<number, void>(
+    () => [
+      {
+        type: "spring",
+        precision: 0.1,
+        from: 1,
+        to: 1.2,
+      },
+      {
+        type: "spring",
+        precision: 0.1,
+        from: 1.2,
+        to: 1,
+      },
+    ],
+    [],
+    { mode: "blocking" },
+  );
+
+  const publishedAnimation = useEventPublisher<number>();
+
+  useEffect(() => {
+    const eventListener = EventListener.create<number>(x => {
+      publishedAnimation[EventListenerLike_notify](x);
+
+      if (x === 1) {
+        // FIXME: To make this really right, we should measure the velocity
+        // and dispatch that so we can adjust the size of the overshoot
+        // in the animation.
+        dispatchSpring();
+      }
+    });
+
+    pipe(
       scrollAnimation,
       EventSource.map(x => x.value.y.progress),
-    ),
-    [scrollAnimation],
-  );
+      invoke(EventSourceLike_addListener, eventListener),
+    );
+
+    pipe(
+      spring,
+      EventSource.map(x => x.value),
+      invoke(EventSourceLike_addListener, publishedAnimation),
+    );
+
+    return bindMethod(eventListener, DisposableLike_dispose);
+  }, [scrollAnimation, publishedAnimation, spring]);
 
   return (
     <div
@@ -76,7 +121,7 @@ const ScrollApp = () => {
           zIndex: "0",
         }}
       >
-        <AnimatedCircle animation={animation} />
+        <AnimatedCircle animation={publishedAnimation} />
       </div>
 
       <div
