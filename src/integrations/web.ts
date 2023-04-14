@@ -1501,22 +1501,22 @@ export type CSSStyleKey = keyof Omit<
 const calcProgress = (min: number, max: number, value: number) =>
   max - min === 0 ? 1 : (value - min) / (max - min);
 
+export interface ScrollState {
+  current: number;
+  progress: number;
+  scrollLength: number;
+}
+
+export interface ScrollValue {
+  x: ScrollState;
+  y: ScrollState;
+}
+
 export const addScrollListener =
   (
     listener: EventListenerLike<{
       event: "scroll";
-      value: {
-        x: {
-          current: number;
-          progress: number;
-          scrollLength: number;
-        };
-        y: {
-          current: number;
-          progress: number;
-          scrollLength: number;
-        };
-      };
+      value: ScrollValue;
     }>,
   ) =>
   <TElement extends HTMLElement>(element: TElement): TElement => {
@@ -1530,7 +1530,7 @@ export const addScrollListener =
         const x = {
           current: xCurrent,
           scrollLength: xScrollLength,
-          progress: calcProgress(0, xCurrent, xCurrent),
+          progress: calcProgress(0, xScrollLength, xCurrent),
         };
 
         const yCurrent = element[`scrollTop`];
@@ -1538,7 +1538,7 @@ export const addScrollListener =
         const y = {
           current: yCurrent,
           scrollLength: yScrollLength,
-          progress: calcProgress(0, yCurrent, yCurrent),
+          progress: calcProgress(0, yScrollLength, yCurrent),
         };
 
         listener[EventListenerLike_notify]({

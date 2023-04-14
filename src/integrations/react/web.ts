@@ -22,6 +22,7 @@ import { ReadonlyObjectMapLike } from "../../keyed-containers.js";
 import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import {
   DisposableLike_dispose,
+  EventListenerLike,
   EventSourceLike,
   EventSourceLike_addListener,
   QueueableLike_enqueue,
@@ -30,6 +31,7 @@ import * as EventListener from "../../util/EventListener.js";
 import { useObservable, useStream } from "../react.js";
 import {
   CSSStyleKey,
+  ScrollValue,
   WindowLocationStreamLike,
   WindowLocationStreamLike_canGoBack,
   WindowLocationStreamLike_goBack,
@@ -141,7 +143,7 @@ export const useAnimate = <
   T = number,
   TEvent = unknown,
 >(
-  value: Optional<EventSourceLike<{ event: TEvent; value: T }>>,
+  animation: Optional<EventSourceLike<{ event: TEvent; value: T }>>,
   selector: (ev: {
     event: TEvent;
     value: T;
@@ -152,7 +154,7 @@ export const useAnimate = <
   const selectorMemoized = useCallback(selector, deps);
 
   useEffect(() => {
-    if (isNone(value)) {
+    if (isNone(animation)) {
       return;
     }
 
@@ -168,47 +170,29 @@ export const useAnimate = <
       }
     });
 
-    value[EventSourceLike_addListener](listener);
+    animation[EventSourceLike_addListener](listener);
 
     return bindMethod(listener, DisposableLike_dispose);
-  }, [value, selectorMemoized, ref]);
+  }, [animation, selectorMemoized, ref]);
 
   return ref;
 };
 
-export const useScroll = (
-  onScrollEvent: (ev: {
+export const useScroll = <TElement extends HTMLElement>(
+  eventListener: EventListenerLike<{
     event: "scroll";
-    value: {
-      x: {
-        current: number;
-        progress: number;
-        scrollLength: number;
-      };
-      y: {
-        current: number;
-        progress: number;
-        scrollLength: number;
-      };
-    };
-  }) => void,
-  deps: readonly unknown[] = [],
-): React.Ref<HTMLElement> => {
-  const [element, setElement] = useState<Optional<HTMLElement>>();
-
-  const onScrollEventMemoized = useCallback(onScrollEvent, deps);
+    value: ScrollValue;
+  }>,
+): React.Ref<TElement> => {
+  const [element, setElement] = useState<Optional<TElement>>();
 
   useEffect(() => {
     if (isNone(element)) {
       return;
     }
 
-    const listener = EventListener.create(onScrollEventMemoized);
+    pipe(element, addScrollListener(eventListener));
+  }, [element, eventListener]);
 
-    pipe(element, addScrollListener(listener));
-
-    return bindMethod(listener, DisposableLike_dispose);
-  }, [element, onScrollEventMemoized]);
-
-  return setElement as React.Ref<HTMLElement>;
+  return setElement as React.Ref<TElement>;
 };

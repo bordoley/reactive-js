@@ -20,7 +20,7 @@ const EventListener_create: <T>(
   return createInstanceFactory(
     mix(
       include(Disposable_mixin),
-      function ObserverMixin(
+      function EventListener(
         instance: Mutable<TProperties>,
         notify: Method1<EventListenerLike<T>, T, void>,
       ): EventListenerLike<T> {

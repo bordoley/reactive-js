@@ -17,6 +17,7 @@
 ### Other Functions
 
 - [createComponent](integrations_react.md#createcomponent)
+- [useEventPublisher](integrations_react.md#useeventpublisher)
 
 ## Hook Functions
 
@@ -401,3 +402,26 @@ ___
 #### Returns
 
 `ComponentType`<`TProps`\>
+
+___
+
+### useEventPublisher
+
+▸ **useEventPublisher**<`T`\>(`«destructured»?`): [`EventPublisherLike`](../interfaces/util.EventPublisherLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `replay?` | `number` |
+
+#### Returns
+
+[`EventPublisherLike`](../interfaces/util.EventPublisherLike.md)<`T`\>

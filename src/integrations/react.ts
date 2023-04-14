@@ -741,3 +741,20 @@ export const useAnimation: UseAnimation["useAnimation"] = (<
     isAnimationRunning,
   ];
 }) as UseAnimation["useAnimation"];
+
+export const useEventPublisher = <T>({
+  replay,
+}: { replay?: number } = {}): EventPublisherLike<T> => {
+  const [publisher, setPublisher] = useState<EventPublisherLike<T>>(
+    EventPublisher.disposed(),
+  );
+
+  useEffect(() => {
+    const publisher = EventPublisher.create<T>({ replay });
+    setPublisher(publisher);
+
+    return bindMethod(publisher, DisposableLike_dispose);
+  }, [replay, setPublisher]);
+
+  return publisher;
+};

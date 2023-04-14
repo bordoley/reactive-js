@@ -161,18 +161,16 @@ interface ObserveEvent {
 export declare const observeEvent: ObserveEvent["observeEvent"];
 export declare const windowLocation: StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike>;
 export type CSSStyleKey = keyof Omit<CSSStyleDeclaration, "item" | "length" | "parentRule" | "getPropertyPriority" | "getPropertyValue" | "removeProperty" | "setProperty" | number | typeof Symbol.iterator>;
+export interface ScrollState {
+    current: number;
+    progress: number;
+    scrollLength: number;
+}
+export interface ScrollValue {
+    x: ScrollState;
+    y: ScrollState;
+}
 export declare const addScrollListener: (listener: EventListenerLike<{
     event: "scroll";
-    value: {
-        x: {
-            current: number;
-            progress: number;
-            scrollLength: number;
-        };
-        y: {
-            current: number;
-            progress: number;
-            scrollLength: number;
-        };
-    };
+    value: ScrollValue;
 }>) => <TElement extends HTMLElement>(element: TElement) => TElement;

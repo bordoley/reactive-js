@@ -217,14 +217,14 @@ export const addScrollListener = (listener) => (element) => {
         const x = {
             current: xCurrent,
             scrollLength: xScrollLength,
-            progress: calcProgress(0, xCurrent, xCurrent),
+            progress: calcProgress(0, xScrollLength, xCurrent),
         };
         const yCurrent = element[`scrollTop`];
         const yScrollLength = element["scrollHeight"] - element["clientHeight"];
         const y = {
             current: yCurrent,
             scrollLength: yScrollLength,
-            progress: calcProgress(0, yCurrent, yCurrent),
+            progress: calcProgress(0, yScrollLength, yCurrent),
         };
         listener[EventListenerLike_notify]({
             event: "scroll",
