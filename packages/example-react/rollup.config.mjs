@@ -36,4 +36,21 @@ export default [
       }),
     ],
   },
+
+  {
+    external: ["react", "react-dom", "react-dom/client", "scheduler"],
+    input: "src/scroll.tsx",
+    output: {
+      dir: "./build",
+      format: "iife",
+      name: "ScrollExample",
+      globals: {
+        react: "React",
+        "react-dom/client": "ReactDOM",
+        scheduler:
+          "React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.Scheduler",
+      },
+    },
+    plugins: [typescript(typescriptConfig), resolve()],
+  },
 ];

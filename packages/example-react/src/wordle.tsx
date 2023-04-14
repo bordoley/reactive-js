@@ -35,21 +35,21 @@ const clamp = (min: number, v: number, max: number): number =>
   v > max ? max : v < min ? min : v;
 
 const calcXRotation = (state: boolean, value: number, i: number) => {
-  const clamped =  clamp(0, value / (i + 1), 180);
+  const clamped = clamp(0, value / (i + 1), 180);
   return state ? clamped : 180 - clamped;
-}
+};
 
 const AnimatedBox = ({
   label,
-  value,
+  animation,
   index,
 }: {
   label: string;
-  value: EventSourceLike<{ event: boolean; value: number }>;
+  animation: EventSourceLike<{ event: boolean; value: number }>;
   index: number;
 }) => {
   const frontBox = useAnimate<HTMLDivElement, number, boolean>(
-    value,
+    animation,
     ({ event, value }) => ({
       transform: `perspective(600px) rotateX(${
         180 - calcXRotation(event, value, index)
@@ -59,7 +59,7 @@ const AnimatedBox = ({
   );
 
   const backBox = useAnimate<HTMLDivElement, number, boolean>(
-    value,
+    animation,
     ({ event, value }) => ({
       transform: `perspective(600px) rotateX(${calcXRotation(
         event,
@@ -101,7 +101,7 @@ const AnimatedBox = ({
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const [animatedValue, dispatch, isAnimationRunning] = useAnimation<
+  const [animation, dispatch, isAnimationRunning] = useAnimation<
     number,
     boolean
   >(
@@ -135,7 +135,7 @@ export const Wordle = () => {
       }}
     >
       {items.map((x, i) => (
-        <AnimatedBox key={x} label={x} value={animatedValue} index={i} />
+        <AnimatedBox key={x} label={x} animation={animation} index={i} />
       ))}
     </div>
   );

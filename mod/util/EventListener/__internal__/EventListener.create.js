@@ -5,7 +5,7 @@ import { none } from "../../../functions.js";
 import { EventListenerLike_notify } from "../../../util.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 const EventListener_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable_mixin), function ObserverMixin(instance, notify) {
+    return createInstanceFactory(mix(include(Disposable_mixin), function EventListener(instance, notify) {
         init(Disposable_mixin, instance);
         instance[EventListenerLike_notify] = notify;
         return instance;

@@ -10,6 +10,8 @@
 
 ### Other Interfaces
 
+- [ScrollState](../interfaces/integrations_web.ScrollState.md)
+- [ScrollValue](../interfaces/integrations_web.ScrollValue.md)
 - [WindowLocationURI](../interfaces/integrations_web.WindowLocationURI.md)
 
 ### Type Aliases
@@ -1296,7 +1298,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `listener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<{ `event`: ``"scroll"`` ; `value`: { `x`: { `current`: `number` ; `progress`: `number` ; `scrollLength`: `number`  } ; `y`: { `current`: `number` ; `progress`: `number` ; `scrollLength`: `number`  }  }  }\> |
+| `listener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<{ `event`: ``"scroll"`` ; `value`: [`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)  }\> |
 
 #### Returns
 

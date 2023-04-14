@@ -82,11 +82,11 @@ const CacheComponent = () => {
 };
 
 const AnimatedBox = ({
-  value,
+  animation,
 }: {
-  value?: EventSourceLike<{ event: unknown; value: number }>;
+  animation?: EventSourceLike<{ event: unknown; value: number }>;
 }) => {
-  const ref = useAnimate<HTMLDivElement>(value, ({ value }) => ({
+  const ref = useAnimate<HTMLDivElement>(animation, ({ value }) => ({
     margin: `${50 - value * 50}px`,
     padding: `${value * 50}px`,
   }));
@@ -148,7 +148,7 @@ const Root = () => {
   );
   const counter = useFlowable(counterFlowable);
 
-  const [animatedValues, dispatch, isAnimationRunning] = useAnimations(
+  const [animations, dispatch, isAnimationRunning] = useAnimations(
     () => ({
       abc: () => ({
         type: "loop",
@@ -202,14 +202,14 @@ const Root = () => {
       </div>
       <div>
         {pipe(
-          animatedValues,
+          animations,
           ReadonlyObjectMap.entries<
             EventSourceLike<{ event: unknown; value: number }>,
             string
           >(),
           Enumerator.toReadonlyArray(),
-          ReadonlyArray.map(([key, value]) => (
-            <AnimatedBox key={key} value={value} />
+          ReadonlyArray.map(([key, animation]) => (
+            <AnimatedBox key={key} animation={animation} />
           )),
         )}
       </div>
