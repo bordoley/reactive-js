@@ -58,7 +58,7 @@ const createThrottleObserver: <T>(
   delegate: ObserverLike<T>,
   durationFunction: Function1<T, ObservableLike>,
   mode: "first" | "last" | "interval",
-) => ObserverLike<T> = (<T>() => {
+) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [__ThrottleObserver_value]: Optional<T>;
     [__ThrottleObserver_hasValue]: boolean;

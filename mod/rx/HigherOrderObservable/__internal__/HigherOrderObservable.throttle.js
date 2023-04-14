@@ -17,7 +17,7 @@ import Observable_subscribeWithConfig from "../../Observable/__internal__/Observ
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
-const createThrottleObserver = (() => {
+const createThrottleObserver = /*@__PURE__*/ (() => {
     const setupDurationSubscription = (observer, next) => {
         observer[__ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[__ThrottleObserver_durationFunction](next), Observable_forEach(observer[__ThrottleObserver_onNotify]), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer));
     };
