@@ -51,6 +51,18 @@ export default [
           "React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.Scheduler",
       },
     },
-    plugins: [typescript(typescriptConfig), resolve()],
+    plugins: [
+      typescript(typescriptConfig),
+      resolve(),
+      replace({
+        preventAssignment: true,
+        "process.env.NODE_ENV": JSON.stringify("production"),
+      }),
+      terser({
+        compress: {
+          unsafe: true,
+        },
+      }),
+    ],
   },
 ];

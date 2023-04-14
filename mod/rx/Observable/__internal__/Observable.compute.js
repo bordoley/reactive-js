@@ -63,7 +63,7 @@ const validateComputeEffect = ((ctx, type) => {
     }
 });
 const arrayStrictEquality = arrayEquality();
-const awaiting = error();
+const awaiting = /*@__PURE__*/ error();
 class ComputeContext {
     [__ComputeContext_index] = 0;
     [__ComputeContext_effects] = [];
