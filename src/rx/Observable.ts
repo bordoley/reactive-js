@@ -171,6 +171,7 @@ import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwI
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
 import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
+import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_toRunnable from "./Observable/__internal__/Observable.toRunnable.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
@@ -501,6 +502,8 @@ export const timeout: Timeout<ObservableLike>["timeout"] = Observable_timeout;
 
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   Observable_toEnumerable;
+
+export const toEventSource = Observable_toEventSource;
 
 export const toObservable: ToObservable<ObservableLike>["toObservable"] =
   identity;

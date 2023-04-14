@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAnimation } from "@reactive-js/core/integrations/react";
 import { EventSourceLike } from "@reactive-js/core/util";
-import { useAnimate } from "@reactive-js/core/integrations/react/web";
+import { useAnimateEvent } from "@reactive-js/core/integrations/react/web";
 import { Property } from "csstype";
 
 const items = ["W", "O", "R", "D", "L", "E"];
@@ -48,7 +48,7 @@ const AnimatedBox = ({
   animation: EventSourceLike<{ event: boolean; value: number }>;
   index: number;
 }) => {
-  const frontBox = useAnimate<HTMLDivElement, number, boolean>(
+  const frontBox = useAnimateEvent<HTMLDivElement, number, boolean>(
     animation,
     ({ event, value }) => ({
       transform: `perspective(600px) rotateX(${
@@ -58,7 +58,7 @@ const AnimatedBox = ({
     [index],
   );
 
-  const backBox = useAnimate<HTMLDivElement, number, boolean>(
+  const backBox = useAnimateEvent<HTMLDivElement, number, boolean>(
     animation,
     ({ event, value }) => ({
       transform: `perspective(600px) rotateX(${calcXRotation(

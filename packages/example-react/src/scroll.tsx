@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
 import {
   useAnimate,
@@ -7,19 +7,18 @@ import {
 import { useEventPublisher } from "@reactive-js/core/integrations/react";
 import { EventSourceLike } from "@reactive-js/core/util";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
+import { pipeLazy } from "@reactive-js/core/functions";
+import * as EventSource from "@reactive-js/core/util/EventSource";
 
 const AnimatedCircle = ({
   animation,
 }: {
-  animation: EventSourceLike<{
-    event: "scroll";
-    value: ScrollValue;
-  }>;
+  animation: EventSourceLike<number>;
 }) => {
-  const circleRef = useAnimate<HTMLDivElement, ScrollValue>(
+  const circleRef = useAnimate<HTMLDivElement>(
     animation,
-    ({ value: { y } }) => ({
-      clipPath: `circle(${y.progress * 25 + 5}%)`,
+    progress => ({
+      clipPath: `circle(${progress * 25 + 5}%)`,
     }),
   );
 
@@ -48,6 +47,14 @@ const ScrollApp = () => {
 
   const containerRef = useScroll<HTMLDivElement>(scrollAnimation);
 
+  const animation = useMemo(
+    pipeLazy(
+      scrollAnimation,
+      EventSource.map(x => x.value.y.progress),
+    ),
+    [scrollAnimation],
+  );
+
   return (
     <div
       ref={containerRef}
@@ -69,7 +76,7 @@ const ScrollApp = () => {
           zIndex: "0",
         }}
       >
-        <AnimatedCircle animation={scrollAnimation} />
+        <AnimatedCircle animation={animation} />
       </div>
 
       <div

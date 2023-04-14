@@ -138,16 +138,9 @@ export const WindowLocationProvider: React.FunctionComponent<{
 /**
  * @category Hook
  */
-export const useAnimate = <
-  TElement extends HTMLElement,
-  T = number,
-  TEvent = unknown,
->(
-  animation: Optional<EventSourceLike<{ event: TEvent; value: T }>>,
-  selector: (ev: {
-    event: TEvent;
-    value: T;
-  }) => ReadonlyObjectMapLike<string, CSSStyleKey>,
+export const useAnimate = <TElement extends HTMLElement, T = number>(
+  animation: Optional<EventSourceLike<T>>,
+  selector: (ev: T) => ReadonlyObjectMapLike<string, CSSStyleKey>,
   deps: readonly unknown[] = [],
 ): React.Ref<TElement> => {
   const ref = useRef<TElement>(null);
@@ -158,7 +151,7 @@ export const useAnimate = <
       return;
     }
 
-    const listener = EventListener.create((v: { event: TEvent; value: T }) => {
+    const listener = EventListener.create((v: T) => {
       const element = ref.current;
       if (element != null) {
         pipe(
@@ -178,6 +171,31 @@ export const useAnimate = <
   return ref;
 };
 
+/**
+ * @category Hook
+ */
+export const useAnimateEvent = <
+  TElement extends HTMLElement,
+  T = number,
+  TEvent = unknown,
+>(
+  animation: Optional<EventSourceLike<{ event: TEvent; value: T }>>,
+  selector: (ev: {
+    event: TEvent;
+    value: T;
+  }) => ReadonlyObjectMapLike<string, CSSStyleKey>,
+  deps: readonly unknown[] = [],
+): React.Ref<TElement> => {
+  return useAnimate<TElement, { event: TEvent; value: T }>(
+    animation,
+    selector,
+    deps,
+  );
+};
+
+/**
+ * @category Hook
+ */
 export const useScroll = <TElement extends HTMLElement>(
   eventListener: EventListenerLike<{
     event: "scroll";
