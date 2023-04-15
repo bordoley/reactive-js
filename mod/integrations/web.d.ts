@@ -162,17 +162,18 @@ export declare const observeEvent: ObserveEvent["observeEvent"];
 export declare const windowLocation: StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike>;
 export type CSSStyleKey = keyof Omit<CSSStyleDeclaration, "item" | "length" | "parentRule" | "getPropertyPriority" | "getPropertyValue" | "removeProperty" | "setProperty" | number | typeof Symbol.iterator>;
 export interface ScrollState {
-    current: number;
-    progress: number;
-    scrollLength: number;
-    velocity: number;
-    acceleration: number;
+    readonly current: number;
+    readonly progress: number;
+    readonly scrollLength: number;
+    readonly velocity: number;
+    readonly acceleration: number;
 }
 export interface ScrollValue {
-    x: ScrollState;
-    y: ScrollState;
+    readonly x: ScrollState;
+    readonly y: ScrollState;
 }
 export declare const addScrollListener: (listener: EventListenerLike<{
     event: "scroll";
     value: ScrollValue;
 }>) => <TElement extends HTMLElement>(element: TElement) => TElement;
+export declare const addResizeListener: <T extends Element>(listener: EventListenerLike<ResizeObserverEntry>, options?: ResizeObserverOptions) => Function1<T, T>;

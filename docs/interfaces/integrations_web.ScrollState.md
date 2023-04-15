@@ -18,28 +18,28 @@
 
 ### acceleration
 
-• **acceleration**: `number`
+• `Readonly` **acceleration**: `number`
 
 ___
 
 ### current
 
-• **current**: `number`
+• `Readonly` **current**: `number`
 
 ___
 
 ### progress
 
-• **progress**: `number`
+• `Readonly` **progress**: `number`
 
 ___
 
 ### scrollLength
 
-• **scrollLength**: `number`
+• `Readonly` **scrollLength**: `number`
 
 ___
 
 ### velocity
 
-• **velocity**: `number`
+• `Readonly` **velocity**: `number`

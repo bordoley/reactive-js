@@ -27,6 +27,7 @@ import {
   error,
   invoke,
   isFunction,
+  isNone,
   isSome,
   newInstance,
   none,
@@ -61,6 +62,8 @@ import {
   DisposableLike_dispose,
   EventListenerLike,
   EventListenerLike_notify,
+  EventPublisherLike,
+  EventSourceLike_addListener,
   IndexedBufferCollectionLike,
   KeyedCollectionLike_get,
   QueueableLike,
@@ -70,6 +73,7 @@ import {
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
 import * as EventListener from "../util/EventListener.js";
+import * as EventPublisher from "../util/EventPublisher.js";
 
 export {
   WindowLocationStreamLike_goBack,
@@ -1505,16 +1509,16 @@ const calcProgress = (min: number, max: number, value: number) =>
   max - min === 0 ? 1 : (value - min) / (max - min);
 
 export interface ScrollState {
-  current: number;
-  progress: number;
-  scrollLength: number;
-  velocity: number;
-  acceleration: number;
+  readonly current: number;
+  readonly progress: number;
+  readonly scrollLength: number;
+  readonly velocity: number;
+  readonly acceleration: number;
 }
 
 export interface ScrollValue {
-  x: ScrollState;
-  y: ScrollState;
+  readonly x: ScrollState;
+  readonly y: ScrollState;
 }
 
 export const addScrollListener =
@@ -1596,3 +1600,59 @@ export const addScrollListener =
 
     return element;
   };
+
+export const addResizeListener: <T extends Element>(
+  listener: EventListenerLike<ResizeObserverEntry>,
+  options?: ResizeObserverOptions,
+) => Function1<T, T> = /*@__PURE__*/ (() => {
+  const publishers =
+    newInstance<Map<Element, EventPublisherLike<ResizeObserverEntry>>>(Map);
+  let resizeObserver: Optional<ResizeObserver> = none;
+
+  return (listener, options) => element => {
+    if (isNone(resizeObserver)) {
+      resizeObserver = newInstance(
+        ResizeObserver,
+        (entries: ResizeObserverEntry[]) => {
+          for (const entry of entries) {
+            const publisher = publishers.get(entry.target);
+
+            if (isNone(publisher)) {
+              continue;
+            }
+
+            publisher[EventListenerLike_notify](entry);
+          }
+        },
+      );
+    }
+
+    const publisher =
+      publishers.get(element) ??
+      (() => {
+        const publisher = pipe(
+          EventPublisher.createRefCounted<ResizeObserverEntry>(),
+          Disposable.onDisposed(() => {
+            resizeObserver?.unobserve(element);
+            publishers.delete(element);
+
+            if (publishers.size > 0) {
+              return;
+            }
+
+            resizeObserver?.disconnect();
+            resizeObserver = none;
+          }),
+        );
+
+        publishers.set(element, publisher);
+        resizeObserver.observe(element, options);
+
+        return publisher;
+      })();
+
+    publisher[EventSourceLike_addListener](listener);
+
+    return element;
+  };
+})();

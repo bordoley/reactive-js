@@ -25,6 +25,7 @@
 ### Functions
 
 - [addEventListener](integrations_web.md#addeventlistener)
+- [addResizeListener](integrations_web.md#addresizelistener)
 - [addScrollListener](integrations_web.md#addscrolllistener)
 - [createEventSource](integrations_web.md#createeventsource)
 - [observeEvent](integrations_web.md#observeevent)
@@ -1287,6 +1288,29 @@
 #### Returns
 
 [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
+
+___
+
+### addResizeListener
+
+▸ **addResizeListener**<`T`\>(`listener`, `options?`): [`Function1`](functions.md#function1)<`T`, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Element`<`T`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `listener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ResizeObserverEntry`\> |
+| `options?` | `ResizeObserverOptions` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `T`\>
 
 ___
 
