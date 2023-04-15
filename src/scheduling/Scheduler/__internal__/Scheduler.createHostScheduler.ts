@@ -1,3 +1,4 @@
+import * as CurrentTime from "../../../__internal__/CurrentTime.js";
 import {
   createInstanceFactory,
   include,
@@ -5,13 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  Optional,
-  isFunction,
-  none,
-  pipe,
-  unsafeCast,
-} from "../../../functions.js";
+import { Optional, none, pipe, unsafeCast } from "../../../functions.js";
 import { SchedulerLike, SchedulerLike_now } from "../../../scheduling.js";
 import {
   DisposableLike,
@@ -38,13 +33,7 @@ declare const navigator: {
   }>;
 };
 
-const supportsPerformanceNow = /*@__PURE__*/ (() =>
-  typeof performance === "object" && isFunction(performance.now))();
-
 const supportsSetImmediate = typeof setImmediate === "function";
-
-const supportsProcessHRTime = /*@__PURE__*/ (() =>
-  typeof process === "object" && isFunction(process.hrtime))();
 
 const supportsIsInputPending = /*@__PURE__*/ (() =>
   typeof navigator === "object" &&
@@ -132,14 +121,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
       props({}),
       {
         get [SchedulerLike_now](): number {
-          if (supportsPerformanceNow) {
-            return performance.now();
-          } else if (supportsProcessHRTime) {
-            const hr = process.hrtime();
-            return hr[0] * 1000 + hr[1] / 1e6;
-          } else {
-            return Date.now();
-          }
+          return CurrentTime.now();
         },
 
         get [PrioritySchedulerImplementationLike_shouldYield](): boolean {

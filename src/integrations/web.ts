@@ -1,3 +1,4 @@
+import * as CurrentTime from "../__internal__/CurrentTime.js";
 import * as Object from "../__internal__/Object.js";
 import { MAX_VALUE, MIN_VALUE } from "../__internal__/constants.js";
 import { clamp } from "../__internal__/math.js";
@@ -1540,8 +1541,7 @@ export const addScrollListener =
           yVelocityPrev = 0;
         }
 
-        // FIXME: Should define this in a common function
-        const now = performance.now();
+        const now = CurrentTime.now();
         const dt = clamp(0, now - prevTime, MAX_VALUE);
 
         // FIXME: Nearly every production implementation seems to reuse an

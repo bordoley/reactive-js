@@ -1,3 +1,4 @@
+import * as CurrentTime from "../../../__internal__/CurrentTime.js";
 import {
   createInstanceFactory,
   include,
@@ -27,7 +28,6 @@ import {
 
 const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
   type TProperties = {
-    [SchedulerLike_now]: number;
     [__AnimationFrameScheduler_delayScheduler]: SchedulerLike;
   };
 
@@ -51,10 +51,13 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
         return instance;
       },
       props<TProperties>({
-        [SchedulerLike_now]: 0,
         [__AnimationFrameScheduler_delayScheduler]: none,
       }),
       {
+        get [SchedulerLike_now](): number {
+          return CurrentTime.now();
+        },
+
         [PrioritySchedulerImplementationLike_shouldYield]: true,
 
         [ContinuationSchedulerLike_schedule](
@@ -86,8 +89,7 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
               Disposable_addTo(continuation),
             );
           } else {
-            requestAnimationFrame(time => {
-              this[SchedulerLike_now] = time;
+            requestAnimationFrame(_ => {
               this[PrioritySchedulerImplementationLike_runContinuation](
                 continuation,
               );

@@ -1,5 +1,6 @@
 /// <reference types="./Scheduler.createAnimationFrameScheduler.d.ts" />
 
+import * as CurrentTime from "../../../__internal__/CurrentTime.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __AnimationFrameScheduler_delayScheduler } from "../../../__internal__/symbols.js";
 import { invoke, none, pipe, pipeLazy } from "../../../functions.js";
@@ -14,9 +15,11 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
         instance[__AnimationFrameScheduler_delayScheduler] = delayScheduler;
         return instance;
     }, props({
-        [SchedulerLike_now]: 0,
         [__AnimationFrameScheduler_delayScheduler]: none,
     }), {
+        get [SchedulerLike_now]() {
+            return CurrentTime.now();
+        },
         [PrioritySchedulerImplementationLike_shouldYield]: true,
         [ContinuationSchedulerLike_schedule](continuation, delay) {
             pipe(this, Disposable_addIgnoringChildErrors(continuation));
@@ -30,8 +33,7 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
                 pipe(this[__AnimationFrameScheduler_delayScheduler], invoke(SchedulerLike_schedule, pipeLazy(this, invoke(ContinuationSchedulerLike_schedule, continuation, 0)), { delay }), Disposable_addTo(continuation));
             }
             else {
-                requestAnimationFrame(time => {
-                    this[SchedulerLike_now] = time;
+                requestAnimationFrame(_ => {
                     this[PrioritySchedulerImplementationLike_runContinuation](continuation);
                 });
             }

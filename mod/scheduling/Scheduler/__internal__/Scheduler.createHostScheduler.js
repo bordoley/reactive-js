@@ -1,7 +1,8 @@
 /// <reference types="./Scheduler.createHostScheduler.d.ts" />
 
+import * as CurrentTime from "../../../__internal__/CurrentTime.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { isFunction, none, pipe, unsafeCast, } from "../../../functions.js";
+import { none, pipe, unsafeCast } from "../../../functions.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
@@ -9,9 +10,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
-const supportsPerformanceNow = /*@__PURE__*/ (() => typeof performance === "object" && isFunction(performance.now))();
 const supportsSetImmediate = typeof setImmediate === "function";
-const supportsProcessHRTime = /*@__PURE__*/ (() => typeof process === "object" && isFunction(process.hrtime))();
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== none &&
     navigator.scheduling.isInputPending !== none)();
@@ -42,16 +41,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
     return instance;
 }, props({}), {
     get [SchedulerLike_now]() {
-        if (supportsPerformanceNow) {
-            return performance.now();
-        }
-        else if (supportsProcessHRTime) {
-            const hr = process.hrtime();
-            return hr[0] * 1000 + hr[1] / 1e6;
-        }
-        else {
-            return Date.now();
-        }
+        return CurrentTime.now();
     },
     get [PrioritySchedulerImplementationLike_shouldYield]() {
         unsafeCast(this);
