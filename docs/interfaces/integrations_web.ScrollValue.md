@@ -15,10 +15,10 @@
 
 ### x
 
-• **x**: [`ScrollState`](integrations_web.ScrollState.md)
+• `Readonly` **x**: [`ScrollState`](integrations_web.ScrollState.md)
 
 ___
 
 ### y
 
-• **y**: [`ScrollState`](integrations_web.ScrollState.md)
+• `Readonly` **y**: [`ScrollState`](integrations_web.ScrollState.md)

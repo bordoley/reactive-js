@@ -7,7 +7,7 @@ import { clamp } from "../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
 import { __WindowLocationStreamLike_canGoBack as WindowLocationStreamLike_canGoBack, __WindowLocationStreamLike_goBack as WindowLocationStreamLike_goBack, __WindowLocationStreamLike_replace as WindowLocationStreamLike_replace, } from "../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../__internal__/util.js";
-import { bindMethod, compose, error, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
+import { bindMethod, compose, error, invoke, isFunction, isNone, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
 import { ObservableLike_observe, ReplayableLike_buffer, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
@@ -15,10 +15,11 @@ import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLi
 import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, EventSourceLike_addListener, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
 import * as EventListener from "../util/EventListener.js";
+import * as EventPublisher from "../util/EventPublisher.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
 const errorEvent = "error";
 const reservedEvents = [errorEvent, "open"];
@@ -265,3 +266,37 @@ export const addScrollListener = (listener) => (element) => {
     pipe(window, addEventListener("resize", eventListener));
     return element;
 };
+export const addResizeListener = /*@__PURE__*/ (() => {
+    const publishers = newInstance(Map);
+    let resizeObserver = none;
+    return (listener, options) => element => {
+        if (isNone(resizeObserver)) {
+            resizeObserver = newInstance(ResizeObserver, (entries) => {
+                for (const entry of entries) {
+                    const publisher = publishers.get(entry.target);
+                    if (isNone(publisher)) {
+                        continue;
+                    }
+                    publisher[EventListenerLike_notify](entry);
+                }
+            });
+        }
+        const publisher = publishers.get(element) ??
+            (() => {
+                const publisher = pipe(EventPublisher.createRefCounted(), Disposable.onDisposed(() => {
+                    resizeObserver?.unobserve(element);
+                    publishers.delete(element);
+                    if (publishers.size > 0) {
+                        return;
+                    }
+                    resizeObserver?.disconnect();
+                    resizeObserver = none;
+                }));
+                publishers.set(element, publisher);
+                resizeObserver.observe(element, options);
+                return publisher;
+            })();
+        publisher[EventSourceLike_addListener](listener);
+        return element;
+    };
+})();
