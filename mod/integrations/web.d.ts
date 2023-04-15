@@ -165,6 +165,8 @@ export interface ScrollState {
     current: number;
     progress: number;
     scrollLength: number;
+    velocity: number;
+    acceleration: number;
 }
 export interface ScrollValue {
     x: ScrollState;

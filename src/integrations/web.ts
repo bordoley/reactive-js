@@ -1,4 +1,6 @@
 import * as Object from "../__internal__/Object.js";
+import { MAX_VALUE, MIN_VALUE } from "../__internal__/constants.js";
+import { clamp } from "../__internal__/math.js";
 import {
   createInstanceFactory,
   include,
@@ -1505,6 +1507,8 @@ export interface ScrollState {
   current: number;
   progress: number;
   scrollLength: number;
+  velocity: number;
+  acceleration: number;
 }
 
 export interface ScrollValue {
@@ -1520,26 +1524,53 @@ export const addScrollListener =
     }>,
   ) =>
   <TElement extends HTMLElement>(element: TElement): TElement => {
+    let prevTime = MIN_VALUE;
+    let xPrev = 0;
+    let yPrev = 0;
+    let xVelocityPrev = 0;
+    let yVelocityPrev = 0;
+
     const eventListener = pipe(
       (_: Event) => {
+        // FIXME: Reset the prev metrics/time on the resize event
+
+        // FIXME: Should define this in a common function
+        const now = performance.now();
+        const dt = clamp(0, now - prevTime, MAX_VALUE);
+
         // FIXME: Nearly every production implementation seems to reuse an
         // event object to avoid memory allocations.
 
-        const xCurrent = element[`scrollLeft`];
-        const xScrollLength = element["scrollWidth"] - element["clientWidth"];
+        const xCurrent = element.scrollLeft;
+        const xScrollLength = element.scrollWidth - element.clientWidth;
+        const xVelocity = (xCurrent - xPrev) / dt;
+        const xAcceleration = dt > 0 ? (xVelocity - xVelocityPrev) / dt : 0;
+
+        const yCurrent = element.scrollTop;
+        const yScrollLength = element.scrollHeight - element.clientHeight;
+        const yVelocity = (yCurrent - yPrev) / dt;
+        const yAcceleration = dt > 0 ? (yVelocity - yVelocityPrev) / dt : 0;
+
         const x = {
           current: xCurrent,
           scrollLength: xScrollLength,
           progress: calcProgress(0, xScrollLength, xCurrent),
+          velocity: xVelocity,
+          acceleration: xAcceleration,
         };
-
-        const yCurrent = element[`scrollTop`];
-        const yScrollLength = element["scrollHeight"] - element["clientHeight"];
         const y = {
           current: yCurrent,
           scrollLength: yScrollLength,
           progress: calcProgress(0, yScrollLength, yCurrent),
+          velocity: yVelocity,
+          acceleration: yAcceleration,
         };
+
+        prevTime = now;
+        xPrev = xCurrent;
+        xVelocityPrev = xVelocity;
+        yPrev = yCurrent;
+        yVelocityPrev = yVelocity;
 
         listener[EventListenerLike_notify]({
           event: "scroll",

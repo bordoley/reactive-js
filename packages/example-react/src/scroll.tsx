@@ -90,29 +90,30 @@ const ScrollApp = () => {
   const publishedAnimation = useEventPublisher<number>();
 
   useEffect(() => {
-    const eventListener = EventListener.create<number>(x => {
-      publishedAnimation[EventListenerLike_notify](x);
+    const eventListener = EventListener.create(
+      ({ value }: { value: ScrollValue }) => {
+        const pos = value.y.progress;
+        const velocity = value.y.velocity;
 
-      if (x === 1) {
-        // FIXME: To make this really right, we should measure the velocity
-        // and dispatch that so we can adjust the size of the overshoot
-        // in the animation.
-        dispatchSpring(true);
-      }
+        publishedAnimation[EventListenerLike_notify](pos);
 
-      if (x === 0) {
-        // FIXME: To make this really right, we should measure the velocity
-        // and dispatch that so we can adjust the size of the overshoot
-        // in the animation.
-        dispatchSpring(false);
-      }
-    });
+        if (pos === 1 && Math.abs(velocity) > 0.5) {
+          // FIXME: To make this really right, we should measure the velocity
+          // and dispatch that so we can adjust the size of the overshoot
+          // in the animation.
+          dispatchSpring(true);
+        }
 
-    pipe(
-      scrollAnimation,
-      EventSource.map(x => x.value.y.progress),
-      invoke(EventSourceLike_addListener, eventListener),
+        if (pos === 0 && Math.abs(velocity) > 0.5) {
+          // FIXME: To make this really right, we should measure the velocity
+          // and dispatch that so we can adjust the size of the overshoot
+          // in the animation.
+          dispatchSpring(false);
+        }
+      },
     );
+
+    scrollAnimation[EventSourceLike_addListener](eventListener);
 
     pipe(
       spring,

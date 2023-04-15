@@ -8,11 +8,19 @@
 
 ### Properties
 
+- [acceleration](integrations_web.ScrollState.md#acceleration)
 - [current](integrations_web.ScrollState.md#current)
 - [progress](integrations_web.ScrollState.md#progress)
 - [scrollLength](integrations_web.ScrollState.md#scrolllength)
+- [velocity](integrations_web.ScrollState.md#velocity)
 
 ## Properties
+
+### acceleration
+
+• **acceleration**: `number`
+
+___
 
 ### current
 
@@ -29,3 +37,9 @@ ___
 ### scrollLength
 
 • **scrollLength**: `number`
+
+___
+
+### velocity
+
+• **velocity**: `number`

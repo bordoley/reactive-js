@@ -1,4 +1,5 @@
-export const { MAX_SAFE_INTEGER, MAX_VALUE } = Number;
+export const { MAX_SAFE_INTEGER, MAX_VALUE, MIN_SAFE_INTEGER, MIN_VALUE } =
+  Number;
 
 const process =
   typeof global === "object"
