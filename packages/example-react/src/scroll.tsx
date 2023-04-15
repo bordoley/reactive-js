@@ -52,23 +52,39 @@ const ScrollApp = () => {
   }>();
   const containerRef = useScroll<HTMLDivElement>(scrollAnimation);
 
-  const [spring, dispatchSpring] = useAnimation<number, void>(
-    () => [
-      {
-        type: "spring",
-        precision: 0.1,
-        from: 1,
-        to: 1.2,
-      },
-      {
-        type: "spring",
-        precision: 0.1,
-        from: 1.2,
-        to: 1,
-      },
-    ],
+  const [spring, dispatchSpring] = useAnimation<number, boolean>(
+    direction =>
+      direction
+        ? [
+            {
+              type: "spring",
+              precision: 0.1,
+              from: 1,
+              to: 1.2,
+            },
+            {
+              type: "spring",
+              precision: 0.1,
+              from: 1.2,
+              to: 1,
+            },
+          ]
+        : [
+            {
+              type: "spring",
+              precision: 0.1,
+              from: 0,
+              to: -0.01,
+            },
+            {
+              type: "spring",
+              precision: 0.1,
+              from: -0.01,
+              to: 0,
+            },
+          ],
     [],
-    { mode: "blocking" },
+    { mode: "switching" },
   );
 
   const publishedAnimation = useEventPublisher<number>();
@@ -81,7 +97,14 @@ const ScrollApp = () => {
         // FIXME: To make this really right, we should measure the velocity
         // and dispatch that so we can adjust the size of the overshoot
         // in the animation.
-        dispatchSpring();
+        dispatchSpring(true);
+      }
+
+      if (x === 0) {
+        // FIXME: To make this really right, we should measure the velocity
+        // and dispatch that so we can adjust the size of the overshoot
+        // in the animation.
+        dispatchSpring(false);
       }
     });
 
