@@ -1531,8 +1531,14 @@ export const addScrollListener =
     let yVelocityPrev = 0;
 
     const eventListener = pipe(
-      (_: Event) => {
-        // FIXME: Reset the prev metrics/time on the resize event
+      (ev: Event) => {
+        if (ev.type === "resize") {
+          prevTime = MIN_VALUE;
+          xPrev = 0;
+          yPrev = 0;
+          xVelocityPrev = 0;
+          yVelocityPrev = 0;
+        }
 
         // FIXME: Should define this in a common function
         const now = performance.now();
@@ -1584,8 +1590,9 @@ export const addScrollListener =
     pipe(
       element,
       addEventListener<HTMLElement, "scroll">("scroll", eventListener),
-      addEventListener<HTMLElement, "resize">("resize", eventListener),
     );
+
+    pipe(window, addEventListener<Window, "resize">("resize", eventListener));
 
     return element;
   };
