@@ -55,9 +55,7 @@ export const addEventListener = ((eventName, eventListener) => target => {
     pipe(eventListener, Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));
-    const listener = (event) => {
-        eventListener[EventListenerLike_notify](event);
-    };
+    const listener = bindMethod(eventListener, EventListenerLike_notify);
     target.addEventListener(eventName, listener, {
         passive: true,
     });
@@ -211,76 +209,79 @@ export const windowLocation = /*@__PURE__*/ (() => {
         [StreamableLike_stream]: stream,
     };
 })();
-const calcProgress = (min, max, value) => max - min === 0 ? 1 : (value - min) / (max - min);
-export const addScrollListener = (listener) => (element) => {
-    let prevTime = MIN_VALUE;
-    let xPrev = 0;
-    let yPrev = 0;
-    let xVelocityPrev = 0;
-    let yVelocityPrev = 0;
-    const eventListener = pipe((ev) => {
-        if (ev.type === "resize") {
-            prevTime = MIN_VALUE;
-            xPrev = 0;
-            yPrev = 0;
-            xVelocityPrev = 0;
-            yVelocityPrev = 0;
-        }
-        const now = CurrentTime.now();
-        const dt = clamp(0, now - prevTime, MAX_VALUE);
-        // FIXME: Nearly every production implementation seems to reuse an
-        // event object to avoid memory allocations.
-        const xCurrent = element.scrollLeft;
-        const xScrollLength = element.scrollWidth - element.clientWidth;
-        const xVelocity = (xCurrent - xPrev) / dt;
-        const xAcceleration = dt > 0 ? (xVelocity - xVelocityPrev) / dt : 0;
-        const yCurrent = element.scrollTop;
-        const yScrollLength = element.scrollHeight - element.clientHeight;
-        const yVelocity = (yCurrent - yPrev) / dt;
-        const yAcceleration = dt > 0 ? (yVelocity - yVelocityPrev) / dt : 0;
-        const x = {
-            current: xCurrent,
-            scrollLength: xScrollLength,
-            progress: calcProgress(0, xScrollLength, xCurrent),
-            velocity: xVelocity,
-            acceleration: xAcceleration,
-        };
-        const y = {
-            current: yCurrent,
-            scrollLength: yScrollLength,
-            progress: calcProgress(0, yScrollLength, yCurrent),
-            velocity: yVelocity,
-            acceleration: yAcceleration,
-        };
-        prevTime = now;
-        xPrev = xCurrent;
-        xVelocityPrev = xVelocity;
-        yPrev = yCurrent;
-        yVelocityPrev = yVelocity;
-        listener[EventListenerLike_notify]({
-            event: "scroll",
-            value: { x, y },
-        });
-    }, EventListener.create, Disposable.bindTo(listener));
-    pipe(element, addEventListener("scroll", eventListener));
-    pipe(window, addEventListener("resize", eventListener));
-    return element;
-};
+export const addScrollListener = /*@__PURE__*/ (() => {
+    const calcProgress = (min, max, value) => max - min === 0 ? 1 : (value - min) / (max - min);
+    return (listener) => (element) => {
+        let prevTime = MIN_VALUE;
+        let xPrev = 0;
+        let yPrev = 0;
+        let xVelocityPrev = 0;
+        let yVelocityPrev = 0;
+        const eventListener = pipe((ev) => {
+            if (ev.type === "resize") {
+                prevTime = MIN_VALUE;
+                xPrev = 0;
+                yPrev = 0;
+                xVelocityPrev = 0;
+                yVelocityPrev = 0;
+            }
+            const now = CurrentTime.now();
+            const dt = clamp(0, now - prevTime, MAX_VALUE);
+            // FIXME: Nearly every production implementation seems to reuse an
+            // event object to avoid memory allocations.
+            const xCurrent = element.scrollLeft;
+            const xScrollLength = element.scrollWidth - element.clientWidth;
+            const xVelocity = (xCurrent - xPrev) / dt;
+            const xAcceleration = dt > 0 ? (xVelocity - xVelocityPrev) / dt : 0;
+            const yCurrent = element.scrollTop;
+            const yScrollLength = element.scrollHeight - element.clientHeight;
+            const yVelocity = (yCurrent - yPrev) / dt;
+            const yAcceleration = dt > 0 ? (yVelocity - yVelocityPrev) / dt : 0;
+            const x = {
+                current: xCurrent,
+                scrollLength: xScrollLength,
+                progress: calcProgress(0, xScrollLength, xCurrent),
+                velocity: xVelocity,
+                acceleration: xAcceleration,
+            };
+            const y = {
+                current: yCurrent,
+                scrollLength: yScrollLength,
+                progress: calcProgress(0, yScrollLength, yCurrent),
+                velocity: yVelocity,
+                acceleration: yAcceleration,
+            };
+            prevTime = now;
+            xPrev = xCurrent;
+            xVelocityPrev = xVelocity;
+            yPrev = yCurrent;
+            yVelocityPrev = yVelocity;
+            listener[EventListenerLike_notify]({
+                event: "scroll",
+                value: { x, y },
+            });
+        }, EventListener.create, Disposable.bindTo(listener));
+        pipe(element, addEventListener("scroll", eventListener));
+        pipe(window, addEventListener("resize", eventListener));
+        return element;
+    };
+})();
 export const addResizeListener = /*@__PURE__*/ (() => {
     const publishers = newInstance(Map);
     let resizeObserver = none;
-    return (listener, options) => element => {
-        if (isNone(resizeObserver)) {
-            resizeObserver = newInstance(ResizeObserver, (entries) => {
-                for (const entry of entries) {
-                    const publisher = publishers.get(entry.target);
-                    if (isNone(publisher)) {
-                        continue;
-                    }
-                    publisher[EventListenerLike_notify](entry);
-                }
-            });
+    const resizeObserverCallback = (entries) => {
+        for (const entry of entries) {
+            const publisher = publishers.get(entry.target);
+            if (isNone(publisher)) {
+                continue;
+            }
+            publisher[EventListenerLike_notify](entry);
         }
+    };
+    return (listener, options) => element => {
+        resizeObserver =
+            resizeObserver ??
+                (() => newInstance(ResizeObserver, resizeObserverCallback))();
         const publisher = publishers.get(element) ??
             (() => {
                 const publisher = pipe(EventPublisher.createRefCounted(), Disposable.onDisposed(() => {
@@ -299,4 +300,64 @@ export const addResizeListener = /*@__PURE__*/ (() => {
         publisher[EventSourceLike_addListener](listener);
         return element;
     };
+})();
+export const addMeasureListener = /*@__PURE__*/ (() => {
+    const findScrollContainers = (element) => {
+        const { overflow, overflowX, overflowY } = window.getComputedStyle(element);
+        const result = element !== document.body &&
+            [overflow, overflowX, overflowY].some(prop => prop === "auto" || prop === "scroll")
+            ? [element]
+            : [];
+        return element !== document.body && element.parentElement != null
+            ? [...result, ...findScrollContainers(element.parentElement)]
+            : result;
+    };
+    return listener => element => {
+        const eventListener = pipe(EventListener.create(() => {
+            const { left, top, width, height, bottom, right, x, y } = element.getBoundingClientRect();
+            const rect = {
+                left,
+                top,
+                width,
+                height,
+                bottom,
+                right,
+                x,
+                y,
+            };
+            /*
+            if (state.current.element instanceof HTMLElement && offsetSize) {
+              size.height = state.current.element.offsetHeight
+              size.width = state.current.element.offsetWidth
+            }
+            */
+            listener[EventListenerLike_notify](rect);
+        }), Disposable.bindTo(listener));
+        pipe(element, addResizeListener(eventListener));
+        for (const scrollContainer of findScrollContainers(element)) {
+            pipe(scrollContainer, addEventListener("scroll", eventListener));
+        }
+        pipe(window, addEventListener("resize", eventListener), 
+        // { capture: true, passive: true }
+        addEventListener("scroll", eventListener));
+        return element;
+    };
+})();
+export const observeMeasure = 
+/*@__PURE__*/ (() => {
+    const keys = [
+        "x",
+        "y",
+        "top",
+        "bottom",
+        "left",
+        "right",
+        "width",
+        "height",
+    ];
+    const areBoundsEqual = (a, b) => keys.every(key => a[key] === b[key]);
+    return returns(element => pipe(Observable.create(observer => {
+        const listener = pipe(EventListener.create(bindMethod(observer, QueueableLike_enqueue)), Disposable.bindTo(observer));
+        pipe(element, addMeasureListener(listener));
+    }), Observable.distinctUntilChanged({ equality: areBoundsEqual })));
 })();

@@ -215,7 +215,6 @@ interface AddEventListener {
     eventName: K,
     eventListener: EventListenerLike<BroadcastChannelEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
-
   addEventListener<
     TEventTarget extends Document,
     K extends keyof DocumentEventMap,
@@ -223,7 +222,13 @@ interface AddEventListener {
     eventName: K,
     eventListener: EventListenerLike<DocumentEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
-
+  addEventListener<
+    TEventTarget extends Element,
+    K extends keyof ElementEventMap,
+  >(
+    eventName: K,
+    eventListener: EventListenerLike<ElementEventMap[K]>,
+  ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaStreamTrack,
     K extends keyof MediaStreamTrackEventMap,
@@ -266,7 +271,6 @@ interface AddEventListener {
     eventName: K,
     eventListener: EventListenerLike<IDBDatabaseEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
-
   addEventListener<
     TEventTarget extends HTMLBodyElement,
     K extends keyof HTMLBodyElementEventMap,
@@ -274,7 +278,6 @@ interface AddEventListener {
     eventName: K,
     eventListener: EventListenerLike<HTMLBodyElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
-
   addEventListener<
     TEventTarget extends HTMLElement,
     K extends keyof HTMLElementEventMap,
@@ -282,7 +285,6 @@ interface AddEventListener {
     eventName: K,
     eventListener: EventListenerLike<HTMLElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
-
   addEventListener<
     TEventTarget extends HTMLMediaElement,
     K extends keyof HTMLMediaElementEventMap,
@@ -290,7 +292,6 @@ interface AddEventListener {
     eventName: K,
     eventListener: EventListenerLike<HTMLMediaElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
-
   addEventListener<
     TEventTarget extends HTMLVideoElement,
     K extends keyof HTMLVideoElementEventMap,
@@ -298,7 +299,6 @@ interface AddEventListener {
     eventName: K,
     eventListener: EventListenerLike<HTMLVideoElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
-
   addEventListener<
     TEventTarget extends IDBOpenDBRequest,
     K extends keyof IDBOpenDBRequestEventMap,
@@ -646,9 +646,7 @@ export const addEventListener: AddEventListener["addEventListener"] = ((
         target.removeEventListener(eventName, listener);
       }),
     );
-    const listener = (event: unknown) => {
-      eventListener[EventListenerLike_notify](event);
-    };
+    const listener = bindMethod(eventListener, EventListenerLike_notify);
 
     target.addEventListener(eventName, listener, {
       passive: true,
@@ -723,7 +721,14 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<DocumentEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-
+  observeEvent<
+    TEventTarget extends Element,
+    K extends keyof ElementEventMap,
+    T,
+  >(
+    eventName: K,
+    selector: Function1<ElementEventMap[K], T>,
+  ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaStreamTrack,
     K extends keyof MediaStreamTrackEventMap,
@@ -781,7 +786,6 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<HTMLBodyElementEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-
   observeEvent<
     TEventTarget extends HTMLElement,
     K extends keyof HTMLElementEventMap,
@@ -799,7 +803,6 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<HTMLMediaElementEventMap[K], T>,
   ): Function1<TEventTarget, ObservableLike<T>>;
-
   observeEvent<
     TEventTarget extends HTMLVideoElement,
     K extends keyof HTMLVideoElementEventMap,
@@ -1505,9 +1508,6 @@ export type CSSStyleKey = keyof Omit<
   | typeof Symbol.iterator
 >;
 
-const calcProgress = (min: number, max: number, value: number) =>
-  max - min === 0 ? 1 : (value - min) / (max - min);
-
 export interface ScrollState {
   readonly current: number;
   readonly progress: number;
@@ -1521,111 +1521,119 @@ export interface ScrollValue {
   readonly y: ScrollState;
 }
 
-export const addScrollListener =
-  (
-    listener: EventListenerLike<{
-      event: "scroll";
-      value: ScrollValue;
-    }>,
-  ) =>
-  <TElement extends HTMLElement>(element: TElement): TElement => {
-    let prevTime = MIN_VALUE;
-    let xPrev = 0;
-    let yPrev = 0;
-    let xVelocityPrev = 0;
-    let yVelocityPrev = 0;
+export const addScrollListener: <TElement extends HTMLElement>(
+  listener: EventListenerLike<{
+    event: "scroll";
+    value: ScrollValue;
+  }>,
+) => Function1<TElement, TElement> = /*@__PURE__*/ (() => {
+  const calcProgress = (min: number, max: number, value: number) =>
+    max - min === 0 ? 1 : (value - min) / (max - min);
 
-    const eventListener = pipe(
-      (ev: Event) => {
-        if (ev.type === "resize") {
-          prevTime = MIN_VALUE;
-          xPrev = 0;
-          yPrev = 0;
-          xVelocityPrev = 0;
-          yVelocityPrev = 0;
-        }
+  return <TElement extends HTMLElement>(
+      listener: EventListenerLike<{
+        event: "scroll";
+        value: ScrollValue;
+      }>,
+    ) =>
+    (element: TElement): TElement => {
+      let prevTime = MIN_VALUE;
+      let xPrev = 0;
+      let yPrev = 0;
+      let xVelocityPrev = 0;
+      let yVelocityPrev = 0;
 
-        const now = CurrentTime.now();
-        const dt = clamp(0, now - prevTime, MAX_VALUE);
+      const eventListener = pipe(
+        (ev: Event) => {
+          if (ev.type === "resize") {
+            prevTime = MIN_VALUE;
+            xPrev = 0;
+            yPrev = 0;
+            xVelocityPrev = 0;
+            yVelocityPrev = 0;
+          }
 
-        // FIXME: Nearly every production implementation seems to reuse an
-        // event object to avoid memory allocations.
+          const now = CurrentTime.now();
+          const dt = clamp(0, now - prevTime, MAX_VALUE);
 
-        const xCurrent = element.scrollLeft;
-        const xScrollLength = element.scrollWidth - element.clientWidth;
-        const xVelocity = (xCurrent - xPrev) / dt;
-        const xAcceleration = dt > 0 ? (xVelocity - xVelocityPrev) / dt : 0;
+          // FIXME: Nearly every production implementation seems to reuse an
+          // event object to avoid memory allocations.
 
-        const yCurrent = element.scrollTop;
-        const yScrollLength = element.scrollHeight - element.clientHeight;
-        const yVelocity = (yCurrent - yPrev) / dt;
-        const yAcceleration = dt > 0 ? (yVelocity - yVelocityPrev) / dt : 0;
+          const xCurrent = element.scrollLeft;
+          const xScrollLength = element.scrollWidth - element.clientWidth;
+          const xVelocity = (xCurrent - xPrev) / dt;
+          const xAcceleration = dt > 0 ? (xVelocity - xVelocityPrev) / dt : 0;
 
-        const x = {
-          current: xCurrent,
-          scrollLength: xScrollLength,
-          progress: calcProgress(0, xScrollLength, xCurrent),
-          velocity: xVelocity,
-          acceleration: xAcceleration,
-        };
-        const y = {
-          current: yCurrent,
-          scrollLength: yScrollLength,
-          progress: calcProgress(0, yScrollLength, yCurrent),
-          velocity: yVelocity,
-          acceleration: yAcceleration,
-        };
+          const yCurrent = element.scrollTop;
+          const yScrollLength = element.scrollHeight - element.clientHeight;
+          const yVelocity = (yCurrent - yPrev) / dt;
+          const yAcceleration = dt > 0 ? (yVelocity - yVelocityPrev) / dt : 0;
 
-        prevTime = now;
-        xPrev = xCurrent;
-        xVelocityPrev = xVelocity;
-        yPrev = yCurrent;
-        yVelocityPrev = yVelocity;
+          const x = {
+            current: xCurrent,
+            scrollLength: xScrollLength,
+            progress: calcProgress(0, xScrollLength, xCurrent),
+            velocity: xVelocity,
+            acceleration: xAcceleration,
+          };
+          const y = {
+            current: yCurrent,
+            scrollLength: yScrollLength,
+            progress: calcProgress(0, yScrollLength, yCurrent),
+            velocity: yVelocity,
+            acceleration: yAcceleration,
+          };
 
-        listener[EventListenerLike_notify]({
-          event: "scroll",
-          value: { x, y },
-        });
-      },
-      EventListener.create,
-      Disposable.bindTo(listener),
-    );
+          prevTime = now;
+          xPrev = xCurrent;
+          xVelocityPrev = xVelocity;
+          yPrev = yCurrent;
+          yVelocityPrev = yVelocity;
 
-    pipe(
-      element,
-      addEventListener<HTMLElement, "scroll">("scroll", eventListener),
-    );
+          listener[EventListenerLike_notify]({
+            event: "scroll",
+            value: { x, y },
+          });
+        },
+        EventListener.create,
+        Disposable.bindTo(listener),
+      );
 
-    pipe(window, addEventListener<Window, "resize">("resize", eventListener));
+      pipe(
+        element,
+        addEventListener<HTMLElement, "scroll">("scroll", eventListener),
+      );
 
-    return element;
-  };
+      pipe(window, addEventListener<Window, "resize">("resize", eventListener));
 
-export const addResizeListener: <T extends Element>(
+      return element;
+    };
+})();
+
+export const addResizeListener: <TElement extends Element>(
   listener: EventListenerLike<ResizeObserverEntry>,
   options?: ResizeObserverOptions,
-) => Function1<T, T> = /*@__PURE__*/ (() => {
+) => Function1<TElement, TElement> = /*@__PURE__*/ (() => {
   const publishers =
     newInstance<Map<Element, EventPublisherLike<ResizeObserverEntry>>>(Map);
   let resizeObserver: Optional<ResizeObserver> = none;
 
-  return (listener, options) => element => {
-    if (isNone(resizeObserver)) {
-      resizeObserver = newInstance(
-        ResizeObserver,
-        (entries: ResizeObserverEntry[]) => {
-          for (const entry of entries) {
-            const publisher = publishers.get(entry.target);
+  const resizeObserverCallback = (entries: ResizeObserverEntry[]) => {
+    for (const entry of entries) {
+      const publisher = publishers.get(entry.target);
 
-            if (isNone(publisher)) {
-              continue;
-            }
+      if (isNone(publisher)) {
+        continue;
+      }
 
-            publisher[EventListenerLike_notify](entry);
-          }
-        },
-      );
+      publisher[EventListenerLike_notify](entry);
     }
+  };
+
+  return (listener, options) => element => {
+    resizeObserver =
+      resizeObserver ??
+      (() => newInstance(ResizeObserver, resizeObserverCallback))();
 
     const publisher =
       publishers.get(element) ??
@@ -1656,3 +1664,119 @@ export const addResizeListener: <T extends Element>(
     return element;
   };
 })();
+
+export interface RectReadOnly {
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+  readonly top: number;
+  readonly right: number;
+  readonly bottom: number;
+  readonly left: number;
+}
+export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
+  listener: EventListenerLike<RectReadOnly>,
+) => Function1<TElement, TElement> = /*@__PURE__*/ (() => {
+  const findScrollContainers = (
+    element: HTMLElement | SVGElement,
+  ): (HTMLElement | SVGElement)[] => {
+    const { overflow, overflowX, overflowY } = window.getComputedStyle(element);
+
+    const result =
+      element !== document.body &&
+      [overflow, overflowX, overflowY].some(
+        prop => prop === "auto" || prop === "scroll",
+      )
+        ? [element]
+        : [];
+
+    return element !== document.body && element.parentElement != null
+      ? [...result, ...findScrollContainers(element.parentElement)]
+      : result;
+  };
+
+  return listener => element => {
+    const eventListener = pipe(
+      EventListener.create(() => {
+        const { left, top, width, height, bottom, right, x, y }: DOMRect =
+          element.getBoundingClientRect();
+
+        const rect: RectReadOnly = {
+          left,
+          top,
+          width,
+          height,
+          bottom,
+          right,
+          x,
+          y,
+        };
+
+        /*
+        if (state.current.element instanceof HTMLElement && offsetSize) {
+          size.height = state.current.element.offsetHeight
+          size.width = state.current.element.offsetWidth
+        }
+        */
+
+        listener[EventListenerLike_notify](rect);
+      }),
+      Disposable.bindTo(listener),
+    );
+
+    pipe(element, addResizeListener(eventListener));
+
+    for (const scrollContainer of findScrollContainers(element)) {
+      pipe(
+        scrollContainer,
+        addEventListener<GlobalEventHandlers, "scroll">(
+          "scroll",
+          eventListener,
+        ),
+      );
+    }
+
+    pipe(
+      window,
+      addEventListener<Window, "resize">("resize", eventListener),
+      // { capture: true, passive: true }
+      addEventListener<Window, "scroll">("scroll", eventListener),
+    );
+
+    return element;
+  };
+})();
+
+export const observeMeasure: <
+  TElement extends HTMLElement | SVGElement,
+>() => Function1<TElement, ObservableLike<RectReadOnly>> =
+  /*@__PURE__*/ (() => {
+    const keys: (keyof RectReadOnly)[] = [
+      "x",
+      "y",
+      "top",
+      "bottom",
+      "left",
+      "right",
+      "width",
+      "height",
+    ];
+    const areBoundsEqual = (a: RectReadOnly, b: RectReadOnly) =>
+      keys.every(key => a[key] === b[key]);
+
+    return returns(element =>
+      pipe(
+        Observable.create(observer => {
+          const listener = pipe(
+            EventListener.create<RectReadOnly>(
+              bindMethod(observer, QueueableLike_enqueue),
+            ),
+            Disposable.bindTo(observer),
+          );
+          pipe(element, addMeasureListener(listener));
+        }),
+        Observable.distinctUntilChanged({ equality: areBoundsEqual }),
+      ),
+    );
+  })();
