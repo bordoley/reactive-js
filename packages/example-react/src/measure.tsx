@@ -1,4 +1,4 @@
-import { Optional, isSome, pipe, pipeLazy } from "@reactive-js/core/functions";
+import { Optional, pipeLazy, pipeSome } from "@reactive-js/core/functions";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   RectReadOnly,
@@ -19,9 +19,8 @@ const Measure = () => {
 
   const measure = useMemo(
     () =>
-      isSome(container)
-        ? pipe(container, observeMeasure(), Observable.throttle(50))
-        : Observable.empty<RectReadOnly>(),
+      pipeSome(container, observeMeasure(), Observable.throttle(50)) ??
+      Observable.empty<RectReadOnly>(),
     [container],
   );
 
