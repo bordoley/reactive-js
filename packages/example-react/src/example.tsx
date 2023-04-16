@@ -53,6 +53,7 @@ import {
 } from "@reactive-js/core/rx/effects";
 import { SchedulerLike } from "@reactive-js/core/scheduling";
 import { Wordle } from "./wordle";
+import Measure from "./measure";
 
 const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
   const values = cache[KeyedCollectionLike_get]("a");
@@ -345,5 +346,6 @@ ReactDOMClient.createRoot(rootElement as any).render(
     <Root />
     <RootRxComponent />
     <Wordle />
+    <Measure />
   </WindowLocationProvider>,
 );
