@@ -38,6 +38,7 @@ interface AddEventListener {
     addEventListener<TEventTarget extends AudioWorkletNode, K extends keyof AudioWorkletNodeEventMap>(eventName: K, eventListener: EventListenerLike<AudioWorkletNodeEventMap[K]>): Function1<TEventTarget, TEventTarget>;
     addEventListener<TEventTarget extends BroadcastChannel, K extends keyof BroadcastChannelEventMap>(eventName: K, eventListener: EventListenerLike<BroadcastChannelEventMap[K]>): Function1<TEventTarget, TEventTarget>;
     addEventListener<TEventTarget extends Document, K extends keyof DocumentEventMap>(eventName: K, eventListener: EventListenerLike<DocumentEventMap[K]>): Function1<TEventTarget, TEventTarget>;
+    addEventListener<TEventTarget extends Element, K extends keyof ElementEventMap>(eventName: K, eventListener: EventListenerLike<ElementEventMap[K]>): Function1<TEventTarget, TEventTarget>;
     addEventListener<TEventTarget extends MediaStreamTrack, K extends keyof MediaStreamTrackEventMap>(eventName: K, eventListener: EventListenerLike<MediaStreamTrackEventMap[K]>): Function1<TEventTarget, TEventTarget>;
     addEventListener<TEventTarget extends EventSource, K extends keyof EventSourceEventMap>(eventName: K, eventListener: EventListenerLike<EventSourceEventMap[K]>): Function1<TEventTarget, TEventTarget>;
     addEventListener<TEventTarget extends FileReader, K extends keyof FileReaderEventMap>(eventName: K, eventListener: EventListenerLike<FileReaderEventMap[K]>): Function1<TEventTarget, TEventTarget>;
@@ -103,6 +104,7 @@ interface ObserveEvent {
     observeEvent<TEventTarget extends AudioWorkletNode, K extends keyof AudioWorkletNodeEventMap, T>(eventName: K, selector: Function1<AudioWorkletNodeEventMap[K], T>): Function1<TEventTarget, ObservableLike<T>>;
     observeEvent<TEventTarget extends BroadcastChannel, K extends keyof BroadcastChannelEventMap, T>(eventName: K, selector: Function1<BroadcastChannelEventMap[K], T>): Function1<TEventTarget, ObservableLike<T>>;
     observeEvent<TEventTarget extends Document, K extends keyof DocumentEventMap, T>(eventName: K, selector: Function1<DocumentEventMap[K], T>): Function1<TEventTarget, ObservableLike<T>>;
+    observeEvent<TEventTarget extends Element, K extends keyof ElementEventMap, T>(eventName: K, selector: Function1<ElementEventMap[K], T>): Function1<TEventTarget, ObservableLike<T>>;
     observeEvent<TEventTarget extends MediaStreamTrack, K extends keyof MediaStreamTrackEventMap, T>(eventName: K, selector: Function1<MediaStreamTrackEventMap[K], T>): Function1<TEventTarget, ObservableLike<T>>;
     observeEvent<TEventTarget extends EventSource, K extends keyof EventSourceEventMap, T>(eventName: K, selector: Function1<EventSourceEventMap[K], T>): Function1<TEventTarget, ObservableLike<T>>;
     observeEvent<TEventTarget extends FileReader, K extends keyof FileReaderEventMap, T>(eventName: K, selector: Function1<FileReaderEventMap[K], T>): Function1<TEventTarget, ObservableLike<T>>;
@@ -172,8 +174,20 @@ export interface ScrollValue {
     readonly x: ScrollState;
     readonly y: ScrollState;
 }
-export declare const addScrollListener: (listener: EventListenerLike<{
+export declare const addScrollListener: <TElement extends HTMLElement>(listener: EventListenerLike<{
     event: "scroll";
     value: ScrollValue;
-}>) => <TElement extends HTMLElement>(element: TElement) => TElement;
-export declare const addResizeListener: <T extends Element>(listener: EventListenerLike<ResizeObserverEntry>, options?: ResizeObserverOptions) => Function1<T, T>;
+}>) => Function1<TElement, TElement>;
+export declare const addResizeListener: <TElement extends Element>(listener: EventListenerLike<ResizeObserverEntry>, options?: ResizeObserverOptions) => Function1<TElement, TElement>;
+export interface RectReadOnly {
+    readonly x: number;
+    readonly y: number;
+    readonly width: number;
+    readonly height: number;
+    readonly top: number;
+    readonly right: number;
+    readonly bottom: number;
+    readonly left: number;
+}
+export declare const addMeasureListener: <TElement extends HTMLElement | SVGElement>(listener: EventListenerLike<RectReadOnly>) => Function1<TElement, TElement>;
+export declare const observeMeasure: <TElement extends HTMLElement | SVGElement>() => Function1<TElement, ObservableLike<RectReadOnly>>;

@@ -10,6 +10,7 @@
 
 ### Other Interfaces
 
+- [RectReadOnly](../interfaces/integrations_web.RectReadOnly.md)
 - [ScrollState](../interfaces/integrations_web.ScrollState.md)
 - [ScrollValue](../interfaces/integrations_web.ScrollValue.md)
 - [WindowLocationURI](../interfaces/integrations_web.WindowLocationURI.md)
@@ -25,10 +26,12 @@
 ### Functions
 
 - [addEventListener](integrations_web.md#addeventlistener)
+- [addMeasureListener](integrations_web.md#addmeasurelistener)
 - [addResizeListener](integrations_web.md#addresizelistener)
 - [addScrollListener](integrations_web.md#addscrolllistener)
 - [createEventSource](integrations_web.md#createeventsource)
 - [observeEvent](integrations_web.md#observeevent)
+- [observeMeasure](integrations_web.md#observemeasure)
 
 ## Type Aliases
 
@@ -201,6 +204,26 @@
 | :------ | :------ |
 | `eventName` | `K` |
 | `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`DocumentEventMap`[`K`]\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
+
+▸ **addEventListener**<`TEventTarget`, `K`\>(`eventName`, `eventListener`): [`Function1`](functions.md#function1)<`TEventTarget`, `TEventTarget`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `Element`<`TEventTarget`\> |
+| `K` | extends keyof `ElementEventMap` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ElementEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1291,15 +1314,37 @@
 
 ___
 
-### addResizeListener
+### addMeasureListener
 
-▸ **addResizeListener**<`T`\>(`listener`, `options?`): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **addMeasureListener**<`TElement`\>(`listener`): [`Function1`](functions.md#function1)<`TElement`, `TElement`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `Element`<`T`\> |
+| `TElement` | extends `HTMLElement` \| `SVGElement` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `listener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<[`RectReadOnly`](../interfaces/integrations_web.RectReadOnly.md)\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`TElement`, `TElement`\>
+
+___
+
+### addResizeListener
+
+▸ **addResizeListener**<`TElement`\>(`listener`, `options?`): [`Function1`](functions.md#function1)<`TElement`, `TElement`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TElement` | extends `Element`<`TElement`\> |
 
 #### Parameters
 
@@ -1310,13 +1355,19 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `T`\>
+[`Function1`](functions.md#function1)<`TElement`, `TElement`\>
 
 ___
 
 ### addScrollListener
 
-▸ **addScrollListener**(`listener`): <TElement\>(`element`: `TElement`) => `TElement`
+▸ **addScrollListener**<`TElement`\>(`listener`): [`Function1`](functions.md#function1)<`TElement`, `TElement`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TElement` | extends `HTMLElement`<`TElement`\> |
 
 #### Parameters
 
@@ -1326,25 +1377,7 @@ ___
 
 #### Returns
 
-`fn`
-
-▸ <`TElement`\>(`element`): `TElement`
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TElement` | extends `HTMLElement`<`TElement`\> |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `element` | `TElement` |
-
-##### Returns
-
-`TElement`
+[`Function1`](functions.md#function1)<`TElement`, `TElement`\>
 
 ___
 
@@ -1530,6 +1563,27 @@ ___
 | :------ | :------ |
 | `eventName` | `K` |
 | `selector` | [`Function1`](functions.md#function1)<`DocumentEventMap`[`K`], `T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventTarget` | extends `Element`<`TEventTarget`\> |
+| `K` | extends keyof `ElementEventMap` |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventName` | `K` |
+| `selector` | [`Function1`](functions.md#function1)<`ElementEventMap`[`K`], `T`\> |
 
 #### Returns
 
@@ -2669,3 +2723,19 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+___
+
+### observeMeasure
+
+▸ **observeMeasure**<`TElement`\>(): [`Function1`](functions.md#function1)<`TElement`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`RectReadOnly`](../interfaces/integrations_web.RectReadOnly.md)\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TElement` | extends `HTMLElement` \| `SVGElement` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`TElement`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`RectReadOnly`](../interfaces/integrations_web.RectReadOnly.md)\>\>
