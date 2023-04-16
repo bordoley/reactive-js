@@ -10,7 +10,7 @@
 
 ### Other Interfaces
 
-- [RectReadOnly](../interfaces/integrations_web.RectReadOnly.md)
+- [Rect](../interfaces/integrations_web.Rect.md)
 - [ScrollState](../interfaces/integrations_web.ScrollState.md)
 - [ScrollValue](../interfaces/integrations_web.ScrollValue.md)
 - [WindowLocationURI](../interfaces/integrations_web.WindowLocationURI.md)
@@ -1328,7 +1328,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `listener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<[`RectReadOnly`](../interfaces/integrations_web.RectReadOnly.md)\> |
+| `listener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<[`Rect`](../interfaces/integrations_web.Rect.md)\> |
 
 #### Returns
 
@@ -2728,7 +2728,7 @@ ___
 
 ### observeMeasure
 
-▸ **observeMeasure**<`TElement`\>(): [`Function1`](functions.md#function1)<`TElement`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`RectReadOnly`](../interfaces/integrations_web.RectReadOnly.md)\>\>
+▸ **observeMeasure**<`TElement`\>(): [`Function1`](functions.md#function1)<`TElement`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`Rect`](../interfaces/integrations_web.Rect.md)\>\>
 
 #### Type parameters
 
@@ -2738,4 +2738,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TElement`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`RectReadOnly`](../interfaces/integrations_web.RectReadOnly.md)\>\>
+[`Function1`](functions.md#function1)<`TElement`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<[`Rect`](../interfaces/integrations_web.Rect.md)\>\>

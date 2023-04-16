@@ -343,8 +343,7 @@ export const addMeasureListener = /*@__PURE__*/ (() => {
         return element;
     };
 })();
-export const observeMeasure = 
-/*@__PURE__*/ (() => {
+export const observeMeasure = /*@__PURE__*/ (() => {
     const keys = [
         "x",
         "y",

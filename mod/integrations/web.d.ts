@@ -179,7 +179,7 @@ export declare const addScrollListener: <TElement extends HTMLElement>(listener:
     value: ScrollValue;
 }>) => Function1<TElement, TElement>;
 export declare const addResizeListener: <TElement extends Element>(listener: EventListenerLike<ResizeObserverEntry>, options?: ResizeObserverOptions) => Function1<TElement, TElement>;
-export interface RectReadOnly {
+export interface Rect {
     readonly x: number;
     readonly y: number;
     readonly width: number;
@@ -189,5 +189,5 @@ export interface RectReadOnly {
     readonly bottom: number;
     readonly left: number;
 }
-export declare const addMeasureListener: <TElement extends HTMLElement | SVGElement>(listener: EventListenerLike<RectReadOnly>) => Function1<TElement, TElement>;
-export declare const observeMeasure: <TElement extends HTMLElement | SVGElement>() => Function1<TElement, ObservableLike<RectReadOnly>>;
+export declare const addMeasureListener: <TElement extends HTMLElement | SVGElement>(listener: EventListenerLike<Rect>) => Function1<TElement, TElement>;
+export declare const observeMeasure: <TElement extends HTMLElement | SVGElement>() => Function1<TElement, ObservableLike<Rect>>;

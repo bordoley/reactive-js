@@ -1665,7 +1665,7 @@ export const addResizeListener: <TElement extends Element>(
   };
 })();
 
-export interface RectReadOnly {
+export interface Rect {
   readonly x: number;
   readonly y: number;
   readonly width: number;
@@ -1676,7 +1676,7 @@ export interface RectReadOnly {
   readonly left: number;
 }
 export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
-  listener: EventListenerLike<RectReadOnly>,
+  listener: EventListenerLike<Rect>,
 ) => Function1<TElement, TElement> = /*@__PURE__*/ (() => {
   const findScrollContainers = (
     element: HTMLElement | SVGElement,
@@ -1702,7 +1702,7 @@ export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
         const { left, top, width, height, bottom, right, x, y }: DOMRect =
           element.getBoundingClientRect();
 
-        const rect: RectReadOnly = {
+        const rect: Rect = {
           left,
           top,
           width,
@@ -1750,33 +1750,32 @@ export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
 
 export const observeMeasure: <
   TElement extends HTMLElement | SVGElement,
->() => Function1<TElement, ObservableLike<RectReadOnly>> =
-  /*@__PURE__*/ (() => {
-    const keys: (keyof RectReadOnly)[] = [
-      "x",
-      "y",
-      "top",
-      "bottom",
-      "left",
-      "right",
-      "width",
-      "height",
-    ];
-    const areBoundsEqual = (a: RectReadOnly, b: RectReadOnly) =>
-      keys.every(key => a[key] === b[key]);
+>() => Function1<TElement, ObservableLike<Rect>> = /*@__PURE__*/ (() => {
+  const keys: (keyof Rect)[] = [
+    "x",
+    "y",
+    "top",
+    "bottom",
+    "left",
+    "right",
+    "width",
+    "height",
+  ];
+  const areBoundsEqual = (a: Rect, b: Rect) =>
+    keys.every(key => a[key] === b[key]);
 
-    return returns(element =>
-      pipe(
-        Observable.create(observer => {
-          const listener = pipe(
-            EventListener.create<RectReadOnly>(
-              bindMethod(observer, QueueableLike_enqueue),
-            ),
-            Disposable.bindTo(observer),
-          );
-          pipe(element, addMeasureListener(listener));
-        }),
-        Observable.distinctUntilChanged({ equality: areBoundsEqual }),
-      ),
-    );
-  })();
+  return returns(element =>
+    pipe(
+      Observable.create(observer => {
+        const listener = pipe(
+          EventListener.create<Rect>(
+            bindMethod(observer, QueueableLike_enqueue),
+          ),
+          Disposable.bindTo(observer),
+        );
+        pipe(element, addMeasureListener(listener));
+      }),
+      Observable.distinctUntilChanged({ equality: areBoundsEqual }),
+    ),
+  );
+})();
