@@ -15,18 +15,7 @@ import { ContainerOperator } from "../containers.js";
 import {
   Factory,
   Function1,
-  Function2,
-  Function3,
-  Function4,
-  Function5,
-  SideEffect1,
-  SideEffect2,
-  SideEffect3,
-  SideEffect4,
-  SideEffect5,
-  SideEffect6,
   bindMethod,
-  error,
   ignore,
   invoke,
   isFunction,
@@ -55,67 +44,6 @@ import {
   QueueableLike_enqueue,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-
-interface BindNodeCallback {
-  bindNodeCallback<T>(
-    callbackFunc: SideEffect1<SideEffect2<unknown, T>>,
-  ): Factory<ObservableLike<T>>;
-  bindNodeCallback(
-    callbackFunc: SideEffect1<SideEffect1<unknown>>,
-  ): Factory<ObservableLike<void>>;
-
-  bindNodeCallback<A1, T>(
-    callbackFunc: SideEffect2<A1, SideEffect2<unknown, T>>,
-  ): Function1<A1, ObservableLike<T>>;
-  bindNodeCallback<A1>(
-    callbackFunc: SideEffect2<A1, SideEffect1<unknown>>,
-  ): Function1<A1, ObservableLike<void>>;
-
-  bindNodeCallback<A1, A2, T>(
-    callbackFunc: SideEffect3<A1, A2, SideEffect2<unknown, T>>,
-  ): Function2<A1, A2, ObservableLike<T>>;
-  bindNodeCallback<A1, A2>(
-    callbackFunc: SideEffect3<A1, A2, SideEffect1<unknown>>,
-  ): Function2<A1, A2, ObservableLike<void>>;
-
-  bindNodeCallback<A1, A2, A3, T>(
-    callbackFunc: SideEffect4<A1, A2, A3, SideEffect2<unknown, T>>,
-  ): Function3<A1, A2, A3, ObservableLike<T>>;
-  bindNodeCallback<A1, A2, A3>(
-    callbackFunc: SideEffect4<A1, A2, A3, SideEffect1<unknown>>,
-  ): Function3<A1, A2, A3, ObservableLike<void>>;
-
-  bindNodeCallback<A1, A2, A3, A4, T>(
-    callbackFunc: SideEffect5<A1, A2, A3, A4, SideEffect2<unknown, T>>,
-  ): Function4<A1, A2, A3, A4, ObservableLike<T>>;
-  bindNodeCallback<A1, A2, A3, A4>(
-    callbackFunc: SideEffect5<A1, A2, A3, A4, SideEffect1<unknown>>,
-  ): Function4<A1, A2, A3, A4, ObservableLike<void>>;
-
-  bindNodeCallback<A1, A2, A3, A4, A5, T>(
-    callbackFunc: SideEffect6<A1, A2, A3, A4, A5, SideEffect2<unknown, T>>,
-  ): Function5<A1, A2, A3, A4, A5, ObservableLike<T>>;
-  bindNodeCallback<A1, A2, A3, A4, A5>(
-    callbackFunc: SideEffect6<A1, A2, A3, A4, A5, SideEffect1<unknown>>,
-  ): Function5<A1, A2, A3, A4, A5, ObservableLike<void>>;
-}
-export const bindNodeCallback: BindNodeCallback["bindNodeCallback"] = <T>(
-  callback: (...args: readonly any[]) => unknown,
-): ((...args: readonly unknown[]) => ObservableLike<T | void>) =>
-  function (this: unknown, ...args: readonly unknown[]) {
-    return Observable.create<unknown>(observer => {
-      const handler = (err: unknown, arg: unknown) => {
-        if (err) {
-          observer[DisposableLike_dispose](error(err));
-        } else {
-          observer[QueueableLike_enqueue](arg);
-          observer[DispatcherLike_complete]();
-        }
-      };
-
-      callback.apply(this, [...args, handler]);
-    });
-  };
 
 type NodeStream = Readable | Writable | Transform;
 
