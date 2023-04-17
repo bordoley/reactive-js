@@ -2244,81 +2244,68 @@ ___
 
 ### pick
 
-▸ **pick**<`T`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `string` \| `number` \| `symbol` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `key` | keyof `T` |
+| `key` | `TKey` |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `keyA` | keyof `T` |
-| `keyB` | keyof `T`[keyof `T`] |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+| `TKeyC` | extends `string` \| `number` \| `symbol` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `keyA` | keyof `T` |
-| `keyB` | keyof `T`[keyof `T`] |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+| `keyC` | `TKeyC` |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]]\>
-
-▸ **pick**<`T`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]][keyof `T`[keyof `T`][keyof `T`[keyof `T`]]]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `keyA` | keyof `T` |
-| `keyB` | keyof `T`[keyof `T`] |
-| `keyC` | keyof `T`[keyof `T`][keyof `T`[keyof `T`]] |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[keyof `T`][keyof `T`[keyof `T`]][keyof `T`[keyof `T`][keyof `T`[keyof `T`]]]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 

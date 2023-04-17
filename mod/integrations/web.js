@@ -15,11 +15,12 @@ import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLi
 import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, EventSourceLike_addListener, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
 import * as EventListener from "../util/EventListener.js";
 import * as EventPublisher from "../util/EventPublisher.js";
+import IndexedBufferCollection_empty from "../util/IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
 const errorEvent = "error";
 const reservedEvents = [errorEvent, "open"];
@@ -359,4 +360,70 @@ export const observeMeasure = /*@__PURE__*/ (() => {
         const listener = pipe(EventListener.create(bindMethod(observer, QueueableLike_enqueue)), Disposable.bindTo(observer));
         pipe(element, addMeasureListener(listener));
     }), Observable.distinctUntilChanged({ equality: areBoundsEqual })));
+})();
+export const intersectionWith = 
+/*@__PURE__*/ (() => {
+    const intersectionObservers = newInstance(Map);
+    const eventPublishers = newInstance(Map);
+    class IntersectionObserverEventSource {
+        root;
+        child;
+        constructor(root, child) {
+            this.root = root;
+            this.child = child;
+        }
+        get [EventSourceLike_listenerCount]() {
+            return (eventPublishers.get(this.root)?.get(this.child)?.[EventSourceLike_listenerCount] ?? 0);
+        }
+        get [ReplayableLike_buffer]() {
+            return IndexedBufferCollection_empty();
+        }
+        [EventSourceLike_addListener](listener) {
+            const { root, child } = this;
+            const publisher = eventPublishers.get(root)?.get(child) ??
+                (() => {
+                    const publisher = EventPublisher.createRefCounted();
+                    const parentMap = eventPublishers.get(root) ??
+                        (() => {
+                            const parentMap = newInstance(Map);
+                            eventPublishers.set(root, parentMap);
+                            return parentMap;
+                        })();
+                    parentMap.set(child, publisher);
+                    const intersectionObserver = intersectionObservers.get(root) ??
+                        (() => {
+                            const cb = (entries) => {
+                                for (const entry of entries) {
+                                    const { target } = entry;
+                                    const listener = eventPublishers.get(root)?.get(target);
+                                    if (isNone(listener)) {
+                                        continue;
+                                    }
+                                    listener[EventListenerLike_notify](entry);
+                                }
+                            };
+                            const intersectionObserver = newInstance(IntersectionObserver, cb, { root });
+                            intersectionObservers.set(root, intersectionObserver);
+                            return intersectionObserver;
+                        })();
+                    intersectionObserver.observe(child);
+                    return pipe(publisher, Disposable.onDisposed(() => {
+                        const intersectionObserver = intersectionObservers.get(root);
+                        intersectionObserver?.unobserve(child);
+                        const childToPublisherMap = eventPublishers.get(root);
+                        childToPublisherMap?.delete(child);
+                        if ((childToPublisherMap?.size ?? 0) > 0) {
+                            return;
+                        }
+                        eventPublishers.delete(root);
+                        intersectionObserver?.disconnect();
+                        intersectionObservers.delete(root);
+                    }));
+                })();
+            publisher[EventSourceLike_addListener](listener);
+        }
+    }
+    return root => child => {
+        return newInstance(IntersectionObserverEventSource, root ?? document, child);
+    };
 })();

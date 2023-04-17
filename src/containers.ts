@@ -818,20 +818,21 @@ export interface Pick<C extends ContainerLike> extends Container<C> {
   /**
    * @category Operator
    */
-  pick<T>(key: keyof T): ContainerOperator<C, T, T[typeof key]>;
-  pick<T>(
-    keyA: keyof T,
-    keyB: keyof T[typeof keyA],
-  ): ContainerOperator<C, T, T[typeof keyA][typeof keyB]>;
-  pick<T>(
-    keyA: keyof T,
-    keyB: keyof T[typeof keyA],
-  ): ContainerOperator<C, T, T[typeof keyA][typeof keyB]>;
-  pick<T>(
-    keyA: keyof T,
-    keyB: keyof T[typeof keyA],
-    keyC: keyof T[typeof keyA][typeof keyB],
-  ): ContainerOperator<C, T, T[typeof keyA][typeof keyB][typeof keyC]>;
+  pick<T, TKey extends keyof T>(key: TKey): ContainerOperator<C, T, T[TKey]>;
+  pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(
+    keyA: TKeyA,
+    keyB: TKeyB,
+  ): ContainerOperator<C, T, T[TKeyA][TKeyB]>;
+  pick<
+    T,
+    TKeyA extends keyof T,
+    TKeyB extends keyof T[TKeyA],
+    TKeyC extends keyof T[TKeyA][TKeyB],
+  >(
+    keyA: TKeyA,
+    keyB: TKeyB,
+    keyC: TKeyC,
+  ): ContainerOperator<C, T, T[TKeyA][TKeyB][TKeyC]>;
 }
 
 /**

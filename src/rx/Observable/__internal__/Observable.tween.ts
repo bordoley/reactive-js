@@ -33,7 +33,7 @@ const Observable_tween = (
       },
       returns([MAX_VALUE, 0]),
     ),
-    Observable_pick<RunnableLike, [unknown, number]>(1),
+    Observable_pick<RunnableLike, [unknown, number], 1>(1),
     Observable_takeWhile<RunnableLike, number>(isNotEqualTo(1), {
       inclusive: true,
     }),

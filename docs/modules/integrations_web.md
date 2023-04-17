@@ -30,6 +30,7 @@
 - [addResizeListener](integrations_web.md#addresizelistener)
 - [addScrollListener](integrations_web.md#addscrolllistener)
 - [createEventSource](integrations_web.md#createeventsource)
+- [intersectionWith](integrations_web.md#intersectionwith)
 - [observeEvent](integrations_web.md#observeevent)
 - [observeMeasure](integrations_web.md#observemeasure)
 
@@ -1395,6 +1396,22 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/rx.ObservableLike.md)<{ `data`: `string` ; `id`: `string` ; `type`: `string`  }\>
+
+___
+
+### intersectionWith
+
+▸ **intersectionWith**(`parent?`): [`Function1`](functions.md#function1)<`Element`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`IntersectionObserverEntry`\>\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `parent?` | `Element` \| `Document` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Element`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`IntersectionObserverEntry`\>\>
 
 ___
 

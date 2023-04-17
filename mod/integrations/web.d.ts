@@ -2,7 +2,7 @@ import { __WindowLocationStreamLike_canGoBack as WindowLocationStreamLike_canGoB
 import { Function1, Updater } from "../functions.js";
 import { ObservableLike } from "../rx.js";
 import { StreamLike, StreamableLike } from "../streaming.js";
-import { EventListenerLike } from "../util.js";
+import { EventListenerLike, EventSourceLike } from "../util.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
 /**
  * @noInheritDoc
@@ -191,3 +191,4 @@ export interface Rect {
 }
 export declare const addMeasureListener: <TElement extends HTMLElement | SVGElement>(listener: EventListenerLike<Rect>) => Function1<TElement, TElement>;
 export declare const observeMeasure: <TElement extends HTMLElement | SVGElement>() => Function1<TElement, ObservableLike<Rect>>;
+export declare const intersectionWith: (parent?: Document | Element) => Function1<Element, EventSourceLike<IntersectionObserverEntry>>;

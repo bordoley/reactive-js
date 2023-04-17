@@ -12,6 +12,7 @@
 
 - [keep](util_EventSource.md#keep)
 - [map](util_EventSource.md#map)
+- [pick](util_EventSource.md#pick)
 
 ### Transform Functions
 
@@ -103,6 +104,73 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `TA`, `TB`\>
+
+___
+
+### pick
+
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `TKey` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+| `TKeyC` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+| `keyC` | `TKeyC` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 

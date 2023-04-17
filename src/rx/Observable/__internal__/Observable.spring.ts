@@ -40,7 +40,7 @@ const Observable_spring = (options?: {
       },
       returns([MAX_VALUE, 0, 0]),
     ),
-    Observable_pick<RunnableLike, [unknown, unknown, number]>(2),
+    Observable_pick<RunnableLike, [unknown, unknown, number], 2>(2),
     Observable_takeWhile<RunnableLike, number>(isNotEqualTo(1), {
       inclusive: true,
     }),

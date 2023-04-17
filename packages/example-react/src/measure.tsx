@@ -42,7 +42,7 @@ const Measure = () => {
         animation,
         EventSource.toObservable(),
         Observable.throttle(50),
-        Observable.pick<{ value: number }>("value"),
+        Observable.pick<{ value: number }, "value">("value"),
         Observable.map(Math.floor),
       ),
       [animation],
