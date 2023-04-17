@@ -4,7 +4,7 @@ import { MappingLike_selector, } from "../../../__internal__/containers.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { none, partial, pipe } from "../../../functions.js";
-import { EventListenerLike_notify, } from "../../../util.js";
+import { EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../../../util.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
@@ -17,6 +17,7 @@ const EventSource_map = /*@__PURE__*/ (() => {
     }, props({
         [MappingLike_selector]: none,
     }), {
+        [EventListenerLike_isErrorSafe]: false,
         [EventListenerLike_notify](next) {
             const mapped = this[MappingLike_selector](next);
             this[DelegatingLike_delegate][EventListenerLike_notify](mapped);

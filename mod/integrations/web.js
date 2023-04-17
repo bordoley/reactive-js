@@ -53,10 +53,10 @@ export const createEventSource = (url, options = {}) => {
     });
 };
 export const addEventListener = ((eventName, eventListener) => target => {
-    pipe(eventListener, Disposable.onDisposed(_ => {
+    const errorSafeEventListener = pipe(eventListener, Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));
-    const listener = bindMethod(eventListener, EventListenerLike_notify);
+    const listener = bindMethod(errorSafeEventListener, EventListenerLike_notify);
     target.addEventListener(eventName, listener, {
         passive: true,
     });
@@ -261,7 +261,7 @@ export const addScrollListener = /*@__PURE__*/ (() => {
                 event: "scroll",
                 value: { x, y },
             });
-        }, EventListener.create, Disposable.bindTo(listener));
+        }, EventListener.create, EventListener.toErrorSafeEventListener(), Disposable.bindTo(listener));
         pipe(element, addEventListener("scroll", eventListener));
         pipe(window, addEventListener("resize", eventListener));
         return element;
@@ -314,7 +314,7 @@ export const addMeasureListener = /*@__PURE__*/ (() => {
             : result;
     };
     return listener => element => {
-        const eventListener = pipe(EventListener.create(() => {
+        const eventListener = pipe(() => {
             const { left, top, width, height, bottom, right, x, y } = element.getBoundingClientRect();
             const rect = {
                 left,
@@ -333,7 +333,7 @@ export const addMeasureListener = /*@__PURE__*/ (() => {
             }
             */
             listener[EventListenerLike_notify](rect);
-        }), Disposable.bindTo(listener));
+        }, EventListener.create, EventListener.toErrorSafeEventListener(), Disposable.bindTo(listener));
         pipe(element, addResizeListener(eventListener));
         for (const scrollContainer of findScrollContainers(element)) {
             pipe(scrollContainer, addEventListener("scroll", eventListener));

@@ -24,6 +24,8 @@ export declare const __EnumeratorLike_current: unique symbol;
 
 export declare const __EnumeratorLike_hasCurrent: unique symbol;
 
+export declare const __EventListenerLike_isErrorSafe: unique symbol;
+
 export declare const __EventListenerLike_notify: unique symbol;
 
 export declare const __EventSourceLike_addListener: unique symbol;

@@ -7,7 +7,7 @@ import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../container
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { error, isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ReplayableLike_buffer, } from "../../../rx.js";
-import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
+import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
@@ -33,6 +33,7 @@ const Publisher_create = /*@__PURE__*/ (() => {
         [__Publisher_observers]: none,
         [ReplayableLike_buffer]: none,
     }), {
+        [EventListenerLike_isErrorSafe]: true,
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         get [MulticastObservableLike_observerCount]() {

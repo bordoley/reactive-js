@@ -64,7 +64,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`AbortSignalEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`AbortSignalEventMap`[`K`]\> |
 
 #### Returns
 
@@ -84,7 +84,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`AnimationEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`AnimationEventMap`[`K`]\> |
 
 #### Returns
 
@@ -104,7 +104,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`AbstractWorkerEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`AbstractWorkerEventMap`[`K`]\> |
 
 #### Returns
 
@@ -124,7 +124,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`AudioScheduledSourceNodeEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`AudioScheduledSourceNodeEventMap`[`K`]\> |
 
 #### Returns
 
@@ -144,7 +144,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`BaseAudioContextEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`BaseAudioContextEventMap`[`K`]\> |
 
 #### Returns
 
@@ -164,7 +164,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`AudioWorkletNodeEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`AudioWorkletNodeEventMap`[`K`]\> |
 
 #### Returns
 
@@ -184,7 +184,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`BroadcastChannelEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`BroadcastChannelEventMap`[`K`]\> |
 
 #### Returns
 
@@ -204,7 +204,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`DocumentEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`DocumentEventMap`[`K`]\> |
 
 #### Returns
 
@@ -224,7 +224,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ElementEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`ElementEventMap`[`K`]\> |
 
 #### Returns
 
@@ -244,7 +244,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaStreamTrackEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`MediaStreamTrackEventMap`[`K`]\> |
 
 #### Returns
 
@@ -264,7 +264,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`EventSourceEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`EventSourceEventMap`[`K`]\> |
 
 #### Returns
 
@@ -284,7 +284,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`FileReaderEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`FileReaderEventMap`[`K`]\> |
 
 #### Returns
 
@@ -304,7 +304,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`FontFaceSetEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`FontFaceSetEventMap`[`K`]\> |
 
 #### Returns
 
@@ -324,7 +324,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`GlobalEventHandlersEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`GlobalEventHandlersEventMap`[`K`]\> |
 
 #### Returns
 
@@ -344,7 +344,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`IDBDatabaseEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`IDBDatabaseEventMap`[`K`]\> |
 
 #### Returns
 
@@ -364,7 +364,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`HTMLBodyElementEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`HTMLBodyElementEventMap`[`K`]\> |
 
 #### Returns
 
@@ -384,7 +384,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`HTMLElementEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`HTMLElementEventMap`[`K`]\> |
 
 #### Returns
 
@@ -404,7 +404,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`HTMLMediaElementEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`HTMLMediaElementEventMap`[`K`]\> |
 
 #### Returns
 
@@ -424,7 +424,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`HTMLVideoElementEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`HTMLVideoElementEventMap`[`K`]\> |
 
 #### Returns
 
@@ -444,7 +444,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`IDBOpenDBRequestEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`IDBOpenDBRequestEventMap`[`K`]\> |
 
 #### Returns
 
@@ -465,7 +465,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`IDBRequestEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`IDBRequestEventMap`[`K`]\> |
 
 #### Returns
 
@@ -485,7 +485,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`IDBTransactionEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`IDBTransactionEventMap`[`K`]\> |
 
 #### Returns
 
@@ -505,7 +505,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MathMLElementEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`MathMLElementEventMap`[`K`]\> |
 
 #### Returns
 
@@ -525,7 +525,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaDevicesEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`MediaDevicesEventMap`[`K`]\> |
 
 #### Returns
 
@@ -545,7 +545,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaKeySessionEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`MediaKeySessionEventMap`[`K`]\> |
 
 #### Returns
 
@@ -565,7 +565,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaQueryListEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`MediaQueryListEventMap`[`K`]\> |
 
 #### Returns
 
@@ -585,7 +585,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaRecorderEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`MediaRecorderEventMap`[`K`]\> |
 
 #### Returns
 
@@ -605,7 +605,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaSourceEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`MediaSourceEventMap`[`K`]\> |
 
 #### Returns
 
@@ -625,7 +625,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MediaStreamEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`MediaStreamEventMap`[`K`]\> |
 
 #### Returns
 
@@ -645,7 +645,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`MessagePortEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`MessagePortEventMap`[`K`]\> |
 
 #### Returns
 
@@ -665,7 +665,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`NotificationEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`NotificationEventMap`[`K`]\> |
 
 #### Returns
 
@@ -685,7 +685,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`OfflineAudioContextEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`OfflineAudioContextEventMap`[`K`]\> |
 
 #### Returns
 
@@ -705,7 +705,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`OffscreenCanvasEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`OffscreenCanvasEventMap`[`K`]\> |
 
 #### Returns
 
@@ -725,7 +725,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`PaymentRequestEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`PaymentRequestEventMap`[`K`]\> |
 
 #### Returns
 
@@ -745,7 +745,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`PerformanceEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`PerformanceEventMap`[`K`]\> |
 
 #### Returns
 
@@ -765,7 +765,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`PermissionStatusEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`PermissionStatusEventMap`[`K`]\> |
 
 #### Returns
 
@@ -785,7 +785,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`PictureInPictureWindowEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`PictureInPictureWindowEventMap`[`K`]\> |
 
 #### Returns
 
@@ -805,7 +805,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCDTMFSenderEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`RTCDTMFSenderEventMap`[`K`]\> |
 
 #### Returns
 
@@ -825,7 +825,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCDataChannelEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`RTCDataChannelEventMap`[`K`]\> |
 
 #### Returns
 
@@ -845,7 +845,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCDtlsTransportEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`RTCDtlsTransportEventMap`[`K`]\> |
 
 #### Returns
 
@@ -865,7 +865,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCIceTransportEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`RTCIceTransportEventMap`[`K`]\> |
 
 #### Returns
 
@@ -885,7 +885,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCPeerConnectionEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`RTCPeerConnectionEventMap`[`K`]\> |
 
 #### Returns
 
@@ -905,7 +905,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RTCSctpTransportEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`RTCSctpTransportEventMap`[`K`]\> |
 
 #### Returns
 
@@ -925,7 +925,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`RemotePlaybackEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`RemotePlaybackEventMap`[`K`]\> |
 
 #### Returns
 
@@ -945,7 +945,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SVGSVGElementEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`SVGSVGElementEventMap`[`K`]\> |
 
 #### Returns
 
@@ -965,7 +965,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ScreenOrientationEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`ScreenOrientationEventMap`[`K`]\> |
 
 #### Returns
 
@@ -985,7 +985,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ServiceWorkerEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`ServiceWorkerEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1005,7 +1005,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ServiceWorkerContainerEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`ServiceWorkerContainerEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1025,7 +1025,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ServiceWorkerRegistrationEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`ServiceWorkerRegistrationEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1045,7 +1045,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`ShadowRootEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`ShadowRootEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1065,7 +1065,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SourceBufferEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`SourceBufferEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1085,7 +1085,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SourceBufferListEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`SourceBufferListEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1105,7 +1105,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SpeechSynthesisEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`SpeechSynthesisEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1125,7 +1125,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SpeechSynthesisUtteranceEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`SpeechSynthesisUtteranceEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1145,7 +1145,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`SVGElementEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`SVGElementEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1165,7 +1165,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`TextTrackEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`TextTrackEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1185,7 +1185,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`TextTrackCueEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`TextTrackCueEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1205,7 +1205,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`TextTrackListEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`TextTrackListEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1225,7 +1225,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`VisualViewportEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`VisualViewportEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1245,7 +1245,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`WebSocketEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`WebSocketEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1266,7 +1266,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`WindowEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`WindowEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1287,7 +1287,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`WorkerEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`WorkerEventMap`[`K`]\> |
 
 #### Returns
 
@@ -1307,7 +1307,7 @@
 | Name | Type |
 | :------ | :------ |
 | `eventName` | `K` |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`XMLHttpRequestEventTargetEventMap`[`K`]\> |
+| `eventListener` | [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`XMLHttpRequestEventTargetEventMap`[`K`]\> |
 
 #### Returns
 

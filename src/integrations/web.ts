@@ -60,6 +60,7 @@ import {
   BufferLike_capacity,
   CollectionLike_count,
   DisposableLike_dispose,
+  ErrorSafeEventListenerLike,
   EventListenerLike,
   EventListenerLike_notify,
   EventPublisherLike,
@@ -174,140 +175,142 @@ interface AddEventListener {
     K extends keyof AbortSignalEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<AbortSignalEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<AbortSignalEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Animation,
     K extends keyof AnimationEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<AnimationEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<AnimationEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends AbstractWorker,
     K extends keyof AbstractWorkerEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<AbstractWorkerEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<AbstractWorkerEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends AudioScheduledSourceNode,
     K extends keyof AudioScheduledSourceNodeEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<AudioScheduledSourceNodeEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<
+      AudioScheduledSourceNodeEventMap[K]
+    >,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends BaseAudioContext,
     K extends keyof BaseAudioContextEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<BaseAudioContextEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<BaseAudioContextEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends AudioWorkletNode,
     K extends keyof AudioWorkletNodeEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<AudioWorkletNodeEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<AudioWorkletNodeEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends BroadcastChannel,
     K extends keyof BroadcastChannelEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<BroadcastChannelEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<BroadcastChannelEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Document,
     K extends keyof DocumentEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<DocumentEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<DocumentEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Element,
     K extends keyof ElementEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<ElementEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<ElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaStreamTrack,
     K extends keyof MediaStreamTrackEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<MediaStreamTrackEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<MediaStreamTrackEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends EventSource,
     K extends keyof EventSourceEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<EventSourceEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<EventSourceEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends FileReader,
     K extends keyof FileReaderEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<FileReaderEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<FileReaderEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends FontFaceSet,
     K extends keyof FontFaceSetEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<FontFaceSetEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<FontFaceSetEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends GlobalEventHandlers,
     K extends keyof GlobalEventHandlersEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<GlobalEventHandlersEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<GlobalEventHandlersEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends IDBDatabase,
     K extends keyof IDBDatabaseEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<IDBDatabaseEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<IDBDatabaseEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends HTMLBodyElement,
     K extends keyof HTMLBodyElementEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<HTMLBodyElementEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<HTMLBodyElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends HTMLElement,
     K extends keyof HTMLElementEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<HTMLElementEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<HTMLElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends HTMLMediaElement,
     K extends keyof HTMLMediaElementEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<HTMLMediaElementEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<HTMLMediaElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends HTMLVideoElement,
     K extends keyof HTMLVideoElementEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<HTMLVideoElementEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<HTMLVideoElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends IDBOpenDBRequest,
     K extends keyof IDBOpenDBRequestEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<IDBOpenDBRequestEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<IDBOpenDBRequestEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends IDBRequest<TDBObject>,
@@ -315,280 +318,288 @@ interface AddEventListener {
     TDBObject = any,
   >(
     eventName: K,
-    eventListener: EventListenerLike<IDBRequestEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<IDBRequestEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends IDBTransaction,
     K extends keyof IDBTransactionEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<IDBTransactionEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<IDBTransactionEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MathMLElement,
     K extends keyof MathMLElementEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<MathMLElementEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<MathMLElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaDevices,
     K extends keyof MediaDevicesEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<MediaDevicesEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<MediaDevicesEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaKeySession,
     K extends keyof MediaKeySessionEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<MediaKeySessionEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<MediaKeySessionEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaQueryList,
     K extends keyof MediaQueryListEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<MediaQueryListEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<MediaQueryListEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaRecorder,
     K extends keyof MediaRecorderEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<MediaRecorderEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<MediaRecorderEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaSource | MediaStream,
     K extends keyof MediaSourceEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<MediaSourceEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<MediaSourceEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaStream,
     K extends keyof MediaStreamEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<MediaStreamEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<MediaStreamEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MessagePort,
     K extends keyof MessagePortEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<MessagePortEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<MessagePortEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Notification,
     K extends keyof NotificationEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<NotificationEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<NotificationEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends OfflineAudioContext,
     K extends keyof OfflineAudioContextEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<OfflineAudioContextEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<OfflineAudioContextEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends OffscreenCanvas,
     K extends keyof OffscreenCanvasEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<OffscreenCanvasEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<OffscreenCanvasEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends PaymentRequest,
     K extends keyof PaymentRequestEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<PaymentRequestEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<PaymentRequestEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Performance,
     K extends keyof PerformanceEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<PerformanceEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<PerformanceEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends PermissionStatus,
     K extends keyof PermissionStatusEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<PermissionStatusEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<PermissionStatusEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends PictureInPictureWindow,
     K extends keyof PictureInPictureWindowEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<PictureInPictureWindowEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<
+      PictureInPictureWindowEventMap[K]
+    >,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCDTMFSender,
     K extends keyof RTCDTMFSenderEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<RTCDTMFSenderEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<RTCDTMFSenderEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCDataChannel,
     K extends keyof RTCDataChannelEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<RTCDataChannelEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<RTCDataChannelEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCDtlsTransport,
     K extends keyof RTCDtlsTransportEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<RTCDtlsTransportEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<RTCDtlsTransportEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCIceTransport,
     K extends keyof RTCIceTransportEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<RTCIceTransportEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<RTCIceTransportEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCPeerConnection,
     K extends keyof RTCPeerConnectionEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<RTCPeerConnectionEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<RTCPeerConnectionEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCSctpTransport,
     K extends keyof RTCSctpTransportEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<RTCSctpTransportEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<RTCSctpTransportEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RemotePlayback,
     K extends keyof RemotePlaybackEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<RemotePlaybackEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<RemotePlaybackEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SVGSVGElement,
     K extends keyof SVGSVGElementEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<SVGSVGElementEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<SVGSVGElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends ScreenOrientation,
     K extends keyof ScreenOrientationEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<ScreenOrientationEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<ScreenOrientationEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends ServiceWorker,
     K extends keyof ServiceWorkerEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<ServiceWorkerEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<ServiceWorkerEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends ServiceWorkerContainer,
     K extends keyof ServiceWorkerContainerEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<ServiceWorkerContainerEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<
+      ServiceWorkerContainerEventMap[K]
+    >,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends ServiceWorkerRegistration,
     K extends keyof ServiceWorkerRegistrationEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<ServiceWorkerRegistrationEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<
+      ServiceWorkerRegistrationEventMap[K]
+    >,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends ShadowRoot,
     K extends keyof ShadowRootEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<ShadowRootEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<ShadowRootEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SourceBuffer,
     K extends keyof SourceBufferEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<SourceBufferEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<SourceBufferEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SourceBufferList,
     K extends keyof SourceBufferListEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<SourceBufferListEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<SourceBufferListEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SpeechSynthesis,
     K extends keyof SpeechSynthesisEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<SpeechSynthesisEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<SpeechSynthesisEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SpeechSynthesisUtterance,
     K extends keyof SpeechSynthesisUtteranceEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<SpeechSynthesisUtteranceEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<
+      SpeechSynthesisUtteranceEventMap[K]
+    >,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SVGElement,
     K extends keyof SVGElementEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<SVGElementEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<SVGElementEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends TextTrack,
     K extends keyof TextTrackEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<TextTrackEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<TextTrackEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends TextTrackCue,
     K extends keyof TextTrackCueEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<TextTrackCueEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<TextTrackCueEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends TextTrackList,
     K extends keyof TextTrackListEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<TextTrackListEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<TextTrackListEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends VisualViewport,
     K extends keyof VisualViewportEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<VisualViewportEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<VisualViewportEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends WebSocket,
     K extends keyof WebSocketEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<WebSocketEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<WebSocketEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Window,
@@ -596,7 +607,7 @@ interface AddEventListener {
     T,
   >(
     eventName: K,
-    eventListener: EventListenerLike<WindowEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<WindowEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Worker,
@@ -604,20 +615,22 @@ interface AddEventListener {
     T,
   >(
     eventName: K,
-    eventListener: EventListenerLike<WorkerEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<WorkerEventMap[K]>,
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends XMLHttpRequestEventTarget,
     K extends keyof XMLHttpRequestEventTargetEventMap,
   >(
     eventName: K,
-    eventListener: EventListenerLike<XMLHttpRequestEventTargetEventMap[K]>,
+    eventListener: ErrorSafeEventListenerLike<
+      XMLHttpRequestEventTargetEventMap[K]
+    >,
   ): Function1<TEventTarget, TEventTarget>;
 }
 
 export const addEventListener: AddEventListener["addEventListener"] = ((
     eventName: string,
-    eventListener: EventListenerLike<unknown>,
+    eventListener: ErrorSafeEventListenerLike<unknown>,
   ): Function1<
     {
       addEventListener(
@@ -643,13 +656,17 @@ export const addEventListener: AddEventListener["addEventListener"] = ((
     }
   > =>
   target => {
-    pipe(
+    const errorSafeEventListener = pipe(
       eventListener,
       Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
       }),
     );
-    const listener = bindMethod(eventListener, EventListenerLike_notify);
+
+    const listener = bindMethod(
+      errorSafeEventListener,
+      EventListenerLike_notify,
+    );
 
     target.addEventListener(eventName, listener, {
       passive: true,
@@ -1599,6 +1616,7 @@ export const addScrollListener: <TElement extends HTMLElement>(
           });
         },
         EventListener.create,
+        EventListener.toErrorSafeEventListener(),
         Disposable.bindTo(listener),
       );
 
@@ -1701,7 +1719,7 @@ export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
 
   return listener => element => {
     const eventListener = pipe(
-      EventListener.create(() => {
+      () => {
         const { left, top, width, height, bottom, right, x, y }: DOMRect =
           element.getBoundingClientRect();
 
@@ -1724,7 +1742,9 @@ export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
         */
 
         listener[EventListenerLike_notify](rect);
-      }),
+      },
+      EventListener.create,
+      EventListener.toErrorSafeEventListener(),
       Disposable.bindTo(listener),
     );
 

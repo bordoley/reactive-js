@@ -14,7 +14,7 @@ An `EventListener` that can be used to publish notifications to one or more obse
 
 ## Hierarchy
 
-- [`EventListenerLike`](util.EventListenerLike.md)<`T`\>
+- [`ErrorSafeEventListenerLike`](util.ErrorSafeEventListenerLike.md)<`T`\>
 
 - [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`T`\>
 

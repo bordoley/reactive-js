@@ -25,6 +25,8 @@ export const __EnumeratorLike_current: unique symbol;
 /** @type {unique symbol} */
 export const __EnumeratorLike_hasCurrent: unique symbol;
 /** @type {unique symbol} */
+export const __EventListenerLike_isErrorSafe: unique symbol;
+/** @type {unique symbol} */
 export const __EventListenerLike_notify: unique symbol;
 /** @type {unique symbol} */
 export const __EventSourceLike_addListener: unique symbol;

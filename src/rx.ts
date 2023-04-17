@@ -19,7 +19,7 @@ import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
   DisposableLike,
-  EventListenerLike,
+  ErrorSafeEventListenerLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   ReplayableLike,
@@ -145,7 +145,7 @@ export interface MulticastObservableLike<T>
  * @category Container
  */
 export interface PublisherLike<T = unknown>
-  extends EventListenerLike<T>,
+  extends ErrorSafeEventListenerLike<T>,
     MulticastObservableLike<T> {}
 
 /**

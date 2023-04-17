@@ -34,6 +34,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike,
+  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventSourceLike,
   EventSourceLike_addListener,
@@ -49,7 +50,9 @@ import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndex
 export interface EventKeepMapPublisherLike<T, TOut = T>
   extends EventSourceLike<TOut>,
     EventListenerLike<T>,
-    DisposableLike {}
+    DisposableLike {
+  readonly [EventListenerLike_isErrorSafe]: true;
+}
 
 const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
   predicate: Predicate<T>,
@@ -71,6 +74,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
         instance: Pick<
           EventKeepMapPublisherLike<T, TOut>,
           | typeof EventSourceLike_addListener
+          | typeof EventListenerLike_isErrorSafe
           | typeof EventListenerLike_notify
           | typeof EventSourceLike_listenerCount
         > &
@@ -113,6 +117,8 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
         [MappingLike_selector]: none,
       }),
       {
+        [EventListenerLike_isErrorSafe]: true as const,
+
         get [EventSourceLike_listenerCount]() {
           unsafeCast<TProperties>(this);
           return this.l.size;

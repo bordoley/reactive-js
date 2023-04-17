@@ -28,6 +28,8 @@ export const __EnumeratorLike_current = /*@__PURE__*/ symbol("EnumeratorLike_cur
 /** @type {unique symbol} */
 export const __EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol("EnumeratorLike_hasCurrent");
 /** @type {unique symbol} */
+export const __EventListenerLike_isErrorSafe = /*@__PURE__*/ symbol("EventListenerLike_isErrorSafe");
+/** @type {unique symbol} */
 export const __EventListenerLike_notify = /*@__PURE__*/ symbol("EventListenerLike_notify");
 /** @type {unique symbol} */
 export const __EventSourceLike_addListener = /*@__PURE__*/ symbol("EventSourceLike_addListener");

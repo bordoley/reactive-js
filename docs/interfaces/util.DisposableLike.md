@@ -18,6 +18,8 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`EventListenerLike`](util.EventListenerLike.md)
 
+  ↳ [`ErrorSafeEventListenerLike`](util.ErrorSafeEventListenerLike.md)
+
 ## Table of contents
 
 ### Properties

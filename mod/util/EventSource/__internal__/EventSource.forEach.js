@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { none, partial, pipe } from "../../../functions.js";
-import { EventListenerLike_notify, } from "../../../util.js";
+import { EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../../../util.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
@@ -17,6 +17,7 @@ const EventSource_forEach =
     }, props({
         ef: none,
     }), {
+        [EventListenerLike_isErrorSafe]: false,
         [EventListenerLike_notify](next) {
             this.ef(next);
             this[DelegatingLike_delegate][EventListenerLike_notify](next);

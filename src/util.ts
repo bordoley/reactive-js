@@ -5,6 +5,7 @@ import {
   __DisposableLike_dispose as DisposableLike_dispose,
   __DisposableLike_error as DisposableLike_error,
   __DisposableLike_isDisposed as DisposableLike_isDisposed,
+  __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe,
   __EventListenerLike_notify as EventListenerLike_notify,
   __EventSourceLike_addListener as EventSourceLike_addListener,
   __EventSourceLike_listenerCount as EventSourceLike_listenerCount,
@@ -27,6 +28,7 @@ export {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventSourceLike_addListener,
   EventSourceLike_listenerCount,
@@ -145,6 +147,18 @@ export interface ReplayableLike<T = unknown> {
  * @noInheritDoc
  */
 export interface EventListenerLike<T = unknown> extends DisposableLike {
+  readonly [EventListenerLike_isErrorSafe]: boolean;
+
+  [EventListenerLike_notify](event: T): void;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface ErrorSafeEventListenerLike<T = unknown>
+  extends DisposableLike {
+  readonly [EventListenerLike_isErrorSafe]: true;
+
   [EventListenerLike_notify](event: T): void;
 }
 
@@ -165,4 +179,4 @@ export interface EventSourceLike<T = unknown>
  */
 export interface EventPublisherLike<T = unknown>
   extends EventSourceLike<T>,
-    EventListenerLike<T> {}
+    ErrorSafeEventListenerLike<T> {}

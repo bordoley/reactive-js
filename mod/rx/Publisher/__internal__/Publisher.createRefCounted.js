@@ -4,7 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { pipe } from "../../../functions.js";
 import { MulticastObservableLike_observerCount, ObservableLike_observe, } from "../../../rx.js";
-import { DisposableLike_dispose, EventListenerLike_notify, } from "../../../util.js";
+import { DisposableLike_dispose, EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -17,6 +17,7 @@ const Publisher_createRefCounted = /*@__PURE__*/ (() => {
         init(Delegating_mixin(), instance, delegate);
         return instance;
     }, props({}), {
+        [EventListenerLike_isErrorSafe]: true,
         [EventListenerLike_notify](next) {
             this[DelegatingLike_delegate][EventListenerLike_notify](next);
         },

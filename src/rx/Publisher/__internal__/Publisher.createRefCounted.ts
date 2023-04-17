@@ -18,6 +18,7 @@ import {
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
+  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
 } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
@@ -39,7 +40,9 @@ const Publisher_createRefCounted: <T>(options?: {
       function RefCountedPublisher(
         instance: Pick<
           PublisherLike<T>,
-          typeof ObservableLike_observe | typeof EventListenerLike_notify
+          | typeof ObservableLike_observe
+          | typeof EventListenerLike_isErrorSafe
+          | typeof EventListenerLike_notify
         >,
         delegate: PublisherLike<T>,
       ): PublisherLike<T> {
@@ -51,6 +54,8 @@ const Publisher_createRefCounted: <T>(options?: {
       },
       props({}),
       {
+        [EventListenerLike_isErrorSafe]: true as const,
+
         [EventListenerLike_notify](
           this: DelegatingLike<PublisherLike<T>>,
           next: T,

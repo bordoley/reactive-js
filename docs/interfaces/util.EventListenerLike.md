@@ -16,15 +16,21 @@
 
   ↳ **`EventListenerLike`**
 
-  ↳↳ [`PublisherLike`](rx.PublisherLike.md)
-
-  ↳↳ [`EventPublisherLike`](util.EventPublisherLike.md)
-
 ## Table of contents
+
+### Properties
+
+- [[\_\_\_EventListenerLike\_isErrorSafe]](util.EventListenerLike.md#[___eventlistenerlike_iserrorsafe])
 
 ### Methods
 
 - [[\_\_\_EventListenerLike\_notify]](util.EventListenerLike.md#[___eventlistenerlike_notify])
+
+## Properties
+
+### [\_\_\_EventListenerLike\_isErrorSafe]
+
+• `Readonly` **[\_\_\_EventListenerLike\_isErrorSafe]**: `boolean`
 
 ## Methods
 

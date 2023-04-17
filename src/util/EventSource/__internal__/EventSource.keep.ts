@@ -17,6 +17,7 @@ import { Keep } from "../../../containers.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
   EventListenerLike,
+  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventSourceLike,
 } from "../../../util.js";
@@ -35,7 +36,8 @@ const EventSource_keep: Keep<EventSourceLike>["keep"] = /*@__PURE__*/ (() => {
         function KeepEventListener(
           instance: Pick<
             EventListenerLike<T>,
-            typeof EventListenerLike_notify
+            | typeof EventListenerLike_isErrorSafe
+            | typeof EventListenerLike_notify
           > &
             PredicatedLike<T>,
           delegate: EventListenerLike<T>,
@@ -51,6 +53,8 @@ const EventSource_keep: Keep<EventSourceLike>["keep"] = /*@__PURE__*/ (() => {
           [PredicatedLike_predicate]: none,
         }),
         {
+          [EventListenerLike_isErrorSafe]: false,
+
           [EventListenerLike_notify](
             this: PredicatedLike<T> &
               DelegatingLike<EventListenerLike<T>> &

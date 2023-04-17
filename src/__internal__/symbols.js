@@ -60,6 +60,11 @@ export const __EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __EventListenerLike_isErrorSafe = /*@__PURE__*/ symbol(
+  "EventListenerLike_isErrorSafe",
+);
+
+/** @type {unique symbol} */
 export const __EventListenerLike_notify = /*@__PURE__*/ symbol(
   "EventListenerLike_notify",
 );

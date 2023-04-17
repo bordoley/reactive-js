@@ -13,6 +13,7 @@ import { ForEach } from "../../../containers.js";
 import { SideEffect1, none, partial, pipe } from "../../../functions.js";
 import {
   EventListenerLike,
+  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventSourceLike,
 } from "../../../util.js";
@@ -32,7 +33,8 @@ const EventSource_forEach: ForEach<EventSourceLike>["forEach"] =
           function ForEachEventListener(
             instance: Pick<
               EventListenerLike<T>,
-              typeof EventListenerLike_notify
+              | typeof EventListenerLike_isErrorSafe
+              | typeof EventListenerLike_notify
             > & { ef: SideEffect1<T> },
             delegate: EventListenerLike<T>,
             effect: SideEffect1<T>,
@@ -47,6 +49,8 @@ const EventSource_forEach: ForEach<EventSourceLike>["forEach"] =
             ef: none,
           }),
           {
+            [EventListenerLike_isErrorSafe]: false,
+
             [EventListenerLike_notify](
               this: { ef: SideEffect1<T> } & DelegatingLike<
                 EventListenerLike<T>

@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { pipe, unsafeCast } from "../../../functions.js";
-import { DisposableLike_dispose, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, ReplayableLike_buffer, } from "../../../util.js";
+import { DisposableLike_dispose, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, ReplayableLike_buffer, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -14,6 +14,7 @@ const EventPublisher_createRefCounted = /*@__PURE__*/ (() => {
         init(Delegating_mixin(), instance, delegate);
         return instance;
     }, props({}), {
+        [EventListenerLike_isErrorSafe]: true,
         get [ReplayableLike_buffer]() {
             unsafeCast(this);
             return this[DelegatingLike_delegate][ReplayableLike_buffer];

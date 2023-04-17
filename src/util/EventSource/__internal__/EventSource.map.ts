@@ -17,6 +17,7 @@ import { Map } from "../../../containers.js";
 import { Function1, none, partial, pipe } from "../../../functions.js";
 import {
   EventListenerLike,
+  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventSourceLike,
 } from "../../../util.js";
@@ -35,7 +36,8 @@ const EventSource_map: Map<EventSourceLike>["map"] = /*@__PURE__*/ (() => {
         function MapEventListener(
           instance: Pick<
             EventListenerLike<TA>,
-            typeof EventListenerLike_notify
+            | typeof EventListenerLike_isErrorSafe
+            | typeof EventListenerLike_notify
           > &
             MappingLike<TA, TB>,
           delegate: EventListenerLike<TB>,
@@ -51,6 +53,8 @@ const EventSource_map: Map<EventSourceLike>["map"] = /*@__PURE__*/ (() => {
           [MappingLike_selector]: none,
         }),
         {
+          [EventListenerLike_isErrorSafe]: false,
+
           [EventListenerLike_notify](
             this: MappingLike<TA, TB> &
               DelegatingLike<EventListenerLike<TB>> &

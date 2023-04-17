@@ -14,6 +14,6 @@
 
 - [`EventSourceLike`](util.EventSourceLike.md)<`T`\>
 
-- [`EventListenerLike`](util.EventListenerLike.md)<`T`\>
+- [`ErrorSafeEventListenerLike`](util.ErrorSafeEventListenerLike.md)<`T`\>
 
   ↳ **`EventPublisherLike`**

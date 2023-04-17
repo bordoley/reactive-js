@@ -13,6 +13,7 @@ import { pipe, unsafeCast } from "../../../functions.js";
 import {
   DisposableLike_dispose,
   EventListenerLike,
+  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike_addListener,
@@ -34,6 +35,7 @@ const EventPublisher_createRefCounted: <T>(options?: {
         instance: Pick<
           EventPublisherLike<T>,
           | typeof EventSourceLike_addListener
+          | typeof EventListenerLike_isErrorSafe
           | typeof EventListenerLike_notify
           | typeof EventSourceLike_listenerCount
           | typeof ReplayableLike_buffer
@@ -47,6 +49,8 @@ const EventPublisher_createRefCounted: <T>(options?: {
       },
       props({}),
       {
+        [EventListenerLike_isErrorSafe]: true as const,
+
         get [ReplayableLike_buffer]() {
           unsafeCast<DelegatingLike<EventPublisherLike<T>>>(this);
           return this[DelegatingLike_delegate][ReplayableLike_buffer];

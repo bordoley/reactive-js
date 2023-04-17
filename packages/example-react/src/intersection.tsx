@@ -32,7 +32,7 @@ const IntersectionApp = () => {
   return (
     <div
       style={{
-        height: "400px",
+        height: "100vh",
         overflowY: "scroll",
       }}
     >

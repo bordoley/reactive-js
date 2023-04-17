@@ -36,6 +36,7 @@ import {
   CollectionLike_count,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   KeyedCollectionLike_get,
   QueueableLike_enqueue,
@@ -63,6 +64,7 @@ const Publisher_create: <T>(options?: {
           | typeof ObservableLike_isRunnable
           | typeof MulticastObservableLike_observerCount
           | typeof ReplayableLike_buffer
+          | typeof EventListenerLike_isErrorSafe
           | typeof EventListenerLike_notify
         > &
           Mutable<TProperties>,
@@ -103,6 +105,7 @@ const Publisher_create: <T>(options?: {
         [ReplayableLike_buffer]: none,
       }),
       {
+        [EventListenerLike_isErrorSafe]: true as const,
         [ObservableLike_isEnumerable]: false as const,
         [ObservableLike_isRunnable]: false as const,
 
