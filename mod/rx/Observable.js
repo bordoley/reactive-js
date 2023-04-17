@@ -208,6 +208,9 @@ export const throwIfEmpty = Observable_throwIfEmpty;
 export const throws = Observable_throws;
 export const timeout = Observable_timeout;
 export const toEnumerable = Observable_toEnumerable;
+/**
+ * @category Transform
+ */
 export const toEventSource = Observable_toEventSource;
 export const toObservable = identity;
 export const toRunnable = Observable_toRunnable;

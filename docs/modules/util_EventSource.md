@@ -6,6 +6,7 @@
 
 ### Constructor Functions
 
+- [create](util_EventSource.md#create)
 - [empty](util_EventSource.md#empty)
 
 ### Operator Functions
@@ -21,6 +22,30 @@
 - [toObservable](util_EventSource.md#toobservable)
 
 ## Constructor Functions
+
+### create
+
+▸ **create**<`T`\>(`setup`, `options?`): [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `setup` | [`SideEffect1`](functions.md#sideeffect1)<[`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T`\>\> |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
+
+___
 
 ### empty
 

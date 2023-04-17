@@ -503,6 +503,9 @@ export const timeout: Timeout<ObservableLike>["timeout"] = Observable_timeout;
 export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
   Observable_toEnumerable;
 
+/**
+ * @category Transform
+ */
 export const toEventSource = Observable_toEventSource;
 
 export const toObservable: ToObservable<ObservableLike>["toObservable"] =

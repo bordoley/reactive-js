@@ -191,4 +191,6 @@ export interface Rect {
 }
 export declare const addMeasureListener: <TElement extends HTMLElement | SVGElement>(listener: EventListenerLike<Rect>) => Function1<TElement, TElement>;
 export declare const observeMeasure: <TElement extends HTMLElement | SVGElement>() => Function1<TElement, ObservableLike<Rect>>;
-export declare const intersectionWith: (parent?: Document | Element) => Function1<Element, EventSourceLike<IntersectionObserverEntry>>;
+export declare const intersectionWith: (parent?: Document | Element, options?: {
+    readonly replay?: number;
+}) => Function1<Element, EventSourceLike<IntersectionObserverEntry>>;

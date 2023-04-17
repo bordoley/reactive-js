@@ -76,7 +76,7 @@ import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.j
 import * as Disposable from "../util/Disposable.js";
 import * as EventListener from "../util/EventListener.js";
 import * as EventPublisher from "../util/EventPublisher.js";
-import IndexedBufferCollection_empty from "../util/IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
+import * as RxEventSource from "../util/EventSource.js";
 
 export {
   WindowLocationStreamLike_goBack,
@@ -1804,6 +1804,7 @@ export const observeMeasure: <
 
 export const intersectionWith: (
   parent?: Document | Element,
+  options?: { readonly replay?: number },
 ) => Function1<Element, EventSourceLike<IntersectionObserverEntry>> =
   /*@__PURE__*/ (() => {
     const intersectionObservers =
@@ -1817,92 +1818,76 @@ export const intersectionWith: (
         >
       >(Map);
 
-    class IntersectionObserverEventSource
-      implements EventSourceLike<IntersectionObserverEntry>
-    {
-      constructor(readonly root: Document | Element, readonly child: Element) {}
+    return (root = document, options) =>
+      child =>
+        RxEventSource.create(listener => {
+          const publisher =
+            eventPublishers.get(root)?.get(child) ??
+            (() => {
+              const publisher =
+                EventPublisher.createRefCounted<IntersectionObserverEntry>();
 
-      get [ReplayableLike_buffer](): IndexedBufferCollectionLike<IntersectionObserverEntry> {
-        return IndexedBufferCollection_empty();
-      }
+              const parentMap =
+                eventPublishers.get(root) ??
+                (() => {
+                  const parentMap =
+                    newInstance<
+                      Map<
+                        Element,
+                        EventPublisherLike<IntersectionObserverEntry>
+                      >
+                    >(Map);
+                  eventPublishers.set(root, parentMap);
+                  return parentMap;
+                })();
+              parentMap.set(child, publisher);
 
-      [EventSourceLike_addListener](
-        listener: EventListenerLike<IntersectionObserverEntry>,
-      ): void {
-        const { root, child } = this;
-        const publisher =
-          eventPublishers.get(root)?.get(child) ??
-          (() => {
-            const publisher =
-              EventPublisher.createRefCounted<IntersectionObserverEntry>();
+              const intersectionObserver =
+                intersectionObservers.get(root) ??
+                (() => {
+                  const cb = (entries: IntersectionObserverEntry[]) => {
+                    for (const entry of entries) {
+                      const { target } = entry;
+                      const listener = eventPublishers.get(root)?.get(target);
 
-            const parentMap =
-              eventPublishers.get(root) ??
-              (() => {
-                const parentMap =
-                  newInstance<
-                    Map<Element, EventPublisherLike<IntersectionObserverEntry>>
-                  >(Map);
-                eventPublishers.set(root, parentMap);
-                return parentMap;
-              })();
-            parentMap.set(child, publisher);
+                      if (isNone(listener)) {
+                        continue;
+                      }
 
-            const intersectionObserver =
-              intersectionObservers.get(root) ??
-              (() => {
-                const cb = (entries: IntersectionObserverEntry[]) => {
-                  for (const entry of entries) {
-                    const { target } = entry;
-                    const listener = eventPublishers.get(root)?.get(target);
-
-                    if (isNone(listener)) {
-                      continue;
+                      listener[EventListenerLike_notify](entry);
                     }
+                  };
 
-                    listener[EventListenerLike_notify](entry);
+                  const intersectionObserver = newInstance(
+                    IntersectionObserver,
+                    cb,
+                    { root },
+                  );
+                  intersectionObservers.set(root, intersectionObserver);
+                  return intersectionObserver;
+                })();
+              intersectionObserver.observe(child);
+
+              return pipe(
+                publisher,
+                Disposable.onDisposed(() => {
+                  const intersectionObserver = intersectionObservers.get(root);
+                  intersectionObserver?.unobserve(child);
+
+                  const childToPublisherMap = eventPublishers.get(root);
+                  childToPublisherMap?.delete(child);
+
+                  if ((childToPublisherMap?.size ?? 0) > 0) {
+                    return;
                   }
-                };
 
-                const intersectionObserver = newInstance(
-                  IntersectionObserver,
-                  cb,
-                  { root },
-                );
-                intersectionObservers.set(root, intersectionObserver);
-                return intersectionObserver;
-              })();
-            intersectionObserver.observe(child);
+                  eventPublishers.delete(root);
+                  intersectionObserver?.disconnect();
+                  intersectionObservers.delete(root);
+                }),
+              );
+            })();
 
-            return pipe(
-              publisher,
-              Disposable.onDisposed(() => {
-                const intersectionObserver = intersectionObservers.get(root);
-                intersectionObserver?.unobserve(child);
-
-                const childToPublisherMap = eventPublishers.get(root);
-                childToPublisherMap?.delete(child);
-
-                if ((childToPublisherMap?.size ?? 0) > 0) {
-                  return;
-                }
-
-                eventPublishers.delete(root);
-                intersectionObserver?.disconnect();
-                intersectionObservers.delete(root);
-              }),
-            );
-          })();
-
-        publisher[EventSourceLike_addListener](listener);
-      }
-    }
-
-    return root => child => {
-      return newInstance(
-        IntersectionObserverEventSource,
-        root ?? document,
-        child,
-      );
-    };
+          publisher[EventSourceLike_addListener](listener);
+        }, options);
   })();

@@ -95,7 +95,6 @@
 ### Other Functions
 
 - [subscribe](rx_Observable.md#subscribe)
-- [toEventSource](rx_Observable.md#toeventsource)
 
 ### Transform Functions
 
@@ -103,6 +102,7 @@
 - [lastAsync](rx_Observable.md#lastasync)
 - [multicast](rx_Observable.md#multicast)
 - [toEnumerable](rx_Observable.md#toenumerable)
+- [toEventSource](rx_Observable.md#toeventsource)
 - [toObservable](rx_Observable.md#toobservable)
 - [toRunnable](rx_Observable.md#torunnable)
 
@@ -3645,32 +3645,6 @@ ___
 
 ___
 
-### toEventSource
-
-▸ **toEventSource**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-___
-
 ## Transform Functions
 
 ### firstAsync
@@ -3770,6 +3744,32 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+
+___
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>
 
 ___
 

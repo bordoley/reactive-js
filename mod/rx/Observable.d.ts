@@ -183,11 +183,14 @@ export declare const throws: Throws<ObservableLike, {
 }>["throws"];
 export declare const timeout: Timeout<ObservableLike>["timeout"];
 export declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
+/**
+ * @category Transform
+ */
 export declare const toEventSource: <T>(scheduler: SchedulerLike, options?: {
     readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;
     readonly replay?: number | undefined;
-}) => Function1<ObservableLike<T>, import("../util.js").EventSourceLike<T> & DisposableLike>;
+}) => Function1<ObservableLike<T>, import("../util.js").EventSourceLike<T>>;
 export declare const toObservable: ToObservable<ObservableLike>["toObservable"];
 export declare const toRunnable: ToRunnable<ObservableLike>["toRunnable"];
 export declare const withCurrentTime: WithCurrentTime<ObservableLike>["withCurrentTime"];

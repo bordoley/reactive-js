@@ -1401,13 +1401,15 @@ ___
 
 ### intersectionWith
 
-▸ **intersectionWith**(`parent?`): [`Function1`](functions.md#function1)<`Element`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`IntersectionObserverEntry`\>\>
+▸ **intersectionWith**(`parent?`, `options?`): [`Function1`](functions.md#function1)<`Element`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`IntersectionObserverEntry`\>\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `parent?` | `Element` \| `Document` |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
 
 #### Returns
 
