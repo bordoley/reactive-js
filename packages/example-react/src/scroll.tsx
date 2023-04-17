@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDOMClient from "react-dom/client";
 import {
   useAnimate,
@@ -7,16 +7,17 @@ import {
 import {
   useAnimation,
   useEventPublisher,
+  useEventSource,
 } from "@reactive-js/core/integrations/react";
 import {
-  DisposableLike_dispose,
   EventSourceLike,
-  EventSourceLike_addListener,
 } from "@reactive-js/core/util";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
-import { bindMethod, invoke, pipe } from "@reactive-js/core/functions";
+import {
+  bindMethod,
+  pipeLazy,
+} from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/util/EventSource";
-import * as EventListener from "@reactive-js/core/util/EventListener";
 import { EventListenerLike_notify } from "@reactive-js/core/util";
 
 const AnimatedCircle = ({
@@ -89,9 +90,10 @@ const ScrollApp = () => {
 
   const publishedAnimation = useEventPublisher<number>();
 
-  useEffect(() => {
-    const eventListener = EventListener.create(
-      ({ value }: { value: ScrollValue }) => {
+  useEventSource(
+    pipeLazy(
+      scrollAnimation,
+      EventSource.forEach(({ value }: { value: ScrollValue }) => {
         const pos = value.y.progress;
         const velocity = value.y.velocity;
 
@@ -110,19 +112,23 @@ const ScrollApp = () => {
           // in the animation.
           dispatchSpring(false);
         }
-      },
-    );
+      }),
+      EventSource.ignoreElements(),
+    ),
+    [scrollAnimation, dispatchSpring],
+  );
 
-    scrollAnimation[EventSourceLike_addListener](eventListener);
-
-    pipe(
+  useEventSource(
+    pipeLazy(
       spring,
-      EventSource.map(x => x.value),
-      invoke(EventSourceLike_addListener, publishedAnimation),
-    );
-
-    return bindMethod(eventListener, DisposableLike_dispose);
-  }, [scrollAnimation, publishedAnimation, spring]);
+      EventSource.pick("value"),
+      EventSource.forEach(
+        bindMethod(publishedAnimation, EventListenerLike_notify),
+      ),
+      EventSource.ignoreElements(),
+    ),
+    [spring, publishedAnimation],
+  );
 
   return (
     <div

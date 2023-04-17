@@ -20,7 +20,7 @@ const IntersectionApp = () => {
     () =>
       pipeSome(
         endOfPageRef,
-        intersectionWith(),
+        intersectionWith(document, {replay: 1}),
         EventSource.pick("isIntersecting"),
         EventSource.keep(isTrue),
         EventSource.forEach(pipeLazy(incrementBy(10), updateCount)),
