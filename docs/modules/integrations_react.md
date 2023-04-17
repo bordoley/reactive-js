@@ -18,6 +18,7 @@
 
 - [createComponent](integrations_react.md#createcomponent)
 - [useEventPublisher](integrations_react.md#useeventpublisher)
+- [useEventSource](integrations_react.md#useeventsource)
 
 ## Hook Functions
 
@@ -557,3 +558,44 @@ ___
 #### Returns
 
 [`EventPublisherLike`](../interfaces/util.EventPublisherLike.md)<`T`\>
+
+___
+
+### useEventSource
+
+▸ **useEventSource**<`T`\>(`eventSource`): [`Optional`](functions.md#optional)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventSource` | [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\> |
+
+#### Returns
+
+[`Optional`](functions.md#optional)<`T`\>
+
+▸ **useEventSource**<`T`\>(`factory`, `deps`): [`Optional`](functions.md#optional)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\> |
+| `deps` | readonly `unknown`[] |
+
+#### Returns
+
+[`Optional`](functions.md#optional)<`T`\>

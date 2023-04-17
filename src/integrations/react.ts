@@ -85,11 +85,13 @@ import {
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
+  EventSourceLike_addListener,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
+import * as EventListener from "../util/EventListener.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 import * as EventSource from "../util/EventSource.js";
 
@@ -172,6 +174,39 @@ const createAnimationFrameSchedulerFactory = (priority?: number) => () => {
     Scheduler.createAnimationFrameScheduler(hostScheduler),
     Disposable.add(hostScheduler),
   );
+};
+
+interface UseEventSource {
+  useEventSource<T>(eventSource: EventSourceLike<T>): Optional<T>;
+
+  useEventSource<T>(
+    factory: Factory<EventSourceLike<T>>,
+    deps: readonly unknown[],
+  ): Optional<T>;
+}
+export const useEventSource: UseEventSource["useEventSource"] = <T>(
+  eventSourceOrFactory: EventSourceLike<T> | Factory<EventSourceLike<T>>,
+  depsOrNone?: readonly unknown[],
+): Optional<T> => {
+  const [state, updateState] = useState<Optional<T>>(none);
+  const [error, updateError] = useState<Optional<Error>>(none);
+
+  const eventSource = isFunction(eventSourceOrFactory)
+    ? useMemo(eventSourceOrFactory, depsOrNone as readonly unknown[])
+    : eventSourceOrFactory;
+
+  useEffect(() => {
+    const listener = pipe(
+      EventListener.create<T>(v => updateState(_ => v)),
+      Disposable.onError(updateError),
+    );
+
+    eventSource[EventSourceLike_addListener](listener);
+
+    return bindMethod(listener, DisposableLike_dispose);
+  }, [eventSource, updateState, updateError]);
+
+  return isSome(error) ? raiseError<T>(error) : state;
 };
 
 interface UseObservable {

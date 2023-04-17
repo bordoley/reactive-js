@@ -10,6 +10,8 @@
 
 ### Operator Functions
 
+- [forEach](util_EventSource.md#foreach)
+- [ignoreElements](util_EventSource.md#ignoreelements)
 - [keep](util_EventSource.md#keep)
 - [map](util_EventSource.md#map)
 - [pick](util_EventSource.md#pick)
@@ -45,6 +47,54 @@ Return an ContainerLike that emits no items.
 ___
 
 ## Operator Functions
+
+### forEach
+
+▸ **forEach**<`T`\>(`effect`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerOperator that applies the side effect function to each
+value emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `unknown`, `T`\>
+
+___
 
 ### keep
 

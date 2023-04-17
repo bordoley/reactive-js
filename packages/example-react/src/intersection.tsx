@@ -1,27 +1,31 @@
 import React, { useState } from "react";
 import ReactDOMClient from "react-dom/client";
 import { intersectionWith } from "@reactive-js/core/integrations/web";
-import { Optional, isTrue, none, pipeSome } from "@reactive-js/core/functions";
-import { useObservable } from "@reactive-js/core/integrations/react";
+import {
+  Optional,
+  incrementBy,
+  isTrue,
+  none,
+  pipeLazy,
+  pipeSome,
+} from "@reactive-js/core/functions";
+import { useEventSource } from "@reactive-js/core/integrations/react";
 import * as EventSource from "@reactive-js/core/util/EventSource";
-import * as Observable from "@reactive-js/core/rx/Observable";
 
 const IntersectionApp = () => {
   const [count, updateCount] = useState(10);
   const [endOfPageRef, setEndOfPage] = useState<Optional<HTMLDivElement>>();
 
-  useObservable(
+  useEventSource(
     () =>
       pipeSome(
         endOfPageRef,
         intersectionWith(),
         EventSource.pick("isIntersecting"),
         EventSource.keep(isTrue),
-        EventSource.toObservable<boolean>(),
-        Observable.forEach(_ => {
-          updateCount(x => x + 10);
-        }),
-      ) ?? Observable.empty(),
+        EventSource.forEach(pipeLazy(incrementBy(10), updateCount)),
+        EventSource.ignoreElements(),
+      ) ?? EventSource.empty(),
     [endOfPageRef],
   );
 

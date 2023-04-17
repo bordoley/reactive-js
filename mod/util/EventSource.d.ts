@@ -1,7 +1,9 @@
-import { Empty, Keep, Map, Pick } from "../containers.js";
+import { Empty, ForEach, IgnoreElements, Keep, Map, Pick } from "../containers.js";
 import { ToObservable } from "../rx.js";
 import { EventSourceLike } from "../util.js";
 export declare const empty: Empty<EventSourceLike>["empty"];
+export declare const forEach: ForEach<EventSourceLike>["forEach"];
+export declare const ignoreElements: IgnoreElements<EventSourceLike>["ignoreElements"];
 export declare const keep: Keep<EventSourceLike>["keep"];
 export declare const map: Map<EventSourceLike>["map"];
 export declare const pick: Pick<EventSourceLike>["pick"];
