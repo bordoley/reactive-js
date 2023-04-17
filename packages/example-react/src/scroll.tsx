@@ -9,14 +9,9 @@ import {
   useEventPublisher,
   useEventSource,
 } from "@reactive-js/core/integrations/react";
-import {
-  EventSourceLike,
-} from "@reactive-js/core/util";
+import { EventSourceLike } from "@reactive-js/core/util";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
-import {
-  bindMethod,
-  pipeLazy,
-} from "@reactive-js/core/functions";
+import { bindMethod, pipeLazy } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 import { EventListenerLike_notify } from "@reactive-js/core/util";
 

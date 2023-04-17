@@ -1,23 +1,27 @@
-import { pipe } from "../../../functions.js";
-import { ToObservable } from "../../../rx.js";
+import { bindMethod, pipe } from "../../../functions.js";
+import { DispatcherLike_complete, ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import {
+  DisposableLike_dispose,
   EventSourceLike,
   EventSourceLike_addListener,
   QueueableLike_enqueue,
 } from "../../../util.js";
-import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
+import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
+import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
+import Disposable_onError from "../../Disposable/__internal__/Disposable.onError.js";
 import EventListener_create from "../../EventListener/__internal__/EventListener.create.js";
 
 const EventSource_toObservable: ToObservable<EventSourceLike>["toObservable"] =
   <T>() =>
   (eventSource: EventSourceLike<T>) =>
     Observable_create<T>(observer => {
-      const listener = EventListener_create<T>(ev => {
-        observer[QueueableLike_enqueue](ev);
-      });
-
-      pipe(observer, Disposable_add(listener));
+      const listener = pipe(
+        EventListener_create<T>(bindMethod(observer, QueueableLike_enqueue)),
+        Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
+        Disposable_onError(bindMethod(observer, DisposableLike_dispose)),
+        Disposable_addTo(observer),
+      );
 
       eventSource[EventSourceLike_addListener](listener);
     });
