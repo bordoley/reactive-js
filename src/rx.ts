@@ -5,7 +5,6 @@ import {
   __ObservableLike_observe as ObservableLike_observe,
   __ObserverLike_notify as ObserverLike_notify,
   __PublisherLike_observerCount as PublisherLike_observerCount,
-  __ReplayableLike_buffer as ReplayableLike_buffer,
 } from "./__internal__/symbols.js";
 import {
   Container,
@@ -32,7 +31,6 @@ export {
   ObservableLike_observe,
   ObserverLike_notify,
   PublisherLike_observerCount,
-  ReplayableLike_buffer,
 };
 
 /**

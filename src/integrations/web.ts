@@ -37,12 +37,7 @@ import {
   unsafeCast,
 } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
-import {
-  ObservableLike,
-  ObservableLike_observe,
-  ObserverLike,
-  ReplayableLike_buffer,
-} from "../rx.js";
+import { ObservableLike, ObservableLike_observe, ObserverLike } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { SchedulerLike } from "../scheduling.js";
 import {
@@ -71,6 +66,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  ReplayableLike_buffer,
 } from "../util.js";
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";

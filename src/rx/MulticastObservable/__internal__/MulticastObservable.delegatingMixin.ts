@@ -7,8 +7,8 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  ReplayableLike_buffer,
 } from "../../../rx.js";
+import { ReplayableLike_buffer } from "../../../util.js";
 
 const MulticastObservable_delegatingMixin: <T>() => Mixin1<
   MulticastObservableLike<T>,

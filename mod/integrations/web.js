@@ -9,13 +9,13 @@ import { __WindowLocationStreamLike_canGoBack as WindowLocationStreamLike_canGoB
 import { DelegatingLike_delegate, } from "../__internal__/util.js";
 import { bindMethod, compose, error, invoke, isFunction, isNone, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
-import { ObservableLike_observe, ReplayableLike_buffer, } from "../rx.js";
+import { ObservableLike_observe } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
 import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, EventSourceLike_addListener, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, EventSourceLike_addListener, KeyedCollectionLike_get, QueueableLike_enqueue, ReplayableLike_buffer, } from "../util.js";
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
 import * as EventListener from "../util/EventListener.js";

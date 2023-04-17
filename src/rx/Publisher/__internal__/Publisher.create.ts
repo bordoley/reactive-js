@@ -30,7 +30,6 @@ import {
   ObserverLike,
   PublisherLike,
   PublisherLike_observerCount,
-  ReplayableLike_buffer,
 } from "../../../rx.js";
 import {
   CollectionLike_count,
@@ -40,6 +39,7 @@ import {
   EventListenerLike_notify,
   KeyedCollectionLike_get,
   QueueableLike_enqueue,
+  ReplayableLike_buffer,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
