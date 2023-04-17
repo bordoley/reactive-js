@@ -34,6 +34,7 @@ import {
   bindMethod,
   ignore,
   invoke,
+  isFunction,
   isSome,
   none,
   pipe,
@@ -173,6 +174,26 @@ const createAnimationFrameSchedulerFactory = (priority?: number) => () => {
   );
 };
 
+interface UseObservable {
+  useObservable<T>(
+    observable: ObservableLike<T>,
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Optional<T>;
+
+  useObservable<T>(
+    factory: Factory<ObservableLike<T>>,
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Optional<T>;
+}
 /**
  * Returns the current value, if defined, of `observable`.
  *
@@ -182,22 +203,39 @@ const createAnimationFrameSchedulerFactory = (priority?: number) => () => {
  *
  * @category Hook
  */
-export const useObservable = <T>(
-  observable: ObservableLike<T>,
-  options: {
+export const useObservable: UseObservable["useObservable"] = <T>(
+  observableOrFactory: ObservableLike<T> | Factory<ObservableLike<T>>,
+  optionsOrDeps:
+    | Optional<{
+        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+      }>
+    | readonly unknown[],
+  optionsOrNone?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-  } = {},
+  },
 ): Optional<T> => {
   const [state, updateState] = useState<Optional<T>>(none);
   const [error, updateError] = useState<Optional<Error>>(none);
+
+  const observable = isFunction(observableOrFactory)
+    ? useMemo(observableOrFactory, optionsOrDeps as readonly unknown[])
+    : observableOrFactory;
 
   const {
     backpressureStrategy,
     capacity,
     priority = unstable_NormalPriority,
-  } = options;
+  } = (isFunction(observableOrFactory)
+    ? optionsOrNone
+    : (optionsOrDeps as Optional<{
+        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+      }>)) ?? {};
 
   useEffect(() => {
     const scheduler = createSchedulerWithPriority(priority);
@@ -215,30 +253,74 @@ export const useObservable = <T>(
   return isSome(error) ? raiseError<T>(error) : state;
 };
 
+interface UseStream {
+  useStream<TReq, T, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>>(
+    streamable: StreamableLike<TReq, T, TStream>,
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly replay?: number;
+    },
+  ): Optional<TStream>;
+
+  useStream<TReq, T, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>>(
+    factory: Factory<StreamableLike<TReq, T, TStream>>,
+    dep: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly replay?: number;
+    },
+  ): Optional<TStream>;
+}
+
 /**
  * @category Hook
  */
-export const useStream = <
+export const useStream: UseStream["useStream"] = <
   TReq,
   T,
   TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
 >(
-  streamable: StreamableLike<TReq, T, TStream>,
-  options: {
+  streamableOrFactory:
+    | StreamableLike<TReq, T, TStream>
+    | Factory<StreamableLike<TReq, T, TStream>>,
+  optionsOrDeps:
+    | Optional<{
+        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+        readonly replay?: number;
+      }>
+    | readonly unknown[],
+  optionsOrNone?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
     readonly replay?: number;
-  } = {},
+  },
 ): Optional<TStream> => {
   const [stream, setStream] = useState<Optional<TStream>>(none);
+
+  const streamable = isFunction(streamableOrFactory)
+    ? useMemo(streamableOrFactory, optionsOrDeps as readonly unknown[])
+    : streamableOrFactory;
 
   const {
     backpressureStrategy,
     capacity,
     priority = unstable_NormalPriority,
     replay = 1,
-  } = options;
+  } = (isFunction(streamableOrFactory)
+    ? optionsOrNone
+    : (optionsOrDeps as Optional<{
+        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+        readonly replay?: number;
+      }>)) ?? {};
 
   useEffect(() => {
     const scheduler = createSchedulerWithPriority(priority);
@@ -280,43 +362,138 @@ const useDispatcher = <TReq>(
 
 const emptyObservable = /*@__PURE__*/ Observable.empty<unknown>();
 
+interface UseStreamable {
+  useStreamable<TReq, T>(
+    streamable: StreamableLike<TReq, T>,
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly replay?: number;
+    },
+  ): readonly [Optional<T>, Function1<TReq, boolean>];
+
+  useStreamable<TReq, T>(
+    factory: Factory<StreamableLike<TReq, T>>,
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly replay?: number;
+    },
+  ): readonly [Optional<T>, Function1<TReq, boolean>];
+}
 /**
  * @category Hook
  */
-export const useStreamable = <TReq, T>(
-  streamable: StreamableLike<TReq, T>,
-  options: {
+export const useStreamable: UseStreamable["useStreamable"] = <TReq, T>(
+  streamableOrFactory:
+    | StreamableLike<TReq, T>
+    | Factory<StreamableLike<TReq, T>>,
+  optionsOrDeps:
+    | Optional<{
+        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+        readonly replay?: number;
+      }>
+    | readonly unknown[],
+  optionsOrNone?: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
     readonly replay?: number;
-  } = {},
+  },
 ): readonly [Optional<T>, Function1<TReq, boolean>] => {
-  const stream = useStream(streamable, options);
+  const stream = (useStream as any)(
+    streamableOrFactory,
+    optionsOrDeps,
+    optionsOrNone,
+  );
   const dispatch = useDispatcher(stream);
+  const options = (
+    isFunction(streamableOrFactory) ? optionsOrNone : optionsOrDeps
+  ) as Optional<{
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly replay?: number;
+  }>;
   const value = useObservable<T>(stream ?? emptyObservable, options);
   return [value, dispatch];
 };
 
+interface UseFlowable {
+  useFlowable<T>(
+    flowable: FlowableLike<T>,
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly replay?: number;
+    },
+  ): {
+    pause: SideEffect;
+    resume: SideEffect;
+    value: Optional<T>;
+    isPaused: boolean;
+  };
+  useFlowable<T>(
+    factory: Factory<FlowableLike<T>>,
+    deps: readonly unknown[],
+    options?: {
+      readonly priority?: 1 | 2 | 3 | 4 | 5;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly replay?: number;
+    },
+  ): {
+    pause: SideEffect;
+    resume: SideEffect;
+    value: Optional<T>;
+    isPaused: boolean;
+  };
+}
 /**
  * @category Hook
  */
-export const useFlowable = <T>(
-  flowable: FlowableLike<T>,
-  options: {
+export const useFlowable: UseFlowable["useFlowable"] = <T>(
+  flowableOrFactory: FlowableLike<T> | Factory<FlowableLike<T>>,
+  optionsOrDeps:
+    | Optional<{
+        readonly priority?: 1 | 2 | 3 | 4 | 5;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+        readonly replay?: number;
+      }>
+    | readonly unknown[],
+  optionsOrNone?: Optional<{
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
     readonly replay?: number;
-  } = {},
+  }>,
 ): {
   pause: SideEffect;
   resume: SideEffect;
   value: Optional<T>;
   isPaused: boolean;
 } => {
-  const stream = useStream(flowable, options);
+  const stream = (useStream as any)(
+    flowableOrFactory,
+    optionsOrDeps,
+    optionsOrNone,
+  );
   const dispatch = useDispatcher(stream);
+  const options = (
+    isFunction(flowableOrFactory) ? optionsOrNone : optionsOrDeps
+  ) as Optional<{
+    readonly priority?: 1 | 2 | 3 | 4 | 5;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly replay?: number;
+  }>;
   const value = useObservable<T>(stream ?? emptyObservable, options);
 
   const isPaused =
@@ -341,11 +518,28 @@ const defaultEnumeratorState = {
   hasCurrent: false,
 };
 
+interface UseEnumerate {
+  useEnumerate<T>(enumerable: EnumerableLike<T>): {
+    current: T;
+    hasCurrent: boolean;
+    move: () => boolean;
+  };
+  useEnumerate<T>(
+    factory: Factory<EnumerableLike<T>>,
+    deps: readonly unknown[],
+  ): {
+    current: T;
+    hasCurrent: boolean;
+    move: () => boolean;
+  };
+}
+
 /**
  * @category Hook
  */
-export const useEnumerate = <T>(
-  enumerable: EnumerableLike<T>,
+export const useEnumerate: UseEnumerate["useEnumerate"] = <T>(
+  enumerableOrFactory: EnumerableLike<T> | Factory<EnumerableLike<T>>,
+  depsOrNone?: readonly unknown[],
 ): {
   current: T;
   hasCurrent: boolean;
@@ -356,6 +550,10 @@ export const useEnumerate = <T>(
     current: Optional<T>;
     hasCurrent: boolean;
   }>(defaultEnumeratorState);
+
+  const enumerable = isFunction(enumerableOrFactory)
+    ? useMemo(enumerableOrFactory, depsOrNone)
+    : enumerableOrFactory;
 
   useEffect(() => {
     const enumerator = pipe(enumerable, Enumerable.enumerate());
@@ -409,11 +607,10 @@ export const createComponent = <TProps>(
       [propsPublisher, props],
     );
 
-    const elementObservable = useMemo(
-      () => pipe(propsPublisher, fn),
-      [propsPublisher],
+    return (
+      useObservable(pipeLazy(propsPublisher, fn), [propsPublisher], options) ??
+      null
     );
-    return useObservable(elementObservable, options) ?? null;
   };
 
   return ObservableComponent;
@@ -562,7 +759,7 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
   const animations = useMemo(animationFactory, deps);
   const publishers = usePublishers<{ event: TEvent; value: T }>(animations);
 
-  const streamable = useMemo(
+  const [value, dispatch] = useStreamable(
     () =>
       Streamable.createEventHandler((event: TEvent) => {
         const observables: ReadonlyObjectMapLike<
@@ -611,9 +808,8 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
       publishers,
       options?.priority,
     ],
+    options,
   );
-
-  const [value, dispatch] = useStreamable(streamable, options);
 
   return [publishers, dispatch, value];
 }) as UseAnimations["useAnimations"];

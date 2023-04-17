@@ -1,9 +1,6 @@
 import { Optional, pipeLazy, pipeSome } from "@reactive-js/core/functions";
-import React, { useEffect, useMemo, useState } from "react";
-import {
-  RectReadOnly,
-  observeMeasure,
-} from "@reactive-js/core/integrations/web";
+import React, { useEffect, useState } from "react";
+import { Rect, observeMeasure } from "@reactive-js/core/integrations/web";
 import * as Observable from "@reactive-js/core/rx/Observable";
 import {
   useAnimation,
@@ -17,14 +14,12 @@ const Measure = () => {
 
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
 
-  const measure = useMemo(
+  const { width: boxWidth } = useObservable(
     () =>
       pipeSome(container, observeMeasure(), Observable.throttle(50)) ??
-      Observable.empty<RectReadOnly>(),
+      Observable.empty<Rect>(),
     [container],
-  );
-
-  const { width: boxWidth } = useObservable(measure) ?? { width: 0 };
+  ) ?? { width: 0 };
 
   const [animation, dispatch] = useAnimation<
     number,
@@ -41,18 +36,17 @@ const Measure = () => {
     { mode: "switching" },
   );
 
-  const widthObservable = useMemo(
-    pipeLazy(
-      animation,
-      EventSource.toObservable(),
-      Observable.throttle(50),
-      Observable.pick<{ value: number }>("value"),
-      Observable.map(Math.floor),
-    ),
-    [animation],
-  );
-
-  const width = useObservable(widthObservable) ?? 0;
+  const width =
+    useObservable(
+      pipeLazy(
+        animation,
+        EventSource.toObservable(),
+        Observable.throttle(50),
+        Observable.pick<{ value: number }>("value"),
+        Observable.map(Math.floor),
+      ),
+      [animation],
+    ) ?? 0;
 
   useEffect(() => {
     if (width > 0 && boxWidth > width && open) {

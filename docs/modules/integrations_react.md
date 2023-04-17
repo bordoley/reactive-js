@@ -256,6 +256,31 @@ ___
 | `hasCurrent` | `boolean` |
 | `move` | () => `boolean` |
 
+▸ **useEnumerate**<`T`\>(`factory`, `deps`): `Object`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\> |
+| `deps` | readonly `unknown`[] |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `current` | `T` |
+| `hasCurrent` | `boolean` |
+| `move` | () => `boolean` |
+
 ___
 
 ### useFlowable
@@ -273,6 +298,37 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `flowable` | [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `isPaused` | `boolean` |
+| `pause` | [`SideEffect`](functions.md#sideeffect) |
+| `resume` | [`SideEffect`](functions.md#sideeffect) |
+| `value` | [`Optional`](functions.md#optional)<`T`\> |
+
+▸ **useFlowable**<`T`\>(`factory`, `deps`, `options?`): `Object`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\> |
+| `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -318,6 +374,31 @@ Returns the current value, if defined, of `observable`.
 
 [`Optional`](functions.md#optional)<`T`\>
 
+▸ **useObservable**<`T`\>(`factory`, `deps`, `options?`): [`Optional`](functions.md#optional)<`T`\>
+
+Returns the current value, if defined, of `observable`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
+| `deps` | readonly `unknown`[] |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+
+#### Returns
+
+[`Optional`](functions.md#optional)<`T`\>
+
 ___
 
 ### useStream
@@ -347,6 +428,32 @@ ___
 
 [`Optional`](functions.md#optional)<`TStream`\>
 
+▸ **useStream**<`TReq`, `T`, `TStream`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)<`TStream`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `T` | `T` |
+| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\>\> |
+| `dep` | readonly `unknown`[] |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Optional`](functions.md#optional)<`TStream`\>
+
 ___
 
 ### useStreamable
@@ -365,6 +472,31 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+readonly [[`Optional`](functions.md#optional)<`T`\>, [`Function1`](functions.md#function1)<`TReq`, `boolean`\>]
+
+▸ **useStreamable**<`TReq`, `T`\>(`factory`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`Function1`](functions.md#function1)<`TReq`, `boolean`\>]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TReq` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>\> |
+| `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

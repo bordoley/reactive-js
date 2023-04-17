@@ -24,7 +24,7 @@ export default [
     },
     plugins: [
       typescript(typescriptConfig),
-      resolve(),
+      resolve() /*
       replace({
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
@@ -33,7 +33,7 @@ export default [
         compress: {
           unsafe: true,
         },
-      }),
+      }),*/,
     ],
   },
 
@@ -53,7 +53,7 @@ export default [
     },
     plugins: [
       typescript(typescriptConfig),
-      resolve(),
+      resolve() /*
       replace({
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
@@ -62,7 +62,7 @@ export default [
         compress: {
           unsafe: true,
         },
-      }),
+      }),*/,
     ],
   },
 ];

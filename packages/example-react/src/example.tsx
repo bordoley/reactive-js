@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Enumerable from "@reactive-js/core/rx/Enumerable";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
@@ -76,8 +76,10 @@ const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
 };
 
 const CacheComponent = () => {
-  const cache = useMemo(() => Streamable.createInMemoryCache<string>(), []);
-  const cacheStream = useStream(cache);
+  const cacheStream = useStream(
+    () => Streamable.createInMemoryCache<string>(),
+    [],
+  );
 
   return isSome(cacheStream) ? <CacheInner cache={cacheStream} /> : null;
 };
@@ -133,7 +135,7 @@ const Root = () => {
     }
   }, [history.uri, counterInitialValue, setCounterInitialValue]);
 
-  const counterFlowable = useMemo(
+  const counter = useFlowable(
     () =>
       pipe(
         Runnable.generate(increment, returns(counterInitialValue ?? -1)),
@@ -147,7 +149,6 @@ const Root = () => {
       ),
     [history.replace, counterInitialValue],
   );
-  const counter = useFlowable(counterFlowable);
 
   const [animations, dispatch, isAnimationRunning] = useAnimations(
     () => ({
@@ -171,11 +172,10 @@ const Root = () => {
     { mode: "blocking" },
   );
 
-  const enumerable = useMemo(
+  const enumerator = useEnumerate(
     () => Enumerable.generate(increment, () => -1),
     [],
   );
-  const enumerator = useEnumerate(enumerable);
 
   return (
     <div>

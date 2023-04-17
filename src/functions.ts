@@ -937,13 +937,11 @@ interface PipeSome {
 /**
  * Pipes `source` through a series of unary functions if it is not undefined.
  */
-export const pipeSome: PipeSome["pipeSome"] =
-  (
-    source: Optional<unknown>,
-    ...operators: Function1<unknown, unknown>[]
-  ): Optional<unknown> =>
-  () =>
-    isSome(source) ? pipeUnsafe(source, ...operators) : none;
+export const pipeSome: PipeSome["pipeSome"] = (
+  source: Optional<unknown>,
+  ...operators: Function1<unknown, unknown>[]
+): Optional<unknown> =>
+  isSome(source) ? pipeUnsafe(source, ...operators) : none;
 
 export const error = (message?: unknown): Error => {
   const messageIsString = isString(message);
