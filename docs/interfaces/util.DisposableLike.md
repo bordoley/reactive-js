@@ -12,15 +12,11 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`ObserverLike`](rx.ObserverLike.md)
 
-  ↳ [`PublisherLike`](rx.PublisherLike.md)
-
   ↳ [`SchedulerLike`](scheduling.SchedulerLike.md)
 
   ↳ [`StreamLike`](streaming.StreamLike.md)
 
   ↳ [`EventListenerLike`](util.EventListenerLike.md)
-
-  ↳ [`EventPublisherLike`](util.EventPublisherLike.md)
 
 ## Table of contents
 

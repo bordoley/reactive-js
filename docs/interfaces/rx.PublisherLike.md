@@ -18,6 +18,4 @@ An `EventListener` that can be used to publish notifications to one or more obse
 
 - [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`T`\>
 
-- [`DisposableLike`](util.DisposableLike.md)
-
   ↳ **`PublisherLike`**

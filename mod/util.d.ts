@@ -103,5 +103,5 @@ export interface EventSourceLike<T = unknown> extends ReplayableLike<T>, Contain
 /**
  * @noInheritDoc
  */
-export interface EventPublisherLike<T = unknown> extends EventSourceLike<T>, EventListenerLike<T>, DisposableLike {
+export interface EventPublisherLike<T = unknown> extends EventSourceLike<T>, EventListenerLike<T> {
 }

@@ -165,5 +165,4 @@ export interface EventSourceLike<T = unknown>
  */
 export interface EventPublisherLike<T = unknown>
   extends EventSourceLike<T>,
-    EventListenerLike<T>,
-    DisposableLike {}
+    EventListenerLike<T> {}

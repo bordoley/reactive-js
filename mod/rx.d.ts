@@ -96,7 +96,7 @@ export interface MulticastObservableLike<T> extends ObservableLike<T>, Replayabl
  * @noInheritDoc
  * @category Container
  */
-export interface PublisherLike<T = unknown> extends EventListenerLike<T>, MulticastObservableLike<T>, DisposableLike {
+export interface PublisherLike<T = unknown> extends EventListenerLike<T>, MulticastObservableLike<T> {
 }
 /**
  * @noInheritDoc

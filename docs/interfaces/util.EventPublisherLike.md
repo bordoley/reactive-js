@@ -16,6 +16,4 @@
 
 - [`EventListenerLike`](util.EventListenerLike.md)<`T`\>
 
-- [`DisposableLike`](util.DisposableLike.md)
-
   ↳ **`EventPublisherLike`**

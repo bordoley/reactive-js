@@ -146,8 +146,7 @@ export interface MulticastObservableLike<T>
  */
 export interface PublisherLike<T = unknown>
   extends EventListenerLike<T>,
-    MulticastObservableLike<T>,
-    DisposableLike {}
+    MulticastObservableLike<T> {}
 
 /**
  * @noInheritDoc
