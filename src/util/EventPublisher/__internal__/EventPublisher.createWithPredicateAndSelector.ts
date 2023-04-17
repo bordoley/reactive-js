@@ -36,9 +36,9 @@ import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
+  EventPublisherLike_listenerCount,
   EventSourceLike,
   EventSourceLike_addListener,
-  EventSourceLike_listenerCount,
   KeyedCollectionLike_get,
   QueueableLike_enqueue,
   ReplayableLike_buffer,
@@ -52,6 +52,7 @@ export interface EventKeepMapPublisherLike<T, TOut = T>
     EventListenerLike<T>,
     DisposableLike {
   readonly [EventListenerLike_isErrorSafe]: true;
+  readonly [EventPublisherLike_listenerCount]: number;
 }
 
 const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
@@ -76,7 +77,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
           | typeof EventSourceLike_addListener
           | typeof EventListenerLike_isErrorSafe
           | typeof EventListenerLike_notify
-          | typeof EventSourceLike_listenerCount
+          | typeof EventPublisherLike_listenerCount
         > &
           Mutable<TProperties>,
         predicate: Predicate<T>,
@@ -119,7 +120,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
       {
         [EventListenerLike_isErrorSafe]: true as const,
 
-        get [EventSourceLike_listenerCount]() {
+        get [EventPublisherLike_listenerCount]() {
           unsafeCast<TProperties>(this);
           return this.l.size;
         },

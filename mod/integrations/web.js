@@ -15,7 +15,7 @@ import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLi
 import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, EventSourceLike_addListener, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../util.js";
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
 import * as EventListener from "../util/EventListener.js";
@@ -371,9 +371,6 @@ export const intersectionWith =
         constructor(root, child) {
             this.root = root;
             this.child = child;
-        }
-        get [EventSourceLike_listenerCount]() {
-            return (eventPublishers.get(this.root)?.get(this.child)?.[EventSourceLike_listenerCount] ?? 0);
         }
         get [ReplayableLike_buffer]() {
             return IndexedBufferCollection_empty();

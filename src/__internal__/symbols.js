@@ -70,13 +70,13 @@ export const __EventListenerLike_notify = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __EventSourceLike_addListener = /*@__PURE__*/ symbol(
-  "EventSourceLike_addListener",
+export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol(
+  "EventPublisherLike_listenerCount",
 );
 
 /** @type {unique symbol} */
-export const __EventSourceLike_listenerCount = /*@__PURE__*/ symbol(
-  "EventSourceLike_listenerCount",
+export const __EventSourceLike_addListener = /*@__PURE__*/ symbol(
+  "EventSourceLike_addListener",
 );
 
 /** @type {unique symbol} */
@@ -102,11 +102,6 @@ export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __KeyedContainerLike_TKey = /*@__PURE__*/ symbol(
   "KeyedContainerLike_TKey",
-);
-
-/** @type {unique symbol} */
-export const __MulticastObservableLike_observerCount = /*@__PURE__*/ symbol(
-  "MulticastObservableLike_observerCount",
 );
 
 /** @type {unique symbol} */
@@ -142,6 +137,11 @@ export const __PauseableSchedulerLike_pause = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __PauseableSchedulerLike_resume = /*@__PURE__*/ symbol(
   "PauseableSchedulerLike_resume",
+);
+
+/** @type {unique symbol} */
+export const __PublisherLike_observerCount = /*@__PURE__*/ symbol(
+  "PublisherLike_observerCount",
 );
 
 /** @type {unique symbol} */

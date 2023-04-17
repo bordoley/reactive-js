@@ -17,3 +17,15 @@
 - [`ErrorSafeEventListenerLike`](util.ErrorSafeEventListenerLike.md)<`T`\>
 
   ↳ **`EventPublisherLike`**
+
+## Table of contents
+
+### Properties
+
+- [[\_\_\_EventPublisherLike\_listenerCount]](util.EventPublisherLike.md#[___eventpublisherlike_listenercount])
+
+## Properties
+
+### [\_\_\_EventPublisherLike\_listenerCount]
+
+• `Readonly` **[\_\_\_EventPublisherLike\_listenerCount]**: `number`

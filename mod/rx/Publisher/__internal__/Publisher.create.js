@@ -6,7 +6,7 @@ import { __Publisher_observers } from "../../../__internal__/symbols.js";
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { error, isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
-import { DispatcherLike_complete, MulticastObservableLike_observerCount, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ReplayableLike_buffer, } from "../../../rx.js";
+import { DispatcherLike_complete, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PublisherLike_observerCount, ReplayableLike_buffer, } from "../../../rx.js";
 import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -36,7 +36,7 @@ const Publisher_create = /*@__PURE__*/ (() => {
         [EventListenerLike_isErrorSafe]: true,
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
-        get [MulticastObservableLike_observerCount]() {
+        get [PublisherLike_observerCount]() {
             unsafeCast(this);
             return this[__Publisher_observers].size;
         },

@@ -3,7 +3,6 @@ import { __DelegatingMulticastObservableMixin_delegate } from "../../../__intern
 import { none, returns, unsafeCast } from "../../../functions.js";
 import {
   MulticastObservableLike,
-  MulticastObservableLike_observerCount,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -35,13 +34,6 @@ const MulticastObservable_delegatingMixin: <T>() => Mixin1<
         [__DelegatingMulticastObservableMixin_delegate]: none,
       }),
       {
-        get [MulticastObservableLike_observerCount](): number {
-          unsafeCast<TProperties>(this);
-          return this[__DelegatingMulticastObservableMixin_delegate][
-            MulticastObservableLike_observerCount
-          ];
-        },
-
         get [ReplayableLike_buffer]() {
           unsafeCast<TProperties>(this);
           return this[__DelegatingMulticastObservableMixin_delegate][

@@ -66,7 +66,6 @@ import {
   EventPublisherLike,
   EventSourceLike,
   EventSourceLike_addListener,
-  EventSourceLike_listenerCount,
   IndexedBufferCollectionLike,
   KeyedCollectionLike_get,
   QueueableLike,
@@ -1822,14 +1821,6 @@ export const intersectionWith: (
       implements EventSourceLike<IntersectionObserverEntry>
     {
       constructor(readonly root: Document | Element, readonly child: Element) {}
-
-      get [EventSourceLike_listenerCount](): number {
-        return (
-          eventPublishers.get(this.root)?.get(this.child)?.[
-            EventSourceLike_listenerCount
-          ] ?? 0
-        );
-      }
 
       get [ReplayableLike_buffer](): IndexedBufferCollectionLike<IntersectionObserverEntry> {
         return IndexedBufferCollection_empty();

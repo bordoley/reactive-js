@@ -6,7 +6,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { error, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
-import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, KeyedCollectionLike_get, QueueableLike_enqueue, ReplayableLike_buffer, } from "../../../util.js";
+import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventSourceLike_addListener, KeyedCollectionLike_get, QueueableLike_enqueue, ReplayableLike_buffer, } from "../../../util.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
@@ -33,7 +33,7 @@ const EventPublisher_createWithPredicateAndSelector = /*@__PURE__*/ (() => {
         [MappingLike_selector]: none,
     }), {
         [EventListenerLike_isErrorSafe]: true,
-        get [EventSourceLike_listenerCount]() {
+        get [EventPublisherLike_listenerCount]() {
             unsafeCast(this);
             return this.l.size;
         },

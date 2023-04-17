@@ -4,13 +4,11 @@ import {
   EventListenerLike,
   EventSourceLike,
   EventSourceLike_addListener,
-  EventSourceLike_listenerCount,
   ReplayableLike_buffer,
 } from "../../../util.js";
 import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
 
 const _empty: EventSourceLike = {
-  [EventSourceLike_listenerCount]: 0,
   [EventSourceLike_addListener]: function (
     listener: EventListenerLike<unknown>,
   ): void {

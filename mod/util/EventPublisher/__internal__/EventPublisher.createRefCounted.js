@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { pipe, unsafeCast } from "../../../functions.js";
-import { DisposableLike_dispose, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventSourceLike_addListener, EventSourceLike_listenerCount, ReplayableLike_buffer, } from "../../../util.js";
+import { DisposableLike_dispose, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventSourceLike_addListener, ReplayableLike_buffer, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -19,9 +19,9 @@ const EventPublisher_createRefCounted = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[DelegatingLike_delegate][ReplayableLike_buffer];
         },
-        get [EventSourceLike_listenerCount]() {
+        get [EventPublisherLike_listenerCount]() {
             unsafeCast(this);
-            return this[DelegatingLike_delegate][EventSourceLike_listenerCount];
+            return this[DelegatingLike_delegate][EventPublisherLike_listenerCount];
         },
         [EventListenerLike_notify](next) {
             this[DelegatingLike_delegate][EventListenerLike_notify](next);
@@ -29,7 +29,7 @@ const EventPublisher_createRefCounted = /*@__PURE__*/ (() => {
         [EventSourceLike_addListener](listener) {
             this[DelegatingLike_delegate][EventSourceLike_addListener](listener);
             pipe(listener, Disposable_onDisposed(() => {
-                if (this[EventSourceLike_listenerCount] === 0) {
+                if (this[EventPublisherLike_listenerCount] === 0) {
                     this[DisposableLike_dispose]();
                 }
             }));

@@ -16,8 +16,8 @@ import {
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventPublisherLike,
+  EventPublisherLike_listenerCount,
   EventSourceLike_addListener,
-  EventSourceLike_listenerCount,
   ReplayableLike_buffer,
 } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
@@ -37,7 +37,7 @@ const EventPublisher_createRefCounted: <T>(options?: {
           | typeof EventSourceLike_addListener
           | typeof EventListenerLike_isErrorSafe
           | typeof EventListenerLike_notify
-          | typeof EventSourceLike_listenerCount
+          | typeof EventPublisherLike_listenerCount
           | typeof ReplayableLike_buffer
         >,
         delegate: EventPublisherLike<T>,
@@ -56,9 +56,11 @@ const EventPublisher_createRefCounted: <T>(options?: {
           return this[DelegatingLike_delegate][ReplayableLike_buffer];
         },
 
-        get [EventSourceLike_listenerCount]() {
+        get [EventPublisherLike_listenerCount]() {
           unsafeCast<DelegatingLike<EventPublisherLike<T>>>(this);
-          return this[DelegatingLike_delegate][EventSourceLike_listenerCount];
+          return this[DelegatingLike_delegate][
+            EventPublisherLike_listenerCount
+          ];
         },
         [EventListenerLike_notify](
           this: DelegatingLike<EventPublisherLike<T>>,
@@ -76,7 +78,7 @@ const EventPublisher_createRefCounted: <T>(options?: {
           pipe(
             listener,
             Disposable_onDisposed(() => {
-              if (this[EventSourceLike_listenerCount] === 0) {
+              if (this[EventPublisherLike_listenerCount] === 0) {
                 this[DisposableLike_dispose]();
               }
             }),

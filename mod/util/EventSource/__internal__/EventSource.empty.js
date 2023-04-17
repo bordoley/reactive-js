@@ -1,9 +1,8 @@
 /// <reference types="./EventSource.empty.d.ts" />
 
-import { DisposableLike_dispose, EventSourceLike_addListener, EventSourceLike_listenerCount, ReplayableLike_buffer, } from "../../../util.js";
+import { DisposableLike_dispose, EventSourceLike_addListener, ReplayableLike_buffer, } from "../../../util.js";
 import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
 const _empty = {
-    [EventSourceLike_listenerCount]: 0,
     [EventSourceLike_addListener]: function (listener) {
         listener[DisposableLike_dispose]();
     },

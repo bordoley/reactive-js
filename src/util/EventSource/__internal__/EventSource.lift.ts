@@ -13,7 +13,6 @@ import {
   EventListenerLike,
   EventSourceLike,
   EventSourceLike_addListener,
-  EventSourceLike_listenerCount,
   IndexedBufferCollectionLike,
   ReplayableLike_buffer,
 } from "../../../util.js";
@@ -39,11 +38,6 @@ class LiftedEventSource<TIn, TOut>
   ) {
     this[LiftedLike_source] = source;
     this[LiftedLike_operators] = operators;
-  }
-
-  get [EventSourceLike_listenerCount](): number {
-    // Kind of a lie, but kind of true
-    return this[LiftedLike_source][EventSourceLike_listenerCount];
   }
 
   get [ReplayableLike_buffer](): IndexedBufferCollectionLike<TOut> {

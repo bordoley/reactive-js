@@ -19,3 +19,17 @@ An `EventListener` that can be used to publish notifications to one or more obse
 - [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`T`\>
 
   ↳ **`PublisherLike`**
+
+## Table of contents
+
+### Properties
+
+- [[\_\_\_PublisherLike\_observerCount]](rx.PublisherLike.md#[___publisherlike_observercount])
+
+## Properties
+
+### [\_\_\_PublisherLike\_observerCount]
+
+• `Readonly` **[\_\_\_PublisherLike\_observerCount]**: `number`
+
+The number of observers currently observing the `Publisher`.

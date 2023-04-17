@@ -7,8 +7,8 @@ import {
   __DisposableLike_isDisposed as DisposableLike_isDisposed,
   __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe,
   __EventListenerLike_notify as EventListenerLike_notify,
+  __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount,
   __EventSourceLike_addListener as EventSourceLike_addListener,
-  __EventSourceLike_listenerCount as EventSourceLike_listenerCount,
   __KeyedCollectionLike_get as KeyedCollectionLike_get,
   __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy,
   __QueueableLike_enqueue as QueueableLike_enqueue,
@@ -30,8 +30,8 @@ export {
   DisposableLike_isDisposed,
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
+  EventPublisherLike_listenerCount,
   EventSourceLike_addListener,
-  EventSourceLike_listenerCount,
   KeyedCollectionLike_get,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -169,7 +169,6 @@ export interface EventSourceLike<T = unknown>
   extends ReplayableLike<T>,
     ContainerLike {
   readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
-  readonly [EventSourceLike_listenerCount]: number;
 
   [EventSourceLike_addListener](listener: EventListenerLike<T>): void;
 }
@@ -179,4 +178,6 @@ export interface EventSourceLike<T = unknown>
  */
 export interface EventPublisherLike<T = unknown>
   extends EventSourceLike<T>,
-    ErrorSafeEventListenerLike<T> {}
+    ErrorSafeEventListenerLike<T> {
+  readonly [EventPublisherLike_listenerCount]: number;
+}

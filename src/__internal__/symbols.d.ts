@@ -28,9 +28,9 @@ export declare const __EventListenerLike_isErrorSafe: unique symbol;
 
 export declare const __EventListenerLike_notify: unique symbol;
 
-export declare const __EventSourceLike_addListener: unique symbol;
+export declare const __EventPublisherLike_listenerCount: unique symbol;
 
-export declare const __EventSourceLike_listenerCount: unique symbol;
+export declare const __EventSourceLike_addListener: unique symbol;
 
 export declare const __FlowableStreamLike_isPaused: unique symbol;
 
@@ -41,8 +41,6 @@ export declare const __FlowableStreamLike_resume: unique symbol;
 export declare const __KeyedCollectionLike_get: unique symbol;
 
 export declare const __KeyedContainerLike_TKey: unique symbol;
-
-export declare const __MulticastObservableLike_observerCount: unique symbol;
 
 export declare const __ObserverLike_notify: unique symbol;
 
@@ -57,6 +55,8 @@ export declare const __PauseableSchedulerLike_isPaused: unique symbol;
 export declare const __PauseableSchedulerLike_pause: unique symbol;
 
 export declare const __PauseableSchedulerLike_resume: unique symbol;
+
+export declare const __PublisherLike_observerCount: unique symbol;
 
 export declare const __QueueableLike_enqueue: unique symbol;
 

@@ -9,12 +9,12 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
-import { pipe } from "../../../functions.js";
+import { pipe, unsafeCast } from "../../../functions.js";
 import {
-  MulticastObservableLike_observerCount,
   ObservableLike_observe,
   ObserverLike,
   PublisherLike,
+  PublisherLike_observerCount,
 } from "../../../rx.js";
 import {
   DisposableLike_dispose,
@@ -40,9 +40,10 @@ const Publisher_createRefCounted: <T>(options?: {
       function RefCountedPublisher(
         instance: Pick<
           PublisherLike<T>,
-          | typeof ObservableLike_observe
           | typeof EventListenerLike_isErrorSafe
           | typeof EventListenerLike_notify
+          | typeof ObservableLike_observe
+          | typeof PublisherLike_observerCount
         >,
         delegate: PublisherLike<T>,
       ): PublisherLike<T> {
@@ -54,6 +55,11 @@ const Publisher_createRefCounted: <T>(options?: {
       },
       props({}),
       {
+        get [PublisherLike_observerCount](): number {
+          unsafeCast<DelegatingLike<PublisherLike<T>>>(this);
+          return this[DelegatingLike_delegate][PublisherLike_observerCount];
+        },
+
         [EventListenerLike_isErrorSafe]: true as const,
 
         [EventListenerLike_notify](
@@ -72,7 +78,7 @@ const Publisher_createRefCounted: <T>(options?: {
           pipe(
             observer,
             Disposable_onDisposed(() => {
-              if (this[MulticastObservableLike_observerCount] === 0) {
+              if (this[PublisherLike_observerCount] === 0) {
                 this[DisposableLike_dispose]();
               }
             }),

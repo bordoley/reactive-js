@@ -25,7 +25,6 @@
 ### Properties
 
 - [[\_\_\_ContainerLike\_type]](util.EventSourceLike.md#[___containerlike_type])
-- [[\_\_\_EventSourceLike\_listenerCount]](util.EventSourceLike.md#[___eventsourcelike_listenercount])
 
 ### Methods
 
@@ -40,12 +39,6 @@
 #### Overrides
 
 [ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
-
-___
-
-### [\_\_\_EventSourceLike\_listenerCount]
-
-• `Readonly` **[\_\_\_EventSourceLike\_listenerCount]**: `number`
 
 ## Methods
 

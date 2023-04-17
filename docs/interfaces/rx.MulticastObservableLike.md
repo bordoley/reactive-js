@@ -28,19 +28,10 @@ A stateful ObservableLike resource.
 
 ### Properties
 
-- [[\_\_\_MulticastObservableLike\_observerCount]](rx.MulticastObservableLike.md#[___multicastobservablelike_observercount])
 - [[\_\_\_ObservableLike\_isEnumerable]](rx.MulticastObservableLike.md#[___observablelike_isenumerable])
 - [[\_\_\_ObservableLike\_isRunnable]](rx.MulticastObservableLike.md#[___observablelike_isrunnable])
 
 ## Properties
-
-### [\_\_\_MulticastObservableLike\_observerCount]
-
-• `Readonly` **[\_\_\_MulticastObservableLike\_observerCount]**: `number`
-
-The number of observers currently observing the `MulticastObservableLike`.
-
-___
 
 ### [\_\_\_ObservableLike\_isEnumerable]
 
