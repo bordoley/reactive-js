@@ -156,10 +156,8 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
  * @noInheritDoc
  */
 export interface ErrorSafeEventListenerLike<T = unknown>
-  extends DisposableLike {
+  extends EventListenerLike<T> {
   readonly [EventListenerLike_isErrorSafe]: true;
-
-  [EventListenerLike_notify](event: T): void;
 }
 
 /**

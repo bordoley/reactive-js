@@ -16,6 +16,8 @@
 
   ↳ **`EventListenerLike`**
 
+  ↳↳ [`ErrorSafeEventListenerLike`](util.ErrorSafeEventListenerLike.md)
+
 ## Table of contents
 
 ### Properties
