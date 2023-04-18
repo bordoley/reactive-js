@@ -177,8 +177,14 @@ const createAnimationFrameSchedulerFactory = (priority?: number) => () => {
 };
 
 interface UseEventSource {
+  /**
+   * @category Hook
+   */
   useEventSource<T>(eventSource: EventSourceLike<T>): Optional<T>;
 
+  /**
+   * @category Hook
+   */
   useEventSource<T>(
     factory: Factory<EventSourceLike<T>>,
     deps: readonly unknown[],
@@ -933,7 +939,6 @@ interface UseAnimation {
     never,
   ];
 }
-
 export const useAnimation: UseAnimation["useAnimation"] = (<
   T = unknown,
   TEvent = number,
@@ -973,6 +978,9 @@ export const useAnimation: UseAnimation["useAnimation"] = (<
   ];
 }) as UseAnimation["useAnimation"];
 
+/**
+ * @category Hook
+ */
 export const useEventPublisher = <T>({
   replay,
 }: { replay?: number } = {}): EventPublisherLike<T> => {
