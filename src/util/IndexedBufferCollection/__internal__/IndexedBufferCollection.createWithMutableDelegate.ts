@@ -20,21 +20,22 @@ import {
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import IndexedBufferCollection_empty from "./IndexedBufferCollection.empty.js";
 
-const IndexedBufferCollection_createWithMutableDelegate: <T>() => Mutable<
-  DelegatingLike<IndexedBufferCollectionLike<T>>
-> &
-  IndexedBufferCollectionLike<T> = (<T>() =>
+const IndexedBufferCollection_createWithMutableDelegate: <T>(options?: {
+  readonly replay?: number;
+}) => Mutable<DelegatingLike<IndexedBufferCollectionLike<T>>> &
+  IndexedBufferCollectionLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
       include(Delegating_mixin()),
       function MutableDelegatingIndexedBufferCollection(
         instance: IndexedBufferCollectionLike<T>,
+        options?: { readonly replay?: number },
       ): Mutable<DelegatingLike<IndexedBufferCollectionLike<T>>> &
         IndexedBufferCollectionLike<T> {
         init(
           Delegating_mixin<IndexedBufferCollectionLike<T>>(),
           instance,
-          IndexedBufferCollection_empty(),
+          IndexedBufferCollection_empty(options),
         );
 
         return instance;
