@@ -1,4 +1,5 @@
 import { ContainerOperator } from "../../../containers.js";
+import Container_pick from "../../../containers/Container/__internal__/Container.pick.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_map from "./Observable.map.js";
 
@@ -27,15 +28,7 @@ interface ObservablePick {
     keyC: TKeyC,
   ): ContainerOperator<C, T, T[TKeyA][TKeyB][TKeyC]>;
 }
-const Observable_pick: ObservablePick["pick"] = <C extends ObservableLike>(
-  ...keys: any[]
-): ContainerOperator<C, any, unknown> =>
-  Observable_map<C, any, unknown>((value: any) => {
-    let result: any = value;
-    for (const key of keys) {
-      result = result[key];
-    }
-    return result;
-  });
+const Observable_pick: ObservablePick["pick"] =
+  /*@__PURE__*/ Container_pick(Observable_map);
 
 export default Observable_pick;
