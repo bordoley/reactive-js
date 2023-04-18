@@ -15,7 +15,6 @@ import {
   error,
   none,
   pipe,
-  unsafeCast,
 } from "../../../functions.js";
 import {
   DisposableLike_dispose,
@@ -23,12 +22,13 @@ import {
   EventPublisherLike,
   EventSourceLike,
   EventSourceLike_addListener,
+  IndexedBufferCollectionLike,
   ReplayableLike_buffer,
 } from "../../../util.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import EventPublisher_createRefCounted from "../../EventPublisher/__internal__/EventPublisher.createRefCounted.js";
-import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
+import IndexedBufferCollection_createWithMutableDelegate from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.createWithMutableDelegate.js";
 
 const EventSource_create: <T>(
   setup: SideEffect1<EventListenerLike<T>>,
@@ -38,6 +38,10 @@ const EventSource_create: <T>(
     // FIXME: Use Symbols
     su: SideEffect1<EventListenerLike<T>>;
     op: Optional<{ readonly replay?: number }>;
+    [ReplayableLike_buffer]: Mutable<
+      DelegatingLike<IndexedBufferCollectionLike<T>>
+    > &
+      IndexedBufferCollectionLike<T>;
   };
 
   return createInstanceFactory(
@@ -54,22 +58,17 @@ const EventSource_create: <T>(
       ): EventSourceLike<T> {
         instance.su = setup;
         instance.op = options;
+        instance[ReplayableLike_buffer] =
+          IndexedBufferCollection_createWithMutableDelegate();
 
         return instance;
       },
       props<TProperties>({
         su: none,
         op: none,
+        [ReplayableLike_buffer]: none,
       }),
       {
-        get [ReplayableLike_buffer]() {
-          unsafeCast<DelegatingLike<Optional<EventPublisherLike<T>>>>(this);
-          return (
-            this[DelegatingLike_delegate]?.[ReplayableLike_buffer] ??
-            IndexedBufferCollection_empty<T>()
-          );
-        },
-
         [EventSourceLike_addListener](
           this: TProperties &
             Mutable<DelegatingLike<Optional<EventPublisherLike<T>>>>,
@@ -91,6 +90,9 @@ const EventSource_create: <T>(
               } catch (e) {
                 delegate[DisposableLike_dispose](error(e));
               }
+
+              const buffer = delegate[ReplayableLike_buffer];
+              this[ReplayableLike_buffer][DelegatingLike_delegate] = buffer;
 
               return delegate;
             })();
