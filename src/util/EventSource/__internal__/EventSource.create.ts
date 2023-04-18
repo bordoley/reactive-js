@@ -12,11 +12,13 @@ import {
 import {
   Optional,
   SideEffect1,
+  error,
   none,
   pipe,
   unsafeCast,
 } from "../../../functions.js";
 import {
+  DisposableLike_dispose,
   EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
@@ -84,7 +86,11 @@ const EventSource_create: <T>(
               );
 
               this[DelegatingLike_delegate] = delegate;
-              this.su(delegate);
+              try {
+                this.su(delegate);
+              } catch (e) {
+                delegate[DisposableLike_dispose](error(e));
+              }
 
               return delegate;
             })();
