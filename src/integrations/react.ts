@@ -24,7 +24,6 @@ import {
 import {
   ContinuationLike,
   ContinuationLike_priority,
-  ContinuationSchedulerLike_schedule,
 } from "../__internal__/scheduling.js";
 import {
   EnumeratorLike,
@@ -69,6 +68,7 @@ import * as Scheduler from "../scheduling/Scheduler.js";
 import {
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_scheduleContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
 } from "../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
@@ -83,7 +83,6 @@ import * as Streamable from "../streaming/Streamable.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
-  DisposableLike_isDisposed,
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
@@ -108,7 +107,7 @@ const createSchedulerWithPriority = /*@__PURE__*/ (() => {
           PrioritySchedulerImplementationLike,
           | typeof SchedulerLike_now
           | typeof PrioritySchedulerImplementationLike_shouldYield
-          | typeof ContinuationSchedulerLike_schedule
+          | typeof PrioritySchedulerImplementationLike_scheduleContinuation
         >,
       ): PrioritySchedulerLike & DisposableLike {
         init(PriorityScheduler_mixin, instance, 300);
@@ -124,18 +123,12 @@ const createSchedulerWithPriority = /*@__PURE__*/ (() => {
           return unstable_shouldYield();
         },
 
-        [ContinuationSchedulerLike_schedule](
+        [PrioritySchedulerImplementationLike_scheduleContinuation](
           this: PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
           delay: number,
         ) {
           const priority = continuation[ContinuationLike_priority];
-
-          pipe(this, Disposable.addIgnoringChildErrors(continuation));
-
-          if (continuation[DisposableLike_isDisposed]) {
-            return;
-          }
 
           const callback = () => {
             callbackNodeDisposable[DisposableLike_dispose]();

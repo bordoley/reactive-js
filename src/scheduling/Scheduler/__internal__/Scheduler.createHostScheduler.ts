@@ -6,24 +6,17 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  ContinuationLike,
-  ContinuationSchedulerLike_schedule,
-} from "../../../__internal__/scheduling.js";
+import { ContinuationLike } from "../../../__internal__/scheduling.js";
 import { Optional, none, pipe, unsafeCast } from "../../../functions.js";
 import { SchedulerLike, SchedulerLike_now } from "../../../scheduling.js";
-import {
-  DisposableLike,
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
-} from "../../../util.js";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import {
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_scheduleContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
 } from "./Scheduler.mixin.js";
@@ -111,7 +104,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           PrioritySchedulerImplementationLike,
           | typeof SchedulerLike_now
           | typeof PrioritySchedulerImplementationLike_shouldYield
-          | typeof ContinuationSchedulerLike_schedule
+          | typeof PrioritySchedulerImplementationLike_scheduleContinuation
         >,
         maxYieldInterval: number,
       ): SchedulerLike & DisposableLike {
@@ -130,17 +123,11 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           return isInputPending();
         },
 
-        [ContinuationSchedulerLike_schedule](
+        [PrioritySchedulerImplementationLike_scheduleContinuation](
           this: PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
           delay: number,
         ) {
-          pipe(this, Disposable_addIgnoringChildErrors(continuation));
-
-          if (continuation[DisposableLike_isDisposed]) {
-            return;
-          }
-
           if (delay > 0) {
             scheduleDelayed(this, continuation, delay);
           } else {

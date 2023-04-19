@@ -1,15 +1,13 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ContinuationSchedulerLike_schedule, } from "../../../__internal__/scheduling.js";
 import { __ObserverMixin_scheduler } from "../../../__internal__/symbols.js";
-import { none, pipe, returns, unsafeCast } from "../../../functions.js";
+import { invoke, none, pipe, pipeLazy, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_notify } from "../../../rx.js";
 import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import Scheduler_delegatingMixin from "../../../scheduling/Scheduler/__internal__/Scheduler.delegatingMixin.js";
-import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
-import { BufferLike_capacity, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, } from "../../../util.js";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
+import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
@@ -32,14 +30,8 @@ const Observer_mixin = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this[__ObserverMixin_scheduler][SchedulerLike_shouldYield];
         },
-        [ContinuationSchedulerLike_schedule](continuation, delay) {
-            pipe(this, Disposable_addIgnoringChildErrors(continuation));
-            if (continuation[DisposableLike_isDisposed]) {
-                return;
-            }
-            pipe(this[__ObserverMixin_scheduler][SchedulerLike_schedule](() => {
-                this[PrioritySchedulerImplementationLike_runContinuation](continuation);
-            }, { delay }), Disposable_addTo(continuation));
+        [PrioritySchedulerImplementationLike_scheduleContinuation](continuation, delay) {
+            pipe(this[__ObserverMixin_scheduler][SchedulerLike_schedule](pipeLazy(this, invoke(PrioritySchedulerImplementationLike_runContinuation, continuation)), { delay }), Disposable_addTo(continuation));
         },
         [ObserverLike_notify](_) {
             Observer_assertState(this);

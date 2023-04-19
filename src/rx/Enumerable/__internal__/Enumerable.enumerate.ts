@@ -7,10 +7,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  ContinuationLike,
-  ContinuationSchedulerLike_schedule,
-} from "../../../__internal__/scheduling.js";
+import { ContinuationLike } from "../../../__internal__/scheduling.js";
 import { __EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
@@ -47,6 +44,7 @@ import { SchedulerLike_now } from "../../../scheduling.js";
 import {
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_scheduleContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
 } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
@@ -54,7 +52,6 @@ import {
   BufferLike_capacity,
   DisposableLike,
   DisposableLike_dispose,
-  DisposableLike_isDisposed,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -134,7 +131,7 @@ const Enumerable_enumerate: <T>() => (
 
           return this[EnumeratorLike_hasCurrent];
         },
-        [ContinuationSchedulerLike_schedule](
+        [PrioritySchedulerImplementationLike_scheduleContinuation](
           this: TEnumeratorSchedulerProperties &
             DisposableLike &
             QueueLike<ContinuationLike> &
@@ -149,10 +146,6 @@ const Enumerable_enumerate: <T>() => (
           }
 
           pipe(this, Disposable_add(continuation));
-
-          if (continuation[DisposableLike_isDisposed]) {
-            return;
-          }
 
           this[__EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](
             continuation,

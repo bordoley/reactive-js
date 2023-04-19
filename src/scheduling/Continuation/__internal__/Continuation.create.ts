@@ -10,16 +10,15 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   ContinuationLike,
+  ContinuationLike_activeChild,
+  ContinuationLike_parent,
   ContinuationLike_priority,
   ContinuationLike_run,
+  ContinuationLike_scheduler,
   ContinuationSchedulerLike,
   ContinuationSchedulerLike_schedule,
 } from "../../../__internal__/scheduling.js";
-import {
-  __Continuation_childContinuation,
-  __Continuation_effect,
-  __Continuation_scheduler,
-} from "../../../__internal__/symbols.js";
+import { __Continuation_effect } from "../../../__internal__/symbols.js";
 import {
   QueueCollectionLike,
   QueueLike_dequeue,
@@ -32,6 +31,7 @@ import {
   isSome,
   none,
   pipe,
+  pipeLazy,
 } from "../../../functions.js";
 import {
   SchedulerLike,
@@ -49,15 +49,58 @@ import YieldError from "./Continuation.yieldError.js";
 
 const Continuation_create = /*@__PURE__*/ (() => {
   type TContinuationProperties = {
-    [__Continuation_scheduler]: SchedulerLike & ContinuationSchedulerLike;
+    [ContinuationLike_activeChild]: Optional<ContinuationLike>;
+    [ContinuationLike_parent]: Optional<ContinuationLike>;
     [ContinuationLike_priority]: number;
-    [__Continuation_childContinuation]: Optional<ContinuationLike>;
+    [ContinuationLike_scheduler]: SchedulerLike & ContinuationSchedulerLike;
     [__Continuation_effect]: SideEffect1<SchedulerLike>;
   };
 
   const indexedQueueProtoype = getPrototype(
     Queue_indexedQueueMixin<ContinuationLike>(),
   );
+
+  const findNearestNonDisposedParent = (continuation: ContinuationLike) => {
+    let parent = continuation[ContinuationLike_parent];
+    while (isSome(parent) && parent[DisposableLike_isDisposed]) {
+      parent = parent[ContinuationLike_parent];
+    }
+    return parent;
+  };
+
+  const rescheduleContinuation = (continuation: ContinuationLike) => {
+    const scheduler = continuation[ContinuationLike_scheduler];
+    const parent = findNearestNonDisposedParent(continuation);
+
+    if (isSome(parent)) {
+      parent[QueueableLike_enqueue](continuation);
+    } else {
+      scheduler[ContinuationSchedulerLike_schedule](continuation);
+    }
+  };
+
+  const rescheduleChildrenOnParentOrScheduler = (
+    continuation: ContinuationLike & QueueCollectionLike<ContinuationLike>,
+  ) => {
+    const scheduler = continuation[ContinuationLike_scheduler];
+    const parent = findNearestNonDisposedParent(continuation);
+
+    if (isSome(parent)) {
+      let head: Optional<ContinuationLike> = none;
+      while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
+        if (!head[DisposableLike_isDisposed]) {
+          parent[QueueableLike_enqueue](head);
+        }
+      }
+    } else {
+      let head: Optional<ContinuationLike> = none;
+      while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
+        if (!head[DisposableLike_isDisposed]) {
+          scheduler[ContinuationSchedulerLike_schedule](head);
+        }
+      }
+    }
+  };
 
   return createInstanceFactory(
     mix(
@@ -78,28 +121,24 @@ const Continuation_create = /*@__PURE__*/ (() => {
           "overflow",
         );
 
-        instance[__Continuation_scheduler] = scheduler;
+        instance[ContinuationLike_scheduler] = scheduler;
         instance[__Continuation_effect] = effect;
         instance[ContinuationLike_priority] = priority;
 
         pipe(
           instance,
-          Disposable_onDisposed(_ => {
-            let head: Optional<ContinuationLike> = none;
-            while (((head = instance[QueueLike_dequeue]()), isSome(head))) {
-              if (!head[DisposableLike_isDisposed]) {
-                scheduler[ContinuationSchedulerLike_schedule](head, 0);
-              }
-            }
-          }),
+          Disposable_onDisposed(
+            pipeLazy(instance, rescheduleChildrenOnParentOrScheduler),
+          ),
         );
 
         return instance;
       },
       props<TContinuationProperties>({
-        [__Continuation_scheduler]: none,
+        [ContinuationLike_activeChild]: none,
+        [ContinuationLike_parent]: none,
         [ContinuationLike_priority]: 0,
-        [__Continuation_childContinuation]: none,
+        [ContinuationLike_scheduler]: none,
         [__Continuation_effect]: none,
       }),
       {
@@ -113,21 +152,21 @@ const Continuation_create = /*@__PURE__*/ (() => {
             return;
           }
 
-          const scheduler = this[__Continuation_scheduler];
+          const scheduler = this[ContinuationLike_scheduler];
 
           // Run any inner continuations first.
           let head: Optional<ContinuationLike> = none;
           while (((head = this[QueueLike_dequeue]()), isSome(head))) {
-            this[__Continuation_childContinuation] = head;
+            this[ContinuationLike_activeChild] = head;
             head[ContinuationLike_run]();
-            this[__Continuation_childContinuation] = none;
+            this[ContinuationLike_activeChild] = none;
 
             const shouldYield = scheduler[SchedulerLike_shouldYield];
 
             if (this[DisposableLike_isDisposed]) {
               return;
             } else if (shouldYield) {
-              scheduler[ContinuationSchedulerLike_schedule](this, 0);
+              rescheduleContinuation(this);
               return;
             }
           }
@@ -135,6 +174,7 @@ const Continuation_create = /*@__PURE__*/ (() => {
           let err: Optional<Error> = none;
           let yieldError: Optional<YieldError> = none;
 
+          this[ContinuationLike_activeChild] = this;
           try {
             this[__Continuation_effect](scheduler);
           } catch (e) {
@@ -144,56 +184,33 @@ const Continuation_create = /*@__PURE__*/ (() => {
               err = error(e);
             }
           }
+          this[ContinuationLike_activeChild] = none;
 
           if (isSome(yieldError) && !this[DisposableLike_isDisposed]) {
-            scheduler[ContinuationSchedulerLike_schedule](
-              this,
-              yieldError.delay,
-            );
-
             if (yieldError.delay > 0) {
-              let head: Optional<ContinuationLike> = none;
-              // If the current continuation is being rescheduled with delay,
-              // reschedule all its children on the parent.
-              while (((head = this[QueueLike_dequeue]()), isSome(head))) {
-                if (!head[DisposableLike_isDisposed]) {
-                  scheduler[ContinuationSchedulerLike_schedule](head, 0);
-                }
-              }
+              rescheduleChildrenOnParentOrScheduler(this);
+
+              // FIXME: Do we need to reset the parent on this?
+              scheduler[ContinuationSchedulerLike_schedule](this, yieldError);
+            } else {
+              rescheduleContinuation(this);
             }
           } else {
             this[DisposableLike_dispose](err);
           }
         },
+
         [QueueableLike_enqueue](
           this: ContinuationLike & TContinuationProperties,
           continuation: ContinuationLike,
         ): boolean {
-          const childContinuation = this[__Continuation_childContinuation];
+          continuation[ContinuationLike_parent] = this;
 
-          if (continuation[DisposableLike_isDisposed]) {
-            return false;
-          } else if (this[DisposableLike_isDisposed]) {
-            const scheduler = this[__Continuation_scheduler];
-            scheduler[ContinuationSchedulerLike_schedule](continuation, 0);
-            /*
-          return raiseWithDebugMessage(
-            "attempting to enqueue onto a disposed continuation",
-          );*/
-            return false;
-          } else if (
-            isSome(childContinuation) &&
-            childContinuation !== continuation &&
-            !childContinuation[DisposableLike_isDisposed]
-          ) {
-            return childContinuation[QueueableLike_enqueue](continuation);
-          } else {
-            return call(
-              indexedQueueProtoype[QueueableLike_enqueue],
-              this,
-              continuation,
-            );
-          }
+          return call(
+            indexedQueueProtoype[QueueableLike_enqueue],
+            this,
+            continuation,
+          );
         },
       },
     ),

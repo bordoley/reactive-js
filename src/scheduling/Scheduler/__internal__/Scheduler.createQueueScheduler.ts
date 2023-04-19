@@ -11,7 +11,6 @@ import {
 import {
   ContinuationLike,
   ContinuationLike_priority,
-  ContinuationSchedulerLike_schedule,
 } from "../../../__internal__/scheduling.js";
 import {
   __QueueScheduler_delayed,
@@ -49,7 +48,6 @@ import {
   isNone,
   isSome,
   none,
-  pipe,
   unsafeCast,
 } from "../../../functions.js";
 import {
@@ -71,13 +69,13 @@ import {
   DisposableLike_isDisposed,
   QueueableLike_enqueue,
 } from "../../../util.js";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
 import {
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_scheduleContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
 } from "./Scheduler.mixin.js";
@@ -249,7 +247,7 @@ const Scheduler_createQueueScheduler: Function2<
             PrioritySchedulerImplementationLike,
           | typeof SchedulerLike_now
           | typeof PrioritySchedulerImplementationLike_shouldYield
-          | typeof ContinuationSchedulerLike_schedule
+          | typeof PrioritySchedulerImplementationLike_scheduleContinuation
           | typeof PauseableSchedulerLike_pause
           | typeof PauseableSchedulerLike_resume
         > &
@@ -335,7 +333,7 @@ const Scheduler_createQueueScheduler: Function2<
 
           return this[EnumeratorLike_hasCurrent];
         },
-        [ContinuationSchedulerLike_schedule](
+        [PrioritySchedulerImplementationLike_scheduleContinuation](
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike<QueueTask> &
@@ -344,12 +342,6 @@ const Scheduler_createQueueScheduler: Function2<
           delay: number,
         ) {
           const priority = continuation[ContinuationLike_priority];
-
-          pipe(this, Disposable_addIgnoringChildErrors(continuation));
-
-          if (continuation[DisposableLike_isDisposed]) {
-            return;
-          }
 
           const now = this[SchedulerLike_now];
           const dueTime = max(now + delay, now);

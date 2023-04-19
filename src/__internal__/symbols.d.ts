@@ -96,9 +96,15 @@ export declare const __WindowLocationStream_historyCounter: unique symbol;
 
 export declare const __WindowLocationStreamLike_replace: unique symbol;
 
+export declare const __ContinuationLike_activeChild: unique symbol;
+
 export declare const __ContinuationLike_run: unique symbol;
 
+export declare const __ContinuationLike_parent: unique symbol;
+
 export declare const __ContinuationLike_priority: unique symbol;
+
+export declare const __ContinuationLike_scheduler: unique symbol;
 
 export declare const __ContinuationSchedulerLike_schedule: unique symbol;
 
@@ -109,6 +115,8 @@ export declare const __MutableEnumeratorLike_reset: unique symbol;
 export declare const __MutableKeyedCollectionLike_set: unique symbol;
 
 export declare const __PrioritySchedulerImplementationLike_runContinuation: unique symbol;
+
+export declare const __PrioritySchedulerImplementationLike_scheduleContinuation: unique symbol;
 
 export declare const __PrioritySchedulerImplementationLike_shouldYield: unique symbol;
 
@@ -152,11 +160,11 @@ export declare const __ObserverMixin_isCompleted: unique symbol;
 
 export declare const __ObserverMixin_scheduler: unique symbol;
 
-export declare const __SchedulerMixin_yieldRequested: unique symbol;
-
 export declare const __SchedulerMixin_currentContinuation: unique symbol;
 
 export declare const __SchedulerMixin_startTime: unique symbol;
+
+export declare const __SchedulerMixin_yieldRequested: unique symbol;
 
 export declare const __SerialDisposableMixin_current: unique symbol;
 
@@ -218,11 +226,7 @@ export declare const __ComputeContext_memoOrUse: unique symbol;
 
 export declare const __ComputeEffect_type: unique symbol;
 
-export declare const __Continuation_childContinuation: unique symbol;
-
 export declare const __Continuation_effect: unique symbol;
-
-export declare const __Continuation_scheduler: unique symbol;
 
 export declare const __CreateObservable_effect: unique symbol;
 

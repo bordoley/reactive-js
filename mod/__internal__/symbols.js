@@ -100,9 +100,15 @@ export const __WindowLocationStream_historyCounter = /*@__PURE__*/ symbol("Windo
 /** @type {unique symbol} */
 export const __WindowLocationStreamLike_replace = /*@__PURE__*/ symbol("WindowLocationStreamLike_replace");
 /** @type {unique symbol} */
+export const __ContinuationLike_activeChild = /*@__PURE__*/ symbol("ContinuationLike_activeChild");
+/** @type {unique symbol} */
 export const __ContinuationLike_run = /*@__PURE__*/ symbol("ContinuationLike_run");
 /** @type {unique symbol} */
+export const __ContinuationLike_parent = /*@__PURE__*/ symbol("ContinuationLike_parent");
+/** @type {unique symbol} */
 export const __ContinuationLike_priority = /*@__PURE__*/ symbol("ContinuationLike_priority");
+/** @type {unique symbol} */
+export const __ContinuationLike_scheduler = /*@__PURE__*/ symbol("ContinuationLike_scheduler");
 /** @type {unique symbol} */
 export const __ContinuationSchedulerLike_schedule = /*@__PURE__*/ symbol("ContinuationSchedulerLike_schedule");
 /** @type {unique symbol} */
@@ -114,6 +120,9 @@ export const __MutableKeyedCollectionLike_set = /*@__PURE__*/ symbol("MutableKey
 /** @type {unique symbol} */
 export const __PrioritySchedulerImplementationLike_runContinuation = 
 /*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_runContinuation");
+/** @type {unique symbol} */
+export const __PrioritySchedulerImplementationLike_scheduleContinuation = 
+/*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_scheduleContinuation");
 /** @type {unique symbol} */
 export const __PrioritySchedulerImplementationLike_shouldYield = 
 /*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_shouldYield");
@@ -159,11 +168,11 @@ export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol("ObserverMixin_i
 /** @type {unique symbol} */
 export const __ObserverMixin_scheduler = /*@__PURE__*/ symbol("ObserverMixin_scheduler");
 /** @type {unique symbol} */
-export const __SchedulerMixin_yieldRequested = /*@__PURE__*/ symbol("SchedulerMixin_yieldRequested");
-/** @type {unique symbol} */
 export const __SchedulerMixin_currentContinuation = /*@__PURE__*/ symbol("SchedulerMixin_currentContinuation");
 /** @type {unique symbol} */
 export const __SchedulerMixin_startTime = /*@__PURE__*/ symbol("SchedulerMixin_startTime");
+/** @type {unique symbol} */
+export const __SchedulerMixin_yieldRequested = /*@__PURE__*/ symbol("SchedulerMixin_yieldRequested");
 /** @type {unique symbol} */
 export const __SerialDisposableMixin_current = /*@__PURE__*/ symbol("SerialDisposableMixin_current");
 /** @type {unique symbol} */
@@ -226,11 +235,7 @@ export const __ComputeContext_memoOrUse = /*@__PURE__*/ symbol("ComputeContext_m
 /** @type {unique symbol} */
 export const __ComputeEffect_type = /*@__PURE__*/ symbol("ComputeEffect_type");
 /** @type {unique symbol} */
-export const __Continuation_childContinuation = /*@__PURE__*/ symbol("Continuation_childContinuation ");
-/** @type {unique symbol} */
 export const __Continuation_effect = /*@__PURE__*/ symbol("Continuation_effect");
-/** @type {unique symbol} */
-export const __Continuation_scheduler = /*@__PURE__*/ symbol("Continuation_scheduler");
 /** @type {unique symbol} */
 export const __CreateObservable_effect = /*@__PURE__*/ symbol("CreateObservable_effect");
 /** @type {unique symbol} */

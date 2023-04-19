@@ -3,17 +3,15 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ContinuationSchedulerLike_schedule, } from "../../../__internal__/scheduling.js";
 import { __VirtualTask_continuation, __VirtualTask_dueTime, __VirtualTask_id, __VirtualTimeScheduler_maxMicroTaskTicks, __VirtualTimeScheduler_microTaskTicks, __VirtualTimeScheduler_taskIDCount, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue } from "../../../__internal__/util.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { isSome, pipe, unsafeCast } from "../../../functions.js";
+import { isSome, unsafeCast } from "../../../functions.js";
 import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
-import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const comparator = (a, b) => {
     const diff = a[__VirtualTask_dueTime] - b[__VirtualTask_dueTime];
     return diff !== 0 ? diff : a[__VirtualTask_id] - b[__VirtualTask_id];
@@ -46,15 +44,12 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
             this[PrioritySchedulerImplementationLike_runContinuation](continuation);
         }
     },
-    [ContinuationSchedulerLike_schedule](continuation, delay) {
-        pipe(this, Disposable_addIgnoringChildErrors(continuation));
-        if (!continuation[DisposableLike_isDisposed]) {
-            this[QueueableLike_enqueue]({
-                [__VirtualTask_id]: this[__VirtualTimeScheduler_taskIDCount]++,
-                [__VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
-                [__VirtualTask_continuation]: continuation,
-            });
-        }
+    [PrioritySchedulerImplementationLike_scheduleContinuation](continuation, delay) {
+        this[QueueableLike_enqueue]({
+            [__VirtualTask_id]: this[__VirtualTimeScheduler_taskIDCount]++,
+            [__VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
+            [__VirtualTask_continuation]: continuation,
+        });
     },
     [EnumeratorLike_move]() {
         const task = this[QueueLike_dequeue]();
