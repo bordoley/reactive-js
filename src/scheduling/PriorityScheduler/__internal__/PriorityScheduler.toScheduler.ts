@@ -19,7 +19,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  ContinuationContextLike,
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -28,6 +27,7 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  SchedulerLike_yield,
 } from "../../../scheduling.js";
 import { DisposableLike } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -51,6 +51,7 @@ const createSchedulerInstance = /*@__PURE__*/ (() =>
           | typeof SchedulerLike_shouldYield
           | typeof SchedulerLike_requestYield
           | typeof SchedulerLike_schedule
+          | typeof SchedulerLike_yield
         > &
           Mutable<TProperties>,
         scheduler: PrioritySchedulerLike,
@@ -100,7 +101,7 @@ const createSchedulerInstance = /*@__PURE__*/ (() =>
         },
         [SchedulerLike_schedule](
           this: TProperties & DisposableLike,
-          effect: SideEffect1<ContinuationContextLike>,
+          effect: SideEffect1<SchedulerLike>,
           options?: { readonly delay?: number },
         ): DisposableLike {
           const scheduler =
@@ -112,6 +113,13 @@ const createSchedulerInstance = /*@__PURE__*/ (() =>
             }),
             Disposable_addToIgnoringChildErrors(this),
           );
+        },
+
+        [SchedulerLike_yield](this: TProperties & DisposableLike, delay = 0) {
+          const scheduler =
+            this[__PrioritySchedulerDelegatingScheduler_priorityScheduler];
+
+          scheduler[SchedulerLike_yield](delay);
         },
       },
     ),

@@ -63,7 +63,6 @@ import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
 import * as Scheduler from "../scheduling/Scheduler.js";
 import {
   ContinuationLike,
-  ContinuationLike_continuationScheduler,
   ContinuationLike_priority,
   ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
@@ -135,8 +134,6 @@ const createSchedulerWithPriority = /*@__PURE__*/ (() => {
           if (continuation[DisposableLike_isDisposed]) {
             return;
           }
-
-          continuation[ContinuationLike_continuationScheduler] = this;
 
           const callback = () => {
             callbackNodeDisposable[DisposableLike_dispose]();

@@ -8,13 +8,13 @@ import { QueueLike_dequeue, QueueLike_head, SerialDisposableLike_current, } from
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
-import { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../../scheduling.js";
 import { DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
-import { ContinuationLike_continuationScheduler, ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { ContinuationLike_priority, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
     const delayedComparator = (a, b) => {
         let diff = 0;
@@ -73,7 +73,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
         const delay = clampPositiveInteger(dueTime - instance[__QueueScheduler_hostScheduler][SchedulerLike_now]);
         instance[__QueueScheduler_dueTime] = dueTime;
         const continuation = instance[__QueueScheduler_hostContinuation] ??
-            ((ctx) => {
+            ((scheduler) => {
                 for (let task = peek(instance); isSome(task) && !instance[DisposableLike_isDisposed]; task = peek(instance)) {
                     const { [__QueueTask_continuation]: continuation, [__QueueTask_dueTime]: dueTime, } = task;
                     const delay = clampPositiveInteger(dueTime -
@@ -87,7 +87,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
                         instance[EnumeratorLike_move]();
                         instance[PrioritySchedulerImplementationLike_runContinuation](continuation);
                     }
-                    ctx[ContinuationContextLike_yield](delay);
+                    scheduler[SchedulerLike_yield](delay);
                 }
             });
         instance[__QueueScheduler_hostContinuation] = continuation;
@@ -145,7 +145,6 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
             if (continuation[DisposableLike_isDisposed]) {
                 return;
             }
-            continuation[ContinuationLike_continuationScheduler] = this;
             const now = this[SchedulerLike_now];
             const dueTime = max(now + delay, now);
             const task = this[SchedulerLike_inContinuation] &&

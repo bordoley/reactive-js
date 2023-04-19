@@ -48,8 +48,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
   PauseableSchedulerLike,
   PauseableSchedulerLike_isPaused,
   PauseableSchedulerLike_pause,
@@ -61,6 +59,7 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  SchedulerLike_yield,
 } from "../../../scheduling.js";
 import {
   DisposableLike,
@@ -73,7 +72,6 @@ import SerialDisposable_mixin from "../../../util/Disposable/__internal__/Serial
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
 import {
   ContinuationLike,
-  ContinuationLike_continuationScheduler,
   ContinuationLike_priority,
   ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
@@ -189,7 +187,7 @@ const Scheduler_createQueueScheduler: Function2<
 
     const continuation =
       instance[__QueueScheduler_hostContinuation] ??
-      ((ctx: ContinuationContextLike) => {
+      ((scheduler: SchedulerLike) => {
         for (
           let task = peek(instance);
           isSome(task) && !instance[DisposableLike_isDisposed];
@@ -215,7 +213,7 @@ const Scheduler_createQueueScheduler: Function2<
               continuation,
             );
           }
-          ctx[ContinuationContextLike_yield](delay);
+          scheduler[SchedulerLike_yield](delay);
         }
       });
     instance[__QueueScheduler_hostContinuation] = continuation;
@@ -229,9 +227,7 @@ const Scheduler_createQueueScheduler: Function2<
     readonly [__QueueScheduler_delayed]: QueueLike<QueueTask>;
     [__QueueScheduler_dueTime]: number;
     readonly [__QueueScheduler_hostScheduler]: SchedulerLike;
-    [__QueueScheduler_hostContinuation]: Optional<
-      SideEffect1<ContinuationContextLike>
-    >;
+    [__QueueScheduler_hostContinuation]: Optional<SideEffect1<SchedulerLike>>;
     [PauseableSchedulerLike_isPaused]: boolean;
     readonly [__QueueScheduler_queue]: QueueLike<QueueTask>;
     [__QueueScheduler_taskIDCounter]: number;
@@ -352,8 +348,6 @@ const Scheduler_createQueueScheduler: Function2<
           if (continuation[DisposableLike_isDisposed]) {
             return;
           }
-
-          continuation[ContinuationLike_continuationScheduler] = this;
 
           const now = this[SchedulerLike_now];
           const dueTime = max(now + delay, now);

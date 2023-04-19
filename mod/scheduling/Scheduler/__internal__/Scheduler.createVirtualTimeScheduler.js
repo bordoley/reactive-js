@@ -12,7 +12,7 @@ import { SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../../../sched
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
-import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const comparator = (a, b) => {
     const diff = a[__VirtualTask_dueTime] - b[__VirtualTask_dueTime];
     return diff !== 0 ? diff : a[__VirtualTask_id] - b[__VirtualTask_id];
@@ -48,7 +48,6 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
     [ContinuationSchedulerLike_schedule](continuation, delay) {
         pipe(this, Disposable_addIgnoringChildErrors(continuation));
         if (!continuation[DisposableLike_isDisposed]) {
-            continuation[ContinuationLike_continuationScheduler] = this;
             this[QueueableLike_enqueue]({
                 [__VirtualTask_id]: this[__VirtualTimeScheduler_taskIDCount]++,
                 [__VirtualTask_dueTime]: this[SchedulerLike_now] + delay,

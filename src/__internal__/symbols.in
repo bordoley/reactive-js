@@ -2,7 +2,6 @@ BufferLike_capacity
 CollectionLike_count
 ContainerLike_T
 ContainerLike_type
-ContinuationContextLike_yield
 DispatcherLike_complete
 DisposableLike_add
 DisposableLike_dispose
@@ -37,6 +36,7 @@ SchedulerLike_now
 SchedulerLike_requestYield
 SchedulerLike_schedule
 SchedulerLike_shouldYield
+SchedulerLike_yield
 StreamLike_scheduler
 StreamableLike_stream
 StreamableLike_isEnumerable
@@ -52,7 +52,6 @@ ContinuationLike_run
 ContinuationLike_priority
 ContinuationLike_continuationScheduler
 ContinuationSchedulerLike_schedule
-ContinuationSchedulerLike_shouldYield
 DelegatingLike_delegate
 MutableEnumeratorLike_reset
 MutableKeyedCollectionLike_set

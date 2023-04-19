@@ -32,10 +32,9 @@ import { DispatcherLike, ObservableLike, PublisherLike } from "../../../rx.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
   SchedulerLike,
   SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../../scheduling.js";
 import {
   CacheLike,
@@ -118,7 +117,7 @@ const createCacheStream: <T>(
           "overflow",
         );
 
-        const cleanupContinuation = (ctx: ContinuationContextLike) => {
+        const cleanupContinuation = (scheduler: SchedulerLike) => {
           const { store, subscriptions } = instance;
 
           while (store.size > capacity) {
@@ -130,7 +129,7 @@ const createCacheStream: <T>(
             if (!subscriptions.has(key)) {
               store.delete(key);
             }
-            ctx[ContinuationContextLike_yield]();
+            scheduler[SchedulerLike_yield]();
           }
         };
 

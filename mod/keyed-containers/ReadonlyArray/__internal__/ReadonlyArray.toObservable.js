@@ -4,7 +4,7 @@ import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
-import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
+import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
@@ -14,7 +14,7 @@ ReadonlyArray_toContainer((values, startIndex, count, options) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const onSubscribe = (observer) => {
         let index = startIndex, cnt = count;
-        const continuation = (ctx) => {
+        const continuation = (scheduler) => {
             while (!observer[DisposableLike_isDisposed] && cnt !== 0) {
                 const value = values[index];
                 if (cnt > 0) {
@@ -26,7 +26,7 @@ ReadonlyArray_toContainer((values, startIndex, count, options) => {
                     cnt++;
                 }
                 observer[ObserverLike_notify](value);
-                ctx[ContinuationContextLike_yield](delay);
+                scheduler[SchedulerLike_yield](delay);
             }
             observer[DisposableLike_dispose]();
         };

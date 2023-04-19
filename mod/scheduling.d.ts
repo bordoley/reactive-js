@@ -1,27 +1,7 @@
-import { __ContinuationContextLike_yield as ContinuationContextLike_yield, __PauseableSchedulerLike_isPaused as PauseableSchedulerLike_isPaused, __PauseableSchedulerLike_pause as PauseableSchedulerLike_pause, __PauseableSchedulerLike_resume as PauseableSchedulerLike_resume, __SchedulerLike_inContinuation as SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval as SchedulerLike_maxYieldInterval, __SchedulerLike_now as SchedulerLike_now, __SchedulerLike_requestYield as SchedulerLike_requestYield, __SchedulerLike_schedule as SchedulerLike_schedule, __SchedulerLike_shouldYield as SchedulerLike_shouldYield, __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
+import { __PauseableSchedulerLike_isPaused as PauseableSchedulerLike_isPaused, __PauseableSchedulerLike_pause as PauseableSchedulerLike_pause, __PauseableSchedulerLike_resume as PauseableSchedulerLike_resume, __SchedulerLike_inContinuation as SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval as SchedulerLike_maxYieldInterval, __SchedulerLike_now as SchedulerLike_now, __SchedulerLike_requestYield as SchedulerLike_requestYield, __SchedulerLike_schedule as SchedulerLike_schedule, __SchedulerLike_shouldYield as SchedulerLike_shouldYield, __SchedulerLike_yield as SchedulerLike_yield, __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
 import { SideEffect1 } from "./functions.js";
 import { DisposableLike } from "./util.js";
-export { ContinuationContextLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, };
-/**
- * A context object passed by a scheduler to a continuation
- * when it is run, which can be used by the continuation to
- * yield control back to the scheduler.
- */
-export interface ContinuationContextLike {
-    /**
-     * Yields control back to the scheduler.
-     *
-     * If no delay is specified, a scheduler may either allow
-     * the continuation to continue to execute, or it will throw
-     * an internal exception that must not be caught by the continuation
-     * which the scheduler will use to reschedule the continuation for
-     * a future time.
-     *
-     * @param delay - The amount of delay in ms the scheduler
-     * should delay before resuming execution of the continuation.
-     */
-    [ContinuationContextLike_yield](delay?: number): void;
-}
+export { SchedulerLike_yield, PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, };
 /**
  * Schedulers are the core unit of concurrency, orchestration and
  * cooperative multi-tasking.
@@ -53,11 +33,24 @@ export interface SchedulerLike {
      */
     [SchedulerLike_requestYield](): void;
     /**
+     * Yields control back to the scheduler.
+     *
+     * If no delay is specified, a scheduler may either allow
+     * the continuation to continue to execute, or it will throw
+     * an internal exception that must not be caught by the continuation
+     * which the scheduler will use to reschedule the continuation for
+     * a future time.
+     *
+     * @param delay - The amount of delay in ms the scheduler
+     * should delay before resuming execution of the continuation.
+     */
+    [SchedulerLike_yield](delay?: number): void;
+    /**
      * Schedule a continuation on the Scheduler.
      * @param continuation - The continuation to run on the scheduler.
      * @param options
      */
-    [SchedulerLike_schedule](continuation: SideEffect1<ContinuationContextLike>, options?: {
+    [SchedulerLike_schedule](continuation: SideEffect1<SchedulerLike>, options?: {
         /**
          * The amount of time in ms to delay execution of the continuation.
          */
@@ -92,7 +85,7 @@ export interface PauseableSchedulerLike extends SchedulerLike {
  * @noInheritDoc
  */
 export interface PrioritySchedulerLike extends SchedulerLike {
-    [SchedulerLike_schedule](continuation: SideEffect1<ContinuationContextLike>, options?: {
+    [SchedulerLike_schedule](continuation: SideEffect1<SchedulerLike>, options?: {
         /**
          * The amount of time in ms to delay execution of the continuation.
          */

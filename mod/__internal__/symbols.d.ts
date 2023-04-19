@@ -7,8 +7,6 @@ export const __ContainerLike_T: unique symbol;
 /** @type {unique symbol} */
 export const __ContainerLike_type: unique symbol;
 /** @type {unique symbol} */
-export const __ContinuationContextLike_yield: unique symbol;
-/** @type {unique symbol} */
 export const __DispatcherLike_complete: unique symbol;
 /** @type {unique symbol} */
 export const __DisposableLike_add: unique symbol;
@@ -77,6 +75,8 @@ export const __SchedulerLike_schedule: unique symbol;
 /** @type {unique symbol} */
 export const __SchedulerLike_shouldYield: unique symbol;
 /** @type {unique symbol} */
+export const __SchedulerLike_yield: unique symbol;
+/** @type {unique symbol} */
 export const __StreamLike_scheduler: unique symbol;
 /** @type {unique symbol} */
 export const __StreamableLike_stream: unique symbol;
@@ -104,8 +104,6 @@ export const __ContinuationLike_priority: unique symbol;
 export const __ContinuationLike_continuationScheduler: unique symbol;
 /** @type {unique symbol} */
 export const __ContinuationSchedulerLike_schedule: unique symbol;
-/** @type {unique symbol} */
-export const __ContinuationSchedulerLike_shouldYield: unique symbol;
 /** @type {unique symbol} */
 export const __DelegatingLike_delegate: unique symbol;
 /** @type {unique symbol} */

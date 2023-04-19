@@ -32,7 +32,7 @@ Schedule a continuation on the Scheduler.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `continuation` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`ContinuationContextLike`](scheduling.ContinuationContextLike.md)\> | The continuation to run on the scheduler. |
+| `continuation` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`SchedulerLike`](scheduling.SchedulerLike.md)\> | The continuation to run on the scheduler. |
 | `options?` | `Object` |  |
 | `options.delay?` | `number` | The amount of time in ms to delay execution of the continuation. |
 | `options.priority?` | `number` | The priority to execute the continuation with. The default behavior is implementation specific. |

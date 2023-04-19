@@ -4,19 +4,19 @@ import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
-import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
+import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 const Iterable_toObservable = ((options) => (iterable) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const onSubscribe = (observer) => {
         const iterator = iterable[Symbol.iterator]();
-        const continuation = (ctx) => {
+        const continuation = (scheduler) => {
             while (!observer[DisposableLike_isDisposed]) {
                 const next = iterator.next();
                 if (!next.done) {
                     observer[ObserverLike_notify](next.value);
-                    ctx[ContinuationContextLike_yield](delay);
+                    scheduler[SchedulerLike_yield](delay);
                 }
                 else {
                     observer[DisposableLike_dispose]();

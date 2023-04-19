@@ -8,7 +8,7 @@ import { SchedulerLike_now, SchedulerLike_schedule, } from "../../../scheduling.
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(PriorityScheduler_mixin), function AnimationFrameScheduler(instance, delayScheduler) {
         init(PriorityScheduler_mixin, instance, 5);
@@ -26,7 +26,6 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
             if (continuation[DisposableLike_isDisposed]) {
                 return;
             }
-            continuation[ContinuationLike_continuationScheduler] = this;
             // The frame time is 16 ms at 60 fps so just ignore the delay
             // if its not more than a frame.
             if (delay > 16) {

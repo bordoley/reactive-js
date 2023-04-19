@@ -6,7 +6,7 @@ import { none, pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObserverLike_notify } from "../../../rx.js";
 import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import Scheduler_delegatingMixin from "../../../scheduling/Scheduler/__internal__/Scheduler.delegatingMixin.js";
-import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import { BufferLike_capacity, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -36,7 +36,6 @@ const Observer_mixin = /*@__PURE__*/ (() => {
             if (continuation[DisposableLike_isDisposed]) {
                 return;
             }
-            continuation[ContinuationLike_continuationScheduler] = this;
             pipe(this[__ObserverMixin_scheduler][SchedulerLike_schedule](() => {
                 this[PrioritySchedulerImplementationLike_runContinuation](continuation);
             }, { delay }), Disposable_addTo(continuation));

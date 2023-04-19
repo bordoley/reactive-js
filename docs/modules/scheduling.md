@@ -6,7 +6,6 @@
 
 ### Interfaces
 
-- [ContinuationContextLike](../interfaces/scheduling.ContinuationContextLike.md)
 - [PauseableSchedulerLike](../interfaces/scheduling.PauseableSchedulerLike.md)
 - [PrioritySchedulerLike](../interfaces/scheduling.PrioritySchedulerLike.md)
 - [SchedulerLike](../interfaces/scheduling.SchedulerLike.md)

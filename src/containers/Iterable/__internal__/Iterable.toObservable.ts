@@ -10,9 +10,9 @@ import {
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
+  SchedulerLike,
   SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../../scheduling.js";
 import {
   DisposableLike_dispose,
@@ -42,13 +42,13 @@ const Iterable_toObservable: IterableToObservable["toObservable"] = (<
     const onSubscribe = (observer: ObserverLike<T>) => {
       const iterator = iterable[Symbol.iterator]();
 
-      const continuation = (ctx: ContinuationContextLike) => {
+      const continuation = (scheduler: SchedulerLike) => {
         while (!observer[DisposableLike_isDisposed]) {
           const next = iterator.next();
 
           if (!next.done) {
             observer[ObserverLike_notify](next.value);
-            ctx[ContinuationContextLike_yield](delay);
+            scheduler[SchedulerLike_yield](delay);
           } else {
             observer[DisposableLike_dispose]();
           }

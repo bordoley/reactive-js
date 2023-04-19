@@ -42,7 +42,6 @@ import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sour
 import { SchedulerLike_now } from "../../../scheduling.js";
 import {
   ContinuationLike,
-  ContinuationLike_continuationScheduler,
   ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
@@ -152,8 +151,6 @@ const Enumerable_enumerate: <T>() => (
           if (continuation[DisposableLike_isDisposed]) {
             return;
           }
-
-          continuation[ContinuationLike_continuationScheduler] = this;
 
           this[__EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](
             continuation,

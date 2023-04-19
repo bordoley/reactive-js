@@ -8,7 +8,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  ContinuationContextLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -16,6 +15,7 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  SchedulerLike_yield,
 } from "../../../scheduling.js";
 import { DisposableLike } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -83,7 +83,7 @@ const Scheduler_delegatingMixin: Mixin1<
 
       [SchedulerLike_schedule](
         this: TProperties & SchedulerLike & DisposableLike,
-        continuation: SideEffect1<ContinuationContextLike>,
+        continuation: SideEffect1<SchedulerLike>,
         options?: {
           readonly delay?: number;
         },
@@ -95,6 +95,13 @@ const Scheduler_delegatingMixin: Mixin1<
           ),
           Disposable_addToIgnoringChildErrors(this),
         );
+      },
+
+      [SchedulerLike_yield](
+        this: TProperties & SchedulerLike & DisposableLike,
+        delay?: number,
+      ) {
+        this[__DelegatingSchedulerMixin_delegate][SchedulerLike_yield](delay);
       },
     },
   );

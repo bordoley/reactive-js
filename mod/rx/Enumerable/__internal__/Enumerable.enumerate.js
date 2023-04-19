@@ -11,7 +11,7 @@ import { ObservableLike_isEnumerable, ObserverLike_notify, } from "../../../rx.j
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
-import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import { BufferLike_capacity, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
@@ -58,7 +58,6 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             if (continuation[DisposableLike_isDisposed]) {
                 return;
             }
-            continuation[ContinuationLike_continuationScheduler] = this;
             this[__EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](continuation);
         },
         [ObserverLike_notify](next) {

@@ -37,9 +37,9 @@ import {
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
+  SchedulerLike,
   SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
@@ -250,7 +250,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         ReadonlyArray_forEach(Disposable_addTo(observer)),
       );
 
-      const continuation = (ctx: ContinuationContextLike) => {
+      const continuation = (scheduler: SchedulerLike) => {
         while ((moveAll(enumerators), allHaveCurrent(enumerators))) {
           pipe(
             enumerators,
@@ -258,7 +258,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             bindMethod(observer, ObserverLike_notify),
           );
 
-          ctx[ContinuationContextLike_yield]();
+          scheduler[SchedulerLike_yield]();
         }
         observer[DisposableLike_dispose]();
       };

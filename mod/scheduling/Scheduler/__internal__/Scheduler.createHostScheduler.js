@@ -9,7 +9,7 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import { ContinuationLike_continuationScheduler, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== none &&
@@ -52,7 +52,6 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
         if (continuation[DisposableLike_isDisposed]) {
             return;
         }
-        continuation[ContinuationLike_continuationScheduler] = this;
         if (delay > 0) {
             scheduleDelayed(this, continuation, delay);
         }

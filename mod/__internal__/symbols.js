@@ -10,8 +10,6 @@ export const __ContainerLike_T = /*@__PURE__*/ symbol("ContainerLike_T");
 /** @type {unique symbol} */
 export const __ContainerLike_type = /*@__PURE__*/ symbol("ContainerLike_type");
 /** @type {unique symbol} */
-export const __ContinuationContextLike_yield = /*@__PURE__*/ symbol("ContinuationContextLike_yield");
-/** @type {unique symbol} */
 export const __DispatcherLike_complete = /*@__PURE__*/ symbol("DispatcherLike_complete");
 /** @type {unique symbol} */
 export const __DisposableLike_add = /*@__PURE__*/ symbol("DisposableLike_add");
@@ -80,6 +78,8 @@ export const __SchedulerLike_schedule = /*@__PURE__*/ symbol("SchedulerLike_sche
 /** @type {unique symbol} */
 export const __SchedulerLike_shouldYield = /*@__PURE__*/ symbol("SchedulerLike_shouldYield");
 /** @type {unique symbol} */
+export const __SchedulerLike_yield = /*@__PURE__*/ symbol("SchedulerLike_yield");
+/** @type {unique symbol} */
 export const __StreamLike_scheduler = /*@__PURE__*/ symbol("StreamLike_scheduler");
 /** @type {unique symbol} */
 export const __StreamableLike_stream = /*@__PURE__*/ symbol("StreamableLike_stream");
@@ -107,8 +107,6 @@ export const __ContinuationLike_priority = /*@__PURE__*/ symbol("ContinuationLik
 export const __ContinuationLike_continuationScheduler = /*@__PURE__*/ symbol("ContinuationLike_continuationScheduler");
 /** @type {unique symbol} */
 export const __ContinuationSchedulerLike_schedule = /*@__PURE__*/ symbol("ContinuationSchedulerLike_schedule");
-/** @type {unique symbol} */
-export const __ContinuationSchedulerLike_shouldYield = /*@__PURE__*/ symbol("ContinuationSchedulerLike_shouldYield");
 /** @type {unique symbol} */
 export const __DelegatingLike_delegate = /*@__PURE__*/ symbol("DelegatingLike_delegate");
 /** @type {unique symbol} */

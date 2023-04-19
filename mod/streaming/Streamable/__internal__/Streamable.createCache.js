@@ -8,7 +8,7 @@ import * as ReadonlyObjectMap from "../../../keyed-containers/ReadonlyObjectMap.
 import ReadonlyObjectMap_union from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.union.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
-import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
+import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
 import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../../../streaming.js";
 import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import { CollectionLike_count, DisposableLike_isDisposed, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
@@ -21,7 +21,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
         instance.store = new Map();
         instance.subscriptions = new Map();
         const cleanupQueue = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
-        const cleanupContinuation = (ctx) => {
+        const cleanupContinuation = (scheduler) => {
             const { store, subscriptions } = instance;
             while (store.size > capacity) {
                 const key = cleanupQueue[QueueLike_dequeue]();
@@ -31,7 +31,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                 if (!subscriptions.has(key)) {
                     store.delete(key);
                 }
-                ctx[ContinuationContextLike_yield]();
+                scheduler[SchedulerLike_yield]();
             }
         };
         let cleanupJob = Disposable.disposed;

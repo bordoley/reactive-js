@@ -12,9 +12,9 @@ import {
   RunnableLike,
 } from "../../../rx.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
+  SchedulerLike,
   SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../../scheduling.js";
 import {
   DisposableLike_dispose,
@@ -53,11 +53,11 @@ const Runnable_fromEnumeratorFactory: RunnableFromEnumeratorFactory["fromEnumera
     const onSubscribe = (observer: ObserverLike<T>) => {
       const enumerator = factory();
 
-      const continuation = (ctx: ContinuationContextLike) => {
+      const continuation = (scheduler: SchedulerLike) => {
         while (!observer[DisposableLike_isDisposed]) {
           if (enumerator[EnumeratorLike_move]()) {
             observer[ObserverLike_notify](enumerator[EnumeratorLike_current]);
-            ctx[ContinuationContextLike_yield](delay);
+            scheduler[SchedulerLike_yield](delay);
           } else {
             observer[DisposableLike_dispose]();
           }

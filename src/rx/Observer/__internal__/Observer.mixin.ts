@@ -17,7 +17,6 @@ import {
 import Scheduler_delegatingMixin from "../../../scheduling/Scheduler/__internal__/Scheduler.delegatingMixin.js";
 import {
   ContinuationLike,
-  ContinuationLike_continuationScheduler,
   ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
@@ -98,8 +97,6 @@ const Observer_mixin: <T>() => Mixin2<
           if (continuation[DisposableLike_isDisposed]) {
             return;
           }
-
-          continuation[ContinuationLike_continuationScheduler] = this;
 
           pipe(
             this[__ObserverMixin_scheduler][SchedulerLike_schedule](

@@ -9,9 +9,9 @@ import {
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
+  SchedulerLike,
   SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../../scheduling.js";
 import {
   DisposableLike_dispose,
@@ -66,7 +66,7 @@ const ReadonlyArray_toObservable: ReadonlyArrayToObservable["toObservable"] =
         let index = startIndex,
           cnt = count;
 
-        const continuation = (ctx: ContinuationContextLike) => {
+        const continuation = (scheduler: SchedulerLike) => {
           while (!observer[DisposableLike_isDisposed] && cnt !== 0) {
             const value = values[index];
             if (cnt > 0) {
@@ -78,7 +78,7 @@ const ReadonlyArray_toObservable: ReadonlyArrayToObservable["toObservable"] =
             }
 
             observer[ObserverLike_notify](value);
-            ctx[ContinuationContextLike_yield](delay);
+            scheduler[SchedulerLike_yield](delay);
           }
           observer[DisposableLike_dispose]();
         };

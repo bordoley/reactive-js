@@ -42,7 +42,6 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
 import {
   ContinuationLike,
-  ContinuationLike_continuationScheduler,
   ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
@@ -149,8 +148,6 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           pipe(this, Disposable_addIgnoringChildErrors(continuation));
 
           if (!continuation[DisposableLike_isDisposed]) {
-            continuation[ContinuationLike_continuationScheduler] = this;
-
             this[QueueableLike_enqueue]({
               [__VirtualTask_id]: this[__VirtualTimeScheduler_taskIDCount]++,
               [__VirtualTask_dueTime]: this[SchedulerLike_now] + delay,

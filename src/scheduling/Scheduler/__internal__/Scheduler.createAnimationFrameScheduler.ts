@@ -18,7 +18,6 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import {
   ContinuationLike,
-  ContinuationLike_continuationScheduler,
   ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
@@ -70,8 +69,6 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
           if (continuation[DisposableLike_isDisposed]) {
             return;
           }
-
-          continuation[ContinuationLike_continuationScheduler] = this;
 
           // The frame time is 16 ms at 60 fps so just ignore the delay
           // if its not more than a frame.

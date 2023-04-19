@@ -21,10 +21,9 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
   SchedulerLike,
   SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
@@ -63,7 +62,7 @@ const Observer_baseMixin: <T>() => Mixin1<
     if (
       observer[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
     ) {
-      const continuation = (ctx: ContinuationContextLike) => {
+      const continuation = (scheduler: SchedulerLike) => {
         unsafeCast<TProperties & ObserverLike<T>>(observer);
 
         while (observer[CollectionLike_count] > 0) {
@@ -71,7 +70,7 @@ const Observer_baseMixin: <T>() => Mixin1<
           observer[ObserverLike_notify](next);
 
           if (observer[CollectionLike_count] > 0) {
-            ctx[ContinuationContextLike_yield]();
+            scheduler[SchedulerLike_yield]();
           }
         }
 

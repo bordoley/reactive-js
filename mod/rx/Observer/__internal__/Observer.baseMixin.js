@@ -5,7 +5,7 @@ import { __ObserverMixin_dispatchSubscription, __ObserverMixin_isCompleted, } fr
 import { QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { call, pipe, returns, unsafeCast } from "../../../functions.js";
 import { DispatcherLike_complete, ObserverLike_notify, } from "../../../rx.js";
-import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
+import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -13,13 +13,13 @@ import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.inde
 const Observer_baseMixin = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (observer) => {
         if (observer[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
-            const continuation = (ctx) => {
+            const continuation = (scheduler) => {
                 unsafeCast(observer);
                 while (observer[CollectionLike_count] > 0) {
                     const next = observer[QueueLike_dequeue]();
                     observer[ObserverLike_notify](next);
                     if (observer[CollectionLike_count] > 0) {
-                        ctx[ContinuationContextLike_yield]();
+                        scheduler[SchedulerLike_yield]();
                     }
                 }
                 if (observer[__ObserverMixin_isCompleted]) {

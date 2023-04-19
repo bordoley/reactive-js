@@ -3,7 +3,7 @@
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
-import { ContinuationContextLike_yield, SchedulerLike_schedule, } from "../../../scheduling.js";
+import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
@@ -12,11 +12,11 @@ const Runnable_fromEnumeratorFactory = ((factory, options) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const onSubscribe = (observer) => {
         const enumerator = factory();
-        const continuation = (ctx) => {
+        const continuation = (scheduler) => {
             while (!observer[DisposableLike_isDisposed]) {
                 if (enumerator[EnumeratorLike_move]()) {
                     observer[ObserverLike_notify](enumerator[EnumeratorLike_current]);
-                    ctx[ContinuationContextLike_yield](delay);
+                    scheduler[SchedulerLike_yield](delay);
                 }
                 else {
                     observer[DisposableLike_dispose]();

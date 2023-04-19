@@ -3,7 +3,7 @@
 import { mix, props } from "../../../__internal__/mixins.js";
 import { __DelegatingSchedulerMixin_delegate } from "../../../__internal__/symbols.js";
 import { none, pipe, unsafeCast, } from "../../../functions.js";
-import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
+import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../../scheduling.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 const Scheduler_delegatingMixin = /*@__PURE__*/ (() => {
     return mix(function DelegatingSchedulerMixin(instance, delegate) {
@@ -33,6 +33,9 @@ const Scheduler_delegatingMixin = /*@__PURE__*/ (() => {
         },
         [SchedulerLike_schedule](continuation, options) {
             return pipe(this[__DelegatingSchedulerMixin_delegate][SchedulerLike_schedule](continuation, options), Disposable_addToIgnoringChildErrors(this));
+        },
+        [SchedulerLike_yield](delay) {
+            this[__DelegatingSchedulerMixin_delegate][SchedulerLike_yield](delay);
         },
     });
 })();

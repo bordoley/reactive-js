@@ -7,9 +7,9 @@ import {
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import {
-  ContinuationContextLike,
-  ContinuationContextLike_yield,
+  SchedulerLike,
   SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../../scheduling.js";
 import { DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -40,11 +40,11 @@ const Observable_generate: ObservableGenerate["generate"] = (<T>(
 
   const onSubscribe = (observer: ObserverLike<T>) => {
     let acc = initialValue();
-    const continuation = (ctx: ContinuationContextLike) => {
+    const continuation = (scheduler: SchedulerLike) => {
       while (!observer[DisposableLike_isDisposed]) {
         acc = generator(acc);
         observer[ObserverLike_notify](acc);
-        ctx[ContinuationContextLike_yield](delay);
+        scheduler[SchedulerLike_yield](delay);
       }
     };
 

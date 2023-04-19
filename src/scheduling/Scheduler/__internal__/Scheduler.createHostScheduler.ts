@@ -19,7 +19,6 @@ import Disposable_create from "../../../util/Disposable/__internal__/Disposable.
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import {
   ContinuationLike,
-  ContinuationLike_continuationScheduler,
   ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
@@ -139,8 +138,6 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           if (continuation[DisposableLike_isDisposed]) {
             return;
           }
-
-          continuation[ContinuationLike_continuationScheduler] = this;
 
           if (delay > 0) {
             scheduleDelayed(this, continuation, delay);

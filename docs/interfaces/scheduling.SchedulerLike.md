@@ -32,6 +32,7 @@ cooperative multi-tasking.
 
 - [[\_\_\_SchedulerLike\_requestYield]](scheduling.SchedulerLike.md#[___schedulerlike_requestyield])
 - [[\_\_\_SchedulerLike\_schedule]](scheduling.SchedulerLike.md#[___schedulerlike_schedule])
+- [[\_\_\_SchedulerLike\_yield]](scheduling.SchedulerLike.md#[___schedulerlike_yield])
 
 ## Properties
 
@@ -92,10 +93,34 @@ Schedule a continuation on the Scheduler.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `continuation` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`ContinuationContextLike`](scheduling.ContinuationContextLike.md)\> | The continuation to run on the scheduler. |
+| `continuation` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`SchedulerLike`](scheduling.SchedulerLike.md)\> | The continuation to run on the scheduler. |
 | `options?` | `Object` |  |
 | `options.delay?` | `number` | The amount of time in ms to delay execution of the continuation. |
 
 #### Returns
 
 [`DisposableLike`](util.DisposableLike.md)
+
+___
+
+### [\_\_\_SchedulerLike\_yield]
+
+▸ **[___SchedulerLike_yield]**(`delay?`): `void`
+
+Yields control back to the scheduler.
+
+If no delay is specified, a scheduler may either allow
+the continuation to continue to execute, or it will throw
+an internal exception that must not be caught by the continuation
+which the scheduler will use to reschedule the continuation for
+a future time.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `delay?` | `number` | The amount of delay in ms the scheduler should delay before resuming execution of the continuation. |
+
+#### Returns
+
+`void`
