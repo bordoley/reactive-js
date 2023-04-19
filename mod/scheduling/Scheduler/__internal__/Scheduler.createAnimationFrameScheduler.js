@@ -6,10 +6,8 @@ import { ContinuationSchedulerLike_schedule, } from "../../../__internal__/sched
 import { __AnimationFrameScheduler_delayScheduler } from "../../../__internal__/symbols.js";
 import { invoke, none, pipe, pipeLazy } from "../../../functions.js";
 import { SchedulerLike_now, SchedulerLike_schedule, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(PriorityScheduler_mixin), function AnimationFrameScheduler(instance, delayScheduler) {
         init(PriorityScheduler_mixin, instance, 5);
@@ -22,20 +20,14 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
             return CurrentTime.now();
         },
         [PrioritySchedulerImplementationLike_shouldYield]: true,
-        [ContinuationSchedulerLike_schedule](continuation, delay) {
-            pipe(this, Disposable_addIgnoringChildErrors(continuation));
-            if (continuation[DisposableLike_isDisposed]) {
-                return;
-            }
+        [PrioritySchedulerImplementationLike_scheduleContinuation](continuation, delay) {
             // The frame time is 16 ms at 60 fps so just ignore the delay
             // if its not more than a frame.
             if (delay > 16) {
-                pipe(this[__AnimationFrameScheduler_delayScheduler], invoke(SchedulerLike_schedule, pipeLazy(this, invoke(ContinuationSchedulerLike_schedule, continuation, 0)), { delay }), Disposable_addTo(continuation));
+                pipe(this[__AnimationFrameScheduler_delayScheduler], invoke(SchedulerLike_schedule, pipeLazy(this, invoke(ContinuationSchedulerLike_schedule, continuation)), { delay }), Disposable_addTo(continuation));
             }
             else {
-                requestAnimationFrame(_ => {
-                    this[PrioritySchedulerImplementationLike_runContinuation](continuation);
-                });
+                requestAnimationFrame(pipeLazy(this, invoke(PrioritySchedulerImplementationLike_runContinuation, continuation)));
             }
         },
     }));

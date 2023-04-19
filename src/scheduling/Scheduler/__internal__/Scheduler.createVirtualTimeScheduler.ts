@@ -8,10 +8,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  ContinuationLike,
-  ContinuationSchedulerLike_schedule,
-} from "../../../__internal__/scheduling.js";
+import { ContinuationLike } from "../../../__internal__/scheduling.js";
 import {
   __VirtualTask_continuation,
   __VirtualTask_dueTime,
@@ -30,7 +27,7 @@ import {
 import MutableEnumerator_mixin, {
   MutableEnumeratorLike,
 } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { isSome, pipe, unsafeCast } from "../../../functions.js";
+import { isSome, unsafeCast } from "../../../functions.js";
 import {
   SchedulerLike_now,
   VirtualTimeSchedulerLike,
@@ -42,11 +39,11 @@ import {
   DisposableLike_isDisposed,
   QueueableLike_enqueue,
 } from "../../../util.js";
-import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
 import {
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
+  PrioritySchedulerImplementationLike_scheduleContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
   PriorityScheduler_mixin,
 } from "./Scheduler.mixin.js";
@@ -139,7 +136,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             );
           }
         },
-        [ContinuationSchedulerLike_schedule](
+        [PrioritySchedulerImplementationLike_scheduleContinuation](
           this: TProperties &
             DisposableLike &
             QueueLike<VirtualTask> &
@@ -147,15 +144,11 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           continuation: ContinuationLike,
           delay: number,
         ) {
-          pipe(this, Disposable_addIgnoringChildErrors(continuation));
-
-          if (!continuation[DisposableLike_isDisposed]) {
-            this[QueueableLike_enqueue]({
-              [__VirtualTask_id]: this[__VirtualTimeScheduler_taskIDCount]++,
-              [__VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
-              [__VirtualTask_continuation]: continuation,
-            });
-          }
+          this[QueueableLike_enqueue]({
+            [__VirtualTask_id]: this[__VirtualTimeScheduler_taskIDCount]++,
+            [__VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
+            [__VirtualTask_continuation]: continuation,
+          });
         },
         [EnumeratorLike_move](
           this: TProperties &

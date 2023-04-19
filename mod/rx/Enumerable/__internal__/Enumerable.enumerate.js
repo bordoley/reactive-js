@@ -2,7 +2,6 @@
 
 import { MAX_SAFE_INTEGER, __DEV__ } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ContinuationSchedulerLike_schedule, } from "../../../__internal__/scheduling.js";
 import { __EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
@@ -12,8 +11,8 @@ import { ObservableLike_isEnumerable, ObserverLike_notify, } from "../../../rx.j
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
-import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
-import { BufferLike_capacity, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
+import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { BufferLike_capacity, DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Observer_baseMixin from "../../Observer/__internal__/Observer.baseMixin.js";
@@ -51,14 +50,11 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             }
             return this[EnumeratorLike_hasCurrent];
         },
-        [ContinuationSchedulerLike_schedule](continuation, delay) {
+        [PrioritySchedulerImplementationLike_scheduleContinuation](continuation, delay) {
             if (delay > 0) {
                 raiseWithDebugMessage("Enumerable scheduling continuation with delay");
             }
             pipe(this, Disposable_add(continuation));
-            if (continuation[DisposableLike_isDisposed]) {
-                return;
-            }
             this[__EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](continuation);
         },
         [ObserverLike_notify](next) {
