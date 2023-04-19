@@ -1,12 +1,13 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { ContinuationSchedulerLike_schedule, } from "../../../__internal__/scheduling.js";
 import { __ObserverMixin_scheduler } from "../../../__internal__/symbols.js";
 import { none, pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObserverLike_notify } from "../../../rx.js";
 import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import Scheduler_delegatingMixin from "../../../scheduling/Scheduler/__internal__/Scheduler.delegatingMixin.js";
-import { ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import { BufferLike_capacity, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";

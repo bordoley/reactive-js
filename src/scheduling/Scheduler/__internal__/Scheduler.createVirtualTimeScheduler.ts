@@ -9,6 +9,10 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ContinuationLike,
+  ContinuationSchedulerLike_schedule,
+} from "../../../__internal__/scheduling.js";
+import {
   __VirtualTask_continuation,
   __VirtualTask_dueTime,
   __VirtualTask_id,
@@ -41,8 +45,6 @@ import {
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
 import {
-  ContinuationLike,
-  ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,

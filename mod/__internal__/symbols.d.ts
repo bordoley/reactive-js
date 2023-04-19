@@ -101,8 +101,6 @@ export const __ContinuationLike_run: unique symbol;
 /** @type {unique symbol} */
 export const __ContinuationLike_priority: unique symbol;
 /** @type {unique symbol} */
-export const __ContinuationLike_continuationScheduler: unique symbol;
-/** @type {unique symbol} */
 export const __ContinuationSchedulerLike_schedule: unique symbol;
 /** @type {unique symbol} */
 export const __DelegatingLike_delegate: unique symbol;
@@ -224,6 +222,8 @@ export const __ComputeEffect_type: unique symbol;
 export const __Continuation_childContinuation: unique symbol;
 /** @type {unique symbol} */
 export const __Continuation_effect: unique symbol;
+/** @type {unique symbol} */
+export const __Continuation_scheduler: unique symbol;
 /** @type {unique symbol} */
 export const __CreateObservable_effect: unique symbol;
 /** @type {unique symbol} */

@@ -104,8 +104,6 @@ export const __ContinuationLike_run = /*@__PURE__*/ symbol("ContinuationLike_run
 /** @type {unique symbol} */
 export const __ContinuationLike_priority = /*@__PURE__*/ symbol("ContinuationLike_priority");
 /** @type {unique symbol} */
-export const __ContinuationLike_continuationScheduler = /*@__PURE__*/ symbol("ContinuationLike_continuationScheduler");
-/** @type {unique symbol} */
 export const __ContinuationSchedulerLike_schedule = /*@__PURE__*/ symbol("ContinuationSchedulerLike_schedule");
 /** @type {unique symbol} */
 export const __DelegatingLike_delegate = /*@__PURE__*/ symbol("DelegatingLike_delegate");
@@ -231,6 +229,8 @@ export const __ComputeEffect_type = /*@__PURE__*/ symbol("ComputeEffect_type");
 export const __Continuation_childContinuation = /*@__PURE__*/ symbol("Continuation_childContinuation ");
 /** @type {unique symbol} */
 export const __Continuation_effect = /*@__PURE__*/ symbol("Continuation_effect");
+/** @type {unique symbol} */
+export const __Continuation_scheduler = /*@__PURE__*/ symbol("Continuation_scheduler");
 /** @type {unique symbol} */
 export const __CreateObservable_effect = /*@__PURE__*/ symbol("CreateObservable_effect");
 /** @type {unique symbol} */

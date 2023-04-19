@@ -9,6 +9,11 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
+  ContinuationLike,
+  ContinuationLike_priority,
+  ContinuationSchedulerLike_schedule,
+} from "../../../__internal__/scheduling.js";
+import {
   __QueueScheduler_delayed,
   __QueueScheduler_dueTime,
   __QueueScheduler_hostContinuation,
@@ -71,9 +76,6 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
 import {
-  ContinuationLike,
-  ContinuationLike_priority,
-  ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,

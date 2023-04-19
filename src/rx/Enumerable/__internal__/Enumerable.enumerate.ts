@@ -7,6 +7,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  ContinuationLike,
+  ContinuationSchedulerLike_schedule,
+} from "../../../__internal__/scheduling.js";
 import { __EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
@@ -41,8 +45,6 @@ import Observer_assertState from "../../../rx/Observer/__internal__/Observer.ass
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
 import {
-  ContinuationLike,
-  ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,

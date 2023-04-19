@@ -100,8 +100,6 @@ export declare const __ContinuationLike_run: unique symbol;
 
 export declare const __ContinuationLike_priority: unique symbol;
 
-export declare const __ContinuationLike_continuationScheduler: unique symbol;
-
 export declare const __ContinuationSchedulerLike_schedule: unique symbol;
 
 export declare const __DelegatingLike_delegate: unique symbol;
@@ -223,6 +221,8 @@ export declare const __ComputeEffect_type: unique symbol;
 export declare const __Continuation_childContinuation: unique symbol;
 
 export declare const __Continuation_effect: unique symbol;
+
+export declare const __Continuation_scheduler: unique symbol;
 
 export declare const __CreateObservable_effect: unique symbol;
 

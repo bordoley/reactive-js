@@ -50,7 +50,6 @@ WindowLocationStreamLike_replace
 
 ContinuationLike_run
 ContinuationLike_priority
-ContinuationLike_continuationScheduler
 ContinuationSchedulerLike_schedule
 DelegatingLike_delegate
 MutableEnumeratorLike_reset
@@ -115,6 +114,7 @@ ComputeContext_memoOrUse
 ComputeEffect_type
 Continuation_childContinuation 
 Continuation_effect
+Continuation_scheduler
 CreateObservable_effect
 DecodeWithCharsetObserver_textDecoder
 DispatchedObservable_observer

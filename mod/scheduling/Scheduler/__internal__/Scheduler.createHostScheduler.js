@@ -2,6 +2,7 @@
 
 import * as CurrentTime from "../../../__internal__/CurrentTime.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { ContinuationSchedulerLike_schedule, } from "../../../__internal__/scheduling.js";
 import { none, pipe, unsafeCast } from "../../../functions.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
@@ -9,7 +10,7 @@ import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__intern
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import { ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== none &&

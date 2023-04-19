@@ -1,9 +1,9 @@
+import { ContinuationLike } from "../../../__internal__/scheduling.js";
 import { __QueueTask_continuation, __QueueTask_dueTime, __QueueTask_priority, __QueueTask_taskID } from "../../../__internal__/symbols.js";
 import { QueueLike } from "../../../__internal__/util.js";
 import { Function2 } from "../../../functions.js";
 import { PauseableSchedulerLike, PrioritySchedulerLike, SchedulerLike } from "../../../scheduling.js";
 import { DisposableLike } from "../../../util.js";
-import { ContinuationLike } from "./Scheduler.mixin.js";
 export type QueueTask = {
     readonly [__QueueTask_continuation]: ContinuationLike;
     [__QueueTask_dueTime]: number;

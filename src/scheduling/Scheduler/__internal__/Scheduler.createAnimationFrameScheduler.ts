@@ -6,6 +6,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  ContinuationLike,
+  ContinuationSchedulerLike_schedule,
+} from "../../../__internal__/scheduling.js";
 import { __AnimationFrameScheduler_delayScheduler } from "../../../__internal__/symbols.js";
 import { invoke, none, pipe, pipeLazy } from "../../../functions.js";
 import {
@@ -17,8 +21,6 @@ import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import {
-  ContinuationLike,
-  ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,

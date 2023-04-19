@@ -248,11 +248,6 @@ export const __ContinuationLike_priority = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __ContinuationLike_continuationScheduler = /*@__PURE__*/ symbol(
-  "ContinuationLike_continuationScheduler",
-);
-
-/** @type {unique symbol} */
 export const __ContinuationSchedulerLike_schedule = /*@__PURE__*/ symbol(
   "ContinuationSchedulerLike_schedule",
 );
@@ -539,6 +534,11 @@ export const __Continuation_childContinuation = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __Continuation_effect = /*@__PURE__*/ symbol(
   "Continuation_effect",
+);
+
+/** @type {unique symbol} */
+export const __Continuation_scheduler = /*@__PURE__*/ symbol(
+  "Continuation_scheduler",
 );
 
 /** @type {unique symbol} */

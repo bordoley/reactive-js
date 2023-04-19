@@ -1,16 +1,10 @@
 import { Mixin1 } from "../../../__internal__/mixins.js";
-import { __ContinuationLike_priority as ContinuationLike_priority, __ContinuationLike_run as ContinuationLike_run, __ContinuationSchedulerLike_schedule as ContinuationSchedulerLike_schedule, __PrioritySchedulerImplementationLike_runContinuation as PrioritySchedulerImplementationLike_runContinuation, __PrioritySchedulerImplementationLike_shouldYield as PrioritySchedulerImplementationLike_shouldYield } from "../../../__internal__/symbols.js";
+import { ContinuationLike, ContinuationSchedulerLike, ContinuationSchedulerLike_schedule } from "../../../__internal__/scheduling.js";
+import { __PrioritySchedulerImplementationLike_runContinuation as PrioritySchedulerImplementationLike_runContinuation, __PrioritySchedulerImplementationLike_shouldYield as PrioritySchedulerImplementationLike_shouldYield } from "../../../__internal__/symbols.js";
 import { SideEffect1 } from "../../../functions.js";
 import { PrioritySchedulerLike, SchedulerLike, SchedulerLike_now, SchedulerLike_schedule } from "../../../scheduling.js";
-import { CollectionLike, DisposableLike, QueueableLike } from "../../../util.js";
-export { ContinuationLike_priority, ContinuationLike_run, ContinuationSchedulerLike_schedule, PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, };
-export interface ContinuationSchedulerLike {
-    [ContinuationSchedulerLike_schedule](continuation: ContinuationLike, delay: number): void;
-}
-export interface ContinuationLike extends DisposableLike, QueueableLike<ContinuationLike>, CollectionLike {
-    readonly [ContinuationLike_priority]: number;
-    [ContinuationLike_run](): void;
-}
+import { DisposableLike } from "../../../util.js";
+export { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_shouldYield, };
 export interface PrioritySchedulerImplementationLike extends PrioritySchedulerLike, ContinuationSchedulerLike, DisposableLike {
     readonly [PrioritySchedulerImplementationLike_shouldYield]: boolean;
     [PrioritySchedulerImplementationLike_runContinuation](continuation: ContinuationLike): void;

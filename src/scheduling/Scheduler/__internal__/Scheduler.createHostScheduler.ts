@@ -6,6 +6,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  ContinuationLike,
+  ContinuationSchedulerLike_schedule,
+} from "../../../__internal__/scheduling.js";
 import { Optional, none, pipe, unsafeCast } from "../../../functions.js";
 import { SchedulerLike, SchedulerLike_now } from "../../../scheduling.js";
 import {
@@ -18,8 +22,6 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import {
-  ContinuationLike,
-  ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,

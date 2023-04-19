@@ -22,6 +22,11 @@ import {
   props,
 } from "../__internal__/mixins.js";
 import {
+  ContinuationLike,
+  ContinuationLike_priority,
+  ContinuationSchedulerLike_schedule,
+} from "../__internal__/scheduling.js";
+import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
@@ -62,9 +67,6 @@ import {
 import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
 import * as Scheduler from "../scheduling/Scheduler.js";
 import {
-  ContinuationLike,
-  ContinuationLike_priority,
-  ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,

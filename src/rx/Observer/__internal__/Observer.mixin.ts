@@ -5,6 +5,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import {
+  ContinuationLike,
+  ContinuationSchedulerLike_schedule,
+} from "../../../__internal__/scheduling.js";
 import { __ObserverMixin_scheduler } from "../../../__internal__/symbols.js";
 import { none, pipe, returns, unsafeCast } from "../../../functions.js";
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
@@ -16,8 +20,6 @@ import {
 } from "../../../scheduling.js";
 import Scheduler_delegatingMixin from "../../../scheduling/Scheduler/__internal__/Scheduler.delegatingMixin.js";
 import {
-  ContinuationLike,
-  ContinuationSchedulerLike_schedule,
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
   PrioritySchedulerImplementationLike_shouldYield,
