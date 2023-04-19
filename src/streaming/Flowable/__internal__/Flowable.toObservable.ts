@@ -19,7 +19,7 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
-import Stream_sourceFrom from "../../Stream/__internal__/Stream.sourceFrom.js";
+import Streamable_sinkInto from "../../Streamable/__internal__/Streamable.sinkInto.js";
 
 const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
   <T>() =>
@@ -44,15 +44,16 @@ const Flowable_toObservable: ToObservable<FlowableLike>["toObservable"] =
         ),
       );
 
-      pipe(
+      const stream = pipe(
         Stream_create<T, boolean>(op, observer, {
           backpressureStrategy,
           capacity,
         }),
-        Stream_sourceFrom(src),
-        Disposable_addTo(observer),
         Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
+        Disposable_addTo(observer),
       );
+
+      pipe(src, Streamable_sinkInto(stream), Disposable_addTo(observer));
     });
   };
 

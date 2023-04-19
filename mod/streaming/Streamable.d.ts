@@ -1,4 +1,5 @@
 import { StreamLike, StreamableLike } from "../streaming.js";
+import { DisposableLike } from "../util.js";
 /**
  * @category Constructor
  */
@@ -57,4 +58,4 @@ export declare const createStateStore: <T>(initialState: import("../functions.js
  * @category Constructor
  */
 export declare const identity: <T>() => StreamableLike<T, T, StreamLike<T, T>>;
-export declare const sinkInto: <TReq, T>(dest: StreamLike<T, TReq>) => (src: StreamableLike<TReq, T>) => StreamableLike<TReq, T>;
+export declare const sinkInto: <TReq, T>(dest: StreamLike<T, TReq>) => (src: StreamableLike<TReq, T>) => DisposableLike;

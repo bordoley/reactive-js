@@ -54,6 +54,7 @@ import * as Streamable from "../streaming/Streamable.js";
 import {
   BufferLike_capacity,
   CollectionLike_count,
+  DisposableLike,
   DisposableLike_dispose,
   ErrorSafeEventListenerLike,
   EventListenerLike,
@@ -1303,8 +1304,8 @@ export const windowLocation: StreamableLike<
           | typeof WindowLocationStreamLike_replace
           | typeof ObservableLike_observe
         >,
-        delegate: StreamLike<Updater<TState>, TState>,
-      ): WindowLocationStreamLike {
+        delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
+      ): WindowLocationStreamLike & DisposableLike {
         init(Stream_delegatingMixin(), instance, delegate);
         init(Delegating_mixin(), instance, delegate);
 
@@ -1382,7 +1383,9 @@ export const windowLocation: StreamableLike<
     ),
   );
 
-  let currentWindowLocationStream: Optional<WindowLocationStreamLike> = none;
+  let currentWindowLocationStream: Optional<
+    WindowLocationStreamLike & DisposableLike
+  > = none;
 
   const createSyncToHistoryStream = (
     f: typeof history.pushState,
@@ -1411,7 +1414,7 @@ export const windowLocation: StreamableLike<
       readonly replay?: number;
       readonly capacity?: number;
     },
-  ): WindowLocationStreamLike => {
+  ): WindowLocationStreamLike & DisposableLike => {
     if (isSome(currentWindowLocationStream)) {
       raiseWithDebugMessage("Cannot stream more than once");
     }
@@ -1428,7 +1431,7 @@ export const windowLocation: StreamableLike<
       { backpressureStrategy: "drop-oldest", capacity: 1 },
     );
 
-    currentWindowLocationStream = pipe(
+    const locationStream = pipe(
       Streamable.createStateStore(
         () => ({
           replace: true,
@@ -1444,6 +1447,10 @@ export const windowLocation: StreamableLike<
         capacity: options?.capacity ?? 1,
         backpressureStrategy: options?.backpressureStrategy ?? "drop-oldest",
       }),
+    );
+
+    const syncState = pipe(
+      locationStream,
       Stream.syncState(
         state =>
           // Initialize the history state on page load
@@ -1494,9 +1501,14 @@ export const windowLocation: StreamableLike<
           );
         },
       ),
+    );
+
+    currentWindowLocationStream = pipe(
+      locationStream,
       createWindowLocationStream,
       Disposable.add(pushState),
       Disposable.add(replaceState),
+      Disposable.add(syncState),
     );
 
     return currentWindowLocationStream;

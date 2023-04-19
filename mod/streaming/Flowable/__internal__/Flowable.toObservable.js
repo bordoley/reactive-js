@@ -13,7 +13,7 @@ import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
-import Stream_sourceFrom from "../../Stream/__internal__/Stream.sourceFrom.js";
+import Streamable_sinkInto from "../../Streamable/__internal__/Streamable.sinkInto.js";
 const Flowable_toObservable = () => (src) => {
     const create = src[StreamableLike_isRunnable]
         ? Runnable_create
@@ -27,10 +27,11 @@ const Flowable_toObservable = () => (src) => {
         // otherwise it will have no observer to queue events onto.
         // Observable.startWith uses concatenation.
         Observable_mergeWith(pipe(false, Optional_toObservable())));
-        pipe(Stream_create(op, observer, {
+        const stream = pipe(Stream_create(op, observer, {
             backpressureStrategy,
             capacity,
-        }), Stream_sourceFrom(src), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
+        }), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)), Disposable_addTo(observer));
+        pipe(src, Streamable_sinkInto(stream), Disposable_addTo(observer));
     });
 };
 export default Flowable_toObservable;

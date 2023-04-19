@@ -80,7 +80,7 @@ are supported.
 
 ### [\_\_\_StreamableLike\_stream]
 
-▸ **[___StreamableLike_stream]**(`scheduler`, `options?`): `TStream`
+▸ **[___StreamableLike_stream]**(`scheduler`, `options?`): `TStream` & [`DisposableLike`](util.DisposableLike.md)
 
 Subscribe to the Streamable.
 
@@ -96,4 +96,4 @@ Subscribe to the Streamable.
 
 #### Returns
 
-`TStream`
+`TStream` & [`DisposableLike`](util.DisposableLike.md)

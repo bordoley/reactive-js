@@ -12,7 +12,7 @@ export { FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLi
  * @noInheritDoc
  * @category Stream
  */
-export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T>, DisposableLike {
+export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
     readonly [StreamLike_scheduler]: SchedulerLike;
 }
 /**
@@ -59,7 +59,7 @@ export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = S
          */
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): TStream;
+    }): TStream & DisposableLike;
 }
 /**
  * A container that returns an interactive stream that produces

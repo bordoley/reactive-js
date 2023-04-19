@@ -15,6 +15,7 @@ import {
   StreamableLike_stream,
 } from "../../../streaming.js";
 import {
+  DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
@@ -22,12 +23,12 @@ import {
 class LiftedAsyncEnumerable<T>
   implements
     AsyncEnumerableLike<T>,
-    LiftedLike<AsyncEnumerableLike<T>, StreamLike<void, any>>
+    LiftedLike<AsyncEnumerableLike<T>, StreamLike<void, any> & DisposableLike>
 {
   readonly [LiftedLike_source]: AsyncEnumerableLike<any>;
   readonly [LiftedLike_operators]: readonly Function1<
-    StreamLike<void, any>,
-    StreamLike<void, any>
+    StreamLike<void, any> & DisposableLike,
+    StreamLike<void, any> & DisposableLike
   >[];
 
   readonly [StreamableLike_isEnumerable]: boolean;
@@ -37,8 +38,8 @@ class LiftedAsyncEnumerable<T>
   constructor(
     src: AsyncEnumerableLike<any>,
     operators: readonly Function1<
-      StreamLike<void, any>,
-      StreamLike<void, any>
+      StreamLike<void, any> & DisposableLike,
+      StreamLike<void, any> & DisposableLike
     >[],
     isEnumerable: boolean,
     isRunnable: boolean,
@@ -56,7 +57,7 @@ class LiftedAsyncEnumerable<T>
       readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): StreamLike<void, T> {
+  ): StreamLike<void, T> & DisposableLike {
     const src = this[LiftedLike_source][StreamableLike_stream](
       scheduler,
       options,
@@ -65,14 +66,18 @@ class LiftedAsyncEnumerable<T>
     return pipeUnsafe(src, ...this[LiftedLike_operators]) as StreamLike<
       void,
       T
-    >;
+    > &
+      DisposableLike;
   }
 }
 
 const AsyncEnumerable_lift =
   (isEnumerable: boolean, isRunnable: boolean) =>
   <TA, TB>(
-    operator: Function1<StreamLike<void, TA>, StreamLike<void, TB>>,
+    operator: Function1<
+      StreamLike<void, TA> & DisposableLike,
+      StreamLike<void, TB> & DisposableLike
+    >,
   ): ContainerOperator<AsyncEnumerableLike, TA, TB> =>
   enumerable => {
     const src = (enumerable as any)[LiftedLike_source] ?? enumerable;
@@ -88,7 +93,10 @@ const AsyncEnumerable_lift =
     return newInstance<
       LiftedAsyncEnumerable<TB>,
       AsyncEnumerableLike<any>,
-      readonly Function1<StreamLike<void, any>, StreamLike<void, any>>[],
+      readonly Function1<
+        StreamLike<void, any> & DisposableLike,
+        StreamLike<void, any> & DisposableLike
+      >[],
       boolean,
       boolean
     >(

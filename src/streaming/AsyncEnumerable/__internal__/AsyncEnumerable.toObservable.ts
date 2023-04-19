@@ -11,7 +11,6 @@ import Observable_forEach from "../../../rx/Observable/__internal__/Observable.f
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
   AsyncEnumerableLike,
-  StreamLike,
   StreamableLike_isEnumerable,
   StreamableLike_isRunnable,
   StreamableLike_stream,
@@ -37,13 +36,13 @@ const AsyncEnumerable_toObservable: ToObservable<AsyncEnumerableLike>["toObserva
         const capacity = observer[BufferLike_capacity];
         const backpressureStrategy =
           observer[QueueableLike_backpressureStrategy];
-        const enumerator: StreamLike<void, T> = pipe(
+        const enumerator = pipe(
           enumerable,
           invoke(StreamableLike_stream, observer, {
             backpressureStrategy,
             capacity,
           }),
-          Disposable_addTo<StreamLike<void, T>>(observer),
+          Disposable_addTo(observer),
         );
 
         pipe(

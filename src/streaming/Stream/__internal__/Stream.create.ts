@@ -5,6 +5,7 @@ import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 
 import {
+  DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
@@ -18,7 +19,7 @@ const Stream_create: <TReq, T>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => StreamLike<TReq, T> = /*@__PURE__*/ (() =>
+) => StreamLike<TReq, T> & DisposableLike = /*@__PURE__*/ (() =>
   createInstanceFactory(Stream_mixin()))();
 
 export default Stream_create;

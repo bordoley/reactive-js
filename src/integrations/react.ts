@@ -373,11 +373,14 @@ export const useStream: UseStream["useStream"] = <
   useEffect(() => {
     const scheduler = createSchedulerWithPriority(priority);
 
-    const stream: TStream = streamable[StreamableLike_stream](scheduler, {
-      replay,
-      backpressureStrategy,
-      capacity,
-    });
+    const stream: TStream = pipe(
+      streamable[StreamableLike_stream](scheduler, {
+        replay,
+        backpressureStrategy,
+        capacity,
+      }),
+      Disposable.addTo(scheduler),
+    );
 
     setStream(stream);
 

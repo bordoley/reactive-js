@@ -48,6 +48,7 @@ import {
 import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import {
   CollectionLike_count,
+  DisposableLike,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
   KeyedCollectionLike_get,
@@ -77,7 +78,7 @@ const createCacheStream: <T>(
   capacity: number,
   cleanupScheduler: SchedulerLike,
   persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-) => CacheStreamLike<T> = /*@__PURE__*/ (<T>() => {
+) => CacheStreamLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   type TProperties<T> = {
     scheduleCleanup: SideEffect1<string>;
     store: Map<string, T>;
@@ -108,7 +109,7 @@ const createCacheStream: <T>(
         capacity: number,
         cleanupScheduler: SchedulerLike,
         persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-      ): CacheStreamLike<T> {
+      ): CacheStreamLike<T> & DisposableLike {
         instance.store = new Map();
         instance.subscriptions = new Map();
 
@@ -283,7 +284,8 @@ const createCacheStream: <T>(
               DispatcherLike<
                 Record<string, Function1<Optional<T>, Optional<T>>>
               >
-            >,
+            > &
+            DisposableLike,
           key: string,
         ): ObservableLike<T> {
           const {

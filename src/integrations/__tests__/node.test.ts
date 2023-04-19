@@ -19,8 +19,9 @@ import * as Runnable from "../../rx/Runnable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { StreamableLike_stream } from "../../streaming.js";
 import * as Flowable from "../../streaming/Flowable.js";
-import * as Stream from "../../streaming/Stream.js";
+import * as Streamable from "../../streaming/Streamable.js";
 import { DisposableLike_dispose } from "../../util.js";
+import * as Disposable from "../../util/Disposable.js";
 import {
   createReadableSource,
   createWritableSink,
@@ -54,14 +55,15 @@ testModule(
           Runnable.toFlowable(),
         );
 
-        await pipe(
+        const stream = pipe(
           writable,
           returns,
           createWritableSink,
           invoke(StreamableLike_stream, scheduler),
-          Stream.sourceFrom(src),
-          Observable.lastAsync({ scheduler }),
         );
+
+        pipe(src, Streamable.sinkInto(stream), Disposable.addTo(stream));
+        await pipe(stream, Observable.lastAsync({ scheduler }));
 
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
@@ -92,14 +94,15 @@ testModule(
           Runnable.toFlowable(),
         );
 
-        const promise = pipe(
+        const stream = pipe(
           writable,
           returns,
           createWritableSink,
           invoke(StreamableLike_stream, scheduler),
-          Stream.sourceFrom(src),
-          Observable.lastAsync({ scheduler }),
         );
+
+        pipe(src, Streamable.sinkInto(stream), Disposable.addTo(stream));
+        const promise = pipe(stream, Observable.lastAsync({ scheduler }));
 
         await expectPromiseToThrow(promise);
         pipe(writable.destroyed, expectEquals(true));

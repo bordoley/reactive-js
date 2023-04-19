@@ -6,38 +6,13 @@
 
 ### Functions
 
-- [sourceFrom](streaming_Stream.md#sourcefrom)
 - [syncState](streaming_Stream.md#syncstate)
 
 ## Functions
 
-### sourceFrom
-
-▸ **sourceFrom**<`TReq`, `T`, `TSinkStream`\>(`streamable`): [`Function1`](functions.md#function1)<`TSinkStream`, `TSinkStream`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TReq` | `TReq` |
-| `T` | `T` |
-| `TSinkStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `TReq`, `TSinkStream`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`TSinkStream`, `TSinkStream`\>
-
-___
-
 ### syncState
 
-▸ **syncState**<`T`\>(`onInit`, `onChange`, `options?`): [`Function1`](functions.md#function1)<[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+▸ **syncState**<`T`\>(`onInit`, `onChange`, `options?`): [`Function1`](functions.md#function1)<[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -59,4 +34,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+[`Function1`](functions.md#function1)<[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>

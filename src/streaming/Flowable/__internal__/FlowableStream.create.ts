@@ -31,6 +31,7 @@ import {
   FlowableStreamLike_resume,
 } from "../../../streaming.js";
 import {
+  DisposableLike,
   EventListenerLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -47,7 +48,7 @@ const FlowableStream_create: <T>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => FlowableStreamLike<T> = /*@__PURE__*/ (<T>() => {
+) => FlowableStreamLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [FlowableStreamLike_isPaused]: ObservableLike<boolean>;
   };
@@ -68,7 +69,7 @@ const FlowableStream_create: <T>(
           capacity?: number;
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
-      ): FlowableStreamLike<T> {
+      ): FlowableStreamLike<T> & DisposableLike {
         const publisher = Publisher_create({ replay: 1 });
 
         const liftedOp = compose(

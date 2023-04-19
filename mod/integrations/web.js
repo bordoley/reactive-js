@@ -166,7 +166,7 @@ export const windowLocation = /*@__PURE__*/ (() => {
         }
         const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { backpressureStrategy: "drop-oldest", capacity: 1 });
         const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { backpressureStrategy: "drop-oldest", capacity: 1 });
-        currentWindowLocationStream = pipe(Streamable.createStateStore(() => ({
+        const locationStream = pipe(Streamable.createStateStore(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
             // Initialize the counter to -1 so that the initized start value
@@ -176,7 +176,8 @@ export const windowLocation = /*@__PURE__*/ (() => {
             replay: options?.replay ?? 1,
             capacity: options?.capacity ?? 1,
             backpressureStrategy: options?.backpressureStrategy ?? "drop-oldest",
-        }), Stream.syncState(state => 
+        }));
+        const syncState = pipe(locationStream, Stream.syncState(state => 
         // Initialize the history state on page load
         pipe(window, observeEvent("popstate", (e) => {
             const { counter, title } = e.state;
@@ -200,7 +201,8 @@ export const windowLocation = /*@__PURE__*/ (() => {
                 : push
                     ? pushState[QueueableLike_enqueue](state)
                     : false), Observable.ignoreElements());
-        }), createWindowLocationStream, Disposable.add(pushState), Disposable.add(replaceState));
+        }));
+        currentWindowLocationStream = pipe(locationStream, createWindowLocationStream, Disposable.add(pushState), Disposable.add(replaceState), Disposable.add(syncState));
         return currentWindowLocationStream;
     };
     return {

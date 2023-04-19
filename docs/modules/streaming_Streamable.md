@@ -233,7 +233,7 @@ ___
 
 ### sinkInto
 
-▸ **sinkInto**<`TReq`, `T`\>(`dest`): (`src`: [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>) => [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
+▸ **sinkInto**<`TReq`, `T`\>(`dest`): (`src`: [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>) => [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 #### Type parameters
 
@@ -252,7 +252,7 @@ ___
 
 `fn`
 
-▸ (`src`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
+▸ (`src`): [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ##### Parameters
 
@@ -262,4 +262,4 @@ ___
 
 ##### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
+[`DisposableLike`](../interfaces/util.DisposableLike.md)

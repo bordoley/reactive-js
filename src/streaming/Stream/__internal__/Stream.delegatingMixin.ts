@@ -10,11 +10,12 @@ import { none, returns, unsafeCast } from "../../../functions.js";
 import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
+import { DisposableLike } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 const Stream_delegatingMixin: <TReq, T>() => Mixin1<
-  StreamLike<TReq, T>,
-  StreamLike<TReq, T>
+  StreamLike<TReq, T> & DisposableLike,
+  StreamLike<TReq, T> & DisposableLike
 > = /*@__PURE__*/ (<TReq, T>() => {
   type TProperties = {
     [__DelegatingStreamMixin_delegate]: StreamLike<TReq, T>;
@@ -29,8 +30,8 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
       function DelegatingStreamMixin(
         instance: Pick<StreamLike<TReq, T>, typeof StreamLike_scheduler> &
           TProperties,
-        delegate: StreamLike<TReq, T>,
-      ): StreamLike<TReq, T> {
+        delegate: StreamLike<TReq, T> & DisposableLike,
+      ): StreamLike<TReq, T> & DisposableLike {
         init(Disposable_delegatingMixin, instance, delegate);
         init(MulticastObservable_delegatingMixin<T>(), instance, delegate);
         init(Dispatcher_delegatingMixin(), instance, delegate);

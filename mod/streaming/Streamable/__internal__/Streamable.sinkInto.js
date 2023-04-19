@@ -10,7 +10,6 @@ import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/
 import { StreamLike_scheduler, StreamableLike_stream, } from "../../../streaming.js";
 import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 const Streamable_sinkInto = (dest) => (src) => {
     const capacity = dest[BufferLike_capacity];
     const backpressureStrategy = dest[QueueableLike_backpressureStrategy];
@@ -18,7 +17,6 @@ const Streamable_sinkInto = (dest) => (src) => {
         backpressureStrategy,
         capacity,
     });
-    pipe(Observable_merge(pipe(srcStream, Observable_enqueue(dest), Observable_ignoreElements(), Observable_onSubscribe(returns(bindMethod(dest, DispatcherLike_complete)))), pipe(dest, Observable_enqueue(srcStream), Observable_ignoreElements())), Observable_ignoreElements(), Observable_subscribeWithConfig(dest[StreamLike_scheduler], dest), Disposable_addTo(dest), Disposable_add(srcStream));
-    return src;
+    return pipe(Observable_merge(pipe(srcStream, Observable_enqueue(dest), Observable_ignoreElements(), Observable_onSubscribe(returns(bindMethod(dest, DispatcherLike_complete)))), pipe(dest, Observable_enqueue(srcStream), Observable_ignoreElements())), Observable_ignoreElements(), Observable_subscribeWithConfig(dest[StreamLike_scheduler], dest), Disposable_add(srcStream));
 };
 export default Streamable_sinkInto;

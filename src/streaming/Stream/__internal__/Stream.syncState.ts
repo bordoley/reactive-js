@@ -16,10 +16,10 @@ import Observable_throttle from "../../../rx/Observable/__internal__/Observable.
 import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import {
+  DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 const Stream_syncState = <T>(
   onInit: (initialValue: T) => ObservableLike<Updater<T>>,
@@ -30,13 +30,13 @@ const Stream_syncState = <T>(
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly scheduler: SchedulerLike;
   },
-): Function1<StreamLike<Updater<T>, T>, StreamLike<Updater<T>, T>> => {
+): Function1<StreamLike<Updater<T>, T>, DisposableLike> => {
   const throttleDuration = options?.throttleDuration ?? 0;
 
   return (stateStore: StreamLike<Updater<T>, T>) => {
     const scheduler = options?.scheduler ?? stateStore[StreamLike_scheduler];
 
-    pipe(
+    return pipe(
       stateStore,
       Observable_forkMerge(
         compose(
@@ -58,10 +58,7 @@ const Stream_syncState = <T>(
         backpressureStrategy: options?.backpressureStrategy,
         capacity: options?.capacity,
       }),
-      Disposable_addTo(stateStore),
     );
-
-    return stateStore;
   };
 };
 

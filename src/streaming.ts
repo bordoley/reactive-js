@@ -49,8 +49,7 @@ export {
  */
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
-    MulticastObservableLike<T>,
-    DisposableLike {
+    MulticastObservableLike<T> {
   readonly [StreamLike_scheduler]: SchedulerLike;
 }
 
@@ -110,7 +109,7 @@ export interface StreamableLike<
 
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
-  ): TStream;
+  ): TStream & DisposableLike;
 }
 
 /**

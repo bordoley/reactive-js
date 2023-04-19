@@ -13,14 +13,14 @@ import {
 } from "../../../streaming.js";
 import {
   BufferLike_capacity,
+  DisposableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 const Streamable_sinkInto =
   <TReq, T>(dest: StreamLike<T, TReq>) =>
-  (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
+  (src: StreamableLike<TReq, T>): DisposableLike => {
     const capacity = dest[BufferLike_capacity];
     const backpressureStrategy = dest[QueueableLike_backpressureStrategy];
     const srcStream = src[StreamableLike_stream](dest[StreamLike_scheduler], {
@@ -28,7 +28,7 @@ const Streamable_sinkInto =
       capacity,
     });
 
-    pipe(
+    return pipe(
       Observable_merge(
         pipe(
           srcStream,
@@ -46,11 +46,8 @@ const Streamable_sinkInto =
       ),
       Observable_ignoreElements<ObservableLike, unknown>(),
       Observable_subscribeWithConfig(dest[StreamLike_scheduler], dest),
-      Disposable_addTo(dest),
       Disposable_add(srcStream),
     );
-
-    return src;
   };
 
 export default Streamable_sinkInto;

@@ -172,7 +172,7 @@ type TProperties = {
 };
 
 const Stream_mixin: <TReq, T>() => Mixin3<
-  StreamLike<TReq, T>,
+  StreamLike<TReq, T> & DisposableLike,
   ContainerOperator<ObservableLike, TReq, T>,
   SchedulerLike,
   Optional<{
@@ -197,7 +197,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           capacity?: number;
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
-      ): StreamLike<TReq, T> {
+      ): StreamLike<TReq, T> & DisposableLike {
         instance[StreamLike_scheduler] = scheduler;
 
         const dispatchedObservable = DispatchedObservable_create<TReq>();

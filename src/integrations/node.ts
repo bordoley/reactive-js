@@ -34,7 +34,6 @@ import {
   StreamableLike_stream,
 } from "../streaming.js";
 import * as Flowable from "../streaming/Flowable.js";
-import * as Stream from "../streaming/Stream.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
   BufferLike_capacity,
@@ -207,14 +206,13 @@ export const transform =
           observer[QueueableLike_backpressureStrategy];
         const capacity = observer[BufferLike_capacity];
 
-        pipe(
+        const transformWritableStream = pipe(
           transform,
           createWritableSink,
           invoke(StreamableLike_stream, observer, {
             backpressureStrategy,
             capacity,
           }),
-          Stream.sourceFrom(src),
           Disposable.addTo(observer),
         );
 
@@ -222,6 +220,13 @@ export const transform =
           transform,
           createReadableSource,
           invoke(StreamableLike_stream, observer, { capacity }),
+          Disposable.addTo(observer),
+        );
+
+        pipe(
+          src,
+          Streamable.sinkInto(transformWritableStream),
+          Disposable.addTo(observer),
         );
 
         transformReadableStream[ObservableLike_observe](observer);
