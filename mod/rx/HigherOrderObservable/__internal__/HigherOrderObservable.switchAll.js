@@ -14,6 +14,7 @@ import SerialDisposable_create from "../../../util/Disposable/__internal__/Seria
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 const HigherOrderObservable_switchAll = (lift) => {
     const createSwitchAllObserver = (() => {
@@ -23,17 +24,17 @@ const HigherOrderObservable_switchAll = (lift) => {
             }
         }
         return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function SwitchAllObserver(instance, delegate) {
-            init(Observer_mixin(), instance, delegate, delegate);
+            Observer_mixin_initFromDelegate(instance, delegate);
             init(Delegating_mixin(), instance, delegate);
             instance[__HigherOrderObservable_currentRef] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));
-            pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(bind(onDispose, instance)));
+            pipe(instance, Disposable_onComplete(bind(onDispose, instance)));
             return instance;
         }, props({
             [__HigherOrderObservable_currentRef]: none,
         }), {
             [ObserverLike_notify](next) {
                 Observer_assertState(this);
-                this[__HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(this[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(this[DelegatingLike_delegate], this), Disposable_onComplete(() => {
+                this[__HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(this[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(this[DelegatingLike_delegate], this), Disposable_addTo(this[DelegatingLike_delegate]), Disposable_onComplete(() => {
                     if (this[DisposableLike_isDisposed]) {
                         this[DelegatingLike_delegate][DisposableLike_dispose]();
                     }

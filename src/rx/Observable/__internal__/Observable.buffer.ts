@@ -44,6 +44,7 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
@@ -73,7 +74,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
         durationFunction: Function1<T, ObservableLike>,
         count: number,
       ): ObserverLike<T> {
-        init(Observer_mixin(), instance, delegate, delegate);
+        Observer_mixin_initFromDelegate(instance, delegate);
         init(Delegating_mixin(), instance, delegate);
 
         instance[__BufferObserver_buffer] = [];
@@ -149,6 +150,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
               this[__BufferObserver_durationFunction],
               Observable_forEach<ObservableLike>(doOnNotify),
               Observable_subscribeWithConfig(this, this),
+              Disposable_addTo(this),
             );
           }
         },

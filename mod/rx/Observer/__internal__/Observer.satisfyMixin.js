@@ -8,15 +8,15 @@ import { invoke, none, pipe } from "../../../functions.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "./Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "./Observer.mixin.js";
 const Observer_satisfyMixin = (defaultResult) => mix(include(Delegating_mixin(), Observer_mixin()), function SatisfyObserver(instance, delegate, predicate) {
-    init(Observer_mixin(), instance, delegate, delegate);
+    Observer_mixin_initFromDelegate(instance, delegate);
     init(Delegating_mixin(), instance, delegate);
     instance[PredicatedLike_predicate] = predicate;
-    pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
+    pipe(instance, Disposable_onComplete(() => {
         if (!delegate[DisposableLike_isDisposed]) {
             pipe(defaultResult, Optional_toObservable(), invoke(ObservableLike_observe, delegate));
         }

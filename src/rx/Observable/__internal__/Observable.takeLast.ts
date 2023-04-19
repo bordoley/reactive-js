@@ -3,7 +3,6 @@ import {
   Mutable,
   createInstanceFactory,
   include,
-  init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
@@ -19,11 +18,11 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import { DisposableLike, QueueableLike_enqueue } from "../../../util.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Indexed_toReadonlyArray from "../../../util/Indexed/__internal__/Indexed.toReadonlyArray.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
 type ObservableTakeLast = <C extends ObservableLike, T>(options?: {
@@ -43,7 +42,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
         delegate: ObserverLike<T>,
         takeLastCount: number,
       ): ObserverLike<T> {
-        init(Observer_mixin(), instance, delegate, delegate);
+        Observer_mixin_initFromDelegate(instance, delegate);
 
         instance[__TakeLastObserver_takeLastQueue] = Queue_createIndexedQueue(
           takeLastCount,
@@ -52,7 +51,6 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
 
         pipe(
           instance,
-          Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             pipe(
               instance[__TakeLastObserver_takeLastQueue],

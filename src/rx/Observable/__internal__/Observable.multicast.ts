@@ -10,7 +10,7 @@ import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 import Observable_multicastImpl from "./Observable.multicastImpl.js";
 
 const Observable_multicast = <T>(
-  schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>,
+  schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
   options: {
     readonly replay?: number;
     readonly capacity?: number;

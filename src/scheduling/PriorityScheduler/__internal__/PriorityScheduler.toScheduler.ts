@@ -55,7 +55,7 @@ const createSchedulerInstance = /*@__PURE__*/ (() =>
           Mutable<TProperties>,
         scheduler: PrioritySchedulerLike,
         priority: number,
-      ): SchedulerLike {
+      ): SchedulerLike & DisposableLike {
         init(Disposable_mixin, instance);
 
         instance[__PrioritySchedulerDelegatingScheduler_priorityScheduler] =
@@ -119,7 +119,7 @@ const createSchedulerInstance = /*@__PURE__*/ (() =>
 
 const PriorityScheduler_toScheduler = (
   priority: number,
-): Function1<PrioritySchedulerLike, SchedulerLike> =>
+): Function1<PrioritySchedulerLike, SchedulerLike & DisposableLike> =>
   pipe(createSchedulerInstance, partial(priority));
 
 export default PriorityScheduler_toScheduler;

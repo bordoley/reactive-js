@@ -71,7 +71,6 @@ const Observer_mixin: <T>() => Mixin2<
         init(Observer_baseMixin<T>(), instance, config);
 
         instance[__ObserverMixin_scheduler] = scheduler;
-        pipe(scheduler, Disposable_addIgnoringChildErrors(instance));
 
         return instance;
       },

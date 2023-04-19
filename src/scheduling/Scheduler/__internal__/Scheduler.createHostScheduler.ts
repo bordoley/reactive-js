@@ -113,7 +113,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           | typeof ContinuationSchedulerLike_schedule
         >,
         maxYieldInterval: number,
-      ): SchedulerLike {
+      ): SchedulerLike & DisposableLike {
         init(PriorityScheduler_mixin, instance, maxYieldInterval);
 
         return instance;
@@ -156,7 +156,7 @@ const Scheduler_createHostScheduler = (
   options: {
     readonly maxYieldInterval?: number;
   } = {},
-): SchedulerLike => {
+): SchedulerLike & DisposableLike => {
   const { maxYieldInterval = 300 } = options;
   return createHostSchedulerInstance(maxYieldInterval);
 };

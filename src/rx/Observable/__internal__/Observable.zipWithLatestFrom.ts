@@ -41,6 +41,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
@@ -90,7 +91,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
             other: ObservableLike<TB>,
             selector: Function2<TA, TB, T>,
           ): ObserverLike<TA> {
-            init(Observer_mixin(), instance, delegate, delegate);
+            Observer_mixin_initFromDelegate(instance, delegate);
             init(Delegating_mixin<ObserverLike<T>>(), instance, delegate);
             instance[__WithLatestLike_selector] = selector;
             instance[__ZipWithLatestFromObserver_TAQueue] =
@@ -129,11 +130,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLa
               Disposable_addTo(delegate),
             );
 
-            pipe(
-              instance,
-              Disposable_addTo(delegate),
-              Disposable_onComplete(disposeDelegate),
-            );
+            pipe(instance, Disposable_onComplete(disposeDelegate));
 
             return instance;
           },

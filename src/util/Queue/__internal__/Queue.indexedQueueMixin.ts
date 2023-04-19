@@ -38,6 +38,7 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
   IndexedQueueLike<T>,
   number,
   QueueableLike[typeof QueueableLike_backpressureStrategy],
+  unknown,
   Omit<
     IndexedQueueLike<T>,
     | typeof QueueableLike_backpressureStrategy

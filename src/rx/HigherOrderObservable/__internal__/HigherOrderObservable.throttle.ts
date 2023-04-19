@@ -51,6 +51,7 @@ import SerialDisposable_create from "../../../util/Disposable/__internal__/Seria
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 
@@ -84,6 +85,7 @@ const createThrottleObserver: <T>(
         observer[DelegatingLike_delegate],
         observer,
       ),
+      Disposable_addTo(observer[DelegatingLike_delegate]),
     );
   };
 
@@ -98,7 +100,7 @@ const createThrottleObserver: <T>(
         mode: "first" | "last" | "interval",
       ): ObserverLike<T> {
         init(Delegating_mixin<ObserverLike>(), instance, delegate);
-        init(Observer_mixin(), instance, delegate, delegate);
+        Observer_mixin_initFromDelegate(instance, delegate);
 
         instance[__ThrottleObserver_durationFunction] = durationFunction;
         instance[__ThrottleObserver_mode] = mode;
@@ -122,7 +124,6 @@ const createThrottleObserver: <T>(
 
         pipe(
           instance,
-          Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             if (
               instance[__ThrottleObserver_mode] !== "first" &&

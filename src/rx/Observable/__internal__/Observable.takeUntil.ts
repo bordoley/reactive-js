@@ -6,6 +6,7 @@ import {
   ObserverLike,
   RunnableLike,
 } from "../../../rx.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
@@ -34,6 +35,7 @@ const Observable_takeUntil: ObservableTakeUntil["takeUntil"] = (<T>(
           notifier,
           Observable_takeFirst<ObservableLike, T>(),
           Observable_subscribeWithConfig(delegate, delegate),
+          Disposable_addTo(delegate),
         ),
       ),
     );

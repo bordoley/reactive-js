@@ -92,7 +92,7 @@ export type QueueTask = {
 const Scheduler_createQueueScheduler: Function2<
   SchedulerLike,
   () => QueueLike<QueueTask>,
-  PauseableSchedulerLike & PrioritySchedulerLike
+  PauseableSchedulerLike & PrioritySchedulerLike & DisposableLike
 > = /*@__PURE__*/ (() => {
   const delayedComparator = (a: QueueTask, b: QueueTask) => {
     let diff = 0;
@@ -258,7 +258,7 @@ const Scheduler_createQueueScheduler: Function2<
           Mutable<TProperties>,
         host: SchedulerLike,
         createImmediateQueue: Factory<QueueLike<QueueTask>>,
-      ): PauseableSchedulerLike & PrioritySchedulerLike {
+      ): PauseableSchedulerLike & PrioritySchedulerLike & DisposableLike {
         init(
           PriorityScheduler_mixin,
           instance,

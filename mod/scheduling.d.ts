@@ -28,7 +28,7 @@ export interface ContinuationContextLike {
  *
  * @noInheritDoc
  */
-export interface SchedulerLike extends DisposableLike {
+export interface SchedulerLike {
     /**
      * Boolean flag indicating the scheduler is currently
      * running a continuation.

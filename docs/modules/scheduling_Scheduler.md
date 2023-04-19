@@ -16,7 +16,7 @@
 
 ### createAnimationFrameScheduler
 
-▸ **createAnimationFrameScheduler**(`a`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+▸ **createAnimationFrameScheduler**(`a`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 #### Parameters
 
@@ -26,13 +26,13 @@
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ___
 
 ### createHostScheduler
 
-▸ **createHostScheduler**(`options?`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+▸ **createHostScheduler**(`options?`): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 #### Parameters
 
@@ -43,13 +43,13 @@ ___
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ___
 
 ### createVirtualTimeScheduler
 
-▸ **createVirtualTimeScheduler**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
+▸ **createVirtualTimeScheduler**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 #### Parameters
 
@@ -60,13 +60,13 @@ ___
 
 #### Returns
 
-[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
+[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ___
 
 ### toPausableScheduler
 
-▸ **toPausableScheduler**(`a`): [`PauseableSchedulerLike`](../interfaces/scheduling.PauseableSchedulerLike.md)
+▸ **toPausableScheduler**(`a`): [`PauseableSchedulerLike`](../interfaces/scheduling.PauseableSchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 #### Parameters
 
@@ -76,13 +76,13 @@ ___
 
 #### Returns
 
-[`PauseableSchedulerLike`](../interfaces/scheduling.PauseableSchedulerLike.md)
+[`PauseableSchedulerLike`](../interfaces/scheduling.PauseableSchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 ___
 
 ### toPriorityScheduler
 
-▸ **toPriorityScheduler**(`a`): [`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md)
+▸ **toPriorityScheduler**(`a`): [`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
 
 #### Parameters
 
@@ -92,4 +92,4 @@ ___
 
 #### Returns
 
-[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md)
+[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)

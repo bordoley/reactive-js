@@ -12,7 +12,7 @@ export interface ContinuationLike extends DisposableLike, QueueableLike<Continua
     readonly [ContinuationLike_priority]: number;
     [ContinuationLike_run](): void;
 }
-export interface PrioritySchedulerImplementationLike extends PrioritySchedulerLike, ContinuationSchedulerLike {
+export interface PrioritySchedulerImplementationLike extends PrioritySchedulerLike, ContinuationSchedulerLike, DisposableLike {
     readonly [PrioritySchedulerImplementationLike_shouldYield]: boolean;
     [PrioritySchedulerImplementationLike_runContinuation](continuation: ContinuationLike): void;
 }

@@ -1,15 +1,15 @@
 /// <reference types="./Observable.latest.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, mix, props, } from "../../../__internal__/mixins.js";
 import { __LatestCtx_completedCount, __LatestCtx_delegate, __LatestCtx_mode, __LatestCtx_observers, __LatestObserver_ctx, __LatestObserver_latest, __LatestObserver_ready, } from "../../../__internal__/symbols.js";
 import { none, pipe } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
-import { BufferLike_capacity, DisposableLike_dispose, QueueableLike_backpressureStrategy, } from "../../../util.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
@@ -41,8 +41,8 @@ const Observable_latest = /*@__PURE__*/ (() => {
             instance[__LatestCtx_delegate][DisposableLike_dispose]();
         }
     };
-    const createLatestObserver = createInstanceFactory(mix(include(Observer_mixin()), function LatestObserver(instance, ctx, scheduler, config) {
-        init(Observer_mixin(), instance, scheduler, config);
+    const createLatestObserver = createInstanceFactory(mix(include(Observer_mixin()), function LatestObserver(instance, ctx, delegate) {
+        Observer_mixin_initFromDelegate(instance, delegate);
         instance[__LatestObserver_ctx] = ctx;
         return instance;
     }, props({
@@ -67,7 +67,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 [__LatestCtx_mode]: mode,
             };
             for (const observable of observables) {
-                const innerObserver = pipe(createLatestObserver(ctx, delegate, delegate), Disposable_addTo(delegate), Disposable_onComplete(() => {
+                const innerObserver = pipe(createLatestObserver(ctx, delegate), Disposable_onComplete(() => {
                     onCompleted(ctx);
                 }), Observer_sourceFrom(observable));
                 add(ctx, innerObserver);

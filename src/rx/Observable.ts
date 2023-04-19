@@ -395,7 +395,7 @@ export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =
  * @category Transform
  */
 export const multicast: <T>(
-  schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>,
+  schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
   options?: {
     /**
      * The number of events that should be replayed when the `MulticastObservableLike`

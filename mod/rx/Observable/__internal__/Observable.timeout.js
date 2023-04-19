@@ -7,6 +7,7 @@ import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -17,7 +18,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 import Observable_throws from "./Observable.throws.js";
 const Observable_timeout = /*@__PURE__*/ (() => {
     const setupDurationSubscription = (observer) => {
-        observer[SerialDisposableLike_current] = pipe(observer[__TimeoutObserver_duration], Observable_subscribeWithConfig(observer, observer));
+        observer[SerialDisposableLike_current] = pipe(observer[__TimeoutObserver_duration], Observable_subscribeWithConfig(observer, observer), Disposable_addTo(observer));
     };
     const createTimeoutObserver = createInstanceFactory(mix(include(Observer_delegatingMixin(), SerialDisposable_mixin(), Delegating_mixin()), function TimeoutObserver(instance, delegate, duration) {
         init(Observer_delegatingMixin(), instance, delegate, delegate);

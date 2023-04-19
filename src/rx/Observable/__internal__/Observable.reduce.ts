@@ -6,7 +6,6 @@ import {
 import {
   createInstanceFactory,
   include,
-  init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
@@ -28,10 +27,10 @@ import {
   ObserverLike_notify,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
 type ObservableReduce = <C extends ObservableLike, T, TAcc>(
@@ -49,7 +48,7 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
       ): ObserverLike<T> {
-        init(Observer_mixin(), instance, delegate, delegate);
+        Observer_mixin_initFromDelegate(instance, delegate);
         instance[ReducerAccumulatorLike_reducer] = reducer;
 
         try {
@@ -61,7 +60,6 @@ const Observable_reduce: ObservableReduce = /*@__PURE__*/ (<T, TAcc>() => {
 
         pipe(
           instance,
-          Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             pipe(
               [instance[ReducerAccumulatorLike_acc]],

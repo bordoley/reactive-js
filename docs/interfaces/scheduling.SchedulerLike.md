@@ -9,17 +9,15 @@ cooperative multi-tasking.
 
 ## Hierarchy
 
-- [`DisposableLike`](util.DisposableLike.md)
+- **`SchedulerLike`**
 
-  ↳ **`SchedulerLike`**
+  ↳ [`ObserverLike`](rx.ObserverLike.md)
 
-  ↳↳ [`ObserverLike`](rx.ObserverLike.md)
+  ↳ [`PauseableSchedulerLike`](scheduling.PauseableSchedulerLike.md)
 
-  ↳↳ [`PauseableSchedulerLike`](scheduling.PauseableSchedulerLike.md)
+  ↳ [`PrioritySchedulerLike`](scheduling.PrioritySchedulerLike.md)
 
-  ↳↳ [`PrioritySchedulerLike`](scheduling.PrioritySchedulerLike.md)
-
-  ↳↳ [`VirtualTimeSchedulerLike`](scheduling.VirtualTimeSchedulerLike.md)
+  ↳ [`VirtualTimeSchedulerLike`](scheduling.VirtualTimeSchedulerLike.md)
 
 ## Table of contents
 

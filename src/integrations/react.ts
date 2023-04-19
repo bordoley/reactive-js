@@ -80,6 +80,7 @@ import {
 } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
+  DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike_notify,
@@ -108,7 +109,7 @@ const createSchedulerWithPriority = /*@__PURE__*/ (() => {
           | typeof PrioritySchedulerImplementationLike_shouldYield
           | typeof ContinuationSchedulerLike_schedule
         >,
-      ): PrioritySchedulerLike {
+      ): PrioritySchedulerLike & DisposableLike {
         init(PriorityScheduler_mixin, instance, 300);
         return instance;
       },
@@ -162,8 +163,14 @@ const createSchedulerWithPriority = /*@__PURE__*/ (() => {
     ),
   );
 
-  return (priority: number): SchedulerLike =>
-    pipe(createPriorityScheduler(), PriorityScheduler.toScheduler(priority));
+  return (priority: number): SchedulerLike & DisposableLike => {
+    const priorityScheduler = createPriorityScheduler();
+    return pipe(
+      priorityScheduler,
+      PriorityScheduler.toScheduler(priority),
+      Disposable.bindTo(priorityScheduler),
+    );
+  };
 })();
 
 const createAnimationFrameSchedulerFactory = (priority?: number) => () => {

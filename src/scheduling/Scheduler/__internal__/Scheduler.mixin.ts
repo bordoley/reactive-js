@@ -57,6 +57,7 @@ import {
   QueueableLike,
   QueueableLike_enqueue,
 } from "../../../util.js";
+import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
@@ -92,7 +93,8 @@ export interface ContinuationLike
 
 export interface PrioritySchedulerImplementationLike
   extends PrioritySchedulerLike,
-    ContinuationSchedulerLike {
+    ContinuationSchedulerLike,
+    DisposableLike {
   readonly [PrioritySchedulerImplementationLike_shouldYield]: boolean;
 
   [PrioritySchedulerImplementationLike_runContinuation](
@@ -363,7 +365,10 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
         ): DisposableLike {
           const delay = clampPositiveInteger(options?.delay ?? 0);
           const { priority = 0 } = options ?? {};
-          const continuation = createContinuation(this, effect, priority);
+          const continuation = pipe(
+            createContinuation(this, effect, priority),
+            Disposable_addToIgnoringChildErrors(this),
+          );
 
           const currentContinuation =
             this[__SchedulerMixin_currentContinuation];

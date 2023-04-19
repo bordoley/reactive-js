@@ -10,9 +10,10 @@ import Observable_subscribe from "./Observable.subscribe.js";
 const Observable_lastAsync = (options) => async (observable) => {
     const schedulerOrFactory = options?.scheduler ?? Scheduler_createHostScheduler;
     const isSchedulerFactory = isFunction(schedulerOrFactory);
-    const scheduler = isSchedulerFactory
+    const schedulerDisposable = isSchedulerFactory
         ? schedulerOrFactory()
-        : schedulerOrFactory;
+        : none;
+    const scheduler = schedulerDisposable ?? schedulerOrFactory;
     try {
         return await newInstance(Promise, (resolve, reject) => {
             let result = none;
@@ -24,9 +25,7 @@ const Observable_lastAsync = (options) => async (observable) => {
         });
     }
     finally {
-        if (isSchedulerFactory) {
-            scheduler[DisposableLike_dispose]();
-        }
+        schedulerDisposable?.[DisposableLike_dispose]();
     }
 };
 export default Observable_lastAsync;

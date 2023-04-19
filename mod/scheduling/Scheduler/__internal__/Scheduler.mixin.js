@@ -8,6 +8,7 @@ import { QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { error, isNone, isSome, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
 import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
+import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
@@ -162,7 +163,7 @@ export const PriorityScheduler_mixin =
         [SchedulerLike_schedule](effect, options) {
             const delay = clampPositiveInteger(options?.delay ?? 0);
             const { priority = 0 } = options ?? {};
-            const continuation = createContinuation(this, effect, priority);
+            const continuation = pipe(createContinuation(this, effect, priority), Disposable_addToIgnoringChildErrors(this));
             const currentContinuation = this[__SchedulerMixin_currentContinuation];
             if (delay > 0 ||
                 isNone(currentContinuation) ||

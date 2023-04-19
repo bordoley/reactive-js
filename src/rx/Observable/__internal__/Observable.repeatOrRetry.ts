@@ -50,6 +50,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
             bindMethod(delegate, ObserverLike_notify),
           ),
           Observable_subscribeWithConfig(delegate, delegate),
+          Disposable_addToIgnoringChildErrors(delegate),
           Disposable_onDisposed(doOnDispose),
         );
       }

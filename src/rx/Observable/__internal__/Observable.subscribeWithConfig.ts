@@ -7,9 +7,8 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 import Observer_create from "../../Observer/__internal__/Observer.create.js";
-import sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
+import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
 const Observable_subscribeWithConfig =
   <T>(
@@ -20,10 +19,6 @@ const Observable_subscribeWithConfig =
     },
   ): Function1<ObservableLike<T>, DisposableLike> =>
   observable =>
-    pipe(
-      Observer_create(scheduler, config),
-      Disposable_addToIgnoringChildErrors(scheduler),
-      sourceFrom(observable),
-    );
+    pipe(Observer_create(scheduler, config), Observer_sourceFrom(observable));
 
 export default Observable_subscribeWithConfig;

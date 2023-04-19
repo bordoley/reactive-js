@@ -1,5 +1,6 @@
 import { Function1 } from "../functions.js";
 import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.js";
+import { DisposableLike } from "../util.js";
 import Scheduler_createAnimationFrameScheduler from "./Scheduler/__internal__/Scheduler.createAnimationFrameScheduler.js";
 import Scheduler_createHostScheduler from "./Scheduler/__internal__/Scheduler.createHostScheduler.js";
 import Scheduler_createVirtualTimeScheduler from "./Scheduler/__internal__/Scheduler.createVirtualTimeScheduler.js";
@@ -17,5 +18,5 @@ export const toPausableScheduler = Scheduler_toPausableScheduler;
 
 export const toPriorityScheduler: Function1<
   SchedulerLike,
-  PrioritySchedulerLike
+  PrioritySchedulerLike & DisposableLike
 > = Scheduler_toPriorityScheduler;
