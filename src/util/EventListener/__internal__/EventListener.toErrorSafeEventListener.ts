@@ -22,8 +22,8 @@ import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable
 
 const ErrorSafeEventListener_create: <T>(
   delegate: EventListenerLike<T>,
-) => ErrorSafeEventListenerLike<T> = /*@__PURE__*/ (<T>() => {
-  return createInstanceFactory(
+) => ErrorSafeEventListenerLike<T> = /*@__PURE__*/ (<T>() =>
+  createInstanceFactory(
     mix(
       include(Disposable_delegatingMixin, Delegating_mixin()),
       function ErrorSafeEventListener(
@@ -55,8 +55,7 @@ const ErrorSafeEventListener_create: <T>(
         },
       },
     ),
-  );
-})();
+  ))();
 
 const EventListener_toErrorSafeEventListener: <T>() => Function1<
   EventListenerLike<T>,

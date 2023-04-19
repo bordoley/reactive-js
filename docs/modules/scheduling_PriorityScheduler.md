@@ -12,7 +12,7 @@
 
 ### toScheduler
 
-▸ **toScheduler**(`priority`): [`Function1`](functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\>
+▸ **toScheduler**(`priority`): [`Function1`](functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
 
@@ -24,4 +24,4 @@ Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\>
+[`Function1`](functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>

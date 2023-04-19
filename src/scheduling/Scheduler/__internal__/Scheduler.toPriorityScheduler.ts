@@ -5,6 +5,7 @@ import {
 } from "../../../__internal__/symbols.js";
 import { Function1 } from "../../../functions.js";
 import { PrioritySchedulerLike, SchedulerLike } from "../../../scheduling.js";
+import { DisposableLike } from "../../../util.js";
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
 import Scheduler_createQueueScheduler, {
   QueueTask,
@@ -22,7 +23,7 @@ const createTaskQueue = () =>
 
 const Scheduler_toPriorityScheduler: Function1<
   SchedulerLike,
-  PrioritySchedulerLike
+  PrioritySchedulerLike & DisposableLike
 > = (hostScheduler: SchedulerLike) =>
   Scheduler_createQueueScheduler(hostScheduler, createTaskQueue);
 

@@ -13,7 +13,7 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
 } from "../../../scheduling.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
+import { DisposableLike, DisposableLike_isDisposed } from "../../../util.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import {
@@ -43,7 +43,7 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
         > &
           TProperties,
         delayScheduler: SchedulerLike,
-      ): SchedulerLike {
+      ): SchedulerLike & DisposableLike {
         init(PriorityScheduler_mixin, instance, 5);
 
         instance[__AnimationFrameScheduler_delayScheduler] = delayScheduler;

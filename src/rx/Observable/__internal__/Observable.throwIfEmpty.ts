@@ -27,10 +27,10 @@ import {
 } from "../../../rx.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
 type ObservableThrowIfEmpty = <C extends ObservableLike, T>(
@@ -52,12 +52,11 @@ const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
           delegate: ObserverLike<T>,
           factory: Factory<unknown>,
         ): ObserverLike<T> {
-          init(Observer_mixin(), instance, delegate, delegate);
+          Observer_mixin_initFromDelegate(instance, delegate);
           init(Delegating_mixin(), instance, delegate);
 
           pipe(
             instance,
-            Disposable_addTo(delegate),
             Disposable_onComplete(() => {
               let err: Optional<Error> = none;
 

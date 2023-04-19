@@ -10,6 +10,7 @@ import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import Scheduler_createHostScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.createHostScheduler.js";
 import {
+  DisposableLike,
   DisposableLike_dispose,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -21,7 +22,9 @@ import Observable_subscribe from "./Observable.subscribe.js";
 
 const Observable_lastAsync =
   <T>(options?: {
-    readonly scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    readonly scheduler?:
+      | SchedulerLike
+      | Factory<SchedulerLike & DisposableLike>;
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }) =>
@@ -29,9 +32,11 @@ const Observable_lastAsync =
     const schedulerOrFactory =
       options?.scheduler ?? Scheduler_createHostScheduler;
     const isSchedulerFactory = isFunction(schedulerOrFactory);
-    const scheduler = isSchedulerFactory
+    const schedulerDisposable = isSchedulerFactory
       ? schedulerOrFactory()
-      : schedulerOrFactory;
+      : none;
+    const scheduler =
+      schedulerDisposable ?? (schedulerOrFactory as SchedulerLike);
 
     try {
       return await newInstance<
@@ -56,9 +61,7 @@ const Observable_lastAsync =
         );
       });
     } finally {
-      if (isSchedulerFactory) {
-        scheduler[DisposableLike_dispose]();
-      }
+      schedulerDisposable?.[DisposableLike_dispose]();
     }
   };
 

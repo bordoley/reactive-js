@@ -2,7 +2,6 @@ import {
   Mutable,
   createInstanceFactory,
   include,
-  init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
@@ -25,16 +24,10 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
-import {
-  BufferLike_capacity,
-  DisposableLike_dispose,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../util.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
@@ -102,13 +95,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
         instance: Pick<ObserverLike, typeof ObserverLike_notify> &
           Mutable<TProperties>,
         ctx: LatestCtx,
-        scheduler: SchedulerLike,
-        config: {
-          readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          readonly [BufferLike_capacity]: number;
-        },
+        delegate: ObserverLike,
       ): ObserverLike & TProperties {
-        init(Observer_mixin(), instance, scheduler, config);
+        Observer_mixin_initFromDelegate(instance, delegate);
         instance[__LatestObserver_ctx] = ctx;
 
         return instance;
@@ -146,8 +135,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
 
       for (const observable of observables) {
         const innerObserver = pipe(
-          createLatestObserver(ctx, delegate, delegate),
-          Disposable_addTo(delegate),
+          createLatestObserver(ctx, delegate),
           Disposable_onComplete(() => {
             onCompleted(ctx);
           }),

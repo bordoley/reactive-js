@@ -118,7 +118,7 @@ export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
  *
  * @category Transform
  */
-export declare const multicast: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
+export declare const multicast: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
     /**
      * The number of events that should be replayed when the `MulticastObservableLike`
      * is subscribed to.
@@ -151,7 +151,7 @@ export declare const scanMany: ScanMany<ObservableLike, ObservableLike>["scanMan
  *
  * @category Operator
  */
-export declare const share: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
+export declare const share: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
     readonly replay?: number | undefined;
     readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;
@@ -168,7 +168,7 @@ export declare const subscribe: <T>(scheduler: SchedulerLike, options?: {
 /**
  * @category Operator
  */
-export declare const subscribeOn: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
+export declare const subscribeOn: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
     readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;
 } | undefined) => (observable: ObservableLike<T>) => ObservableLike<T>;

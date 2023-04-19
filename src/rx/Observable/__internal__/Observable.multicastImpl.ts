@@ -33,7 +33,7 @@ const Observable_multicastImpl =
       }>,
       PublisherLike<T>
     >,
-    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>,
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
     options: {
       readonly replay?: number;
       readonly capacity?: number;

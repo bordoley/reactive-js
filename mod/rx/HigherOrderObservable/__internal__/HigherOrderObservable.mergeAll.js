@@ -15,6 +15,7 @@ import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.cre
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 const HigherOrderObservable_mergeAll = (lift) => {
     const createMergeAllObserver = (() => {
@@ -23,7 +24,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
             pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[__MergeAllObserver_onDispose]));
         };
         return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
-            init(Observer_mixin(), instance, delegate, delegate);
+            Observer_mixin_initFromDelegate(instance, delegate);
             init(Delegating_mixin(), instance, delegate);
             instance[__MergeAllObserver_observablesQueue] =
                 Queue_createIndexedQueue(capacity, backpressureStrategy);
@@ -40,7 +41,7 @@ const HigherOrderObservable_mergeAll = (lift) => {
                     instance[DelegatingLike_delegate][DisposableLike_dispose]();
                 }
             };
-            pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
+            pipe(instance, Disposable_onComplete(() => {
                 if (delegate[DisposableLike_isDisposed]) {
                     // FIXME: Clear the queue
                 }

@@ -19,7 +19,6 @@ const Observer_mixin = /*@__PURE__*/ (() => {
         init(Scheduler_delegatingMixin, instance, scheduler);
         init(Observer_baseMixin(), instance, config);
         instance[__ObserverMixin_scheduler] = scheduler;
-        pipe(scheduler, Disposable_addIgnoringChildErrors(instance));
         return instance;
     }, props({
         [__ObserverMixin_scheduler]: none,

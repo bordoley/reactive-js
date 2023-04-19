@@ -59,6 +59,7 @@ import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.cre
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
 const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
@@ -124,7 +125,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
           backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
           concurrency: number,
         ): ObserverLike<ContainerOf<C, T>> {
-          init(Observer_mixin(), instance, delegate, delegate);
+          Observer_mixin_initFromDelegate(instance, delegate);
           init(Delegating_mixin<ObserverLike<T>>(), instance, delegate);
 
           instance[__MergeAllObserver_observablesQueue] =
@@ -151,7 +152,6 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
           pipe(
             instance,
-            Disposable_addTo(delegate),
             Disposable_onComplete(() => {
               if (delegate[DisposableLike_isDisposed]) {
                 // FIXME: Clear the queue

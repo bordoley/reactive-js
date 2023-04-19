@@ -28,6 +28,7 @@ import {
 } from "../../../rx.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -58,6 +59,7 @@ const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<
     observer[SerialDisposableLike_current] = pipe(
       observer[__TimeoutObserver_duration],
       Observable_subscribeWithConfig(observer, observer),
+      Disposable_addTo(observer),
     );
   };
 

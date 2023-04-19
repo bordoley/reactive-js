@@ -4,7 +4,7 @@ import { SchedulerLike } from "../../../scheduling.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
 declare const Observable_multicastImpl: <T>(publisherFactory: Function1<Optional<{
     replay?: number | undefined;
-}>, PublisherLike<T>>, schedulerOrFactory: SchedulerLike | Factory<SchedulerLike>, options?: {
+}>, PublisherLike<T>>, schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
     readonly replay?: number;
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

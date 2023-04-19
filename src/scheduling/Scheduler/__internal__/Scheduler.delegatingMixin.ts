@@ -1,6 +1,12 @@
 import { Mixin1, mix, props } from "../../../__internal__/mixins.js";
 import { __DelegatingSchedulerMixin_delegate } from "../../../__internal__/symbols.js";
-import { SideEffect1, none, pipe, unsafeCast } from "../../../functions.js";
+import {
+  Function2,
+  SideEffect1,
+  none,
+  pipe,
+  unsafeCast,
+} from "../../../functions.js";
 import {
   ContinuationContextLike,
   SchedulerLike,
@@ -15,18 +21,28 @@ import { DisposableLike } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
 
 const Scheduler_delegatingMixin: Mixin1<
-  Omit<SchedulerLike, keyof DisposableLike>,
-  SchedulerLike
+  SchedulerLike & DisposableLike,
+  SchedulerLike,
+  DisposableLike
 > = /*@__PURE__*/ (() => {
   type TProperties = {
     [__DelegatingSchedulerMixin_delegate]: SchedulerLike;
   };
 
-  return mix(
+  return mix<
+    Function2<
+      SchedulerLike & TProperties & DisposableLike,
+      SchedulerLike,
+      SchedulerLike & DisposableLike
+    >,
+    ReturnType<typeof props<TProperties>>,
+    SchedulerLike,
+    DisposableLike
+  >(
     function DelegatingSchedulerMixin(
-      instance: Omit<SchedulerLike, keyof DisposableLike> & TProperties,
+      instance: SchedulerLike & TProperties & DisposableLike,
       delegate: SchedulerLike,
-    ): Omit<SchedulerLike, keyof DisposableLike> {
+    ): SchedulerLike & DisposableLike {
       instance[__DelegatingSchedulerMixin_delegate] = delegate;
 
       return instance;
@@ -66,7 +82,7 @@ const Scheduler_delegatingMixin: Mixin1<
       },
 
       [SchedulerLike_schedule](
-        this: TProperties & SchedulerLike,
+        this: TProperties & SchedulerLike & DisposableLike,
         continuation: SideEffect1<ContinuationContextLike>,
         options?: {
           readonly delay?: number;

@@ -6,6 +6,7 @@ import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__inter
 import { StreamableLike_isRunnable } from "../../../streaming.js";
 import Flowable_createWithConfig from "../../../streaming/Flowable/__internal__/Flowable.createWithConfig.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -13,7 +14,7 @@ import Observable_subscribeOn from "../../Observable/__internal__/Observable.sub
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 const Runnable_toFlowable = () => observable => Flowable_createWithConfig((modeObs) => Observable_create(observer => {
-    const pauseableScheduler = Scheduler_toPausableScheduler(observer);
+    const pauseableScheduler = pipe(observer, Scheduler_toPausableScheduler, Disposable_addTo(observer));
     pipe(observer, Observer_sourceFrom(pipe(observable, Observable_subscribeOn(pauseableScheduler))), Disposable_add(pipe(modeObs, Observable_forEach(isPaused => {
         if (isPaused) {
             pauseableScheduler[PauseableSchedulerLike_pause]();

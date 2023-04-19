@@ -18,6 +18,7 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../../util/Disposable/__internal__/SerialDisposable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
@@ -25,7 +26,7 @@ import Observable_never from "./Observable.never.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_buffer = /*@__PURE__*/ (() => {
     const createBufferObserver = createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function BufferObserver(instance, delegate, durationFunction, count) {
-        init(Observer_mixin(), instance, delegate, delegate);
+        Observer_mixin_initFromDelegate(instance, delegate);
         init(Delegating_mixin(), instance, delegate);
         instance[__BufferObserver_buffer] = [];
         instance[__BufferObserver_durationFunction] = durationFunction;
@@ -63,7 +64,7 @@ const Observable_buffer = /*@__PURE__*/ (() => {
                 doOnNotify();
             }
             else if (this[__BufferObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed]) {
-                this[__BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[__BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribeWithConfig(this, this));
+                this[__BufferObserver_durationSubscription][SerialDisposableLike_current] = pipe(next, this[__BufferObserver_durationFunction], Observable_forEach(doOnNotify), Observable_subscribeWithConfig(this, this), Disposable_addTo(this));
             }
         },
     }));

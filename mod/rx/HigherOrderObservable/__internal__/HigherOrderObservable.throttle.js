@@ -15,15 +15,16 @@ import SerialDisposable_create from "../../../util/Disposable/__internal__/Seria
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Runnable_lift from "../../Runnable/__internal__/Runnable.lift.js";
 const createThrottleObserver = /*@__PURE__*/ (() => {
     const setupDurationSubscription = (observer, next) => {
-        observer[__ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[__ThrottleObserver_durationFunction](next), Observable_forEach(observer[__ThrottleObserver_onNotify]), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer));
+        observer[__ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[__ThrottleObserver_durationFunction](next), Observable_forEach(observer[__ThrottleObserver_onNotify]), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer), Disposable_addTo(observer[DelegatingLike_delegate]));
     };
     return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function ThrottleObserver(instance, delegate, durationFunction, mode) {
         init(Delegating_mixin(), instance, delegate);
-        init(Observer_mixin(), instance, delegate, delegate);
+        Observer_mixin_initFromDelegate(instance, delegate);
         instance[__ThrottleObserver_durationFunction] = durationFunction;
         instance[__ThrottleObserver_mode] = mode;
         instance[__ThrottleObserver_durationSubscription] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));
@@ -36,7 +37,7 @@ const createThrottleObserver = /*@__PURE__*/ (() => {
                 setupDurationSubscription(instance, value);
             }
         };
-        pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
+        pipe(instance, Disposable_onComplete(() => {
             if (instance[__ThrottleObserver_mode] !== "first" &&
                 instance[__ThrottleObserver_hasValue] &&
                 !delegate[DisposableLike_isDisposed]) {

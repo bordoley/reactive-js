@@ -58,6 +58,7 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
+import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
@@ -175,7 +176,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
         enumerators: readonly (EnumeratorLike<any> & DisposableLike)[],
         queuedEnumerator: QueuedEnumeratorLike,
       ): ObserverLike {
-        init(Observer_mixin(), instance, delegate, delegate);
+        Observer_mixin_initFromDelegate(instance, delegate);
         init(Delegating_mixin(), instance, delegate);
 
         instance[__ZipObserver_queuedEnumerator] = queuedEnumerator;
