@@ -148,11 +148,12 @@ const Continuation_create = /*@__PURE__*/ (() => {
             TContinuationProperties &
             SchedulerLike,
         ): void {
+          const scheduler = this[ContinuationLike_scheduler];
+
           if (this[DisposableLike_isDisposed]) {
+            rescheduleChildrenOnParentOrScheduler(this);
             return;
           }
-
-          const scheduler = this[ContinuationLike_scheduler];
 
           // Run any inner continuations first.
           let head: Optional<ContinuationLike> = none;
@@ -161,12 +162,10 @@ const Continuation_create = /*@__PURE__*/ (() => {
             head[ContinuationLike_run]();
             this[ContinuationLike_activeChild] = none;
 
-            const shouldYield = scheduler[SchedulerLike_shouldYield];
-
             if (this[DisposableLike_isDisposed]) {
               rescheduleChildrenOnParentOrScheduler(this);
               return;
-            } else if (shouldYield) {
+            } else if (scheduler[SchedulerLike_shouldYield]) {
               rescheduleContinuation(this);
               return;
             }
@@ -195,8 +194,8 @@ const Continuation_create = /*@__PURE__*/ (() => {
               rescheduleContinuation(this);
             }
           } else {
-            rescheduleChildrenOnParentOrScheduler(this);
             this[DisposableLike_dispose](err);
+            rescheduleChildrenOnParentOrScheduler(this); 
           }
         },
 
