@@ -10,11 +10,11 @@ const _empty = {
     },
 };
 const IndexedBufferCollection_empty = (options) => {
-    const { replay = 0 } = options ?? {};
-    return (replay === 0
+    const { [BufferLike_capacity]: capacity = 0 } = options ?? {};
+    return (capacity === 0
         ? _empty
         : {
-            [BufferLike_capacity]: replay,
+            [BufferLike_capacity]: capacity,
             [CollectionLike_count]: 0,
             [KeyedCollectionLike_get]: _empty[KeyedCollectionLike_get],
         });

@@ -21,7 +21,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import IndexedBufferCollection_empty from "./IndexedBufferCollection.empty.js";
 
 const IndexedBufferCollection_createWithMutableDelegate: <T>(options?: {
-  readonly replay?: number;
+  readonly [BufferLike_capacity]?: number;
 }) => Mutable<DelegatingLike<IndexedBufferCollectionLike<T>>> &
   IndexedBufferCollectionLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
@@ -29,7 +29,7 @@ const IndexedBufferCollection_createWithMutableDelegate: <T>(options?: {
       include(Delegating_mixin()),
       function MutableDelegatingIndexedBufferCollection(
         instance: IndexedBufferCollectionLike<T>,
-        options?: { readonly replay?: number },
+        options?: { readonly [BufferLike_capacity]?: number },
       ): Mutable<DelegatingLike<IndexedBufferCollectionLike<T>>> &
         IndexedBufferCollectionLike<T> {
         init(

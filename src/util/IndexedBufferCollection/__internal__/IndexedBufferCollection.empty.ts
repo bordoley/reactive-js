@@ -15,14 +15,14 @@ const _empty: IndexedBufferCollectionLike = {
 };
 
 const IndexedBufferCollection_empty = <T>(options?: {
-  readonly replay?: number;
+  readonly [BufferLike_capacity]?: number;
 }): IndexedBufferCollectionLike<T> => {
-  const { replay = 0 } = options ?? {};
+  const { [BufferLike_capacity]: capacity = 0 } = options ?? {};
   return (
-    replay === 0
+    capacity === 0
       ? _empty
       : {
-          [BufferLike_capacity]: replay,
+          [BufferLike_capacity]: capacity,
           [CollectionLike_count]: 0,
           [KeyedCollectionLike_get]: _empty[KeyedCollectionLike_get],
         }

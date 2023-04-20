@@ -17,6 +17,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  BufferLike_capacity,
   DisposableLike_dispose,
   EventListenerLike,
   EventPublisherLike,
@@ -54,12 +55,14 @@ const EventSource_create: <T>(
         > &
           TProperties,
         setup: SideEffect1<EventListenerLike<T>>,
-        options?: { readonly replay?: number },
+        options: { readonly replay?: number } = {},
       ): EventSourceLike<T> {
         instance.su = setup;
         instance.op = options;
         instance[ReplayableLike_buffer] =
-          IndexedBufferCollection_createWithMutableDelegate();
+          IndexedBufferCollection_createWithMutableDelegate({
+            [BufferLike_capacity]: options.replay,
+          });
 
         return instance;
       },
