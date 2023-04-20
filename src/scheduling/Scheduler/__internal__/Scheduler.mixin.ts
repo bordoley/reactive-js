@@ -215,7 +215,11 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
             activeContinuation[DisposableLike_isDisposed] ||
             activeContinuation[ContinuationLike_priority] !==
               continuation[ContinuationLike_priority] ||
+            // Occurs when the continuation is rescheduling itself
+            // and there is no non-disposed parent to enqueue itself onto.
             activeContinuation === continuation ||
+            // Occurs when an active continuation is rescheduling its
+            // children because it will be disposed.
             continuation[ContinuationLike_parent] === activeContinuation
           ) {
             continuation[ContinuationLike_parent] = none;

@@ -104,7 +104,6 @@ const Continuation_create = /*@__PURE__*/ (() => {
             if (isSome(yieldError) && !this[DisposableLike_isDisposed]) {
                 if (yieldError.delay > 0) {
                     rescheduleChildrenOnParentOrScheduler(this);
-                    // FIXME: Do we need to reset the parent on this?
                     scheduler[ContinuationSchedulerLike_schedule](this, yieldError);
                 }
                 else {
