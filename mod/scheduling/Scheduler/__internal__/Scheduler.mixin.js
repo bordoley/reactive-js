@@ -15,18 +15,14 @@ import YieldError from "../../Continuation/__internal__/Continuation.yieldError.
 export { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, };
 export const PriorityScheduler_mixin = 
 /*@__PURE__*/ (() => {
-    const getActiveContinuation = (continuation) => {
-        let parent = continuation;
+    const getActiveContinuation = (instance) => {
+        let parent = instance[__SchedulerMixin_currentContinuation];
         let activeChild = parent?.[ContinuationLike_activeChild];
         while (isSome(activeChild) && activeChild !== parent) {
             parent = activeChild;
             activeChild = parent[ContinuationLike_activeChild];
         }
         return parent;
-    };
-    const shouldYieldContinuation = (instance) => {
-        const continuation = instance[__SchedulerMixin_currentContinuation];
-        return ((getActiveContinuation(continuation)?.[CollectionLike_count] ?? 0) > 0);
     };
     return mix(include(Disposable_mixin), function SchedulerMixin(instance, maxYieldInterval) {
         init(Disposable_mixin, instance);
@@ -49,15 +45,14 @@ export const PriorityScheduler_mixin =
             const inContinuation = this[SchedulerLike_inContinuation];
             const isDisposed = this[DisposableLike_isDisposed];
             const yieldRequested = this[__SchedulerMixin_yieldRequested];
-            const exceededMaxYieldInterval = this[SchedulerLike_now] >
-                this[__SchedulerMixin_startTime] +
-                    this[SchedulerLike_maxYieldInterval];
-            const currentContinuationHasNestedRequests = shouldYieldContinuation(this);
             return (inContinuation &&
                 (isDisposed ||
                     yieldRequested ||
-                    exceededMaxYieldInterval ||
-                    currentContinuationHasNestedRequests ||
+                    //exceededMaxYieldInterval
+                    this[SchedulerLike_now] >
+                        this[__SchedulerMixin_startTime] +
+                            this[SchedulerLike_maxYieldInterval] ||
+                    (getActiveContinuation(this)?.[CollectionLike_count] ?? 0) > 0 ||
                     this[PrioritySchedulerImplementationLike_shouldYield]));
         },
         [SchedulerLike_requestYield]() {
@@ -72,7 +67,7 @@ export const PriorityScheduler_mixin =
             if (continuation[DisposableLike_isDisposed]) {
                 return;
             }
-            const activeContinuation = getActiveContinuation(this[__SchedulerMixin_currentContinuation]);
+            const activeContinuation = getActiveContinuation(this);
             if (delay > 0 ||
                 isNone(activeContinuation) ||
                 activeContinuation[DisposableLike_isDisposed] ||

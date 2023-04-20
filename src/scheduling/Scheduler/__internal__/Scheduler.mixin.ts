@@ -113,8 +113,8 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
       [__SchedulerMixin_startTime]: number;
     };
 
-    const getActiveContinuation = (continuation?: ContinuationLike) => {
-      let parent = continuation;
+    const getActiveContinuation = (instance: TSchedulerProperties) => {
+      let parent = instance[__SchedulerMixin_currentContinuation];
       let activeChild = parent?.[ContinuationLike_activeChild];
 
       while (isSome(activeChild) && activeChild !== parent) {
@@ -122,13 +122,6 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
         activeChild = parent[ContinuationLike_activeChild];
       }
       return parent;
-    };
-
-    const shouldYieldContinuation = (instance: TSchedulerProperties) => {
-      const continuation = instance[__SchedulerMixin_currentContinuation];
-      return (
-        (getActiveContinuation(continuation)?.[CollectionLike_count] ?? 0) > 0
-      );
     };
 
     return mix(
@@ -177,19 +170,16 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           const inContinuation = this[SchedulerLike_inContinuation];
           const isDisposed = this[DisposableLike_isDisposed];
           const yieldRequested = this[__SchedulerMixin_yieldRequested];
-          const exceededMaxYieldInterval =
-            this[SchedulerLike_now] >
-            this[__SchedulerMixin_startTime] +
-              this[SchedulerLike_maxYieldInterval];
-          const currentContinuationHasNestedRequests =
-            shouldYieldContinuation(this);
 
           return (
             inContinuation &&
             (isDisposed ||
               yieldRequested ||
-              exceededMaxYieldInterval ||
-              currentContinuationHasNestedRequests ||
+              //exceededMaxYieldInterval
+              this[SchedulerLike_now] >
+                this[__SchedulerMixin_startTime] +
+                  this[SchedulerLike_maxYieldInterval] ||
+              (getActiveContinuation(this)?.[CollectionLike_count] ?? 0) > 0 ||
               this[PrioritySchedulerImplementationLike_shouldYield])
           );
         },
@@ -217,9 +207,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
             return;
           }
 
-          const activeContinuation = getActiveContinuation(
-            this[__SchedulerMixin_currentContinuation],
-          );
+          const activeContinuation = getActiveContinuation(this);
 
           if (
             delay > 0 ||
