@@ -1,4 +1,8 @@
 import {
+  ForEachLike,
+  ForEachLike_effect,
+} from "../../../__internal__/containers.js";
+import {
   createInstanceFactory,
   include,
   init,
@@ -35,30 +39,30 @@ const EventSource_forEach: ForEach<EventSourceLike>["forEach"] =
               EventListenerLike<T>,
               | typeof EventListenerLike_isErrorSafe
               | typeof EventListenerLike_notify
-            > & { ef: SideEffect1<T> },
+            > &
+              ForEachLike<T>,
             delegate: EventListenerLike<T>,
             effect: SideEffect1<T>,
           ): EventListenerLike<T> {
             init(Delegating_mixin(), instance, delegate);
             init(Disposable_delegatingMixin, instance, delegate);
-            instance.ef = effect;
+            instance[ForEachLike_effect] = effect;
 
             return instance;
           },
-          props<{ ef: SideEffect1<T> }>({
-            ef: none,
+          props<ForEachLike<T>>({
+            [ForEachLike_effect]: none,
           }),
           {
             [EventListenerLike_isErrorSafe]: false,
 
             [EventListenerLike_notify](
-              this: { ef: SideEffect1<T> } & DelegatingLike<
-                EventListenerLike<T>
-              > &
+              this: ForEachLike<T> &
+                DelegatingLike<EventListenerLike<T>> &
                 EventListenerLike<T>,
               next: T,
             ) {
-              this.ef(next);
+              this[ForEachLike_effect](next);
               this[DelegatingLike_delegate][EventListenerLike_notify](next);
             },
           },

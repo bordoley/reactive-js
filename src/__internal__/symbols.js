@@ -416,6 +416,9 @@ export const __LiftedLike_operators = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __ForEachLike_effect = /*@__PURE__*/ symbol("ForEachLike_effect");
+
+/** @type {unique symbol} */
 export const __MappingLike_selector = /*@__PURE__*/ symbol(
   "MappingLike_selector",
 );
@@ -553,6 +556,11 @@ export const __Continuation_effect = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __CreateEventSource_createDelegate = /*@__PURE__*/ symbol(
+  "CreateEventSource_createDelegate",
+);
+
+/** @type {unique symbol} */
 export const __CreateObservable_effect = /*@__PURE__*/ symbol(
   "CreateObservable_effect",
 );
@@ -595,6 +603,11 @@ export const __Enumerator_private_current = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __EnumerableEnumerator_continuationQueue = /*@__PURE__*/ symbol(
   "EnumerableEnumerator_continuationQueue",
+);
+
+/** @type {unique symbol} */
+export const __EventPublisher_listeners = /*@__PURE__*/ symbol(
+  "EventPublisher_listeners",
 );
 
 /** @type {unique symbol} */

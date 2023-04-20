@@ -1,5 +1,6 @@
 /// <reference types="./EventSource.forEach.d.ts" />
 
+import { ForEachLike_effect, } from "../../../__internal__/containers.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { none, partial, pipe } from "../../../functions.js";
@@ -12,14 +13,14 @@ const EventSource_forEach =
     const createForEachEventListener = (() => createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function ForEachEventListener(instance, delegate, effect) {
         init(Delegating_mixin(), instance, delegate);
         init(Disposable_delegatingMixin, instance, delegate);
-        instance.ef = effect;
+        instance[ForEachLike_effect] = effect;
         return instance;
     }, props({
-        ef: none,
+        [ForEachLike_effect]: none,
     }), {
         [EventListenerLike_isErrorSafe]: false,
         [EventListenerLike_notify](next) {
-            this.ef(next);
+            this[ForEachLike_effect](next);
             this[DelegatingLike_delegate][EventListenerLike_notify](next);
         },
     })))();

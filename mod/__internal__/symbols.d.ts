@@ -173,6 +173,8 @@ export const __LiftedLike_source: unique symbol;
 /** @type {unique symbol} */
 export const __LiftedLike_operators: unique symbol;
 /** @type {unique symbol} */
+export const __ForEachLike_effect: unique symbol;
+/** @type {unique symbol} */
 export const __MappingLike_selector: unique symbol;
 /** @type {unique symbol} */
 export const __PredicatedLike_predicate: unique symbol;
@@ -229,6 +231,8 @@ export const __ComputeEffect_type: unique symbol;
 /** @type {unique symbol} */
 export const __Continuation_effect: unique symbol;
 /** @type {unique symbol} */
+export const __CreateEventSource_createDelegate: unique symbol;
+/** @type {unique symbol} */
 export const __CreateObservable_effect: unique symbol;
 /** @type {unique symbol} */
 export const __DecodeWithCharsetObserver_textDecoder: unique symbol;
@@ -246,6 +250,8 @@ export const __EnqueueObserver_effect: unique symbol;
 export const __Enumerator_private_current: unique symbol;
 /** @type {unique symbol} */
 export const __EnumerableEnumerator_continuationQueue: unique symbol;
+/** @type {unique symbol} */
+export const __EventPublisher_listeners: unique symbol;
 /** @type {unique symbol} */
 export const __HigherOrderObservable_currentRef: unique symbol;
 /** @type {unique symbol} */

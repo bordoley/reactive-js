@@ -88,6 +88,7 @@ SerialDisposableMixin_current
 
 LiftedLike_source
 LiftedLike_operators
+ForEachLike_effect
 MappingLike_selector
 PredicatedLike_predicate
 ReducerAccumulatorLike_acc
@@ -117,6 +118,7 @@ ComputeContext_awaitOrObserve
 ComputeContext_memoOrUse
 ComputeEffect_type
 Continuation_effect
+CreateEventSource_createDelegate
 CreateObservable_effect
 DecodeWithCharsetObserver_textDecoder
 DispatchedObservable_observer
@@ -126,6 +128,7 @@ DistinctUntilChangedObserver_hasValue
 EnqueueObserver_effect
 Enumerator_private_current
 EnumerableEnumerator_continuationQueue
+EventPublisher_listeners
 HigherOrderObservable_currentRef
 IteratorEnumerator_iterator
 LatestCtx_delegate

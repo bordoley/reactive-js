@@ -1,6 +1,7 @@
 /// <reference types="./EventSource.create.d.ts" />
 
-import { createInstanceFactory, include, mix, props, } from "../../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { __CreateEventSource_createDelegate } from "../../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { error, none, pipe, } from "../../../functions.js";
 import { BufferLike_capacity, DisposableLike_dispose, EventSourceLike_addListener, ReplayableLike_buffer, } from "../../../util.js";
@@ -10,35 +11,34 @@ import EventPublisher_createRefCounted from "../../EventPublisher/__internal__/E
 import IndexedBufferCollection_createWithMutableDelegate from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.createWithMutableDelegate.js";
 const EventSource_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Delegating_mixin()), function CreateEventSource(instance, setup, options = {}) {
-        instance.su = setup;
-        instance.op = options;
+        init(Delegating_mixin(), instance, none);
         instance[ReplayableLike_buffer] =
             IndexedBufferCollection_createWithMutableDelegate({
                 [BufferLike_capacity]: options.replay,
             });
+        instance[__CreateEventSource_createDelegate] = () => {
+            const delegate = pipe(EventPublisher_createRefCounted(options), Disposable_onDisposed(() => {
+                instance[DelegatingLike_delegate] = none;
+            }));
+            instance[DelegatingLike_delegate] = delegate;
+            try {
+                setup(delegate);
+            }
+            catch (e) {
+                delegate[DisposableLike_dispose](error(e));
+            }
+            const buffer = delegate[ReplayableLike_buffer];
+            instance[ReplayableLike_buffer][DelegatingLike_delegate] = buffer;
+            return delegate;
+        };
         return instance;
     }, props({
-        su: none,
-        op: none,
+        [__CreateEventSource_createDelegate]: none,
         [ReplayableLike_buffer]: none,
     }), {
         [EventSourceLike_addListener](listener) {
             const delegate = this[DelegatingLike_delegate] ??
-                (() => {
-                    const delegate = pipe(EventPublisher_createRefCounted(this.op), Disposable_onDisposed(() => {
-                        this[DelegatingLike_delegate] = none;
-                    }));
-                    this[DelegatingLike_delegate] = delegate;
-                    try {
-                        this.su(delegate);
-                    }
-                    catch (e) {
-                        delegate[DisposableLike_dispose](error(e));
-                    }
-                    const buffer = delegate[ReplayableLike_buffer];
-                    this[ReplayableLike_buffer][DelegatingLike_delegate] = buffer;
-                    return delegate;
-                })();
+                this[__CreateEventSource_createDelegate]();
             delegate[EventSourceLike_addListener](listener);
         },
     }));

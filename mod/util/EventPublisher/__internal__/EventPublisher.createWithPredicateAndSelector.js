@@ -3,6 +3,7 @@
 import { MappingLike_selector, PredicatedLike_predicate, } from "../../../__internal__/containers.js";
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { __EventPublisher_listeners } from "../../../__internal__/symbols.js";
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { error, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
@@ -13,13 +14,14 @@ import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndex
 const EventPublisher_createWithPredicateAndSelector = /*@__PURE__*/ (() => {
     const createPublisherInstance = createInstanceFactory(mix(include(Disposable_mixin), function EventPublisher(instance, predicate, selector, replay) {
         init(Disposable_mixin, instance);
-        instance.l = newInstance(Set);
+        instance[__EventPublisher_listeners] =
+            newInstance(Set);
         instance[PredicatedLike_predicate] = predicate;
         instance[MappingLike_selector] = selector;
         // FIXME: use the mixin instead and return this from a getter;
         instance[ReplayableLike_buffer] = Queue_createIndexedQueue(replay, "drop-oldest");
         pipe(instance, Disposable_onDisposed(e => {
-            const enumerator = pipe(instance.l, Iterable_enumerate());
+            const enumerator = pipe(instance[__EventPublisher_listeners], Iterable_enumerate());
             while (enumerator[EnumeratorLike_move]()) {
                 const listener = enumerator[EnumeratorLike_current];
                 listener[DisposableLike_dispose](e);
@@ -27,7 +29,7 @@ const EventPublisher_createWithPredicateAndSelector = /*@__PURE__*/ (() => {
         }));
         return instance;
     }, props({
-        l: none,
+        [__EventPublisher_listeners]: none,
         [ReplayableLike_buffer]: none,
         [PredicatedLike_predicate]: none,
         [MappingLike_selector]: none,
@@ -35,7 +37,7 @@ const EventPublisher_createWithPredicateAndSelector = /*@__PURE__*/ (() => {
         [EventListenerLike_isErrorSafe]: true,
         get [EventPublisherLike_listenerCount]() {
             unsafeCast(this);
-            return this.l.size;
+            return this[__EventPublisher_listeners].size;
         },
         [EventListenerLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
@@ -46,7 +48,7 @@ const EventPublisher_createWithPredicateAndSelector = /*@__PURE__*/ (() => {
             }
             const result = this[MappingLike_selector](next);
             this[ReplayableLike_buffer][QueueableLike_enqueue](result);
-            for (const listener of this.l) {
+            for (const listener of this[__EventPublisher_listeners]) {
                 try {
                     listener[EventListenerLike_notify](result);
                 }
@@ -57,7 +59,7 @@ const EventPublisher_createWithPredicateAndSelector = /*@__PURE__*/ (() => {
         },
         [EventSourceLike_addListener](listener) {
             if (!this[DisposableLike_isDisposed]) {
-                const { l: listeners } = this;
+                const listeners = this[__EventPublisher_listeners];
                 listeners.add(listener);
                 pipe(listener, Disposable_onDisposed(_ => {
                     listeners.delete(listener);

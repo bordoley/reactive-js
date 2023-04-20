@@ -13,6 +13,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { __EventPublisher_listeners } from "../../../__internal__/symbols.js";
 import { IndexedQueueLike } from "../../../__internal__/util.js";
 import {
   EnumeratorLike_current,
@@ -63,7 +64,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
   },
 ) => EventKeepMapPublisherLike<T, TOut> = /*@__PURE__*/ (<T, TOut>() => {
   type TProperties = {
-    readonly l: Set<EventListenerLike<TOut>>;
+    readonly [__EventPublisher_listeners]: Set<EventListenerLike<TOut>>;
     readonly [ReplayableLike_buffer]: IndexedQueueLike<TOut>;
   } & PredicatedLike<T> &
     MappingLike<T, TOut>;
@@ -86,7 +87,8 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
       ): EventKeepMapPublisherLike<T, TOut> {
         init(Disposable_mixin, instance);
 
-        instance.l = newInstance<Set<EventListenerLike>>(Set);
+        instance[__EventPublisher_listeners] =
+          newInstance<Set<EventListenerLike>>(Set);
 
         instance[PredicatedLike_predicate] = predicate;
         instance[MappingLike_selector] = selector;
@@ -100,7 +102,10 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
         pipe(
           instance,
           Disposable_onDisposed(e => {
-            const enumerator = pipe(instance.l, Iterable_enumerate());
+            const enumerator = pipe(
+              instance[__EventPublisher_listeners],
+              Iterable_enumerate(),
+            );
 
             while (enumerator[EnumeratorLike_move]()) {
               const listener = enumerator[EnumeratorLike_current];
@@ -112,7 +117,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
         return instance;
       },
       props<TProperties>({
-        l: none,
+        [__EventPublisher_listeners]: none,
         [ReplayableLike_buffer]: none,
         [PredicatedLike_predicate]: none,
         [MappingLike_selector]: none,
@@ -122,7 +127,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
 
         get [EventPublisherLike_listenerCount]() {
           unsafeCast<TProperties>(this);
-          return this.l.size;
+          return this[__EventPublisher_listeners].size;
         },
 
         [EventListenerLike_notify](
@@ -141,7 +146,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
 
           this[ReplayableLike_buffer][QueueableLike_enqueue](result);
 
-          for (const listener of this.l) {
+          for (const listener of this[__EventPublisher_listeners]) {
             try {
               listener[EventListenerLike_notify](result);
             } catch (e) {
@@ -155,7 +160,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
           listener: EventListenerLike<TOut>,
         ) {
           if (!this[DisposableLike_isDisposed]) {
-            const { l: listeners } = this;
+            const listeners = this[__EventPublisher_listeners];
             listeners.add(listener);
 
             pipe(

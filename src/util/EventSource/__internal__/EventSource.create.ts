@@ -2,14 +2,17 @@ import {
   Mutable,
   createInstanceFactory,
   include,
+  init,
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { __CreateEventSource_createDelegate } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
 import {
+  Factory,
   Optional,
   SideEffect1,
   error,
@@ -37,8 +40,7 @@ const EventSource_create: <T>(
 ) => EventSourceLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     // FIXME: Use Symbols
-    su: SideEffect1<EventListenerLike<T>>;
-    op: Optional<{ readonly replay?: number }>;
+    [__CreateEventSource_createDelegate]: Factory<EventPublisherLike<T>>;
     [ReplayableLike_buffer]: Mutable<
       DelegatingLike<IndexedBufferCollectionLike<T>>
     > &
@@ -57,18 +59,43 @@ const EventSource_create: <T>(
         setup: SideEffect1<EventListenerLike<T>>,
         options: { readonly replay?: number } = {},
       ): EventSourceLike<T> {
-        instance.su = setup;
-        instance.op = options;
+        init(Delegating_mixin(), instance, none);
         instance[ReplayableLike_buffer] =
           IndexedBufferCollection_createWithMutableDelegate({
             [BufferLike_capacity]: options.replay,
           });
 
+        instance[__CreateEventSource_createDelegate] = () => {
+          const delegate = pipe(
+            EventPublisher_createRefCounted<T>(options),
+            Disposable_onDisposed(() => {
+              (
+                instance as Mutable<
+                  DelegatingLike<Optional<EventPublisherLike<T>>>
+                >
+              )[DelegatingLike_delegate] = none;
+            }),
+          );
+
+          (
+            instance as Mutable<DelegatingLike<Optional<EventPublisherLike<T>>>>
+          )[DelegatingLike_delegate] = delegate;
+          try {
+            setup(delegate);
+          } catch (e) {
+            delegate[DisposableLike_dispose](error(e));
+          }
+
+          const buffer = delegate[ReplayableLike_buffer];
+          instance[ReplayableLike_buffer][DelegatingLike_delegate] = buffer;
+
+          return delegate;
+        };
+
         return instance;
       },
       props<TProperties>({
-        su: none,
-        op: none,
+        [__CreateEventSource_createDelegate]: none,
         [ReplayableLike_buffer]: none,
       }),
       {
@@ -79,26 +106,7 @@ const EventSource_create: <T>(
         ) {
           const delegate =
             this[DelegatingLike_delegate] ??
-            (() => {
-              const delegate = pipe(
-                EventPublisher_createRefCounted<T>(this.op),
-                Disposable_onDisposed(() => {
-                  this[DelegatingLike_delegate] = none;
-                }),
-              );
-
-              this[DelegatingLike_delegate] = delegate;
-              try {
-                this.su(delegate);
-              } catch (e) {
-                delegate[DisposableLike_dispose](error(e));
-              }
-
-              const buffer = delegate[ReplayableLike_buffer];
-              this[ReplayableLike_buffer][DelegatingLike_delegate] = buffer;
-
-              return delegate;
-            })();
+            this[__CreateEventSource_createDelegate]();
 
           delegate[EventSourceLike_addListener](listener);
         },

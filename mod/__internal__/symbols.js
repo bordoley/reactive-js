@@ -180,6 +180,8 @@ export const __LiftedLike_source = /*@__PURE__*/ symbol("LiftedLike_source");
 /** @type {unique symbol} */
 export const __LiftedLike_operators = /*@__PURE__*/ symbol("LiftedLike_operators");
 /** @type {unique symbol} */
+export const __ForEachLike_effect = /*@__PURE__*/ symbol("ForEachLike_effect");
+/** @type {unique symbol} */
 export const __MappingLike_selector = /*@__PURE__*/ symbol("MappingLike_selector");
 /** @type {unique symbol} */
 export const __PredicatedLike_predicate = /*@__PURE__*/ symbol("PredicatedLike_predicate");
@@ -237,6 +239,8 @@ export const __ComputeEffect_type = /*@__PURE__*/ symbol("ComputeEffect_type");
 /** @type {unique symbol} */
 export const __Continuation_effect = /*@__PURE__*/ symbol("Continuation_effect");
 /** @type {unique symbol} */
+export const __CreateEventSource_createDelegate = /*@__PURE__*/ symbol("CreateEventSource_createDelegate");
+/** @type {unique symbol} */
 export const __CreateObservable_effect = /*@__PURE__*/ symbol("CreateObservable_effect");
 /** @type {unique symbol} */
 export const __DecodeWithCharsetObserver_textDecoder = /*@__PURE__*/ symbol("DecodeWithCharsetObserver_textDecoder");
@@ -254,6 +258,8 @@ export const __EnqueueObserver_effect = /*@__PURE__*/ symbol("EnqueueObserver_ef
 export const __Enumerator_private_current = /*@__PURE__*/ symbol("Enumerator_private_current");
 /** @type {unique symbol} */
 export const __EnumerableEnumerator_continuationQueue = /*@__PURE__*/ symbol("EnumerableEnumerator_continuationQueue");
+/** @type {unique symbol} */
+export const __EventPublisher_listeners = /*@__PURE__*/ symbol("EventPublisher_listeners");
 /** @type {unique symbol} */
 export const __HigherOrderObservable_currentRef = /*@__PURE__*/ symbol("HigherOrderObservable_currentRef");
 /** @type {unique symbol} */

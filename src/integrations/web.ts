@@ -1277,7 +1277,6 @@ export const windowLocation: StreamableLike<
       function WindowLocationStream(
         instance: Pick<
           WindowLocationStreamLike,
-          | typeof ReplayableLike_buffer
           | typeof QueueableLike_enqueue
           | typeof WindowLocationStreamLike_canGoBack
           | typeof WindowLocationStreamLike_goBack

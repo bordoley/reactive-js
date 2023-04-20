@@ -172,6 +172,8 @@ export declare const __LiftedLike_source: unique symbol;
 
 export declare const __LiftedLike_operators: unique symbol;
 
+export declare const __ForEachLike_effect: unique symbol;
+
 export declare const __MappingLike_selector: unique symbol;
 
 export declare const __PredicatedLike_predicate: unique symbol;
@@ -228,6 +230,8 @@ export declare const __ComputeEffect_type: unique symbol;
 
 export declare const __Continuation_effect: unique symbol;
 
+export declare const __CreateEventSource_createDelegate: unique symbol;
+
 export declare const __CreateObservable_effect: unique symbol;
 
 export declare const __DecodeWithCharsetObserver_textDecoder: unique symbol;
@@ -245,6 +249,8 @@ export declare const __EnqueueObserver_effect: unique symbol;
 export declare const __Enumerator_private_current: unique symbol;
 
 export declare const __EnumerableEnumerator_continuationQueue: unique symbol;
+
+export declare const __EventPublisher_listeners: unique symbol;
 
 export declare const __HigherOrderObservable_currentRef: unique symbol;
 
