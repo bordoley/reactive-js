@@ -15,12 +15,13 @@ import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLi
 import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, EventListenerLike_notify, EventSourceLike_addListener, KeyedCollectionLike_get, QueueableLike_enqueue, ReplayableLike_buffer, } from "../util.js";
+import { DisposableLike_dispose, EventListenerLike_notify, EventSourceLike_addListener, QueueableLike_enqueue, ReplayableLike_buffer, } from "../util.js";
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
 import * as EventListener from "../util/EventListener.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 import * as RxEventSource from "../util/EventSource.js";
+import IndexedBufferCollection_map from "../util/IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
 export { WindowLocationStreamLike_goBack, WindowLocationStreamLike_canGoBack, WindowLocationStreamLike_replace, };
 const errorEvent = "error";
 const reservedEvents = [errorEvent, "open"];
@@ -103,30 +104,14 @@ export const windowLocation = /*@__PURE__*/ (() => {
     // Intentionally ignore the replace flag.
     (a === b || (a.title === b.title && areURIsEqual(a, b))) &&
         counterA === counterB;
-    class WindowLocationReplayBuffer {
-        d;
-        constructor(d) {
-            this.d = d;
-        }
-        get [BufferLike_capacity]() {
-            return this.d[BufferLike_capacity];
-        }
-        get [CollectionLike_count]() {
-            return this.d[CollectionLike_count];
-        }
-        [KeyedCollectionLike_get](index) {
-            return this.d[KeyedCollectionLike_get](index).uri;
-        }
-    }
     const createWindowLocationStream = createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function WindowLocationStream(instance, delegate) {
         init(Stream_delegatingMixin(), instance, delegate);
         init(Delegating_mixin(), instance, delegate);
+        instance[ReplayableLike_buffer] = pipe(instance[DelegatingLike_delegate][ReplayableLike_buffer], IndexedBufferCollection_map(location => location.uri));
         return instance;
-    }, props({}), {
-        get [ReplayableLike_buffer]() {
-            unsafeCast(this);
-            return newInstance(WindowLocationReplayBuffer, this[DelegatingLike_delegate][ReplayableLike_buffer]);
-        },
+    }, props({
+        [ReplayableLike_buffer]: none,
+    }), {
         get [WindowLocationStreamLike_canGoBack]() {
             unsafeCast(this);
             return pipe(this[DelegatingLike_delegate], Observable.map(({ counter }) => counter > 0));

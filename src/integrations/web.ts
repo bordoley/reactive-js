@@ -52,8 +52,6 @@ import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
-  BufferLike_capacity,
-  CollectionLike_count,
   DisposableLike,
   DisposableLike_dispose,
   ErrorSafeEventListenerLike,
@@ -63,7 +61,6 @@ import {
   EventSourceLike,
   EventSourceLike_addListener,
   IndexedBufferCollectionLike,
-  KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -74,6 +71,7 @@ import * as Disposable from "../util/Disposable.js";
 import * as EventListener from "../util/EventListener.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 import * as RxEventSource from "../util/EventSource.js";
+import IndexedBufferCollection_map from "../util/IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
 
 export {
   WindowLocationStreamLike_goBack,
@@ -1273,24 +1271,6 @@ export const windowLocation: StreamableLike<
     (a === b || (a.title === b.title && areURIsEqual(a, b))) &&
     counterA === counterB;
 
-  class WindowLocationReplayBuffer
-    implements IndexedBufferCollectionLike<WindowLocationURI>
-  {
-    constructor(readonly d: IndexedBufferCollectionLike<TState>) {}
-
-    get [BufferLike_capacity](): number {
-      return this.d[BufferLike_capacity];
-    }
-
-    get [CollectionLike_count](): number {
-      return this.d[CollectionLike_count];
-    }
-
-    [KeyedCollectionLike_get](index: number): WindowLocationURI {
-      return this.d[KeyedCollectionLike_get](index).uri;
-    }
-  }
-
   const createWindowLocationStream = createInstanceFactory(
     mix(
       include(Stream_delegatingMixin(), Delegating_mixin()),
@@ -1303,24 +1283,30 @@ export const windowLocation: StreamableLike<
           | typeof WindowLocationStreamLike_goBack
           | typeof WindowLocationStreamLike_replace
           | typeof ObservableLike_observe
-        >,
+        > & {
+          [ReplayableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
+        },
         delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
       ): WindowLocationStreamLike & DisposableLike {
         init(Stream_delegatingMixin(), instance, delegate);
-        init(Delegating_mixin(), instance, delegate);
+        init(
+          Delegating_mixin<StreamLike<Updater<TState>, TState>>(),
+          instance,
+          delegate,
+        );
 
+        instance[ReplayableLike_buffer] = pipe(
+          instance[DelegatingLike_delegate][ReplayableLike_buffer],
+          IndexedBufferCollection_map(location => location.uri),
+        );
         return instance;
       },
-      props<unknown>({}),
+      props<{
+        [ReplayableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
+      }>({
+        [ReplayableLike_buffer]: none,
+      }),
       {
-        get [ReplayableLike_buffer](): IndexedBufferCollectionLike<WindowLocationURI> {
-          unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
-          return newInstance(
-            WindowLocationReplayBuffer,
-            this[DelegatingLike_delegate][ReplayableLike_buffer],
-          );
-        },
-
         get [WindowLocationStreamLike_canGoBack](): ObservableLike<boolean> {
           unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
           return pipe(
