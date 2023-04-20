@@ -79,6 +79,7 @@ const Continuation_create = /*@__PURE__*/ (() => {
                 this[ContinuationLike_activeChild] = none;
                 const shouldYield = scheduler[SchedulerLike_shouldYield];
                 if (this[DisposableLike_isDisposed]) {
+                    rescheduleChildrenOnParentOrScheduler(this);
                     return;
                 }
                 else if (shouldYield) {
@@ -111,6 +112,7 @@ const Continuation_create = /*@__PURE__*/ (() => {
                 }
             }
             else {
+                rescheduleChildrenOnParentOrScheduler(this);
                 this[DisposableLike_dispose](err);
             }
         },

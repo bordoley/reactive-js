@@ -164,6 +164,7 @@ const Continuation_create = /*@__PURE__*/ (() => {
             const shouldYield = scheduler[SchedulerLike_shouldYield];
 
             if (this[DisposableLike_isDisposed]) {
+              rescheduleChildrenOnParentOrScheduler(this);
               return;
             } else if (shouldYield) {
               rescheduleContinuation(this);
@@ -194,6 +195,7 @@ const Continuation_create = /*@__PURE__*/ (() => {
               rescheduleContinuation(this);
             }
           } else {
+            rescheduleChildrenOnParentOrScheduler(this);
             this[DisposableLike_dispose](err);
           }
         },
