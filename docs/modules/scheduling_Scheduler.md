@@ -49,7 +49,7 @@ ___
 
 ### createVirtualTimeScheduler
 
-▸ **createVirtualTimeScheduler**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
+▸ **createVirtualTimeScheduler**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
 
 #### Parameters
 
@@ -60,7 +60,7 @@ ___
 
 #### Returns
 
-[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
+[`VirtualTimeSchedulerLike`](../interfaces/scheduling.VirtualTimeSchedulerLike.md)
 
 ___
 

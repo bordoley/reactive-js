@@ -146,7 +146,9 @@ export interface PrioritySchedulerLike extends SchedulerLike {
  *
  * @noInheritDoc
  */
-export interface VirtualTimeSchedulerLike extends SchedulerLike {
+export interface VirtualTimeSchedulerLike
+  extends SchedulerLike,
+    DisposableLike {
   /**
    * Runs the scheduler synchronously until it has no more
    * enqueued continuations, at which time the scheduler will auto dispose.

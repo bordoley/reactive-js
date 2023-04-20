@@ -81,7 +81,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         > &
           Mutable<TProperties>,
         maxMicroTaskTicks: number,
-      ): VirtualTimeSchedulerLike & DisposableLike {
+      ): VirtualTimeSchedulerLike {
         init(PriorityScheduler_mixin, instance, 1);
         init(MutableEnumerator_mixin<VirtualTask>(), instance);
         init(
@@ -172,7 +172,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
 
 const Scheduler_createVirtualTimeScheduler = (
   options: { readonly maxMicroTaskTicks?: number } = {},
-): VirtualTimeSchedulerLike & DisposableLike => {
+): VirtualTimeSchedulerLike => {
   const maxMicroTaskTicks = clampPositiveNonZeroInteger(
     options.maxMicroTaskTicks ?? MAX_SAFE_INTEGER,
   );

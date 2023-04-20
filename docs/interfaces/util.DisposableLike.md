@@ -12,6 +12,8 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`ObserverLike`](rx.ObserverLike.md)
 
+  ↳ [`VirtualTimeSchedulerLike`](scheduling.VirtualTimeSchedulerLike.md)
+
   ↳ [`EventListenerLike`](util.EventListenerLike.md)
 
 ## Table of contents

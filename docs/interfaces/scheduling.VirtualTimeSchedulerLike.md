@@ -10,6 +10,8 @@ A non-concurrent scheduler that simulates time but executes synchronously.
 
 - [`SchedulerLike`](scheduling.SchedulerLike.md)
 
+- [`DisposableLike`](util.DisposableLike.md)
+
   ↳ **`VirtualTimeSchedulerLike`**
 
 ## Table of contents

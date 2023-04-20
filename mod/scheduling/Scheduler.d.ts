@@ -7,6 +7,6 @@ export declare const createHostScheduler: (options?: {
 }) => SchedulerLike & DisposableLike;
 export declare const createVirtualTimeScheduler: (options?: {
     readonly maxMicroTaskTicks?: number | undefined;
-}) => import("../scheduling.js").VirtualTimeSchedulerLike & DisposableLike;
+}) => import("../scheduling.js").VirtualTimeSchedulerLike;
 export declare const toPausableScheduler: Function1<SchedulerLike, import("../scheduling.js").PauseableSchedulerLike & DisposableLike>;
 export declare const toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike & DisposableLike>;

@@ -195,7 +195,7 @@ const Continuation_create = /*@__PURE__*/ (() => {
             }
           } else {
             this[DisposableLike_dispose](err);
-            rescheduleChildrenOnParentOrScheduler(this); 
+            rescheduleChildrenOnParentOrScheduler(this);
           }
         },
 
