@@ -22,6 +22,9 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
         const subscription = pipe(Disposable_create(), Disposable_addTo(instance));
         instance[__AnimationFrameScheduler_rafSubscription] = subscription;
         const cb = () => {
+            if (subscription[DisposableLike_isDisposed]) {
+                return;
+            }
             const startTime = instance[SchedulerLike_now];
             const continuations = instance[__AnimationFrameScheduler_immediateQueue];
             instance[__AnimationFrameScheduler_immediateQueue] =
@@ -30,6 +33,9 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
             while (((continuation = continuations[QueueLike_dequeue]()),
                 isSome(continuation))) {
                 instance[PrioritySchedulerImplementationLike_runContinuation](continuation);
+                if (subscription[DisposableLike_isDisposed]) {
+                    return;
+                }
                 const elapsedTime = instance[SchedulerLike_now] - startTime;
                 if (elapsedTime > 5 /*ms*/) {
                     break;

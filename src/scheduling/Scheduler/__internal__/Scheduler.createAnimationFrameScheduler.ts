@@ -77,6 +77,10 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
     instance[__AnimationFrameScheduler_rafSubscription] = subscription;
 
     const cb = () => {
+      if (subscription[DisposableLike_isDisposed]) {
+        return;
+      }
+
       const startTime = instance[SchedulerLike_now];
       const continuations = instance[__AnimationFrameScheduler_immediateQueue];
 
@@ -91,6 +95,10 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
         instance[PrioritySchedulerImplementationLike_runContinuation](
           continuation,
         );
+
+        if (subscription[DisposableLike_isDisposed]) {
+          return;
+        }
 
         const elapsedTime = instance[SchedulerLike_now] - startTime;
         if (elapsedTime > 5 /*ms*/) {
