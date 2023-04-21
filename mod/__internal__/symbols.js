@@ -148,8 +148,6 @@ export const __DelegatingQueueableMixin_delegate = /*@__PURE__*/ symbol("Delegat
 /** @type {unique symbol} */
 export const __DelegatingSchedulerMixin_delegate = /*@__PURE__*/ symbol("DelegatingSchedulerMixin_delegate");
 /** @type {unique symbol} */
-export const __DelegatingStreamMixin_delegate = /*@__PURE__*/ symbol("DelegatingStreamMixin_delegate");
-/** @type {unique symbol} */
 export const __DisposableMixin_disposables = /*@__PURE__*/ symbol("DisposableMixin_disposables");
 /** @type {unique symbol} */
 export const __IndexedQueueMixin_head = /*@__PURE__*/ symbol("IndexedQueueMixin_head");

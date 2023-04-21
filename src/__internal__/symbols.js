@@ -338,11 +338,6 @@ export const __DelegatingSchedulerMixin_delegate = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __DelegatingStreamMixin_delegate = /*@__PURE__*/ symbol(
-  "DelegatingStreamMixin_delegate",
-);
-
-/** @type {unique symbol} */
 export const __DisposableMixin_disposables = /*@__PURE__*/ symbol(
   "DisposableMixin_disposables",
 );

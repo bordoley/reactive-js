@@ -141,8 +141,6 @@ export const __DelegatingQueueableMixin_delegate: unique symbol;
 /** @type {unique symbol} */
 export const __DelegatingSchedulerMixin_delegate: unique symbol;
 /** @type {unique symbol} */
-export const __DelegatingStreamMixin_delegate: unique symbol;
-/** @type {unique symbol} */
 export const __DisposableMixin_disposables: unique symbol;
 /** @type {unique symbol} */
 export const __IndexedQueueMixin_head: unique symbol;

@@ -5,10 +5,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { __DelegatingStreamMixin_delegate } from "../../../__internal__/symbols.js";
-import { none, returns, unsafeCast } from "../../../functions.js";
+import { none, returns } from "../../../functions.js";
 import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
+import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import { DisposableLike } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -18,7 +18,7 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
   StreamLike<TReq, T> & DisposableLike
 > = /*@__PURE__*/ (<TReq, T>() => {
   type TProperties = {
-    [__DelegatingStreamMixin_delegate]: StreamLike<TReq, T>;
+    [StreamLike_scheduler]: SchedulerLike;
   };
   return returns(
     mix(
@@ -36,19 +36,14 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
         init(MulticastObservable_delegatingMixin<T>(), instance, delegate);
         init(Dispatcher_delegatingMixin(), instance, delegate);
 
-        instance[__DelegatingStreamMixin_delegate] = delegate;
+        instance[StreamLike_scheduler] = delegate[StreamLike_scheduler];
 
         return instance;
       },
       props<TProperties>({
-        [__DelegatingStreamMixin_delegate]: none,
+        [StreamLike_scheduler]: none,
       }),
-      {
-        get [StreamLike_scheduler]() {
-          unsafeCast<TProperties>(this);
-          return this[__DelegatingStreamMixin_delegate][StreamLike_scheduler];
-        },
-      },
+      {},
     ),
   );
 })();

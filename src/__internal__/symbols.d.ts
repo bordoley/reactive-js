@@ -140,8 +140,6 @@ export declare const __DelegatingQueueableMixin_delegate: unique symbol;
 
 export declare const __DelegatingSchedulerMixin_delegate: unique symbol;
 
-export declare const __DelegatingStreamMixin_delegate: unique symbol;
-
 export declare const __DisposableMixin_disposables: unique symbol;
 
 export declare const __IndexedQueueMixin_head: unique symbol;
