@@ -7,24 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  unstable_NormalPriority,
-  unstable_cancelCallback,
-  unstable_now,
-  unstable_scheduleCallback,
-  unstable_shouldYield,
-} from "scheduler";
-import {
-  createInstanceFactory,
-  include,
-  init,
-  mix,
-  props,
-} from "../__internal__/mixins.js";
-import {
-  ContinuationLike,
-  ContinuationLike_priority,
-} from "../__internal__/scheduling.js";
+import { unstable_NormalPriority } from "scheduler";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -59,20 +42,6 @@ import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Publisher from "../rx/Publisher.js";
 import {
-  PrioritySchedulerLike,
-  SchedulerLike,
-  SchedulerLike_now,
-} from "../scheduling.js";
-import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
-import * as Scheduler from "../scheduling/Scheduler.js";
-import {
-  PrioritySchedulerImplementationLike,
-  PrioritySchedulerImplementationLike_runContinuation,
-  PrioritySchedulerImplementationLike_scheduleContinuation,
-  PrioritySchedulerImplementationLike_shouldYield,
-  PriorityScheduler_mixin,
-} from "../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
-import {
   FlowableLike,
   FlowableStreamLike_isPaused,
   StreamLike,
@@ -95,85 +64,7 @@ import * as Disposable from "../util/Disposable.js";
 import * as EventListener from "../util/EventListener.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 import * as EventSource from "../util/EventSource.js";
-
-const createSchedulerWithPriority = /*@__PURE__*/ (() => {
-  type TProperties = unknown;
-
-  const createPriorityScheduler = createInstanceFactory(
-    mix(
-      include(PriorityScheduler_mixin),
-      function ReactPriorityScheduler(
-        instance: Pick<
-          PrioritySchedulerImplementationLike,
-          | typeof SchedulerLike_now
-          | typeof PrioritySchedulerImplementationLike_shouldYield
-          | typeof PrioritySchedulerImplementationLike_scheduleContinuation
-        >,
-      ): PrioritySchedulerLike & DisposableLike {
-        init(PriorityScheduler_mixin, instance, 300);
-        return instance;
-      },
-      props<TProperties>({}),
-      {
-        get [SchedulerLike_now](): number {
-          return unstable_now();
-        },
-
-        get [PrioritySchedulerImplementationLike_shouldYield](): boolean {
-          return unstable_shouldYield();
-        },
-
-        [PrioritySchedulerImplementationLike_scheduleContinuation](
-          this: PrioritySchedulerImplementationLike,
-          continuation: ContinuationLike,
-          delay: number,
-        ) {
-          const priority = continuation[ContinuationLike_priority];
-
-          const callback = () => {
-            callbackNodeDisposable[DisposableLike_dispose]();
-            this[PrioritySchedulerImplementationLike_runContinuation](
-              continuation,
-            );
-          };
-
-          const callbackNode = unstable_scheduleCallback(
-            priority,
-            callback,
-            delay > 0 ? { delay } : none,
-          );
-
-          const callbackNodeDisposable = pipe(
-            Disposable.create(),
-            Disposable.onDisposed(
-              pipeLazy(callbackNode, unstable_cancelCallback),
-            ),
-            Disposable.addTo(continuation),
-          );
-        },
-      },
-    ),
-  );
-
-  return (priority: number): SchedulerLike & DisposableLike => {
-    const priorityScheduler = createPriorityScheduler();
-    return pipe(
-      priorityScheduler,
-      PriorityScheduler.toScheduler(priority),
-      Disposable.bindTo(priorityScheduler),
-    );
-  };
-})();
-
-const createAnimationFrameSchedulerFactory = (priority?: number) => () => {
-  const hostScheduler = createSchedulerWithPriority(
-    priority ?? unstable_NormalPriority,
-  );
-  return pipe(
-    Scheduler.createAnimationFrameScheduler(hostScheduler),
-    Disposable.add(hostScheduler),
-  );
-};
+import { getAnimationFrameScheduler, getScheduler } from "./scheduler.js";
 
 interface UseEventSource {
   /**
@@ -278,16 +169,16 @@ export const useObservable: UseObservable["useObservable"] = <T>(
       }>)) ?? {};
 
   useEffect(() => {
-    const scheduler = createSchedulerWithPriority(priority);
+    const scheduler = getScheduler({ priority });
 
-    pipe(
+    const subscription = pipe(
       observable,
       Observable.forEach<T>(v => updateState(_ => v)),
       Observable.subscribe(scheduler, { backpressureStrategy, capacity }),
       Disposable.onError(updateError),
     );
 
-    return bindMethod(scheduler, DisposableLike_dispose);
+    return bindMethod(subscription, DisposableLike_dispose);
   }, [observable, updateState, updateError, priority, capacity]);
 
   return isSome(error) ? raiseError<T>(error) : state;
@@ -363,20 +254,20 @@ export const useStream: UseStream["useStream"] = <
       }>)) ?? {};
 
   useEffect(() => {
-    const scheduler = createSchedulerWithPriority(priority);
+    const scheduler = getScheduler({ priority });
 
-    const stream: TStream = pipe(
-      streamable[StreamableLike_stream](scheduler, {
+    const stream: TStream & DisposableLike = streamable[StreamableLike_stream](
+      scheduler,
+      {
         replay,
         backpressureStrategy,
         capacity,
-      }),
-      Disposable.addTo(scheduler),
+      },
     );
 
     setStream(stream);
 
-    return bindMethod(scheduler, DisposableLike_dispose);
+    return bindMethod(stream, DisposableLike_dispose);
   }, [streamable, setStream, priority, capacity]);
 
   return stream;
@@ -837,9 +728,7 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
             pipeLazy(observables, ReadonlyObjectMap.values()),
           ),
           Observable.map(
-            Observable.subscribeOn(
-              createAnimationFrameSchedulerFactory(options?.priority),
-            ),
+            Observable.subscribeOn(getAnimationFrameScheduler(options)),
           ),
           Observable.mergeAll({ concurrency: options.concurrency }),
         );

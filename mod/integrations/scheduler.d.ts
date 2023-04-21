@@ -1,0 +1,7 @@
+import { SchedulerLike } from "../scheduling.js";
+export declare const getScheduler: (options?: {
+    priority?: 1 | 2 | 3 | 4 | 5;
+}) => SchedulerLike;
+export declare const getAnimationFrameScheduler: (options?: {
+    priority?: 1 | 2 | 3 | 4 | 5;
+}) => SchedulerLike;
