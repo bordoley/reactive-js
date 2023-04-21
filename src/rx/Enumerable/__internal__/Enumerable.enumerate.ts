@@ -55,7 +55,6 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Observer_baseMixin from "../../Observer/__internal__/Observer.baseMixin.js";
 
@@ -144,8 +143,6 @@ const Enumerable_enumerate: <T>() => (
               "Enumerable scheduling continuation with delay",
             );
           }
-
-          pipe(this, Disposable_add(continuation));
 
           this[__EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](
             continuation,

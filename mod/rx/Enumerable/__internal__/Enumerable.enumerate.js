@@ -13,7 +13,6 @@ import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sour
 import { SchedulerLike_now } from "../../../scheduling.js";
 import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import { BufferLike_capacity, DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Observer_baseMixin from "../../Observer/__internal__/Observer.baseMixin.js";
 const Enumerable_enumerate = /*@__PURE__*/ (() => {
@@ -54,7 +53,6 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             if (delay > 0) {
                 raiseWithDebugMessage("Enumerable scheduling continuation with delay");
             }
-            pipe(this, Disposable_add(continuation));
             this[__EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](continuation);
         },
         [ObserverLike_notify](next) {
