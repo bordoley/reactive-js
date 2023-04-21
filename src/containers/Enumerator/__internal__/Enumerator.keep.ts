@@ -20,24 +20,18 @@ import {
   EnumeratorLike_move,
   Keep,
 } from "../../../containers.js";
-import { Predicate, none } from "../../../functions.js";
+import { Predicate, none, unsafeCast } from "../../../functions.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
-import MutableEnumerator_mixin, {
-  MutableEnumeratorLike,
-  MutableEnumeratorLike_reset,
-} from "./MutableEnumerator.mixin.js";
 
 const Enumerator_keep: Keep<EnumeratorLike>["keep"] = /*@__PURE__*/ (<T>() => {
   const createKeepEnumerator = createInstanceFactory(
     mix(
-      include(MutableEnumerator_mixin(), Delegating_mixin()),
+      include(Delegating_mixin()),
       function KeepEnumerator(
-        instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
-          PredicatedLike<T>,
+        instance: EnumeratorLike<T> & PredicatedLike<T>,
         delegate: EnumeratorLike<T>,
         predicate: Predicate<T>,
       ): EnumeratorLike<T> {
-        init(MutableEnumerator_mixin<T>(), instance);
         init(Delegating_mixin(), instance, delegate);
 
         instance[PredicatedLike_predicate] = predicate;
@@ -48,13 +42,21 @@ const Enumerator_keep: Keep<EnumeratorLike>["keep"] = /*@__PURE__*/ (<T>() => {
         [PredicatedLike_predicate]: none,
       }),
       {
+        get [EnumeratorLike_current]() {
+          unsafeCast<DelegatingLike<EnumeratorLike<T>>>(this);
+          return this[DelegatingLike_delegate][EnumeratorLike_current];
+        },
+
+        get [EnumeratorLike_hasCurrent]() {
+          unsafeCast<DelegatingLike<EnumeratorLike<T>>>(this);
+          return this[DelegatingLike_delegate][EnumeratorLike_hasCurrent];
+        },
+
         [EnumeratorLike_move](
           this: PredicatedLike<T> &
-            MutableEnumeratorLike<T> &
+            EnumeratorLike<T> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
-          this[MutableEnumeratorLike_reset]();
-
           const delegate = this[DelegatingLike_delegate];
           const predicate = this[PredicatedLike_predicate];
 
