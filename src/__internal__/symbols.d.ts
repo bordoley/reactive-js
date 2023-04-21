@@ -190,6 +190,10 @@ export declare const __WithLatestLike_selector: unique symbol;
 
 export declare const __AnimationFrameScheduler_delayScheduler: unique symbol;
 
+export declare const __AnimationFrameScheduler_immediateQueue: unique symbol;
+
+export declare const __AnimationFrameScheduler_rafSubscription: unique symbol;
+
 export declare const __AwaitOrObserveEffect_observable: unique symbol;
 
 export declare const __AwaitOrObserveEffect_subscription: unique symbol;

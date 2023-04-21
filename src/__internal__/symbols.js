@@ -459,6 +459,16 @@ export const __AnimationFrameScheduler_delayScheduler = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __AnimationFrameScheduler_immediateQueue = /*@__PURE__*/ symbol(
+  "AnimationFrameScheduler_immediateQueue",
+);
+
+/** @type {unique symbol} */
+export const __AnimationFrameScheduler_rafSubscription = /*@__PURE__*/ symbol(
+  "AnimationFrameScheduler_rafSubscription",
+);
+
+/** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable = /*@__PURE__*/ symbol(
   "AwaitOrObserveEffect_observable",
 );
