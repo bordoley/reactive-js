@@ -368,11 +368,6 @@ export const __IndexedQueueMixin_values = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __ObserverMixin_continuation = /*@__PURE__*/ symbol(
-  "ObserverMixin_continuation",
-);
-
-/** @type {unique symbol} */
 export const __ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol(
   "ObserverMixin_dispatchSubscription",
 );
@@ -380,11 +375,6 @@ export const __ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol(
   "ObserverMixin_isCompleted",
-);
-
-/** @type {unique symbol} */
-export const __ObserverMixin_scheduler = /*@__PURE__*/ symbol(
-  "ObserverMixin_scheduler",
 );
 
 /** @type {unique symbol} */

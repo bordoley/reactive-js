@@ -153,13 +153,9 @@ export const __IndexedQueueMixin_capacityMask: unique symbol;
 /** @type {unique symbol} */
 export const __IndexedQueueMixin_values: unique symbol;
 /** @type {unique symbol} */
-export const __ObserverMixin_continuation: unique symbol;
-/** @type {unique symbol} */
 export const __ObserverMixin_dispatchSubscription: unique symbol;
 /** @type {unique symbol} */
 export const __ObserverMixin_isCompleted: unique symbol;
-/** @type {unique symbol} */
-export const __ObserverMixin_scheduler: unique symbol;
 /** @type {unique symbol} */
 export const __SchedulerMixin_currentContinuation: unique symbol;
 /** @type {unique symbol} */

@@ -1,41 +1,21 @@
 /// <reference types="./Observer.mixin.d.ts" />
 
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { __ObserverMixin_scheduler } from "../../../__internal__/symbols.js";
-import { invoke, none, pipe, pipeLazy, returns, unsafeCast, } from "../../../functions.js";
+import { returns } from "../../../functions.js";
 import { ObserverLike_notify } from "../../../rx.js";
-import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../scheduling.js";
 import Scheduler_delegatingMixin from "../../../scheduling/Scheduler/__internal__/Scheduler.delegatingMixin.js";
-import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_baseMixin from "./Observer.baseMixin.js";
-const Observer_mixin = /*@__PURE__*/ (() => {
-    return returns(mix(include(Observer_baseMixin(), Scheduler_delegatingMixin, Disposable_mixin), function ObserverMixin(instance, scheduler, config) {
-        init(Disposable_mixin, instance);
-        init(Scheduler_delegatingMixin, instance, scheduler);
-        init(Observer_baseMixin(), instance, config);
-        instance[__ObserverMixin_scheduler] = scheduler;
-        return instance;
-    }, props({
-        [__ObserverMixin_scheduler]: none,
-    }), {
-        get [SchedulerLike_now]() {
-            unsafeCast(this);
-            return this[__ObserverMixin_scheduler][SchedulerLike_now];
-        },
-        get [PrioritySchedulerImplementationLike_shouldYield]() {
-            unsafeCast(this);
-            return this[__ObserverMixin_scheduler][SchedulerLike_shouldYield];
-        },
-        [PrioritySchedulerImplementationLike_scheduleContinuation](continuation, delay) {
-            pipe(this[__ObserverMixin_scheduler][SchedulerLike_schedule](pipeLazy(this, invoke(PrioritySchedulerImplementationLike_runContinuation, continuation)), { delay }), Disposable_addTo(continuation));
-        },
-        [ObserverLike_notify](_) {
-            Observer_assertState(this);
-        },
-    }));
-})();
+const Observer_mixin = /*@__PURE__*/ (() => returns(mix(include(Observer_baseMixin(), Scheduler_delegatingMixin, Disposable_mixin), function ObserverMixin(instance, scheduler, config) {
+    init(Disposable_mixin, instance);
+    init(Scheduler_delegatingMixin, instance, scheduler);
+    init(Observer_baseMixin(), instance, config);
+    return instance;
+}, props({}), {
+    [ObserverLike_notify](_) {
+        Observer_assertState(this);
+    },
+})))();
 export default Observer_mixin;

@@ -152,13 +152,9 @@ export declare const __IndexedQueueMixin_capacityMask: unique symbol;
 
 export declare const __IndexedQueueMixin_values: unique symbol;
 
-export declare const __ObserverMixin_continuation: unique symbol;
-
 export declare const __ObserverMixin_dispatchSubscription: unique symbol;
 
 export declare const __ObserverMixin_isCompleted: unique symbol;
-
-export declare const __ObserverMixin_scheduler: unique symbol;
 
 export declare const __SchedulerMixin_currentContinuation: unique symbol;
 

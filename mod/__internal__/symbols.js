@@ -160,13 +160,9 @@ export const __IndexedQueueMixin_capacityMask = /*@__PURE__*/ symbol("IndexedQue
 /** @type {unique symbol} */
 export const __IndexedQueueMixin_values = /*@__PURE__*/ symbol("IndexedQueueMixin_values");
 /** @type {unique symbol} */
-export const __ObserverMixin_continuation = /*@__PURE__*/ symbol("ObserverMixin_continuation");
-/** @type {unique symbol} */
 export const __ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol("ObserverMixin_dispatchSubscription");
 /** @type {unique symbol} */
 export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol("ObserverMixin_isCompleted");
-/** @type {unique symbol} */
-export const __ObserverMixin_scheduler = /*@__PURE__*/ symbol("ObserverMixin_scheduler");
 /** @type {unique symbol} */
 export const __SchedulerMixin_currentContinuation = /*@__PURE__*/ symbol("SchedulerMixin_currentContinuation");
 /** @type {unique symbol} */
