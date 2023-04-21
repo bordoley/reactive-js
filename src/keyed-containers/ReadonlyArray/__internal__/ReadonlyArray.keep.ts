@@ -1,9 +1,7 @@
-import { Predicate } from "../../../functions.js";
 import { Keep, ReadonlyArrayLike } from "../../../keyed-containers.js";
+import ReadonlyArray_keepWithKey from "./ReadonlyArray.keepWithKey.js";
 
 const ReadonlyArray_keep: Keep<ReadonlyArrayLike>["keep"] =
-  <T>(predicate: Predicate<T>) =>
-  (arr: readonly T[]): readonly T[] =>
-    arr.filter(predicate as (value: T) => value is T);
+  ReadonlyArray_keepWithKey;
 
 export default ReadonlyArray_keep;

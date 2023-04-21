@@ -1,10 +1,5 @@
 /// <reference types="./ReadonlyMap.map.d.ts" />
 
-const ReadonlyMap_map = (selector) => (map) => {
-    const result = new Map();
-    for (let [key, value] of map) {
-        result.set(key, selector(value));
-    }
-    return result;
-};
+import ReadonlyMap_mapWithKey from "./ReadonlyMap.mapWithKey.js";
+const ReadonlyMap_map = ReadonlyMap_mapWithKey;
 export default ReadonlyMap_map;

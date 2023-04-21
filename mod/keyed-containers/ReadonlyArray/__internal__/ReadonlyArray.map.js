@@ -1,4 +1,5 @@
 /// <reference types="./ReadonlyArray.map.d.ts" />
 
-const ReadonlyArray_map = (selector) => (arr) => arr.map(selector);
+import ReadonlyArray_mapWithKey from "./ReadonlyArray.mapWithKey.js";
+const ReadonlyArray_map = ReadonlyArray_mapWithKey;
 export default ReadonlyArray_map;

@@ -1,4 +1,5 @@
 /// <reference types="./ReadonlyArray.keep.d.ts" />
 
-const ReadonlyArray_keep = (predicate) => (arr) => arr.filter(predicate);
+import ReadonlyArray_keepWithKey from "./ReadonlyArray.keepWithKey.js";
+const ReadonlyArray_keep = ReadonlyArray_keepWithKey;
 export default ReadonlyArray_keep;
