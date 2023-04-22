@@ -11,12 +11,6 @@
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 | `CInner` | extends [`ObservableLike`](rx.ObservableLike.md) |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`ScanMany`**
-
 ## Table of contents
 
 ### Operator Properties

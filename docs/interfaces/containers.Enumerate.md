@@ -11,12 +11,6 @@
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 | `CEnumerator` | extends [`EnumeratorLike`](containers.EnumeratorLike.md) = [`EnumeratorLike`](containers.EnumeratorLike.md) |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`Enumerate`**
-
 ## Table of contents
 
 ### Transform Methods

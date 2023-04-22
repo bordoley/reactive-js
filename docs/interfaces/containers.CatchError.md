@@ -11,12 +11,6 @@
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 | `O` | `never` |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`CatchError`**
-
 ## Table of contents
 
 ### Operator Methods

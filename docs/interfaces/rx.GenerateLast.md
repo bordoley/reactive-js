@@ -12,12 +12,6 @@
 | `CInner` | extends [`ObservableLike`](rx.ObservableLike.md) |
 | `O` | `never` |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`GenerateLast`**
-
 ## Table of contents
 
 ### Constructor Methods

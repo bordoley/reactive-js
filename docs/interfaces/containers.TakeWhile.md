@@ -11,12 +11,6 @@
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 | `O` | `unknown` |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`TakeWhile`**
-
 ## Table of contents
 
 ### Operator Methods

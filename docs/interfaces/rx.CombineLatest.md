@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ObservableLike`](rx.ObservableLike.md) |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`CombineLatest`**
-
 ## Table of contents
 
 ### Constructor Methods

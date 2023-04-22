@@ -1,5 +1,5 @@
 import { __FlowableStreamLike_isPaused as FlowableStreamLike_isPaused, __FlowableStreamLike_pause as FlowableStreamLike_pause, __FlowableStreamLike_resume as FlowableStreamLike_resume, __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_isEnumerable as StreamableLike_isEnumerable, __StreamableLike_isInteractive as StreamableLike_isInteractive, __StreamableLike_isRunnable as StreamableLike_isRunnable, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
-import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
+import { ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { DispatcherLike, MulticastObservableLike, ObservableLike } from "./rx.js";
@@ -129,7 +129,7 @@ export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Fun
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromAsyncEnumerable<C extends ContainerLike, O = never> extends Container<C> {
+export interface FromAsyncEnumerable<C extends ContainerLike, O = never> {
     /**
      * @category Constructor
      */
@@ -139,7 +139,7 @@ export interface FromAsyncEnumerable<C extends ContainerLike, O = never> extends
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromFlowable<C extends ContainerLike, O = never> extends Container<C> {
+export interface FromFlowable<C extends ContainerLike, O = never> {
     /**
      * @category Constructor
      */
@@ -149,7 +149,7 @@ export interface FromFlowable<C extends ContainerLike, O = never> extends Contai
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToAsyncEnumerable<C extends ContainerLike, O = never> extends Container<C> {
+export interface ToAsyncEnumerable<C extends ContainerLike, O = never> {
     /**
      * @category Transform
      */
@@ -159,7 +159,7 @@ export interface ToAsyncEnumerable<C extends ContainerLike, O = never> extends C
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToFlowable<C extends ContainerLike, O = never> extends Container<C> {
+export interface ToFlowable<C extends ContainerLike, O = never> {
     /**
      * @category Transform
      */

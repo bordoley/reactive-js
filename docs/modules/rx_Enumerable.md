@@ -586,7 +586,7 @@ ___
 
 ▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
 
-Returns a ContainerLike which buffers items produced by the source until either the
+Returns a ContainerLike which buffers items produced by the source until the
 number of items reaches the specified maximum buffer size.
 
 #### Type parameters

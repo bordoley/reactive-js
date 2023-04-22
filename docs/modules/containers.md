@@ -22,7 +22,6 @@
 - [ConcatAll](../interfaces/containers.ConcatAll.md)
 - [ConcatMap](../interfaces/containers.ConcatMap.md)
 - [ConcatWith](../interfaces/containers.ConcatWith.md)
-- [Container](../interfaces/containers.Container.md)
 - [Contains](../interfaces/containers.Contains.md)
 - [DecodeWithCharset](../interfaces/containers.DecodeWithCharset.md)
 - [Defer](../interfaces/containers.Defer.md)

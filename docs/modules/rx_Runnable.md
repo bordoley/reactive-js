@@ -1123,7 +1123,7 @@ ___
 
 ▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
 
-Returns a ContainerLike which buffers items produced by the source until either the
+Returns a ContainerLike which buffers items produced by the source until the
 number of items reaches the specified maximum buffer size.
 
 #### Type parameters

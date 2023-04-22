@@ -11,12 +11,6 @@
 | `C` | extends [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md) |
 | `O` | `unknown` |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`FromEntries`**
-
 ## Table of contents
 
 ### Constructor Methods

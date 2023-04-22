@@ -9,7 +9,6 @@ import {
   __StreamableLike_stream as StreamableLike_stream,
 } from "./__internal__/symbols.js";
 import {
-  Container,
   ContainerLike,
   ContainerLike_T,
   ContainerLike_type,
@@ -204,8 +203,7 @@ export interface CacheLike<T>
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromAsyncEnumerable<C extends ContainerLike, O = never>
-  extends Container<C> {
+export interface FromAsyncEnumerable<C extends ContainerLike, O = never> {
   /**
    * @category Constructor
    */
@@ -218,8 +216,7 @@ export interface FromAsyncEnumerable<C extends ContainerLike, O = never>
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromFlowable<C extends ContainerLike, O = never>
-  extends Container<C> {
+export interface FromFlowable<C extends ContainerLike, O = never> {
   /**
    * @category Constructor
    */
@@ -230,8 +227,7 @@ export interface FromFlowable<C extends ContainerLike, O = never>
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToAsyncEnumerable<C extends ContainerLike, O = never>
-  extends Container<C> {
+export interface ToAsyncEnumerable<C extends ContainerLike, O = never> {
   /**
    * @category Transform
    */
@@ -244,8 +240,7 @@ export interface ToAsyncEnumerable<C extends ContainerLike, O = never>
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToFlowable<C extends ContainerLike, O = never>
-  extends Container<C> {
+export interface ToFlowable<C extends ContainerLike, O = never> {
   /**
    * @category Transform
    */

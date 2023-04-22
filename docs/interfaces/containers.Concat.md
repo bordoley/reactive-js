@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`Concat`**
-
 ## Table of contents
 
 ### Constructor Methods

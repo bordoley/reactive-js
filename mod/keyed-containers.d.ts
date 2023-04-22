@@ -1,5 +1,5 @@
 import { __KeyedContainerLike_TKey as KeyedContainerLike_TKey } from "./__internal__/symbols.js";
-import { Container, ContainerLike, ContainerLike_T, ContainerLike_type, EnumeratorLike, ReadonlySetLike } from "./containers.js";
+import { ContainerLike, ContainerLike_T, ContainerLike_type, EnumeratorLike, ReadonlySetLike } from "./containers.js";
 import { Function1, Function2, Predicate, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
 export { KeyedContainerLike_TKey };
 /**
@@ -66,7 +66,7 @@ export type KeyOf<C extends KeyedContainerLike> = C extends {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Empty<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface Empty<C extends KeyedContainerLike, O = never> {
     /**
      * Return an ContainerLike that emits no items.
      *
@@ -78,7 +78,7 @@ export interface Empty<C extends KeyedContainerLike, O = never> extends Containe
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Entries<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface Entries<C extends KeyedContainerLike, O = never> {
     /**
      *
      * @category Transform
@@ -89,7 +89,7 @@ export interface Entries<C extends KeyedContainerLike, O = never> extends Contai
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForEach<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface ForEach<C extends KeyedContainerLike, O = never> {
     /**
      * Returns a ContainerOperator that applies the side effect function to each
      * value emitted by the source.
@@ -102,7 +102,7 @@ export interface ForEach<C extends KeyedContainerLike, O = never> extends Contai
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForEachWithKey<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface ForEachWithKey<C extends KeyedContainerLike, O = never> {
     /**
      * Returns a KeyedContainerOperator that applies the side effect function to each
      * value emitted by the source.
@@ -115,7 +115,7 @@ export interface ForEachWithKey<C extends KeyedContainerLike, O = never> extends
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromEntries<C extends KeyedContainerLike, O = unknown> extends Container<C> {
+export interface FromEntries<C extends KeyedContainerLike, O = unknown> {
     /**
      * @category Constructor
      */
@@ -125,7 +125,7 @@ export interface FromEntries<C extends KeyedContainerLike, O = unknown> extends 
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromReadonlyArray<C extends KeyedContainerLike, O = unknown> extends Container<C> {
+export interface FromReadonlyArray<C extends KeyedContainerLike, O = unknown> {
     /**
      * @category Constructor
      */
@@ -138,7 +138,7 @@ export interface FromReadonlyArray<C extends KeyedContainerLike, O = unknown> ex
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Identity<C extends KeyedContainerLike> extends Container<C> {
+export interface Identity<C extends KeyedContainerLike> {
     /**
      * @category Operator
      */
@@ -148,7 +148,7 @@ export interface Identity<C extends KeyedContainerLike> extends Container<C> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Keep<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface Keep<C extends KeyedContainerLike, O = never> {
     /**
      * Returns a ContainerOperator that only emits items produced by the
      * source that satisfy the specified predicate.
@@ -161,7 +161,7 @@ export interface Keep<C extends KeyedContainerLike, O = never> extends Container
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeepType<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface KeepType<C extends KeyedContainerLike, O = never> {
     /**
      *
      * @category Operator
@@ -172,7 +172,7 @@ export interface KeepType<C extends KeyedContainerLike, O = never> extends Conta
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeepWithKey<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface KeepWithKey<C extends KeyedContainerLike, O = never> {
     /**
      * Returns a ContainerOperator that only emits items produced by the
      * source that satisfy the specified predicate.
@@ -185,7 +185,7 @@ export interface KeepWithKey<C extends KeyedContainerLike, O = never> extends Co
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Keys<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface Keys<C extends KeyedContainerLike, O = never> {
     /**
      *
      * @category Transform
@@ -196,7 +196,7 @@ export interface Keys<C extends KeyedContainerLike, O = never> extends Container
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeySet<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface KeySet<C extends KeyedContainerLike, O = never> {
     /**
      *
      * @category Transform
@@ -207,7 +207,7 @@ export interface KeySet<C extends KeyedContainerLike, O = never> extends Contain
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Map<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface Map<C extends KeyedContainerLike, O = never> {
     /**
      * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
@@ -224,7 +224,7 @@ export interface Map<C extends KeyedContainerLike, O = never> extends Container<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface MapWithKey<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface MapWithKey<C extends KeyedContainerLike, O = never> {
     /**
      * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
@@ -241,7 +241,7 @@ export interface MapWithKey<C extends KeyedContainerLike, O = never> extends Con
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToReadonlyArray<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface ToReadonlyArray<C extends KeyedContainerLike, O = never> {
     /**
      * Converts the ContainerLike to a `ReadonlyArrayLike`.
      *
@@ -253,7 +253,7 @@ export interface ToReadonlyArray<C extends KeyedContainerLike, O = never> extend
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Values<C extends KeyedContainerLike, O = never> extends Container<C> {
+export interface Values<C extends KeyedContainerLike, O = never> {
     /**
      *
      * @category Transform

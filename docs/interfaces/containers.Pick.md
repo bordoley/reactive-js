@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`Pick`**
-
 ## Table of contents
 
 ### Operator Methods

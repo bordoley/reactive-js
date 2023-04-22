@@ -11,12 +11,6 @@
 | `C` | extends [`ObservableLike`](rx.ObservableLike.md) |
 | `O` | `never` |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`MergeMap`**
-
 ## Table of contents
 
 ### Operator Properties

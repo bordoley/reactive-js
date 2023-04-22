@@ -11,12 +11,6 @@
 | `C` | extends [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md) |
 | `O` | `never` |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`Empty`**
-
 ## Table of contents
 
 ### Constructor Methods

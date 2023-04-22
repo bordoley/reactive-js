@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ObservableLike`](rx.ObservableLike.md) |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`BackpressureStrategy`**
-
 ## Table of contents
 
 ### Operator Methods

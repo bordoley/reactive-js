@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md) |
 
-## Hierarchy
-
-- [`Container`](containers.Container.md)<`C`\>
-
-  ↳ **`Identity`**
-
 ## Table of contents
 
 ### Operator Methods
