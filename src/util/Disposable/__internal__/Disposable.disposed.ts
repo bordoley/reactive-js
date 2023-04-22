@@ -1,8 +1,8 @@
 import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
-import create from "./Disposable.create.js";
+import Disposable_create from "./Disposable.create.js";
 
 const Disposable_disposed: DisposableLike = /*@__PURE__*/ (() => {
-  const instance = create();
+  const instance = Disposable_create();
   instance[DisposableLike_dispose]();
   return instance;
 })();
