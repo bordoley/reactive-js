@@ -3,7 +3,8 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { __VirtualTask_continuation, __VirtualTask_dueTime, __VirtualTask_id, __VirtualTimeScheduler_maxMicroTaskTicks, __VirtualTimeScheduler_microTaskTicks, __VirtualTimeScheduler_taskIDCount, } from "../../../__internal__/symbols.js";
+import { SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, } from "../../../__internal__/scheduling.js";
+import { __VirtualTimeScheduler_maxMicroTaskTicks, __VirtualTimeScheduler_microTaskTicks, __VirtualTimeScheduler_taskIDCount, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue } from "../../../__internal__/util.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
@@ -13,8 +14,8 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueu
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
 import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
 const comparator = (a, b) => {
-    const diff = a[__VirtualTask_dueTime] - b[__VirtualTask_dueTime];
-    return diff !== 0 ? diff : a[__VirtualTask_id] - b[__VirtualTask_id];
+    const diff = a[SchedulerTaskLike_dueTime] - b[SchedulerTaskLike_dueTime];
+    return diff !== 0 ? diff : a[SchedulerTaskLike_id] - b[SchedulerTaskLike_id];
 };
 const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(PriorityScheduler_mixin, MutableEnumerator_mixin(), Queue_priorityQueueMixin()), function VirtualTimeScheduler(instance, maxMicroTaskTicks) {
     init(PriorityScheduler_mixin, instance, 1);
@@ -38,7 +39,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
         while (!this[DisposableLike_isDisposed] &&
             this[EnumeratorLike_move]()) {
             const task = this[EnumeratorLike_current];
-            const { [__VirtualTask_dueTime]: dueTime, [__VirtualTask_continuation]: continuation, } = task;
+            const { [SchedulerTaskLike_dueTime]: dueTime, [SchedulerTaskLike_continuation]: continuation, } = task;
             this[__VirtualTimeScheduler_microTaskTicks] = 0;
             this[SchedulerLike_now] = dueTime;
             this[PrioritySchedulerImplementationLike_runContinuation](continuation);
@@ -46,9 +47,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
     },
     [PrioritySchedulerImplementationLike_scheduleContinuation](continuation, delay) {
         this[QueueableLike_enqueue]({
-            [__VirtualTask_id]: this[__VirtualTimeScheduler_taskIDCount]++,
-            [__VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
-            [__VirtualTask_continuation]: continuation,
+            [SchedulerTaskLike_id]: this[__VirtualTimeScheduler_taskIDCount]++,
+            [SchedulerTaskLike_dueTime]: this[SchedulerLike_now] + delay,
+            [SchedulerTaskLike_continuation]: continuation,
         });
     },
     [EnumeratorLike_move]() {

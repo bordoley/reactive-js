@@ -172,9 +172,17 @@ export declare const __MappingLike_selector: unique symbol;
 
 export declare const __PredicatedLike_predicate: unique symbol;
 
+export declare const __PrioritySchedulerTaskLike_priority: unique symbol;
+
 export declare const __ReducerAccumulatorLike_acc: unique symbol;
 
 export declare const __ReducerAccumulatorLike_reducer: unique symbol;
+
+export declare const __SchedulerTaskLike_continuation: unique symbol;
+
+export declare const __SchedulerTaskLike_dueTime: unique symbol;
+
+export declare const __SchedulerTaskLike_id: unique symbol;
 
 export declare const __WithLatestLike_hasLatest: unique symbol;
 
@@ -318,14 +326,6 @@ export declare const __QueueScheduler_queue: unique symbol;
 
 export declare const __QueueScheduler_taskIDCounter: unique symbol;
 
-export declare const __QueueTask_continuation: unique symbol;
-
-export declare const __QueueTask_dueTime: unique symbol;
-
-export declare const __QueueTask_priority: unique symbol;
-
-export declare const __QueueTask_taskID: unique symbol;
-
 export declare const __ReadonlyArrayEnumerator_values: unique symbol;
 
 export declare const __ReadonlyArrayEnumerator_index: unique symbol;
@@ -361,12 +361,6 @@ export declare const __ThrowIfEmptyObserver_isEmpty: unique symbol;
 export declare const __timeoutError: unique symbol;
 
 export declare const __TimeoutObserver_duration: unique symbol;
-
-export declare const __VirtualTask_continuation: unique symbol;
-
-export declare const __VirtualTask_dueTime: unique symbol;
-
-export declare const __VirtualTask_id: unique symbol;
 
 export declare const __VirtualTimeScheduler_maxMicroTaskTicks: unique symbol;
 

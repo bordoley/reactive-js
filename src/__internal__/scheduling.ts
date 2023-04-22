@@ -8,6 +8,10 @@ import {
   __ContinuationLike_run as ContinuationLike_run,
   __ContinuationLike_scheduler as ContinuationLike_scheduler,
   __ContinuationSchedulerLike_schedule as ContinuationSchedulerLike_schedule,
+  __PrioritySchedulerTaskLike_priority as PrioritySchedulerTaskLike_priority,
+  __SchedulerTaskLike_continuation as SchedulerTaskLike_continuation,
+  __SchedulerTaskLike_dueTime as SchedulerTaskLike_dueTime,
+  __SchedulerTaskLike_id as SchedulerTaskLike_id,
 } from "./symbols.js";
 
 export {
@@ -17,6 +21,10 @@ export {
   ContinuationLike_run,
   ContinuationLike_scheduler,
   ContinuationSchedulerLike_schedule,
+  PrioritySchedulerTaskLike_priority,
+  SchedulerTaskLike_continuation,
+  SchedulerTaskLike_dueTime,
+  SchedulerTaskLike_id,
 };
 
 export interface ContinuationLike
@@ -37,4 +45,14 @@ export interface ContinuationSchedulerLike extends SchedulerLike {
     continuation: ContinuationLike,
     options?: { readonly delay?: number },
   ): void;
+}
+
+export interface SchedulerTaskLike {
+  readonly [SchedulerTaskLike_continuation]: ContinuationLike;
+  [SchedulerTaskLike_dueTime]: number;
+  [SchedulerTaskLike_id]: number;
+}
+
+export interface PrioritySchedulerTaskLike extends SchedulerTaskLike {
+  readonly [PrioritySchedulerTaskLike_priority]: number;
 }

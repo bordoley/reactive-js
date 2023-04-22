@@ -180,9 +180,17 @@ export const __MappingLike_selector = /*@__PURE__*/ symbol("MappingLike_selector
 /** @type {unique symbol} */
 export const __PredicatedLike_predicate = /*@__PURE__*/ symbol("PredicatedLike_predicate");
 /** @type {unique symbol} */
+export const __PrioritySchedulerTaskLike_priority = /*@__PURE__*/ symbol("PrioritySchedulerTaskLike_priority");
+/** @type {unique symbol} */
 export const __ReducerAccumulatorLike_acc = /*@__PURE__*/ symbol("ReducerAccumulatorLike_acc");
 /** @type {unique symbol} */
 export const __ReducerAccumulatorLike_reducer = /*@__PURE__*/ symbol("ReducerAccumulatorLike_reducer");
+/** @type {unique symbol} */
+export const __SchedulerTaskLike_continuation = /*@__PURE__*/ symbol("SchedulerTaskLike_continuation");
+/** @type {unique symbol} */
+export const __SchedulerTaskLike_dueTime = /*@__PURE__*/ symbol("SchedulerTaskLike_dueTime");
+/** @type {unique symbol} */
+export const __SchedulerTaskLike_id = /*@__PURE__*/ symbol("SchedulerTaskLike_id");
 /** @type {unique symbol} */
 export const __WithLatestLike_hasLatest = /*@__PURE__*/ symbol("WithLatestLike_hasLatest");
 /** @type {unique symbol} */
@@ -329,14 +337,6 @@ export const __QueueScheduler_queue = /*@__PURE__*/ symbol("QueueScheduler_queue
 /** @type {unique symbol} */
 export const __QueueScheduler_taskIDCounter = /*@__PURE__*/ symbol("QueueScheduler_taskIDCounter ");
 /** @type {unique symbol} */
-export const __QueueTask_continuation = /*@__PURE__*/ symbol("QueueTask_continuation");
-/** @type {unique symbol} */
-export const __QueueTask_dueTime = /*@__PURE__*/ symbol("QueueTask_dueTime");
-/** @type {unique symbol} */
-export const __QueueTask_priority = /*@__PURE__*/ symbol("QueueTask_priority");
-/** @type {unique symbol} */
-export const __QueueTask_taskID = /*@__PURE__*/ symbol("QueueTask_taskID");
-/** @type {unique symbol} */
 export const __ReadonlyArrayEnumerator_values = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_values");
 /** @type {unique symbol} */
 export const __ReadonlyArrayEnumerator_index = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_index");
@@ -372,12 +372,6 @@ export const __ThrowIfEmptyObserver_isEmpty = /*@__PURE__*/ symbol("ThrowIfEmpty
 export const __timeoutError = /*@__PURE__*/ symbol("timeoutError");
 /** @type {unique symbol} */
 export const __TimeoutObserver_duration = /*@__PURE__*/ symbol("TimeoutObserver_duration");
-/** @type {unique symbol} */
-export const __VirtualTask_continuation = /*@__PURE__*/ symbol("VirtualTask_continuation");
-/** @type {unique symbol} */
-export const __VirtualTask_dueTime = /*@__PURE__*/ symbol("VirtualTask_dueTime");
-/** @type {unique symbol} */
-export const __VirtualTask_id = /*@__PURE__*/ symbol("VirtualTask_id");
 /** @type {unique symbol} */
 export const __VirtualTimeScheduler_maxMicroTaskTicks = /*@__PURE__*/ symbol("VirtualTimeScheduler_maxMicroTaskTicks");
 /** @type {unique symbol} */

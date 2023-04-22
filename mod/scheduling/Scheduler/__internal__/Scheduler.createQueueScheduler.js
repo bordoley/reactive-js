@@ -3,8 +3,8 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ContinuationLike_priority, } from "../../../__internal__/scheduling.js";
-import { __QueueScheduler_delayed, __QueueScheduler_dueTime, __QueueScheduler_hostContinuation, __QueueScheduler_hostScheduler, __QueueScheduler_queue, __QueueScheduler_taskIDCounter, __QueueTask_continuation, __QueueTask_dueTime, __QueueTask_priority, __QueueTask_taskID, } from "../../../__internal__/symbols.js";
+import { ContinuationLike_priority, PrioritySchedulerTaskLike_priority, SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, } from "../../../__internal__/scheduling.js";
+import { __QueueScheduler_delayed, __QueueScheduler_dueTime, __QueueScheduler_hostContinuation, __QueueScheduler_hostScheduler, __QueueScheduler_queue, __QueueScheduler_taskIDCounter, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, QueueLike_head, SerialDisposableLike_current, } from "../../../__internal__/util.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
@@ -18,8 +18,12 @@ import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerI
 const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
     const delayedComparator = (a, b) => {
         let diff = 0;
-        diff = diff !== 0 ? diff : a[__QueueTask_dueTime] - b[__QueueTask_dueTime];
-        diff = diff !== 0 ? diff : b[__QueueTask_taskID] - a[__QueueTask_taskID];
+        diff =
+            diff !== 0
+                ? diff
+                : a[SchedulerTaskLike_dueTime] - b[SchedulerTaskLike_dueTime];
+        diff =
+            diff !== 0 ? diff : b[SchedulerTaskLike_id] - a[SchedulerTaskLike_id];
         return diff;
     };
     const peek = (instance) => {
@@ -30,8 +34,8 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
             if (isNone(task)) {
                 break;
             }
-            const taskIsDispose = task[__QueueTask_continuation][DisposableLike_isDisposed];
-            if (task[__QueueTask_dueTime] > now && !taskIsDispose) {
+            const taskIsDispose = task[SchedulerTaskLike_continuation][DisposableLike_isDisposed];
+            if (task[SchedulerTaskLike_dueTime] > now && !taskIsDispose) {
                 break;
             }
             delayed[QueueLike_dequeue]();
@@ -45,7 +49,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
             if (isNone(task)) {
                 break;
             }
-            if (!task[__QueueTask_continuation][DisposableLike_isDisposed]) {
+            if (!task[SchedulerTaskLike_continuation][DisposableLike_isDisposed]) {
                 break;
             }
             queue[QueueLike_dequeue]();
@@ -55,27 +59,28 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
     const priorityShouldYield = (instance, next) => {
         const { [EnumeratorLike_current]: current } = instance;
         return (current !== next &&
-            next[__QueueTask_dueTime] <=
+            next[SchedulerTaskLike_dueTime] <=
                 instance[__QueueScheduler_hostScheduler][SchedulerLike_now] &&
-            next[__QueueTask_priority] > current[__QueueTask_priority]);
+            next[PrioritySchedulerTaskLike_priority] >
+                current[PrioritySchedulerTaskLike_priority]);
     };
     const scheduleOnHost = (instance) => {
         const task = peek(instance);
         const continuationActive = !instance[SerialDisposableLike_current][DisposableLike_isDisposed] &&
             isSome(task) &&
-            instance[__QueueScheduler_dueTime] <= task[__QueueTask_dueTime];
+            instance[__QueueScheduler_dueTime] <= task[SchedulerTaskLike_dueTime];
         if (isNone(task) ||
             continuationActive ||
             instance[PauseableSchedulerLike_isPaused]) {
             return;
         }
-        const dueTime = task[__QueueTask_dueTime];
+        const dueTime = task[SchedulerTaskLike_dueTime];
         const delay = clampPositiveInteger(dueTime - instance[__QueueScheduler_hostScheduler][SchedulerLike_now]);
         instance[__QueueScheduler_dueTime] = dueTime;
         const continuation = instance[__QueueScheduler_hostContinuation] ??
             ((scheduler) => {
                 for (let task = peek(instance); isSome(task) && !instance[DisposableLike_isDisposed]; task = peek(instance)) {
-                    const { [__QueueTask_continuation]: continuation, [__QueueTask_dueTime]: dueTime, } = task;
+                    const { [SchedulerTaskLike_continuation]: continuation, [SchedulerTaskLike_dueTime]: dueTime, } = task;
                     const delay = clampPositiveInteger(dueTime -
                         instance[__QueueScheduler_hostScheduler][SchedulerLike_now]);
                     if (delay > 0) {
@@ -145,15 +150,15 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
             const dueTime = max(now + delay, now);
             const task = this[SchedulerLike_inContinuation] &&
                 this[EnumeratorLike_hasCurrent] &&
-                this[EnumeratorLike_current][__QueueTask_continuation] ===
+                this[EnumeratorLike_current][SchedulerTaskLike_continuation] ===
                     continuation &&
                 delay <= 0
                 ? this[EnumeratorLike_current]
                 : {
-                    [__QueueTask_taskID]: this[__QueueScheduler_taskIDCounter]++,
-                    [__QueueTask_continuation]: continuation,
-                    [__QueueTask_dueTime]: dueTime,
-                    [__QueueTask_priority]: clampPositiveInteger(priority ?? MAX_SAFE_INTEGER),
+                    [SchedulerTaskLike_id]: this[__QueueScheduler_taskIDCounter]++,
+                    [SchedulerTaskLike_continuation]: continuation,
+                    [SchedulerTaskLike_dueTime]: dueTime,
+                    [PrioritySchedulerTaskLike_priority]: clampPositiveInteger(priority ?? MAX_SAFE_INTEGER),
                 };
             const { [__QueueScheduler_delayed]: delayed, [__QueueScheduler_queue]: queue, } = this;
             const targetQueue = dueTime > now ? delayed : queue;

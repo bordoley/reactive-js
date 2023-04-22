@@ -88,8 +88,12 @@ LiftedLike_operators
 ForEachLike_effect
 MappingLike_selector
 PredicatedLike_predicate
+PrioritySchedulerTaskLike_priority
 ReducerAccumulatorLike_acc
 ReducerAccumulatorLike_reducer
+SchedulerTaskLike_continuation
+SchedulerTaskLike_dueTime
+SchedulerTaskLike_id
 WithLatestLike_hasLatest
 WithLatestLike_otherLatest
 WithLatestLike_selector
@@ -162,10 +166,6 @@ QueueScheduler_hostContinuation
 QueueScheduler_hostScheduler
 QueueScheduler_queue 
 QueueScheduler_taskIDCounter 
-QueueTask_continuation
-QueueTask_dueTime
-QueueTask_priority
-QueueTask_taskID
 ReadonlyArrayEnumerator_values
 ReadonlyArrayEnumerator_index
 ReadonlyArrayEnumerator_count
@@ -184,9 +184,6 @@ ThrottleObserver_onNotify
 ThrowIfEmptyObserver_isEmpty
 timeoutError
 TimeoutObserver_duration
-VirtualTask_continuation
-VirtualTask_dueTime
-VirtualTask_id
 VirtualTimeScheduler_maxMicroTaskTicks
 VirtualTimeScheduler_microTaskTicks
 VirtualTimeScheduler_taskIDCount

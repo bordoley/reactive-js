@@ -8,11 +8,14 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ContinuationLike } from "../../../__internal__/scheduling.js";
 import {
-  __VirtualTask_continuation,
-  __VirtualTask_dueTime,
-  __VirtualTask_id,
+  ContinuationLike,
+  SchedulerTaskLike,
+  SchedulerTaskLike_continuation,
+  SchedulerTaskLike_dueTime,
+  SchedulerTaskLike_id,
+} from "../../../__internal__/scheduling.js";
+import {
   __VirtualTimeScheduler_maxMicroTaskTicks,
   __VirtualTimeScheduler_microTaskTicks,
   __VirtualTimeScheduler_taskIDCount,
@@ -48,15 +51,9 @@ import {
   PriorityScheduler_mixin,
 } from "./Scheduler.mixin.js";
 
-type VirtualTask = {
-  readonly [__VirtualTask_continuation]: ContinuationLike;
-  [__VirtualTask_dueTime]: number;
-  [__VirtualTask_id]: number;
-};
-
-const comparator = (a: VirtualTask, b: VirtualTask) => {
-  const diff = a[__VirtualTask_dueTime] - b[__VirtualTask_dueTime];
-  return diff !== 0 ? diff : a[__VirtualTask_id] - b[__VirtualTask_id];
+const comparator = (a: SchedulerTaskLike, b: SchedulerTaskLike) => {
+  const diff = a[SchedulerTaskLike_dueTime] - b[SchedulerTaskLike_dueTime];
+  return diff !== 0 ? diff : a[SchedulerTaskLike_id] - b[SchedulerTaskLike_id];
 };
 
 type TProperties = {
@@ -71,8 +68,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
     mix(
       include(
         PriorityScheduler_mixin,
-        MutableEnumerator_mixin<VirtualTask>(),
-        Queue_priorityQueueMixin<VirtualTask>(),
+        MutableEnumerator_mixin<SchedulerTaskLike>(),
+        Queue_priorityQueueMixin<SchedulerTaskLike>(),
       ),
       function VirtualTimeScheduler(
         instance: Pick<
@@ -83,9 +80,9 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         maxMicroTaskTicks: number,
       ): VirtualTimeSchedulerLike {
         init(PriorityScheduler_mixin, instance, 1);
-        init(MutableEnumerator_mixin<VirtualTask>(), instance);
+        init(MutableEnumerator_mixin<SchedulerTaskLike>(), instance);
         init(
-          Queue_priorityQueueMixin<VirtualTask>(),
+          Queue_priorityQueueMixin<SchedulerTaskLike>(),
           instance,
           comparator,
           MAX_SAFE_INTEGER,
@@ -115,7 +112,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         },
         [VirtualTimeSchedulerLike_run](
           this: TProperties &
-            EnumeratorLike<VirtualTask> &
+            EnumeratorLike<SchedulerTaskLike> &
             PrioritySchedulerImplementationLike,
         ) {
           while (
@@ -124,8 +121,8 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           ) {
             const task = this[EnumeratorLike_current];
             const {
-              [__VirtualTask_dueTime]: dueTime,
-              [__VirtualTask_continuation]: continuation,
+              [SchedulerTaskLike_dueTime]: dueTime,
+              [SchedulerTaskLike_continuation]: continuation,
             } = task;
 
             this[__VirtualTimeScheduler_microTaskTicks] = 0;
@@ -139,21 +136,21 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         [PrioritySchedulerImplementationLike_scheduleContinuation](
           this: TProperties &
             DisposableLike &
-            QueueLike<VirtualTask> &
+            QueueLike<SchedulerTaskLike> &
             PrioritySchedulerImplementationLike,
           continuation: ContinuationLike,
           delay: number,
         ) {
           this[QueueableLike_enqueue]({
-            [__VirtualTask_id]: this[__VirtualTimeScheduler_taskIDCount]++,
-            [__VirtualTask_dueTime]: this[SchedulerLike_now] + delay,
-            [__VirtualTask_continuation]: continuation,
+            [SchedulerTaskLike_id]: this[__VirtualTimeScheduler_taskIDCount]++,
+            [SchedulerTaskLike_dueTime]: this[SchedulerLike_now] + delay,
+            [SchedulerTaskLike_continuation]: continuation,
           });
         },
         [EnumeratorLike_move](
           this: TProperties &
-            MutableEnumeratorLike<VirtualTask> &
-            QueueLike<VirtualTask> &
+            MutableEnumeratorLike<SchedulerTaskLike> &
+            QueueLike<SchedulerTaskLike> &
             DisposableLike,
         ): boolean {
           const task = this[QueueLike_dequeue]();
