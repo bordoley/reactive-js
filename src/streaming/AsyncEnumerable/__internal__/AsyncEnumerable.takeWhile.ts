@@ -1,10 +1,10 @@
 import { ContainerOperator, TakeWhile } from "../../../containers.js";
-import { Predicate, partial, pipe } from "../../../functions.js";
+import { Predicate, pipe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
 import { AsyncEnumerableLike } from "../../../streaming.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
-import AsyncEnumerator_create from "./AsyncEnumerator.create.js";
+import AsyncEnumerator_lift from "./AsyncEnumerator.lift.js";
 
 const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] = <
   T,
@@ -14,8 +14,8 @@ const AsyncEnumerable_takeWhile: TakeWhile<AsyncEnumerableLike>["takeWhile"] = <
 ) => {
   const { inclusive = false } = options;
   return pipe(
-    AsyncEnumerator_create(),
-    partial(Observable_takeWhile<ObservableLike, T>(predicate, { inclusive })),
+    Observable_takeWhile<ObservableLike, T>(predicate, { inclusive }),
+    AsyncEnumerator_lift,
     AsyncEnumerable_lift(true, true),
   ) as ContainerOperator<AsyncEnumerableLike, T, T>;
 };

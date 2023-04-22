@@ -5,36 +5,36 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-} from "../../../__internal__/util.js";
+
 import { ContainerOperator } from "../../../containers.js";
-import { pipe, returns, unsafeCast } from "../../../functions.js";
+import { none, pipe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
+import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import { BufferLike_capacity, DisposableLike } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addIgnoringChildErrors.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
-const AsyncEnumerator_create: <TA, TB>() => (
-  stream: StreamLike<void, TA> & DisposableLike,
+const AsyncEnumerator_lift: <TA, TB>(
   op: ContainerOperator<ObservableLike, TA, TB>,
-) => StreamLike<void, TB> & DisposableLike = /*@__PURE__*/ (<TA, TB>() =>
-  pipe(
+) => (
+  stream: StreamLike<void, TA> & DisposableLike,
+) => StreamLike<void, TB> & DisposableLike = /*@__PURE__*/ (<TA, TB>() => {
+  const createLiftedAsyncEnumerator = createInstanceFactory(
     mix(
       include(
         Dispatcher_delegatingMixin(),
         MulticastObservable_delegatingMixin<TB>(),
         Disposable_delegatingMixin,
-        Delegating_mixin(),
       ),
       function AsyncEnumerator(
-        instance: Pick<StreamLike<void, TA>, typeof StreamLike_scheduler>,
+        instance: {
+          [StreamLike_scheduler]: SchedulerLike;
+        },
         delegate: StreamLike<void, TA> & DisposableLike,
         operator: ContainerOperator<ObservableLike, TA, TB>,
       ): StreamLike<void, TB> {
@@ -52,21 +52,26 @@ const AsyncEnumerator_create: <TA, TB>() => (
         init(Dispatcher_delegatingMixin(), instance, delegate);
         init(Delegating_mixin(), instance, delegate);
 
+        instance[StreamLike_scheduler] = delegate[StreamLike_scheduler];
+
         return instance;
       },
-      props({}),
-      {
-        get [StreamLike_scheduler]() {
-          unsafeCast<DelegatingLike<StreamLike<void, TA>>>(this);
-          return this[DelegatingLike_delegate][StreamLike_scheduler];
-        },
-      },
+      props<{
+        [StreamLike_scheduler]: SchedulerLike;
+      }>({
+        [StreamLike_scheduler]: none,
+      }),
+      {},
     ),
-    createInstanceFactory,
-    returns,
-  ) as <TA, TB>() => (
-    stream: StreamLike<void, TA> & DisposableLike,
-    op: ContainerOperator<ObservableLike, TA, TB>,
-  ) => StreamLike<void, TB> & DisposableLike)();
+  );
 
-export default AsyncEnumerator_create;
+  return (op: ContainerOperator<ObservableLike, TA, TB>) =>
+    (stream: StreamLike<void, TA> & DisposableLike): StreamLike<void, TB> =>
+      createLiftedAsyncEnumerator(stream, op);
+})() as <TA, TB>(
+  op: ContainerOperator<ObservableLike, TA, TB>,
+) => (
+  stream: StreamLike<void, TA> & DisposableLike,
+) => StreamLike<void, TB> & DisposableLike;
+
+export default AsyncEnumerator_lift;
