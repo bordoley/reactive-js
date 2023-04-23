@@ -13,15 +13,20 @@
 
 ## Table of contents
 
-### Operator Methods
+### Methods
 
 - [everySatisfy](containers.EverySatisfy.md#everysatisfy)
 
-## Operator Methods
+## Methods
 
 ### everySatisfy
 
-▸ **everySatisfy**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `boolean`\>
+▸ **everySatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
+
+/**
+Determines whether all the members of an Container satisfy the predicate.
+The predicate function is invoked for each element in the Container until the
+it returns false, or until the end of the Container.
 
 #### Type parameters
 
@@ -38,4 +43,4 @@
 
 #### Returns
 
-[`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `boolean`\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>

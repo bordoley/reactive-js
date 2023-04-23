@@ -7,7 +7,7 @@ import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toRea
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
-import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_everySatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_first from "./ReadonlyArray/__internal__/ReadonlyArray.first.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
@@ -19,7 +19,7 @@ import ReadonlyArray_keepWithKey from "./ReadonlyArray/__internal__/ReadonlyArra
 import ReadonlyArray_last from "./ReadonlyArray/__internal__/ReadonlyArray.last.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_mapWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.mapWithKey.js";
-import ReadonlyArray_some from "./ReadonlyArray/__internal__/ReadonlyArray.some.js";
+import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
 import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -27,7 +27,7 @@ import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/Readonly
 export const empty = ReadonlyArray_empty;
 export const entries = ReadonlyArray_entries;
 export const enumerate = ReadonlyArray_enumerate;
-export const every = ReadonlyArray_every;
+export const everySatisfy = ReadonlyArray_everySatisfy;
 export const first = ReadonlyArray_first;
 export const forEach = ReadonlyArray_forEach;
 export const forEachWithKey = ReadonlyArray_forEachWithKey;
@@ -45,7 +45,7 @@ export const keepWithKey = ReadonlyArray_keepWithKey;
 export const last = ReadonlyArray_last;
 export const map = ReadonlyArray_map;
 export const mapWithKey = ReadonlyArray_mapWithKey;
-export const some = ReadonlyArray_some;
+export const someSatisfy = ReadonlyArray_someSatisfy;
 export const toAsyncEnumerable = ReadonlyArray_toAsyncEnumerable;
 export const toEnumerable = ReadonlyArray_toObservable;
 export const toFlowable = ReadonlyArray_toFlowable;

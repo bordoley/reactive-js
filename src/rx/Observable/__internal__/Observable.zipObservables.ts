@@ -24,10 +24,10 @@ import {
   ReadonlyArrayLike,
 } from "../../../containers.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
-import ReadonlyArray_every from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_everySatisfy from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_forEach from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import ReadonlyArray_some from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
+import ReadonlyArray_someSatisfy from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
 import {
   EnumerableLike,
   ObservableLike,
@@ -138,7 +138,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
       (x: EnumeratorLike) =>
         x[EnumeratorLike_hasCurrent] || x[EnumeratorLike_move](),
     ),
-    ReadonlyArray_every(isTrue),
+    ReadonlyArray_everySatisfy(isTrue),
   );
 
   const Enumerator_getCurrent = <T>(enumerator: EnumeratorLike<T>): T =>
@@ -157,7 +157,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
   const shouldComplete = /*@__PURE__*/ (() =>
     compose(
       ReadonlyArray_forEach(Enumerator_move<EnumeratorLike & DisposableLike>()),
-      ReadonlyArray_some(x => x[DisposableLike_isDisposed]),
+      ReadonlyArray_someSatisfy(x => x[DisposableLike_isDisposed]),
     ))();
 
   type TProperties = {
@@ -239,7 +239,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
   };
 
   const allHaveCurrent = (enumerators: readonly EnumeratorLike[]) =>
-    pipe(enumerators, ReadonlyArray_every(Enumerator_hasCurrent));
+    pipe(enumerators, ReadonlyArray_everySatisfy(Enumerator_hasCurrent));
 
   const enumerableOnSubscribe =
     (observables: readonly EnumerableLike[]) =>

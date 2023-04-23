@@ -180,7 +180,7 @@ export interface Contains<C extends ContainerLike, O = unknown> {
      */
     contains: <T>(value: T, options?: O & {
         readonly equality?: Equality<T>;
-    }) => ContainerOperator<C, T, boolean>;
+    }) => Function1<ContainerOf<C, T>, boolean>;
 }
 /**
  * @noInheritDoc
@@ -266,7 +266,7 @@ export interface Enumerate<C extends ContainerLike, CEnumerator extends Enumerat
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Every<C extends ContainerLike, O = never> {
+export interface EverySatisfy<C extends ContainerLike, O = never> {
     /**
      * /**
      * Determines whether all the members of an Container satisfy the predicate.
@@ -275,17 +275,7 @@ export interface Every<C extends ContainerLike, O = never> {
      *
      * @param predicate
      */
-    every<T>(predicate: Predicate<T>, options?: O): Function1<ContainerOf<C, T>, boolean>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface EverySatisfy<C extends ContainerLike, O = never> {
-    /**
-     * @category Operator
-     */
-    everySatisfy<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, boolean>;
+    everySatisfy<T>(predicate: Predicate<T>, options?: O): Function1<ContainerOf<C, T>, boolean>;
 }
 /**
  * @noInheritDoc
@@ -551,7 +541,7 @@ export interface NoneSatisfy<C extends ContainerLike, O = never> {
     /**
      * @category Operator
      */
-    noneSatisfy<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, boolean>;
+    noneSatisfy<T>(predicate: Predicate<T>, options?: O): Function1<ContainerOf<C, T>, boolean>;
 }
 /**
  * @noInheritDoc
@@ -647,25 +637,11 @@ export interface SkipFirst<C extends ContainerLike, O = unknown> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Some<C extends ContainerLike, O = never> {
-    /**
-     * Determines whether the specified predicate returns true for any
-     * element of a Container. The predicate function is invoked for each element
-     * in the Container until it returns true, or until the end of the Container.
-     *
-     * @param predicate
-     */
-    some<T>(predicate: Predicate<T>, options?: O): Function1<ContainerOf<C, T>, boolean>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface SomeSatisfy<C extends ContainerLike, O = never> {
     /**
      * @category Operator
      */
-    someSatisfy<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, boolean>;
+    someSatisfy<T>(predicate: Predicate<T>, options?: O): Function1<ContainerOf<C, T>, boolean>;
 }
 /**
  * @noInheritDoc

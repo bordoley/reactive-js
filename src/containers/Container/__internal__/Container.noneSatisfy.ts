@@ -1,13 +1,13 @@
 import {
   ContainerLike,
-  ContainerOperator,
+  ContainerOf,
   EverySatisfy,
 } from "../../../containers.js";
-import { Predicate, compose, negate } from "../../../functions.js";
+import { Function1, Predicate, compose, negate } from "../../../functions.js";
 
 const Container_noneSatisfy =
   <C extends ContainerLike>(everySatisfy: EverySatisfy<C>["everySatisfy"]) =>
-  <T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean> =>
+  <T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean> =>
     everySatisfy(compose(predicate, negate));
 
 export default Container_noneSatisfy;

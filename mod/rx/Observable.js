@@ -17,7 +17,6 @@ import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatAll from "./Observable/__internal__/Observable.concatAll.js";
 import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
-import Observable_contains from "./Observable/__internal__/Observable.contains.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
@@ -27,7 +26,6 @@ import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
-import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
 import Observable_exhaust from "./Observable/__internal__/Observable.exhaust.js";
 import Observable_exhaustMap from "./Observable/__internal__/Observable.exhaustMap.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
@@ -64,7 +62,6 @@ import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_scanLast from "./Observable/__internal__/Observable.scanLast.js";
 import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
-import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
@@ -104,7 +101,6 @@ export const concat = Observable_concat;
 export const concatAll = Observable_concatAll;
 export const concatMap = Observable_concatMap;
 export const concatWith = Observable_concatWith;
-export const contains = Observable_contains;
 /**
  * @category Constructor
  */
@@ -117,7 +113,6 @@ export const empty = Observable_empty;
 export const encodeUtf8 = Observable_encodeUtf8;
 export const enqueue = Observable_enqueue;
 export const endWith = Observable_endWith;
-export const everySatisfy = Observable_everySatisfy;
 export const exhaust = Observable_exhaust;
 export const exhaustMap = Observable_exhaustMap;
 export const firstAsync = Observable_firstAsync;
@@ -190,7 +185,6 @@ export const scanMany = Observable_scanLast;
  */
 export const share = Observable_share;
 export const skipFirst = Observable_skipFirst;
-export const someSatisfy = Observable_someSatisfy;
 export const startWith = Observable_startWith;
 export const switchAll = Observable_switchAll;
 export const switchMap = Observable_switchMap;

@@ -21,7 +21,7 @@
 
 ### noneSatisfy
 
-▸ **noneSatisfy**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `boolean`\>
+▸ **noneSatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -38,4 +38,4 @@
 
 #### Returns
 
-[`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `boolean`\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>

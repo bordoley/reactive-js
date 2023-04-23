@@ -21,11 +21,11 @@
 
 ### contains
 
-• **contains**: <T\>(`value`: `T`, `options?`: `O` & { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  }) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `boolean`\>
+• **contains**: <T\>(`value`: `T`, `options?`: `O` & { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  }) => [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
 
 #### Type declaration
 
-▸ <`T`\>(`value`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `boolean`\>
+▸ <`T`\>(`value`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
 
 ##### Type parameters
 
@@ -42,4 +42,4 @@
 
 ##### Returns
 
-[`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `boolean`\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>

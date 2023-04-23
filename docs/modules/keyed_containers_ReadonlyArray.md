@@ -23,13 +23,13 @@
 - [keepWithKey](keyed_containers_ReadonlyArray.md#keepwithkey)
 - [map](keyed_containers_ReadonlyArray.md#map)
 - [mapWithKey](keyed_containers_ReadonlyArray.md#mapwithkey)
+- [someSatisfy](keyed_containers_ReadonlyArray.md#somesatisfy)
 
 ### Other Functions
 
-- [every](keyed_containers_ReadonlyArray.md#every)
+- [everySatisfy](keyed_containers_ReadonlyArray.md#everysatisfy)
 - [getLength](keyed_containers_ReadonlyArray.md#getlength)
 - [isEmpty](keyed_containers_ReadonlyArray.md#isempty)
-- [some](keyed_containers_ReadonlyArray.md#some)
 
 ### Transform Functions
 
@@ -409,11 +409,34 @@ TB - The inner type of the mapped container
 
 ___
 
+### someSatisfy
+
+▸ **someSatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
+
+___
+
 ## Other Functions
 
-### every
+### everySatisfy
 
-▸ **every**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
+▸ **everySatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
 
 /**
 Determines whether all the members of an Container satisfy the predicate.
@@ -468,33 +491,6 @@ ___
 #### Returns
 
 `boolean`
-
-___
-
-### some
-
-▸ **some**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
-
-Determines whether the specified predicate returns true for any
-element of a Container. The predicate function is invoked for each element
-in the Container until it returns true, or until the end of the Container.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
 
 ___
 

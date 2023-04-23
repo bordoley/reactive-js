@@ -1,4 +1,4 @@
-import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, Contains, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, EverySatisfy, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
+import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, SideEffect1 } from "../functions.js";
 import { Animate, BackpressureStrategy, CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, MulticastObservableLike, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
@@ -25,7 +25,6 @@ export declare const concat: Concat<ObservableLike>["concat"];
 export declare const concatAll: ConcatAll<ObservableLike>["concatAll"];
 export declare const concatMap: ConcatMap<ObservableLike>["concatMap"];
 export declare const concatWith: ConcatWith<ObservableLike>["concatWith"];
-export declare const contains: Contains<ObservableLike>["contains"];
 /**
  * @category Constructor
  */
@@ -40,7 +39,6 @@ export declare const empty: Empty<ObservableLike, {
 export declare const encodeUtf8: EncodeUtf8<ObservableLike>["encodeUtf8"];
 export declare const enqueue: Enqueue<ObservableLike>["enqueue"];
 export declare const endWith: EndWith<ObservableLike>["endWith"];
-export declare const everySatisfy: EverySatisfy<ObservableLike>["everySatisfy"];
 export declare const exhaust: Exhaust<ObservableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"];
 export declare const firstAsync: FirstAsync<ObservableLike, {
@@ -157,7 +155,6 @@ export declare const share: <T>(schedulerOrFactory: SchedulerLike | Factory<Sche
     readonly capacity?: number | undefined;
 } | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
 export declare const skipFirst: SkipFirst<ObservableLike>["skipFirst"];
-export declare const someSatisfy: SomeSatisfy<ObservableLike>["someSatisfy"];
 export declare const startWith: StartWith<ObservableLike>["startWith"];
 export declare const switchAll: SwitchAll<ObservableLike>["switchAll"];
 export declare const switchMap: SwitchMap<ObservableLike>["switchMap"];

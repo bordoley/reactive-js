@@ -38,13 +38,11 @@
 - [concatAll](rx_Observable.md#concatall)
 - [concatMap](rx_Observable.md#concatmap)
 - [concatWith](rx_Observable.md#concatwith)
-- [contains](rx_Observable.md#contains)
 - [decodeWithCharset](rx_Observable.md#decodewithcharset)
 - [distinctUntilChanged](rx_Observable.md#distinctuntilchanged)
 - [encodeUtf8](rx_Observable.md#encodeutf8)
 - [endWith](rx_Observable.md#endwith)
 - [enqueue](rx_Observable.md#enqueue)
-- [everySatisfy](rx_Observable.md#everysatisfy)
 - [exhaust](rx_Observable.md#exhaust)
 - [exhaustMap](rx_Observable.md#exhaustmap)
 - [flatMapAsync](rx_Observable.md#flatmapasync)
@@ -75,7 +73,6 @@
 - [scanMany](rx_Observable.md#scanmany)
 - [share](rx_Observable.md#share)
 - [skipFirst](rx_Observable.md#skipfirst)
-- [someSatisfy](rx_Observable.md#somesatisfy)
 - [startWith](rx_Observable.md#startwith)
 - [subscribeOn](rx_Observable.md#subscribeon)
 - [switchAll](rx_Observable.md#switchall)
@@ -1387,30 +1384,6 @@ ___
 
 ___
 
-### contains
-
-▸ **contains**<`T`\>(`value`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `options?` | `Object` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
-
-___
-
 ### decodeWithCharset
 
 ▸ **decodeWithCharset**(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
@@ -1513,29 +1486,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
-### everySatisfy
-
-▸ **everySatisfy**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 
@@ -2984,29 +2934,6 @@ Returns a ContainerLike that skips the first count items emitted by the source.
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
-### someSatisfy
-
-▸ **someSatisfy**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 

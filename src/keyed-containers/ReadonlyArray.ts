@@ -1,11 +1,11 @@
 import {
   Enumerate,
-  Every,
+  EverySatisfy,
   First,
   FromIterable,
   FromOptional,
   Last,
-  Some,
+  SomeSatisfy,
   ToIterable,
 } from "../containers.js";
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
@@ -38,7 +38,7 @@ import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
-import ReadonlyArray_every from "./ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_everySatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_first from "./ReadonlyArray/__internal__/ReadonlyArray.first.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
@@ -50,7 +50,7 @@ import ReadonlyArray_keepWithKey from "./ReadonlyArray/__internal__/ReadonlyArra
 import ReadonlyArray_last from "./ReadonlyArray/__internal__/ReadonlyArray.last.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_mapWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.mapWithKey.js";
-import ReadonlyArray_some from "./ReadonlyArray/__internal__/ReadonlyArray.some.js";
+import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
 import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -64,7 +64,8 @@ export const entries: Entries<ReadonlyArrayLike>["entries"] =
 export const enumerate: Enumerate<ReadonlyArrayLike>["enumerate"] =
   ReadonlyArray_enumerate;
 
-export const every: Every<ReadonlyArrayLike>["every"] = ReadonlyArray_every;
+export const everySatisfy: EverySatisfy<ReadonlyArrayLike>["everySatisfy"] =
+  ReadonlyArray_everySatisfy;
 
 export const first: First<ReadonlyArrayLike>["first"] = ReadonlyArray_first;
 
@@ -111,7 +112,8 @@ export const map: Map<ReadonlyArrayLike>["map"] = ReadonlyArray_map;
 export const mapWithKey: MapWithKey<ReadonlyArrayLike>["mapWithKey"] =
   ReadonlyArray_mapWithKey;
 
-export const some: Some<ReadonlyArrayLike>["some"] = ReadonlyArray_some;
+export const someSatisfy: SomeSatisfy<ReadonlyArrayLike>["someSatisfy"] =
+  ReadonlyArray_someSatisfy;
 
 export const toAsyncEnumerable: ToAsyncEnumerable<
   ReadonlyArrayLike,

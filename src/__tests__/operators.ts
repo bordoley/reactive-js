@@ -335,9 +335,7 @@ export const everySatisfyTests = <C extends ContainerLike>(
         [],
         m.fromReadonlyArray(),
         m.everySatisfy(alwaysFalse),
-        m.toRunnable(),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([true]),
+        expectEquals(true),
       ),
     ),
     test(
@@ -346,9 +344,7 @@ export const everySatisfyTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.everySatisfy(alwaysTrue),
-        m.toRunnable(),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([true]),
+        expectEquals(true),
       ),
     ),
     test(
@@ -357,9 +353,7 @@ export const everySatisfyTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.everySatisfy(alwaysFalse),
-        m.toRunnable(),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([false]),
+        expectEquals(false),
       ),
     ),
   );
@@ -1025,14 +1019,7 @@ export const containsTests = <C extends ContainerLike>(
     "contains",
     test(
       "source is empty",
-      pipeLazy(
-        [],
-        m.fromReadonlyArray(),
-        m.contains(1),
-        m.toRunnable(),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([false]),
-      ),
+      pipeLazy([], m.fromReadonlyArray(), m.contains(1), expectEquals(false)),
     ),
     test(
       "source contains value",
@@ -1040,9 +1027,7 @@ export const containsTests = <C extends ContainerLike>(
         [0, 1, 2],
         m.fromReadonlyArray(),
         m.contains(1),
-        m.toRunnable(),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([true]),
+        expectEquals(true),
       ),
     ),
     test(
@@ -1051,9 +1036,7 @@ export const containsTests = <C extends ContainerLike>(
         [2, 3, 4],
         m.fromReadonlyArray(),
         m.contains(1),
-        m.toRunnable(),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([false]),
+        expectEquals(false),
       ),
     ),
   );

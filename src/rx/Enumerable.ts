@@ -35,6 +35,7 @@ import {
   Last,
   Map,
   MapTo,
+  NoneSatisfy,
   Pairwise,
   Pick,
   Reduce,
@@ -75,12 +76,10 @@ import Enumerable_scanLast from "../rx/Enumerable/__internal__/Enumerable.scanLa
 import Observable_buffer from "../rx/Observable/__internal__/Observable.buffer.js";
 import Observable_concat from "../rx/Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "../rx/Observable/__internal__/Observable.concatWith.js";
-import Observable_contains from "../rx/Observable/__internal__/Observable.contains.js";
 import Observable_decodeWithCharset from "../rx/Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "../rx/Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "../rx/Observable/__internal__/Observable.endWith.js";
-import Observable_everySatisfy from "../rx/Observable/__internal__/Observable.everySatisfy.js";
 import Observable_forEach from "../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_forkConcat from "../rx/Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkZip from "../rx/Observable/__internal__/Observable.forkZip.js";
@@ -96,7 +95,6 @@ import Observable_reduce from "../rx/Observable/__internal__/Observable.reduce.j
 import Observable_retry from "../rx/Observable/__internal__/Observable.retry.js";
 import Observable_scan from "../rx/Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "../rx/Observable/__internal__/Observable.skipFirst.js";
-import Observable_someSatisfy from "../rx/Observable/__internal__/Observable.someSatisfy.js";
 import Observable_startWith from "../rx/Observable/__internal__/Observable.startWith.js";
 import Observable_takeFirst from "../rx/Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "../rx/Observable/__internal__/Observable.takeLast.js";
@@ -115,9 +113,13 @@ import Observable_backpressureStrategy from "./Observable/__internal__/Observabl
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
+import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
+import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
+import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
+import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 
 export const backpressureStrategy: BackpressureStrategy<EnumerableLike>["backpressureStrategy"] =
   Observable_backpressureStrategy;
@@ -143,8 +145,7 @@ export const concatMap: ConcatMap<EnumerableLike>["concatMap"] =
 export const concatWith: ConcatWith<EnumerableLike>["concatWith"] =
   Observable_concatWith as ConcatWith<EnumerableLike>["concatWith"];
 
-export const contains: Contains<EnumerableLike>["contains"] =
-  Observable_contains;
+export const contains: Contains<EnumerableLike>["contains"] = Runnable_contains;
 
 export const decodeWithCharset: DecodeWithCharset<EnumerableLike>["decodeWithCharset"] =
   Observable_decodeWithCharset;
@@ -171,7 +172,7 @@ export const enumerate: Enumerate<
 >["enumerate"] = Enumerable_enumerate;
 
 export const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"] =
-  Observable_everySatisfy;
+  Runnable_everySatisfy;
 
 export const first: First<EnumerableLike>["first"] = Runnable_first;
 
@@ -221,6 +222,9 @@ export const map: Map<EnumerableLike>["map"] = Observable_map;
 
 export const mapTo: MapTo<EnumerableLike>["mapTo"] = Observable_mapTo;
 
+export const noneSatisfy: NoneSatisfy<EnumerableLike>["noneSatisfy"] =
+  Runnable_noneSatisfy;
+
 export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
   Observable_pairwise;
 
@@ -241,7 +245,7 @@ export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
   Observable_skipFirst;
 
 export const someSatisfy: SomeSatisfy<EnumerableLike>["someSatisfy"] =
-  Observable_someSatisfy;
+  Runnable_someSatisfy;
 
 export const startWith: StartWith<EnumerableLike>["startWith"] =
   Observable_startWith;

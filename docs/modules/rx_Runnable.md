@@ -38,7 +38,6 @@
 - [encodeUtf8](rx_Runnable.md#encodeutf8)
 - [endWith](rx_Runnable.md#endwith)
 - [enqueue](rx_Runnable.md#enqueue)
-- [everySatisfy](rx_Runnable.md#everysatisfy)
 - [exhaust](rx_Runnable.md#exhaust)
 - [exhaustMap](rx_Runnable.md#exhaustmap)
 - [flatMapIterable](rx_Runnable.md#flatmapiterable)
@@ -56,6 +55,7 @@
 - [mergeAll](rx_Runnable.md#mergeall)
 - [mergeMap](rx_Runnable.md#mergemap)
 - [mergeWith](rx_Runnable.md#mergewith)
+- [noneSatisfy](rx_Runnable.md#nonesatisfy)
 - [pairwise](rx_Runnable.md#pairwise)
 - [pick](rx_Runnable.md#pick)
 - [reduce](rx_Runnable.md#reduce)
@@ -83,6 +83,7 @@
 
 ### Other Functions
 
+- [everySatisfy](rx_Runnable.md#everysatisfy)
 - [run](rx_Runnable.md#run)
 
 ### Transform Functions
@@ -1246,7 +1247,7 @@ ___
 
 ### contains
 
-▸ **contains**<`T`\>(`value`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
+▸ **contains**<`T`\>(`value`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -1264,7 +1265,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
 
 ___
 
@@ -1370,29 +1371,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
-### everySatisfy
-
-▸ **everySatisfy**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
 
 ___
 
@@ -2220,6 +2198,29 @@ ___
 
 ___
 
+### noneSatisfy
+
+▸ **noneSatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
+
+___
+
 ### pairwise
 
 ▸ **pairwise**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
@@ -2543,7 +2544,7 @@ ___
 
 ### someSatisfy
 
-▸ **someSatisfy**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
+▸ **someSatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -2560,7 +2561,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `boolean`\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
 
 ___
 
@@ -3136,6 +3137,34 @@ ___
 ___
 
 ## Other Functions
+
+### everySatisfy
+
+▸ **everySatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
+
+/**
+Determines whether all the members of an Container satisfy the predicate.
+The predicate function is invoked for each element in the Container until the
+it returns false, or until the end of the Container.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `options?` | `undefined` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
+
+___
 
 ### run
 

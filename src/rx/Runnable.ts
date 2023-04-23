@@ -31,6 +31,7 @@ import {
   Last,
   Map,
   MapTo,
+  NoneSatisfy,
   Pairwise,
   Pick,
   Reduce,
@@ -92,14 +93,12 @@ import Observable_combineLatest from "./Observable/__internal__/Observable.combi
 import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
-import Observable_contains from "./Observable/__internal__/Observable.contains.js";
 import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
-import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
@@ -121,7 +120,6 @@ import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
-import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
@@ -140,8 +138,10 @@ import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.z
 import Runnable_catchError from "./Runnable/__internal__/Runnable.catchError.js";
 import Runnable_concatAll from "./Runnable/__internal__/Runnable.concatAll.js";
 import Runnable_concatMap from "./Runnable/__internal__/Runnable.concatMap.js";
+import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
 import Runnable_defer from "./Runnable/__internal__/Runnable.defer.js";
 import Runnable_encodeUtf8 from "./Runnable/__internal__/Runnable.encodeUtf8.js";
+import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
 import Runnable_exhaust from "./Runnable/__internal__/Runnable.exhaust.js";
 import Runnable_exhaustMap from "./Runnable/__internal__/Runnable.exhaustMap.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
@@ -150,9 +150,11 @@ import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fro
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_mergeAll from "./Runnable/__internal__/Runnable.mergeAll.js";
 import Runnable_mergeMap from "./Runnable/__internal__/Runnable.mergeMap.js";
+import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_scanLast from "./Runnable/__internal__/Runnable.scanLast.js";
 import Runnable_scanMany from "./Runnable/__internal__/Runnable.scanMany.js";
+import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
@@ -188,7 +190,7 @@ export const concatMap: ConcatMap<RunnableLike>["concatMap"] =
 export const concatWith: ConcatWith<RunnableLike>["concatWith"] =
   Observable_concatWith as ConcatWith<RunnableLike>["concatWith"];
 
-export const contains: Contains<RunnableLike>["contains"] = Observable_contains;
+export const contains: Contains<RunnableLike>["contains"] = Runnable_contains;
 
 export const currentTime: CurrentTime<RunnableLike>["currentTime"] =
   Observable_currentTime;
@@ -212,7 +214,7 @@ export const enqueue: Enqueue<RunnableLike>["enqueue"] = Observable_enqueue;
 export const endWith: EndWith<RunnableLike>["endWith"] = Observable_endWith;
 
 export const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
-  Observable_everySatisfy;
+  Runnable_everySatisfy;
 
 export const exhaust: Exhaust<RunnableLike>["exhaust"] = Runnable_exhaust;
 
@@ -289,6 +291,9 @@ export const keepType: KeepType<RunnableLike>["keepType"] =
 
 export const last: Last<RunnableLike>["last"] = Runnable_last;
 
+export const noneSatisfy: NoneSatisfy<RunnableLike>["noneSatisfy"] =
+  Runnable_noneSatisfy;
+
 export const map: Map<RunnableLike>["map"] = Observable_map;
 
 export const mapTo: MapTo<RunnableLike>["mapTo"] = Observable_mapTo;
@@ -340,7 +345,7 @@ export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] =
   Observable_skipFirst;
 
 export const someSatisfy: SomeSatisfy<RunnableLike>["someSatisfy"] =
-  Observable_someSatisfy;
+  Runnable_someSatisfy;
 
 export const startWith: StartWith<RunnableLike>["startWith"] =
   Observable_startWith;

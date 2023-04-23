@@ -5,10 +5,10 @@ import { __ZipObserver_enumerators, __ZipObserver_queuedEnumerator, } from "../.
 import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
-import ReadonlyArray_every from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.every.js";
+import ReadonlyArray_everySatisfy from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_forEach from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import ReadonlyArray_some from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.some.js";
+import ReadonlyArray_someSatisfy from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
@@ -57,14 +57,14 @@ const QueuedEnumerator_create = /*@__PURE__*/ (() => {
     }));
 })();
 const Observable_zipObservables = /*@__PURE__*/ (() => {
-    const shouldEmit = compose(ReadonlyArray_map((x) => x[EnumeratorLike_hasCurrent] || x[EnumeratorLike_move]()), ReadonlyArray_every(isTrue));
+    const shouldEmit = compose(ReadonlyArray_map((x) => x[EnumeratorLike_hasCurrent] || x[EnumeratorLike_move]()), ReadonlyArray_everySatisfy(isTrue));
     const Enumerator_getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
     const Enumerator_hasCurrent = (enumerator) => enumerator[EnumeratorLike_hasCurrent];
     const Enumerator_move = () => (enumerator) => {
         enumerator[EnumeratorLike_move]();
         return enumerator[EnumeratorLike_hasCurrent];
     };
-    const shouldComplete = /*@__PURE__*/ (() => compose(ReadonlyArray_forEach(Enumerator_move()), ReadonlyArray_some(x => x[DisposableLike_isDisposed])))();
+    const shouldComplete = /*@__PURE__*/ (() => compose(ReadonlyArray_forEach(Enumerator_move()), ReadonlyArray_someSatisfy(x => x[DisposableLike_isDisposed])))();
     const createZipObserver = createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function ZipObserver(instance, delegate, enumerators, queuedEnumerator) {
         Observer_mixin_initFromDelegate(instance, delegate);
         init(Delegating_mixin(), instance, delegate);
@@ -101,7 +101,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             enumerator[EnumeratorLike_move]();
         }
     };
-    const allHaveCurrent = (enumerators) => pipe(enumerators, ReadonlyArray_every(Enumerator_hasCurrent));
+    const allHaveCurrent = (enumerators) => pipe(enumerators, ReadonlyArray_everySatisfy(Enumerator_hasCurrent));
     const enumerableOnSubscribe = (observables) => (observer) => {
         const enumerators = pipe(observables, ReadonlyArray_map(Enumerable_enumerate()), ReadonlyArray_forEach(Disposable_addTo(observer)));
         const continuation = (scheduler) => {
