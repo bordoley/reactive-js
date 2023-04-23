@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/core",
-  "version": "0.80.0",
+  "version": "0.81.0",
   "type": "module",
   "keywords": [
     "asynchronous",
@@ -83,5 +83,6 @@
     "./util/EventListener": "./util/EventListener.js",
     "./util/EventPublisher": "./util/EventPublisher.js",
     "./util/EventSource": "./util/EventSource.js"
-  }
+  },
+  "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"
 }
