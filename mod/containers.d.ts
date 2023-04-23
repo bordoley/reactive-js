@@ -112,23 +112,6 @@ export interface Buffer<C extends ContainerLike, O = unknown> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface CatchError<C extends ContainerLike, O = never> {
-    /**
-     * Returns a ContainerLike which catches errors produced by the source and either continues with
-     * the ContainerLike returned from the `onError` callback or swallows the error if
-     * void is returned.
-     *
-     * @param onError - A function that takes source error and either returns a ContainerLike
-     * to continue with or void if the error should be propagated.
-     *
-     * @category Operator
-     */
-    catchError<T>(onError: Function1<unknown, ContainerOf<C, T> | void>, options?: O): ContainerOperator<C, T, T>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface Concat<C extends ContainerLike> {
     /**
      * Returns a ContainerLike which emits all values from each source sequentially.
@@ -186,28 +169,6 @@ export interface Contains<C extends ContainerLike, O = unknown> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface DecodeWithCharset<C extends ContainerLike, O = unknown> {
-    /**
-     * @category Operator
-     */
-    decodeWithCharset(options?: O & {
-        charset?: string;
-    }): ContainerOperator<C, ArrayBuffer, string>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface Defer<C extends ContainerLike, O = never> {
-    /**
-     * @category Constructor
-     */
-    defer<T>(factory: Factory<ContainerOf<C, T>>, options?: O): ContainerOf<C, T>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface DistinctUntilChanged<C extends ContainerLike, O = unknown> {
     /**
      * Returns a ContainerOperator that emits all items emitted by the source that
@@ -230,16 +191,6 @@ export interface Empty<C extends ContainerLike, O = never> {
      * @category Constructor
      */
     empty<T>(options?: O): ContainerOf<C, T>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface EncodeUtf8<C extends ContainerLike, O = never> {
-    /**
-     * @category Operator
-     */
-    encodeUtf8(options?: O): ContainerOperator<C, string, Uint8Array>;
 }
 /**
  * @noInheritDoc
@@ -525,18 +476,6 @@ export interface MapTo<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Never<C extends ContainerLike, O = never> {
-    /**
-     * Returns a ContainerLike instance that emits no items and never disposes its state.
-     *
-     * @category Constructor
-     */
-    never<T>(options?: O): ContainerOf<C, T>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface NoneSatisfy<C extends ContainerLike, O = never> {
     /**
      * @category Operator
@@ -698,32 +637,6 @@ export interface TakeWhile<C extends ContainerLike, O = unknown> {
     takeWhile<T>(predicate: Predicate<T>, options?: O & {
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface ThrowIfEmpty<C extends ContainerLike, O = never> {
-    /**
-     * Returns a ContainerLike that emits an error if the source completes without emitting a value.
-     *
-     * @param factory - A factory function invoked to produce the error to be thrown.
-     *
-     * @category Operator
-     */
-    throwIfEmpty<T>(factory: Factory<unknown>, options?: O): ContainerOperator<C, T, T>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface Throws<C extends ContainerLike, O = unknown> {
-    /**
-     * @category Constructor
-     */
-    throws<T>(options?: O & {
-        raise?: Factory<unknown>;
-    }): ContainerOf<C, T>;
 }
 /**
  * @noInheritDoc

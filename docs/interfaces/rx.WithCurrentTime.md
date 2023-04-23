@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ObservableLike`](rx.ObservableLike.md) |
+| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 
 ## Table of contents
 

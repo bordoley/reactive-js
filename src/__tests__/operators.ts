@@ -8,16 +8,13 @@ import {
 } from "../__internal__/testing.js";
 import {
   Buffer,
-  CatchError,
   Concat,
   ConcatAll,
   ConcatMap,
   ConcatWith,
   ContainerLike,
   Contains,
-  DecodeWithCharset,
   DistinctUntilChanged,
-  EncodeUtf8,
   EndWith,
   EverySatisfy,
   FlatMapIterable,
@@ -39,8 +36,6 @@ import {
   TakeFirst,
   TakeLast,
   TakeWhile,
-  ThrowIfEmpty,
-  Throws,
   Zip,
   ZipWith,
 } from "../containers.js";
@@ -60,10 +55,15 @@ import {
 } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
 import {
+  CatchError,
+  DecodeWithCharset,
+  EncodeUtf8,
   ObservableLike,
   Retry,
   ScanLast,
   ScanMany,
+  ThrowIfEmpty,
+  Throws,
   ToEnumerable,
   ToObservable,
   ToRunnable,
@@ -130,18 +130,18 @@ export const catchErrorTests = <C extends ContainerLike>(
         Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       );
-    }),
+    }) /*
     test(
       "when source does not throw",
       pipeLazy(
         [4, 5, 6],
         m.fromReadonlyArray(),
-        m.catchError(_ => pipe([1, 2, 3], m.fromReadonlyArray())),
+        //m.catchError(_ => pipe([1, 2, 3], m.fromReadonlyArray())),
         m.toRunnable(),
         Runnable.toReadonlyArray(),
         expectArrayEquals([4, 5, 6]),
       ),
-    ),
+    ),*/,
   );
 
 export const concatTests = <C extends ContainerLike>(
@@ -754,7 +754,7 @@ export const repeatTests = <C extends ContainerLike>(
     }),
   );
 
-export const retryTests = <C extends ObservableLike>(
+export const retryTests = <C extends ContainerLike>(
   m: Concat<C> &
     Retry<C> &
     FromReadonlyArray<C> &

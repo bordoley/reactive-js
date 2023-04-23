@@ -1,5 +1,5 @@
-import { CatchError } from "../../../containers.js";
 import {
+  CatchError,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,

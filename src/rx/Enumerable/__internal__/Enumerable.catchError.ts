@@ -1,5 +1,4 @@
-import { CatchError } from "../../../containers.js";
-import { EnumerableLike } from "../../../rx.js";
+import { CatchError, EnumerableLike } from "../../../rx.js";
 import HigherOrderObservable_catchError from "../../../rx/HigherOrderObservable/__internal__/HigherOrderObservable.catchError.js";
 import EnumerableObservable_lift from "./Enumerable.lift.js";
 

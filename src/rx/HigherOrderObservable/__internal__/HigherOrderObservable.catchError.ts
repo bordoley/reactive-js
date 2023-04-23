@@ -9,11 +9,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
-import {
-  CatchError,
-  ContainerOf,
-  ContainerOperator,
-} from "../../../containers.js";
+import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import {
   Function1,
   bindMethod,
@@ -23,6 +19,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  CatchError,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,

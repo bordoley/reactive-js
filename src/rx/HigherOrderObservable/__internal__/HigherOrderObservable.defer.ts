@@ -1,6 +1,7 @@
-import { ContainerOf, Defer } from "../../../containers.js";
+import { ContainerOf } from "../../../containers.js";
 import { Factory, SideEffect1 } from "../../../functions.js";
 import {
+  Defer,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,

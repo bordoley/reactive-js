@@ -1,5 +1,5 @@
-import { Buffer, CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike, Contains, DecodeWithCharset, DistinctUntilChanged, EncodeUtf8, EndWith, EverySatisfy, FlatMapIterable, ForEach, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, Map, MapTo, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
-import { ObservableLike, Retry, ScanLast, ScanMany, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
+import { Buffer, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike, Contains, DistinctUntilChanged, EndWith, EverySatisfy, FlatMapIterable, ForEach, FromOptional, FromReadonlyArray, Generate, IgnoreElements, Keep, Map, MapTo, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, Zip, ZipWith } from "../containers.js";
+import { CatchError, DecodeWithCharset, EncodeUtf8, ObservableLike, Retry, ScanLast, ScanMany, ThrowIfEmpty, Throws, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 export declare const bufferTests: <C extends ContainerLike>(m: Buffer<C, unknown> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("../__internal__/testing.js").Describe;
 export declare const catchErrorTests: <C extends ContainerLike>(m: CatchError<C, never> & Throws<C, unknown> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("../__internal__/testing.js").Describe;
 export declare const concatTests: <C extends ContainerLike>(m: Concat<C> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("../__internal__/testing.js").Describe;
@@ -21,7 +21,7 @@ export declare const pairwiseTests: <C extends ContainerLike>(m: Pairwise<C, nev
 export declare const pickTests: <C extends ContainerLike>(m: Pick<C> & FromOptional<C, never> & ToRunnable<C, never>) => import("../__internal__/testing.js").Describe;
 export declare const reduceTests: <C extends ContainerLike>(m: Reduce<C, never> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("../__internal__/testing.js").Describe;
 export declare const repeatTests: <C extends ContainerLike>(m: Repeat<C, never> & FromReadonlyArray<C, unknown> & TakeFirst<C, unknown> & ToRunnable<C, never>) => import("../__internal__/testing.js").Describe;
-export declare const retryTests: <C extends ObservableLike<unknown>>(m: Concat<C> & Retry<C> & FromReadonlyArray<C, unknown> & Throws<C, unknown> & TakeFirst<C, unknown> & ToRunnable<C, never>) => import("../__internal__/testing.js").Describe;
+export declare const retryTests: <C extends ContainerLike>(m: Concat<C> & Retry<C> & FromReadonlyArray<C, unknown> & Throws<C, unknown> & TakeFirst<C, unknown> & ToRunnable<C, never>) => import("../__internal__/testing.js").Describe;
 export declare const scanTests: <C extends ContainerLike>(m: Scan<C, never> & FromReadonlyArray<C, unknown> & ToRunnable<C, never>) => import("../__internal__/testing.js").Describe;
 export declare const scanLastTests: <C extends ContainerLike, CInner extends ObservableLike<unknown>>(m: ScanLast<C, CInner> & FromReadonlyArray<C, {
     readonly start?: number | undefined;

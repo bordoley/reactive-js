@@ -204,7 +204,7 @@ export type AnimationConfig<T = number> =
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Animate<C extends ObservableLike> {
+export interface Animate<C extends ContainerLike> {
   /**
    * @category Constructor
    */
@@ -217,7 +217,7 @@ export interface Animate<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface BackpressureStrategy<C extends ObservableLike> {
+export interface BackpressureStrategy<C extends ContainerLike> {
   /**
    * @category Operator
    */
@@ -231,7 +231,28 @@ export interface BackpressureStrategy<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface CombineLatest<C extends ObservableLike> {
+export interface CatchError<C extends ContainerLike, O = never> {
+  /**
+   * Returns a ContainerLike which catches errors produced by the source and either continues with
+   * the ContainerLike returned from the `onError` callback or swallows the error if
+   * void is returned.
+   *
+   * @param onError - A function that takes source error and either returns a ContainerLike
+   * to continue with or void if the error should be propagated.
+   *
+   * @category Operator
+   */
+  catchError<T>(
+    onError: Function1<unknown, ContainerOf<C, T> | void>,
+    options?: O,
+  ): ContainerOperator<C, T, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface CombineLatest<C extends ContainerLike> {
   /**
    * @category Constructor
    */
@@ -301,7 +322,7 @@ export interface CombineLatest<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface CurrentTime<C extends ObservableLike> {
+export interface CurrentTime<C extends ContainerLike> {
   /**
    * @category Constructor
    */
@@ -315,7 +336,44 @@ export interface CurrentTime<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Enqueue<C extends ObservableLike, O = never> {
+export interface DecodeWithCharset<C extends ContainerLike, O = unknown> {
+  /**
+   * @category Operator
+   */
+  decodeWithCharset(
+    options?: O & {
+      charset?: string;
+    },
+  ): ContainerOperator<C, ArrayBuffer, string>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Defer<C extends ContainerLike, O = never> {
+  /**
+   * @category Constructor
+   */
+  defer<T>(factory: Factory<ContainerOf<C, T>>, options?: O): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface EncodeUtf8<C extends ContainerLike, O = never> {
+  /**
+   * @category Operator
+   */
+  encodeUtf8(options?: O): ContainerOperator<C, string, Uint8Array>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Enqueue<C extends ContainerLike, O = never> {
   /**
    *
    * @category Operator
@@ -330,7 +388,7 @@ export interface Enqueue<C extends ObservableLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Exhaust<C extends ObservableLike, O = never> {
+export interface Exhaust<C extends ContainerLike, O = never> {
   /**
    *
    * @category Operator
@@ -342,7 +400,7 @@ export interface Exhaust<C extends ObservableLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ExhaustMap<C extends ObservableLike, O = never> {
+export interface ExhaustMap<C extends ContainerLike, O = never> {
   /**
    * @category Operator
    */
@@ -356,7 +414,7 @@ export interface ExhaustMap<C extends ObservableLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForkCombineLatest<C extends ObservableLike> {
+export interface ForkCombineLatest<C extends ContainerLike> {
   /**
    * @category Operator
    */
@@ -426,7 +484,7 @@ export interface ForkCombineLatest<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForkMerge<C extends ObservableLike> {
+export interface ForkMerge<C extends ContainerLike> {
   /**
    * @category Operator
    */
@@ -441,7 +499,7 @@ export interface ForkMerge<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForkZipLatest<C extends ObservableLike> {
+export interface ForkZipLatest<C extends ContainerLike> {
   /**
    * @category Operator
    */
@@ -556,7 +614,7 @@ export interface GenerateLast<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Merge<C extends ObservableLike> {
+export interface Merge<C extends ContainerLike> {
   /**
    *
    * @category Constructor
@@ -572,7 +630,7 @@ export interface Merge<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface MergeAll<C extends ObservableLike, O = never> {
+export interface MergeAll<C extends ContainerLike, O = never> {
   /**
    *
    * @category Operator
@@ -584,7 +642,7 @@ export interface MergeAll<C extends ObservableLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface MergeMap<C extends ObservableLike, O = never> {
+export interface MergeMap<C extends ContainerLike, O = never> {
   /**
    * @category Operator
    */
@@ -598,7 +656,7 @@ export interface MergeMap<C extends ObservableLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface MergeWith<C extends ObservableLike> {
+export interface MergeWith<C extends ContainerLike> {
   /**
    * @category Operator
    */
@@ -612,7 +670,20 @@ export interface MergeWith<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Retry<C extends ObservableLike> {
+export interface Never<C extends ContainerLike, O = never> {
+  /**
+   * Returns a ContainerLike instance that emits no items and never disposes its state.
+   *
+   * @category Constructor
+   */
+  never<T>(options?: O): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Retry<C extends ContainerLike> {
   /**
    * Returns an `ObservableLike` that mirrors the source, re-subscribing
    * if the source completes with an error.
@@ -672,7 +743,7 @@ export interface ScanMany<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface SwitchAll<C extends ObservableLike, O = never> {
+export interface SwitchAll<C extends ContainerLike, O = never> {
   /**
    *
    * @category Operator
@@ -684,7 +755,7 @@ export interface SwitchAll<C extends ObservableLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface SwitchMap<C extends ObservableLike, O = never> {
+export interface SwitchMap<C extends ContainerLike, O = never> {
   /**
    * @category Operator
    */
@@ -698,7 +769,7 @@ export interface SwitchMap<C extends ObservableLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface TakeUntil<C extends ObservableLike> {
+export interface TakeUntil<C extends ContainerLike> {
   /**
    * @category Operator
    */
@@ -709,7 +780,7 @@ export interface TakeUntil<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Throttle<C extends ObservableLike> {
+export interface Throttle<C extends ContainerLike> {
   /**
    * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
    *
@@ -743,7 +814,40 @@ export interface Throttle<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Timeout<C extends ObservableLike> {
+export interface ThrowIfEmpty<C extends ContainerLike, O = never> {
+  /**
+   * Returns a ContainerLike that emits an error if the source completes without emitting a value.
+   *
+   * @param factory - A factory function invoked to produce the error to be thrown.
+   *
+   * @category Operator
+   */
+  throwIfEmpty<T>(
+    factory: Factory<unknown>,
+    options?: O,
+  ): ContainerOperator<C, T, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Throws<C extends ContainerLike, O = unknown> {
+  /**
+   * @category Constructor
+   */
+  throws<T>(
+    options?: O & {
+      raise?: Factory<unknown>;
+    },
+  ): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Timeout<C extends ContainerLike> {
   /**
    * Returns an `ObservableLike` that completes with an error if the source
    * does not emit a value in given time span.
@@ -802,7 +906,7 @@ export interface ToRunnable<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface WithCurrentTime<C extends ObservableLike> {
+export interface WithCurrentTime<C extends ContainerLike> {
   /**
    * @category Operator
    */
@@ -815,7 +919,7 @@ export interface WithCurrentTime<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface WithLatestFrom<C extends ObservableLike> {
+export interface WithLatestFrom<C extends ContainerLike> {
   /**
    * @category Operator
    */
@@ -829,7 +933,7 @@ export interface WithLatestFrom<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ZipLatest<C extends ObservableLike> {
+export interface ZipLatest<C extends ContainerLike> {
   /**
    * Returns a container that zips the latest values from
    * multiple sources.
@@ -902,7 +1006,7 @@ export interface ZipLatest<C extends ObservableLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ZipWithLatestFrom<C extends ObservableLike> {
+export interface ZipWithLatestFrom<C extends ContainerLike> {
   /**
    * @category Operator
    */
