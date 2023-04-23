@@ -303,16 +303,6 @@ export interface GenerateLast<C extends ContainerLike, CInner extends Observable
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Lift<C extends ObservableLike> {
-    /**
-     * @category Operator
-     */
-    lift<TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>): ContainerOperator<C, TA, TB>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface Merge<C extends ObservableLike> {
     /**
      *

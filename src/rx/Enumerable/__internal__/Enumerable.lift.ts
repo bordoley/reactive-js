@@ -1,6 +1,6 @@
+import { Lift } from "../../../__internal__/rx.js";
 import {
   EnumerableLike,
-  Lift,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
 } from "../../../rx.js";

@@ -39,7 +39,6 @@
 - [FromEnumerable](../interfaces/rx.FromEnumerable.md)
 - [FromRunnable](../interfaces/rx.FromRunnable.md)
 - [GenerateLast](../interfaces/rx.GenerateLast.md)
-- [Lift](../interfaces/rx.Lift.md)
 - [Merge](../interfaces/rx.Merge.md)
 - [MergeAll](../interfaces/rx.MergeAll.md)
 - [MergeMap](../interfaces/rx.MergeMap.md)
