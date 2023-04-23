@@ -77,7 +77,6 @@ const createFilterMapFusionPerfTest = <C extends ContainerLike>(
       m.keep(isEven),
       m.toRunnable(),
       Runnable.reduce(sum, returns(0)),
-      Runnable.first(),
     ),
   );
 
@@ -112,7 +111,6 @@ const createFilterMapReducePerfTest = <C extends ContainerLike>(
       m.map(increment),
       m.toRunnable(),
       Runnable.reduce(sum, returns(0)),
-      Runnable.first(),
     ),
   );
 
@@ -151,7 +149,6 @@ const createScanReducePerfTest = <C extends ContainerLike>(
       m.scan(sum, returns(0)),
       m.toRunnable(),
       Runnable.reduce<number, number>(passthrough, returns(0)),
-      Runnable.first(),
     ),
   );
 
@@ -180,13 +177,12 @@ export const every = (n: number) =>
         src,
         Runnable.fromReadonlyArray(),
         Runnable.everySatisfy(i => i < 0),
-        Runnable.first(),
       ),
     ),
     benchmarkTest("readonlyArray", async src =>
       pipeLazy(
         src,
-        ReadonlyArray.every(i => i < 0),
+        ReadonlyArray.everySatisfy(i => i < 0),
       ),
     ),
     benchmarkTest("array methods", async src => () => src.every(i => i < 0)),
