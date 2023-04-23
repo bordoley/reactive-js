@@ -65,7 +65,6 @@
 - [onSubscribe](rx_Observable.md#onsubscribe)
 - [pairwise](rx_Observable.md#pairwise)
 - [pick](rx_Observable.md#pick)
-- [reduce](rx_Observable.md#reduce)
 - [repeat](rx_Observable.md#repeat)
 - [retry](rx_Observable.md#retry)
 - [scan](rx_Observable.md#scan)
@@ -2672,31 +2671,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
-
-___
-
-### reduce
-
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 

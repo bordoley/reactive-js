@@ -21,7 +21,7 @@
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -40,4 +40,4 @@
 
 #### Returns
 
-[`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `TAcc`\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `TAcc`\>

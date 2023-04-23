@@ -1,4 +1,4 @@
-import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
+import { CatchError, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, Empty, EncodeUtf8, EndWith, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Never, Pairwise, Pick, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Throws, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, SideEffect1 } from "../functions.js";
 import { Animate, BackpressureStrategy, CombineLatest, CurrentTime, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, MulticastObservableLike, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
@@ -132,7 +132,6 @@ export declare const never: Never<ObservableLike>["never"];
 export declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<ObservableLike, T, T>;
 export declare const pairwise: Pairwise<ObservableLike>["pairwise"];
 export declare const pick: Pick<ObservableLike>["pick"];
-export declare const reduce: Reduce<ObservableLike>["reduce"];
 export declare const repeat: Repeat<ObservableLike>["repeat"];
 export declare const retry: Retry<ObservableLike>["retry"];
 export declare const scan: Scan<ObservableLike>["scan"];

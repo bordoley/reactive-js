@@ -667,7 +667,7 @@ testModule(
   mergeTests,
   pairwiseTests(Runnable),
   pickTests(Runnable),
-  reduceTests(Runnable),
+  reduceTests<RunnableLike>(Runnable),
   retryTests<RunnableLike>(Runnable),
   runTests,
   scanTests(Runnable),

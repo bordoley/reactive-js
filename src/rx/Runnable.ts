@@ -115,7 +115,6 @@ import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeWith from "./Observable/__internal__/Observable.mergeWith.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
-import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
@@ -151,6 +150,7 @@ import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_mergeAll from "./Runnable/__internal__/Runnable.mergeAll.js";
 import Runnable_mergeMap from "./Runnable/__internal__/Runnable.mergeMap.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
+import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_scanLast from "./Runnable/__internal__/Runnable.scanLast.js";
 import Runnable_scanMany from "./Runnable/__internal__/Runnable.scanMany.js";
@@ -325,7 +325,7 @@ export const pairwise: Pairwise<RunnableLike>["pairwise"] = Observable_pairwise;
 
 export const pick: Pick<RunnableLike>["pick"] = Observable_pick;
 
-export const reduce: Reduce<RunnableLike>["reduce"] = Observable_reduce;
+export const reduce: Reduce<RunnableLike>["reduce"] = Runnable_reduce;
 
 export const repeat: Repeat<RunnableLike>["repeat"] = Observable_repeat;
 

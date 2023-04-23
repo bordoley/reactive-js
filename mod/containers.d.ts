@@ -573,7 +573,7 @@ export interface Reduce<C extends ContainerLike, O = never> {
     /**
      * @category Operator
      */
-    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: O): ContainerOperator<C, T, TAcc>;
+    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: O): Function1<ContainerOf<C, T>, TAcc>;
 }
 /**
  * @noInheritDoc

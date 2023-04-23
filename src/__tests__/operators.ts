@@ -692,9 +692,7 @@ export const reduceTests = <C extends ContainerLike>(
         [1, 2, 3],
         m.fromReadonlyArray(),
         m.reduce<number, number>((acc, next) => acc + next, returns(0)),
-        m.toRunnable(),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([6]),
+        expectEquals(6),
       ),
     ),
   );

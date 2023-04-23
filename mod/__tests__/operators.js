@@ -121,7 +121,7 @@ export const pickTests = (m) => describe("pick", test("with object and symbol ke
     const obj = [1, 2, 3, 4, 5, 6];
     pipe(obj, m.fromOptional(), m.pick(3), m.toRunnable(), Runnable.first(), expectEquals(4));
 }));
-export const reduceTests = (m) => describe("reduce", test("summing all values", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.reduce((acc, next) => acc + next, returns(0)), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([6]))));
+export const reduceTests = (m) => describe("reduce", test("summing all values", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.reduce((acc, next) => acc + next, returns(0)), expectEquals(6))));
 export const repeatTests = (m) => describe("repeat", test("when always repeating", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(), m.takeFirst({ count: 6 }), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when repeating a finite amount of times.", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(3), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.repeat(lessThan(1)), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the repeat function throws", () => {
     const err = new Error();
     pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.repeat(_ => {

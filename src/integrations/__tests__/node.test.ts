@@ -125,11 +125,10 @@ testModule(
       const acc = await pipe(
         createReadableSource(() => pipe(generate(), Readable.from)),
         Flowable.toObservable(),
-        Observable.reduce<Uint8Array, string>(
+        Observable.scan<Uint8Array, string>(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
         ),
-        Observable.takeFirst<string>({ count: 1 }),
         Observable.lastAsync(),
       );
       pipe(acc, expectEquals<Optional<string>>("abcdefg"));
@@ -146,7 +145,7 @@ testModule(
       await pipe(
         createReadableSource(() => pipe(generate(), Readable.from)),
         Flowable.toObservable(),
-        Observable.reduce<Uint8Array, string>(
+        Observable.scan<Uint8Array, string>(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
         ),
@@ -166,7 +165,7 @@ testModule(
       gzip(),
       gunzip(),
       Flowable.toObservable(),
-      Observable.reduce<Uint8Array, string>(
+      Observable.scan<Uint8Array, string>(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),
       ),

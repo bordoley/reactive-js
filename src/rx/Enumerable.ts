@@ -91,7 +91,6 @@ import Observable_keepType from "../rx/Observable/__internal__/Observable.keepTy
 import Observable_map from "../rx/Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "../rx/Observable/__internal__/Observable.mapTo.js";
 import Observable_pairwise from "../rx/Observable/__internal__/Observable.pairwise.js";
-import Observable_reduce from "../rx/Observable/__internal__/Observable.reduce.js";
 import Observable_retry from "../rx/Observable/__internal__/Observable.retry.js";
 import Observable_scan from "../rx/Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "../rx/Observable/__internal__/Observable.skipFirst.js";
@@ -119,6 +118,7 @@ import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
+import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 
 export const backpressureStrategy: BackpressureStrategy<EnumerableLike>["backpressureStrategy"] =
@@ -230,7 +230,7 @@ export const pairwise: Pairwise<EnumerableLike>["pairwise"] =
 
 export const pick: Pick<EnumerableLike>["pick"] = Observable_pick;
 
-export const reduce: Reduce<EnumerableLike>["reduce"] = Observable_reduce;
+export const reduce: Reduce<EnumerableLike>["reduce"] = Runnable_reduce;
 
 export const repeat: Repeat<EnumerableLike>["repeat"] = Observable_repeat;
 
