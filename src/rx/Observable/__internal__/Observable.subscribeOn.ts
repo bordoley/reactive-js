@@ -1,8 +1,9 @@
 import { Factory, bindMethod, isFunction, pipe } from "../../../functions.js";
-import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
+import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
+  DispatcherLike_complete,
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

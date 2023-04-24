@@ -22,8 +22,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  DispatcherLike,
-  DispatcherLike_complete,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -31,7 +29,6 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
-import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import {
@@ -42,12 +39,15 @@ import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import {
   BufferLike_capacity,
   CollectionLike_count,
+  DispatcherLike,
+  DispatcherLike_complete,
   DisposableLike,
   DisposableLike_isDisposed,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
+import Dispatcher_delegatingMixin from "../../../util/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 interface DispatchedObservableLike<T>

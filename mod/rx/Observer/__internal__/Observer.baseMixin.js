@@ -4,9 +4,9 @@ import { getPrototype, include, init, mix, props, } from "../../../__internal__/
 import { __ObserverMixin_dispatchSubscription, __ObserverMixin_isCompleted, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { call, pipe, returns, unsafeCast } from "../../../functions.js";
-import { DispatcherLike_complete, ObserverLike_notify, } from "../../../rx.js";
+import { ObserverLike_notify } from "../../../rx.js";
 import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
+import { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";

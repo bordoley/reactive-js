@@ -2,9 +2,9 @@ import { __FlowableStreamLike_isPaused as FlowableStreamLike_isPaused, __Flowabl
 import { ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
-import { DispatcherLike, MulticastObservableLike, ObservableLike } from "./rx.js";
+import { MulticastObservableLike, ObservableLike } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
-import { DisposableLike, KeyedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
+import { DispatcherLike, DisposableLike, KeyedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
 export { FlowableStreamLike_isPaused, FlowableStreamLike_pause, FlowableStreamLike_resume, StreamLike_scheduler, StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, };
 /**
  * Represents a duplex stream

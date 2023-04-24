@@ -1,14 +1,13 @@
 /// <reference types="./Streamable.sinkInto.d.ts" />
 
 import { bindMethod, pipe, returns } from "../../../functions.js";
-import { DispatcherLike_complete } from "../../../rx.js";
 import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.enqueue.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
 import { StreamLike_scheduler, StreamableLike_stream, } from "../../../streaming.js";
-import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
+import { BufferLike_capacity, DispatcherLike_complete, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 const Streamable_sinkInto = (dest) => (src) => {
     const capacity = dest[BufferLike_capacity];

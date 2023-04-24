@@ -33,7 +33,6 @@ import { ReadonlyObjectMapLike } from "../keyed-containers.js";
 import * as ReadonlyObjectMap from "../keyed-containers/ReadonlyObjectMap.js";
 import {
   AnimationConfig,
-  DispatcherLike,
   EnumerableLike,
   ObservableLike,
   PublisherLike,
@@ -50,6 +49,7 @@ import {
 } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
+  DispatcherLike,
   DisposableLike,
   DisposableLike_dispose,
   EventListenerLike_notify,

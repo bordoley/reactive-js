@@ -22,11 +22,7 @@ import {
   pipe,
   pipeLazy,
 } from "../functions.js";
-import {
-  DispatcherLike_complete,
-  ObservableLike,
-  ObservableLike_observe,
-} from "../rx.js";
+import { ObservableLike, ObservableLike_observe } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import {
   FlowableLike,
@@ -37,6 +33,7 @@ import * as Flowable from "../streaming/Flowable.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
   BufferLike_capacity,
+  DispatcherLike_complete,
   DisposableLike,
   DisposableLike_dispose,
   QueueableLike_backpressureStrategy,

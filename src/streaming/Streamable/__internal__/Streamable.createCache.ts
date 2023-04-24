@@ -28,7 +28,7 @@ import {
 import { ReadonlyObjectMapLike } from "../../../keyed-containers.js";
 import * as ReadonlyObjectMap from "../../../keyed-containers/ReadonlyObjectMap.js";
 import ReadonlyObjectMap_union from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.union.js";
-import { DispatcherLike, ObservableLike, PublisherLike } from "../../../rx.js";
+import { ObservableLike, PublisherLike } from "../../../rx.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
 import {
@@ -47,6 +47,7 @@ import {
 import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import {
   CollectionLike_count,
+  DispatcherLike,
   DisposableLike,
   DisposableLike_isDisposed,
   EventListenerLike_notify,

@@ -1,6 +1,7 @@
 import { error } from "../../../functions.js";
-import { DispatcherLike_complete, ObserverLike } from "../../../rx.js";
+import { ObserverLike } from "../../../rx.js";
 import {
+  DispatcherLike_complete,
   DisposableLike_dispose,
   QueueableLike_enqueue,
 } from "../../../util.js";

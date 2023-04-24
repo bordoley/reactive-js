@@ -7,8 +7,8 @@ import {
 } from "../../../__internal__/mixins.js";
 import { __DelegatingDispatcherMixin_delegate } from "../../../__internal__/symbols.js";
 import { none, returns } from "../../../functions.js";
-import { DispatcherLike, DispatcherLike_complete } from "../../../rx.js";
-import Queueable_delegatingMixin from "../../../util/Queue/__internal__/Queueable.delegatingMixin.js";
+import { DispatcherLike, DispatcherLike_complete } from "../../../util.js";
+import Queueable_delegatingMixin from "../../Queue/__internal__/Queueable.delegatingMixin.js";
 
 const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
   DispatcherLike<TReq>,

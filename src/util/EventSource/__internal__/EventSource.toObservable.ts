@@ -1,7 +1,8 @@
 import { bindMethod, pipe } from "../../../functions.js";
-import { DispatcherLike_complete, ToObservable } from "../../../rx.js";
+import { ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import {
+  DispatcherLike_complete,
   EventSourceLike,
   EventSourceLike_addListener,
   QueueableLike_enqueue,

@@ -21,7 +21,6 @@
 
 ### Other Interfaces
 
-- [DispatcherLike](../interfaces/rx.DispatcherLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 
 ### TypeClass Interfaces

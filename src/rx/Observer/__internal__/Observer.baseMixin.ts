@@ -15,11 +15,7 @@ import {
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
 import { call, pipe, returns, unsafeCast } from "../../../functions.js";
-import {
-  DispatcherLike_complete,
-  ObserverLike,
-  ObserverLike_notify,
-} from "../../../rx.js";
+import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import {
   SchedulerLike,
   SchedulerLike_schedule,
@@ -28,6 +24,7 @@ import {
 import {
   BufferLike_capacity,
   CollectionLike_count,
+  DispatcherLike_complete,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,

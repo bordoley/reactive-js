@@ -1,8 +1,7 @@
 /// <reference types="./Promiseable.toObservable.d.ts" />
 
-import { DispatcherLike_complete, } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
-import { DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
+import { DispatcherLike_complete, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_toErrorHandler from "../../../util/Disposable/__internal__/Disposable.toErrorHandler.js";
 const Promiseable_toObservable = () => (promise) => Observable_create(observer => {
     promise.then(next => {

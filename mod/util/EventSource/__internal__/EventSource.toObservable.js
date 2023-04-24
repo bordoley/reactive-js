@@ -1,9 +1,8 @@
 /// <reference types="./EventSource.toObservable.d.ts" />
 
 import { bindMethod, pipe } from "../../../functions.js";
-import { DispatcherLike_complete } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
-import { EventSourceLike_addListener, QueueableLike_enqueue, } from "../../../util.js";
+import { DispatcherLike_complete, EventSourceLike_addListener, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import EventListener_create from "../../EventListener/__internal__/EventListener.create.js";

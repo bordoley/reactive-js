@@ -16,13 +16,10 @@ import {
 } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
-import {
-  DispatcherLike,
-  MulticastObservableLike,
-  ObservableLike,
-} from "./rx.js";
+import { MulticastObservableLike, ObservableLike } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
+  DispatcherLike,
   DisposableLike,
   KeyedCollectionLike,
   QueueableLike,

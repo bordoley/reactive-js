@@ -1,6 +1,6 @@
 import { AsyncIterableLike } from "../../../containers.js";
 import { bindMethod, pipe, returns } from "../../../functions.js";
-import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
+import { ObservableLike } from "../../../rx.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
@@ -13,7 +13,10 @@ import {
   ToAsyncEnumerable,
 } from "../../../streaming.js";
 import Streamable_createWithConfig from "../../../streaming/Streamable/__internal__/Streamable.createWithConfig.js";
-import { QueueableLike_enqueue } from "../../../util.js";
+import {
+  DispatcherLike_complete,
+  QueueableLike_enqueue,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Promiseable_toObservable from "../../Promiseable/__internal__/Promiseable.toObservable.js";

@@ -1,11 +1,8 @@
 import { PromiseableLike } from "../../../containers.js";
-import {
-  DispatcherLike_complete,
-  ObservableLike,
-  ToObservable,
-} from "../../../rx.js";
+import { ObservableLike, ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import {
+  DispatcherLike_complete,
   DisposableLike_isDisposed,
   QueueableLike_enqueue,
 } from "../../../util.js";

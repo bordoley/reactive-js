@@ -1,5 +1,5 @@
 import { bindMethod, pipe, returns } from "../../../functions.js";
-import { DispatcherLike_complete, ObservableLike } from "../../../rx.js";
+import { ObservableLike } from "../../../rx.js";
 import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.enqueue.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
@@ -13,6 +13,7 @@ import {
 } from "../../../streaming.js";
 import {
   BufferLike_capacity,
+  DispatcherLike_complete,
   DisposableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";

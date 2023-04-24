@@ -14,7 +14,7 @@ A consumer of push-based notifications.
 
 ## Hierarchy
 
-- [`DispatcherLike`](rx.DispatcherLike.md)<`T`\>
+- [`DispatcherLike`](util.DispatcherLike.md)<`T`\>
 
 - [`DisposableLike`](util.DisposableLike.md)
 

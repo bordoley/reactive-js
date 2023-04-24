@@ -1,5 +1,4 @@
 import {
-  __DispatcherLike_complete as DispatcherLike_complete,
   __ObservableLike_isEnumerable as ObservableLike_isEnumerable,
   __ObservableLike_isRunnable as ObservableLike_isRunnable,
   __ObservableLike_observe as ObservableLike_observe,
@@ -16,6 +15,7 @@ import {
 import { Factory, Function1, Function2 } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
+  DispatcherLike,
   DisposableLike,
   ErrorSafeEventListenerLike,
   QueueableLike,
@@ -24,26 +24,12 @@ import {
 } from "./util.js";
 
 export {
-  DispatcherLike_complete,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike_notify,
   PublisherLike_observerCount,
 };
-
-/**
- * A `QueueableLike` type that consumes enqueued events to
- * be dispatched from any execution context.
- *
- * @noInheritDoc
- */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
-  /**
-   * Communicates to the dispatcher that no more events will be enqueued.
-   */
-  [DispatcherLike_complete](): void;
-}
 
 /**
  * A consumer of push-based notifications.

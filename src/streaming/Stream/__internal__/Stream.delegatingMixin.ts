@@ -6,11 +6,11 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { none, returns } from "../../../functions.js";
-import Dispatcher_delegatingMixin from "../../../rx/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import { DisposableLike } from "../../../util.js";
+import Dispatcher_delegatingMixin from "../../../util/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 
 const Stream_delegatingMixin: <TReq, T>() => Mixin1<

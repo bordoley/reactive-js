@@ -23,7 +23,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  DispatcherLike_complete,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -33,6 +32,7 @@ import {
 } from "../../../rx.js";
 import {
   CollectionLike_count,
+  DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EventListenerLike_isErrorSafe,

@@ -1,6 +1,7 @@
 import {
   __BufferLike_capacity as BufferLike_capacity,
   __CollectionLike_count as CollectionLike_count,
+  __DispatcherLike_complete as DispatcherLike_complete,
   __DisposableLike_add as DisposableLike_add,
   __DisposableLike_dispose as DisposableLike_dispose,
   __DisposableLike_error as DisposableLike_error,
@@ -24,6 +25,7 @@ import { Optional, SideEffect1 } from "./functions.js";
 export {
   BufferLike_capacity,
   CollectionLike_count,
+  DispatcherLike_complete,
   DisposableLike_add,
   DisposableLike_dispose,
   DisposableLike_error,
@@ -178,4 +180,17 @@ export interface EventPublisherLike<T = unknown>
   extends EventSourceLike<T>,
     ErrorSafeEventListenerLike<T> {
   readonly [EventPublisherLike_listenerCount]: number;
+}
+
+/**
+ * A `QueueableLike` type that consumes enqueued events to
+ * be dispatched from any execution constext.
+ *
+ * @noInheritDoc
+ */
+export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
+  /**
+   * Communicates to the dispatcher that no more events will be enqueued.
+   */
+  [DispatcherLike_complete](): void;
 }

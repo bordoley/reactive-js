@@ -8,6 +8,7 @@
 
 - [BufferLike](../interfaces/util.BufferLike.md)
 - [CollectionLike](../interfaces/util.CollectionLike.md)
+- [DispatcherLike](../interfaces/util.DispatcherLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
 - [ErrorSafeEventListenerLike](../interfaces/util.ErrorSafeEventListenerLike.md)
 - [EventListenerLike](../interfaces/util.EventListenerLike.md)

@@ -1,8 +1,7 @@
 /// <reference types="./Observable.subscribeOn.d.ts" />
 
 import { bindMethod, isFunction, pipe } from "../../../functions.js";
-import { DispatcherLike_complete } from "../../../rx.js";
-import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../../util.js";
+import { BufferLike_capacity, DispatcherLike_complete, QueueableLike_backpressureStrategy, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "./Observable.create.js";
