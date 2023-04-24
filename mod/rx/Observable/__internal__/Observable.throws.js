@@ -1,7 +1,9 @@
 /// <reference types="./Observable.throws.d.ts" />
 
-import Container_throws from "../../../containers/Container/__internal__/Container.throws.js";
+import { error, raise } from "../../../functions.js";
 import Observable_fromFactory from "./Observable.fromFactory.js";
-const Observable_throws = 
-/*@__PURE__*/ Container_throws(Observable_fromFactory);
+const Observable_throws = ((options) => {
+    const { raise: factory = raise } = options ?? {};
+    return Observable_fromFactory(() => raise(error(factory())), options);
+});
 export default Observable_throws;
