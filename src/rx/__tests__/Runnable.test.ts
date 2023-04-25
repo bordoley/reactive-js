@@ -446,7 +446,10 @@ const withLatestFromTest = describe(
     pipeLazy(
       [0],
       ReadonlyArray.toRunnable({ delay: 1 }),
-      Runnable.withLatestFrom(Runnable.empty<number>(), (a, b) => a + b),
+      Runnable.withLatestFrom(
+        Runnable.empty<number>(),
+        (a, b: number) => a + b,
+      ),
       Runnable.toReadonlyArray(),
       expectArrayEquals([] as number[]),
     ),

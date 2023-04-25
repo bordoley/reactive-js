@@ -51,7 +51,6 @@ import Container_identity from "../containers/Container/__internal__/Container.i
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { Factory } from "../functions.js";
 import {
   BackpressureStrategy,
   CatchError,
@@ -106,13 +105,8 @@ import Observable_throws from "../rx/Observable/__internal__/Observable.throws.j
 import Observable_zip from "../rx/Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith.js";
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
-import { SchedulerLike } from "../scheduling.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
-import {
-  DisposableLike,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-} from "../util.js";
+import { DisposableLike } from "../util.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
@@ -186,14 +180,8 @@ export const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"] =
 
 export const first: First<EnumerableLike>["first"] = Runnable_first;
 
-export const firstAsync: FirstAsync<
-  EnumerableLike,
-  {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-  }
->["firstAsync"] = Observable_firstAsync;
+export const firstAsync: FirstAsync<EnumerableLike>["firstAsync"] =
+  Observable_firstAsync;
 
 export const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"] =
   Enumerable_flatMapIterable;
@@ -237,14 +225,8 @@ export const keepType: KeepType<EnumerableLike>["keepType"] =
 
 export const last: Last<EnumerableLike>["last"] = Runnable_last;
 
-export const lastAsync: LastAsync<
-  EnumerableLike,
-  {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-  }
->["lastAsync"] = Observable_lastAsync;
+export const lastAsync: LastAsync<EnumerableLike>["lastAsync"] =
+  Observable_lastAsync;
 
 export const map: Map<EnumerableLike>["map"] = Observable_map;
 

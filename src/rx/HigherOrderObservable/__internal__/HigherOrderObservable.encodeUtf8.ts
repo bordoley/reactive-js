@@ -7,7 +7,7 @@ const HigherOrderObservable_encodeUtf8 =
     defer: Defer<C>["defer"],
     map: Map<C>["map"],
   ): EncodeUtf8<C>["encodeUtf8"] =>
-  _ =>
+  () =>
   observable =>
     defer(() => {
       const textEncoder = newInstance(TextEncoder);

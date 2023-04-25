@@ -1,17 +1,11 @@
-import {
-  ContainerLike,
-  ContainerOf,
-  FromFactory,
-  FromOptional,
-  Map,
-} from "../../../containers.js";
-import { Factory, pipe } from "../../../functions.js";
+import { ContainerLike, ContainerOf, Map } from "../../../containers.js";
+import { Factory, Function1, Optional, pipe } from "../../../functions.js";
 
 const Container_fromFactory =
   <C extends ContainerLike, O = never>(
-    fromOptional: FromOptional<C, O>["fromOptional"],
+    fromOptional: <T>(options?: O) => Function1<Optional<T>, ContainerOf<C, T>>,
     map: Map<C>["map"],
-  ): FromFactory<C, O>["fromFactory"] =>
+  ) =>
   <T>(factory: Factory<T>, options?: O): ContainerOf<C, T> =>
     pipe(
       factory,

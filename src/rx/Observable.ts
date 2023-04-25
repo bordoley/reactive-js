@@ -5,19 +5,12 @@ import {
   ConcatWith,
   ContainerOperator,
   DistinctUntilChanged,
-  Empty,
   EndWith,
   FlatMapIterable,
   ForEach,
   ForkConcat,
   ForkZip,
   FromAsyncIterable,
-  FromEnumeratorFactory,
-  FromFactory,
-  FromIterable,
-  FromOptional,
-  FromReadonlyArray,
-  Generate,
   Identity,
   IgnoreElements,
   Keep,
@@ -50,6 +43,7 @@ import {
   CurrentTime,
   DecodeWithCharset,
   Defer,
+  Empty,
   EncodeUtf8,
   Enqueue,
   Exhaust,
@@ -58,6 +52,12 @@ import {
   ForkCombineLatest,
   ForkMerge,
   ForkZipLatest,
+  FromEnumeratorFactory,
+  FromFactory,
+  FromIterable,
+  FromOptional,
+  FromReadonlyArray,
+  Generate,
   LastAsync,
   Merge,
   MergeAll,
@@ -225,8 +225,7 @@ export const defer: Defer<ObservableLike>["defer"] = Observable_defer;
 export const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
-export const empty: Empty<ObservableLike, { delay?: number }>["empty"] =
-  Observable_empty;
+export const empty: Empty<ObservableLike>["empty"] = Observable_empty;
 
 export const encodeUtf8: EncodeUtf8<ObservableLike>["encodeUtf8"] =
   Observable_encodeUtf8;
@@ -240,14 +239,8 @@ export const exhaust: Exhaust<ObservableLike>["exhaust"] = Observable_exhaust;
 export const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"] =
   Observable_exhaustMap;
 
-export const firstAsync: FirstAsync<
-  ObservableLike,
-  {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-  }
->["firstAsync"] = Observable_firstAsync;
+export const firstAsync: FirstAsync<ObservableLike>["firstAsync"] =
+  Observable_firstAsync;
 
 /**
  * @category Operator
@@ -284,47 +277,26 @@ export const fromAsyncFactory = Observable_fromAsyncFactory;
 export const fromAsyncIterable: FromAsyncIterable<ObservableLike>["fromAsyncIterable"] =
   AsyncIterable_toObservable;
 
-export const fromEnumeratorFactory: FromEnumeratorFactory<
-  ObservableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["fromEnumeratorFactory"] = Runnable_fromEnumeratorFactory;
+export const fromEnumeratorFactory: FromEnumeratorFactory<ObservableLike>["fromEnumeratorFactory"] =
+  Runnable_fromEnumeratorFactory;
 
-export const fromFactory: FromFactory<
-  ObservableLike,
-  { delay: number }
->["fromFactory"] = Observable_fromFactory;
+export const fromFactory: FromFactory<ObservableLike>["fromFactory"] =
+  Observable_fromFactory;
 
 export const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"] =
   Flowable_toObservable;
 
-export const fromIterable: FromIterable<
-  ObservableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["fromIterable"] = Iterable_toObservable;
+export const fromIterable: FromIterable<ObservableLike>["fromIterable"] =
+  Iterable_toObservable;
 
-export const fromOptional: FromOptional<
-  ObservableLike,
-  { delay?: number }
->["fromOptional"] = Optional_toObservable;
+export const fromOptional: FromOptional<ObservableLike>["fromOptional"] =
+  Optional_toObservable;
 
-export const fromReadonlyArray: FromReadonlyArray<
-  ObservableLike,
-  {
-    delay?: number;
-    delayStart?: boolean;
-  }
->["fromReadonlyArray"] = ReadonlyArray_toObservable;
+export const fromReadonlyArray: FromReadonlyArray<ObservableLike>["fromReadonlyArray"] =
+  ReadonlyArray_toObservable;
 
-export const generate: Generate<
-  ObservableLike,
-  { readonly delay?: number; readonly delayStart?: boolean }
->["generate"] = Observable_generate;
+export const generate: Generate<ObservableLike>["generate"] =
+  Observable_generate;
 
 export const identity: Identity<ObservableLike>["identity"] =
   Container_identity;
@@ -337,14 +309,8 @@ export const keep: Keep<ObservableLike>["keep"] = Observable_keep;
 export const keepType: KeepType<ObservableLike>["keepType"] =
   Observable_keepType as KeepType<ObservableLike>["keepType"];
 
-export const lastAsync: LastAsync<
-  ObservableLike,
-  {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-  }
->["lastAsync"] = Observable_lastAsync;
+export const lastAsync: LastAsync<ObservableLike>["lastAsync"] =
+  Observable_lastAsync;
 
 export const map: Map<ObservableLike>["map"] = Observable_map;
 
@@ -353,21 +319,11 @@ export const mapTo: MapTo<ObservableLike>["mapTo"] = Observable_mapTo;
 export const merge: Merge<ObservableLike>["merge"] = Observable_merge;
 
 export const mergeAll: MergeAll<
-  ObservableLike,
-  {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly concurrency?: number;
-  }
+  ObservableLike
 >["mergeAll"] = Observable_mergeAll;
 
 export const mergeMap: MergeMap<
-  ObservableLike,
-  {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly concurrency?: number;
-  }
+  ObservableLike
 >["mergeMap"] = Observable_mergeMap;
 
 export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =

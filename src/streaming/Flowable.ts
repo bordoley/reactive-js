@@ -1,15 +1,13 @@
-import {
-  FromAsyncIterable,
-  FromIterable,
-  FromOptional,
-  FromReadonlyArray,
-} from "../containers.js";
+import { FromAsyncIterable } from "../containers.js";
 import AsyncIterable_toFlowable from "../containers/AsyncIterable/__internal__/AsyncIterable.toFlowable.js";
 import Iterable_toFlowable from "../containers/Iterable/__internal__/Iterable.toFlowable.js";
 import Optional_toFlowable from "../containers/Optional/__internal__/Optional.toFlowable.js";
 import ReadonlyArray_toFlowable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import {
   FromEnumerable,
+  FromIterable,
+  FromOptional,
+  FromReadonlyArray,
   FromRunnable,
   ToObservable,
   ToRunnable,
@@ -34,18 +32,11 @@ export const fromEnumerable: FromEnumerable<FlowableLike>["fromEnumerable"] =
 export const fromIterable: FromIterable<FlowableLike>["fromIterable"] =
   Iterable_toFlowable;
 
-export const fromOptional: FromOptional<
-  FlowableLike,
-  { delay?: number }
->["fromOptional"] = Optional_toFlowable;
+export const fromOptional: FromOptional<FlowableLike>["fromOptional"] =
+  Optional_toFlowable;
 
-export const fromReadonlyArray: FromReadonlyArray<
-  FlowableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["fromReadonlyArray"] = ReadonlyArray_toFlowable;
+export const fromReadonlyArray: FromReadonlyArray<FlowableLike>["fromReadonlyArray"] =
+  ReadonlyArray_toFlowable;
 
 export const fromRunnable: FromRunnable<FlowableLike>["fromRunnable"] =
   Runnable_toFlowable;
