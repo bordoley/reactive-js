@@ -30,8 +30,6 @@ TStream
 
 - **`StreamableLike`**
 
-  ↳ [`AsyncEnumerableLike`](streaming.AsyncEnumerableLike.md)
-
   ↳ [`FlowableLike`](streaming.FlowableLike.md)
 
   ↳ [`CacheLike`](streaming.CacheLike.md)

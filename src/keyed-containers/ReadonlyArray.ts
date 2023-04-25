@@ -1,5 +1,6 @@
 import {
   Enumerate,
+  EnumeratorLike,
   EverySatisfy,
   First,
   FromIterable,
@@ -61,8 +62,14 @@ export const empty: Empty<ReadonlyArrayLike>["empty"] = ReadonlyArray_empty;
 export const entries: Entries<ReadonlyArrayLike>["entries"] =
   ReadonlyArray_entries;
 
-export const enumerate: Enumerate<ReadonlyArrayLike>["enumerate"] =
-  ReadonlyArray_enumerate;
+export const enumerate: Enumerate<
+  ReadonlyArrayLike,
+  EnumeratorLike,
+  {
+    readonly start?: number;
+    readonly count?: number;
+  }
+>["enumerate"] = ReadonlyArray_enumerate;
 
 export const enumerateAsync: EnumerateAsync<
   ReadonlyArrayLike,

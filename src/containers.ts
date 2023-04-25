@@ -284,12 +284,15 @@ export interface EndWith<C extends ContainerLike> {
 export interface Enumerate<
   C extends ContainerLike,
   CEnumerator extends EnumeratorLike = EnumeratorLike,
+  O = never,
 > {
   /**
    *
    * @category Transform
    */
-  enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
+  enumerate<T>(
+    options?: O,
+  ): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
 }
 
 /**
