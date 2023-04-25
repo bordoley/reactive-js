@@ -6,7 +6,6 @@ import Streamable_createInMemoryCache from "./Streamable/__internal__/Streamable
 import Streamable_createPersistentCache from "./Streamable/__internal__/Streamable.createPersistentCache.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
-import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
 /**
  * @category Constructor
  */
@@ -41,4 +40,3 @@ export const createStateStore = Streamable_createStateStore;
  * @category Constructor
  */
 export const identity = Streamable_identity;
-export const sinkInto = Streamable_sinkInto;

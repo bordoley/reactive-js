@@ -104,8 +104,8 @@ import Observable_throwIfEmpty from "../rx/Observable/__internal__/Observable.th
 import Observable_throws from "../rx/Observable/__internal__/Observable.throws.js";
 import Observable_zip from "../rx/Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith.js";
-import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
-import { EnumerateAsync, ToFlowable } from "../streaming.js";
+import Runnable_flow from "../rx/Runnable/__internal__/Runnable.flow.js";
+import { EnumerateAsync, Flow } from "../streaming.js";
 import { DisposableLike } from "../util.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_enumerateAsync from "./Enumerable/__internal__/Enumerable.enumerateAsync.js";
@@ -190,6 +190,8 @@ export const firstAsync: FirstAsync<EnumerableLike>["firstAsync"] =
 
 export const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"] =
   Enumerable_flatMapIterable;
+
+export const flow: Flow<EnumerableLike>["flow"] = Runnable_flow;
 
 export const forEach: ForEach<EnumerableLike>["forEach"] = Observable_forEach;
 
@@ -281,9 +283,6 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
 
 export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
   identity;
-
-export const toFlowable: ToFlowable<EnumerableLike>["toFlowable"] =
-  Runnable_toFlowable;
 
 export const toObservable: ToObservable<EnumerableLike>["toObservable"] =
   identity;

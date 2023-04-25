@@ -13,10 +13,6 @@
 - [createStateStore](streaming_Streamable.md#createstatestore)
 - [identity](streaming_Streamable.md#identity)
 
-### Other Functions
-
-- [sinkInto](streaming_Streamable.md#sinkinto)
-
 ## Constructor Functions
 
 ### create
@@ -226,40 +222,3 @@ ___
 #### Returns
 
 [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`\>\>
-
-___
-
-## Other Functions
-
-### sinkInto
-
-▸ **sinkInto**<`TReq`, `T`\>(`dest`): (`src`: [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>) => [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TReq` |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dest` | [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `TReq`\> |
-
-#### Returns
-
-`fn`
-
-▸ (`src`): [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\> |
-
-##### Returns
-
-[`DisposableLike`](../interfaces/util.DisposableLike.md)

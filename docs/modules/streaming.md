@@ -7,8 +7,11 @@
 ### Container Interfaces
 
 - [CacheLike](../interfaces/streaming.CacheLike.md)
-- [FlowableLike](../interfaces/streaming.FlowableLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)
+
+### Other Interfaces
+
+- [Flow](../interfaces/streaming.Flow.md)
 
 ### Stream Interfaces
 
@@ -19,4 +22,3 @@
 ### TypeClass Interfaces
 
 - [EnumerateAsync](../interfaces/streaming.EnumerateAsync.md)
-- [ToFlowable](../interfaces/streaming.ToFlowable.md)

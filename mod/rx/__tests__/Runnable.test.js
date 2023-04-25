@@ -7,7 +7,6 @@ import { arrayEquality, identity, increment, incrementBy, isSome, newInstance, n
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import { SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { StreamableLike_stream } from "../../streaming.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
@@ -67,13 +66,12 @@ const throttleTests = describe("throttle", test("first", pipeLazy(Runnable.gener
 }), Runnable.takeFirst({ count: 200 }), Runnable.throttle(75, { mode: "interval" }), Runnable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199]))));
 const timeoutTests = describe("timeout", test("throws when a timeout occurs", pipeLazy(pipeLazy([1], ReadonlyArray.toRunnable({ delay: 2, delayStart: true }), Runnable.timeout(1), Runnable.toReadonlyArray()), expectToThrow)), test("when timeout is greater than observed time", pipeLazy([1], ReadonlyArray.toRunnable({ delay: 2, delayStart: true }), Runnable.timeout(3), Runnable.toReadonlyArray(), expectArrayEquals([1]))));
 // FIXME Move these tests into container?
-const toFlowableTests = describe("toFlowable", test("flow a generating source", () => {
+const flow = describe("flow", test("flow a generating source", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
-    const streamableSrc = pipe(Runnable.generate(increment, returns(-1), {
+    const generateStream = pipe(Runnable.generate(increment, returns(-1), {
         delay: 1,
         delayStart: true,
-    }), Runnable.toFlowable());
-    const generateStream = streamableSrc[StreamableLike_stream](scheduler);
+    }), Runnable.flow(scheduler));
     scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_enqueue](false));
     scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_enqueue](true), {
         delay: 2,
@@ -110,4 +108,4 @@ const zipTests = describe("zip", test("with synchronous and non-synchronous sour
 const zipLatestTests = describe("zipLatest", test("zipLatestWith", pipeLazy(Runnable.zipLatest(pipe([1, 2, 3, 4, 5, 6, 7, 8], ReadonlyArray.toRunnable({ delay: 1, delayStart: true })), pipe([1, 2, 3, 4], ReadonlyArray.toRunnable({ delay: 2, delayStart: true }))), Runnable.map(([a, b]) => a + b), Runnable.toReadonlyArray(), expectArrayEquals([2, 5, 8, 11]))));
 const zipWithLatestTests = describe("zipWithLatestFrom", test("when source throws", pipeLazy(pipeLazy(Runnable.throws(), Runnable.zipWithLatestFrom(pipe([1], ReadonlyArray.toRunnable()), (_, b) => b), Runnable.toReadonlyArray()), expectToThrow)), test("when other throws", pipeLazy(pipeLazy([1, 2, 3], ReadonlyArray.toRunnable({ delay: 1 }), Runnable.zipWithLatestFrom(Runnable.throws(), (_, b) => b), Runnable.toReadonlyArray()), expectToThrow)), test("when other completes first", pipeLazy([1, 2, 3], ReadonlyArray.toRunnable({ delay: 2 }), Runnable.zipWithLatestFrom(pipe([2, 4], ReadonlyArray.toRunnable({ delay: 1 })), (a, b) => a + b), Runnable.toReadonlyArray(), expectArrayEquals([3, 6]))), test("when this completes first", pipeLazy([1, 2, 3], ReadonlyArray.toRunnable({ delay: 2 }), Runnable.zipWithLatestFrom(pipe([2, 4, 6, 8], ReadonlyArray.toRunnable({ delay: 1 })), (a, b) => a + b), Runnable.toReadonlyArray(), expectArrayEquals([3, 6, 11]))));
 const runTests = describe("run", test("with higher order observable and no delay", pipeLazy(Runnable.generate(_ => pipe(1, Runnable.fromOptional()), returns(Runnable.empty())), Runnable.concatAll(), Runnable.takeFirst({ count: 10 }), Runnable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]))));
-testModule("Runnable", Containers_test(Runnable), catchErrorTests(Runnable), combineLatestTests, computeTests, decodeWithCharsetTests(Runnable), exhaustTests, mergeTests, retryTests(Runnable), runTests, scanLastTests(Runnable, Runnable), scanManyTests(Runnable, Runnable), switchAllTests, takeUntilTests, throttleTests, timeoutTests, toFlowableTests, withLatestFromTest, zipTests, zipLatestTests, zipWithLatestTests);
+testModule("Runnable", Containers_test(Runnable), catchErrorTests(Runnable), combineLatestTests, computeTests, decodeWithCharsetTests(Runnable), exhaustTests, flow, mergeTests, retryTests(Runnable), runTests, scanLastTests(Runnable, Runnable), scanManyTests(Runnable, Runnable), switchAllTests, takeUntilTests, throttleTests, timeoutTests, withLatestFromTest, zipTests, zipLatestTests, zipWithLatestTests);

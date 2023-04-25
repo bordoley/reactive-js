@@ -37,7 +37,6 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { StreamableLike_stream } from "../../streaming.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -349,20 +348,18 @@ const timeoutTests = describe(
 );
 
 // FIXME Move these tests into container?
-const toFlowableTests = describe(
-  "toFlowable",
+const flow = describe(
+  "flow",
   test("flow a generating source", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
 
-    const streamableSrc = pipe(
+    const generateStream = pipe(
       Runnable.generate(increment, returns(-1), {
         delay: 1,
         delayStart: true,
       }),
-      Runnable.toFlowable(),
+      Runnable.flow(scheduler),
     );
-
-    const generateStream = streamableSrc[StreamableLike_stream](scheduler);
 
     scheduler[SchedulerLike_schedule](() =>
       generateStream[QueueableLike_enqueue](false),
@@ -626,6 +623,7 @@ testModule(
   computeTests,
   decodeWithCharsetTests(Runnable),
   exhaustTests,
+  flow,
   mergeTests,
   retryTests<RunnableLike>(Runnable),
   runTests,
@@ -635,7 +633,6 @@ testModule(
   takeUntilTests,
   throttleTests,
   timeoutTests,
-  toFlowableTests,
   withLatestFromTest,
   zipTests,
   zipLatestTests,

@@ -63,6 +63,7 @@
 
 - [enumerateAsync](rx_Enumerable.md#enumerateasync)
 - [everySatisfy](rx_Enumerable.md#everysatisfy)
+- [flow](rx_Enumerable.md#flow)
 
 ### Transform Functions
 
@@ -72,7 +73,6 @@
 - [last](rx_Enumerable.md#last)
 - [lastAsync](rx_Enumerable.md#lastasync)
 - [toEnumerable](rx_Enumerable.md#toenumerable)
-- [toFlowable](rx_Enumerable.md#toflowable)
 - [toObservable](rx_Enumerable.md#toobservable)
 - [toReadonlyArray](rx_Enumerable.md#toreadonlyarray)
 - [toRunnable](rx_Enumerable.md#torunnable)
@@ -1935,6 +1935,32 @@ it returns false, or until the end of the Container.
 
 ___
 
+### flow
+
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+___
+
 ## Transform Functions
 
 ### enumerate
@@ -2060,28 +2086,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
-
-___
-
-### toFlowable
-
-▸ **toFlowable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 

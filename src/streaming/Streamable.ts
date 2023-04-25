@@ -1,12 +1,9 @@
-import { StreamLike, StreamableLike } from "../streaming.js";
-import { DisposableLike } from "../util.js";
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
 import Streamable_createEventHandler from "./Streamable/__internal__/Streamable.createEventHandler.js";
 import Streamable_createInMemoryCache from "./Streamable/__internal__/Streamable.createInMemoryCache.js";
 import Streamable_createPersistentCache from "./Streamable/__internal__/Streamable.createPersistentCache.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
-import Streamable_sinkInto from "./Streamable/__internal__/Streamable.sinkInto.js";
 
 /**
  * @category Constructor
@@ -47,7 +44,3 @@ export const createStateStore = Streamable_createStateStore;
  * @category Constructor
  */
 export const identity = Streamable_identity;
-
-export const sinkInto: <TReq, T>(
-  dest: StreamLike<T, TReq>,
-) => (src: StreamableLike<TReq, T>) => DisposableLike = Streamable_sinkInto;
