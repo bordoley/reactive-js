@@ -46,16 +46,6 @@ export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = S
     }): TStream & DisposableLike;
 }
 /**
- * A container that returns an interactive stream that produces
- * exactly one value for every enqueued void request.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface AsyncEnumerableLike<T = unknown> extends StreamableLike<void, T>, ObservableLike<T> {
-    readonly [ContainerLike_type]?: AsyncEnumerableLike<this[typeof ContainerLike_T]>;
-}
-/**
  * An `ObservableLike` that supports imperative flow control
  * via the pause and resume methods.
  *
@@ -120,7 +110,7 @@ export interface EnumerateAsync<C extends ContainerLike, O = unknown> {
          */
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<ContainerOf<C, T>, StreamLike<void, unknown> & DisposableLike>;
+    }): Function1<ContainerOf<C, T>, StreamLike<void, T> & DisposableLike>;
 }
 /**
  * @noInheritDoc

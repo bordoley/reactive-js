@@ -6,7 +6,6 @@
 
 ### Container Interfaces
 
-- [AsyncEnumerableLike](../interfaces/streaming.AsyncEnumerableLike.md)
 - [CacheLike](../interfaces/streaming.CacheLike.md)
 - [FlowableLike](../interfaces/streaming.FlowableLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)

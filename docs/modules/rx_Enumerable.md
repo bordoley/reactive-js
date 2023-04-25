@@ -1887,7 +1887,7 @@ ___
 
 ### enumerateAsync
 
-▸ **enumerateAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `unknown`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **enumerateAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -1904,7 +1904,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `unknown`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 
@@ -1939,13 +1939,19 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **enumerate**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `undefined` |
 
 #### Returns
 

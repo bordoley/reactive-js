@@ -25,10 +25,12 @@ import MutableEnumerator_mixin, {
 import { Function1, none } from "../../../functions.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
-const ReadonlyArray_enumerate: <T>() => Function1<
-  ReadonlyArrayLike<T>,
-  EnumeratorLike<T>
-> = /*@__PURE__*/ (<T>() => {
+const ReadonlyArray_enumerate: <T>(options?: {
+  readonly start?: number;
+  readonly count?: number;
+}) => Function1<ReadonlyArrayLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<
+  T,
+>() => {
   type TReadonlyArrayEnumeratorProperties = {
     [__ReadonlyArrayEnumerator_values]: ReadonlyArrayLike<T>;
     [__ReadonlyArrayEnumerator_index]: number;

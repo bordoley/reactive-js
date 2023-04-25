@@ -21,7 +21,7 @@
 
 ### enumerateAsync
 
-▸ **enumerateAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`StreamLike`](streaming.StreamLike.md)<`void`, `unknown`\> & [`DisposableLike`](util.DisposableLike.md)\>
+▸ **enumerateAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`StreamLike`](streaming.StreamLike.md)<`void`, `T`\> & [`DisposableLike`](util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -38,4 +38,4 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`StreamLike`](streaming.StreamLike.md)<`void`, `unknown`\> & [`DisposableLike`](util.DisposableLike.md)\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`StreamLike`](streaming.StreamLike.md)<`void`, `T`\> & [`DisposableLike`](util.DisposableLike.md)\>
