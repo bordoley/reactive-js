@@ -108,26 +108,6 @@ export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Fun
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromAsyncEnumerable<C extends ContainerLike, O = never> {
-    /**
-     * @category Constructor
-     */
-    fromAsyncEnumerable<T>(options?: O): Function1<AsyncEnumerableLike<T>, ContainerOf<C, T>>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface FromFlowable<C extends ContainerLike, O = never> {
-    /**
-     * @category Constructor
-     */
-    fromFlowable<T>(options?: O): Function1<FlowableLike<T>, ContainerOf<C, T>>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface ToAsyncEnumerable<C extends ContainerLike, O = never> {
     /**
      * @category Transform
