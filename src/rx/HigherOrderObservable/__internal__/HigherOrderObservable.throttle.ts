@@ -20,11 +20,7 @@ import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../../__internal__/util.js";
-import {
-  ContainerOf,
-  ContainerOperator,
-  FromReadonlyArray,
-} from "../../../containers.js";
+import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import {
   Function1,
@@ -37,6 +33,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  FromReadonlyArray,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -199,10 +196,7 @@ const throttleImpl = <C extends ObservableLike, T>(
 
 const HigherOrderObservable_throttle =
   <C extends ObservableLike, T>(
-    fromReadonlyArray: FromReadonlyArray<
-      C,
-      { delay: number; delayStart: boolean }
-    >["fromReadonlyArray"],
+    fromReadonlyArray: FromReadonlyArray<C>["fromReadonlyArray"],
     lift: <T>(
       f: Function1<ObserverLike<T>, ObserverLike<T>>,
     ) => ContainerOperator<C, T, T>,

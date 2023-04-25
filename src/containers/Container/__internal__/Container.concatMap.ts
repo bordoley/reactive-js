@@ -1,5 +1,4 @@
 import {
-  ConcatAll,
   ContainerLike,
   ContainerOf,
   ContainerOperator,
@@ -10,7 +9,7 @@ import { Function1, compose } from "../../../functions.js";
 const Container_concatMap =
   <C extends ContainerLike, O = never>(
     map: Map<C>["map"],
-    concatAll: ConcatAll<C, O>["concatAll"],
+    concatAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>,
   ) =>
   <TA, TB>(
     selector: Function1<TA, ContainerOf<C, TB>>,

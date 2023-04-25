@@ -1,9 +1,5 @@
 import {
   FromAsyncIterable,
-  FromIterable,
-  FromOptional,
-  FromReadonlyArray,
-  Generate,
   Keep,
   Map,
   Scan,
@@ -15,6 +11,10 @@ import Optional_toAsyncEnumerable from "../containers/Optional/__internal__/Opti
 import ReadonlyArray_toAsyncEnumerable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 import {
   FromEnumerable,
+  FromIterable,
+  FromOptional,
+  FromReadonlyArray,
+  Generate,
   GenerateLast,
   ObservableLike,
   ScanLast,
@@ -44,25 +44,14 @@ export const fromAsyncIterable: FromAsyncIterable<AsyncEnumerableLike>["fromAsyn
 export const fromEnumerable: FromEnumerable<AsyncEnumerableLike>["fromEnumerable"] =
   Enumerable_toAsyncEnumerable;
 
-export const fromOptional: FromOptional<
-  AsyncEnumerableLike,
-  { delay?: number }
->["fromOptional"] = Optional_toAsyncEnumerable;
+export const fromOptional: FromOptional<AsyncEnumerableLike>["fromOptional"] =
+  Optional_toAsyncEnumerable;
 
-export const fromReadonlyArray: FromReadonlyArray<
-  AsyncEnumerableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-    readonly start?: number;
-    readonly count?: number;
-  }
->["fromReadonlyArray"] = ReadonlyArray_toAsyncEnumerable;
+export const fromReadonlyArray: FromReadonlyArray<AsyncEnumerableLike>["fromReadonlyArray"] =
+  ReadonlyArray_toAsyncEnumerable;
 
-export const generate: Generate<
-  AsyncEnumerableLike,
-  { delay: number }
->["generate"] = AsyncEnumerable_generate;
+export const generate: Generate<AsyncEnumerableLike>["generate"] =
+  AsyncEnumerable_generate;
 
 export const generateLast: GenerateLast<
   AsyncEnumerableLike,

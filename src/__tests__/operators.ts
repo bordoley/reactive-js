@@ -21,7 +21,6 @@ import {
   ForEach,
   FromOptional,
   FromReadonlyArray,
-  Generate,
   IgnoreElements,
   Keep,
   Map,
@@ -68,6 +67,7 @@ import {
   ToObservable,
   ToRunnable,
 } from "../rx.js";
+import type * as RX from "../rx.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Runnable from "../rx/Runnable.js";
@@ -833,24 +833,8 @@ export const scanLastTests = <
   C extends ContainerLike,
   CInner extends ObservableLike,
 >(
-  m: ScanLast<C, CInner> &
-    FromReadonlyArray<
-      C,
-      {
-        readonly start?: number;
-        readonly count?: number;
-        delay?: number;
-      }
-    > &
-    ToRunnable<C>,
-  mInner: FromReadonlyArray<
-    CInner,
-    {
-      readonly start?: number;
-      readonly count?: number;
-      delay?: number;
-    }
-  >,
+  m: ScanLast<C, CInner> & RX.FromReadonlyArray<C> & ToRunnable<C>,
+  mInner: RX.FromReadonlyArray<CInner>,
 ) =>
   describe(
     "scanLast",
@@ -919,23 +903,8 @@ export const scanManyTests = <
   C extends ContainerLike,
   CInner extends ObservableLike,
 >(
-  m: ScanMany<C, CInner> &
-    FromReadonlyArray<
-      C,
-      {
-        readonly start?: number;
-        readonly count?: number;
-        delay?: number;
-      }
-    > &
-    ToRunnable<C>,
-  mInner: Generate<
-    CInner,
-    {
-      delay?: number;
-    }
-  > &
-    TakeFirst<CInner>,
+  m: ScanMany<C, CInner> & RX.FromReadonlyArray<C> & ToRunnable<C>,
+  mInner: RX.Generate<CInner> & TakeFirst<CInner>,
 ) =>
   describe(
     "scanMany",

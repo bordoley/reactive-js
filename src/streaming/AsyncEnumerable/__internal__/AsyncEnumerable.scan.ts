@@ -6,10 +6,7 @@ import { AsyncEnumerableLike } from "../../../streaming.js";
 import AsyncEnumerable_lift from "./AsyncEnumerable.lift.js";
 import AsyncEnumerator_lift from "./AsyncEnumerator.lift.js";
 
-const AsyncEnumerable_scan: Scan<
-  AsyncEnumerableLike,
-  ObservableLike
->["scan"] = <T, TAcc>(
+const AsyncEnumerable_scan: Scan<AsyncEnumerableLike>["scan"] = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ): ContainerOperator<AsyncEnumerableLike, T, TAcc> =>

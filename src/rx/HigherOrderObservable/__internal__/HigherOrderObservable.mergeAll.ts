@@ -24,11 +24,7 @@ import {
   QueueLike,
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
-import {
-  ConcatAll,
-  ContainerOf,
-  ContainerOperator,
-} from "../../../containers.js";
+import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import {
   Function1,
   Optional,
@@ -40,6 +36,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  MergeAll,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
@@ -66,14 +63,9 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>,
   ) => ContainerOperator<C, ContainerOf<C, T>, T>,
-): ConcatAll<
-  C,
-  {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly concurrency?: number;
-  }
->["concatAll"] => {
+): MergeAll<
+  C
+>["mergeAll"] => {
   const createMergeAllObserver: <T>(
     delegate: ObserverLike<T>,
     capacity: number,

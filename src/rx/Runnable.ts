@@ -6,7 +6,6 @@ import {
   ConcatWith,
   Contains,
   DistinctUntilChanged,
-  Empty,
   EndWith,
   EverySatisfy,
   First,
@@ -14,12 +13,6 @@ import {
   ForEach,
   ForkConcat,
   ForkZip,
-  FromEnumeratorFactory,
-  FromFactory,
-  FromIterable,
-  FromOptional,
-  FromReadonlyArray,
-  Generate,
   Identity,
   IgnoreElements,
   Keep,
@@ -46,7 +39,6 @@ import {
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
-import { Factory } from "../functions.js";
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   Animate,
@@ -56,6 +48,7 @@ import {
   CurrentTime,
   DecodeWithCharset,
   Defer,
+  Empty,
   EncodeUtf8,
   Enqueue,
   Exhaust,
@@ -63,6 +56,12 @@ import {
   FirstAsync,
   ForkMerge,
   ForkZipLatest,
+  FromEnumeratorFactory,
+  FromFactory,
+  FromIterable,
+  FromOptional,
+  FromReadonlyArray,
+  Generate,
   LastAsync,
   Merge,
   MergeAll,
@@ -87,9 +86,7 @@ import {
   ZipLatest,
   ZipWithLatestFrom,
 } from "../rx.js";
-import { SchedulerLike } from "../scheduling.js";
 import { ToFlowable } from "../streaming.js";
-import { QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -209,8 +206,7 @@ export const defer: Defer<RunnableLike>["defer"] = Runnable_defer;
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
-export const empty: Empty<RunnableLike, { delay?: number }>["empty"] =
-  Observable_empty;
+export const empty: Empty<RunnableLike>["empty"] = Observable_empty;
 
 export const encodeUtf8: EncodeUtf8<RunnableLike>["encodeUtf8"] =
   Runnable_encodeUtf8;
@@ -229,14 +225,8 @@ export const exhaustMap: ExhaustMap<RunnableLike>["exhaustMap"] =
 
 export const first: First<RunnableLike>["first"] = Runnable_first;
 
-export const firstAsync: FirstAsync<
-  RunnableLike,
-  {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-  }
->["firstAsync"] = Observable_firstAsync;
+export const firstAsync: FirstAsync<RunnableLike>["firstAsync"] =
+  Observable_firstAsync;
 
 export const flatMapIterable: FlatMapIterable<RunnableLike>["flatMapIterable"] =
   Runnable_flatMapIterable;
@@ -255,44 +245,22 @@ export const forkZip: ForkZip<RunnableLike>["forkZip"] =
 export const forkZipLatest: ForkZipLatest<RunnableLike>["forkZipLatest"] =
   Observable_forkZipLatest as ForkZipLatest<RunnableLike>["forkZipLatest"];
 
-export const fromEnumeratorFactory: FromEnumeratorFactory<
-  RunnableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["fromEnumeratorFactory"] = Runnable_fromEnumeratorFactory;
+export const fromEnumeratorFactory: FromEnumeratorFactory<RunnableLike>["fromEnumeratorFactory"] =
+  Runnable_fromEnumeratorFactory;
 
-export const fromFactory: FromFactory<
-  RunnableLike,
-  { delay: number }
->["fromFactory"] = Observable_fromFactory;
+export const fromFactory: FromFactory<RunnableLike>["fromFactory"] =
+  Observable_fromFactory;
 
-export const fromIterable: FromIterable<
-  RunnableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["fromIterable"] = Iterable_toObservable;
+export const fromIterable: FromIterable<RunnableLike>["fromIterable"] =
+  Iterable_toObservable;
 
-export const fromOptional: FromOptional<
-  RunnableLike,
-  { delay?: number }
->["fromOptional"] = Optional_toObservable;
+export const fromOptional: FromOptional<RunnableLike>["fromOptional"] =
+  Optional_toObservable;
 
-export const fromReadonlyArray: FromReadonlyArray<
-  RunnableLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["fromReadonlyArray"] = ReadonlyArray_toObservable;
+export const fromReadonlyArray: FromReadonlyArray<RunnableLike>["fromReadonlyArray"] =
+  ReadonlyArray_toObservable;
 
-export const generate: Generate<
-  RunnableLike,
-  { readonly delay?: number; readonly delayStart?: boolean }
->["generate"] = Observable_generate;
+export const generate: Generate<RunnableLike>["generate"] = Observable_generate;
 
 export const identity: Identity<RunnableLike>["identity"] = Container_identity;
 
@@ -306,14 +274,8 @@ export const keepType: KeepType<RunnableLike>["keepType"] =
 
 export const last: Last<RunnableLike>["last"] = Runnable_last;
 
-export const lastAsync: LastAsync<
-  RunnableLike,
-  {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-  }
->["lastAsync"] = Observable_lastAsync;
+export const lastAsync: LastAsync<RunnableLike>["lastAsync"] =
+  Observable_lastAsync;
 
 export const noneSatisfy: NoneSatisfy<RunnableLike>["noneSatisfy"] =
   Runnable_noneSatisfy;
@@ -325,21 +287,11 @@ export const mapTo: MapTo<RunnableLike>["mapTo"] = Observable_mapTo;
 export const merge: Merge<RunnableLike>["merge"] = Observable_merge;
 
 export const mergeAll: MergeAll<
-  RunnableLike,
-  {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly concurrency?: number;
-  }
+  RunnableLike
 >["mergeAll"] = Runnable_mergeAll;
 
 export const mergeMap: MergeMap<
-  RunnableLike,
-  {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly concurrency?: number;
-  }
+  RunnableLike
 >["mergeMap"] = Runnable_mergeMap;
 
 export const mergeWith: MergeWith<RunnableLike>["mergeWith"] =

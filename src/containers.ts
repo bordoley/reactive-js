@@ -151,18 +151,16 @@ export type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Buffer<C extends ContainerLike, O = unknown> {
+export interface Buffer<C extends ContainerLike> {
   /**
    * Returns a ContainerLike which buffers items produced by the source until the
    * number of items reaches the specified maximum buffer size.
    *
    * @category Operator
    */
-  buffer: <T>(
-    options?: O & {
-      readonly count?: number;
-    },
-  ) => ContainerOperator<C, T, readonly T[]>;
+  buffer: <T>(options?: {
+    readonly count?: number;
+  }) => ContainerOperator<C, T, readonly T[]>;
 }
 
 /**
@@ -186,27 +184,26 @@ export interface Concat<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ConcatAll<C extends ContainerLike, O = never> {
+export interface ConcatAll<C extends ContainerLike> {
   /**
    * Converts a higher-order ContainerLike into a first-order
    * ContainerLike by concatenating the inner sources in order.
    *
    * @category Operator
    */
-  concatAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
+  concatAll: <T>() => ContainerOperator<C, ContainerOf<C, T>, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ConcatMap<C extends ContainerLike, O = never> {
+export interface ConcatMap<C extends ContainerLike> {
   /**
    * @category Operator
    */
   concatMap: <TA, TB>(
     selector: Function1<TA, ContainerOf<C, TB>>,
-    options?: O,
   ) => ContainerOperator<C, TA, TB>;
 }
 
@@ -228,13 +225,13 @@ export interface ConcatWith<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Contains<C extends ContainerLike, O = unknown> {
+export interface Contains<C extends ContainerLike> {
   /**
    * @category Operator
    */
   contains: <T>(
     value: T,
-    options?: O & {
+    options?: {
       readonly equality?: Equality<T>;
     },
   ) => Function1<ContainerOf<C, T>, boolean>;
@@ -244,31 +241,29 @@ export interface Contains<C extends ContainerLike, O = unknown> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface DistinctUntilChanged<C extends ContainerLike, O = unknown> {
+export interface DistinctUntilChanged<C extends ContainerLike> {
   /**
    * Returns a ContainerOperator that emits all items emitted by the source that
    * are distinct by comparison from the previous item.
    *
    * @category Operator
    */
-  distinctUntilChanged<T>(
-    options?: O & {
-      readonly equality?: Equality<T>;
-    },
-  ): ContainerOperator<C, T, T>;
+  distinctUntilChanged<T>(options?: {
+    readonly equality?: Equality<T>;
+  }): ContainerOperator<C, T, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Empty<C extends ContainerLike, O = never> {
+export interface Empty<C extends ContainerLike> {
   /**
    * Return an ContainerLike that emits no items.
    *
    * @category Constructor
    */
-  empty<T>(options?: O): ContainerOf<C, T>;
+  empty<T>(): ContainerOf<C, T>;
 }
 
 /**
@@ -301,7 +296,7 @@ export interface Enumerate<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface EverySatisfy<C extends ContainerLike, O = never> {
+export interface EverySatisfy<C extends ContainerLike> {
   /**
    * /**
    * Determines whether all the members of an Container satisfy the predicate.
@@ -312,7 +307,6 @@ export interface EverySatisfy<C extends ContainerLike, O = never> {
    */
   everySatisfy<T>(
     predicate: Predicate<T>,
-    options?: O,
   ): Function1<ContainerOf<C, T>, boolean>;
 }
 
@@ -320,25 +314,24 @@ export interface EverySatisfy<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface First<C extends ContainerLike, O = never> {
+export interface First<C extends ContainerLike> {
   /**
    *
    * @category Transform
    */
-  first<T>(options?: O): Function1<ContainerOf<C, T>, Optional<T>>;
+  first<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FlatMapIterable<C extends ContainerLike, O = never> {
+export interface FlatMapIterable<C extends ContainerLike> {
   /**
    * @category Operator
    */
   flatMapIterable: <TA, TB>(
     selector: Function1<TA, IterableLike<TB>>,
-    options?: O,
   ) => ContainerOperator<C, TA, TB>;
 }
 
@@ -346,14 +339,14 @@ export interface FlatMapIterable<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForEach<C extends ContainerLike, O = never> {
+export interface ForEach<C extends ContainerLike> {
   /**
    * Returns a ContainerOperator that applies the side effect function to each
    * value emitted by the source.
    *
    * @category Operator
    */
-  forEach<T>(effect: SideEffect1<T>, options?: O): ContainerOperator<C, T, T>;
+  forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
 }
 
 /**
@@ -445,26 +438,23 @@ export interface ForkZip<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromAsyncIterable<C extends ContainerLike, O = never> {
+export interface FromAsyncIterable<C extends ContainerLike> {
   /**
    * @category Constructor
    */
-  fromAsyncIterable<T>(
-    options?: O,
-  ): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
+  fromAsyncIterable<T>(): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromEnumeratorFactory<C extends ContainerLike, O = never> {
+export interface FromEnumeratorFactory<C extends ContainerLike> {
   /**
    * @category Constructor
    */
   fromEnumeratorFactory<T>(
     factory: Factory<EnumeratorLike<T>>,
-    options?: O,
   ): ContainerOf<C, T>;
 }
 
@@ -472,56 +462,54 @@ export interface FromEnumeratorFactory<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromFactory<C extends ContainerLike, O = never> {
+export interface FromFactory<C extends ContainerLike> {
   /**
    * @category Constructor
    */
-  fromFactory<T>(factory: Factory<T>, options?: O): ContainerOf<C, T>;
+  fromFactory<T>(factory: Factory<T>): ContainerOf<C, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromIterable<C extends ContainerLike, O = never> {
+export interface FromIterable<C extends ContainerLike> {
   /**
    * @category Constructor
    */
-  fromIterable<T>(options?: O): Function1<Iterable<T>, ContainerOf<C, T>>;
+  fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromOptional<C extends ContainerLike, O = never> {
+export interface FromOptional<C extends ContainerLike> {
   /**
    * @category Constructor
    */
-  fromOptional<T>(options?: O): Function1<Optional<T>, ContainerOf<C, T>>;
+  fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromReadonlyArray<C extends ContainerLike, O = unknown> {
+export interface FromReadonlyArray<C extends ContainerLike> {
   /**
    * @category Constructor
    */
-  fromReadonlyArray<T>(
-    options?: O & {
-      readonly start?: number;
-      readonly count?: number;
-    },
-  ): Function1<readonly T[], ContainerOf<C, T>>;
+  fromReadonlyArray<T>(options?: {
+    readonly start?: number;
+    readonly count?: number;
+  }): Function1<readonly T[], ContainerOf<C, T>>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Generate<C extends ContainerLike, O = never> {
+export interface Generate<C extends ContainerLike> {
   /**
    * Generates a ContainerLike from a generator function
    * that is applied to an accumulator value between emitted items.
@@ -534,7 +522,6 @@ export interface Generate<C extends ContainerLike, O = never> {
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
-    options?: O,
   ): ContainerOf<C, T>;
 }
 
@@ -553,39 +540,38 @@ export interface Identity<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface IgnoreElements<C extends ContainerLike, O = never> {
+export interface IgnoreElements<C extends ContainerLike> {
   /**
    * @category Operator
    */
-  ignoreElements<T>(options?: O): ContainerOperator<C, unknown, T>;
+  ignoreElements<T>(): ContainerOperator<C, unknown, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Keep<C extends ContainerLike, O = never> {
+export interface Keep<C extends ContainerLike> {
   /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
    *
    * @category Operator
    */
-  keep<T>(predicate: Predicate<T>, options?: O): ContainerOperator<C, T, T>;
+  keep<T>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeepType<C extends ContainerLike, O = never> {
+export interface KeepType<C extends ContainerLike> {
   /**
    *
    * @category Operator
    */
   keepType<TA, TB extends TA>(
     predicate: TypePredicate<TA, TB>,
-    options?: O,
   ): ContainerOperator<C, TA, TB>;
 }
 
@@ -593,19 +579,19 @@ export interface KeepType<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Last<C extends ContainerLike, O = never> {
+export interface Last<C extends ContainerLike> {
   /**
    *
    * @category Transform
    */
-  last<T>(options?: O): Function1<ContainerOf<C, T>, Optional<T>>;
+  last<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Map<C extends ContainerLike, O = never> {
+export interface Map<C extends ContainerLike> {
   /**
    * Returns a ContainerOperator that applies the `selector` function to each
    * value emitted by the source.
@@ -616,34 +602,30 @@ export interface Map<C extends ContainerLike, O = never> {
    *
    * @category Operator
    */
-  map<TA, TB>(
-    selector: Function1<TA, TB>,
-    options?: O,
-  ): ContainerOperator<C, TA, TB>;
+  map<TA, TB>(selector: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface MapTo<C extends ContainerLike, O = never> {
+export interface MapTo<C extends ContainerLike> {
   /**
    * @category Operator
    */
-  mapTo<TA, TB>(value: TB, options?: O): ContainerOperator<C, TA, TB>;
+  mapTo<TA, TB>(value: TB): ContainerOperator<C, TA, TB>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface NoneSatisfy<C extends ContainerLike, O = never> {
+export interface NoneSatisfy<C extends ContainerLike> {
   /**
    * @category Operator
    */
   noneSatisfy<T>(
     predicate: Predicate<T>,
-    options?: O,
   ): Function1<ContainerOf<C, T>, boolean>;
 }
 
@@ -651,11 +633,11 @@ export interface NoneSatisfy<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Pairwise<C extends ContainerLike, O = never> {
+export interface Pairwise<C extends ContainerLike> {
   /**
    * @category Operator
    */
-  pairwise<T>(options?: O): ContainerOperator<C, T, readonly [T, T]>;
+  pairwise<T>(): ContainerOperator<C, T, readonly [T, T]>;
 }
 /**
  * @noInheritDoc
@@ -686,14 +668,13 @@ export interface Pick<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Reduce<C extends ContainerLike, O = never> {
+export interface Reduce<C extends ContainerLike> {
   /**
    * @category Operator
    */
   reduce<T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
-    options?: O,
   ): Function1<ContainerOf<C, T>, TAcc>;
 }
 
@@ -701,7 +682,7 @@ export interface Reduce<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Repeat<C extends ContainerLike, O = never> {
+export interface Repeat<C extends ContainerLike> {
   /**
    * Returns a ContainerLike that mirrors the source, repeating it whenever the predicate returns true.
    *
@@ -709,10 +690,7 @@ export interface Repeat<C extends ContainerLike, O = never> {
    *
    * @category Operator
    */
-  repeat<T>(
-    predicate: Predicate<number>,
-    options?: O,
-  ): ContainerOperator<C, T, T>;
+  repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
   /**
    * Returns a ContainerLike that mirrors the source, repeating it `count` times.
    *
@@ -720,21 +698,21 @@ export interface Repeat<C extends ContainerLike, O = never> {
    *
    * @category Operator
    */
-  repeat<T>(count: number, options?: O): ContainerOperator<C, T, T>;
+  repeat<T>(count: number): ContainerOperator<C, T, T>;
 
   /**
    * Returns a ContainerLike that mirrors the source, continually repeating it.
    *
    * @category Operator
    */
-  repeat<T>(options?: O): ContainerOperator<C, T, T>;
+  repeat<T>(): ContainerOperator<C, T, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Scan<C extends ContainerLike, O = never> {
+export interface Scan<C extends ContainerLike> {
   /**
    * Returns a ContainerLike that applies an accumulator function over the source,
    * and emits each intermediate result.
@@ -747,7 +725,6 @@ export interface Scan<C extends ContainerLike, O = never> {
   scan<T, TAcc>(
     scanner: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
-    options?: O,
   ): ContainerOperator<C, T, TAcc>;
 }
 
@@ -755,30 +732,27 @@ export interface Scan<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface SkipFirst<C extends ContainerLike, O = unknown> {
+export interface SkipFirst<C extends ContainerLike> {
   /**
    * Returns a ContainerLike that skips the first count items emitted by the source.
    *
    * @category Operator
    */
-  skipFirst<T>(
-    options?: O & {
-      readonly count?: number;
-    },
-  ): ContainerOperator<C, T, T>;
+  skipFirst<T>(options?: {
+    readonly count?: number;
+  }): ContainerOperator<C, T, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface SomeSatisfy<C extends ContainerLike, O = never> {
+export interface SomeSatisfy<C extends ContainerLike> {
   /**
    * @category Operator
    */
   someSatisfy<T>(
     predicate: Predicate<T>,
-    options?: O,
   ): Function1<ContainerOf<C, T>, boolean>;
 }
 
@@ -797,41 +771,37 @@ export interface StartWith<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface TakeFirst<C extends ContainerLike, O = unknown> {
+export interface TakeFirst<C extends ContainerLike> {
   /**
    * Returns a ContainerLike that only emits the first `count` values emitted by the source.
    *
    * @category Operator
    */
-  takeFirst<T>(
-    options?: O & {
-      readonly count?: number;
-    },
-  ): ContainerOperator<C, T, T>;
+  takeFirst<T>(options?: {
+    readonly count?: number;
+  }): ContainerOperator<C, T, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface TakeLast<C extends ContainerLike, O = unknown> {
+export interface TakeLast<C extends ContainerLike> {
   /**
    *  Returns a ContainerLike that only emits the last `count` items emitted by the source.
    *
    * @category Operator
    */
-  takeLast<T>(
-    options?: O & {
-      readonly count?: number;
-    },
-  ): ContainerOperator<C, T, T>;
+  takeLast<T>(options?: {
+    readonly count?: number;
+  }): ContainerOperator<C, T, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface TakeWhile<C extends ContainerLike, O = unknown> {
+export interface TakeWhile<C extends ContainerLike> {
   /**
    * Returns a ContainerLike which emits values emitted by the source as long
    * as each value satisfies the given predicate, and then completes as soon as
@@ -843,7 +813,7 @@ export interface TakeWhile<C extends ContainerLike, O = unknown> {
    */
   takeWhile<T>(
     predicate: Predicate<T>,
-    options?: O & { readonly inclusive?: boolean },
+    options?: { readonly inclusive?: boolean },
   ): ContainerOperator<C, T, T>;
 }
 

@@ -11,9 +11,17 @@ import {
   ContainerLike_type,
   ContainerOf,
   ContainerOperator,
+  EnumeratorLike,
   PromiseableLike,
 } from "./containers.js";
-import { Factory, Function1, Function2, Optional } from "./functions.js";
+import type * as Containers from "./containers.js";
+import {
+  Factory,
+  Function1,
+  Function2,
+  Optional,
+  Updater,
+} from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
   DispatcherLike,
@@ -218,7 +226,7 @@ export interface BackpressureStrategy<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface CatchError<C extends ContainerLike, O = never> {
+export interface CatchError<C extends ContainerLike> {
   /**
    * Returns a ContainerLike which catches errors produced by the source and either continues with
    * the ContainerLike returned from the `onError` callback or swallows the error if
@@ -231,7 +239,7 @@ export interface CatchError<C extends ContainerLike, O = never> {
    */
   catchError<T>(
     onError: Function1<unknown, ContainerOf<C, T> | void>,
-    options?: O,
+    
   ): ContainerOperator<C, T, T>;
 }
 
@@ -338,36 +346,49 @@ export interface DecodeWithCharset<C extends ContainerLike, O = unknown> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Defer<C extends ContainerLike, O = never> {
+export interface Defer<C extends ContainerLike> {
   /**
    * @category Constructor
    */
-  defer<T>(factory: Factory<ContainerOf<C, T>>, options?: O): ContainerOf<C, T>;
+  defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface EncodeUtf8<C extends ContainerLike, O = never> {
+export interface Empty<C extends ContainerLike> extends Containers.Empty<C> {
+  /**
+   * Return an ContainerLike that emits no items.
+   *
+   * @category Constructor
+   */
+  empty<T>(options?: { delay?: number }): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface EncodeUtf8<C extends ContainerLike> {
   /**
    * @category Operator
    */
-  encodeUtf8(options?: O): ContainerOperator<C, string, Uint8Array>;
+  encodeUtf8(): ContainerOperator<C, string, Uint8Array>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Enqueue<C extends ContainerLike, O = never> {
+export interface Enqueue<C extends ContainerLike> {
   /**
    *
    * @category Operator
    */
   enqueue<T>(
     queue: QueueableLike<T> | Function1<T, boolean>,
-    options?: O,
+    
   ): ContainerOperator<C, T, T>;
 }
 
@@ -375,25 +396,25 @@ export interface Enqueue<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Exhaust<C extends ContainerLike, O = never> {
+export interface Exhaust<C extends ContainerLike> {
   /**
    *
    * @category Operator
    */
-  exhaust: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
+  exhaust: <T>() => ContainerOperator<C, ContainerOf<C, T>, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ExhaustMap<C extends ContainerLike, O = never> {
+export interface ExhaustMap<C extends ContainerLike> {
   /**
    * @category Operator
    */
   exhaustMap: <TA, TB>(
     selector: Function1<TA, ContainerOf<C, TB>>,
-    options?: O,
+    
   ) => ContainerOperator<C, TA, TB>;
 }
 
@@ -401,14 +422,16 @@ export interface ExhaustMap<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FirstAsync<C extends ContainerLike, O = never> {
+export interface FirstAsync<C extends ContainerLike> {
   /**
    *
    * @category Transform
    */
-  firstAsync<T>(
-    options?: O,
-  ): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+  firstAsync<T>(options?: {
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  }): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
 }
 
 /**
@@ -570,12 +593,12 @@ export interface ForkZipLatest<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromEnumerable<C extends ContainerLike, O = never> {
+export interface FromEnumerable<C extends ContainerLike> {
   /**
    * @category Constructor
    */
   fromEnumerable<T>(
-    options?: O,
+    
   ): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
 }
 
@@ -583,13 +606,118 @@ export interface FromEnumerable<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromRunnable<C extends ContainerLike, O = never> {
+export interface FromEnumeratorFactory<C extends ContainerLike>
+  extends Containers.FromEnumeratorFactory<C> {
+  /**
+   * @category Constructor
+   */
+  fromEnumeratorFactory<T>(
+    factory: Factory<EnumeratorLike<T>>,
+    options?: {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    },
+  ): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface FromFactory<C extends ContainerLike>
+  extends Containers.FromFactory<C> {
+  /**
+   * @category Constructor
+   */
+  fromFactory<T>(
+    factory: Factory<T>,
+    options?: {
+      readonly delay?: number;
+    },
+  ): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface FromIterable<C extends ContainerLike>
+  extends Containers.FromIterable<C> {
+  /**
+   * @category Constructor
+   */
+  fromIterable<T>(options?: {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }): Function1<Iterable<T>, ContainerOf<C, T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface FromOptional<C extends ContainerLike>
+  extends Containers.FromOptional<C> {
+  /**
+   * @category Constructor
+   */
+  fromOptional<T>(options?: {
+    readonly delay?: number;
+  }): Function1<Optional<T>, ContainerOf<C, T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface FromReadonlyArray<C extends ContainerLike>
+  extends Containers.FromReadonlyArray<C> {
+  /**
+   * @category Constructor
+   */
+  fromReadonlyArray<T>(options?: {
+    readonly count?: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+  }): Function1<readonly T[], ContainerOf<C, T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface FromRunnable<C extends ContainerLike> {
   /**
    * @category Constructor
    */
   fromRunnable: <T>(
-    options?: O,
   ) => Function1<RunnableLike<T>, ContainerOf<C, T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Generate<C extends ContainerLike>
+  extends Containers.Generate<C> {
+  /**
+   * Generates a ContainerLike from a generator function
+   * that is applied to an accumulator value between emitted items.
+   *
+   * @param generator - The generator function.
+   * @param initialValue - Factory function used to generate the initial accumulator.
+   *
+   * @category Constructor
+   */
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options?: {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    },
+  ): ContainerOf<C, T>;
 }
 
 /**
@@ -599,7 +727,6 @@ export interface FromRunnable<C extends ContainerLike, O = never> {
 export interface GenerateLast<
   C extends ContainerLike,
   CInner extends ObservableLike,
-  O = never,
 > {
   /**
    * @category Constructor
@@ -607,7 +734,6 @@ export interface GenerateLast<
   generateLast<T>(
     generator: Function1<T, ContainerOf<CInner, T>>,
     initialValue: Factory<T>,
-    options?: O,
   ): ContainerOf<C, T>;
 }
 
@@ -615,14 +741,16 @@ export interface GenerateLast<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface LastAsync<C extends ContainerLike, O = never> {
+export interface LastAsync<C extends ContainerLike> {
   /**
    *
    * @category Transform
    */
-  lastAsync<T>(
-    options?: O,
-  ): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+  lastAsync<T>(options?: {
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  }): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
 }
 
 /**
@@ -645,25 +773,33 @@ export interface Merge<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface MergeAll<C extends ContainerLike, O = never> {
+export interface MergeAll<C extends ContainerLike> {
   /**
    *
    * @category Operator
    */
-  mergeAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
+  mergeAll: <T>(options?:   {
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  }) => ContainerOperator<C, ContainerOf<C, T>, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface MergeMap<C extends ContainerLike, O = never> {
+export interface MergeMap<C extends ContainerLike> {
   /**
    * @category Operator
    */
   mergeMap: <TA, TB>(
     selector: Function1<TA, ContainerOf<C, TB>>,
-    options?: O,
+    options?:  {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly concurrency?: number;
+    }
   ) => ContainerOperator<C, TA, TB>;
 }
 
@@ -685,13 +821,13 @@ export interface MergeWith<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Never<C extends ContainerLike, O = never> {
+export interface Never<C extends ContainerLike> {
   /**
    * Returns a ContainerLike instance that emits no items and never disposes its state.
    *
    * @category Constructor
    */
-  never<T>(options?: O): ContainerOf<C, T>;
+  never<T>(): ContainerOf<C, T>;
 }
 
 /**
@@ -758,25 +894,25 @@ export interface ScanMany<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface SwitchAll<C extends ContainerLike, O = never> {
+export interface SwitchAll<C extends ContainerLike> {
   /**
    *
    * @category Operator
    */
-  switchAll: <T>(options?: O) => ContainerOperator<C, ContainerOf<C, T>, T>;
+  switchAll: <T>() => ContainerOperator<C, ContainerOf<C, T>, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface SwitchMap<C extends ContainerLike, O = never> {
+export interface SwitchMap<C extends ContainerLike> {
   /**
    * @category Operator
    */
   switchMap: <TA, TB>(
     selector: Function1<TA, ContainerOf<C, TB>>,
-    options?: O,
+    
   ) => ContainerOperator<C, TA, TB>;
 }
 
@@ -829,7 +965,7 @@ export interface Throttle<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ThrowIfEmpty<C extends ContainerLike, O = never> {
+export interface ThrowIfEmpty<C extends ContainerLike> {
   /**
    * Returns a ContainerLike that emits an error if the source completes without emitting a value.
    *
@@ -839,7 +975,7 @@ export interface ThrowIfEmpty<C extends ContainerLike, O = never> {
    */
   throwIfEmpty<T>(
     factory: Factory<unknown>,
-    options?: O,
+    
   ): ContainerOperator<C, T, T>;
 }
 
