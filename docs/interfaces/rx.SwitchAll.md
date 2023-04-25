@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / SwitchAll
 
-# Interface: SwitchAll<C, O\>
+# Interface: SwitchAll<C\>
 
 [rx](../modules/rx.md).SwitchAll
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,23 +20,17 @@
 
 ### switchAll
 
-• **switchAll**: <T\>(`options?`: `O`) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
+• **switchAll**: <T\>() => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
+▸ <`T`\>(): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
 
 ##### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 ##### Returns
 

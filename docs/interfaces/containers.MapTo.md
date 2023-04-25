@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / MapTo
 
-# Interface: MapTo<C, O\>
+# Interface: MapTo<C\>
 
 [containers](../modules/containers.md).MapTo
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -35,7 +34,6 @@
 | Name | Type |
 | :------ | :------ |
 | `value` | `TB` |
-| `options?` | `O` |
 
 #### Returns
 

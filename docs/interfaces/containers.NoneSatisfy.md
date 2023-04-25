@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / NoneSatisfy
 
-# Interface: NoneSatisfy<C, O\>
+# Interface: NoneSatisfy<C\>
 
 [containers](../modules/containers.md).NoneSatisfy
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### noneSatisfy
 
-▸ **noneSatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
+▸ **noneSatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -34,7 +33,6 @@
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
-| `options?` | `O` |
 
 #### Returns
 

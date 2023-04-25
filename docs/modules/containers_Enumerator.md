@@ -18,7 +18,7 @@
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -34,7 +34,6 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -44,7 +43,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -69,7 +68,6 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-| `options?` | `undefined` | - |
 
 #### Returns
 

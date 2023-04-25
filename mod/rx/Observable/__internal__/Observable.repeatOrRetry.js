@@ -1,6 +1,6 @@
 /// <reference types="./Observable.repeatOrRetry.d.ts" />
 
-import { bindMethod, error, partial, pipe } from "../../../functions.js";
+import { bindMethod, error, isSome, partial, pipe, } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
@@ -19,7 +19,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             catch (e) {
                 shouldComplete = true;
-                err = error([e, err]);
+                err = isSome(err) ? error([e, err]) : error(e);
             }
             if (shouldComplete) {
                 delegate[DisposableLike_dispose](err);

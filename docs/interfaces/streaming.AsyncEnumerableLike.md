@@ -17,7 +17,7 @@ exactly one value for every enqueued void request.
 
 - [`StreamableLike`](streaming.StreamableLike.md)<`void`, `T`\>
 
-- [`ContainerLike`](containers.ContainerLike.md)
+- [`ObservableLike`](rx.ObservableLike.md)<`T`\>
 
   ↳ **`AsyncEnumerableLike`**
 
@@ -26,7 +26,6 @@ exactly one value for every enqueued void request.
 ### Properties
 
 - [[\_\_\_ContainerLike\_type]](streaming.AsyncEnumerableLike.md#[___containerlike_type])
-- [[\_\_\_StreamableLike\_isInteractive]](streaming.AsyncEnumerableLike.md#[___streamablelike_isinteractive])
 
 ## Properties
 
@@ -36,17 +35,4 @@ exactly one value for every enqueued void request.
 
 #### Overrides
 
-[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
-
-___
-
-### [\_\_\_StreamableLike\_isInteractive]
-
-• `Readonly` **[\_\_\_StreamableLike\_isInteractive]**: ``true``
-
-Indicates if the resulting is stream is interactive,
-producing exactly one value for every enqueued request.
-
-#### Overrides
-
-[StreamableLike](streaming.StreamableLike.md).[[___StreamableLike_isInteractive]](streaming.StreamableLike.md#[___streamablelike_isinteractive])
+[ObservableLike](rx.ObservableLike.md).[[___ContainerLike_type]](rx.ObservableLike.md#[___containerlike_type])

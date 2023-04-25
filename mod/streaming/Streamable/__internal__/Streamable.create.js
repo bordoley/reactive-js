@@ -1,10 +1,8 @@
 /// <reference types="./Streamable.create.d.ts" />
 
-import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, } from "../../../streaming.js";
-import Streamable_createWithConfig from "./Streamable.createWithConfig.js";
-const Streamable_create = (op) => Streamable_createWithConfig(op, {
-    [StreamableLike_isEnumerable]: false,
-    [StreamableLike_isInteractive]: false,
-    [StreamableLike_isRunnable]: false,
+import { StreamableLike_stream } from "../../../streaming.js";
+import Stream_create from "../../Stream/__internal__/Stream.create.js";
+const Streamable_create = (op) => ({
+    [StreamableLike_stream]: (scheduler, options) => Stream_create(op, scheduler, options),
 });
 export default Streamable_create;

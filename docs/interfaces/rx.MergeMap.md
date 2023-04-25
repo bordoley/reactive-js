@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / MergeMap
 
-# Interface: MergeMap<C, O\>
+# Interface: MergeMap<C\>
 
 [rx](../modules/rx.md).MergeMap
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### mergeMap
 
-• **mergeMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `TB`\>\>, `options?`: `O`) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
+• **mergeMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `TB`\>\>, `options?`: { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `concurrency?`: `number`  }) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type declaration
 
@@ -39,7 +38,10 @@
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `TB`\>\> |
-| `options?` | `O` |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.concurrency?` | `number` |
 
 ##### Returns
 

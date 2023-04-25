@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / KeepType
 
-# Interface: KeepType<C, O\>
+# Interface: KeepType<C\>
 
 [containers](../modules/containers.md).KeepType
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -35,7 +34,6 @@
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`TypePredicate`](../modules/functions.md#typepredicate)<`TA`, `TB`\> |
-| `options?` | `O` |
 
 #### Returns
 

@@ -9,7 +9,7 @@ import ReadonlyObjectMap_union from "../../../keyed-containers/ReadonlyObjectMap
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
 import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
-import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../../../streaming.js";
+import { StreamableLike_stream, } from "../../../streaming.js";
 import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import { CollectionLike_count, DisposableLike_isDisposed, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
@@ -121,9 +121,6 @@ const createCacheStream = /*@__PURE__*/ (() => {
     }));
 })();
 const Streamable_createCache = (persistentStore, options = {}) => ({
-    [StreamableLike_isEnumerable]: false,
-    [StreamableLike_isInteractive]: false,
-    [StreamableLike_isRunnable]: false,
     [StreamableLike_stream]: (scheduler, streamOptions) => createCacheStream(scheduler, streamOptions, options.capacity ?? MAX_SAFE_INTEGER, options.cleanupScheduler ?? scheduler, persistentStore),
 });
 export default Streamable_createCache;

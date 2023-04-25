@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / Last
 
-# Interface: Last<C, O\>
+# Interface: Last<C\>
 
 [containers](../modules/containers.md).Last
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,19 +20,13 @@
 
 ### last
 
-▸ **last**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

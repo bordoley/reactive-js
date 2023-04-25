@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / TakeWhile
 
-# Interface: TakeWhile<C, O\>
+# Interface: TakeWhile<C\>
 
 [containers](../modules/containers.md).TakeWhile
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -38,7 +37,8 @@ this predicate is not satisfied.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> | The predicate function. |
-| `options?` | `O` & { `inclusive?`: `boolean`  } | - |
+| `options?` | `Object` | - |
+| `options.inclusive?` | `boolean` | - |
 
 #### Returns
 

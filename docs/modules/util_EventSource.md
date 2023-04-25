@@ -49,7 +49,7 @@ ___
 
 ### empty
 
-▸ **empty**<`T`\>(`options?`): [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
+▸ **empty**<`T`\>(): [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
 
 Return an ContainerLike that emits no items.
 
@@ -58,12 +58,6 @@ Return an ContainerLike that emits no items.
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -75,7 +69,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -91,7 +85,6 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -101,19 +94,13 @@ ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `unknown`, `T`\>
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `unknown`, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -123,7 +110,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -139,7 +126,6 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -149,7 +135,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -174,7 +160,6 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-| `options?` | `undefined` | - |
 
 #### Returns
 

@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / EncodeUtf8
 
-# Interface: EncodeUtf8<C, O\>
+# Interface: EncodeUtf8<C\>
 
 [rx](../modules/rx.md).EncodeUtf8
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,13 +20,7 @@
 
 ### encodeUtf8
 
-▸ **encodeUtf8**(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `string`, `Uint8Array`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
+▸ **encodeUtf8**(): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `string`, `Uint8Array`\>
 
 #### Returns
 

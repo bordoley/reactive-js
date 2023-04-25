@@ -89,7 +89,9 @@
 ### Transform Functions
 
 - [first](rx_Runnable.md#first)
+- [firstAsync](rx_Runnable.md#firstasync)
 - [last](rx_Runnable.md#last)
+- [lastAsync](rx_Runnable.md#lastasync)
 - [toEnumerable](rx_Runnable.md#toenumerable)
 - [toFlowable](rx_Runnable.md#toflowable)
 - [toObservable](rx_Runnable.md#toobservable)
@@ -410,7 +412,7 @@ ___
 
 ### defer
 
-▸ **defer**<`T`\>(`factory`, `options?`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
+▸ **defer**<`T`\>(`factory`): [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -423,7 +425,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -497,7 +498,7 @@ ___
 | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<`T`\> |
 | `options?` | `Object` |
-| `options.delay` | `number` |
+| `options.delay?` | `number` |
 
 #### Returns
 
@@ -566,7 +567,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | { `delay?`: `number` ; `delayStart?`: `boolean`  } & { `count?`: `number` ; `start?`: `number`  } |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
 
 #### Returns
 
@@ -1148,7 +1153,7 @@ ___
 
 ### catchError
 
-▸ **catchError**<`T`\>(`onError`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike which catches errors produced by the source and either continues with
 the ContainerLike returned from the `onError` callback or swallows the error if
@@ -1165,7 +1170,6 @@ void is returned.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> | A function that takes source error and either returns a ContainerLike to continue with or void if the error should be propagated. |
-| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -1175,7 +1179,7 @@ ___
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 Converts a higher-order ContainerLike into a first-order
 ContainerLike by concatenating the inner sources in order.
@@ -1186,12 +1190,6 @@ ContainerLike by concatenating the inner sources in order.
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
@@ -1200,7 +1198,7 @@ ___
 
 ### concatMap
 
-▸ **concatMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1214,7 +1212,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\>\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -1314,13 +1311,7 @@ ___
 
 ### encodeUtf8
 
-▸ **encodeUtf8**(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `string`, `Uint8Array`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
+▸ **encodeUtf8**(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `string`, `Uint8Array`\>
 
 #### Returns
 
@@ -1353,7 +1344,7 @@ ___
 
 ### enqueue
 
-▸ **enqueue**<`T`\>(`queue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1366,7 +1357,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `queue` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> \| [`Function1`](functions.md#function1)<`T`, `boolean`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -1376,19 +1366,13 @@ ___
 
 ### exhaust
 
-▸ **exhaust**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -1398,7 +1382,7 @@ ___
 
 ### exhaustMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1412,7 +1396,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\>\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -1422,7 +1405,7 @@ ___
 
 ### flatMapIterable
 
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1436,7 +1419,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`IterableLike`](../interfaces/containers.IterableLike.md)<`TB`\>\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -1446,7 +1428,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -1462,7 +1444,6 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -1994,19 +1975,13 @@ ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `unknown`, `T`\>
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `unknown`, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2016,7 +1991,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -2032,7 +2007,6 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2042,7 +2016,7 @@ ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2056,7 +2030,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2066,7 +2039,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -2091,7 +2064,6 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -2101,7 +2073,7 @@ ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2115,7 +2087,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `value` | `TB` |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2200,7 +2171,7 @@ ___
 
 ### noneSatisfy
 
-▸ **noneSatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
+▸ **noneSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -2213,7 +2184,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2223,19 +2193,13 @@ ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2312,7 +2276,7 @@ ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -2327,7 +2291,6 @@ ___
 | :------ | :------ |
 | `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2337,7 +2300,7 @@ ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that mirrors the source, repeating it whenever the predicate returns true.
 
@@ -2352,13 +2315,12 @@ Returns a ContainerLike that mirrors the source, repeating it whenever the predi
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(`count`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that mirrors the source, repeating it `count` times.
 
@@ -2373,13 +2335,12 @@ Returns a ContainerLike that mirrors the source, repeating it `count` times.
 | Name | Type |
 | :------ | :------ |
 | `count` | `number` |
-| `options?` | `undefined` |
 
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that mirrors the source, continually repeating it.
 
@@ -2388,12 +2349,6 @@ Returns a ContainerLike that mirrors the source, continually repeating it.
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2443,7 +2398,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 Returns a ContainerLike that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -2461,7 +2416,6 @@ and emits each intermediate result.
 | :------ | :------ | :------ |
 | `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
-| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -2544,7 +2498,7 @@ ___
 
 ### someSatisfy
 
-▸ **someSatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
+▸ **someSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -2557,7 +2511,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2590,19 +2543,13 @@ ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2612,7 +2559,7 @@ ___
 
 ### switchMap
 
-▸ **switchMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2626,7 +2573,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`TB`\>\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -2785,7 +2731,7 @@ ___
 
 ### throwIfEmpty
 
-▸ **throwIfEmpty**<`T`\>(`factory`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **throwIfEmpty**<`T`\>(`factory`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that emits an error if the source completes without emitting a value.
 
@@ -2800,7 +2746,6 @@ Returns a ContainerLike that emits an error if the source completes without emit
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `factory` | [`Factory`](functions.md#factory)<`unknown`\> | A factory function invoked to produce the error to be thrown. |
-| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -3140,7 +3085,7 @@ ___
 
 ### everySatisfy
 
-▸ **everySatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
+▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `boolean`\>
 
 /**
 Determines whether all the members of an Container satisfy the predicate.
@@ -3158,7 +3103,6 @@ it returns false, or until the end of the Container.
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -3206,19 +3150,13 @@ ___
 
 ### first
 
-▸ **first**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+▸ **first**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -3226,9 +3164,9 @@ ___
 
 ___
 
-### last
+### firstAsync
 
-▸ **last**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+▸ **firstAsync**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -3240,11 +3178,55 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `undefined` |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+___
+
+### last
+
+▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
+### lastAsync
+
+▸ **lastAsync**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 

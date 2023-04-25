@@ -1,5 +1,11 @@
 import { ContainerOf, ContainerOperator } from "../../../containers.js";
-import { bindMethod, error, partial, pipe } from "../../../functions.js";
+import {
+  bindMethod,
+  error,
+  isSome,
+  partial,
+  pipe,
+} from "../../../functions.js";
 import {
   ObservableLike,
   ObservableLike_isEnumerable,
@@ -36,7 +42,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
         shouldComplete = !shouldRepeat(count, err);
       } catch (e) {
         shouldComplete = true;
-        err = error([e, err]);
+        err = isSome(err) ? error([e, err]) : error(e);
       }
 
       if (shouldComplete) {

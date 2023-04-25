@@ -30,10 +30,6 @@ Base type for all Containers.
 
   ↳ [`ObservableLike`](rx.ObservableLike.md)
 
-  ↳ [`AsyncEnumerableLike`](streaming.AsyncEnumerableLike.md)
-
-  ↳ [`FlowableLike`](streaming.FlowableLike.md)
-
   ↳ [`EventSourceLike`](util.EventSourceLike.md)
 
 ## Table of contents

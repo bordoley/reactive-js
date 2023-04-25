@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / FromOptional
 
-# Interface: FromOptional<C, O\>
+# Interface: FromOptional<C\>
 
 [containers](../modules/containers.md).FromOptional
 
@@ -9,7 +9,12 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
+
+## Hierarchy
+
+- **`FromOptional`**
+
+  ↳ [`FromOptional`](rx.FromOptional.md)
 
 ## Table of contents
 
@@ -21,19 +26,13 @@
 
 ### fromOptional
 
-▸ **fromOptional**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\>
+▸ **fromOptional**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

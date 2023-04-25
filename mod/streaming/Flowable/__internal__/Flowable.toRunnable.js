@@ -1,13 +1,12 @@
 /// <reference types="./Flowable.toRunnable.d.ts" />
 
-import { errorWithDebugMessage, pipe } from "../../../functions.js";
+import { errorWithDebugMessage } from "../../../functions.js";
+import { ObservableLike_isRunnable, } from "../../../rx.js";
 import Observable_throws from "../../../rx/Observable/__internal__/Observable.throws.js";
-import { StreamableLike_isRunnable } from "../../../streaming.js";
-import Flowable_toObservable from "./Flowable.toObservable.js";
 const throwOptions = {
     raise: () => errorWithDebugMessage("Flowable is not Runnable"),
 };
-const Flowable_toRunnable = () => (enumerable) => enumerable[StreamableLike_isRunnable]
-    ? pipe(enumerable, Flowable_toObservable())
+const Flowable_toRunnable = () => (flowable) => flowable[ObservableLike_isRunnable]
+    ? flowable
     : Observable_throws(throwOptions);
 export default Flowable_toRunnable;

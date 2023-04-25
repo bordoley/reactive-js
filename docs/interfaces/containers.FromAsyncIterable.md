@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / FromAsyncIterable
 
-# Interface: FromAsyncIterable<C, O\>
+# Interface: FromAsyncIterable<C\>
 
 [containers](../modules/containers.md).FromAsyncIterable
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,19 +20,13 @@
 
 ### fromAsyncIterable
 
-▸ **fromAsyncIterable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\>
+▸ **fromAsyncIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / Repeat
 
-# Interface: Repeat<C, O\>
+# Interface: Repeat<C\>
 
 [containers](../modules/containers.md).Repeat
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
 Returns a ContainerLike that mirrors the source, repeating it whenever the predicate returns true.
 
@@ -36,13 +35,12 @@ Returns a ContainerLike that mirrors the source, repeating it whenever the predi
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](../modules/functions.md#predicate)<`number`\> |
-| `options?` | `O` |
 
 #### Returns
 
 [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
-▸ **repeat**<`T`\>(`count`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
 Returns a ContainerLike that mirrors the source, repeating it `count` times.
 
@@ -57,13 +55,12 @@ Returns a ContainerLike that mirrors the source, repeating it `count` times.
 | Name | Type |
 | :------ | :------ |
 | `count` | `number` |
-| `options?` | `O` |
 
 #### Returns
 
 [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
-▸ **repeat**<`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **repeat**<`T`\>(): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
 Returns a ContainerLike that mirrors the source, continually repeating it.
 
@@ -72,12 +69,6 @@ Returns a ContainerLike that mirrors the source, continually repeating it.
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

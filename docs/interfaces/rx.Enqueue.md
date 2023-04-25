@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / Enqueue
 
-# Interface: Enqueue<C, O\>
+# Interface: Enqueue<C\>
 
 [rx](../modules/rx.md).Enqueue
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### enqueue
 
-▸ **enqueue**<`T`\>(`queue`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -34,7 +33,6 @@
 | Name | Type |
 | :------ | :------ |
 | `queue` | [`QueueableLike`](util.QueueableLike.md)<`T`\> \| [`Function1`](../modules/functions.md#function1)<`T`, `boolean`\> |
-| `options?` | `O` |
 
 #### Returns
 

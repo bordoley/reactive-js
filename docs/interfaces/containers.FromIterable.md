@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / FromIterable
 
-# Interface: FromIterable<C, O\>
+# Interface: FromIterable<C\>
 
 [containers](../modules/containers.md).FromIterable
 
@@ -9,7 +9,12 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
+
+## Hierarchy
+
+- **`FromIterable`**
+
+  ↳ [`FromIterable`](rx.FromIterable.md)
 
 ## Table of contents
 
@@ -21,19 +26,13 @@
 
 ### fromIterable
 
-▸ **fromIterable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\>
+▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

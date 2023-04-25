@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / SkipFirst
 
-# Interface: SkipFirst<C, O\>
+# Interface: SkipFirst<C\>
 
 [containers](../modules/containers.md).SkipFirst
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -35,7 +34,8 @@ Returns a ContainerLike that skips the first count items emitted by the source.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `O` & { `count?`: `number`  } |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
 #### Returns
 

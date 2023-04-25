@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / TakeLast
 
-# Interface: TakeLast<C, O\>
+# Interface: TakeLast<C\>
 
 [containers](../modules/containers.md).TakeLast
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -35,7 +34,8 @@ Returns a ContainerLike that only emits the last `count` items emitted by the so
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `O` & { `count?`: `number`  } |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
 #### Returns
 
