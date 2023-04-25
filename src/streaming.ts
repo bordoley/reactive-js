@@ -5,11 +5,7 @@ import {
   __StreamLike_scheduler as StreamLike_scheduler,
   __StreamableLike_stream as StreamableLike_stream,
 } from "./__internal__/symbols.js";
-import {
-  ContainerLike,
-  ContainerLike_type,
-  ContainerOf,
-} from "./containers.js";
+import { ContainerLike, ContainerOf } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike } from "./rx.js";
@@ -132,9 +128,7 @@ export interface CacheLike<T>
     Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>,
     never,
     CacheStreamLike<T>
-  > {
-  readonly [ContainerLike_type]?: CacheLike<never>;
-}
+  > {}
 
 /**
  * @noInheritDoc
