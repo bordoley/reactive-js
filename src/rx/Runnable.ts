@@ -86,7 +86,7 @@ import {
   ZipLatest,
   ZipWithLatestFrom,
 } from "../rx.js";
-import { ToFlowable } from "../streaming.js";
+import { Flow } from "../streaming.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -148,6 +148,7 @@ import Runnable_exhaust from "./Runnable/__internal__/Runnable.exhaust.js";
 import Runnable_exhaustMap from "./Runnable/__internal__/Runnable.exhaustMap.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
 import Runnable_flatMapIterable from "./Runnable/__internal__/Runnable.flatMapIterable.js";
+import Runnable_flow from "./Runnable/__internal__/Runnable.flow.js";
 import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_mergeAll from "./Runnable/__internal__/Runnable.mergeAll.js";
@@ -161,7 +162,6 @@ import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.j
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
-import Runnable_toFlowable from "./Runnable/__internal__/Runnable.toFlowable.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 
 export const animate: Animate<RunnableLike>["animate"] = Observable_animate;
@@ -230,6 +230,8 @@ export const firstAsync: FirstAsync<RunnableLike>["firstAsync"] =
 
 export const flatMapIterable: FlatMapIterable<RunnableLike>["flatMapIterable"] =
   Runnable_flatMapIterable;
+
+export const flow: Flow<RunnableLike>["flow"] = Runnable_flow;
 
 export const forEach: ForEach<RunnableLike>["forEach"] = Observable_forEach;
 
@@ -351,9 +353,6 @@ export const timeout: Timeout<RunnableLike>["timeout"] = Observable_timeout;
 
 export const toEnumerable: ToEnumerable<RunnableLike>["toEnumerable"] =
   Observable_toEnumerable;
-
-export const toFlowable: ToFlowable<RunnableLike>["toFlowable"] =
-  Runnable_toFlowable;
 
 export const toObservable: ToObservable<RunnableLike>["toObservable"] =
   Container_identity as ToObservable<RunnableLike>["toObservable"];

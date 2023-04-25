@@ -29,6 +29,7 @@
 
 - [enumerateAsync](keyed_containers_ReadonlyArray.md#enumerateasync)
 - [everySatisfy](keyed_containers_ReadonlyArray.md#everysatisfy)
+- [flow](keyed_containers_ReadonlyArray.md#flow)
 - [getLength](keyed_containers_ReadonlyArray.md#getlength)
 - [isEmpty](keyed_containers_ReadonlyArray.md#isempty)
 
@@ -39,7 +40,6 @@
 - [first](keyed_containers_ReadonlyArray.md#first)
 - [last](keyed_containers_ReadonlyArray.md#last)
 - [toEnumerable](keyed_containers_ReadonlyArray.md#toenumerable)
-- [toFlowable](keyed_containers_ReadonlyArray.md#toflowable)
 - [toIterable](keyed_containers_ReadonlyArray.md#toiterable)
 - [toObservable](keyed_containers_ReadonlyArray.md#toobservable)
 - [toReadonlyArray](keyed_containers_ReadonlyArray.md#toreadonlyarray)
@@ -459,6 +459,29 @@ it returns false, or until the end of the Container.
 
 ___
 
+### flow
+
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | { `delay?`: `number` ; `delayStart?`: `boolean`  } & { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `replay?`: `number`  } |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+___
+
 ### getLength
 
 ▸ **getLength**(`arr`): `number`
@@ -593,30 +616,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
-
-___
-
-### toFlowable
-
-▸ **toFlowable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-| `options.delayStart?` | `boolean` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 

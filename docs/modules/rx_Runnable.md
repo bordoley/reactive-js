@@ -84,6 +84,7 @@
 ### Other Functions
 
 - [everySatisfy](rx_Runnable.md#everysatisfy)
+- [flow](rx_Runnable.md#flow)
 - [run](rx_Runnable.md#run)
 
 ### Transform Functions
@@ -93,7 +94,6 @@
 - [last](rx_Runnable.md#last)
 - [lastAsync](rx_Runnable.md#lastasync)
 - [toEnumerable](rx_Runnable.md#toenumerable)
-- [toFlowable](rx_Runnable.md#toflowable)
 - [toObservable](rx_Runnable.md#toobservable)
 - [toReadonlyArray](rx_Runnable.md#toreadonlyarray)
 - [toRunnable](rx_Runnable.md#torunnable)
@@ -3110,6 +3110,32 @@ it returns false, or until the end of the Container.
 
 ___
 
+### flow
+
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`FlowableStreamLike`](../interfaces/streaming.FlowableStreamLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+___
+
 ### run
 
 ▸ **run**<`T`\>(`options?`): (`observable`: [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>) => `void`
@@ -3249,28 +3275,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
-
-___
-
-### toFlowable
-
-▸ **toFlowable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
 
 ___
 

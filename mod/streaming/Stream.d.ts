@@ -1,3 +1,4 @@
+export declare const sinkInto: <TReq, T>(dest: import("../streaming.js").StreamLike<T, TReq>) => (src: import("../streaming.js").StreamLike<TReq, T>) => import("../util.js").DisposableLike;
 export declare const syncState: <T>(onInit: (initialValue: T) => import("../rx.js").ObservableLike<import("../functions.js").Updater<T>>, onChange: (oldValue: T, newValue: T) => import("../rx.js").ObservableLike<import("../functions.js").Updater<T>>, options?: {
     readonly throttleDuration?: number | undefined;
     readonly capacity?: number | undefined;

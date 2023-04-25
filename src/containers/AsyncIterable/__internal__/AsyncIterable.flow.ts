@@ -5,26 +5,36 @@ import Observable_create from "../../../rx/Observable/__internal__/Observable.cr
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
 import {
+  SchedulerLike,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
   SchedulerLike_schedule,
 } from "../../../scheduling.js";
-import { ToFlowable } from "../../../streaming.js";
-import Flowable_create from "../../../streaming/Flowable/__internal__/Flowable.create.js";
+import { Flow } from "../../../streaming.js";
+import FlowableStream_create from "../../../streaming/Flowable/__internal__/FlowableStream.create.js";
 import {
   DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 
-const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
-  <T>() =>
-  (iterable: AsyncIterableLike<T>) =>
-    Flowable_create((modeObs: ObservableLike<boolean>) =>
-      Observable_create<T>((observer: ObserverLike<T>) => {
+const AsyncIterable_flow: Flow<AsyncIterableLike>["flow"] =
+  <T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly replay?: number;
+      readonly capacity?: number;
+    },
+  ) =>
+  (iterable: AsyncIterableLike<T>) => {
+    const op = (modeObs: ObservableLike<boolean>) =>
+      Observable_create((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();
         const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
 
@@ -83,7 +93,9 @@ const AsyncIterable_toFlowable: ToFlowable<AsyncIterableLike>["toFlowable"] =
           Disposable_addTo(observer),
           Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
         );
-      }),
-    );
+      });
 
-export default AsyncIterable_toFlowable;
+    return FlowableStream_create<T>(op, scheduler, options);
+  };
+
+export default AsyncIterable_flow;

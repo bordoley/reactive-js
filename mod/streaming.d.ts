@@ -1,5 +1,5 @@
 import { __FlowableStreamLike_isPaused as FlowableStreamLike_isPaused, __FlowableStreamLike_pause as FlowableStreamLike_pause, __FlowableStreamLike_resume as FlowableStreamLike_resume, __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
-import { ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf } from "./containers.js";
+import { ContainerLike, ContainerLike_type, ContainerOf } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike } from "./rx.js";
@@ -67,16 +67,6 @@ export interface FlowableStreamLike<T = unknown> extends StreamLike<boolean | Up
     [FlowableStreamLike_resume](): void;
 }
 /**
- * A container that returns an `ObservableLike` which supports
- * imperative flow control when subscribed to.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface FlowableLike<T = unknown> extends StreamableLike<boolean | Updater<boolean>, T, FlowableStreamLike<T>>, ObservableLike<T> {
-    readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
-}
-/**
  * A cache stream that support transaction updates of a collection of keys
  * and observing the changing values of individual keys.
  *
@@ -112,13 +102,10 @@ export interface EnumerateAsync<C extends ContainerLike, O = unknown> {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ContainerOf<C, T>, StreamLike<void, T> & DisposableLike>;
 }
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface ToFlowable<C extends ContainerLike, O = never> {
-    /**
-     * @category Transform
-     */
-    toFlowable<T>(options?: O): Function1<ContainerOf<C, T>, FlowableLike<T>>;
+export interface Flow<C extends ContainerLike, O = unknown> {
+    flow<T>(scheduler: SchedulerLike, options?: O & {
+        readonly replay?: number;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    }): Function1<ContainerOf<C, T>, FlowableStreamLike<T> & DisposableLike>;
 }

@@ -5,34 +5,16 @@ import Observable_ignoreElements from "../../../rx/Observable/__internal__/Obser
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
-import {
-  StreamLike,
-  StreamLike_scheduler,
-  StreamableLike,
-  StreamableLike_stream,
-} from "../../../streaming.js";
-import {
-  BufferLike_capacity,
-  DispatcherLike_complete,
-  DisposableLike,
-  QueueableLike_backpressureStrategy,
-} from "../../../util.js";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
+import { DispatcherLike_complete, DisposableLike } from "../../../util.js";
 
-const Streamable_sinkInto =
+const Stream_sinkInto =
   <TReq, T>(dest: StreamLike<T, TReq>) =>
-  (src: StreamableLike<TReq, T>): DisposableLike => {
-    const capacity = dest[BufferLike_capacity];
-    const backpressureStrategy = dest[QueueableLike_backpressureStrategy];
-    const srcStream = src[StreamableLike_stream](dest[StreamLike_scheduler], {
-      backpressureStrategy,
-      capacity,
-    });
-
+  (src: StreamLike<TReq, T>): DisposableLike => {
     return pipe(
       Observable_merge(
         pipe(
-          srcStream,
+          src,
           Observable_enqueue<ObservableLike, T>(dest),
           Observable_ignoreElements<ObservableLike, unknown>(),
           Observable_onSubscribe(
@@ -41,14 +23,13 @@ const Streamable_sinkInto =
         ),
         pipe(
           dest,
-          Observable_enqueue<ObservableLike, TReq>(srcStream),
+          Observable_enqueue<ObservableLike, TReq>(src),
           Observable_ignoreElements<ObservableLike, unknown>(),
         ),
       ),
       Observable_ignoreElements<ObservableLike, unknown>(),
       Observable_subscribeWithConfig(dest[StreamLike_scheduler], dest),
-      Disposable_add(srcStream),
     );
   };
 
-export default Streamable_sinkInto;
+export default Stream_sinkInto;

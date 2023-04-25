@@ -30,8 +30,6 @@ TStream
 
 - **`StreamableLike`**
 
-  ↳ [`FlowableLike`](streaming.FlowableLike.md)
-
   ↳ [`CacheLike`](streaming.CacheLike.md)
 
 ## Table of contents

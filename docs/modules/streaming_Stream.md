@@ -6,9 +6,45 @@
 
 ### Functions
 
+- [sinkInto](streaming_Stream.md#sinkinto)
 - [syncState](streaming_Stream.md#syncstate)
 
 ## Functions
+
+### sinkInto
+
+▸ **sinkInto**<`TReq`, `T`\>(`dest`): (`src`: [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>) => [`DisposableLike`](../interfaces/util.DisposableLike.md)
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TReq` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dest` | [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `TReq`\> |
+
+#### Returns
+
+`fn`
+
+▸ (`src`): [`DisposableLike`](../interfaces/util.DisposableLike.md)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\> |
+
+##### Returns
+
+[`DisposableLike`](../interfaces/util.DisposableLike.md)
+
+___
 
 ### syncState
 

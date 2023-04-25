@@ -1,16 +1,19 @@
 import { ReadonlyArrayLike } from "../../../containers.js";
 import { compose } from "../../../functions.js";
-import Runnable_toFlowable from "../../../rx/Runnable/__internal__/Runnable.toFlowable.js";
-import { ToFlowable } from "../../../streaming.js";
+import Runnable_flow from "../../../rx/Runnable/__internal__/Runnable.flow.js";
+import { Flow } from "../../../streaming.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray.toObservable.js";
 
-const ReadonlyArray_toFlowable: ToFlowable<
+const ReadonlyArray_toFlowable: Flow<
   ReadonlyArrayLike,
   {
     readonly delay?: number;
     readonly delayStart?: boolean;
   }
->["toFlowable"] = options =>
-  compose(ReadonlyArray_toObservable(options), Runnable_toFlowable());
+>["flow"] = (scheduler, options) =>
+  compose(
+    ReadonlyArray_toObservable(options),
+    Runnable_flow(scheduler, options),
+  );
 
 export default ReadonlyArray_toFlowable;

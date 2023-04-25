@@ -11,7 +11,7 @@
 - [useEnumerate](integrations_react.md#useenumerate)
 - [useEventPublisher](integrations_react.md#useeventpublisher)
 - [useEventSource](integrations_react.md#useeventsource)
-- [useFlowable](integrations_react.md#useflowable)
+- [useFlow](integrations_react.md#useflow)
 - [useObservable](integrations_react.md#useobservable)
 - [useStream](integrations_react.md#usestream)
 - [useStreamable](integrations_react.md#usestreamable)
@@ -348,9 +348,9 @@ ___
 
 ___
 
-### useFlowable
+### useFlow
 
-▸ **useFlowable**<`T`\>(`flowable`, `options?`): `Object`
+▸ **useFlow**<`T`\>(`runnable`, `options?`): `Object`
 
 #### Type parameters
 
@@ -362,7 +362,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `flowable` | [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\> |
+| `runnable` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -380,7 +380,7 @@ ___
 | `resume` | [`SideEffect`](functions.md#sideeffect) |
 | `value` | [`Optional`](functions.md#optional)<`T`\> |
 
-▸ **useFlowable**<`T`\>(`factory`, `deps`, `options?`): `Object`
+▸ **useFlow**<`T`\>(`factory`, `deps`, `options?`): `Object`
 
 #### Type parameters
 
@@ -392,7 +392,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |

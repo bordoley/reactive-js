@@ -6,7 +6,7 @@ import * as Observable from "@reactive-js/core/rx/Observable";
 import {
   createComponent,
   useEnumerate,
-  useFlowable,
+  useFlow,
   useObservable,
   useStream,
   useAnimations,
@@ -134,7 +134,7 @@ const Root = () => {
     }
   }, [history.uri, counterInitialValue, setCounterInitialValue]);
 
-  const counter = useFlowable(
+  const counter = useFlow(
     () =>
       pipe(
         Runnable.generate(increment, returns(counterInitialValue ?? -1)),
@@ -144,7 +144,6 @@ const Root = () => {
             query: `v=${value}`,
           })),
         ),
-        Runnable.toFlowable(),
       ),
     [history.replace, counterInitialValue],
   );

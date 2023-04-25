@@ -35,13 +35,14 @@ import {
   ToRunnable,
 } from "../rx.js";
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { EnumerateAsync, ToFlowable } from "../streaming.js";
+import { EnumerateAsync, Flow } from "../streaming.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import ReadonlyArray_enumerateAsync from "./ReadonlyArray/__internal__/ReadonlyArray.enumerateAsync.js";
 import ReadonlyArray_everySatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_first from "./ReadonlyArray/__internal__/ReadonlyArray.first.js";
+import ReadonlyArray_flow from "./ReadonlyArray/__internal__/ReadonlyArray.flow.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
 import ReadonlyArray_getLength from "./ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
@@ -53,7 +54,6 @@ import ReadonlyArray_last from "./ReadonlyArray/__internal__/ReadonlyArray.last.
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_mapWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.mapWithKey.js";
 import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
-import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 
@@ -84,6 +84,14 @@ export const everySatisfy: EverySatisfy<ReadonlyArrayLike>["everySatisfy"] =
   ReadonlyArray_everySatisfy;
 
 export const first: First<ReadonlyArrayLike>["first"] = ReadonlyArray_first;
+
+export const flow: Flow<
+  ReadonlyArrayLike,
+  {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }
+>["flow"] = ReadonlyArray_flow;
 
 export const forEach: ForEach<ReadonlyArrayLike>["forEach"] =
   ReadonlyArray_forEach;
@@ -138,14 +146,6 @@ export const toEnumerable: ToEnumerable<
     readonly count: number;
   }
 >["toEnumerable"] = ReadonlyArray_toObservable;
-
-export const toFlowable: ToFlowable<
-  ReadonlyArrayLike,
-  {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }
->["toFlowable"] = ReadonlyArray_toFlowable;
 
 export const toIterable: ToIterable<
   ReadonlyArrayLike,

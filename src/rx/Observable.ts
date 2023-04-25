@@ -29,7 +29,7 @@ import {
   Zip,
   ZipWith,
 } from "../containers.js";
-import AsyncIterable_toFlowable from "../containers/AsyncIterable/__internal__/AsyncIterable.toFlowable.js";
+import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
@@ -269,7 +269,7 @@ export const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"] =
 export const fromAsyncFactory = Observable_fromAsyncFactory;
 
 export const fromAsyncIterable: FromAsyncIterable<ObservableLike>["fromAsyncIterable"] =
-  AsyncIterable_toFlowable;
+  AsyncIterable_toObservable;
 
 export const fromEnumeratorFactory: FromEnumeratorFactory<ObservableLike>["fromEnumeratorFactory"] =
   Runnable_fromEnumeratorFactory;
