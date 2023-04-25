@@ -75,18 +75,18 @@ export const __EventSourceLike_addListener = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __FlowableStreamLike_isPaused = /*@__PURE__*/ symbol(
-  "FlowableStreamLike_isPaused",
+export const __FlowableObservableLike_isPaused = /*@__PURE__*/ symbol(
+  "FlowableObservableLike_isPaused",
 );
 
 /** @type {unique symbol} */
-export const __FlowableStreamLike_pause = /*@__PURE__*/ symbol(
-  "FlowableStreamLike_pause",
+export const __FlowableObservableLike_pause = /*@__PURE__*/ symbol(
+  "FlowableObservableLike_pause",
 );
 
 /** @type {unique symbol} */
-export const __FlowableStreamLike_resume = /*@__PURE__*/ symbol(
-  "FlowableStreamLike_resume",
+export const __FlowableObservableLike_resume = /*@__PURE__*/ symbol(
+  "FlowableObservableLike_resume",
 );
 
 /** @type {unique symbol} */

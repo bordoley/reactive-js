@@ -31,11 +31,11 @@ export const __EventPublisherLike_listenerCount: unique symbol;
 /** @type {unique symbol} */
 export const __EventSourceLike_addListener: unique symbol;
 /** @type {unique symbol} */
-export const __FlowableStreamLike_isPaused: unique symbol;
+export const __FlowableObservableLike_isPaused: unique symbol;
 /** @type {unique symbol} */
-export const __FlowableStreamLike_pause: unique symbol;
+export const __FlowableObservableLike_pause: unique symbol;
 /** @type {unique symbol} */
-export const __FlowableStreamLike_resume: unique symbol;
+export const __FlowableObservableLike_resume: unique symbol;
 /** @type {unique symbol} */
 export const __KeyedCollectionLike_get: unique symbol;
 /** @type {unique symbol} */

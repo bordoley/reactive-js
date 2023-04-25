@@ -2,9 +2,9 @@
 
 import { describe, expectArrayEquals, expectEquals, testAsync, testModule, } from "../../__internal__/testing.js";
 import { error, pipe } from "../../functions.js";
+import { FlowableObservableLike_resume } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { FlowableStreamLike_resume } from "../../streaming.js";
 import { DisposableLike_dispose } from "../../util.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 testModule("AsyncIterable", describe("flow", testAsync("infinite immediately resolving iterable", async () => {
@@ -16,7 +16,7 @@ testModule("AsyncIterable", describe("flow", testAsync("infinite immediately res
                 yield i++;
             }
         })(), AsyncIterable.flow(scheduler, { capacity: 1 }));
-        stream[FlowableStreamLike_resume]();
+        stream[FlowableObservableLike_resume]();
         const result = await pipe(stream, Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync({ scheduler }));
         scheduler[DisposableLike_dispose]();
         pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
@@ -32,7 +32,7 @@ testModule("AsyncIterable", describe("flow", testAsync("infinite immediately res
             yield 2;
             yield 3;
         })(), AsyncIterable.flow(scheduler));
-        stream[FlowableStreamLike_resume]();
+        stream[FlowableObservableLike_resume]();
         const result = await pipe(stream, Observable.buffer(), Observable.lastAsync({ scheduler }));
         pipe(result ?? [], expectArrayEquals([1, 2, 3]));
     }
@@ -46,7 +46,7 @@ testModule("AsyncIterable", describe("flow", testAsync("infinite immediately res
         const stream = pipe((async function* foo() {
             throw e;
         })(), AsyncIterable.flow(scheduler));
-        stream[FlowableStreamLike_resume]();
+        stream[FlowableObservableLike_resume]();
         const result = await pipe(stream, Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())), Observable.lastAsync({ scheduler }));
         pipe(result, expectEquals(e));
     }

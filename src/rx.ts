@@ -1,9 +1,13 @@
 import {
+  __FlowableObservableLike_isPaused as FlowableObservableLike_isPaused,
+  __FlowableObservableLike_pause as FlowableObservableLike_pause,
+  __FlowableObservableLike_resume as FlowableObservableLike_resume,
   __ObservableLike_isEnumerable as ObservableLike_isEnumerable,
   __ObservableLike_isRunnable as ObservableLike_isRunnable,
   __ObservableLike_observe as ObservableLike_observe,
   __ObserverLike_notify as ObserverLike_notify,
   __PublisherLike_observerCount as PublisherLike_observerCount,
+  __StreamLike_scheduler as StreamLike_scheduler,
 } from "./__internal__/symbols.js";
 import {
   ContainerLike,
@@ -33,11 +37,15 @@ import {
 } from "./util.js";
 
 export {
+  FlowableObservableLike_isPaused,
+  FlowableObservableLike_pause,
+  FlowableObservableLike_resume,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike_notify,
   PublisherLike_observerCount,
+  StreamLike_scheduler,
 };
 
 /**
@@ -138,6 +146,43 @@ export interface PublisherLike<T = unknown>
    * The number of observers currently observing the `Publisher`.
    */
   readonly [PublisherLike_observerCount]: number;
+}
+
+/**
+ * Represents a duplex stream
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface StreamLike<TReq, T>
+  extends DispatcherLike<TReq>,
+    MulticastObservableLike<T> {
+  readonly [StreamLike_scheduler]: SchedulerLike;
+}
+
+/**
+ * A `MulticastObservableLike` that supports imperative flow control
+ * via the pause and resume methods.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface FlowableObservableLike<T = unknown>
+  extends StreamLike<boolean | Updater<boolean>, T> {
+  /**
+   * Reactive property indicating if the stream is paused or not.
+   */
+  readonly [FlowableObservableLike_isPaused]: MulticastObservableLike<boolean>;
+
+  /**
+   * Imperatively pause the stream.
+   */
+  [FlowableObservableLike_pause](): void;
+
+  /**
+   * Imperatively resume the stream.
+   */
+  [FlowableObservableLike_resume](): void;
 }
 
 /**
@@ -394,6 +439,30 @@ export interface Enqueue<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
+export interface EnumerateAsync<C extends ContainerLike, O = unknown> {
+  enumerateAsync<T>(
+    scheduler: SchedulerLike,
+    options?: O & {
+      /**
+       * The number of items to buffer for replay when an observer subscribes
+       * to the stream.
+       */
+      readonly replay?: number;
+
+      /**
+       * The capacity of the stream's request queue.
+       */
+      readonly capacity?: number;
+
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<ContainerOf<C, T>, StreamLike<void, T> & DisposableLike>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface Exhaust<C extends ContainerLike> {
   /**
    *
@@ -429,6 +498,17 @@ export interface FirstAsync<C extends ContainerLike> {
     capacity?: number;
     backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+}
+
+export interface Flow<C extends ContainerLike, O = unknown> {
+  flow<T>(
+    scheduler: SchedulerLike,
+    options?: O & {
+      readonly replay?: number;
+      readonly capacity?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<ContainerOf<C, T>, FlowableObservableLike<T> & DisposableLike>;
 }
 
 /**

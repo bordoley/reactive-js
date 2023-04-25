@@ -1,11 +1,14 @@
 import { bindMethod, pipe, returns } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import {
+  ObservableLike,
+  StreamLike,
+  StreamLike_scheduler,
+} from "../../../rx.js";
 import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.enqueue.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_merge from "../../../rx/Observable/__internal__/Observable.merge.js";
 import Observable_onSubscribe from "../../../rx/Observable/__internal__/Observable.onSubscribe.js";
 import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
-import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import { DispatcherLike_complete, DisposableLike } from "../../../util.js";
 
 const Stream_sinkInto =

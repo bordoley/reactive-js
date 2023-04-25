@@ -1,7 +1,6 @@
 import { Enumerate, EnumeratorLike, EverySatisfy, First, FromIterable, FromOptional, Last, SomeSatisfy, ToIterable } from "../containers.js";
 import { Empty, Entries, ForEach, ForEachWithKey, FromReadonlyArray, Identity, Keep, KeepType, KeepWithKey, Map, MapWithKey, ReadonlyArrayLike, ToReadonlyArray } from "../keyed-containers.js";
-import { FromEnumerable, FromRunnable, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
-import { EnumerateAsync, Flow } from "../streaming.js";
+import { EnumerateAsync, Flow, FromEnumerable, FromRunnable, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 export declare const empty: Empty<ReadonlyArrayLike>["empty"];
 export declare const entries: Entries<ReadonlyArrayLike>["entries"];
 export declare const enumerate: Enumerate<ReadonlyArrayLike, EnumeratorLike, {

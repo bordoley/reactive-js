@@ -4,7 +4,7 @@ import { __ComputeContext_awaitOrObserve, __ComputeContext_memoOrUse, __ComputeC
 import { bind, bindMethod, isSome, none, pipe, } from "../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../rx.js";
 import { SchedulerLike_schedule } from "../scheduling.js";
-import { StreamableLike_stream, } from "../streaming.js";
+import { StreamableLike_stream } from "../streaming.js";
 import Streamable_createStateStore from "../streaming/Streamable/__internal__/Streamable.createStateStore.js";
 import { DisposableLike_dispose, } from "../util.js";
 import Disposable_addTo from "../util/Disposable/__internal__/Disposable.addTo.js";

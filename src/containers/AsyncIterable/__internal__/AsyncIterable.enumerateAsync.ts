@@ -1,13 +1,12 @@
 import { AsyncIterableLike } from "../../../containers.js";
 import { bindMethod, pipe } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import { EnumerateAsync, ObservableLike } from "../../../rx.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
+import Stream_create from "../../../rx/Stream/__internal__/Stream.create.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import { EnumerateAsync } from "../../../streaming.js";
-import Stream_create from "../../../streaming/Stream/__internal__/Stream.create.js";
 import {
   DispatcherLike_complete,
   QueueableLike,

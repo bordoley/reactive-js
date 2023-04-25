@@ -455,7 +455,7 @@ ___
 
 ### \_\_state
 
-▸ **__state**<`T`\>(`initialState`, `options?`): [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+▸ **__state**<`T`\>(`initialState`, `options?`): [`StreamLike`](../interfaces/rx.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -476,7 +476,7 @@ ___
 
 #### Returns
 
-[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+[`StreamLike`](../interfaces/rx.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 ___
 
@@ -490,7 +490,7 @@ ___
 | :------ | :------ |
 | `TReq` | `TReq` |
 | `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> |
+| `TStream` | extends [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`, `TStream`\> |
 
 #### Parameters
 

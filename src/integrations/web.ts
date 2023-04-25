@@ -37,16 +37,17 @@ import {
   unsafeCast,
 } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
-import { ObservableLike, ObservableLike_observe, ObserverLike } from "../rx.js";
-import * as Observable from "../rx/Observable.js";
-import { SchedulerLike } from "../scheduling.js";
 import {
+  ObservableLike,
+  ObservableLike_observe,
+  ObserverLike,
   StreamLike,
-  StreamableLike,
-  StreamableLike_stream,
-} from "../streaming.js";
-import * as Stream from "../streaming/Stream.js";
-import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
+} from "../rx.js";
+import * as Observable from "../rx/Observable.js";
+import * as Stream from "../rx/Stream.js";
+import Stream_delegatingMixin from "../rx/Stream/__internal__/Stream.delegatingMixin.js";
+import { SchedulerLike } from "../scheduling.js";
+import { StreamableLike, StreamableLike_stream } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
   DisposableLike,

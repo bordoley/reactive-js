@@ -16,20 +16,16 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
-import Observable_backpressureStrategy from "../../../rx/Observable/__internal__/Observable.backpressureStrategy.js";
-import Observable_distinctUntilChanged from "../../../rx/Observable/__internal__/Observable.distinctUntilChanged.js";
-import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable.mergeWith.js";
-import Observable_scan from "../../../rx/Observable/__internal__/Observable.scan.js";
-import Publisher_create from "../../../rx/Publisher/__internal__/Publisher.create.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import {
-  FlowableStreamLike,
-  FlowableStreamLike_isPaused,
-  FlowableStreamLike_pause,
-  FlowableStreamLike_resume,
-} from "../../../streaming.js";
+  FlowableObservableLike,
+  FlowableObservableLike_isPaused,
+  FlowableObservableLike_pause,
+  FlowableObservableLike_resume,
+  MulticastObservableLike,
+  ObservableLike,
+} from "../../../rx.js";
+import Stream_mixin from "../../../rx/Stream/__internal__/Stream.mixin.js";
+import { SchedulerLike } from "../../../scheduling.js";
 import {
   DisposableLike,
   EventListenerLike_notify,
@@ -38,9 +34,14 @@ import {
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
-import Stream_mixin from "../../Stream/__internal__/Stream.mixin.js";
+import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";
+import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
+import Observable_scan from "../../Observable/__internal__/Observable.scan.js";
+import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
-const FlowableStream_create: <T>(
+const FlowableObservable_create: <T>(
   op: ContainerOperator<ObservableLike, boolean, T>,
   scheduler: SchedulerLike,
   options?: {
@@ -48,19 +49,20 @@ const FlowableStream_create: <T>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => FlowableStreamLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
+) => FlowableObservableLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [FlowableStreamLike_isPaused]: ObservableLike<boolean>;
+    [FlowableObservableLike_isPaused]: MulticastObservableLike<boolean>;
   };
 
   return createInstanceFactory(
     mix(
       include(Stream_mixin<boolean, T>()),
-      function FlowableStream(
+      function FlowableObservable(
         instance: TProperties &
           Pick<
-            FlowableStreamLike<T>,
-            typeof FlowableStreamLike_pause | typeof FlowableStreamLike_resume
+            FlowableObservableLike<T>,
+            | typeof FlowableObservableLike_pause
+            | typeof FlowableObservableLike_resume
           >,
         op: ContainerOperator<ObservableLike, boolean, T>,
         scheduler: SchedulerLike,
@@ -69,8 +71,8 @@ const FlowableStream_create: <T>(
           capacity?: number;
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
-      ): FlowableStreamLike<T> & DisposableLike {
-        const publisher = Publisher_create({ replay: 1 });
+      ): FlowableObservableLike<T> & DisposableLike {
+        const publisher = Publisher_create<boolean>({ replay: 1 });
 
         const liftedOp = compose(
           Observable_backpressureStrategy<
@@ -102,18 +104,18 @@ const FlowableStream_create: <T>(
 
         pipe(instance, Disposable_add(publisher));
 
-        instance[FlowableStreamLike_isPaused] = publisher;
+        instance[FlowableObservableLike_isPaused] = publisher;
 
         return instance;
       },
       props<TProperties>({
-        [FlowableStreamLike_isPaused]: none,
+        [FlowableObservableLike_isPaused]: none,
       }),
       {
-        [FlowableStreamLike_pause](this: FlowableStreamLike<T>) {
+        [FlowableObservableLike_pause](this: FlowableObservableLike<T>) {
           this[QueueableLike_enqueue](true);
         },
-        [FlowableStreamLike_resume](this: FlowableStreamLike<T>) {
+        [FlowableObservableLike_resume](this: FlowableObservableLike<T>) {
           this[QueueableLike_enqueue](false);
         },
       },
@@ -121,4 +123,4 @@ const FlowableStream_create: <T>(
   );
 })();
 
-export default FlowableStream_create;
+export default FlowableObservable_create;

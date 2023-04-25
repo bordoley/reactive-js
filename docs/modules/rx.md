@@ -14,13 +14,16 @@
 ### Container Interfaces
 
 - [EnumerableLike](../interfaces/rx.EnumerableLike.md)
+- [FlowableObservableLike](../interfaces/rx.FlowableObservableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [PublisherLike](../interfaces/rx.PublisherLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
+- [StreamLike](../interfaces/rx.StreamLike.md)
 
 ### Other Interfaces
 
+- [Flow](../interfaces/rx.Flow.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 
 ### TypeClass Interfaces
@@ -35,6 +38,7 @@
 - [Empty](../interfaces/rx.Empty.md)
 - [EncodeUtf8](../interfaces/rx.EncodeUtf8.md)
 - [Enqueue](../interfaces/rx.Enqueue.md)
+- [EnumerateAsync](../interfaces/rx.EnumerateAsync.md)
 - [Exhaust](../interfaces/rx.Exhaust.md)
 - [ExhaustMap](../interfaces/rx.ExhaustMap.md)
 - [FirstAsync](../interfaces/rx.FirstAsync.md)

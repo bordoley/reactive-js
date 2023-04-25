@@ -1,7 +1,7 @@
 import { ContainerOperator } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
+import Stream_create from "../../../rx/Stream/__internal__/Stream.create.js";
 import { StreamableLike, StreamableLike_stream } from "../../../streaming.js";
-import Stream_create from "../../Stream/__internal__/Stream.create.js";
 
 const Streamable_create: <TReq, T>(
   op: ContainerOperator<ObservableLike, TReq, T>,

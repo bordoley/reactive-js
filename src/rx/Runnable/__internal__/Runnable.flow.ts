@@ -1,13 +1,12 @@
 import { pipe } from "../../../functions.js";
-import { ObservableLike, RunnableLike } from "../../../rx.js";
+import { Flow, ObservableLike, RunnableLike } from "../../../rx.js";
+import FlowableObservable_create from "../../../rx/FlowableObservable/__internal__/FlowableObservable.create.js";
 import {
   PauseableSchedulerLike_pause,
   PauseableSchedulerLike_resume,
   SchedulerLike,
 } from "../../../scheduling.js";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
-import { Flow } from "../../../streaming.js";
-import FlowableStream_create from "../../../streaming/FlowableStream/__internal__/FlowableStream.create.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -62,6 +61,6 @@ const Runnable_flow: Flow<RunnableLike>["flow"] =
         );
       });
 
-    return FlowableStream_create<T>(op, scheduler, options);
+    return FlowableObservable_create<T>(op, scheduler, options);
   };
 export default Runnable_flow;
