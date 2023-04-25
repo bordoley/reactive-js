@@ -7,7 +7,7 @@ import {
 } from "../../../scheduling.js";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import { Flow } from "../../../streaming.js";
-import FlowableStream_create from "../../../streaming/Flowable/__internal__/FlowableStream.create.js";
+import FlowableStream_create from "../../../streaming/FlowableStream/__internal__/FlowableStream.create.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,

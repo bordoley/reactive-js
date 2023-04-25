@@ -1,5 +1,5 @@
 import { __FlowableStreamLike_isPaused as FlowableStreamLike_isPaused, __FlowableStreamLike_pause as FlowableStreamLike_pause, __FlowableStreamLike_resume as FlowableStreamLike_resume, __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
-import { ContainerLike, ContainerLike_type, ContainerOf } from "./containers.js";
+import { ContainerLike, ContainerOf } from "./containers.js";
 import { Function1, Optional, Updater } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike } from "./rx.js";
@@ -82,7 +82,6 @@ export interface CacheStreamLike<T> extends StreamLike<ReadonlyObjectMapLike<Fun
  * @category Container
  */
 export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>, never, CacheStreamLike<T>> {
-    readonly [ContainerLike_type]?: CacheLike<never>;
 }
 /**
  * @noInheritDoc

@@ -1,3 +1,4 @@
+import { debug } from "console";
 import { AsyncIterableLike } from "../../../containers.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
 import { ObservableLike, ObserverLike } from "../../../rx.js";
@@ -11,7 +12,7 @@ import {
   SchedulerLike_schedule,
 } from "../../../scheduling.js";
 import { Flow } from "../../../streaming.js";
-import FlowableStream_create from "../../../streaming/Flowable/__internal__/FlowableStream.create.js";
+import FlowableStream_create from "../../../streaming/FlowableStream/__internal__/FlowableStream.create.js";
 import {
   DispatcherLike_complete,
   DisposableLike_dispose,

@@ -3,7 +3,7 @@
 import { pipe } from "../../../functions.js";
 import { PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, } from "../../../scheduling.js";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
-import FlowableStream_create from "../../../streaming/Flowable/__internal__/FlowableStream.create.js";
+import FlowableStream_create from "../../../streaming/FlowableStream/__internal__/FlowableStream.create.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
