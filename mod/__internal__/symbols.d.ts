@@ -37,6 +37,8 @@ export const __FlowableObservableLike_pause: unique symbol;
 /** @type {unique symbol} */
 export const __FlowableObservableLike_resume: unique symbol;
 /** @type {unique symbol} */
+export const __InteractiveObservableLike_move: unique symbol;
+/** @type {unique symbol} */
 export const __KeyedCollectionLike_get: unique symbol;
 /** @type {unique symbol} */
 export const __KeyedContainerLike_TKey: unique symbol;

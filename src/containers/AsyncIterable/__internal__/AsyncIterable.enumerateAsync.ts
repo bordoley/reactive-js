@@ -1,11 +1,11 @@
 import { AsyncIterableLike } from "../../../containers.js";
 import { bindMethod, pipe } from "../../../functions.js";
 import { EnumerateAsync, ObservableLike } from "../../../rx.js";
+import InteractiveObservable_create from "../../../rx/InteractiveObservableLike/__internal__/InteractiveObservable.create.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
-import Stream_create from "../../../rx/Stream/__internal__/Stream.create.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   DispatcherLike_complete,
@@ -28,7 +28,7 @@ const AsyncIterable_enumerateAsync: EnumerateAsync<AsyncIterableLike>["enumerate
       },
     ) =>
     (iterable: AsyncIterableLike) =>
-      Stream_create<void, T>(
+      InteractiveObservable_create<T>(
         observable =>
           Observable_create(observer => {
             const iterator = iterable[Symbol.asyncIterator]();

@@ -23,10 +23,10 @@ import {
   FlowableObservableLike_resume,
   MulticastObservableLike,
   ObservableLike,
-  StreamLike,
 } from "../../../rx.js";
-import Stream_mixin from "../../../rx/Stream/__internal__/Stream.mixin.js";
 import { SchedulerLike } from "../../../scheduling.js";
+import { StreamLike } from "../../../streaming.js";
+import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin.js";
 import {
   DisposableLike,
   EventListenerLike_notify,

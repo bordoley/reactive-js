@@ -40,6 +40,8 @@ export const __FlowableObservableLike_pause = /*@__PURE__*/ symbol("FlowableObse
 /** @type {unique symbol} */
 export const __FlowableObservableLike_resume = /*@__PURE__*/ symbol("FlowableObservableLike_resume");
 /** @type {unique symbol} */
+export const __InteractiveObservableLike_move = /*@__PURE__*/ symbol("InteractiveObservableLike_move");
+/** @type {unique symbol} */
 export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol("KeyedCollectionLike_get");
 /** @type {unique symbol} */
 export const __KeyedContainerLike_TKey = /*@__PURE__*/ symbol("KeyedContainerLike_TKey");

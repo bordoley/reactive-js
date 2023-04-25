@@ -17,7 +17,7 @@
 
 ### create
 
-▸ **create**<`TReq`, `T`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`\>\>
+▸ **create**<`TReq`, `T`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
 
 #### Type parameters
 
@@ -34,13 +34,13 @@
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
 
 ___
 
 ### createEventHandler
 
-▸ **createEventHandler**<`TEvent`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent`, `never`\>\>
+▸ **createEventHandler**<`TEvent`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `never`\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -60,9 +60,9 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent`, `never`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `never`\>\>
 
-▸ **createEventHandler**<`TEvent_1`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent_1`, `boolean`\>\>
+▸ **createEventHandler**<`TEvent_1`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_1`, `boolean`\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -82,9 +82,9 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent_1`, `boolean`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_1`, `boolean`\>\>
 
-▸ **createEventHandler**<`TEvent_2`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_2`, `never`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent_2`, `never`\>\>
+▸ **createEventHandler**<`TEvent_2`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_2`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_2`, `never`\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -106,9 +106,9 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_2`, `never`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent_2`, `never`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_2`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_2`, `never`\>\>
 
-▸ **createEventHandler**<`TEvent_3`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_3`, `never`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent_3`, `never`\>\>
+▸ **createEventHandler**<`TEvent_3`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_3`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_3`, `never`\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -126,7 +126,7 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_3`, `never`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent_3`, `never`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_3`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_3`, `never`\>\>
 
 ___
 
@@ -183,7 +183,7 @@ ___
 
 ### createStateStore
 
-▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -205,13 +205,13 @@ new state based upon the previous state.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`T`, `T`\>\>
+▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -221,4 +221,4 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`T`, `T`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`\>\>

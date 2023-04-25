@@ -22,9 +22,11 @@ A stateful ObservableLike resource.
 
   ↳↳ [`PublisherLike`](rx.PublisherLike.md)
 
-  ↳↳ [`StreamLike`](rx.StreamLike.md)
-
   ↳↳ [`FlowableObservableLike`](rx.FlowableObservableLike.md)
+
+  ↳↳ [`InteractiveObservableLike`](rx.InteractiveObservableLike.md)
+
+  ↳↳ [`StreamLike`](streaming.StreamLike.md)
 
 ## Table of contents
 

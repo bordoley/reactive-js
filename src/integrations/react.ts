@@ -41,13 +41,16 @@ import {
   ObservableLike,
   PublisherLike,
   RunnableLike,
-  StreamLike,
 } from "../rx.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Publisher from "../rx/Publisher.js";
 import * as Runnable from "../rx/Runnable.js";
-import { StreamableLike, StreamableLike_stream } from "../streaming.js";
+import {
+  StreamLike,
+  StreamableLike,
+  StreamableLike_stream,
+} from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
   DispatcherLike,

@@ -1,16 +1,33 @@
-import { __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
+import {
+  __StreamLike_scheduler as StreamLike_scheduler,
+  __StreamableLike_stream as StreamableLike_stream,
+} from "./__internal__/symbols.js";
+
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
-import { ObservableLike, StreamLike } from "./rx.js";
+import { MulticastObservableLike, ObservableLike } from "./rx.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
+  DispatcherLike,
   DisposableLike,
   KeyedCollectionLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "./util.js";
 
-export { StreamableLike_stream };
+export { StreamableLike_stream, StreamLike_scheduler };
+
+/**
+ * Represents a duplex stream
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface StreamLike<TReq, T>
+  extends DispatcherLike<TReq>,
+    MulticastObservableLike<T> {
+  readonly [StreamLike_scheduler]: SchedulerLike;
+}
 
 /**
  * A container that supports bi-directional streaming.

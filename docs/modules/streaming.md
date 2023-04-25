@@ -7,6 +7,7 @@
 ### Container Interfaces
 
 - [CacheLike](../interfaces/streaming.CacheLike.md)
+- [StreamLike](../interfaces/streaming.StreamLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)
 
 ### Stream Interfaces

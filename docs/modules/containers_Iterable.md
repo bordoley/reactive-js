@@ -73,7 +73,7 @@ ___
 
 ### enumerateAsync
 
-▸ **enumerateAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`StreamLike`](../interfaces/rx.StreamLike.md)<`void`, `T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **enumerateAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`InteractiveObservableLike`](../interfaces/rx.InteractiveObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -90,7 +90,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`StreamLike`](../interfaces/rx.StreamLike.md)<`void`, `T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`InteractiveObservableLike`](../interfaces/rx.InteractiveObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 

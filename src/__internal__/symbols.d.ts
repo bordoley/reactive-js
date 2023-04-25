@@ -36,6 +36,8 @@ export declare const __FlowableObservableLike_pause: unique symbol;
 
 export declare const __FlowableObservableLike_resume: unique symbol;
 
+export declare const __InteractiveObservableLike_move: unique symbol;
+
 export declare const __KeyedCollectionLike_get: unique symbol;
 
 export declare const __KeyedContainerLike_TKey: unique symbol;

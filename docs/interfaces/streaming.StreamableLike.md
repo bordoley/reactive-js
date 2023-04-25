@@ -24,7 +24,7 @@ TStream
 | :------ | :------ |
 | `TReq` | `TReq` |
 | `T` | `T` |
-| `TStream` | extends [`StreamLike`](rx.StreamLike.md)<`TReq`, `T`\> = [`StreamLike`](rx.StreamLike.md)<`TReq`, `T`\> |
+| `TStream` | extends [`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`\> = [`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`\> |
 
 ## Hierarchy
 

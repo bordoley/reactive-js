@@ -19,10 +19,10 @@
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [PublisherLike](../interfaces/rx.PublisherLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
-- [StreamLike](../interfaces/rx.StreamLike.md)
 
 ### Other Interfaces
 
+- [InteractiveObservableLike](../interfaces/rx.InteractiveObservableLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 
 ### TypeClass Interfaces

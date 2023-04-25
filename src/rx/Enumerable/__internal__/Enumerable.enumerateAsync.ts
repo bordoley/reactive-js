@@ -10,13 +10,13 @@ import {
   ObservableLike,
   ObservableLike_observe,
 } from "../../../rx.js";
-import Stream_create from "../../../rx/Stream/__internal__/Stream.create.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import InteractiveObservable_create from "../../InteractiveObservableLike/__internal__/InteractiveObservable.create.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
@@ -37,7 +37,7 @@ const Enumerable_enumerateAsync: EnumerateAsync<
     },
   ) =>
   (enumerable: EnumerableLike<T>) =>
-    Stream_create<void, T>(
+    InteractiveObservable_create<T>(
       (observable: ObservableLike<void>) =>
         Observable_create(observer => {
           const enumerator = pipe(
