@@ -6,6 +6,7 @@ import {
   TakeWhile,
 } from "../containers.js";
 import AsyncIterable_toAsyncEnumerable from "../containers/AsyncIterable/__internal__/AsyncIterable.toAsyncEnumerable.js";
+import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toAsyncEnumerable from "../containers/Iterable/__internal__/Iterable.toAsyncEnumerable.js";
 import Optional_toAsyncEnumerable from "../containers/Optional/__internal__/Optional.toAsyncEnumerable.js";
 import ReadonlyArray_toAsyncEnumerable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
@@ -32,7 +33,6 @@ import AsyncEnumerable_scan from "./AsyncEnumerable/__internal__/AsyncEnumerable
 import AsyncEnumerable_scanLast from "./AsyncEnumerable/__internal__/AsyncEnumerable.scanLast.js";
 import AsyncEnumerable_takeWhile from "./AsyncEnumerable/__internal__/AsyncEnumerable.takeWhile.js";
 import AsyncEnumerable_toEnumerable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toEnumerable.js";
-import AsyncEnumerable_toObservable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
 import AsyncEnumerable_toRunnable from "./AsyncEnumerable/__internal__/AsyncEnumerable.toRunnable.js";
 
 export const fromIterable: FromIterable<AsyncEnumerableLike>["fromIterable"] =
@@ -76,7 +76,7 @@ export const toEnumerable: ToEnumerable<AsyncEnumerableLike>["toEnumerable"] =
   AsyncEnumerable_toEnumerable;
 
 export const toObservable: ToObservable<AsyncEnumerableLike>["toObservable"] =
-  AsyncEnumerable_toObservable;
+  Container_identity as ToObservable<AsyncEnumerableLike>["toObservable"];
 
 export const toRunnable: ToRunnable<AsyncEnumerableLike>["toRunnable"] =
   AsyncEnumerable_toRunnable;

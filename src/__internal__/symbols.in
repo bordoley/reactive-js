@@ -39,9 +39,6 @@ SchedulerLike_shouldYield
 SchedulerLike_yield
 StreamLike_scheduler
 StreamableLike_stream
-StreamableLike_isEnumerable
-StreamableLike_isInteractive
-StreamableLike_isRunnable
 VirtualTimeSchedulerLike_run
 WindowLocationStreamLike_goBack
 WindowLocationStreamLike_canGoBack

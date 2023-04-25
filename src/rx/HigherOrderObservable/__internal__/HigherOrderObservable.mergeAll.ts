@@ -63,9 +63,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>,
   ) => ContainerOperator<C, ContainerOf<C, T>, T>,
-): MergeAll<
-  C
->["mergeAll"] => {
+): MergeAll<C>["mergeAll"] => {
   const createMergeAllObserver: <T>(
     delegate: ObserverLike<T>,
     capacity: number,

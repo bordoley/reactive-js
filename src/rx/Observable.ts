@@ -86,9 +86,6 @@ import {
   ZipWithLatestFrom,
 } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
-import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
-import AsyncEnumerable_toObservable from "../streaming/AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
-import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
 import {
   DisposableLike,
   DisposableOrTeardown,
@@ -266,9 +263,6 @@ export const forkZip: ForkZip<ObservableLike>["forkZip"] = Observable_forkZip;
 export const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"] =
   Observable_forkZipLatest;
 
-export const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsyncEnumerable"] =
-  AsyncEnumerable_toObservable;
-
 /**
  * @category Constructor
  */
@@ -282,9 +276,6 @@ export const fromEnumeratorFactory: FromEnumeratorFactory<ObservableLike>["fromE
 
 export const fromFactory: FromFactory<ObservableLike>["fromFactory"] =
   Observable_fromFactory;
-
-export const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"] =
-  Flowable_toObservable;
 
 export const fromIterable: FromIterable<ObservableLike>["fromIterable"] =
   Iterable_toObservable;
@@ -318,13 +309,11 @@ export const mapTo: MapTo<ObservableLike>["mapTo"] = Observable_mapTo;
 
 export const merge: Merge<ObservableLike>["merge"] = Observable_merge;
 
-export const mergeAll: MergeAll<
-  ObservableLike
->["mergeAll"] = Observable_mergeAll;
+export const mergeAll: MergeAll<ObservableLike>["mergeAll"] =
+  Observable_mergeAll;
 
-export const mergeMap: MergeMap<
-  ObservableLike
->["mergeMap"] = Observable_mergeMap;
+export const mergeMap: MergeMap<ObservableLike>["mergeMap"] =
+  Observable_mergeMap;
 
 export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =
   Observable_mergeWith as MergeWith<ObservableLike>["mergeWith"];

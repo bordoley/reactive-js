@@ -3,9 +3,6 @@ import {
   __FlowableStreamLike_pause as FlowableStreamLike_pause,
   __FlowableStreamLike_resume as FlowableStreamLike_resume,
   __StreamLike_scheduler as StreamLike_scheduler,
-  __StreamableLike_isEnumerable as StreamableLike_isEnumerable,
-  __StreamableLike_isInteractive as StreamableLike_isInteractive,
-  __StreamableLike_isRunnable as StreamableLike_isRunnable,
   __StreamableLike_stream as StreamableLike_stream,
 } from "./__internal__/symbols.js";
 import {
@@ -31,9 +28,6 @@ export {
   FlowableStreamLike_pause,
   FlowableStreamLike_resume,
   StreamLike_scheduler,
-  StreamableLike_isEnumerable,
-  StreamableLike_isInteractive,
-  StreamableLike_isRunnable,
   StreamableLike_stream,
 };
 
@@ -64,25 +58,6 @@ export interface StreamableLike<
   T,
   TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
 > {
-  /**
-   * Indicates if the resulting is stream is enumerable,
-   * producting exactly one value synchronously for every
-   * enqueued request.
-   */
-  readonly [StreamableLike_isEnumerable]: boolean;
-
-  /**
-   * Indicates if the resulting is stream is interactive,
-   * producing exactly one value for every enqueued request.
-   */
-  readonly [StreamableLike_isInteractive]: boolean;
-
-  /**
-   * Indicates if subscriptions on a VirtualTimeScheduler
-   * are supported.
-   */
-  readonly [StreamableLike_isRunnable]: boolean;
-
   /**
    * Subscribe to the Streamable.
    *
@@ -117,12 +92,10 @@ export interface StreamableLike<
  */
 export interface AsyncEnumerableLike<T = unknown>
   extends StreamableLike<void, T>,
-    ContainerLike {
+    ObservableLike<T> {
   readonly [ContainerLike_type]?: AsyncEnumerableLike<
     this[typeof ContainerLike_T]
   >;
-
-  readonly [StreamableLike_isInteractive]: true;
 }
 
 /**
@@ -159,10 +132,8 @@ export interface FlowableStreamLike<T = unknown>
  */
 export interface FlowableLike<T = unknown>
   extends StreamableLike<boolean | Updater<boolean>, T, FlowableStreamLike<T>>,
-    ContainerLike {
+    ObservableLike<T> {
   readonly [ContainerLike_type]?: FlowableLike<this[typeof ContainerLike_T]>;
-  readonly [StreamableLike_isEnumerable]: false;
-  readonly [StreamableLike_isInteractive]: false;
 }
 
 /**
@@ -192,8 +163,6 @@ export interface CacheLike<T>
     CacheStreamLike<T>
   > {
   readonly [ContainerLike_type]?: CacheLike<never>;
-  readonly [StreamableLike_isEnumerable]: false;
-  readonly [StreamableLike_isInteractive]: false;
 }
 
 /**
