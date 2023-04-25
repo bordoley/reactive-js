@@ -4,7 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { bindMethod, compose, isFunction, none, pipe, returns, } from "../../../functions.js";
 import { FlowableObservableLike_isPaused, FlowableObservableLike_pause, FlowableObservableLike_resume, } from "../../../rx.js";
-import Stream_mixin from "../../../rx/Stream/__internal__/Stream.mixin.js";
+import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin.js";
 import { EventListenerLike_notify, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";

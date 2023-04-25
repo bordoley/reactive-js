@@ -1,10 +1,10 @@
-import { __FlowableObservableLike_isPaused as FlowableObservableLike_isPaused, __FlowableObservableLike_pause as FlowableObservableLike_pause, __FlowableObservableLike_resume as FlowableObservableLike_resume, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PublisherLike_observerCount as PublisherLike_observerCount, __StreamLike_scheduler as StreamLike_scheduler } from "./__internal__/symbols.js";
+import { __FlowableObservableLike_isPaused as FlowableObservableLike_isPaused, __FlowableObservableLike_pause as FlowableObservableLike_pause, __FlowableObservableLike_resume as FlowableObservableLike_resume, __InteractiveObservableLike_move as InteractiveObservableLike_move, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PublisherLike_observerCount as PublisherLike_observerCount } from "./__internal__/symbols.js";
 import { ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, EnumeratorLike, PromiseableLike } from "./containers.js";
 import type * as Containers from "./containers.js";
 import { Factory, Function1, Function2, Optional, Updater } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import { DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayableLike } from "./util.js";
-export { FlowableObservableLike_isPaused, FlowableObservableLike_pause, FlowableObservableLike_resume, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, StreamLike_scheduler, };
+export { FlowableObservableLike_isPaused, FlowableObservableLike_pause, FlowableObservableLike_resume, InteractiveObservableLike_move, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, };
 /**
  * A consumer of push-based notifications.
  *
@@ -88,15 +88,6 @@ export interface PublisherLike<T = unknown> extends ErrorSafeEventListenerLike<T
     readonly [PublisherLike_observerCount]: number;
 }
 /**
- * Represents a duplex stream
- *
- * @noInheritDoc
- * @category Container
- */
-export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
-    readonly [StreamLike_scheduler]: SchedulerLike;
-}
-/**
  * A `MulticastObservableLike` that supports imperative flow control
  * via the pause and resume methods.
  *
@@ -116,6 +107,9 @@ export interface FlowableObservableLike<T = unknown> extends MulticastObservable
      * Imperatively resume the observable.
      */
     [FlowableObservableLike_resume](): void;
+}
+export interface InteractiveObservableLike<T = unknown> extends MulticastObservableLike<T> {
+    [InteractiveObservableLike_move](): void;
 }
 /**
  * @noInheritDoc
@@ -302,7 +296,7 @@ export interface EnumerateAsync<C extends ContainerLike, O = unknown> {
          */
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<ContainerOf<C, T>, StreamLike<void, T> & DisposableLike>;
+    }): Function1<ContainerOf<C, T>, InteractiveObservableLike<T> & DisposableLike>;
 }
 /**
  * @noInheritDoc

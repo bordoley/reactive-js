@@ -21,7 +21,7 @@ be dispatched from any execution constext.
 
   ↳↳ [`ObserverLike`](rx.ObserverLike.md)
 
-  ↳↳ [`StreamLike`](rx.StreamLike.md)
+  ↳↳ [`StreamLike`](streaming.StreamLike.md)
 
 ## Table of contents
 

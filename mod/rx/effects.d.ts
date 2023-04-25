@@ -1,7 +1,7 @@
 import { Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Optional, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater } from "../functions.js";
-import { ObservableLike, StreamLike } from "../rx.js";
+import { ObservableLike } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
-import { StreamableLike } from "../streaming.js";
+import { StreamLike, StreamableLike } from "../streaming.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 interface __Memo {
     __memo<T>(fn: Factory<T>): T;

@@ -17,6 +17,7 @@ EventSourceLike_addListener
 FlowableObservableLike_isPaused
 FlowableObservableLike_pause
 FlowableObservableLike_resume
+InteractiveObservableLike_move
 KeyedCollectionLike_get
 KeyedContainerLike_TKey
 ObserverLike_notify
