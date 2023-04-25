@@ -3,7 +3,6 @@ import ReactDOMClient from "react-dom/client";
 import * as Enumerable from "@reactive-js/core/rx/Enumerable";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import * as Observable from "@reactive-js/core/rx/Observable";
-import * as AsyncEnumerable from "@reactive-js/core/streaming/AsyncEnumerable";
 import {
   createComponent,
   useEnumerate,
@@ -49,6 +48,7 @@ import {
   __memo,
   __observe,
   __stream,
+  __using,
 } from "@reactive-js/core/rx/effects";
 import { SchedulerLike } from "@reactive-js/core/scheduling";
 import { Wordle } from "./wordle";
@@ -229,7 +229,7 @@ const RxComponent = createComponent(
       windowLocationStream: WindowLocationStreamLike;
     }>,
   ) => {
-    const asyncEnumerable = AsyncEnumerable.generate(increment, () => -1);
+    const enumerable = Enumerable.generate(increment, () => -1);
     const createRef = () => ({ current: null });
 
     const createAnimationStream = (
@@ -285,11 +285,12 @@ const RxComponent = createComponent(
       const { windowLocationStream } = __await(props);
       const uri = __await(windowLocationStream);
 
-      const enumerator = __stream(asyncEnumerable);
+      const scheduler = __currentScheduler();
+      const enumerateAsync = __memo(Enumerable.enumerateAsync, scheduler);
+      const enumerator = __using(enumerateAsync, enumerable);
       const move: SideEffect = __bindMethod(enumerator, QueueableLike_enqueue);
 
       const animatedDivRef = __memo(createRef);
-      const scheduler = __currentScheduler();
       const animationStreamable = __memo(
         createAnimationStream,
         animatedDivRef,
