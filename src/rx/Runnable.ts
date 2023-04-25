@@ -54,6 +54,7 @@ import {
   Exhaust,
   ExhaustMap,
   FirstAsync,
+  Flow,
   ForkMerge,
   ForkZipLatest,
   FromEnumeratorFactory,
@@ -86,7 +87,6 @@ import {
   ZipLatest,
   ZipWithLatestFrom,
 } from "../rx.js";
-import { Flow } from "../streaming.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";

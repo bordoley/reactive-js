@@ -1,5 +1,5 @@
 import { ReadonlyArrayLike } from "../../../containers.js";
-import { EnumerateAsync } from "../../../streaming.js";
+import { EnumerateAsync } from "../../../rx.js";
 declare const ReadonlyArray_enumerateAsync: EnumerateAsync<ReadonlyArrayLike, {
     readonly delay?: number;
     readonly start?: number;

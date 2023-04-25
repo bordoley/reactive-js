@@ -28,6 +28,8 @@ import {
   ToReadonlyArray,
 } from "../keyed-containers.js";
 import {
+  EnumerateAsync,
+  Flow,
   FromEnumerable,
   FromRunnable,
   ToEnumerable,
@@ -35,7 +37,6 @@ import {
   ToRunnable,
 } from "../rx.js";
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { EnumerateAsync, Flow } from "../streaming.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";

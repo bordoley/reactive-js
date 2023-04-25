@@ -1,7 +1,7 @@
 import { ReadonlyArrayLike } from "../../../containers.js";
 import { compose } from "../../../functions.js";
+import { Flow } from "../../../rx.js";
 import Runnable_flow from "../../../rx/Runnable/__internal__/Runnable.flow.js";
-import { Flow } from "../../../streaming.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray.toObservable.js";
 
 const ReadonlyArray_toFlowable: Flow<

@@ -6,12 +6,12 @@ import {
 import { bindMethod, invoke, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
+  EnumerateAsync,
   ObservableLike,
   ObservableLike_observe,
 } from "../../../rx.js";
+import Stream_create from "../../../rx/Stream/__internal__/Stream.create.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import { EnumerateAsync } from "../../../streaming.js";
-import Stream_create from "../../../streaming/Stream/__internal__/Stream.create.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,

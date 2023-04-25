@@ -1,5 +1,4 @@
-import { EnumerableLike } from "../../../rx.js";
-import { EnumerateAsync } from "../../../streaming.js";
+import { EnumerableLike, EnumerateAsync } from "../../../rx.js";
 declare const Enumerable_enumerateAsync: EnumerateAsync<EnumerableLike, {
     readonly delay?: number;
 }>["enumerateAsync"];

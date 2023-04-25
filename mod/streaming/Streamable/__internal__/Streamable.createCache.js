@@ -8,9 +8,9 @@ import * as ReadonlyObjectMap from "../../../keyed-containers/ReadonlyObjectMap.
 import ReadonlyObjectMap_union from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.union.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
+import Stream_delegatingMixin from "../../../rx/Stream/__internal__/Stream.delegatingMixin.js";
 import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
-import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import { CollectionLike_count, DisposableLike_isDisposed, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../../util/Disposable.js";

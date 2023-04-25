@@ -476,7 +476,7 @@ ___
 | :------ | :------ |
 | `TReq` | `TReq` |
 | `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\> |
+| `TStream` | extends [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`, `TStream`\> = [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`\> |
 
 #### Parameters
 
@@ -501,7 +501,7 @@ ___
 | :------ | :------ |
 | `TReq` | `TReq` |
 | `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\> |
+| `TStream` | extends [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`, `TStream`\> = [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`\> |
 
 #### Parameters
 
@@ -536,7 +536,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\> |
+| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -560,7 +560,7 @@ readonly [[`Optional`](functions.md#optional)<`T`\>, [`Function1`](functions.md#
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`\>\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |

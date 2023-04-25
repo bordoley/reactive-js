@@ -1,9 +1,9 @@
 /// <reference types="./Runnable.flow.d.ts" />
 
 import { pipe } from "../../../functions.js";
+import FlowableObservable_create from "../../../rx/FlowableObservable/__internal__/FlowableObservable.create.js";
 import { PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, } from "../../../scheduling.js";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
-import FlowableStream_create from "../../../streaming/FlowableStream/__internal__/FlowableStream.create.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
@@ -24,6 +24,6 @@ const Runnable_flow = (scheduler, options) => (runnable) => {
             }
         }), Observable_subscribeWithConfig(observer, observer), Disposable_bindTo(pauseableScheduler))), Disposable_add(pauseableScheduler));
     });
-    return FlowableStream_create(op, scheduler, options);
+    return FlowableObservable_create(op, scheduler, options);
 };
 export default Runnable_flow;

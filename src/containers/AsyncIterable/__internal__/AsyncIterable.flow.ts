@@ -1,7 +1,7 @@
-import { debug } from "console";
 import { AsyncIterableLike } from "../../../containers.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike } from "../../../rx.js";
+import { Flow, ObservableLike, ObserverLike } from "../../../rx.js";
+import FlowableObservable_create from "../../../rx/FlowableObservable/__internal__/FlowableObservable.create.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
@@ -11,8 +11,6 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
 } from "../../../scheduling.js";
-import { Flow } from "../../../streaming.js";
-import FlowableStream_create from "../../../streaming/FlowableStream/__internal__/FlowableStream.create.js";
 import {
   DispatcherLike_complete,
   DisposableLike_dispose,
@@ -96,7 +94,7 @@ const AsyncIterable_flow: Flow<AsyncIterableLike>["flow"] =
         );
       });
 
-    return FlowableStream_create<T>(op, scheduler, options);
+    return FlowableObservable_create<T>(op, scheduler, options);
   };
 
 export default AsyncIterable_flow;

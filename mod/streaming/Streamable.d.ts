@@ -1,7 +1,7 @@
 /**
  * @category Constructor
  */
-export declare const create: <TReq, T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableLike<unknown>, TReq, T>) => import("../streaming.js").StreamableLike<TReq, T, import("../streaming.js").StreamLike<TReq, T>>;
+export declare const create: <TReq, T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableLike<unknown>, TReq, T>) => import("../streaming.js").StreamableLike<TReq, T, import("../rx.js").StreamLike<TReq, T>>;
 /**
  * Returns an event handler that invokes the observable function.
  *
@@ -10,16 +10,16 @@ export declare const create: <TReq, T>(op: import("../containers.js").ContainerO
 export declare const createEventHandler: {
     <TEvent>(op: import("../functions.js").Function1<TEvent, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "switching";
-    }): import("../streaming.js").StreamableLike<TEvent, never, import("../streaming.js").StreamLike<TEvent, never>>;
+    }): import("../streaming.js").StreamableLike<TEvent, never, import("../rx.js").StreamLike<TEvent, never>>;
     <TEvent_1>(op: import("../functions.js").Function1<TEvent_1, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "blocking";
-    }): import("../streaming.js").StreamableLike<TEvent_1, boolean, import("../streaming.js").StreamLike<TEvent_1, boolean>>;
+    }): import("../streaming.js").StreamableLike<TEvent_1, boolean, import("../rx.js").StreamLike<TEvent_1, boolean>>;
     <TEvent_2>(op: import("../functions.js").Function1<TEvent_2, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "queueing";
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
-    }): import("../streaming.js").StreamableLike<TEvent_2, never, import("../streaming.js").StreamLike<TEvent_2, never>>;
-    <TEvent_3>(op: import("../functions.js").Function1<TEvent_3, import("../rx.js").ObservableLike<unknown>>): import("../streaming.js").StreamableLike<TEvent_3, never, import("../streaming.js").StreamLike<TEvent_3, never>>;
+    }): import("../streaming.js").StreamableLike<TEvent_2, never, import("../rx.js").StreamLike<TEvent_2, never>>;
+    <TEvent_3>(op: import("../functions.js").Function1<TEvent_3, import("../rx.js").ObservableLike<unknown>>): import("../streaming.js").StreamableLike<TEvent_3, never, import("../rx.js").StreamLike<TEvent_3, never>>;
 };
 /**
  * @category Constructor
@@ -51,8 +51,8 @@ export declare const createPersistentCache: <T>(persistentStore: {
  */
 export declare const createStateStore: <T>(initialState: import("../functions.js").Factory<T>, options?: {
     readonly equality?: import("../functions.js").Equality<T> | undefined;
-} | undefined) => import("../streaming.js").StreamableLike<import("../functions.js").Updater<T>, T, import("../streaming.js").StreamLike<import("../functions.js").Updater<T>, T>>;
+} | undefined) => import("../streaming.js").StreamableLike<import("../functions.js").Updater<T>, T, import("../rx.js").StreamLike<import("../functions.js").Updater<T>, T>>;
 /**
  * @category Constructor
  */
-export declare const identity: <T>() => import("../streaming.js").StreamableLike<T, T, import("../streaming.js").StreamLike<T, T>>;
+export declare const identity: <T>() => import("../streaming.js").StreamableLike<T, T, import("../rx.js").StreamLike<T, T>>;

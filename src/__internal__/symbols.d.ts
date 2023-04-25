@@ -30,11 +30,11 @@ export declare const __EventPublisherLike_listenerCount: unique symbol;
 
 export declare const __EventSourceLike_addListener: unique symbol;
 
-export declare const __FlowableStreamLike_isPaused: unique symbol;
+export declare const __FlowableObservableLike_isPaused: unique symbol;
 
-export declare const __FlowableStreamLike_pause: unique symbol;
+export declare const __FlowableObservableLike_pause: unique symbol;
 
-export declare const __FlowableStreamLike_resume: unique symbol;
+export declare const __FlowableObservableLike_resume: unique symbol;
 
 export declare const __KeyedCollectionLike_get: unique symbol;
 

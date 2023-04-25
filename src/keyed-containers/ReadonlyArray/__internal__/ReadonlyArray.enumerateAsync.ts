@@ -1,8 +1,8 @@
 import { ReadonlyArrayLike } from "../../../containers.js";
 import { pipe } from "../../../functions.js";
+import { EnumerateAsync } from "../../../rx.js";
 import Enumerable_enumerateAsync from "../../../rx/Enumerable/__internal__/Enumerable.enumerateAsync.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import { EnumerateAsync } from "../../../streaming.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,

@@ -1,4 +1,3 @@
-import { RunnableLike } from "../../../rx.js";
-import { Flow } from "../../../streaming.js";
+import { Flow, RunnableLike } from "../../../rx.js";
 declare const Runnable_flow: Flow<RunnableLike>["flow"];
 export default Runnable_flow;

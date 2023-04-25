@@ -1,8 +1,7 @@
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
+import { ObservableLike, StreamLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
-import { StreamLike } from "../../../streaming.js";
 
 import {
   DisposableLike,

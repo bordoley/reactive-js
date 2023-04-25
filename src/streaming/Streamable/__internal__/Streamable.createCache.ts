@@ -31,6 +31,7 @@ import ReadonlyObjectMap_union from "../../../keyed-containers/ReadonlyObjectMap
 import { ObservableLike, PublisherLike } from "../../../rx.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
+import Stream_delegatingMixin from "../../../rx/Stream/__internal__/Stream.delegatingMixin.js";
 import {
   SchedulerLike,
   SchedulerLike_schedule,
@@ -41,7 +42,6 @@ import {
   CacheStreamLike,
   StreamableLike_stream,
 } from "../../../streaming.js";
-import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import {
   CollectionLike_count,
   DispatcherLike,

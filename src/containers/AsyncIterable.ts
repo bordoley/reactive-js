@@ -1,6 +1,5 @@
 import { AsyncIterableLike, Identity } from "../containers.js";
-import { ToObservable } from "../rx.js";
-import { EnumerateAsync, Flow } from "../streaming.js";
+import { EnumerateAsync, Flow, ToObservable } from "../rx.js";
 import AsyncIterable_enumerateAsync from "./AsyncIterable/__internal__/AsyncIterable.enumerateAsync.js";
 import AsyncIterable_flow from "./AsyncIterable/__internal__/AsyncIterable.flow.js";
 import AsyncIterable_toObservable from "./AsyncIterable/__internal__/AsyncIterable.toObservable.js";

@@ -34,13 +34,10 @@ import {
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
+  StreamLike,
 } from "../rx.js";
 import { SchedulerLike, SchedulerLike_schedule } from "../scheduling.js";
-import {
-  StreamLike,
-  StreamableLike,
-  StreamableLike_stream,
-} from "../streaming.js";
+import { StreamableLike, StreamableLike_stream } from "../streaming.js";
 import Streamable_createStateStore from "../streaming/Streamable/__internal__/Streamable.createStateStore.js";
 import {
   DisposableLike,

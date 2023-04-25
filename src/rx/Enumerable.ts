@@ -58,7 +58,9 @@ import {
   Defer,
   EncodeUtf8,
   EnumerableLike,
+  EnumerateAsync,
   FirstAsync,
+  Flow,
   LastAsync,
   Retry,
   ScanLast,
@@ -105,7 +107,6 @@ import Observable_throws from "../rx/Observable/__internal__/Observable.throws.j
 import Observable_zip from "../rx/Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith.js";
 import Runnable_flow from "../rx/Runnable/__internal__/Runnable.flow.js";
-import { EnumerateAsync, Flow } from "../streaming.js";
 import { DisposableLike } from "../util.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_enumerateAsync from "./Enumerable/__internal__/Enumerable.enumerateAsync.js";

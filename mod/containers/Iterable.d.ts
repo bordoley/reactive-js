@@ -1,6 +1,5 @@
 import { Enumerate, FromReadonlyArray, Identity, IterableLike, ToReadonlyArray } from "../containers.js";
-import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
-import { EnumerateAsync, Flow } from "../streaming.js";
+import { EnumerateAsync, Flow, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 export declare const enumerate: Enumerate<IterableLike>["enumerate"];
 export declare const flow: Flow<IterableLike, {
     readonly delay?: number;

@@ -34,21 +34,18 @@ import * as ReadonlyObjectMap from "../keyed-containers/ReadonlyObjectMap.js";
 import {
   AnimationConfig,
   EnumerableLike,
+  FlowableObservableLike,
+  FlowableObservableLike_isPaused,
   ObservableLike,
   PublisherLike,
   RunnableLike,
+  StreamLike,
 } from "../rx.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Publisher from "../rx/Publisher.js";
 import * as Runnable from "../rx/Runnable.js";
-import {
-  FlowableStreamLike,
-  FlowableStreamLike_isPaused,
-  StreamLike,
-  StreamableLike,
-  StreamableLike_stream,
-} from "../streaming.js";
+import { StreamableLike, StreamableLike_stream } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
   DispatcherLike,
@@ -416,7 +413,7 @@ export const useFlow: UseFlow["useFlow"] = <T>(
   value: Optional<T>;
   isPaused: boolean;
 } => {
-  const flowStreamRef = useRef<Optional<FlowableStreamLike<T>>>(none);
+  const flowStreamRef = useRef<Optional<FlowableObservableLike<T>>>(none);
 
   const runnable = isFunction(runnableOrFactory)
     ? useMemo(runnableOrFactory, optionsOrDeps as unknown[])
@@ -454,7 +451,8 @@ export const useFlow: UseFlow["useFlow"] = <T>(
 
   const isPaused =
     useObservable<boolean>(
-      flowStreamRef.current?.[FlowableStreamLike_isPaused] ?? emptyObservable,
+      flowStreamRef.current?.[FlowableObservableLike_isPaused] ??
+        emptyObservable,
       options,
     ) ?? true;
 
