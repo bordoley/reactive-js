@@ -104,6 +104,10 @@ export interface CacheStreamLike<T> extends StreamLike<ReadonlyObjectMapLike<Fun
 export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>, never, CacheStreamLike<T>> {
     readonly [ContainerLike_type]?: CacheLike<never>;
 }
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface EnumerateAsync<C extends ContainerLike, O = unknown> {
     enumerateAsync<T>(scheduler: SchedulerLike, options?: O & {
         /**

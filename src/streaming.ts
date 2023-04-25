@@ -165,6 +165,10 @@ export interface CacheLike<T>
   readonly [ContainerLike_type]?: CacheLike<never>;
 }
 
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface EnumerateAsync<C extends ContainerLike, O = unknown> {
   enumerateAsync<T>(
     scheduler: SchedulerLike,
