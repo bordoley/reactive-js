@@ -30,7 +30,11 @@ import {
   returns,
 } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
-import { RunnableLike } from "../../rx.js";
+import {
+  FlowableObservableLike_pause,
+  FlowableObservableLike_resume,
+  RunnableLike,
+} from "../../rx.js";
 import {
   SchedulerLike_now,
   SchedulerLike_schedule,
@@ -40,7 +44,6 @@ import * as Scheduler from "../../scheduling/Scheduler.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  QueueableLike_enqueue,
 } from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
@@ -362,11 +365,11 @@ const flow = describe(
     );
 
     scheduler[SchedulerLike_schedule](() =>
-      generateStream[QueueableLike_enqueue](false),
+      generateStream[FlowableObservableLike_resume](),
     );
 
     scheduler[SchedulerLike_schedule](
-      () => generateStream[QueueableLike_enqueue](true),
+      () => generateStream[FlowableObservableLike_pause](),
 
       {
         delay: 2,
@@ -374,7 +377,7 @@ const flow = describe(
     );
 
     scheduler[SchedulerLike_schedule](
-      () => generateStream[QueueableLike_enqueue](false),
+      () => generateStream[FlowableObservableLike_resume](),
       {
         delay: 4,
       },

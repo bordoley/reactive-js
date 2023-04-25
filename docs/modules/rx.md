@@ -23,7 +23,6 @@
 
 ### Other Interfaces
 
-- [Flow](../interfaces/rx.Flow.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 
 ### TypeClass Interfaces
@@ -42,6 +41,7 @@
 - [Exhaust](../interfaces/rx.Exhaust.md)
 - [ExhaustMap](../interfaces/rx.ExhaustMap.md)
 - [FirstAsync](../interfaces/rx.FirstAsync.md)
+- [Flow](../interfaces/rx.Flow.md)
 - [ForkCombineLatest](../interfaces/rx.ForkCombineLatest.md)
 - [ForkMerge](../interfaces/rx.ForkMerge.md)
 - [ForkZipLatest](../interfaces/rx.ForkZipLatest.md)

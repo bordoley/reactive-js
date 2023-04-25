@@ -36,6 +36,8 @@ import {
   EnumerableLike,
   FlowableObservableLike,
   FlowableObservableLike_isPaused,
+  FlowableObservableLike_pause,
+  FlowableObservableLike_resume,
   ObservableLike,
   PublisherLike,
   RunnableLike,
@@ -413,7 +415,7 @@ export const useFlow: UseFlow["useFlow"] = <T>(
   value: Optional<T>;
   isPaused: boolean;
 } => {
-  const flowStreamRef = useRef<Optional<FlowableObservableLike<T>>>(none);
+  const flowObservableRef = useRef<Optional<FlowableObservableLike<T>>>(none);
 
   const runnable = isFunction(runnableOrFactory)
     ? useMemo(runnableOrFactory, optionsOrDeps as unknown[])
@@ -436,33 +438,34 @@ export const useFlow: UseFlow["useFlow"] = <T>(
 
   useEffect(() => {
     const scheduler = getScheduler({ priority });
-    const flowStream = pipe(runnable, Runnable.flow(scheduler, options));
-    flowStreamRef.current = flowStream;
+    const flowableObservable = pipe(
+      runnable,
+      Runnable.flow(scheduler, options),
+    );
+    flowObservableRef.current = flowableObservable;
 
-    return bindMethod(flowStream, DisposableLike_dispose);
+    return bindMethod(flowableObservable, DisposableLike_dispose);
   }, [runnable, priority, backpressureStrategy, capacity]);
 
-  const dispatch = useDispatcher(flowStreamRef.current);
-
   const value = useObservable<T>(
-    flowStreamRef.current ?? emptyObservable,
+    flowObservableRef.current ?? emptyObservable,
     options,
   );
 
   const isPaused =
     useObservable<boolean>(
-      flowStreamRef.current?.[FlowableObservableLike_isPaused] ??
+      flowObservableRef.current?.[FlowableObservableLike_isPaused] ??
         emptyObservable,
       options,
     ) ?? true;
 
   const pause = useCallback(() => {
-    dispatch(true);
-  }, [dispatch]);
+    flowObservableRef.current?.[FlowableObservableLike_pause]();
+  }, [flowObservableRef]);
 
   const resume = useCallback(() => {
-    dispatch(false);
-  }, [dispatch]);
+    flowObservableRef.current?.[FlowableObservableLike_resume]();
+  }, [flowObservableRef]);
 
   return { resume, pause, value, isPaused };
 };

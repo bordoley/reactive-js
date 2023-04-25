@@ -24,6 +24,8 @@ A stateful ObservableLike resource.
 
   ↳↳ [`StreamLike`](rx.StreamLike.md)
 
+  ↳↳ [`FlowableObservableLike`](rx.FlowableObservableLike.md)
+
 ## Table of contents
 
 ### Properties
