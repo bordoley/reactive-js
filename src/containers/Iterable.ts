@@ -7,10 +7,10 @@ import {
 } from "../containers.js";
 import ReadonlyArray_toReadonlyArray from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
-import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import { EnumerateAsync, ToFlowable } from "../streaming.js";
 import Container_identity from "./Container/__internal__/Container.identity.js";
 import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
-import Iterable_toAsyncEnumerable from "./Iterable/__internal__/Iterable.toAsyncEnumerable.js";
+import Iterable_enumerateAsync from "./Iterable/__internal__/Iterable.enumerateAsync.js";
 import Iterable_toFlowable from "./Iterable/__internal__/Iterable.toFlowable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
@@ -23,10 +23,10 @@ export const fromReadonlyArray: FromReadonlyArray<IterableLike>["fromReadonlyArr
 
 export const identity: Identity<IterableLike>["identity"] = Container_identity;
 
-export const toAsyncEnumerable: ToAsyncEnumerable<
+export const enumerateAsync: EnumerateAsync<
   IterableLike,
   { delay?: number }
->["toAsyncEnumerable"] = Iterable_toAsyncEnumerable;
+>["enumerateAsync"] = Iterable_enumerateAsync;
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   Iterable_toObservable;

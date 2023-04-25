@@ -1,6 +1,6 @@
 /// <reference types="./Observable.d.ts" />
 
-import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
+import AsyncIterable_toFlowable from "../containers/AsyncIterable/__internal__/AsyncIterable.toFlowable.js";
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
@@ -128,7 +128,7 @@ export const forkZipLatest = Observable_forkZipLatest;
  * @category Constructor
  */
 export const fromAsyncFactory = Observable_fromAsyncFactory;
-export const fromAsyncIterable = AsyncIterable_toObservable;
+export const fromAsyncIterable = AsyncIterable_toFlowable;
 export const fromEnumeratorFactory = Runnable_fromEnumeratorFactory;
 export const fromFactory = Observable_fromFactory;
 export const fromIterable = Iterable_toObservable;

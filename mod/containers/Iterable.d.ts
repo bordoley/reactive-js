@@ -1,12 +1,12 @@
 import { Enumerate, FromReadonlyArray, Identity, IterableLike, ToReadonlyArray } from "../containers.js";
 import { ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
-import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import { EnumerateAsync, ToFlowable } from "../streaming.js";
 export declare const enumerate: Enumerate<IterableLike>["enumerate"];
 export declare const fromReadonlyArray: FromReadonlyArray<IterableLike>["fromReadonlyArray"];
 export declare const identity: Identity<IterableLike>["identity"];
-export declare const toAsyncEnumerable: ToAsyncEnumerable<IterableLike, {
+export declare const enumerateAsync: EnumerateAsync<IterableLike, {
     delay?: number;
-}>["toAsyncEnumerable"];
+}>["enumerateAsync"];
 export declare const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"];
 export declare const toFlowable: ToFlowable<IterableLike, {
     readonly delay?: number;

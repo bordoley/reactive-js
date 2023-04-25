@@ -165,17 +165,24 @@ export interface CacheLike<T>
   readonly [ContainerLike_type]?: CacheLike<never>;
 }
 
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface ToAsyncEnumerable<C extends ContainerLike, O = never> {
-  /**
-   * @category Transform
-   */
-  toAsyncEnumerable<T>(
-    options?: O,
-  ): Function1<ContainerOf<C, T>, AsyncEnumerableLike<T>>;
+export interface EnumerateAsync<C extends ContainerLike, O = unknown> {
+  enumerateAsync<T>(
+    scheduler: SchedulerLike,
+    options?: O & {
+      /**
+       * The number of items to buffer for replay when an observer subscribes
+       * to the stream.
+       */
+      readonly replay?: number;
+
+      /**
+       * The capacity of the stream's request queue.
+       */
+      readonly capacity?: number;
+
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<ContainerOf<C, T>, StreamLike<void, unknown> & DisposableLike>;
 }
 
 /**

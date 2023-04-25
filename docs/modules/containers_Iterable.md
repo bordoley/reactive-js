@@ -12,10 +12,13 @@
 
 - [identity](containers_Iterable.md#identity)
 
+### Other Functions
+
+- [enumerateAsync](containers_Iterable.md#enumerateasync)
+
 ### Transform Functions
 
 - [enumerate](containers_Iterable.md#enumerate)
-- [toAsyncEnumerable](containers_Iterable.md#toasyncenumerable)
 - [toEnumerable](containers_Iterable.md#toenumerable)
 - [toFlowable](containers_Iterable.md#toflowable)
 - [toObservable](containers_Iterable.md#toobservable)
@@ -66,6 +69,31 @@ ___
 
 ___
 
+## Other Functions
+
+### enumerateAsync
+
+▸ **enumerateAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `unknown`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | { `delay?`: `number`  } & { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `replay?`: `number`  } |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `unknown`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+___
+
 ## Transform Functions
 
 ### enumerate
@@ -81,29 +109,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
-
-___
-
-### toAsyncEnumerable
-
-▸ **toAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
 
 ___
 

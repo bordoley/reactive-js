@@ -7,7 +7,6 @@ import {
 } from "../../__internal__/testing.js";
 import { error, pipe } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
-import * as Flowable from "../../streaming/Flowable.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 
 testModule(
@@ -23,7 +22,6 @@ testModule(
           }
         })(),
         AsyncIterable.toFlowable(),
-        Flowable.toObservable(),
         Observable.takeFirst({ count: 10 }),
         Observable.buffer(),
         Observable.lastAsync({ capacity: 5 }),
@@ -39,7 +37,6 @@ testModule(
           yield 3;
         })(),
         AsyncIterable.toFlowable(),
-        Flowable.toObservable(),
         Observable.buffer(),
         Observable.lastAsync({ capacity: 5 }),
       );
@@ -55,7 +52,6 @@ testModule(
           throw e;
         })(),
         AsyncIterable.toFlowable(),
-        Flowable.toObservable(),
         Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
         Observable.lastAsync({ capacity: 5 }),
       );
