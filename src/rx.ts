@@ -11,8 +11,9 @@ import {
   ContainerLike_type,
   ContainerOf,
   ContainerOperator,
+  PromiseableLike,
 } from "./containers.js";
-import { Factory, Function1, Function2 } from "./functions.js";
+import { Factory, Function1, Function2, Optional } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
   DispatcherLike,
@@ -400,6 +401,20 @@ export interface ExhaustMap<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
+export interface FirstAsync<C extends ContainerLike, O = never> {
+  /**
+   *
+   * @category Transform
+   */
+  firstAsync<T>(
+    options?: O,
+  ): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface ForkCombineLatest<C extends ContainerLike> {
   /**
    * @category Operator
@@ -594,6 +609,20 @@ export interface GenerateLast<
     initialValue: Factory<T>,
     options?: O,
   ): ContainerOf<C, T>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface LastAsync<C extends ContainerLike, O = never> {
+  /**
+   *
+   * @category Transform
+   */
+  lastAsync<T>(
+    options?: O,
+  ): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
 }
 
 /**

@@ -46,6 +46,7 @@ import {
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
+import { Factory } from "../functions.js";
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   Animate,
@@ -59,8 +60,10 @@ import {
   Enqueue,
   Exhaust,
   ExhaustMap,
+  FirstAsync,
   ForkMerge,
   ForkZipLatest,
+  LastAsync,
   Merge,
   MergeAll,
   MergeMap,
@@ -84,6 +87,7 @@ import {
   ZipLatest,
   ZipWithLatestFrom,
 } from "../rx.js";
+import { SchedulerLike } from "../scheduling.js";
 import { ToFlowable } from "../streaming.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
@@ -99,6 +103,7 @@ import Observable_distinctUntilChanged from "./Observable/__internal__/Observabl
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
+import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
@@ -109,6 +114,7 @@ import Observable_generate from "./Observable/__internal__/Observable.generate.j
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
+import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
@@ -223,6 +229,15 @@ export const exhaustMap: ExhaustMap<RunnableLike>["exhaustMap"] =
 
 export const first: First<RunnableLike>["first"] = Runnable_first;
 
+export const firstAsync: FirstAsync<
+  RunnableLike,
+  {
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  }
+>["firstAsync"] = Observable_firstAsync;
+
 export const flatMapIterable: FlatMapIterable<RunnableLike>["flatMapIterable"] =
   Runnable_flatMapIterable;
 
@@ -290,6 +305,15 @@ export const keepType: KeepType<RunnableLike>["keepType"] =
   Observable_keepType as KeepType<RunnableLike>["keepType"];
 
 export const last: Last<RunnableLike>["last"] = Runnable_last;
+
+export const lastAsync: LastAsync<
+  RunnableLike,
+  {
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  }
+>["lastAsync"] = Observable_lastAsync;
 
 export const noneSatisfy: NoneSatisfy<RunnableLike>["noneSatisfy"] =
   Runnable_noneSatisfy;
