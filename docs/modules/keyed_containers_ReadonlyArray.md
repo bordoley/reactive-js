@@ -27,6 +27,7 @@
 
 ### Other Functions
 
+- [enumerateAsync](keyed_containers_ReadonlyArray.md#enumerateasync)
 - [everySatisfy](keyed_containers_ReadonlyArray.md#everysatisfy)
 - [getLength](keyed_containers_ReadonlyArray.md#getlength)
 - [isEmpty](keyed_containers_ReadonlyArray.md#isempty)
@@ -37,7 +38,6 @@
 - [enumerate](keyed_containers_ReadonlyArray.md#enumerate)
 - [first](keyed_containers_ReadonlyArray.md#first)
 - [last](keyed_containers_ReadonlyArray.md#last)
-- [toAsyncEnumerable](keyed_containers_ReadonlyArray.md#toasyncenumerable)
 - [toEnumerable](keyed_containers_ReadonlyArray.md#toenumerable)
 - [toFlowable](keyed_containers_ReadonlyArray.md#toflowable)
 - [toIterable](keyed_containers_ReadonlyArray.md#toiterable)
@@ -409,6 +409,29 @@ ___
 
 ## Other Functions
 
+### enumerateAsync
+
+▸ **enumerateAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `unknown`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | { `count?`: `number` ; `delay?`: `number` ; `start?`: `number`  } & { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `replay?`: `number`  } |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `unknown`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+___
+
 ### everySatisfy
 
 ▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
@@ -538,31 +561,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
-
-___
-
-### toAsyncEnumerable
-
-▸ **toAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.delay?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
 
 ___
 

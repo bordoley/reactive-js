@@ -18,7 +18,6 @@ import * as Observable from "../../rx/Observable.js";
 import * as Runnable from "../../rx/Runnable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { StreamableLike_stream } from "../../streaming.js";
-import * as Flowable from "../../streaming/Flowable.js";
 import * as Streamable from "../../streaming/Streamable.js";
 import { DisposableLike_dispose } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
@@ -124,7 +123,6 @@ testModule(
 
       const acc = await pipe(
         createReadableSource(() => pipe(generate(), Readable.from)),
-        Flowable.toObservable(),
         Observable.scan<Uint8Array, string>(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
@@ -144,7 +142,6 @@ testModule(
       const textDecoder = newInstance(TextDecoder);
       await pipe(
         createReadableSource(() => pipe(generate(), Readable.from)),
-        Flowable.toObservable(),
         Observable.scan<Uint8Array, string>(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
@@ -164,7 +161,6 @@ testModule(
       Runnable.toFlowable(),
       gzip(),
       gunzip(),
-      Flowable.toObservable(),
       Observable.scan<Uint8Array, string>(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),

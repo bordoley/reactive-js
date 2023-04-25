@@ -105,10 +105,10 @@ import Observable_throws from "../rx/Observable/__internal__/Observable.throws.j
 import Observable_zip from "../rx/Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith.js";
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
-import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import { EnumerateAsync, ToFlowable } from "../streaming.js";
 import { DisposableLike } from "../util.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
-import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
+import Enumerable_enumerateAsync from "./Enumerable/__internal__/Enumerable.enumerateAsync.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
@@ -174,6 +174,11 @@ export const enumerate: Enumerate<
   EnumerableLike,
   EnumerableEnumerator
 >["enumerate"] = Enumerable_enumerate;
+
+export const enumerateAsync: EnumerateAsync<
+  EnumerableLike,
+  { delay?: number }
+>["enumerateAsync"] = Enumerable_enumerateAsync;
 
 export const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"] =
   Runnable_everySatisfy;
@@ -273,11 +278,6 @@ export const throws: Throws<EnumerableLike>["throws"] = Observable_throws;
 
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty;
-
-export const toAsyncEnumerable: ToAsyncEnumerable<
-  EnumerableLike,
-  { delay?: number }
->["toAsyncEnumerable"] = Enumerable_toAsyncEnumerable;
 
 export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
   identity;

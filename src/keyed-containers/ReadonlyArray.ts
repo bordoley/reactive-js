@@ -34,10 +34,11 @@ import {
   ToRunnable,
 } from "../rx.js";
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
+import { EnumerateAsync, ToFlowable } from "../streaming.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
+import ReadonlyArray_enumerateAsync from "./ReadonlyArray/__internal__/ReadonlyArray.enumerateAsync.js";
 import ReadonlyArray_everySatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_first from "./ReadonlyArray/__internal__/ReadonlyArray.first.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
@@ -51,7 +52,6 @@ import ReadonlyArray_last from "./ReadonlyArray/__internal__/ReadonlyArray.last.
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_mapWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.mapWithKey.js";
 import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
-import ReadonlyArray_toAsyncEnumerable from "./ReadonlyArray/__internal__/ReadonlyArray.toAsyncEnumerable.js";
 import ReadonlyArray_toFlowable from "./ReadonlyArray/__internal__/ReadonlyArray.toFlowable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
@@ -63,6 +63,15 @@ export const entries: Entries<ReadonlyArrayLike>["entries"] =
 
 export const enumerate: Enumerate<ReadonlyArrayLike>["enumerate"] =
   ReadonlyArray_enumerate;
+
+export const enumerateAsync: EnumerateAsync<
+  ReadonlyArrayLike,
+  {
+    readonly delay?: number;
+    readonly start?: number;
+    readonly count?: number;
+  }
+>["enumerateAsync"] = ReadonlyArray_enumerateAsync;
 
 export const everySatisfy: EverySatisfy<ReadonlyArrayLike>["everySatisfy"] =
   ReadonlyArray_everySatisfy;
@@ -114,15 +123,6 @@ export const mapWithKey: MapWithKey<ReadonlyArrayLike>["mapWithKey"] =
 
 export const someSatisfy: SomeSatisfy<ReadonlyArrayLike>["someSatisfy"] =
   ReadonlyArray_someSatisfy;
-
-export const toAsyncEnumerable: ToAsyncEnumerable<
-  ReadonlyArrayLike,
-  {
-    readonly delay?: number;
-    readonly start?: number;
-    readonly count?: number;
-  }
->["toAsyncEnumerable"] = ReadonlyArray_toAsyncEnumerable;
 
 export const toEnumerable: ToEnumerable<
   ReadonlyArrayLike,

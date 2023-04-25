@@ -8,9 +8,12 @@
 
 - [identity](containers_AsyncIterable.md#identity)
 
+### Other Functions
+
+- [enumerateAsync](containers_AsyncIterable.md#enumerateasync)
+
 ### Transform Functions
 
-- [toAsyncEnumerable](containers_AsyncIterable.md#toasyncenumerable)
 - [toFlowable](containers_AsyncIterable.md#toflowable)
 - [toObservable](containers_AsyncIterable.md#toobservable)
 
@@ -32,11 +35,11 @@
 
 ___
 
-## Transform Functions
+## Other Functions
 
-### toAsyncEnumerable
+### enumerateAsync
 
-▸ **toAsyncEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
+▸ **enumerateAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `unknown`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -46,15 +49,21 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | - |
+| `options?` | `Object` | - |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
+| `options.capacity?` | `number` | The capacity of the stream's request queue. |
+| `options.replay?` | `number` | The number of items to buffer for replay when an observer subscribes to the stream. |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streaming.AsyncEnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`void`, `unknown`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
+
+## Transform Functions
 
 ### toFlowable
 

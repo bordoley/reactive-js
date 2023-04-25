@@ -14,11 +14,6 @@
 - [fromReadonlyArray](streaming_Flowable.md#fromreadonlyarray)
 - [fromRunnable](streaming_Flowable.md#fromrunnable)
 
-### Transform Functions
-
-- [toObservable](streaming_Flowable.md#toobservable)
-- [toRunnable](streaming_Flowable.md#torunnable)
-
 ## Constructor Functions
 
 ### create
@@ -161,49 +156,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>\>
-
-___
-
-## Transform Functions
-
-### toObservable
-
-▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-___
-
-### toRunnable
-
-▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streaming.FlowableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>

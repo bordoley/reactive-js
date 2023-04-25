@@ -11,6 +11,10 @@
 - [FlowableLike](../interfaces/streaming.FlowableLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)
 
+### Other Interfaces
+
+- [EnumerateAsync](../interfaces/streaming.EnumerateAsync.md)
+
 ### Stream Interfaces
 
 - [CacheStreamLike](../interfaces/streaming.CacheStreamLike.md)
@@ -19,5 +23,4 @@
 
 ### TypeClass Interfaces
 
-- [ToAsyncEnumerable](../interfaces/streaming.ToAsyncEnumerable.md)
 - [ToFlowable](../interfaces/streaming.ToFlowable.md)
