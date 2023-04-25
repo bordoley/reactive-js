@@ -15,6 +15,7 @@
 
 - [EnumerableLike](../interfaces/rx.EnumerableLike.md)
 - [FlowableObservableLike](../interfaces/rx.FlowableObservableLike.md)
+- [InteractiveObservableLike](../interfaces/rx.InteractiveObservableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [PublisherLike](../interfaces/rx.PublisherLike.md)
@@ -22,7 +23,6 @@
 
 ### Other Interfaces
 
-- [InteractiveObservableLike](../interfaces/rx.InteractiveObservableLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 
 ### TypeClass Interfaces

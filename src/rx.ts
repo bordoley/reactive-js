@@ -173,8 +173,13 @@ export interface FlowableObservableLike<T = unknown>
   [FlowableObservableLike_resume](): void;
 }
 
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface InteractiveObservableLike<T = unknown>
   extends MulticastObservableLike<T> {
+    
   [InteractiveObservableLike_move](): void;
 }
 
