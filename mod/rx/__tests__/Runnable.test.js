@@ -5,9 +5,10 @@ import { catchErrorTests, decodeWithCharsetTests, retryTests, scanLastTests, sca
 import Containers_test from "../../containers/__tests__/Containers.test.js";
 import { arrayEquality, identity, increment, incrementBy, isSome, newInstance, none, pipe, pipeLazy, returns, } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
+import { FlowableObservableLike_pause, FlowableObservableLike_resume, } from "../../rx.js";
 import { SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
 import { __await, __memo } from "../effects.js";
@@ -72,11 +73,11 @@ const flow = describe("flow", test("flow a generating source", () => {
         delay: 1,
         delayStart: true,
     }), Runnable.flow(scheduler));
-    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_enqueue](false));
-    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_enqueue](true), {
+    scheduler[SchedulerLike_schedule](() => generateStream[FlowableObservableLike_resume]());
+    scheduler[SchedulerLike_schedule](() => generateStream[FlowableObservableLike_pause](), {
         delay: 2,
     });
-    scheduler[SchedulerLike_schedule](() => generateStream[QueueableLike_enqueue](false), {
+    scheduler[SchedulerLike_schedule](() => generateStream[FlowableObservableLike_resume](), {
         delay: 4,
     });
     scheduler[SchedulerLike_schedule](() => generateStream[DisposableLike_dispose](), {

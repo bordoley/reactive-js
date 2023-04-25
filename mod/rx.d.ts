@@ -103,17 +103,17 @@ export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObse
  * @noInheritDoc
  * @category Container
  */
-export interface FlowableObservableLike<T = unknown> extends StreamLike<boolean | Updater<boolean>, T> {
+export interface FlowableObservableLike<T = unknown> extends MulticastObservableLike<T> {
     /**
-     * Reactive property indicating if the stream is paused or not.
+     * Reactive property indicating if the observable is paused or not.
      */
     readonly [FlowableObservableLike_isPaused]: MulticastObservableLike<boolean>;
     /**
-     * Imperatively pause the stream.
+     * Imperatively pause the observable.
      */
     [FlowableObservableLike_pause](): void;
     /**
-     * Imperatively resume the stream.
+     * Imperatively resume the observable.
      */
     [FlowableObservableLike_resume](): void;
 }
@@ -340,6 +340,10 @@ export interface FirstAsync<C extends ContainerLike> {
         backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
 }
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface Flow<C extends ContainerLike, O = unknown> {
     flow<T>(scheduler: SchedulerLike, options?: O & {
         readonly replay?: number;

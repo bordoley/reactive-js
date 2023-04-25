@@ -15,7 +15,7 @@ via the pause and resume methods.
 
 ## Hierarchy
 
-- [`StreamLike`](rx.StreamLike.md)<`boolean` \| [`Updater`](../modules/functions.md#updater)<`boolean`\>, `T`\>
+- [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`T`\>
 
   ↳ **`FlowableObservableLike`**
 
@@ -36,7 +36,7 @@ via the pause and resume methods.
 
 • `Readonly` **[\_\_\_FlowableObservableLike\_isPaused]**: [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`boolean`\>
 
-Reactive property indicating if the stream is paused or not.
+Reactive property indicating if the observable is paused or not.
 
 ## Methods
 
@@ -44,7 +44,7 @@ Reactive property indicating if the stream is paused or not.
 
 ▸ **[___FlowableObservableLike_pause]**(): `void`
 
-Imperatively pause the stream.
+Imperatively pause the observable.
 
 #### Returns
 
@@ -56,7 +56,7 @@ ___
 
 ▸ **[___FlowableObservableLike_resume]**(): `void`
 
-Imperatively resume the stream.
+Imperatively resume the observable.
 
 #### Returns
 

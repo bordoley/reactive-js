@@ -23,6 +23,7 @@ import {
   FlowableObservableLike_resume,
   MulticastObservableLike,
   ObservableLike,
+  StreamLike,
 } from "../../../rx.js";
 import Stream_mixin from "../../../rx/Stream/__internal__/Stream.mixin.js";
 import { SchedulerLike } from "../../../scheduling.js";
@@ -112,10 +113,14 @@ const FlowableObservable_create: <T>(
         [FlowableObservableLike_isPaused]: none,
       }),
       {
-        [FlowableObservableLike_pause](this: FlowableObservableLike<T>) {
+        [FlowableObservableLike_pause](
+          this: FlowableObservableLike<T> & StreamLike<boolean, T>,
+        ) {
           this[QueueableLike_enqueue](true);
         },
-        [FlowableObservableLike_resume](this: FlowableObservableLike<T>) {
+        [FlowableObservableLike_resume](
+          this: FlowableObservableLike<T> & StreamLike<boolean, T>,
+        ) {
           this[QueueableLike_enqueue](false);
         },
       },

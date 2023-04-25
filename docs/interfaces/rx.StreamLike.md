@@ -23,8 +23,6 @@ Represents a duplex stream
 
   ↳↳ [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
 
-  ↳↳ [`FlowableObservableLike`](rx.FlowableObservableLike.md)
-
   ↳↳ [`CacheStreamLike`](streaming.CacheStreamLike.md)
 
 ## Table of contents
