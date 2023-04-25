@@ -43,9 +43,6 @@ import { SchedulerLike } from "../scheduling.js";
 import {
   StreamLike,
   StreamableLike,
-  StreamableLike_isEnumerable,
-  StreamableLike_isInteractive,
-  StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../streaming.js";
 import * as Stream from "../streaming/Stream.js";
@@ -1500,9 +1497,6 @@ export const windowLocation: StreamableLike<
   };
 
   return {
-    [StreamableLike_isEnumerable]: false,
-    [StreamableLike_isInteractive]: false,
-    [StreamableLike_isRunnable]: false,
     [StreamableLike_stream]: stream,
   };
 })();

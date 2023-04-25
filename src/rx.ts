@@ -239,7 +239,6 @@ export interface CatchError<C extends ContainerLike> {
    */
   catchError<T>(
     onError: Function1<unknown, ContainerOf<C, T> | void>,
-    
   ): ContainerOperator<C, T, T>;
 }
 
@@ -388,7 +387,6 @@ export interface Enqueue<C extends ContainerLike> {
    */
   enqueue<T>(
     queue: QueueableLike<T> | Function1<T, boolean>,
-    
   ): ContainerOperator<C, T, T>;
 }
 
@@ -414,7 +412,6 @@ export interface ExhaustMap<C extends ContainerLike> {
    */
   exhaustMap: <TA, TB>(
     selector: Function1<TA, ContainerOf<C, TB>>,
-    
   ) => ContainerOperator<C, TA, TB>;
 }
 
@@ -597,9 +594,7 @@ export interface FromEnumerable<C extends ContainerLike> {
   /**
    * @category Constructor
    */
-  fromEnumerable<T>(
-    
-  ): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
 }
 
 /**
@@ -691,8 +686,7 @@ export interface FromRunnable<C extends ContainerLike> {
   /**
    * @category Constructor
    */
-  fromRunnable: <T>(
-  ) => Function1<RunnableLike<T>, ContainerOf<C, T>>;
+  fromRunnable: <T>() => Function1<RunnableLike<T>, ContainerOf<C, T>>;
 }
 
 /**
@@ -778,7 +772,7 @@ export interface MergeAll<C extends ContainerLike> {
    *
    * @category Operator
    */
-  mergeAll: <T>(options?:   {
+  mergeAll: <T>(options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
     readonly concurrency?: number;
@@ -795,11 +789,11 @@ export interface MergeMap<C extends ContainerLike> {
    */
   mergeMap: <TA, TB>(
     selector: Function1<TA, ContainerOf<C, TB>>,
-    options?:  {
+    options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
       readonly concurrency?: number;
-    }
+    },
   ) => ContainerOperator<C, TA, TB>;
 }
 
@@ -912,7 +906,6 @@ export interface SwitchMap<C extends ContainerLike> {
    */
   switchMap: <TA, TB>(
     selector: Function1<TA, ContainerOf<C, TB>>,
-    
   ) => ContainerOperator<C, TA, TB>;
 }
 
@@ -973,10 +966,7 @@ export interface ThrowIfEmpty<C extends ContainerLike> {
    *
    * @category Operator
    */
-  throwIfEmpty<T>(
-    factory: Factory<unknown>,
-    
-  ): ContainerOperator<C, T, T>;
+  throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 }
 
 /**

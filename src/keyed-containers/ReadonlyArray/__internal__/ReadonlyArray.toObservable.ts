@@ -22,9 +22,6 @@ import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
 interface ReadonlyArrayToObservable {
   toObservable<T>(): Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
-  toObservable<T>(
-    options: unknown,
-  ): Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
   toObservable<T>(options: {
     readonly count: number;
   }): Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
@@ -41,6 +38,9 @@ interface ReadonlyArrayToObservable {
     readonly count?: number;
     readonly start?: number;
   }): Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
+  toObservable<T>(
+    options: unknown,
+  ): Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
 }
 const ReadonlyArray_toObservable: ReadonlyArrayToObservable["toObservable"] =
   /*@__PURE__*/

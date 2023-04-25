@@ -1,79 +1,127 @@
 import {
+  createInstanceFactory,
+  mix,
+  include,
+  init,
+  props,
+} from "../../../__internal__/mixins.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.js";
+import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
 } from "../../../containers.js";
-import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
-import { bindMethod, invoke, pipe } from "../../../functions.js";
+import {
+  bindMethod,
+  invoke,
+  pipe,
+  returns,
+  unsafeCast,
+} from "../../../functions.js";
 import {
   EnumerableLike,
   ObservableLike,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
   ObservableLike_observe,
+  ObserverLike,
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_takeWhile from "../../../rx/Observable/__internal__/Observable.takeWhile.js";
+import { SchedulerLike } from "../../../scheduling.js";
 import {
   AsyncEnumerableLike,
-  StreamableLike_isEnumerable,
-  StreamableLike_isInteractive,
-  StreamableLike_isRunnable,
+  StreamLike,
+  StreamableLike_stream,
   ToAsyncEnumerable,
 } from "../../../streaming.js";
-import Streamable_createWithConfig from "../../../streaming/Streamable/__internal__/Streamable.createWithConfig.js";
+import Stream_create from "../../../streaming/Stream/__internal__/Stream.create.js";
+import {
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+  DisposableLike,
+} from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Observable_concatMap from "../../Observable/__internal__/Observable.concatMap.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
 const Enumerable_toAsyncEnumerable: ToAsyncEnumerable<
   EnumerableLike,
   { delay?: number }
->["toAsyncEnumerable"] =
-  /*@__PURE__*/
+>["toAsyncEnumerable"] = (<T>() =>
+  returns(
+    createInstanceFactory(
+      mix(
+        include(Delegating_mixin()),
+        function EnumerableToAsyncEnumerable(
+          instance: AsyncEnumerableLike<T>,
+          delegate: EnumerableLike<T>,
+        ): AsyncEnumerableLike<T> {
+          init(Delegating_mixin(), instance, delegate);
+          return instance;
+        },
+        props({}),
+        {
+          get [ObservableLike_isEnumerable](): boolean {
+            unsafeCast<DelegatingLike<EnumerableLike<T>>>(this);
+            return this[DelegatingLike_delegate][ObservableLike_isEnumerable];
+          },
 
+          get [ObservableLike_isRunnable](): boolean {
+            unsafeCast<DelegatingLike<EnumerableLike<T>>>(this);
+            return this[DelegatingLike_delegate][ObservableLike_isRunnable];
+          },
 
-    <T>(options?: { readonly delay?: number }) =>
-    (enumerable: EnumerableLike<T>): AsyncEnumerableLike<T> => {
-      const { delay = 0 } = options ?? {};
+          [ObservableLike_observe](
+            this: DelegatingLike<EnumerableLike<T>>,
+            observer: ObserverLike<T>,
+          ) {
+            this[DelegatingLike_delegate][ObservableLike_observe](observer);
+          },
 
-      return Streamable_createWithConfig<T>(
-        observable =>
-          Observable_create(observer => {
-            const enumerator = pipe(
-              enumerable,
-              Enumerable_enumerate<T>(),
-              Disposable_addTo(observer),
-            );
+          [StreamableLike_stream](
+            this: DelegatingLike<EnumerableLike<T>>,
+            scheduler: SchedulerLike,
+            options?: {
+              readonly replay?: number;
+              readonly capacity?: number;
+              readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+            },
+          ): StreamLike<void, T> & DisposableLike {
+            const op = (observable: ObservableLike<void>) =>
+              Observable_create(observer => {
+                const enumerator = pipe(
+                  this[DelegatingLike_delegate],
+                  Enumerable_enumerate<T>(),
+                  Disposable_addTo(observer),
+                );
 
-            pipe(
-              observable,
-              Observable_forEach<ObservableLike, void>(
-                bindMethod(enumerator, EnumeratorLike_move),
-              ),
-              Observable_takeWhile<ObservableLike, void>(
-                _ => enumerator[EnumeratorLike_hasCurrent],
-              ),
-              delay > 0
-                ? Observable_concatMap(_ =>
-                    pipe(
-                      enumerator[EnumeratorLike_current],
-                      Optional_toObservable({ delay }),
-                    ),
-                  )
-                : Observable_map<ObservableLike, void, T>(
+                pipe(
+                  observable,
+                  Observable_forEach<ObservableLike, void>(
+                    bindMethod(enumerator, EnumeratorLike_move),
+                  ),
+                  Observable_takeWhile<ObservableLike, void>(
+                    _ => enumerator[EnumeratorLike_hasCurrent],
+                  ),
+
+                  Observable_map<ObservableLike, void, T>(
                     _ => enumerator[EnumeratorLike_current],
                   ),
-              invoke(ObservableLike_observe, observer),
-            );
-          }),
+                  invoke(ObservableLike_observe, observer),
+                );
+              });
 
-        {
-          [StreamableLike_isEnumerable]: delay <= 0,
-          [StreamableLike_isInteractive]: true,
-          [StreamableLike_isRunnable]: true,
+            return Stream_create<void, T>(op, scheduler, options);
+          },
         },
-      );
-    };
+      ),
+    ),
+  ))();
 
 export default Enumerable_toAsyncEnumerable;

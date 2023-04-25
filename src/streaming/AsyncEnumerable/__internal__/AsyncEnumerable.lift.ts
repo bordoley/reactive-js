@@ -4,21 +4,25 @@ import {
   LiftedLike_source,
 } from "../../../__internal__/containers.js";
 import { ContainerOperator } from "../../../containers.js";
-import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
+import { Function1, bindMethod, newInstance, invoke, none, pipe, pipeUnsafe } from "../../../functions.js";
+import {ObserverLike, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   AsyncEnumerableLike,
   StreamLike,
-  StreamableLike_isEnumerable,
-  StreamableLike_isInteractive,
-  StreamableLike_isRunnable,
+  StreamableLike,
   StreamableLike_stream,
 } from "../../../streaming.js";
 import {
+  BufferLike_capacity,
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_enqueue,
 } from "../../../util.js";
+import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
+import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 class LiftedAsyncEnumerable<T>
   implements
@@ -31,9 +35,9 @@ class LiftedAsyncEnumerable<T>
     StreamLike<void, any> & DisposableLike
   >[];
 
-  readonly [StreamableLike_isEnumerable]: boolean;
-  readonly [StreamableLike_isInteractive] = true;
-  readonly [StreamableLike_isRunnable]: boolean;
+  readonly [ObservableLike_isEnumerable]: boolean;
+  readonly [ObservableLike_isRunnable]: boolean;
+  readonly [ObservableLike_observe]: ObservableLike[typeof ObservableLike_observe];
 
   constructor(
     src: AsyncEnumerableLike<any>,
@@ -46,8 +50,38 @@ class LiftedAsyncEnumerable<T>
   ) {
     this[LiftedLike_source] = src;
     this[LiftedLike_operators] = operators;
-    this[StreamableLike_isEnumerable] = isEnumerable;
-    this[StreamableLike_isRunnable] = isRunnable;
+    this[ObservableLike_isEnumerable] = isEnumerable;
+    this[ObservableLike_isRunnable] = isRunnable;
+
+    // FIXME: Code duplication
+    const observable = Observable_create((observer: ObserverLike<T>) => {
+      const capacity = observer[BufferLike_capacity];
+      const backpressureStrategy =
+        observer[QueueableLike_backpressureStrategy];
+      const enumerator = pipe(
+        this as StreamableLike<void, T>,
+        invoke(StreamableLike_stream, observer, {
+          backpressureStrategy,
+          capacity,
+        }),
+        Disposable_addTo(observer),
+      );
+
+      pipe(
+        enumerator,
+        Observable_forEach<ObservableLike, T>(_ => {
+          enumerator[QueueableLike_enqueue](none);
+        }),
+        invoke(ObservableLike_observe, observer),
+      );
+
+      enumerator[QueueableLike_enqueue](none);
+    });
+
+    this[ObservableLike_observe] = bindMethod(
+      observable,
+      ObservableLike_observe,
+    );
   }
 
   [StreamableLike_stream](
@@ -87,8 +121,8 @@ const AsyncEnumerable_lift =
     ];
 
     const liftedIsEnumerable =
-      isEnumerable && enumerable[StreamableLike_isEnumerable];
-    const liftIsRunnable = isRunnable && enumerable[StreamableLike_isRunnable];
+      isEnumerable && enumerable[ObservableLike_isEnumerable];
+    const liftIsRunnable = isRunnable && enumerable[ObservableLike_isRunnable];
 
     return newInstance<
       LiftedAsyncEnumerable<TB>,

@@ -198,21 +198,6 @@ export const __StreamableLike_stream = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __StreamableLike_isEnumerable = /*@__PURE__*/ symbol(
-  "StreamableLike_isEnumerable",
-);
-
-/** @type {unique symbol} */
-export const __StreamableLike_isInteractive = /*@__PURE__*/ symbol(
-  "StreamableLike_isInteractive",
-);
-
-/** @type {unique symbol} */
-export const __StreamableLike_isRunnable = /*@__PURE__*/ symbol(
-  "StreamableLike_isRunnable",
-);
-
-/** @type {unique symbol} */
 export const __VirtualTimeSchedulerLike_run = /*@__PURE__*/ symbol(
   "VirtualTimeSchedulerLike_run",
 );

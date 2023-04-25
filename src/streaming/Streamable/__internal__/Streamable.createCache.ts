@@ -39,9 +39,6 @@ import {
 import {
   CacheLike,
   CacheStreamLike,
-  StreamableLike_isEnumerable,
-  StreamableLike_isInteractive,
-  StreamableLike_isRunnable,
   StreamableLike_stream,
 } from "../../../streaming.js";
 import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
@@ -342,9 +339,6 @@ const Streamable_createCache = <T>(
     readonly cleanupScheduler?: SchedulerLike;
   } = {},
 ): CacheLike<T> => ({
-  [StreamableLike_isEnumerable]: false,
-  [StreamableLike_isInteractive]: false,
-  [StreamableLike_isRunnable]: false,
   [StreamableLike_stream]: (scheduler, streamOptions) =>
     createCacheStream(
       scheduler,

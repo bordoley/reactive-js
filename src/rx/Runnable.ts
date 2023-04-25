@@ -286,13 +286,9 @@ export const mapTo: MapTo<RunnableLike>["mapTo"] = Observable_mapTo;
 
 export const merge: Merge<RunnableLike>["merge"] = Observable_merge;
 
-export const mergeAll: MergeAll<
-  RunnableLike
->["mergeAll"] = Runnable_mergeAll;
+export const mergeAll: MergeAll<RunnableLike>["mergeAll"] = Runnable_mergeAll;
 
-export const mergeMap: MergeMap<
-  RunnableLike
->["mergeMap"] = Runnable_mergeMap;
+export const mergeMap: MergeMap<RunnableLike>["mergeMap"] = Runnable_mergeMap;
 
 export const mergeWith: MergeWith<RunnableLike>["mergeWith"] =
   Observable_mergeWith as MergeWith<RunnableLike>["mergeWith"];

@@ -80,12 +80,6 @@ export declare const __StreamLike_scheduler: unique symbol;
 
 export declare const __StreamableLike_stream: unique symbol;
 
-export declare const __StreamableLike_isEnumerable: unique symbol;
-
-export declare const __StreamableLike_isInteractive: unique symbol;
-
-export declare const __StreamableLike_isRunnable: unique symbol;
-
 export declare const __VirtualTimeSchedulerLike_run: unique symbol;
 
 export declare const __WindowLocationStreamLike_goBack: unique symbol;
