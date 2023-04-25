@@ -21,7 +21,7 @@ export { StreamableLike_stream, StreamLike_scheduler };
  * Represents a duplex stream
  *
  * @noInheritDoc
- * @category Container
+ * @category Stream
  */
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
