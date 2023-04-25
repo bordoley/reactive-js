@@ -32,7 +32,10 @@ import {
 } from "@reactive-js/core/functions";
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
-import { InteractiveObservableLike_move, ObservableLike } from "@reactive-js/core/rx";
+import {
+  InteractiveObservableLike_move,
+  ObservableLike,
+} from "@reactive-js/core/rx";
 import {
   QueueableLike_enqueue,
   KeyedCollectionLike_get,
@@ -280,14 +283,22 @@ const RxComponent = createComponent(
         { mode: "switching" },
       );
 
+    const delayOption = { delay: 1000 };
     return Observable.compute(() => {
       const { windowLocationStream } = __await(props);
       const uri = __await(windowLocationStream);
 
       const scheduler = __currentScheduler();
-      const enumerateAsync = __memo(Enumerable.enumerateAsync, scheduler);
+      const enumerateAsync = __memo(
+        Enumerable.enumerateAsync,
+        scheduler,
+        delayOption,
+      );
       const enumerator = __using(enumerateAsync, enumerable);
-      const move: SideEffect = __bindMethod(enumerator, InteractiveObservableLike_move);
+      const move: SideEffect = __bindMethod(
+        enumerator,
+        InteractiveObservableLike_move,
+      );
 
       const animatedDivRef = __memo(createRef);
       const animationStreamable = __memo(

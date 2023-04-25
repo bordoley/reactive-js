@@ -179,7 +179,6 @@ export interface FlowableObservableLike<T = unknown>
  */
 export interface InteractiveObservableLike<T = unknown>
   extends MulticastObservableLike<T> {
-    
   [InteractiveObservableLike_move](): void;
 }
 
