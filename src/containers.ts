@@ -332,20 +332,6 @@ export interface First<C extends ContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FirstAsync<C extends ContainerLike, O = never> {
-  /**
-   *
-   * @category Transform
-   */
-  firstAsync<T>(
-    options?: O,
-  ): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface FlatMapIterable<C extends ContainerLike, O = never> {
   /**
    * @category Operator
@@ -613,20 +599,6 @@ export interface Last<C extends ContainerLike, O = never> {
    * @category Transform
    */
   last<T>(options?: O): Function1<ContainerOf<C, T>, Optional<T>>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface LastAsync<C extends ContainerLike, O = never> {
-  /**
-   *
-   * @category Transform
-   */
-  lastAsync<T>(
-    options?: O,
-  ): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
 }
 
 /**

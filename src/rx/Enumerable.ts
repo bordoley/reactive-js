@@ -51,6 +51,7 @@ import Container_identity from "../containers/Container/__internal__/Container.i
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import { Factory } from "../functions.js";
 import {
   BackpressureStrategy,
   CatchError,
@@ -58,6 +59,8 @@ import {
   Defer,
   EncodeUtf8,
   EnumerableLike,
+  FirstAsync,
+  LastAsync,
   Retry,
   ScanLast,
   ThrowIfEmpty,
@@ -103,13 +106,20 @@ import Observable_throws from "../rx/Observable/__internal__/Observable.throws.j
 import Observable_zip from "../rx/Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith.js";
 import Runnable_toFlowable from "../rx/Runnable/__internal__/Runnable.toFlowable.js";
+import { SchedulerLike } from "../scheduling.js";
 import { ToAsyncEnumerable, ToFlowable } from "../streaming.js";
-import { DisposableLike } from "../util.js";
+import {
+  DisposableLike,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+} from "../util.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toAsyncEnumerable from "./Enumerable/__internal__/Enumerable.toAsyncEnumerable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
+import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
+import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
@@ -176,6 +186,15 @@ export const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"] =
 
 export const first: First<EnumerableLike>["first"] = Runnable_first;
 
+export const firstAsync: FirstAsync<
+  EnumerableLike,
+  {
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  }
+>["firstAsync"] = Observable_firstAsync;
+
 export const flatMapIterable: FlatMapIterable<EnumerableLike>["flatMapIterable"] =
   Enumerable_flatMapIterable;
 
@@ -217,6 +236,15 @@ export const keepType: KeepType<EnumerableLike>["keepType"] =
   Observable_keepType as KeepType<EnumerableLike>["keepType"];
 
 export const last: Last<EnumerableLike>["last"] = Runnable_last;
+
+export const lastAsync: LastAsync<
+  EnumerableLike,
+  {
+    scheduler?: SchedulerLike | Factory<SchedulerLike>;
+    capacity?: number;
+    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+  }
+>["lastAsync"] = Observable_lastAsync;
 
 export const map: Map<EnumerableLike>["map"] = Observable_map;
 
