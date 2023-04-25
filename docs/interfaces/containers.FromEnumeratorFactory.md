@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / FromEnumeratorFactory
 
-# Interface: FromEnumeratorFactory<C, O\>
+# Interface: FromEnumeratorFactory<C\>
 
 [containers](../modules/containers.md).FromEnumeratorFactory
 
@@ -9,7 +9,12 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
+
+## Hierarchy
+
+- **`FromEnumeratorFactory`**
+
+  ↳ [`FromEnumeratorFactory`](rx.FromEnumeratorFactory.md)
 
 ## Table of contents
 
@@ -21,7 +26,7 @@
 
 ### fromEnumeratorFactory
 
-▸ **fromEnumeratorFactory**<`T`\>(`factory`, `options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
+▸ **fromEnumeratorFactory**<`T`\>(`factory`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
 #### Type parameters
 
@@ -34,7 +39,6 @@
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](containers.EnumeratorLike.md)<`T`\>\> |
-| `options?` | `O` |
 
 #### Returns
 

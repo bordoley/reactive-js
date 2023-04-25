@@ -10,9 +10,4 @@ testModule(
   "AsyncEnumerable",
   toObservableTests<AsyncEnumerableLike>(AsyncEnumerable),
   fromReadonlyArrayTests<AsyncEnumerableLike>(AsyncEnumerable),
-  /*
-  scanLastTests<AsyncEnumerableLike, RunnableLike>(
-    AsyncEnumerable,
-    Runnable,
-  ),*/
 );

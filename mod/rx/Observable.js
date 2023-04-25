@@ -5,8 +5,6 @@ import Container_identity from "../containers/Container/__internal__/Container.i
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import AsyncEnumerable_toObservable from "../streaming/AsyncEnumerable/__internal__/AsyncEnumerable.toObservable.js";
-import Flowable_toObservable from "../streaming/Flowable/__internal__/Flowable.toObservable.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -126,7 +124,6 @@ export const forkConcat = Observable_forkConcat;
 export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;
-export const fromAsyncEnumerable = AsyncEnumerable_toObservable;
 /**
  * @category Constructor
  */
@@ -134,7 +131,6 @@ export const fromAsyncFactory = Observable_fromAsyncFactory;
 export const fromAsyncIterable = AsyncIterable_toObservable;
 export const fromEnumeratorFactory = Runnable_fromEnumeratorFactory;
 export const fromFactory = Observable_fromFactory;
-export const fromFlowable = Flowable_toObservable;
 export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toObservable;

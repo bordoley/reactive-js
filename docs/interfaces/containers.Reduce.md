@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / Reduce
 
-# Interface: Reduce<C, O\>
+# Interface: Reduce<C\>
 
 [containers](../modules/containers.md).Reduce
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -36,7 +35,6 @@
 | :------ | :------ |
 | `reducer` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
 | `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
-| `options?` | `O` |
 
 #### Returns
 

@@ -84,12 +84,6 @@ export const __StreamLike_scheduler = /*@__PURE__*/ symbol("StreamLike_scheduler
 /** @type {unique symbol} */
 export const __StreamableLike_stream = /*@__PURE__*/ symbol("StreamableLike_stream");
 /** @type {unique symbol} */
-export const __StreamableLike_isEnumerable = /*@__PURE__*/ symbol("StreamableLike_isEnumerable");
-/** @type {unique symbol} */
-export const __StreamableLike_isInteractive = /*@__PURE__*/ symbol("StreamableLike_isInteractive");
-/** @type {unique symbol} */
-export const __StreamableLike_isRunnable = /*@__PURE__*/ symbol("StreamableLike_isRunnable");
-/** @type {unique symbol} */
 export const __VirtualTimeSchedulerLike_run = /*@__PURE__*/ symbol("VirtualTimeSchedulerLike_run");
 /** @type {unique symbol} */
 export const __WindowLocationStreamLike_goBack = /*@__PURE__*/ symbol("WindowLocationStreamLike_goBack");

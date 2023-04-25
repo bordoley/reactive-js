@@ -1,11 +1,6 @@
 /// <reference types="./Streamable.createStateStore.d.ts" />
 
 import Observable_stateStore from "../../../rx/Observable/__internal__/Observable.stateStore.js";
-import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, } from "../../../streaming.js";
-import Streamable_createWithConfig from "./Streamable.createWithConfig.js";
-const Streamable_createStateStore = (initialState, options) => Streamable_createWithConfig(Observable_stateStore(initialState, options), {
-    [StreamableLike_isEnumerable]: true,
-    [StreamableLike_isInteractive]: true,
-    [StreamableLike_isRunnable]: true,
-});
+import Streamable_create from "./Streamable.create.js";
+const Streamable_createStateStore = (initialState, options) => Streamable_create(Observable_stateStore(initialState, options));
 export default Streamable_createStateStore;

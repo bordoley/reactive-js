@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / Empty
 
-# Interface: Empty<C, O\>
+# Interface: Empty<C\>
 
 [containers](../modules/containers.md).Empty
 
@@ -9,7 +9,12 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
+
+## Hierarchy
+
+- **`Empty`**
+
+  ↳ [`Empty`](rx.Empty.md)
 
 ## Table of contents
 
@@ -21,7 +26,7 @@
 
 ### empty
 
-▸ **empty**<`T`\>(`options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
+▸ **empty**<`T`\>(): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
 Return an ContainerLike that emits no items.
 
@@ -30,12 +35,6 @@ Return an ContainerLike that emits no items.
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

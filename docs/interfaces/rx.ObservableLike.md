@@ -22,6 +22,10 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
   ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
+  ↳↳ [`AsyncEnumerableLike`](streaming.AsyncEnumerableLike.md)
+
+  ↳↳ [`FlowableLike`](streaming.FlowableLike.md)
+
 ## Table of contents
 
 ### Properties

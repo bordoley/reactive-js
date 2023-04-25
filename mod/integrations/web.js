@@ -11,7 +11,7 @@ import { bindMethod, compose, error, invoke, isFunction, isNone, isSome, newInst
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
 import { ObservableLike_observe } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import { StreamableLike_isEnumerable, StreamableLike_isInteractive, StreamableLike_isRunnable, StreamableLike_stream, } from "../streaming.js";
+import { StreamableLike_stream, } from "../streaming.js";
 import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
@@ -191,9 +191,6 @@ export const windowLocation = /*@__PURE__*/ (() => {
         return currentWindowLocationStream;
     };
     return {
-        [StreamableLike_isEnumerable]: false,
-        [StreamableLike_isInteractive]: false,
-        [StreamableLike_isRunnable]: false,
         [StreamableLike_stream]: stream,
     };
 })();

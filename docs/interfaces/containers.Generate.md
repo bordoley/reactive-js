@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / Generate
 
-# Interface: Generate<C, O\>
+# Interface: Generate<C\>
 
 [containers](../modules/containers.md).Generate
 
@@ -9,7 +9,12 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
+
+## Hierarchy
+
+- **`Generate`**
+
+  ↳ [`Generate`](rx.Generate.md)
 
 ## Table of contents
 
@@ -21,7 +26,7 @@
 
 ### generate
 
-▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
 Generates a ContainerLike from a generator function
 that is applied to an accumulator value between emitted items.
@@ -38,7 +43,6 @@ that is applied to an accumulator value between emitted items.
 | :------ | :------ | :------ |
 | `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> | The generator function. |
 | `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
-| `options?` | `O` | - |
 
 #### Returns
 

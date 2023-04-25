@@ -1,8 +1,8 @@
 import {
   createInstanceFactory,
-  mix,
   include,
   init,
+  mix,
   props,
 } from "../../../__internal__/mixins.js";
 import {
@@ -41,9 +41,9 @@ import {
 } from "../../../streaming.js";
 import Stream_create from "../../../streaming/Stream/__internal__/Stream.create.js";
 import {
+  DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  DisposableLike,
 } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";

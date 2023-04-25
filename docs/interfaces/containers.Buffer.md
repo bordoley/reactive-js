@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / Buffer
 
-# Interface: Buffer<C, O\>
+# Interface: Buffer<C\>
 
 [containers](../modules/containers.md).Buffer
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### buffer
 
-• **buffer**: <T\>(`options?`: `O` & { `count?`: `number`  }) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+• **buffer**: <T\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>
 
 #### Type declaration
 
@@ -40,7 +39,8 @@ number of items reaches the specified maximum buffer size.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `O` & { `count?`: `number`  } |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
 ##### Returns
 

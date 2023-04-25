@@ -5,7 +5,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
-import { pipe, bindMethod, none, invoke } from "../../../functions.js";
+import { bindMethod, invoke, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObservableLike_isEnumerable,

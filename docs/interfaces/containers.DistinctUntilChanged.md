@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / DistinctUntilChanged
 
-# Interface: DistinctUntilChanged<C, O\>
+# Interface: DistinctUntilChanged<C\>
 
 [containers](../modules/containers.md).DistinctUntilChanged
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -36,7 +35,8 @@ are distinct by comparison from the previous item.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `O` & { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  } |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
 
 #### Returns
 

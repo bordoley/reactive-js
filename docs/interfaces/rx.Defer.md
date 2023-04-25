@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / Defer
 
-# Interface: Defer<C, O\>
+# Interface: Defer<C\>
 
 [rx](../modules/rx.md).Defer
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### defer
 
-▸ **defer**<`T`\>(`factory`, `options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
+▸ **defer**<`T`\>(`factory`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
 #### Type parameters
 
@@ -34,7 +33,6 @@
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](../modules/functions.md#factory)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>\> |
-| `options?` | `O` |
 
 #### Returns
 

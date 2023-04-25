@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / EverySatisfy
 
-# Interface: EverySatisfy<C, O\>
+# Interface: EverySatisfy<C\>
 
 [containers](../modules/containers.md).EverySatisfy
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### everySatisfy
 
-▸ **everySatisfy**<`T`\>(`predicate`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
+▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
 
 /**
 Determines whether all the members of an Container satisfy the predicate.
@@ -39,7 +38,6 @@ it returns false, or until the end of the Container.
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
-| `options?` | `O` |
 
 #### Returns
 

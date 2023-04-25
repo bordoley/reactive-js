@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / ConcatAll
 
-# Interface: ConcatAll<C, O\>
+# Interface: ConcatAll<C\>
 
 [containers](../modules/containers.md).ConcatAll
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,11 +20,11 @@
 
 ### concatAll
 
-• **concatAll**: <T\>(`options?`: `O`) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
+• **concatAll**: <T\>() => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
+▸ <`T`\>(): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
 
 Converts a higher-order ContainerLike into a first-order
 ContainerLike by concatenating the inner sources in order.
@@ -35,12 +34,6 @@ ContainerLike by concatenating the inner sources in order.
 | Name |
 | :------ |
 | `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 ##### Returns
 

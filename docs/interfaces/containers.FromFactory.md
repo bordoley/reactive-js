@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / FromFactory
 
-# Interface: FromFactory<C, O\>
+# Interface: FromFactory<C\>
 
 [containers](../modules/containers.md).FromFactory
 
@@ -9,7 +9,12 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
+
+## Hierarchy
+
+- **`FromFactory`**
+
+  ↳ [`FromFactory`](rx.FromFactory.md)
 
 ## Table of contents
 
@@ -21,7 +26,7 @@
 
 ### fromFactory
 
-▸ **fromFactory**<`T`\>(`factory`, `options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
+▸ **fromFactory**<`T`\>(`factory`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
 #### Type parameters
 
@@ -34,7 +39,6 @@
 | Name | Type |
 | :------ | :------ |
 | `factory` | [`Factory`](../modules/functions.md#factory)<`T`\> |
-| `options?` | `O` |
 
 #### Returns
 

@@ -1,7 +1,6 @@
-import { Buffer, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DistinctUntilChanged, Empty, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, NoneSatisfy, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { Animate, BackpressureStrategy, CatchError, CombineLatest, CurrentTime, DecodeWithCharset, Defer, EncodeUtf8, Enqueue, Exhaust, ExhaustMap, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, Retry, RunnableLike, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, ThrowIfEmpty, Throws, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { Buffer, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DistinctUntilChanged, EndWith, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, NoneSatisfy, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Animate, BackpressureStrategy, CatchError, CombineLatest, CurrentTime, DecodeWithCharset, Defer, Empty, EncodeUtf8, Enqueue, Exhaust, ExhaustMap, FirstAsync, ForkMerge, ForkZipLatest, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, LastAsync, Merge, MergeAll, MergeMap, MergeWith, Retry, RunnableLike, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, ThrowIfEmpty, Throws, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { ToFlowable } from "../streaming.js";
-import { QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 export declare const animate: Animate<RunnableLike>["animate"];
 export declare const backpressureStrategy: BackpressureStrategy<RunnableLike>["backpressureStrategy"];
 export declare const buffer: Buffer<RunnableLike>["buffer"];
@@ -22,9 +21,7 @@ export declare const currentTime: CurrentTime<RunnableLike>["currentTime"];
 export declare const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"];
 export declare const defer: Defer<RunnableLike>["defer"];
 export declare const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"];
-export declare const empty: Empty<RunnableLike, {
-    delay?: number;
-}>["empty"];
+export declare const empty: Empty<RunnableLike>["empty"];
 export declare const encodeUtf8: EncodeUtf8<RunnableLike>["encodeUtf8"];
 export declare const enqueue: Enqueue<RunnableLike>["enqueue"];
 export declare const endWith: EndWith<RunnableLike>["endWith"];
@@ -32,53 +29,31 @@ export declare const everySatisfy: EverySatisfy<RunnableLike>["everySatisfy"];
 export declare const exhaust: Exhaust<RunnableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<RunnableLike>["exhaustMap"];
 export declare const first: First<RunnableLike>["first"];
+export declare const firstAsync: FirstAsync<RunnableLike>["firstAsync"];
 export declare const flatMapIterable: FlatMapIterable<RunnableLike>["flatMapIterable"];
 export declare const forEach: ForEach<RunnableLike>["forEach"];
 export declare const forkConcat: ForkConcat<RunnableLike>["forkConcat"];
 export declare const forkMerge: ForkMerge<RunnableLike>["forkMerge"];
 export declare const forkZip: ForkZip<RunnableLike>["forkZip"];
 export declare const forkZipLatest: ForkZipLatest<RunnableLike>["forkZipLatest"];
-export declare const fromEnumeratorFactory: FromEnumeratorFactory<RunnableLike, {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-}>["fromEnumeratorFactory"];
-export declare const fromFactory: FromFactory<RunnableLike, {
-    delay: number;
-}>["fromFactory"];
-export declare const fromIterable: FromIterable<RunnableLike, {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-}>["fromIterable"];
-export declare const fromOptional: FromOptional<RunnableLike, {
-    delay?: number;
-}>["fromOptional"];
-export declare const fromReadonlyArray: FromReadonlyArray<RunnableLike, {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-}>["fromReadonlyArray"];
-export declare const generate: Generate<RunnableLike, {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-}>["generate"];
+export declare const fromEnumeratorFactory: FromEnumeratorFactory<RunnableLike>["fromEnumeratorFactory"];
+export declare const fromFactory: FromFactory<RunnableLike>["fromFactory"];
+export declare const fromIterable: FromIterable<RunnableLike>["fromIterable"];
+export declare const fromOptional: FromOptional<RunnableLike>["fromOptional"];
+export declare const fromReadonlyArray: FromReadonlyArray<RunnableLike>["fromReadonlyArray"];
+export declare const generate: Generate<RunnableLike>["generate"];
 export declare const identity: Identity<RunnableLike>["identity"];
 export declare const ignoreElements: IgnoreElements<RunnableLike>["ignoreElements"];
 export declare const keep: Keep<RunnableLike>["keep"];
 export declare const keepType: KeepType<RunnableLike>["keepType"];
 export declare const last: Last<RunnableLike>["last"];
+export declare const lastAsync: LastAsync<RunnableLike>["lastAsync"];
 export declare const noneSatisfy: NoneSatisfy<RunnableLike>["noneSatisfy"];
 export declare const map: Map<RunnableLike>["map"];
 export declare const mapTo: MapTo<RunnableLike>["mapTo"];
 export declare const merge: Merge<RunnableLike>["merge"];
-export declare const mergeAll: MergeAll<RunnableLike, {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly concurrency?: number;
-}>["mergeAll"];
-export declare const mergeMap: MergeMap<RunnableLike, {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly concurrency?: number;
-}>["mergeMap"];
+export declare const mergeAll: MergeAll<RunnableLike>["mergeAll"];
+export declare const mergeMap: MergeMap<RunnableLike>["mergeMap"];
 export declare const mergeWith: MergeWith<RunnableLike>["mergeWith"];
 export declare const pairwise: Pairwise<RunnableLike>["pairwise"];
 export declare const pick: Pick<RunnableLike>["pick"];

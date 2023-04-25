@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / FromReadonlyArray
 
-# Interface: FromReadonlyArray<C, O\>
+# Interface: FromReadonlyArray<C\>
 
 [containers](../modules/containers.md).FromReadonlyArray
 
@@ -9,7 +9,12 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
+
+## Hierarchy
+
+- **`FromReadonlyArray`**
+
+  ↳ [`FromReadonlyArray`](rx.FromReadonlyArray.md)
 
 ## Table of contents
 
@@ -33,7 +38,9 @@
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `O` & { `count?`: `number` ; `start?`: `number`  } |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
 
 #### Returns
 

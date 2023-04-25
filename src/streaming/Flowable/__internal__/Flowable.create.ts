@@ -6,7 +6,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
-import { compose, pipe, bindMethod, none } from "../../../functions.js";
+import { bindMethod, compose, none, pipe } from "../../../functions.js";
 import {
   ObservableLike,
   ObservableLike_isEnumerable,
@@ -20,8 +20,8 @@ import Observable_mergeWith from "../../../rx/Observable/__internal__/Observable
 import { FlowableLike, StreamableLike_stream } from "../../../streaming.js";
 import {
   BufferLike_capacity,
-  QueueableLike_backpressureStrategy,
   DispatcherLike_complete,
+  QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";

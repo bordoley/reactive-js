@@ -1,8 +1,7 @@
-import { Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, DistinctUntilChanged, Empty, EndWith, FirstAsync, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, LastAsync, Map, MapTo, Pairwise, Pick, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, Zip, ZipWith } from "../containers.js";
+import { Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, DistinctUntilChanged, EndWith, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, Identity, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Pick, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, SideEffect1 } from "../functions.js";
-import { Animate, BackpressureStrategy, CatchError, CombineLatest, CurrentTime, DecodeWithCharset, Defer, EncodeUtf8, Enqueue, Exhaust, ExhaustMap, ForkCombineLatest, ForkMerge, ForkZipLatest, Merge, MergeAll, MergeMap, MergeWith, MulticastObservableLike, Never, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, ThrowIfEmpty, Throws, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { Animate, BackpressureStrategy, CatchError, CombineLatest, CurrentTime, DecodeWithCharset, Defer, Empty, EncodeUtf8, Enqueue, Exhaust, ExhaustMap, FirstAsync, ForkCombineLatest, ForkMerge, ForkZipLatest, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, LastAsync, Merge, MergeAll, MergeMap, MergeWith, MulticastObservableLike, Never, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, ThrowIfEmpty, Throws, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
-import { FromAsyncEnumerable, FromFlowable } from "../streaming.js";
 import { DisposableLike, DisposableOrTeardown, QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 export declare const animate: Animate<ObservableLike>["animate"];
 export declare const backpressureStrategy: BackpressureStrategy<ObservableLike>["backpressureStrategy"];
@@ -33,19 +32,13 @@ export declare const currentTime: CurrentTime<ObservableLike>["currentTime"];
 export declare const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"];
 export declare const defer: Defer<ObservableLike>["defer"];
 export declare const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"];
-export declare const empty: Empty<ObservableLike, {
-    delay?: number;
-}>["empty"];
+export declare const empty: Empty<ObservableLike>["empty"];
 export declare const encodeUtf8: EncodeUtf8<ObservableLike>["encodeUtf8"];
 export declare const enqueue: Enqueue<ObservableLike>["enqueue"];
 export declare const endWith: EndWith<ObservableLike>["endWith"];
 export declare const exhaust: Exhaust<ObservableLike>["exhaust"];
 export declare const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"];
-export declare const firstAsync: FirstAsync<ObservableLike, {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-}>["firstAsync"];
+export declare const firstAsync: FirstAsync<ObservableLike>["firstAsync"];
 /**
  * @category Operator
  */
@@ -57,57 +50,27 @@ export declare const forkConcat: ForkConcat<ObservableLike>["forkConcat"];
 export declare const forkMerge: ForkMerge<ObservableLike>["forkMerge"];
 export declare const forkZip: ForkZip<ObservableLike>["forkZip"];
 export declare const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"];
-export declare const fromAsyncEnumerable: FromAsyncEnumerable<ObservableLike>["fromAsyncEnumerable"];
 /**
  * @category Constructor
  */
 export declare const fromAsyncFactory: <T>(f: (abortSignal: AbortSignal) => Promise<T>) => ObservableLike<T>;
 export declare const fromAsyncIterable: FromAsyncIterable<ObservableLike>["fromAsyncIterable"];
-export declare const fromEnumeratorFactory: FromEnumeratorFactory<ObservableLike, {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-}>["fromEnumeratorFactory"];
-export declare const fromFactory: FromFactory<ObservableLike, {
-    delay: number;
-}>["fromFactory"];
-export declare const fromFlowable: FromFlowable<ObservableLike>["fromFlowable"];
-export declare const fromIterable: FromIterable<ObservableLike, {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-}>["fromIterable"];
-export declare const fromOptional: FromOptional<ObservableLike, {
-    delay?: number;
-}>["fromOptional"];
-export declare const fromReadonlyArray: FromReadonlyArray<ObservableLike, {
-    delay?: number;
-    delayStart?: boolean;
-}>["fromReadonlyArray"];
-export declare const generate: Generate<ObservableLike, {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-}>["generate"];
+export declare const fromEnumeratorFactory: FromEnumeratorFactory<ObservableLike>["fromEnumeratorFactory"];
+export declare const fromFactory: FromFactory<ObservableLike>["fromFactory"];
+export declare const fromIterable: FromIterable<ObservableLike>["fromIterable"];
+export declare const fromOptional: FromOptional<ObservableLike>["fromOptional"];
+export declare const fromReadonlyArray: FromReadonlyArray<ObservableLike>["fromReadonlyArray"];
+export declare const generate: Generate<ObservableLike>["generate"];
 export declare const identity: Identity<ObservableLike>["identity"];
 export declare const ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"];
 export declare const keep: Keep<ObservableLike>["keep"];
 export declare const keepType: KeepType<ObservableLike>["keepType"];
-export declare const lastAsync: LastAsync<ObservableLike, {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-}>["lastAsync"];
+export declare const lastAsync: LastAsync<ObservableLike>["lastAsync"];
 export declare const map: Map<ObservableLike>["map"];
 export declare const mapTo: MapTo<ObservableLike>["mapTo"];
 export declare const merge: Merge<ObservableLike>["merge"];
-export declare const mergeAll: MergeAll<ObservableLike, {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly concurrency?: number;
-}>["mergeAll"];
-export declare const mergeMap: MergeMap<ObservableLike, {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly concurrency?: number;
-}>["mergeMap"];
+export declare const mergeAll: MergeAll<ObservableLike>["mergeAll"];
+export declare const mergeMap: MergeMap<ObservableLike>["mergeMap"];
 export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.

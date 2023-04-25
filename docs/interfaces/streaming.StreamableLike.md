@@ -38,43 +38,9 @@ TStream
 
 ## Table of contents
 
-### Properties
-
-- [[\_\_\_StreamableLike\_isEnumerable]](streaming.StreamableLike.md#[___streamablelike_isenumerable])
-- [[\_\_\_StreamableLike\_isInteractive]](streaming.StreamableLike.md#[___streamablelike_isinteractive])
-- [[\_\_\_StreamableLike\_isRunnable]](streaming.StreamableLike.md#[___streamablelike_isrunnable])
-
 ### Methods
 
 - [[\_\_\_StreamableLike\_stream]](streaming.StreamableLike.md#[___streamablelike_stream])
-
-## Properties
-
-### [\_\_\_StreamableLike\_isEnumerable]
-
-• `Readonly` **[\_\_\_StreamableLike\_isEnumerable]**: `boolean`
-
-Indicates if the resulting is stream is enumerable,
-producting exactly one value synchronously for every
-enqueued request.
-
-___
-
-### [\_\_\_StreamableLike\_isInteractive]
-
-• `Readonly` **[\_\_\_StreamableLike\_isInteractive]**: `boolean`
-
-Indicates if the resulting is stream is interactive,
-producing exactly one value for every enqueued request.
-
-___
-
-### [\_\_\_StreamableLike\_isRunnable]
-
-• `Readonly` **[\_\_\_StreamableLike\_isRunnable]**: `boolean`
-
-Indicates if subscriptions on a VirtualTimeScheduler
-are supported.
 
 ## Methods
 

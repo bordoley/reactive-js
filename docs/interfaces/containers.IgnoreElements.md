@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / IgnoreElements
 
-# Interface: IgnoreElements<C, O\>
+# Interface: IgnoreElements<C\>
 
 [containers](../modules/containers.md).IgnoreElements
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,19 +20,13 @@
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `unknown`, `T`\>
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `unknown`, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

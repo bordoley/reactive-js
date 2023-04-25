@@ -52,17 +52,17 @@ import {
   ZipWith,
 } from "../../containers.js";
 import {
-  pipeLazy,
-  arrayEquality,
-  pipe,
+  Optional,
   alwaysFalse,
   alwaysTrue,
-  none,
+  arrayEquality,
   greaterThan,
   increment,
-  Optional,
-  returns,
   lessThan,
+  none,
+  pipe,
+  pipeLazy,
+  returns,
 } from "../../functions.js";
 
 export interface Container<C extends ContainerLike>

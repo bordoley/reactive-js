@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / Contains
 
-# Interface: Contains<C, O\>
+# Interface: Contains<C\>
 
 [containers](../modules/containers.md).Contains
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### contains
 
-• **contains**: <T\>(`value`: `T`, `options?`: `O` & { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  }) => [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
+• **contains**: <T\>(`value`: `T`, `options?`: { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  }) => [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
 
 #### Type declaration
 
@@ -38,7 +37,8 @@
 | Name | Type |
 | :------ | :------ |
 | `value` | `T` |
-| `options?` | `O` & { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  } |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
 
 ##### Returns
 

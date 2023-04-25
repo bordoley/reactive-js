@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / GenerateLast
 
-# Interface: GenerateLast<C, CInner, O\>
+# Interface: GenerateLast<C, CInner\>
 
 [rx](../modules/rx.md).GenerateLast
 
@@ -10,7 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 | `CInner` | extends [`ObservableLike`](rx.ObservableLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -22,7 +21,7 @@
 
 ### generateLast
 
-▸ **generateLast**<`T`\>(`generator`, `initialValue`, `options?`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
+▸ **generateLast**<`T`\>(`generator`, `initialValue`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
 #### Type parameters
 
@@ -36,7 +35,6 @@
 | :------ | :------ |
 | `generator` | [`Function1`](../modules/functions.md#function1)<`T`, [`ContainerOf`](../modules/containers.md#containerof)<`CInner`, `T`\>\> |
 | `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
-| `options?` | `O` |
 
 #### Returns
 
