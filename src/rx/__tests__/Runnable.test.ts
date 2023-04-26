@@ -1,6 +1,7 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   expectToHaveBeenCalledTimes,
   expectToThrow,
   expectToThrowError,
@@ -9,14 +10,7 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import {
-  catchErrorTests,
-  decodeWithCharsetTests,
-  retryTests,
-  scanLastTests,
-  scanManyTests,
-  throwIfEmptyTests,
-} from "../../__tests__/operators.js";
+import { Concat, ContainerLike, TakeFirst } from "../../containers.js";
 import Containers_test from "../../containers/__tests__/Containers.test.js";
 import {
   arrayEquality,
@@ -32,9 +26,21 @@ import {
 } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import {
+  CatchError,
+  DecodeWithCharset,
+  EncodeUtf8,
   FlowableObservableLike_pause,
   FlowableObservableLike_resume,
+  FromReadonlyArray,
+  Generate,
+  ObservableLike,
+  Retry,
   RunnableLike,
+  ScanLast,
+  ScanMany,
+  ThrowIfEmpty,
+  Throws,
+  ToRunnable,
 } from "../../rx.js";
 import {
   SchedulerLike_now,
@@ -49,6 +55,34 @@ import {
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
 import { __await, __memo } from "../effects.js";
+
+export const catchErrorTests = <C extends ContainerLike>(
+  m: CatchError<C> & Throws<C> & FromReadonlyArray<C> & ToRunnable<C>,
+) =>
+  describe(
+    "catchError",
+    test("when source throws", () => {
+      const e = {};
+      pipe(
+        m.throws<number>({ raise: returns(e) }),
+        m.catchError(_ => pipe([1, 2, 3], m.fromReadonlyArray())),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3]),
+      );
+    }) /*
+    test(
+      "when source does not throw",
+      pipeLazy(
+        [4, 5, 6],
+        m.fromReadonlyArray(),
+        //m.catchError(_ => pipe([1, 2, 3], m.fromReadonlyArray())),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([4, 5, 6]),
+      ),
+    ),*/,
+  );
 
 const combineLatestTests = describe(
   "combineLatest",
@@ -146,6 +180,43 @@ const computeTests = describe(
     );
   }),
 );
+
+export const decodeWithCharsetTests = <C extends ContainerLike>(
+  m: DecodeWithCharset<C> &
+    EncodeUtf8<C> &
+    FromReadonlyArray<C> &
+    ToRunnable<C>,
+) =>
+  describe(
+    "decodeWithCharset",
+    test("decoding ascii", () => {
+      const str = "abcdefghijklmnsopqrstuvwxyz";
+
+      pipe(
+        [str],
+        m.fromReadonlyArray(),
+        m.encodeUtf8(),
+        m.decodeWithCharset(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        x => x.join(),
+        expectEquals(str),
+      );
+    }),
+    test("decoding multi-byte code points", () => {
+      const str = String.fromCodePoint(8364);
+      pipe(
+        [str],
+        m.fromReadonlyArray(),
+        m.encodeUtf8(),
+        m.decodeWithCharset(),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        x => x.join(),
+        expectEquals(str),
+      );
+    }),
+  );
 
 const exhaustTests = describe(
   "exhaust",
@@ -419,6 +490,29 @@ const flow = describe(
   }),
 );
 
+export const retryTests = <C extends ContainerLike>(
+  m: Concat<C> &
+    Retry<C> &
+    FromReadonlyArray<C> &
+    Throws<C> &
+    TakeFirst<C> &
+    ToRunnable<C>,
+) =>
+  describe(
+    "retry",
+    test(
+      "retrys the container on an exception",
+      pipeLazy(
+        m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), m.throws()),
+        m.retry(),
+        m.takeFirst({ count: 6 }),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+  );
+
 const withLatestFromTest = describe(
   "withLatestFrom",
   test(
@@ -618,6 +712,175 @@ const runTests = describe(
     ),
   ),
 );
+
+export const scanLastTests = <
+  C extends ContainerLike,
+  CInner extends ObservableLike,
+>(
+  m: ScanLast<C, CInner> & FromReadonlyArray<C> & ToRunnable<C>,
+  mInner: FromReadonlyArray<CInner>,
+) =>
+  describe(
+    "scanLast",
+    test(
+      "fast src, slow acc",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromReadonlyArray(),
+        m.scanLast<number, number>(
+          (acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })),
+          returns(0),
+        ),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 3, 6]),
+      ),
+    ),
+
+    test(
+      "slow src, fast acc",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromReadonlyArray({ delay: 4 }),
+        m.scanLast<number, number>(
+          (acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })),
+          returns(0),
+        ),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 3, 6]),
+      ),
+    ),
+
+    test(
+      "slow src, slow acc",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromReadonlyArray({ delay: 4 }),
+        m.scanLast<number, number>(
+          (acc, x) => pipe([x + acc], mInner.fromReadonlyArray({ delay: 4 })),
+          returns(0),
+        ),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 3, 6]),
+      ),
+    ),
+
+    test(
+      "fast src, fast acc",
+      pipeLazy(
+        [1, 2, 3],
+        m.fromReadonlyArray(),
+        m.scanLast<number, number>(
+          (acc, x) => pipe([x + acc], mInner.fromReadonlyArray()),
+          returns(0),
+        ),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 3, 6]),
+      ),
+    ),
+  );
+
+export const scanManyTests = <
+  C extends ContainerLike,
+  CInner extends ObservableLike,
+>(
+  m: ScanMany<C, CInner> & FromReadonlyArray<C> & ToRunnable<C>,
+  mInner: Generate<CInner> & TakeFirst<CInner>,
+) =>
+  describe(
+    "scanMany",
+    test(
+      "slow src, fast acc",
+      pipeLazy(
+        [1, 1, 1],
+        m.fromReadonlyArray({ delay: 10 }),
+        m.scanMany<number, number>(
+          (acc, next) =>
+            pipe(
+              mInner.generate<number>(identity, returns(next + acc), {
+                delay: 1,
+              }),
+              mInner.takeFirst({ count: 3 }),
+            ),
+          returns(0),
+        ),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+      ),
+    ),
+    test(
+      "fast src, slow acc",
+      pipeLazy(
+        [1, 1, 1],
+        m.fromReadonlyArray({ delay: 1 }),
+        m.scanMany<number, number>(
+          (acc, next) =>
+            pipe(
+              mInner.generate<number>(identity, returns(next + acc), {
+                delay: 10,
+              }),
+              mInner.takeFirst({ count: 3 }),
+            ),
+          returns(0),
+        ),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+      ),
+    ),
+  );
+
+export const throwIfEmptyTests = <C extends ContainerLike>(
+  m: FromReadonlyArray<C> & ThrowIfEmpty<C> & ToRunnable<C>,
+) =>
+  describe(
+    "throwIfEmpty",
+    test("when source is empty", () => {
+      const error = new Error();
+      pipe(
+        pipeLazy(
+          [],
+          m.fromReadonlyArray(),
+          m.throwIfEmpty(() => error),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+
+    test("when factory throw", () => {
+      const error = new Error();
+      pipe(
+        pipeLazy(
+          [],
+          m.fromReadonlyArray(),
+          m.throwIfEmpty(() => {
+            throw error;
+          }),
+          m.toRunnable(),
+          Runnable.toReadonlyArray(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+
+    test(
+      "when source is not empty",
+      pipeLazy(
+        [1],
+        m.fromReadonlyArray(),
+        m.throwIfEmpty(() => undefined),
+        m.toRunnable(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1]),
+      ),
+    ),
+  );
 
 testModule(
   "Runnable",
