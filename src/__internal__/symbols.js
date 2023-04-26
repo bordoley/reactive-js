@@ -110,6 +110,11 @@ export const __ObservableLike_isRunnable = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __PauseableLike_isPaused = /*@__PURE__*/ symbol(
+  "PauseableLike_isPaused",
+);
+
+/** @type {unique symbol} */
 export const __PauseableLike_pause = /*@__PURE__*/ symbol(
   "PauseableLike_pause",
 );
@@ -122,11 +127,6 @@ export const __PauseableLike_resume = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __PauseableObservableLike_isPaused = /*@__PURE__*/ symbol(
   "PauseableObservableLike_isPaused",
-);
-
-/** @type {unique symbol} */
-export const __PauseableSchedulerLike_isPaused = /*@__PURE__*/ symbol(
-  "PauseableSchedulerLike_isPaused",
 );
 
 /** @type {unique symbol} */

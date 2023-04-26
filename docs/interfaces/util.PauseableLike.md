@@ -14,10 +14,22 @@
 
 ## Table of contents
 
+### Properties
+
+- [[\_\_\_PauseableLike\_isPaused]](util.PauseableLike.md#[___pauseablelike_ispaused])
+
 ### Methods
 
 - [[\_\_\_PauseableLike\_pause]](util.PauseableLike.md#[___pauseablelike_pause])
 - [[\_\_\_PauseableLike\_resume]](util.PauseableLike.md#[___pauseablelike_resume])
+
+## Properties
+
+### [\_\_\_PauseableLike\_isPaused]
+
+• `Readonly` **[\_\_\_PauseableLike\_isPaused]**: `boolean`
+
+Boolean flag indicating if the PauseableLike is currently paused or not.
 
 ## Methods
 

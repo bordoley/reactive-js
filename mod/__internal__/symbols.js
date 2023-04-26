@@ -48,13 +48,13 @@ export const __ObservableLike_isEnumerable = /*@__PURE__*/ symbol("ObservableLik
 /** @type {unique symbol} */
 export const __ObservableLike_isRunnable = /*@__PURE__*/ symbol("ObservableLike_isRunnable");
 /** @type {unique symbol} */
+export const __PauseableLike_isPaused = /*@__PURE__*/ symbol("PauseableLike_isPaused");
+/** @type {unique symbol} */
 export const __PauseableLike_pause = /*@__PURE__*/ symbol("PauseableLike_pause");
 /** @type {unique symbol} */
 export const __PauseableLike_resume = /*@__PURE__*/ symbol("PauseableLike_resume");
 /** @type {unique symbol} */
 export const __PauseableObservableLike_isPaused = /*@__PURE__*/ symbol("PauseableObservableLike_isPaused");
-/** @type {unique symbol} */
-export const __PauseableSchedulerLike_isPaused = /*@__PURE__*/ symbol("PauseableSchedulerLike_isPaused");
 /** @type {unique symbol} */
 export const __PublisherLike_observerCount = /*@__PURE__*/ symbol("PublisherLike_observerCount");
 /** @type {unique symbol} */

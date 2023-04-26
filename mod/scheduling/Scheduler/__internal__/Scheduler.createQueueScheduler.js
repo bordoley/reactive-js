@@ -9,8 +9,8 @@ import { QueueLike_dequeue, QueueLike_head, SerialDisposableLike_current, } from
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, unsafeCast, } from "../../../functions.js";
-import { PauseableSchedulerLike_isPaused, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../../../util.js";
+import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../../scheduling.js";
+import { DisposableLike_isDisposed, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
@@ -71,7 +71,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
             instance[__QueueScheduler_dueTime] <= task[SchedulerTaskLike_dueTime];
         if (isNone(task) ||
             continuationActive ||
-            instance[PauseableSchedulerLike_isPaused]) {
+            instance[PauseableLike_isPaused]) {
             return;
         }
         const dueTime = task[SchedulerTaskLike_dueTime];
@@ -111,7 +111,7 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
         [__QueueScheduler_dueTime]: 0,
         [__QueueScheduler_hostScheduler]: none,
         [__QueueScheduler_hostContinuation]: none,
-        [PauseableSchedulerLike_isPaused]: false,
+        [PauseableLike_isPaused]: false,
         [__QueueScheduler_queue]: none,
         [__QueueScheduler_taskIDCounter]: 0,
     }), {
@@ -123,16 +123,16 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
             unsafeCast(this);
             const next = peek(this);
             return (!this[EnumeratorLike_hasCurrent] ||
-                this[PauseableSchedulerLike_isPaused] ||
+                this[PauseableLike_isPaused] ||
                 (isSome(next) ? priorityShouldYield(this, next) : false) ||
                 this[__QueueScheduler_hostScheduler][SchedulerLike_shouldYield]);
         },
         [PauseableLike_pause]() {
-            this[PauseableSchedulerLike_isPaused] = true;
+            this[PauseableLike_isPaused] = true;
             this[SerialDisposableLike_current] = Disposable_disposed;
         },
         [PauseableLike_resume]() {
-            this[PauseableSchedulerLike_isPaused] = false;
+            this[PauseableLike_isPaused] = false;
             scheduleOnHost(this);
         },
         [EnumeratorLike_move]() {

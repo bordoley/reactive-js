@@ -44,13 +44,13 @@ export declare const __ObservableLike_isEnumerable: unique symbol;
 
 export declare const __ObservableLike_isRunnable: unique symbol;
 
+export declare const __PauseableLike_isPaused: unique symbol;
+
 export declare const __PauseableLike_pause: unique symbol;
 
 export declare const __PauseableLike_resume: unique symbol;
 
 export declare const __PauseableObservableLike_isPaused: unique symbol;
-
-export declare const __PauseableSchedulerLike_isPaused: unique symbol;
 
 export declare const __PublisherLike_observerCount: unique symbol;
 

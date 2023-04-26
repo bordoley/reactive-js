@@ -21,10 +21,10 @@ ObserverLike_notify
 ObservableLike_observe
 ObservableLike_isEnumerable
 ObservableLike_isRunnable
+PauseableLike_isPaused
 PauseableLike_pause
 PauseableLike_resume
 PauseableObservableLike_isPaused
-PauseableSchedulerLike_isPaused
 PublisherLike_observerCount
 QueueableLike_enqueue
 QueueableLike_backpressureStrategy

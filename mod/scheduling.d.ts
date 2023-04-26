@@ -1,7 +1,7 @@
-import { __PauseableSchedulerLike_isPaused as PauseableSchedulerLike_isPaused, __SchedulerLike_inContinuation as SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval as SchedulerLike_maxYieldInterval, __SchedulerLike_now as SchedulerLike_now, __SchedulerLike_requestYield as SchedulerLike_requestYield, __SchedulerLike_schedule as SchedulerLike_schedule, __SchedulerLike_shouldYield as SchedulerLike_shouldYield, __SchedulerLike_yield as SchedulerLike_yield, __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
+import { __SchedulerLike_inContinuation as SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval as SchedulerLike_maxYieldInterval, __SchedulerLike_now as SchedulerLike_now, __SchedulerLike_requestYield as SchedulerLike_requestYield, __SchedulerLike_schedule as SchedulerLike_schedule, __SchedulerLike_shouldYield as SchedulerLike_shouldYield, __SchedulerLike_yield as SchedulerLike_yield, __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
 import { SideEffect1 } from "./functions.js";
 import { DisposableLike, PauseableLike } from "./util.js";
-export { SchedulerLike_yield, PauseableSchedulerLike_isPaused, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, };
+export { SchedulerLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, };
 /**
  * Schedulers are the core unit of concurrency, orchestration and
  * cooperative multi-tasking.
@@ -64,10 +64,6 @@ export interface SchedulerLike {
  * @noInheritDoc
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
-    /**
-     * Boolean flag indicating if the scheduler is currently paused or not.
-     */
-    readonly [PauseableSchedulerLike_isPaused]: boolean;
 }
 /**
  * A scheduler that support priority scheduling based upon priority.

@@ -11,6 +11,7 @@ import {
   __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount,
   __EventSourceLike_addListener as EventSourceLike_addListener,
   __KeyedCollectionLike_get as KeyedCollectionLike_get,
+  __PauseableLike_isPaused as PauseableLike_isPaused,
   __PauseableLike_pause as PauseableLike_pause,
   __PauseableLike_resume as PauseableLike_resume,
   __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy,
@@ -37,6 +38,7 @@ export {
   EventPublisherLike_listenerCount,
   EventSourceLike_addListener,
   KeyedCollectionLike_get,
+  PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike_backpressureStrategy,
@@ -200,6 +202,11 @@ export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
 }
 
 export interface PauseableLike {
+  /**
+   * Boolean flag indicating if the PauseableLike is currently paused or not.
+   */
+  readonly [PauseableLike_isPaused]: boolean;
+
   /**
    * Imperatively pause the source.
    */

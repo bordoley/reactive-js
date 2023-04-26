@@ -45,13 +45,13 @@ export const __ObservableLike_isEnumerable: unique symbol;
 /** @type {unique symbol} */
 export const __ObservableLike_isRunnable: unique symbol;
 /** @type {unique symbol} */
+export const __PauseableLike_isPaused: unique symbol;
+/** @type {unique symbol} */
 export const __PauseableLike_pause: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableLike_resume: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableObservableLike_isPaused: unique symbol;
-/** @type {unique symbol} */
-export const __PauseableSchedulerLike_isPaused: unique symbol;
 /** @type {unique symbol} */
 export const __PublisherLike_observerCount: unique symbol;
 /** @type {unique symbol} */

@@ -53,7 +53,6 @@ import {
 } from "../../../functions.js";
 import {
   PauseableSchedulerLike,
-  PauseableSchedulerLike_isPaused,
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -66,6 +65,7 @@ import {
 import {
   DisposableLike,
   DisposableLike_isDisposed,
+  PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike_enqueue,
@@ -176,7 +176,7 @@ const Scheduler_createQueueScheduler: Function2<
     if (
       isNone(task) ||
       continuationActive ||
-      instance[PauseableSchedulerLike_isPaused]
+      instance[PauseableLike_isPaused]
     ) {
       return;
     }
@@ -230,7 +230,7 @@ const Scheduler_createQueueScheduler: Function2<
     [__QueueScheduler_dueTime]: number;
     readonly [__QueueScheduler_hostScheduler]: SchedulerLike;
     [__QueueScheduler_hostContinuation]: Optional<SideEffect1<SchedulerLike>>;
-    [PauseableSchedulerLike_isPaused]: boolean;
+    [PauseableLike_isPaused]: boolean;
     readonly [__QueueScheduler_queue]: QueueLike<PrioritySchedulerTaskLike>;
     [__QueueScheduler_taskIDCounter]: number;
   };
@@ -280,7 +280,7 @@ const Scheduler_createQueueScheduler: Function2<
         [__QueueScheduler_dueTime]: 0,
         [__QueueScheduler_hostScheduler]: none,
         [__QueueScheduler_hostContinuation]: none,
-        [PauseableSchedulerLike_isPaused]: false,
+        [PauseableLike_isPaused]: false,
         [__QueueScheduler_queue]: none,
         [__QueueScheduler_taskIDCounter]: 0,
       }),
@@ -300,7 +300,7 @@ const Scheduler_createQueueScheduler: Function2<
 
           return (
             !this[EnumeratorLike_hasCurrent] ||
-            this[PauseableSchedulerLike_isPaused] ||
+            this[PauseableLike_isPaused] ||
             (isSome(next) ? priorityShouldYield(this, next) : false) ||
             this[__QueueScheduler_hostScheduler][SchedulerLike_shouldYield]
           );
@@ -311,7 +311,7 @@ const Scheduler_createQueueScheduler: Function2<
             EnumeratorLike &
             PrioritySchedulerImplementationLike,
         ) {
-          this[PauseableSchedulerLike_isPaused] = true;
+          this[PauseableLike_isPaused] = true;
           this[SerialDisposableLike_current] = Disposable_disposed;
         },
         [PauseableLike_resume](
@@ -320,7 +320,7 @@ const Scheduler_createQueueScheduler: Function2<
             EnumeratorLike &
             PrioritySchedulerImplementationLike,
         ) {
-          this[PauseableSchedulerLike_isPaused] = false;
+          this[PauseableLike_isPaused] = false;
           scheduleOnHost(this);
         },
         [EnumeratorLike_move](

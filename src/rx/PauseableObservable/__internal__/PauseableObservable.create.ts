@@ -13,6 +13,7 @@ import {
   compose,
   none,
   pipe,
+  unsafeCast,
 } from "../../../functions.js";
 import {
   MulticastObservableLike,
@@ -26,11 +27,14 @@ import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin.js
 import {
   DisposableLike,
   EventListenerLike_notify,
+  KeyedCollectionLike_get,
+  PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  ReplayableLike_buffer,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";
@@ -59,7 +63,9 @@ const PauseableObservable_create: <T>(
         instance: TProperties &
           Pick<
             PauseableObservableLike<T>,
-            typeof PauseableLike_pause | typeof PauseableLike_resume
+            | typeof PauseableLike_isPaused
+            | typeof PauseableLike_pause
+            | typeof PauseableLike_resume
           >,
         op: ContainerOperator<ObservableLike, boolean, T>,
         scheduler: SchedulerLike,
@@ -105,6 +111,15 @@ const PauseableObservable_create: <T>(
         [PauseableObservableLike_isPaused]: none,
       }),
       {
+        get [PauseableLike_isPaused](): boolean {
+          unsafeCast<TProperties>(this);
+          return (
+            this[PauseableObservableLike_isPaused][ReplayableLike_buffer][
+              KeyedCollectionLike_get
+            ](0) ?? true
+          );
+        },
+
         [PauseableLike_pause](
           this: PauseableObservableLike<T> & StreamLike<boolean, T>,
         ) {
