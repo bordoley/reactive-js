@@ -281,6 +281,9 @@ export interface Enqueue<C extends ContainerLike> {
  * @category TypeClass
  */
 export interface EnumerateAsync<C extends ContainerLike, O = unknown> {
+    /**
+     * @category Transform
+     */
     enumerateAsync<T>(scheduler: SchedulerLike, options?: O & {
         /**
          * The number of items to buffer for replay when an observer subscribes
@@ -571,6 +574,31 @@ export interface MergeWith<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
+export interface Multicast<C extends ContainerLike, O = unknown> {
+    /**
+     * Returns a `MulticastObservableLike` backed by a single subscription to the source.
+     *
+     * @param scheduler - A `SchedulerLike` that is used to subscribe to the source observable.
+     *
+     * @category Transform
+     */
+    multicast<T>(scheduler: SchedulerLike, options?: O & {
+        /**
+         * The number of items to buffer for replay when an observer subscribes
+         * to the stream.
+         */
+        readonly replay?: number;
+        /**
+         * The capacity of the stream's request queue.
+         */
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    }): Function1<ContainerOf<C, T>, MulticastObservableLike<T> & DisposableLike>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface Never<C extends ContainerLike> {
     /**
      * Returns a ContainerLike instance that emits no items and never disposes its state.
@@ -620,6 +648,26 @@ export interface ScanMany<C extends ContainerLike, CInner extends ObservableLike
      * @category Operator
      */
     scanMany: <T, TAcc>(scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Share<C extends ContainerLike, O = unknown> {
+    /**
+     * Returns an `ObservableLike` backed by a shared refcounted subscription to the
+     * source. When the refcount goes to 0, the underlying subscription
+     * to the source is disposed.
+     *
+     * @param scheduler - A `SchedulerLike` that is used to subscribe to the source.
+     *
+     * @category Transform
+     */
+    share<T>(scheduler: SchedulerLike, options?: O & {
+        readonly replay?: number;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    }): Function1<ContainerOf<C, T>, ObservableLike<T>>;
 }
 /**
  * @noInheritDoc

@@ -146,13 +146,6 @@ export const merge = Observable_merge;
 export const mergeAll = Observable_mergeAll;
 export const mergeMap = Observable_mergeMap;
 export const mergeWith = Observable_mergeWith;
-/**
- * Returns a `MulticastObservableLike` backed by a single subscription to the source.
- *
- * @param scheduler - A `SchedulerLike` that is used to subscribe to the source observable.
- *
- * @category Transform
- */
 export const multicast = Observable_multicast;
 export const never = Observable_never;
 /**
@@ -166,17 +159,6 @@ export const retry = Observable_retry;
 export const scan = Observable_scan;
 export const scanLast = Observable_scanLast;
 export const scanMany = Observable_scanLast;
-/**
- * Returns an `ObservableLike` backed by a shared refcounted subscription to the
- * source. When the refcount goes to 0, the underlying subscription
- * to the source is disposed.
- *
- * @param scheduler - A `SchedulerLike` that is used to subscribe to the source.
- * @param replay - The number of events that should be replayed when the `ObservableLike`
- * is subscribed to.
- *
- * @category Operator
- */
 export const share = Observable_share;
 export const skipFirst = Observable_skipFirst;
 export const startWith = Observable_startWith;

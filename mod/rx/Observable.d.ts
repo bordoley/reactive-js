@@ -1,6 +1,6 @@
 import { Concat, ConcatAll, ConcatMap, ConcatWith, ContainerOperator, DistinctUntilChanged, EndWith, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromAsyncIterable, Identity, IgnoreElements, Keep, KeepType, Map, MapTo, Pairwise, Pick, Repeat, Scan, SkipFirst, StartWith, TakeFirst, TakeLast, TakeWhile, Zip, ZipWith } from "../containers.js";
 import { Factory, Function1, SideEffect1 } from "../functions.js";
-import { Animate, BackpressureStrategy, CatchError, CombineLatest, CurrentTime, DecodeWithCharset, Defer, Empty, EncodeUtf8, Enqueue, Exhaust, ExhaustMap, FirstAsync, ForkCombineLatest, ForkMerge, ForkZipLatest, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, LastAsync, Merge, MergeAll, MergeMap, MergeWith, MulticastObservableLike, Never, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, ThrowIfEmpty, Throws, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { Animate, BackpressureStrategy, CatchError, CombineLatest, CurrentTime, DecodeWithCharset, Defer, Empty, EncodeUtf8, Enqueue, Exhaust, ExhaustMap, FirstAsync, ForkCombineLatest, ForkMerge, ForkZipLatest, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, LastAsync, Merge, MergeAll, MergeMap, MergeWith, Multicast, Never, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Share, SwitchAll, SwitchMap, TakeUntil, Throttle, ThrowIfEmpty, Throws, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import { SchedulerLike } from "../scheduling.js";
 import { DisposableLike, DisposableOrTeardown, QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
 export declare const animate: Animate<ObservableLike>["animate"];
@@ -72,22 +72,7 @@ export declare const merge: Merge<ObservableLike>["merge"];
 export declare const mergeAll: MergeAll<ObservableLike>["mergeAll"];
 export declare const mergeMap: MergeMap<ObservableLike>["mergeMap"];
 export declare const mergeWith: MergeWith<ObservableLike>["mergeWith"];
-/**
- * Returns a `MulticastObservableLike` backed by a single subscription to the source.
- *
- * @param scheduler - A `SchedulerLike` that is used to subscribe to the source observable.
- *
- * @category Transform
- */
-export declare const multicast: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
-    /**
-     * The number of events that should be replayed when the `MulticastObservableLike`
-     * is subscribed to.
-     */
-    readonly replay?: number;
-    readonly capacity?: number;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-}) => Function1<ObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
+export declare const multicast: Multicast<ObservableLike>["multicast"];
 export declare const never: Never<ObservableLike>["never"];
 /**
  * @category Operator
@@ -100,22 +85,7 @@ export declare const retry: Retry<ObservableLike>["retry"];
 export declare const scan: Scan<ObservableLike>["scan"];
 export declare const scanLast: ScanLast<ObservableLike, ObservableLike>["scanLast"];
 export declare const scanMany: ScanMany<ObservableLike, ObservableLike>["scanMany"];
-/**
- * Returns an `ObservableLike` backed by a shared refcounted subscription to the
- * source. When the refcount goes to 0, the underlying subscription
- * to the source is disposed.
- *
- * @param scheduler - A `SchedulerLike` that is used to subscribe to the source.
- * @param replay - The number of events that should be replayed when the `ObservableLike`
- * is subscribed to.
- *
- * @category Operator
- */
-export declare const share: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
-    readonly replay?: number | undefined;
-    readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
-    readonly capacity?: number | undefined;
-} | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
+export declare const share: Share<ObservableLike>["share"];
 export declare const skipFirst: SkipFirst<ObservableLike>["skipFirst"];
 export declare const startWith: StartWith<ObservableLike>["startWith"];
 export declare const switchAll: SwitchAll<ObservableLike>["switchAll"];

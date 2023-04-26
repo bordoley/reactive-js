@@ -68,7 +68,6 @@
 - [scan](rx_Observable.md#scan)
 - [scanLast](rx_Observable.md#scanlast)
 - [scanMany](rx_Observable.md#scanmany)
-- [share](rx_Observable.md#share)
 - [skipFirst](rx_Observable.md#skipfirst)
 - [startWith](rx_Observable.md#startwith)
 - [subscribeOn](rx_Observable.md#subscribeon)
@@ -95,6 +94,7 @@
 - [firstAsync](rx_Observable.md#firstasync)
 - [lastAsync](rx_Observable.md#lastasync)
 - [multicast](rx_Observable.md#multicast)
+- [share](rx_Observable.md#share)
 - [toEnumerable](rx_Observable.md#toenumerable)
 - [toEventSource](rx_Observable.md#toeventsource)
 - [toObservable](rx_Observable.md#toobservable)
@@ -2752,36 +2752,6 @@ ___
 
 ___
 
-### share
-
-▸ **share**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-Returns an `ObservableLike` backed by a shared refcounted subscription to the
-source. When the refcount goes to 0, the underlying subscription
-to the source is disposed.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)\> |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
-
-___
-
 ### skipFirst
 
 ▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
@@ -3488,7 +3458,7 @@ ___
 
 ### multicast
 
-▸ **multicast**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 Returns a `MulticastObservableLike` backed by a single subscription to the source.
 
@@ -3502,15 +3472,45 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)\> | - |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
 | `options?` | `Object` | - |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
-| `options.capacity?` | `number` | - |
-| `options.replay?` | `number` | The number of events that should be replayed when the `MulticastObservableLike` is subscribed to. |
+| `options.capacity?` | `number` | The capacity of the stream's request queue. |
+| `options.replay?` | `number` | The number of items to buffer for replay when an observer subscribes to the stream. |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+___
+
+### share
+
+▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+
+Returns an `ObservableLike` backed by a shared refcounted subscription to the
+source. When the refcount goes to 0, the underlying subscription
+to the source is disposed.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
+| `options?` | `Object` | - |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
+| `options.capacity?` | `number` | - |
+| `options.replay?` | `number` | - |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 

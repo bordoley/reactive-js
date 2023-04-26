@@ -13,11 +13,11 @@
 
 ## Table of contents
 
-### Methods
+### Transform Methods
 
 - [enumerateAsync](rx.EnumerateAsync.md#enumerateasync)
 
-## Methods
+## Transform Methods
 
 ### enumerateAsync
 

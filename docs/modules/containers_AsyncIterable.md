@@ -8,12 +8,9 @@
 
 - [identity](containers_AsyncIterable.md#identity)
 
-### Other Functions
-
-- [enumerateAsync](containers_AsyncIterable.md#enumerateasync)
-
 ### Transform Functions
 
+- [enumerateAsync](containers_AsyncIterable.md#enumerateasync)
 - [flow](containers_AsyncIterable.md#flow)
 - [toObservable](containers_AsyncIterable.md#toobservable)
 
@@ -35,7 +32,7 @@
 
 ___
 
-## Other Functions
+## Transform Functions
 
 ### enumerateAsync
 
@@ -62,8 +59,6 @@ ___
 [`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`InteractiveObservableLike`](../interfaces/rx.InteractiveObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
-
-## Transform Functions
 
 ### flow
 

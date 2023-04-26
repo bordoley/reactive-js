@@ -63,13 +63,14 @@ import {
   MergeAll,
   MergeMap,
   MergeWith,
-  MulticastObservableLike,
+  Multicast,
   Never,
   ObservableLike,
   ObserverLike,
   Retry,
   ScanLast,
   ScanMany,
+  Share,
   SwitchAll,
   SwitchMap,
   TakeUntil,
@@ -318,25 +319,7 @@ export const mergeMap: MergeMap<ObservableLike>["mergeMap"] =
 export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =
   Observable_mergeWith as MergeWith<ObservableLike>["mergeWith"];
 
-/**
- * Returns a `MulticastObservableLike` backed by a single subscription to the source.
- *
- * @param scheduler - A `SchedulerLike` that is used to subscribe to the source observable.
- *
- * @category Transform
- */
-export const multicast: <T>(
-  schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
-  options?: {
-    /**
-     * The number of events that should be replayed when the `MulticastObservableLike`
-     * is subscribed to.
-     */
-    readonly replay?: number;
-    readonly capacity?: number;
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-  },
-) => Function1<ObservableLike<T>, MulticastObservableLike<T> & DisposableLike> =
+export const multicast: Multicast<ObservableLike>["multicast"] =
   Observable_multicast;
 
 export const never: Never<ObservableLike>["never"] = Observable_never;
@@ -365,18 +348,7 @@ export const scanLast: ScanLast<ObservableLike, ObservableLike>["scanLast"] =
 export const scanMany: ScanMany<ObservableLike, ObservableLike>["scanMany"] =
   Observable_scanLast;
 
-/**
- * Returns an `ObservableLike` backed by a shared refcounted subscription to the
- * source. When the refcount goes to 0, the underlying subscription
- * to the source is disposed.
- *
- * @param scheduler - A `SchedulerLike` that is used to subscribe to the source.
- * @param replay - The number of events that should be replayed when the `ObservableLike`
- * is subscribed to.
- *
- * @category Operator
- */
-export const share = Observable_share;
+export const share: Share<ObservableLike>["share"] = Observable_share;
 
 export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
   Observable_skipFirst;
