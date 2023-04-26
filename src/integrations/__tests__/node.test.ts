@@ -1,4 +1,5 @@
 import { Readable, Writable, pipeline } from "node:stream";
+import zlib from "node:zlib";
 import {
   describe,
   expectEquals,
@@ -11,13 +12,13 @@ import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { DisposableLike_dispose, PauseableLike_resume } from "../../util.js";
-import { read, writeTo } from "../node.js";
-const zlib = require("node:zlib");
+import * as Disposable from "../../util/Disposable.js";
+import * as NodeStream from "../node/Stream.js";
 
 testModule(
   "node",
   describe(
-    "writeTo",
+    "sinkInto",
     testAsync("sinking to writable", async () => {
       const scheduler = Scheduler.createHostScheduler();
 
@@ -37,7 +38,8 @@ testModule(
         await pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
           ReadonlyArray.flow(scheduler),
-          writeTo(writable),
+          Disposable.addTo(scheduler),
+          NodeStream.sinkInto(writable),
           Observable.lastAsync({ scheduler }),
         );
 
@@ -66,7 +68,8 @@ testModule(
         const promise = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
           ReadonlyArray.flow(scheduler),
-          writeTo(writable),
+          Disposable.addTo(scheduler),
+          NodeStream.sinkInto(writable),
           Observable.lastAsync({ scheduler }),
         );
 
@@ -96,13 +99,14 @@ testModule(
           zlib.createGzip(),
           zlib.createGunzip(),
           writable,
-          _ => {},
+          Disposable.toErrorHandler(scheduler),
         );
 
         await pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
           ReadonlyArray.flow(scheduler),
-          writeTo(compressionPipeline),
+          Disposable.addTo(scheduler),
+          NodeStream.sinkInto(compressionPipeline),
           Observable.lastAsync({ scheduler }),
         );
 
@@ -115,7 +119,7 @@ testModule(
   ),
 
   describe(
-    "read",
+    "flow",
     testAsync("reading from readable", async () => {
       function* generate() {
         yield Buffer.from("abc", "utf8");
@@ -125,7 +129,11 @@ testModule(
       const textDecoder = newInstance(TextDecoder);
       const scheduler = Scheduler.createHostScheduler();
       try {
-        const flowable = pipe(() => Readable.from(generate()), read(scheduler));
+        const flowable = pipe(
+          () => Readable.from(generate()),
+          NodeStream.flow(scheduler),
+          Disposable.addTo(scheduler),
+        );
 
         flowable[PauseableLike_resume]();
 
@@ -153,7 +161,11 @@ testModule(
       const textDecoder = newInstance(TextDecoder);
       const scheduler = Scheduler.createHostScheduler();
       try {
-        const flowable = pipe(() => Readable.from(generate()), read(scheduler));
+        const flowable = pipe(
+          () => Readable.from(generate()),
+          NodeStream.flow(scheduler),
+          Disposable.addTo(scheduler),
+        );
 
         flowable[PauseableLike_resume]();
 

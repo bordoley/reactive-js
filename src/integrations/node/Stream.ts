@@ -1,5 +1,5 @@
 import { Readable, Transform, Writable } from "stream";
-import { __NODE_JS_PAUSE_EVENT } from "../__internal__/symbols.js";
+import { __NODE_JS_PAUSE_EVENT } from "../../__internal__/symbols.js";
 import {
   Factory,
   Function1,
@@ -7,11 +7,11 @@ import {
   ignore,
   isFunction,
   pipe,
-} from "../functions.js";
-import { FlowableObservableLike, ObservableLike } from "../rx.js";
-import FlowableObservable_create from "../rx/FlowableObservable/__internal__/FlowableObservable.create.js";
-import * as Observable from "../rx/Observable.js";
-import { SchedulerLike } from "../scheduling.js";
+} from "../../functions.js";
+import { FlowableObservableLike, ObservableLike } from "../../rx.js";
+import FlowableObservable_create from "../../rx/FlowableObservable/__internal__/FlowableObservable.create.js";
+import * as Observable from "../../rx/Observable.js";
+import { SchedulerLike } from "../../scheduling.js";
 import {
   DispatcherLike_complete,
   DisposableLike,
@@ -21,8 +21,8 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
-} from "../util.js";
-import * as Disposable from "../util/Disposable.js";
+} from "../../util.js";
+import * as Disposable from "../../util/Disposable.js";
 
 type NodeStream = Readable | Writable | Transform;
 
@@ -68,7 +68,7 @@ const addToDisposable =
     return stream;
   };
 
-export const read =
+export const flow =
   (
     scheduler: SchedulerLike,
     options?: {
@@ -78,7 +78,7 @@ export const read =
     },
   ): Function1<
     Factory<Readable> | Readable,
-    FlowableObservableLike<Uint8Array>
+    FlowableObservableLike<Uint8Array> & DisposableLike
   > =>
   factory =>
     FlowableObservable_create(
@@ -125,7 +125,7 @@ export const read =
       options,
     );
 
-export const writeTo =
+export const sinkInto =
   (factory: Writable | Factory<Writable>) =>
   (flowable: FlowableObservableLike<Uint8Array>): ObservableLike<void> =>
     Observable.create(observer => {
