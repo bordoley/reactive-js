@@ -9,25 +9,25 @@ import {
   returns,
 } from "@reactive-js/core/functions";
 import {
-  StreamableLike_stream, 
-  FlowableStreamLike_pause, 
-  FlowableStreamLike_isPaused, 
-  FlowableStreamLike_resume
-} from "@reactive-js/core/streaming";
-
-  const flowableCounter = pipe(
-    Runnable.generate(increment, returns(-1), { delay: 500 }),
-    Runnable.toFlowable(),
-  );
+  FlowableObservableLike_isPaused, 
+} from "@reactive-js/core/rx";
+import {
+  PauseableLike_pause, 
+  PauseableLike_resume
+} from "@reactive-js/core/util";
 
   const scheduler = Scheduler.createHostScheduler();
-  const counter = flowableCounter[StreamableLike_stream](scheduler);
 
-  const pause = bindMethod(counter, FlowableStreamLike_pause);
-  const resume = bindMethod(counter, FlowableStreamLike_resume);
+  const counter = pipe(
+    Runnable.generate(increment, returns(-1), { delay: 500 }),
+    Runnable.flow(scheduler),
+  );
+
+  const pause = bindMethod(counter, PauseableLike_pause);
+  const resume = bindMethod(counter, PauseableLike_resume);
 
   const isPaused = pipe(
-    counter[FlowableStreamLike_isPaused],
+    counter[FlowableObservableLike_isPaused],
     subscribe(scheduler),
   );
 
