@@ -12,6 +12,7 @@ Reactive-JS
 - [containers/Iterable](modules/containers_Iterable.md)
 - [containers/Promiseable](modules/containers_Promiseable.md)
 - [functions](modules/functions.md)
+- [integrations/node](modules/integrations_node.md)
 - [integrations/react](modules/integrations_react.md)
 - [integrations/react/web](modules/integrations_react_web.md)
 - [integrations/scheduler](modules/integrations_scheduler.md)
