@@ -27,7 +27,6 @@
 - [concatAll](rx_Enumerable.md#concatall)
 - [concatMap](rx_Enumerable.md#concatmap)
 - [concatWith](rx_Enumerable.md#concatwith)
-- [contains](rx_Enumerable.md#contains)
 - [decodeWithCharset](rx_Enumerable.md#decodewithcharset)
 - [distinctUntilChanged](rx_Enumerable.md#distinctuntilchanged)
 - [encodeUtf8](rx_Enumerable.md#encodeutf8)
@@ -42,16 +41,13 @@
 - [keepType](rx_Enumerable.md#keeptype)
 - [map](rx_Enumerable.md#map)
 - [mapTo](rx_Enumerable.md#mapto)
-- [noneSatisfy](rx_Enumerable.md#nonesatisfy)
 - [pairwise](rx_Enumerable.md#pairwise)
 - [pick](rx_Enumerable.md#pick)
-- [reduce](rx_Enumerable.md#reduce)
 - [repeat](rx_Enumerable.md#repeat)
 - [retry](rx_Enumerable.md#retry)
 - [scan](rx_Enumerable.md#scan)
 - [scanLast](rx_Enumerable.md#scanlast)
 - [skipFirst](rx_Enumerable.md#skipfirst)
-- [someSatisfy](rx_Enumerable.md#somesatisfy)
 - [startWith](rx_Enumerable.md#startwith)
 - [takeFirst](rx_Enumerable.md#takefirst)
 - [takeLast](rx_Enumerable.md#takelast)
@@ -62,16 +58,20 @@
 ### Other Functions
 
 - [enumerateAsync](rx_Enumerable.md#enumerateasync)
-- [everySatisfy](rx_Enumerable.md#everysatisfy)
-- [flow](rx_Enumerable.md#flow)
 
 ### Transform Functions
 
+- [contains](rx_Enumerable.md#contains)
 - [enumerate](rx_Enumerable.md#enumerate)
+- [everySatisfy](rx_Enumerable.md#everysatisfy)
 - [first](rx_Enumerable.md#first)
 - [firstAsync](rx_Enumerable.md#firstasync)
+- [flow](rx_Enumerable.md#flow)
 - [last](rx_Enumerable.md#last)
 - [lastAsync](rx_Enumerable.md#lastasync)
+- [noneSatisfy](rx_Enumerable.md#nonesatisfy)
+- [reduce](rx_Enumerable.md#reduce)
+- [someSatisfy](rx_Enumerable.md#somesatisfy)
 - [toEnumerable](rx_Enumerable.md#toenumerable)
 - [toObservable](rx_Enumerable.md#toobservable)
 - [toReadonlyArray](rx_Enumerable.md#toreadonlyarray)
@@ -683,30 +683,6 @@ ___
 
 ___
 
-### contains
-
-▸ **contains**<`T`\>(`value`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `options?` | `Object` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
-
-___
-
 ### decodeWithCharset
 
 ▸ **decodeWithCharset**(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
@@ -1221,28 +1197,6 @@ ___
 
 ___
 
-### noneSatisfy
-
-▸ **noneSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
-
-___
-
 ### pairwise
 
 ▸ **pairwise**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
@@ -1323,30 +1277,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
-
-___
-
-### reduce
-
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `TAcc`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `TAcc`\>
 
 ___
 
@@ -1521,28 +1451,6 @@ Returns a ContainerLike that skips the first count items emitted by the source.
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
-
-___
-
-### someSatisfy
-
-▸ **someSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
 
 ___
 
@@ -1908,14 +1816,11 @@ ___
 
 ___
 
-### everySatisfy
+## Transform Functions
 
-▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
+### contains
 
-/**
-Determines whether all the members of an Container satisfy the predicate.
-The predicate function is invoked for each element in the Container until the
-it returns false, or until the end of the Container.
+▸ **contains**<`T`\>(`value`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -1927,41 +1832,15 @@ it returns false, or until the end of the Container.
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `value` | `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
 
 ___
-
-### flow
-
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`FlowableObservableLike`](../interfaces/rx.FlowableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`FlowableObservableLike`](../interfaces/rx.FlowableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-___
-
-## Transform Functions
 
 ### enumerate
 
@@ -1982,6 +1861,32 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+___
+
+### everySatisfy
+
+▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
+
+Determines whether all the members of an Container satisfy the predicate.
+The predicate function is invoked for each element in the Container until the
+it returns false, or until the end of the Container.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
 
 ___
 
@@ -2026,6 +1931,32 @@ ___
 
 ___
 
+### flow
+
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`FlowableObservableLike`](../interfaces/rx.FlowableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`FlowableObservableLike`](../interfaces/rx.FlowableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+___
+
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
@@ -2064,6 +1995,74 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+___
+
+### noneSatisfy
+
+▸ **noneSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
+
+___
+
+### reduce
+
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `TAcc`\>
+
+___
+
+### someSatisfy
+
+▸ **someSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>, `boolean`\>
 
 ___
 

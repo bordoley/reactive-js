@@ -12,11 +12,11 @@
 
 ## Table of contents
 
-### Operator Methods
+### Transform Methods
 
 - [reduce](containers.Reduce.md#reduce)
 
-## Operator Methods
+## Transform Methods
 
 ### reduce
 

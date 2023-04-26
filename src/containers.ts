@@ -227,7 +227,7 @@ export interface ConcatWith<C extends ContainerLike> {
  */
 export interface Contains<C extends ContainerLike> {
   /**
-   * @category Operator
+   * @category Transform
    */
   contains: <T>(
     value: T,
@@ -301,12 +301,12 @@ export interface Enumerate<
  */
 export interface EverySatisfy<C extends ContainerLike> {
   /**
-   * /**
    * Determines whether all the members of an Container satisfy the predicate.
    * The predicate function is invoked for each element in the Container until the
    * it returns false, or until the end of the Container.
    *
    * @param predicate
+   * @category Transform
    */
   everySatisfy<T>(
     predicate: Predicate<T>,
@@ -625,7 +625,7 @@ export interface MapTo<C extends ContainerLike> {
  */
 export interface NoneSatisfy<C extends ContainerLike> {
   /**
-   * @category Operator
+   * @category Transform
    */
   noneSatisfy<T>(
     predicate: Predicate<T>,
@@ -673,7 +673,7 @@ export interface Pick<C extends ContainerLike> {
  */
 export interface Reduce<C extends ContainerLike> {
   /**
-   * @category Operator
+   * @category Transform
    */
   reduce<T, TAcc>(
     reducer: Reducer<T, TAcc>,
@@ -752,7 +752,7 @@ export interface SkipFirst<C extends ContainerLike> {
  */
 export interface SomeSatisfy<C extends ContainerLike> {
   /**
-   * @category Operator
+   * @category Transform
    */
   someSatisfy<T>(
     predicate: Predicate<T>,

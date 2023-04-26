@@ -12,17 +12,16 @@
 
 ## Table of contents
 
-### Methods
+### Transform Methods
 
 - [everySatisfy](containers.EverySatisfy.md#everysatisfy)
 
-## Methods
+## Transform Methods
 
 ### everySatisfy
 
 ▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `boolean`\>
 
-/**
 Determines whether all the members of an Container satisfy the predicate.
 The predicate function is invoked for each element in the Container until the
 it returns false, or until the end of the Container.

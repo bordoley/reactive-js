@@ -11,10 +11,10 @@
 ### Other Functions
 
 - [enumerateAsync](containers_AsyncIterable.md#enumerateasync)
-- [flow](containers_AsyncIterable.md#flow)
 
 ### Transform Functions
 
+- [flow](containers_AsyncIterable.md#flow)
 - [toObservable](containers_AsyncIterable.md#toobservable)
 
 ## Operator Functions
@@ -63,6 +63,8 @@ ___
 
 ___
 
+## Transform Functions
+
 ### flow
 
 ▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`FlowableObservableLike`](../interfaces/rx.FlowableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
@@ -88,8 +90,6 @@ ___
 [`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`FlowableObservableLike`](../interfaces/rx.FlowableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
-
-## Transform Functions
 
 ### toObservable
 

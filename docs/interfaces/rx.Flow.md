@@ -13,11 +13,11 @@
 
 ## Table of contents
 
-### Methods
+### Transform Methods
 
 - [flow](rx.Flow.md#flow)
 
-## Methods
+## Transform Methods
 
 ### flow
 

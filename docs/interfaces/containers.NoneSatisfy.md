@@ -12,11 +12,11 @@
 
 ## Table of contents
 
-### Operator Methods
+### Transform Methods
 
 - [noneSatisfy](containers.NoneSatisfy.md#nonesatisfy)
 
-## Operator Methods
+## Transform Methods
 
 ### noneSatisfy
 

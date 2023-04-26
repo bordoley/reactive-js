@@ -335,6 +335,9 @@ export interface FirstAsync<C extends ContainerLike> {
  * @category TypeClass
  */
 export interface Flow<C extends ContainerLike, O = unknown> {
+    /**
+     * @category Transform
+     */
     flow<T>(scheduler: SchedulerLike, options?: O & {
         readonly replay?: number;
         readonly capacity?: number;

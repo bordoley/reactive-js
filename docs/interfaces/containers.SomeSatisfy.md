@@ -12,11 +12,11 @@
 
 ## Table of contents
 
-### Operator Methods
+### Transform Methods
 
 - [someSatisfy](containers.SomeSatisfy.md#somesatisfy)
 
-## Operator Methods
+## Transform Methods
 
 ### someSatisfy
 

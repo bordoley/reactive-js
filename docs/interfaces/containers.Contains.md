@@ -12,11 +12,11 @@
 
 ## Table of contents
 
-### Operator Properties
+### Transform Properties
 
 - [contains](containers.Contains.md#contains)
 
-## Operator Properties
+## Transform Properties
 
 ### contains
 
