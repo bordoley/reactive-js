@@ -145,7 +145,6 @@ MergeAllObserver_concurrency
 MergeAllObserver_onDispose
 MergeAllObserver_observablesQueue
 MergeObserverCtx_completedCount
-NODE_JS_PAUSE_EVENT
 Object_init
 Object_properties
 Object_prototype

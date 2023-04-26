@@ -1,5 +1,4 @@
 import { Readable, Transform, Writable } from "stream";
-import { __NODE_JS_PAUSE_EVENT } from "../../__internal__/symbols.js";
 import {
   Factory,
   Function1,
@@ -140,8 +139,7 @@ export const sinkInto =
           // node throws a type Error regarding expecting a Buffer, though the docs
           // say a UInt8Array should be accepted. Need to file a bug.
           if (!writable.write(Buffer.from(ev))) {
-            // Hack in a custom event here for pause request
-            writable.emit(__NODE_JS_PAUSE_EVENT);
+            flowable[PauseableLike_pause]();
           }
         }),
         Observable.subscribe(observer),
@@ -151,11 +149,9 @@ export const sinkInto =
 
       const onDrain = bindMethod(flowable, PauseableLike_resume);
       const onFinish = bindMethod(observer, DisposableLike_dispose);
-      const onPause = bindMethod(flowable, PauseableLike_pause);
 
       writable.on("drain", onDrain);
       writable.on("finish", onFinish);
-      writable.on(__NODE_JS_PAUSE_EVENT, onPause);
 
       flowable[PauseableLike_resume]();
     });

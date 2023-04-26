@@ -39,7 +39,6 @@ const EventSource_create: <T>(
   options?: { readonly replay?: number },
 ) => EventSourceLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    // FIXME: Use Symbols
     [__CreateEventSource_createDelegate]: Factory<EventPublisherLike<T>>;
     [ReplayableLike_buffer]: Mutable<
       DelegatingLike<IndexedBufferCollectionLike<T>>

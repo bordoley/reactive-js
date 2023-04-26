@@ -1,6 +1,5 @@
 /// <reference types="./Stream.d.ts" />
 
-import { __NODE_JS_PAUSE_EVENT } from "../../__internal__/symbols.js";
 import { bindMethod, ignore, isFunction, pipe, } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
 import PauseableObservable_create from "../../rx/PauseableObservable/__internal__/PauseableObservable.create.js";
@@ -60,15 +59,12 @@ export const sinkInto = (factory) => (flowable) => Observable.create(observer =>
         // node throws a type Error regarding expecting a Buffer, though the docs
         // say a UInt8Array should be accepted. Need to file a bug.
         if (!writable.write(Buffer.from(ev))) {
-            // Hack in a custom event here for pause request
-            writable.emit(__NODE_JS_PAUSE_EVENT);
+            flowable[PauseableLike_pause]();
         }
     }), Observable.subscribe(observer), Disposable.onComplete(bindMethod(writable, "end")), Disposable.addTo(observer));
     const onDrain = bindMethod(flowable, PauseableLike_resume);
     const onFinish = bindMethod(observer, DisposableLike_dispose);
-    const onPause = bindMethod(flowable, PauseableLike_pause);
     writable.on("drain", onDrain);
     writable.on("finish", onFinish);
-    writable.on(__NODE_JS_PAUSE_EVENT, onPause);
     flowable[PauseableLike_resume]();
 });

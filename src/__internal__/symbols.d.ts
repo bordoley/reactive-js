@@ -284,8 +284,6 @@ export declare const __MergeAllObserver_observablesQueue: unique symbol;
 
 export declare const __MergeObserverCtx_completedCount: unique symbol;
 
-export declare const __NODE_JS_PAUSE_EVENT: unique symbol;
-
 export declare const __Object_init: unique symbol;
 
 export declare const __Object_properties: unique symbol;
@@ -298,7 +296,7 @@ export declare const __PairwiseObserver_prev: unique symbol;
 
 export declare const __PairwiseObserver_hasPrev: unique symbol;
 
-export declare const __PriorityQueueImpl_comparator: unique symbol;
+export declare const __PriorityQueueImpl_comparator : unique symbol;
 
 export declare const __PrioritySchedulerDelegatingScheduler_priorityScheduler: unique symbol;
 
@@ -306,17 +304,17 @@ export declare const __PrioritySchedulerDelegatingScheduler_priority: unique sym
 
 export declare const __Publisher_observers: unique symbol;
 
-export declare const __QueueScheduler_delayed: unique symbol;
+export declare const __QueueScheduler_delayed : unique symbol;
 
-export declare const __QueueScheduler_dueTime: unique symbol;
+export declare const __QueueScheduler_dueTime : unique symbol;
 
-export declare const __QueueScheduler_hostContinuation: unique symbol;
+export declare const __QueueScheduler_hostContinuation : unique symbol;
 
 export declare const __QueueScheduler_hostScheduler: unique symbol;
 
-export declare const __QueueScheduler_queue: unique symbol;
+export declare const __QueueScheduler_queue : unique symbol;
 
-export declare const __QueueScheduler_taskIDCounter: unique symbol;
+export declare const __QueueScheduler_taskIDCounter : unique symbol;
 
 export declare const __ReadonlyArrayEnumerator_values: unique symbol;
 
