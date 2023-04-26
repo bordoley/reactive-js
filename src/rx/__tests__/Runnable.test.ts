@@ -15,6 +15,7 @@ import {
   retryTests,
   scanLastTests,
   scanManyTests,
+  throwIfEmptyTests,
 } from "../../__tests__/operators.js";
 import Containers_test from "../../containers/__tests__/Containers.test.js";
 import {
@@ -635,6 +636,7 @@ testModule(
   switchAllTests,
   takeUntilTests,
   throttleTests,
+  throwIfEmptyTests<RunnableLike>(Runnable),
   timeoutTests,
   withLatestFromTest,
   zipTests,
