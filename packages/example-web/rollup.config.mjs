@@ -1,6 +1,7 @@
 import typescript from "@rollup/plugin-typescript";
 import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
+import svelte from "rollup-plugin-svelte";
 import terser from "@rollup/plugin-terser";
 
 const typescriptConfig = {
@@ -94,4 +95,21 @@ export default [
       }),*/,
     ],
   },
+  {
+    input: "src/svelte-example.js",
+    output: {
+      dir: "./build",
+      format: "iife",
+      name: "ExampleSvelte",
+    },
+    plugins: [
+      svelte(),
+      resolve({
+        browser: true,
+        dedupe: ["svelte"],
+      }),
+    ],
+  },
 ];
+
+

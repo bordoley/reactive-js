@@ -1,13 +1,21 @@
 {
-  "name": "@reactive-js/example-svelte",
+  "name": "@reactive-js/example-web",
   "version": "0.86.0",
   "type": "module",
   "private": true,
   "dependencies": {
-    "@reactive-js/core": "^0.86.0"
+    "@reactive-js/core": "^0.86.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "scheduler": "0.23.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "15.0.1",
+    "@rollup/plugin-replace": "5.0.2",
+    "@rollup/plugin-terser": "0.3.0",
+    "@rollup/plugin-typescript": "11.0.0",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
     "rollup": "3.9.1",
     "rollup-plugin-svelte": "7.1.4",
     "svelte": "3.57.0"
