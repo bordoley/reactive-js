@@ -11,10 +11,8 @@ import {
   Updater,
   bindMethod,
   compose,
-  isFunction,
   none,
   pipe,
-  returns,
 } from "../../../functions.js";
 import {
   FlowableObservableLike,
@@ -39,7 +37,6 @@ import Observable_backpressureStrategy from "../../Observable/__internal__/Obser
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
-import Observable_scan from "../../Observable/__internal__/Observable.scan.js";
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
 const FlowableObservable_create: <T>(
@@ -79,10 +76,6 @@ const FlowableObservable_create: <T>(
             ObservableLike,
             boolean | Updater<boolean>
           >(1, "drop-oldest"),
-          Observable_scan<ObservableLike, boolean | Updater<boolean>, boolean>(
-            (acc, next) => (isFunction(next) ? next(acc) : next),
-            returns(true),
-          ),
           Observable_mergeWith<ObservableLike, boolean>(
             // Initialize to paused state
             pipe(true, Optional_toObservable()),
