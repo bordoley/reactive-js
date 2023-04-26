@@ -9,7 +9,7 @@ import {
   returns,
 } from "@reactive-js/core/functions";
 import {
-  FlowableObservableLike_isPaused, 
+  PauseableObservableLike_isPaused, 
 } from "@reactive-js/core/rx";
 import {
   PauseableLike_pause, 
@@ -27,7 +27,7 @@ import {
   const resume = bindMethod(counter, PauseableLike_resume);
 
   const isPaused = pipe(
-    counter[FlowableObservableLike_isPaused],
+    counter[PauseableObservableLike_isPaused],
     subscribe(scheduler),
   );
 

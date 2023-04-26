@@ -15,10 +15,10 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  FlowableObservableLike,
-  FlowableObservableLike_isPaused,
   MulticastObservableLike,
   ObservableLike,
+  PauseableObservableLike,
+  PauseableObservableLike_isPaused,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
@@ -39,7 +39,7 @@ import Observable_forEach from "../../Observable/__internal__/Observable.forEach
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
-const FlowableObservable_create: <T>(
+const PauseableObservable_create: <T>(
   op: ContainerOperator<ObservableLike, boolean, T>,
   scheduler: SchedulerLike,
   options?: {
@@ -47,18 +47,18 @@ const FlowableObservable_create: <T>(
     readonly replay?: number;
     readonly capacity?: number;
   },
-) => FlowableObservableLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
+) => PauseableObservableLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [FlowableObservableLike_isPaused]: MulticastObservableLike<boolean>;
+    [PauseableObservableLike_isPaused]: MulticastObservableLike<boolean>;
   };
 
   return createInstanceFactory(
     mix(
       include(Stream_mixin<boolean, T>()),
-      function FlowableObservable(
+      function PauseableObservable(
         instance: TProperties &
           Pick<
-            FlowableObservableLike<T>,
+            PauseableObservableLike<T>,
             typeof PauseableLike_pause | typeof PauseableLike_resume
           >,
         op: ContainerOperator<ObservableLike, boolean, T>,
@@ -68,7 +68,7 @@ const FlowableObservable_create: <T>(
           capacity?: number;
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
-      ): FlowableObservableLike<T> & DisposableLike {
+      ): PauseableObservableLike<T> & DisposableLike {
         const publisher = Publisher_create<boolean>({ replay: 1 });
 
         const liftedOp = compose(
@@ -97,21 +97,21 @@ const FlowableObservable_create: <T>(
 
         pipe(instance, Disposable_add(publisher));
 
-        instance[FlowableObservableLike_isPaused] = publisher;
+        instance[PauseableObservableLike_isPaused] = publisher;
 
         return instance;
       },
       props<TProperties>({
-        [FlowableObservableLike_isPaused]: none,
+        [PauseableObservableLike_isPaused]: none,
       }),
       {
         [PauseableLike_pause](
-          this: FlowableObservableLike<T> & StreamLike<boolean, T>,
+          this: PauseableObservableLike<T> & StreamLike<boolean, T>,
         ) {
           this[QueueableLike_enqueue](true);
         },
         [PauseableLike_resume](
-          this: FlowableObservableLike<T> & StreamLike<boolean, T>,
+          this: PauseableObservableLike<T> & StreamLike<boolean, T>,
         ) {
           this[QueueableLike_enqueue](false);
         },
@@ -120,4 +120,4 @@ const FlowableObservable_create: <T>(
   );
 })();
 
-export default FlowableObservable_create;
+export default PauseableObservable_create;

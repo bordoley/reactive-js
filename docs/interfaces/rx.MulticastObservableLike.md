@@ -22,7 +22,7 @@ A stateful ObservableLike resource.
 
   ↳↳ [`PublisherLike`](rx.PublisherLike.md)
 
-  ↳↳ [`FlowableObservableLike`](rx.FlowableObservableLike.md)
+  ↳↳ [`PauseableObservableLike`](rx.PauseableObservableLike.md)
 
   ↳↳ [`InteractiveObservableLike`](rx.InteractiveObservableLike.md)
 

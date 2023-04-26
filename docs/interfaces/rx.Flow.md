@@ -21,7 +21,7 @@
 
 ### flow
 
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`FlowableObservableLike`](rx.FlowableObservableLike.md)<`T`\> & [`DisposableLike`](util.DisposableLike.md)\>
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -38,4 +38,4 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`FlowableObservableLike`](rx.FlowableObservableLike.md)<`T`\> & [`DisposableLike`](util.DisposableLike.md)\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](util.DisposableLike.md)\>

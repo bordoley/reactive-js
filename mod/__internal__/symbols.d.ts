@@ -31,8 +31,6 @@ export const __EventPublisherLike_listenerCount: unique symbol;
 /** @type {unique symbol} */
 export const __EventSourceLike_addListener: unique symbol;
 /** @type {unique symbol} */
-export const __FlowableObservableLike_isPaused: unique symbol;
-/** @type {unique symbol} */
 export const __InteractiveObservableLike_move: unique symbol;
 /** @type {unique symbol} */
 export const __KeyedCollectionLike_get: unique symbol;
@@ -50,6 +48,8 @@ export const __ObservableLike_isRunnable: unique symbol;
 export const __PauseableLike_pause: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableLike_resume: unique symbol;
+/** @type {unique symbol} */
+export const __PauseableObservableLike_isPaused: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableSchedulerLike_isPaused: unique symbol;
 /** @type {unique symbol} */

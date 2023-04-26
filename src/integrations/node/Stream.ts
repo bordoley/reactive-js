@@ -8,9 +8,9 @@ import {
   isFunction,
   pipe,
 } from "../../functions.js";
-import { FlowableObservableLike, ObservableLike } from "../../rx.js";
-import FlowableObservable_create from "../../rx/FlowableObservable/__internal__/FlowableObservable.create.js";
+import { ObservableLike, PauseableObservableLike } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
+import PauseableObservable_create from "../../rx/PauseableObservable/__internal__/PauseableObservable.create.js";
 import { SchedulerLike } from "../../scheduling.js";
 import {
   DispatcherLike_complete,
@@ -78,10 +78,10 @@ export const flow =
     },
   ): Function1<
     Factory<Readable> | Readable,
-    FlowableObservableLike<Uint8Array> & DisposableLike
+    PauseableObservableLike<Uint8Array> & DisposableLike
   > =>
   factory =>
-    FlowableObservable_create(
+    PauseableObservable_create(
       mode =>
         Observable.create(observer => {
           const dispatchDisposable = pipe(
@@ -127,7 +127,7 @@ export const flow =
 
 export const sinkInto =
   (factory: Writable | Factory<Writable>) =>
-  (flowable: FlowableObservableLike<Uint8Array>): ObservableLike<void> =>
+  (flowable: PauseableObservableLike<Uint8Array>): ObservableLike<void> =>
     Observable.create(observer => {
       const writable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(observer))

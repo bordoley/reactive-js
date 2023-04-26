@@ -2,8 +2,8 @@
 
 import { __NODE_JS_PAUSE_EVENT } from "../../__internal__/symbols.js";
 import { bindMethod, ignore, isFunction, pipe, } from "../../functions.js";
-import FlowableObservable_create from "../../rx/FlowableObservable/__internal__/FlowableObservable.create.js";
 import * as Observable from "../../rx/Observable.js";
+import PauseableObservable_create from "../../rx/PauseableObservable/__internal__/PauseableObservable.create.js";
 import { DispatcherLike_complete, DisposableLike_dispose, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 const disposeStream = (stream) => () => {
@@ -32,7 +32,7 @@ const addToDisposable = (disposable) => stream => {
     stream.on("error", Disposable.toErrorHandler(disposable));
     return stream;
 };
-export const flow = (scheduler, options) => factory => FlowableObservable_create(mode => Observable.create(observer => {
+export const flow = (scheduler, options) => factory => PauseableObservable_create(mode => Observable.create(observer => {
     const dispatchDisposable = pipe(Disposable.create(), Disposable.onError(Disposable.toErrorHandler(observer)), Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)));
     const readable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(dispatchDisposable))

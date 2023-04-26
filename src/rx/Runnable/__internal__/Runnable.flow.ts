@@ -1,6 +1,6 @@
 import { pipe } from "../../../functions.js";
 import { Flow, ObservableLike, RunnableLike } from "../../../rx.js";
-import FlowableObservable_create from "../../../rx/FlowableObservable/__internal__/FlowableObservable.create.js";
+import PauseableObservable_create from "../../../rx/PauseableObservable/__internal__/PauseableObservable.create.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import {
@@ -59,6 +59,6 @@ const Runnable_flow: Flow<RunnableLike>["flow"] =
         );
       });
 
-    return FlowableObservable_create<T>(op, scheduler, options);
+    return PauseableObservable_create<T>(op, scheduler, options);
   };
 export default Runnable_flow;

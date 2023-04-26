@@ -75,11 +75,6 @@ export const __EventSourceLike_addListener = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __FlowableObservableLike_isPaused = /*@__PURE__*/ symbol(
-  "FlowableObservableLike_isPaused",
-);
-
-/** @type {unique symbol} */
 export const __InteractiveObservableLike_move = /*@__PURE__*/ symbol(
   "InteractiveObservableLike_move",
 );
@@ -122,6 +117,11 @@ export const __PauseableLike_pause = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __PauseableLike_resume = /*@__PURE__*/ symbol(
   "PauseableLike_resume",
+);
+
+/** @type {unique symbol} */
+export const __PauseableObservableLike_isPaused = /*@__PURE__*/ symbol(
+  "PauseableObservableLike_isPaused",
 );
 
 /** @type {unique symbol} */

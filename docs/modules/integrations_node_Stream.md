@@ -13,7 +13,7 @@
 
 ### flow
 
-▸ **flow**(`scheduler`, `options?`): [`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`FlowableObservableLike`](../interfaces/rx.FlowableObservableLike.md)<`Uint8Array`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **flow**(`scheduler`, `options?`): [`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`Uint8Array`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Parameters
 
@@ -27,13 +27,13 @@
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`FlowableObservableLike`](../interfaces/rx.FlowableObservableLike.md)<`Uint8Array`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`Uint8Array`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 
 ### sinkInto
 
-▸ **sinkInto**(`factory`): (`flowable`: [`FlowableObservableLike`](../interfaces/rx.FlowableObservableLike.md)<`Uint8Array`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\>
+▸ **sinkInto**(`factory`): (`flowable`: [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`Uint8Array`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\>
 
 #### Parameters
 
@@ -51,7 +51,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `flowable` | [`FlowableObservableLike`](../interfaces/rx.FlowableObservableLike.md)<`Uint8Array`\> |
+| `flowable` | [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`Uint8Array`\> |
 
 ##### Returns
 

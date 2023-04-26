@@ -14,7 +14,6 @@ EventListenerLike_isErrorSafe
 EventListenerLike_notify
 EventPublisherLike_listenerCount
 EventSourceLike_addListener
-FlowableObservableLike_isPaused
 InteractiveObservableLike_move
 KeyedCollectionLike_get
 KeyedContainerLike_TKey
@@ -24,6 +23,7 @@ ObservableLike_isEnumerable
 ObservableLike_isRunnable
 PauseableLike_pause
 PauseableLike_resume
+PauseableObservableLike_isPaused
 PauseableSchedulerLike_isPaused
 PublisherLike_observerCount
 QueueableLike_enqueue

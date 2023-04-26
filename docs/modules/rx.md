@@ -14,10 +14,10 @@
 ### Container Interfaces
 
 - [EnumerableLike](../interfaces/rx.EnumerableLike.md)
-- [FlowableObservableLike](../interfaces/rx.FlowableObservableLike.md)
 - [InteractiveObservableLike](../interfaces/rx.InteractiveObservableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
+- [PauseableObservableLike](../interfaces/rx.PauseableObservableLike.md)
 - [PublisherLike](../interfaces/rx.PublisherLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
 

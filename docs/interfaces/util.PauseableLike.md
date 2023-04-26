@@ -8,7 +8,7 @@
 
 - **`PauseableLike`**
 
-  ↳ [`FlowableObservableLike`](rx.FlowableObservableLike.md)
+  ↳ [`PauseableObservableLike`](rx.PauseableObservableLike.md)
 
   ↳ [`PauseableSchedulerLike`](scheduling.PauseableSchedulerLike.md)
 

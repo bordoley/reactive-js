@@ -30,8 +30,6 @@ export declare const __EventPublisherLike_listenerCount: unique symbol;
 
 export declare const __EventSourceLike_addListener: unique symbol;
 
-export declare const __FlowableObservableLike_isPaused: unique symbol;
-
 export declare const __InteractiveObservableLike_move: unique symbol;
 
 export declare const __KeyedCollectionLike_get: unique symbol;
@@ -49,6 +47,8 @@ export declare const __ObservableLike_isRunnable: unique symbol;
 export declare const __PauseableLike_pause: unique symbol;
 
 export declare const __PauseableLike_resume: unique symbol;
+
+export declare const __PauseableObservableLike_isPaused: unique symbol;
 
 export declare const __PauseableSchedulerLike_isPaused: unique symbol;
 

@@ -34,9 +34,9 @@ import * as ReadonlyObjectMap from "../keyed-containers/ReadonlyObjectMap.js";
 import {
   AnimationConfig,
   EnumerableLike,
-  FlowableObservableLike,
-  FlowableObservableLike_isPaused,
   ObservableLike,
+  PauseableObservableLike,
+  PauseableObservableLike_isPaused,
   PublisherLike,
   RunnableLike,
 } from "../rx.js";
@@ -418,7 +418,7 @@ export const useFlow: UseFlow["useFlow"] = <T>(
   value: Optional<T>;
   isPaused: boolean;
 } => {
-  const flowObservableRef = useRef<Optional<FlowableObservableLike<T>>>(none);
+  const flowObservableRef = useRef<Optional<PauseableObservableLike<T>>>(none);
 
   const runnable = isFunction(runnableOrFactory)
     ? useMemo(runnableOrFactory, optionsOrDeps as unknown[])
@@ -441,13 +441,13 @@ export const useFlow: UseFlow["useFlow"] = <T>(
 
   useEffect(() => {
     const scheduler = getScheduler({ priority });
-    const flowableObservable = pipe(
+    const PauseableObservable = pipe(
       runnable,
       Runnable.flow(scheduler, options),
     );
-    flowObservableRef.current = flowableObservable;
+    flowObservableRef.current = PauseableObservable;
 
-    return bindMethod(flowableObservable, DisposableLike_dispose);
+    return bindMethod(PauseableObservable, DisposableLike_dispose);
   }, [runnable, priority, backpressureStrategy, capacity]);
 
   const value = useObservable<T>(
@@ -457,7 +457,7 @@ export const useFlow: UseFlow["useFlow"] = <T>(
 
   const isPaused =
     useObservable<boolean>(
-      flowObservableRef.current?.[FlowableObservableLike_isPaused] ??
+      flowObservableRef.current?.[PauseableObservableLike_isPaused] ??
         emptyObservable,
       options,
     ) ?? true;

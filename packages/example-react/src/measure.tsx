@@ -10,7 +10,6 @@ import { useAnimateEvent } from "@reactive-js/core/integrations/react/web";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
 
-
 const Measure = () => {
   const [open, toggle] = useState(false);
 
@@ -18,8 +17,11 @@ const Measure = () => {
 
   const { width: boxWidth } = useObservable(
     () =>
-      pipeSome(container ,WebElement.observeMeasure(), Observable.throttle(50)) ??
-      Observable.empty<Rect>(),
+      pipeSome(
+        container,
+        WebElement.observeMeasure(),
+        Observable.throttle(50),
+      ) ?? Observable.empty<Rect>(),
     [container],
   ) ?? { width: 0 };
 
