@@ -1,13 +1,11 @@
 import { pipe } from "../../../functions.js";
 import { Flow, ObservableLike, RunnableLike } from "../../../rx.js";
 import FlowableObservable_create from "../../../rx/FlowableObservable/__internal__/FlowableObservable.create.js";
-import {
-  PauseableSchedulerLike_pause,
-  PauseableSchedulerLike_resume,
-  SchedulerLike,
-} from "../../../scheduling.js";
+import { SchedulerLike } from "../../../scheduling.js";
 import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import {
+  PauseableLike_pause,
+  PauseableLike_resume,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
@@ -48,9 +46,9 @@ const Runnable_flow: Flow<RunnableLike>["flow"] =
               modeObs,
               Observable_forEach<ObservableLike, boolean>(isPaused => {
                 if (isPaused) {
-                  pauseableScheduler[PauseableSchedulerLike_pause]();
+                  pauseableScheduler[PauseableLike_pause]();
                 } else {
-                  pauseableScheduler[PauseableSchedulerLike_resume]();
+                  pauseableScheduler[PauseableLike_resume]();
                 }
               }),
               Observable_subscribeWithConfig(observer, observer),

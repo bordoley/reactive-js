@@ -17,6 +17,8 @@ via the pause and resume methods.
 
 - [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`T`\>
 
+- [`PauseableLike`](util.PauseableLike.md)
+
   ↳ **`FlowableObservableLike`**
 
 ## Table of contents
@@ -25,11 +27,6 @@ via the pause and resume methods.
 
 - [[\_\_\_FlowableObservableLike\_isPaused]](rx.FlowableObservableLike.md#[___flowableobservablelike_ispaused])
 
-### Methods
-
-- [[\_\_\_FlowableObservableLike\_pause]](rx.FlowableObservableLike.md#[___flowableobservablelike_pause])
-- [[\_\_\_FlowableObservableLike\_resume]](rx.FlowableObservableLike.md#[___flowableobservablelike_resume])
-
 ## Properties
 
 ### [\_\_\_FlowableObservableLike\_isPaused]
@@ -37,27 +34,3 @@ via the pause and resume methods.
 • `Readonly` **[\_\_\_FlowableObservableLike\_isPaused]**: [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`boolean`\>
 
 Reactive property indicating if the observable is paused or not.
-
-## Methods
-
-### [\_\_\_FlowableObservableLike\_pause]
-
-▸ **[___FlowableObservableLike_pause]**(): `void`
-
-Imperatively pause the observable.
-
-#### Returns
-
-`void`
-
-___
-
-### [\_\_\_FlowableObservableLike\_resume]
-
-▸ **[___FlowableObservableLike_resume]**(): `void`
-
-Imperatively resume the observable.
-
-#### Returns
-
-`void`

@@ -36,8 +36,6 @@ import {
   EnumerableLike,
   FlowableObservableLike,
   FlowableObservableLike_isPaused,
-  FlowableObservableLike_pause,
-  FlowableObservableLike_resume,
   ObservableLike,
   PublisherLike,
   RunnableLike,
@@ -60,6 +58,8 @@ import {
   EventPublisherLike,
   EventSourceLike,
   EventSourceLike_addListener,
+  PauseableLike_pause,
+  PauseableLike_resume,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -463,11 +463,11 @@ export const useFlow: UseFlow["useFlow"] = <T>(
     ) ?? true;
 
   const pause = useCallback(() => {
-    flowObservableRef.current?.[FlowableObservableLike_pause]();
+    flowObservableRef.current?.[PauseableLike_pause]();
   }, [flowObservableRef]);
 
   const resume = useCallback(() => {
-    flowObservableRef.current?.[FlowableObservableLike_resume]();
+    flowObservableRef.current?.[PauseableLike_resume]();
   }, [flowObservableRef]);
 
   return { resume, pause, value, isPaused };

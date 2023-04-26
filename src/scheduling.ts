@@ -1,7 +1,5 @@
 import {
   __PauseableSchedulerLike_isPaused as PauseableSchedulerLike_isPaused,
-  __PauseableSchedulerLike_pause as PauseableSchedulerLike_pause,
-  __PauseableSchedulerLike_resume as PauseableSchedulerLike_resume,
   __SchedulerLike_inContinuation as SchedulerLike_inContinuation,
   __SchedulerLike_maxYieldInterval as SchedulerLike_maxYieldInterval,
   __SchedulerLike_now as SchedulerLike_now,
@@ -12,13 +10,11 @@ import {
   __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run,
 } from "./__internal__/symbols.js";
 import { SideEffect1 } from "./functions.js";
-import { DisposableLike } from "./util.js";
+import { DisposableLike, PauseableLike } from "./util.js";
 
 export {
   SchedulerLike_yield,
   PauseableSchedulerLike_isPaused,
-  PauseableSchedulerLike_pause,
-  PauseableSchedulerLike_resume,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
   SchedulerLike_now,
@@ -99,21 +95,11 @@ export interface SchedulerLike {
  *
  * @noInheritDoc
  */
-export interface PauseableSchedulerLike extends SchedulerLike {
+export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
   /**
    * Boolean flag indicating if the scheduler is currently paused or not.
    */
   readonly [PauseableSchedulerLike_isPaused]: boolean;
-
-  /**
-   * Imperatively pause the scheduler.
-   */
-  [PauseableSchedulerLike_pause](): void;
-
-  /**
-   * Imperatively resume the scheduler.
-   */
-  [PauseableSchedulerLike_resume](): void;
 }
 
 /**

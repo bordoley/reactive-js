@@ -1,7 +1,5 @@
 import {
   __FlowableObservableLike_isPaused as FlowableObservableLike_isPaused,
-  __FlowableObservableLike_pause as FlowableObservableLike_pause,
-  __FlowableObservableLike_resume as FlowableObservableLike_resume,
   __InteractiveObservableLike_move as InteractiveObservableLike_move,
   __ObservableLike_isEnumerable as ObservableLike_isEnumerable,
   __ObservableLike_isRunnable as ObservableLike_isRunnable,
@@ -31,6 +29,7 @@ import {
   DispatcherLike,
   DisposableLike,
   ErrorSafeEventListenerLike,
+  PauseableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   ReplayableLike,
@@ -38,8 +37,6 @@ import {
 
 export {
   FlowableObservableLike_isPaused,
-  FlowableObservableLike_pause,
-  FlowableObservableLike_resume,
   InteractiveObservableLike_move,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -156,21 +153,12 @@ export interface PublisherLike<T = unknown>
  * @category Container
  */
 export interface FlowableObservableLike<T = unknown>
-  extends MulticastObservableLike<T> {
+  extends MulticastObservableLike<T>,
+    PauseableLike {
   /**
    * Reactive property indicating if the observable is paused or not.
    */
   readonly [FlowableObservableLike_isPaused]: MulticastObservableLike<boolean>;
-
-  /**
-   * Imperatively pause the observable.
-   */
-  [FlowableObservableLike_pause](): void;
-
-  /**
-   * Imperatively resume the observable.
-   */
-  [FlowableObservableLike_resume](): void;
 }
 
 /**

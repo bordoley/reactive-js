@@ -11,6 +11,8 @@ import {
   __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount,
   __EventSourceLike_addListener as EventSourceLike_addListener,
   __KeyedCollectionLike_get as KeyedCollectionLike_get,
+  __PauseableLike_pause as PauseableLike_pause,
+  __PauseableLike_resume as PauseableLike_resume,
   __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy,
   __QueueableLike_enqueue as QueueableLike_enqueue,
   __ReplayableLike_buffer as ReplayableLike_buffer,
@@ -35,6 +37,8 @@ export {
   EventPublisherLike_listenerCount,
   EventSourceLike_addListener,
   KeyedCollectionLike_get,
+  PauseableLike_pause,
+  PauseableLike_resume,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
   ReplayableLike_buffer,
@@ -193,4 +197,16 @@ export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
    * Communicates to the dispatcher that no more events will be enqueued.
    */
   [DispatcherLike_complete](): void;
+}
+
+export interface PauseableLike {
+  /**
+   * Imperatively pause the source.
+   */
+  [PauseableLike_pause](): void;
+
+  /**
+   * Imperatively resume the source.
+   */
+  [PauseableLike_resume](): void;
 }
