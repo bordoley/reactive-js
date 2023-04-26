@@ -37,9 +37,9 @@ import {
   WindowLocationStreamLike_goBack,
   WindowLocationStreamLike_replace,
   WindowLocationURI,
-  addScrollListener,
   windowLocation,
 } from "../web.js";
+import * as WebElement from "../web/Element.js";
 
 const WindowLocationContext =
   /*@__PURE__*/ createContext<WindowLocationStreamLike>(
@@ -209,7 +209,7 @@ export const useScroll = <TElement extends HTMLElement>(
       return;
     }
 
-    pipe(element, addScrollListener(eventListener));
+    pipe(element, WebElement.addScrollListener(eventListener));
   }, [element, eventListener]);
 
   return setElement as React.Ref<TElement>;

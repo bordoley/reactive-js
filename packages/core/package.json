@@ -59,6 +59,7 @@
     "./integrations/scheduler": "./integrations/scheduler.js",
     "./integrations/svelte": "./integrations/svelte.js",
     "./integrations/web": "./integrations/web.js",
+    "./integrations/web/Element": "./integrations/web/Element.js",
     "./keyed-containers": "./keyed-containers.js",
     "./keyed-containers/ReadonlyArray": "./keyed-containers/ReadonlyArray.js",
     "./keyed-containers/ReadonlyMap": "./keyed-containers/ReadonlyMap.js",

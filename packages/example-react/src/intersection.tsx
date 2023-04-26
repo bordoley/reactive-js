@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOMClient from "react-dom/client";
-import { intersectionWith } from "@reactive-js/core/integrations/web";
+import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import {
   Optional,
   incrementBy,
@@ -20,7 +20,7 @@ const IntersectionApp = () => {
     () =>
       pipeSome(
         endOfPageRef,
-        intersectionWith(document, { replay: 1 }),
+        WebElement.intersectionWith(document, { replay: 1 }),
         EventSource.pick("isIntersecting"),
         EventSource.keep(isTrue),
         EventSource.forEach(pipeLazy(incrementBy(10), updateCount)),

@@ -1,6 +1,6 @@
 import { Optional, pipeLazy, pipeSome } from "@reactive-js/core/functions";
 import React, { useEffect, useState } from "react";
-import { Rect, observeMeasure } from "@reactive-js/core/integrations/web";
+import { Rect } from "@reactive-js/core/integrations/web";
 import * as Observable from "@reactive-js/core/rx/Observable";
 import {
   useAnimation,
@@ -8,6 +8,8 @@ import {
 } from "@reactive-js/core/integrations/react";
 import { useAnimateEvent } from "@reactive-js/core/integrations/react/web";
 import * as EventSource from "@reactive-js/core/util/EventSource";
+import * as WebElement from "@reactive-js/core/integrations/web/Element";
+
 
 const Measure = () => {
   const [open, toggle] = useState(false);
@@ -16,7 +18,7 @@ const Measure = () => {
 
   const { width: boxWidth } = useObservable(
     () =>
-      pipeSome(container, observeMeasure(), Observable.throttle(50)) ??
+      pipeSome(container ,WebElement.observeMeasure(), Observable.throttle(50)) ??
       Observable.empty<Rect>(),
     [container],
   ) ?? { width: 0 };
