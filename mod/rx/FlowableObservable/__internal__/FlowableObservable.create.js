@@ -3,9 +3,9 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { bindMethod, compose, isFunction, none, pipe, returns, } from "../../../functions.js";
-import { FlowableObservableLike_isPaused, FlowableObservableLike_pause, FlowableObservableLike_resume, } from "../../../rx.js";
+import { FlowableObservableLike_isPaused, } from "../../../rx.js";
 import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin.js";
-import { EventListenerLike_notify, QueueableLike_enqueue, } from "../../../util.js";
+import { EventListenerLike_notify, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
@@ -26,10 +26,10 @@ const FlowableObservable_create = /*@__PURE__*/ (() => {
     }, props({
         [FlowableObservableLike_isPaused]: none,
     }), {
-        [FlowableObservableLike_pause]() {
+        [PauseableLike_pause]() {
             this[QueueableLike_enqueue](true);
         },
-        [FlowableObservableLike_resume]() {
+        [PauseableLike_resume]() {
             this[QueueableLike_enqueue](false);
         },
     }));

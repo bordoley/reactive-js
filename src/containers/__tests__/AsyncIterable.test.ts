@@ -6,10 +6,9 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import { error, pipe } from "../../functions.js";
-import { FlowableObservableLike_resume } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { DisposableLike_dispose } from "../../util.js";
+import { DisposableLike_dispose, PauseableLike_resume } from "../../util.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 
 testModule(
@@ -29,7 +28,7 @@ testModule(
           })(),
           AsyncIterable.flow(scheduler, { capacity: 1 }),
         );
-        stream[FlowableObservableLike_resume]();
+        stream[PauseableLike_resume]();
 
         const result = await pipe(
           stream,
@@ -56,7 +55,7 @@ testModule(
           })(),
           AsyncIterable.flow(scheduler),
         );
-        stream[FlowableObservableLike_resume]();
+        stream[PauseableLike_resume]();
 
         const result = await pipe(
           stream,
@@ -81,7 +80,7 @@ testModule(
           })(),
           AsyncIterable.flow(scheduler),
         );
-        stream[FlowableObservableLike_resume]();
+        stream[PauseableLike_resume]();
 
         const result = await pipe(
           stream,

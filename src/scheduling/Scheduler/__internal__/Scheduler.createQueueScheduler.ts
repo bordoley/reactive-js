@@ -54,8 +54,6 @@ import {
 import {
   PauseableSchedulerLike,
   PauseableSchedulerLike_isPaused,
-  PauseableSchedulerLike_pause,
-  PauseableSchedulerLike_resume,
   PrioritySchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -68,6 +66,8 @@ import {
 import {
   DisposableLike,
   DisposableLike_isDisposed,
+  PauseableLike_pause,
+  PauseableLike_resume,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
@@ -250,8 +250,8 @@ const Scheduler_createQueueScheduler: Function2<
           | typeof SchedulerLike_now
           | typeof PrioritySchedulerImplementationLike_shouldYield
           | typeof PrioritySchedulerImplementationLike_scheduleContinuation
-          | typeof PauseableSchedulerLike_pause
-          | typeof PauseableSchedulerLike_resume
+          | typeof PauseableLike_pause
+          | typeof PauseableLike_resume
         > &
           Mutable<TProperties>,
         host: SchedulerLike,
@@ -305,7 +305,7 @@ const Scheduler_createQueueScheduler: Function2<
             this[__QueueScheduler_hostScheduler][SchedulerLike_shouldYield]
           );
         },
-        [PauseableSchedulerLike_pause](
+        [PauseableLike_pause](
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike &
@@ -314,7 +314,7 @@ const Scheduler_createQueueScheduler: Function2<
           this[PauseableSchedulerLike_isPaused] = true;
           this[SerialDisposableLike_current] = Disposable_disposed;
         },
-        [PauseableSchedulerLike_resume](
+        [PauseableLike_resume](
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike &

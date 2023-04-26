@@ -29,8 +29,6 @@ import {
   CatchError,
   DecodeWithCharset,
   EncodeUtf8,
-  FlowableObservableLike_pause,
-  FlowableObservableLike_resume,
   FromReadonlyArray,
   Generate,
   ObservableLike,
@@ -51,6 +49,8 @@ import * as Scheduler from "../../scheduling/Scheduler.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  PauseableLike_pause,
+  PauseableLike_resume,
 } from "../../util.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
@@ -437,11 +437,11 @@ const flow = describe(
     );
 
     scheduler[SchedulerLike_schedule](() =>
-      generateStream[FlowableObservableLike_resume](),
+      generateStream[PauseableLike_resume](),
     );
 
     scheduler[SchedulerLike_schedule](
-      () => generateStream[FlowableObservableLike_pause](),
+      () => generateStream[PauseableLike_pause](),
 
       {
         delay: 2,
@@ -449,7 +449,7 @@ const flow = describe(
     );
 
     scheduler[SchedulerLike_schedule](
-      () => generateStream[FlowableObservableLike_resume](),
+      () => generateStream[PauseableLike_resume](),
       {
         delay: 4,
       },

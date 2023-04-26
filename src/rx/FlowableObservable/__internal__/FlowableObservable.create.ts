@@ -19,8 +19,6 @@ import {
 import {
   FlowableObservableLike,
   FlowableObservableLike_isPaused,
-  FlowableObservableLike_pause,
-  FlowableObservableLike_resume,
   MulticastObservableLike,
   ObservableLike,
 } from "../../../rx.js";
@@ -30,6 +28,8 @@ import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin.js
 import {
   DisposableLike,
   EventListenerLike_notify,
+  PauseableLike_pause,
+  PauseableLike_resume,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -62,8 +62,7 @@ const FlowableObservable_create: <T>(
         instance: TProperties &
           Pick<
             FlowableObservableLike<T>,
-            | typeof FlowableObservableLike_pause
-            | typeof FlowableObservableLike_resume
+            typeof PauseableLike_pause | typeof PauseableLike_resume
           >,
         op: ContainerOperator<ObservableLike, boolean, T>,
         scheduler: SchedulerLike,
@@ -113,12 +112,12 @@ const FlowableObservable_create: <T>(
         [FlowableObservableLike_isPaused]: none,
       }),
       {
-        [FlowableObservableLike_pause](
+        [PauseableLike_pause](
           this: FlowableObservableLike<T> & StreamLike<boolean, T>,
         ) {
           this[QueueableLike_enqueue](true);
         },
-        [FlowableObservableLike_resume](
+        [PauseableLike_resume](
           this: FlowableObservableLike<T> & StreamLike<boolean, T>,
         ) {
           this[QueueableLike_enqueue](false);

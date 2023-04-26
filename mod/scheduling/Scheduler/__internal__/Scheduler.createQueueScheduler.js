@@ -9,8 +9,8 @@ import { QueueLike_dequeue, QueueLike_head, SerialDisposableLike_current, } from
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, unsafeCast, } from "../../../functions.js";
-import { PauseableSchedulerLike_isPaused, PauseableSchedulerLike_pause, PauseableSchedulerLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
+import { PauseableSchedulerLike_isPaused, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../../scheduling.js";
+import { DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
@@ -127,11 +127,11 @@ const Scheduler_createQueueScheduler = /*@__PURE__*/ (() => {
                 (isSome(next) ? priorityShouldYield(this, next) : false) ||
                 this[__QueueScheduler_hostScheduler][SchedulerLike_shouldYield]);
         },
-        [PauseableSchedulerLike_pause]() {
+        [PauseableLike_pause]() {
             this[PauseableSchedulerLike_isPaused] = true;
             this[SerialDisposableLike_current] = Disposable_disposed;
         },
-        [PauseableSchedulerLike_resume]() {
+        [PauseableLike_resume]() {
             this[PauseableSchedulerLike_isPaused] = false;
             scheduleOnHost(this);
         },
