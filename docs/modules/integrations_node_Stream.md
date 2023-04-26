@@ -33,7 +33,7 @@ ___
 
 ### sinkInto
 
-▸ **sinkInto**(`factory`): (`flowable`: [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`Uint8Array`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\>
+▸ **sinkInto**(`factory`): [`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`Uint8Array`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\>\>
 
 #### Parameters
 
@@ -43,16 +43,4 @@ ___
 
 #### Returns
 
-`fn`
-
-▸ (`flowable`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `flowable` | [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`Uint8Array`\> |
-
-##### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\>
+[`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`Uint8Array`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\>\>

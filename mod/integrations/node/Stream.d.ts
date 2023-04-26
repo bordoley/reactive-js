@@ -8,4 +8,4 @@ export declare const flow: (scheduler: SchedulerLike, options?: {
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
 }) => Function1<Factory<Readable> | Readable, PauseableObservableLike<Uint8Array> & DisposableLike>;
-export declare const sinkInto: (factory: Writable | Factory<Writable>) => (flowable: PauseableObservableLike<Uint8Array>) => ObservableLike<void>;
+export declare const sinkInto: (factory: Writable | Factory<Writable>) => Function1<PauseableObservableLike<Uint8Array>, ObservableLike<void>>;

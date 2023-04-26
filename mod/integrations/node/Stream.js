@@ -50,7 +50,7 @@ export const flow = (scheduler, options) => factory => PauseableObservable_creat
     readable.on("data", onData);
     readable.on("end", onEnd);
 }), scheduler, options);
-export const sinkInto = (factory) => (flowable) => Observable.create(observer => {
+export const sinkInto = (factory) => flowable => Observable.create(observer => {
     const writable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(observer))
         : pipe(factory, addDisposable(observer));

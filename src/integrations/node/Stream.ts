@@ -125,8 +125,10 @@ export const flow =
     );
 
 export const sinkInto =
-  (factory: Writable | Factory<Writable>) =>
-  (flowable: PauseableObservableLike<Uint8Array>): ObservableLike<void> =>
+  (
+    factory: Writable | Factory<Writable>,
+  ): Function1<PauseableObservableLike<Uint8Array>, ObservableLike<void>> =>
+  flowable =>
     Observable.create(observer => {
       const writable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(observer))
