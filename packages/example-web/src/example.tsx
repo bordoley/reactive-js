@@ -31,9 +31,7 @@ import {
 } from "@reactive-js/core/functions";
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
-import {
-  ObservableLike,
-} from "@reactive-js/core/rx";
+import { ObservableLike } from "@reactive-js/core/rx";
 import {
   QueueableLike_enqueue,
   KeyedCollectionLike_get,
