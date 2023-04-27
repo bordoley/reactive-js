@@ -7,9 +7,16 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import { Optional, newInstance, pipe, returns } from "../../functions.js";
+import {
+  Optional,
+  bindMethod,
+  newInstance,
+  pipe,
+  returns,
+} from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import * as Observable from "../../rx/Observable.js";
+import * as PauseableObservable from "../../rx/PauseableObservable.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
 import { DisposableLike_dispose, PauseableLike_resume } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
@@ -36,9 +43,11 @@ testModule(
         });
 
         await pipe(
-          [encoder.encode("abc"), encoder.encode("defg")],
+          ["abc", "defg", "xyz"],
           ReadonlyArray.flow(scheduler),
           Disposable.addTo(scheduler),
+          PauseableObservable.keep(x => x !== "xyz"),
+          PauseableObservable.map(bindMethod(encoder, "encode")),
           NodeStream.sinkInto(writable),
           Observable.lastAsync(scheduler),
         );

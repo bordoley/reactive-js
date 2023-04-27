@@ -447,7 +447,12 @@ export interface ExhaustMap<C extends ContainerLike> {
  * @category TypeClass
  */
 export interface FirstAsync<C extends ContainerLike> {
+  /**
+   *
+   * @category Transform
+   */
   firstAsync<T>(): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+
   /**
    *
    * @category Transform
