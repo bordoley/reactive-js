@@ -1,7 +1,7 @@
 import { ReadonlyArrayLike } from "../../../containers.js";
 import { pipe } from "../../../functions.js";
-import { EnumerateAsync } from "../../../rx.js";
-import Enumerable_enumerateAsync from "../../../rx/Enumerable/__internal__/Enumerable.enumerateAsync.js";
+import { ToInteractiveObservable } from "../../../rx.js";
+import Enumerable_toInteractiveObservable from "../../../rx/Enumerable/__internal__/Enumerable.toInteractiveObservable.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   QueueableLike,
@@ -9,14 +9,14 @@ import {
 } from "../../../util.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray.toObservable.js";
 
-const ReadonlyArray_enumerateAsync: EnumerateAsync<
+const ReadonlyArray_toInteractiveObservable: ToInteractiveObservable<
   ReadonlyArrayLike,
   {
     readonly delay?: number;
     readonly start?: number;
     readonly count?: number;
   }
->["enumerateAsync"] =
+>["toInteractiveObservable"] =
   <T>(
     scheduler: SchedulerLike,
     options?: {
@@ -37,7 +37,7 @@ const ReadonlyArray_enumerateAsync: EnumerateAsync<
           readonly start: number;
         },
       ),
-      Enumerable_enumerateAsync(scheduler, options),
+      Enumerable_toInteractiveObservable(scheduler, options),
     );
 
-export default ReadonlyArray_enumerateAsync;
+export default ReadonlyArray_toInteractiveObservable;

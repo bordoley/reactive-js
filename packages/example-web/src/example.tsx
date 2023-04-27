@@ -289,12 +289,12 @@ const RxComponent = createComponent(
       const uri = __await(windowLocationStream);
 
       const scheduler = __currentScheduler();
-      const enumerateAsync = __memo(
-        Enumerable.enumerateAsync,
+      const toInteractiveObservable = __memo(
+        Enumerable.toInteractiveObservable,
         scheduler,
         delayOption,
       );
-      const enumerator = __using(enumerateAsync, enumerable);
+      const enumerator = __using(toInteractiveObservable, enumerable);
       const move: SideEffect = __bindMethod(
         enumerator,
         InteractiveObservableLike_move,

@@ -7,9 +7,9 @@ import Optional_toObservable from "../../../containers/Optional/__internal__/Opt
 import { bindMethod, invoke, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
-  EnumerateAsync,
   ObservableLike,
   ObservableLike_observe,
+  ToInteractiveObservable,
 } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
@@ -25,10 +25,10 @@ import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Observable_takeWhile from "../../Observable/__internal__/Observable.takeWhile.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
-const Enumerable_enumerateAsync: EnumerateAsync<
+const Enumerable_toInteractiveObservable: ToInteractiveObservable<
   EnumerableLike,
   { readonly delay?: number }
->["enumerateAsync"] = <T>(
+>["toInteractiveObservable"] = <T>(
   scheduler: SchedulerLike,
   options?: {
     readonly replay?: number;
@@ -75,4 +75,4 @@ const Enumerable_enumerateAsync: EnumerateAsync<
     );
 };
 
-export default Enumerable_enumerateAsync;
+export default Enumerable_toInteractiveObservable;

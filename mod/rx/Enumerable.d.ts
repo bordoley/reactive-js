@@ -1,5 +1,5 @@
 import { Buffer, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike_T, ContainerLike_type, Contains, DistinctUntilChanged, Empty, EndWith, Enumerate, EnumeratorLike, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, NoneSatisfy, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { BackpressureStrategy, CatchError, DecodeWithCharset, Defer, EncodeUtf8, EnumerableLike, EnumerateAsync, FirstAsync, Flow, LastAsync, Retry, ScanLast, ThrowIfEmpty, Throws, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
+import { BackpressureStrategy, CatchError, DecodeWithCharset, Defer, EncodeUtf8, EnumerableLike, FirstAsync, Flow, LastAsync, Retry, ScanLast, ThrowIfEmpty, Throws, ToEnumerable, ToInteractiveObservable, ToObservable, ToRunnable } from "../rx.js";
 import { DisposableLike } from "../util.js";
 export declare const backpressureStrategy: BackpressureStrategy<EnumerableLike>["backpressureStrategy"];
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
@@ -25,9 +25,6 @@ interface EnumerableEnumerator<T = unknown> extends EnumeratorLike<T> {
     readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]> & DisposableLike;
 }
 export declare const enumerate: Enumerate<EnumerableLike, EnumerableEnumerator>["enumerate"];
-export declare const enumerateAsync: EnumerateAsync<EnumerableLike, {
-    delay?: number;
-}>["enumerateAsync"];
 export declare const everySatisfy: EverySatisfy<EnumerableLike>["everySatisfy"];
 export declare const first: First<EnumerableLike>["first"];
 export declare const firstAsync: FirstAsync<EnumerableLike>["firstAsync"];
@@ -67,6 +64,9 @@ export declare const takeWhile: TakeWhile<EnumerableLike>["takeWhile"];
 export declare const throws: Throws<EnumerableLike>["throws"];
 export declare const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"];
 export declare const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"];
+export declare const toInteractiveObservable: ToInteractiveObservable<EnumerableLike, {
+    delay?: number;
+}>["toInteractiveObservable"];
 export declare const toObservable: ToObservable<EnumerableLike>["toObservable"];
 export declare const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
 export declare const toRunnable: ToRunnable<EnumerableLike>["toRunnable"];

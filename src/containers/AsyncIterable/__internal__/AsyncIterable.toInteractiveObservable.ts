@@ -1,6 +1,6 @@
 import { AsyncIterableLike } from "../../../containers.js";
 import { bindMethod, pipe } from "../../../functions.js";
-import { EnumerateAsync, ObservableLike } from "../../../rx.js";
+import { ObservableLike, ToInteractiveObservable } from "../../../rx.js";
 import InteractiveObservable_create from "../../../rx/InteractiveObservableLike/__internal__/InteractiveObservable.create.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
@@ -17,7 +17,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Promiseable_toObservable from "../../Promiseable/__internal__/Promiseable.toObservable.js";
 
-const AsyncIterable_enumerateAsync: EnumerateAsync<AsyncIterableLike>["enumerateAsync"] =
+const AsyncIterable_toInteractiveObservable: ToInteractiveObservable<AsyncIterableLike>["toInteractiveObservable"] =
 
     <T>(
       scheduler: SchedulerLike,
@@ -58,4 +58,4 @@ const AsyncIterable_enumerateAsync: EnumerateAsync<AsyncIterableLike>["enumerate
         options,
       );
 
-export default AsyncIterable_enumerateAsync;
+export default AsyncIterable_toInteractiveObservable;

@@ -1,7 +1,7 @@
 import { IterableLike } from "../../../containers.js";
 import { compose } from "../../../functions.js";
-import { EnumerateAsync } from "../../../rx.js";
-import Enumerable_enumerateAsync from "../../../rx/Enumerable/__internal__/Enumerable.enumerateAsync.js";
+import { ToInteractiveObservable } from "../../../rx.js";
+import Enumerable_toInteractiveObservable from "../../../rx/Enumerable/__internal__/Enumerable.toInteractiveObservable.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   QueueableLike,
@@ -9,10 +9,10 @@ import {
 } from "../../../util.js";
 import Iterable_toObservable from "./Iterable.toObservable.js";
 
-const Iterable_enumerateAsync: EnumerateAsync<
+const Iterable_toInteractiveObservable: ToInteractiveObservable<
   IterableLike,
   { readonly delay?: number }
->["enumerateAsync"] = <T>(
+>["toInteractiveObservable"] = <T>(
   scheduler: SchedulerLike,
   options?: {
     readonly replay?: number;
@@ -23,7 +23,7 @@ const Iterable_enumerateAsync: EnumerateAsync<
 ) =>
   compose(
     Iterable_toObservable<T>(),
-    Enumerable_enumerateAsync(scheduler, options),
+    Enumerable_toInteractiveObservable(scheduler, options),
   );
 
-export default Iterable_enumerateAsync;
+export default Iterable_toInteractiveObservable;

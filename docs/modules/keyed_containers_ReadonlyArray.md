@@ -33,13 +33,13 @@
 
 - [entries](keyed_containers_ReadonlyArray.md#entries)
 - [enumerate](keyed_containers_ReadonlyArray.md#enumerate)
-- [enumerateAsync](keyed_containers_ReadonlyArray.md#enumerateasync)
 - [everySatisfy](keyed_containers_ReadonlyArray.md#everysatisfy)
 - [first](keyed_containers_ReadonlyArray.md#first)
 - [flow](keyed_containers_ReadonlyArray.md#flow)
 - [last](keyed_containers_ReadonlyArray.md#last)
 - [someSatisfy](keyed_containers_ReadonlyArray.md#somesatisfy)
 - [toEnumerable](keyed_containers_ReadonlyArray.md#toenumerable)
+- [toInteractiveObservable](keyed_containers_ReadonlyArray.md#tointeractiveobservable)
 - [toIterable](keyed_containers_ReadonlyArray.md#toiterable)
 - [toObservable](keyed_containers_ReadonlyArray.md#toobservable)
 - [toReadonlyArray](keyed_containers_ReadonlyArray.md#toreadonlyarray)
@@ -468,29 +468,6 @@ ___
 
 ___
 
-### enumerateAsync
-
-▸ **enumerateAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`InteractiveObservableLike`](../interfaces/rx.InteractiveObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-| `options?` | { `count?`: `number` ; `delay?`: `number` ; `start?`: `number`  } & { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `replay?`: `number`  } |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`InteractiveObservableLike`](../interfaces/rx.InteractiveObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
-
-___
-
 ### everySatisfy
 
 ▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, `boolean`\>
@@ -615,6 +592,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+
+___
+
+### toInteractiveObservable
+
+▸ **toInteractiveObservable**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`InteractiveObservableLike`](../interfaces/rx.InteractiveObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options?` | { `count?`: `number` ; `delay?`: `number` ; `start?`: `number`  } & { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `replay?`: `number`  } |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyArrayLike`](../interfaces/keyed_containers.ReadonlyArrayLike.md)<`T`\>, [`InteractiveObservableLike`](../interfaces/rx.InteractiveObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 
