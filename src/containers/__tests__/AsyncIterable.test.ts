@@ -34,7 +34,7 @@ testModule(
           stream,
           Observable.takeFirst({ count: 10 }),
           Observable.buffer(),
-          Observable.lastAsync({ scheduler }),
+          Observable.lastAsync(scheduler),
         );
         scheduler[DisposableLike_dispose]();
 
@@ -60,7 +60,7 @@ testModule(
         const result = await pipe(
           stream,
           Observable.buffer(),
-          Observable.lastAsync({ scheduler }),
+          Observable.lastAsync(scheduler),
         );
 
         pipe(result ?? [], expectArrayEquals([1, 2, 3]));
@@ -85,7 +85,7 @@ testModule(
         const result = await pipe(
           stream,
           Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
-          Observable.lastAsync({ scheduler }),
+          Observable.lastAsync(scheduler),
         );
 
         pipe(result, expectEquals(e as unknown));
@@ -97,49 +97,64 @@ testModule(
   describe(
     "toObservable",
     testAsync("infinite immediately resolving iterable", async () => {
-      const result = await pipe(
-        (async function* foo() {
-          let i = 0;
-          while (true) {
-            yield i++;
-          }
-        })(),
-        AsyncIterable.toObservable(),
-        Observable.takeFirst({ count: 10 }),
-        Observable.buffer(),
-        Observable.lastAsync({ capacity: 5 }),
-      );
+      const scheduler = Scheduler.createHostScheduler();
+      try {
+        const result = await pipe(
+          (async function* foo() {
+            let i = 0;
+            while (true) {
+              yield i++;
+            }
+          })(),
+          AsyncIterable.toObservable(),
+          Observable.takeFirst({ count: 10 }),
+          Observable.buffer(),
+          Observable.lastAsync(scheduler, { capacity: 5 }),
+        );
 
-      pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+        pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+      } finally {
+        scheduler[DisposableLike_dispose]();
+      }
     }),
     testAsync("iterable that completes", async () => {
-      const result = await pipe(
-        (async function* foo() {
-          yield 1;
-          yield 2;
-          yield 3;
-        })(),
-        AsyncIterable.toObservable(),
-        Observable.buffer(),
-        Observable.lastAsync({ capacity: 1 }),
-      );
+      const scheduler = Scheduler.createHostScheduler();
+      try {
+        const result = await pipe(
+          (async function* foo() {
+            yield 1;
+            yield 2;
+            yield 3;
+          })(),
+          AsyncIterable.toObservable(),
+          Observable.buffer(),
+          Observable.lastAsync(scheduler, { capacity: 1 }),
+        );
 
-      pipe(result ?? [], expectArrayEquals([1, 2, 3]));
+        pipe(result ?? [], expectArrayEquals([1, 2, 3]));
+      } finally {
+        scheduler[DisposableLike_dispose]();
+      }
     }),
 
     testAsync("iterable that throws", async () => {
-      const e = error();
+      const scheduler = Scheduler.createHostScheduler();
+      try {
+        const e = error();
 
-      const result = await pipe(
-        (async function* foo() {
-          throw e;
-        })(),
-        AsyncIterable.toObservable(),
-        Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
-        Observable.lastAsync({ capacity: 1 }),
-      );
+        const result = await pipe(
+          (async function* foo() {
+            throw e;
+          })(),
+          AsyncIterable.toObservable(),
+          Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
+          Observable.lastAsync(scheduler, { capacity: 1 }),
+        );
 
-      pipe(result, expectEquals(e as unknown));
+        pipe(result, expectEquals(e as unknown));
+      } finally {
+        scheduler[DisposableLike_dispose]();
+      }
     }),
   ),
 );

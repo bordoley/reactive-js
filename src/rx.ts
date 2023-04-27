@@ -447,15 +447,18 @@ export interface ExhaustMap<C extends ContainerLike> {
  * @category TypeClass
  */
 export interface FirstAsync<C extends ContainerLike> {
+  firstAsync<T>(): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
   /**
    *
    * @category Transform
    */
-  firstAsync<T>(options?: {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-  }): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+  firstAsync<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      capacity?: number;
+      backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
 }
 
 /**
@@ -784,11 +787,19 @@ export interface LastAsync<C extends ContainerLike> {
    *
    * @category Transform
    */
-  lastAsync<T>(options?: {
-    scheduler?: SchedulerLike | Factory<SchedulerLike>;
-    capacity?: number;
-    backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-  }): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+  lastAsync<T>(): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+
+  /**
+   *
+   * @category Transform
+   */
+  lastAsync<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      capacity?: number;
+      backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
 }
 
 /**

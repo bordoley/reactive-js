@@ -40,7 +40,7 @@ testModule(
           ReadonlyArray.flow(scheduler),
           Disposable.addTo(scheduler),
           NodeStream.sinkInto(writable),
-          Observable.lastAsync({ scheduler }),
+          Observable.lastAsync(scheduler),
         );
 
         pipe(writable.destroyed, expectEquals(true));
@@ -70,7 +70,7 @@ testModule(
           ReadonlyArray.flow(scheduler),
           Disposable.addTo(scheduler),
           NodeStream.sinkInto(writable),
-          Observable.lastAsync({ scheduler }),
+          Observable.lastAsync(scheduler),
         );
 
         await expectPromiseToThrow(promise);
@@ -107,7 +107,7 @@ testModule(
           ReadonlyArray.flow(scheduler),
           Disposable.addTo(scheduler),
           NodeStream.sinkInto(compressionPipeline),
-          Observable.lastAsync({ scheduler }),
+          Observable.lastAsync(scheduler),
         );
 
         pipe(writable.destroyed, expectEquals(true));
@@ -143,7 +143,7 @@ testModule(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
-          Observable.lastAsync({ scheduler }),
+          Observable.lastAsync(scheduler),
         );
         pipe(acc, expectEquals<Optional<string>>("abcdefg"));
       } finally {
@@ -175,7 +175,7 @@ testModule(
             (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
             returns(""),
           ),
-          Observable.lastAsync({ scheduler }),
+          Observable.lastAsync(scheduler),
           expectPromiseToThrow,
         );
       } finally {
