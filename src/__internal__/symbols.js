@@ -70,8 +70,8 @@ export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __EventSourceLike_addListener = /*@__PURE__*/ symbol(
-  "EventSourceLike_addListener",
+export const __EventEmitterLike_addListener = /*@__PURE__*/ symbol(
+  "EventEmitterLike_addListener",
 );
 
 /** @type {unique symbol} */
@@ -350,6 +350,11 @@ export const __ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol(
   "ObserverMixin_isCompleted",
+);
+
+/** @type {unique symbol} */
+export const __ObserverMixin_queuePublisher = /*@__PURE__*/ symbol(
+  "ObserverMixin_queuePublisher",
 );
 
 /** @type {unique symbol} */

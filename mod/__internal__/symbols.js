@@ -32,7 +32,7 @@ export const __EventListenerLike_notify = /*@__PURE__*/ symbol("EventListenerLik
 /** @type {unique symbol} */
 export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol("EventPublisherLike_listenerCount");
 /** @type {unique symbol} */
-export const __EventSourceLike_addListener = /*@__PURE__*/ symbol("EventSourceLike_addListener");
+export const __EventEmitterLike_addListener = /*@__PURE__*/ symbol("EventEmitterLike_addListener");
 /** @type {unique symbol} */
 export const __InteractiveObservableLike_move = /*@__PURE__*/ symbol("InteractiveObservableLike_move");
 /** @type {unique symbol} */
@@ -153,6 +153,8 @@ export const __IndexedQueueMixin_values = /*@__PURE__*/ symbol("IndexedQueueMixi
 export const __ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol("ObserverMixin_dispatchSubscription");
 /** @type {unique symbol} */
 export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol("ObserverMixin_isCompleted");
+/** @type {unique symbol} */
+export const __ObserverMixin_queuePublisher = /*@__PURE__*/ symbol("ObserverMixin_queuePublisher");
 /** @type {unique symbol} */
 export const __SchedulerMixin_currentContinuation = /*@__PURE__*/ symbol("SchedulerMixin_currentContinuation");
 /** @type {unique symbol} */

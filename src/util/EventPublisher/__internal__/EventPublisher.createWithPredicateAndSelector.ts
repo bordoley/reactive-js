@@ -34,12 +34,12 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventEmitterLike_addListener,
   EventListenerLike,
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventPublisherLike_listenerCount,
   EventSourceLike,
-  EventSourceLike_addListener,
   KeyedCollectionLike_get,
   QueueableLike_enqueue,
   ReplayableLike_buffer,
@@ -75,7 +75,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
       function EventPublisher(
         instance: Pick<
           EventKeepMapPublisherLike<T, TOut>,
-          | typeof EventSourceLike_addListener
+          | typeof EventEmitterLike_addListener
           | typeof EventListenerLike_isErrorSafe
           | typeof EventListenerLike_notify
           | typeof EventPublisherLike_listenerCount
@@ -155,7 +155,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
           }
         },
 
-        [EventSourceLike_addListener](
+        [EventEmitterLike_addListener](
           this: TProperties & EventKeepMapPublisherLike<T, TOut>,
           listener: EventListenerLike<TOut>,
         ) {

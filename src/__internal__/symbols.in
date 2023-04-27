@@ -13,7 +13,7 @@ EnumeratorLike_hasCurrent
 EventListenerLike_isErrorSafe
 EventListenerLike_notify
 EventPublisherLike_listenerCount
-EventSourceLike_addListener
+EventEmitterLike_addListener
 InteractiveObservableLike_move
 KeyedCollectionLike_get
 KeyedContainerLike_TKey
@@ -74,6 +74,7 @@ IndexedQueueMixin_capacityMask
 IndexedQueueMixin_values
 ObserverMixin_dispatchSubscription
 ObserverMixin_isCompleted
+ObserverMixin_queuePublisher
 SchedulerMixin_currentContinuation
 SchedulerMixin_startTime
 SchedulerMixin_yieldRequested

@@ -22,9 +22,9 @@ import { ReadonlyObjectMapLike } from "../../keyed-containers.js";
 import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import {
   DisposableLike_dispose,
+  EventEmitterLike_addListener,
   EventListenerLike,
   EventSourceLike,
-  EventSourceLike_addListener,
   QueueableLike_enqueue,
 } from "../../util.js";
 import * as EventListener from "../../util/EventListener.js";
@@ -163,7 +163,7 @@ export const useAnimate = <TElement extends HTMLElement, T = number>(
       }
     });
 
-    animation[EventSourceLike_addListener](listener);
+    animation[EventEmitterLike_addListener](listener);
 
     return bindMethod(listener, DisposableLike_dispose);
   }, [animation, selectorMemoized, ref]);

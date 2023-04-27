@@ -3,8 +3,8 @@ import { ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import {
   DispatcherLike_complete,
+  EventEmitterLike_addListener,
   EventSourceLike,
-  EventSourceLike_addListener,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
@@ -21,7 +21,7 @@ const EventSource_toObservable: ToObservable<EventSourceLike>["toObservable"] =
         Disposable_addTo(observer),
       );
 
-      eventSource[EventSourceLike_addListener](listener);
+      eventSource[EventEmitterLike_addListener](listener);
     });
 
 export default EventSource_toObservable;

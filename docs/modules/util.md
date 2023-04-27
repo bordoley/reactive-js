@@ -11,6 +11,7 @@
 - [DispatcherLike](../interfaces/util.DispatcherLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
 - [ErrorSafeEventListenerLike](../interfaces/util.ErrorSafeEventListenerLike.md)
+- [EventEmitterLike](../interfaces/util.EventEmitterLike.md)
 - [EventListenerLike](../interfaces/util.EventListenerLike.md)
 - [EventPublisherLike](../interfaces/util.EventPublisherLike.md)
 - [EventSourceLike](../interfaces/util.EventSourceLike.md)

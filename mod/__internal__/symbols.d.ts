@@ -29,7 +29,7 @@ export const __EventListenerLike_notify: unique symbol;
 /** @type {unique symbol} */
 export const __EventPublisherLike_listenerCount: unique symbol;
 /** @type {unique symbol} */
-export const __EventSourceLike_addListener: unique symbol;
+export const __EventEmitterLike_addListener: unique symbol;
 /** @type {unique symbol} */
 export const __InteractiveObservableLike_move: unique symbol;
 /** @type {unique symbol} */
@@ -146,6 +146,8 @@ export const __IndexedQueueMixin_values: unique symbol;
 export const __ObserverMixin_dispatchSubscription: unique symbol;
 /** @type {unique symbol} */
 export const __ObserverMixin_isCompleted: unique symbol;
+/** @type {unique symbol} */
+export const __ObserverMixin_queuePublisher: unique symbol;
 /** @type {unique symbol} */
 export const __SchedulerMixin_currentContinuation: unique symbol;
 /** @type {unique symbol} */

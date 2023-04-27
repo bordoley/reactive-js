@@ -28,7 +28,7 @@ export declare const __EventListenerLike_notify: unique symbol;
 
 export declare const __EventPublisherLike_listenerCount: unique symbol;
 
-export declare const __EventSourceLike_addListener: unique symbol;
+export declare const __EventEmitterLike_addListener: unique symbol;
 
 export declare const __InteractiveObservableLike_move: unique symbol;
 
@@ -145,6 +145,8 @@ export declare const __IndexedQueueMixin_values: unique symbol;
 export declare const __ObserverMixin_dispatchSubscription: unique symbol;
 
 export declare const __ObserverMixin_isCompleted: unique symbol;
+
+export declare const __ObserverMixin_queuePublisher: unique symbol;
 
 export declare const __SchedulerMixin_currentContinuation: unique symbol;
 

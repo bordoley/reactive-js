@@ -17,6 +17,8 @@ be dispatched from any execution constext.
 
 - [`QueueableLike`](util.QueueableLike.md)<`T`\>
 
+- [`EventEmitterLike`](util.EventEmitterLike.md)<``"wait"`` \| ``"drain"`` \| ``"complete"``\>
+
   ↳ **`DispatcherLike`**
 
   ↳↳ [`ObserverLike`](rx.ObserverLike.md)

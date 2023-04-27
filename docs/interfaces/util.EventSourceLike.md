@@ -12,6 +12,8 @@
 
 ## Hierarchy
 
+- [`EventEmitterLike`](util.EventEmitterLike.md)<`T`\>
+
 - [`ReplayableLike`](util.ReplayableLike.md)<`T`\>
 
 - [`ContainerLike`](containers.ContainerLike.md)
@@ -26,10 +28,6 @@
 
 - [[\_\_\_ContainerLike\_type]](util.EventSourceLike.md#[___containerlike_type])
 
-### Methods
-
-- [[\_\_\_EventSourceLike\_addListener]](util.EventSourceLike.md#[___eventsourcelike_addlistener])
-
 ## Properties
 
 ### [\_\_\_ContainerLike\_type]
@@ -39,19 +37,3 @@
 #### Overrides
 
 [ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
-
-## Methods
-
-### [\_\_\_EventSourceLike\_addListener]
-
-▸ **[___EventSourceLike_addListener]**(`listener`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `listener` | [`EventListenerLike`](util.EventListenerLike.md)<`T`\> |
-
-#### Returns
-
-`void`

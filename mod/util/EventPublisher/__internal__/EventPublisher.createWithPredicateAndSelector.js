@@ -7,7 +7,7 @@ import { __EventPublisher_listeners } from "../../../__internal__/symbols.js";
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { error, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
-import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventSourceLike_addListener, KeyedCollectionLike_get, QueueableLike_enqueue, ReplayableLike_buffer, } from "../../../util.js";
+import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EventEmitterLike_addListener, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, KeyedCollectionLike_get, QueueableLike_enqueue, ReplayableLike_buffer, } from "../../../util.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
@@ -57,7 +57,7 @@ const EventPublisher_createWithPredicateAndSelector = /*@__PURE__*/ (() => {
                 }
             }
         },
-        [EventSourceLike_addListener](listener) {
+        [EventEmitterLike_addListener](listener) {
             if (!this[DisposableLike_isDisposed]) {
                 const listeners = this[__EventPublisher_listeners];
                 listeners.add(listener);

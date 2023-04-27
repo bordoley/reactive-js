@@ -1,7 +1,7 @@
-import { __BufferLike_capacity as BufferLike_capacity, __CollectionLike_count as CollectionLike_count, __DispatcherLike_complete as DispatcherLike_complete, __DisposableLike_add as DisposableLike_add, __DisposableLike_dispose as DisposableLike_dispose, __DisposableLike_error as DisposableLike_error, __DisposableLike_isDisposed as DisposableLike_isDisposed, __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe, __EventListenerLike_notify as EventListenerLike_notify, __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount, __EventSourceLike_addListener as EventSourceLike_addListener, __KeyedCollectionLike_get as KeyedCollectionLike_get, __PauseableLike_isPaused as PauseableLike_isPaused, __PauseableLike_pause as PauseableLike_pause, __PauseableLike_resume as PauseableLike_resume, __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy, __QueueableLike_enqueue as QueueableLike_enqueue, __ReplayableLike_buffer as ReplayableLike_buffer } from "./__internal__/symbols.js";
+import { __BufferLike_capacity as BufferLike_capacity, __CollectionLike_count as CollectionLike_count, __DispatcherLike_complete as DispatcherLike_complete, __DisposableLike_add as DisposableLike_add, __DisposableLike_dispose as DisposableLike_dispose, __DisposableLike_error as DisposableLike_error, __DisposableLike_isDisposed as DisposableLike_isDisposed, __EventEmitterLike_addListener as EventEmitterLike_addListener, __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe, __EventListenerLike_notify as EventListenerLike_notify, __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount, __KeyedCollectionLike_get as KeyedCollectionLike_get, __PauseableLike_isPaused as PauseableLike_isPaused, __PauseableLike_pause as PauseableLike_pause, __PauseableLike_resume as PauseableLike_resume, __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy, __QueueableLike_enqueue as QueueableLike_enqueue, __ReplayableLike_buffer as ReplayableLike_buffer } from "./__internal__/symbols.js";
 import { ContainerLike, ContainerLike_T, ContainerLike_type } from "./containers.js";
 import { Optional, SideEffect1 } from "./functions.js";
-export { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventSourceLike_addListener, KeyedCollectionLike_get, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_backpressureStrategy, QueueableLike_enqueue, ReplayableLike_buffer, };
+export { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventEmitterLike_addListener, KeyedCollectionLike_get, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_backpressureStrategy, QueueableLike_enqueue, ReplayableLike_buffer, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -99,12 +99,14 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
 export interface ErrorSafeEventListenerLike<T = unknown> extends EventListenerLike<T> {
     readonly [EventListenerLike_isErrorSafe]: true;
 }
+export interface EventEmitterLike<T = unknown> {
+    [EventEmitterLike_addListener](listener: EventListenerLike<T>): void;
+}
 /**
  * @noInheritDoc
  */
-export interface EventSourceLike<T = unknown> extends ReplayableLike<T>, ContainerLike {
+export interface EventSourceLike<T = unknown> extends EventEmitterLike<T>, ReplayableLike<T>, ContainerLike {
     readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
-    [EventSourceLike_addListener](listener: EventListenerLike<T>): void;
 }
 /**
  * @noInheritDoc
@@ -118,7 +120,7 @@ export interface EventPublisherLike<T = unknown> extends EventSourceLike<T>, Err
  *
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
+export interface DispatcherLike<T = unknown> extends QueueableLike<T>, EventEmitterLike<"wait" | "drain" | "complete"> {
     /**
      * Communicates to the dispatcher that no more events will be enqueued.
      */

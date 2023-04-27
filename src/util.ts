@@ -6,10 +6,10 @@ import {
   __DisposableLike_dispose as DisposableLike_dispose,
   __DisposableLike_error as DisposableLike_error,
   __DisposableLike_isDisposed as DisposableLike_isDisposed,
+  __EventEmitterLike_addListener as EventEmitterLike_addListener,
   __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe,
   __EventListenerLike_notify as EventListenerLike_notify,
   __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount,
-  __EventSourceLike_addListener as EventSourceLike_addListener,
   __KeyedCollectionLike_get as KeyedCollectionLike_get,
   __PauseableLike_isPaused as PauseableLike_isPaused,
   __PauseableLike_pause as PauseableLike_pause,
@@ -36,7 +36,7 @@ export {
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventPublisherLike_listenerCount,
-  EventSourceLike_addListener,
+  EventEmitterLike_addListener,
   KeyedCollectionLike_get,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -168,15 +168,18 @@ export interface ErrorSafeEventListenerLike<T = unknown>
   readonly [EventListenerLike_isErrorSafe]: true;
 }
 
+export interface EventEmitterLike<T = unknown> {
+  [EventEmitterLike_addListener](listener: EventListenerLike<T>): void;
+}
+
 /**
  * @noInheritDoc
  */
 export interface EventSourceLike<T = unknown>
-  extends ReplayableLike<T>,
+  extends EventEmitterLike<T>,
+    ReplayableLike<T>,
     ContainerLike {
   readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
-
-  [EventSourceLike_addListener](listener: EventListenerLike<T>): void;
 }
 
 /**
@@ -194,7 +197,9 @@ export interface EventPublisherLike<T = unknown>
  *
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T> {
+export interface DispatcherLike<T = unknown>
+  extends QueueableLike<T>,
+    EventEmitterLike<"wait" | "drain" | "complete"> {
   /**
    * Communicates to the dispatcher that no more events will be enqueued.
    */

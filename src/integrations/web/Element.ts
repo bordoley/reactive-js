@@ -15,11 +15,11 @@ import { ObservableLike } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import {
   ErrorSafeEventListenerLike,
+  EventEmitterLike_addListener,
   EventListenerLike,
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
-  EventSourceLike_addListener,
   QueueableLike_enqueue,
 } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
@@ -1213,7 +1213,7 @@ export const addResizeListener: <TElement extends Element>(
         return publisher;
       })();
 
-    publisher[EventSourceLike_addListener](listener);
+    publisher[EventEmitterLike_addListener](listener);
 
     return element;
   };
@@ -1412,6 +1412,6 @@ export const intersectionWith: (
               );
             })();
 
-          publisher[EventSourceLike_addListener](listener);
+          publisher[EventEmitterLike_addListener](listener);
         }, options);
   })();

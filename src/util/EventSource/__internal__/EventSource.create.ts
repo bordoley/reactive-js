@@ -22,10 +22,10 @@ import {
 import {
   BufferLike_capacity,
   DisposableLike_dispose,
+  EventEmitterLike_addListener,
   EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
-  EventSourceLike_addListener,
   IndexedBufferCollectionLike,
   ReplayableLike_buffer,
 } from "../../../util.js";
@@ -52,7 +52,7 @@ const EventSource_create: <T>(
       function CreateEventSource(
         instance: Pick<
           EventSourceLike<T>,
-          typeof EventSourceLike_addListener | typeof ReplayableLike_buffer
+          typeof EventEmitterLike_addListener | typeof ReplayableLike_buffer
         > &
           TProperties,
         setup: SideEffect1<EventListenerLike<T>>,
@@ -98,7 +98,7 @@ const EventSource_create: <T>(
         [ReplayableLike_buffer]: none,
       }),
       {
-        [EventSourceLike_addListener](
+        [EventEmitterLike_addListener](
           this: TProperties &
             Mutable<DelegatingLike<Optional<EventPublisherLike<T>>>>,
           listener: EventListenerLike,
@@ -107,7 +107,7 @@ const EventSource_create: <T>(
             this[DelegatingLike_delegate] ??
             this[__CreateEventSource_createDelegate]();
 
-          delegate[EventSourceLike_addListener](listener);
+          delegate[EventEmitterLike_addListener](listener);
         },
       },
     ),

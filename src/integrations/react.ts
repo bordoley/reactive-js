@@ -54,10 +54,10 @@ import {
   DispatcherLike,
   DisposableLike,
   DisposableLike_dispose,
+  EventEmitterLike_addListener,
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
-  EventSourceLike_addListener,
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
@@ -101,7 +101,7 @@ export const useEventSource: UseEventSource["useEventSource"] = <T>(
       Disposable.onError(updateError),
     );
 
-    eventSource[EventSourceLike_addListener](listener);
+    eventSource[EventEmitterLike_addListener](listener);
 
     return bindMethod(listener, DisposableLike_dispose);
   }, [eventSource, updateState, updateError]);

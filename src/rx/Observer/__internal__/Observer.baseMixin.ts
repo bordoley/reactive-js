@@ -9,12 +9,20 @@ import {
 import {
   __ObserverMixin_dispatchSubscription,
   __ObserverMixin_isCompleted,
+  __ObserverMixin_queuePublisher,
 } from "../../../__internal__/symbols.js";
 import {
   IndexedQueueLike,
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
-import { call, pipe, returns, unsafeCast } from "../../../functions.js";
+import {
+  Optional,
+  call,
+  none,
+  pipe,
+  returns,
+  unsafeCast,
+} from "../../../functions.js";
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import {
   SchedulerLike,
@@ -28,12 +36,17 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EventEmitterLike_addListener,
+  EventListenerLike,
+  EventListenerLike_notify,
+  EventPublisherLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
+import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
 import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
 
 type TObserverBaseMixin<T> = Omit<
@@ -51,6 +64,9 @@ const Observer_baseMixin: <T>() => Mixin1<
   type TProperties = {
     [__ObserverMixin_isCompleted]: boolean;
     [__ObserverMixin_dispatchSubscription]: DisposableLike;
+    [__ObserverMixin_queuePublisher]: Optional<
+      EventPublisherLike<"wait" | "drain" | "complete">
+    >;
   };
 
   const scheduleDrainQueue = (
@@ -73,6 +89,10 @@ const Observer_baseMixin: <T>() => Mixin1<
 
         if (observer[__ObserverMixin_isCompleted]) {
           observer[DisposableLike_dispose]();
+        } else {
+          observer[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify](
+            "drain",
+          );
         }
       };
 
@@ -89,7 +109,10 @@ const Observer_baseMixin: <T>() => Mixin1<
     mix(
       include(Queue_indexedQueueMixin()),
       function ObserverMixin(
-        instance: Pick<ObserverLike, typeof DispatcherLike_complete>,
+        instance: Pick<
+          ObserverLike,
+          typeof DispatcherLike_complete | typeof EventEmitterLike_addListener
+        >,
         config: {
           readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
           readonly [BufferLike_capacity]: number;
@@ -108,6 +131,7 @@ const Observer_baseMixin: <T>() => Mixin1<
       props<TProperties>({
         [__ObserverMixin_isCompleted]: false,
         [__ObserverMixin_dispatchSubscription]: Disposable_disposed,
+        [__ObserverMixin_queuePublisher]: none,
       }),
       {
         [QueueableLike_enqueue](
@@ -123,6 +147,13 @@ const Observer_baseMixin: <T>() => Mixin1<
               this,
               next,
             );
+
+            if (!result) {
+              this[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify](
+                "wait",
+              );
+            }
+
             scheduleDrainQueue(this);
             return result;
           }
@@ -135,6 +166,12 @@ const Observer_baseMixin: <T>() => Mixin1<
           const isCompleted = this[__ObserverMixin_isCompleted];
           this[__ObserverMixin_isCompleted] = true;
 
+          if (!isCompleted) {
+            this[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify](
+              "complete",
+            );
+          }
+
           if (
             this[__ObserverMixin_dispatchSubscription][
               DisposableLike_isDisposed
@@ -143,6 +180,23 @@ const Observer_baseMixin: <T>() => Mixin1<
           ) {
             this[DisposableLike_dispose]();
           }
+        },
+        [EventEmitterLike_addListener](
+          this: TProperties & ObserverLike,
+          listener: EventListenerLike<"wait" | "drain" | "complete">,
+        ): void {
+          const publisher =
+            this[__ObserverMixin_queuePublisher] ??
+            (() => {
+              const publisher = EventPublisher_create<
+                "wait" | "drain" | "complete"
+              >();
+              this[__ObserverMixin_queuePublisher] = publisher;
+
+              return pipe(publisher, Disposable_addTo(this));
+            })();
+
+          publisher[EventEmitterLike_addListener](listener);
         },
       },
     ),

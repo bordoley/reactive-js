@@ -3,7 +3,7 @@
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __DelegatingDispatcherMixin_delegate } from "../../../__internal__/symbols.js";
 import { none, returns } from "../../../functions.js";
-import { DispatcherLike_complete } from "../../../util.js";
+import { DispatcherLike_complete, EventEmitterLike_addListener, } from "../../../util.js";
 import Queueable_delegatingMixin from "../../Queue/__internal__/Queueable.delegatingMixin.js";
 const Dispatcher_delegatingMixin = /*@__PURE__*/ (() => {
     return returns(mix(include(Queueable_delegatingMixin()), function DelegatingDispatcherMixin(instance, delegate) {
@@ -15,6 +15,9 @@ const Dispatcher_delegatingMixin = /*@__PURE__*/ (() => {
     }), {
         [DispatcherLike_complete]() {
             this[__DelegatingDispatcherMixin_delegate][DispatcherLike_complete]();
+        },
+        [EventEmitterLike_addListener](listener) {
+            this[__DelegatingDispatcherMixin_delegate][EventEmitterLike_addListener](listener);
         },
     }));
 })();

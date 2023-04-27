@@ -1,15 +1,15 @@
 import { Empty } from "../../../containers.js";
 import {
   DisposableLike_dispose,
+  EventEmitterLike_addListener,
   EventListenerLike,
   EventSourceLike,
-  EventSourceLike_addListener,
   ReplayableLike_buffer,
 } from "../../../util.js";
 import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
 
 const _empty: EventSourceLike = {
-  [EventSourceLike_addListener]: function (
+  [EventEmitterLike_addListener]: function (
     listener: EventListenerLike<unknown>,
   ): void {
     listener[DisposableLike_dispose]();

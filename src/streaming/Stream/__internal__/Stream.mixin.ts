@@ -43,6 +43,8 @@ import {
   DispatcherLike_complete,
   DisposableLike,
   DisposableLike_isDisposed,
+  EventEmitterLike_addListener,
+  EventListenerLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
@@ -161,6 +163,26 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             }
 
             this[__DispatchedObservable_observer] = observer;
+          },
+
+          [EventEmitterLike_addListener](
+            this: TProperties,
+            listener: EventListenerLike<"wait" | "drain" | "complete">,
+          ): void {
+            const observer = this[
+              __DispatchedObservable_observer
+            ] as ObserverLike<T>;
+
+            // Practically the observer can never be none,
+            // unless the stream operator uses fromFactory subscriptions
+            // eg. concat.
+            if (__DEV__ && isNone(observer)) {
+              raiseWithDebugMessage(
+                "DispatchedObservable has not been subscribed to yet",
+              );
+            }
+
+            observer[EventEmitterLike_addListener](listener);
           },
         },
       ),
