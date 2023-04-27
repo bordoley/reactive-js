@@ -27,7 +27,6 @@ const AsyncIterable_flow: Flow<AsyncIterableLike>["flow"] =
     scheduler: SchedulerLike,
     options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly replay?: number;
       readonly capacity?: number;
     },
   ) =>

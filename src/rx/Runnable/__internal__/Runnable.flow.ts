@@ -23,7 +23,6 @@ const Runnable_flow: Flow<RunnableLike>["flow"] =
     scheduler: SchedulerLike,
     options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly replay?: number;
       readonly capacity?: number;
     },
   ) =>

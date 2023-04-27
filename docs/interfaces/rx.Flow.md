@@ -34,7 +34,7 @@
 | Name | Type |
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) |
-| `options?` | `O` & { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `replay?`: `number`  } |
+| `options?` | `O` & { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number`  } |
 
 #### Returns
 

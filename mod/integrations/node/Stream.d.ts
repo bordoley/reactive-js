@@ -4,7 +4,6 @@ import { ObservableLike, PauseableObservableLike } from "../../rx.js";
 import { SchedulerLike } from "../../scheduling.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../../util.js";
 export declare const flow: (scheduler: SchedulerLike, options?: {
-    readonly replay?: number;
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
 }) => Function1<Factory<Readable> | Readable, PauseableObservableLike<Uint8Array> & DisposableLike>;

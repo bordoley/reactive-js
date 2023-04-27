@@ -3138,7 +3138,6 @@ ___
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
-| `options.replay?` | `number` |
 
 #### Returns
 

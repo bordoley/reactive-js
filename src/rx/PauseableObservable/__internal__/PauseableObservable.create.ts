@@ -48,7 +48,6 @@ const PauseableObservable_create: <T>(
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly replay?: number;
     readonly capacity?: number;
   },
 ) => PauseableObservableLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
@@ -70,7 +69,6 @@ const PauseableObservable_create: <T>(
         op: ContainerOperator<ObservableLike, boolean, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
-          replay?: number;
           capacity?: number;
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },

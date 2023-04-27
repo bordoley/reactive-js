@@ -71,7 +71,6 @@ export const flow =
   (
     scheduler: SchedulerLike,
     options?: {
-      readonly replay?: number;
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },

@@ -469,7 +469,6 @@ export interface Flow<C extends ContainerLike, O = unknown> {
   flow<T>(
     scheduler: SchedulerLike,
     options?: O & {
-      readonly replay?: number;
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
