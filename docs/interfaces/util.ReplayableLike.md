@@ -16,8 +16,6 @@
 
   ↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
-  ↳ [`EventSourceLike`](util.EventSourceLike.md)
-
 ## Table of contents
 
 ### Properties

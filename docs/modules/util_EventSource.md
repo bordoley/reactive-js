@@ -25,7 +25,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`setup`, `options?`): [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
+▸ **create**<`T`\>(`setup`): [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
 
 #### Type parameters
 
@@ -38,8 +38,6 @@
 | Name | Type |
 | :------ | :------ |
 | `setup` | [`SideEffect1`](functions.md#sideeffect1)<[`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T`\>\> |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
 
 #### Returns
 

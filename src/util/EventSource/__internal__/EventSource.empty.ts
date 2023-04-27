@@ -4,9 +4,7 @@ import {
   EventEmitterLike_addListener,
   EventListenerLike,
   EventSourceLike,
-  ReplayableLike_buffer,
 } from "../../../util.js";
-import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
 
 const _empty: EventSourceLike = {
   [EventEmitterLike_addListener]: function (
@@ -14,7 +12,6 @@ const _empty: EventSourceLike = {
   ): void {
     listener[DisposableLike_dispose]();
   },
-  [ReplayableLike_buffer]: /*@__PURE__*/ IndexedBufferCollection_empty(),
 };
 
 const EventSource_empty: Empty<EventSourceLike>["empty"] = <

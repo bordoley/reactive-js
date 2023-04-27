@@ -5,6 +5,5 @@ import { EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy } fr
 declare const Observable_toEventSource: <T>(scheduler: SchedulerLike, options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-    readonly replay?: number;
 }) => Function1<ObservableLike<T>, EventSourceLike<T>>;
 export default Observable_toEventSource;

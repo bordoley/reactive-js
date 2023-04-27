@@ -18,21 +18,18 @@ const Observable_toEventSource =
     options: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
-      readonly replay?: number;
     } = {},
   ): Function1<ObservableLike<T>, EventSourceLike<T>> =>
   obs =>
-    EventSource_create(
-      publisher =>
-        pipe(
-          obs,
-          Observable_forEach<ObservableLike, T>(
-            bindMethod(publisher, EventListenerLike_notify),
-          ),
-          Observable_subscribe(scheduler, options),
-          Disposable_bindTo(publisher),
+    EventSource_create(publisher =>
+      pipe(
+        obs,
+        Observable_forEach<ObservableLike, T>(
+          bindMethod(publisher, EventListenerLike_notify),
         ),
-      options,
+        Observable_subscribe(scheduler, options),
+        Disposable_bindTo(publisher),
+      ),
     );
 
 export default Observable_toEventSource;

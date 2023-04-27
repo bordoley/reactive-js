@@ -1328,7 +1328,6 @@ export const observeMeasure: <
 
 export const intersectionWith: (
   parent?: Document | Element,
-  options?: { readonly replay?: number },
 ) => Function1<Element, EventSourceLike<IntersectionObserverEntry>> =
   /*@__PURE__*/ (() => {
     const intersectionObservers =
@@ -1342,7 +1341,7 @@ export const intersectionWith: (
         >
       >(Map);
 
-    return (root = document, options) =>
+    return (root = document) =>
       child =>
         RxEventSource.create(listener => {
           const publisher =
@@ -1413,5 +1412,5 @@ export const intersectionWith: (
             })();
 
           publisher[EventEmitterLike_addListener](listener);
-        }, options);
+        });
   })();

@@ -2,18 +2,13 @@
 
 import { LiftedLike_operators, LiftedLike_source, } from "../../../__internal__/containers.js";
 import { bindMethod, newInstance, pipeUnsafe, } from "../../../functions.js";
-import { EventEmitterLike_addListener, ReplayableLike_buffer, } from "../../../util.js";
-import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
+import { EventEmitterLike_addListener, } from "../../../util.js";
 class LiftedEventSource {
     [LiftedLike_source];
     [LiftedLike_operators];
     constructor(source, operators) {
         this[LiftedLike_source] = source;
         this[LiftedLike_operators] = operators;
-    }
-    get [ReplayableLike_buffer]() {
-        // Can only lift when the replay is 0
-        return IndexedBufferCollection_empty();
     }
     [EventEmitterLike_addListener](listener) {
         pipeUnsafe(listener, ...this[LiftedLike_operators], bindMethod(this[LiftedLike_source], EventEmitterLike_addListener));

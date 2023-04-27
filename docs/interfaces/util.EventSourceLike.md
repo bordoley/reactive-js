@@ -14,8 +14,6 @@
 
 - [`EventEmitterLike`](util.EventEmitterLike.md)<`T`\>
 
-- [`ReplayableLike`](util.ReplayableLike.md)<`T`\>
-
 - [`ContainerLike`](containers.ContainerLike.md)
 
   ↳ **`EventSourceLike`**

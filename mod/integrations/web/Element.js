@@ -187,7 +187,7 @@ export const intersectionWith =
 /*@__PURE__*/ (() => {
     const intersectionObservers = newInstance(Map);
     const eventPublishers = newInstance(Map);
-    return (root = document, options) => child => RxEventSource.create(listener => {
+    return (root = document) => child => RxEventSource.create(listener => {
         const publisher = eventPublishers.get(root)?.get(child) ??
             (() => {
                 const publisher = EventPublisher.createRefCounted();
@@ -229,5 +229,5 @@ export const intersectionWith =
                 }));
             })();
         publisher[EventEmitterLike_addListener](listener);
-    }, options);
+    });
 })();

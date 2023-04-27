@@ -118,7 +118,6 @@ export declare const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"];
 export declare const toEventSource: <T>(scheduler: SchedulerLike, options?: {
     readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;
-    readonly replay?: number | undefined;
 }) => Function1<ObservableLike<T>, import("../util.js").EventSourceLike<T>>;
 export declare const toObservable: ToObservable<ObservableLike>["toObservable"];
 export declare const toRunnable: ToRunnable<ObservableLike>["toRunnable"];

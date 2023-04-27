@@ -13,10 +13,7 @@ import {
   EventEmitterLike_addListener,
   EventListenerLike,
   EventSourceLike,
-  IndexedBufferCollectionLike,
-  ReplayableLike_buffer,
 } from "../../../util.js";
-import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
 
 class LiftedEventSource<TIn, TOut>
   implements
@@ -38,11 +35,6 @@ class LiftedEventSource<TIn, TOut>
   ) {
     this[LiftedLike_source] = source;
     this[LiftedLike_operators] = operators;
-  }
-
-  get [ReplayableLike_buffer](): IndexedBufferCollectionLike<TOut> {
-    // Can only lift when the replay is 0
-    return IndexedBufferCollection_empty();
   }
 
   [EventEmitterLike_addListener](listener: EventListenerLike<TOut>) {

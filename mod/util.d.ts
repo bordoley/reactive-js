@@ -105,7 +105,7 @@ export interface EventEmitterLike<T = unknown> {
 /**
  * @noInheritDoc
  */
-export interface EventSourceLike<T = unknown> extends EventEmitterLike<T>, ReplayableLike<T>, ContainerLike {
+export interface EventSourceLike<T = unknown> extends EventEmitterLike<T>, ContainerLike {
     readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
 }
 /**

@@ -177,7 +177,6 @@ export interface EventEmitterLike<T = unknown> {
  */
 export interface EventSourceLike<T = unknown>
   extends EventEmitterLike<T>,
-    ReplayableLike<T>,
     ContainerLike {
   readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
 }

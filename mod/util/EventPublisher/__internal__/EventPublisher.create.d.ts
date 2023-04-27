@@ -1,5 +1,3 @@
 import { EventPublisherLike } from "../../../util.js";
-declare const EventPublisher_create: <T>(options?: {
-    readonly replay?: number;
-}) => EventPublisherLike<T>;
+declare const EventPublisher_create: <T>() => EventPublisherLike<T>;
 export default EventPublisher_create;

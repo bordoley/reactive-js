@@ -2,5 +2,5 @@
 
 import { alwaysTrue, identity } from "../../../functions.js";
 import EventPublisher_createWithPredicateAndSelector from "./EventPublisher.createWithPredicateAndSelector.js";
-const EventPublisher_create = (options) => EventPublisher_createWithPredicateAndSelector(alwaysTrue, identity, options);
+const EventPublisher_create = () => EventPublisher_createWithPredicateAndSelector(alwaysTrue, identity);
 export default EventPublisher_create;

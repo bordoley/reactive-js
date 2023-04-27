@@ -4,7 +4,6 @@ import {
   PredicatedLike,
   PredicatedLike_predicate,
 } from "../../../__internal__/containers.js";
-import { clampPositiveInteger } from "../../../__internal__/math.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -14,7 +13,6 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { __EventPublisher_listeners } from "../../../__internal__/symbols.js";
-import { IndexedQueueLike } from "../../../__internal__/util.js";
 import {
   EnumeratorLike_current,
   EnumeratorLike_move,
@@ -30,7 +28,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  CollectionLike_count,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -40,13 +37,9 @@ import {
   EventListenerLike_notify,
   EventPublisherLike_listenerCount,
   EventSourceLike,
-  KeyedCollectionLike_get,
-  QueueableLike_enqueue,
-  ReplayableLike_buffer,
 } from "../../../util.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
 
 export interface EventKeepMapPublisherLike<T, TOut = T>
   extends EventSourceLike<TOut>,
@@ -65,7 +58,6 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
 ) => EventKeepMapPublisherLike<T, TOut> = /*@__PURE__*/ (<T, TOut>() => {
   type TProperties = {
     readonly [__EventPublisher_listeners]: Set<EventListenerLike<TOut>>;
-    readonly [ReplayableLike_buffer]: IndexedQueueLike<TOut>;
   } & PredicatedLike<T> &
     MappingLike<T, TOut>;
 
@@ -83,7 +75,6 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
           Mutable<TProperties>,
         predicate: Predicate<T>,
         selector: Function1<T, TOut>,
-        replay: number,
       ): EventKeepMapPublisherLike<T, TOut> {
         init(Disposable_mixin, instance);
 
@@ -92,12 +83,6 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
 
         instance[PredicatedLike_predicate] = predicate;
         instance[MappingLike_selector] = selector;
-
-        // FIXME: use the mixin instead and return this from a getter;
-        instance[ReplayableLike_buffer] = Queue_createIndexedQueue(
-          replay,
-          "drop-oldest",
-        );
 
         pipe(
           instance,
@@ -118,7 +103,6 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
       },
       props<TProperties>({
         [__EventPublisher_listeners]: none,
-        [ReplayableLike_buffer]: none,
         [PredicatedLike_predicate]: none,
         [MappingLike_selector]: none,
       }),
@@ -144,8 +128,6 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
 
           const result = this[MappingLike_selector](next);
 
-          this[ReplayableLike_buffer][QueueableLike_enqueue](result);
-
           for (const listener of this[__EventPublisher_listeners]) {
             try {
               listener[EventListenerLike_notify](result);
@@ -170,29 +152,13 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
               }),
             );
           }
-
-          const buffer = this[ReplayableLike_buffer];
-          const count = buffer[CollectionLike_count];
-          try {
-            for (let i = 0; i < count; i++) {
-              const next = buffer[KeyedCollectionLike_get](i);
-              listener[EventListenerLike_notify](next);
-            }
-          } catch (e) {
-            listener[DisposableLike_dispose](error(e));
-          }
         },
       },
     ),
   );
 
-  return (
-    predicate: Predicate<T>,
-    selector: Function1<T, TOut>,
-    options?: { readonly replay?: number },
-  ) => {
-    const replay = clampPositiveInteger(options?.replay ?? 0);
-    return createPublisherInstance(predicate, selector, replay);
+  return (predicate: Predicate<T>, selector: Function1<T, TOut>) => {
+    return createPublisherInstance(predicate, selector);
   };
 })();
 
