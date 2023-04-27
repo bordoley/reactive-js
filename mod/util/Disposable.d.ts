@@ -15,3 +15,8 @@ export declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
  */
 export declare const toErrorHandler: (disposable: DisposableLike) => import("../functions.js").SideEffect1<unknown>;
 export declare const toObservable: <T>() => import("../functions.js").Function1<DisposableLike, import("../rx.js").ObservableLike<T>>;
+export declare const usingAsync: {
+    <TDisposable extends DisposableLike, TResult = unknown>(factoryOrDisposable: TDisposable | import("../functions.js").Factory<TDisposable>): import("../functions.js").Function1<import("../functions.js").Function1<TDisposable, Promise<TResult>>, Promise<TResult>>;
+    <TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TResult_1 = unknown>(factoryOrDisposableA: TDisposableA | import("../functions.js").Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | import("../functions.js").Factory<TDisposableB>): import("../functions.js").Function1<import("../functions.js").Function2<TDisposableA, TDisposableB, Promise<TResult_1>>, Promise<TResult_1>>;
+    <TDisposableA_1 extends DisposableLike, TDisposableB_1 extends DisposableLike, TDisposableC extends DisposableLike, TResult_2 = unknown>(factoryOrDisposableA: TDisposableA_1 | import("../functions.js").Factory<TDisposableA_1>, factoryOrDisposableB: TDisposableB_1 | import("../functions.js").Factory<TDisposableB_1>, factoryOrDisposableC: TDisposableC | import("../functions.js").Factory<TDisposableC>): import("../functions.js").Function1<import("../functions.js").Function3<TDisposableA_1, TDisposableB_1, TDisposableC, Promise<TResult_2>>, Promise<TResult_2>>;
+};

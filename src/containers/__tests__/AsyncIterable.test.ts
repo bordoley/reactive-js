@@ -5,20 +5,21 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import { error, pipe } from "../../functions.js";
+import { error, pipe, pipeLazy } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
+import { SchedulerLike } from "../../scheduling.js";
 import * as Scheduler from "../../scheduling/Scheduler.js";
-import { DisposableLike_dispose, PauseableLike_resume } from "../../util.js";
+import { PauseableLike_resume } from "../../util.js";
+import * as Disposable from "../../util/Disposable.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 
 testModule(
   "AsyncIterable",
   describe(
     "flow",
-    testAsync("infinite immediately resolving iterable", async () => {
-      const scheduler = Scheduler.createHostScheduler();
-
-      try {
+    testAsync(
+      "infinite immediately resolving iterable",
+      pipeLazy(async (scheduler: SchedulerLike) => {
         const stream = pipe(
           (async function* foo() {
             let i = 0;
@@ -36,17 +37,12 @@ testModule(
           Observable.buffer(),
           Observable.lastAsync(scheduler),
         );
-        scheduler[DisposableLike_dispose]();
-
         pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-      } finally {
-        scheduler[DisposableLike_dispose]();
-      }
-    }),
-    testAsync("iterable that completes", async () => {
-      const scheduler = Scheduler.createHostScheduler();
-
-      try {
+      }, Disposable.usingAsync(Scheduler.createHostScheduler)),
+    ),
+    testAsync(
+      "iterable that completes",
+      pipeLazy(async (scheduler: SchedulerLike) => {
         const stream = pipe(
           (async function* foo() {
             yield 1;
@@ -64,14 +60,11 @@ testModule(
         );
 
         pipe(result ?? [], expectArrayEquals([1, 2, 3]));
-      } finally {
-        scheduler[DisposableLike_dispose]();
-      }
-    }),
-
-    testAsync("iterable that throws", async () => {
-      const scheduler = Scheduler.createHostScheduler();
-      try {
+      }, Disposable.usingAsync(Scheduler.createHostScheduler)),
+    ),
+    testAsync(
+      "iterable that throws",
+      pipeLazy(async (scheduler: SchedulerLike) => {
         const e = error();
 
         const stream = pipe(
@@ -89,16 +82,14 @@ testModule(
         );
 
         pipe(result, expectEquals(e as unknown));
-      } finally {
-        scheduler[DisposableLike_dispose]();
-      }
-    }),
+      }, Disposable.usingAsync(Scheduler.createHostScheduler)),
+    ),
   ),
   describe(
     "toObservable",
-    testAsync("infinite immediately resolving iterable", async () => {
-      const scheduler = Scheduler.createHostScheduler();
-      try {
+    testAsync(
+      "infinite immediately resolving iterable",
+      pipeLazy(async (scheduler: SchedulerLike) => {
         const result = await pipe(
           (async function* foo() {
             let i = 0;
@@ -113,13 +104,11 @@ testModule(
         );
 
         pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-      } finally {
-        scheduler[DisposableLike_dispose]();
-      }
-    }),
-    testAsync("iterable that completes", async () => {
-      const scheduler = Scheduler.createHostScheduler();
-      try {
+      }, Disposable.usingAsync(Scheduler.createHostScheduler)),
+    ),
+    testAsync(
+      "iterable that completes",
+      pipeLazy(async (scheduler: SchedulerLike) => {
         const result = await pipe(
           (async function* foo() {
             yield 1;
@@ -132,14 +121,12 @@ testModule(
         );
 
         pipe(result ?? [], expectArrayEquals([1, 2, 3]));
-      } finally {
-        scheduler[DisposableLike_dispose]();
-      }
-    }),
+      }, Disposable.usingAsync(Scheduler.createHostScheduler)),
+    ),
 
-    testAsync("iterable that throws", async () => {
-      const scheduler = Scheduler.createHostScheduler();
-      try {
+    testAsync(
+      "iterable that throws",
+      pipeLazy(async (scheduler: SchedulerLike) => {
         const e = error();
 
         const result = await pipe(
@@ -152,9 +139,7 @@ testModule(
         );
 
         pipe(result, expectEquals(e as unknown));
-      } finally {
-        scheduler[DisposableLike_dispose]();
-      }
-    }),
+      }, Disposable.usingAsync(Scheduler.createHostScheduler)),
+    ),
   ),
 );

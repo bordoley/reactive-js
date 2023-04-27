@@ -13,6 +13,7 @@ import Disposable_onError from "./Disposable/__internal__/Disposable.onError.js"
 import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbortSignal.js";
 import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
 import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObservable.js";
+import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
 export const add = Disposable_add;
 export const addIgnoringChildErrors = Disposable_addIgnoringChildErrors;
 export const addTo = Disposable_addTo;
@@ -29,3 +30,4 @@ export const toAbortSignal = Disposable_toAbortSignal;
  */
 export const toErrorHandler = Disposable_toErrorHandler;
 export const toObservable = Disposable_toObservable;
+export const usingAsync = Disposable_usingAsync;
