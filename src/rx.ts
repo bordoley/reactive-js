@@ -146,15 +146,21 @@ export interface PublisherLike<T = unknown>
 }
 
 /**
- * A `MulticastObservableLike` that supports imperative flow control
+ * A `ObservableLike` that supports imperative flow control
  * via the pause and resume methods.
  *
  * @noInheritDoc
  * @category Container
  */
 export interface PauseableObservableLike<T = unknown>
-  extends MulticastObservableLike<T>,
+  extends ObservableLike<T>,
     PauseableLike {
+  readonly [ContainerLike_type]?: PauseableObservableLike<
+    this[typeof ContainerLike_T]
+  >;
+
+  readonly [ObservableLike_isEnumerable]: false;
+  readonly [ObservableLike_isRunnable]: false;
   /**
    * Reactive property indicating if the observable is paused or not.
    */

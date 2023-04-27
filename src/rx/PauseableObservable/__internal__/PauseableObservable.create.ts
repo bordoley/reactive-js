@@ -105,7 +105,7 @@ const PauseableObservable_create: <T>(
 
         instance[PauseableObservableLike_isPaused] = publisher;
 
-        return instance;
+        return instance as PauseableObservableLike<T> & DisposableLike;
       },
       props<TProperties>({
         [PauseableObservableLike_isPaused]: none,
@@ -120,14 +120,10 @@ const PauseableObservable_create: <T>(
           );
         },
 
-        [PauseableLike_pause](
-          this: PauseableObservableLike<T> & StreamLike<boolean, T>,
-        ) {
+        [PauseableLike_pause](this: StreamLike<boolean, T>) {
           this[QueueableLike_enqueue](true);
         },
-        [PauseableLike_resume](
-          this: PauseableObservableLike<T> & StreamLike<boolean, T>,
-        ) {
+        [PauseableLike_resume](this: StreamLike<boolean, T>) {
           this[QueueableLike_enqueue](false);
         },
       },

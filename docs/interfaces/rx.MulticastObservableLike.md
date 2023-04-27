@@ -20,8 +20,6 @@ A stateful ObservableLike resource.
 
   ↳↳ [`PublisherLike`](rx.PublisherLike.md)
 
-  ↳↳ [`PauseableObservableLike`](rx.PauseableObservableLike.md)
-
   ↳↳ [`StreamLike`](streaming.StreamLike.md)
 
 ## Table of contents

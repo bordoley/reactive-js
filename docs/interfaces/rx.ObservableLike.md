@@ -22,6 +22,8 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
   ↳↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)
 
+  ↳↳ [`PauseableObservableLike`](rx.PauseableObservableLike.md)
+
 ## Table of contents
 
 ### Properties

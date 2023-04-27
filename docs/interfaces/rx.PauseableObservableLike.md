@@ -4,7 +4,7 @@
 
 [rx](../modules/rx.md).PauseableObservableLike
 
-A `MulticastObservableLike` that supports imperative flow control
+A `ObservableLike` that supports imperative flow control
 via the pause and resume methods.
 
 ## Type parameters
@@ -15,7 +15,7 @@ via the pause and resume methods.
 
 ## Hierarchy
 
-- [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`T`\>
+- [`ObservableLike`](rx.ObservableLike.md)<`T`\>
 
 - [`PauseableLike`](util.PauseableLike.md)
 
@@ -25,9 +25,47 @@ via the pause and resume methods.
 
 ### Properties
 
+- [[\_\_\_ContainerLike\_type]](rx.PauseableObservableLike.md#[___containerlike_type])
+- [[\_\_\_ObservableLike\_isEnumerable]](rx.PauseableObservableLike.md#[___observablelike_isenumerable])
+- [[\_\_\_ObservableLike\_isRunnable]](rx.PauseableObservableLike.md#[___observablelike_isrunnable])
 - [[\_\_\_PauseableObservableLike\_isPaused]](rx.PauseableObservableLike.md#[___pauseableobservablelike_ispaused])
 
 ## Properties
+
+### [\_\_\_ContainerLike\_type]
+
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`unknown`\>
+
+#### Overrides
+
+[ObservableLike](rx.ObservableLike.md).[[___ContainerLike_type]](rx.ObservableLike.md#[___containerlike_type])
+
+___
+
+### [\_\_\_ObservableLike\_isEnumerable]
+
+• `Readonly` **[\_\_\_ObservableLike\_isEnumerable]**: ``false``
+
+Indicates if the `ObservableLike` supports interactive enumeration.
+
+#### Overrides
+
+[ObservableLike](rx.ObservableLike.md).[[___ObservableLike_isEnumerable]](rx.ObservableLike.md#[___observablelike_isenumerable])
+
+___
+
+### [\_\_\_ObservableLike\_isRunnable]
+
+• `Readonly` **[\_\_\_ObservableLike\_isRunnable]**: ``false``
+
+Indicates if the `ObservableLike` supports being subscribed to
+on a VirtualTimeScheduler.
+
+#### Overrides
+
+[ObservableLike](rx.ObservableLike.md).[[___ObservableLike_isRunnable]](rx.ObservableLike.md#[___observablelike_isrunnable])
+
+___
 
 ### [\_\_\_PauseableObservableLike\_isPaused]
 
