@@ -22,11 +22,11 @@ import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observab
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
 const HigherOrderObservable_scanLast =
-  <C extends ObservableLike, CInner extends ObservableLike>(
+  <C extends ObservableLike>(
     createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ContainerOf<C, T>,
-  ): ScanLast<C, CInner>["scanLast"] =>
+  ): ScanLast<C>["scanLast"] =>
   <T, TAcc>(
-    scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
+    scanner: Function2<TAcc, T, ContainerOf<C, TAcc>>,
     initialValue: Factory<TAcc>,
   ): ContainerOperator<C, T, TAcc> =>
   observable =>

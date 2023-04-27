@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [keyed-containers](../modules/keyed_containers.md) / Keep
 
-# Interface: Keep<C, O\>
+# Interface: Keep<C\>
 
 [keyed-containers](../modules/keyed_containers.md).Keep
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`, `options?`): [`KeyedContainerOperator`](../modules/keyed_containers.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](../modules/keyed_containers.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -38,7 +37,6 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
-| `options?` | `O` |
 
 #### Returns
 

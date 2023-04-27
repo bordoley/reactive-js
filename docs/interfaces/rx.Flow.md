@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / Flow
 
-# Interface: Flow<C, O\>
+# Interface: Flow<C\>
 
 [rx](../modules/rx.md).Flow
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -34,7 +33,9 @@
 | Name | Type |
 | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) |
-| `options?` | `O` & { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number`  } |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
 
 #### Returns
 

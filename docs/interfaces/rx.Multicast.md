@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / Multicast
 
-# Interface: Multicast<C, O\>
+# Interface: Multicast<C\>
 
 [rx](../modules/rx.md).Multicast
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -36,7 +35,10 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
-| `options?` | `O` & { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `replay?`: `number`  } | - |
+| `options?` | `Object` | - |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
+| `options.capacity?` | `number` | The capacity of the stream's request queue. |
+| `options.replay?` | `number` | The number of items to buffer for replay when an observer subscribes to the stream. |
 
 #### Returns
 

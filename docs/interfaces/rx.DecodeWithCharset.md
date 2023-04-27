@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / DecodeWithCharset
 
-# Interface: DecodeWithCharset<C, O\>
+# Interface: DecodeWithCharset<C\>
 
 [rx](../modules/rx.md).DecodeWithCharset
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -27,7 +26,8 @@
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `O` & { `charset?`: `string`  } |
+| `options?` | `Object` |
+| `options.charset?` | `string` |
 
 #### Returns
 

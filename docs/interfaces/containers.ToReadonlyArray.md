@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / ToReadonlyArray
 
-# Interface: ToReadonlyArray<C, O\>
+# Interface: ToReadonlyArray<C\>
 
 [containers](../modules/containers.md).ToReadonlyArray
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)<`T`\>\>
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)<`T`\>\>
 
 Converts the ContainerLike to a `ReadonlyArrayLike`.
 
@@ -30,12 +29,6 @@ Converts the ContainerLike to a `ReadonlyArrayLike`.
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

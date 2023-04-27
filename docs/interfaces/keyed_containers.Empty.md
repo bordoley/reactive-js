@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [keyed-containers](../modules/keyed_containers.md) / Empty
 
-# Interface: Empty<C, O\>
+# Interface: Empty<C\>
 
 [keyed-containers](../modules/keyed_containers.md).Empty
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(`options?`): [`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `T`\>
+▸ **empty**<`T`, `TKey`\>(): [`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `T`\>
 
 Return an ContainerLike that emits no items.
 
@@ -31,12 +30,6 @@ Return an ContainerLike that emits no items.
 | :------ | :------ |
 | `T` | `T` |
 | `TKey` | extends `Object` = [`KeyOf`](../modules/keyed_containers.md#keyof)<`C`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

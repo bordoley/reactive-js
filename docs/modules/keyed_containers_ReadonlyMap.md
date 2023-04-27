@@ -21,7 +21,7 @@
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(`options?`): [`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>
+▸ **empty**<`T`, `TKey`\>(): [`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>
 
 Return an ContainerLike that emits no items.
 
@@ -31,12 +31,6 @@ Return an ContainerLike that emits no items.
 | :------ | :------ |
 | `T` | `T` |
 | `TKey` | extends `Object` = {} |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -48,7 +42,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -74,7 +68,6 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -84,7 +77,7 @@ ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`, `options?`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -110,7 +103,6 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function2`](functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
-| `options?` | `undefined` | - |
 
 #### Returns
 
@@ -122,7 +114,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
@@ -130,12 +122,6 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TKey` | extends `Object` = {} |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 

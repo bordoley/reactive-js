@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [keyed-containers](../modules/keyed_containers.md) / ForEach
 
-# Interface: ForEach<C, O\>
+# Interface: ForEach<C\>
 
 [keyed-containers](../modules/keyed_containers.md).ForEach
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`effect`, `options?`): [`KeyedContainerOperator`](../modules/keyed_containers.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](../modules/keyed_containers.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -38,7 +37,6 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `effect` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`T`\> |
-| `options?` | `O` |
 
 #### Returns
 

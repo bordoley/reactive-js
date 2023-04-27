@@ -33,7 +33,6 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  FromReadonlyArray,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -196,7 +195,12 @@ const throttleImpl = <C extends ObservableLike, T>(
 
 const HigherOrderObservable_throttle =
   <C extends ObservableLike, T>(
-    fromReadonlyArray: FromReadonlyArray<C>["fromReadonlyArray"],
+    fromReadonlyArray: <T>(options?: {
+      readonly count?: number;
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+      readonly start?: number;
+    }) => Function1<readonly T[], ContainerOf<C, T>>,
     lift: <T>(
       f: Function1<ObserverLike<T>, ObserverLike<T>>,
     ) => ContainerOperator<C, T, T>,

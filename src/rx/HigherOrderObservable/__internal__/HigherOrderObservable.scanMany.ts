@@ -26,11 +26,11 @@ import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observab
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
 const HigherOrderObservable_scanMany =
-  <C extends ObservableLike, CInner extends ObservableLike>(
+  <C extends ObservableLike>(
     createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ContainerOf<C, T>,
-  ): ScanMany<C, CInner>["scanMany"] =>
+  ): ScanMany<C>["scanMany"] =>
   <T, TAcc>(
-    scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
+    scanner: Function2<TAcc, T, ContainerOf<C, TAcc>>,
     initialValue: Factory<TAcc>,
   ): ContainerOperator<C, T, TAcc> =>
   observable =>
@@ -47,7 +47,7 @@ const HigherOrderObservable_scanMany =
         ),
         Observable_forkMerge<ContainerOf<ObservableLike, TAcc>, TAcc>(
           compose(
-            Observable_concatMap(Observable_takeLast<CInner, TAcc>()),
+            Observable_concatMap(Observable_takeLast<C, TAcc>()),
             Observable_forEach<ObservableLike, TAcc>(
               bindMethod(accFeedbackStream, EventListenerLike_notify),
             ),

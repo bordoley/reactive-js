@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 
-## Hierarchy
-
-- **`FromOptional`**
-
-  ↳ [`FromOptional`](rx.FromOptional.md)
-
 ## Table of contents
 
 ### Constructor Methods

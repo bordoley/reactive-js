@@ -65,9 +65,6 @@ import {
   ScanLast,
   ThrowIfEmpty,
   Throws,
-  ToEnumerable,
-  ToObservable,
-  ToRunnable,
 } from "../rx.js";
 import Enumerable_catchError from "../rx/Enumerable/__internal__/Enumerable.catchError.js";
 import Enumerable_concatAll from "../rx/Enumerable/__internal__/Enumerable.concatAll.js";
@@ -249,7 +246,7 @@ export const retry: Retry<EnumerableLike>["retry"] = Observable_retry;
 
 export const scan: Scan<EnumerableLike>["scan"] = Observable_scan;
 
-export const scanLast: ScanLast<EnumerableLike, EnumerableLike>["scanLast"] =
+export const scanLast: ScanLast<EnumerableLike>["scanLast"] =
   Enumerable_scanLast;
 
 export const skipFirst: SkipFirst<EnumerableLike>["skipFirst"] =
@@ -275,16 +272,8 @@ export const throws: Throws<EnumerableLike>["throws"] = Observable_throws;
 export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
-  identity;
-
-export const toObservable: ToObservable<EnumerableLike>["toObservable"] =
-  identity;
-
 export const toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"] =
   Enumerable_toReadonlyArray;
-
-export const toRunnable: ToRunnable<EnumerableLike>["toRunnable"] = identity;
 
 export const zip: Zip<EnumerableLike>["zip"] =
   Observable_zip as Zip<EnumerableLike>["zip"];

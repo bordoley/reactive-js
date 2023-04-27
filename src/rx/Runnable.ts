@@ -7,6 +7,7 @@ import {
   Contains,
   DistinctUntilChanged,
   EndWith,
+  EnumeratorLike,
   EverySatisfy,
   First,
   FlatMapIterable,
@@ -36,9 +37,11 @@ import {
   Zip,
   ZipWith,
 } from "../containers.js";
+import * as Containers from "../containers.js";
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
+import { Factory, Function1, Optional, Updater } from "../functions.js";
 import ReadonlyArray_toObservable from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   Animate,
@@ -48,7 +51,6 @@ import {
   CurrentTime,
   DecodeWithCharset,
   Defer,
-  Empty,
   EncodeUtf8,
   Enqueue,
   Exhaust,
@@ -57,12 +59,6 @@ import {
   Flow,
   ForkMerge,
   ForkZipLatest,
-  FromEnumeratorFactory,
-  FromFactory,
-  FromIterable,
-  FromOptional,
-  FromReadonlyArray,
-  Generate,
   LastAsync,
   Merge,
   MergeAll,
@@ -77,16 +73,14 @@ import {
   TakeUntil,
   Throttle,
   ThrowIfEmpty,
-  Throws,
   Timeout,
   ToEnumerable,
-  ToObservable,
-  ToRunnable,
   WithCurrentTime,
   WithLatestFrom,
   ZipLatest,
   ZipWithLatestFrom,
 } from "../rx.js";
+import type * as Rx from "../rx.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -206,7 +200,13 @@ export const defer: Defer<RunnableLike>["defer"] = Runnable_defer;
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
-export const empty: Empty<RunnableLike>["empty"] = Observable_empty;
+interface Empty extends Containers.Empty<RunnableLike> {
+  /**
+   * @category Constructor
+   */
+  empty<T>(options?: { delay?: number }): RunnableLike<T>;
+}
+export const empty: Empty["empty"] = Observable_empty;
 
 export const encodeUtf8: EncodeUtf8<RunnableLike>["encodeUtf8"] =
   Runnable_encodeUtf8;
@@ -247,22 +247,85 @@ export const forkZip: ForkZip<RunnableLike>["forkZip"] =
 export const forkZipLatest: ForkZipLatest<RunnableLike>["forkZipLatest"] =
   Observable_forkZipLatest as ForkZipLatest<RunnableLike>["forkZipLatest"];
 
-export const fromEnumeratorFactory: FromEnumeratorFactory<RunnableLike>["fromEnumeratorFactory"] =
+interface FromEnumeratorFactory
+  extends Containers.FromEnumeratorFactory<RunnableLike> {
+  /**
+   * @category Constructor
+   */
+  fromEnumeratorFactory<T>(
+    factory: Factory<EnumeratorLike<T>>,
+    options?: {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    },
+  ): RunnableLike<T>;
+}
+export const fromEnumeratorFactory: FromEnumeratorFactory["fromEnumeratorFactory"] =
   Runnable_fromEnumeratorFactory;
 
-export const fromFactory: FromFactory<RunnableLike>["fromFactory"] =
-  Observable_fromFactory;
+interface FromFactory extends Containers.FromFactory<RunnableLike> {
+  /**
+   * @category Constructor
+   */
+  fromFactory<T>(
+    factory: Factory<T>,
+    options?: {
+      readonly delay?: number;
+    },
+  ): RunnableLike<T>;
+}
+export const fromFactory: FromFactory["fromFactory"] = Observable_fromFactory;
 
-export const fromIterable: FromIterable<RunnableLike>["fromIterable"] =
-  Iterable_toObservable;
+interface FromIterable extends Containers.FromIterable<RunnableLike> {
+  /**
+   * @category Constructor
+   */
+  fromIterable<T>(options?: {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }): Function1<Iterable<T>, RunnableLike<T>>;
+}
+export const fromIterable: FromIterable["fromIterable"] = Iterable_toObservable;
 
-export const fromOptional: FromOptional<RunnableLike>["fromOptional"] =
-  Optional_toObservable;
+interface FromOptional extends Containers.FromOptional<RunnableLike> {
+  /**
+   * @category Constructor
+   */
+  fromOptional<T>(options?: {
+    readonly delay?: number;
+  }): Function1<Optional<T>, RunnableLike<T>>;
+}
+export const fromOptional: FromOptional["fromOptional"] = Optional_toObservable;
 
-export const fromReadonlyArray: FromReadonlyArray<RunnableLike>["fromReadonlyArray"] =
+interface FromReadonlyArray extends Containers.FromReadonlyArray<RunnableLike> {
+  /**
+   * @category Constructor
+   */
+  fromReadonlyArray<T>(options?: {
+    readonly count?: number;
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+    readonly start?: number;
+  }): Function1<readonly T[], RunnableLike<T>>;
+}
+export const fromReadonlyArray: FromReadonlyArray["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 
-export const generate: Generate<RunnableLike>["generate"] = Observable_generate;
+interface Generate extends Containers.Generate<RunnableLike> {
+  /**
+   * @category Constructor
+   */
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options?: {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    },
+  ): RunnableLike<T>;
+}
+
+export const generate: Generate["generate"] = Observable_generate;
 
 export const identity: Identity<RunnableLike>["identity"] = Container_identity;
 
@@ -309,11 +372,9 @@ export const run = Runnable_run;
 
 export const scan: Scan<RunnableLike>["scan"] = Observable_scan;
 
-export const scanLast: ScanLast<RunnableLike, RunnableLike>["scanLast"] =
-  Runnable_scanLast;
+export const scanLast: ScanLast<RunnableLike>["scanLast"] = Runnable_scanLast;
 
-export const scanMany: ScanMany<RunnableLike, RunnableLike>["scanMany"] =
-  Runnable_scanMany;
+export const scanMany: ScanMany<RunnableLike>["scanMany"] = Runnable_scanMany;
 
 export const skipFirst: SkipFirst<RunnableLike>["skipFirst"] =
   Observable_skipFirst;
@@ -346,22 +407,24 @@ export const throttle: Throttle<RunnableLike>["throttle"] = Runnable_throttle;
 export const throwIfEmpty: ThrowIfEmpty<RunnableLike>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-export const throws: Throws<RunnableLike, { delay?: number }>["throws"] =
-  Observable_throws;
+interface Throws extends Rx.Throws<RunnableLike> {
+  /**
+   * @category Constructor
+   */
+  throws<T>(options?: {
+    delay?: number;
+    raise?: Factory<unknown>;
+  }): RunnableLike<T>;
+}
+export const throws: Throws["throws"] = Observable_throws;
 
 export const timeout: Timeout<RunnableLike>["timeout"] = Observable_timeout;
 
 export const toEnumerable: ToEnumerable<RunnableLike>["toEnumerable"] =
   Observable_toEnumerable;
 
-export const toObservable: ToObservable<RunnableLike>["toObservable"] =
-  Container_identity as ToObservable<RunnableLike>["toObservable"];
-
 export const toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
   Runnable_toReadonlyArray;
-
-export const toRunnable: ToRunnable<RunnableLike>["toRunnable"] =
-  Container_identity as ToRunnable<RunnableLike>["toRunnable"];
 
 export const withCurrentTime: WithCurrentTime<RunnableLike>["withCurrentTime"] =
   Observable_withCurrentTime;

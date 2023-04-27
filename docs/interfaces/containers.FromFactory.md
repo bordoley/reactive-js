@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 
-## Hierarchy
-
-- **`FromFactory`**
-
-  ↳ [`FromFactory`](rx.FromFactory.md)
-
 ## Table of contents
 
 ### Constructor Methods

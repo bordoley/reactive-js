@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / ToIterable
 
-# Interface: ToIterable<C, O\>
+# Interface: ToIterable<C\>
 
 [containers](../modules/containers.md).ToIterable
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### toIterable
 
-▸ **toIterable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`IterableLike`](containers.IterableLike.md)<`T`\>\>
+▸ **toIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`IterableLike`](containers.IterableLike.md)<`T`\>\>
 
 Converts the ContainerLike to a `IterableLike`.
 
@@ -30,12 +29,6 @@ Converts the ContainerLike to a `IterableLike`.
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

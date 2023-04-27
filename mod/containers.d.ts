@@ -206,12 +206,12 @@ export interface EndWith<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Enumerate<C extends ContainerLike, CEnumerator extends EnumeratorLike = EnumeratorLike, O = never> {
+export interface Enumerate<C extends ContainerLike, CEnumerator extends EnumeratorLike = EnumeratorLike> {
     /**
      *
      * @category Transform
      */
-    enumerate<T>(options?: O): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
+    enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
 }
 /**
  * @noInheritDoc
@@ -620,25 +620,25 @@ export interface TakeWhile<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToIterable<C extends ContainerLike, O = never> {
+export interface ToIterable<C extends ContainerLike> {
     /**
      * Converts the ContainerLike to a `IterableLike`.
      *
      * @category Transform
      */
-    toIterable<T>(options?: O): Function1<ContainerOf<C, T>, IterableLike<T>>;
+    toIterable<T>(): Function1<ContainerOf<C, T>, IterableLike<T>>;
 }
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToReadonlyArray<C extends ContainerLike, O = never> {
+export interface ToReadonlyArray<C extends ContainerLike> {
     /**
      * Converts the ContainerLike to a `ReadonlyArrayLike`.
      *
      * @category Transform
      */
-    toReadonlyArray<T>(options?: O): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
+    toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
 }
 /**
  * @noInheritDoc

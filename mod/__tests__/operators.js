@@ -44,5 +44,4 @@ export const mapTests = (m) => describe("map", test("maps every value", pipeLazy
     pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.map(selector), m.toRunnable(), Runnable.toReadonlyArray()), expectToThrowError(err));
 }));
 export const toEnumerableTests = (m) => describe("toEnumerable", test("with an enumerable observable", pipeLazy([1, 2, 3, 4], m.fromReadonlyArray(), m.toEnumerable(), Enumerable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))));
-const toRunnableTest = (m) => test("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])));
-export const toRunnableWithDelayTests = (m) => describe("toRunnable", toRunnableTest(m), test("with delay", pipeLazy([9, 9, 9, 9], m.fromReadonlyArray(), m.toRunnable({ delay: 2 }), Runnable.withCurrentTime(t => t), Runnable.toReadonlyArray(), expectArrayEquals([0, 2, 4, 6]))));
+export const toRunnableTest = (m) => test("without delay", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.toRunnable(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5])));

@@ -645,9 +645,6 @@ ___
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
-Generates a ContainerLike from a generator function
-that is applied to an accumulator value between emitted items.
-
 #### Type parameters
 
 | Name |
@@ -656,13 +653,13 @@ that is applied to an accumulator value between emitted items.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> | The generator function. |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
-| `options?` | `Object` | - |
-| `options.delay?` | `number` | - |
-| `options.delayStart?` | `boolean` | - |
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 
@@ -726,7 +723,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | { `delay?`: `number`  } & { `raise?`: [`Factory`](functions.md#factory)<`unknown`\>  } |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
 
 #### Returns
 
@@ -3540,19 +3539,13 @@ ___
 
 ### toEnumerable
 
-▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -3587,19 +3580,13 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 
@@ -3609,19 +3596,13 @@ ___
 
 ### toRunnable
 
-▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+▸ **toRunnable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `undefined` |
 
 #### Returns
 

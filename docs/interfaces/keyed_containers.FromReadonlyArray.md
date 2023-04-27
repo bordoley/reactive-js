@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [keyed-containers](../modules/keyed_containers.md) / FromReadonlyArray
 
-# Interface: FromReadonlyArray<C, O\>
+# Interface: FromReadonlyArray<C\>
 
 [keyed-containers](../modules/keyed_containers.md).FromReadonlyArray
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -34,7 +33,9 @@
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `O` & { `count?`: `number` ; `start?`: `number`  } |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
 
 #### Returns
 

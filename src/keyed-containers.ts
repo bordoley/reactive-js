@@ -118,36 +118,35 @@ export type KeyOf<C extends KeyedContainerLike> = C extends {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Empty<C extends KeyedContainerLike, O = never> {
+export interface Empty<C extends KeyedContainerLike> {
   /**
    * Return an ContainerLike that emits no items.
    *
    * @category Constructor
    */
-  empty<T, TKey extends KeyOf<C> = KeyOf<C>>(
-    options?: O,
-  ): KeyedContainerOf<C, TKey, T>;
+  empty<T, TKey extends KeyOf<C> = KeyOf<C>>(): KeyedContainerOf<C, TKey, T>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Entries<C extends KeyedContainerLike, O = never> {
+export interface Entries<C extends KeyedContainerLike> {
   /**
    *
    * @category Transform
    */
-  entries<T, TKey extends KeyOf<C> = KeyOf<C>>(
-    options?: O,
-  ): Function1<KeyedContainerOf<C, TKey, T>, EnumeratorLike<[TKey, T]>>;
+  entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+    KeyedContainerOf<C, TKey, T>,
+    EnumeratorLike<[TKey, T]>
+  >;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForEach<C extends KeyedContainerLike, O = never> {
+export interface ForEach<C extends KeyedContainerLike> {
   /**
    * Returns a ContainerOperator that applies the side effect function to each
    * value emitted by the source.
@@ -156,7 +155,6 @@ export interface ForEach<C extends KeyedContainerLike, O = never> {
    */
   forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(
     effect: SideEffect1<T>,
-    options?: O,
   ): KeyedContainerOperator<C, TKey, T, T>;
 }
 
@@ -164,7 +162,7 @@ export interface ForEach<C extends KeyedContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForEachWithKey<C extends KeyedContainerLike, O = never> {
+export interface ForEachWithKey<C extends KeyedContainerLike> {
   /**
    * Returns a KeyedContainerOperator that applies the side effect function to each
    * value emitted by the source.
@@ -173,7 +171,6 @@ export interface ForEachWithKey<C extends KeyedContainerLike, O = never> {
    */
   forEachWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(
     effect: SideEffect2<T, TKey>,
-    options?: O,
   ): KeyedContainerOperator<C, TKey, T, T>;
 }
 
@@ -181,32 +178,31 @@ export interface ForEachWithKey<C extends KeyedContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromEntries<C extends KeyedContainerLike, O = unknown> {
+export interface FromEntries<C extends KeyedContainerLike> {
   /**
    * @category Constructor
    */
-  fromEntries<T, TKey extends KeyOf<C> = KeyOf<C>>(
-    options?: O,
-  ): Function1<EnumeratorLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
+  fromEntries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+    EnumeratorLike<[TKey, T]>,
+    KeyedContainerOf<C, TKey, T>
+  >;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromReadonlyArray<C extends KeyedContainerLike, O = unknown> {
+export interface FromReadonlyArray<C extends KeyedContainerLike> {
   /**
    * @category Constructor
    */
   fromReadonlyArray<
     T,
     TKey extends KeyOf<ReadonlyArrayLike> = KeyOf<ReadonlyArrayLike>,
-  >(
-    options?: O & {
-      readonly start?: number;
-      readonly count?: number;
-    },
-  ): Function1<readonly T[], KeyedContainerOf<C, TKey, T>>;
+  >(options?: {
+    readonly start?: number;
+    readonly count?: number;
+  }): Function1<readonly T[], KeyedContainerOf<C, TKey, T>>;
 }
 
 /**
@@ -229,7 +225,7 @@ export interface Identity<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Keep<C extends KeyedContainerLike, O = never> {
+export interface Keep<C extends KeyedContainerLike> {
   /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
@@ -238,7 +234,6 @@ export interface Keep<C extends KeyedContainerLike, O = never> {
    */
   keep<T, TKey extends KeyOf<C> = KeyOf<C>>(
     predicate: Predicate<T>,
-    options?: O,
   ): KeyedContainerOperator<C, TKey, T, T>;
 }
 
@@ -246,14 +241,13 @@ export interface Keep<C extends KeyedContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeepType<C extends KeyedContainerLike, O = never> {
+export interface KeepType<C extends KeyedContainerLike> {
   /**
    *
    * @category Operator
    */
   keepType<TA, TB extends TA, TKey extends KeyOf<C> = KeyOf<C>>(
     predicate: TypePredicate<TA, TB>,
-    options?: O,
   ): KeyedContainerOperator<C, TKey, TA, TB>;
 }
 
@@ -261,7 +255,7 @@ export interface KeepType<C extends KeyedContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeepWithKey<C extends KeyedContainerLike, O = never> {
+export interface KeepWithKey<C extends KeyedContainerLike> {
   /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
@@ -270,7 +264,6 @@ export interface KeepWithKey<C extends KeyedContainerLike, O = never> {
    */
   keepWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(
     predicate: Function2<T, TKey, boolean>,
-    options?: O,
   ): KeyedContainerOperator<C, TKey, T, T>;
 }
 
@@ -278,35 +271,37 @@ export interface KeepWithKey<C extends KeyedContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Keys<C extends KeyedContainerLike, O = never> {
+export interface Keys<C extends KeyedContainerLike> {
   /**
    *
    * @category Transform
    */
-  keys<TKey extends KeyOf<C> = KeyOf<C>>(
-    options?: O,
-  ): Function1<KeyedContainerOf<C, TKey, unknown>, EnumeratorLike<TKey>>;
+  keys<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+    KeyedContainerOf<C, TKey, unknown>,
+    EnumeratorLike<TKey>
+  >;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeySet<C extends KeyedContainerLike, O = never> {
+export interface KeySet<C extends KeyedContainerLike> {
   /**
    *
    * @category Transform
    */
-  keySet<TKey extends KeyOf<C> = KeyOf<C>>(
-    options?: O,
-  ): Function1<KeyedContainerOf<C, TKey, unknown>, ReadonlySetLike<TKey>>;
+  keySet<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+    KeyedContainerOf<C, TKey, unknown>,
+    ReadonlySetLike<TKey>
+  >;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Map<C extends KeyedContainerLike, O = never> {
+export interface Map<C extends KeyedContainerLike> {
   /**
    * Returns a ContainerOperator that applies the `selector` function to each
    * value emitted by the source.
@@ -319,7 +314,6 @@ export interface Map<C extends KeyedContainerLike, O = never> {
    */
   map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(
     selector: Function1<TA, TB>,
-    options?: O,
   ): KeyedContainerOperator<C, TKey, TA, TB>;
 }
 
@@ -327,7 +321,7 @@ export interface Map<C extends KeyedContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface MapWithKey<C extends KeyedContainerLike, O = never> {
+export interface MapWithKey<C extends KeyedContainerLike> {
   /**
    * Returns a ContainerOperator that applies the `selector` function to each
    * value emitted by the source.
@@ -340,7 +334,6 @@ export interface MapWithKey<C extends KeyedContainerLike, O = never> {
    */
   mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(
     selector: Function2<TA, TKey, TB>,
-    options?: O,
   ): KeyedContainerOperator<C, TKey, TA, TB>;
 }
 
@@ -348,27 +341,26 @@ export interface MapWithKey<C extends KeyedContainerLike, O = never> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToReadonlyArray<C extends KeyedContainerLike, O = never> {
+export interface ToReadonlyArray<C extends KeyedContainerLike> {
   /**
    * Converts the ContainerLike to a `ReadonlyArrayLike`.
    *
    * @category Transform
    */
-  toReadonlyArray<T, TKey extends KeyOf<C> = KeyOf<C>>(
-    options?: O,
-  ): Function1<KeyedContainerOf<C, TKey, T>, ReadonlyArrayLike<T>>;
+  toReadonlyArray<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+    KeyedContainerOf<C, TKey, T>,
+    ReadonlyArrayLike<T>
+  >;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Values<C extends KeyedContainerLike, O = never> {
+export interface Values<C extends KeyedContainerLike> {
   /**
    *
    * @category Transform
    */
-  values<T>(
-    options?: O,
-  ): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
+  values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
 }

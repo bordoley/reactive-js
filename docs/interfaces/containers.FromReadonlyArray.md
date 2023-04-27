@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 
-## Hierarchy
-
-- **`FromReadonlyArray`**
-
-  ↳ [`FromReadonlyArray`](rx.FromReadonlyArray.md)
-
 ## Table of contents
 
 ### Constructor Methods

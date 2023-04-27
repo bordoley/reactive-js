@@ -1,7 +1,12 @@
 import { IterableLike } from "../../../containers.js";
-import { Flow } from "../../../rx.js";
-declare const Iterable_flow: Flow<IterableLike, {
+import { Function1 } from "../../../functions.js";
+import { PauseableObservableLike } from "../../../rx.js";
+import { SchedulerLike } from "../../../scheduling.js";
+import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
+declare const Iterable_flow: <T>(scheduler: SchedulerLike, options?: {
+    readonly capacity?: number;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly delay?: number;
     readonly delayStart?: boolean;
-}>["flow"];
+}) => Function1<IterableLike<T>, PauseableObservableLike<T> & DisposableLike>;
 export default Iterable_flow;

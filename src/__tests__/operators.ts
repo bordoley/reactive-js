@@ -202,7 +202,7 @@ export const toEnumerableTests = <C extends ContainerLike>(
     ),
   );
 
-const toRunnableTest = <C extends ContainerLike>(
+export const toRunnableTest = <C extends ContainerLike>(
   m: FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   test(
@@ -213,31 +213,5 @@ const toRunnableTest = <C extends ContainerLike>(
       m.toRunnable(),
       Runnable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 4, 5]),
-    ),
-  );
-
-export const toRunnableWithDelayTests = <C extends ContainerLike>(
-  m: FromReadonlyArray<C> &
-    ToRunnable<
-      C,
-      {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-      }
-    >,
-) =>
-  describe(
-    "toRunnable",
-    toRunnableTest(m),
-    test(
-      "with delay",
-      pipeLazy(
-        [9, 9, 9, 9],
-        m.fromReadonlyArray(),
-        m.toRunnable({ delay: 2 }),
-        Runnable.withCurrentTime(t => t),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([0, 2, 4, 6]),
-      ),
     ),
   );

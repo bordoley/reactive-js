@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [keyed-containers](../modules/keyed_containers.md) / FromEntries
 
-# Interface: FromEntries<C, O\>
+# Interface: FromEntries<C\>
 
 [keyed-containers](../modules/keyed_containers.md).FromEntries
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -21,7 +20,7 @@
 
 ### fromEntries
 
-▸ **fromEntries**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](containers.EnumeratorLike.md)<[`TKey`, `T`]\>, [`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](containers.EnumeratorLike.md)<[`TKey`, `T`]\>, [`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
 
 #### Type parameters
 
@@ -29,12 +28,6 @@
 | :------ | :------ |
 | `T` | `T` |
 | `TKey` | extends `Object` = [`KeyOf`](../modules/keyed_containers.md#keyof)<`C`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 #### Returns
 

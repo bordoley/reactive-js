@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 
-## Hierarchy
-
-- **`FromEnumeratorFactory`**
-
-  ↳ [`FromEnumeratorFactory`](rx.FromEnumeratorFactory.md)
-
 ## Table of contents
 
 ### Constructor Methods

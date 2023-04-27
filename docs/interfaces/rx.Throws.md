@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / Throws
 
-# Interface: Throws<C, O\>
+# Interface: Throws<C\>
 
 [rx](../modules/rx.md).Throws
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -33,7 +32,8 @@
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `O` & { `raise?`: [`Factory`](../modules/functions.md#factory)<`unknown`\>  } |
+| `options?` | `Object` |
+| `options.raise?` | [`Factory`](../modules/functions.md#factory)<`unknown`\> |
 
 #### Returns
 

@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / Share
 
-# Interface: Share<C, O\>
+# Interface: Share<C\>
 
 [rx](../modules/rx.md).Share
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `unknown` |
 
 ## Table of contents
 
@@ -38,7 +37,10 @@ to the source is disposed.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
-| `options?` | `O` & { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `replay?`: `number`  } | - |
+| `options?` | `Object` | - |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
+| `options.capacity?` | `number` | - |
+| `options.replay?` | `number` | - |
 
 #### Returns
 

@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
 
-## Hierarchy
-
-- **`Generate`**
-
-  ↳ [`Generate`](rx.Generate.md)
-
 ## Table of contents
 
 ### Constructor Methods

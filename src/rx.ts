@@ -13,17 +13,9 @@ import {
   ContainerLike_type,
   ContainerOf,
   ContainerOperator,
-  EnumeratorLike,
   PromiseableLike,
 } from "./containers.js";
-import type * as Containers from "./containers.js";
-import {
-  Factory,
-  Function1,
-  Function2,
-  Optional,
-  Updater,
-} from "./functions.js";
+import { Factory, Function1, Function2, Optional } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import {
   DispatcherLike,
@@ -357,15 +349,13 @@ export interface CurrentTime<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface DecodeWithCharset<C extends ContainerLike, O = unknown> {
+export interface DecodeWithCharset<C extends ContainerLike> {
   /**
    * @category Operator
    */
-  decodeWithCharset(
-    options?: O & {
-      charset?: string;
-    },
-  ): ContainerOperator<C, ArrayBuffer, string>;
+  decodeWithCharset(options?: {
+    charset?: string;
+  }): ContainerOperator<C, ArrayBuffer, string>;
 }
 
 /**
@@ -377,19 +367,6 @@ export interface Defer<C extends ContainerLike> {
    * @category Constructor
    */
   defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface Empty<C extends ContainerLike> extends Containers.Empty<C> {
-  /**
-   * Return an ContainerLike that emits no items.
-   *
-   * @category Constructor
-   */
-  empty<T>(options?: { delay?: number }): ContainerOf<C, T>;
 }
 
 /**
@@ -470,13 +447,13 @@ export interface FirstAsync<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Flow<C extends ContainerLike, O = unknown> {
+export interface Flow<C extends ContainerLike> {
   /**
    * @category Transform
    */
   flow<T>(
     scheduler: SchedulerLike,
-    options?: O & {
+    options?: {
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
@@ -653,134 +630,11 @@ export interface FromEnumerable<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromEnumeratorFactory<C extends ContainerLike>
-  extends Containers.FromEnumeratorFactory<C> {
-  /**
-   * @category Constructor
-   */
-  fromEnumeratorFactory<T>(
-    factory: Factory<EnumeratorLike<T>>,
-    options?: {
-      readonly delay?: number;
-      readonly delayStart?: boolean;
-    },
-  ): ContainerOf<C, T>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface FromFactory<C extends ContainerLike>
-  extends Containers.FromFactory<C> {
-  /**
-   * @category Constructor
-   */
-  fromFactory<T>(
-    factory: Factory<T>,
-    options?: {
-      readonly delay?: number;
-    },
-  ): ContainerOf<C, T>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface FromIterable<C extends ContainerLike>
-  extends Containers.FromIterable<C> {
-  /**
-   * @category Constructor
-   */
-  fromIterable<T>(options?: {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }): Function1<Iterable<T>, ContainerOf<C, T>>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface FromOptional<C extends ContainerLike>
-  extends Containers.FromOptional<C> {
-  /**
-   * @category Constructor
-   */
-  fromOptional<T>(options?: {
-    readonly delay?: number;
-  }): Function1<Optional<T>, ContainerOf<C, T>>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface FromReadonlyArray<C extends ContainerLike>
-  extends Containers.FromReadonlyArray<C> {
-  /**
-   * @category Constructor
-   */
-  fromReadonlyArray<T>(options?: {
-    readonly count?: number;
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-    readonly start?: number;
-  }): Function1<readonly T[], ContainerOf<C, T>>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
 export interface FromRunnable<C extends ContainerLike> {
   /**
    * @category Constructor
    */
   fromRunnable: <T>() => Function1<RunnableLike<T>, ContainerOf<C, T>>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface Generate<C extends ContainerLike>
-  extends Containers.Generate<C> {
-  /**
-   * Generates a ContainerLike from a generator function
-   * that is applied to an accumulator value between emitted items.
-   *
-   * @param generator - The generator function.
-   * @param initialValue - Factory function used to generate the initial accumulator.
-   *
-   * @category Constructor
-   */
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options?: {
-      readonly delay?: number;
-      readonly delayStart?: boolean;
-    },
-  ): ContainerOf<C, T>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface GenerateLast<
-  C extends ContainerLike,
-  CInner extends ObservableLike,
-> {
-  /**
-   * @category Constructor
-   */
-  generateLast<T>(
-    generator: Function1<T, ContainerOf<CInner, T>>,
-    initialValue: Factory<T>,
-  ): ContainerOf<C, T>;
 }
 
 /**
@@ -875,7 +729,7 @@ export interface MergeWith<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Multicast<C extends ContainerLike, O = unknown> {
+export interface Multicast<C extends ContainerLike> {
   /**
    * Returns a `MulticastObservableLike` backed by a single subscription to the source.
    *
@@ -885,7 +739,7 @@ export interface Multicast<C extends ContainerLike, O = unknown> {
    */
   multicast<T>(
     scheduler: SchedulerLike,
-    options?: O & {
+    options?: {
       /**
        * The number of items to buffer for replay when an observer subscribes
        * to the stream.
@@ -943,15 +797,12 @@ export interface Retry<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ScanLast<
-  C extends ContainerLike,
-  CInner extends ObservableLike,
-> {
+export interface ScanLast<C extends ContainerLike> {
   /**
    * @category Operator
    */
   scanLast: <T, TAcc>(
-    scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
+    scanner: Function2<TAcc, T, ContainerOf<C, TAcc>>,
     initialValue: Factory<TAcc>,
   ) => ContainerOperator<C, T, TAcc>;
 }
@@ -960,15 +811,12 @@ export interface ScanLast<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ScanMany<
-  C extends ContainerLike,
-  CInner extends ObservableLike,
-> {
+export interface ScanMany<C extends ContainerLike> {
   /**
    * @category Operator
    */
   scanMany: <T, TAcc>(
-    scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
+    scanner: Function2<TAcc, T, ContainerOf<C, TAcc>>,
     initialValue: Factory<TAcc>,
   ) => ContainerOperator<C, T, TAcc>;
 }
@@ -977,7 +825,7 @@ export interface ScanMany<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Share<C extends ContainerLike, O = unknown> {
+export interface Share<C extends ContainerLike> {
   /**
    * Returns an `ObservableLike` backed by a shared refcounted subscription to the
    * source. When the refcount goes to 0, the underlying subscription
@@ -989,7 +837,7 @@ export interface Share<C extends ContainerLike, O = unknown> {
    */
   share<T>(
     scheduler: SchedulerLike,
-    options?: O & {
+    options?: {
       readonly replay?: number;
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -1086,15 +934,11 @@ export interface ThrowIfEmpty<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Throws<C extends ContainerLike, O = unknown> {
+export interface Throws<C extends ContainerLike> {
   /**
    * @category Constructor
    */
-  throws<T>(
-    options?: O & {
-      raise?: Factory<unknown>;
-    },
-  ): ContainerOf<C, T>;
+  throws<T>(options?: { raise?: Factory<unknown> }): ContainerOf<C, T>;
 }
 
 /**
@@ -1125,35 +969,33 @@ export interface Timeout<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToEnumerable<C extends ContainerLike, O = never> {
+export interface ToEnumerable<C extends ContainerLike> {
   /**
    * @category Transform
    */
-  toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+  toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToObservable<C extends ContainerLike, O = never> {
+export interface ToObservable<C extends ContainerLike> {
   /**
    * @category Transform
    */
-  toObservable: <T>(
-    options?: O,
-  ) => Function1<ContainerOf<C, T>, ObservableLike<T>>;
+  toObservable: <T>() => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 }
 
 /**
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToRunnable<C extends ContainerLike, O = never> {
+export interface ToRunnable<C extends ContainerLike> {
   /**
    * @category Transform
    */
-  toRunnable: <T>(options?: O) => Function1<ContainerOf<C, T>, RunnableLike<T>>;
+  toRunnable: <T>() => Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
 /**

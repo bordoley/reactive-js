@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / ToRunnable
 
-# Interface: ToRunnable<C, O\>
+# Interface: ToRunnable<C\>
 
 [rx](../modules/rx.md).ToRunnable
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `O` | `never` |
 
 ## Table of contents
 
@@ -21,23 +20,17 @@
 
 ### toRunnable
 
-• **toRunnable**: <T\>(`options?`: `O`) => [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`RunnableLike`](rx.RunnableLike.md)<`T`\>\>
+• **toRunnable**: <T\>() => [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`RunnableLike`](rx.RunnableLike.md)<`T`\>\>
 
 #### Type declaration
 
-▸ <`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`RunnableLike`](rx.RunnableLike.md)<`T`\>\>
+▸ <`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`RunnableLike`](rx.RunnableLike.md)<`T`\>\>
 
 ##### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `O` |
 
 ##### Returns
 
