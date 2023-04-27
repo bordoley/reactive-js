@@ -11,7 +11,7 @@ import Streamable_create from "./Streamable.create.js";
 const Streamable_createEventHandler = ((op, options = {}) => {
     const { mode } = options;
     return Streamable_create(mode === "switching"
-        ? Observable_switchMap(compose(op, Observable_ignoreElements()))
+        ? compose(Observable_switchMap(compose(op, Observable_ignoreElements(), Observable_startWith(true), Observable_endWith(false))), Observable_startWith(false))
         : mode === "blocking"
             ? compose(Observable_exhaustMap(compose(op, Observable_ignoreElements(), Observable_startWith(true), Observable_endWith(false))), Observable_startWith(false))
             : Observable_mergeMap(compose(op, Observable_ignoreElements()), { ...options, concurrency: 1 }));

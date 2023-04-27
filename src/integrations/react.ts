@@ -624,7 +624,7 @@ interface UseAnimations {
   ): readonly [
     ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
     Function1<TEvent, boolean>,
-    never,
+    boolean,
   ];
 
   /**
@@ -791,7 +791,7 @@ interface UseAnimation {
   ): readonly [
     EventSourceLike<{ event: TEvent; value: T }>,
     Function1<TEvent, boolean>,
-    never,
+    boolean,
   ];
 
   /**

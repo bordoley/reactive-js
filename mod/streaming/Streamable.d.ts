@@ -10,7 +10,7 @@ export declare const create: <TReq, T>(op: import("../containers.js").ContainerO
 export declare const createEventHandler: {
     <TEvent>(op: import("../functions.js").Function1<TEvent, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "switching";
-    }): import("../streaming.js").StreamableLike<TEvent, never, import("../streaming.js").StreamLike<TEvent, never>>;
+    }): import("../streaming.js").StreamableLike<TEvent, boolean, import("../streaming.js").StreamLike<TEvent, boolean>>;
     <TEvent_1>(op: import("../functions.js").Function1<TEvent_1, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "blocking";
     }): import("../streaming.js").StreamableLike<TEvent_1, boolean, import("../streaming.js").StreamLike<TEvent_1, boolean>>;

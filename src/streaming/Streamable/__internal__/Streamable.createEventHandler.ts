@@ -17,7 +17,7 @@ interface CreateEventHandler {
   createEventHandler<TEvent>(
     op: Function1<TEvent, ObservableLike<unknown>>,
     options: { readonly mode: "switching" },
-  ): StreamableLike<TEvent, never>;
+  ): StreamableLike<TEvent, boolean>;
   createEventHandler<TEvent>(
     op: Function1<TEvent, ObservableLike<unknown>>,
     options: { readonly mode: "blocking" },
@@ -47,8 +47,16 @@ const Streamable_createEventHandler: CreateEventHandler["createEventHandler"] =
     const { mode } = options;
     return Streamable_create<TEvent, unknown>(
       mode === "switching"
-        ? Observable_switchMap<TEvent, never>(
-            compose(op, Observable_ignoreElements<ObservableLike, never>()),
+        ? compose(
+            Observable_switchMap<TEvent, never>(
+              compose(
+                op,
+                Observable_ignoreElements<ObservableLike, never>(),
+                Observable_startWith<ObservableLike, boolean>(true),
+                Observable_endWith<ObservableLike, boolean>(false),
+              ),
+            ),
+            Observable_startWith<ObservableLike, boolean>(false),
           )
         : mode === "blocking"
         ? compose(

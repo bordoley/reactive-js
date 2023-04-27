@@ -240,46 +240,48 @@ const RxComponent = createComponent(
       },
       hostScheduler: SchedulerLike,
     ) =>
-      Streamable.createEventHandler(
-        pipe(
-          Observable.animate([
-            {
-              type: "tween",
-              duration: 1000,
-              from: 0,
-              to: 50,
-              selector: (v: number) => ({
-                color: "blue",
-                margin: `${50 - v}px`,
-                padding: `${v}px`,
-              }),
-            },
-            {
-              type: "spring",
-              stiffness: 0.01,
-              damping: 0.1,
-              from: 50,
-              to: 0,
-              selector: (v: number) => ({
-                color: "green",
-                margin: `${50 - v}px`,
-                padding: `${v}px`,
-              }),
-            },
-          ]),
-          Observable.forEach(({ color, margin, padding }) => {
-            const animatedDiv = animatedDivRef.current;
-            if (animatedDiv != null) {
-              animatedDiv.style.backgroundColor = color;
-              animatedDiv.style.margin = margin;
-              animatedDiv.style.padding = padding;
-            }
-          }),
-          Observable.subscribeOn(() =>
-            createAnimationFrameScheduler(hostScheduler),
-          ),
-          returns,
-        ),
+      Streamable.createEventHandler<"cancel" | "animate">(
+        ev =>
+          ev === "animate"
+            ? pipe(
+                Observable.animate([
+                  {
+                    type: "tween",
+                    duration: 1000,
+                    from: 0,
+                    to: 50,
+                    selector: (v: number) => ({
+                      color: "blue",
+                      margin: `${50 - v}px`,
+                      padding: `${v}px`,
+                    }),
+                  },
+                  {
+                    type: "spring",
+                    stiffness: 0.01,
+                    damping: 0.1,
+                    from: 50,
+                    to: 0,
+                    selector: (v: number) => ({
+                      color: "green",
+                      margin: `${50 - v}px`,
+                      padding: `${v}px`,
+                    }),
+                  },
+                ]),
+                Observable.forEach(({ color, margin, padding }) => {
+                  const animatedDiv = animatedDivRef.current;
+                  if (animatedDiv != null) {
+                    animatedDiv.style.backgroundColor = color;
+                    animatedDiv.style.margin = margin;
+                    animatedDiv.style.padding = padding;
+                  }
+                }),
+                Observable.subscribeOn(() =>
+                  createAnimationFrameScheduler(hostScheduler),
+                ),
+              )
+            : Observable.empty(),
         { mode: "switching" },
       );
 
@@ -307,6 +309,7 @@ const RxComponent = createComponent(
         scheduler,
       );
       const animationStream = __stream(animationStreamable);
+      const isAnimationRunning = __observe(animationStream) ?? false;
 
       const runAnimation = __bindMethod(animationStream, QueueableLike_enqueue);
 
@@ -336,7 +339,15 @@ const RxComponent = createComponent(
             }}
           />
           <div>
-            <button onClick={runAnimation}>Run Animation</button>
+            {isAnimationRunning ? (
+              <button onClick={() => runAnimation("cancel")}>
+                Cancel Animation
+              </button>
+            ) : (
+              <button onClick={() => runAnimation("animate")}>
+                Run Animation
+              </button>
+            )}
           </div>
         </div>
       );

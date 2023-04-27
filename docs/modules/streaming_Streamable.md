@@ -40,7 +40,7 @@ ___
 
 ### createEventHandler
 
-▸ **createEventHandler**<`TEvent`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `never`\>\>
+▸ **createEventHandler**<`TEvent`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `boolean`\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -60,7 +60,7 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `never`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `never`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `boolean`\>\>
 
 ▸ **createEventHandler**<`TEvent_1`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_1`, `boolean`\>\>
 

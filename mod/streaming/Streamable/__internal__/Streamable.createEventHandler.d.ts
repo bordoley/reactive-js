@@ -5,7 +5,7 @@ import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util
 interface CreateEventHandler {
     createEventHandler<TEvent>(op: Function1<TEvent, ObservableLike<unknown>>, options: {
         readonly mode: "switching";
-    }): StreamableLike<TEvent, never>;
+    }): StreamableLike<TEvent, boolean>;
     createEventHandler<TEvent>(op: Function1<TEvent, ObservableLike<unknown>>, options: {
         readonly mode: "blocking";
     }): StreamableLike<TEvent, boolean>;
