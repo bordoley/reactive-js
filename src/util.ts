@@ -16,7 +16,6 @@ import {
   __PauseableLike_resume as PauseableLike_resume,
   __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy,
   __QueueableLike_enqueue as QueueableLike_enqueue,
-  __ReplayableLike_buffer as ReplayableLike_buffer,
 } from "./__internal__/symbols.js";
 import {
   ContainerLike,
@@ -43,7 +42,6 @@ export {
   PauseableLike_resume,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
-  ReplayableLike_buffer,
 };
 
 export type DisposableOrTeardown =
@@ -143,13 +141,6 @@ export interface IndexedCollectionLike<T = unknown>
 export interface IndexedBufferCollectionLike<T = unknown>
   extends BufferLike,
     IndexedCollectionLike<T> {}
-
-/**
- * @noInheritDoc
- */
-export interface ReplayableLike<T = unknown> {
-  readonly [ReplayableLike_buffer]: IndexedBufferCollectionLike<T>;
-}
 
 /**
  * @noInheritDoc

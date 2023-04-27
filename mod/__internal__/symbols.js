@@ -26,19 +26,21 @@ export const __EnumeratorLike_current = /*@__PURE__*/ symbol("EnumeratorLike_cur
 /** @type {unique symbol} */
 export const __EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol("EnumeratorLike_hasCurrent");
 /** @type {unique symbol} */
+export const __EventEmitterLike_addListener = /*@__PURE__*/ symbol("EventEmitterLike_addListener");
+/** @type {unique symbol} */
 export const __EventListenerLike_isErrorSafe = /*@__PURE__*/ symbol("EventListenerLike_isErrorSafe");
 /** @type {unique symbol} */
 export const __EventListenerLike_notify = /*@__PURE__*/ symbol("EventListenerLike_notify");
 /** @type {unique symbol} */
 export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol("EventPublisherLike_listenerCount");
 /** @type {unique symbol} */
-export const __EventEmitterLike_addListener = /*@__PURE__*/ symbol("EventEmitterLike_addListener");
-/** @type {unique symbol} */
 export const __InteractiveObservableLike_move = /*@__PURE__*/ symbol("InteractiveObservableLike_move");
 /** @type {unique symbol} */
 export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol("KeyedCollectionLike_get");
 /** @type {unique symbol} */
 export const __KeyedContainerLike_TKey = /*@__PURE__*/ symbol("KeyedContainerLike_TKey");
+/** @type {unique symbol} */
+export const __MulticastObservableLike_buffer = /*@__PURE__*/ symbol("MulticastObservableLike_buffer");
 /** @type {unique symbol} */
 export const __ObserverLike_notify = /*@__PURE__*/ symbol("ObserverLike_notify");
 /** @type {unique symbol} */
@@ -61,8 +63,6 @@ export const __PublisherLike_observerCount = /*@__PURE__*/ symbol("PublisherLike
 export const __QueueableLike_enqueue = /*@__PURE__*/ symbol("QueueableLike_enqueue");
 /** @type {unique symbol} */
 export const __QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol("QueueableLike_backpressureStrategy");
-/** @type {unique symbol} */
-export const __ReplayableLike_buffer = /*@__PURE__*/ symbol("ReplayableLike_buffer");
 /** @type {unique symbol} */
 export const __SchedulerLike_inContinuation = /*@__PURE__*/ symbol("SchedulerLike_inContinuation");
 /** @type {unique symbol} */

@@ -6,13 +6,13 @@ import { __WindowLocationStreamLike_canGoBack as WindowLocationStreamLike_canGoB
 import { DelegatingLike_delegate, } from "../__internal__/util.js";
 import { bindMethod, compose, error, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
-import { ObservableLike_observe } from "../rx.js";
+import { MulticastObservableLike_buffer, ObservableLike_observe, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import * as Stream from "../streaming/Stream.js";
 import Stream_delegatingMixin from "../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import * as Streamable from "../streaming/Streamable.js";
-import { DisposableLike_dispose, QueueableLike_enqueue, ReplayableLike_buffer, } from "../util.js";
+import { DisposableLike_dispose, QueueableLike_enqueue, } from "../util.js";
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
 import IndexedBufferCollection_map from "../util/IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
@@ -80,10 +80,10 @@ export const windowLocation = /*@__PURE__*/ (() => {
     const createWindowLocationStream = createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function WindowLocationStream(instance, delegate) {
         init(Stream_delegatingMixin(), instance, delegate);
         init(Delegating_mixin(), instance, delegate);
-        instance[ReplayableLike_buffer] = pipe(instance[DelegatingLike_delegate][ReplayableLike_buffer], IndexedBufferCollection_map(location => location.uri));
+        instance[MulticastObservableLike_buffer] = pipe(instance[DelegatingLike_delegate][MulticastObservableLike_buffer], IndexedBufferCollection_map(location => location.uri));
         return instance;
     }, props({
-        [ReplayableLike_buffer]: none,
+        [MulticastObservableLike_buffer]: none,
     }), {
         get [WindowLocationStreamLike_canGoBack]() {
             unsafeCast(this);

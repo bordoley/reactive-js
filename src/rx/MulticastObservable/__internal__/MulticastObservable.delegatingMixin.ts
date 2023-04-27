@@ -3,12 +3,12 @@ import { __DelegatingMulticastObservableMixin_delegate } from "../../../__intern
 import { none, returns, unsafeCast } from "../../../functions.js";
 import {
   MulticastObservableLike,
+  MulticastObservableLike_buffer,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
 } from "../../../rx.js";
-import { ReplayableLike_buffer } from "../../../util.js";
 
 const MulticastObservable_delegatingMixin: <T>() => Mixin1<
   MulticastObservableLike<T>,
@@ -34,10 +34,10 @@ const MulticastObservable_delegatingMixin: <T>() => Mixin1<
         [__DelegatingMulticastObservableMixin_delegate]: none,
       }),
       {
-        get [ReplayableLike_buffer]() {
+        get [MulticastObservableLike_buffer]() {
           unsafeCast<TProperties>(this);
           return this[__DelegatingMulticastObservableMixin_delegate][
-            ReplayableLike_buffer
+            MulticastObservableLike_buffer
           ];
         },
 

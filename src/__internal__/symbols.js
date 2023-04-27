@@ -55,6 +55,11 @@ export const __EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __EventEmitterLike_addListener = /*@__PURE__*/ symbol(
+  "EventEmitterLike_addListener",
+);
+
+/** @type {unique symbol} */
 export const __EventListenerLike_isErrorSafe = /*@__PURE__*/ symbol(
   "EventListenerLike_isErrorSafe",
 );
@@ -70,11 +75,6 @@ export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __EventEmitterLike_addListener = /*@__PURE__*/ symbol(
-  "EventEmitterLike_addListener",
-);
-
-/** @type {unique symbol} */
 export const __InteractiveObservableLike_move = /*@__PURE__*/ symbol(
   "InteractiveObservableLike_move",
 );
@@ -87,6 +87,11 @@ export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __KeyedContainerLike_TKey = /*@__PURE__*/ symbol(
   "KeyedContainerLike_TKey",
+);
+
+/** @type {unique symbol} */
+export const __MulticastObservableLike_buffer = /*@__PURE__*/ symbol(
+  "MulticastObservableLike_buffer",
 );
 
 /** @type {unique symbol} */
@@ -142,11 +147,6 @@ export const __QueueableLike_enqueue = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol(
   "QueueableLike_backpressureStrategy",
-);
-
-/** @type {unique symbol} */
-export const __ReplayableLike_buffer = /*@__PURE__*/ symbol(
-  "ReplayableLike_buffer",
 );
 
 /** @type {unique symbol} */

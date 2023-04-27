@@ -32,7 +32,12 @@ import {
   unsafeCast,
 } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
-import { ObservableLike, ObservableLike_observe, ObserverLike } from "../rx.js";
+import {
+  MulticastObservableLike_buffer,
+  ObservableLike,
+  ObservableLike_observe,
+  ObserverLike,
+} from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { SchedulerLike } from "../scheduling.js";
 import {
@@ -50,7 +55,6 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
-  ReplayableLike_buffer,
 } from "../util.js";
 import Delegating_mixin from "../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../util/Disposable.js";
@@ -221,7 +225,7 @@ export const windowLocation: StreamableLike<
           | typeof WindowLocationStreamLike_replace
           | typeof ObservableLike_observe
         > & {
-          [ReplayableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
+          [MulticastObservableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
         },
         delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
       ): WindowLocationStreamLike & DisposableLike {
@@ -232,16 +236,16 @@ export const windowLocation: StreamableLike<
           delegate,
         );
 
-        instance[ReplayableLike_buffer] = pipe(
-          instance[DelegatingLike_delegate][ReplayableLike_buffer],
+        instance[MulticastObservableLike_buffer] = pipe(
+          instance[DelegatingLike_delegate][MulticastObservableLike_buffer],
           IndexedBufferCollection_map(location => location.uri),
         );
         return instance;
       },
       props<{
-        [ReplayableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
+        [MulticastObservableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
       }>({
-        [ReplayableLike_buffer]: none,
+        [MulticastObservableLike_buffer]: none,
       }),
       {
         get [WindowLocationStreamLike_canGoBack](): ObservableLike<boolean> {

@@ -1,5 +1,6 @@
 import {
   __InteractiveObservableLike_move as InteractiveObservableLike_move,
+  __MulticastObservableLike_buffer as MulticastObservableLike_buffer,
   __ObservableLike_isEnumerable as ObservableLike_isEnumerable,
   __ObservableLike_isRunnable as ObservableLike_isRunnable,
   __ObservableLike_observe as ObservableLike_observe,
@@ -29,15 +30,16 @@ import {
   DispatcherLike,
   DisposableLike,
   ErrorSafeEventListenerLike,
+  IndexedBufferCollectionLike,
   PauseableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  ReplayableLike,
 } from "./util.js";
 
 export {
   PauseableObservableLike_isPaused,
   InteractiveObservableLike_move,
+  MulticastObservableLike_buffer,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -123,11 +125,11 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  * @noInheritDoc
  * @category Container
  */
-export interface MulticastObservableLike<T>
-  extends ObservableLike<T>,
-    ReplayableLike<T> {
+export interface MulticastObservableLike<T> extends ObservableLike<T> {
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
+
+  readonly [MulticastObservableLike_buffer]: IndexedBufferCollectionLike<T>;
 }
 
 /**

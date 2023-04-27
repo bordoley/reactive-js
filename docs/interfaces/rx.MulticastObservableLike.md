@@ -16,8 +16,6 @@ A stateful ObservableLike resource.
 
 - [`ObservableLike`](rx.ObservableLike.md)<`T`\>
 
-- [`ReplayableLike`](util.ReplayableLike.md)<`T`\>
-
   ↳ **`MulticastObservableLike`**
 
   ↳↳ [`PublisherLike`](rx.PublisherLike.md)
@@ -32,10 +30,17 @@ A stateful ObservableLike resource.
 
 ### Properties
 
+- [[\_\_\_MulticastObservableLike\_buffer]](rx.MulticastObservableLike.md#[___multicastobservablelike_buffer])
 - [[\_\_\_ObservableLike\_isEnumerable]](rx.MulticastObservableLike.md#[___observablelike_isenumerable])
 - [[\_\_\_ObservableLike\_isRunnable]](rx.MulticastObservableLike.md#[___observablelike_isrunnable])
 
 ## Properties
+
+### [\_\_\_MulticastObservableLike\_buffer]
+
+• `Readonly` **[\_\_\_MulticastObservableLike\_buffer]**: [`IndexedBufferCollectionLike`](util.IndexedBufferCollectionLike.md)<`T`\>
+
+___
 
 ### [\_\_\_ObservableLike\_isEnumerable]
 

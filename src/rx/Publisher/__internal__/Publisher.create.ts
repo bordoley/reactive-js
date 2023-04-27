@@ -23,6 +23,7 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
+  MulticastObservableLike_buffer,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -39,7 +40,6 @@ import {
   EventListenerLike_notify,
   KeyedCollectionLike_get,
   QueueableLike_enqueue,
-  ReplayableLike_buffer,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
@@ -50,7 +50,7 @@ const Publisher_create: <T>(options?: {
 }) => PublisherLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     readonly [__Publisher_observers]: Set<ObserverLike<T>>;
-    readonly [ReplayableLike_buffer]: IndexedQueueLike<T>;
+    readonly [MulticastObservableLike_buffer]: IndexedQueueLike<T>;
   };
 
   const createPublisherInstance = createInstanceFactory(
@@ -63,7 +63,7 @@ const Publisher_create: <T>(options?: {
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
           | typeof PublisherLike_observerCount
-          | typeof ReplayableLike_buffer
+          | typeof MulticastObservableLike_buffer
           | typeof EventListenerLike_isErrorSafe
           | typeof EventListenerLike_notify
         > &
@@ -73,7 +73,7 @@ const Publisher_create: <T>(options?: {
         init(Disposable_mixin, instance);
 
         instance[__Publisher_observers] = newInstance<Set<ObserverLike>>(Set);
-        instance[ReplayableLike_buffer] = Queue_createIndexedQueue(
+        instance[MulticastObservableLike_buffer] = Queue_createIndexedQueue(
           replay,
           "drop-oldest",
         );
@@ -102,7 +102,7 @@ const Publisher_create: <T>(options?: {
       },
       props<TProperties>({
         [__Publisher_observers]: none,
-        [ReplayableLike_buffer]: none,
+        [MulticastObservableLike_buffer]: none,
       }),
       {
         [EventListenerLike_isErrorSafe]: true as const,
@@ -122,7 +122,7 @@ const Publisher_create: <T>(options?: {
             return;
           }
 
-          this[ReplayableLike_buffer][QueueableLike_enqueue](next);
+          this[MulticastObservableLike_buffer][QueueableLike_enqueue](next);
 
           for (const observer of this[__Publisher_observers]) {
             try {
@@ -152,7 +152,7 @@ const Publisher_create: <T>(options?: {
           // The idea here is that an onSubscribe function may
           // call next from unscheduled sources such as event handlers.
           // So we marshall those events back to the scheduler.
-          const buffer = this[ReplayableLike_buffer];
+          const buffer = this[MulticastObservableLike_buffer];
           const count = buffer[CollectionLike_count];
 
           try {

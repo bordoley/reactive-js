@@ -22,19 +22,21 @@ export declare const __EnumeratorLike_current: unique symbol;
 
 export declare const __EnumeratorLike_hasCurrent: unique symbol;
 
+export declare const __EventEmitterLike_addListener: unique symbol;
+
 export declare const __EventListenerLike_isErrorSafe: unique symbol;
 
 export declare const __EventListenerLike_notify: unique symbol;
 
 export declare const __EventPublisherLike_listenerCount: unique symbol;
 
-export declare const __EventEmitterLike_addListener: unique symbol;
-
 export declare const __InteractiveObservableLike_move: unique symbol;
 
 export declare const __KeyedCollectionLike_get: unique symbol;
 
 export declare const __KeyedContainerLike_TKey: unique symbol;
+
+export declare const __MulticastObservableLike_buffer: unique symbol;
 
 export declare const __ObserverLike_notify: unique symbol;
 
@@ -57,8 +59,6 @@ export declare const __PublisherLike_observerCount: unique symbol;
 export declare const __QueueableLike_enqueue: unique symbol;
 
 export declare const __QueueableLike_backpressureStrategy: unique symbol;
-
-export declare const __ReplayableLike_buffer: unique symbol;
 
 export declare const __SchedulerLike_inContinuation: unique symbol;
 

@@ -17,6 +17,7 @@ import {
 } from "../../../functions.js";
 import {
   MulticastObservableLike,
+  MulticastObservableLike_buffer,
   ObservableLike,
   PauseableObservableLike,
   PauseableObservableLike_isPaused,
@@ -34,7 +35,6 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
-  ReplayableLike_buffer,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";
@@ -114,9 +114,9 @@ const PauseableObservable_create: <T>(
         get [PauseableLike_isPaused](): boolean {
           unsafeCast<TProperties>(this);
           return (
-            this[PauseableObservableLike_isPaused][ReplayableLike_buffer][
-              KeyedCollectionLike_get
-            ](0) ?? true
+            this[PauseableObservableLike_isPaused][
+              MulticastObservableLike_buffer
+            ][KeyedCollectionLike_get](0) ?? true
           );
         },
 
