@@ -30,8 +30,6 @@ export declare const __EventListenerLike_notify: unique symbol;
 
 export declare const __EventPublisherLike_listenerCount: unique symbol;
 
-export declare const __InteractiveObservableLike_move: unique symbol;
-
 export declare const __KeyedCollectionLike_get: unique symbol;
 
 export declare const __KeyedContainerLike_TKey: unique symbol;

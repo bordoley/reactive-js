@@ -28,12 +28,10 @@ import {
   Optional,
   pipe,
   returns,
-  SideEffect,
 } from "@reactive-js/core/functions";
 import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 import {
-  InteractiveObservableLike_move,
   ObservableLike,
 } from "@reactive-js/core/rx";
 import {
@@ -231,7 +229,6 @@ const RxComponent = createComponent(
       windowLocationStream: WindowLocationStreamLike;
     }>,
   ) => {
-    const enumerable = Enumerable.generate(increment, () => -1);
     const createRef = () => ({ current: null });
 
     const createAnimationStream = (
@@ -285,22 +282,11 @@ const RxComponent = createComponent(
         { mode: "switching" },
       );
 
-    const delayOption = { delay: 1000 };
     return Observable.compute(() => {
       const { windowLocationStream } = __await(props);
       const uri = __await(windowLocationStream);
 
       const scheduler = __currentScheduler();
-      const toInteractiveObservable = __memo(
-        Enumerable.toInteractiveObservable,
-        scheduler,
-        delayOption,
-      );
-      const enumerator = __using(toInteractiveObservable, enumerable);
-      const move: SideEffect = __bindMethod(
-        enumerator,
-        InteractiveObservableLike_move,
-      );
 
       const animatedDivRef = __memo(createRef);
       const animationStreamable = __memo(
@@ -315,17 +301,10 @@ const RxComponent = createComponent(
 
       __observe(animationStream);
 
-      const value = __observe<number>(enumerator) ?? "no value";
-
       return (
         <div>
           <div>This is not actually a React Component</div>
           <div>{String(uri) ?? ""}</div>
-          <div>
-            <button onClick={move}>Move the Enumerator</button>
-            <span>{value}</span>
-          </div>
-
           <div
             ref={animatedDivRef}
             style={{

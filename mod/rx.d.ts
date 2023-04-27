@@ -1,10 +1,10 @@
-import { __InteractiveObservableLike_move as InteractiveObservableLike_move, __MulticastObservableLike_buffer as MulticastObservableLike_buffer, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PauseableObservableLike_isPaused as PauseableObservableLike_isPaused, __PublisherLike_observerCount as PublisherLike_observerCount } from "./__internal__/symbols.js";
+import { __MulticastObservableLike_buffer as MulticastObservableLike_buffer, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PauseableObservableLike_isPaused as PauseableObservableLike_isPaused, __PublisherLike_observerCount as PublisherLike_observerCount } from "./__internal__/symbols.js";
 import { ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, EnumeratorLike, PromiseableLike } from "./containers.js";
 import type * as Containers from "./containers.js";
 import { Factory, Function1, Function2, Optional, Updater } from "./functions.js";
 import { SchedulerLike } from "./scheduling.js";
 import { DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, IndexedBufferCollectionLike, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
-export { PauseableObservableLike_isPaused, InteractiveObservableLike_move, MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, };
+export { PauseableObservableLike_isPaused, MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, };
 /**
  * A consumer of push-based notifications.
  *
@@ -100,13 +100,6 @@ export interface PauseableObservableLike<T = unknown> extends MulticastObservabl
      * Reactive property indicating if the observable is paused or not.
      */
     readonly [PauseableObservableLike_isPaused]: MulticastObservableLike<boolean>;
-}
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface InteractiveObservableLike<T = unknown> extends MulticastObservableLike<T> {
-    [InteractiveObservableLike_move](): void;
 }
 /**
  * @noInheritDoc
@@ -767,27 +760,6 @@ export interface ToEnumerable<C extends ContainerLike, O = never> {
      * @category Transform
      */
     toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
-}
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface ToInteractiveObservable<C extends ContainerLike, O = unknown> {
-    /**
-     * @category Transform
-     */
-    toInteractiveObservable<T>(scheduler: SchedulerLike, options?: O & {
-        /**
-         * The number of items to buffer for replay when an observer subscribes
-         * to the stream.
-         */
-        readonly replay?: number;
-        /**
-         * The capacity of the stream's request queue.
-         */
-        readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<ContainerOf<C, T>, InteractiveObservableLike<T> & DisposableLike>;
 }
 /**
  * @noInheritDoc

@@ -31,8 +31,6 @@ export const __EventListenerLike_notify: unique symbol;
 /** @type {unique symbol} */
 export const __EventPublisherLike_listenerCount: unique symbol;
 /** @type {unique symbol} */
-export const __InteractiveObservableLike_move: unique symbol;
-/** @type {unique symbol} */
 export const __KeyedCollectionLike_get: unique symbol;
 /** @type {unique symbol} */
 export const __KeyedContainerLike_TKey: unique symbol;

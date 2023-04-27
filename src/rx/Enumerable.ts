@@ -66,7 +66,6 @@ import {
   ThrowIfEmpty,
   Throws,
   ToEnumerable,
-  ToInteractiveObservable,
   ToObservable,
   ToRunnable,
 } from "../rx.js";
@@ -109,7 +108,6 @@ import Observable_zipWith from "../rx/Observable/__internal__/Observable.zipWith
 import Runnable_flow from "../rx/Runnable/__internal__/Runnable.flow.js";
 import { DisposableLike } from "../util.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
-import Enumerable_toInteractiveObservable from "./Enumerable/__internal__/Enumerable.toInteractiveObservable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
@@ -279,11 +277,6 @@ export const throwIfEmpty: ThrowIfEmpty<EnumerableLike>["throwIfEmpty"] =
 
 export const toEnumerable: ToEnumerable<EnumerableLike>["toEnumerable"] =
   identity;
-
-export const toInteractiveObservable: ToInteractiveObservable<
-  EnumerableLike,
-  { delay?: number }
->["toInteractiveObservable"] = Enumerable_toInteractiveObservable;
 
 export const toObservable: ToObservable<EnumerableLike>["toObservable"] =
   identity;

@@ -6,17 +6,10 @@ import {
   ToReadonlyArray,
 } from "../containers.js";
 import ReadonlyArray_toReadonlyArray from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
-import {
-  Flow,
-  ToEnumerable,
-  ToInteractiveObservable,
-  ToObservable,
-  ToRunnable,
-} from "../rx.js";
+import { Flow, ToEnumerable, ToObservable, ToRunnable } from "../rx.js";
 import Container_identity from "./Container/__internal__/Container.identity.js";
 import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
 import Iterable_flow from "./Iterable/__internal__/Iterable.flow.js";
-import Iterable_toInteractiveObservable from "./Iterable/__internal__/Iterable.toInteractiveObservable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 
@@ -38,11 +31,6 @@ export const identity: Identity<IterableLike>["identity"] = Container_identity;
 
 export const toEnumerable: ToEnumerable<IterableLike>["toEnumerable"] =
   Iterable_toObservable;
-
-export const toInteractiveObservable: ToInteractiveObservable<
-  IterableLike,
-  { delay?: number }
->["toInteractiveObservable"] = Iterable_toInteractiveObservable;
 
 export const toObservable: ToObservable<
   IterableLike,

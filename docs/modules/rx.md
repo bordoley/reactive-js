@@ -14,7 +14,6 @@
 ### Container Interfaces
 
 - [EnumerableLike](../interfaces/rx.EnumerableLike.md)
-- [InteractiveObservableLike](../interfaces/rx.InteractiveObservableLike.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [PauseableObservableLike](../interfaces/rx.PauseableObservableLike.md)
@@ -72,7 +71,6 @@
 - [Throws](../interfaces/rx.Throws.md)
 - [Timeout](../interfaces/rx.Timeout.md)
 - [ToEnumerable](../interfaces/rx.ToEnumerable.md)
-- [ToInteractiveObservable](../interfaces/rx.ToInteractiveObservable.md)
 - [ToObservable](../interfaces/rx.ToObservable.md)
 - [ToRunnable](../interfaces/rx.ToRunnable.md)
 - [WithCurrentTime](../interfaces/rx.WithCurrentTime.md)

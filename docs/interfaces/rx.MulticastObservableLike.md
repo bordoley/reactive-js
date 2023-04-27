@@ -22,8 +22,6 @@ A stateful ObservableLike resource.
 
   ↳↳ [`PauseableObservableLike`](rx.PauseableObservableLike.md)
 
-  ↳↳ [`InteractiveObservableLike`](rx.InteractiveObservableLike.md)
-
   ↳↳ [`StreamLike`](streaming.StreamLike.md)
 
 ## Table of contents

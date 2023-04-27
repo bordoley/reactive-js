@@ -32,7 +32,6 @@ import {
   FromEnumerable,
   FromRunnable,
   ToEnumerable,
-  ToInteractiveObservable,
   ToObservable,
   ToRunnable,
 } from "../rx.js";
@@ -54,7 +53,6 @@ import ReadonlyArray_last from "./ReadonlyArray/__internal__/ReadonlyArray.last.
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_mapWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.mapWithKey.js";
 import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
-import ReadonlyArray_toInteractiveObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toInteractiveObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 
@@ -138,15 +136,6 @@ export const toEnumerable: ToEnumerable<
     readonly count: number;
   }
 >["toEnumerable"] = ReadonlyArray_toObservable;
-
-export const toInteractiveObservable: ToInteractiveObservable<
-  ReadonlyArrayLike,
-  {
-    readonly delay?: number;
-    readonly start?: number;
-    readonly count?: number;
-  }
->["toInteractiveObservable"] = ReadonlyArray_toInteractiveObservable;
 
 export const toIterable: ToIterable<
   ReadonlyArrayLike,

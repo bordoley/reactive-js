@@ -14,7 +14,6 @@ EventEmitterLike_addListener
 EventListenerLike_isErrorSafe
 EventListenerLike_notify
 EventPublisherLike_listenerCount
-InteractiveObservableLike_move
 KeyedCollectionLike_get
 KeyedContainerLike_TKey
 MulticastObservableLike_buffer

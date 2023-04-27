@@ -1,5 +1,4 @@
 import {
-  __InteractiveObservableLike_move as InteractiveObservableLike_move,
   __MulticastObservableLike_buffer as MulticastObservableLike_buffer,
   __ObservableLike_isEnumerable as ObservableLike_isEnumerable,
   __ObservableLike_isRunnable as ObservableLike_isRunnable,
@@ -38,7 +37,6 @@ import {
 
 export {
   PauseableObservableLike_isPaused,
-  InteractiveObservableLike_move,
   MulticastObservableLike_buffer,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -161,15 +159,6 @@ export interface PauseableObservableLike<T = unknown>
    * Reactive property indicating if the observable is paused or not.
    */
   readonly [PauseableObservableLike_isPaused]: MulticastObservableLike<boolean>;
-}
-
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface InteractiveObservableLike<T = unknown>
-  extends MulticastObservableLike<T> {
-  [InteractiveObservableLike_move](): void;
 }
 
 /**
@@ -1120,36 +1109,6 @@ export interface ToEnumerable<C extends ContainerLike, O = never> {
    * @category Transform
    */
   toEnumerable<T>(options?: O): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface ToInteractiveObservable<C extends ContainerLike, O = unknown> {
-  /**
-   * @category Transform
-   */
-  toInteractiveObservable<T>(
-    scheduler: SchedulerLike,
-    options?: O & {
-      /**
-       * The number of items to buffer for replay when an observer subscribes
-       * to the stream.
-       */
-      readonly replay?: number;
-
-      /**
-       * The capacity of the stream's request queue.
-       */
-      readonly capacity?: number;
-
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    },
-  ): Function1<
-    ContainerOf<C, T>,
-    InteractiveObservableLike<T> & DisposableLike
-  >;
 }
 
 /**

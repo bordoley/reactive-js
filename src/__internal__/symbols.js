@@ -75,11 +75,6 @@ export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __InteractiveObservableLike_move = /*@__PURE__*/ symbol(
-  "InteractiveObservableLike_move",
-);
-
-/** @type {unique symbol} */
 export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol(
   "KeyedCollectionLike_get",
 );
