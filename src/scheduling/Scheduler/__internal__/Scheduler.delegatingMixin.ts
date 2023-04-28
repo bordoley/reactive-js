@@ -18,7 +18,7 @@ import {
   SchedulerLike_yield,
 } from "../../../scheduling.js";
 import { DisposableLike } from "../../../util.js";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 const Scheduler_delegatingMixin: Mixin1<
   SchedulerLike & DisposableLike,
@@ -93,7 +93,7 @@ const Scheduler_delegatingMixin: Mixin1<
             continuation,
             options,
           ),
-          Disposable_addToIgnoringChildErrors(this),
+          Disposable_addTo(this, { ignoreChildErrors: true }),
         );
       },
 

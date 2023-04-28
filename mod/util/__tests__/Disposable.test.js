@@ -9,14 +9,14 @@ import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed
 import * as Disposable from "../Disposable.js";
 testModule("Disposable", test("disposes child disposable when disposed", () => {
     const child = Disposable.create();
-    const disposable = pipe(Disposable.create(), Disposable.addIgnoringChildErrors(child));
+    const disposable = pipe(Disposable.create(), Disposable.add(child, { ignoreChildErrors: true }));
     disposable[DisposableLike_dispose]();
     pipe(child[DisposableLike_isDisposed], expectTrue);
 }), test("adding to disposed disposable disposes the child", () => {
     const child = Disposable.create();
     const disposable = Disposable.create();
     disposable[DisposableLike_dispose]();
-    pipe(disposable, Disposable.addIgnoringChildErrors(child));
+    pipe(disposable, Disposable.add(child, { ignoreChildErrors: true }));
     pipe(child[DisposableLike_isDisposed], expectTrue);
 }), test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();

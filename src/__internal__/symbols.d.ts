@@ -296,7 +296,7 @@ export declare const __PairwiseObserver_prev: unique symbol;
 
 export declare const __PairwiseObserver_hasPrev: unique symbol;
 
-export declare const __PriorityQueueImpl_comparator : unique symbol;
+export declare const __PriorityQueueImpl_comparator: unique symbol;
 
 export declare const __PrioritySchedulerDelegatingScheduler_priorityScheduler: unique symbol;
 
@@ -304,17 +304,17 @@ export declare const __PrioritySchedulerDelegatingScheduler_priority: unique sym
 
 export declare const __Publisher_observers: unique symbol;
 
-export declare const __QueueScheduler_delayed : unique symbol;
+export declare const __QueueScheduler_delayed: unique symbol;
 
-export declare const __QueueScheduler_dueTime : unique symbol;
+export declare const __QueueScheduler_dueTime: unique symbol;
 
-export declare const __QueueScheduler_hostContinuation : unique symbol;
+export declare const __QueueScheduler_hostContinuation: unique symbol;
 
 export declare const __QueueScheduler_hostScheduler: unique symbol;
 
-export declare const __QueueScheduler_queue : unique symbol;
+export declare const __QueueScheduler_queue: unique symbol;
 
-export declare const __QueueScheduler_taskIDCounter : unique symbol;
+export declare const __QueueScheduler_taskIDCounter: unique symbol;
 
 export declare const __ReadonlyArrayEnumerator_values: unique symbol;
 

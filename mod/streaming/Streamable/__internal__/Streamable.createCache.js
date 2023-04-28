@@ -104,7 +104,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                     pipe(publisher, Disposable.onDisposed(_ => {
                         subscriptions.delete(key);
                         scheduleCleanup(key);
-                    }), Disposable.addToIgnoringChildErrors(this));
+                    }), Disposable.addTo(this, { ignoreChildErrors: true }));
                     const initialValue = store.get(key);
                     if (isSome(initialValue)) {
                         publisher[EventListenerLike_notify](initialValue);

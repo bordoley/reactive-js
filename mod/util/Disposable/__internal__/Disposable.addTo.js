@@ -1,11 +1,8 @@
 /// <reference types="./Disposable.addTo.d.ts" />
 
-import { bindMethod, pipe } from "../../../functions.js";
-import { DisposableLike_add, DisposableLike_dispose, } from "../../../util.js";
-import Disposable_onError from "./Disposable.onError.js";
-const Disposable_addTo = (parent) => (child) => {
-    parent[DisposableLike_add](child);
-    pipe(child, Disposable_onError(bindMethod(parent, DisposableLike_dispose)));
+import Disposable_addChildToParent from "./Disposable.addChildToParent.js";
+const Disposable_addTo = (parent, options) => (child) => {
+    Disposable_addChildToParent(parent, child, options);
     return child;
 };
 export default Disposable_addTo;

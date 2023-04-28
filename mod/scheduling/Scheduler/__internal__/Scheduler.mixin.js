@@ -8,7 +8,7 @@ import { __PrioritySchedulerImplementationLike_runContinuation as PrioritySchedu
 import { isNone, isSome, newInstance, none, pipe, raiseWithDebugMessage, unsafeCast, } from "../../../functions.js";
 import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../../scheduling.js";
 import { CollectionLike_count, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../util.js";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Continuation_create from "../../Continuation/__internal__/Continuation.create.js";
 import YieldError from "../../Continuation/__internal__/Continuation.yieldError.js";
@@ -87,7 +87,7 @@ export const PriorityScheduler_mixin =
         },
         [SchedulerLike_schedule](effect, options) {
             const { priority = 0 } = options ?? {};
-            const continuation = pipe(Continuation_create(this, effect, priority), Disposable_addToIgnoringChildErrors(this));
+            const continuation = pipe(Continuation_create(this, effect, priority), Disposable_addTo(this, { ignoreChildErrors: true }));
             this[ContinuationSchedulerLike_schedule](continuation, options);
             return continuation;
         },

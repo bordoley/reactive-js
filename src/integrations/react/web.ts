@@ -57,8 +57,7 @@ export const useWindowLocation = (): {
 
   const uri = useObservable(windowLocation);
 
-  const stableWindowLocationRef =
-    useRef<Optional<WindowLocationLike>>(none);
+  const stableWindowLocationRef = useRef<Optional<WindowLocationLike>>(none);
   useEffect(() => {
     stableWindowLocationRef.current = windowLocation;
   }, [windowLocation, stableWindowLocationRef]);

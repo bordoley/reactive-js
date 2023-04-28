@@ -3,7 +3,7 @@
 import { bindMethod, error, isSome, partial, pipe, } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -26,10 +26,10 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithConfig(delegate, delegate), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithConfig(delegate, delegate), Disposable_addTo(delegate, { ignoreChildErrors: true }), Disposable_onDisposed(doOnDispose));
             }
         };
-        return pipe(Observer_createWithDelegate(delegate), Disposable_addToIgnoringChildErrors(delegate), Disposable_onDisposed(doOnDispose));
+        return pipe(Observer_createWithDelegate(delegate), Disposable_addTo(delegate, { ignoreChildErrors: true }), Disposable_onDisposed(doOnDispose));
     };
     return ((shouldRepeat) => (observable) => {
         const operator = pipe(createRepeatObserver, partial(observable, shouldRepeat));

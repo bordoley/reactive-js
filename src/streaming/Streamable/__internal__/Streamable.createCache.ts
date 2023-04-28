@@ -304,7 +304,7 @@ const createCacheStream: <T>(
                   subscriptions.delete(key);
                   scheduleCleanup(key);
                 }),
-                Disposable.addToIgnoringChildErrors(this),
+                Disposable.addTo(this, { ignoreChildErrors: true }),
               );
 
               const initialValue = store.get(key);

@@ -11,9 +11,7 @@
 ### Functions
 
 - [add](util_Disposable.md#add)
-- [addIgnoringChildErrors](util_Disposable.md#addignoringchilderrors)
 - [addTo](util_Disposable.md#addto)
-- [addToIgnoringChildErrors](util_Disposable.md#addtoignoringchilderrors)
 - [bindTo](util_Disposable.md#bindto)
 - [create](util_Disposable.md#create)
 - [onComplete](util_Disposable.md#oncomplete)
@@ -34,7 +32,7 @@
 
 ### add
 
-▸ **add**<`T`\>(`child`): (`parent`: `T`) => `T`
+▸ **add**<`T`\>(`child`, `options?`): (`parent`: `T`) => `T`
 
 #### Type parameters
 
@@ -47,40 +45,8 @@
 | Name | Type |
 | :------ | :------ |
 | `child` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-
-#### Returns
-
-`fn`
-
-▸ (`parent`): `T`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `parent` | `T` |
-
-##### Returns
-
-`T`
-
-___
-
-### addIgnoringChildErrors
-
-▸ **addIgnoringChildErrors**<`T`\>(`child`): (`parent`: `T`) => `T`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `child` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `options?` | `Object` |
+| `options.ignoreChildErrors?` | `boolean` |
 
 #### Returns
 
@@ -102,7 +68,7 @@ ___
 
 ### addTo
 
-▸ **addTo**<`T`\>(`parent`): [`Updater`](functions.md#updater)<`T`\>
+▸ **addTo**<`T`\>(`parent`, `options?`): [`Updater`](functions.md#updater)<`T`\>
 
 #### Type parameters
 
@@ -115,28 +81,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `parent` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-
-#### Returns
-
-[`Updater`](functions.md#updater)<`T`\>
-
-___
-
-### addToIgnoringChildErrors
-
-▸ **addToIgnoringChildErrors**<`T`\>(`parent`): [`Updater`](functions.md#updater)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `options?` | `Object` |
+| `options.ignoreChildErrors?` | `boolean` |
 
 #### Returns
 

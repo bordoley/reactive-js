@@ -1,16 +1,14 @@
-import { Updater, bindMethod, pipe } from "../../../functions.js";
-import {
-  DisposableLike,
-  DisposableLike_add,
-  DisposableLike_dispose,
-} from "../../../util.js";
-import Disposable_onError from "./Disposable.onError.js";
+import { Updater } from "../../../functions.js";
+import { DisposableLike } from "../../../util.js";
+import Disposable_addChildToParent from "./Disposable.addChildToParent.js";
 
 const Disposable_addTo =
-  <T extends DisposableLike>(parent: DisposableLike): Updater<T> =>
+  <T extends DisposableLike>(
+    parent: DisposableLike,
+    options?: { readonly ignoreChildErrors?: boolean },
+  ): Updater<T> =>
   (child: T): T => {
-    parent[DisposableLike_add](child);
-    pipe(child, Disposable_onError(bindMethod(parent, DisposableLike_dispose)));
+    Disposable_addChildToParent(parent, child, options);
     return child;
   };
 

@@ -54,7 +54,7 @@ import {
   DisposableLike_isDisposed,
   QueueableLike_enqueue,
 } from "../../../util.js";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 import Continuation_create from "../../Continuation/__internal__/Continuation.create.js";
 import YieldError from "../../Continuation/__internal__/Continuation.yieldError.js";
@@ -238,7 +238,7 @@ export const PriorityScheduler_mixin: Mixin1<PrioritySchedulerMixin, number> =
           const { priority = 0 } = options ?? {};
           const continuation = pipe(
             Continuation_create(this, effect, priority),
-            Disposable_addToIgnoringChildErrors(this),
+            Disposable_addTo(this, { ignoreChildErrors: true }),
           );
           this[ContinuationSchedulerLike_schedule](continuation, options);
           return continuation;

@@ -1,8 +1,10 @@
 import { DisposableLike } from "../util.js";
-export declare const add: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
-export declare const addIgnoringChildErrors: <T extends DisposableLike>(child: DisposableLike) => (parent: T) => T;
-export declare const addTo: <T extends DisposableLike>(parent: DisposableLike) => import("../functions.js").Updater<T>;
-export declare const addToIgnoringChildErrors: <T extends DisposableLike>(parent: DisposableLike) => import("../functions.js").Updater<T>;
+export declare const add: <T extends DisposableLike>(child: DisposableLike, options?: {
+    readonly ignoreChildErrors?: boolean | undefined;
+} | undefined) => (parent: T) => T;
+export declare const addTo: <T extends DisposableLike>(parent: DisposableLike, options?: {
+    readonly ignoreChildErrors?: boolean | undefined;
+} | undefined) => import("../functions.js").Updater<T>;
 export declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => import("../functions.js").Updater<T>;
 export declare const create: import("../functions.js").Factory<DisposableLike>;
 export declare const disposed: DisposableLike;

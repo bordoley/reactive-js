@@ -30,7 +30,7 @@ import {
   SchedulerLike_yield,
 } from "../../../scheduling.js";
 import { DisposableLike } from "../../../util.js";
-import Disposable_addToIgnoringChildErrors from "../../../util/Disposable/__internal__/Disposable.addToIgnoringChildErrors.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
 
 type TProperties = {
@@ -111,7 +111,7 @@ const createSchedulerInstance = /*@__PURE__*/ (() =>
               ...options,
               priority: this[__PrioritySchedulerDelegatingScheduler_priority],
             }),
-            Disposable_addToIgnoringChildErrors(this),
+            Disposable_addTo(this, { ignoreChildErrors: true }),
           );
         },
 
