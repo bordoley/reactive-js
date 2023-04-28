@@ -10,7 +10,6 @@
 - [useAnimateEvent](integrations_react_web.md#useanimateevent)
 - [useScroll](integrations_react_web.md#usescroll)
 - [useWindowLocation](integrations_react_web.md#usewindowlocation)
-- [useWindowLocationStream](integrations_react_web.md#usewindowlocationstream)
 
 ### Other Functions
 
@@ -109,16 +108,6 @@ ___
 
 ___
 
-### useWindowLocationStream
-
-▸ **useWindowLocationStream**(): [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)
-
-#### Returns
-
-[`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)
-
-___
-
 ## Other Functions
 
 ### WindowLocationProvider
@@ -131,7 +120,7 @@ ___
 | :------ | :------ |
 | `props` | `Object` |
 | `props.children` | `ReactNode` |
-| `props.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `props.windowLocation` | [`WindowLocationLike`](../interfaces/integrations_web.WindowLocationLike.md) |
 | `context?` | `any` |
 
 #### Returns

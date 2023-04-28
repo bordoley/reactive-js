@@ -19,6 +19,7 @@ Reactive-JS
 - [integrations/svelte](modules/integrations_svelte.md)
 - [integrations/web](modules/integrations_web.md)
 - [integrations/web/Element](modules/integrations_web_Element.md)
+- [integrations/web/WindowLocation](modules/integrations_web_WindowLocation.md)
 - [keyed-containers](modules/keyed_containers.md)
 - [keyed-containers/ReadonlyArray](modules/keyed_containers_ReadonlyArray.md)
 - [keyed-containers/ReadonlyMap](modules/keyed_containers_ReadonlyMap.md)

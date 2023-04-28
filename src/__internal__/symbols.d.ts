@@ -78,13 +78,13 @@ export declare const __StreamableLike_stream: unique symbol;
 
 export declare const __VirtualTimeSchedulerLike_run: unique symbol;
 
-export declare const __WindowLocationStreamLike_goBack: unique symbol;
+export declare const __WindowLocationLike_push: unique symbol;
 
-export declare const __WindowLocationStreamLike_canGoBack: unique symbol;
+export declare const __WindowLocationLike_goBack: unique symbol;
 
-export declare const __WindowLocationStream_historyCounter: unique symbol;
+export declare const __WindowLocationLike_canGoBack: unique symbol;
 
-export declare const __WindowLocationStreamLike_replace: unique symbol;
+export declare const __WindowLocationLike_replace: unique symbol;
 
 export declare const __ContinuationLike_activeChild: unique symbol;
 
@@ -296,7 +296,7 @@ export declare const __PairwiseObserver_prev: unique symbol;
 
 export declare const __PairwiseObserver_hasPrev: unique symbol;
 
-export declare const __PriorityQueueImpl_comparator: unique symbol;
+export declare const __PriorityQueueImpl_comparator : unique symbol;
 
 export declare const __PrioritySchedulerDelegatingScheduler_priorityScheduler: unique symbol;
 
@@ -304,17 +304,17 @@ export declare const __PrioritySchedulerDelegatingScheduler_priority: unique sym
 
 export declare const __Publisher_observers: unique symbol;
 
-export declare const __QueueScheduler_delayed: unique symbol;
+export declare const __QueueScheduler_delayed : unique symbol;
 
-export declare const __QueueScheduler_dueTime: unique symbol;
+export declare const __QueueScheduler_dueTime : unique symbol;
 
-export declare const __QueueScheduler_hostContinuation: unique symbol;
+export declare const __QueueScheduler_hostContinuation : unique symbol;
 
 export declare const __QueueScheduler_hostScheduler: unique symbol;
 
-export declare const __QueueScheduler_queue: unique symbol;
+export declare const __QueueScheduler_queue : unique symbol;
 
-export declare const __QueueScheduler_taskIDCounter: unique symbol;
+export declare const __QueueScheduler_taskIDCounter : unique symbol;
 
 export declare const __ReadonlyArrayEnumerator_values: unique symbol;
 
@@ -357,6 +357,8 @@ export declare const __VirtualTimeScheduler_maxMicroTaskTicks: unique symbol;
 export declare const __VirtualTimeScheduler_microTaskTicks: unique symbol;
 
 export declare const __VirtualTimeScheduler_taskIDCount: unique symbol;
+
+export declare const __WindowLocationStream_historyCounter: unique symbol;
 
 export declare const __WithCurrentTimeObserver_selector: unique symbol;
 

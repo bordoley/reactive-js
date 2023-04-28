@@ -24,32 +24,24 @@ import {
   DisposableLike_dispose,
   EventListenerLike,
   EventSourceLike,
-  QueueableLike_enqueue,
 } from "../../util.js";
 import * as EventSource from "../../util/EventSource.js";
-import { useObservable, useStream } from "../react.js";
+import { useObservable } from "../react.js";
 import {
   CSSStyleKey,
   ScrollValue,
-  WindowLocationStreamLike,
-  WindowLocationStreamLike_canGoBack,
-  WindowLocationStreamLike_goBack,
-  WindowLocationStreamLike_replace,
+  WindowLocationLike,
+  WindowLocationLike_canGoBack,
+  WindowLocationLike_goBack,
+  WindowLocationLike_push,
+  WindowLocationLike_replace,
   WindowLocationURI,
-  windowLocation,
 } from "../web.js";
 import * as WebElement from "../web/Element.js";
 
-const WindowLocationContext =
-  /*@__PURE__*/ createContext<WindowLocationStreamLike>(
-    none as unknown as WindowLocationStreamLike,
-  );
-
-/**
- * @category Hook
- */
-export const useWindowLocationStream = (): WindowLocationStreamLike =>
-  useContext(WindowLocationContext);
+const WindowLocationContext = /*@__PURE__*/ createContext<WindowLocationLike>(
+  none as unknown as WindowLocationLike,
+);
 
 /**
  * @category Hook
@@ -61,46 +53,45 @@ export const useWindowLocation = (): {
   canGoBack: boolean;
   goBack: () => void;
 } => {
-  const windowLocationStream = useWindowLocationStream();
+  const windowLocation = useContext(WindowLocationContext);
 
-  const uri = useObservable(windowLocationStream);
+  const uri = useObservable(windowLocation);
 
-  const stableWindowLocationStreamRef =
-    useRef<Optional<WindowLocationStreamLike>>(none);
+  const stableWindowLocationRef =
+    useRef<Optional<WindowLocationLike>>(none);
   useEffect(() => {
-    stableWindowLocationStreamRef.current = windowLocationStream;
-  }, [windowLocationStream, stableWindowLocationStreamRef]);
+    stableWindowLocationRef.current = windowLocation;
+  }, [windowLocation, stableWindowLocationRef]);
 
   const push = useCallback(
     (action: Updater<WindowLocationURI> | WindowLocationURI) => {
-      const windowLocationStream = stableWindowLocationStreamRef.current;
+      const windowLocationStream = stableWindowLocationRef.current;
       return isSome(windowLocationStream)
-        ? windowLocationStream[QueueableLike_enqueue](action)
+        ? windowLocationStream[WindowLocationLike_push](action)
         : false;
     },
-    [stableWindowLocationStreamRef],
+    [stableWindowLocationRef],
   );
 
   const replace = useCallback(
     (action: Updater<WindowLocationURI> | WindowLocationURI) => {
-      const windowLocationStream = stableWindowLocationStreamRef.current;
+      const windowLocationStream = stableWindowLocationRef.current;
       return isSome(windowLocationStream)
-        ? windowLocationStream[WindowLocationStreamLike_replace](action)
+        ? windowLocationStream[WindowLocationLike_replace](action)
         : false;
     },
-    [stableWindowLocationStreamRef],
+    [stableWindowLocationRef],
   );
 
   const goBack = useCallback(() => {
-    const windowLocationStream = stableWindowLocationStreamRef.current;
+    const windowLocationStream = stableWindowLocationRef.current;
     return isSome(windowLocationStream)
-      ? windowLocationStream[WindowLocationStreamLike_goBack]()
+      ? windowLocationStream[WindowLocationLike_goBack]()
       : false;
-  }, [stableWindowLocationStreamRef]);
+  }, [stableWindowLocationRef]);
 
   const canGoBack =
-    useObservable(windowLocationStream[WindowLocationStreamLike_canGoBack]) ??
-    false;
+    useObservable(windowLocation[WindowLocationLike_canGoBack]) ?? false;
 
   return {
     uri,
@@ -112,27 +103,23 @@ export const useWindowLocation = (): {
 };
 
 export const WindowLocationProvider: React.FunctionComponent<{
-  priority?: 1 | 2 | 3 | 4 | 5;
+  windowLocation: WindowLocationLike;
   children: React.ReactNode;
 }> = ({
-  priority,
+  windowLocation,
   children,
 }: {
+  windowLocation: WindowLocationLike;
   priority?: 1 | 2 | 3 | 4 | 5;
   children: React.ReactNode;
-}) => {
-  const value = useStream(windowLocation, { priority });
-
-  return isSome(value)
-    ? createElement(
-        WindowLocationContext.Provider,
-        {
-          value,
-        },
-        children,
-      )
-    : null;
-};
+}) =>
+  createElement(
+    WindowLocationContext.Provider,
+    {
+      value: windowLocation,
+    },
+    children,
+  );
 
 /**
  * @category Hook

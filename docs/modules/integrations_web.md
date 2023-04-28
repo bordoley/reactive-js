@@ -6,7 +6,7 @@
 
 ### Container Interfaces
 
-- [WindowLocationStreamLike](../interfaces/integrations_web.WindowLocationStreamLike.md)
+- [WindowLocationLike](../interfaces/integrations_web.WindowLocationLike.md)
 
 ### Other Interfaces
 
@@ -19,10 +19,6 @@
 
 - [CSSStyleKey](integrations_web.md#cssstylekey)
 
-### Variables
-
-- [windowLocation](integrations_web.md#windowlocation)
-
 ### Functions
 
 - [createEventSource](integrations_web.md#createeventsource)
@@ -32,12 +28,6 @@
 ### CSSStyleKey
 
 Ƭ **CSSStyleKey**: keyof `Omit`<`CSSStyleDeclaration`, ``"item"`` \| ``"length"`` \| ``"parentRule"`` \| ``"getPropertyPriority"`` \| ``"getPropertyValue"`` \| ``"removeProperty"`` \| ``"setProperty"`` \| `number` \| typeof `Symbol.iterator`\>
-
-## Variables
-
-### windowLocation
-
-• `Const` **windowLocation**: [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\> \| [`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md), [`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md), [`WindowLocationStreamLike`](../interfaces/integrations_web.WindowLocationStreamLike.md)\>
 
 ## Functions
 

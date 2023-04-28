@@ -60,6 +60,7 @@
     "./integrations/svelte": "./integrations/svelte.js",
     "./integrations/web": "./integrations/web.js",
     "./integrations/web/Element": "./integrations/web/Element.js",
+    "./integrations/web/WindowLocation": "./integrations/web/WindowLocation.js",
     "./keyed-containers": "./keyed-containers.js",
     "./keyed-containers/ReadonlyArray": "./keyed-containers/ReadonlyArray.js",
     "./keyed-containers/ReadonlyMap": "./keyed-containers/ReadonlyMap.js",

@@ -21,8 +21,6 @@ Represents a duplex stream
 
   ↳ **`StreamLike`**
 
-  ↳↳ [`WindowLocationStreamLike`](integrations_web.WindowLocationStreamLike.md)
-
   ↳↳ [`CacheStreamLike`](streaming.CacheStreamLike.md)
 
 ## Table of contents

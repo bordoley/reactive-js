@@ -79,13 +79,13 @@ export const __StreamableLike_stream: unique symbol;
 /** @type {unique symbol} */
 export const __VirtualTimeSchedulerLike_run: unique symbol;
 /** @type {unique symbol} */
-export const __WindowLocationStreamLike_goBack: unique symbol;
+export const __WindowLocationLike_push: unique symbol;
 /** @type {unique symbol} */
-export const __WindowLocationStreamLike_canGoBack: unique symbol;
+export const __WindowLocationLike_goBack: unique symbol;
 /** @type {unique symbol} */
-export const __WindowLocationStream_historyCounter: unique symbol;
+export const __WindowLocationLike_canGoBack: unique symbol;
 /** @type {unique symbol} */
-export const __WindowLocationStreamLike_replace: unique symbol;
+export const __WindowLocationLike_replace: unique symbol;
 /** @type {unique symbol} */
 export const __ContinuationLike_activeChild: unique symbol;
 /** @type {unique symbol} */
@@ -358,6 +358,8 @@ export const __VirtualTimeScheduler_maxMicroTaskTicks: unique symbol;
 export const __VirtualTimeScheduler_microTaskTicks: unique symbol;
 /** @type {unique symbol} */
 export const __VirtualTimeScheduler_taskIDCount: unique symbol;
+/** @type {unique symbol} */
+export const __WindowLocationStream_historyCounter: unique symbol;
 /** @type {unique symbol} */
 export const __WithCurrentTimeObserver_selector: unique symbol;
 /** @type {unique symbol} */

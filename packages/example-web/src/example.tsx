@@ -14,11 +14,10 @@ import {
 import {
   useAnimateEvent,
   useWindowLocation,
-  useWindowLocationStream,
   WindowLocationProvider,
 } from "@reactive-js/core/integrations/react/web";
 import {
-  WindowLocationStreamLike,
+  WindowLocationLike,
   WindowLocationURI,
 } from "@reactive-js/core/integrations/web";
 import {
@@ -52,6 +51,8 @@ import {
 import { SchedulerLike } from "@reactive-js/core/scheduling";
 import { Wordle } from "./wordle";
 import Measure from "./measure";
+import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
+import * as Scheduler from "@reactive-js/core/integrations/scheduler";
 
 const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
   const values = cache[KeyedCollectionLike_get]("a");
@@ -224,7 +225,7 @@ const Root = () => {
 const RxComponent = createComponent(
   (
     props: ObservableLike<{
-      windowLocationStream: WindowLocationStreamLike;
+      windowLocation: WindowLocationLike;
     }>,
   ) => {
     const createRef = () => ({ current: null });
@@ -281,8 +282,8 @@ const RxComponent = createComponent(
       );
 
     return Observable.compute(() => {
-      const { windowLocationStream } = __await(props);
-      const uri = __await(windowLocationStream);
+      const { windowLocation } = __await(props);
+      const uri = __await(windowLocation);
 
       const scheduler = __currentScheduler();
 
@@ -332,17 +333,14 @@ const RxComponent = createComponent(
   },
 );
 
-const RootRxComponent = () => {
-  const windowLocationStream = useWindowLocationStream();
-
-  return <RxComponent windowLocationStream={windowLocationStream} />;
-};
-
+// Subscribe to the window location using react's normal priority scheduler.
+const windowLocation = WindowLocation.subscribe(Scheduler.getScheduler());
 const rootElement = document.getElementById("root");
+
 ReactDOMClient.createRoot(rootElement as any).render(
-  <WindowLocationProvider>
+  <WindowLocationProvider windowLocation={windowLocation}>
     <Root />
-    <RootRxComponent />
+    <RxComponent windowLocation={windowLocation} />
     <Wordle />
     <Measure />
   </WindowLocationProvider>,
