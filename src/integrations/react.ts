@@ -55,7 +55,6 @@ import {
   DispatcherLike,
   DisposableLike,
   DisposableLike_dispose,
-  EventEmitterLike_addListener,
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
@@ -66,7 +65,6 @@ import {
   QueueableLike_enqueue,
 } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
-import * as EventListener from "../util/EventListener.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 import * as EventSource from "../util/EventSource.js";
 import { getAnimationFrameScheduler, getScheduler } from "./scheduler.js";
@@ -97,14 +95,13 @@ export const useEventSource: UseEventSource["useEventSource"] = <T>(
     : eventSourceOrFactory;
 
   useEffect(() => {
-    const listener = pipe(
-      EventListener.create<T>(v => updateState(_ => v)),
+    const disposable = pipe(
+      eventSource,
+      EventSource.addEventHandler(v => updateState(_ => v)),
       Disposable.onError(updateError),
     );
 
-    eventSource[EventEmitterLike_addListener](listener);
-
-    return bindMethod(listener, DisposableLike_dispose);
+    return bindMethod(disposable, DisposableLike_dispose);
   }, [eventSource, updateState, updateError]);
 
   return isSome(error) ? raiseError<T>(error) : state;

@@ -6,7 +6,7 @@ import { QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { call, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_notify } from "../../../rx.js";
 import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
-import { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, EventEmitterLike_addListener, EventListenerLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
+import { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, EventEmitterLike_addEventListener, EventListenerLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
@@ -67,14 +67,14 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
                 this[DisposableLike_dispose]();
             }
         },
-        [EventEmitterLike_addListener](listener) {
+        [EventEmitterLike_addEventListener](listener) {
             const publisher = this[__ObserverMixin_queuePublisher] ??
                 (() => {
                     const publisher = EventPublisher_create();
                     this[__ObserverMixin_queuePublisher] = publisher;
                     return pipe(publisher, Disposable_addTo(this));
                 })();
-            publisher[EventEmitterLike_addListener](listener);
+            publisher[EventEmitterLike_addEventListener](listener);
         },
     }));
 })();

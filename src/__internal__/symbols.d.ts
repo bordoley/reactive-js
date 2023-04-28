@@ -22,7 +22,7 @@ export declare const __EnumeratorLike_current: unique symbol;
 
 export declare const __EnumeratorLike_hasCurrent: unique symbol;
 
-export declare const __EventEmitterLike_addListener: unique symbol;
+export declare const __EventEmitterLike_addEventListener: unique symbol;
 
 export declare const __EventListenerLike_isErrorSafe: unique symbol;
 

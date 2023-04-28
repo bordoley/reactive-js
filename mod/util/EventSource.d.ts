@@ -1,10 +1,12 @@
 import { Empty, ForEach, IgnoreElements, Keep, Map, Pick } from "../containers.js";
+import { Function1, SideEffect1 } from "../functions.js";
 import { ToObservable } from "../rx.js";
-import { EventSourceLike } from "../util.js";
+import { DisposableLike, EventSourceLike } from "../util.js";
+export declare const addEventHandler: <T>(handler: SideEffect1<T>) => Function1<EventSourceLike<T>, DisposableLike>;
 /**
  * @category Constructor
  */
-export declare const create: <T>(setup: import("../functions.js").SideEffect1<import("../util.js").EventListenerLike<T>>) => EventSourceLike<T>;
+export declare const create: <T>(setup: SideEffect1<import("../util.js").EventListenerLike<T>>) => EventSourceLike<T>;
 export declare const empty: Empty<EventSourceLike>["empty"];
 export declare const forEach: ForEach<EventSourceLike>["forEach"];
 export declare const ignoreElements: IgnoreElements<EventSourceLike>["ignoreElements"];

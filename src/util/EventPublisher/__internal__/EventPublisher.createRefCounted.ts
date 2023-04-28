@@ -12,7 +12,7 @@ import {
 import { pipe, unsafeCast } from "../../../functions.js";
 import {
   DisposableLike_dispose,
-  EventEmitterLike_addListener,
+  EventEmitterLike_addEventListener,
   EventListenerLike,
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
@@ -32,7 +32,7 @@ const EventPublisher_createRefCounted: <T>() => EventPublisherLike<T> =
         function RefCountedEventPublisher(
           instance: Pick<
             EventPublisherLike<T>,
-            | typeof EventEmitterLike_addListener
+            | typeof EventEmitterLike_addEventListener
             | typeof EventListenerLike_isErrorSafe
             | typeof EventListenerLike_notify
             | typeof EventPublisherLike_listenerCount
@@ -61,11 +61,11 @@ const EventPublisher_createRefCounted: <T>() => EventPublisherLike<T> =
             this[DelegatingLike_delegate][EventListenerLike_notify](next);
           },
 
-          [EventEmitterLike_addListener](
+          [EventEmitterLike_addEventListener](
             this: DelegatingLike<EventPublisherLike<T>> & EventPublisherLike<T>,
             listener: EventListenerLike<T>,
           ) {
-            this[DelegatingLike_delegate][EventEmitterLike_addListener](
+            this[DelegatingLike_delegate][EventEmitterLike_addEventListener](
               listener,
             );
 

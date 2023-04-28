@@ -17,6 +17,10 @@
 - [map](util_EventSource.md#map)
 - [pick](util_EventSource.md#pick)
 
+### Other Functions
+
+- [addEventHandler](util_EventSource.md#addeventhandler)
+
 ### Transform Functions
 
 - [toObservable](util_EventSource.md#toobservable)
@@ -229,6 +233,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+## Other Functions
+
+### addEventHandler
+
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `handler` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 

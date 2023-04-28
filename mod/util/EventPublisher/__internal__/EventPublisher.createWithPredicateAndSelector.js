@@ -6,7 +6,7 @@ import { __EventPublisher_listeners } from "../../../__internal__/symbols.js";
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import Iterable_enumerate from "../../../containers/Iterable/__internal__/Iterable.enumerate.js";
 import { error, newInstance, none, pipe, unsafeCast, } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EventEmitterLike_addListener, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EventEmitterLike_addEventListener, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, } from "../../../util.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 const EventPublisher_createWithPredicateAndSelector = /*@__PURE__*/ (() => {
@@ -51,7 +51,7 @@ const EventPublisher_createWithPredicateAndSelector = /*@__PURE__*/ (() => {
                 }
             }
         },
-        [EventEmitterLike_addListener](listener) {
+        [EventEmitterLike_addEventListener](listener) {
             if (!this[DisposableLike_isDisposed]) {
                 const listeners = this[__EventPublisher_listeners];
                 listeners.add(listener);

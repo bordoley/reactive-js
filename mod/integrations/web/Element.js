@@ -5,11 +5,16 @@ import { MAX_VALUE, MIN_VALUE } from "../../__internal__/constants.js";
 import { clamp } from "../../__internal__/math.js";
 import { bindMethod, isNone, newInstance, none, pipe, returns, } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
-import { EventEmitterLike_addListener, EventListenerLike_notify, QueueableLike_enqueue, } from "../../util.js";
+import { EventEmitterLike_addEventListener, EventListenerLike_notify, QueueableLike_enqueue, } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as EventListener from "../../util/EventListener.js";
 import * as EventPublisher from "../../util/EventPublisher.js";
 import * as RxEventSource from "../../util/EventSource.js";
+export const addEventHandler = (eventName, eventHandler) => source => {
+    const listener = pipe(eventHandler, EventListener.create, EventListener.toErrorSafeEventListener());
+    pipe(source, addEventListener(eventName, listener));
+    return listener;
+};
 export const addEventListener = ((eventName, eventListener) => target => {
     const errorSafeEventListener = pipe(eventListener, Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
@@ -32,6 +37,11 @@ export const observeEvent = ((eventName, selector) => target => Observable.creat
         passive: true,
     });
 }));
+export const addScrollHandler = (handler) => element => {
+    const listener = EventListener.create(handler);
+    pipe(element, addScrollListener(listener));
+    return listener;
+};
 export const addScrollListener = /*@__PURE__*/ (() => {
     const calcProgress = (min, max, value) => max - min === 0 ? 1 : (value - min) / (max - min);
     return (listener) => (element) => {
@@ -89,6 +99,11 @@ export const addScrollListener = /*@__PURE__*/ (() => {
         return element;
     };
 })();
+export const addResizeHandler = (handler) => element => {
+    const listener = EventListener.create(handler);
+    pipe(element, addResizeListener(listener));
+    return listener;
+};
 export const addResizeListener = /*@__PURE__*/ (() => {
     const publishers = newInstance(Map);
     let resizeObserver = none;
@@ -120,10 +135,15 @@ export const addResizeListener = /*@__PURE__*/ (() => {
                 resizeObserver.observe(element, options);
                 return publisher;
             })();
-        publisher[EventEmitterLike_addListener](listener);
+        publisher[EventEmitterLike_addEventListener](listener);
         return element;
     };
 })();
+export const addMeasureHandler = (handler) => element => {
+    const listener = EventListener.create(handler);
+    pipe(element, addMeasureListener(listener));
+    return listener;
+};
 export const addMeasureListener = /*@__PURE__*/ (() => {
     const findScrollContainers = (element) => {
         const { overflow, overflowX, overflowY } = window.getComputedStyle(element);
@@ -228,6 +248,6 @@ export const intersectionWith =
                     intersectionObservers.delete(root);
                 }));
             })();
-        publisher[EventEmitterLike_addListener](listener);
+        publisher[EventEmitterLike_addEventListener](listener);
     });
 })();

@@ -55,8 +55,8 @@ export const __EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __EventEmitterLike_addListener = /*@__PURE__*/ symbol(
-  "EventEmitterLike_addListener",
+export const __EventEmitterLike_addEventListener = /*@__PURE__*/ symbol(
+  "EventEmitterLike_addEventListener",
 );
 
 /** @type {unique symbol} */

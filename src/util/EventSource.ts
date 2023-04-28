@@ -6,8 +6,10 @@ import {
   Map,
   Pick,
 } from "../containers.js";
+import { Function1, SideEffect1 } from "../functions.js";
 import { ToObservable } from "../rx.js";
-import { EventSourceLike } from "../util.js";
+import { DisposableLike, EventSourceLike } from "../util.js";
+import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__internal__/EventSource.create.js";
 import EventSource_empty from "./EventSource/__internal__/EventSource.empty.js";
 import EventSource_forEach from "./EventSource/__internal__/EventSource.forEach.js";
@@ -16,6 +18,11 @@ import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
+
+export const addEventHandler: <T>(
+  handler: SideEffect1<T>,
+) => Function1<EventSourceLike<T>, DisposableLike> =
+  EventSource_addEventHandler;
 
 /**
  * @category Constructor

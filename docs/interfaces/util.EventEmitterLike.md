@@ -22,13 +22,13 @@
 
 ### Methods
 
-- [[\_\_\_EventEmitterLike\_addListener]](util.EventEmitterLike.md#[___eventemitterlike_addlistener])
+- [[\_\_\_EventEmitterLike\_addEventListener]](util.EventEmitterLike.md#[___eventemitterlike_addeventlistener])
 
 ## Methods
 
-### [\_\_\_EventEmitterLike\_addListener]
+### [\_\_\_EventEmitterLike\_addEventListener]
 
-▸ **[___EventEmitterLike_addListener]**(`listener`): `void`
+▸ **[___EventEmitterLike_addEventListener]**(`listener`): `void`
 
 #### Parameters
 

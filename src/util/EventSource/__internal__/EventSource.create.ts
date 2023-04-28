@@ -21,7 +21,7 @@ import {
 } from "../../../functions.js";
 import {
   DisposableLike_dispose,
-  EventEmitterLike_addListener,
+  EventEmitterLike_addEventListener,
   EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
@@ -43,7 +43,7 @@ const EventSource_create: <T>(
       function CreateEventSource(
         instance: Pick<
           EventSourceLike<T>,
-          typeof EventEmitterLike_addListener
+          typeof EventEmitterLike_addEventListener
         > &
           TProperties,
         setup: SideEffect1<EventListenerLike<T>>,
@@ -80,7 +80,7 @@ const EventSource_create: <T>(
         [__CreateEventSource_createDelegate]: none,
       }),
       {
-        [EventEmitterLike_addListener](
+        [EventEmitterLike_addEventListener](
           this: TProperties &
             Mutable<DelegatingLike<Optional<EventPublisherLike<T>>>>,
           listener: EventListenerLike,
@@ -89,7 +89,7 @@ const EventSource_create: <T>(
             this[DelegatingLike_delegate] ??
             this[__CreateEventSource_createDelegate]();
 
-          delegate[EventEmitterLike_addListener](listener);
+          delegate[EventEmitterLike_addEventListener](listener);
         },
       },
     ),

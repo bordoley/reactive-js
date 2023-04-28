@@ -22,12 +22,11 @@ import { ReadonlyObjectMapLike } from "../../keyed-containers.js";
 import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import {
   DisposableLike_dispose,
-  EventEmitterLike_addListener,
   EventListenerLike,
   EventSourceLike,
   QueueableLike_enqueue,
 } from "../../util.js";
-import * as EventListener from "../../util/EventListener.js";
+import * as EventSource from "../../util/EventSource.js";
 import { useObservable, useStream } from "../react.js";
 import {
   CSSStyleKey,
@@ -151,21 +150,22 @@ export const useAnimate = <TElement extends HTMLElement, T = number>(
       return;
     }
 
-    const listener = EventListener.create((v: T) => {
-      const element = ref.current;
-      if (element != null) {
-        pipe(
-          selectorMemoized(v) as ReadonlyObjectMapLike<string, CSSStyleKey>,
-          ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>((v, key) => {
-            element.style[key] = v ?? "";
-          }),
-        );
-      }
-    });
+    const disposable = pipe(
+      animation,
+      EventSource.addEventHandler(v => {
+        const element = ref.current;
+        if (element != null) {
+          pipe(
+            selectorMemoized(v) as ReadonlyObjectMapLike<string, CSSStyleKey>,
+            ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>((v, key) => {
+              element.style[key] = v ?? "";
+            }),
+          );
+        }
+      }),
+    );
 
-    animation[EventEmitterLike_addListener](listener);
-
-    return bindMethod(listener, DisposableLike_dispose);
+    return bindMethod(disposable, DisposableLike_dispose);
   }, [animation, selectorMemoized, ref]);
 
   return ref;

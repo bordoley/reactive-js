@@ -43,7 +43,7 @@ import {
   DispatcherLike_complete,
   DisposableLike,
   DisposableLike_isDisposed,
-  EventEmitterLike_addListener,
+  EventEmitterLike_addEventListener,
   EventListenerLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -165,7 +165,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             this[__DispatchedObservable_observer] = observer;
           },
 
-          [EventEmitterLike_addListener](
+          [EventEmitterLike_addEventListener](
             this: TProperties,
             listener: EventListenerLike<"wait" | "drain" | "complete">,
           ): void {
@@ -182,7 +182,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
               );
             }
 
-            observer[EventEmitterLike_addListener](listener);
+            observer[EventEmitterLike_addEventListener](listener);
           },
         },
       ),

@@ -36,7 +36,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EventEmitterLike_addListener,
+  EventEmitterLike_addEventListener,
   EventListenerLike,
   EventListenerLike_notify,
   EventPublisherLike,
@@ -111,7 +111,8 @@ const Observer_baseMixin: <T>() => Mixin1<
       function ObserverMixin(
         instance: Pick<
           ObserverLike,
-          typeof DispatcherLike_complete | typeof EventEmitterLike_addListener
+          | typeof DispatcherLike_complete
+          | typeof EventEmitterLike_addEventListener
         >,
         config: {
           readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -181,7 +182,7 @@ const Observer_baseMixin: <T>() => Mixin1<
             this[DisposableLike_dispose]();
           }
         },
-        [EventEmitterLike_addListener](
+        [EventEmitterLike_addEventListener](
           this: TProperties & ObserverLike,
           listener: EventListenerLike<"wait" | "drain" | "complete">,
         ): void {
@@ -196,7 +197,7 @@ const Observer_baseMixin: <T>() => Mixin1<
               return pipe(publisher, Disposable_addTo(this));
             })();
 
-          publisher[EventEmitterLike_addListener](listener);
+          publisher[EventEmitterLike_addEventListener](listener);
         },
       },
     ),

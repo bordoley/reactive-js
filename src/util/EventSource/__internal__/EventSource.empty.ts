@@ -1,13 +1,13 @@
 import { Empty } from "../../../containers.js";
 import {
   DisposableLike_dispose,
-  EventEmitterLike_addListener,
+  EventEmitterLike_addEventListener,
   EventListenerLike,
   EventSourceLike,
 } from "../../../util.js";
 
 const _empty: EventSourceLike = {
-  [EventEmitterLike_addListener]: function (
+  [EventEmitterLike_addEventListener]: function (
     listener: EventListenerLike<unknown>,
   ): void {
     listener[DisposableLike_dispose]();

@@ -6,7 +6,7 @@ import {
   __DisposableLike_dispose as DisposableLike_dispose,
   __DisposableLike_error as DisposableLike_error,
   __DisposableLike_isDisposed as DisposableLike_isDisposed,
-  __EventEmitterLike_addListener as EventEmitterLike_addListener,
+  __EventEmitterLike_addEventListener as EventEmitterLike_addEventListener,
   __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe,
   __EventListenerLike_notify as EventListenerLike_notify,
   __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount,
@@ -35,7 +35,7 @@ export {
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventPublisherLike_listenerCount,
-  EventEmitterLike_addListener,
+  EventEmitterLike_addEventListener,
   KeyedCollectionLike_get,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -160,7 +160,7 @@ export interface ErrorSafeEventListenerLike<T = unknown>
 }
 
 export interface EventEmitterLike<T = unknown> {
-  [EventEmitterLike_addListener](listener: EventListenerLike<T>): void;
+  [EventEmitterLike_addEventListener](listener: EventListenerLike<T>): void;
 }
 
 /**

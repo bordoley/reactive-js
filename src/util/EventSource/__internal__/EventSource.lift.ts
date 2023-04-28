@@ -10,7 +10,7 @@ import {
   pipeUnsafe,
 } from "../../../functions.js";
 import {
-  EventEmitterLike_addListener,
+  EventEmitterLike_addEventListener,
   EventListenerLike,
   EventSourceLike,
 } from "../../../util.js";
@@ -37,11 +37,11 @@ class LiftedEventSource<TIn, TOut>
     this[LiftedLike_operators] = operators;
   }
 
-  [EventEmitterLike_addListener](listener: EventListenerLike<TOut>) {
+  [EventEmitterLike_addEventListener](listener: EventListenerLike<TOut>) {
     pipeUnsafe(
       listener,
       ...this[LiftedLike_operators],
-      bindMethod(this[LiftedLike_source], EventEmitterLike_addListener),
+      bindMethod(this[LiftedLike_source], EventEmitterLike_addEventListener),
     );
   }
 }
