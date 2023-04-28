@@ -45,6 +45,7 @@ import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Publisher from "../rx/Publisher.js";
 import * as Runnable from "../rx/Runnable.js";
+import * as Scheduler from "../scheduling/Scheduler.js";
 import {
   StreamLike,
   StreamableLike,
@@ -67,7 +68,7 @@ import {
 import * as Disposable from "../util/Disposable.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 import * as EventSource from "../util/EventSource.js";
-import { getAnimationFrameScheduler, getScheduler } from "./scheduler.js";
+import { getScheduler } from "./scheduler.js";
 
 interface UseEventSource {
   /**
@@ -752,7 +753,9 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
             pipeLazy(observables, ReadonlyObjectMap.values()),
           ),
           Observable.map(
-            Observable.subscribeOn(getAnimationFrameScheduler(options)),
+            Observable.subscribeOn(() =>
+              Scheduler.createAnimationFrameScheduler(getScheduler(options)),
+            ),
           ),
           Observable.mergeAll({ concurrency: options.concurrency }),
         );

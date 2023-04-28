@@ -183,12 +183,6 @@ export const __WithLatestLike_otherLatest: unique symbol;
 /** @type {unique symbol} */
 export const __WithLatestLike_selector: unique symbol;
 /** @type {unique symbol} */
-export const __AnimationFrameScheduler_delayScheduler: unique symbol;
-/** @type {unique symbol} */
-export const __AnimationFrameScheduler_immediateQueue: unique symbol;
-/** @type {unique symbol} */
-export const __AnimationFrameScheduler_rafSubscription: unique symbol;
-/** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable: unique symbol;
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_subscription: unique symbol;

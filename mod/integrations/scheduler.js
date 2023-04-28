@@ -6,7 +6,6 @@ import { ContinuationLike_priority, } from "../__internal__/scheduling.js";
 import { newInstance, none, pipe, pipeLazy } from "../functions.js";
 import { SchedulerLike_now, } from "../scheduling.js";
 import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
-import * as Scheduler from "../scheduling/Scheduler.js";
 import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
 import { DisposableLike_dispose } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
@@ -45,19 +44,6 @@ export const getScheduler = /*@__PURE__*/ (() => {
                 const scheduler = createSchedulerWithPriority(priority);
                 schedulerCache.set(priority, scheduler);
                 return scheduler;
-            })());
-    };
-})();
-export const getAnimationFrameScheduler = /*@__PURE__*/ (() => {
-    const schedulerCache = newInstance(Map);
-    return (options = {}) => {
-        const priority = options.priority ?? unstable_NormalPriority;
-        return (schedulerCache.get(priority) ??
-            (() => {
-                const hostScheduler = getScheduler(options);
-                const animationScheduler = Scheduler.createAnimationFrameScheduler(hostScheduler);
-                schedulerCache.set(priority, animationScheduler);
-                return animationScheduler;
             })());
     };
 })();

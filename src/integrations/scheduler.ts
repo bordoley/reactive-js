@@ -23,7 +23,6 @@ import {
   SchedulerLike_now,
 } from "../scheduling.js";
 import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
-import * as Scheduler from "../scheduling/Scheduler.js";
 import {
   PrioritySchedulerImplementationLike,
   PrioritySchedulerImplementationLike_runContinuation,
@@ -116,28 +115,6 @@ export const getScheduler: (options?: {
         const scheduler = createSchedulerWithPriority(priority);
         schedulerCache.set(priority, scheduler);
         return scheduler;
-      })()
-    );
-  };
-})();
-
-export const getAnimationFrameScheduler: (options?: {
-  priority?: 1 | 2 | 3 | 4 | 5;
-}) => SchedulerLike = /*@__PURE__*/ (() => {
-  const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike> =
-    newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike>>(Map);
-
-  return (options = {}) => {
-    const priority = options.priority ?? unstable_NormalPriority;
-
-    return (
-      schedulerCache.get(priority) ??
-      (() => {
-        const hostScheduler = getScheduler(options);
-        const animationScheduler =
-          Scheduler.createAnimationFrameScheduler(hostScheduler);
-        schedulerCache.set(priority, animationScheduler);
-        return animationScheduler;
       })()
     );
   };

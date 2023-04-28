@@ -190,12 +190,6 @@ export const __WithLatestLike_otherLatest = /*@__PURE__*/ symbol("WithLatestLike
 /** @type {unique symbol} */
 export const __WithLatestLike_selector = /*@__PURE__*/ symbol("WithLatestLike_selector");
 /** @type {unique symbol} */
-export const __AnimationFrameScheduler_delayScheduler = /*@__PURE__*/ symbol("AnimationFrameScheduler_delayScheduler");
-/** @type {unique symbol} */
-export const __AnimationFrameScheduler_immediateQueue = /*@__PURE__*/ symbol("AnimationFrameScheduler_immediateQueue");
-/** @type {unique symbol} */
-export const __AnimationFrameScheduler_rafSubscription = /*@__PURE__*/ symbol("AnimationFrameScheduler_rafSubscription");
-/** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable = /*@__PURE__*/ symbol("AwaitOrObserveEffect_observable");
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_subscription = /*@__PURE__*/ symbol("AwaitOrObserveEffect_subscription");

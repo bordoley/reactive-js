@@ -12,16 +12,13 @@ import {
   ContinuationSchedulerLike_schedule,
 } from "../../../__internal__/scheduling.js";
 import {
-  __AnimationFrameScheduler_delayScheduler,
-  __AnimationFrameScheduler_immediateQueue,
-  __AnimationFrameScheduler_rafSubscription,
-} from "../../../__internal__/symbols.js";
-import {
-  IndexedQueueLike,
+  DelegatingLike,
+  DelegatingLike_delegate,
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
 import {
   Optional,
+  SideEffect,
   invoke,
   isSome,
   none,
@@ -36,13 +33,10 @@ import {
 import {
   CollectionLike_count,
   DisposableLike,
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
   QueueableLike_enqueue,
 } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
-import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import {
   PrioritySchedulerImplementationLike,
@@ -53,123 +47,70 @@ import {
 } from "./Scheduler.mixin.js";
 
 const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
-  type TProperties = {
-    [__AnimationFrameScheduler_delayScheduler]: SchedulerLike;
-    [__AnimationFrameScheduler_immediateQueue]: IndexedQueueLike<ContinuationLike>;
-    [__AnimationFrameScheduler_rafSubscription]: DisposableLike;
-  };
+  let rafQueue = Queue_createIndexedQueue<SideEffect>(
+    MAX_SAFE_INTEGER,
+    "overflow",
+  );
+  let rafIsRunning = false;
 
-  const scheduleRaf = (
-    instance: TProperties &
-      DisposableLike &
-      SchedulerLike &
-      PrioritySchedulerImplementationLike,
-  ) => {
-    if (
-      !instance[__AnimationFrameScheduler_rafSubscription][
-        DisposableLike_isDisposed
-      ]
-    ) {
-      return;
+  const rafCallback = () => {
+    const startTime = CurrentTime.now();
+    const workQueue = rafQueue;
+
+    rafQueue = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
+
+    let job: Optional<SideEffect> = none;
+    while (((job = workQueue[QueueLike_dequeue]()), isSome(job))) {
+      job();
+
+      const elapsedTime = CurrentTime.now() - startTime;
+      if (elapsedTime > 5 /*ms*/) {
+        break;
+      }
     }
 
-    const subscription = pipe(Disposable_create(), Disposable_addTo(instance));
-    instance[__AnimationFrameScheduler_rafSubscription] = subscription;
+    const jobsCount = workQueue[CollectionLike_count];
+    const newWorkQueue = rafQueue;
+    const newJobsCount = newWorkQueue[CollectionLike_count];
 
-    const cb = () => {
-      if (subscription[DisposableLike_isDisposed]) {
-        return;
+    if (jobsCount > 0 && newJobsCount === 0) {
+      rafQueue = workQueue;
+    } else if (jobsCount > 0) {
+      // Merge the job queues copying the newly enqueued jobs
+      // onto the original queue.
+      let job: Optional<SideEffect> = none;
+      while (((job = newWorkQueue[QueueLike_dequeue]()), isSome(job))) {
+        workQueue[QueueableLike_enqueue](job);
       }
+      rafQueue = workQueue;
+    }
 
-      const startTime = instance[SchedulerLike_now];
-      const continuations = instance[__AnimationFrameScheduler_immediateQueue];
-
-      instance[__AnimationFrameScheduler_immediateQueue] =
-        Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
-
-      let continuation: Optional<ContinuationLike> = none;
-      while (
-        ((continuation = continuations[QueueLike_dequeue]()),
-        isSome(continuation))
-      ) {
-        instance[PrioritySchedulerImplementationLike_runContinuation](
-          continuation,
-        );
-
-        if (subscription[DisposableLike_isDisposed]) {
-          return;
-        }
-
-        const elapsedTime = instance[SchedulerLike_now] - startTime;
-        if (elapsedTime > 5 /*ms*/) {
-          break;
-        }
-      }
-
-      const continuationsCount = continuations[CollectionLike_count];
-      const newContinuations =
-        instance[__AnimationFrameScheduler_immediateQueue];
-      const newContinuationsCount = newContinuations[CollectionLike_count];
-
-      if (continuationsCount > 0 && newContinuationsCount === 0) {
-        instance[__AnimationFrameScheduler_immediateQueue] = continuations;
-      } else if (continuationsCount > 0) {
-        // Merge the continuations copying the newly enqueued continuations
-        // onto the original queue.
-
-        instance[__AnimationFrameScheduler_immediateQueue] = continuations;
-
-        let continuation: Optional<ContinuationLike> = none;
-        while (
-          ((continuation = newContinuations[QueueLike_dequeue]()),
-          isSome(continuation))
-        ) {
-          continuations[QueueableLike_enqueue](continuation);
-        }
-      }
-
-      const immediateQueueCount =
-        instance[__AnimationFrameScheduler_immediateQueue][
-          CollectionLike_count
-        ];
-      if (immediateQueueCount > 0) {
-        requestAnimationFrame(cb);
-      } else {
-        subscription[DisposableLike_dispose]();
-      }
-    };
-
-    requestAnimationFrame(cb);
+    const workQueueCount = rafQueue[CollectionLike_count];
+    if (workQueueCount > 0) {
+      requestAnimationFrame(rafCallback);
+    } else {
+      rafIsRunning = false;
+    }
   };
 
   return createInstanceFactory(
     mix(
-      include(PriorityScheduler_mixin),
+      include(PriorityScheduler_mixin, Delegating_mixin()),
       function AnimationFrameScheduler(
         instance: Pick<
           PrioritySchedulerImplementationLike,
           | typeof SchedulerLike_now
           | typeof PrioritySchedulerImplementationLike_shouldYield
           | typeof PrioritySchedulerImplementationLike_scheduleContinuation
-        > &
-          TProperties,
+        >,
         delayScheduler: SchedulerLike,
       ): SchedulerLike & DisposableLike {
         init(PriorityScheduler_mixin, instance, 5);
-
-        instance[__AnimationFrameScheduler_delayScheduler] = delayScheduler;
-        instance[__AnimationFrameScheduler_immediateQueue] =
-          Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
-        instance[__AnimationFrameScheduler_rafSubscription] =
-          Disposable_disposed;
+        init(Delegating_mixin(), instance, delayScheduler);
 
         return instance;
       },
-      props<TProperties>({
-        [__AnimationFrameScheduler_delayScheduler]: none,
-        [__AnimationFrameScheduler_immediateQueue]: none,
-        [__AnimationFrameScheduler_rafSubscription]: none,
-      }),
+      props({}),
       {
         get [SchedulerLike_now](): number {
           return CurrentTime.now();
@@ -178,7 +119,8 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
         [PrioritySchedulerImplementationLike_shouldYield]: true,
 
         [PrioritySchedulerImplementationLike_scheduleContinuation](
-          this: PrioritySchedulerImplementationLike & TProperties,
+          this: PrioritySchedulerImplementationLike &
+            DelegatingLike<SchedulerLike>,
           continuation: ContinuationLike,
           delay: number,
         ) {
@@ -186,7 +128,7 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
           // if its not more than a frame.
           if (delay > 16) {
             pipe(
-              this[__AnimationFrameScheduler_delayScheduler],
+              this[DelegatingLike_delegate],
               invoke(
                 SchedulerLike_schedule,
                 pipeLazy(
@@ -198,10 +140,16 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
               Disposable_addTo(continuation),
             );
           } else {
-            this[__AnimationFrameScheduler_immediateQueue][
-              QueueableLike_enqueue
-            ](continuation);
-            scheduleRaf(this);
+            rafQueue[QueueableLike_enqueue](() =>
+              this[PrioritySchedulerImplementationLike_runContinuation](
+                continuation,
+              ),
+            );
+
+            if (!rafIsRunning) {
+              rafIsRunning = true;
+              requestAnimationFrame(rafCallback);
+            }
           }
         },
       },
