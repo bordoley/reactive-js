@@ -1,7 +1,7 @@
 import { Buffer, Concat, ConcatAll, ConcatMap, ConcatWith, Contains, DistinctUntilChanged, EndWith, EnumeratorLike, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, NoneSatisfy, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import * as Containers from "../containers.js";
 import { Factory, Function1, Optional, Updater } from "../functions.js";
-import { Animate, BackpressureStrategy, CatchError, CombineLatest, CurrentTime, DecodeWithCharset, Defer, EncodeUtf8, Enqueue, Exhaust, ExhaustMap, FirstAsync, Flow, ForkMerge, ForkZipLatest, LastAsync, Merge, MergeAll, MergeMap, MergeWith, Retry, RunnableLike, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, ThrowIfEmpty, Timeout, ToEnumerable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
+import { Animate, BackpressureStrategy, CatchError, CombineLatest, CurrentTime, DecodeWithCharset, Defer, DispatchTo, EncodeUtf8, Enqueue, Exhaust, ExhaustMap, FirstAsync, Flow, ForkMerge, ForkZipLatest, LastAsync, Merge, MergeAll, MergeMap, MergeWith, Retry, RunnableLike, ScanLast, ScanMany, SwitchAll, SwitchMap, TakeUntil, Throttle, ThrowIfEmpty, Timeout, ToEnumerable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import type * as Rx from "../rx.js";
 export declare const animate: Animate<RunnableLike>["animate"];
 export declare const backpressureStrategy: BackpressureStrategy<RunnableLike>["backpressureStrategy"];
@@ -22,6 +22,7 @@ export declare const contains: Contains<RunnableLike>["contains"];
 export declare const currentTime: CurrentTime<RunnableLike>["currentTime"];
 export declare const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithCharset"];
 export declare const defer: Defer<RunnableLike>["defer"];
+export declare const dispatchTo: DispatchTo<RunnableLike>["dispatchTo"];
 export declare const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"];
 interface Empty extends Containers.Empty<RunnableLike> {
     /**

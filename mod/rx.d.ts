@@ -241,6 +241,17 @@ export interface Defer<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
+export interface DispatchTo<C extends ContainerLike> {
+    /**
+     *
+     * @category Operator
+     */
+    dispatchTo<T>(dispatcher: DispatcherLike<T>): ContainerOperator<C, T, T>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface EncodeUtf8<C extends ContainerLike> {
     /**
      * @category Operator
@@ -256,7 +267,7 @@ export interface Enqueue<C extends ContainerLike> {
      *
      * @category Operator
      */
-    enqueue<T>(queue: QueueableLike<T> | Function1<T, boolean>): ContainerOperator<C, T, T>;
+    enqueue<T>(queue: QueueableLike<T>): ContainerOperator<C, T, T>;
 }
 /**
  * @noInheritDoc

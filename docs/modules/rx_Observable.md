@@ -37,6 +37,7 @@
 - [concatMap](rx_Observable.md#concatmap)
 - [concatWith](rx_Observable.md#concatwith)
 - [decodeWithCharset](rx_Observable.md#decodewithcharset)
+- [dispatchTo](rx_Observable.md#dispatchto)
 - [distinctUntilChanged](rx_Observable.md#distinctuntilchanged)
 - [encodeUtf8](rx_Observable.md#encodeutf8)
 - [endWith](rx_Observable.md#endwith)
@@ -1336,6 +1337,28 @@ ___
 
 ___
 
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>, `T`, `T`\>
@@ -1409,7 +1432,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> \| [`Function1`](functions.md#function1)<`T`, `boolean`\> |
+| `queue` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> |
 
 #### Returns
 

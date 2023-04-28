@@ -32,7 +32,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `queue` | [`QueueableLike`](util.QueueableLike.md)<`T`\> \| [`Function1`](../modules/functions.md#function1)<`T`, `boolean`\> |
+| `queue` | [`QueueableLike`](util.QueueableLike.md)<`T`\> |
 
 #### Returns
 

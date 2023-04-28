@@ -1,5 +1,5 @@
 import { Buffer, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike_T, ContainerLike_type, Contains, DistinctUntilChanged, Empty, EndWith, Enumerate, EnumeratorLike, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, NoneSatisfy, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
-import { BackpressureStrategy, CatchError, DecodeWithCharset, Defer, EncodeUtf8, EnumerableLike, FirstAsync, Flow, LastAsync, Retry, ScanLast, ThrowIfEmpty, Throws } from "../rx.js";
+import { BackpressureStrategy, CatchError, DecodeWithCharset, Defer, DispatchTo, EncodeUtf8, Enqueue, EnumerableLike, FirstAsync, Flow, LastAsync, Retry, ScanLast, ThrowIfEmpty, Throws } from "../rx.js";
 import { DisposableLike } from "../util.js";
 export declare const backpressureStrategy: BackpressureStrategy<EnumerableLike>["backpressureStrategy"];
 export declare const buffer: Buffer<EnumerableLike>["buffer"];
@@ -17,9 +17,11 @@ export declare const concatWith: ConcatWith<EnumerableLike>["concatWith"];
 export declare const contains: Contains<EnumerableLike>["contains"];
 export declare const decodeWithCharset: DecodeWithCharset<EnumerableLike>["decodeWithCharset"];
 export declare const defer: Defer<EnumerableLike>["defer"];
+export declare const dispatchTo: DispatchTo<EnumerableLike>["dispatchTo"];
 export declare const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"];
 export declare const empty: Empty<EnumerableLike>["empty"];
 export declare const encodeUtf8: EncodeUtf8<EnumerableLike>["encodeUtf8"];
+export declare const enqueue: Enqueue<EnumerableLike>["enqueue"];
 export declare const endWith: EndWith<EnumerableLike>["endWith"];
 interface EnumerableEnumerator<T = unknown> extends EnumeratorLike<T> {
     readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]> & DisposableLike;

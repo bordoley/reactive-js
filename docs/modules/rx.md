@@ -33,6 +33,7 @@
 - [CurrentTime](../interfaces/rx.CurrentTime.md)
 - [DecodeWithCharset](../interfaces/rx.DecodeWithCharset.md)
 - [Defer](../interfaces/rx.Defer.md)
+- [DispatchTo](../interfaces/rx.DispatchTo.md)
 - [EncodeUtf8](../interfaces/rx.EncodeUtf8.md)
 - [Enqueue](../interfaces/rx.Enqueue.md)
 - [Exhaust](../interfaces/rx.Exhaust.md)

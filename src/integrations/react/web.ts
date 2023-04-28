@@ -9,8 +9,8 @@ import {
   useState,
 } from "react";
 import {
-  Function1,
   Optional,
+  SideEffect1,
   Updater,
   bindMethod,
   isNone,
@@ -57,8 +57,8 @@ export const useWindowLocationStream = (): WindowLocationStreamLike =>
  */
 export const useWindowLocation = (): {
   uri: Optional<WindowLocationURI>;
-  push: Function1<Updater<WindowLocationURI> | WindowLocationURI, boolean>;
-  replace: Function1<Updater<WindowLocationURI> | WindowLocationURI, boolean>;
+  push: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
+  replace: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
   canGoBack: boolean;
   goBack: () => void;
 } => {

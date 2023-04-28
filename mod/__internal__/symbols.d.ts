@@ -243,7 +243,7 @@ export const __DistinctUntilChangedObserver_prev: unique symbol;
 /** @type {unique symbol} */
 export const __DistinctUntilChangedObserver_hasValue: unique symbol;
 /** @type {unique symbol} */
-export const __EnqueueObserver_effect: unique symbol;
+export const __EnqueueObserver_queue: unique symbol;
 /** @type {unique symbol} */
 export const __Enumerator_private_current: unique symbol;
 /** @type {unique symbol} */

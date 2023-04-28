@@ -21,6 +21,7 @@ import {
   bindMethod,
   compose,
   error,
+  identity,
   invoke,
   isFunction,
   isSome,
@@ -417,13 +418,11 @@ export const windowLocation: StreamableLike<
           return pipe(
             state,
             Observable.fromOptional(),
-            Observable.enqueue(state =>
-              replace
-                ? replaceState[QueueableLike_enqueue](state)
-                : push
-                ? pushState[QueueableLike_enqueue](state)
-                : false,
-            ),
+            replace
+              ? Observable.enqueue(replaceState)
+              : push
+              ? Observable.enqueue(pushState)
+              : identity,
             Observable.ignoreElements(),
           );
         },

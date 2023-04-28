@@ -1,17 +1,15 @@
-import { Factory, bindMethod, isFunction, pipe } from "../../../functions.js";
+import { Factory, isFunction, pipe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
-  DispatcherLike_complete,
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "./Observable.create.js";
-import Observable_enqueue from "./Observable.enqueue.js";
+import Observable_dispatchTo from "./Observable.dispatchTo.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const Observable_subscribeOn =
@@ -31,7 +29,7 @@ const Observable_subscribeOn =
 
       pipe(
         observable,
-        Observable_enqueue<ObservableLike, T>(observer),
+        Observable_dispatchTo<ObservableLike, T>(observer),
         Observable_subscribeWithConfig(scheduler, {
           [BufferLike_capacity]:
             options?.capacity ?? observer[BufferLike_capacity],
@@ -39,7 +37,6 @@ const Observable_subscribeOn =
             options?.backpressureStrategy ??
             observer[QueueableLike_backpressureStrategy],
         }),
-        Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
         Disposable_addTo(observer),
       );
     });

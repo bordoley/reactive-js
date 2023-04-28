@@ -28,9 +28,11 @@
 - [concatMap](rx_Enumerable.md#concatmap)
 - [concatWith](rx_Enumerable.md#concatwith)
 - [decodeWithCharset](rx_Enumerable.md#decodewithcharset)
+- [dispatchTo](rx_Enumerable.md#dispatchto)
 - [distinctUntilChanged](rx_Enumerable.md#distinctuntilchanged)
 - [encodeUtf8](rx_Enumerable.md#encodeutf8)
 - [endWith](rx_Enumerable.md#endwith)
+- [enqueue](rx_Enumerable.md#enqueue)
 - [flatMapIterable](rx_Enumerable.md#flatmapiterable)
 - [forEach](rx_Enumerable.md#foreach)
 - [forkConcat](rx_Enumerable.md#forkconcat)
@@ -693,6 +695,28 @@ ___
 
 ___
 
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
@@ -745,6 +769,28 @@ ___
 | :------ | :------ |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> |
 
 #### Returns
 

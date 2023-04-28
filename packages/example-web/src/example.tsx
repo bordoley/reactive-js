@@ -137,7 +137,7 @@ const Root = () => {
     () =>
       pipe(
         Runnable.generate(increment, returns(counterInitialValue ?? -1)),
-        Runnable.enqueue<number>(value =>
+        Runnable.forEach<number>(value =>
           history.replace((uri: WindowLocationURI) => ({
             ...uri,
             query: `v=${value}`,

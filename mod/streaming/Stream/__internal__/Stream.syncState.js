@@ -2,7 +2,7 @@
 
 import { compose, identity, pipe, } from "../../../functions.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
-import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.enqueue.js";
+import Observable_dispatchTo from "../../../rx/Observable/__internal__/Observable.dispatchTo.js";
 import Observable_forkMerge from "../../../rx/Observable/__internal__/Observable.forkMerge.js";
 import Observable_pairwise from "../../../rx/Observable/__internal__/Observable.pairwise.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
@@ -15,7 +15,7 @@ const Stream_syncState = (onInit, onChange, options) => {
         const scheduler = options?.scheduler ?? stateStore[StreamLike_scheduler];
         return pipe(stateStore, Observable_forkMerge(compose(Observable_takeFirst(), Observable_concatMap(onInit)), compose(throttleDuration > 0
             ? Observable_throttle(throttleDuration)
-            : identity, Observable_pairwise(), Observable_concatMap(([oldValue, newValue]) => onChange(oldValue, newValue)))), Observable_enqueue(stateStore), Observable_subscribe(scheduler, {
+            : identity, Observable_pairwise(), Observable_concatMap(([oldValue, newValue]) => onChange(oldValue, newValue)))), Observable_dispatchTo(stateStore), Observable_subscribe(scheduler, {
             backpressureStrategy: options?.backpressureStrategy,
             capacity: options?.capacity,
         }));

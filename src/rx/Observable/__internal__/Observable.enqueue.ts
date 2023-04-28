@@ -1,92 +1,18 @@
-import {
-  Mutable,
-  createInstanceFactory,
-  include,
-  init,
-  mix,
-  props,
-} from "../../../__internal__/mixins.js";
-import { __EnqueueObserver_effect } from "../../../__internal__/symbols.js";
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-} from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
-import {
-  Function1,
-  bindMethod,
-  isFunction,
-  none,
-  partial,
-  pipe,
-} from "../../../functions.js";
-import {
-  ObservableLike,
-  ObserverLike,
-  ObserverLike_notify,
-} from "../../../rx.js";
-import { SchedulerLike_requestYield } from "../../../scheduling.js";
-import { QueueableLike, QueueableLike_enqueue } from "../../../util.js";
-import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
+import { partial, pipe } from "../../../functions.js";
+import { ObservableLike } from "../../../rx.js";
+import { QueueableLike } from "../../../util.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
-import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
-import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
+import Observer_createEnqueueObserver from "../../Observer/__internal__/Observer.createEnqueueObserver.js";
 
 type ObservableEnqueue = <C extends ObservableLike, T = unknown>(
-  queue: QueueableLike<T> | Function1<T, boolean>,
+  queue: QueueableLike<T>,
 ) => ContainerOperator<C, T, T>;
-const Observable_enqueue: ObservableEnqueue = /*@__PURE__*/ (<T>() => {
-  const createEnqueueObserver: <T>(
-    delegate: ObserverLike<T>,
-    effect: Function1<T, boolean>,
-  ) => ObserverLike<T> = (<T>() => {
-    type TProperties = {
-      readonly [__EnqueueObserver_effect]: Function1<T, boolean>;
-    };
-
-    return createInstanceFactory(
-      mix(
-        include(Observer_delegatingMixin(), Delegating_mixin()),
-        function EnqueueObserver(
-          instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
-            Mutable<TProperties>,
-          delegate: ObserverLike<T>,
-          effect: Function1<T, boolean>,
-        ): ObserverLike<T> {
-          init(Observer_delegatingMixin(), instance, delegate, delegate);
-          init(Delegating_mixin(), instance, delegate);
-          instance[__EnqueueObserver_effect] = effect;
-
-          return instance;
-        },
-        props<TProperties>({
-          [__EnqueueObserver_effect]: none,
-        }),
-        {
-          [ObserverLike_notify](
-            this: TProperties &
-              DelegatingLike<ObserverLike<T>> &
-              ObserverLike<T>,
-            next: T,
-          ) {
-            Observer_assertState(this);
-
-            if (!this[__EnqueueObserver_effect](next)) {
-              this[SchedulerLike_requestYield]();
-            }
-            this[DelegatingLike_delegate][ObserverLike_notify](next);
-          },
-        },
-      ),
-    );
-  })();
-
-  return ((queue: QueueableLike<T> | Function1<T, boolean>) => {
-    const effect = isFunction(queue)
-      ? queue
-      : bindMethod(queue, QueueableLike_enqueue);
-    return pipe(createEnqueueObserver, partial(effect), Enumerable_lift);
-  }) as ObservableEnqueue;
-})();
+const Observable_enqueue: ObservableEnqueue = (<T>(queue: QueueableLike<T>) =>
+  pipe(
+    Observer_createEnqueueObserver,
+    partial(queue),
+    Enumerable_lift,
+  )) as ObservableEnqueue;
 
 export default Observable_enqueue;

@@ -7,7 +7,7 @@ import {
 } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
-import Observable_enqueue from "../../../rx/Observable/__internal__/Observable.enqueue.js";
+import Observable_dispatchTo from "../../../rx/Observable/__internal__/Observable.dispatchTo.js";
 import Observable_forkMerge from "../../../rx/Observable/__internal__/Observable.forkMerge.js";
 import Observable_pairwise from "../../../rx/Observable/__internal__/Observable.pairwise.js";
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
@@ -53,7 +53,7 @@ const Stream_syncState = <T>(
           ),
         ),
       ),
-      Observable_enqueue<ObservableLike, Updater<T>>(stateStore),
+      Observable_dispatchTo<ObservableLike, Updater<T>>(stateStore),
       Observable_subscribe(scheduler, {
         backpressureStrategy: options?.backpressureStrategy,
         capacity: options?.capacity,

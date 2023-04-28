@@ -56,7 +56,9 @@ import {
   CatchError,
   DecodeWithCharset,
   Defer,
+  DispatchTo,
   EncodeUtf8,
+  Enqueue,
   EnumerableLike,
   FirstAsync,
   Flow,
@@ -108,6 +110,8 @@ import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
+import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
+import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
@@ -152,6 +156,9 @@ export const decodeWithCharset: DecodeWithCharset<EnumerableLike>["decodeWithCha
 
 export const defer: Defer<EnumerableLike>["defer"] = Enumerable_defer;
 
+export const dispatchTo: DispatchTo<EnumerableLike>["dispatchTo"] =
+  Observable_dispatchTo;
+
 export const distinctUntilChanged: DistinctUntilChanged<EnumerableLike>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
@@ -159,6 +166,8 @@ export const empty: Empty<EnumerableLike>["empty"] = Observable_empty;
 
 export const encodeUtf8: EncodeUtf8<EnumerableLike>["encodeUtf8"] =
   Enumerable_encodeUtf8;
+
+export const enqueue: Enqueue<EnumerableLike>["enqueue"] = Observable_enqueue;
 
 export const endWith: EndWith<EnumerableLike>["endWith"] = Observable_endWith;
 

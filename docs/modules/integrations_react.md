@@ -24,7 +24,7 @@
 
 ### useAnimation
 
-▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
 #### Type parameters
 
@@ -47,9 +47,9 @@
 
 #### Returns
 
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
-▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
 #### Type parameters
 
@@ -72,9 +72,9 @@ readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: 
 
 #### Returns
 
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
-▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
 #### Type parameters
 
@@ -97,9 +97,9 @@ readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: 
 
 #### Returns
 
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
-▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options?`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options?`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
 #### Type parameters
 
@@ -121,13 +121,13 @@ readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: 
 
 #### Returns
 
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
 ___
 
 ### useAnimations
 
-▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
 #### Type parameters
 
@@ -151,9 +151,9 @@ ___
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
-▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
 #### Type parameters
 
@@ -177,9 +177,9 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `boolean`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
-▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
 #### Type parameters
 
@@ -203,9 +203,9 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
-▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options?`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options?`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
 #### Type parameters
 
@@ -227,7 +227,7 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`Function1`](functions.md#function1)<`TEvent`, `boolean`\>, `never`]
+readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
 ___
 
@@ -523,7 +523,7 @@ ___
 
 ### useStreamable
 
-▸ **useStreamable**<`TReq`, `T`\>(`streamable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`Function1`](functions.md#function1)<`TReq`, `boolean`\>]
+▸ **useStreamable**<`TReq`, `T`\>(`streamable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
 
 #### Type parameters
 
@@ -545,9 +545,9 @@ ___
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<`T`\>, [`Function1`](functions.md#function1)<`TReq`, `boolean`\>]
+readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
 
-▸ **useStreamable**<`TReq`, `T`\>(`factory`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`Function1`](functions.md#function1)<`TReq`, `boolean`\>]
+▸ **useStreamable**<`TReq`, `T`\>(`factory`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
 
 #### Type parameters
 
@@ -570,7 +570,7 @@ readonly [[`Optional`](functions.md#optional)<`T`\>, [`Function1`](functions.md#
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<`T`\>, [`Function1`](functions.md#function1)<`TReq`, `boolean`\>]
+readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
 
 ___
 

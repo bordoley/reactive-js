@@ -6,11 +6,87 @@
 
 ### Operator Functions
 
+- [dispatchTo](rx_PauseableObservable.md#dispatchto)
+- [enqueue](rx_PauseableObservable.md#enqueue)
+- [forEach](rx_PauseableObservable.md#foreach)
 - [keep](rx_PauseableObservable.md#keep)
 - [map](rx_PauseableObservable.md#map)
 - [pick](rx_PauseableObservable.md#pick)
 
+### Other Functions
+
+- [sinkInto](rx_PauseableObservable.md#sinkinto)
+
 ## Operator Functions
+
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](containers.md#containeroperator)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](containers.md#containeroperator)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](../interfaces/util.QueueableLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
+
+### forEach
+
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+Returns a ContainerOperator that applies the side effect function to each
+value emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](containers.md#containeroperator)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`unknown`\>, `T`, `T`\>
+
+___
 
 ### keep
 
@@ -135,3 +211,27 @@ ___
 #### Returns
 
 [`ContainerOperator`](containers.md#containeroperator)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+## Other Functions
+
+### sinkInto
+
+▸ **sinkInto**<`T`\>(`sink`): [`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `sink` | [`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\>\>

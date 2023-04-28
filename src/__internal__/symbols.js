@@ -586,8 +586,8 @@ export const __DistinctUntilChangedObserver_hasValue = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __EnqueueObserver_effect = /*@__PURE__*/ symbol(
-  "EnqueueObserver_effect",
+export const __EnqueueObserver_queue = /*@__PURE__*/ symbol(
+  "EnqueueObserver_queue",
 );
 
 /** @type {unique symbol} */

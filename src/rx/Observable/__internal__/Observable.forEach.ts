@@ -1,12 +1,17 @@
 import { ContainerOperator } from "../../../containers.js";
-import { SideEffect1, alwaysTrue, compose } from "../../../functions.js";
+import { SideEffect1, partial, pipe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import Observable_enqueue from "./Observable.enqueue.js";
+import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
+import Observer_createForEachObserver from "../../Observer/__internal__/Observer.createForEachObserver.js";
 
 type ObservableForEach = <C extends ObservableLike, T = unknown>(
   effect: SideEffect1<T>,
 ) => ContainerOperator<C, T, T>;
-const Observable_forEach: ObservableForEach = <T>(effect: SideEffect1<T>) =>
-  Observable_enqueue(compose(effect, alwaysTrue));
+const Observable_forEach: ObservableForEach = (<T>(effect: SideEffect1<T>) =>
+  pipe(
+    Observer_createForEachObserver,
+    partial(effect),
+    Enumerable_lift,
+  )) as ObservableForEach;
 
 export default Observable_forEach;

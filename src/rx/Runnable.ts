@@ -51,6 +51,7 @@ import {
   CurrentTime,
   DecodeWithCharset,
   Defer,
+  DispatchTo,
   EncodeUtf8,
   Enqueue,
   Exhaust,
@@ -90,6 +91,7 @@ import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
+import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
@@ -196,6 +198,9 @@ export const decodeWithCharset: DecodeWithCharset<RunnableLike>["decodeWithChars
   Observable_decodeWithCharset;
 
 export const defer: Defer<RunnableLike>["defer"] = Runnable_defer;
+
+export const dispatchTo: DispatchTo<RunnableLike>["dispatchTo"] =
+  Observable_dispatchTo;
 
 export const distinctUntilChanged: DistinctUntilChanged<RunnableLike>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;

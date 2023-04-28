@@ -251,7 +251,7 @@ export const __DistinctUntilChangedObserver_prev = /*@__PURE__*/ symbol("Distinc
 /** @type {unique symbol} */
 export const __DistinctUntilChangedObserver_hasValue = /*@__PURE__*/ symbol("DistinctUntilChangedObserver_hasValue");
 /** @type {unique symbol} */
-export const __EnqueueObserver_effect = /*@__PURE__*/ symbol("EnqueueObserver_effect");
+export const __EnqueueObserver_queue = /*@__PURE__*/ symbol("EnqueueObserver_queue");
 /** @type {unique symbol} */
 export const __Enumerator_private_current = /*@__PURE__*/ symbol("Enumerator_private_current");
 /** @type {unique symbol} */

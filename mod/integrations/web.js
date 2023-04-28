@@ -4,7 +4,7 @@ import * as Object from "../__internal__/Object.js";
 import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
 import { __WindowLocationStreamLike_canGoBack as WindowLocationStreamLike_canGoBack, __WindowLocationStreamLike_goBack as WindowLocationStreamLike_goBack, __WindowLocationStreamLike_replace as WindowLocationStreamLike_replace, } from "../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../__internal__/util.js";
-import { bindMethod, compose, error, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
+import { bindMethod, compose, error, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../functions.js";
 import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
 import { MulticastObservableLike_buffer, ObservableLike_observe, } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
@@ -154,11 +154,11 @@ export const windowLocation = /*@__PURE__*/ (() => {
             let { replace } = state;
             const push = !replace && locationChanged;
             replace = replace || (titleChanged && !locationChanged);
-            return pipe(state, Observable.fromOptional(), Observable.enqueue(state => replace
-                ? replaceState[QueueableLike_enqueue](state)
+            return pipe(state, Observable.fromOptional(), replace
+                ? Observable.enqueue(replaceState)
                 : push
-                    ? pushState[QueueableLike_enqueue](state)
-                    : false), Observable.ignoreElements());
+                    ? Observable.enqueue(pushState)
+                    : identity, Observable.ignoreElements());
         }));
         currentWindowLocationStream = pipe(locationStream, createWindowLocationStream, Disposable.add(pushState), Disposable.add(replaceState), Disposable.add(syncState));
         return currentWindowLocationStream;

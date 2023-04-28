@@ -18,6 +18,7 @@ import {
   Function1,
   Optional,
   SideEffect,
+  SideEffect1,
   bindMethod,
   ignore,
   invoke,
@@ -309,7 +310,7 @@ interface UseStreamable {
       readonly capacity?: number;
       readonly replay?: number;
     },
-  ): readonly [Optional<T>, Function1<TReq, boolean>];
+  ): readonly [Optional<T>, SideEffect1<TReq>];
 
   useStreamable<TReq, T>(
     factory: Factory<StreamableLike<TReq, T>>,
@@ -320,7 +321,7 @@ interface UseStreamable {
       readonly capacity?: number;
       readonly replay?: number;
     },
-  ): readonly [Optional<T>, Function1<TReq, boolean>];
+  ): readonly [Optional<T>, SideEffect1<TReq>];
 }
 /**
  * @category Hook
@@ -343,7 +344,7 @@ export const useStreamable: UseStreamable["useStreamable"] = <TReq, T>(
     readonly capacity?: number;
     readonly replay?: number;
   },
-): readonly [Optional<T>, Function1<TReq, boolean>] => {
+): readonly [Optional<T>, SideEffect1<TReq>] => {
   const stream = (useStream as any)(
     streamableOrFactory,
     optionsOrDeps,
@@ -623,7 +624,7 @@ interface UseAnimations {
     },
   ): readonly [
     ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
-    Function1<TEvent, boolean>,
+    SideEffect1<TEvent>,
     boolean,
   ];
 
@@ -646,7 +647,7 @@ interface UseAnimations {
     },
   ): readonly [
     ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
-    Function1<TEvent, boolean>,
+    SideEffect1<TEvent>,
     boolean,
   ];
 
@@ -669,7 +670,7 @@ interface UseAnimations {
     },
   ): readonly [
     ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
-    Function1<TEvent, boolean>,
+    SideEffect1<TEvent>,
     never,
   ];
 
@@ -690,7 +691,7 @@ interface UseAnimations {
     },
   ): readonly [
     ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
-    Function1<TEvent, boolean>,
+    SideEffect1<TEvent>,
     never,
   ];
 }
@@ -713,7 +714,7 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
   } = {},
 ): readonly [
   ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
-  Function1<TEvent, boolean>,
+  SideEffect1<TEvent>,
   unknown,
 ] => {
   const animations = useMemo(animationFactory, deps);
@@ -790,7 +791,7 @@ interface UseAnimation {
     },
   ): readonly [
     EventSourceLike<{ event: TEvent; value: T }>,
-    Function1<TEvent, boolean>,
+    SideEffect1<TEvent>,
     boolean,
   ];
 
@@ -811,7 +812,7 @@ interface UseAnimation {
     },
   ): readonly [
     EventSourceLike<{ event: TEvent; value: T }>,
-    Function1<TEvent, boolean>,
+    SideEffect1<TEvent>,
     boolean,
   ];
 
@@ -832,7 +833,7 @@ interface UseAnimation {
     },
   ): readonly [
     EventSourceLike<{ event: TEvent; value: T }>,
-    Function1<TEvent, boolean>,
+    SideEffect1<TEvent>,
     never,
   ];
 
@@ -852,7 +853,7 @@ interface UseAnimation {
     },
   ): readonly [
     EventSourceLike<{ event: TEvent; value: T }>,
-    Function1<TEvent, boolean>,
+    SideEffect1<TEvent>,
     never,
   ];
 }
@@ -874,7 +875,7 @@ export const useAnimation: UseAnimation["useAnimation"] = (<
   } = {},
 ): readonly [
   EventSourceLike<{ event: TEvent; value: T }>,
-  Function1<TEvent, boolean>,
+  SideEffect1<TEvent>,
   unknown,
 ] => {
   const [animatedValues, dispatch, isAnimationRunning] = useAnimations<
