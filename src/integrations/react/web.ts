@@ -142,7 +142,7 @@ export const useAnimate = <TElement extends HTMLElement, T = number>(
         const element = ref.current;
         if (element != null) {
           pipe(
-            selectorMemoized(v) as ReadonlyObjectMapLike<string, CSSStyleKey>,
+            selectorMemoized(v),
             ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>((v, key) => {
               element.style[key] = v ?? "";
             }),

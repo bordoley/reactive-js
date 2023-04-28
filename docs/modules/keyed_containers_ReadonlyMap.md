@@ -16,6 +16,7 @@
 ### Transform Functions
 
 - [entries](keyed_containers_ReadonlyMap.md#entries)
+- [keys](keyed_containers_ReadonlyMap.md#keys)
 
 ## Constructor Functions
 
@@ -126,3 +127,19 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+
+___
+
+### keys
+
+▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` = {} |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
