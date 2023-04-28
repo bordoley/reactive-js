@@ -37,6 +37,8 @@ const PauseableObservable_sinkInto =
         Observable_subscribe(observer),
         Disposable_addTo(observer),
       );
+
+      pauseableObservable[PauseableLike_resume]();
     });
 
 export default PauseableObservable_sinkInto;

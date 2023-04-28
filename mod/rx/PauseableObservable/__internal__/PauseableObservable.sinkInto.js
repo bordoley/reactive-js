@@ -18,5 +18,6 @@ const PauseableObservable_sinkInto = (sink) => pauseableObservable => Observable
     }), Disposable_addTo(observer));
     sink[EventEmitterLike_addListener](eventListener);
     pipe(pauseableObservable, Observable_dispatchTo(sink), Observable_subscribe(observer), Disposable_addTo(observer));
+    pauseableObservable[PauseableLike_resume]();
 });
 export default PauseableObservable_sinkInto;
