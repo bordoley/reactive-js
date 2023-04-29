@@ -9,12 +9,12 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  __QueueScheduler_delayed,
-  __QueueScheduler_dueTime,
-  __QueueScheduler_hostContinuation,
-  __QueueScheduler_hostScheduler,
-  __QueueScheduler_queue,
-  __QueueScheduler_taskIDCounter,
+  __PauseableScheduler_delayed,
+  __PauseableScheduler_dueTime,
+  __PauseableScheduler_hostContinuation,
+  __PauseableScheduler_hostScheduler,
+  __PauseableScheduler_queue,
+  __PauseableScheduler_taskIDCounter,
 } from "../../../__internal__/symbols.js";
 import {
   ContinuationLike,
@@ -91,10 +91,10 @@ const Scheduler_toPauseableScheduler: Function1<
 
   const peek = (instance: TProperties): Optional<SchedulerTaskLike> => {
     const {
-      [__QueueScheduler_delayed]: delayed,
-      [__QueueScheduler_queue]: queue,
+      [__PauseableScheduler_delayed]: delayed,
+      [__PauseableScheduler_queue]: queue,
     } = instance;
-    const now = instance[__QueueScheduler_hostScheduler][SchedulerLike_now];
+    const now = instance[__PauseableScheduler_hostScheduler][SchedulerLike_now];
 
     while (true) {
       const task = delayed[QueueLike_head];
@@ -145,7 +145,7 @@ const Scheduler_toPauseableScheduler: Function1<
     const continuationActive =
       !instance[SerialDisposableLike_current][DisposableLike_isDisposed] &&
       isSome(task) &&
-      instance[__QueueScheduler_dueTime] <= task[SchedulerTaskLike_dueTime];
+      instance[__PauseableScheduler_dueTime] <= task[SchedulerTaskLike_dueTime];
 
     if (
       isNone(task) ||
@@ -157,12 +157,12 @@ const Scheduler_toPauseableScheduler: Function1<
 
     const dueTime = task[SchedulerTaskLike_dueTime];
     const delay = clampPositiveInteger(
-      dueTime - instance[__QueueScheduler_hostScheduler][SchedulerLike_now],
+      dueTime - instance[__PauseableScheduler_hostScheduler][SchedulerLike_now],
     );
-    instance[__QueueScheduler_dueTime] = dueTime;
+    instance[__PauseableScheduler_dueTime] = dueTime;
 
     const continuation =
-      instance[__QueueScheduler_hostContinuation] ??
+      instance[__PauseableScheduler_hostContinuation] ??
       ((scheduler: SchedulerLike) => {
         for (
           let task = peek(instance);
@@ -175,12 +175,12 @@ const Scheduler_toPauseableScheduler: Function1<
           } = task;
           const delay = clampPositiveInteger(
             dueTime -
-              instance[__QueueScheduler_hostScheduler][SchedulerLike_now],
+              instance[__PauseableScheduler_hostScheduler][SchedulerLike_now],
           );
 
           if (delay > 0) {
-            instance[__QueueScheduler_dueTime] =
-              instance[__QueueScheduler_hostScheduler][SchedulerLike_now] +
+            instance[__PauseableScheduler_dueTime] =
+              instance[__PauseableScheduler_hostScheduler][SchedulerLike_now] +
               delay;
           } else {
             instance[EnumeratorLike_move]();
@@ -190,21 +190,23 @@ const Scheduler_toPauseableScheduler: Function1<
           scheduler[SchedulerLike_yield](delay);
         }
       });
-    instance[__QueueScheduler_hostContinuation] = continuation;
+    instance[__PauseableScheduler_hostContinuation] = continuation;
 
     instance[SerialDisposableLike_current] = instance[
-      __QueueScheduler_hostScheduler
+      __PauseableScheduler_hostScheduler
     ][SchedulerLike_schedule](continuation, { delay });
   };
 
   type TProperties = {
-    readonly [__QueueScheduler_delayed]: QueueLike<SchedulerTaskLike>;
-    [__QueueScheduler_dueTime]: number;
-    readonly [__QueueScheduler_hostScheduler]: SchedulerLike;
-    [__QueueScheduler_hostContinuation]: Optional<SideEffect1<SchedulerLike>>;
+    readonly [__PauseableScheduler_delayed]: QueueLike<SchedulerTaskLike>;
+    [__PauseableScheduler_dueTime]: number;
+    readonly [__PauseableScheduler_hostScheduler]: SchedulerLike;
+    [__PauseableScheduler_hostContinuation]: Optional<
+      SideEffect1<SchedulerLike>
+    >;
     [PauseableLike_isPaused]: boolean;
-    readonly [__QueueScheduler_queue]: QueueLike<SchedulerTaskLike>;
-    [__QueueScheduler_taskIDCounter]: number;
+    readonly [__PauseableScheduler_queue]: QueueLike<SchedulerTaskLike>;
+    [__PauseableScheduler_taskIDCounter]: number;
   };
 
   return createInstanceFactory(
@@ -214,7 +216,7 @@ const Scheduler_toPauseableScheduler: Function1<
         MutableEnumerator_mixin<SchedulerTaskLike>(),
         SerialDisposable_mixin(),
       ),
-      function QueueScheduler(
+      function PauseableScheduler(
         instance: Pick<
           PauseableSchedulerLike & SchedulerImplementationLike,
           | typeof SchedulerLike_now
@@ -234,32 +236,32 @@ const Scheduler_toPauseableScheduler: Function1<
         init(MutableEnumerator_mixin<SchedulerTaskLike>(), instance);
         init(SerialDisposable_mixin(), instance, Disposable_disposed);
 
-        instance[__QueueScheduler_delayed] = Queue_createPriorityQueue(
+        instance[__PauseableScheduler_delayed] = Queue_createPriorityQueue(
           delayedComparator,
           MAX_SAFE_INTEGER,
           "overflow",
         );
-        instance[__QueueScheduler_queue] = Queue_createIndexedQueue(
+        instance[__PauseableScheduler_queue] = Queue_createIndexedQueue(
           MAX_SAFE_INTEGER,
           "overflow",
         );
-        instance[__QueueScheduler_hostScheduler] = host;
+        instance[__PauseableScheduler_hostScheduler] = host;
 
         return instance;
       },
       props<TProperties>({
-        [__QueueScheduler_delayed]: none,
-        [__QueueScheduler_dueTime]: 0,
-        [__QueueScheduler_hostScheduler]: none,
-        [__QueueScheduler_hostContinuation]: none,
+        [__PauseableScheduler_delayed]: none,
+        [__PauseableScheduler_dueTime]: 0,
+        [__PauseableScheduler_hostScheduler]: none,
+        [__PauseableScheduler_hostContinuation]: none,
         [PauseableLike_isPaused]: true,
-        [__QueueScheduler_queue]: none,
-        [__QueueScheduler_taskIDCounter]: 0,
+        [__PauseableScheduler_queue]: none,
+        [__PauseableScheduler_taskIDCounter]: 0,
       }),
       {
         get [SchedulerLike_now](): number {
           unsafeCast<TProperties>(this);
-          return this[__QueueScheduler_hostScheduler][SchedulerLike_now];
+          return this[__PauseableScheduler_hostScheduler][SchedulerLike_now];
         },
         get [SchedulerImplementationLike_shouldYield](): boolean {
           unsafeCast<
@@ -274,8 +276,8 @@ const Scheduler_toPauseableScheduler: Function1<
             (isSome(next) &&
               this[EnumeratorLike_current] !== next &&
               next[SchedulerTaskLike_dueTime] <=
-                this[__QueueScheduler_hostScheduler][SchedulerLike_now]) ||
-            this[__QueueScheduler_hostScheduler][SchedulerLike_shouldYield]
+                this[__PauseableScheduler_hostScheduler][SchedulerLike_now]) ||
+            this[__PauseableScheduler_hostScheduler][SchedulerLike_shouldYield]
           );
         },
         [PauseableLike_pause](
@@ -302,7 +304,7 @@ const Scheduler_toPauseableScheduler: Function1<
           // First fast forward through disposed tasks.
           peek(this);
 
-          const task = this[__QueueScheduler_queue][QueueLike_dequeue]();
+          const task = this[__PauseableScheduler_queue][QueueLike_dequeue]();
 
           if (isSome(task)) {
             this[EnumeratorLike_current] = task;
@@ -330,15 +332,15 @@ const Scheduler_toPauseableScheduler: Function1<
               ? this[EnumeratorLike_current]
               : {
                   [SchedulerTaskLike_id]: this[
-                    __QueueScheduler_taskIDCounter
+                    __PauseableScheduler_taskIDCounter
                   ]++,
                   [SchedulerTaskLike_continuation]: continuation,
                   [SchedulerTaskLike_dueTime]: dueTime,
                 };
 
           const {
-            [__QueueScheduler_delayed]: delayed,
-            [__QueueScheduler_queue]: queue,
+            [__PauseableScheduler_delayed]: delayed,
+            [__PauseableScheduler_queue]: queue,
           } = this;
           const targetQueue = dueTime > now ? delayed : queue;
           targetQueue[QueueableLike_enqueue](task);

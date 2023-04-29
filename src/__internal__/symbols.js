@@ -690,33 +690,33 @@ export const __Publisher_observers = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __QueueScheduler_delayed = /*@__PURE__*/ symbol(
-  "QueueScheduler_delayed ",
+export const __PauseableScheduler_delayed = /*@__PURE__*/ symbol(
+  "PauseableScheduler_delayed ",
 );
 
 /** @type {unique symbol} */
-export const __QueueScheduler_dueTime = /*@__PURE__*/ symbol(
-  "QueueScheduler_dueTime ",
+export const __PauseableScheduler_dueTime = /*@__PURE__*/ symbol(
+  "PauseableScheduler_dueTime ",
 );
 
 /** @type {unique symbol} */
-export const __QueueScheduler_hostContinuation = /*@__PURE__*/ symbol(
-  "QueueScheduler_hostContinuation ",
+export const __PauseableScheduler_hostContinuation = /*@__PURE__*/ symbol(
+  "PauseableScheduler_hostContinuation ",
 );
 
 /** @type {unique symbol} */
-export const __QueueScheduler_hostScheduler = /*@__PURE__*/ symbol(
-  "QueueScheduler_hostScheduler",
+export const __PauseableScheduler_hostScheduler = /*@__PURE__*/ symbol(
+  "PauseableScheduler_hostScheduler",
 );
 
 /** @type {unique symbol} */
-export const __QueueScheduler_queue = /*@__PURE__*/ symbol(
-  "QueueScheduler_queue ",
+export const __PauseableScheduler_queue = /*@__PURE__*/ symbol(
+  "PauseableScheduler_queue ",
 );
 
 /** @type {unique symbol} */
-export const __QueueScheduler_taskIDCounter = /*@__PURE__*/ symbol(
-  "QueueScheduler_taskIDCounter ",
+export const __PauseableScheduler_taskIDCounter = /*@__PURE__*/ symbol(
+  "PauseableScheduler_taskIDCounter ",
 );
 
 /** @type {unique symbol} */
