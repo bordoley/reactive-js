@@ -20,8 +20,6 @@ import {
   SideEffect,
   SideEffect1,
   bindMethod,
-  ignore,
-  invoke,
   isFunction,
   isSome,
   none,
@@ -31,7 +29,6 @@ import {
   returns,
 } from "../functions.js";
 import { ReadonlyObjectMapLike } from "../keyed-containers.js";
-import * as ReadonlyObjectMap from "../keyed-containers/ReadonlyObjectMap.js";
 import {
   AnimationConfig,
   EnumerableLike,
@@ -52,22 +49,25 @@ import {
 } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
+  AssociativeCollectionLike,
+  DictionaryLike,
   DispatcherLike,
   DisposableLike,
   DisposableLike_dispose,
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
+  KeyedCollectionLike_get,
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../util.js";
+import * as Dictionary from "../util/Dictionary.js";
 import * as Disposable from "../util/Disposable.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 import * as EventSource from "../util/EventSource.js";
-import * as Scheduler from "../util/Scheduler.js";
 import { getScheduler } from "./scheduler.js";
 
 interface UseEventSource {
@@ -575,41 +575,19 @@ export const createComponent = <TProps>(
   return ObservableComponent;
 };
 
-const usePublishers = <T>(
-  keyMap: ReadonlyObjectMapLike<unknown, string>,
-): ReadonlyObjectMapLike<EventPublisherLike<T>, string> => {
-  const [publishers, setPublishers] =
-    useState<Optional<ReadonlyObjectMapLike<EventPublisherLike<T>>>>();
-
-  useEffect(() => {
-    const publishers = pipe(
-      keyMap,
-      ReadonlyObjectMap.map<unknown, EventPublisherLike<T>, string>(_ =>
-        EventPublisher.create<T>(),
-      ),
-    );
-
-    setPublishers(publishers);
-    return pipeLazy(
-      publishers,
-      ReadonlyObjectMap.forEachWithKey<EventPublisherLike<T>, string>(
-        invoke(DisposableLike_dispose),
-      ),
-      ignore,
-    );
-  }, [keyMap]);
-
-  return publishers ?? ReadonlyObjectMap.empty<EventPublisherLike<T>>();
-};
-
 interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<T = number, TEvent = unknown>(
+  useAnimations<
+    T = number,
+    TEvent = unknown,
+    TKey extends string | number | symbol = string,
+  >(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
-        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
+        TKey
       >
     >,
     deps: readonly unknown[],
@@ -621,7 +599,7 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
+    DictionaryLike<EventSourceLike<{ event: TEvent; value: T }>, TKey>,
     SideEffect1<TEvent>,
     boolean,
   ];
@@ -629,10 +607,15 @@ interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<T = number, TEvent = unknown>(
+  useAnimations<
+    T = number,
+    TEvent = unknown,
+    TKey extends string | number | symbol = string,
+  >(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
-        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
+        TKey
       >
     >,
     deps: readonly unknown[],
@@ -644,7 +627,7 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
+    DictionaryLike<EventSourceLike<{ event: TEvent; value: T }>, TKey>,
     SideEffect1<TEvent>,
     boolean,
   ];
@@ -652,10 +635,15 @@ interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<T = number, TEvent = unknown>(
+  useAnimations<
+    T = number,
+    TEvent = unknown,
+    TKey extends string | number | symbol = string,
+  >(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
-        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
+        TKey
       >
     >,
     deps: readonly unknown[],
@@ -667,7 +655,7 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
+    DictionaryLike<EventSourceLike<{ event: TEvent; value: T }>, TKey>,
     SideEffect1<TEvent>,
     never,
   ];
@@ -675,20 +663,26 @@ interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<T = number, TEvent = unknown>(
+  useAnimations<
+    T = number,
+    TEvent = unknown,
+    TKey extends string | number | symbol = string,
+  >(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
-        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
+        TKey
       >
     >,
     deps: readonly unknown[],
     options?: {
+      readonly concurrency?: number;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
   ): readonly [
-    ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
+    DictionaryLike<EventSourceLike<{ event: TEvent; value: T }>, TKey>,
     SideEffect1<TEvent>,
     never,
   ];
@@ -696,10 +690,12 @@ interface UseAnimations {
 export const useAnimations: UseAnimations["useAnimations"] = (<
   T = number,
   TEvent = unknown,
+  TKey extends string | number | symbol = string,
 >(
   animationFactory: Factory<
     ReadonlyObjectMapLike<
-      Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
+      TKey
     >
   >,
   deps: readonly unknown[],
@@ -711,66 +707,29 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
     readonly capacity?: number;
   } = {},
 ): readonly [
-  ReadonlyObjectMapLike<EventSourceLike<{ event: TEvent; value: T }>>,
+  DictionaryLike<EventSourceLike<{ event: TEvent; value: T }>, TKey>,
   SideEffect1<TEvent>,
   unknown,
 ] => {
   const animations = useMemo(animationFactory, deps);
-  const publishers = usePublishers<{ event: TEvent; value: T }>(animations);
 
-  const [value, dispatch] = useStreamable(
-    () =>
-      Streamable.createEventHandler((event: TEvent) => {
-        const observables: ReadonlyObjectMapLike<
-          ObservableLike<T>,
-          string
-        > = pipe(
-          animations,
-          ReadonlyObjectMap.mapWithKey<
-            Function1<
-              TEvent,
-              AnimationConfig<T> | readonly AnimationConfig<T>[]
-            >,
-            ObservableLike<T>,
-            string
-          >((factory, key: string) =>
-            pipe(
-              Observable.animate<T>(factory(event)),
-              Observable.forEach(value => {
-                const publisher = publishers[key];
-                if (isSome(publisher)) {
-                  // FIXME: consider reusing an event object to avoid memory allocations
-                  publisher[EventListenerLike_notify]({ event, value });
-                }
-              }),
-              Observable.ignoreElements<T>(),
-            ),
-          ),
-        );
-
-        return pipe(
-          Observable.fromEnumeratorFactory(
-            pipeLazy(observables, ReadonlyObjectMap.values()),
-          ),
-          Observable.map(
-            Observable.subscribeOn(() =>
-              Scheduler.createAnimationFrameScheduler(getScheduler(options)),
-            ),
-          ),
-          Observable.mergeAll({ concurrency: options.concurrency }),
-        );
-      }, options as any),
-    [
-      animations,
-      options.concurrency,
-      options.mode,
-      publishers,
-      options?.priority,
-    ],
+  const stream = useStream(
+    () => Streamable.createAnimationEventHandler(animations, options as any),
+    [animations, options.concurrency, options.mode, options?.priority],
     options,
   );
 
-  return [publishers, dispatch, value];
+  const dict: Optional<
+    AssociativeCollectionLike<
+      TKey,
+      Optional<EventSourceLike<{ event: TEvent; value: T }>>
+    >
+  > = stream;
+
+  const dispatch = useDispatcher(stream);
+  const value = useObservable<T>(stream ?? emptyObservable, options);
+
+  return [dict ?? Dictionary.empty(), dispatch, value];
 }) as UseAnimations["useAnimations"];
 
 interface UseAnimation {
@@ -883,14 +842,14 @@ export const useAnimation: UseAnimation["useAnimation"] = (<
     TEvent
   >(
     returns({
-      value: animationFactory,
+      v: animationFactory,
     }),
     deps,
     options,
   );
 
   return [
-    animatedValues.value ?? EventSource.empty(),
+    animatedValues[KeyedCollectionLike_get]("v") ?? EventSource.empty(),
     dispatch,
     isAnimationRunning,
   ];

@@ -6,8 +6,10 @@
 
 ### Interfaces
 
+- [AssociativeCollectionLike](../interfaces/util.AssociativeCollectionLike.md)
 - [BufferLike](../interfaces/util.BufferLike.md)
 - [CollectionLike](../interfaces/util.CollectionLike.md)
+- [DictionaryLike](../interfaces/util.DictionaryLike.md)
 - [DispatcherLike](../interfaces/util.DispatcherLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
 - [ErrorSafeEventListenerLike](../interfaces/util.ErrorSafeEventListenerLike.md)

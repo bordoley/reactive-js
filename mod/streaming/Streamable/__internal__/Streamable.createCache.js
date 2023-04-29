@@ -4,13 +4,14 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
+import ReadonlyMap_keys from "../../../keyed-containers/ReadonlyMap/__internal__/ReadonlyMap.keys.js";
 import * as ReadonlyObjectMap from "../../../keyed-containers/ReadonlyObjectMap.js";
 import ReadonlyObjectMap_union from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.union.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
-import { CollectionLike_count, DisposableLike_isDisposed, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, SchedulerLike_schedule, SchedulerLike_yield, } from "../../../util.js";
+import { AssociativeCollectionLike_keys, CollectionLike_count, DisposableLike_isDisposed, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, SchedulerLike_schedule, SchedulerLike_yield, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../../util/Disposable.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
@@ -92,7 +93,11 @@ const createCacheStream = /*@__PURE__*/ (() => {
     }), {
         get [CollectionLike_count]() {
             unsafeCast(this);
-            return this.subscriptions.size;
+            return this.store.size;
+        },
+        get [AssociativeCollectionLike_keys]() {
+            unsafeCast(this);
+            return pipe(this.store, ReadonlyMap_keys());
         },
         [KeyedCollectionLike_get](key) {
             const { scheduleCleanup, store, subscriptions, [DelegatingLike_delegate]: delegate, } = this;

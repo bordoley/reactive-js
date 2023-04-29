@@ -127,7 +127,7 @@ ___
 
 ### useAnimations
 
-▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+▸ **useAnimations**<`T`, `TEvent`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
 #### Type parameters
 
@@ -135,12 +135,13 @@ ___
 | :------ | :------ |
 | `T` | `number` |
 | `TEvent` | `unknown` |
+| `TKey` | extends `string` \| `number` \| `symbol` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -151,9 +152,9 @@ ___
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
-▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+▸ **useAnimations**<`T`, `TEvent`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
 #### Type parameters
 
@@ -161,12 +162,13 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 | :------ | :------ |
 | `T` | `number` |
 | `TEvent` | `unknown` |
+| `TKey` | extends `string` \| `number` \| `symbol` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -177,9 +179,9 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
 
-▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+▸ **useAnimations**<`T`, `TEvent`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
 #### Type parameters
 
@@ -187,12 +189,13 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 | :------ | :------ |
 | `T` | `number` |
 | `TEvent` | `unknown` |
+| `TKey` | extends `string` \| `number` \| `symbol` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -203,9 +206,9 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
-▸ **useAnimations**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options?`): readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+▸ **useAnimations**<`T`, `TEvent`, `TKey`\>(`animationFactory`, `deps`, `options?`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
 #### Type parameters
 
@@ -213,21 +216,23 @@ readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[
 | :------ | :------ |
 | `T` | `number` |
 | `TEvent` | `unknown` |
+| `TKey` | extends `string` \| `number` \| `symbol` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `string`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
+| `options.concurrency?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
 #### Returns
 
-readonly [[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `string`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
 
 ___
 

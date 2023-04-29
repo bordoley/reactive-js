@@ -1,27 +1,23 @@
-import { hasOwn } from "../../../__internal__/Object.js";
 import { EnumeratorLike } from "../../../containers.js";
-import Iterator_enumerate from "../../../containers/Iterator/__internal__/Iterator.enumerate.js";
+import Enumerator_map from "../../../containers/Enumerator/__internal__/Enumerator.map.js";
 import { pipe } from "../../../functions.js";
 import {
   KeyOf,
   ReadonlyObjectMapLike,
   Values,
 } from "../../../keyed-containers.js";
+import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 
 const ReadonlyObjectMap_values: Values<ReadonlyObjectMapLike>["values"] =
   <
     T,
     TKey extends KeyOf<ReadonlyObjectMapLike> = KeyOf<ReadonlyObjectMapLike>,
   >() =>
-  (obj: ReadonlyObjectMapLike<T, TKey>): EnumeratorLike<T> => {
-    function* ReadonlyObjectMapValues(): Iterator<T> {
-      for (const key in obj) {
-        if (hasOwn(obj, key)) {
-          yield obj[key as TKey] as T;
-        }
-      }
-    }
-    return pipe(ReadonlyObjectMapValues(), Iterator_enumerate());
-  };
+  (obj: ReadonlyObjectMapLike<T, TKey>): EnumeratorLike<T> =>
+    pipe(
+      obj,
+      ReadonlyObjectMap_keys(),
+      Enumerator_map(key => obj[key as TKey] as T),
+    );
 
 export default ReadonlyObjectMap_values;

@@ -1,11 +1,14 @@
-import { Empty, Entries, ForEachWithKey, Keep, KeepType, KeepWithKey, KeySet, Map, MapWithKey, ReadonlyObjectMapLike, Values } from "../keyed-containers.js";
+import { Empty, Entries, ForEachWithKey, Keep, KeepType, KeepWithKey, KeySet, Keys, Map, MapWithKey, ReadonlyObjectMapLike, Reduce, ReduceWithKey, Values } from "../keyed-containers.js";
 export declare const empty: Empty<ReadonlyObjectMapLike>["empty"];
 export declare const entries: Entries<ReadonlyObjectMapLike>["entries"];
 export declare const forEachWithKey: ForEachWithKey<ReadonlyObjectMapLike>["forEachWithKey"];
 export declare const keep: Keep<ReadonlyObjectMapLike>["keep"];
 export declare const keepType: KeepType<ReadonlyObjectMapLike>["keepType"];
 export declare const keepWithKey: KeepWithKey<ReadonlyObjectMapLike>["keepWithKey"];
+export declare const keys: Keys<ReadonlyObjectMapLike>["keys"];
 export declare const keySet: KeySet<ReadonlyObjectMapLike>["keySet"];
 export declare const map: Map<ReadonlyObjectMapLike>["map"];
 export declare const mapWithKey: MapWithKey<ReadonlyObjectMapLike>["mapWithKey"];
+export declare const reduce: Reduce<ReadonlyObjectMapLike>["reduce"];
+export declare const reduceWithKey: ReduceWithKey<ReadonlyObjectMapLike>["reduceWithKey"];
 export declare const values: Values<ReadonlyObjectMapLike>["values"];

@@ -37,7 +37,7 @@ import {
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
 import { EventSourceLike, SchedulerLike } from "@reactive-js/core/util";
-import * as ReadonlyObjectMap from "@reactive-js/core/keyed-containers/ReadonlyObjectMap";
+import * as Dictionary from "@reactive-js/core/util/Dictionary";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
 import {
   __await,
@@ -147,7 +147,7 @@ const Root = () => {
     [history.replace, counterInitialValue],
   );
 
-  const [animations, dispatch, isAnimationRunning] = useAnimations(
+  const [animations, dispatch, isAnimationRunning] = useAnimations<number>(
     () => ({
       abc: () => ({
         type: "loop",
@@ -201,10 +201,7 @@ const Root = () => {
       <div>
         {pipe(
           animations,
-          ReadonlyObjectMap.entries<
-            EventSourceLike<{ event: unknown; value: number }>,
-            string
-          >(),
+          Dictionary.entries(),
           Enumerator.map(([key, animation]) => (
             <AnimatedBox key={key} animation={animation} />
           )),

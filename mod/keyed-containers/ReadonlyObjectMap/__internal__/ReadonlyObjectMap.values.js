@@ -1,16 +1,7 @@
 /// <reference types="./ReadonlyObjectMap.values.d.ts" />
 
-import { hasOwn } from "../../../__internal__/Object.js";
-import Iterator_enumerate from "../../../containers/Iterator/__internal__/Iterator.enumerate.js";
+import Enumerator_map from "../../../containers/Enumerator/__internal__/Enumerator.map.js";
 import { pipe } from "../../../functions.js";
-const ReadonlyObjectMap_values = () => (obj) => {
-    function* ReadonlyObjectMapValues() {
-        for (const key in obj) {
-            if (hasOwn(obj, key)) {
-                yield obj[key];
-            }
-        }
-    }
-    return pipe(ReadonlyObjectMapValues(), Iterator_enumerate());
-};
+import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
+const ReadonlyObjectMap_values = () => (obj) => pipe(obj, ReadonlyObjectMap_keys(), Enumerator_map(key => obj[key]));
 export default ReadonlyObjectMap_values;

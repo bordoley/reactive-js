@@ -14,6 +14,8 @@ Base type for all Containers.
 
   ↳↳ [`ReadonlyArrayLike`](keyed_containers.ReadonlyArrayLike.md)
 
+  ↳↳ [`DictionaryLike`](util.DictionaryLike.md)
+
 ## Table of contents
 
 ### Properties

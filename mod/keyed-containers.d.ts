@@ -1,6 +1,6 @@
 import { __KeyedContainerLike_TKey as KeyedContainerLike_TKey } from "./__internal__/symbols.js";
 import { ContainerLike, ContainerLike_T, ContainerLike_type, EnumeratorLike, ReadonlySetLike } from "./containers.js";
-import { Function1, Function2, Predicate, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
+import { Factory, Function1, Function2, Function3, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
 export { KeyedContainerLike_TKey };
 /**
  * Base type for all Containers.
@@ -236,6 +236,26 @@ export interface MapWithKey<C extends KeyedContainerLike> {
      * @category Operator
      */
     mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function2<TA, TKey, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Reduce<C extends KeyedContainerLike> {
+    /**
+     * @category Transform
+     */
+    reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
+}
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ReduceWithKey<C extends KeyedContainerLike> {
+    /**
+     * @category Transform
+     */
+    reduceWithKey<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
 }
 /**
  * @noInheritDoc

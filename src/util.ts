@@ -1,4 +1,5 @@
 import {
+  __AssociativeCollectionLike_keys as AssociativeCollectionLike_keys,
   __BufferLike_capacity as BufferLike_capacity,
   __CollectionLike_count as CollectionLike_count,
   __DispatcherLike_complete as DispatcherLike_complete,
@@ -29,10 +30,16 @@ import {
   ContainerLike,
   ContainerLike_T,
   ContainerLike_type,
+  EnumeratorLike,
 } from "./containers.js";
 import { Optional, SideEffect1 } from "./functions.js";
+import {
+  KeyedContainerLike,
+  KeyedContainerLike_TKey,
+} from "./keyed-containers.js";
 
 export {
+  AssociativeCollectionLike_keys,
   BufferLike_capacity,
   CollectionLike_count,
   DispatcherLike_complete,
@@ -143,6 +150,25 @@ export interface CollectionLike {
 export interface KeyedCollectionLike<TKey = unknown, T = unknown>
   extends CollectionLike {
   [KeyedCollectionLike_get](index: TKey): T;
+}
+
+export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
+  extends KeyedCollectionLike<TKey, T> {
+  readonly [AssociativeCollectionLike_keys]: EnumeratorLike<TKey>;
+}
+
+/**
+ * @noInheritDoc
+ */
+export interface DictionaryLike<T = unknown, TKey = unknown>
+  extends AssociativeCollectionLike<TKey, Optional<T>>,
+    KeyedContainerLike {
+  readonly [ContainerLike_type]?: DictionaryLike<
+    this[typeof ContainerLike_T],
+    this[typeof KeyedContainerLike_TKey]
+  >;
+
+  readonly [KeyedContainerLike_TKey]?: unknown;
 }
 
 /**

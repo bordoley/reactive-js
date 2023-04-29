@@ -2,7 +2,7 @@ import { __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_stream
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike } from "./rx.js";
-import { DispatcherLike, DisposableLike, KeyedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
+import { AssociativeCollectionLike, DispatcherLike, DisposableLike, EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { StreamableLike_stream, StreamLike_scheduler };
 /**
  * Represents a duplex stream
@@ -50,7 +50,7 @@ export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = S
  * @noInheritDoc
  * @category Stream
  */
-export interface CacheStreamLike<T> extends StreamLike<ReadonlyObjectMapLike<Function1<Optional<T>, Optional<T>>>, never>, KeyedCollectionLike<string, ObservableLike<T>> {
+export interface CacheStreamLike<T> extends StreamLike<ReadonlyObjectMapLike<Function1<Optional<T>, Optional<T>>>, never>, AssociativeCollectionLike<string, ObservableLike<T>> {
 }
 /**
  * A container that returns a CacheStream when subscribed to.
@@ -59,4 +59,20 @@ export interface CacheStreamLike<T> extends StreamLike<ReadonlyObjectMapLike<Fun
  * @category Container
  */
 export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>, never, CacheStreamLike<T>> {
+}
+/**
+ * @noInheritDoc
+ * @category Stream
+ */
+export interface AnimationEventHandlerStreamLike<TEvent, T, TKey extends string | number | symbol> extends StreamLike<TEvent, boolean>, AssociativeCollectionLike<TKey, Optional<EventSourceLike<{
+    event: TEvent;
+    value: T;
+}>>> {
+}
+/**
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface AnimationEventHandlerLike<TEvent, T, TKey extends string | number | symbol> extends StreamableLike<TEvent, boolean, AnimationEventHandlerStreamLike<TEvent, T, TKey>> {
 }

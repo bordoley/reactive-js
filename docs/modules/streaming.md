@@ -6,10 +6,12 @@
 
 ### Container Interfaces
 
+- [AnimationEventHandlerLike](../interfaces/streaming.AnimationEventHandlerLike.md)
 - [CacheLike](../interfaces/streaming.CacheLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)
 
 ### Stream Interfaces
 
+- [AnimationEventHandlerStreamLike](../interfaces/streaming.AnimationEventHandlerStreamLike.md)
 - [CacheStreamLike](../interfaces/streaming.CacheStreamLike.md)
 - [StreamLike](../interfaces/streaming.StreamLike.md)

@@ -1,4 +1,5 @@
-import { EnumeratorLike, Keep, Map, Pick, ToReadonlyArray } from "../containers.js";
+import { Empty, EnumeratorLike, Keep, Map, Pick, ToReadonlyArray } from "../containers.js";
+export declare const empty: Empty<EnumeratorLike>["empty"];
 export declare const keep: Keep<EnumeratorLike>["keep"];
 export declare const map: Map<EnumeratorLike>["map"];
 export declare const pick: Pick<EnumeratorLike>["pick"];

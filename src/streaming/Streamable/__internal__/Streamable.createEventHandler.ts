@@ -29,10 +29,10 @@ interface CreateEventHandler {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): StreamableLike<TEvent, never>;
+  ): StreamableLike<TEvent, boolean>;
   createEventHandler<TEvent>(
     op: Function1<TEvent, ObservableLike<unknown>>,
-  ): StreamableLike<TEvent, never>;
+  ): StreamableLike<TEvent, boolean>;
 }
 
 const Streamable_createEventHandler: CreateEventHandler["createEventHandler"] =
@@ -70,9 +70,17 @@ const Streamable_createEventHandler: CreateEventHandler["createEventHandler"] =
             ),
             Observable_startWith<ObservableLike, boolean>(false),
           )
-        : Observable_mergeMap<TEvent, never>(
-            compose(op, Observable_ignoreElements<ObservableLike, never>()),
-            { ...options, concurrency: 1 },
+        : compose(
+            Observable_mergeMap<TEvent, never>(
+              compose(
+                op,
+                Observable_ignoreElements<ObservableLike, never>(),
+                Observable_startWith<ObservableLike, boolean>(true),
+                Observable_endWith<ObservableLike, boolean>(false),
+              ),
+              { ...options, concurrency: 1 },
+            ),
+            Observable_startWith<ObservableLike, boolean>(false),
           ),
     );
   }) as CreateEventHandler["createEventHandler"];
