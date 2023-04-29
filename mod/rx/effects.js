@@ -1,6 +1,6 @@
 /// <reference types="./effects.d.ts" />
 
-import { __ComputeContext_awaitOrObserve, __ComputeContext_memoOrUse, __ComputeContext_observableConfig, __ComputeContext_observer, } from "../__internal__/symbols.js";
+import { __ComputeContext_awaitOrObserve, __ComputeContext_constant, __ComputeContext_memoOrUse, __ComputeContext_observableConfig, __ComputeContext_observer, } from "../__internal__/symbols.js";
 import { bind, bindMethod, isSome, none, pipe, } from "../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../rx.js";
 import { StreamableLike_stream, } from "../streaming.js";
@@ -19,6 +19,10 @@ export const __memo = (f, ...args) => {
 export const __await = (observable) => {
     const ctx = assertCurrentContext();
     return ctx[__ComputeContext_awaitOrObserve](observable, true);
+};
+export const __constant = (value) => {
+    const ctx = assertCurrentContext();
+    return ctx[__ComputeContext_constant](value);
 };
 export const __observe = (observable) => {
     const ctx = assertCurrentContext();

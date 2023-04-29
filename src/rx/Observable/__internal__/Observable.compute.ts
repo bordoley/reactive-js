@@ -5,6 +5,7 @@ import {
   __AwaitOrObserveEffect_value,
   __ComputeContext_awaitOrObserve,
   __ComputeContext_cleanup,
+  __ComputeContext_constant,
   __ComputeContext_effects,
   __ComputeContext_index,
   __ComputeContext_memoOrUse,
@@ -14,6 +15,8 @@ import {
   __ComputeContext_runComputation,
   __ComputeContext_scheduledComputationSubscription,
   __ComputeEffect_type,
+  __ConstantEffect_hasValue,
+  __ConstantEffect_value,
   __MemoOrUsingEffect_args,
   __MemoOrUsingEffect_func,
   __MemoOrUsingEffect_value,
@@ -62,12 +65,14 @@ const Memo = 1;
 const Await = 2;
 const Observe = 3;
 const Using = 4;
+const Constant = 5;
 
 type ComputeEffectType =
   | typeof Memo
   | typeof Await
   | typeof Observe
-  | typeof Using;
+  | typeof Using
+  | typeof Constant;
 
 type MemoOrUsingEffect<T = unknown> = {
   [__MemoOrUsingEffect_func]: (...args: any[]) => unknown;
@@ -99,10 +104,25 @@ type AwaitEffect = {
   readonly [__ComputeEffect_type]: typeof Await;
 } & AwaitOrObserveEffect;
 
-type ComputeEffect = AwaitEffect | MemoEffect | ObserveEffect | UsingEffect;
+type ConstantEffect<T = unknown> = {
+  readonly [__ComputeEffect_type]: typeof Constant;
+  [__ConstantEffect_value]: T;
+  [__ConstantEffect_hasValue]: boolean;
+};
+
+type ComputeEffect =
+  | AwaitEffect
+  | ConstantEffect
+  | MemoEffect
+  | ObserveEffect
+  | UsingEffect;
 
 interface ValidateComputeEffect {
   validateComputeEffect(ctx: ComputeContext, type: typeof Await): AwaitEffect;
+  validateComputeEffect<T>(
+    ctx: ComputeContext,
+    type: typeof Constant,
+  ): ConstantEffect<T>;
   validateComputeEffect(ctx: ComputeContext, type: typeof Memo): MemoEffect;
   validateComputeEffect(
     ctx: ComputeContext,
@@ -155,6 +175,12 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
             [__MemoOrUsingEffect_func]: ignore,
             [__MemoOrUsingEffect_args]: [],
             [__MemoOrUsingEffect_value]: Disposable_disposed,
+          }
+        : type === Constant
+        ? {
+            [__ComputeEffect_type]: type,
+            [__ConstantEffect_value]: none,
+            [__ConstantEffect_hasValue]: false,
           }
         : raiseWithDebugMessage("invalid effect type");
 
@@ -290,6 +316,17 @@ class ComputeContext {
       effect[__AwaitOrObserveEffect_hasValue] = false;
 
       return shouldAwait ? raiseError(awaiting) : none;
+    }
+  }
+
+  [__ComputeContext_constant]<T>(value: T): T {
+    const effect = validateComputeEffect<T>(this, Constant);
+    if (effect[__ConstantEffect_hasValue]) {
+      return effect[__ConstantEffect_value];
+    } else {
+      effect[__ConstantEffect_value] = value;
+      effect[__ConstantEffect_hasValue] = true;
+      return value;
     }
   }
 

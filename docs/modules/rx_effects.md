@@ -9,6 +9,7 @@
 - [\_\_await](rx_effects.md#__await)
 - [\_\_bind](rx_effects.md#__bind)
 - [\_\_bindMethod](rx_effects.md#__bindmethod)
+- [\_\_constant](rx_effects.md#__constant)
 - [\_\_currentScheduler](rx_effects.md#__currentscheduler)
 - [\_\_do](rx_effects.md#__do)
 - [\_\_memo](rx_effects.md#__memo)
@@ -86,6 +87,28 @@ ___
 #### Returns
 
 `TFunction`
+
+___
+
+### \_\_constant
+
+▸ **__constant**<`T`\>(`value`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+
+#### Returns
+
+`T`
 
 ___
 

@@ -1,6 +1,6 @@
 /// <reference types="./Observable.compute.d.ts" />
 
-import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
+import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_hasValue, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
@@ -16,6 +16,7 @@ const Memo = 1;
 const Await = 2;
 const Observe = 3;
 const Using = 4;
+const Constant = 5;
 const validateComputeEffect = ((ctx, type) => {
     const { [__ComputeContext_effects]: effects, [__ComputeContext_index]: index, } = ctx;
     ctx[__ComputeContext_index]++;
@@ -51,7 +52,13 @@ const validateComputeEffect = ((ctx, type) => {
                         [__MemoOrUsingEffect_args]: [],
                         [__MemoOrUsingEffect_value]: Disposable_disposed,
                     }
-                    : raiseWithDebugMessage("invalid effect type");
+                    : type === Constant
+                        ? {
+                            [__ComputeEffect_type]: type,
+                            [__ConstantEffect_value]: none,
+                            [__ConstantEffect_hasValue]: false,
+                        }
+                        : raiseWithDebugMessage("invalid effect type");
         if (isSome(effect)) {
             effects[index] = newEffect;
         }
@@ -124,6 +131,17 @@ class ComputeContext {
             effect[__AwaitOrObserveEffect_value] = none;
             effect[__AwaitOrObserveEffect_hasValue] = false;
             return shouldAwait ? raiseError(awaiting) : none;
+        }
+    }
+    [__ComputeContext_constant](value) {
+        const effect = validateComputeEffect(this, Constant);
+        if (effect[__ConstantEffect_hasValue]) {
+            return effect[__ConstantEffect_value];
+        }
+        else {
+            effect[__ConstantEffect_value] = value;
+            effect[__ConstantEffect_hasValue] = true;
+            return value;
         }
     }
     [__ComputeContext_memoOrUse](shouldUse, f, ...args) {

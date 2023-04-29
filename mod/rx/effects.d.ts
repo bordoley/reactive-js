@@ -13,6 +13,7 @@ interface __Memo {
 }
 export declare const __memo: __Memo["__memo"];
 export declare const __await: <T>(observable: ObservableLike<T>) => T;
+export declare const __constant: <T>(value: T) => T;
 export declare const __observe: <T>(observable: ObservableLike<T>) => Optional<T>;
 interface __Do {
     __do(fn: SideEffect): void;

@@ -514,12 +514,27 @@ export const __ComputeContext_awaitOrObserve = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __ComputeContext_constant = /*@__PURE__*/ symbol(
+  "ComputeContext_constant",
+);
+
+/** @type {unique symbol} */
 export const __ComputeContext_memoOrUse = /*@__PURE__*/ symbol(
   "ComputeContext_memoOrUse",
 );
 
 /** @type {unique symbol} */
 export const __ComputeEffect_type = /*@__PURE__*/ symbol("ComputeEffect_type");
+
+/** @type {unique symbol} */
+export const __ConstantEffect_hasValue = /*@__PURE__*/ symbol(
+  "ConstantEffect_hasValue",
+);
+
+/** @type {unique symbol} */
+export const __ConstantEffect_value = /*@__PURE__*/ symbol(
+  "ConstantEffect_value",
+);
 
 /** @type {unique symbol} */
 export const __Continuation_effect = /*@__PURE__*/ symbol(
