@@ -201,11 +201,11 @@ interface ObserveEvent {
 }
 export declare const observeEvent: ObserveEvent["observeEvent"];
 export declare const addScrollHandler: <TElement extends HTMLElement>(handler: SideEffect1<{
-    event: "scroll";
+    type: "scroll";
     value: ScrollValue;
 }>) => Function1<TElement, DisposableLike>;
 export declare const addScrollListener: <TElement extends HTMLElement>(listener: EventListenerLike<{
-    event: "scroll";
+    type: "scroll";
     value: ScrollValue;
 }>) => Function1<TElement, TElement>;
 export declare const addResizeHandler: <TElement extends Element>(handler: SideEffect1<ResizeObserverEntry>) => Function1<TElement, DisposableLike>;

@@ -24,20 +24,20 @@
 
 ### useAnimation
 
-▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+▸ **useAnimation**<`T`, `TEventType`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
-| `TEvent` | `unknown` |
+| `TEventType` | `unknown` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -47,22 +47,22 @@
 
 #### Returns
 
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
-▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+▸ **useAnimation**<`T`, `TEventType`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
-| `TEvent` | `unknown` |
+| `TEventType` | `unknown` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -72,22 +72,22 @@ readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: 
 
 #### Returns
 
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
-▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+▸ **useAnimation**<`T`, `TEventType`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
-| `TEvent` | `unknown` |
+| `TEventType` | `unknown` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -97,22 +97,22 @@ readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: 
 
 #### Returns
 
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
-▸ **useAnimation**<`T`, `TEvent`\>(`animationFactory`, `deps`, `options?`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+▸ **useAnimation**<`T`, `TEventType`\>(`animationFactory`, `deps`, `options?`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
-| `TEvent` | `unknown` |
+| `TEventType` | `unknown` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `animationFactory` | [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -121,27 +121,27 @@ readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: 
 
 #### Returns
 
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 ___
 
 ### useAnimations
 
-▸ **useAnimations**<`T`, `TEvent`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+▸ **useAnimations**<`T`, `TEventType`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
-| `TEvent` | `unknown` |
+| `TEventType` | `unknown` |
 | `TKey` | extends `string` \| `number` \| `symbol` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -152,23 +152,23 @@ ___
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
-▸ **useAnimations**<`T`, `TEvent`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+▸ **useAnimations**<`T`, `TEventType`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
-| `TEvent` | `unknown` |
+| `TEventType` | `unknown` |
 | `TKey` | extends `string` \| `number` \| `symbol` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -179,23 +179,23 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `boolean`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
-▸ **useAnimations**<`T`, `TEvent`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+▸ **useAnimations**<`T`, `TEventType`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
-| `TEvent` | `unknown` |
+| `TEventType` | `unknown` |
 | `TKey` | extends `string` \| `number` \| `symbol` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -206,23 +206,23 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
-▸ **useAnimations**<`T`, `TEvent`, `TKey`\>(`animationFactory`, `deps`, `options?`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+▸ **useAnimations**<`T`, `TEventType`, `TKey`\>(`animationFactory`, `deps`, `options?`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
-| `TEvent` | `unknown` |
+| `TEventType` | `unknown` |
 | `TKey` | extends `string` \| `number` \| `symbol` = `string` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
+| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -232,7 +232,7 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEvent`\>, `never`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 ___
 
@@ -481,7 +481,7 @@ ___
 | :------ | :------ |
 | `TReq` | `TReq` |
 | `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\> |
+| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> |
 
 #### Parameters
 
@@ -506,7 +506,7 @@ ___
 | :------ | :------ |
 | `TReq` | `TReq` |
 | `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\> |
+| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> |
 
 #### Parameters
 
@@ -541,7 +541,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\> |
+| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -565,7 +565,7 @@ readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.m
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |

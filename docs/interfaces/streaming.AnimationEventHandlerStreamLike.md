@@ -1,21 +1,18 @@
 [Reactive-JS](../README.md) / [streaming](../modules/streaming.md) / AnimationEventHandlerStreamLike
 
-# Interface: AnimationEventHandlerStreamLike<TEvent, T, TKey\>
+# Interface: AnimationEventHandlerStreamLike<TEventType, T\>
 
 [streaming](../modules/streaming.md).AnimationEventHandlerStreamLike
 
 ## Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TEvent` | `TEvent` |
-| `T` | `T` |
-| `TKey` | extends `string` \| `number` \| `symbol` |
+| Name |
+| :------ |
+| `TEventType` |
+| `T` |
 
 ## Hierarchy
 
-- [`StreamLike`](streaming.StreamLike.md)<`TEvent`, `boolean`\>
-
-- [`AssociativeCollectionLike`](util.AssociativeCollectionLike.md)<`TKey`, [`Optional`](../modules/functions.md#optional)<[`EventSourceLike`](util.EventSourceLike.md)<{ `event`: `TEvent` ; `value`: `T`  }\>\>\>
+- [`StreamLike`](streaming.StreamLike.md)<`TEventType`, `boolean`, { `type`: `TEventType` ; `value`: `T`  } & { `type`: ``"wait"`` \| ``"drain"`` \| ``"complete"``  }\>
 
   ↳ **`AnimationEventHandlerStreamLike`**

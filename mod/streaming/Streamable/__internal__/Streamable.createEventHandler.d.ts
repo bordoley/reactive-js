@@ -3,18 +3,18 @@ import { ObservableLike } from "../../../rx.js";
 import { StreamableLike } from "../../../streaming.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
 interface CreateEventHandler {
-    createEventHandler<TEvent>(op: Function1<TEvent, ObservableLike<unknown>>, options: {
+    createEventHandler<TEventType>(op: Function1<TEventType, ObservableLike<unknown>>, options: {
         readonly mode: "switching";
-    }): StreamableLike<TEvent, boolean>;
-    createEventHandler<TEvent>(op: Function1<TEvent, ObservableLike<unknown>>, options: {
+    }): StreamableLike<TEventType, boolean>;
+    createEventHandler<TEventType>(op: Function1<TEventType, ObservableLike<unknown>>, options: {
         readonly mode: "blocking";
-    }): StreamableLike<TEvent, boolean>;
-    createEventHandler<TEvent>(op: Function1<TEvent, ObservableLike<unknown>>, options: {
+    }): StreamableLike<TEventType, boolean>;
+    createEventHandler<TEventType>(op: Function1<TEventType, ObservableLike<unknown>>, options: {
         readonly mode: "queueing";
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): StreamableLike<TEvent, boolean>;
-    createEventHandler<TEvent>(op: Function1<TEvent, ObservableLike<unknown>>): StreamableLike<TEvent, boolean>;
+    }): StreamableLike<TEventType, boolean>;
+    createEventHandler<TEventType>(op: Function1<TEventType, ObservableLike<unknown>>): StreamableLike<TEventType, boolean>;
 }
 declare const Streamable_createEventHandler: CreateEventHandler["createEventHandler"];
 export default Streamable_createEventHandler;

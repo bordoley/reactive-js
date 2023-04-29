@@ -19,7 +19,7 @@
 
   ↳↳ [`CacheStreamLike`](streaming.CacheStreamLike.md)
 
-  ↳↳ [`AnimationEventHandlerStreamLike`](streaming.AnimationEventHandlerStreamLike.md)
+  ↳↳ [`AnimationsEventHandlerStreamLike`](streaming.AnimationsEventHandlerStreamLike.md)
 
   ↳↳ [`DictionaryLike`](util.DictionaryLike.md)
 

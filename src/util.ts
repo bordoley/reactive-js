@@ -229,9 +229,13 @@ export interface EventPublisherLike<T = unknown>
  *
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown>
-  extends QueueableLike<T>,
-    EventEmitterLike<"wait" | "drain" | "complete"> {
+export interface DispatcherLike<
+  T = unknown,
+  TEvents extends { type: "wait" | "drain" | "complete" } = {
+    type: "wait" | "drain" | "complete";
+  },
+> extends QueueableLike<T>,
+    EventEmitterLike<TEvents> {
   /**
    * Communicates to the dispatcher that no more events will be enqueued.
    */

@@ -1269,7 +1269,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`T`\> |
+| `dispatcher` | [`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> |
 
 #### Returns
 

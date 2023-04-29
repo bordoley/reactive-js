@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [streaming](../modules/streaming.md) / StreamLike
 
-# Interface: StreamLike<TReq, T\>
+# Interface: StreamLike<TReq, T, TEvents\>
 
 [streaming](../modules/streaming.md).StreamLike
 
@@ -8,20 +8,23 @@ Represents a duplex stream
 
 ## Type parameters
 
-| Name |
-| :------ |
-| `TReq` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `T` | `T` |
+| `TEvents` | extends `Object` = { `type`: ``"wait"`` \| ``"drain"`` \| ``"complete"``  } |
 
 ## Hierarchy
 
-- [`DispatcherLike`](util.DispatcherLike.md)<`TReq`\>
+- [`DispatcherLike`](util.DispatcherLike.md)<`TReq`, `TEvents`\>
 
 - [`MulticastObservableLike`](rx.MulticastObservableLike.md)<`T`\>
 
   ↳ **`StreamLike`**
 
   ↳↳ [`CacheStreamLike`](streaming.CacheStreamLike.md)
+
+  ↳↳ [`AnimationsEventHandlerStreamLike`](streaming.AnimationsEventHandlerStreamLike.md)
 
   ↳↳ [`AnimationEventHandlerStreamLike`](streaming.AnimationEventHandlerStreamLike.md)
 

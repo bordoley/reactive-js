@@ -1556,7 +1556,7 @@ export const observeEvent: ObserveEvent["observeEvent"] = (<T>(
 export const addScrollHandler =
   <TElement extends HTMLElement>(
     handler: SideEffect1<{
-      event: "scroll";
+      type: "scroll";
       value: ScrollValue;
     }>,
   ): Function1<TElement, DisposableLike> =>
@@ -1568,7 +1568,7 @@ export const addScrollHandler =
 
 export const addScrollListener: <TElement extends HTMLElement>(
   listener: EventListenerLike<{
-    event: "scroll";
+    type: "scroll";
     value: ScrollValue;
   }>,
 ) => Function1<TElement, TElement> = /*@__PURE__*/ (() => {
@@ -1577,7 +1577,7 @@ export const addScrollListener: <TElement extends HTMLElement>(
 
   return <TElement extends HTMLElement>(
       listener: EventListenerLike<{
-        event: "scroll";
+        type: "scroll";
         value: ScrollValue;
       }>,
     ) =>
@@ -1636,7 +1636,7 @@ export const addScrollListener: <TElement extends HTMLElement>(
           yVelocityPrev = yVelocity;
 
           listener[EventListenerLike_notify]({
-            event: "scroll",
+            type: "scroll",
             value: { x, y },
           });
         },

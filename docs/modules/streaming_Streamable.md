@@ -8,6 +8,7 @@
 
 - [create](streaming_Streamable.md#create)
 - [createAnimationEventHandler](streaming_Streamable.md#createanimationeventhandler)
+- [createAnimationsEventHandler](streaming_Streamable.md#createanimationseventhandler)
 - [createEventHandler](streaming_Streamable.md#createeventhandler)
 - [createInMemoryCache](streaming_Streamable.md#createinmemorycache)
 - [createPersistentCache](streaming_Streamable.md#createpersistentcache)
@@ -18,7 +19,7 @@
 
 ### create
 
-▸ **create**<`TReq`, `T`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
+▸ **create**<`TReq`, `T`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
 #### Type parameters
 
@@ -35,19 +36,110 @@
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
 ___
 
 ### createAnimationEventHandler
 
-▸ **createAnimationEventHandler**<`TEvent`, `T`, `TKey`\>(`animations`, `options`): [`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEvent`, `T`, `TKey`\>
+▸ **createAnimationEventHandler**<`TEventType`, `T`\>(`animation`, `options`): [`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEventType`, `T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEvent` | `unknown` |
+| `TEventType` | `unknown` |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animation` | [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\> |
+| `options` | `Object` |
+| `options.concurrency?` | `number` |
+| `options.mode` | ``"switching"`` |
+
+#### Returns
+
+[`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEventType`, `T`\>
+
+▸ **createAnimationEventHandler**<`TEventType_1`, `T_1`\>(`animation`, `options`): [`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEventType_1`, `T_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventType_1` | `unknown` |
+| `T_1` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animation` | [`Function1`](functions.md#function1)<`TEventType_1`, [`AnimationConfig`](rx.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_1`\>[]\> |
+| `options` | `Object` |
+| `options.concurrency?` | `number` |
+| `options.mode` | ``"blocking"`` |
+
+#### Returns
+
+[`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEventType_1`, `T_1`\>
+
+▸ **createAnimationEventHandler**<`TEventType_2`, `T_2`\>(`animation`, `options`): [`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEventType_2`, `T_2`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventType_2` | `unknown` |
+| `T_2` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animation` | [`Function1`](functions.md#function1)<`TEventType_2`, [`AnimationConfig`](rx.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_2`\>[]\> |
+| `options` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.concurrency?` | `number` |
+| `options.mode` | ``"queueing"`` |
+
+#### Returns
+
+[`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEventType_2`, `T_2`\>
+
+▸ **createAnimationEventHandler**<`TEventType_3`, `T_3`\>(`animation`): [`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEventType_3`, `T_3`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventType_3` | `unknown` |
+| `T_3` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animation` | [`Function1`](functions.md#function1)<`TEventType_3`, [`AnimationConfig`](rx.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_3`\>[]\> |
+
+#### Returns
+
+[`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEventType_3`, `T_3`\>
+
+___
+
+### createAnimationsEventHandler
+
+▸ **createAnimationsEventHandler**<`TEventType`, `T`, `TKey`\>(`animations`, `options`): [`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType`, `T`, `TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TEventType` | `unknown` |
 | `T` | `number` |
 | `TKey` | extends `string` \| `number` \| `symbol` = `string` |
 
@@ -55,22 +147,22 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\> |
+| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\> |
 | `options` | `Object` |
 | `options.concurrency?` | `number` |
 | `options.mode` | ``"switching"`` |
 
 #### Returns
 
-[`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEvent`, `T`, `TKey`\>
+[`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType`, `T`, `TKey`\>
 
-▸ **createAnimationEventHandler**<`TEvent_1`, `T_1`, `TKey_1`\>(`animations`, `options`): [`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEvent_1`, `T_1`, `TKey_1`\>
+▸ **createAnimationsEventHandler**<`TEventType_1`, `T_1`, `TKey_1`\>(`animations`, `options`): [`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_1`, `T_1`, `TKey_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEvent_1` | `unknown` |
+| `TEventType_1` | `unknown` |
 | `T_1` | `number` |
 | `TKey_1` | extends `string` \| `number` \| `symbol` = `string` |
 
@@ -78,22 +170,22 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent_1`, [`AnimationConfig`](rx.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_1`\>[]\>, `TKey_1`\> |
+| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType_1`, [`AnimationConfig`](rx.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_1`\>[]\>, `TKey_1`\> |
 | `options` | `Object` |
 | `options.concurrency?` | `number` |
 | `options.mode` | ``"blocking"`` |
 
 #### Returns
 
-[`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEvent_1`, `T_1`, `TKey_1`\>
+[`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_1`, `T_1`, `TKey_1`\>
 
-▸ **createAnimationEventHandler**<`TEvent_2`, `T_2`, `TKey_2`\>(`animations`, `options`): [`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEvent_2`, `T_2`, `TKey_2`\>
+▸ **createAnimationsEventHandler**<`TEventType_2`, `T_2`, `TKey_2`\>(`animations`, `options`): [`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_2`, `T_2`, `TKey_2`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEvent_2` | `unknown` |
+| `TEventType_2` | `unknown` |
 | `T_2` | `number` |
 | `TKey_2` | extends `string` \| `number` \| `symbol` = `string` |
 
@@ -101,7 +193,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent_2`, [`AnimationConfig`](rx.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_2`\>[]\>, `TKey_2`\> |
+| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType_2`, [`AnimationConfig`](rx.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_2`\>[]\>, `TKey_2`\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -110,15 +202,15 @@ ___
 
 #### Returns
 
-[`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEvent_2`, `T_2`, `TKey_2`\>
+[`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_2`, `T_2`, `TKey_2`\>
 
-▸ **createAnimationEventHandler**<`TEvent_3`, `T_3`, `TKey_3`\>(`animations`): [`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEvent_3`, `T_3`, `TKey_3`\>
+▸ **createAnimationsEventHandler**<`TEventType_3`, `T_3`, `TKey_3`\>(`animations`): [`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_3`, `T_3`, `TKey_3`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEvent_3` | `unknown` |
+| `TEventType_3` | `unknown` |
 | `T_3` | `number` |
 | `TKey_3` | extends `string` \| `number` \| `symbol` = `string` |
 
@@ -126,17 +218,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEvent_3`, [`AnimationConfig`](rx.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_3`\>[]\>, `TKey_3`\> |
+| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType_3`, [`AnimationConfig`](rx.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_3`\>[]\>, `TKey_3`\> |
 
 #### Returns
 
-[`AnimationEventHandlerLike`](../interfaces/streaming.AnimationEventHandlerLike.md)<`TEvent_3`, `T_3`, `TKey_3`\>
+[`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_3`, `T_3`, `TKey_3`\>
 
 ___
 
 ### createEventHandler
 
-▸ **createEventHandler**<`TEvent`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `boolean`\>\>
+▸ **createEventHandler**<`TEventType`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -144,21 +236,21 @@ Returns an event handler that invokes the observable function.
 
 | Name |
 | :------ |
-| `TEvent` |
+| `TEventType` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEvent`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent`, `boolean`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
-▸ **createEventHandler**<`TEvent_1`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_1`, `boolean`\>\>
+▸ **createEventHandler**<`TEventType_1`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_1`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -166,21 +258,21 @@ Returns an event handler that invokes the observable function.
 
 | Name |
 | :------ |
-| `TEvent_1` |
+| `TEventType_1` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEvent_1`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType_1`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_1`, `boolean`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_1`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
-▸ **createEventHandler**<`TEvent_2`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_2`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_2`, `boolean`\>\>
+▸ **createEventHandler**<`TEventType_2`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_2`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_2`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -188,13 +280,13 @@ Returns an event handler that invokes the observable function.
 
 | Name |
 | :------ |
-| `TEvent_2` |
+| `TEventType_2` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEvent_2`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType_2`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -202,9 +294,9 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_2`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_2`, `boolean`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_2`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_2`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
-▸ **createEventHandler**<`TEvent_3`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_3`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_3`, `boolean`\>\>
+▸ **createEventHandler**<`TEventType_3`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_3`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_3`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -212,17 +304,17 @@ Returns an event handler that invokes the observable function.
 
 | Name |
 | :------ |
-| `TEvent_3` |
+| `TEventType_3` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEvent_3`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType_3`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`unknown`\>\> |
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEvent_3`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEvent_3`, `boolean`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_3`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_3`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
 ___
 
@@ -279,7 +371,7 @@ ___
 
 ### createStateStore
 
-▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -301,13 +393,13 @@ new state based upon the previous state.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`\>\>
+▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
 
 #### Type parameters
 
@@ -317,4 +409,4 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>

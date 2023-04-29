@@ -90,7 +90,7 @@ export const addScrollListener = /*@__PURE__*/ (() => {
             yPrev = yCurrent;
             yVelocityPrev = yVelocity;
             listener[EventListenerLike_notify]({
-                event: "scroll",
+                type: "scroll",
                 value: { x, y },
             });
         }, EventListener.create, EventListener.toErrorSafeEventListener(), Disposable.bindTo(listener));

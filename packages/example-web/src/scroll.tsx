@@ -43,7 +43,7 @@ const AnimatedCircle = ({
 
 const ScrollApp = () => {
   const scrollAnimation = useEventPublisher<{
-    event: "scroll";
+    type: "scroll";
     value: ScrollValue;
   }>();
   const containerRef = useScroll<HTMLDivElement>(scrollAnimation);

@@ -32,6 +32,8 @@ TStream
 
   ↳ [`CacheLike`](streaming.CacheLike.md)
 
+  ↳ [`AnimationsEventHandlerLike`](streaming.AnimationsEventHandlerLike.md)
+
   ↳ [`AnimationEventHandlerLike`](streaming.AnimationEventHandlerLike.md)
 
 ## Table of contents

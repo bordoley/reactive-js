@@ -162,16 +162,16 @@ export const useAnimate = <TElement extends HTMLElement, T = number>(
 export const useAnimateEvent = <
   TElement extends HTMLElement,
   T = number,
-  TEvent = unknown,
+  TEventType = unknown,
 >(
-  animation: Optional<EventSourceLike<{ event: TEvent; value: T }>>,
+  animation: Optional<EventSourceLike<{ type: TEventType; value: T }>>,
   selector: (ev: {
-    event: TEvent;
+    type: TEventType;
     value: T;
   }) => ReadonlyObjectMapLike<string, CSSStyleKey>,
   deps: readonly unknown[] = [],
 ): React.Ref<TElement> => {
-  return useAnimate<TElement, { event: TEvent; value: T }>(
+  return useAnimate<TElement, { type: TEventType; value: T }>(
     animation,
     selector,
     deps,
@@ -183,7 +183,7 @@ export const useAnimateEvent = <
  */
 export const useScroll = <TElement extends HTMLElement>(
   eventListener: EventListenerLike<{
-    event: "scroll";
+    type: "scroll";
     value: ScrollValue;
   }>,
 ): React.Ref<TElement> => {

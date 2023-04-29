@@ -5,45 +5,17 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-} from "../../../__internal__/util.js";
-import { EnumeratorLike } from "../../../containers.js";
-import {
-  Function1,
-  Optional,
-  incrementBy,
-  isSome,
-  pipe,
-  pipeLazy,
-  returns,
-  unsafeCast,
-} from "../../../functions.js";
-import { ReadonlyObjectMapLike } from "../../../keyed-containers.js";
-import ReadonlyObjectMap_keys from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
-import ReadonlyObjectMap_map from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.map.js";
-import ReadonlyObjectMap_mapWithKey from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
-import ReadonlyObjectMap_reduce from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
-import ReadonlyObjectMap_values from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
-import { AnimationConfig, ObservableLike } from "../../../rx.js";
-import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
-import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
-import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
-import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
-import Observable_mergeAll from "../../../rx/Observable/__internal__/Observable.mergeAll.js";
-import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
-import Runnable_fromEnumeratorFactory from "../../../rx/Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
+import { Function1, Optional, none, pipe } from "../../../functions.js";
+import { AnimationConfig } from "../../../rx.js";
 import {
   AnimationEventHandlerLike,
   AnimationEventHandlerStreamLike,
   StreamableLike_stream,
 } from "../../../streaming.js";
 import {
-  AssociativeCollectionLike_keys,
-  CollectionLike_count,
   DisposableLike,
-  EventListenerLike_notify,
+  EventEmitterLike_addEventListener,
+  EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
   KeyedCollectionLike_get,
@@ -54,22 +26,16 @@ import {
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
-import Scheduler_createAnimationFrameScheduler from "../../../util/Scheduler/__internal__/Scheduler.createAnimationFrameScheduler.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
-import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
+import Streamable_createAnimationsEventHandler from "./Streamable.createAnimationsEventHandler.js";
 
-const createAnimationEventHandlerStream: <
-  TEvent = unknown,
-  T = number,
-  TKey extends string | number | symbol = string,
->(
-  animations: ReadonlyObjectMapLike<
-    Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-    TKey
+const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
+  animation: Function1<
+    TEventType,
+    AnimationConfig<T> | readonly AnimationConfig<T>[]
   >,
   creationOptions: Optional<{
     readonly mode?: "switching" | "blocking" | "queueing";
-    readonly concurrency?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
   }>,
@@ -79,36 +45,30 @@ const createAnimationEventHandlerStream: <
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }>,
-) => AnimationEventHandlerStreamLike<TEvent, T, TKey> & DisposableLike =
-  /*@__PURE__*/ (<
-    TEvent,
-    T,
-    TKey extends string | symbol | number = string,
-  >() => {
+) => AnimationEventHandlerStreamLike<TEventType, T> & DisposableLike =
+  /*@__PURE__*/ (<TEventType, T>() => {
     type TProperties = {
-      [CollectionLike_count]: number;
+      publisher: EventPublisherLike<
+        { type: TEventType; value: T } & {
+          type: "wait" | "drain" | "complete";
+        }
+      >;
     };
 
     return createInstanceFactory(
       mix(
-        include(Stream_delegatingMixin<TEvent, boolean>(), Delegating_mixin()),
+        include(
+          Stream_delegatingMixin<TEventType, boolean>(),
+          Delegating_mixin(),
+        ),
         function AnimationEventHandlerStream(
-          instance: TProperties &
-            Pick<
-              AnimationEventHandlerStreamLike<TEvent, T, TKey>,
-              | typeof AssociativeCollectionLike_keys
-              | typeof KeyedCollectionLike_get
-            >,
-          animations: ReadonlyObjectMapLike<
-            Function1<
-              TEvent,
-              AnimationConfig<T> | readonly AnimationConfig<T>[]
-            >,
-            TKey
+          instance: TProperties,
+          animation: Function1<
+            TEventType,
+            AnimationConfig<T> | readonly AnimationConfig<T>[]
           >,
           creationOptions: Optional<{
             readonly mode?: "switching" | "blocking" | "queueing";
-            readonly concurrency?: number;
             readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
             readonly capacity?: number;
           }>,
@@ -118,123 +78,54 @@ const createAnimationEventHandlerStream: <
             readonly capacity?: number;
             readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
           }>,
-        ): AnimationEventHandlerStreamLike<TEvent, T, TKey> & DisposableLike {
-          const streamDelegate = Streamable_createEventHandler(
-            (event: TEvent) => {
-              const observables: ReadonlyObjectMapLike<
-                ObservableLike<T>,
-                string
-              > = pipe(
-                animations,
-                ReadonlyObjectMap_mapWithKey<
-                  Function1<
-                    TEvent,
-                    AnimationConfig<T> | readonly AnimationConfig<T>[]
-                  >,
-                  ObservableLike<T>,
-                  string
-                >((factory, key: string) =>
-                  pipe(
-                    Observable_animate<T>(factory(event)),
-                    Observable_map<
-                      ObservableLike,
-                      T,
-                      { event: TEvent; value: T }
-                    >(value => ({ event, value })),
-                    Observable_forEach<
-                      ObservableLike,
-                      { event: TEvent; value: T }
-                    >(value => {
-                      const publisher = publishers[key];
-                      if (isSome(publisher)) {
-                        publisher[EventListenerLike_notify](value);
-                      }
-                    }),
-                    Observable_ignoreElements<ObservableLike, T>(),
-                  ),
-                ),
-              );
-
-              return pipe(
-                Runnable_fromEnumeratorFactory(
-                  pipeLazy(observables, ReadonlyObjectMap_values()),
-                ),
-                Observable_map<
-                  ObservableLike,
-                  ObservableLike<T>,
-                  ObservableLike<T>
-                >(
-                  Observable_subscribeOn(
-                    pipeLazy(
-                      scheduler,
-                      Scheduler_createAnimationFrameScheduler,
-                    ),
-                  ),
-                ),
-                Observable_mergeAll({
-                  concurrency: creationOptions?.concurrency,
-                }),
-              );
-            },
+        ): AnimationEventHandlerStreamLike<TEventType, T> & DisposableLike {
+          const streamDelegate = Streamable_createAnimationsEventHandler(
+            { v: animation },
             creationOptions as any,
           )[StreamableLike_stream](scheduler, streamOptions);
 
           init(
-            Stream_delegatingMixin<TEvent, boolean>(),
+            Stream_delegatingMixin<TEventType, boolean>(),
             instance,
             streamDelegate,
           );
 
-          const publishers = pipe(
-            animations,
-            ReadonlyObjectMap_map<
-              unknown,
-              EventPublisherLike<{ event: TEvent; value: T }>,
-              string
-            >(_ =>
-              pipe(
-                EventPublisher_create<{ event: TEvent; value: T }>(),
-                Disposable_addTo(instance),
-              ),
-            ),
+          init(Delegating_mixin(), instance, streamDelegate);
+
+          const animationEventsPublisher = streamDelegate[
+            KeyedCollectionLike_get
+          ]("v") as EventSourceLike<{
+            type: TEventType;
+            value: T;
+          }>;
+
+          const publisher = pipe(
+            EventPublisher_create(),
+            Disposable_addTo(instance),
+          );
+          instance.publisher = publisher;
+
+          animationEventsPublisher[EventEmitterLike_addEventListener](
+            publisher,
           );
 
-          instance[CollectionLike_count] = pipe(
-            publishers,
-            ReadonlyObjectMap_reduce<unknown, number, string>(
-              incrementBy(1),
-              returns(0),
-            ),
-          );
-
-          init(Delegating_mixin(), instance, publishers);
+          streamDelegate[EventEmitterLike_addEventListener](publisher);
 
           return instance;
         },
         props<TProperties>({
-          [CollectionLike_count]: 0,
+          publisher: none,
         }),
         {
-          get [AssociativeCollectionLike_keys](): EnumeratorLike<TKey> {
-            unsafeCast<DelegatingLike<ReadonlyObjectMapLike<unknown, TKey>>>(
-              this,
-            );
-            return pipe(
-              this[DelegatingLike_delegate],
-              ReadonlyObjectMap_keys(),
-            );
-          },
-
-          [KeyedCollectionLike_get](
-            this: DelegatingLike<
-              ReadonlyObjectMapLike<
-                EventSourceLike<{ event: TEvent; value: T }>,
-                TKey
-              >
+          [EventEmitterLike_addEventListener](
+            this: TProperties,
+            listener: EventListenerLike<
+              { type: TEventType; value: T } & {
+                type: "wait" | "drain" | "complete";
+              }
             >,
-            index: TKey,
-          ): Optional<EventSourceLike<{ event: TEvent; value: T }>> {
-            return this[DelegatingLike_delegate][index];
+          ) {
+            this.publisher[EventEmitterLike_addEventListener](listener);
           },
         },
       ),
@@ -242,36 +133,24 @@ const createAnimationEventHandlerStream: <
   })();
 
 interface CreateAnimationEventHandler {
-  createAnimationEventHandler<
-    TEvent = unknown,
-    T = number,
-    TKey extends string | symbol | number = string,
-  >(
-    animations: ReadonlyObjectMapLike<
-      Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+  createAnimationEventHandler<TEventType = unknown, T = number>(
+    animation: Function1<
+      TEventType,
+      AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
     options: { readonly mode: "switching"; readonly concurrency?: number },
-  ): AnimationEventHandlerLike<TEvent, T, TKey>;
-  createAnimationEventHandler<
-    TEvent = unknown,
-    T = number,
-    TKey extends string | symbol | number = string,
-  >(
-    animations: ReadonlyObjectMapLike<
-      Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+  ): AnimationEventHandlerLike<TEventType, T>;
+  createAnimationEventHandler<TEventType = unknown, T = number>(
+    animation: Function1<
+      TEventType,
+      AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
     options: { readonly mode: "blocking"; readonly concurrency?: number },
-  ): AnimationEventHandlerLike<TEvent, T, TKey>;
-  createAnimationEventHandler<
-    TEvent = unknown,
-    T = number,
-    TKey extends string | symbol | number = string,
-  >(
-    animations: ReadonlyObjectMapLike<
-      Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+  ): AnimationEventHandlerLike<TEventType, T>;
+  createAnimationEventHandler<TEventType = unknown, T = number>(
+    animation: Function1<
+      TEventType,
+      AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
     options: {
       readonly mode: "queueing";
@@ -279,27 +158,20 @@ interface CreateAnimationEventHandler {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): AnimationEventHandlerLike<TEvent, T, TKey>;
-  createAnimationEventHandler<
-    TEvent = unknown,
-    T = number,
-    TKey extends string | symbol | number = string,
-  >(
-    animations: ReadonlyObjectMapLike<
-      Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+  ): AnimationEventHandlerLike<TEventType, T>;
+  createAnimationEventHandler<TEventType = unknown, T = number>(
+    animation: Function1<
+      TEventType,
+      AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
-  ): AnimationEventHandlerLike<TEvent, T, TKey>;
+  ): AnimationEventHandlerLike<TEventType, T>;
 }
+
 const Streamable_createAnimationEventHandler: CreateAnimationEventHandler["createAnimationEventHandler"] =
-  (<
-    TEvent = unknown,
-    T = number,
-    TKey extends string | symbol | number = string,
-  >(
-    animations: ReadonlyObjectMapLike<
-      Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+  (<TEventType = unknown, T = number>(
+    animation: Function1<
+      TEventType,
+      AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";
@@ -307,10 +179,10 @@ const Streamable_createAnimationEventHandler: CreateAnimationEventHandler["creat
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): AnimationEventHandlerLike<TEvent, T, TKey> => ({
+  ): AnimationEventHandlerLike<TEventType, T> => ({
     [StreamableLike_stream]: (scheduler, options) =>
       createAnimationEventHandlerStream(
-        animations,
+        animation,
         createOptions,
         scheduler,
         options,

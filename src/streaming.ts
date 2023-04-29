@@ -24,8 +24,13 @@ export { StreamableLike_stream, StreamLike_scheduler };
  * @noInheritDoc
  * @category Stream
  */
-export interface StreamLike<TReq, T>
-  extends DispatcherLike<TReq>,
+export interface StreamLike<
+  TReq,
+  T,
+  TEvents extends { type: "wait" | "drain" | "complete" } = {
+    type: "wait" | "drain" | "complete";
+  },
+> extends DispatcherLike<TReq, TEvents>,
     MulticastObservableLike<T> {
   readonly [StreamLike_scheduler]: SchedulerLike;
 }
@@ -101,14 +106,14 @@ export interface CacheLike<T>
  * @noInheritDoc
  * @category Stream
  */
-export interface AnimationEventHandlerStreamLike<
-  TEvent,
+export interface AnimationsEventHandlerStreamLike<
+  TEventType,
   T,
   TKey extends string | number | symbol,
-> extends StreamLike<TEvent, boolean>,
+> extends StreamLike<TEventType, boolean>,
     AssociativeCollectionLike<
       TKey,
-      Optional<EventSourceLike<{ event: TEvent; value: T }>>
+      Optional<EventSourceLike<{ type: TEventType; value: T }>>
     > {}
 
 /**
@@ -116,12 +121,37 @@ export interface AnimationEventHandlerStreamLike<
  * @noInheritDoc
  * @category Container
  */
-export interface AnimationEventHandlerLike<
-  TEvent,
+export interface AnimationsEventHandlerLike<
+  TEventType,
   T,
   TKey extends string | number | symbol,
 > extends StreamableLike<
-    TEvent,
+    TEventType,
     boolean,
-    AnimationEventHandlerStreamLike<TEvent, T, TKey>
+    AnimationsEventHandlerStreamLike<TEventType, T, TKey>
+  > {}
+
+/**
+ * @noInheritDoc
+ * @category Stream
+ */
+export interface AnimationEventHandlerStreamLike<TEventType, T>
+  extends StreamLike<
+    TEventType,
+    boolean,
+    { type: TEventType; value: T } & {
+      type: "wait" | "drain" | "complete";
+    }
+  > {}
+
+/**
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface AnimationEventHandlerLike<TEventType, T>
+  extends StreamableLike<
+    TEventType,
+    boolean,
+    AnimationEventHandlerStreamLike<TEventType, T>
   > {}

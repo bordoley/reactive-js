@@ -581,12 +581,15 @@ interface UseAnimations {
    */
   useAnimations<
     T = number,
-    TEvent = unknown,
+    TEventType = unknown,
     TKey extends string | number | symbol = string,
   >(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
-        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
+        Function1<
+          TEventType,
+          AnimationConfig<T> | readonly AnimationConfig<T>[]
+        >,
         TKey
       >
     >,
@@ -599,8 +602,8 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    DictionaryLike<EventSourceLike<{ event: TEvent; value: T }>, TKey>,
-    SideEffect1<TEvent>,
+    DictionaryLike<EventSourceLike<{ type: TEventType; value: T }>, TKey>,
+    SideEffect1<TEventType>,
     boolean,
   ];
 
@@ -609,12 +612,15 @@ interface UseAnimations {
    */
   useAnimations<
     T = number,
-    TEvent = unknown,
+    TEventType = unknown,
     TKey extends string | number | symbol = string,
   >(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
-        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
+        Function1<
+          TEventType,
+          AnimationConfig<T> | readonly AnimationConfig<T>[]
+        >,
         TKey
       >
     >,
@@ -627,8 +633,8 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    DictionaryLike<EventSourceLike<{ event: TEvent; value: T }>, TKey>,
-    SideEffect1<TEvent>,
+    DictionaryLike<EventSourceLike<{ type: TEventType; value: T }>, TKey>,
+    SideEffect1<TEventType>,
     boolean,
   ];
 
@@ -637,12 +643,15 @@ interface UseAnimations {
    */
   useAnimations<
     T = number,
-    TEvent = unknown,
+    TEventType = unknown,
     TKey extends string | number | symbol = string,
   >(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
-        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
+        Function1<
+          TEventType,
+          AnimationConfig<T> | readonly AnimationConfig<T>[]
+        >,
         TKey
       >
     >,
@@ -655,8 +664,8 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    DictionaryLike<EventSourceLike<{ event: TEvent; value: T }>, TKey>,
-    SideEffect1<TEvent>,
+    DictionaryLike<EventSourceLike<{ type: TEventType; value: T }>, TKey>,
+    SideEffect1<TEventType>,
     never,
   ];
 
@@ -665,12 +674,15 @@ interface UseAnimations {
    */
   useAnimations<
     T = number,
-    TEvent = unknown,
+    TEventType = unknown,
     TKey extends string | number | symbol = string,
   >(
     animationFactory: Factory<
       ReadonlyObjectMapLike<
-        Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
+        Function1<
+          TEventType,
+          AnimationConfig<T> | readonly AnimationConfig<T>[]
+        >,
         TKey
       >
     >,
@@ -682,19 +694,19 @@ interface UseAnimations {
       readonly capacity?: number;
     },
   ): readonly [
-    DictionaryLike<EventSourceLike<{ event: TEvent; value: T }>, TKey>,
-    SideEffect1<TEvent>,
+    DictionaryLike<EventSourceLike<{ type: TEventType; value: T }>, TKey>,
+    SideEffect1<TEventType>,
     never,
   ];
 }
 export const useAnimations: UseAnimations["useAnimations"] = (<
   T = number,
-  TEvent = unknown,
+  TEventType = unknown,
   TKey extends string | number | symbol = string,
 >(
   animationFactory: Factory<
     ReadonlyObjectMapLike<
-      Function1<TEvent, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
+      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
       TKey
     >
   >,
@@ -707,14 +719,14 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
     readonly capacity?: number;
   } = {},
 ): readonly [
-  DictionaryLike<EventSourceLike<{ event: TEvent; value: T }>, TKey>,
-  SideEffect1<TEvent>,
+  DictionaryLike<EventSourceLike<{ type: TEventType; value: T }>, TKey>,
+  SideEffect1<TEventType>,
   unknown,
 ] => {
   const animations = useMemo(animationFactory, deps);
 
   const stream = useStream(
-    () => Streamable.createAnimationEventHandler(animations, options as any),
+    () => Streamable.createAnimationsEventHandler(animations, options as any),
     [animations, options.concurrency, options.mode, options?.priority],
     options,
   );
@@ -722,7 +734,7 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
   const dict: Optional<
     AssociativeCollectionLike<
       TKey,
-      Optional<EventSourceLike<{ event: TEvent; value: T }>>
+      Optional<EventSourceLike<{ type: TEventType; value: T }>>
     >
   > = stream;
 
@@ -736,9 +748,9 @@ interface UseAnimation {
   /**
    * @category Hook
    */
-  useAnimation<T = number, TEvent = unknown>(
+  useAnimation<T = number, TEventType = unknown>(
     animationFactory: Function1<
-      TEvent,
+      TEventType,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
     deps: readonly unknown[],
@@ -749,17 +761,17 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    EventSourceLike<{ event: TEvent; value: T }>,
-    SideEffect1<TEvent>,
+    EventSourceLike<{ type: TEventType; value: T }>,
+    SideEffect1<TEventType>,
     boolean,
   ];
 
   /**
    * @category Hook
    */
-  useAnimation<T = number, TEvent = unknown>(
+  useAnimation<T = number, TEventType = unknown>(
     animationFactory: Function1<
-      TEvent,
+      TEventType,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
     deps: readonly unknown[],
@@ -770,17 +782,17 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    EventSourceLike<{ event: TEvent; value: T }>,
-    SideEffect1<TEvent>,
+    EventSourceLike<{ type: TEventType; value: T }>,
+    SideEffect1<TEventType>,
     boolean,
   ];
 
   /**
    * @category Hook
    */
-  useAnimation<T = number, TEvent = unknown>(
+  useAnimation<T = number, TEventType = unknown>(
     animationFactory: Function1<
-      TEvent,
+      TEventType,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
     deps: readonly unknown[],
@@ -791,17 +803,17 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    EventSourceLike<{ event: TEvent; value: T }>,
-    SideEffect1<TEvent>,
+    EventSourceLike<{ type: TEventType; value: T }>,
+    SideEffect1<TEventType>,
     never,
   ];
 
   /**
    * @category Hook
    */
-  useAnimation<T = number, TEvent = unknown>(
+  useAnimation<T = number, TEventType = unknown>(
     animationFactory: Function1<
-      TEvent,
+      TEventType,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
     deps: readonly unknown[],
@@ -811,17 +823,17 @@ interface UseAnimation {
       readonly capacity?: number;
     },
   ): readonly [
-    EventSourceLike<{ event: TEvent; value: T }>,
-    SideEffect1<TEvent>,
+    EventSourceLike<{ type: TEventType; value: T }>,
+    SideEffect1<TEventType>,
     never,
   ];
 }
 export const useAnimation: UseAnimation["useAnimation"] = (<
   T = unknown,
-  TEvent = number,
+  TEventType = number,
 >(
   animationFactory: Function1<
-    TEvent,
+    TEventType,
     AnimationConfig<T> | readonly AnimationConfig<T>[]
   >,
   deps: readonly unknown[],
@@ -833,13 +845,13 @@ export const useAnimation: UseAnimation["useAnimation"] = (<
     readonly capacity?: number;
   } = {},
 ): readonly [
-  EventSourceLike<{ event: TEvent; value: T }>,
-  SideEffect1<TEvent>,
+  EventSourceLike<{ type: TEventType; value: T }>,
+  SideEffect1<TEventType>,
   unknown,
 ] => {
   const [animatedValues, dispatch, isAnimationRunning] = useAnimations<
     T,
-    TEvent
+    TEventType
   >(
     returns({
       v: animationFactory,

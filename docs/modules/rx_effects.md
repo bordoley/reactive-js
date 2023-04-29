@@ -478,7 +478,7 @@ ___
 
 ### \_\_state
 
-▸ **__state**<`T`\>(`initialState`, `options?`): [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+▸ **__state**<`T`\>(`initialState`, `options?`): [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>
 
 #### Type parameters
 
@@ -499,7 +499,7 @@ ___
 
 #### Returns
 
-[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>
 
 ___
 
@@ -513,7 +513,7 @@ ___
 | :------ | :------ |
 | `TReq` | `TReq` |
 | `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, `TStream`\> |
+| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }, `TStream`\> |
 
 #### Parameters
 

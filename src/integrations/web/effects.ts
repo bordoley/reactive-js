@@ -76,28 +76,28 @@ export const __animate: Animate["__animate"] = (
 
   return setRef;
 };
-const defaultSelector = <T>(ev: { event: unknown; value: T }) => ev.value;
+const defaultSelector = <T>(ev: { type: unknown; value: T }) => ev.value;
 
 interface AnimateEvent {
   __animateEvent(
     animation: EventSourceLike<{
-      event: unknown;
+      type: unknown;
       value: ReadonlyObjectMapLike<string, CSSStyleKey>;
     }>,
   ): SideEffect1<Optional<HTMLElement | null>>;
 
-  __animateEvent<TEvent, T>(
-    animation: EventSourceLike<{ event: TEvent; value: T }>,
+  __animateEvent<TEventType, T>(
+    animation: EventSourceLike<{ type: TEventType; value: T }>,
     selector: (ev: {
-      event: TEvent;
+      type: TEventType;
       value: T;
     }) => ReadonlyObjectMapLike<string, CSSStyleKey>,
   ): SideEffect1<Optional<HTMLElement | null>>;
 }
-export const __animateEvent: AnimateEvent["__animateEvent"] = <TEvent, T>(
-  animation: EventSourceLike<{ event: TEvent; value: T }>,
+export const __animateEvent: AnimateEvent["__animateEvent"] = <TEventType, T>(
+  animation: EventSourceLike<{ type: TEventType; value: T }>,
   selector?: (ev: {
-    event: TEvent;
+    type: TEventType;
     value: T;
   }) => ReadonlyObjectMapLike<string, CSSStyleKey>,
 ): SideEffect1<Optional<HTMLElement | null>> => {

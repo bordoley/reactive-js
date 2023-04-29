@@ -9,14 +9,14 @@ interface Animate {
 export declare const __animate: Animate["__animate"];
 interface AnimateEvent {
     __animateEvent(animation: EventSourceLike<{
-        event: unknown;
+        type: unknown;
         value: ReadonlyObjectMapLike<string, CSSStyleKey>;
     }>): SideEffect1<Optional<HTMLElement | null>>;
-    __animateEvent<TEvent, T>(animation: EventSourceLike<{
-        event: TEvent;
+    __animateEvent<TEventType, T>(animation: EventSourceLike<{
+        type: TEventType;
         value: T;
     }>, selector: (ev: {
-        event: TEvent;
+        type: TEventType;
         value: T;
     }) => ReadonlyObjectMapLike<string, CSSStyleKey>): SideEffect1<Optional<HTMLElement | null>>;
 }

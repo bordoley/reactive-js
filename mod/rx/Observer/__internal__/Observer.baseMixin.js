@@ -11,6 +11,9 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
 import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
 const Observer_baseMixin = /*@__PURE__*/ (() => {
+    const completeEvent = { type: "complete" };
+    const drainEvent = { type: "drain" };
+    const waitEvent = { type: "wait" };
     const scheduleDrainQueue = (observer) => {
         if (observer[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
             const continuation = (scheduler) => {
@@ -26,7 +29,7 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
                     observer[DisposableLike_dispose]();
                 }
                 else {
-                    observer[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify]("drain");
+                    observer[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify](drainEvent);
                 }
             };
             observer[__ObserverMixin_dispatchSubscription] = pipe(observer[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
@@ -48,7 +51,7 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
                 !this[DisposableLike_isDisposed]) {
                 const result = call(indexedQueueProtoype[QueueableLike_enqueue], this, next);
                 if (!result) {
-                    this[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify]("wait");
+                    this[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify](waitEvent);
                 }
                 scheduleDrainQueue(this);
                 return result;
@@ -59,7 +62,7 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
             const isCompleted = this[__ObserverMixin_isCompleted];
             this[__ObserverMixin_isCompleted] = true;
             if (!isCompleted) {
-                this[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify]("complete");
+                this[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify](completeEvent);
             }
             if (this[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed] &&
                 !isCompleted) {

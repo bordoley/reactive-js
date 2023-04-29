@@ -10,7 +10,11 @@ export { StreamableLike_stream, StreamLike_scheduler };
  * @noInheritDoc
  * @category Stream
  */
-export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
+export interface StreamLike<TReq, T, TEvents extends {
+    type: "wait" | "drain" | "complete";
+} = {
+    type: "wait" | "drain" | "complete";
+}> extends DispatcherLike<TReq, TEvents>, MulticastObservableLike<T> {
     readonly [StreamLike_scheduler]: SchedulerLike;
 }
 /**
@@ -64,8 +68,8 @@ export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Fun
  * @noInheritDoc
  * @category Stream
  */
-export interface AnimationEventHandlerStreamLike<TEvent, T, TKey extends string | number | symbol> extends StreamLike<TEvent, boolean>, AssociativeCollectionLike<TKey, Optional<EventSourceLike<{
-    event: TEvent;
+export interface AnimationsEventHandlerStreamLike<TEventType, T, TKey extends string | number | symbol> extends StreamLike<TEventType, boolean>, AssociativeCollectionLike<TKey, Optional<EventSourceLike<{
+    type: TEventType;
     value: T;
 }>>> {
 }
@@ -74,5 +78,23 @@ export interface AnimationEventHandlerStreamLike<TEvent, T, TKey extends string 
  * @noInheritDoc
  * @category Container
  */
-export interface AnimationEventHandlerLike<TEvent, T, TKey extends string | number | symbol> extends StreamableLike<TEvent, boolean, AnimationEventHandlerStreamLike<TEvent, T, TKey>> {
+export interface AnimationsEventHandlerLike<TEventType, T, TKey extends string | number | symbol> extends StreamableLike<TEventType, boolean, AnimationsEventHandlerStreamLike<TEventType, T, TKey>> {
+}
+/**
+ * @noInheritDoc
+ * @category Stream
+ */
+export interface AnimationEventHandlerStreamLike<TEventType, T> extends StreamLike<TEventType, boolean, {
+    type: TEventType;
+    value: T;
+} & {
+    type: "wait" | "drain" | "complete";
+}> {
+}
+/**
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface AnimationEventHandlerLike<TEventType, T> extends StreamableLike<TEventType, boolean, AnimationEventHandlerStreamLike<TEventType, T>> {
 }

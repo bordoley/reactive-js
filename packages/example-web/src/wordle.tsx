@@ -45,14 +45,14 @@ const AnimatedBox = ({
   index,
 }: {
   label: string;
-  animation: EventSourceLike<{ event: boolean; value: number }>;
+  animation: EventSourceLike<{ type: boolean; value: number }>;
   index: number;
 }) => {
   const frontBox = useAnimateEvent<HTMLDivElement, number, boolean>(
     animation,
-    ({ event, value }) => ({
+    ({ type, value }) => ({
       transform: `perspective(600px) rotateX(${
-        180 - calcXRotation(event, value, index)
+        180 - calcXRotation(type, value, index)
       }deg)`,
     }),
     [index],
@@ -60,9 +60,9 @@ const AnimatedBox = ({
 
   const backBox = useAnimateEvent<HTMLDivElement, number, boolean>(
     animation,
-    ({ event, value }) => ({
+    ({ type, value }) => ({
       transform: `perspective(600px) rotateX(${calcXRotation(
-        event,
+        type,
         value,
         index,
       )}deg)`,

@@ -50,7 +50,7 @@ const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
 
         [EventEmitterLike_addEventListener](
           this: TProperties,
-          listener: EventListenerLike<"wait" | "drain" | "complete">,
+          listener: EventListenerLike<{ type: "wait" | "drain" | "complete" }>,
         ): void {
           this[__DelegatingDispatcherMixin_delegate][
             EventEmitterLike_addEventListener

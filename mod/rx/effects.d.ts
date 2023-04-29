@@ -36,7 +36,9 @@ interface __Using {
 }
 export declare const __using: __Using["__using"];
 export declare function __currentScheduler(): SchedulerLike;
-export declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, backpressureStrategy, capacity, scheduler, }?: {
+export declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T, {
+    type: "complete" | "wait" | "drain";
+}>>(streamable: StreamableLike<TReq, T, TStream>, { replay, backpressureStrategy, capacity, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
     readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
@@ -47,7 +49,9 @@ export declare const __state: <T>(initialState: () => T, options?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
     readonly capacity?: number | undefined;
-}) => StreamLike<Updater<T>, T>;
+}) => StreamLike<Updater<T>, T, {
+    type: "complete" | "wait" | "drain";
+}>;
 export declare const __bind: <F extends Function>(f: F, thiz: unknown) => F;
 export declare const __bindMethod: <T extends { [K in TKey]: (...args: any[]) => any; }, TKey extends string | number | symbol, TFunction extends T[TKey]>(thiz: T, key: TKey) => TFunction;
 export {};

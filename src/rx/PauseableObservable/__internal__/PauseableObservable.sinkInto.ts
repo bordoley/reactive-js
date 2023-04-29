@@ -19,13 +19,15 @@ const PauseableObservable_sinkInto =
     Observable_create(observer => {
       pipe(
         sink,
-        EventSource_addEventHandler(ev => {
-          if (ev === "wait" || ev === "complete") {
-            pauseableObservable[PauseableLike_pause]();
-          } else {
-            pauseableObservable[PauseableLike_resume]();
-          }
-        }),
+        EventSource_addEventHandler(
+          ({ type }: { type: "wait" | "complete" | "drain" }) => {
+            if (type === "wait" || type === "complete") {
+              pauseableObservable[PauseableLike_pause]();
+            } else if (type === "drain") {
+              pauseableObservable[PauseableLike_resume]();
+            }
+          },
+        ),
         Disposable_addTo(observer),
       );
 

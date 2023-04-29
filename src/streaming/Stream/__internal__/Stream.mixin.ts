@@ -165,7 +165,9 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
 
           [EventEmitterLike_addEventListener](
             this: TProperties,
-            listener: EventListenerLike<"wait" | "drain" | "complete">,
+            listener: EventListenerLike<{
+              type: "wait" | "drain" | "complete";
+            }>,
           ): void {
             const observer = this[
               __DispatchedObservable_observer

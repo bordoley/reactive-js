@@ -8,11 +8,11 @@ import Observable_create from "../../Observable/__internal__/Observable.create.j
 import Observable_dispatchTo from "../../Observable/__internal__/Observable.dispatchTo.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 const PauseableObservable_sinkInto = (sink) => pauseableObservable => Observable_create(observer => {
-    pipe(sink, EventSource_addEventHandler(ev => {
-        if (ev === "wait" || ev === "complete") {
+    pipe(sink, EventSource_addEventHandler(({ type }) => {
+        if (type === "wait" || type === "complete") {
             pauseableObservable[PauseableLike_pause]();
         }
-        else {
+        else if (type === "drain") {
             pauseableObservable[PauseableLike_resume]();
         }
     }), Disposable_addTo(observer));

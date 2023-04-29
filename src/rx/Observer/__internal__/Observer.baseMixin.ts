@@ -59,11 +59,15 @@ const Observer_baseMixin: <T>() => Mixin1<
     readonly [BufferLike_capacity]: number;
   }
 > = /*@__PURE__*/ (<T>() => {
+  const completeEvent: { type: "complete" } = { type: "complete" };
+  const drainEvent: { type: "drain" } = { type: "drain" };
+  const waitEvent: { type: "wait" } = { type: "wait" };
+
   type TProperties = {
     [__ObserverMixin_isCompleted]: boolean;
     [__ObserverMixin_dispatchSubscription]: DisposableLike;
     [__ObserverMixin_queuePublisher]: Optional<
-      EventPublisherLike<"wait" | "drain" | "complete">
+      EventPublisherLike<{ type: "wait" | "drain" | "complete" }>
     >;
   };
 
@@ -89,7 +93,7 @@ const Observer_baseMixin: <T>() => Mixin1<
           observer[DisposableLike_dispose]();
         } else {
           observer[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify](
-            "drain",
+            drainEvent,
           );
         }
       };
@@ -149,7 +153,7 @@ const Observer_baseMixin: <T>() => Mixin1<
 
             if (!result) {
               this[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify](
-                "wait",
+                waitEvent,
               );
             }
 
@@ -167,7 +171,7 @@ const Observer_baseMixin: <T>() => Mixin1<
 
           if (!isCompleted) {
             this[__ObserverMixin_queuePublisher]?.[EventListenerLike_notify](
-              "complete",
+              completeEvent,
             );
           }
 
@@ -182,14 +186,14 @@ const Observer_baseMixin: <T>() => Mixin1<
         },
         [EventEmitterLike_addEventListener](
           this: TProperties & ObserverLike,
-          listener: EventListenerLike<"wait" | "drain" | "complete">,
+          listener: EventListenerLike<{ type: "wait" | "drain" | "complete" }>,
         ): void {
           const publisher =
             this[__ObserverMixin_queuePublisher] ??
             (() => {
-              const publisher = EventPublisher_create<
-                "wait" | "drain" | "complete"
-              >();
+              const publisher = EventPublisher_create<{
+                type: "wait" | "drain" | "complete";
+              }>();
               this[__ObserverMixin_queuePublisher] = publisher;
 
               return pipe(publisher, Disposable_addTo(this));

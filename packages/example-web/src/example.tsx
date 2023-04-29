@@ -34,6 +34,7 @@ import { ObservableLike } from "@reactive-js/core/rx";
 import {
   QueueableLike_enqueue,
   KeyedCollectionLike_get,
+  EventEmitterLike,
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
 import { EventSourceLike } from "@reactive-js/core/util";
@@ -90,7 +91,7 @@ const CacheComponent = () => {
 const AnimatedBox = ({
   animation,
 }: {
-  animation?: EventSourceLike<{ event: unknown; value: number }>;
+  animation?: EventSourceLike<{ type: unknown; value: number }>;
 }) => {
   const ref = useAnimateEvent<HTMLDivElement>(animation, ({ value }) => ({
     margin: `${50 - value * 50}px`,
@@ -233,36 +234,34 @@ const RxComponent = createComponent(
       "animate" | "cancel",
       ReadonlyObjectMapLike<string, CSSStyleKey>
     >(
-      {
-        animation: ev =>
-          ev === "animate"
-            ? [
-                {
-                  type: "tween",
-                  duration: 1000,
-                  from: 0,
-                  to: 50,
-                  selector: (v: number) => ({
-                    "background-color": "blue",
-                    margin: `${50 - v}px`,
-                    padding: `${v}px`,
-                  }),
-                },
-                {
-                  type: "spring",
-                  stiffness: 0.01,
-                  damping: 0.1,
-                  from: 50,
-                  to: 0,
-                  selector: (v: number) => ({
-                    "background-color": "green",
-                    margin: `${50 - v}px`,
-                    padding: `${v}px`,
-                  }),
-                },
-              ]
-            : [],
-      },
+      ev =>
+        ev === "animate"
+          ? [
+              {
+                type: "tween",
+                duration: 1000,
+                from: 0,
+                to: 50,
+                selector: (v: number) => ({
+                  "background-color": "blue",
+                  margin: `${50 - v}px`,
+                  padding: `${v}px`,
+                }),
+              },
+              {
+                type: "spring",
+                stiffness: 0.01,
+                damping: 0.1,
+                from: 50,
+                to: 0,
+                selector: (v: number) => ({
+                  "background-color": "green",
+                  margin: `${50 - v}px`,
+                  padding: `${v}px`,
+                }),
+              },
+            ]
+          : [],
       { mode: "switching" },
     );
 
@@ -276,13 +275,16 @@ const RxComponent = createComponent(
         animationEventHandler,
         QueueableLike_enqueue,
       );
+
+      // FIXME: Who should filter out events? Maybe __animateEvent should take an array of events
+      // as an argument?
+      const animationEventEmitter: EventEmitterLike<{
+        type: unknown;
+        value: ReadonlyObjectMapLike<string, CSSStyleKey>;
+      }> = animationEventHandler;
+
       const animatedDivRef = __animateEvent(
-        animationEventHandler[KeyedCollectionLike_get](
-          "animation",
-        ) as EventSourceLike<{
-          event: unknown;
-          value: ReadonlyObjectMapLike<string, CSSStyleKey>;
-        }>,
+        animationEventEmitter 
       );
 
       return (
