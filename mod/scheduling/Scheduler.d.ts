@@ -1,12 +1,8 @@
-import { Function1 } from "../functions.js";
-import { PrioritySchedulerLike, SchedulerLike } from "../scheduling.js";
-import { DisposableLike } from "../util.js";
-export declare const createAnimationFrameScheduler: Function1<SchedulerLike, SchedulerLike & DisposableLike>;
+export declare const createAnimationFrameScheduler: import("../functions.js").Function1<import("../scheduling.js").SchedulerLike, import("../scheduling.js").SchedulerLike & import("../util.js").DisposableLike>;
 export declare const createHostScheduler: (options?: {
     readonly maxYieldInterval?: number | undefined;
-}) => SchedulerLike & DisposableLike;
+}) => import("../scheduling.js").SchedulerLike & import("../util.js").DisposableLike;
 export declare const createVirtualTimeScheduler: (options?: {
     readonly maxMicroTaskTicks?: number | undefined;
 }) => import("../scheduling.js").VirtualTimeSchedulerLike;
-export declare const toPausableScheduler: Function1<SchedulerLike, import("../scheduling.js").PauseableSchedulerLike & DisposableLike>;
-export declare const toPriorityScheduler: Function1<SchedulerLike, PrioritySchedulerLike & DisposableLike>;
+export declare const toPausableScheduler: import("../functions.js").Function1<import("../scheduling.js").SchedulerLike, import("../scheduling.js").PauseableSchedulerLike & import("../util.js").DisposableLike>;

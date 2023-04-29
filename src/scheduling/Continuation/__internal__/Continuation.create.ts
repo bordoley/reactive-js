@@ -12,7 +12,6 @@ import {
   ContinuationLike,
   ContinuationLike_activeChild,
   ContinuationLike_parent,
-  ContinuationLike_priority,
   ContinuationLike_run,
   ContinuationLike_scheduler,
   ContinuationSchedulerLike,
@@ -51,7 +50,6 @@ const Continuation_create = /*@__PURE__*/ (() => {
   type TContinuationProperties = {
     [ContinuationLike_activeChild]: Optional<ContinuationLike>;
     [ContinuationLike_parent]: Optional<ContinuationLike>;
-    [ContinuationLike_priority]: number;
     [ContinuationLike_scheduler]: SchedulerLike & ContinuationSchedulerLike;
     [__Continuation_effect]: SideEffect1<SchedulerLike>;
   };
@@ -110,7 +108,6 @@ const Continuation_create = /*@__PURE__*/ (() => {
           Mutable<TContinuationProperties>,
         scheduler: ContinuationSchedulerLike,
         effect: SideEffect1<SchedulerLike>,
-        priority: number,
       ): ContinuationLike {
         init(Disposable_mixin, instance);
 
@@ -123,7 +120,6 @@ const Continuation_create = /*@__PURE__*/ (() => {
 
         instance[ContinuationLike_scheduler] = scheduler;
         instance[__Continuation_effect] = effect;
-        instance[ContinuationLike_priority] = priority;
 
         pipe(
           instance,
@@ -137,7 +133,6 @@ const Continuation_create = /*@__PURE__*/ (() => {
       props<TContinuationProperties>({
         [ContinuationLike_activeChild]: none,
         [ContinuationLike_parent]: none,
-        [ContinuationLike_priority]: 0,
         [ContinuationLike_scheduler]: none,
         [__Continuation_effect]: none,
       }),

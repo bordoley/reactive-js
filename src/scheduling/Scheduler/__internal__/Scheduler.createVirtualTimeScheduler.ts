@@ -44,12 +44,12 @@ import {
 } from "../../../util.js";
 import Queue_priorityQueueMixin from "../../../util/Queue/__internal__/Queue.priorityQueueMixin.js";
 import {
-  PrioritySchedulerImplementationLike,
-  PrioritySchedulerImplementationLike_runContinuation,
-  PrioritySchedulerImplementationLike_scheduleContinuation,
-  PrioritySchedulerImplementationLike_shouldYield,
-  PriorityScheduler_mixin,
-} from "./Scheduler.mixin.js";
+  SchedulerImplementationLike,
+  SchedulerImplementationLike_runContinuation,
+  SchedulerImplementationLike_scheduleContinuation,
+  SchedulerImplementationLike_shouldYield,
+  SchedulerImplementation_mixin,
+} from "./SchedulerImplementation.mixin.js";
 
 const comparator = (a: SchedulerTaskLike, b: SchedulerTaskLike) => {
   const diff = a[SchedulerTaskLike_dueTime] - b[SchedulerTaskLike_dueTime];
@@ -67,7 +67,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
   createInstanceFactory(
     mix(
       include(
-        PriorityScheduler_mixin,
+        SchedulerImplementation_mixin,
         MutableEnumerator_mixin<SchedulerTaskLike>(),
         Queue_priorityQueueMixin<SchedulerTaskLike>(),
       ),
@@ -79,7 +79,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           Mutable<TProperties>,
         maxMicroTaskTicks: number,
       ): VirtualTimeSchedulerLike {
-        init(PriorityScheduler_mixin, instance, 1);
+        init(SchedulerImplementation_mixin, instance, 1);
         init(MutableEnumerator_mixin<SchedulerTaskLike>(), instance);
         init(
           Queue_priorityQueueMixin<SchedulerTaskLike>(),
@@ -100,7 +100,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         [__VirtualTimeScheduler_taskIDCount]: 0,
       }),
       {
-        get [PrioritySchedulerImplementationLike_shouldYield]() {
+        get [SchedulerImplementationLike_shouldYield]() {
           unsafeCast<TProperties>(this);
 
           this[__VirtualTimeScheduler_microTaskTicks]++;
@@ -113,7 +113,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         [VirtualTimeSchedulerLike_run](
           this: TProperties &
             EnumeratorLike<SchedulerTaskLike> &
-            PrioritySchedulerImplementationLike,
+            SchedulerImplementationLike,
         ) {
           while (
             !this[DisposableLike_isDisposed] &&
@@ -128,16 +128,14 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             this[__VirtualTimeScheduler_microTaskTicks] = 0;
             this[SchedulerLike_now] = dueTime;
 
-            this[PrioritySchedulerImplementationLike_runContinuation](
-              continuation,
-            );
+            this[SchedulerImplementationLike_runContinuation](continuation);
           }
         },
-        [PrioritySchedulerImplementationLike_scheduleContinuation](
+        [SchedulerImplementationLike_scheduleContinuation](
           this: TProperties &
             DisposableLike &
             QueueLike<SchedulerTaskLike> &
-            PrioritySchedulerImplementationLike,
+            SchedulerImplementationLike,
           continuation: ContinuationLike,
           delay: number,
         ) {

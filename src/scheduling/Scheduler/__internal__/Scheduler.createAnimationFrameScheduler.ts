@@ -39,12 +39,12 @@ import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.m
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import {
-  PrioritySchedulerImplementationLike,
-  PrioritySchedulerImplementationLike_runContinuation,
-  PrioritySchedulerImplementationLike_scheduleContinuation,
-  PrioritySchedulerImplementationLike_shouldYield,
-  PriorityScheduler_mixin,
-} from "./Scheduler.mixin.js";
+  SchedulerImplementationLike,
+  SchedulerImplementationLike_runContinuation,
+  SchedulerImplementationLike_scheduleContinuation,
+  SchedulerImplementationLike_shouldYield,
+  SchedulerImplementation_mixin,
+} from "./SchedulerImplementation.mixin.js";
 
 const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
   let rafQueue = Queue_createIndexedQueue<SideEffect>(
@@ -95,17 +95,17 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(PriorityScheduler_mixin, Delegating_mixin()),
+      include(SchedulerImplementation_mixin, Delegating_mixin()),
       function AnimationFrameScheduler(
         instance: Pick<
-          PrioritySchedulerImplementationLike,
+          SchedulerImplementationLike,
           | typeof SchedulerLike_now
-          | typeof PrioritySchedulerImplementationLike_shouldYield
-          | typeof PrioritySchedulerImplementationLike_scheduleContinuation
+          | typeof SchedulerImplementationLike_shouldYield
+          | typeof SchedulerImplementationLike_scheduleContinuation
         >,
         delayScheduler: SchedulerLike,
       ): SchedulerLike & DisposableLike {
-        init(PriorityScheduler_mixin, instance, 5);
+        init(SchedulerImplementation_mixin, instance, 5);
         init(Delegating_mixin(), instance, delayScheduler);
 
         return instance;
@@ -116,11 +116,10 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
           return CurrentTime.now();
         },
 
-        [PrioritySchedulerImplementationLike_shouldYield]: true,
+        [SchedulerImplementationLike_shouldYield]: true,
 
-        [PrioritySchedulerImplementationLike_scheduleContinuation](
-          this: PrioritySchedulerImplementationLike &
-            DelegatingLike<SchedulerLike>,
+        [SchedulerImplementationLike_scheduleContinuation](
+          this: SchedulerImplementationLike & DelegatingLike<SchedulerLike>,
           continuation: ContinuationLike,
           delay: number,
         ) {
@@ -141,9 +140,7 @@ const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
             );
           } else {
             rafQueue[QueueableLike_enqueue](() =>
-              this[PrioritySchedulerImplementationLike_runContinuation](
-                continuation,
-              ),
+              this[SchedulerImplementationLike_runContinuation](continuation),
             );
 
             if (!rafIsRunning) {

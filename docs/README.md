@@ -33,7 +33,6 @@ Reactive-JS
 - [rx/Runnable](modules/rx_Runnable.md)
 - [rx/effects](modules/rx_effects.md)
 - [scheduling](modules/scheduling.md)
-- [scheduling/PriorityScheduler](modules/scheduling_PriorityScheduler.md)
 - [scheduling/Scheduler](modules/scheduling_Scheduler.md)
 - [streaming](modules/streaming.md)
 - [streaming/Stream](modules/streaming_Stream.md)

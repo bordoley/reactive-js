@@ -42,12 +42,12 @@ import Observer_assertState from "../../../rx/Observer/__internal__/Observer.ass
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
 import {
-  PrioritySchedulerImplementationLike,
-  PrioritySchedulerImplementationLike_runContinuation,
-  PrioritySchedulerImplementationLike_scheduleContinuation,
-  PrioritySchedulerImplementationLike_shouldYield,
-  PriorityScheduler_mixin,
-} from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+  SchedulerImplementationLike,
+  SchedulerImplementationLike_runContinuation,
+  SchedulerImplementationLike_scheduleContinuation,
+  SchedulerImplementationLike_shouldYield,
+  SchedulerImplementation_mixin,
+} from "../../../scheduling/Scheduler/__internal__/SchedulerImplementation.mixin.js";
 import {
   BufferLike_capacity,
   DisposableLike,
@@ -72,7 +72,7 @@ const Enumerable_enumerate: <T>() => (
       include(
         MutableEnumerator_mixin(),
         Observer_baseMixin(),
-        PriorityScheduler_mixin,
+        SchedulerImplementation_mixin,
       ),
       function EnumeratorScheduler(
         instance: Pick<
@@ -84,7 +84,7 @@ const Enumerable_enumerate: <T>() => (
           Mutable<TEnumeratorSchedulerProperties>,
       ): EnumeratorScheduler<T> {
         init(MutableEnumerator_mixin(), instance);
-        init(PriorityScheduler_mixin, instance, 0);
+        init(SchedulerImplementation_mixin, instance, 0);
         init(Observer_baseMixin<T>(), instance, {
           [QueueableLike_backpressureStrategy]: "overflow",
           [BufferLike_capacity]: MAX_SAFE_INTEGER,
@@ -101,7 +101,7 @@ const Enumerable_enumerate: <T>() => (
       }),
       {
         [SchedulerLike_now]: 0,
-        get [PrioritySchedulerImplementationLike_shouldYield](): boolean {
+        get [SchedulerImplementationLike_shouldYield](): boolean {
           unsafeCast<EnumeratorLike>(this);
           return this[EnumeratorLike_hasCurrent];
         },
@@ -109,7 +109,7 @@ const Enumerable_enumerate: <T>() => (
           this: TEnumeratorSchedulerProperties &
             MutableEnumeratorLike<T> &
             QueueLike<ContinuationLike> &
-            PrioritySchedulerImplementationLike,
+            SchedulerImplementationLike,
         ) {
           this[MutableEnumeratorLike_reset]();
 
@@ -119,9 +119,7 @@ const Enumerable_enumerate: <T>() => (
                 QueueLike_dequeue
               ]();
             if (isSome(continuation)) {
-              this[PrioritySchedulerImplementationLike_runContinuation](
-                continuation,
-              );
+              this[SchedulerImplementationLike_runContinuation](continuation);
             } else {
               this[DisposableLike_dispose]();
               break;
@@ -130,11 +128,11 @@ const Enumerable_enumerate: <T>() => (
 
           return this[EnumeratorLike_hasCurrent];
         },
-        [PrioritySchedulerImplementationLike_scheduleContinuation](
+        [SchedulerImplementationLike_scheduleContinuation](
           this: TEnumeratorSchedulerProperties &
             DisposableLike &
             QueueLike<ContinuationLike> &
-            PrioritySchedulerImplementationLike,
+            SchedulerImplementationLike,
           continuation: ContinuationLike,
           delay: number,
         ): void {

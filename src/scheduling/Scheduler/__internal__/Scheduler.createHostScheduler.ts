@@ -14,12 +14,12 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import {
-  PrioritySchedulerImplementationLike,
-  PrioritySchedulerImplementationLike_runContinuation,
-  PrioritySchedulerImplementationLike_scheduleContinuation,
-  PrioritySchedulerImplementationLike_shouldYield,
-  PriorityScheduler_mixin,
-} from "./Scheduler.mixin.js";
+  SchedulerImplementationLike,
+  SchedulerImplementationLike_runContinuation,
+  SchedulerImplementationLike_scheduleContinuation,
+  SchedulerImplementationLike_shouldYield,
+  SchedulerImplementation_mixin,
+} from "./SchedulerImplementation.mixin.js";
 
 declare const navigator: {
   scheduling: Optional<{
@@ -38,7 +38,7 @@ const isInputPending = (): boolean =>
   supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);
 
 const scheduleImmediateWithSetImmediate = (
-  scheduler: PrioritySchedulerImplementationLike,
+  scheduler: SchedulerImplementationLike,
   continuation: ContinuationLike,
 ) => {
   const disposable = pipe(
@@ -55,7 +55,7 @@ const scheduleImmediateWithSetImmediate = (
 };
 
 const scheduleDelayed = (
-  scheduler: PrioritySchedulerImplementationLike,
+  scheduler: SchedulerImplementationLike,
   continuation: ContinuationLike,
   delay: number,
 ) => {
@@ -75,7 +75,7 @@ const scheduleDelayed = (
 };
 
 const scheduleImmediate = (
-  scheduler: PrioritySchedulerImplementationLike,
+  scheduler: SchedulerImplementationLike,
   continuation: ContinuationLike,
 ) => {
   if (supportsSetImmediate) {
@@ -86,29 +86,29 @@ const scheduleImmediate = (
 };
 
 const runContinuation = (
-  scheduler: PrioritySchedulerImplementationLike,
+  scheduler: SchedulerImplementationLike,
   continuation: ContinuationLike,
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
   // clear the immediateOrTimer disposable
   immmediateOrTimerDisposable[DisposableLike_dispose]();
-  scheduler[PrioritySchedulerImplementationLike_runContinuation](continuation);
+  scheduler[SchedulerImplementationLike_runContinuation](continuation);
 };
 
 const createHostSchedulerInstance = /*@__PURE__*/ (() =>
   createInstanceFactory(
     mix(
-      include(PriorityScheduler_mixin),
+      include(SchedulerImplementation_mixin),
       function HostScheduler(
         instance: Pick<
-          PrioritySchedulerImplementationLike,
+          SchedulerImplementationLike,
           | typeof SchedulerLike_now
-          | typeof PrioritySchedulerImplementationLike_shouldYield
-          | typeof PrioritySchedulerImplementationLike_scheduleContinuation
+          | typeof SchedulerImplementationLike_shouldYield
+          | typeof SchedulerImplementationLike_scheduleContinuation
         >,
         maxYieldInterval: number,
       ): SchedulerLike & DisposableLike {
-        init(PriorityScheduler_mixin, instance, maxYieldInterval);
+        init(SchedulerImplementation_mixin, instance, maxYieldInterval);
 
         return instance;
       },
@@ -118,13 +118,13 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           return CurrentTime.now();
         },
 
-        get [PrioritySchedulerImplementationLike_shouldYield](): boolean {
+        get [SchedulerImplementationLike_shouldYield](): boolean {
           unsafeCast<SchedulerLike>(this);
           return isInputPending();
         },
 
-        [PrioritySchedulerImplementationLike_scheduleContinuation](
-          this: PrioritySchedulerImplementationLike,
+        [SchedulerImplementationLike_scheduleContinuation](
+          this: SchedulerImplementationLike,
           continuation: ContinuationLike,
           delay: number,
         ) {

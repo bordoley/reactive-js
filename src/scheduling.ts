@@ -96,31 +96,6 @@ export interface SchedulerLike {
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
 
 /**
- * A scheduler that support priority scheduling based upon priority.
- *
- * Lower priority values indicate higher priority.
- *
- * @noInheritDoc
- */
-export interface PrioritySchedulerLike extends SchedulerLike {
-  [SchedulerLike_schedule](
-    continuation: SideEffect1<SchedulerLike>,
-    options?: {
-      /**
-       * The amount of time in ms to delay execution of the continuation.
-       */
-      readonly delay?: number;
-
-      /**
-       * The priority to execute the continuation with. The default behavior
-       * is implementation specific.
-       */
-      readonly priority?: number;
-    },
-  ): DisposableLike;
-}
-
-/**
  * A non-concurrent scheduler that simulates time but executes synchronously.
  *
  * @noInheritDoc

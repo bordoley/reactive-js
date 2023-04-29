@@ -11,14 +11,14 @@ import { ObservableLike_isEnumerable, ObserverLike_notify, } from "../../../rx.j
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { SchedulerLike_now } from "../../../scheduling.js";
-import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "../../../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+import { SchedulerImplementationLike_runContinuation, SchedulerImplementationLike_scheduleContinuation, SchedulerImplementationLike_shouldYield, SchedulerImplementation_mixin, } from "../../../scheduling/Scheduler/__internal__/SchedulerImplementation.mixin.js";
 import { BufferLike_capacity, DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Observer_baseMixin from "../../Observer/__internal__/Observer.baseMixin.js";
 const Enumerable_enumerate = /*@__PURE__*/ (() => {
-    const createEnumeratorScheduler = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Observer_baseMixin(), PriorityScheduler_mixin), function EnumeratorScheduler(instance) {
+    const createEnumeratorScheduler = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Observer_baseMixin(), SchedulerImplementation_mixin), function EnumeratorScheduler(instance) {
         init(MutableEnumerator_mixin(), instance);
-        init(PriorityScheduler_mixin, instance, 0);
+        init(SchedulerImplementation_mixin, instance, 0);
         init(Observer_baseMixin(), instance, {
             [QueueableLike_backpressureStrategy]: "overflow",
             [BufferLike_capacity]: MAX_SAFE_INTEGER,
@@ -31,7 +31,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
         [__EnumerableEnumerator_continuationQueue]: none,
     }), {
         [SchedulerLike_now]: 0,
-        get [PrioritySchedulerImplementationLike_shouldYield]() {
+        get [SchedulerImplementationLike_shouldYield]() {
             unsafeCast(this);
             return this[EnumeratorLike_hasCurrent];
         },
@@ -40,7 +40,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             while (!this[EnumeratorLike_hasCurrent]) {
                 const continuation = this[__EnumerableEnumerator_continuationQueue][QueueLike_dequeue]();
                 if (isSome(continuation)) {
-                    this[PrioritySchedulerImplementationLike_runContinuation](continuation);
+                    this[SchedulerImplementationLike_runContinuation](continuation);
                 }
                 else {
                     this[DisposableLike_dispose]();
@@ -49,7 +49,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             }
             return this[EnumeratorLike_hasCurrent];
         },
-        [PrioritySchedulerImplementationLike_scheduleContinuation](continuation, delay) {
+        [SchedulerImplementationLike_scheduleContinuation](continuation, delay) {
             if (delay > 0) {
                 raiseWithDebugMessage("Enumerable scheduling continuation with delay");
             }

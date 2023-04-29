@@ -92,8 +92,6 @@ export declare const __ContinuationLike_run: unique symbol;
 
 export declare const __ContinuationLike_parent: unique symbol;
 
-export declare const __ContinuationLike_priority: unique symbol;
-
 export declare const __ContinuationLike_scheduler: unique symbol;
 
 export declare const __ContinuationSchedulerLike_schedule: unique symbol;
@@ -104,15 +102,15 @@ export declare const __MutableEnumeratorLike_reset: unique symbol;
 
 export declare const __MutableKeyedCollectionLike_set: unique symbol;
 
-export declare const __PrioritySchedulerImplementationLike_runContinuation: unique symbol;
-
-export declare const __PrioritySchedulerImplementationLike_scheduleContinuation: unique symbol;
-
-export declare const __PrioritySchedulerImplementationLike_shouldYield: unique symbol;
-
 export declare const __QueueLike_head: unique symbol;
 
 export declare const __QueueLike_dequeue: unique symbol;
+
+export declare const __SchedulerImplementationLike_runContinuation: unique symbol;
+
+export declare const __SchedulerImplementationLike_scheduleContinuation: unique symbol;
+
+export declare const __SchedulerImplementationLike_shouldYield: unique symbol;
 
 export declare const __SerialDisposableLike_current: unique symbol;
 
@@ -128,7 +126,7 @@ export declare const __DelegatingMulticastObservableMixin_delegate: unique symbo
 
 export declare const __DelegatingQueueableMixin_delegate: unique symbol;
 
-export declare const __DelegatingSchedulerMixin_delegate: unique symbol;
+export declare const __DelegatingSchedulerImplementationMixin_delegate: unique symbol;
 
 export declare const __DisposableMixin_disposables: unique symbol;
 
@@ -146,11 +144,11 @@ export declare const __ObserverMixin_isCompleted: unique symbol;
 
 export declare const __ObserverMixin_queuePublisher: unique symbol;
 
-export declare const __SchedulerMixin_currentContinuation: unique symbol;
+export declare const __SchedulerImplementationMixin_currentContinuation: unique symbol;
 
-export declare const __SchedulerMixin_startTime: unique symbol;
+export declare const __SchedulerImplementationMixin_startTime: unique symbol;
 
-export declare const __SchedulerMixin_yieldRequested: unique symbol;
+export declare const __SchedulerImplementationMixin_yieldRequested: unique symbol;
 
 export declare const __SerialDisposableMixin_current: unique symbol;
 
@@ -163,8 +161,6 @@ export declare const __ForEachLike_effect: unique symbol;
 export declare const __MappingLike_selector: unique symbol;
 
 export declare const __PredicatedLike_predicate: unique symbol;
-
-export declare const __PrioritySchedulerTaskLike_priority: unique symbol;
 
 export declare const __ReducerAccumulatorLike_acc: unique symbol;
 
@@ -291,10 +287,6 @@ export declare const __PairwiseObserver_prev: unique symbol;
 export declare const __PairwiseObserver_hasPrev: unique symbol;
 
 export declare const __PriorityQueueImpl_comparator: unique symbol;
-
-export declare const __PrioritySchedulerDelegatingScheduler_priorityScheduler: unique symbol;
-
-export declare const __PrioritySchedulerDelegatingScheduler_priority: unique symbol;
 
 export declare const __Publisher_observers: unique symbol;
 

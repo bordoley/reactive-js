@@ -8,7 +8,7 @@ import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../../util/Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
-import { PrioritySchedulerImplementationLike_runContinuation, PrioritySchedulerImplementationLike_scheduleContinuation, PrioritySchedulerImplementationLike_shouldYield, PriorityScheduler_mixin, } from "./Scheduler.mixin.js";
+import { SchedulerImplementationLike_runContinuation, SchedulerImplementationLike_scheduleContinuation, SchedulerImplementationLike_shouldYield, SchedulerImplementation_mixin, } from "./SchedulerImplementation.mixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== none &&
@@ -33,20 +33,20 @@ const scheduleImmediate = (scheduler, continuation) => {
 const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
     immmediateOrTimerDisposable[DisposableLike_dispose]();
-    scheduler[PrioritySchedulerImplementationLike_runContinuation](continuation);
+    scheduler[SchedulerImplementationLike_runContinuation](continuation);
 };
-const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(PriorityScheduler_mixin), function HostScheduler(instance, maxYieldInterval) {
-    init(PriorityScheduler_mixin, instance, maxYieldInterval);
+const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(SchedulerImplementation_mixin), function HostScheduler(instance, maxYieldInterval) {
+    init(SchedulerImplementation_mixin, instance, maxYieldInterval);
     return instance;
 }, props({}), {
     get [SchedulerLike_now]() {
         return CurrentTime.now();
     },
-    get [PrioritySchedulerImplementationLike_shouldYield]() {
+    get [SchedulerImplementationLike_shouldYield]() {
         unsafeCast(this);
         return isInputPending();
     },
-    [PrioritySchedulerImplementationLike_scheduleContinuation](continuation, delay) {
+    [SchedulerImplementationLike_scheduleContinuation](continuation, delay) {
         if (delay > 0) {
             scheduleDelayed(this, continuation, delay);
         }

@@ -10,7 +10,6 @@
 - [createHostScheduler](scheduling_Scheduler.md#createhostscheduler)
 - [createVirtualTimeScheduler](scheduling_Scheduler.md#createvirtualtimescheduler)
 - [toPausableScheduler](scheduling_Scheduler.md#topausablescheduler)
-- [toPriorityScheduler](scheduling_Scheduler.md#topriorityscheduler)
 
 ## Functions
 
@@ -77,19 +76,3 @@ ___
 #### Returns
 
 [`PauseableSchedulerLike`](../interfaces/scheduling.PauseableSchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-___
-
-### toPriorityScheduler
-
-▸ **toPriorityScheduler**(`a`): [`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
-
-#### Returns
-
-[`PrioritySchedulerLike`](../interfaces/scheduling.PrioritySchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)

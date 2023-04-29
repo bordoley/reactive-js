@@ -7,6 +7,5 @@
 ### Interfaces
 
 - [PauseableSchedulerLike](../interfaces/scheduling.PauseableSchedulerLike.md)
-- [PrioritySchedulerLike](../interfaces/scheduling.PrioritySchedulerLike.md)
 - [SchedulerLike](../interfaces/scheduling.SchedulerLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/scheduling.VirtualTimeSchedulerLike.md)

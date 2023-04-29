@@ -96,8 +96,6 @@ export const __ContinuationLike_run = /*@__PURE__*/ symbol("ContinuationLike_run
 /** @type {unique symbol} */
 export const __ContinuationLike_parent = /*@__PURE__*/ symbol("ContinuationLike_parent");
 /** @type {unique symbol} */
-export const __ContinuationLike_priority = /*@__PURE__*/ symbol("ContinuationLike_priority");
-/** @type {unique symbol} */
 export const __ContinuationLike_scheduler = /*@__PURE__*/ symbol("ContinuationLike_scheduler");
 /** @type {unique symbol} */
 export const __ContinuationSchedulerLike_schedule = /*@__PURE__*/ symbol("ContinuationSchedulerLike_schedule");
@@ -108,18 +106,17 @@ export const __MutableEnumeratorLike_reset = /*@__PURE__*/ symbol("MutableEnumer
 /** @type {unique symbol} */
 export const __MutableKeyedCollectionLike_set = /*@__PURE__*/ symbol("MutableKeyedCollectionLike_set");
 /** @type {unique symbol} */
-export const __PrioritySchedulerImplementationLike_runContinuation = 
-/*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_runContinuation");
-/** @type {unique symbol} */
-export const __PrioritySchedulerImplementationLike_scheduleContinuation = 
-/*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_scheduleContinuation");
-/** @type {unique symbol} */
-export const __PrioritySchedulerImplementationLike_shouldYield = 
-/*@__PURE__*/ symbol("PrioritySchedulerImplementationLike_shouldYield");
-/** @type {unique symbol} */
 export const __QueueLike_head = /*@__PURE__*/ symbol("QueueLike_head");
 /** @type {unique symbol} */
 export const __QueueLike_dequeue = /*@__PURE__*/ symbol("QueueLike_dequeue");
+/** @type {unique symbol} */
+export const __SchedulerImplementationLike_runContinuation = 
+/*@__PURE__*/ symbol("SchedulerImplementationLike_runContinuation");
+/** @type {unique symbol} */
+export const __SchedulerImplementationLike_scheduleContinuation = 
+/*@__PURE__*/ symbol("SchedulerImplementationLike_scheduleContinuation");
+/** @type {unique symbol} */
+export const __SchedulerImplementationLike_shouldYield = /*@__PURE__*/ symbol("SchedulerImplementationLike_shouldYield");
 /** @type {unique symbol} */
 export const __SerialDisposableLike_current = /*@__PURE__*/ symbol("SerialDisposableLike_current");
 /** @type {unique symbol} */
@@ -136,7 +133,8 @@ export const __DelegatingMulticastObservableMixin_delegate =
 /** @type {unique symbol} */
 export const __DelegatingQueueableMixin_delegate = /*@__PURE__*/ symbol("DelegatingQueueableMixin_delegate");
 /** @type {unique symbol} */
-export const __DelegatingSchedulerMixin_delegate = /*@__PURE__*/ symbol("DelegatingSchedulerMixin_delegate");
+export const __DelegatingSchedulerImplementationMixin_delegate = 
+/*@__PURE__*/ symbol("DelegatingSchedulerImplementationMixin_delegate");
 /** @type {unique symbol} */
 export const __DisposableMixin_disposables = /*@__PURE__*/ symbol("DisposableMixin_disposables");
 /** @type {unique symbol} */
@@ -154,11 +152,13 @@ export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol("ObserverMixin_i
 /** @type {unique symbol} */
 export const __ObserverMixin_queuePublisher = /*@__PURE__*/ symbol("ObserverMixin_queuePublisher");
 /** @type {unique symbol} */
-export const __SchedulerMixin_currentContinuation = /*@__PURE__*/ symbol("SchedulerMixin_currentContinuation");
+export const __SchedulerImplementationMixin_currentContinuation = 
+/*@__PURE__*/ symbol("SchedulerImplementationMixin_currentContinuation");
 /** @type {unique symbol} */
-export const __SchedulerMixin_startTime = /*@__PURE__*/ symbol("SchedulerMixin_startTime");
+export const __SchedulerImplementationMixin_startTime = /*@__PURE__*/ symbol("SchedulerImplementationMixin_startTime");
 /** @type {unique symbol} */
-export const __SchedulerMixin_yieldRequested = /*@__PURE__*/ symbol("SchedulerMixin_yieldRequested");
+export const __SchedulerImplementationMixin_yieldRequested = 
+/*@__PURE__*/ symbol("SchedulerImplementationMixin_yieldRequested");
 /** @type {unique symbol} */
 export const __SerialDisposableMixin_current = /*@__PURE__*/ symbol("SerialDisposableMixin_current");
 /** @type {unique symbol} */
@@ -171,8 +171,6 @@ export const __ForEachLike_effect = /*@__PURE__*/ symbol("ForEachLike_effect");
 export const __MappingLike_selector = /*@__PURE__*/ symbol("MappingLike_selector");
 /** @type {unique symbol} */
 export const __PredicatedLike_predicate = /*@__PURE__*/ symbol("PredicatedLike_predicate");
-/** @type {unique symbol} */
-export const __PrioritySchedulerTaskLike_priority = /*@__PURE__*/ symbol("PrioritySchedulerTaskLike_priority");
 /** @type {unique symbol} */
 export const __ReducerAccumulatorLike_acc = /*@__PURE__*/ symbol("ReducerAccumulatorLike_acc");
 /** @type {unique symbol} */
@@ -300,12 +298,6 @@ export const __PairwiseObserver_prev = /*@__PURE__*/ symbol("PairwiseObserver_pr
 export const __PairwiseObserver_hasPrev = /*@__PURE__*/ symbol("PairwiseObserver_hasPrev");
 /** @type {unique symbol} */
 export const __PriorityQueueImpl_comparator = /*@__PURE__*/ symbol("PriorityQueueImpl_comparator ");
-/** @type {unique symbol} */
-export const __PrioritySchedulerDelegatingScheduler_priorityScheduler = 
-/*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priorityScheduler");
-/** @type {unique symbol} */
-export const __PrioritySchedulerDelegatingScheduler_priority = 
-/*@__PURE__*/ symbol("PrioritySchedulerDelegatingScheduler_priority");
 /** @type {unique symbol} */
 export const __Publisher_observers = /*@__PURE__*/ symbol("Publisher_observers");
 /** @type {unique symbol} */

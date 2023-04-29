@@ -12,70 +12,65 @@ import {
   mix,
   props,
 } from "../__internal__/mixins.js";
-import {
-  ContinuationLike,
-  ContinuationLike_priority,
-} from "../__internal__/scheduling.js";
+import { ContinuationLike } from "../__internal__/scheduling.js";
 import { newInstance, none, pipe, pipeLazy } from "../functions.js";
+import { SchedulerLike, SchedulerLike_now } from "../scheduling.js";
 import {
-  PrioritySchedulerLike,
-  SchedulerLike,
-  SchedulerLike_now,
-} from "../scheduling.js";
-import * as PriorityScheduler from "../scheduling/PriorityScheduler.js";
-import {
-  PrioritySchedulerImplementationLike,
-  PrioritySchedulerImplementationLike_runContinuation,
-  PrioritySchedulerImplementationLike_scheduleContinuation,
-  PrioritySchedulerImplementationLike_shouldYield,
-  PriorityScheduler_mixin,
-} from "../scheduling/Scheduler/__internal__/Scheduler.mixin.js";
+  SchedulerImplementationLike,
+  SchedulerImplementationLike_runContinuation,
+  SchedulerImplementationLike_scheduleContinuation,
+  SchedulerImplementationLike_shouldYield,
+  SchedulerImplementation_mixin,
+} from "../scheduling/Scheduler/__internal__/SchedulerImplementation.mixin.js";
 import { DisposableLike, DisposableLike_dispose } from "../util.js";
 import * as Disposable from "../util/Disposable.js";
 
-const createSchedulerWithPriority = /*@__PURE__*/ (() => {
-  type TProperties = unknown;
+const createReactScheduler = /*@__PURE__*/ (() => {
+  type TProperties = {
+    priority: 1 | 2 | 3 | 4 | 5;
+  };
 
-  const createPriorityScheduler = createInstanceFactory(
+  return createInstanceFactory(
     mix(
-      include(PriorityScheduler_mixin),
+      include(SchedulerImplementation_mixin),
       function ReactPriorityScheduler(
         instance: Pick<
-          PrioritySchedulerImplementationLike,
+          SchedulerImplementationLike,
           | typeof SchedulerLike_now
-          | typeof PrioritySchedulerImplementationLike_shouldYield
-          | typeof PrioritySchedulerImplementationLike_scheduleContinuation
-        >,
-      ): PrioritySchedulerLike & DisposableLike {
-        init(PriorityScheduler_mixin, instance, 300);
+          | typeof SchedulerImplementationLike_shouldYield
+          | typeof SchedulerImplementationLike_scheduleContinuation
+        > &
+          TProperties,
+        priority: 1 | 2 | 3 | 4 | 5,
+      ): SchedulerLike & DisposableLike {
+        init(SchedulerImplementation_mixin, instance, 300);
+        instance.priority = priority;
         return instance;
       },
-      props<TProperties>({}),
+      props<TProperties>({
+        priority: 3,
+      }),
       {
         get [SchedulerLike_now](): number {
           return unstable_now();
         },
 
-        get [PrioritySchedulerImplementationLike_shouldYield](): boolean {
+        get [SchedulerImplementationLike_shouldYield](): boolean {
           return unstable_shouldYield();
         },
 
-        [PrioritySchedulerImplementationLike_scheduleContinuation](
-          this: PrioritySchedulerImplementationLike,
+        [SchedulerImplementationLike_scheduleContinuation](
+          this: SchedulerImplementationLike & TProperties,
           continuation: ContinuationLike,
           delay: number,
         ) {
-          const priority = continuation[ContinuationLike_priority];
-
           const callback = () => {
             callbackNodeDisposable[DisposableLike_dispose]();
-            this[PrioritySchedulerImplementationLike_runContinuation](
-              continuation,
-            );
+            this[SchedulerImplementationLike_runContinuation](continuation);
           };
 
           const callbackNode = unstable_scheduleCallback(
-            priority,
+            this.priority,
             callback,
             delay > 0 ? { delay } : none,
           );
@@ -91,15 +86,6 @@ const createSchedulerWithPriority = /*@__PURE__*/ (() => {
       },
     ),
   );
-
-  return (priority: number): SchedulerLike & DisposableLike => {
-    const priorityScheduler = createPriorityScheduler();
-    return pipe(
-      priorityScheduler,
-      PriorityScheduler.toScheduler(priority),
-      Disposable.bindTo(priorityScheduler),
-    );
-  };
 })();
 
 export const getScheduler: (options?: {
@@ -112,7 +98,7 @@ export const getScheduler: (options?: {
     return (
       schedulerCache.get(priority) ??
       (() => {
-        const scheduler = createSchedulerWithPriority(priority);
+        const scheduler = createReactScheduler(priority);
         schedulerCache.set(priority, scheduler);
         return scheduler;
       })()

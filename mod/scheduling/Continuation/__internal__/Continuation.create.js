@@ -2,7 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_priority, ContinuationLike_run, ContinuationLike_scheduler, ContinuationSchedulerLike_schedule, } from "../../../__internal__/scheduling.js";
+import { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_run, ContinuationLike_scheduler, ContinuationSchedulerLike_schedule, } from "../../../__internal__/scheduling.js";
 import { __Continuation_effect } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { call, error, isSome, none, pipe, pipeLazy, } from "../../../functions.js";
@@ -51,18 +51,16 @@ const Continuation_create = /*@__PURE__*/ (() => {
             }
         }
     };
-    return createInstanceFactory(mix(include(Disposable_mixin, Queue_indexedQueueMixin()), function Continuation(instance, scheduler, effect, priority) {
+    return createInstanceFactory(mix(include(Disposable_mixin, Queue_indexedQueueMixin()), function Continuation(instance, scheduler, effect) {
         init(Disposable_mixin, instance);
         init(Queue_indexedQueueMixin(), instance, MAX_SAFE_INTEGER, "overflow");
         instance[ContinuationLike_scheduler] = scheduler;
         instance[__Continuation_effect] = effect;
-        instance[ContinuationLike_priority] = priority;
         pipe(instance, Disposable_onDisposed(pipeLazy(instance, rescheduleChildrenOnParentOrScheduler)));
         return instance;
     }, props({
         [ContinuationLike_activeChild]: none,
         [ContinuationLike_parent]: none,
-        [ContinuationLike_priority]: 0,
         [ContinuationLike_scheduler]: none,
         [__Continuation_effect]: none,
     }), {
