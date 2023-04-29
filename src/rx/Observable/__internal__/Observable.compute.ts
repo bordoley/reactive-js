@@ -42,11 +42,11 @@ import {
   ObserverLike_notify,
   RunnableLike,
 } from "../../../rx.js";
-import { SchedulerLike_schedule } from "../../../scheduling.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  SchedulerLike_schedule,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";

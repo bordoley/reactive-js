@@ -1,7 +1,6 @@
 import { Factory, Function1, Optional } from "../../../functions.js";
 import { MulticastObservableLike, ObservableLike, PublisherLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
+import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../../../util.js";
 declare const Observable_multicastImpl: <T>(publisherFactory: Function1<Optional<{
     replay?: number | undefined;
 }>, PublisherLike<T>>, schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {

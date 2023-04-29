@@ -19,7 +19,10 @@
 - [IndexedCollectionLike](../interfaces/util.IndexedCollectionLike.md)
 - [KeyedCollectionLike](../interfaces/util.KeyedCollectionLike.md)
 - [PauseableLike](../interfaces/util.PauseableLike.md)
+- [PauseableSchedulerLike](../interfaces/util.PauseableSchedulerLike.md)
 - [QueueableLike](../interfaces/util.QueueableLike.md)
+- [SchedulerLike](../interfaces/util.SchedulerLike.md)
+- [VirtualTimeSchedulerLike](../interfaces/util.VirtualTimeSchedulerLike.md)
 
 ### Type Aliases
 

@@ -9,11 +9,11 @@ import {
 } from "../functions.js";
 import { ObservableLike } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
-import { SchedulerLike } from "../scheduling.js";
 import {
   DisposableLike_dispose,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../util.js";
 
 class ObservableSvelteStore<T> {

@@ -1,8 +1,10 @@
 import * as Observable from "@reactive-js/core/rx/Observable";
 import { pipe } from "@reactive-js/core/functions";
-import * as Scheduler from "@reactive-js/core/scheduling/Scheduler";
-import { DisposableLike_dispose } from "@reactive-js/core/util";
-import { SchedulerLike_schedule } from "@reactive-js/core/scheduling";
+import * as Scheduler from "@reactive-js/core/util/Scheduler";
+import {
+  DisposableLike_dispose,
+  SchedulerLike_schedule,
+} from "@reactive-js/core/util";
 
 const scheduler = Scheduler.createHostScheduler();
 

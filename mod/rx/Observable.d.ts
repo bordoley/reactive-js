@@ -3,8 +3,7 @@ import * as Containers from "../containers.js";
 import { Factory, Function1, Optional, SideEffect1, Updater } from "../functions.js";
 import { Animate, BackpressureStrategy, CatchError, CombineLatest, CurrentTime, DecodeWithCharset, Defer, DispatchTo, EncodeUtf8, Enqueue, Exhaust, ExhaustMap, FirstAsync, ForkCombineLatest, ForkMerge, ForkZipLatest, LastAsync, Merge, MergeAll, MergeMap, MergeWith, Multicast, Never, ObservableLike, ObserverLike, Retry, ScanLast, ScanMany, Share, SwitchAll, SwitchMap, TakeUntil, Throttle, ThrowIfEmpty, Timeout, ToEnumerable, ToObservable, ToRunnable, WithCurrentTime, WithLatestFrom, ZipLatest, ZipWithLatestFrom } from "../rx.js";
 import type * as Rx from "../rx.js";
-import { SchedulerLike } from "../scheduling.js";
-import { DisposableLike, DisposableOrTeardown, QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
+import { DisposableLike, DisposableOrTeardown, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../util.js";
 export declare const animate: Animate<ObservableLike>["animate"];
 export declare const backpressureStrategy: BackpressureStrategy<ObservableLike>["backpressureStrategy"];
 /**

@@ -1,8 +1,7 @@
 import { __MulticastObservableLike_buffer as MulticastObservableLike_buffer, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PauseableObservableLike_isPaused as PauseableObservableLike_isPaused, __PublisherLike_observerCount as PublisherLike_observerCount } from "./__internal__/symbols.js";
 import { ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, PromiseableLike } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
-import { SchedulerLike } from "./scheduling.js";
-import { DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, IndexedBufferCollectionLike, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
+import { DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, IndexedBufferCollectionLike, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { PauseableObservableLike_isPaused, MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, };
 /**
  * A consumer of push-based notifications.

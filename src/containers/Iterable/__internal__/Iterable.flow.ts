@@ -2,11 +2,11 @@ import { IterableLike } from "../../../containers.js";
 import { Function1, compose } from "../../../functions.js";
 import { PauseableObservableLike } from "../../../rx.js";
 import Runnable_flow from "../../../rx/Runnable/__internal__/Runnable.flow.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Iterable_toObservable from "./Iterable.toObservable.js";
 

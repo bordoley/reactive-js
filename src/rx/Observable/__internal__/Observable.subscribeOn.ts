@@ -1,11 +1,11 @@
 import { Factory, isFunction, pipe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Observable_create from "./Observable.create.js";

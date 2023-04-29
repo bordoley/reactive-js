@@ -4,9 +4,8 @@ import { expectArrayEquals, expectEquals, test, testModule, } from "../../__inte
 import { bindMethod, pipe } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import { PublisherLike_observerCount } from "../../rx.js";
-import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
-import * as Scheduler from "../../scheduling/Scheduler.js";
-import { DisposableLike_dispose, EventListenerLike_notify, } from "../../util.js";
+import { DisposableLike_dispose, EventListenerLike_notify, VirtualTimeSchedulerLike_run, } from "../../util.js";
+import * as Scheduler from "../../util/Scheduler.js";
 import * as Observable from "../Observable.js";
 import * as Publisher from "../Publisher.js";
 testModule("publisher", test("with replay", () => {

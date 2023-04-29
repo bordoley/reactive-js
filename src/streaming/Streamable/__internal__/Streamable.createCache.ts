@@ -32,11 +32,6 @@ import { ObservableLike, PublisherLike } from "../../../rx.js";
 import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
 import {
-  SchedulerLike,
-  SchedulerLike_schedule,
-  SchedulerLike_yield,
-} from "../../../scheduling.js";
-import {
   CacheLike,
   CacheStreamLike,
   StreamableLike_stream,
@@ -52,6 +47,9 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SchedulerLike,
+  SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../../util/Disposable.js";

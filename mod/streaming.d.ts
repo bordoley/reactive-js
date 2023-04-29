@@ -2,8 +2,7 @@ import { __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_stream
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike } from "./rx.js";
-import { SchedulerLike } from "./scheduling.js";
-import { DispatcherLike, DisposableLike, KeyedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy } from "./util.js";
+import { DispatcherLike, DisposableLike, KeyedCollectionLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { StreamableLike_stream, StreamLike_scheduler };
 /**
  * Represents a duplex stream

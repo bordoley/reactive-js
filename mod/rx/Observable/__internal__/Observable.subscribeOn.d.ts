@@ -1,7 +1,6 @@
 import { Factory } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
+import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../../../util.js";
 declare const Observable_subscribeOn: <T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;

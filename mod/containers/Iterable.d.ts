@@ -2,8 +2,7 @@ import { Enumerate, FromReadonlyArray, Identity, IterableLike, ToReadonlyArray }
 import { Function1 } from "../functions.js";
 import type * as Rx from "../rx.js";
 import { ObservableLike, RunnableLike, ToEnumerable } from "../rx.js";
-import { SchedulerLike } from "../scheduling.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
+import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../util.js";
 export declare const enumerate: Enumerate<IterableLike>["enumerate"];
 interface Flow extends Rx.Flow<IterableLike> {
     /** @category Transform */

@@ -44,7 +44,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) |
+| `scheduler` | [`SchedulerLike`](util.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

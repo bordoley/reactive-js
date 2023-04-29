@@ -3,8 +3,7 @@
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
-import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
+import { DisposableLike_isDisposed, SchedulerLike_schedule, SchedulerLike_yield, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 const Observable_generate = ((generator, initialValue, options) => {

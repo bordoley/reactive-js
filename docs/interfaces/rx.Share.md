@@ -36,7 +36,7 @@ to the source is disposed.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
+| `scheduler` | [`SchedulerLike`](util.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
 | `options?` | `Object` | - |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
 | `options.capacity?` | `number` | - |

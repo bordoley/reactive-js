@@ -28,7 +28,7 @@ import {
   pipe,
   returns,
 } from "@reactive-js/core/functions";
-import { createAnimationFrameScheduler } from "@reactive-js/core/scheduling/Scheduler";
+import { createAnimationFrameScheduler } from "@reactive-js/core/util/Scheduler";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 import { ObservableLike } from "@reactive-js/core/rx";
 import {
@@ -36,7 +36,7 @@ import {
   KeyedCollectionLike_get,
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
-import { EventSourceLike } from "@reactive-js/core/util.js";
+import { EventSourceLike, SchedulerLike } from "@reactive-js/core/util";
 import * as ReadonlyObjectMap from "@reactive-js/core/keyed-containers/ReadonlyObjectMap";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
 import {
@@ -48,7 +48,6 @@ import {
   __stream,
   __using,
 } from "@reactive-js/core/rx/effects";
-import { SchedulerLike } from "@reactive-js/core/scheduling";
 import { Wordle } from "./wordle";
 import Measure from "./measure";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";

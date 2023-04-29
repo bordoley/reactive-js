@@ -3,8 +3,7 @@
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../../containers.js";
 import { none, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
-import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, SchedulerLike_schedule, SchedulerLike_yield, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "./Runnable.create.js";

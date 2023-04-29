@@ -32,8 +32,6 @@ Reactive-JS
 - [rx/Publisher](modules/rx_Publisher.md)
 - [rx/Runnable](modules/rx_Runnable.md)
 - [rx/effects](modules/rx_effects.md)
-- [scheduling](modules/scheduling.md)
-- [scheduling/Scheduler](modules/scheduling_Scheduler.md)
 - [streaming](modules/streaming.md)
 - [streaming/Stream](modules/streaming_Stream.md)
 - [streaming/Streamable](modules/streaming_Streamable.md)
@@ -42,3 +40,4 @@ Reactive-JS
 - [util/EventListener](modules/util_EventListener.md)
 - [util/EventPublisher](modules/util_EventPublisher.md)
 - [util/EventSource](modules/util_EventSource.md)
+- [util/Scheduler](modules/util_Scheduler.md)

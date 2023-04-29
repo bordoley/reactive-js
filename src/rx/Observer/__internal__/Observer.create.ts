@@ -1,10 +1,10 @@
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Observer_mixin from "./Observer.mixin.js";
 

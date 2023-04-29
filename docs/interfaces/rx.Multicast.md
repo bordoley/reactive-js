@@ -34,7 +34,7 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
+| `scheduler` | [`SchedulerLike`](util.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
 | `options?` | `Object` | - |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
 | `options.capacity?` | `number` | The capacity of the stream's request queue. |

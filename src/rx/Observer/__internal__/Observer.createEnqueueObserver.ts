@@ -13,8 +13,11 @@ import {
 } from "../../../__internal__/util.js";
 import { none } from "../../../functions.js";
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
-import { SchedulerLike_requestYield } from "../../../scheduling.js";
-import { QueueableLike, QueueableLike_enqueue } from "../../../util.js";
+import {
+  QueueableLike,
+  QueueableLike_enqueue,
+  SchedulerLike_requestYield,
+} from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";

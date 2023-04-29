@@ -6,13 +6,13 @@ import {
   raiseWithDebugMessage,
 } from "../../../functions.js";
 import { ObservableLike_isRunnable, RunnableLike } from "../../../rx.js";
-import { VirtualTimeSchedulerLike_run } from "../../../scheduling.js";
-import Scheduler_createVirtualTimeScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.createVirtualTimeScheduler.js";
 import {
   DisposableLike_error,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  VirtualTimeSchedulerLike_run,
 } from "../../../util.js";
+import Scheduler_createVirtualTimeScheduler from "../../../util/Scheduler/__internal__/Scheduler.createVirtualTimeScheduler.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 
 const Runnable_run =

@@ -18,7 +18,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `scheduler` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 
 #### Returns
 

@@ -1,11 +1,11 @@
 import { Function1, bindMethod, pipe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import {
   EventListenerLike_notify,
   EventSourceLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
 import EventSource_create from "../../../util/EventSource/__internal__/EventSource.create.js";

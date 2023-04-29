@@ -3,15 +3,13 @@ import { error, pipe } from "../../../functions.js";
 import { ObserverLike, ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import {
-  SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
-  SchedulerLike_schedule,
-} from "../../../scheduling.js";
-import {
   DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_enqueue,
+  SchedulerLike_maxYieldInterval,
+  SchedulerLike_now,
+  SchedulerLike_schedule,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 

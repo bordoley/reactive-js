@@ -12,13 +12,11 @@ import {
   RunnableLike,
 } from "../../../rx.js";
 import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
-} from "../../../scheduling.js";
-import {
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";

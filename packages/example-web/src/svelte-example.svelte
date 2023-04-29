@@ -1,5 +1,5 @@
 <script>
-import * as Scheduler from "@reactive-js/core/scheduling/Scheduler";
+import * as Scheduler from "@reactive-js/core/util/Scheduler";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 import { subscribe } from "@reactive-js/core/integrations/svelte";
 import {

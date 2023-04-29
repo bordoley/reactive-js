@@ -37,11 +37,6 @@ import {
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
 import {
-  SchedulerLike,
-  SchedulerLike_schedule,
-  SchedulerLike_yield,
-} from "../../../scheduling.js";
-import {
   BufferLike_capacity,
   CollectionLike_count,
   DisposableLike,
@@ -50,6 +45,9 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SchedulerLike,
+  SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";

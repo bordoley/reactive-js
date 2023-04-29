@@ -146,7 +146,7 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.capacity?` | `number` |
-| `options.cleanupScheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options.cleanupScheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 
 #### Returns
 
@@ -173,7 +173,7 @@ ___
 | `persistentStore.store` | (`updates`: `Readonly`<`Record`<`string`, `T`\>\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`void`\> |
 | `options?` | `Object` |
 | `options.capacity?` | `number` |
-| `options.cleanupScheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options.cleanupScheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 
 #### Returns
 

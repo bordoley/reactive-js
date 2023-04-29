@@ -26,7 +26,7 @@ export declare const createEventHandler: {
  */
 export declare const createInMemoryCache: <T>(options?: {
     readonly capacity?: number | undefined;
-    readonly cleanupScheduler?: import("../scheduling.js").SchedulerLike | undefined;
+    readonly cleanupScheduler?: import("../util.js").SchedulerLike | undefined;
 }) => import("../streaming.js").CacheLike<T>;
 /**
  * @category Constructor
@@ -36,7 +36,7 @@ export declare const createPersistentCache: <T>(persistentStore: {
     store(updates: Readonly<Record<string, T>>): import("../rx.js").ObservableLike<void>;
 }, options?: {
     readonly capacity?: number | undefined;
-    readonly cleanupScheduler?: import("../scheduling.js").SchedulerLike | undefined;
+    readonly cleanupScheduler?: import("../util.js").SchedulerLike | undefined;
 }) => import("../streaming.js").CacheLike<T>;
 /**
  * Returns a new `StateStoreLike` instance that stores state which can

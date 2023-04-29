@@ -4,8 +4,7 @@ import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __A
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
-import { SchedulerLike_schedule } from "../../../scheduling.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../util.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, SchedulerLike_schedule, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";

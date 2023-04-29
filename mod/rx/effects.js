@@ -3,10 +3,9 @@
 import { __ComputeContext_awaitOrObserve, __ComputeContext_memoOrUse, __ComputeContext_observableConfig, __ComputeContext_observer, } from "../__internal__/symbols.js";
 import { bind, bindMethod, isSome, none, pipe, } from "../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../rx.js";
-import { SchedulerLike_schedule } from "../scheduling.js";
 import { StreamableLike_stream, } from "../streaming.js";
 import Streamable_createStateStore from "../streaming/Streamable/__internal__/Streamable.createStateStore.js";
-import { DisposableLike_dispose, } from "../util.js";
+import { DisposableLike_dispose, SchedulerLike_schedule, } from "../util.js";
 import Disposable_addTo from "../util/Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "./Enumerable/__internal__/Enumerable.create.js";
 import { assertCurrentContext } from "./Observable/__internal__/Observable.compute.js";

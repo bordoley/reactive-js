@@ -1,5 +1,5 @@
-import { SchedulerLike } from "../../../scheduling.js";
 import { CacheLike } from "../../../streaming.js";
+import { SchedulerLike } from "../../../util.js";
 declare const Streamable_createInMemoryCache: <T>(options?: {
     readonly capacity?: number;
     readonly cleanupScheduler?: SchedulerLike;

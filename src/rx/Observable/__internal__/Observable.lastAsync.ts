@@ -7,15 +7,15 @@ import {
   pipe,
 } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
-import Scheduler_createHostScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.createHostScheduler.js";
 import {
   DisposableLike_dispose,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../../util/Disposable/__internal__/Disposable.onError.js";
+import Scheduler_createHostScheduler from "../../../util/Scheduler/__internal__/Scheduler.createHostScheduler.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 

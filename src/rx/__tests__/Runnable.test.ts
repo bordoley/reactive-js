@@ -26,17 +26,15 @@ import {
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import { RunnableLike } from "../../rx.js";
 import {
-  SchedulerLike_now,
-  SchedulerLike_schedule,
-  VirtualTimeSchedulerLike_run,
-} from "../../scheduling.js";
-import * as Scheduler from "../../scheduling/Scheduler.js";
-import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   PauseableLike_pause,
   PauseableLike_resume,
+  SchedulerLike_now,
+  SchedulerLike_schedule,
+  VirtualTimeSchedulerLike_run,
 } from "../../util.js";
+import * as Scheduler from "../../util/Scheduler.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
 import { __await, __memo } from "../effects.js";

@@ -2,8 +2,7 @@
 
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { raiseWithDebugMessage } from "../../../functions.js";
-import { SchedulerLike_inContinuation } from "../../../scheduling.js";
-import { DisposableLike_isDisposed } from "../../../util.js";
+import { DisposableLike_isDisposed, SchedulerLike_inContinuation, } from "../../../util.js";
 const Observer_assertState = (observer) => {
     if (__DEV__ &&
         (!observer[SchedulerLike_inContinuation] ||

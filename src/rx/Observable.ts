@@ -88,12 +88,12 @@ import {
   ZipWithLatestFrom,
 } from "../rx.js";
 import type * as Rx from "../rx.js";
-import { SchedulerLike } from "../scheduling.js";
 import {
   DisposableLike,
   DisposableOrTeardown,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../util.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";

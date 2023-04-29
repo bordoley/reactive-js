@@ -1,7 +1,7 @@
-import { __BufferLike_capacity as BufferLike_capacity, __CollectionLike_count as CollectionLike_count, __DispatcherLike_complete as DispatcherLike_complete, __DisposableLike_add as DisposableLike_add, __DisposableLike_dispose as DisposableLike_dispose, __DisposableLike_error as DisposableLike_error, __DisposableLike_isDisposed as DisposableLike_isDisposed, __EventEmitterLike_addEventListener as EventEmitterLike_addEventListener, __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe, __EventListenerLike_notify as EventListenerLike_notify, __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount, __KeyedCollectionLike_get as KeyedCollectionLike_get, __PauseableLike_isPaused as PauseableLike_isPaused, __PauseableLike_pause as PauseableLike_pause, __PauseableLike_resume as PauseableLike_resume, __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy, __QueueableLike_enqueue as QueueableLike_enqueue } from "./__internal__/symbols.js";
+import { __BufferLike_capacity as BufferLike_capacity, __CollectionLike_count as CollectionLike_count, __DispatcherLike_complete as DispatcherLike_complete, __DisposableLike_add as DisposableLike_add, __DisposableLike_dispose as DisposableLike_dispose, __DisposableLike_error as DisposableLike_error, __DisposableLike_isDisposed as DisposableLike_isDisposed, __EventEmitterLike_addEventListener as EventEmitterLike_addEventListener, __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe, __EventListenerLike_notify as EventListenerLike_notify, __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount, __KeyedCollectionLike_get as KeyedCollectionLike_get, __PauseableLike_isPaused as PauseableLike_isPaused, __PauseableLike_pause as PauseableLike_pause, __PauseableLike_resume as PauseableLike_resume, __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy, __QueueableLike_enqueue as QueueableLike_enqueue, __SchedulerLike_inContinuation as SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval as SchedulerLike_maxYieldInterval, __SchedulerLike_now as SchedulerLike_now, __SchedulerLike_requestYield as SchedulerLike_requestYield, __SchedulerLike_schedule as SchedulerLike_schedule, __SchedulerLike_shouldYield as SchedulerLike_shouldYield, __SchedulerLike_yield as SchedulerLike_yield, __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
 import { ContainerLike, ContainerLike_T, ContainerLike_type } from "./containers.js";
 import { Optional, SideEffect1 } from "./functions.js";
-export { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventEmitterLike_addEventListener, KeyedCollectionLike_get, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_backpressureStrategy, QueueableLike_enqueue, };
+export { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventEmitterLike_addEventListener, KeyedCollectionLike_get, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -133,4 +133,79 @@ export interface PauseableLike {
      * Imperatively resume the source.
      */
     [PauseableLike_resume](): void;
+}
+/**
+ * Schedulers are the core unit of concurrency, orchestration and
+ * cooperative multi-tasking.
+ *
+ * @noInheritDoc
+ */
+export interface SchedulerLike {
+    /**
+     * Boolean flag indicating the scheduler is currently
+     * running a continuation.
+     */
+    readonly [SchedulerLike_inContinuation]: boolean;
+    /**
+     * The max number of milliseconds the scheduler will run
+     * before yielding control back to the underlying system scheduler.
+     */
+    readonly [SchedulerLike_maxYieldInterval]: number;
+    /**
+     * The current time in milliseconds.
+     */
+    readonly [SchedulerLike_now]: number;
+    /**
+     * Boolean flag indicating whether a running continuation
+     * should yield control back to the scheduler.
+     */
+    readonly [SchedulerLike_shouldYield]: boolean;
+    /**
+     * Request the scheduler to yield the current continuation.
+     */
+    [SchedulerLike_requestYield](): void;
+    /**
+     * Yields control back to the scheduler.
+     *
+     * If no delay is specified, a scheduler may either allow
+     * the continuation to continue to execute, or it will throw
+     * an internal exception that must not be caught by the continuation
+     * which the scheduler will use to reschedule the continuation for
+     * a future time.
+     *
+     * @param delay - The amount of delay in ms the scheduler
+     * should delay before resuming execution of the continuation.
+     */
+    [SchedulerLike_yield](delay?: number): void;
+    /**
+     * Schedule a continuation on the Scheduler.
+     * @param continuation - The continuation to run on the scheduler.
+     * @param options
+     */
+    [SchedulerLike_schedule](continuation: SideEffect1<SchedulerLike>, options?: {
+        /**
+         * The amount of time in ms to delay execution of the continuation.
+         */
+        readonly delay?: number;
+    }): DisposableLike;
+}
+/**
+ * A `SchedulerLike` that supports imperative pausing and resuming
+ * of it's run loop.
+ *
+ * @noInheritDoc
+ */
+export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
+}
+/**
+ * A non-concurrent scheduler that simulates time but executes synchronously.
+ *
+ * @noInheritDoc
+ */
+export interface VirtualTimeSchedulerLike extends SchedulerLike, DisposableLike {
+    /**
+     * Runs the scheduler synchronously until it has no more
+     * enqueued continuations, at which time the scheduler will auto dispose.
+     */
+    [VirtualTimeSchedulerLike_run](): void;
 }

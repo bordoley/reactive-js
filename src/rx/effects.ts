@@ -35,7 +35,6 @@ import {
   ObserverLike,
   ObserverLike_notify,
 } from "../rx.js";
-import { SchedulerLike, SchedulerLike_schedule } from "../scheduling.js";
 import {
   StreamLike,
   StreamableLike,
@@ -47,6 +46,8 @@ import {
   DisposableLike_dispose,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
+  SchedulerLike_schedule,
 } from "../util.js";
 import Disposable_addTo from "../util/Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "./Enumerable/__internal__/Enumerable.create.js";

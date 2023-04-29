@@ -1,17 +1,17 @@
 import { pipe } from "../../../functions.js";
 import { Flow, ObservableLike, RunnableLike } from "../../../rx.js";
 import PauseableObservable_create from "../../../rx/PauseableObservable/__internal__/PauseableObservable.create.js";
-import { SchedulerLike } from "../../../scheduling.js";
-import Scheduler_toPausableScheduler from "../../../scheduling/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import {
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";
+import Scheduler_toPausableScheduler from "../../../util/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";

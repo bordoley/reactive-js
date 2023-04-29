@@ -10,7 +10,7 @@
 
   ↳ [`PauseableObservableLike`](rx.PauseableObservableLike.md)
 
-  ↳ [`PauseableSchedulerLike`](scheduling.PauseableSchedulerLike.md)
+  ↳ [`PauseableSchedulerLike`](util.PauseableSchedulerLike.md)
 
 ## Table of contents
 

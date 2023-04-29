@@ -1,8 +1,10 @@
 import { pipe } from "../../../functions.js";
 import { EnumerableLike, RunnableLike } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
-import { SchedulerLike_schedule } from "../../../scheduling.js";
-import { DisposableLike_dispose } from "../../../util.js";
+import {
+  DisposableLike_dispose,
+  SchedulerLike_schedule,
+} from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 

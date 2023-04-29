@@ -25,11 +25,6 @@ import {
 } from "../../../functions.js";
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import {
-  SchedulerLike,
-  SchedulerLike_schedule,
-  SchedulerLike_yield,
-} from "../../../scheduling.js";
-import {
   BufferLike_capacity,
   CollectionLike_count,
   DispatcherLike_complete,
@@ -43,6 +38,9 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SchedulerLike,
+  SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";

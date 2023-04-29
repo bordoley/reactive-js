@@ -5,11 +5,10 @@ import { arrayEquality, bindMethod, none, pipe, returns, } from "../../functions
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import * as Observable from "../../rx/Observable.js";
-import { SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../scheduling.js";
-import * as Scheduler from "../../scheduling/Scheduler.js";
 import { StreamableLike_stream } from "../../streaming.js";
-import { DispatcherLike_complete, DisposableLike_dispose, KeyedCollectionLike_get, QueueableLike_enqueue, } from "../../util.js";
+import { DispatcherLike_complete, DisposableLike_dispose, KeyedCollectionLike_get, QueueableLike_enqueue, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
+import * as Scheduler from "../../util/Scheduler.js";
 import * as Streamable from "../Streamable.js";
 testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();

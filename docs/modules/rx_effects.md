@@ -91,11 +91,11 @@ ___
 
 ### \_\_currentScheduler
 
-▸ **__currentScheduler**(): [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+▸ **__currentScheduler**(): [`SchedulerLike`](../interfaces/util.SchedulerLike.md)
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md)
+[`SchedulerLike`](../interfaces/util.SchedulerLike.md)
 
 ___
 
@@ -472,7 +472,7 @@ ___
 | `options.capacity?` | `number` |
 | `options.equality?` | [`Optional`](functions.md#optional)<[`Equality`](functions.md#equality)<`T`\>\> |
 | `options.replay?` | `number` |
-| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 
 #### Returns
 
@@ -501,7 +501,7 @@ ___
 | › `backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | › `capacity?` | `number` |
 | › `replay?` | `number` |
-| › `scheduler?` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| › `scheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 
 #### Returns
 

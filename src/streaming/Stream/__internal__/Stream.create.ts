@@ -1,14 +1,14 @@
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import { ContainerOperator } from "../../../containers.js";
 import { ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
-
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
+
 import Stream_mixin from "./Stream.mixin.js";
 
 const Stream_create: <TReq, T>(

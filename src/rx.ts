@@ -16,7 +16,6 @@ import {
   PromiseableLike,
 } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
-import { SchedulerLike } from "./scheduling.js";
 import {
   DispatcherLike,
   DisposableLike,
@@ -25,6 +24,7 @@ import {
   PauseableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "./util.js";
 
 export {

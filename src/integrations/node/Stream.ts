@@ -10,7 +10,6 @@ import {
 import { ObservableLike, PauseableObservableLike } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import PauseableObservable_create from "../../rx/PauseableObservable/__internal__/PauseableObservable.create.js";
-import { SchedulerLike } from "../../scheduling.js";
 import {
   DispatcherLike_complete,
   DisposableLike,
@@ -20,6 +19,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SchedulerLike,
 } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 

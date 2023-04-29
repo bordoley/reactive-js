@@ -2836,7 +2836,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `schedulerOrFactory` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)\> |
+| `schedulerOrFactory` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/util.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -3415,7 +3415,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `scheduler` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -3454,7 +3454,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `scheduler` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -3491,7 +3491,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `scheduler` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -3518,7 +3518,7 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
+| `scheduler` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
 | `options?` | `Object` | - |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
 | `options.capacity?` | `number` | The capacity of the stream's request queue. |
@@ -3548,7 +3548,7 @@ to the source is disposed.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
+| `scheduler` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source. |
 | `options?` | `Object` | - |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
 | `options.capacity?` | `number` | - |
@@ -3590,7 +3590,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduling.SchedulerLike.md) |
+| `scheduler` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

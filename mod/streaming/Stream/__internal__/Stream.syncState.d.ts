@@ -1,8 +1,7 @@
 import { Function1, Updater } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
+import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../../../util.js";
 declare const Stream_syncState: <T>(onInit: (initialValue: T) => ObservableLike<Updater<T>>, onChange: (oldValue: T, newValue: T) => ObservableLike<Updater<T>>, options?: {
     readonly throttleDuration?: number;
     readonly capacity?: number;

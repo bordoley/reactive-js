@@ -3,10 +3,9 @@
 import { describe, expectArrayEquals, expectEquals, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import { pipe, raise } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
-import { VirtualTimeSchedulerLike_run } from "../../scheduling.js";
-import * as Scheduler from "../../scheduling/Scheduler.js";
 import * as Streamable from "../../streaming/Streamable.js";
-import { DisposableLike_error, QueueableLike_enqueue } from "../../util.js";
+import { DisposableLike_error, QueueableLike_enqueue, VirtualTimeSchedulerLike_run, } from "../../util.js";
+import * as Scheduler from "../../util/Scheduler.js";
 import * as Observable from "../Observable.js";
 import { __bindMethod, __do, __observe, __stream } from "../effects.js";
 const computeTests = describe("compute", testAsync("__stream", async () => {

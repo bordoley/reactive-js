@@ -4,8 +4,7 @@ import { Function1 } from "../functions.js";
 import { Empty, Entries, ForEach, ForEachWithKey, FromReadonlyArray, Identity, Keep, KeepType, KeepWithKey, Map, MapWithKey, ReadonlyArrayLike, ToReadonlyArray } from "../keyed-containers.js";
 import { EnumerableLike, FromEnumerable, FromRunnable, ObservableLike, PauseableObservableLike, RunnableLike } from "../rx.js";
 import type * as Rx from "../rx.js";
-import { SchedulerLike } from "../scheduling.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../util.js";
+import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../util.js";
 export declare const empty: Empty<ReadonlyArrayLike>["empty"];
 export declare const entries: Entries<ReadonlyArrayLike>["entries"];
 interface Enumerate extends Containers.Enumerate<ReadonlyArrayLike, EnumeratorLike> {

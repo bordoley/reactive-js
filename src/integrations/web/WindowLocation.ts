@@ -32,7 +32,6 @@ import {
   ObserverLike,
 } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
-import { SchedulerLike } from "../../scheduling.js";
 import { StreamLike, StreamableLike_stream } from "../../streaming.js";
 import * as Stream from "../../streaming/Stream.js";
 import Stream_delegatingMixin from "../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
@@ -43,6 +42,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SchedulerLike,
 } from "../../util.js";
 import Delegating_mixin from "../../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../util/Disposable.js";

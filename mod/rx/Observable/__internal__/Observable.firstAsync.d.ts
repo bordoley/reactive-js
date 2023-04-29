@@ -1,7 +1,6 @@
 import { Optional } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
-import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
+import { QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../../../util.js";
 declare const Observable_firstAsync: <T>(scheduler?: SchedulerLike, options?: {
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

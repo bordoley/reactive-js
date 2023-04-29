@@ -7,9 +7,9 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ContinuationLike } from "../../../__internal__/scheduling.js";
 import { __EnumerableEnumerator_continuationQueue } from "../../../__internal__/symbols.js";
 import {
+  ContinuationLike,
   IndexedQueueLike,
   QueueLike,
   QueueLike_dequeue,
@@ -40,22 +40,22 @@ import {
 } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
 import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
-import { SchedulerLike_now } from "../../../scheduling.js";
-import {
-  SchedulerImplementationLike,
-  SchedulerImplementationLike_runContinuation,
-  SchedulerImplementationLike_scheduleContinuation,
-  SchedulerImplementationLike_shouldYield,
-  SchedulerImplementation_mixin,
-} from "../../../scheduling/Scheduler/__internal__/SchedulerImplementation.mixin.js";
 import {
   BufferLike_capacity,
   DisposableLike,
   DisposableLike_dispose,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SchedulerLike_now,
 } from "../../../util.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
+import {
+  SchedulerImplementationLike,
+  SchedulerImplementationLike_runContinuation,
+  SchedulerImplementationLike_scheduleContinuation,
+  SchedulerImplementationLike_shouldYield,
+  SchedulerImplementation_mixin,
+} from "../../../util/Scheduler/__internal__/SchedulerImplementation.mixin.js";
 import Observer_baseMixin from "../../Observer/__internal__/Observer.baseMixin.js";
 
 const Enumerable_enumerate: <T>() => (

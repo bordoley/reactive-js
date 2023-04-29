@@ -7,14 +7,14 @@ import {
 } from "../../../__internal__/mixins.js";
 import { returns } from "../../../functions.js";
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
-import Scheduler_delegatingMixin from "../../../scheduling/Scheduler/__internal__/Scheduler.delegatingMixin.js";
 import {
   BufferLike_capacity,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Disposable_mixin from "../../../util/Disposable/__internal__/Disposable.mixin.js";
+import Scheduler_delegatingMixin from "../../../util/Scheduler/__internal__/Scheduler.delegatingMixin.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_baseMixin from "./Observer.baseMixin.js";
 

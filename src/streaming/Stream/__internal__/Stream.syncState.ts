@@ -13,12 +13,12 @@ import Observable_pairwise from "../../../rx/Observable/__internal__/Observable.
 import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import Observable_takeFirst from "../../../rx/Observable/__internal__/Observable.takeFirst.js";
 import Observable_throttle from "../../../rx/Observable/__internal__/Observable.throttle.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 
 const Stream_syncState = <T>(

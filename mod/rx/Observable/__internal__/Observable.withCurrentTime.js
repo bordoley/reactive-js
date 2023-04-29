@@ -5,7 +5,7 @@ import { __WithCurrentTimeObserver_selector } from "../../../__internal__/symbol
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { none, partial, pipe } from "../../../functions.js";
 import { ObserverLike_notify, } from "../../../rx.js";
-import { SchedulerLike_now } from "../../../scheduling.js";
+import { SchedulerLike_now } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";

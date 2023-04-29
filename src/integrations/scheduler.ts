@@ -12,18 +12,22 @@ import {
   mix,
   props,
 } from "../__internal__/mixins.js";
-import { ContinuationLike } from "../__internal__/scheduling.js";
+import { ContinuationLike } from "../__internal__/util.js";
 import { newInstance, none, pipe, pipeLazy } from "../functions.js";
-import { SchedulerLike, SchedulerLike_now } from "../scheduling.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  SchedulerLike,
+  SchedulerLike_now,
+} from "../util.js";
+import * as Disposable from "../util/Disposable.js";
 import {
   SchedulerImplementationLike,
   SchedulerImplementationLike_runContinuation,
   SchedulerImplementationLike_scheduleContinuation,
   SchedulerImplementationLike_shouldYield,
   SchedulerImplementation_mixin,
-} from "../scheduling/Scheduler/__internal__/SchedulerImplementation.mixin.js";
-import { DisposableLike, DisposableLike_dispose } from "../util.js";
-import * as Disposable from "../util/Disposable.js";
+} from "../util/Scheduler/__internal__/SchedulerImplementation.mixin.js";
 
 const createReactScheduler = /*@__PURE__*/ (() => {
   type TProperties = {

@@ -12,13 +12,13 @@ import {
   ObservableLike,
   PublisherLike,
 } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
   DisposableLike,
   EventListenerLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../../util/Disposable/__internal__/Disposable.bindTo.js";

@@ -7,13 +7,13 @@ import {
 } from "../../../__internal__/mixins.js";
 import { returns } from "../../../functions.js";
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
-import Scheduler_delegatingMixin from "../../../scheduling/Scheduler/__internal__/Scheduler.delegatingMixin.js";
 import {
   BufferLike_capacity,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../util.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import Scheduler_delegatingMixin from "../../../util/Scheduler/__internal__/Scheduler.delegatingMixin.js";
 import Observer_baseMixin from "./Observer.baseMixin.js";
 
 type TObserverDelegatingMixin<T> = Omit<

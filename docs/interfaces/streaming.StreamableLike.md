@@ -50,7 +50,7 @@ Subscribe to the Streamable.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](scheduling.SchedulerLike.md) | The scheduler to subscribe to the stream with. |
+| `scheduler` | [`SchedulerLike`](util.SchedulerLike.md) | The scheduler to subscribe to the stream with. |
 | `options?` | `Object` |  |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
 | `options.capacity?` | `number` | The capacity of the stream's request queue. |

@@ -6,11 +6,11 @@ import {
   pipe,
 } from "../../../functions.js";
 import { MulticastObservableLike, ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Disposable_onDisposed from "../../../util/Disposable/__internal__/Disposable.onDisposed.js";
 import Publisher_createRefCounted from "../../Publisher/__internal__/Publisher.createRefCounted.js";

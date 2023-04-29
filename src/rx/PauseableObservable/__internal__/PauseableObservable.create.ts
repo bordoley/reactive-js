@@ -22,7 +22,6 @@ import {
   PauseableObservableLike,
   PauseableObservableLike_isPaused,
 } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import { StreamLike } from "../../../streaming.js";
 import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin.js";
 import {
@@ -35,6 +34,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SchedulerLike,
 } from "../../../util.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";

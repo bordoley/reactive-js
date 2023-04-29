@@ -7,10 +7,9 @@ import {
 } from "../../__internal__/testing.js";
 import { error, pipe, pipeLazy } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
-import { SchedulerLike } from "../../scheduling.js";
-import * as Scheduler from "../../scheduling/Scheduler.js";
-import { PauseableLike_resume } from "../../util.js";
+import { PauseableLike_resume, SchedulerLike } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
+import * as Scheduler from "../../util/Scheduler.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 
 testModule(

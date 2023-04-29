@@ -1,9 +1,9 @@
 import { Optional, pipe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Observable_lastAsync from "./Observable.lastAsync.js";
 import Observable_takeFirst from "./Observable.takeFirst.js";

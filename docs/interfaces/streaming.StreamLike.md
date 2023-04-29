@@ -33,4 +33,4 @@ Represents a duplex stream
 
 ### [\_\_\_StreamLike\_scheduler]
 
-• `Readonly` **[\_\_\_StreamLike\_scheduler]**: [`SchedulerLike`](scheduling.SchedulerLike.md)
+• `Readonly` **[\_\_\_StreamLike\_scheduler]**: [`SchedulerLike`](util.SchedulerLike.md)

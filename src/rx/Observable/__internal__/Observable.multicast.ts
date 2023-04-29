@@ -1,10 +1,10 @@
 import { Factory, Function1 } from "../../../functions.js";
 import { MulticastObservableLike, ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 import Observable_multicastImpl from "./Observable.multicastImpl.js";

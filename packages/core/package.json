@@ -73,9 +73,6 @@
     "./rx/PauseableObservable": "./rx/PauseableObservable.js",
     "./rx/Publisher": "./rx/Publisher.js",
     "./rx/Runnable": "./rx/Runnable.js",
-    "./scheduling": "./scheduling.js",
-    "./scheduling/PriorityScheduler": "./scheduling/PriorityScheduler.js",
-    "./scheduling/Scheduler": "./scheduling/Scheduler.js",
     "./streaming": "./streaming.js",
     "./streaming/Stream": "./streaming/Stream.js",
     "./streaming/Streamable": "./streaming/Streamable.js",
@@ -83,7 +80,8 @@
     "./util/Disposable": "./util/Disposable.js",
     "./util/EventListener": "./util/EventListener.js",
     "./util/EventPublisher": "./util/EventPublisher.js",
-    "./util/EventSource": "./util/EventSource.js"
+    "./util/EventSource": "./util/EventSource.js",
+    "./util/Scheduler": "./util/Scheduler.js"
   },
   "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"
 }

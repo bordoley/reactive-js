@@ -18,10 +18,13 @@ import {
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import * as Observable from "../../rx/Observable.js";
 import * as PauseableObservable from "../../rx/PauseableObservable.js";
-import { SchedulerLike } from "../../scheduling.js";
-import * as Scheduler from "../../scheduling/Scheduler.js";
-import { DisposableLike, PauseableLike_resume } from "../../util.js";
+import {
+  DisposableLike,
+  PauseableLike_resume,
+  SchedulerLike,
+} from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
+import * as Scheduler from "../../util/Scheduler.js";
 import * as NodeStream from "../node/Stream.js";
 
 testModule(

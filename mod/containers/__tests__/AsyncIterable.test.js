@@ -3,9 +3,9 @@
 import { describe, expectArrayEquals, expectEquals, testAsync, testModule, } from "../../__internal__/testing.js";
 import { error, pipe, pipeLazy } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
-import * as Scheduler from "../../scheduling/Scheduler.js";
 import { PauseableLike_resume } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
+import * as Scheduler from "../../util/Scheduler.js";
 import * as AsyncIterable from "../AsyncIterable.js";
 testModule("AsyncIterable", describe("flow", testAsync("infinite immediately resolving iterable", pipeLazy(async (scheduler) => {
     const stream = pipe((async function* foo() {

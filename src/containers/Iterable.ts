@@ -9,11 +9,11 @@ import { Function1 } from "../functions.js";
 import ReadonlyArray_toReadonlyArray from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import type * as Rx from "../rx.js";
 import { ObservableLike, RunnableLike, ToEnumerable } from "../rx.js";
-import { SchedulerLike } from "../scheduling.js";
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../util.js";
 import Container_identity from "./Container/__internal__/Container.identity.js";
 import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";

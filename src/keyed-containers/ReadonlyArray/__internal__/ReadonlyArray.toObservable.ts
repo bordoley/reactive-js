@@ -9,13 +9,11 @@ import {
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../../../rx/Runnable/__internal__/Runnable.create.js";
 import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
-} from "../../../scheduling.js";
-import {
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";

@@ -1,11 +1,11 @@
 import { Function1, pipe } from "../../../functions.js";
 import { ObservableLike } from "../../../rx.js";
-import { SchedulerLike } from "../../../scheduling.js";
 import {
   BufferLike_capacity,
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SchedulerLike,
 } from "../../../util.js";
 import Observer_create from "../../Observer/__internal__/Observer.create.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";

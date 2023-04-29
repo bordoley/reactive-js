@@ -31,10 +31,6 @@ import {
 } from "../../../rx.js";
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
-import {
-  SchedulerLike,
-  SchedulerLike_inContinuation,
-} from "../../../scheduling.js";
 import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import {
   BufferLike_capacity,
@@ -48,6 +44,8 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SchedulerLike,
+  SchedulerLike_inContinuation,
 } from "../../../util.js";
 import Dispatcher_delegatingMixin from "../../../util/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
