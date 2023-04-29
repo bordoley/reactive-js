@@ -8,11 +8,11 @@ import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.m
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
-import Streamable_createAnimationsEventHandler from "./Streamable.createAnimationsEventHandler.js";
+import Streamable_createAnimationGroupEventHandler from "./Streamable.createAnimationGroupEventHandler.js";
 const createAnimationEventHandlerStream = 
 /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function AnimationEventHandlerStream(instance, animation, creationOptions, scheduler, streamOptions) {
-        const streamDelegate = Streamable_createAnimationsEventHandler({ v: animation }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
+        const streamDelegate = Streamable_createAnimationGroupEventHandler({ v: animation }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         init(Stream_delegatingMixin(), instance, streamDelegate);
         init(Delegating_mixin(), instance, streamDelegate);
         const animationEventsPublisher = streamDelegate[KeyedCollectionLike_get]("v");

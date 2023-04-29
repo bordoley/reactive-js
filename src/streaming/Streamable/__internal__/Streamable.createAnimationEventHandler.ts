@@ -27,7 +27,7 @@ import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.m
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
-import Streamable_createAnimationsEventHandler from "./Streamable.createAnimationsEventHandler.js";
+import Streamable_createAnimationGroupEventHandler from "./Streamable.createAnimationGroupEventHandler.js";
 
 const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
   animation: Function1<
@@ -79,7 +79,7 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
             readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
           }>,
         ): AnimationEventHandlerStreamLike<TEventType, T> & DisposableLike {
-          const streamDelegate = Streamable_createAnimationsEventHandler(
+          const streamDelegate = Streamable_createAnimationGroupEventHandler(
             { v: animation },
             creationOptions as any,
           )[StreamableLike_stream](scheduler, streamOptions);

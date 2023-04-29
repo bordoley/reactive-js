@@ -106,7 +106,7 @@ export interface CacheLike<T>
  * @noInheritDoc
  * @category Stream
  */
-export interface AnimationsEventHandlerStreamLike<
+export interface AnimationGroupEventHandlerStreamLike<
   TEventType,
   T,
   TKey extends string | number | symbol,
@@ -121,14 +121,14 @@ export interface AnimationsEventHandlerStreamLike<
  * @noInheritDoc
  * @category Container
  */
-export interface AnimationsEventHandlerLike<
+export interface AnimationGroupEventHandlerLike<
   TEventType,
   T,
   TKey extends string | number | symbol,
 > extends StreamableLike<
     TEventType,
     boolean,
-    AnimationsEventHandlerStreamLike<TEventType, T, TKey>
+    AnimationGroupEventHandlerStreamLike<TEventType, T, TKey>
   > {}
 
 /**

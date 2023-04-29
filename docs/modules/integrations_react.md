@@ -7,7 +7,7 @@
 ### Hook Functions
 
 - [useAnimation](integrations_react.md#useanimation)
-- [useAnimations](integrations_react.md#useanimations)
+- [useAnimationGroup](integrations_react.md#useanimationgroup)
 - [useEnumerate](integrations_react.md#useenumerate)
 - [useEventPublisher](integrations_react.md#useeventpublisher)
 - [useEventSource](integrations_react.md#useeventsource)
@@ -125,9 +125,9 @@ readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `
 
 ___
 
-### useAnimations
+### useAnimationGroup
 
-▸ **useAnimations**<`T`, `TEventType`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
 #### Type parameters
 
@@ -141,7 +141,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
+| `animationGroupFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -154,7 +154,7 @@ ___
 
 readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
-▸ **useAnimations**<`T`, `TEventType`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
 #### Type parameters
 
@@ -168,7 +168,7 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
+| `animationGroupFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -181,7 +181,7 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
-▸ **useAnimations**<`T`, `TEventType`, `TKey`\>(`animationFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 #### Type parameters
 
@@ -195,7 +195,7 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
+| `animationGroupFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -208,7 +208,7 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
-▸ **useAnimations**<`T`, `TEventType`, `TKey`\>(`animationFactory`, `deps`, `options?`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options?`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 #### Type parameters
 
@@ -222,7 +222,7 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
+| `animationGroupFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |

@@ -575,16 +575,16 @@ export const createComponent = <TProps>(
   return ObservableComponent;
 };
 
-interface UseAnimations {
+interface UseAnimationGroup {
   /**
    * @category Hook
    */
-  useAnimations<
+  useAnimationGroup<
     T = number,
     TEventType = unknown,
     TKey extends string | number | symbol = string,
   >(
-    animationFactory: Factory<
+    animationGroupFactory: Factory<
       ReadonlyObjectMapLike<
         Function1<
           TEventType,
@@ -610,12 +610,12 @@ interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<
+  useAnimationGroup<
     T = number,
     TEventType = unknown,
     TKey extends string | number | symbol = string,
   >(
-    animationFactory: Factory<
+    animationGroupFactory: Factory<
       ReadonlyObjectMapLike<
         Function1<
           TEventType,
@@ -641,12 +641,12 @@ interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<
+  useAnimationGroup<
     T = number,
     TEventType = unknown,
     TKey extends string | number | symbol = string,
   >(
-    animationFactory: Factory<
+    animationGroupFactory: Factory<
       ReadonlyObjectMapLike<
         Function1<
           TEventType,
@@ -672,12 +672,12 @@ interface UseAnimations {
   /**
    * @category Hook
    */
-  useAnimations<
+  useAnimationGroup<
     T = number,
     TEventType = unknown,
     TKey extends string | number | symbol = string,
   >(
-    animationFactory: Factory<
+    animationGroupFactory: Factory<
       ReadonlyObjectMapLike<
         Function1<
           TEventType,
@@ -699,12 +699,12 @@ interface UseAnimations {
     never,
   ];
 }
-export const useAnimations: UseAnimations["useAnimations"] = (<
+export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
   T = number,
   TEventType = unknown,
   TKey extends string | number | symbol = string,
 >(
-  animationFactory: Factory<
+  animationGroupFactory: Factory<
     ReadonlyObjectMapLike<
       Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
       TKey
@@ -723,10 +723,11 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
   SideEffect1<TEventType>,
   unknown,
 ] => {
-  const animations = useMemo(animationFactory, deps);
+  const animations = useMemo(animationGroupFactory, deps);
 
   const stream = useStream(
-    () => Streamable.createAnimationsEventHandler(animations, options as any),
+    () =>
+      Streamable.createAnimationGroupEventHandler(animations, options as any),
     [animations, options.concurrency, options.mode, options?.priority],
     options,
   );
@@ -742,7 +743,7 @@ export const useAnimations: UseAnimations["useAnimations"] = (<
   const value = useObservable<T>(stream ?? emptyObservable, options);
 
   return [dict ?? Dictionary.empty(), dispatch, value];
-}) as UseAnimations["useAnimations"];
+}) as UseAnimationGroup["useAnimationGroup"];
 
 interface UseAnimation {
   /**
@@ -849,7 +850,7 @@ export const useAnimation: UseAnimation["useAnimation"] = (<
   SideEffect1<TEventType>,
   unknown,
 ] => {
-  const [animatedValues, dispatch, isAnimationRunning] = useAnimations<
+  const [animatedValues, dispatch, isAnimationRunning] = useAnimationGroup<
     T,
     TEventType
   >(

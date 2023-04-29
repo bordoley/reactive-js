@@ -8,7 +8,7 @@
 
 - [create](streaming_Streamable.md#create)
 - [createAnimationEventHandler](streaming_Streamable.md#createanimationeventhandler)
-- [createAnimationsEventHandler](streaming_Streamable.md#createanimationseventhandler)
+- [createAnimationGroupEventHandler](streaming_Streamable.md#createanimationgroupeventhandler)
 - [createEventHandler](streaming_Streamable.md#createeventhandler)
 - [createInMemoryCache](streaming_Streamable.md#createinmemorycache)
 - [createPersistentCache](streaming_Streamable.md#createpersistentcache)
@@ -131,9 +131,9 @@ ___
 
 ___
 
-### createAnimationsEventHandler
+### createAnimationGroupEventHandler
 
-▸ **createAnimationsEventHandler**<`TEventType`, `T`, `TKey`\>(`animations`, `options`): [`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType`, `T`, `TKey`\>
+▸ **createAnimationGroupEventHandler**<`TEventType`, `T`, `TKey`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/streaming.AnimationGroupEventHandlerLike.md)<`TEventType`, `T`, `TKey`\>
 
 #### Type parameters
 
@@ -147,16 +147,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>, `TKey`\> |
 | `options` | `Object` |
 | `options.concurrency?` | `number` |
 | `options.mode` | ``"switching"`` |
 
 #### Returns
 
-[`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType`, `T`, `TKey`\>
+[`AnimationGroupEventHandlerLike`](../interfaces/streaming.AnimationGroupEventHandlerLike.md)<`TEventType`, `T`, `TKey`\>
 
-▸ **createAnimationsEventHandler**<`TEventType_1`, `T_1`, `TKey_1`\>(`animations`, `options`): [`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_1`, `T_1`, `TKey_1`\>
+▸ **createAnimationGroupEventHandler**<`TEventType_1`, `T_1`, `TKey_1`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/streaming.AnimationGroupEventHandlerLike.md)<`TEventType_1`, `T_1`, `TKey_1`\>
 
 #### Type parameters
 
@@ -170,16 +170,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType_1`, [`AnimationConfig`](rx.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_1`\>[]\>, `TKey_1`\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType_1`, [`AnimationConfig`](rx.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_1`\>[]\>, `TKey_1`\> |
 | `options` | `Object` |
 | `options.concurrency?` | `number` |
 | `options.mode` | ``"blocking"`` |
 
 #### Returns
 
-[`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_1`, `T_1`, `TKey_1`\>
+[`AnimationGroupEventHandlerLike`](../interfaces/streaming.AnimationGroupEventHandlerLike.md)<`TEventType_1`, `T_1`, `TKey_1`\>
 
-▸ **createAnimationsEventHandler**<`TEventType_2`, `T_2`, `TKey_2`\>(`animations`, `options`): [`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_2`, `T_2`, `TKey_2`\>
+▸ **createAnimationGroupEventHandler**<`TEventType_2`, `T_2`, `TKey_2`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/streaming.AnimationGroupEventHandlerLike.md)<`TEventType_2`, `T_2`, `TKey_2`\>
 
 #### Type parameters
 
@@ -193,7 +193,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType_2`, [`AnimationConfig`](rx.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_2`\>[]\>, `TKey_2`\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType_2`, [`AnimationConfig`](rx.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_2`\>[]\>, `TKey_2`\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -202,9 +202,9 @@ ___
 
 #### Returns
 
-[`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_2`, `T_2`, `TKey_2`\>
+[`AnimationGroupEventHandlerLike`](../interfaces/streaming.AnimationGroupEventHandlerLike.md)<`TEventType_2`, `T_2`, `TKey_2`\>
 
-▸ **createAnimationsEventHandler**<`TEventType_3`, `T_3`, `TKey_3`\>(`animations`): [`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_3`, `T_3`, `TKey_3`\>
+▸ **createAnimationGroupEventHandler**<`TEventType_3`, `T_3`, `TKey_3`\>(`animationGroup`): [`AnimationGroupEventHandlerLike`](../interfaces/streaming.AnimationGroupEventHandlerLike.md)<`TEventType_3`, `T_3`, `TKey_3`\>
 
 #### Type parameters
 
@@ -218,11 +218,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animations` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType_3`, [`AnimationConfig`](rx.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_3`\>[]\>, `TKey_3`\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<[`Function1`](functions.md#function1)<`TEventType_3`, [`AnimationConfig`](rx.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_3`\>[]\>, `TKey_3`\> |
 
 #### Returns
 
-[`AnimationsEventHandlerLike`](../interfaces/streaming.AnimationsEventHandlerLike.md)<`TEventType_3`, `T_3`, `TKey_3`\>
+[`AnimationGroupEventHandlerLike`](../interfaces/streaming.AnimationGroupEventHandlerLike.md)<`TEventType_3`, `T_3`, `TKey_3`\>
 
 ___
 

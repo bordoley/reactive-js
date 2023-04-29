@@ -9,7 +9,7 @@ import {
   useFlow,
   useObservable,
   useStream,
-  useAnimations,
+  useAnimationGroup,
 } from "@reactive-js/core/integrations/react";
 import {
   useAnimateEvent,
@@ -153,7 +153,7 @@ const Root = () => {
     [history.replace, counterInitialValue],
   );
 
-  const [animations, dispatch, isAnimationRunning] = useAnimations<number>(
+  const [animations, dispatch, isAnimationRunning] = useAnimationGroup<number>(
     () => ({
       abc: () => ({
         type: "loop",
@@ -283,9 +283,7 @@ const RxComponent = createComponent(
         value: ReadonlyObjectMapLike<string, CSSStyleKey>;
       }> = animationEventHandler;
 
-      const animatedDivRef = __animateEvent(
-        animationEventEmitter 
-      );
+      const animatedDivRef = __animateEvent(animationEventEmitter);
 
       return (
         <div>

@@ -27,22 +27,22 @@ export declare const createAnimationEventHandler: {
 /**
  * @category Constructor
  */
-export declare const createAnimationsEventHandler: {
-    <TEventType = unknown, T = number, TKey extends string | number | symbol = string>(animations: import("../keyed-containers.js").ReadonlyObjectMapLike<import("../functions.js").Function1<TEventType, import("../rx.js").AnimationConfig<T> | readonly import("../rx.js").AnimationConfig<T>[]>, TKey>, options: {
+export declare const createAnimationGroupEventHandler: {
+    <TEventType = unknown, T = number, TKey extends string | number | symbol = string>(animationGroup: import("../keyed-containers.js").ReadonlyObjectMapLike<import("../functions.js").Function1<TEventType, import("../rx.js").AnimationConfig<T> | readonly import("../rx.js").AnimationConfig<T>[]>, TKey>, options: {
         readonly mode: "switching";
         readonly concurrency?: number | undefined;
-    }): import("../streaming.js").AnimationsEventHandlerLike<TEventType, T, TKey>;
-    <TEventType_1 = unknown, T_1 = number, TKey_1 extends string | number | symbol = string>(animations: import("../keyed-containers.js").ReadonlyObjectMapLike<import("../functions.js").Function1<TEventType_1, import("../rx.js").AnimationConfig<T_1> | readonly import("../rx.js").AnimationConfig<T_1>[]>, TKey_1>, options: {
+    }): import("../streaming.js").AnimationGroupEventHandlerLike<TEventType, T, TKey>;
+    <TEventType_1 = unknown, T_1 = number, TKey_1 extends string | number | symbol = string>(animationGroup: import("../keyed-containers.js").ReadonlyObjectMapLike<import("../functions.js").Function1<TEventType_1, import("../rx.js").AnimationConfig<T_1> | readonly import("../rx.js").AnimationConfig<T_1>[]>, TKey_1>, options: {
         readonly mode: "blocking";
         readonly concurrency?: number | undefined;
-    }): import("../streaming.js").AnimationsEventHandlerLike<TEventType_1, T_1, TKey_1>;
-    <TEventType_2 = unknown, T_2 = number, TKey_2 extends string | number | symbol = string>(animations: import("../keyed-containers.js").ReadonlyObjectMapLike<import("../functions.js").Function1<TEventType_2, import("../rx.js").AnimationConfig<T_2> | readonly import("../rx.js").AnimationConfig<T_2>[]>, TKey_2>, options: {
+    }): import("../streaming.js").AnimationGroupEventHandlerLike<TEventType_1, T_1, TKey_1>;
+    <TEventType_2 = unknown, T_2 = number, TKey_2 extends string | number | symbol = string>(animationGroup: import("../keyed-containers.js").ReadonlyObjectMapLike<import("../functions.js").Function1<TEventType_2, import("../rx.js").AnimationConfig<T_2> | readonly import("../rx.js").AnimationConfig<T_2>[]>, TKey_2>, options: {
         readonly mode: "queueing";
         readonly concurrency?: number | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
-    }): import("../streaming.js").AnimationsEventHandlerLike<TEventType_2, T_2, TKey_2>;
-    <TEventType_3 = unknown, T_3 = number, TKey_3 extends string | number | symbol = string>(animations: import("../keyed-containers.js").ReadonlyObjectMapLike<import("../functions.js").Function1<TEventType_3, import("../rx.js").AnimationConfig<T_3> | readonly import("../rx.js").AnimationConfig<T_3>[]>, TKey_3>): import("../streaming.js").AnimationsEventHandlerLike<TEventType_3, T_3, TKey_3>;
+    }): import("../streaming.js").AnimationGroupEventHandlerLike<TEventType_2, T_2, TKey_2>;
+    <TEventType_3 = unknown, T_3 = number, TKey_3 extends string | number | symbol = string>(animationGroup: import("../keyed-containers.js").ReadonlyObjectMapLike<import("../functions.js").Function1<TEventType_3, import("../rx.js").AnimationConfig<T_3> | readonly import("../rx.js").AnimationConfig<T_3>[]>, TKey_3>): import("../streaming.js").AnimationGroupEventHandlerLike<TEventType_3, T_3, TKey_3>;
 };
 /**
  * Returns an event handler that invokes the observable function.
@@ -56,9 +56,6 @@ export declare const createEventHandler: {
         type: "complete" | "wait" | "drain";
     }>>;
     <TEventType_1>(op: import("../functions.js").Function1<TEventType_1, import("../rx.js").ObservableLike<unknown>>, options: {
-        /**
-         * @category Constructor
-         */
         readonly mode: "blocking";
     }): import("../streaming.js").StreamableLike<TEventType_1, boolean, import("../streaming.js").StreamLike<TEventType_1, boolean, {
         type: "complete" | "wait" | "drain";

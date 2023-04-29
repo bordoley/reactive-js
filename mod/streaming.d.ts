@@ -68,7 +68,7 @@ export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Fun
  * @noInheritDoc
  * @category Stream
  */
-export interface AnimationsEventHandlerStreamLike<TEventType, T, TKey extends string | number | symbol> extends StreamLike<TEventType, boolean>, AssociativeCollectionLike<TKey, Optional<EventSourceLike<{
+export interface AnimationGroupEventHandlerStreamLike<TEventType, T, TKey extends string | number | symbol> extends StreamLike<TEventType, boolean>, AssociativeCollectionLike<TKey, Optional<EventSourceLike<{
     type: TEventType;
     value: T;
 }>>> {
@@ -78,7 +78,7 @@ export interface AnimationsEventHandlerStreamLike<TEventType, T, TKey extends st
  * @noInheritDoc
  * @category Container
  */
-export interface AnimationsEventHandlerLike<TEventType, T, TKey extends string | number | symbol> extends StreamableLike<TEventType, boolean, AnimationsEventHandlerStreamLike<TEventType, T, TKey>> {
+export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends string | number | symbol> extends StreamableLike<TEventType, boolean, AnimationGroupEventHandlerStreamLike<TEventType, T, TKey>> {
 }
 /**
  * @noInheritDoc
