@@ -1,4 +1,6 @@
 /** @type {unique symbol} */
+export const __AssociativeCollectionLike_keys: unique symbol;
+/** @type {unique symbol} */
 export const __BufferLike_capacity: unique symbol;
 /** @type {unique symbol} */
 export const __CollectionLike_count: unique symbol;

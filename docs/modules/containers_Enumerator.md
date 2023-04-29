@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Constructor Functions
+
+- [empty](containers_Enumerator.md#empty)
+
 ### Operator Functions
 
 - [keep](containers_Enumerator.md#keep)
@@ -13,6 +17,26 @@
 ### Transform Functions
 
 - [toReadonlyArray](containers_Enumerator.md#toreadonlyarray)
+
+## Constructor Functions
+
+### empty
+
+▸ **empty**<`T`\>(): [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>
+
+Return an ContainerLike that emits no items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>
+
+___
 
 ## Operator Functions
 

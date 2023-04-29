@@ -8,9 +8,12 @@ import {
 } from "./containers.js";
 
 import {
+  Factory,
   Function1,
   Function2,
+  Function3,
   Predicate,
+  Reducer,
   SideEffect1,
   SideEffect2,
   TypePredicate,
@@ -335,6 +338,34 @@ export interface MapWithKey<C extends KeyedContainerLike> {
   mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(
     selector: Function2<TA, TKey, TB>,
   ): KeyedContainerOperator<C, TKey, TA, TB>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface Reduce<C extends KeyedContainerLike> {
+  /**
+   * @category Transform
+   */
+  reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
+export interface ReduceWithKey<C extends KeyedContainerLike> {
+  /**
+   * @category Transform
+   */
+  reduceWithKey<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(
+    reducer: Function3<TAcc, T, TKey, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
 }
 
 /**

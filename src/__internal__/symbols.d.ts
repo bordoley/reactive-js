@@ -1,3 +1,5 @@
+export declare const __AssociativeCollectionLike_keys: unique symbol;
+
 export declare const __BufferLike_capacity: unique symbol;
 
 export declare const __CollectionLike_count: unique symbol;

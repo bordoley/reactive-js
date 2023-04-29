@@ -30,6 +30,8 @@
 - [Keys](../interfaces/keyed_containers.Keys.md)
 - [Map](../interfaces/keyed_containers.Map.md)
 - [MapWithKey](../interfaces/keyed_containers.MapWithKey.md)
+- [Reduce](../interfaces/keyed_containers.Reduce.md)
+- [ReduceWithKey](../interfaces/keyed_containers.ReduceWithKey.md)
 - [ToReadonlyArray](../interfaces/keyed_containers.ToReadonlyArray.md)
 - [Values](../interfaces/keyed_containers.Values.md)
 

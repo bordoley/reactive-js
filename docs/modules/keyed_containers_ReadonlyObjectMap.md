@@ -21,6 +21,9 @@
 
 - [entries](keyed_containers_ReadonlyObjectMap.md#entries)
 - [keySet](keyed_containers_ReadonlyObjectMap.md#keyset)
+- [keys](keyed_containers_ReadonlyObjectMap.md#keys)
+- [reduce](keyed_containers_ReadonlyObjectMap.md#reduce)
+- [reduceWithKey](keyed_containers_ReadonlyObjectMap.md#reducewithkey)
 - [values](keyed_containers_ReadonlyObjectMap.md#values)
 
 ## Constructor Functions
@@ -250,6 +253,72 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<{ readonly [P in string \| number \| symbol]?: unknown } & [`ReadonlyObjectMapContainerLike`](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md), [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`TKey`\>\>
+
+___
+
+### keys
+
+▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<{ readonly [P in string \| number \| symbol]?: unknown } & [`ReadonlyObjectMapContainerLike`](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md), [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<{ readonly [P in string \| number \| symbol]?: unknown } & [`ReadonlyObjectMapContainerLike`](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md), [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
+
+___
+
+### reduce
+
+▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<{ readonly [P in string \| number \| symbol]?: T } & [`ReadonlyObjectMapContainerLike`](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md), `TAcc`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TAcc` | `TAcc` |
+| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<{ readonly [P in string \| number \| symbol]?: T } & [`ReadonlyObjectMapContainerLike`](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md), `TAcc`\>
+
+___
+
+### reduceWithKey
+
+▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<{ readonly [P in string \| number \| symbol]?: T } & [`ReadonlyObjectMapContainerLike`](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md), `TAcc`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TAcc` | `TAcc` |
+| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Function3`](functions.md#function3)<`TAcc`, `T`, `TKey`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<{ readonly [P in string \| number \| symbol]?: T } & [`ReadonlyObjectMapContainerLike`](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md), `TAcc`\>
 
 ___
 

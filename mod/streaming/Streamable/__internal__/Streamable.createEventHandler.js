@@ -14,6 +14,6 @@ const Streamable_createEventHandler = ((op, options = {}) => {
         ? compose(Observable_switchMap(compose(op, Observable_ignoreElements(), Observable_startWith(true), Observable_endWith(false))), Observable_startWith(false))
         : mode === "blocking"
             ? compose(Observable_exhaustMap(compose(op, Observable_ignoreElements(), Observable_startWith(true), Observable_endWith(false))), Observable_startWith(false))
-            : Observable_mergeMap(compose(op, Observable_ignoreElements()), { ...options, concurrency: 1 }));
+            : compose(Observable_mergeMap(compose(op, Observable_ignoreElements(), Observable_startWith(true), Observable_endWith(false)), { ...options, concurrency: 1 }), Observable_startWith(false)));
 });
 export default Streamable_createEventHandler;

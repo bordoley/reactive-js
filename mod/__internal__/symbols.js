@@ -2,6 +2,8 @@
 
 import symbol from "./symbol.js";
 /** @type {unique symbol} */
+export const __AssociativeCollectionLike_keys = /*@__PURE__*/ symbol("AssociativeCollectionLike_keys");
+/** @type {unique symbol} */
 export const __BufferLike_capacity = /*@__PURE__*/ symbol("BufferLike_capacity");
 /** @type {unique symbol} */
 export const __CollectionLike_count = /*@__PURE__*/ symbol("CollectionLike_count");

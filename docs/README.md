@@ -36,6 +36,7 @@ Reactive-JS
 - [streaming/Stream](modules/streaming_Stream.md)
 - [streaming/Streamable](modules/streaming_Streamable.md)
 - [util](modules/util.md)
+- [util/Dictionary](modules/util_Dictionary.md)
 - [util/Disposable](modules/util_Disposable.md)
 - [util/EventListener](modules/util_EventListener.md)
 - [util/EventPublisher](modules/util_EventPublisher.md)

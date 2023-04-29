@@ -23,6 +23,8 @@ Represents a duplex stream
 
   ↳↳ [`CacheStreamLike`](streaming.CacheStreamLike.md)
 
+  ↳↳ [`AnimationEventHandlerStreamLike`](streaming.AnimationEventHandlerStreamLike.md)
+
 ## Table of contents
 
 ### Properties

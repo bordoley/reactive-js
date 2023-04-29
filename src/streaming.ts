@@ -7,9 +7,10 @@ import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike } from "./rx.js";
 import {
+  AssociativeCollectionLike,
   DispatcherLike,
   DisposableLike,
-  KeyedCollectionLike,
+  EventSourceLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
@@ -81,7 +82,7 @@ export interface CacheStreamLike<T>
       ReadonlyObjectMapLike<Function1<Optional<T>, Optional<T>>>,
       never
     >,
-    KeyedCollectionLike<string, ObservableLike<T>> {}
+    AssociativeCollectionLike<string, ObservableLike<T>> {}
 
 /**
  * A container that returns a CacheStream when subscribed to.
@@ -94,4 +95,33 @@ export interface CacheLike<T>
     Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>,
     never,
     CacheStreamLike<T>
+  > {}
+
+/**
+ * @noInheritDoc
+ * @category Stream
+ */
+export interface AnimationEventHandlerStreamLike<
+  TEvent,
+  T,
+  TKey extends string | number | symbol,
+> extends StreamLike<TEvent, boolean>,
+    AssociativeCollectionLike<
+      TKey,
+      Optional<EventSourceLike<{ event: TEvent; value: T }>>
+    > {}
+
+/**
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface AnimationEventHandlerLike<
+  TEvent,
+  T,
+  TKey extends string | number | symbol,
+> extends StreamableLike<
+    TEvent,
+    boolean,
+    AnimationEventHandlerStreamLike<TEvent, T, TKey>
   > {}

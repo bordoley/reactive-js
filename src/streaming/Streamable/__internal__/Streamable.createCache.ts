@@ -11,6 +11,7 @@ import {
   DelegatingLike_delegate,
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
+import { EnumeratorLike } from "../../../containers.js";
 import {
   Function1,
   Optional,
@@ -26,6 +27,7 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import { ReadonlyObjectMapLike } from "../../../keyed-containers.js";
+import ReadonlyMap_keys from "../../../keyed-containers/ReadonlyMap/__internal__/ReadonlyMap.keys.js";
 import * as ReadonlyObjectMap from "../../../keyed-containers/ReadonlyObjectMap.js";
 import ReadonlyObjectMap_union from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.union.js";
 import { ObservableLike, PublisherLike } from "../../../rx.js";
@@ -38,6 +40,7 @@ import {
 } from "../../../streaming.js";
 import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import {
+  AssociativeCollectionLike_keys,
   CollectionLike_count,
   DispatcherLike,
   DisposableLike,
@@ -93,7 +96,9 @@ const createCacheStream: <T>(
         instance: TProperties<T> &
           Pick<
             CacheStreamLike<T>,
-            typeof KeyedCollectionLike_get | typeof CollectionLike_count
+            | typeof KeyedCollectionLike_get
+            | typeof CollectionLike_count
+            | typeof AssociativeCollectionLike_keys
           >,
         scheduler: SchedulerLike,
         options: Optional<{
@@ -269,7 +274,12 @@ const createCacheStream: <T>(
       {
         get [CollectionLike_count]() {
           unsafeCast<TProperties<T>>(this);
-          return this.subscriptions.size;
+          return this.store.size;
+        },
+
+        get [AssociativeCollectionLike_keys](): EnumeratorLike<string> {
+          unsafeCast<TProperties<T>>(this);
+          return pipe(this.store, ReadonlyMap_keys());
         },
 
         [KeyedCollectionLike_get](
