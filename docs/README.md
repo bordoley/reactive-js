@@ -20,6 +20,7 @@ Reactive-JS
 - [integrations/web](modules/integrations_web.md)
 - [integrations/web/Element](modules/integrations_web_Element.md)
 - [integrations/web/WindowLocation](modules/integrations_web_WindowLocation.md)
+- [integrations/web/effects](modules/integrations_web_effects.md)
 - [keyed-containers](modules/keyed_containers.md)
 - [keyed-containers/ReadonlyArray](modules/keyed_containers_ReadonlyArray.md)
 - [keyed-containers/ReadonlyMap](modules/keyed_containers_ReadonlyMap.md)

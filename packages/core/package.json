@@ -59,6 +59,7 @@
     "./integrations/scheduler": "./integrations/scheduler.js",
     "./integrations/svelte": "./integrations/svelte.js",
     "./integrations/web": "./integrations/web.js",
+    "./integrations/web/effects": "./integrations/web/effects.js",
     "./integrations/web/Element": "./integrations/web/Element.js",
     "./integrations/web/WindowLocation": "./integrations/web/WindowLocation.js",
     "./keyed-containers": "./keyed-containers.js",

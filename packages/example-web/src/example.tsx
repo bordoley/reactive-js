@@ -17,6 +17,7 @@ import {
   WindowLocationProvider,
 } from "@reactive-js/core/integrations/react/web";
 import {
+  CSSStyleKey,
   WindowLocationLike,
   WindowLocationURI,
 } from "@reactive-js/core/integrations/web";
@@ -28,7 +29,6 @@ import {
   pipe,
   returns,
 } from "@reactive-js/core/functions";
-import { createAnimationFrameScheduler } from "@reactive-js/core/util/Scheduler";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
 import { ObservableLike } from "@reactive-js/core/rx";
 import {
@@ -36,7 +36,7 @@ import {
   KeyedCollectionLike_get,
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
-import { EventSourceLike, SchedulerLike } from "@reactive-js/core/util";
+import { EventSourceLike } from "@reactive-js/core/util";
 import * as Dictionary from "@reactive-js/core/util/Dictionary";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
 import {
@@ -48,10 +48,15 @@ import {
   __stream,
   __using,
 } from "@reactive-js/core/rx/effects";
+import {
+  __animate,
+  __animateEvent,
+} from "@reactive-js/core/integrations/web/effects";
 import { Wordle } from "./wordle";
 import Measure from "./measure";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
 import * as Scheduler from "@reactive-js/core/integrations/scheduler";
+import { ReadonlyObjectMapLike } from "@reactive-js/core/keyed-containers";
 
 const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
   const values = cache[KeyedCollectionLike_get]("a");
@@ -224,77 +229,61 @@ const RxComponent = createComponent(
       windowLocation: WindowLocationLike;
     }>,
   ) => {
-    const createRef = () => ({ current: null });
-
-    const createAnimationStream = (
-      animatedDivRef: {
-        current: HTMLElement | null;
-      },
-      hostScheduler: SchedulerLike,
-    ) =>
-      Streamable.createEventHandler<"cancel" | "animate">(
-        ev =>
+    const createAnimationEventHandler = Streamable.createAnimationEventHandler<
+      "animate" | "cancel",
+      ReadonlyObjectMapLike<string, CSSStyleKey>
+    >(
+      {
+        animation: ev =>
           ev === "animate"
-            ? pipe(
-                Observable.animate([
-                  {
-                    type: "tween",
-                    duration: 1000,
-                    from: 0,
-                    to: 50,
-                    selector: (v: number) => ({
-                      color: "blue",
-                      margin: `${50 - v}px`,
-                      padding: `${v}px`,
-                    }),
-                  },
-                  {
-                    type: "spring",
-                    stiffness: 0.01,
-                    damping: 0.1,
-                    from: 50,
-                    to: 0,
-                    selector: (v: number) => ({
-                      color: "green",
-                      margin: `${50 - v}px`,
-                      padding: `${v}px`,
-                    }),
-                  },
-                ]),
-                Observable.forEach(({ color, margin, padding }) => {
-                  const animatedDiv = animatedDivRef.current;
-                  if (animatedDiv != null) {
-                    animatedDiv.style.backgroundColor = color;
-                    animatedDiv.style.margin = margin;
-                    animatedDiv.style.padding = padding;
-                  }
-                }),
-                Observable.subscribeOn(() =>
-                  createAnimationFrameScheduler(hostScheduler),
-                ),
-              )
-            : Observable.empty(),
-        { mode: "switching" },
-      );
+            ? [
+                {
+                  type: "tween",
+                  duration: 1000,
+                  from: 0,
+                  to: 50,
+                  selector: (v: number) => ({
+                    "background-color": "blue",
+                    margin: `${50 - v}px`,
+                    padding: `${v}px`,
+                  }),
+                },
+                {
+                  type: "spring",
+                  stiffness: 0.01,
+                  damping: 0.1,
+                  from: 50,
+                  to: 0,
+                  selector: (v: number) => ({
+                    "background-color": "green",
+                    margin: `${50 - v}px`,
+                    padding: `${v}px`,
+                  }),
+                },
+              ]
+            : [],
+      },
+      { mode: "switching" },
+    );
 
     return Observable.compute(() => {
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
 
-      const scheduler = __currentScheduler();
-
-      const animatedDivRef = __memo(createRef);
-      const animationStreamable = __memo(
-        createAnimationStream,
-        animatedDivRef,
-        scheduler,
+      const animationEventHandler = __stream(createAnimationEventHandler);
+      const isAnimationRunning = __observe(animationEventHandler) ?? false;
+      const runAnimation = __bindMethod(
+        animationEventHandler,
+        QueueableLike_enqueue,
       );
-      const animationStream = __stream(animationStreamable);
-      const isAnimationRunning = __observe(animationStream) ?? false;
-
-      const runAnimation = __bindMethod(animationStream, QueueableLike_enqueue);
-
-      __observe(animationStream);
+      const animatedDivRef = __animateEvent(
+        animationEventHandler[KeyedCollectionLike_get](
+          "animation",
+        ) as EventSourceLike<{
+          event: unknown;
+          value: ReadonlyObjectMapLike<string, CSSStyleKey>;
+        }>,
+      );
 
       return (
         <div>
