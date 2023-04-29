@@ -214,9 +214,15 @@ export declare const __ComputeContext_scheduledComputationSubscription: unique s
 
 export declare const __ComputeContext_awaitOrObserve: unique symbol;
 
+export declare const __ComputeContext_constant: unique symbol;
+
 export declare const __ComputeContext_memoOrUse: unique symbol;
 
 export declare const __ComputeEffect_type: unique symbol;
+
+export declare const __ConstantEffect_hasValue: unique symbol;
+
+export declare const __ConstantEffect_value: unique symbol;
 
 export declare const __Continuation_effect: unique symbol;
 

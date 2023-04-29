@@ -1,5 +1,6 @@
 import {
   __ComputeContext_awaitOrObserve,
+  __ComputeContext_constant,
   __ComputeContext_memoOrUse,
   __ComputeContext_observableConfig,
   __ComputeContext_observer,
@@ -97,6 +98,11 @@ export const __memo: __Memo["__memo"] = <T>(
 export const __await = <T>(observable: ObservableLike<T>): T => {
   const ctx = assertCurrentContext();
   return ctx[__ComputeContext_awaitOrObserve](observable, true) as T;
+};
+
+export const __constant = <T>(value: T): T => {
+  const ctx = assertCurrentContext();
+  return ctx[__ComputeContext_constant](value);
 };
 
 export const __observe = <T>(observable: ObservableLike<T>): Optional<T> => {

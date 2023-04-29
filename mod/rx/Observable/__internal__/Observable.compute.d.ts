@@ -1,4 +1,4 @@
-import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value } from "../../../__internal__/symbols.js";
+import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_hasValue, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value } from "../../../__internal__/symbols.js";
 import { Factory, Optional } from "../../../functions.js";
 import { EnumerableLike, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, RunnableLike } from "../../../rx.js";
 import { DisposableLike } from "../../../util.js";
@@ -7,6 +7,7 @@ declare const Memo = 1;
 declare const Await = 2;
 declare const Observe = 3;
 declare const Using = 4;
+declare const Constant = 5;
 type MemoOrUsingEffect<T = unknown> = {
     [__MemoOrUsingEffect_func]: (...args: any[]) => unknown;
     [__MemoOrUsingEffect_args]: unknown[];
@@ -32,7 +33,12 @@ type ObserveEffect = {
 type AwaitEffect = {
     readonly [__ComputeEffect_type]: typeof Await;
 } & AwaitOrObserveEffect;
-type ComputeEffect = AwaitEffect | MemoEffect | ObserveEffect | UsingEffect;
+type ConstantEffect<T = unknown> = {
+    readonly [__ComputeEffect_type]: typeof Constant;
+    [__ConstantEffect_value]: T;
+    [__ConstantEffect_hasValue]: boolean;
+};
+type ComputeEffect = AwaitEffect | ConstantEffect | MemoEffect | ObserveEffect | UsingEffect;
 declare class ComputeContext {
     [__ComputeContext_index]: number;
     readonly [__ComputeContext_effects]: ComputeEffect[];
@@ -50,6 +56,7 @@ declare class ComputeContext {
         readonly [ObservableLike_isRunnable]: boolean;
     });
     [__ComputeContext_awaitOrObserve]<T>(observable: ObservableLike<T>, shouldAwait: boolean): Optional<T>;
+    [__ComputeContext_constant]<T>(value: T): T;
     [__ComputeContext_memoOrUse]<T>(shouldUse: false, f: (...args: any[]) => T, ...args: unknown[]): T;
     [__ComputeContext_memoOrUse]<T extends DisposableLike>(shouldUse: true, f: (...args: any[]) => T, ...args: unknown[]): T;
 }

@@ -215,9 +215,15 @@ export const __ComputeContext_scheduledComputationSubscription: unique symbol;
 /** @type {unique symbol} */
 export const __ComputeContext_awaitOrObserve: unique symbol;
 /** @type {unique symbol} */
+export const __ComputeContext_constant: unique symbol;
+/** @type {unique symbol} */
 export const __ComputeContext_memoOrUse: unique symbol;
 /** @type {unique symbol} */
 export const __ComputeEffect_type: unique symbol;
+/** @type {unique symbol} */
+export const __ConstantEffect_hasValue: unique symbol;
+/** @type {unique symbol} */
+export const __ConstantEffect_value: unique symbol;
 /** @type {unique symbol} */
 export const __Continuation_effect: unique symbol;
 /** @type {unique symbol} */

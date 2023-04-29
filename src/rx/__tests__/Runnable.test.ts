@@ -37,7 +37,7 @@ import {
 import * as Scheduler from "../../util/Scheduler.js";
 import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
-import { __await, __memo } from "../effects.js";
+import { __await, __constant, __memo } from "../effects.js";
 
 const catchErrorTests = describe(
   "catchError",
@@ -89,15 +89,14 @@ const combineLatestTests = describe(
 
 const computeTests = describe(
   "compute",
-  test("batch mode", () => {
-    const fromValueWithDelay = (
-      delay: number,
-      value: number,
-    ): RunnableLike<number> =>
-      pipe([value], Runnable.fromReadonlyArray({ delay }));
-
-    pipe(
+  test(
+    "batch mode",
+    pipeLazy(
       Runnable.compute(() => {
+        const fromValueWithDelay = __constant(
+          (delay: number, value: number): RunnableLike<number> =>
+            pipe([value], Runnable.fromReadonlyArray({ delay })),
+        );
         const obs1 = __memo(fromValueWithDelay, 10, 5);
         const result1 = __await(obs1);
         const obs2 = __memo(fromValueWithDelay, 20, 10);
@@ -110,19 +109,20 @@ const computeTests = describe(
       Runnable.takeLast<number>(),
       Runnable.toReadonlyArray(),
       expectArrayEquals([22]),
-    );
-  }),
-  test("combined-latest mode", () => {
-    const oneTwoThreeDelayed = pipe(
-      [1, 2, 3],
-      Runnable.fromReadonlyArray({ delay: 1 }),
-    );
-    const createOneTwoThree = (_: unknown) =>
-      pipe([1, 2, 3], Runnable.fromReadonlyArray());
-
-    pipe(
+    ),
+  ),
+  test(
+    "combined-latest mode",
+    pipeLazy(
       Runnable.compute(
         () => {
+          const oneTwoThreeDelayed = __constant(
+            pipe([1, 2, 3], Runnable.fromReadonlyArray({ delay: 1 })),
+          );
+          const createOneTwoThree = __constant((_: unknown) =>
+            pipe([1, 2, 3], Runnable.fromReadonlyArray()),
+          );
+
           const v = __await(oneTwoThreeDelayed);
           const next = __memo(createOneTwoThree, v);
           return __await(next);
@@ -132,20 +132,22 @@ const computeTests = describe(
       Runnable.keepType(isSome),
       Runnable.toReadonlyArray(),
       expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
-    );
-  }),
-  test("conditional hooks", () => {
-    const src = pipe(
-      [0, 1, 2, 3, 4, 5],
-      Runnable.fromReadonlyArray({ delay: 5 }),
-    );
-    const src2 = Runnable.generate(increment, returns(100), {
-      delay: 2,
-      delayStart: false,
-    });
-
-    pipe(
+    ),
+  ),
+  test(
+    "conditional hooks",
+    pipeLazy(
       Runnable.compute(() => {
+        const src = __constant(
+          pipe([0, 1, 2, 3, 4, 5], Runnable.fromReadonlyArray({ delay: 5 })),
+        );
+        const src2 = __constant(
+          Runnable.generate(increment, returns(100), {
+            delay: 2,
+            delayStart: false,
+          }),
+        );
+
         const v = __await(src);
 
         if (v % 2 === 0) {
@@ -156,8 +158,8 @@ const computeTests = describe(
       }),
       Runnable.toReadonlyArray(),
       expectArrayEquals([101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5]),
-    );
-  }),
+    ),
+  ),
 );
 
 const decodeWithCharsetTests = describe(
