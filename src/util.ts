@@ -105,6 +105,7 @@ export interface DisposableLike {
 
 /**
  * @noInheritDoc
+ * @category Collection
  */
 export interface BufferLike {
   /**
@@ -117,6 +118,7 @@ export interface BufferLike {
  * An interface for types that support buffering items with backpressure.
  *
  * @noInheritDoc
+ * @category Collection
  */
 export interface QueueableLike<T = unknown> extends BufferLike {
   /**
@@ -137,8 +139,10 @@ export interface QueueableLike<T = unknown> extends BufferLike {
   [QueueableLike_enqueue](req: T): boolean;
 }
 
+
 /**
  * @noInheritDoc
+ * @category Collection
  */
 export interface CollectionLike {
   readonly [CollectionLike_count]: number;
@@ -146,6 +150,7 @@ export interface CollectionLike {
 
 /**
  * @noInheritDoc
+ * @category Collection
  */
 export interface KeyedCollectionLike<TKey = unknown, T = unknown>
   extends CollectionLike {
@@ -154,6 +159,7 @@ export interface KeyedCollectionLike<TKey = unknown, T = unknown>
 
 /**
  * @noInheritDoc
+ * @category Collection
  */
 export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
   extends KeyedCollectionLike<TKey, T> {
@@ -162,6 +168,7 @@ export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
 
 /**
  * @noInheritDoc
+ * @category Collection
  */
 export interface DictionaryLike<TKey = unknown, T = unknown>
   extends AssociativeCollectionLike<TKey, Optional<T>> {}
@@ -183,12 +190,14 @@ export interface DictionaryContainerLike<T = unknown, TKey = unknown>
 
 /**
  * @noInheritDoc
+ * @category Collection
  */
 export interface IndexedCollectionLike<T = unknown>
   extends KeyedCollectionLike<number, T> {}
 
 /**
  * @noInheritDoc
+ * @category Collection
  */
 export interface IndexedBufferCollectionLike<T = unknown>
   extends BufferLike,
