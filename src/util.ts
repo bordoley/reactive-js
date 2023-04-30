@@ -139,7 +139,6 @@ export interface QueueableLike<T = unknown> extends BufferLike {
   [QueueableLike_enqueue](req: T): boolean;
 }
 
-
 /**
  * @noInheritDoc
  * @category Collection
