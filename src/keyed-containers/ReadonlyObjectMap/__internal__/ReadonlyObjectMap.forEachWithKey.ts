@@ -15,8 +15,8 @@ const ReadonlyObjectMap_forEachWithKey: ForEachWithKey<ReadonlyObjectMapContaine
     >(
       effect: SideEffect2<T, TKey>,
     ): Function1<
-      ReadonlyObjectMapLike<T, TKey>,
-      ReadonlyObjectMapLike<T, TKey>
+      ReadonlyObjectMapLike<TKey, T>,
+      ReadonlyObjectMapLike<TKey, T>
     > =>
     record => {
       for (const key in record) {

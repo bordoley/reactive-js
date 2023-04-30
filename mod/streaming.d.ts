@@ -54,7 +54,7 @@ export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = S
  * @noInheritDoc
  * @category Stream
  */
-export interface CacheStreamLike<T> extends StreamLike<ReadonlyObjectMapLike<Function1<Optional<T>, Optional<T>>>, never>, AssociativeCollectionLike<string, ObservableLike<T>> {
+export interface CacheStreamLike<T> extends StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never>, AssociativeCollectionLike<string, ObservableLike<T>> {
 }
 /**
  * A container that returns a CacheStream when subscribed to.

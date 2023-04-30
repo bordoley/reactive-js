@@ -34,7 +34,7 @@ ___
 
 ### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`ReadonlyObjectMapLike`](../modules/keyed_containers.md#readonlyobjectmaplike)<`unknown`, `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`ReadonlyObjectMapLike`](../modules/keyed_containers.md#readonlyobjectmaplike)<`NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>, `unknown`\>
 
 #### Overrides
 

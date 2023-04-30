@@ -85,7 +85,7 @@ export interface StreamableLike<
  */
 export interface CacheStreamLike<T>
   extends StreamLike<
-      ReadonlyObjectMapLike<Function1<Optional<T>, Optional<T>>>,
+      ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
       never
     >,
     AssociativeCollectionLike<string, ObservableLike<T>> {}

@@ -15,10 +15,10 @@ const ReadonlyObjectMap_keepWithKey: KeepWithKey<ReadonlyObjectMapContainerLike>
     >(
       predicate: Function2<T, TKey, boolean>,
     ): Function1<
-      ReadonlyObjectMapLike<T, TKey>,
-      ReadonlyObjectMapLike<T, TKey>
+      ReadonlyObjectMapLike<TKey, T>,
+      ReadonlyObjectMapLike<TKey, T>
     > =>
-    (obj: ReadonlyObjectMapLike<T, TKey>): ReadonlyObjectMapLike<T, TKey> => {
+    (obj: ReadonlyObjectMapLike<TKey, T>): ReadonlyObjectMapLike<TKey, T> => {
       const result: Record<TKey, T> = create(null);
 
       for (const key in obj) {

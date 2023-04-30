@@ -16,7 +16,7 @@ const ReadonlyObjectMap_mapWithKey: MapWithKey<ReadonlyObjectMapContainerLike>["
     >(
       selector: Function2<TA, TKey, TB>,
     ) =>
-    (obj: ReadonlyObjectMapLike<TA, TKey>): ReadonlyObjectMapLike<TB, TKey> => {
+    (obj: ReadonlyObjectMapLike<TKey, TA>): ReadonlyObjectMapLike<TKey, TB> => {
       const result: Record<TKey, TB> = create(null);
 
       for (const key in obj) {

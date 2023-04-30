@@ -68,8 +68,8 @@ const createAnimationGroupEventHandlerStream: <
   TKey extends string | number | symbol = string,
 >(
   animationGroup: ReadonlyObjectMapLike<
-    Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-    TKey
+    TKey,
+    Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
   >,
   creationOptions: Optional<{
     readonly mode?: "switching" | "blocking" | "queueing";
@@ -107,11 +107,11 @@ const createAnimationGroupEventHandlerStream: <
             | typeof KeyedCollectionLike_get
           >,
         animationGroup: ReadonlyObjectMapLike<
+          TKey,
           Function1<
             TEventType,
             AnimationConfig<T> | readonly AnimationConfig<T>[]
-          >,
-          TKey
+          >
         >,
         creationOptions: Optional<{
           readonly mode?: "switching" | "blocking" | "queueing";
@@ -130,8 +130,8 @@ const createAnimationGroupEventHandlerStream: <
         const streamDelegate = Streamable_createEventHandler(
           (type: TEventType) => {
             const observables: ReadonlyObjectMapLike<
-              ObservableLike<T>,
-              string
+              string,
+              ObservableLike<T>
             > = pipe(
               animationGroup,
               ReadonlyObjectMap_mapWithKey<
@@ -221,7 +221,7 @@ const createAnimationGroupEventHandlerStream: <
       }),
       {
         get [AssociativeCollectionLike_keys](): EnumeratorLike<TKey> {
-          unsafeCast<DelegatingLike<ReadonlyObjectMapLike<unknown, TKey>>>(
+          unsafeCast<DelegatingLike<ReadonlyObjectMapLike<TKey, unknown>>>(
             this,
           );
           return pipe(this[DelegatingLike_delegate], ReadonlyObjectMap_keys());
@@ -230,8 +230,8 @@ const createAnimationGroupEventHandlerStream: <
         [KeyedCollectionLike_get](
           this: DelegatingLike<
             ReadonlyObjectMapLike<
-              EventSourceLike<{ type: TEventType; value: T }>,
-              TKey
+              TKey,
+              EventSourceLike<{ type: TEventType; value: T }>
             >
           >,
           index: TKey,
@@ -250,8 +250,8 @@ interface CreateAnimationGroupEventHandler {
     TKey extends string | symbol | number = string,
   >(
     animationGroup: ReadonlyObjectMapLike<
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+      TKey,
+      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
     >,
     options: { readonly mode: "switching"; readonly concurrency?: number },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
@@ -261,8 +261,8 @@ interface CreateAnimationGroupEventHandler {
     TKey extends string | symbol | number = string,
   >(
     animationGroup: ReadonlyObjectMapLike<
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+      TKey,
+      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
     >,
     options: { readonly mode: "blocking"; readonly concurrency?: number },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
@@ -272,8 +272,8 @@ interface CreateAnimationGroupEventHandler {
     TKey extends string | symbol | number = string,
   >(
     animationGroup: ReadonlyObjectMapLike<
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+      TKey,
+      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
     >,
     options: {
       readonly mode: "queueing";
@@ -288,8 +288,8 @@ interface CreateAnimationGroupEventHandler {
     TKey extends string | symbol | number = string,
   >(
     animationGroup: ReadonlyObjectMapLike<
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+      TKey,
+      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
     >,
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
 }
@@ -300,8 +300,8 @@ const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHand
     TKey extends string | symbol | number = string,
   >(
     animationGroup: ReadonlyObjectMapLike<
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+      TKey,
+      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
     >,
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";

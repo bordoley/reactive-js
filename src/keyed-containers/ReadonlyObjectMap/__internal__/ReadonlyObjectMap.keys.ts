@@ -13,7 +13,7 @@ const ReadonlyObjectMap_keys: Keys<ReadonlyObjectMapContainerLike>["keys"] =
   <
     TKey extends KeyOf<ReadonlyObjectMapContainerLike> = KeyOf<ReadonlyObjectMapContainerLike>,
   >() =>
-  (obj: ReadonlyObjectMapLike<unknown, TKey>): EnumeratorLike<TKey> => {
+  (obj: ReadonlyObjectMapLike<TKey, unknown>): EnumeratorLike<TKey> => {
     function* ReadonlyObjectMapKeys(): Iterator<TKey> {
       for (const key in obj) {
         if (hasOwn(obj, key)) {

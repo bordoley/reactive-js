@@ -35,11 +35,11 @@ export interface ReadonlyMapContainerLike<T = unknown, TKey = unknown> extends C
  * @noInheritDoc
  * @category Container
  */
-export type ReadonlyObjectMapLike<T = unknown, TKey extends symbol | number | string = string> = {
+export type ReadonlyObjectMapLike<TKey extends symbol | number | string = string, T = unknown> = {
     readonly [P in TKey]?: T;
 };
 export interface ReadonlyObjectMapContainerLike extends ContainerLike {
-    readonly [ContainerLike_type]?: ReadonlyObjectMapLike<this[typeof ContainerLike_T], NonNullable<this[typeof KeyedContainerLike_TKey]>>;
+    readonly [ContainerLike_type]?: ReadonlyObjectMapLike<NonNullable<this[typeof KeyedContainerLike_TKey]>, this[typeof ContainerLike_T]>;
     readonly [KeyedContainerLike_TKey]?: symbol | number | string;
 }
 /**

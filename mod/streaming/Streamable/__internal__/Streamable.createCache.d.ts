@@ -4,8 +4,8 @@ import { ObservableLike } from "../../../rx.js";
 import { CacheLike } from "../../../streaming.js";
 import { SchedulerLike } from "../../../util.js";
 declare const Streamable_createCache: <T>(persistentStore: Optional<{
-    load(keys: ReadonlySet<string>): ObservableLike<ReadonlyObjectMapLike<Optional<T>, string>>;
-    store(updates: ReadonlyObjectMapLike<T, string>): ObservableLike<void>;
+    load(keys: ReadonlySet<string>): ObservableLike<ReadonlyObjectMapLike<string, Optional<T>>>;
+    store(updates: ReadonlyObjectMapLike<string, T>): ObservableLike<void>;
 }>, options?: {
     readonly capacity?: number;
     readonly cleanupScheduler?: SchedulerLike;

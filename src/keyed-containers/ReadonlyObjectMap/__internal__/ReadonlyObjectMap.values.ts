@@ -15,7 +15,7 @@ const ReadonlyObjectMap_values: Values<ReadonlyObjectMapContainerLike>["values"]
       T,
       TKey extends KeyOf<ReadonlyObjectMapContainerLike> = KeyOf<ReadonlyObjectMapContainerLike>,
     >() =>
-    (obj: ReadonlyObjectMapLike<T, TKey>): EnumeratorLike<T> =>
+    (obj: ReadonlyObjectMapLike<TKey, T>): EnumeratorLike<T> =>
       pipe(
         obj,
         ReadonlyObjectMap_keys(),

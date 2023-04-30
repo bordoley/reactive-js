@@ -585,11 +585,11 @@ interface UseAnimationGroup {
   >(
     animationGroupFactory: Factory<
       ReadonlyObjectMapLike<
+        TKey,
         Function1<
           TEventType,
           AnimationConfig<T> | readonly AnimationConfig<T>[]
-        >,
-        TKey
+        >
       >
     >,
     deps: readonly unknown[],
@@ -616,11 +616,11 @@ interface UseAnimationGroup {
   >(
     animationGroupFactory: Factory<
       ReadonlyObjectMapLike<
+        TKey,
         Function1<
           TEventType,
           AnimationConfig<T> | readonly AnimationConfig<T>[]
-        >,
-        TKey
+        >
       >
     >,
     deps: readonly unknown[],
@@ -647,11 +647,11 @@ interface UseAnimationGroup {
   >(
     animationGroupFactory: Factory<
       ReadonlyObjectMapLike<
+        TKey,
         Function1<
           TEventType,
           AnimationConfig<T> | readonly AnimationConfig<T>[]
-        >,
-        TKey
+        >
       >
     >,
     deps: readonly unknown[],
@@ -678,11 +678,11 @@ interface UseAnimationGroup {
   >(
     animationGroupFactory: Factory<
       ReadonlyObjectMapLike<
+        TKey,
         Function1<
           TEventType,
           AnimationConfig<T> | readonly AnimationConfig<T>[]
-        >,
-        TKey
+        >
       >
     >,
     deps: readonly unknown[],
@@ -705,8 +705,8 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
 >(
   animationGroupFactory: Factory<
     ReadonlyObjectMapLike<
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>,
-      TKey
+      TKey,
+      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
     >
   >,
   deps: readonly unknown[],

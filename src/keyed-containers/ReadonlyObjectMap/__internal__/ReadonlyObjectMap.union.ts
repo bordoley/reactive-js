@@ -3,9 +3,9 @@ import { isNone } from "../../../functions.js";
 import { ReadonlyObjectMapLike } from "../../../keyed-containers.js";
 
 const ReadonlyObjectMap_union = <TKey extends string | symbol | number, T>(
-  m1: ReadonlyObjectMapLike<T, TKey>,
-  m2: ReadonlyObjectMapLike<T, TKey>,
-): ReadonlyObjectMapLike<T, TKey> => {
+  m1: ReadonlyObjectMapLike<TKey, T>,
+  m2: ReadonlyObjectMapLike<TKey, T>,
+): ReadonlyObjectMapLike<TKey, T> => {
   const result: Record<TKey, T> = create(null);
 
   for (const key in m1) {

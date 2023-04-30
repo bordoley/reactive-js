@@ -11,7 +11,7 @@ const ReadonlyObjectMap_keySet: KeySet<ReadonlyObjectMapContainerLike>["keySet"]
     <
       TKey extends KeyOf<ReadonlyObjectMapContainerLike> = KeyOf<ReadonlyObjectMapContainerLike>,
     >() =>
-    (obj: ReadonlyObjectMapLike<unknown, TKey>): ReadonlySet<TKey> => {
+    (obj: ReadonlyObjectMapLike<TKey, unknown>): ReadonlySet<TKey> => {
       const keys = new Set<TKey>();
 
       for (const key in obj) {

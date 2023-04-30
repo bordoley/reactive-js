@@ -30,7 +30,7 @@
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(): [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`T`, `NonNullable`<`Object`\>\>
+▸ **empty**<`T`, `TKey`\>(): [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>
 
 Return an ContainerLike that emits no items.
 
@@ -43,7 +43,7 @@ Return an ContainerLike that emits no items.
 
 #### Returns
 
-[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`T`, `NonNullable`<`Object`\>\>
+[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>
 
 ___
 
@@ -225,7 +225,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`T`, `NonNullable`<`Object`\>\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
@@ -236,7 +236,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`T`, `NonNullable`<`Object`\>\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 ___
 
@@ -274,7 +274,7 @@ ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`T`, `NonNullable`<`Object`\>\>, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -293,13 +293,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`T`, `NonNullable`<`Object`\>\>, `TAcc`\>
+[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, `TAcc`\>
 
 ___
 
 ### reduceWithKey
 
-▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`T`, `NonNullable`<`Object`\>\>, `TAcc`\>
+▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -318,13 +318,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`T`, `NonNullable`<`Object`\>\>, `TAcc`\>
+[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, `TAcc`\>
 
 ___
 
 ### values
 
-▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`T`, `any`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`any`, `T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -334,4 +334,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`T`, `any`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`any`, `T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>

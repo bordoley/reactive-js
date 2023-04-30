@@ -49,7 +49,7 @@
 
 ### ReadonlyObjectMapLike
 
-Ƭ **ReadonlyObjectMapLike**<`T`, `TKey`\>: { readonly [P in TKey]?: T }
+Ƭ **ReadonlyObjectMapLike**<`TKey`, `T`\>: { readonly [P in TKey]?: T }
 
 A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
 
@@ -59,8 +59,8 @@ A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerL
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `unknown` |
 | `TKey` | extends `symbol` \| `number` \| `string` = `string` |
+| `T` | `unknown` |
 
 ___
 
