@@ -25,7 +25,6 @@ export interface StreamLike<TReq, T, TEvents extends {
  * @typeparam TStream
  *
  * @noInheritDoc
- * @category Container
  */
 export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {
     /**
@@ -60,7 +59,6 @@ export interface CacheStreamLike<T> extends StreamLike<ReadonlyObjectMapLike<str
  * A container that returns a CacheStream when subscribed to.
  *
  * @noInheritDoc
- * @category Container
  */
 export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>, never, CacheStreamLike<T>> {
 }
@@ -76,7 +74,6 @@ export interface AnimationGroupEventHandlerStreamLike<TEventType, T, TKey extend
 /**
  *
  * @noInheritDoc
- * @category Container
  */
 export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends string | number | symbol> extends StreamableLike<TEventType, boolean, AnimationGroupEventHandlerStreamLike<TEventType, T, TKey>> {
 }
@@ -94,7 +91,6 @@ export interface AnimationEventHandlerStreamLike<TEventType, T> extends StreamLi
 /**
  *
  * @noInheritDoc
- * @category Container
  */
 export interface AnimationEventHandlerLike<TEventType, T> extends StreamableLike<TEventType, boolean, AnimationEventHandlerStreamLike<TEventType, T>> {
 }

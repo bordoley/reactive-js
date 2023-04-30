@@ -85,11 +85,8 @@ export interface ReadonlyArrayContainerLike<T = unknown>
 }
 
 /**
- * An interactive mutable `ContainerLike` that can be used to iterate
+ * An interactive mutable enumerator that can be used to iterate
  * over an underlying source of data.
- *
- * @noInheritDoc
- * @category Container
  */
 export interface EnumeratorLike<T = unknown> {
   /**
@@ -110,6 +107,10 @@ export interface EnumeratorLike<T = unknown> {
   [EnumeratorLike_move](): boolean;
 }
 
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface EnumeratorContainerLike<T = unknown>
   extends EnumeratorLike<T>,
     ContainerLike {

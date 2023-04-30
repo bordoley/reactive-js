@@ -4,8 +4,6 @@
 
 [rx](../modules/rx.md).RunnableContainerLike
 
-An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
-
 ## Type parameters
 
 | Name | Type |

@@ -4,15 +4,12 @@
 
 ## Table of contents
 
-### Container Interfaces
-
-- [WindowLocationLike](../interfaces/integrations_web.WindowLocationLike.md)
-
-### Other Interfaces
+### Interfaces
 
 - [Rect](../interfaces/integrations_web.Rect.md)
 - [ScrollState](../interfaces/integrations_web.ScrollState.md)
 - [ScrollValue](../interfaces/integrations_web.ScrollValue.md)
+- [WindowLocationLike](../interfaces/integrations_web.WindowLocationLike.md)
 - [WindowLocationURI](../interfaces/integrations_web.WindowLocationURI.md)
 
 ### Type Aliases

@@ -9,9 +9,6 @@
 - [KeyedContainerLike](../interfaces/keyed_containers.KeyedContainerLike.md)
 - [ReadonlyArrayContainerLike](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)
 - [ReadonlyMapContainerLike](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)
-
-### Other Interfaces
-
 - [ReadonlyObjectMapContainerLike](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md)
 
 ### TypeClass Interfaces
@@ -35,36 +32,14 @@
 - [ToReadonlyArray](../interfaces/keyed_containers.ToReadonlyArray.md)
 - [Values](../interfaces/keyed_containers.Values.md)
 
-### Container Type Aliases
-
-- [ReadonlyObjectMapLike](keyed_containers.md#readonlyobjectmaplike)
-
-### Other Type Aliases
+### Type Aliases
 
 - [KeyOf](keyed_containers.md#keyof)
 - [KeyedContainerOf](keyed_containers.md#keyedcontainerof)
 - [KeyedContainerOperator](keyed_containers.md#keyedcontaineroperator)
+- [ReadonlyObjectMapLike](keyed_containers.md#readonlyobjectmaplike)
 
-## Container Type Aliases
-
-### ReadonlyObjectMapLike
-
-Ƭ **ReadonlyObjectMapLike**<`TKey`, `T`\>: { readonly [P in TKey]?: T }
-
-A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
-
-**`No Inherit Doc`**
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `symbol` \| `number` \| `string` = `string` |
-| `T` | `unknown` |
-
-___
-
-## Other Type Aliases
+## Type Aliases
 
 ### KeyOf
 
@@ -108,3 +83,18 @@ Utility type for a generic operator function that transforms a Container's inner
 | `TKey` | `TKey` |
 | `TA` | `TA` |
 | `TB` | `TB` |
+
+___
+
+### ReadonlyObjectMapLike
+
+Ƭ **ReadonlyObjectMapLike**<`TKey`, `T`\>: { readonly [P in TKey]?: T }
+
+**`No Inherit Doc`**
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `symbol` \| `number` \| `string` = `string` |
+| `T` | `unknown` |

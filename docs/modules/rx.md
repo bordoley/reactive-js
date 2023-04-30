@@ -13,20 +13,20 @@
 
 ### Container Interfaces
 
-- [EnumerableLike](../interfaces/rx.EnumerableLike.md)
-- [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
-- [ObservableLike](../interfaces/rx.ObservableLike.md)
-- [PauseableObservableLike](../interfaces/rx.PauseableObservableLike.md)
-- [PublisherLike](../interfaces/rx.PublisherLike.md)
+- [EnumerableContainerLike](../interfaces/rx.EnumerableContainerLike.md)
+- [ObservableContainerLike](../interfaces/rx.ObservableContainerLike.md)
 - [RunnableContainerLike](../interfaces/rx.RunnableContainerLike.md)
-- [RunnableLike](../interfaces/rx.RunnableLike.md)
 
 ### Other Interfaces
 
-- [EnumerableContainerLike](../interfaces/rx.EnumerableContainerLike.md)
-- [ObservableContainerLike](../interfaces/rx.ObservableContainerLike.md)
+- [EnumerableLike](../interfaces/rx.EnumerableLike.md)
+- [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
+- [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 - [PauseableObservableContainerLike](../interfaces/rx.PauseableObservableContainerLike.md)
+- [PauseableObservableLike](../interfaces/rx.PauseableObservableLike.md)
+- [PublisherLike](../interfaces/rx.PublisherLike.md)
+- [RunnableLike](../interfaces/rx.RunnableLike.md)
 
 ### TypeClass Interfaces
 

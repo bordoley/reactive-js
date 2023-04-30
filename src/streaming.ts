@@ -44,7 +44,6 @@ export interface StreamLike<
  * @typeparam TStream
  *
  * @noInheritDoc
- * @category Container
  */
 export interface StreamableLike<
   TReq,
@@ -94,7 +93,6 @@ export interface CacheStreamLike<T>
  * A container that returns a CacheStream when subscribed to.
  *
  * @noInheritDoc
- * @category Container
  */
 export interface CacheLike<T>
   extends StreamableLike<
@@ -117,7 +115,6 @@ export interface AnimationGroupEventHandlerStreamLike<
 /**
  *
  * @noInheritDoc
- * @category Container
  */
 export interface AnimationGroupEventHandlerLike<
   TEventType,
@@ -145,7 +142,6 @@ export interface AnimationEventHandlerStreamLike<TEventType, T>
 /**
  *
  * @noInheritDoc
- * @category Container
  */
 export interface AnimationEventHandlerLike<TEventType, T>
   extends StreamableLike<

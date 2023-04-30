@@ -4,7 +4,7 @@
 
 [keyed-containers](../modules/keyed_containers.md).ReadonlyObjectMapContainerLike
 
-Base type for all Containers.
+A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
 
 ## Hierarchy
 
@@ -16,21 +16,10 @@ Base type for all Containers.
 
 ### Properties
 
-- [[\_\_\_ContainerLike\_T]](keyed_containers.ReadonlyObjectMapContainerLike.md#[___containerlike_t])
 - [[\_\_\_ContainerLike\_type]](keyed_containers.ReadonlyObjectMapContainerLike.md#[___containerlike_type])
 - [[\_\_\_KeyedContainerLike\_TKey]](keyed_containers.ReadonlyObjectMapContainerLike.md#[___keyedcontainerlike_tkey])
 
 ## Properties
-
-### [\_\_\_ContainerLike\_T]
-
-• `Optional` `Readonly` **[\_\_\_ContainerLike\_T]**: `unknown`
-
-#### Inherited from
-
-[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_T]](containers.ContainerLike.md#[___containerlike_t])
-
-___
 
 ### [\_\_\_ContainerLike\_type]
 

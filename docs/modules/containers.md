@@ -8,14 +8,14 @@
 
 - [AsyncIterableContainerLike](../interfaces/containers.AsyncIterableContainerLike.md)
 - [ContainerLike](../interfaces/containers.ContainerLike.md)
-- [EnumeratorLike](../interfaces/containers.EnumeratorLike.md)
+- [EnumeratorContainerLike](../interfaces/containers.EnumeratorContainerLike.md)
 - [IterableContainerLike](../interfaces/containers.IterableContainerLike.md)
 - [PromiseContainerLike](../interfaces/containers.PromiseContainerLike.md)
 - [ReadonlyArrayContainerLike](../interfaces/containers.ReadonlyArrayContainerLike.md)
 
 ### Other Interfaces
 
-- [EnumeratorContainerLike](../interfaces/containers.EnumeratorContainerLike.md)
+- [EnumeratorLike](../interfaces/containers.EnumeratorLike.md)
 
 ### TypeClass Interfaces
 

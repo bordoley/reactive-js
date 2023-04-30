@@ -23,7 +23,6 @@ export interface ObserverLike<T = unknown> extends DispatcherLike<T>, Disposable
  * The source of notifications which can be consumed by an `ObserverLike` instance.
  *
  * @noInheritDoc
- * @category Container
  */
 export interface ObservableLike<T = unknown> {
     /**
@@ -42,6 +41,10 @@ export interface ObservableLike<T = unknown> {
      */
     [ObservableLike_observe](observer: ObserverLike<T>): void;
 }
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface ObservableContainerLike<T = unknown> extends ObservableLike<T>, ContainerLike {
     readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
 }
@@ -49,14 +52,11 @@ export interface ObservableContainerLike<T = unknown> extends ObservableLike<T>,
  * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
  *
  * @noInheritDoc
- * @category Container
  */
 export interface RunnableLike<T = unknown> extends ObservableLike<T> {
     readonly [ObservableLike_isRunnable]: true;
 }
 /**
- * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
- *
  * @noInheritDoc
  * @category Container
  */
@@ -67,11 +67,14 @@ export interface RunnableContainerLike<T = unknown> extends RunnableLike<T>, Con
  * An `ObservableLike` that supports interactive enumeration.
  *
  * @noInheritDoc
- * @category Container
  */
 export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
     readonly [ObservableLike_isEnumerable]: true;
 }
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface EnumerableContainerLike<T = unknown> extends EnumerableLike<T>, ContainerLike {
     readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
 }
@@ -79,7 +82,6 @@ export interface EnumerableContainerLike<T = unknown> extends EnumerableLike<T>,
  * A stateful ObservableLike resource.
  *
  * @noInheritDoc
- * @category Container
  */
 export interface MulticastObservableLike<T> extends ObservableLike<T> {
     readonly [ObservableLike_isEnumerable]: false;
@@ -90,7 +92,6 @@ export interface MulticastObservableLike<T> extends ObservableLike<T> {
  * An `EventListener` that can be used to publish notifications to one or more observers.
  *
  * @noInheritDoc
- * @category Container
  */
 export interface PublisherLike<T = unknown> extends ErrorSafeEventListenerLike<T>, MulticastObservableLike<T> {
     /**
@@ -103,7 +104,6 @@ export interface PublisherLike<T = unknown> extends ErrorSafeEventListenerLike<T
  * via the pause and resume methods.
  *
  * @noInheritDoc
- * @category Container
  */
 export interface PauseableObservableLike<T = unknown> extends ObservableLike<T>, PauseableLike {
     readonly [ObservableLike_isEnumerable]: false;

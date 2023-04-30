@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Container Interfaces
+### Other Interfaces
 
 - [AnimationEventHandlerLike](../interfaces/streaming.AnimationEventHandlerLike.md)
 - [AnimationGroupEventHandlerLike](../interfaces/streaming.AnimationGroupEventHandlerLike.md)

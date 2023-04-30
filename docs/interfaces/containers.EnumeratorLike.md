@@ -4,7 +4,7 @@
 
 [containers](../modules/containers.md).EnumeratorLike
 
-An interactive mutable `ContainerLike` that can be used to iterate
+An interactive mutable enumerator that can be used to iterate
 over an underlying source of data.
 
 ## Type parameters

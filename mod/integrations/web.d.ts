@@ -13,7 +13,6 @@ export interface WindowLocationURI {
 }
 /**
  * @noInheritDoc
- * @category Container
  */
 export interface WindowLocationLike extends MulticastObservableLike<WindowLocationURI> {
     readonly [WindowLocationLike_canGoBack]: ObservableLike<boolean>;
