@@ -71,6 +71,9 @@ export interface CollectionLike {
 export interface KeyedCollectionLike<TKey = unknown, T = unknown> extends CollectionLike {
     [KeyedCollectionLike_get](index: TKey): T;
 }
+/**
+ * @noInheritDoc
+ */
 export interface AssociativeCollectionLike<TKey = unknown, T = unknown> extends KeyedCollectionLike<TKey, T> {
     readonly [AssociativeCollectionLike_keys]: EnumeratorLike<TKey>;
 }
@@ -81,6 +84,7 @@ export interface DictionaryLike<TKey = unknown, T = unknown> extends Associative
 }
 /**
  * @noInheritDoc
+ * @category Container
  */
 export interface DictionaryContainerLike<T = unknown, TKey = unknown> extends DictionaryLike<T, TKey>, KeyedContainerLike {
     readonly [ContainerLike_type]?: DictionaryLike<this[typeof KeyedContainerLike_TKey], this[typeof ContainerLike_T]>;
@@ -109,11 +113,15 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
 export interface ErrorSafeEventListenerLike<T = unknown> extends EventListenerLike<T> {
     readonly [EventListenerLike_isErrorSafe]: true;
 }
+/**
+ * @noInheritDoc
+ */
 export interface EventSourceLike<T = unknown> {
     [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
 }
 /**
  * @noInheritDoc
+ * @category Container
  */
 export interface EventSourceContainerLike<T = unknown> extends EventSourceLike<T>, ContainerLike {
     readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
@@ -140,6 +148,9 @@ export interface DispatcherLike<T = unknown, TEvents extends {
      */
     [DispatcherLike_complete](): void;
 }
+/**
+ * @noInheritDoc
+ */
 export interface PauseableLike {
     /**
      * Boolean flag indicating if the PauseableLike is currently paused or not.
@@ -159,6 +170,7 @@ export interface PauseableLike {
  * cooperative multi-tasking.
  *
  * @noInheritDoc
+ * @category Scheduler
  */
 export interface SchedulerLike {
     /**
@@ -214,6 +226,7 @@ export interface SchedulerLike {
  * of it's run loop.
  *
  * @noInheritDoc
+ * @category Scheduler
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
 }
@@ -221,6 +234,7 @@ export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {
  * A non-concurrent scheduler that simulates time but executes synchronously.
  *
  * @noInheritDoc
+ * @category Scheduler
  */
 export interface VirtualTimeSchedulerLike extends SchedulerLike, DisposableLike {
     /**
