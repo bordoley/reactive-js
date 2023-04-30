@@ -1,7 +1,7 @@
 import { __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
-import { MulticastObservableLike, ObservableLike } from "./rx.js";
+import { MulticastObservableLike, ObservableLike, PauseableObservableLike } from "./rx.js";
 import { AssociativeCollectionLike, DictionaryLike, DispatcherLike, DisposableLike, EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { StreamableLike_stream, StreamLike_scheduler };
 /**
@@ -66,7 +66,7 @@ export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Fun
  * @noInheritDoc
  * @category Stream
  */
-export interface AnimationGroupEventHandlerStreamLike<TEventType, T, TKey extends string | number | symbol> extends StreamLike<TEventType, boolean>, DictionaryLike<TKey, EventSourceLike<{
+export interface AnimationGroupEventHandlerStreamLike<TEventType, T, TKey extends string | number | symbol> extends StreamLike<TEventType, boolean>, PauseableObservableLike<boolean>, DictionaryLike<TKey, EventSourceLike<{
     type: TEventType;
     value: T;
 }>> {
@@ -86,7 +86,7 @@ export interface AnimationEventHandlerStreamLike<TEventType, T> extends StreamLi
     value: T;
 } & {
     type: "wait" | "drain" | "complete";
-}> {
+}>, PauseableObservableLike<boolean> {
 }
 /**
  *

@@ -5,11 +5,26 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { Function1, Optional, none, pipe } from "../../../functions.js";
-import { AnimationConfig } from "../../../rx.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.js";
+import {
+  Function1,
+  Optional,
+  none,
+  pipe,
+  unsafeCast,
+} from "../../../functions.js";
+import {
+  AnimationConfig,
+  PauseableObservableLike,
+  PauseableObservableLike_isPaused,
+} from "../../../rx.js";
 import {
   AnimationEventHandlerLike,
   AnimationEventHandlerStreamLike,
+  AnimationGroupEventHandlerStreamLike,
   StreamableLike_stream,
 } from "../../../streaming.js";
 import {
@@ -19,6 +34,9 @@ import {
   EventSourceLike,
   EventSourceLike_addEventListener,
   KeyedCollectionLike_get,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
@@ -62,7 +80,14 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
           Delegating_mixin(),
         ),
         function AnimationEventHandlerStream(
-          instance: TProperties,
+          instance: TProperties &
+            Pick<
+              PauseableObservableLike,
+              | typeof PauseableObservableLike_isPaused
+              | typeof PauseableLike_isPaused
+              | typeof PauseableLike_pause
+              | typeof PauseableLike_resume
+            >,
           animation: Function1<
             TEventType,
             AnimationConfig<T> | readonly AnimationConfig<T>[]
@@ -115,6 +140,42 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
           publisher: none,
         }),
         {
+          get [PauseableObservableLike_isPaused]() {
+            unsafeCast<
+              DelegatingLike<
+                AnimationGroupEventHandlerStreamLike<TEventType, T, "v">
+              >
+            >(this);
+            return this[DelegatingLike_delegate][
+              PauseableObservableLike_isPaused
+            ];
+          },
+
+          get [PauseableLike_isPaused](): boolean {
+            unsafeCast<
+              DelegatingLike<
+                AnimationGroupEventHandlerStreamLike<TEventType, T, "v">
+              >
+            >(this);
+            return this[DelegatingLike_delegate][PauseableLike_isPaused];
+          },
+
+          [PauseableLike_pause](
+            this: DelegatingLike<
+              AnimationGroupEventHandlerStreamLike<TEventType, T, "v">
+            >,
+          ) {
+            this[DelegatingLike_delegate][PauseableLike_pause]();
+          },
+
+          [PauseableLike_resume](
+            this: DelegatingLike<
+              AnimationGroupEventHandlerStreamLike<TEventType, T, "v">
+            >,
+          ) {
+            this[DelegatingLike_delegate][PauseableLike_resume]();
+          },
+
           [EventSourceLike_addEventListener](
             this: TProperties,
             listener: EventListenerLike<

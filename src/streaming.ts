@@ -2,10 +2,13 @@ import {
   __StreamLike_scheduler as StreamLike_scheduler,
   __StreamableLike_stream as StreamableLike_stream,
 } from "./__internal__/symbols.js";
-
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
-import { MulticastObservableLike, ObservableLike } from "./rx.js";
+import {
+  MulticastObservableLike,
+  ObservableLike,
+  PauseableObservableLike,
+} from "./rx.js";
 import {
   AssociativeCollectionLike,
   DictionaryLike,
@@ -110,6 +113,7 @@ export interface AnimationGroupEventHandlerStreamLike<
   T,
   TKey extends string | number | symbol,
 > extends StreamLike<TEventType, boolean>,
+    PauseableObservableLike<boolean>,
     DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>> {}
 
 /**
@@ -132,12 +136,13 @@ export interface AnimationGroupEventHandlerLike<
  */
 export interface AnimationEventHandlerStreamLike<TEventType, T>
   extends StreamLike<
-    TEventType,
-    boolean,
-    { type: TEventType; value: T } & {
-      type: "wait" | "drain" | "complete";
-    }
-  > {}
+      TEventType,
+      boolean,
+      { type: TEventType; value: T } & {
+        type: "wait" | "drain" | "complete";
+      }
+    >,
+    PauseableObservableLike<boolean> {}
 
 /**
  *
