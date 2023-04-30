@@ -42,7 +42,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorContainerLike`](../interfaces/containers.EnumeratorContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -61,13 +61,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorContainerLike`](../interfaces/containers.EnumeratorContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorContainerLike`](../interfaces/containers.EnumeratorContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -95,13 +95,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorContainerLike`](../interfaces/containers.EnumeratorContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorContainerLike`](../interfaces/containers.EnumeratorContainerLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -118,9 +118,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorContainerLike`](../interfaces/containers.EnumeratorContainerLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorContainerLike`](../interfaces/containers.EnumeratorContainerLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -139,9 +139,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorContainerLike`](../interfaces/containers.EnumeratorContainerLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorContainerLike`](../interfaces/containers.EnumeratorContainerLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -162,7 +162,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EnumeratorContainerLike`](../interfaces/containers.EnumeratorContainerLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 

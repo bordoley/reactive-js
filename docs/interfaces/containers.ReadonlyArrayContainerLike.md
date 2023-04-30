@@ -30,7 +30,7 @@ A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerL
 
 ### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`ReadonlyArrayContainerLike`](containers.ReadonlyArrayContainerLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: readonly `unknown`[]
 
 #### Overrides
 

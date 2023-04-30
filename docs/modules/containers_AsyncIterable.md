@@ -17,7 +17,7 @@
 
 ### identity
 
-▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncIterableContainerLike`](../interfaces/containers.AsyncIterableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -27,7 +27,7 @@
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`AsyncIterableContainerLike`](../interfaces/containers.AsyncIterableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 ### flow
 
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -54,13 +54,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -70,4 +70,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`AsyncIterableLike`](../interfaces/containers.AsyncIterableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>

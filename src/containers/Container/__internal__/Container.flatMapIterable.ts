@@ -3,7 +3,6 @@ import {
   ContainerLike,
   ContainerOperator,
   FromIterable,
-  IterableLike,
 } from "../../../containers.js";
 import { Function1, compose } from "../../../functions.js";
 
@@ -13,7 +12,7 @@ const Container_flatMapIterable =
     fromIterable: FromIterable<C>["fromIterable"],
   ) =>
   <TA, TB>(
-    selector: Function1<TA, IterableLike<TB>>,
+    selector: Function1<TA, Iterable<TB>>,
   ): ContainerOperator<C, TA, TB> =>
     concatMap(compose(selector, fromIterable<TB>()));
 

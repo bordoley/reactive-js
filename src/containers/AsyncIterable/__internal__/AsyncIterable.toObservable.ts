@@ -1,4 +1,4 @@
-import { AsyncIterableLike } from "../../../containers.js";
+import { AsyncIterableContainerLike } from "../../../containers.js";
 import { error, pipe } from "../../../functions.js";
 import { ObserverLike, ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
@@ -13,10 +13,10 @@ import {
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
-const AsyncIterable_toObservable: ToObservable<AsyncIterableLike>["toObservable"] =
+const AsyncIterable_toObservable: ToObservable<AsyncIterableContainerLike>["toObservable"] =
 
     <T>() =>
-    (iterable: AsyncIterableLike<T>) =>
+    (iterable: AsyncIterable<T>) =>
       Observable_create<T>((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();
         const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];

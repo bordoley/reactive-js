@@ -242,7 +242,7 @@ ___
 
 ### keySet
 
-▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<{}, [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`TKey`\>\>
+▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<{}, `ReadonlySet`<`TKey`\>\>
 
 #### Type parameters
 
@@ -252,7 +252,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<{}, [`ReadonlySetLike`](../interfaces/containers.ReadonlySetLike.md)<`TKey`\>\>
+[`Function1`](functions.md#function1)<{}, `ReadonlySet`<`TKey`\>\>
 
 ___
 

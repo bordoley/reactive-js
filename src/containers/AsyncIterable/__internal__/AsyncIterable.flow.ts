@@ -1,4 +1,4 @@
-import { AsyncIterableLike } from "../../../containers.js";
+import { AsyncIterableContainerLike } from "../../../containers.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
 import {
   Flow,
@@ -25,7 +25,7 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 
-const AsyncIterable_flow: Flow<AsyncIterableLike>["flow"] =
+const AsyncIterable_flow: Flow<AsyncIterableContainerLike>["flow"] =
   <T>(
     scheduler: SchedulerLike,
     options?: {
@@ -33,7 +33,7 @@ const AsyncIterable_flow: Flow<AsyncIterableLike>["flow"] =
       readonly capacity?: number;
     },
   ) =>
-  (iterable: AsyncIterableLike<T>) => {
+  (iterable: AsyncIterable<T>) => {
     const op = (modeObs: ObservableLike<boolean>) =>
       Observable_create((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();

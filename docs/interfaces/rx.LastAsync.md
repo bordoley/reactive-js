@@ -20,7 +20,7 @@
 
 ### lastAsync
 
-▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`PromiseableLike`](containers.PromiseableLike.md)<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -30,9 +30,9 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`PromiseableLike`](containers.PromiseableLike.md)<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
 
-▸ **lastAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`PromiseableLike`](containers.PromiseableLike.md)<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+▸ **lastAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -51,4 +51,4 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`PromiseableLike`](containers.PromiseableLike.md)<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>

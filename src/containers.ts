@@ -42,8 +42,10 @@ export interface ContainerLike {
  * @noInheritDoc
  * @category Container
  */
-export interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
-  readonly [ContainerLike_type]?: IterableLike<this[typeof ContainerLike_T]>;
+export interface IterableContainerLike<T = unknown>
+  extends ContainerLike,
+    Iterable<T> {
+  readonly [ContainerLike_type]?: Iterable<this[typeof ContainerLike_T]>;
 }
 
 /**
@@ -52,12 +54,10 @@ export interface IterableLike<T = unknown> extends ContainerLike, Iterable<T> {
  * @noInheritDoc
  * @category Container
  */
-export interface AsyncIterableLike<T = unknown>
+export interface AsyncIterableContainerLike<T = unknown>
   extends ContainerLike,
     AsyncIterable<T> {
-  readonly [ContainerLike_type]?: AsyncIterableLike<
-    this[typeof ContainerLike_T]
-  >;
+  readonly [ContainerLike_type]?: AsyncIterable<this[typeof ContainerLike_T]>;
 }
 
 /**
@@ -66,10 +66,10 @@ export interface AsyncIterableLike<T = unknown>
  * @noInheritDoc
  * @category Container
  */
-export interface PromiseableLike<T = unknown>
+export interface PromiseContainerLike<T = unknown>
   extends ContainerLike,
     PromiseLike<T> {
-  readonly [ContainerLike_type]?: PromiseableLike<this[typeof ContainerLike_T]>;
+  readonly [ContainerLike_type]?: PromiseLike<this[typeof ContainerLike_T]>;
 }
 
 /**
@@ -81,18 +81,7 @@ export interface PromiseableLike<T = unknown>
 export interface ReadonlyArrayContainerLike<T = unknown>
   extends ContainerLike,
     ReadonlyArray<T> {
-  readonly [ContainerLike_type]?: ReadonlyArrayContainerLike<
-    this[typeof ContainerLike_T]
-  >;
-}
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface ReadonlySetLike<T = unknown>
-  extends ContainerLike,
-    ReadonlySet<T> {
-  readonly [ContainerLike_type]?: ReadonlySetLike<this[typeof ContainerLike_T]>;
+  readonly [ContainerLike_type]?: ReadonlyArray<this[typeof ContainerLike_T]>;
 }
 
 /**
@@ -102,9 +91,7 @@ export interface ReadonlySetLike<T = unknown>
  * @noInheritDoc
  * @category Container
  */
-export interface EnumeratorLike<T = unknown> extends ContainerLike {
-  readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]>;
-
+export interface EnumeratorLike<T = unknown> {
   /**
    * Returns the element if present.
    */
@@ -121,6 +108,12 @@ export interface EnumeratorLike<T = unknown> extends ContainerLike {
    * @returns true if successful, otherwise false.
    */
   [EnumeratorLike_move](): boolean;
+}
+
+export interface EnumeratorContainerLike<T = unknown>
+  extends EnumeratorLike<T>,
+    ContainerLike {
+  readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]>;
 }
 
 /**
@@ -283,7 +276,7 @@ export interface EndWith<C extends ContainerLike> {
  */
 export interface Enumerate<
   C extends ContainerLike,
-  CEnumerator extends EnumeratorLike = EnumeratorLike,
+  CEnumerator extends EnumeratorContainerLike = EnumeratorContainerLike,
 > {
   /**
    *
@@ -331,7 +324,7 @@ export interface FlatMapIterable<C extends ContainerLike> {
    * @category Operator
    */
   flatMapIterable: <TA, TB>(
-    selector: Function1<TA, IterableLike<TB>>,
+    selector: Function1<TA, Iterable<TB>>,
   ) => ContainerOperator<C, TA, TB>;
 }
 
@@ -827,7 +820,7 @@ export interface ToIterable<C extends ContainerLike> {
    *
    * @category Transform
    */
-  toIterable<T>(): Function1<ContainerOf<C, T>, IterableLike<T>>;
+  toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 }
 
 /**

@@ -15,15 +15,14 @@ over an underlying source of data.
 
 ## Hierarchy
 
-- [`ContainerLike`](containers.ContainerLike.md)
+- **`EnumeratorLike`**
 
-  ↳ **`EnumeratorLike`**
+  ↳ [`EnumeratorContainerLike`](containers.EnumeratorContainerLike.md)
 
 ## Table of contents
 
 ### Properties
 
-- [[\_\_\_ContainerLike\_type]](containers.EnumeratorLike.md#[___containerlike_type])
 - [[\_\_\_EnumeratorLike\_current]](containers.EnumeratorLike.md#[___enumeratorlike_current])
 - [[\_\_\_EnumeratorLike\_hasCurrent]](containers.EnumeratorLike.md#[___enumeratorlike_hascurrent])
 
@@ -32,16 +31,6 @@ over an underlying source of data.
 - [[\_\_\_EnumeratorLike\_move]](containers.EnumeratorLike.md#[___enumeratorlike_move])
 
 ## Properties
-
-### [\_\_\_ContainerLike\_type]
-
-• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`EnumeratorLike`](containers.EnumeratorLike.md)<`unknown`\>
-
-#### Overrides
-
-[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
-
-___
 
 ### [\_\_\_EnumeratorLike\_current]
 

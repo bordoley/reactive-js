@@ -10,17 +10,15 @@ Base type for all Containers.
 
 - **`ContainerLike`**
 
-  ↳ [`IterableLike`](containers.IterableLike.md)
+  ↳ [`IterableContainerLike`](containers.IterableContainerLike.md)
 
-  ↳ [`AsyncIterableLike`](containers.AsyncIterableLike.md)
+  ↳ [`AsyncIterableContainerLike`](containers.AsyncIterableContainerLike.md)
 
-  ↳ [`PromiseableLike`](containers.PromiseableLike.md)
+  ↳ [`PromiseContainerLike`](containers.PromiseContainerLike.md)
 
   ↳ [`ReadonlyArrayContainerLike`](containers.ReadonlyArrayContainerLike.md)
 
-  ↳ [`ReadonlySetLike`](containers.ReadonlySetLike.md)
-
-  ↳ [`EnumeratorLike`](containers.EnumeratorLike.md)
+  ↳ [`EnumeratorContainerLike`](containers.EnumeratorContainerLike.md)
 
   ↳ [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md)
 

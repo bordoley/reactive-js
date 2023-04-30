@@ -30,7 +30,7 @@
 
 ### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`DictionaryContainerLike`](util.DictionaryContainerLike.md)<`unknown`, `unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`DictionaryLike`](util.DictionaryLike.md)<`unknown`, `unknown`\>
 
 #### Overrides
 

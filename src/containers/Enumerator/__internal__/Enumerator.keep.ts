@@ -14,6 +14,7 @@ import {
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
 import {
+  EnumeratorContainerLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -23,7 +24,9 @@ import {
 import { Predicate, none, unsafeCast } from "../../../functions.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 
-const Enumerator_keep: Keep<EnumeratorLike>["keep"] = /*@__PURE__*/ (<T>() => {
+const Enumerator_keep: Keep<EnumeratorContainerLike>["keep"] = /*@__PURE__*/ (<
+  T,
+>() => {
   const createKeepEnumerator = createInstanceFactory(
     mix(
       include(Delegating_mixin()),

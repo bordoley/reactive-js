@@ -20,7 +20,7 @@
 
 ### flatMapIterable
 
-• **flatMapIterable**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`IterableLike`](containers.IterableLike.md)<`TB`\>\>) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
+• **flatMapIterable**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\>) => [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type declaration
 
@@ -37,7 +37,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`IterableLike`](containers.IterableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
 
 ##### Returns
 

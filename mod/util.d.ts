@@ -83,7 +83,7 @@ export interface DictionaryLike<T = unknown, TKey = unknown> extends Associative
  * @noInheritDoc
  */
 export interface DictionaryContainerLike<T = unknown, TKey = unknown> extends DictionaryLike<T, TKey>, KeyedContainerLike {
-    readonly [ContainerLike_type]?: DictionaryContainerLike<this[typeof ContainerLike_T], this[typeof KeyedContainerLike_TKey]>;
+    readonly [ContainerLike_type]?: DictionaryLike<this[typeof ContainerLike_T], this[typeof KeyedContainerLike_TKey]>;
     readonly [KeyedContainerLike_TKey]?: unknown;
 }
 /**
@@ -116,7 +116,7 @@ export interface EventSourceLike<T = unknown> {
  * @noInheritDoc
  */
 export interface EventSourceContainerLike<T = unknown> extends EventSourceLike<T>, ContainerLike {
-    readonly [ContainerLike_type]?: EventSourceContainerLike<this[typeof ContainerLike_T]>;
+    readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
 }
 /**
  * @noInheritDoc

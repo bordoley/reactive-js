@@ -4,6 +4,7 @@ import {
   ConcatAll,
   ConcatMap,
   ConcatWith,
+  ContainerLike,
   ContainerLike_T,
   ContainerLike_type,
   Contains,
@@ -176,7 +177,10 @@ export const enqueue: Enqueue<EnumerableContainerLike>["enqueue"] =
 export const endWith: EndWith<EnumerableContainerLike>["endWith"] =
   Observable_endWith;
 
-interface EnumerableEnumerator<T = unknown> extends EnumeratorLike<T> {
+interface EnumerableEnumerator<T = unknown>
+  extends EnumeratorLike<T>,
+    DisposableLike,
+    ContainerLike {
   readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]> &
     DisposableLike;
 }

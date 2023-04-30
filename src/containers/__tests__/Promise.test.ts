@@ -7,10 +7,10 @@ import {
 } from "../../__internal__/testing.js";
 import { Optional, newInstance, pipe } from "../../functions.js";
 import * as Observable from "../../rx/Observable.js";
-import * as Promiseable from "../Promiseable.js";
+import * as PromiseT from "../Promise.js";
 
 testModule(
-  "Promiseable",
+  "Promise",
   describe(
     "toObservable",
     testAsync("when the promise resolves", async () => {
@@ -18,7 +18,7 @@ testModule(
 
       const result = await pipe(
         promise,
-        Promiseable.toObservable(),
+        PromiseT.toObservable(),
         Observable.lastAsync(),
       );
       pipe(result, expectEquals<Optional<number>>(1));
@@ -28,7 +28,7 @@ testModule(
       const promise = Promise.reject(error);
 
       await pipe(
-        pipe(promise, Promiseable.toObservable(), Observable.lastAsync()),
+        pipe(promise, PromiseT.toObservable(), Observable.lastAsync()),
         expectPromiseToThrow,
       );
     }),

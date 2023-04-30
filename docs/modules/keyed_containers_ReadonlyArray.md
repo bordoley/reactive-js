@@ -583,7 +583,7 @@ ___
 
 ### toIterable
 
-▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
+▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, `Iterable`<`T`\>\>
 
 #### Type parameters
 
@@ -601,7 +601,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, `Iterable`<`T`\>\>
 
 ___
 

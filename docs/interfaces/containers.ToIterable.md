@@ -20,7 +20,7 @@
 
 ### toIterable
 
-▸ **toIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`IterableLike`](containers.IterableLike.md)<`T`\>\>
+▸ **toIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>
 
 Converts the ContainerLike to a `IterableLike`.
 
@@ -32,4 +32,4 @@ Converts the ContainerLike to a `IterableLike`.
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`IterableLike`](containers.IterableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>

@@ -1,4 +1,4 @@
-import { EnumeratorLike, EverySatisfy, First, FromIterable, FromOptional, IterableLike, Last, SomeSatisfy } from "../containers.js";
+import { EnumeratorLike, EverySatisfy, First, FromIterable, FromOptional, Last, SomeSatisfy } from "../containers.js";
 import type * as Containers from "../containers.js";
 import { Function1 } from "../functions.js";
 import { Empty, Entries, ForEach, ForEachWithKey, FromReadonlyArray, Identity, Keep, KeepType, KeepWithKey, Map, MapWithKey, ReadonlyArrayContainerLike, ToReadonlyArray } from "../keyed-containers.js";
@@ -7,7 +7,7 @@ import type * as Rx from "../rx.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../util.js";
 export declare const empty: Empty<ReadonlyArrayContainerLike>["empty"];
 export declare const entries: Entries<ReadonlyArrayContainerLike>["entries"];
-interface Enumerate extends Containers.Enumerate<ReadonlyArrayContainerLike, EnumeratorLike> {
+interface Enumerate extends Containers.Enumerate<ReadonlyArrayContainerLike> {
     /**
      *
      * @category Transform
@@ -64,7 +64,7 @@ interface ToIterable extends Containers.ToIterable<ReadonlyArrayContainerLike> {
     toIterable<T>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): Function1<ReadonlyArrayContainerLike<T>, IterableLike<T>>;
+    }): Function1<ReadonlyArrayContainerLike<T>, Iterable<T>>;
 }
 export declare const toIterable: ToIterable["toIterable"];
 interface ToObservable extends Rx.ToObservable<ReadonlyArrayContainerLike> {

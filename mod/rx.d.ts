@@ -1,5 +1,5 @@
 import { __MulticastObservableLike_buffer as MulticastObservableLike_buffer, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PauseableObservableLike_isPaused as PauseableObservableLike_isPaused, __PublisherLike_observerCount as PublisherLike_observerCount } from "./__internal__/symbols.js";
-import { ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator, PromiseableLike } from "./containers.js";
+import { ContainerLike, ContainerLike_T, ContainerLike_type, ContainerOf, ContainerOperator } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
 import { DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, IndexedBufferCollectionLike, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { PauseableObservableLike_isPaused, MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, };
@@ -312,7 +312,7 @@ export interface FirstAsync<C extends ContainerLike> {
      *
      * @category Transform
      */
-    firstAsync<T>(): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+    firstAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
     /**
      *
      * @category Transform
@@ -320,7 +320,7 @@ export interface FirstAsync<C extends ContainerLike> {
     firstAsync<T>(scheduler: SchedulerLike, options?: {
         capacity?: number;
         backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+    }): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
 }
 /**
  * @noInheritDoc
@@ -408,7 +408,7 @@ export interface LastAsync<C extends ContainerLike> {
      *
      * @category Transform
      */
-    lastAsync<T>(): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+    lastAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
     /**
      *
      * @category Transform
@@ -416,7 +416,7 @@ export interface LastAsync<C extends ContainerLike> {
     lastAsync<T>(scheduler: SchedulerLike, options?: {
         capacity?: number;
         backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+    }): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
 }
 /**
  * @noInheritDoc

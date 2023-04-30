@@ -20,7 +20,7 @@
 
 ### keySet
 
-▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, [`ReadonlySetLike`](containers.ReadonlySetLike.md)<`TKey`\>\>
+▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 #### Type parameters
 
@@ -30,4 +30,4 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, [`ReadonlySetLike`](containers.ReadonlySetLike.md)<`TKey`\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>

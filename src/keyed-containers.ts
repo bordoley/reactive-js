@@ -4,7 +4,6 @@ import {
   ContainerLike_T,
   ContainerLike_type,
   EnumeratorLike,
-  ReadonlySetLike,
 } from "./containers.js";
 
 import {
@@ -294,7 +293,7 @@ export interface KeySet<C extends KeyedContainerLike> {
    */
   keySet<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
     KeyedContainerOf<C, TKey, unknown>,
-    ReadonlySetLike<TKey>
+    ReadonlySet<TKey>
   >;
 }
 

@@ -10,7 +10,7 @@ Reactive-JS
 - [containers/AsyncIterable](modules/containers_AsyncIterable.md)
 - [containers/Enumerator](modules/containers_Enumerator.md)
 - [containers/Iterable](modules/containers_Iterable.md)
-- [containers/Promiseable](modules/containers_Promiseable.md)
+- [containers/Promise](modules/containers_Promise.md)
 - [functions](modules/functions.md)
 - [integrations/node/Stream](modules/integrations_node_Stream.md)
 - [integrations/react](modules/integrations_react.md)

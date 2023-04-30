@@ -51,7 +51,7 @@ ___
 
 ### empty
 
-▸ **empty**<`T`\>(): [`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md)<`T`\>
+▸ **empty**<`T`\>(): [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
 
 Return an ContainerLike that emits no items.
 
@@ -63,7 +63,7 @@ Return an ContainerLike that emits no items.
 
 #### Returns
 
-[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md)<`T`\>
+[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
 
 ___
 
@@ -264,7 +264,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -274,4 +274,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>

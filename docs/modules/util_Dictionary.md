@@ -18,7 +18,7 @@
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(): [`DictionaryContainerLike`](../interfaces/util.DictionaryContainerLike.md)<`T`, `TKey`\>
+▸ **empty**<`T`, `TKey`\>(): [`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`T`, `TKey`\>
 
 Return an ContainerLike that emits no items.
 
@@ -31,7 +31,7 @@ Return an ContainerLike that emits no items.
 
 #### Returns
 
-[`DictionaryContainerLike`](../interfaces/util.DictionaryContainerLike.md)<`T`, `TKey`\>
+[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`T`, `TKey`\>
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryContainerLike`](../interfaces/util.DictionaryContainerLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
@@ -50,13 +50,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryContainerLike`](../interfaces/util.DictionaryContainerLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 ___
 
 ### keys
 
-▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryContainerLike`](../interfaces/util.DictionaryContainerLike.md)<`unknown`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
+▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`unknown`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
 
 #### Type parameters
 
@@ -66,13 +66,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryContainerLike`](../interfaces/util.DictionaryContainerLike.md)<`unknown`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`unknown`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
 
 ___
 
 ### values
 
-▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<[`DictionaryContainerLike`](../interfaces/util.DictionaryContainerLike.md)<`T`, `any`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`T`, `any`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -82,4 +82,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryContainerLike`](../interfaces/util.DictionaryContainerLike.md)<`T`, `any`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`T`, `any`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>

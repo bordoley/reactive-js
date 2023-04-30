@@ -13,7 +13,6 @@ import {
   ContainerLike_type,
   ContainerOf,
   ContainerOperator,
-  PromiseableLike,
 } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
 import {
@@ -468,7 +467,7 @@ export interface FirstAsync<C extends ContainerLike> {
    *
    * @category Transform
    */
-  firstAsync<T>(): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+  firstAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
 
   /**
    *
@@ -480,7 +479,7 @@ export interface FirstAsync<C extends ContainerLike> {
       capacity?: number;
       backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
-  ): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+  ): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
 }
 
 /**
@@ -686,7 +685,7 @@ export interface LastAsync<C extends ContainerLike> {
    *
    * @category Transform
    */
-  lastAsync<T>(): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+  lastAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
 
   /**
    *
@@ -698,7 +697,7 @@ export interface LastAsync<C extends ContainerLike> {
       capacity?: number;
       backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
-  ): Function1<ContainerOf<C, T>, PromiseableLike<Optional<T>>>;
+  ): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
 }
 
 /**

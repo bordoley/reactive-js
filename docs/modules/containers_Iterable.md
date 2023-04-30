@@ -25,7 +25,7 @@
 
 ### fromReadonlyArray
 
-▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
 
 #### Type parameters
 
@@ -43,7 +43,7 @@
 
 #### Returns
 
-[`Function1`](functions.md#function1)<readonly `T`[], [`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -61,7 +61,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -79,13 +79,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
 ___
 
 ### flow
 
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -106,13 +106,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 
 ### toEnumerable
 
-▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -122,13 +122,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
 
 ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -146,13 +146,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`ReadonlyArrayContainerLike`](../interfaces/containers.ReadonlyArrayContainerLike.md)<`T`\>\>
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ReadonlyArrayContainerLike`](../interfaces/containers.ReadonlyArrayContainerLike.md)<`T`\>\>
 
 Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
@@ -164,13 +164,13 @@ Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`ReadonlyArrayContainerLike`](../interfaces/containers.ReadonlyArrayContainerLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ReadonlyArrayContainerLike`](../interfaces/containers.ReadonlyArrayContainerLike.md)<`T`\>\>
 
 ___
 
 ### toRunnable
 
-▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -188,4 +188,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IterableLike`](../interfaces/containers.IterableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>

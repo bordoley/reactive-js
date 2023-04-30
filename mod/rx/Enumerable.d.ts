@@ -1,4 +1,4 @@
-import { Buffer, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike_T, ContainerLike_type, Contains, DistinctUntilChanged, Empty, EndWith, Enumerate, EnumeratorLike, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, NoneSatisfy, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
+import { Buffer, Concat, ConcatAll, ConcatMap, ConcatWith, ContainerLike, ContainerLike_T, ContainerLike_type, Contains, DistinctUntilChanged, Empty, EndWith, Enumerate, EnumeratorLike, EverySatisfy, First, FlatMapIterable, ForEach, ForkConcat, ForkZip, FromEnumeratorFactory, FromFactory, FromIterable, FromOptional, FromReadonlyArray, Generate, Identity, IgnoreElements, Keep, KeepType, Last, Map, MapTo, NoneSatisfy, Pairwise, Pick, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, StartWith, TakeFirst, TakeLast, TakeWhile, ToReadonlyArray, Zip, ZipWith } from "../containers.js";
 import { BackpressureStrategy, CatchError, DecodeWithCharset, Defer, DispatchTo, EncodeUtf8, Enqueue, EnumerableContainerLike, FirstAsync, Flow, LastAsync, Retry, ScanLast, ThrowIfEmpty, Throws } from "../rx.js";
 import { DisposableLike } from "../util.js";
 export declare const backpressureStrategy: BackpressureStrategy<EnumerableContainerLike>["backpressureStrategy"];
@@ -23,7 +23,7 @@ export declare const empty: Empty<EnumerableContainerLike>["empty"];
 export declare const encodeUtf8: EncodeUtf8<EnumerableContainerLike>["encodeUtf8"];
 export declare const enqueue: Enqueue<EnumerableContainerLike>["enqueue"];
 export declare const endWith: EndWith<EnumerableContainerLike>["endWith"];
-interface EnumerableEnumerator<T = unknown> extends EnumeratorLike<T> {
+interface EnumerableEnumerator<T = unknown> extends EnumeratorLike<T>, DisposableLike, ContainerLike {
     readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]> & DisposableLike;
 }
 export declare const enumerate: Enumerate<EnumerableContainerLike, EnumerableEnumerator>["enumerate"];

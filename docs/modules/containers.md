@@ -6,13 +6,16 @@
 
 ### Container Interfaces
 
-- [AsyncIterableLike](../interfaces/containers.AsyncIterableLike.md)
+- [AsyncIterableContainerLike](../interfaces/containers.AsyncIterableContainerLike.md)
 - [ContainerLike](../interfaces/containers.ContainerLike.md)
 - [EnumeratorLike](../interfaces/containers.EnumeratorLike.md)
-- [IterableLike](../interfaces/containers.IterableLike.md)
-- [PromiseableLike](../interfaces/containers.PromiseableLike.md)
+- [IterableContainerLike](../interfaces/containers.IterableContainerLike.md)
+- [PromiseContainerLike](../interfaces/containers.PromiseContainerLike.md)
 - [ReadonlyArrayContainerLike](../interfaces/containers.ReadonlyArrayContainerLike.md)
-- [ReadonlySetLike](../interfaces/containers.ReadonlySetLike.md)
+
+### Other Interfaces
+
+- [EnumeratorContainerLike](../interfaces/containers.EnumeratorContainerLike.md)
 
 ### TypeClass Interfaces
 

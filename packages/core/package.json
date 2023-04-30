@@ -51,7 +51,7 @@
     "./containers/AsyncIterable": "./containers/AsyncIterable.js",
     "./containers/Enumerator": "./containers/Enumerator.js",
     "./containers/Iterable": "./containers/Iterable.js",
-    "./containers/Promiseable": "./containers/Promiseable.js",
+    "./containers/Promise": "./containers/Promise.js",
     "./functions": "./functions.js",
     "./integrations/node/Stream": "./integrations/node/Stream.js",
     "./integrations/react": "./integrations/react.js",

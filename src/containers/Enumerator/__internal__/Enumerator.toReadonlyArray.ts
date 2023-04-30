@@ -1,11 +1,12 @@
 import {
+  EnumeratorContainerLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
   ToReadonlyArray,
 } from "../../../containers.js";
 
-const Enumerator_toReadonlyArray: ToReadonlyArray<EnumeratorLike>["toReadonlyArray"] =
+const Enumerator_toReadonlyArray: ToReadonlyArray<EnumeratorContainerLike>["toReadonlyArray"] =
 
     <T>() =>
     (enumerator: EnumeratorLike<T>) => {

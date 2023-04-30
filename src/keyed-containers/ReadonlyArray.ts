@@ -4,7 +4,6 @@ import {
   First,
   FromIterable,
   FromOptional,
-  IterableLike,
   Last,
   SomeSatisfy,
 } from "../containers.js";
@@ -70,8 +69,7 @@ export const empty: Empty<ReadonlyArrayContainerLike>["empty"] =
 export const entries: Entries<ReadonlyArrayContainerLike>["entries"] =
   ReadonlyArray_entries;
 
-interface Enumerate
-  extends Containers.Enumerate<ReadonlyArrayContainerLike, EnumeratorLike> {
+interface Enumerate extends Containers.Enumerate<ReadonlyArrayContainerLike> {
   /**
    *
    * @category Transform
@@ -174,7 +172,7 @@ interface ToIterable extends Containers.ToIterable<ReadonlyArrayContainerLike> {
   toIterable<T>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<ReadonlyArrayContainerLike<T>, IterableLike<T>>;
+  }): Function1<ReadonlyArrayContainerLike<T>, Iterable<T>>;
 }
 export const toIterable: ToIterable["toIterable"] =
   ReadonlyArray_toReadonlyArray;

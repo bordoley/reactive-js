@@ -1,4 +1,3 @@
-import { IterableLike } from "../../../containers.js";
 import { Function1, compose } from "../../../functions.js";
 import { PauseableObservableLike } from "../../../rx.js";
 import Runnable_flow from "../../../rx/Runnable/__internal__/Runnable.flow.js";
@@ -18,7 +17,7 @@ const Iterable_flow = <T>(
     readonly delay?: number;
     readonly delayStart?: boolean;
   },
-): Function1<IterableLike<T>, PauseableObservableLike<T> & DisposableLike> =>
+): Function1<Iterable<T>, PauseableObservableLike<T> & DisposableLike> =>
   compose(Iterable_toObservable(options), Runnable_flow(scheduler, options));
 
 export default Iterable_flow;

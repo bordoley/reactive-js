@@ -28,7 +28,7 @@
 
 ### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`EventSourceContainerLike`](util.EventSourceContainerLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`EventSourceLike`](util.EventSourceLike.md)<`unknown`\>
 
 #### Overrides
 

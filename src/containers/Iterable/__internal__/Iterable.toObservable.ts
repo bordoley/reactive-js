@@ -1,4 +1,3 @@
-import { IterableLike } from "../../../containers.js";
 import { Function1, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -19,14 +18,12 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
 interface IterableToObservable {
-  toObservable<T>(): Function1<IterableLike<T>, EnumerableLike<T>>;
-  toObservable<T>(
-    options: unknown,
-  ): Function1<IterableLike<T>, RunnableLike<T>>;
+  toObservable<T>(): Function1<Iterable<T>, EnumerableLike<T>>;
+  toObservable<T>(options: unknown): Function1<Iterable<T>, RunnableLike<T>>;
   toObservable<T>(options: {
     readonly delay: number;
     readonly delayStart?: boolean;
-  }): Function1<IterableLike<T>, RunnableLike<T>>;
+  }): Function1<Iterable<T>, RunnableLike<T>>;
 }
 const Iterable_toObservable: IterableToObservable["toObservable"] = (<
     T,
@@ -34,7 +31,7 @@ const Iterable_toObservable: IterableToObservable["toObservable"] = (<
     readonly delay?: number;
     readonly delayStart?: boolean;
   }) =>
-  (iterable: IterableLike<T>) => {
+  (iterable: Iterable<T>) => {
     const { delay = 0, delayStart = false } = options ?? {};
 
     const onSubscribe = (observer: ObserverLike<T>) => {
