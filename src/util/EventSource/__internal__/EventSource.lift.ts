@@ -10,15 +10,16 @@ import {
   pipeUnsafe,
 } from "../../../functions.js";
 import {
-  EventEmitterLike_addEventListener,
   EventListenerLike,
+  EventSourceContainerLike,
   EventSourceLike,
+  EventSourceLike_addEventListener,
 } from "../../../util.js";
 
 class LiftedEventSource<TIn, TOut>
   implements
     EventSourceLike<TOut>,
-    LiftedLike<EventSourceLike<TIn>, EventListenerLike<any>>
+    LiftedLike<EventSourceContainerLike<TIn>, EventListenerLike<any>>
 {
   readonly [LiftedLike_source]: EventSourceLike<TIn>;
   readonly [LiftedLike_operators]: readonly Function1<
@@ -37,11 +38,11 @@ class LiftedEventSource<TIn, TOut>
     this[LiftedLike_operators] = operators;
   }
 
-  [EventEmitterLike_addEventListener](listener: EventListenerLike<TOut>) {
+  [EventSourceLike_addEventListener](listener: EventListenerLike<TOut>) {
     pipeUnsafe(
       listener,
       ...this[LiftedLike_operators],
-      bindMethod(this[LiftedLike_source], EventEmitterLike_addEventListener),
+      bindMethod(this[LiftedLike_source], EventSourceLike_addEventListener),
     );
   }
 }

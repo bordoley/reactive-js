@@ -1,0 +1,47 @@
+[Reactive-JS](../README.md) / [util](../modules/util.md) / DictionaryContainerLike
+
+# Interface: DictionaryContainerLike<T, TKey\>
+
+[util](../modules/util.md).DictionaryContainerLike
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+| `TKey` | `unknown` |
+
+## Hierarchy
+
+- [`DictionaryLike`](util.DictionaryLike.md)<`T`, `TKey`\>
+
+- [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md)
+
+  ↳ **`DictionaryContainerLike`**
+
+## Table of contents
+
+### Properties
+
+- [[\_\_\_ContainerLike\_type]](util.DictionaryContainerLike.md#[___containerlike_type])
+- [[\_\_\_KeyedContainerLike\_TKey]](util.DictionaryContainerLike.md#[___keyedcontainerlike_tkey])
+
+## Properties
+
+### [\_\_\_ContainerLike\_type]
+
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`DictionaryContainerLike`](util.DictionaryContainerLike.md)<`unknown`, `unknown`\>
+
+#### Overrides
+
+KeyedContainerLike.\_\_@\_\_\_ContainerLike\_type@22120
+
+___
+
+### [\_\_\_KeyedContainerLike\_TKey]
+
+• `Optional` `Readonly` **[\_\_\_KeyedContainerLike\_TKey]**: `unknown`
+
+#### Overrides
+
+[KeyedContainerLike](keyed_containers.KeyedContainerLike.md).[[___KeyedContainerLike_TKey]](keyed_containers.KeyedContainerLike.md#[___keyedcontainerlike_tkey])

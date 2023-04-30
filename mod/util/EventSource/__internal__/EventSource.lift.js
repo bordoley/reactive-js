@@ -2,7 +2,7 @@
 
 import { LiftedLike_operators, LiftedLike_source, } from "../../../__internal__/containers.js";
 import { bindMethod, newInstance, pipeUnsafe, } from "../../../functions.js";
-import { EventEmitterLike_addEventListener, } from "../../../util.js";
+import { EventSourceLike_addEventListener, } from "../../../util.js";
 class LiftedEventSource {
     [LiftedLike_source];
     [LiftedLike_operators];
@@ -10,8 +10,8 @@ class LiftedEventSource {
         this[LiftedLike_source] = source;
         this[LiftedLike_operators] = operators;
     }
-    [EventEmitterLike_addEventListener](listener) {
-        pipeUnsafe(listener, ...this[LiftedLike_operators], bindMethod(this[LiftedLike_source], EventEmitterLike_addEventListener));
+    [EventSourceLike_addEventListener](listener) {
+        pipeUnsafe(listener, ...this[LiftedLike_operators], bindMethod(this[LiftedLike_source], EventSourceLike_addEventListener));
     }
 }
 const EventSource_lift = (operator) => (source) => {

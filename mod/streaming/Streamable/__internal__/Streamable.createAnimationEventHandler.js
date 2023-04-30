@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, pipe } from "../../../functions.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
-import { EventEmitterLike_addEventListener, KeyedCollectionLike_get, } from "../../../util.js";
+import { EventSourceLike_addEventListener, KeyedCollectionLike_get, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
@@ -18,14 +18,14 @@ const createAnimationEventHandlerStream =
         const animationEventsPublisher = streamDelegate[KeyedCollectionLike_get]("v");
         const publisher = pipe(EventPublisher_create(), Disposable_addTo(instance));
         instance.publisher = publisher;
-        animationEventsPublisher[EventEmitterLike_addEventListener](publisher);
-        streamDelegate[EventEmitterLike_addEventListener](publisher);
+        animationEventsPublisher[EventSourceLike_addEventListener](publisher);
+        streamDelegate[EventSourceLike_addEventListener](publisher);
         return instance;
     }, props({
         publisher: none,
     }), {
-        [EventEmitterLike_addEventListener](listener) {
-            this.publisher[EventEmitterLike_addEventListener](listener);
+        [EventSourceLike_addEventListener](listener) {
+            this.publisher[EventSourceLike_addEventListener](listener);
         },
     }));
 })();

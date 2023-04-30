@@ -31,12 +31,12 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EventEmitterLike_addEventListener,
   EventListenerLike,
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventPublisherLike_listenerCount,
   EventSourceLike,
+  EventSourceLike_addEventListener,
 } from "../../../util.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
@@ -67,7 +67,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
       function EventPublisher(
         instance: Pick<
           EventKeepMapPublisherLike<T, TOut>,
-          | typeof EventEmitterLike_addEventListener
+          | typeof EventSourceLike_addEventListener
           | typeof EventListenerLike_isErrorSafe
           | typeof EventListenerLike_notify
           | typeof EventPublisherLike_listenerCount
@@ -137,7 +137,7 @@ const EventPublisher_createWithPredicateAndSelector: <T, TOut>(
           }
         },
 
-        [EventEmitterLike_addEventListener](
+        [EventSourceLike_addEventListener](
           this: TProperties & EventKeepMapPublisherLike<T, TOut>,
           listener: EventListenerLike<TOut>,
         ) {

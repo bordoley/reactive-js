@@ -7,10 +7,10 @@ import {
   __DisposableLike_dispose as DisposableLike_dispose,
   __DisposableLike_error as DisposableLike_error,
   __DisposableLike_isDisposed as DisposableLike_isDisposed,
-  __EventEmitterLike_addEventListener as EventEmitterLike_addEventListener,
   __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe,
   __EventListenerLike_notify as EventListenerLike_notify,
   __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount,
+  __EventSourceLike_addEventListener as EventSourceLike_addEventListener,
   __KeyedCollectionLike_get as KeyedCollectionLike_get,
   __PauseableLike_isPaused as PauseableLike_isPaused,
   __PauseableLike_pause as PauseableLike_pause,
@@ -50,7 +50,7 @@ export {
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
   EventPublisherLike_listenerCount,
-  EventEmitterLike_addEventListener,
+  EventSourceLike_addEventListener,
   KeyedCollectionLike_get,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -161,9 +161,15 @@ export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
  * @noInheritDoc
  */
 export interface DictionaryLike<T = unknown, TKey = unknown>
-  extends AssociativeCollectionLike<TKey, Optional<T>>,
+  extends AssociativeCollectionLike<TKey, Optional<T>> {}
+
+/**
+ * @noInheritDoc
+ */
+export interface DictionaryContainerLike<T = unknown, TKey = unknown>
+  extends DictionaryLike<T, TKey>,
     KeyedContainerLike {
-  readonly [ContainerLike_type]?: DictionaryLike<
+  readonly [ContainerLike_type]?: DictionaryContainerLike<
     this[typeof ContainerLike_T],
     this[typeof KeyedContainerLike_TKey]
   >;
@@ -201,17 +207,19 @@ export interface ErrorSafeEventListenerLike<T = unknown>
   readonly [EventListenerLike_isErrorSafe]: true;
 }
 
-export interface EventEmitterLike<T = unknown> {
-  [EventEmitterLike_addEventListener](listener: EventListenerLike<T>): void;
+export interface EventSourceLike<T = unknown> {
+  [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
 }
 
 /**
  * @noInheritDoc
  */
-export interface EventSourceLike<T = unknown>
-  extends EventEmitterLike<T>,
+export interface EventSourceContainerLike<T = unknown>
+  extends EventSourceLike<T>,
     ContainerLike {
-  readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
+  readonly [ContainerLike_type]?: EventSourceContainerLike<
+    this[typeof ContainerLike_T]
+  >;
 }
 
 /**
@@ -235,7 +243,7 @@ export interface DispatcherLike<
     type: "wait" | "drain" | "complete";
   },
 > extends QueueableLike<T>,
-    EventEmitterLike<TEvents> {
+    EventSourceLike<TEvents> {
   /**
    * Communicates to the dispatcher that no more events will be enqueued.
    */

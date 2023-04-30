@@ -11,7 +11,7 @@ DisposableLike_isDisposed
 EnumeratorLike_move
 EnumeratorLike_current
 EnumeratorLike_hasCurrent
-EventEmitterLike_addEventListener
+EventSourceLike_addEventListener
 EventListenerLike_isErrorSafe
 EventListenerLike_notify
 EventPublisherLike_listenerCount

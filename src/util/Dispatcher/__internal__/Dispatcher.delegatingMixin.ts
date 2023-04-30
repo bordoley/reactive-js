@@ -10,8 +10,8 @@ import { none, returns } from "../../../functions.js";
 import {
   DispatcherLike,
   DispatcherLike_complete,
-  EventEmitterLike_addEventListener,
   EventListenerLike,
+  EventSourceLike_addEventListener,
 } from "../../../util.js";
 import Queueable_delegatingMixin from "../../Queue/__internal__/Queueable.delegatingMixin.js";
 
@@ -30,7 +30,7 @@ const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
         instance: Pick<
           DispatcherLike,
           | typeof DispatcherLike_complete
-          | typeof EventEmitterLike_addEventListener
+          | typeof EventSourceLike_addEventListener
         > &
           TProperties,
         delegate: DispatcherLike<TReq>,
@@ -48,12 +48,12 @@ const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
           this[__DelegatingDispatcherMixin_delegate][DispatcherLike_complete]();
         },
 
-        [EventEmitterLike_addEventListener](
+        [EventSourceLike_addEventListener](
           this: TProperties,
           listener: EventListenerLike<{ type: "wait" | "drain" | "complete" }>,
         ): void {
           this[__DelegatingDispatcherMixin_delegate][
-            EventEmitterLike_addEventListener
+            EventSourceLike_addEventListener
           ](listener);
         },
       },

@@ -2,11 +2,18 @@ import { EnumeratorLike } from "../../../containers.js";
 import Enumerator_map from "../../../containers/Enumerator/__internal__/Enumerator.map.js";
 import { pipe } from "../../../functions.js";
 import { KeyOf } from "../../../keyed-containers.js";
-import { DictionaryLike, KeyedCollectionLike_get } from "../../../util.js";
+import {
+  DictionaryContainerLike,
+  DictionaryLike,
+  KeyedCollectionLike_get,
+} from "../../../util.js";
 import Dictionary_keys from "./Dictionary.keys.js";
 
 const Dictionary_entries =
-  <T, TKey extends KeyOf<DictionaryLike> = KeyOf<DictionaryLike>>() =>
+  <
+    T,
+    TKey extends KeyOf<DictionaryContainerLike> = KeyOf<DictionaryContainerLike>,
+  >() =>
   (dict: DictionaryLike<T, TKey>): EnumeratorLike<[TKey, T]> =>
     pipe(
       dict,

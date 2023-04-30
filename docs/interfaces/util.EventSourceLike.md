@@ -12,26 +12,32 @@
 
 ## Hierarchy
 
-- [`EventEmitterLike`](util.EventEmitterLike.md)<`T`\>
+- **`EventSourceLike`**
 
-- [`ContainerLike`](containers.ContainerLike.md)
+  ↳ [`EventSourceContainerLike`](util.EventSourceContainerLike.md)
 
-  ↳ **`EventSourceLike`**
+  ↳ [`EventPublisherLike`](util.EventPublisherLike.md)
 
-  ↳↳ [`EventPublisherLike`](util.EventPublisherLike.md)
+  ↳ [`DispatcherLike`](util.DispatcherLike.md)
 
 ## Table of contents
 
-### Properties
+### Methods
 
-- [[\_\_\_ContainerLike\_type]](util.EventSourceLike.md#[___containerlike_type])
+- [[\_\_\_EventSourceLike\_addEventListener]](util.EventSourceLike.md#[___eventsourcelike_addeventlistener])
 
-## Properties
+## Methods
 
-### [\_\_\_ContainerLike\_type]
+### [\_\_\_EventSourceLike\_addEventListener]
 
-• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`EventSourceLike`](util.EventSourceLike.md)<`unknown`\>
+▸ **[___EventSourceLike_addEventListener]**(`listener`): `void`
 
-#### Overrides
+#### Parameters
 
-[ContainerLike](containers.ContainerLike.md).[[___ContainerLike_type]](containers.ContainerLike.md#[___containerlike_type])
+| Name | Type |
+| :------ | :------ |
+| `listener` | [`EventListenerLike`](util.EventListenerLike.md)<`T`\> |
+
+#### Returns
+
+`void`

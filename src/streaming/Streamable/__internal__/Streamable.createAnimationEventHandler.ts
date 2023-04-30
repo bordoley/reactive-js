@@ -14,10 +14,10 @@ import {
 } from "../../../streaming.js";
 import {
   DisposableLike,
-  EventEmitterLike_addEventListener,
   EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
+  EventSourceLike_addEventListener,
   KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -105,11 +105,9 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
           );
           instance.publisher = publisher;
 
-          animationEventsPublisher[EventEmitterLike_addEventListener](
-            publisher,
-          );
+          animationEventsPublisher[EventSourceLike_addEventListener](publisher);
 
-          streamDelegate[EventEmitterLike_addEventListener](publisher);
+          streamDelegate[EventSourceLike_addEventListener](publisher);
 
           return instance;
         },
@@ -117,7 +115,7 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
           publisher: none,
         }),
         {
-          [EventEmitterLike_addEventListener](
+          [EventSourceLike_addEventListener](
             this: TProperties,
             listener: EventListenerLike<
               { type: TEventType; value: T } & {
@@ -125,7 +123,7 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
               }
             >,
           ) {
-            this.publisher[EventEmitterLike_addEventListener](listener);
+            this.publisher[EventSourceLike_addEventListener](listener);
           },
         },
       ),

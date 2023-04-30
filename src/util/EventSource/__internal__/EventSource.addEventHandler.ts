@@ -1,8 +1,8 @@
 import { Function1, SideEffect1 } from "../../../functions.js";
 import {
   DisposableLike,
-  EventEmitterLike_addEventListener,
   EventSourceLike,
+  EventSourceLike_addEventListener,
 } from "../../../util.js";
 import EventListener_create from "../../EventListener/__internal__/EventListener.create.js";
 
@@ -10,7 +10,7 @@ const EventSource_addEventHandler =
   <T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike> =>
   source => {
     const eventListener = EventListener_create<T>(handler);
-    source[EventEmitterLike_addEventListener](eventListener);
+    source[EventSourceLike_addEventListener](eventListener);
     return eventListener;
   };
 

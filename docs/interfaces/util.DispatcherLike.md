@@ -18,7 +18,7 @@ be dispatched from any execution constext.
 
 - [`QueueableLike`](util.QueueableLike.md)<`T`\>
 
-- [`EventEmitterLike`](util.EventEmitterLike.md)<`TEvents`\>
+- [`EventSourceLike`](util.EventSourceLike.md)<`TEvents`\>
 
   ↳ **`DispatcherLike`**
 

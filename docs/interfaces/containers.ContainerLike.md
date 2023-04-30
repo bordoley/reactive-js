@@ -32,7 +32,7 @@ Base type for all Containers.
 
   ↳ [`PauseableObservableContainerLike`](rx.PauseableObservableContainerLike.md)
 
-  ↳ [`EventSourceLike`](util.EventSourceLike.md)
+  ↳ [`EventSourceContainerLike`](util.EventSourceContainerLike.md)
 
 ## Table of contents
 

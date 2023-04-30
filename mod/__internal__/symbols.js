@@ -28,7 +28,7 @@ export const __EnumeratorLike_current = /*@__PURE__*/ symbol("EnumeratorLike_cur
 /** @type {unique symbol} */
 export const __EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol("EnumeratorLike_hasCurrent");
 /** @type {unique symbol} */
-export const __EventEmitterLike_addEventListener = /*@__PURE__*/ symbol("EventEmitterLike_addEventListener");
+export const __EventSourceLike_addEventListener = /*@__PURE__*/ symbol("EventSourceLike_addEventListener");
 /** @type {unique symbol} */
 export const __EventListenerLike_isErrorSafe = /*@__PURE__*/ symbol("EventListenerLike_isErrorSafe");
 /** @type {unique symbol} */

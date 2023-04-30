@@ -8,7 +8,7 @@ import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_
 import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import { StreamLike_scheduler } from "../../../streaming.js";
-import { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_isDisposed, EventEmitterLike_addEventListener, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_inContinuation, } from "../../../util.js";
+import { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_isDisposed, EventSourceLike_addEventListener, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_inContinuation, } from "../../../util.js";
 import Dispatcher_delegatingMixin from "../../../util/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 const DispatchedObservable_create = 
@@ -71,7 +71,7 @@ const DispatchedObservable_create =
             }
             this[__DispatchedObservable_observer] = observer;
         },
-        [EventEmitterLike_addEventListener](listener) {
+        [EventSourceLike_addEventListener](listener) {
             const observer = this[__DispatchedObservable_observer];
             // Practically the observer can never be none,
             // unless the stream operator uses fromFactory subscriptions
@@ -79,7 +79,7 @@ const DispatchedObservable_create =
             if (__DEV__ && isNone(observer)) {
                 raiseWithDebugMessage("DispatchedObservable has not been subscribed to yet");
             }
-            observer[EventEmitterLike_addEventListener](listener);
+            observer[EventSourceLike_addEventListener](listener);
         },
     }));
 })();

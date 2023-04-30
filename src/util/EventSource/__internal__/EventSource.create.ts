@@ -21,10 +21,10 @@ import {
 } from "../../../functions.js";
 import {
   DisposableLike_dispose,
-  EventEmitterLike_addEventListener,
   EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
+  EventSourceLike_addEventListener,
 } from "../../../util.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
@@ -43,7 +43,7 @@ const EventSource_create: <T>(
       function CreateEventSource(
         instance: Pick<
           EventSourceLike<T>,
-          typeof EventEmitterLike_addEventListener
+          typeof EventSourceLike_addEventListener
         > &
           TProperties,
         setup: SideEffect1<EventListenerLike<T>>,
@@ -80,7 +80,7 @@ const EventSource_create: <T>(
         [__CreateEventSource_createDelegate]: none,
       }),
       {
-        [EventEmitterLike_addEventListener](
+        [EventSourceLike_addEventListener](
           this: TProperties &
             Mutable<DelegatingLike<Optional<EventPublisherLike<T>>>>,
           listener: EventListenerLike,
@@ -89,7 +89,7 @@ const EventSource_create: <T>(
             this[DelegatingLike_delegate] ??
             this[__CreateEventSource_createDelegate]();
 
-          delegate[EventEmitterLike_addEventListener](listener);
+          delegate[EventSourceLike_addEventListener](listener);
         },
       },
     ),
