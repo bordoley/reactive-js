@@ -157,27 +157,28 @@ const Root = () => {
     [history.replace, counterInitialValue],
   );
 
-  const [animations, dispatch, isAnimationRunning] = useAnimationGroup<number>(
-    () => ({
-      abc: () => ({
-        type: "loop",
-        count: 2,
-        animation: [
+  const [animations, animationActions, { isAnimationRunning }] =
+    useAnimationGroup<number>(
+      () => ({
+        abc: () => ({
+          type: "loop",
+          count: 2,
+          animation: [
+            { type: "tween", duration: 500, from: 0, to: 1 },
+            { type: "delay", duration: 250 },
+            { type: "tween", duration: 500, from: 1, to: 0 },
+          ],
+        }),
+
+        def: () => [
           { type: "tween", duration: 500, from: 0, to: 1 },
           { type: "delay", duration: 250 },
-          { type: "tween", duration: 500, from: 1, to: 0 },
+          { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
         ],
       }),
-
-      def: () => [
-        { type: "tween", duration: 500, from: 0, to: 1 },
-        { type: "delay", duration: 250 },
-        { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
-      ],
-    }),
-    [],
-    { mode: "blocking" },
-  );
+      [],
+      { mode: "blocking" },
+    );
 
   const enumerator = useEnumerate(
     () => Enumerable.generate(increment, () => -1),
@@ -219,7 +220,10 @@ const Root = () => {
         )}
       </div>
       <div>
-        <button onClick={dispatch} disabled={isAnimationRunning}>
+        <button
+          onClick={animationActions.dispatch}
+          disabled={isAnimationRunning}
+        >
           Run Animation
         </button>
       </div>

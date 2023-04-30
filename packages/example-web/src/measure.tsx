@@ -25,7 +25,7 @@ const Measure = () => {
     [container],
   ) ?? { width: 0 };
 
-  const [animation, dispatch] = useAnimation<
+  const [animation, { dispatch }] = useAnimation<
     number,
     { prevWidth: number; width: number }
   >(

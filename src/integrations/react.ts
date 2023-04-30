@@ -43,6 +43,7 @@ import * as Observable from "../rx/Observable.js";
 import * as Publisher from "../rx/Publisher.js";
 import * as Runnable from "../rx/Runnable.js";
 import {
+  AnimationGroupEventHandlerLike,
   DisposableStreamOf,
   StreamOf,
   StreamableLike,
@@ -270,27 +271,6 @@ export const useStream: UseStream["useStream"] = <
   return stream;
 };
 
-const useDispatcher = <TReq>(
-  dispatcher: Optional<DispatcherLike<TReq>>,
-): Function1<TReq, boolean> => {
-  const dispatcherRef: React.MutableRefObject<Optional<DispatcherLike<TReq>>> =
-    useRef();
-
-  useEffect(() => {
-    dispatcherRef.current = dispatcher;
-  }, [dispatcher, dispatcherRef]);
-
-  return useCallback(
-    (req: TReq) => {
-      const dispatcher = dispatcherRef.current;
-      return isSome(dispatcher)
-        ? dispatcher[QueueableLike_enqueue](req)
-        : false;
-    },
-    [dispatcherRef],
-  );
-};
-
 const emptyObservable = /*@__PURE__*/ Observable.empty<unknown>();
 
 interface UseStreamable {
@@ -342,7 +322,24 @@ export const useStreamable: UseStreamable["useStreamable"] = <TReq, T>(
     optionsOrDeps,
     optionsOrNone,
   );
-  const dispatch = useDispatcher(stream);
+
+  const dispatcherRef: React.MutableRefObject<Optional<DispatcherLike<TReq>>> =
+    useRef();
+
+  useEffect(() => {
+    dispatcherRef.current = stream;
+  }, [stream, dispatcherRef]);
+
+  const dispatch = useCallback(
+    (req: TReq) => {
+      const dispatcher = dispatcherRef.current;
+      return isSome(dispatcher)
+        ? dispatcher[QueueableLike_enqueue](req)
+        : false;
+    },
+    [dispatcherRef],
+  );
+
   const options = (
     isFunction(streamableOrFactory) ? optionsOrNone : optionsOrDeps
   ) as Optional<{
@@ -597,8 +594,15 @@ interface UseAnimationGroup {
     },
   ): readonly [
     DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>,
-    SideEffect1<TEventType>,
-    boolean,
+    {
+      dispatch: SideEffect1<TEventType>;
+      pause: SideEffect;
+      resume: SideEffect;
+    },
+    {
+      isAnimationRunning: boolean;
+      isAnimationPaused: boolean;
+    },
   ];
 
   /**
@@ -628,8 +632,15 @@ interface UseAnimationGroup {
     },
   ): readonly [
     DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>,
-    SideEffect1<TEventType>,
-    boolean,
+    {
+      dispatch: SideEffect1<TEventType>;
+      pause: SideEffect;
+      resume: SideEffect;
+    },
+    {
+      isAnimationRunning: boolean;
+      isAnimationPaused: boolean;
+    },
   ];
 
   /**
@@ -659,8 +670,15 @@ interface UseAnimationGroup {
     },
   ): readonly [
     DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>,
-    SideEffect1<TEventType>,
-    never,
+    {
+      dispatch: SideEffect1<TEventType>;
+      pause: SideEffect;
+      resume: SideEffect;
+    },
+    {
+      isAnimationRunning: boolean;
+      isAnimationPaused: boolean;
+    },
   ];
 
   /**
@@ -689,8 +707,15 @@ interface UseAnimationGroup {
     },
   ): readonly [
     DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>,
-    SideEffect1<TEventType>,
-    never,
+    {
+      dispatch: SideEffect1<TEventType>;
+      pause: SideEffect;
+      resume: SideEffect;
+    },
+    {
+      isAnimationRunning: boolean;
+      isAnimationPaused: boolean;
+    },
   ];
 }
 export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
@@ -714,8 +739,15 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
   } = {},
 ): readonly [
   DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>,
-  SideEffect1<TEventType>,
-  unknown,
+  {
+    dispatch: SideEffect1<TEventType>;
+    pause: SideEffect;
+    resume: SideEffect;
+  },
+  {
+    isAnimationRunning: boolean;
+    isAnimationPaused: boolean;
+  },
 ] => {
   const animations = useMemo(animationGroupFactory, deps);
 
@@ -730,10 +762,54 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
     DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>
   > = stream;
 
-  const dispatch = useDispatcher(stream);
-  const value = useObservable<T>(stream ?? emptyObservable, options);
+  const streamRef: React.MutableRefObject<
+    Optional<StreamOf<AnimationGroupEventHandlerLike<TEventType, T, TKey>>>
+  > = useRef();
 
-  return [dict ?? Dictionary.empty(), dispatch, value];
+  useEffect(() => {
+    streamRef.current = stream;
+  }, [stream, streamRef]);
+
+  const dispatch = useCallback(
+    (req: TEventType) => {
+      const dispatcher = streamRef.current;
+      return isSome(dispatcher)
+        ? dispatcher[QueueableLike_enqueue](req)
+        : false;
+    },
+    [streamRef],
+  );
+
+  const pause = useCallback(() => {
+    const stream = streamRef.current;
+    return isSome(stream) ? stream[PauseableLike_pause]() : false;
+  }, [streamRef]);
+
+  const resume = useCallback(() => {
+    const stream = streamRef.current;
+    return isSome(stream) ? stream[PauseableLike_resume]() : false;
+  }, [streamRef]);
+
+  const isAnimationRunning =
+    useObservable<boolean>(stream ?? emptyObservable, options) ?? false;
+  const isAnimationPaused =
+    useObservable<boolean>(
+      stream?.[PauseableObservableLike_isPaused] ?? emptyObservable,
+      options,
+    ) ?? false;
+
+  const controller = {
+    dispatch,
+    pause,
+    resume,
+  };
+
+  const state = {
+    isAnimationRunning,
+    isAnimationPaused,
+  };
+
+  return [dict ?? Dictionary.empty(), controller, state];
 }) as UseAnimationGroup["useAnimationGroup"];
 
 interface UseAnimation {
@@ -754,8 +830,15 @@ interface UseAnimation {
     },
   ): readonly [
     EventSourceLike<{ type: TEventType; value: T }>,
-    SideEffect1<TEventType>,
-    boolean,
+    {
+      dispatch: SideEffect1<TEventType>;
+      pause: SideEffect;
+      resume: SideEffect;
+    },
+    {
+      isAnimationRunning: boolean;
+      isAnimationPaused: boolean;
+    },
   ];
 
   /**
@@ -775,8 +858,15 @@ interface UseAnimation {
     },
   ): readonly [
     EventSourceLike<{ type: TEventType; value: T }>,
-    SideEffect1<TEventType>,
-    boolean,
+    {
+      dispatch: SideEffect1<TEventType>;
+      pause: SideEffect;
+      resume: SideEffect;
+    },
+    {
+      isAnimationRunning: boolean;
+      isAnimationPaused: boolean;
+    },
   ];
 
   /**
@@ -796,8 +886,15 @@ interface UseAnimation {
     },
   ): readonly [
     EventSourceLike<{ type: TEventType; value: T }>,
-    SideEffect1<TEventType>,
-    never,
+    {
+      dispatch: SideEffect1<TEventType>;
+      pause: SideEffect;
+      resume: SideEffect;
+    },
+    {
+      isAnimationRunning: boolean;
+      isAnimationPaused: boolean;
+    },
   ];
 
   /**
@@ -816,8 +913,15 @@ interface UseAnimation {
     },
   ): readonly [
     EventSourceLike<{ type: TEventType; value: T }>,
-    SideEffect1<TEventType>,
-    never,
+    {
+      dispatch: SideEffect1<TEventType>;
+      pause: SideEffect;
+      resume: SideEffect;
+    },
+    {
+      isAnimationRunning: boolean;
+      isAnimationPaused: boolean;
+    },
   ];
 }
 export const useAnimation: UseAnimation["useAnimation"] = (<
@@ -838,10 +942,17 @@ export const useAnimation: UseAnimation["useAnimation"] = (<
   } = {},
 ): readonly [
   EventSourceLike<{ type: TEventType; value: T }>,
-  SideEffect1<TEventType>,
-  unknown,
+  {
+    dispatch: SideEffect1<TEventType>;
+    pause: SideEffect;
+    resume: SideEffect;
+  },
+  {
+    isAnimationRunning: boolean;
+    isAnimationPaused: boolean;
+  },
 ] => {
-  const [animatedValues, dispatch, isAnimationRunning] = useAnimationGroup<
+  const [animatedValues, animationController, state] = useAnimationGroup<
     T,
     TEventType
   >(
@@ -854,8 +965,8 @@ export const useAnimation: UseAnimation["useAnimation"] = (<
 
   return [
     animatedValues[KeyedCollectionLike_get]("v") ?? EventSource.empty(),
-    dispatch,
-    isAnimationRunning,
+    animationController,
+    state,
   ];
 }) as UseAnimation["useAnimation"];
 

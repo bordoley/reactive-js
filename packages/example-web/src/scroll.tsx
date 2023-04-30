@@ -48,7 +48,7 @@ const ScrollApp = () => {
   }>();
   const containerRef = useScroll<HTMLDivElement>(scrollAnimation);
 
-  const [spring, dispatchSpring] = useAnimation<number, boolean>(
+  const [spring, springActions] = useAnimation<number, boolean>(
     direction =>
       direction
         ? [
@@ -98,19 +98,19 @@ const ScrollApp = () => {
           // FIXME: To make this really right, we should measure the velocity
           // and dispatch that so we can adjust the size of the overshoot
           // in the animation.
-          dispatchSpring(true);
+          springActions.dispatch(true);
         }
 
         if (pos === 0 && Math.abs(velocity) > 0.5) {
           // FIXME: To make this really right, we should measure the velocity
           // and dispatch that so we can adjust the size of the overshoot
           // in the animation.
-          dispatchSpring(false);
+          springActions.dispatch(false);
         }
       }),
       EventSource.ignoreElements(),
     ),
-    [scrollAnimation, dispatchSpring],
+    [scrollAnimation, springActions.dispatch],
   );
 
   useEventSource(

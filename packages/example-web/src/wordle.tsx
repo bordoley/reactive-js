@@ -101,7 +101,7 @@ const AnimatedBox = ({
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const [animation, dispatch, isAnimationRunning] = useAnimation<
+  const [animation, { dispatch }, { isAnimationRunning }] = useAnimation<
     number,
     boolean
   >(
