@@ -38,6 +38,7 @@ import {
 } from "../rx.js";
 import {
   StreamLike,
+  StreamOf,
   StreamableLike,
   StreamableLike_stream,
 } from "../streaming.js";
@@ -239,12 +240,8 @@ export function __currentScheduler(): SchedulerLike {
 }
 
 export const __stream = /*@__PURE__*/ (() => {
-  const streamOnSchedulerFactory = <
-    TReq,
-    T,
-    TStream extends StreamLike<TReq, T>,
-  >(
-    streamable: StreamableLike<TReq, T, TStream>,
+  const streamOnSchedulerFactory = <TStreamable extends StreamableLike>(
+    streamable: TStreamable,
     scheduler: SchedulerLike,
     replay: Optional<number>,
     capacity: Optional<number>,
@@ -258,8 +255,8 @@ export const __stream = /*@__PURE__*/ (() => {
       capacity,
     });
 
-  return <TReq, T, TStream extends StreamLike<TReq, T>>(
-    streamable: StreamableLike<TReq, T, TStream>,
+  return <TStreamable extends StreamableLike>(
+    streamable: TStreamable,
     {
       replay,
       backpressureStrategy,
@@ -271,7 +268,7 @@ export const __stream = /*@__PURE__*/ (() => {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     } = {},
-  ): TStream => {
+  ): StreamOf<TStreamable> => {
     const currentScheduler = __currentScheduler();
     return __using(
       streamOnSchedulerFactory,
@@ -280,7 +277,7 @@ export const __stream = /*@__PURE__*/ (() => {
       replay,
       capacity,
       backpressureStrategy,
-    ) as TStream;
+    );
   };
 })();
 

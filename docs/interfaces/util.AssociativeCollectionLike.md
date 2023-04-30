@@ -17,8 +17,6 @@
 
   ↳ **`AssociativeCollectionLike`**
 
-  ↳↳ [`CacheStreamLike`](streaming.CacheStreamLike.md)
-
   ↳↳ [`DictionaryLike`](util.DictionaryLike.md)
 
 ## Table of contents

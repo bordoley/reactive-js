@@ -79,6 +79,8 @@ export const __StreamLike_scheduler: unique symbol;
 /** @type {unique symbol} */
 export const __StreamableLike_stream: unique symbol;
 /** @type {unique symbol} */
+export const __StreamableLike_TStream: unique symbol;
+/** @type {unique symbol} */
 export const __VirtualTimeSchedulerLike_run: unique symbol;
 /** @type {unique symbol} */
 export const __WindowLocationLike_push: unique symbol;

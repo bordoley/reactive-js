@@ -6,14 +6,40 @@
 
 ### Other Interfaces
 
+- [StreamLike](../interfaces/streaming.StreamLike.md)
+
+### Streamable Interfaces
+
 - [AnimationEventHandlerLike](../interfaces/streaming.AnimationEventHandlerLike.md)
 - [AnimationGroupEventHandlerLike](../interfaces/streaming.AnimationGroupEventHandlerLike.md)
 - [CacheLike](../interfaces/streaming.CacheLike.md)
 - [StreamableLike](../interfaces/streaming.StreamableLike.md)
 
-### Stream Interfaces
+### Type Aliases
 
-- [AnimationEventHandlerStreamLike](../interfaces/streaming.AnimationEventHandlerStreamLike.md)
-- [AnimationGroupEventHandlerStreamLike](../interfaces/streaming.AnimationGroupEventHandlerStreamLike.md)
-- [CacheStreamLike](../interfaces/streaming.CacheStreamLike.md)
-- [StreamLike](../interfaces/streaming.StreamLike.md)
+- [DisposableStreamOf](streaming.md#disposablestreamof)
+- [StreamOf](streaming.md#streamof)
+
+## Type Aliases
+
+### DisposableStreamOf
+
+Ƭ **DisposableStreamOf**<`TStreamable`\>: [`StreamOf`](streaming.md#streamof)<`TStreamable`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/streaming.StreamableLike.md) |
+
+___
+
+### StreamOf
+
+Ƭ **StreamOf**<`TStreamable`\>: `NonNullable`<`TStreamable`[typeof `StreamableLike_TStream`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/streaming.StreamableLike.md) |

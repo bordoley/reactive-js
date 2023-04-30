@@ -193,6 +193,11 @@ export const __StreamableLike_stream = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __StreamableLike_TStream = /*@__PURE__*/ symbol(
+  "StreamableLike_TStream",
+);
+
+/** @type {unique symbol} */
 export const __VirtualTimeSchedulerLike_run = /*@__PURE__*/ symbol(
   "VirtualTimeSchedulerLike_run",
 );

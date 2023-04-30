@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [streaming](../modules/streaming.md) / StreamableLike
 
-# Interface: StreamableLike<TReq, T, TStream\>
+# Interface: StreamableLike<TReq, T\>
 
 [streaming](../modules/streaming.md).StreamableLike
 
@@ -22,9 +22,8 @@ TStream
 
 | Name | Type |
 | :------ | :------ |
-| `TReq` | `TReq` |
-| `T` | `T` |
-| `TStream` | extends [`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`\> = [`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`\> |
+| `TReq` | `unknown` |
+| `T` | `unknown` |
 
 ## Hierarchy
 
@@ -38,15 +37,25 @@ TStream
 
 ## Table of contents
 
+### Properties
+
+- [[\_\_\_StreamableLike\_TStream]](streaming.StreamableLike.md#[___streamablelike_tstream])
+
 ### Methods
 
 - [[\_\_\_StreamableLike\_stream]](streaming.StreamableLike.md#[___streamablelike_stream])
+
+## Properties
+
+### [\_\_\_StreamableLike\_TStream]
+
+• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>
 
 ## Methods
 
 ### [\_\_\_StreamableLike\_stream]
 
-▸ **[___StreamableLike_stream]**(`scheduler`, `options?`): `TStream` & [`DisposableLike`](util.DisposableLike.md)
+▸ **[___StreamableLike_stream]**(`scheduler`, `options?`): [`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> & [`DisposableLike`](util.DisposableLike.md)
 
 Subscribe to the Streamable.
 
@@ -62,4 +71,4 @@ Subscribe to the Streamable.
 
 #### Returns
 
-`TStream` & [`DisposableLike`](util.DisposableLike.md)
+[`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> & [`DisposableLike`](util.DisposableLike.md)

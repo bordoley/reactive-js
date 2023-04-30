@@ -22,12 +22,6 @@ Represents a duplex stream
 
   ↳ **`StreamLike`**
 
-  ↳↳ [`CacheStreamLike`](streaming.CacheStreamLike.md)
-
-  ↳↳ [`AnimationGroupEventHandlerStreamLike`](streaming.AnimationGroupEventHandlerStreamLike.md)
-
-  ↳↳ [`AnimationEventHandlerStreamLike`](streaming.AnimationEventHandlerStreamLike.md)
-
 ## Table of contents
 
 ### Properties

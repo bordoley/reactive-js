@@ -23,12 +23,10 @@ import {
 } from "../../../rx.js";
 import {
   AnimationEventHandlerLike,
-  AnimationEventHandlerStreamLike,
-  AnimationGroupEventHandlerStreamLike,
+  DisposableStreamOf,
   StreamableLike_stream,
 } from "../../../streaming.js";
 import {
-  DisposableLike,
   EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
@@ -63,7 +61,7 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }>,
-) => AnimationEventHandlerStreamLike<TEventType, T> & DisposableLike =
+) => DisposableStreamOf<AnimationEventHandlerLike<TEventType, T>> =
   /*@__PURE__*/ (<TEventType, T>() => {
     type TProperties = {
       publisher: EventPublisherLike<
@@ -103,7 +101,7 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
             readonly capacity?: number;
             readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
           }>,
-        ): AnimationEventHandlerStreamLike<TEventType, T> & DisposableLike {
+        ): DisposableStreamOf<AnimationEventHandlerLike<TEventType, T>> {
           const streamDelegate = Streamable_createAnimationGroupEventHandler(
             { v: animation },
             creationOptions as any,
@@ -141,37 +139,23 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
         }),
         {
           get [PauseableObservableLike_isPaused]() {
-            unsafeCast<
-              DelegatingLike<
-                AnimationGroupEventHandlerStreamLike<TEventType, T, "v">
-              >
-            >(this);
+            unsafeCast<DelegatingLike<PauseableObservableLike>>(this);
             return this[DelegatingLike_delegate][
               PauseableObservableLike_isPaused
             ];
           },
 
           get [PauseableLike_isPaused](): boolean {
-            unsafeCast<
-              DelegatingLike<
-                AnimationGroupEventHandlerStreamLike<TEventType, T, "v">
-              >
-            >(this);
+            unsafeCast<DelegatingLike<PauseableObservableLike>>(this);
             return this[DelegatingLike_delegate][PauseableLike_isPaused];
           },
 
-          [PauseableLike_pause](
-            this: DelegatingLike<
-              AnimationGroupEventHandlerStreamLike<TEventType, T, "v">
-            >,
-          ) {
+          [PauseableLike_pause](this: DelegatingLike<PauseableObservableLike>) {
             this[DelegatingLike_delegate][PauseableLike_pause]();
           },
 
           [PauseableLike_resume](
-            this: DelegatingLike<
-              AnimationGroupEventHandlerStreamLike<TEventType, T, "v">
-            >,
+            this: DelegatingLike<PauseableObservableLike>,
           ) {
             this[DelegatingLike_delegate][PauseableLike_resume]();
           },

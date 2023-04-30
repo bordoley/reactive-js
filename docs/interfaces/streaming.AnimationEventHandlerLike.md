@@ -13,6 +13,22 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streaming.StreamableLike.md)<`TEventType`, `boolean`, [`AnimationEventHandlerStreamLike`](streaming.AnimationEventHandlerStreamLike.md)<`TEventType`, `T`\>\>
+- [`StreamableLike`](streaming.StreamableLike.md)<`TEventType`, `boolean`\>
 
   ↳ **`AnimationEventHandlerLike`**
+
+## Table of contents
+
+### Properties
+
+- [[\_\_\_StreamableLike\_TStream]](streaming.AnimationEventHandlerLike.md#[___streamablelike_tstream])
+
+## Properties
+
+### [\_\_\_StreamableLike\_TStream]
+
+• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](streaming.StreamLike.md)<`TEventType`, `boolean`, { `type`: `TEventType` ; `value`: `T`  } & { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> & [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`boolean`\>
+
+#### Overrides
+
+[StreamableLike](streaming.StreamableLike.md).[[___StreamableLike_TStream]](streaming.StreamableLike.md#[___streamablelike_tstream])

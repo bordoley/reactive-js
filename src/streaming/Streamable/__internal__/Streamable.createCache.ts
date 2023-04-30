@@ -35,11 +35,12 @@ import * as Observable from "../../../rx/Observable.js";
 import * as Publisher from "../../../rx/Publisher.js";
 import {
   CacheLike,
-  CacheStreamLike,
+  DisposableStreamOf,
   StreamableLike_stream,
 } from "../../../streaming.js";
 import Stream_delegatingMixin from "../../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
 import {
+  AssociativeCollectionLike,
   AssociativeCollectionLike_keys,
   CollectionLike_count,
   DispatcherLike,
@@ -78,7 +79,7 @@ const createCacheStream: <T>(
   capacity: number,
   cleanupScheduler: SchedulerLike,
   persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-) => CacheStreamLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
+) => DisposableStreamOf<CacheLike<T>> = /*@__PURE__*/ (<T>() => {
   type TProperties<T> = {
     scheduleCleanup: SideEffect1<string>;
     store: Map<string, T>;
@@ -97,7 +98,7 @@ const createCacheStream: <T>(
       function CacheStream(
         instance: TProperties<T> &
           Pick<
-            CacheStreamLike<T>,
+            AssociativeCollectionLike<string, ObservableLike<T>>,
             | typeof KeyedCollectionLike_get
             | typeof CollectionLike_count
             | typeof AssociativeCollectionLike_keys
@@ -111,7 +112,7 @@ const createCacheStream: <T>(
         capacity: number,
         cleanupScheduler: SchedulerLike,
         persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-      ): CacheStreamLike<T> & DisposableLike {
+      ): DisposableStreamOf<CacheLike<T>> {
         instance.store = new Map();
         instance.subscriptions = new Map();
 
@@ -294,7 +295,6 @@ const createCacheStream: <T>(
 
         [KeyedCollectionLike_get](
           this: TProperties<T> &
-            CacheStreamLike<T> &
             DelegatingLike<
               DispatcherLike<
                 Record<string, Function1<Optional<T>, Optional<T>>>

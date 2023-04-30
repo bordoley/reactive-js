@@ -19,7 +19,7 @@
 
 ### create
 
-▸ **create**<`TReq`, `T`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+▸ **create**<`TReq`, `T`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`\>
 
 #### Type parameters
 
@@ -36,7 +36,7 @@
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`\>
 
 ___
 
@@ -228,7 +228,7 @@ ___
 
 ### createEventHandler
 
-▸ **createEventHandler**<`TEventType`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+▸ **createEventHandler**<`TEventType`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType`, `boolean`\>
 
 Returns an event handler that invokes the observable function.
 
@@ -248,9 +248,9 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType`, `boolean`\>
 
-▸ **createEventHandler**<`TEventType_1`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_1`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+▸ **createEventHandler**<`TEventType_1`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_1`, `boolean`\>
 
 Returns an event handler that invokes the observable function.
 
@@ -270,9 +270,9 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_1`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_1`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_1`, `boolean`\>
 
-▸ **createEventHandler**<`TEventType_2`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_2`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_2`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+▸ **createEventHandler**<`TEventType_2`\>(`op`, `options`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_2`, `boolean`\>
 
 Returns an event handler that invokes the observable function.
 
@@ -294,9 +294,9 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_2`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_2`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_2`, `boolean`\>
 
-▸ **createEventHandler**<`TEventType_3`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_3`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_3`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+▸ **createEventHandler**<`TEventType_3`\>(`op`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_3`, `boolean`\>
 
 Returns an event handler that invokes the observable function.
 
@@ -314,7 +314,7 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_3`, `boolean`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TEventType_3`, `boolean`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TEventType_3`, `boolean`\>
 
 ___
 
@@ -371,7 +371,7 @@ ___
 
 ### createStateStore
 
-▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -393,13 +393,13 @@ new state based upon the previous state.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`\>
 
 #### Type parameters
 
@@ -409,4 +409,4 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`T`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>
+[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`T`, `T`\>

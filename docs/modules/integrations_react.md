@@ -473,21 +473,19 @@ ___
 
 ### useStream
 
-▸ **useStream**<`TReq`, `T`, `TStream`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<`TStream`\>
+▸ **useStream**<`TStreamable`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](streaming.md#streamof)<`TStreamable`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TReq` | `TReq` |
-| `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
+| `streamable` | `TStreamable` |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -496,23 +494,21 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`TStream`\>
+[`Optional`](functions.md#optional)<[`StreamOf`](streaming.md#streamof)<`TStreamable`\>\>
 
-▸ **useStream**<`TReq`, `T`, `TStream`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)<`TStream`\>
+▸ **useStream**<`TStreamable`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](streaming.md#streamof)<`TStreamable`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TReq` | `TReq` |
-| `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }, `TStream`\> = [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<`TStreamable`\> |
 | `dep` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -522,7 +518,7 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<`TStream`\>
+[`Optional`](functions.md#optional)<[`StreamOf`](streaming.md#streamof)<`TStreamable`\>\>
 
 ___
 
@@ -541,7 +537,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\> |
+| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -565,7 +561,7 @@ readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.m
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |

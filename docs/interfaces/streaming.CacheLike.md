@@ -4,7 +4,8 @@
 
 [streaming](../modules/streaming.md).CacheLike
 
-A container that returns a CacheStream when subscribed to.
+A cache stream that support transaction updates of a collection of keys
+and observing the changing values of individual keys.
 
 ## Type parameters
 
@@ -14,6 +15,22 @@ A container that returns a CacheStream when subscribed to.
 
 ## Hierarchy
 
-- [`StreamableLike`](streaming.StreamableLike.md)<`Readonly`<`Record`<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>\>, `never`, [`CacheStreamLike`](streaming.CacheStreamLike.md)<`T`\>\>
+- [`StreamableLike`](streaming.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/keyed_containers.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\>
 
   ↳ **`CacheLike`**
+
+## Table of contents
+
+### Properties
+
+- [[\_\_\_StreamableLike\_TStream]](streaming.CacheLike.md#[___streamablelike_tstream])
+
+## Properties
+
+### [\_\_\_StreamableLike\_TStream]
+
+• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](streaming.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/keyed_containers.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> & [`AssociativeCollectionLike`](util.AssociativeCollectionLike.md)<`string`, [`ObservableLike`](rx.ObservableLike.md)<`T`\>\>
+
+#### Overrides
+
+[StreamableLike](streaming.StreamableLike.md).[[___StreamableLike_TStream]](streaming.StreamableLike.md#[___streamablelike_tstream])

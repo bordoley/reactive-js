@@ -41,7 +41,6 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
 } from "@reactive-js/core/util";
-import { CacheStreamLike } from "@reactive-js/core/streaming";
 import * as Dictionary from "@reactive-js/core/util/Dictionary";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
 import {
@@ -62,8 +61,9 @@ import Measure from "./measure";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
 import * as Scheduler from "@reactive-js/core/integrations/scheduler";
 import { ReadonlyObjectMapLike } from "@reactive-js/core/keyed-containers";
+import { CacheLike, StreamOf } from "@reactive-js/core/streaming";
 
-const CacheInner = ({ cache }: { cache: CacheStreamLike<string> }) => {
+const CacheInner = ({ cache }: { cache: StreamOf<CacheLike<string>> }) => {
   const values = cache[KeyedCollectionLike_get]("a");
   const value = useObservable(values) ?? "";
 

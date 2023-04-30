@@ -27,7 +27,8 @@ import Scheduler_createAnimationFrameScheduler from "../../../util/Scheduler/__i
 import Scheduler_toPauseableScheduler from "../../../util/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
-const createAnimationGroupEventHandlerStream = /*@__PURE__*/ (() => {
+const createAnimationGroupEventHandlerStream = 
+/*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
         const streamDelegate = Streamable_createEventHandler((type) => {
             const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(factory(type)), Observable_map(value => ({ type, value })), Observable_forEach(value => {

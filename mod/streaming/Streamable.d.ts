@@ -1,9 +1,7 @@
 /**
  * @category Constructor
  */
-export declare const create: <TReq, T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableContainer, TReq, T>) => import("../streaming.js").StreamableLike<TReq, T, import("../streaming.js").StreamLike<TReq, T, {
-    type: "complete" | "wait" | "drain";
-}>>;
+export declare const create: <TReq, T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableContainer, TReq, T>) => import("../streaming.js").StreamableLike<TReq, T>;
 /**
  * @category Constructor
  */
@@ -52,24 +50,16 @@ export declare const createAnimationGroupEventHandler: {
 export declare const createEventHandler: {
     <TEventType>(op: import("../functions.js").Function1<TEventType, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "switching";
-    }): import("../streaming.js").StreamableLike<TEventType, boolean, import("../streaming.js").StreamLike<TEventType, boolean, {
-        type: "complete" | "wait" | "drain";
-    }>>;
+    }): import("../streaming.js").StreamableLike<TEventType, boolean>;
     <TEventType_1>(op: import("../functions.js").Function1<TEventType_1, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "blocking";
-    }): import("../streaming.js").StreamableLike<TEventType_1, boolean, import("../streaming.js").StreamLike<TEventType_1, boolean, {
-        type: "complete" | "wait" | "drain";
-    }>>;
+    }): import("../streaming.js").StreamableLike<TEventType_1, boolean>;
     <TEventType_2>(op: import("../functions.js").Function1<TEventType_2, import("../rx.js").ObservableLike<unknown>>, options: {
         readonly mode: "queueing";
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
-    }): import("../streaming.js").StreamableLike<TEventType_2, boolean, import("../streaming.js").StreamLike<TEventType_2, boolean, {
-        type: "complete" | "wait" | "drain";
-    }>>;
-    <TEventType_3>(op: import("../functions.js").Function1<TEventType_3, import("../rx.js").ObservableLike<unknown>>): import("../streaming.js").StreamableLike<TEventType_3, boolean, import("../streaming.js").StreamLike<TEventType_3, boolean, {
-        type: "complete" | "wait" | "drain";
-    }>>;
+    }): import("../streaming.js").StreamableLike<TEventType_2, boolean>;
+    <TEventType_3>(op: import("../functions.js").Function1<TEventType_3, import("../rx.js").ObservableLike<unknown>>): import("../streaming.js").StreamableLike<TEventType_3, boolean>;
 };
 /**
  * @category Constructor
@@ -101,12 +91,8 @@ export declare const createPersistentCache: <T>(persistentStore: {
  */
 export declare const createStateStore: <T>(initialState: import("../functions.js").Factory<T>, options?: {
     readonly equality?: import("../functions.js").Equality<T> | undefined;
-} | undefined) => import("../streaming.js").StreamableLike<import("../functions.js").Updater<T>, T, import("../streaming.js").StreamLike<import("../functions.js").Updater<T>, T, {
-    type: "complete" | "wait" | "drain";
-}>>;
+} | undefined) => import("../streaming.js").StreamableLike<import("../functions.js").Updater<T>, T>;
 /**
  * @category Constructor
  */
-export declare const identity: <T>() => import("../streaming.js").StreamableLike<T, T, import("../streaming.js").StreamLike<T, T, {
-    type: "complete" | "wait" | "drain";
-}>>;
+export declare const identity: <T>() => import("../streaming.js").StreamableLike<T, T>;

@@ -16,5 +16,3 @@
 - [`AssociativeCollectionLike`](util.AssociativeCollectionLike.md)<`TKey`, [`Optional`](../modules/functions.md#optional)<`T`\>\>
 
   ↳ **`DictionaryLike`**
-
-  ↳↳ [`AnimationGroupEventHandlerStreamLike`](streaming.AnimationGroupEventHandlerStreamLike.md)
