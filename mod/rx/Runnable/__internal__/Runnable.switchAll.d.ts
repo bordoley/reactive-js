@@ -1,3 +1,3 @@
-import { RunnableLike, SwitchAll } from "../../../rx.js";
-declare const Runnable_switchAll: SwitchAll<RunnableLike>["switchAll"];
+import { RunnableContainerLike, SwitchAll } from "../../../rx.js";
+declare const Runnable_switchAll: SwitchAll<RunnableContainerLike>["switchAll"];
 export default Runnable_switchAll;

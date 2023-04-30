@@ -1,17 +1,17 @@
 import { Last } from "../../../containers.js";
 import { Optional, none, pipe } from "../../../functions.js";
-import { RunnableLike } from "../../../rx.js";
+import { RunnableContainerLike, RunnableLike } from "../../../rx.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Runnable_run from "./Runnable.run.js";
 
-const Runnable_last: Last<RunnableLike>["last"] =
+const Runnable_last: Last<RunnableContainerLike>["last"] =
   <T>() =>
   (src: RunnableLike<T>) => {
     let result: Optional<T> = none;
 
     pipe(
       src,
-      Observable_forEach<RunnableLike, T>(next => {
+      Observable_forEach<RunnableContainerLike, T>(next => {
         result = next;
       }),
       Runnable_run(),

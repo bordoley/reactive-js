@@ -1,4 +1,4 @@
 import { ConcatMap } from "../../../containers.js";
-import { RunnableLike } from "../../../rx.js";
-declare const Runnable_concatMap: ConcatMap<RunnableLike>["concatMap"];
+import { RunnableContainerLike } from "../../../rx.js";
+declare const Runnable_concatMap: ConcatMap<RunnableContainerLike>["concatMap"];
 export default Runnable_concatMap;

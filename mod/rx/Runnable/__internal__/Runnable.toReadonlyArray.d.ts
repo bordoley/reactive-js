@@ -1,4 +1,4 @@
 import { ToReadonlyArray } from "../../../containers.js";
-import { RunnableLike } from "../../../rx.js";
-declare const Runnable_toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"];
+import { RunnableContainerLike } from "../../../rx.js";
+declare const Runnable_toReadonlyArray: ToReadonlyArray<RunnableContainerLike>["toReadonlyArray"];
 export default Runnable_toReadonlyArray;

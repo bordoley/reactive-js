@@ -2,12 +2,15 @@ import { Function1, SideEffect2 } from "../../../functions.js";
 import {
   ForEachWithKey,
   KeyOf,
-  ReadonlyArrayLike,
+  ReadonlyArrayContainerLike,
 } from "../../../keyed-containers.js";
 
-const ReadonlyArray_forEachWithKey: ForEachWithKey<ReadonlyArrayLike>["forEachWithKey"] =
+const ReadonlyArray_forEachWithKey: ForEachWithKey<ReadonlyArrayContainerLike>["forEachWithKey"] =
 
-    <T, TKey extends KeyOf<ReadonlyArrayLike> = KeyOf<ReadonlyArrayLike>>(
+    <
+      T,
+      TKey extends KeyOf<ReadonlyArrayContainerLike> = KeyOf<ReadonlyArrayContainerLike>,
+    >(
       effect: SideEffect2<T, TKey>,
     ): Function1<readonly T[], readonly T[]> =>
     arr => {

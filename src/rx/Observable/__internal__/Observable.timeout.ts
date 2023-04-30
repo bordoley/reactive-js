@@ -25,6 +25,7 @@ import {
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
+  RunnableContainerLike,
   RunnableLike,
 } from "../../../rx.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
@@ -43,7 +44,9 @@ interface ObservableTimeout {
   timeout<C extends ObservableContainerLike, T>(
     duration: number,
   ): ContainerOperator<C, T, T>;
-  timeout<T>(duration: RunnableLike): ContainerOperator<RunnableLike, T, T>;
+  timeout<T>(
+    duration: RunnableLike,
+  ): ContainerOperator<RunnableContainerLike, T, T>;
   timeout<T>(
     duration: ObservableLike,
   ): ContainerOperator<ObservableContainerLike, T, T>;

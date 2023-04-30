@@ -1100,7 +1100,7 @@ ___
 
 ### backpressureStrategy
 
-▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1117,13 +1117,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly `T`[]\>
 
 Returns a ContainerLike which buffers items produced by the source until the
 number of items reaches the specified maximum buffer size.
@@ -1143,13 +1143,13 @@ number of items reaches the specified maximum buffer size.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly `T`[]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly `T`[]\>
 
 ___
 
 ### catchError
 
-▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike which catches errors produced by the source and either continues with
 the ContainerLike returned from the `onError` callback or swallows the error if
@@ -1169,13 +1169,13 @@ void is returned.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 Converts a higher-order ContainerLike into a first-order
 ContainerLike by concatenating the inner sources in order.
@@ -1188,13 +1188,13 @@ ContainerLike by concatenating the inner sources in order.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### concatMap
 
-▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1211,13 +1211,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### concatWith
 
-▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1234,13 +1234,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -1251,13 +1251,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `ArrayBuffer`, `string`\>
 
 ___
 
 ### dispatchTo
 
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1273,13 +1273,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerOperator that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -1299,23 +1299,23 @@ are distinct by comparison from the previous item.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### encodeUtf8
 
-▸ **encodeUtf8**(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `string`, `Uint8Array`\>
+▸ **encodeUtf8**(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `string`, `Uint8Array`\>
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `string`, `Uint8Array`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `string`, `Uint8Array`\>
 
 ___
 
 ### endWith
 
-▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1332,13 +1332,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### enqueue
 
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1354,13 +1354,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### exhaust
 
-▸ **exhaust**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -1370,13 +1370,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### exhaustMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1393,13 +1393,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### flatMapIterable
 
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1416,13 +1416,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -1441,13 +1441,13 @@ value emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### forkConcat
 
-▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TIn`, `TOut`\>
 
 #### Type parameters
 
@@ -1460,19 +1460,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TIn`, `TOut`\> |
-| `snd` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TIn`, `TOut`\> |
-| `...tail` | readonly [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TIn`, `TOut`\>[] |
+| `fst` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TIn`, `TOut`\> |
+| `snd` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TIn`, `TOut`\> |
+| `...tail` | readonly [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TIn`, `TOut`\>[] |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TIn`, `TOut`\>
 
 ___
 
 ### forkMerge
 
-▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TIn`, `TOut`\>
 
 #### Type parameters
 
@@ -1485,19 +1485,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TIn`, `TOut`\> |
-| `snd` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TIn`, `TOut`\> |
-| `...tail` | readonly [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TIn`, `TOut`\>[] |
+| `fst` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TIn`, `TOut`\> |
+| `snd` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TIn`, `TOut`\> |
+| `...tail` | readonly [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TIn`, `TOut`\>[] |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TIn`, `TOut`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TIn`, `TOut`\>
 
 ___
 
 ### forkZip
 
-▸ **forkZip**<`T`, `TA`, `TB`\>(`a`, `b`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`]\>
+▸ **forkZip**<`T`, `TA`, `TB`\>(`a`, `b`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -1511,14 +1511,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1533,15 +1533,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1557,16 +1557,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1583,17 +1583,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
-| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TE`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
+| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TE`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1611,18 +1611,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
-| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TE`\> |
-| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TF`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
+| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TE`\> |
+| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TF`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1641,19 +1641,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
-| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TE`\> |
-| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TF`\> |
-| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TG`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
+| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TE`\> |
+| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TF`\> |
+| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TG`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1673,20 +1673,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
-| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TE`\> |
-| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TF`\> |
-| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TG`\> |
-| `h` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TH`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
+| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TE`\> |
+| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TF`\> |
+| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TG`\> |
+| `h` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TH`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1707,25 +1707,25 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
-| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TE`\> |
-| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TF`\> |
-| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TG`\> |
-| `h` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TH`\> |
-| `i` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TI`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
+| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TE`\> |
+| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TF`\> |
+| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TG`\> |
+| `h` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TH`\> |
+| `i` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TI`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
 ### forkZipLatest
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -1739,14 +1739,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1761,15 +1761,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1785,16 +1785,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1811,17 +1811,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
-| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TE`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
+| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TE`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1839,18 +1839,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
-| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TE`\> |
-| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TF`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
+| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TE`\> |
+| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TF`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1869,19 +1869,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
-| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TE`\> |
-| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TF`\> |
-| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TG`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
+| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TE`\> |
+| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TF`\> |
+| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TG`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1901,20 +1901,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
-| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TE`\> |
-| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TF`\> |
-| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TG`\> |
-| `h` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TH`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
+| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TE`\> |
+| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TF`\> |
+| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TG`\> |
+| `h` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TH`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1935,25 +1935,25 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TA`\> |
-| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TB`\> |
-| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TC`\> |
-| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TD`\> |
-| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TE`\> |
-| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TF`\> |
-| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TG`\> |
-| `h` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TH`\> |
-| `i` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TI`\> |
+| `a` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TA`\> |
+| `b` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TB`\> |
+| `c` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TC`\> |
+| `d` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TD`\> |
+| `e` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TE`\> |
+| `f` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TF`\> |
+| `g` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TG`\> |
+| `h` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TH`\> |
+| `i` | [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TI`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1963,13 +1963,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `unknown`, `T`\>
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `unknown`, `T`\>
 
 #### Type parameters
 
@@ -1979,13 +1979,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `unknown`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `unknown`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -2004,13 +2004,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2027,13 +2027,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -2061,13 +2061,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2084,13 +2084,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### mergeAll
 
-▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -2109,13 +2109,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### mergeMap
 
-▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2136,13 +2136,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### mergeWith
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -2159,13 +2159,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
 
 #### Type parameters
 
@@ -2175,13 +2175,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, readonly [`T`, `T`]\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -2198,9 +2198,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -2219,9 +2219,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -2242,13 +2242,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that mirrors the source, repeating it whenever the predicate returns true.
 
@@ -2266,9 +2266,9 @@ Returns a ContainerLike that mirrors the source, repeating it whenever the predi
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that mirrors the source, repeating it `count` times.
 
@@ -2286,9 +2286,9 @@ Returns a ContainerLike that mirrors the source, repeating it `count` times.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **repeat**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that mirrors the source, continually repeating it.
 
@@ -2300,13 +2300,13 @@ Returns a ContainerLike that mirrors the source, continually repeating it.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### retry
 
-▸ **retry**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **retry**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns an `ObservableLike` that mirrors the source, re-subscribing
 if the source completes with an error.
@@ -2319,9 +2319,9 @@ if the source completes with an error.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **retry**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **retry**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns an `ObservableLike` that mirrors the source, resubscrbing
 if the source completes with an error which satisfies the predicate function.
@@ -2340,13 +2340,13 @@ if the source completes with an error which satisfies the predicate function.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 Returns a ContainerLike that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -2367,13 +2367,13 @@ and emits each intermediate result.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
 ### scanLast
 
-▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -2391,13 +2391,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
 ### scanMany
 
-▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -2415,13 +2415,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TAcc`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that skips the first count items emitted by the source.
 
@@ -2440,13 +2440,13 @@ Returns a ContainerLike that skips the first count items emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### startWith
 
-▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -2463,13 +2463,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -2479,13 +2479,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### switchMap
 
-▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2502,13 +2502,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `TB`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that only emits the first `count` values emitted by the source.
 
@@ -2527,13 +2527,13 @@ Returns a ContainerLike that only emits the first `count` values emitted by the 
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that only emits the last `count` items emitted by the source.
 
@@ -2552,13 +2552,13 @@ Returns a ContainerLike that only emits the last `count` items emitted by the so
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeUntil
 
-▸ **takeUntil**<`T`\>(`notifier`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeUntil**<`T`\>(`notifier`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -2570,17 +2570,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `notifier` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\> |
+| `notifier` | [`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -2602,13 +2602,13 @@ this predicate is not satisfied.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### throttle
 
-▸ **throttle**<`T`\>(`duration`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **throttle**<`T`\>(`duration`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
 
@@ -2622,15 +2622,15 @@ Emits a value from the source, then ignores subsequent source values for a durat
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `duration` | [`Function1`](functions.md#function1)<`T`, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>\> | Function function that is used to determine the silence duration in between emitted values. |
+| `duration` | [`Function1`](functions.md#function1)<`T`, [`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>\> | Function function that is used to determine the silence duration in between emitted values. |
 | `options?` | `Object` | - |
 | `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` | - |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **throttle**<`T`\>(`duration`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **throttle**<`T`\>(`duration`, `options?`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns an `ObservableLike` which emits a value from the source,
 then ignores subsequent source values for `duration` milliseconds.
@@ -2651,13 +2651,13 @@ then ignores subsequent source values for `duration` milliseconds.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### throwIfEmpty
 
-▸ **throwIfEmpty**<`T`\>(`factory`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **throwIfEmpty**<`T`\>(`factory`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns a ContainerLike that emits an error if the source completes without emitting a value.
 
@@ -2675,13 +2675,13 @@ Returns a ContainerLike that emits an error if the source completes without emit
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### timeout
 
-▸ **timeout**<`T`\>(`duration`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **timeout**<`T`\>(`duration`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 Returns an `ObservableLike` that completes with an error if the source
 does not emit a value in given time span.
@@ -2700,9 +2700,9 @@ does not emit a value in given time span.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **timeout**<`T`\>(`duration`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+▸ **timeout**<`T`\>(`duration`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -2714,17 +2714,17 @@ does not emit a value in given time span.
 
 | Name | Type |
 | :------ | :------ |
-| `duration` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\> |
+| `duration` | [`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\> |
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
 ### withCurrentTime
 
-▸ **withCurrentTime**<`T`, `TOut`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TOut`\>
+▸ **withCurrentTime**<`T`, `TOut`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TOut`\>
 
 #### Type parameters
 
@@ -2741,13 +2741,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `T`, `TOut`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `T`, `TOut`\>
 
 ___
 
 ### withLatestFrom
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `T`\>
 
 #### Type parameters
 
@@ -2766,13 +2766,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `T`\>
 
 ___
 
 ### zipWith
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -2789,9 +2789,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -2810,9 +2810,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -2833,9 +2833,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -2858,9 +2858,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -2885,9 +2885,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -2914,9 +2914,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -2945,9 +2945,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -2978,13 +2978,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
 ### zipWithLatestFrom
 
-▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `T`\>
+▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `T`\>
 
 #### Type parameters
 
@@ -3003,7 +3003,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`unknown`\>, `TA`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`RunnableContainerLike`](../interfaces/rx.RunnableContainerLike.md)<`unknown`\>, `TA`, `T`\>
 
 ___
 
@@ -3314,9 +3314,9 @@ ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`ReadonlyArrayContainerLike`](../interfaces/containers.ReadonlyArrayContainerLike.md)<`T`\>\>
 
-Converts the ContainerLike to a `ReadonlyArrayLike`.
+Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
 #### Type parameters
 
@@ -3326,4 +3326,4 @@ Converts the ContainerLike to a `ReadonlyArrayLike`.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>, [`ReadonlyArrayContainerLike`](../interfaces/containers.ReadonlyArrayContainerLike.md)<`T`\>\>

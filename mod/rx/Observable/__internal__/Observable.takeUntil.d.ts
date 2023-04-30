@@ -1,8 +1,8 @@
 import { ContainerOperator } from "../../../containers.js";
-import { EnumerableLike, ObservableContainerLike, ObservableLike, RunnableLike } from "../../../rx.js";
+import { EnumerableContainerLike, EnumerableLike, ObservableContainerLike, ObservableLike, RunnableContainerLike, RunnableLike } from "../../../rx.js";
 interface ObservableTakeUntil {
-    takeUntil<T>(notifier: EnumerableLike): ContainerOperator<EnumerableLike, T, T>;
-    takeUntil<T>(notifier: RunnableLike): ContainerOperator<RunnableLike, T, T>;
+    takeUntil<T>(notifier: EnumerableLike): ContainerOperator<EnumerableContainerLike, T, T>;
+    takeUntil<T>(notifier: RunnableLike): ContainerOperator<RunnableContainerLike, T, T>;
     takeUntil<T>(notifier: ObservableLike): ContainerOperator<ObservableContainerLike, T, T>;
 }
 declare const Observable_takeUntil: ObservableTakeUntil["takeUntil"];

@@ -1,9 +1,9 @@
-import { Last, ReadonlyArrayLike } from "../../../containers.js";
+import { Last, ReadonlyArrayContainerLike } from "../../../containers.js";
 import { none } from "../../../functions.js";
 
-const ReadonlyArray_last: Last<ReadonlyArrayLike>["last"] =
+const ReadonlyArray_last: Last<ReadonlyArrayContainerLike>["last"] =
   <T>() =>
-  (values: ReadonlyArrayLike<T>) => {
+  (values: ReadonlyArrayContainerLike<T>) => {
     const count = values.length;
 
     return count > 0 ? values[count - 1] : none;

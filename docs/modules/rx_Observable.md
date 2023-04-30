@@ -105,7 +105,7 @@
 
 ### animate
 
-▸ **animate**<`T`\>(`configs`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>
+▸ **animate**<`T`\>(`configs`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -121,13 +121,13 @@
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
 ### combineLatest
 
-▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`]\>
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -140,14 +140,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -161,15 +161,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -184,16 +184,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -209,17 +209,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -236,18 +236,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -265,19 +265,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -296,20 +296,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
-| `h` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TH`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
+| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -329,19 +329,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
-| `h` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TH`\> |
-| `i` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TI`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
+| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
+| `i` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TI`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
@@ -371,7 +371,7 @@ ___
 
 ### concat
 
-▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 Returns a ContainerLike which emits all values from each source sequentially.
 
@@ -385,13 +385,13 @@ Returns a ContainerLike which emits all values from each source sequentially.
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\> |
-| `snd` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\> |
-| `...tail` | readonly [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>[] |
+| `fst` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `snd` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `...tail` | readonly [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>[] |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
@@ -419,7 +419,7 @@ ___
 
 ### currentTime
 
-▸ **currentTime**(`options?`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`number`\>
+▸ **currentTime**(`options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
 
 #### Parameters
 
@@ -431,13 +431,13 @@ ___
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`number`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`number`\>
 
 ___
 
 ### defer
 
-▸ **defer**<`T`\>(`factory`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>
+▸ **defer**<`T`\>(`factory`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -449,11 +449,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
@@ -506,7 +506,7 @@ ___
 
 ### fromAsyncIterable
 
-▸ **fromAsyncIterable**<`T`\>(): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>\>
+▸ **fromAsyncIterable**<`T`\>(): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -516,7 +516,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 
@@ -670,7 +670,7 @@ ___
 
 ### merge
 
-▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -682,19 +682,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\> |
-| `snd` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\> |
-| `...tail` | readonly [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>[] |
+| `fst` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `snd` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `...tail` | readonly [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>[] |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
 ### never
 
-▸ **never**<`T`\>(): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>
+▸ **never**<`T`\>(): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 Returns a ContainerLike instance that emits no items and never disposes its state.
 
@@ -706,7 +706,7 @@ Returns a ContainerLike instance that emits no items and never disposes its stat
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>
 
 ___
 
@@ -736,7 +736,7 @@ ___
 
 ### zip
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
 Combines multiple sources to create a ContainerLike whose values are calculated from the values,
 in order, of each of its input sources.
@@ -752,14 +752,14 @@ in order, of each of its input sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -773,15 +773,15 @@ in order, of each of its input sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -796,16 +796,16 @@ in order, of each of its input sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -821,17 +821,17 @@ in order, of each of its input sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -848,18 +848,18 @@ in order, of each of its input sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -877,19 +877,19 @@ in order, of each of its input sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -908,20 +908,20 @@ in order, of each of its input sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
-| `h` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TH`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
+| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -941,25 +941,25 @@ in order, of each of its input sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
-| `h` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TH`\> |
-| `i` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TI`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
+| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
+| `i` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TI`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
 ### zipLatest
 
-▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`]\>
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
 Returns a container that zips the latest values from
 multiple sources.
@@ -975,14 +975,14 @@ multiple sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -996,15 +996,15 @@ multiple sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1019,16 +1019,16 @@ multiple sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1044,17 +1044,17 @@ multiple sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1071,18 +1071,18 @@ multiple sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1100,19 +1100,19 @@ multiple sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1131,20 +1131,20 @@ multiple sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
-| `h` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TH`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
+| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1164,19 +1164,19 @@ multiple sources.
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TA`\> |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
-| `h` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TH`\> |
-| `i` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TI`\> |
+| `a` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TA`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
+| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
+| `i` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TI`\> |
 
 #### Returns
 
-[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ObservableLike`](../interfaces/rx.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
@@ -1247,7 +1247,7 @@ void is returned.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>\> | A function that takes source error and either returns a ContainerLike to continue with or void if the error should be propagated. |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> | A function that takes source error and either returns a ContainerLike to continue with or void if the error should be propagated. |
 
 #### Returns
 
@@ -1257,7 +1257,7 @@ ___
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, `T`\>
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 Converts a higher-order ContainerLike into a first-order
 ContainerLike by concatenating the inner sources in order.
@@ -1270,7 +1270,7 @@ ContainerLike by concatenating the inner sources in order.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -1289,7 +1289,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
 
 #### Returns
 
@@ -1311,8 +1311,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `snd` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\> |
-| `...tail` | readonly [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>[] |
+| `snd` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `...tail` | readonly [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>[] |
 
 #### Returns
 
@@ -1442,7 +1442,7 @@ ___
 
 ### exhaust
 
-▸ **exhaust**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, `T`\>
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -1452,7 +1452,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -1471,7 +1471,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
 
 #### Returns
 
@@ -2423,7 +2423,7 @@ ___
 
 ### mergeAll
 
-▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, `T`\>
+▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -2442,7 +2442,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -2461,7 +2461,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -2487,8 +2487,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `snd` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\> |
-| `...tail` | readonly [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>[] |
+| `snd` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> |
+| `...tail` | readonly [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>[] |
 
 #### Returns
 
@@ -2741,7 +2741,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TAcc`\>\> |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TAcc`\>\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
@@ -2765,7 +2765,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TAcc`\>\> |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TAcc`\>\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
@@ -2861,7 +2861,7 @@ ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, `T`\>
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -2871,7 +2871,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -2890,7 +2890,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\>\> |
 
 #### Returns
 
@@ -3153,7 +3153,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
+| `other` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
 | `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
@@ -3177,7 +3177,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
 
 #### Returns
 
@@ -3197,8 +3197,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
 
 #### Returns
 
@@ -3219,9 +3219,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
 
 #### Returns
 
@@ -3243,10 +3243,10 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
 
 #### Returns
 
@@ -3269,11 +3269,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
 
 #### Returns
 
@@ -3297,12 +3297,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
 
 #### Returns
 
@@ -3327,13 +3327,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
-| `h` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TH`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
+| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
 
 #### Returns
 
@@ -3359,14 +3359,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
-| `c` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TC`\> |
-| `d` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TD`\> |
-| `e` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TE`\> |
-| `f` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TF`\> |
-| `g` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TG`\> |
-| `h` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TH`\> |
-| `i` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TI`\> |
+| `b` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
+| `c` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TC`\> |
+| `d` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TD`\> |
+| `e` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TE`\> |
+| `f` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TF`\> |
+| `g` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TG`\> |
+| `h` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TH`\> |
+| `i` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TI`\> |
 
 #### Returns
 
@@ -3390,7 +3390,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`TB`\> |
+| `other` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TB`\> |
 | `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
@@ -3430,7 +3430,7 @@ ___
 
 ### firstAsync
 
-▸ **firstAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+▸ **firstAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -3440,9 +3440,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
 
-▸ **firstAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+▸ **firstAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -3461,13 +3461,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 
 ### lastAsync
 
-▸ **lastAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+▸ **lastAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -3477,9 +3477,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
 
-▸ **lastAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+▸ **lastAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -3498,13 +3498,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`PromiseableLike`](../interfaces/containers.PromiseableLike.md)<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 
 ### multicast
 
-▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 Returns a `MulticastObservableLike` backed by a single subscription to the source.
 
@@ -3526,13 +3526,13 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/rx.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 
 ### share
 
-▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 Returns an `ObservableLike` backed by a shared refcounted subscription to the
 source. When the refcount goes to 0, the underlying subscription
@@ -3556,13 +3556,13 @@ to the source is disposed.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### toEnumerable
 
-▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3572,7 +3572,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
 
 ___
 
@@ -3603,7 +3603,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3613,13 +3613,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### toRunnable
 
-▸ **toRunnable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+▸ **toRunnable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3629,4 +3629,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>

@@ -16,7 +16,7 @@ Base type for all Containers.
 
   ↳ [`PromiseableLike`](containers.PromiseableLike.md)
 
-  ↳ [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)
+  ↳ [`ReadonlyArrayContainerLike`](containers.ReadonlyArrayContainerLike.md)
 
   ↳ [`ReadonlySetLike`](containers.ReadonlySetLike.md)
 
@@ -24,11 +24,15 @@ Base type for all Containers.
 
   ↳ [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md)
 
-  ↳ [`ReadonlyMapLike`](keyed_containers.ReadonlyMapLike.md)
+  ↳ [`ReadonlyMapContainerLike`](keyed_containers.ReadonlyMapContainerLike.md)
 
   ↳ [`ReadonlyObjectMapContainerLike`](keyed_containers.ReadonlyObjectMapContainerLike.md)
 
   ↳ [`ObservableContainerLike`](rx.ObservableContainerLike.md)
+
+  ↳ [`RunnableContainerLike`](rx.RunnableContainerLike.md)
+
+  ↳ [`EnumerableContainerLike`](rx.EnumerableContainerLike.md)
 
   ↳ [`PauseableObservableContainerLike`](rx.PauseableObservableContainerLike.md)
 

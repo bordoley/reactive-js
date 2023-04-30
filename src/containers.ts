@@ -78,10 +78,10 @@ export interface PromiseableLike<T = unknown>
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyArrayLike<T = unknown>
+export interface ReadonlyArrayContainerLike<T = unknown>
   extends ContainerLike,
     ReadonlyArray<T> {
-  readonly [ContainerLike_type]?: ReadonlyArrayLike<
+  readonly [ContainerLike_type]?: ReadonlyArrayContainerLike<
     this[typeof ContainerLike_T]
   >;
 }
@@ -836,11 +836,14 @@ export interface ToIterable<C extends ContainerLike> {
  */
 export interface ToReadonlyArray<C extends ContainerLike> {
   /**
-   * Converts the ContainerLike to a `ReadonlyArrayLike`.
+   * Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
    *
    * @category Transform
    */
-  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArrayLike<T>>;
+  toReadonlyArray<T>(): Function1<
+    ContainerOf<C, T>,
+    ReadonlyArrayContainerLike<T>
+  >;
 }
 
 /**

@@ -90,9 +90,7 @@ export interface ObservableLike<T = unknown> {
 export interface ObservableContainerLike<T = unknown>
   extends ObservableLike<T>,
     ContainerLike {
-  readonly [ContainerLike_type]?: ObservableContainerLike<
-    this[typeof ContainerLike_T]
-  >;
+  readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
 }
 
 /**
@@ -101,10 +99,20 @@ export interface ObservableContainerLike<T = unknown>
  * @noInheritDoc
  * @category Container
  */
-export interface RunnableLike<T = unknown> extends ObservableContainerLike<T> {
-  readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
-
+export interface RunnableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
+}
+
+/**
+ * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface RunnableContainerLike<T = unknown>
+  extends RunnableLike<T>,
+    ContainerLike {
+  readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
 }
 
 /**
@@ -114,9 +122,13 @@ export interface RunnableLike<T = unknown> extends ObservableContainerLike<T> {
  * @category Container
  */
 export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
-  readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
-
   readonly [ObservableLike_isEnumerable]: true;
+}
+
+export interface EnumerableContainerLike<T = unknown>
+  extends EnumerableLike<T>,
+    ContainerLike {
+  readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
 }
 
 /**

@@ -1,27 +1,28 @@
 import { EverySatisfy } from "../../../containers.js";
 import { Predicate, isFalse, pipe } from "../../../functions.js";
-import { RunnableLike } from "../../../rx.js";
+import { RunnableContainerLike, RunnableLike } from "../../../rx.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Observable_takeWhile from "../../Observable/__internal__/Observable.takeWhile.js";
 import Runnable_run from "./Runnable.run.js";
 
-const Runnable_someSatisfy: EverySatisfy<RunnableLike>["everySatisfy"] =
-  <T>(predicate: Predicate<T>) =>
-  (runnable: RunnableLike<T>) => {
-    let result = false;
+const Runnable_someSatisfy: EverySatisfy<RunnableContainerLike>["everySatisfy"] =
 
-    pipe(
-      runnable,
-      Observable_map<RunnableLike, T, boolean>(predicate),
-      Observable_forEach<RunnableLike, boolean>(next => {
-        result = next;
-      }),
-      Observable_takeWhile<RunnableLike, boolean>(isFalse),
-      Runnable_run(),
-    );
+    <T>(predicate: Predicate<T>) =>
+    (runnable: RunnableLike<T>) => {
+      let result = false;
 
-    return result;
-  };
+      pipe(
+        runnable,
+        Observable_map<RunnableContainerLike, T, boolean>(predicate),
+        Observable_forEach<RunnableContainerLike, boolean>(next => {
+          result = next;
+        }),
+        Observable_takeWhile<RunnableContainerLike, boolean>(isFalse),
+        Runnable_run(),
+      );
+
+      return result;
+    };
 
 export default Runnable_someSatisfy;

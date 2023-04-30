@@ -18,10 +18,12 @@
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [PauseableObservableLike](../interfaces/rx.PauseableObservableLike.md)
 - [PublisherLike](../interfaces/rx.PublisherLike.md)
+- [RunnableContainerLike](../interfaces/rx.RunnableContainerLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
 
 ### Other Interfaces
 
+- [EnumerableContainerLike](../interfaces/rx.EnumerableContainerLike.md)
 - [ObservableContainerLike](../interfaces/rx.ObservableContainerLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
 - [PauseableObservableContainerLike](../interfaces/rx.PauseableObservableContainerLike.md)

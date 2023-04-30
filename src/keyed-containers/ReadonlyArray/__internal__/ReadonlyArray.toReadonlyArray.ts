@@ -1,11 +1,11 @@
 import {
-  ReadonlyArrayLike,
+  ReadonlyArrayContainerLike,
   ToReadonlyArray,
 } from "../../../keyed-containers.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
-const ReadonlyArray_toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike>["toReadonlyArray"] =
-  /*@__PURE__*/ ReadonlyArray_toContainer<ReadonlyArrayLike>(
+const ReadonlyArray_toReadonlyArray: ToReadonlyArray<ReadonlyArrayContainerLike>["toReadonlyArray"] =
+  /*@__PURE__*/ ReadonlyArray_toContainer<ReadonlyArrayContainerLike>(
     <T>(values: readonly T[], startIndex: number, count: number) =>
       startIndex === 0 && count === values.length
         ? values

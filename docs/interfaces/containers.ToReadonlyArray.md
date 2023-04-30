@@ -20,9 +20,9 @@
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)<`T`\>\>
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayContainerLike`](containers.ReadonlyArrayContainerLike.md)<`T`\>\>
 
-Converts the ContainerLike to a `ReadonlyArrayLike`.
+Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
 #### Type parameters
 
@@ -32,4 +32,4 @@ Converts the ContainerLike to a `ReadonlyArrayLike`.
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayLike`](containers.ReadonlyArrayLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, [`ReadonlyArrayContainerLike`](containers.ReadonlyArrayContainerLike.md)<`T`\>\>

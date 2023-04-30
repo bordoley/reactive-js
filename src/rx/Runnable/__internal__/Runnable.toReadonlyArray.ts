@@ -1,18 +1,21 @@
-import { ReadonlyArrayLike, ToReadonlyArray } from "../../../containers.js";
+import {
+  ReadonlyArrayContainerLike,
+  ToReadonlyArray,
+} from "../../../containers.js";
 import { Function1, pipe } from "../../../functions.js";
-import { RunnableLike } from "../../../rx.js";
+import { RunnableContainerLike, RunnableLike } from "../../../rx.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Runnable_run from "./Runnable.run.js";
 
-const Runnable_toReadonlyArray: ToReadonlyArray<RunnableLike>["toReadonlyArray"] =
+const Runnable_toReadonlyArray: ToReadonlyArray<RunnableContainerLike>["toReadonlyArray"] =
 
-    <T>(): Function1<RunnableLike<T>, ReadonlyArrayLike<T>> =>
+    <T>(): Function1<RunnableLike<T>, ReadonlyArrayContainerLike<T>> =>
     observable => {
       const result: T[] = [];
 
       pipe(
         observable,
-        Observable_forEach<RunnableLike, T>(next => {
+        Observable_forEach<RunnableContainerLike, T>(next => {
           result.push(next);
         }),
         Runnable_run(),

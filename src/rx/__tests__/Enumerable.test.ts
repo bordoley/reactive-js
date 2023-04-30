@@ -6,12 +6,12 @@ import {
 } from "../../__internal__/testing.js";
 import Containers_test from "../../containers/__tests__/Containers.test.js";
 import { pipe, returns } from "../../functions.js";
-import { EnumerableLike } from "../../rx.js";
+import { EnumerableContainerLike } from "../../rx.js";
 import * as Enumerable from "../Enumerable.js";
 
 testModule(
   "Enumerable",
-  Containers_test<EnumerableLike>(Enumerable),
+  Containers_test<EnumerableContainerLike>(Enumerable),
   describe(
     "enumerate",
     test("with higher order observable and no delay", () => {

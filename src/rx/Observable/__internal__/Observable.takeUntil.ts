@@ -1,10 +1,12 @@
 import { ContainerOperator } from "../../../containers.js";
 import { pipe } from "../../../functions.js";
 import {
+  EnumerableContainerLike,
   EnumerableLike,
   ObservableContainerLike,
   ObservableLike,
   ObserverLike,
+  RunnableContainerLike,
   RunnableLike,
 } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -17,8 +19,10 @@ import Observable_takeFirst from "./Observable.takeFirst.js";
 interface ObservableTakeUntil {
   takeUntil<T>(
     notifier: EnumerableLike,
-  ): ContainerOperator<EnumerableLike, T, T>;
-  takeUntil<T>(notifier: RunnableLike): ContainerOperator<RunnableLike, T, T>;
+  ): ContainerOperator<EnumerableContainerLike, T, T>;
+  takeUntil<T>(
+    notifier: RunnableLike,
+  ): ContainerOperator<RunnableContainerLike, T, T>;
   takeUntil<T>(
     notifier: ObservableLike,
   ): ContainerOperator<ObservableContainerLike, T, T>;

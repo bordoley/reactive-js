@@ -1,7 +1,7 @@
 import { returns } from "../../../functions.js";
-import { Empty, ReadonlyMapLike } from "../../../keyed-containers.js";
+import { Empty, ReadonlyMapContainerLike } from "../../../keyed-containers.js";
 
-const ReadonlyMap_empty: Empty<ReadonlyMapLike>["empty"] = /*@__PURE__*/ (() =>
-  returns(new Map()))();
+const ReadonlyMap_empty: Empty<ReadonlyMapContainerLike>["empty"] =
+  /*@__PURE__*/ (() => returns(new Map()))();
 
 export default ReadonlyMap_empty;

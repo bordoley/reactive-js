@@ -170,9 +170,9 @@ ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>, [`ReadonlyArrayContainerLike`](../interfaces/containers.ReadonlyArrayContainerLike.md)<`T`\>\>
 
-Converts the ContainerLike to a `ReadonlyArrayLike`.
+Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
 #### Type parameters
 
@@ -182,4 +182,4 @@ Converts the ContainerLike to a `ReadonlyArrayLike`.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>, [`ReadonlyArrayLike`](../interfaces/containers.ReadonlyArrayLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>, [`ReadonlyArrayContainerLike`](../interfaces/containers.ReadonlyArrayContainerLike.md)<`T`\>\>

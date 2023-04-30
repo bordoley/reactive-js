@@ -1,3 +1,3 @@
-import { RunnableLike, ScanLast } from "../../../rx.js";
-declare const Runnable_scanLast: ScanLast<RunnableLike>["scanLast"];
+import { RunnableContainerLike, ScanLast } from "../../../rx.js";
+declare const Runnable_scanLast: ScanLast<RunnableContainerLike>["scanLast"];
 export default Runnable_scanLast;

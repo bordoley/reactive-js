@@ -25,7 +25,7 @@ import {
   KeepWithKey,
   Map,
   MapWithKey,
-  ReadonlyArrayLike,
+  ReadonlyArrayContainerLike,
   ToReadonlyArray,
 } from "../keyed-containers.js";
 import {
@@ -64,13 +64,14 @@ import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArra
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 
-export const empty: Empty<ReadonlyArrayLike>["empty"] = ReadonlyArray_empty;
+export const empty: Empty<ReadonlyArrayContainerLike>["empty"] =
+  ReadonlyArray_empty;
 
-export const entries: Entries<ReadonlyArrayLike>["entries"] =
+export const entries: Entries<ReadonlyArrayContainerLike>["entries"] =
   ReadonlyArray_entries;
 
 interface Enumerate
-  extends Containers.Enumerate<ReadonlyArrayLike, EnumeratorLike> {
+  extends Containers.Enumerate<ReadonlyArrayContainerLike, EnumeratorLike> {
   /**
    *
    * @category Transform
@@ -78,17 +79,18 @@ interface Enumerate
   enumerate<T>(options?: {
     readonly start?: number;
     readonly count?: number;
-  }): Function1<ReadonlyArrayLike<T>, EnumeratorLike<T>>;
+  }): Function1<ReadonlyArrayContainerLike<T>, EnumeratorLike<T>>;
 }
 
 export const enumerate: Enumerate["enumerate"] = ReadonlyArray_enumerate;
 
-export const everySatisfy: EverySatisfy<ReadonlyArrayLike>["everySatisfy"] =
+export const everySatisfy: EverySatisfy<ReadonlyArrayContainerLike>["everySatisfy"] =
   ReadonlyArray_everySatisfy;
 
-export const first: First<ReadonlyArrayLike>["first"] = ReadonlyArray_first;
+export const first: First<ReadonlyArrayContainerLike>["first"] =
+  ReadonlyArray_first;
 
-interface Flow extends Rx.Flow<ReadonlyArrayLike> {
+interface Flow extends Rx.Flow<ReadonlyArrayContainerLike> {
   /** @category Transform */
   flow<T>(
     scheduler: SchedulerLike,
@@ -101,102 +103,104 @@ interface Flow extends Rx.Flow<ReadonlyArrayLike> {
       readonly count?: number;
     },
   ): Function1<
-    ReadonlyArrayLike<T>,
+    ReadonlyArrayContainerLike<T>,
     PauseableObservableLike<T> & DisposableLike
   >;
 }
 export const flow: Flow["flow"] = ReadonlyArray_flow;
 
-export const forEach: ForEach<ReadonlyArrayLike>["forEach"] =
+export const forEach: ForEach<ReadonlyArrayContainerLike>["forEach"] =
   ReadonlyArray_forEach;
 
-export const forEachWithKey: ForEachWithKey<ReadonlyArrayLike>["forEachWithKey"] =
+export const forEachWithKey: ForEachWithKey<ReadonlyArrayContainerLike>["forEachWithKey"] =
   ReadonlyArray_forEachWithKey;
 
-export const fromEnumerable: FromEnumerable<ReadonlyArrayLike>["fromEnumerable"] =
+export const fromEnumerable: FromEnumerable<ReadonlyArrayContainerLike>["fromEnumerable"] =
   Runnable_toReadonlyArray;
 
-export const fromIterable: FromIterable<ReadonlyArrayLike>["fromIterable"] =
+export const fromIterable: FromIterable<ReadonlyArrayContainerLike>["fromIterable"] =
   Iterable_toReadonlyArray;
 
-export const fromOptional: FromOptional<ReadonlyArrayLike>["fromOptional"] =
+export const fromOptional: FromOptional<ReadonlyArrayContainerLike>["fromOptional"] =
   Optional_toReadonlyArray;
 
-export const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayLike>["fromReadonlyArray"] =
+export const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayContainerLike>["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 
-export const fromRunnable: FromRunnable<ReadonlyArrayLike>["fromRunnable"] =
+export const fromRunnable: FromRunnable<ReadonlyArrayContainerLike>["fromRunnable"] =
   Runnable_toReadonlyArray;
 
 export const getLength = ReadonlyArray_getLength;
 
-export const identity: Identity<ReadonlyArrayLike>["identity"] =
-  Container_identity as Identity<ReadonlyArrayLike>["identity"];
+export const identity: Identity<ReadonlyArrayContainerLike>["identity"] =
+  Container_identity as Identity<ReadonlyArrayContainerLike>["identity"];
 
 export const isEmpty = ReadonlyArray_isEmpty;
 
-export const keep: Keep<ReadonlyArrayLike>["keep"] = ReadonlyArray_keep;
+export const keep: Keep<ReadonlyArrayContainerLike>["keep"] =
+  ReadonlyArray_keep;
 
-export const keepType: KeepType<ReadonlyArrayLike>["keepType"] =
+export const keepType: KeepType<ReadonlyArrayContainerLike>["keepType"] =
   ReadonlyArray_keepType;
 
-export const keepWithKey: KeepWithKey<ReadonlyArrayLike>["keepWithKey"] =
+export const keepWithKey: KeepWithKey<ReadonlyArrayContainerLike>["keepWithKey"] =
   ReadonlyArray_keepWithKey;
 
-export const last: Last<ReadonlyArrayLike>["last"] = ReadonlyArray_last;
+export const last: Last<ReadonlyArrayContainerLike>["last"] =
+  ReadonlyArray_last;
 
-export const map: Map<ReadonlyArrayLike>["map"] = ReadonlyArray_map;
+export const map: Map<ReadonlyArrayContainerLike>["map"] = ReadonlyArray_map;
 
-export const mapWithKey: MapWithKey<ReadonlyArrayLike>["mapWithKey"] =
+export const mapWithKey: MapWithKey<ReadonlyArrayContainerLike>["mapWithKey"] =
   ReadonlyArray_mapWithKey;
 
-export const someSatisfy: SomeSatisfy<ReadonlyArrayLike>["someSatisfy"] =
+export const someSatisfy: SomeSatisfy<ReadonlyArrayContainerLike>["someSatisfy"] =
   ReadonlyArray_someSatisfy;
 
-interface ToEnumerable extends Rx.ToEnumerable<ReadonlyArrayLike> {
+interface ToEnumerable extends Rx.ToEnumerable<ReadonlyArrayContainerLike> {
   /**
    * @category Transform
    */
   toEnumerable<T>(options?: {
     readonly start: number;
     readonly count: number;
-  }): Function1<ReadonlyArrayLike<T>, EnumerableLike<T>>;
+  }): Function1<ReadonlyArrayContainerLike<T>, EnumerableLike<T>>;
 }
 export const toEnumerable: ToEnumerable["toEnumerable"] =
   ReadonlyArray_toObservable;
 
-interface ToIterable extends Containers.ToIterable<ReadonlyArrayLike> {
+interface ToIterable extends Containers.ToIterable<ReadonlyArrayContainerLike> {
   /** @category Transform */
   toIterable<T>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<ReadonlyArrayLike<T>, IterableLike<T>>;
+  }): Function1<ReadonlyArrayContainerLike<T>, IterableLike<T>>;
 }
 export const toIterable: ToIterable["toIterable"] =
   ReadonlyArray_toReadonlyArray;
 
-interface ToObservable extends Rx.ToObservable<ReadonlyArrayLike> {
+interface ToObservable extends Rx.ToObservable<ReadonlyArrayContainerLike> {
   /** @category Transform */
   toObservable: <T>(options?: {
     readonly count?: number;
     readonly delay?: number;
     readonly delayStart?: boolean;
     readonly start?: number;
-  }) => Function1<ReadonlyArrayLike<T>, ObservableLike<T>>;
+  }) => Function1<ReadonlyArrayContainerLike<T>, ObservableLike<T>>;
 }
 export const toObservable: ToObservable["toObservable"] =
   ReadonlyArray_toObservable;
 
-export const toReadonlyArray: ToReadonlyArray<ReadonlyArrayLike>["toReadonlyArray"] =
+export const toReadonlyArray: ToReadonlyArray<ReadonlyArrayContainerLike>["toReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 
-interface ToRunnable extends Rx.ToRunnable<ReadonlyArrayLike> {
+interface ToRunnable extends Rx.ToRunnable<ReadonlyArrayContainerLike> {
   /** @category Transform */
   toRunnable: <T>(options?: {
     readonly count?: number;
     readonly delay?: number;
     readonly delayStart?: boolean;
     readonly start?: number;
-  }) => Function1<ReadonlyArrayLike<T>, RunnableLike<T>>;
+  }) => Function1<ReadonlyArrayContainerLike<T>, RunnableLike<T>>;
 }
 export const toRunnable: ToRunnable["toRunnable"] = ReadonlyArray_toObservable;

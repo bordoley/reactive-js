@@ -37,12 +37,10 @@ export interface KeyedContainerLike extends ContainerLike {
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyArrayLike<T = unknown>
+export interface ReadonlyArrayContainerLike<T = unknown>
   extends KeyedContainerLike,
     ReadonlyArray<T> {
-  readonly [ContainerLike_type]?: ReadonlyArrayLike<
-    this[typeof ContainerLike_T]
-  >;
+  readonly [ContainerLike_type]?: ReadonlyArray<this[typeof ContainerLike_T]>;
 
   readonly [KeyedContainerLike_TKey]?: number;
 }
@@ -51,12 +49,12 @@ export interface ReadonlyArrayLike<T = unknown>
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyMapLike<T = unknown, TKey = unknown>
+export interface ReadonlyMapContainerLike<T = unknown, TKey = unknown>
   extends ContainerLike,
     ReadonlyMap<TKey, T> {
-  readonly [ContainerLike_type]?: ReadonlyMapLike<
-    this[typeof ContainerLike_T],
-    this[typeof KeyedContainerLike_TKey]
+  readonly [ContainerLike_type]?: ReadonlyMap<
+    this[typeof KeyedContainerLike_TKey],
+    this[typeof ContainerLike_T]
   >;
 
   readonly [KeyedContainerLike_TKey]?: unknown;
@@ -201,7 +199,7 @@ export interface FromReadonlyArray<C extends KeyedContainerLike> {
    */
   fromReadonlyArray<
     T,
-    TKey extends KeyOf<ReadonlyArrayLike> = KeyOf<ReadonlyArrayLike>,
+    TKey extends KeyOf<ReadonlyArrayContainerLike> = KeyOf<ReadonlyArrayContainerLike>,
   >(options?: {
     readonly start?: number;
     readonly count?: number;
@@ -374,13 +372,13 @@ export interface ReduceWithKey<C extends KeyedContainerLike> {
  */
 export interface ToReadonlyArray<C extends KeyedContainerLike> {
   /**
-   * Converts the ContainerLike to a `ReadonlyArrayLike`.
+   * Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
    *
    * @category Transform
    */
   toReadonlyArray<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
     KeyedContainerOf<C, TKey, T>,
-    ReadonlyArrayLike<T>
+    ReadonlyArrayContainerLike<T>
   >;
 }
 

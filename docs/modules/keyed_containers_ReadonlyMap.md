@@ -22,7 +22,7 @@
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(): [`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>
+▸ **empty**<`T`, `TKey`\>(): `ReadonlyMap`<`TKey`, `T`\>
 
 Return an ContainerLike that emits no items.
 
@@ -35,7 +35,7 @@ Return an ContainerLike that emits no items.
 
 #### Returns
 
-[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>
+`ReadonlyMap`<`TKey`, `T`\>
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -72,13 +72,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -107,7 +107,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
@@ -126,13 +126,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`T`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+[`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 ___
 
 ### keys
 
-▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
+▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `unknown`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
 
 #### Type parameters
 
@@ -142,4 +142,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyMapLike`](../interfaces/keyed_containers.ReadonlyMapLike.md)<`unknown`, `TKey`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>
+[`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `unknown`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`TKey`\>\>

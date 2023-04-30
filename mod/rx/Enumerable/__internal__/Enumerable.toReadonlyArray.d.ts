@@ -1,4 +1,4 @@
 import { ToReadonlyArray } from "../../../containers.js";
-import { EnumerableLike } from "../../../rx.js";
-declare const Enumerable_toReadonlyArray: ToReadonlyArray<EnumerableLike>["toReadonlyArray"];
+import { EnumerableContainerLike } from "../../../rx.js";
+declare const Enumerable_toReadonlyArray: ToReadonlyArray<EnumerableContainerLike>["toReadonlyArray"];
 export default Enumerable_toReadonlyArray;

@@ -11,7 +11,7 @@
 - [EnumeratorLike](../interfaces/containers.EnumeratorLike.md)
 - [IterableLike](../interfaces/containers.IterableLike.md)
 - [PromiseableLike](../interfaces/containers.PromiseableLike.md)
-- [ReadonlyArrayLike](../interfaces/containers.ReadonlyArrayLike.md)
+- [ReadonlyArrayContainerLike](../interfaces/containers.ReadonlyArrayContainerLike.md)
 - [ReadonlySetLike](../interfaces/containers.ReadonlySetLike.md)
 
 ### TypeClass Interfaces

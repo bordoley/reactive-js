@@ -3,7 +3,7 @@ import { abs, clamp, min } from "../../../__internal__/math.js";
 import {
   ContainerLike,
   ContainerOf,
-  ReadonlyArrayLike,
+  ReadonlyArrayContainerLike,
 } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
 import ReadonlyArray_getLength from "./ReadonlyArray.getLength.js";
@@ -22,7 +22,7 @@ const ReadonlyArray_toContainer =
       readonly start?: number;
       readonly count?: number;
     },
-  ): Function1<ReadonlyArrayLike<T>, ContainerOf<C, T>> =>
+  ): Function1<ReadonlyArrayContainerLike<T>, ContainerOf<C, T>> =>
   values => {
     const valuesLength = ReadonlyArray_getLength(values);
     const {

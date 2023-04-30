@@ -24,7 +24,7 @@ import {
   returns,
 } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
-import { RunnableLike } from "../../rx.js";
+import { RunnableContainerLike, RunnableLike } from "../../rx.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -847,7 +847,7 @@ const throwIfEmptyTests = describe(
 
 testModule(
   "Runnable",
-  Containers_test<RunnableLike>(Runnable),
+  Containers_test<RunnableContainerLike>(Runnable),
   catchErrorTests,
   combineLatestTests,
   computeTests,

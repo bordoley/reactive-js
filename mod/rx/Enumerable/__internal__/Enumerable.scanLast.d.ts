@@ -1,3 +1,3 @@
-import { EnumerableLike, ScanLast } from "../../../rx.js";
-declare const EnumerableObservable_scanLast: ScanLast<EnumerableLike>["scanLast"];
+import { EnumerableContainerLike, ScanLast } from "../../../rx.js";
+declare const EnumerableObservable_scanLast: ScanLast<EnumerableContainerLike>["scanLast"];
 export default EnumerableObservable_scanLast;

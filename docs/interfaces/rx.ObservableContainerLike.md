@@ -20,8 +20,6 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
   ↳ **`ObservableContainerLike`**
 
-  ↳↳ [`RunnableLike`](rx.RunnableLike.md)
-
 ## Table of contents
 
 ### Properties
@@ -49,7 +47,7 @@ ___
 
 ### [\_\_\_ContainerLike\_type]
 
-• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`ObservableContainerLike`](rx.ObservableContainerLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`ObservableLike`](rx.ObservableLike.md)<`unknown`\>
 
 #### Overrides
 

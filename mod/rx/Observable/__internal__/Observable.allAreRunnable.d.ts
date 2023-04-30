@@ -1,4 +1,4 @@
-import { ReadonlyArrayLike } from "../../../containers.js";
+import { ReadonlyArrayContainerLike } from "../../../containers.js";
 import { ObservableLike, RunnableLike } from "../../../rx.js";
-declare const Observable_allAreRunnable: (srcs: ReadonlyArrayLike<ObservableLike>) => srcs is ReadonlyArrayLike<RunnableLike<unknown>>;
+declare const Observable_allAreRunnable: (srcs: ReadonlyArrayContainerLike<ObservableLike>) => srcs is ReadonlyArrayContainerLike<RunnableLike<unknown>>;
 export default Observable_allAreRunnable;

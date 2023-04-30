@@ -1,3 +1,3 @@
-import { ForEachWithKey, ReadonlyArrayLike } from "../../../keyed-containers.js";
-declare const ReadonlyArray_forEachWithKey: ForEachWithKey<ReadonlyArrayLike>["forEachWithKey"];
+import { ForEachWithKey, ReadonlyArrayContainerLike } from "../../../keyed-containers.js";
+declare const ReadonlyArray_forEachWithKey: ForEachWithKey<ReadonlyArrayContainerLike>["forEachWithKey"];
 export default ReadonlyArray_forEachWithKey;

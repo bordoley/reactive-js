@@ -1,4 +1,4 @@
-import { ReadonlyArrayLike } from "../../../containers.js";
+import { ReadonlyArrayContainerLike } from "../../../containers.js";
 import { compose, isTrue } from "../../../functions.js";
 import ReadonlyArray_everySatisfy from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
@@ -10,7 +10,7 @@ const Observable_allAreEnumerable = /*@__PURE__*/ (() =>
     ReadonlyArray_map(Observable_isEnumerable),
     ReadonlyArray_everySatisfy(isTrue),
   ))() as unknown as (
-  srcs: ReadonlyArrayLike<ObservableLike>,
-) => srcs is ReadonlyArrayLike<EnumerableLike>;
+  srcs: ReadonlyArrayContainerLike<ObservableLike>,
+) => srcs is ReadonlyArrayContainerLike<EnumerableLike>;
 
 export default Observable_allAreEnumerable;

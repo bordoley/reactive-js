@@ -7,8 +7,8 @@
 ### Container Interfaces
 
 - [KeyedContainerLike](../interfaces/keyed_containers.KeyedContainerLike.md)
-- [ReadonlyArrayLike](../interfaces/keyed_containers.ReadonlyArrayLike.md)
-- [ReadonlyMapLike](../interfaces/keyed_containers.ReadonlyMapLike.md)
+- [ReadonlyArrayContainerLike](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)
+- [ReadonlyMapContainerLike](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)
 
 ### Other Interfaces
 

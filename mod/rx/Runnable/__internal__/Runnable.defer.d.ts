@@ -1,3 +1,2 @@
-import { RunnableLike } from "../../../rx.js";
-declare const Runnable_defer: <T>(factory: import("../../../functions.js").Factory<RunnableLike<T>>) => RunnableLike<T>;
+declare const Runnable_defer: <T>(factory: import("../../../functions.js").Factory<import("../../../rx.js").RunnableLike<T>>) => import("../../../rx.js").RunnableLike<T>;
 export default Runnable_defer;

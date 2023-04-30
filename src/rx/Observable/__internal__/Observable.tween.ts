@@ -7,7 +7,7 @@ import {
   pipe,
   returns,
 } from "../../../functions.js";
-import { RunnableLike } from "../../../rx.js";
+import { RunnableContainerLike, RunnableLike } from "../../../rx.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
@@ -23,7 +23,7 @@ const Observable_tween = (
 
   return pipe(
     Observable_currentTime(),
-    Observable_scan<RunnableLike, number, [number, number]>(
+    Observable_scan<RunnableContainerLike, number, [number, number]>(
       ([startTime, _], now) => {
         startTime = min(now, startTime);
 
@@ -33,8 +33,8 @@ const Observable_tween = (
       },
       returns([MAX_VALUE, 0]),
     ),
-    Observable_pick<RunnableLike, [unknown, number], 1>(1),
-    Observable_takeWhile<RunnableLike, number>(isNotEqualTo(1), {
+    Observable_pick<RunnableContainerLike, [unknown, number], 1>(1),
+    Observable_takeWhile<RunnableContainerLike, number>(isNotEqualTo(1), {
       inclusive: true,
     }),
   );

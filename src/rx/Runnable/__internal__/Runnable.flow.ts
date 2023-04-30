@@ -3,6 +3,7 @@ import {
   Flow,
   ObservableContainerLike,
   ObservableLike,
+  RunnableContainerLike,
   RunnableLike,
 } from "../../../rx.js";
 import PauseableObservable_create from "../../../rx/PauseableObservable/__internal__/PauseableObservable.create.js";
@@ -23,7 +24,7 @@ import Observable_subscribeOn from "../../Observable/__internal__/Observable.sub
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
-const Runnable_flow: Flow<RunnableLike>["flow"] =
+const Runnable_flow: Flow<RunnableContainerLike>["flow"] =
   <T>(
     scheduler: SchedulerLike,
     options?: {

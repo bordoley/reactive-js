@@ -2,21 +2,28 @@ import { Function2 } from "../../../functions.js";
 import {
   KeyOf,
   MapWithKey,
-  ReadonlyMapLike,
+  ReadonlyMapContainerLike,
 } from "../../../keyed-containers.js";
 
-const ReadonlyMap_mapWithKey: MapWithKey<ReadonlyMapLike>["mapWithKey"] =
-  <TA, TB, TKey extends KeyOf<ReadonlyMapLike> = KeyOf<ReadonlyMapLike>>(
-    selector: Function2<TA, TKey, TB>,
-  ) =>
-  (map: ReadonlyMapLike<TA, TKey>): ReadonlyMapLike<TB, TKey> => {
-    const result = new Map<TKey, TB>();
+const ReadonlyMap_mapWithKey: MapWithKey<ReadonlyMapContainerLike>["mapWithKey"] =
 
-    for (let [key, value] of map) {
-      result.set(key, selector(value, key));
-    }
+    <
+      TA,
+      TB,
+      TKey extends KeyOf<ReadonlyMapContainerLike> = KeyOf<ReadonlyMapContainerLike>,
+    >(
+      selector: Function2<TA, TKey, TB>,
+    ) =>
+    (
+      map: ReadonlyMapContainerLike<TA, TKey>,
+    ): ReadonlyMapContainerLike<TB, TKey> => {
+      const result = new Map<TKey, TB>();
 
-    return result;
-  };
+      for (let [key, value] of map) {
+        result.set(key, selector(value, key));
+      }
+
+      return result;
+    };
 
 export default ReadonlyMap_mapWithKey;

@@ -6,7 +6,8 @@ import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move,
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { none } from "../../../functions.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
-const ReadonlyArray_enumerate = /*@__PURE__*/ (() => {
+const ReadonlyArray_enumerate = 
+/*@__PURE__*/ (() => {
     const createEnumerator = createInstanceFactory(mix(include(MutableEnumerator_mixin()), function ReadonlyArrayEnumerator(instance, values, start, count, _) {
         init(MutableEnumerator_mixin(), instance);
         instance[__ReadonlyArrayEnumerator_values] = values;
