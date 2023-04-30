@@ -34,10 +34,9 @@ import { ObservableLike } from "@reactive-js/core/rx";
 import {
   QueueableLike_enqueue,
   KeyedCollectionLike_get,
-  EventEmitterLike,
+  EventSourceLike,
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
-import { EventSourceLike } from "@reactive-js/core/util";
 import * as Dictionary from "@reactive-js/core/util/Dictionary";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
 import {
@@ -232,7 +231,7 @@ const RxComponent = createComponent(
   ) => {
     const createAnimationEventHandler = Streamable.createAnimationEventHandler<
       "animate" | "cancel",
-      ReadonlyObjectMapLike<string, CSSStyleKey>
+      ReadonlyObjectMapLike<CSSStyleKey, string>
     >(
       ev =>
         ev === "animate"
@@ -278,12 +277,7 @@ const RxComponent = createComponent(
 
       // FIXME: Who should filter out events? Maybe __animateEvent should take an array of events
       // as an argument?
-      const animationEventEmitter: EventEmitterLike<{
-        type: unknown;
-        value: ReadonlyObjectMapLike<string, CSSStyleKey>;
-      }> = animationEventHandler;
-
-      const animatedDivRef = __animateEvent(animationEventEmitter);
+      const animatedDivRef = __animateEvent(animationEventHandler);
 
       return (
         <div>

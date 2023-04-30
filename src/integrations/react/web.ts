@@ -124,7 +124,7 @@ export const WindowLocationProvider: React.FunctionComponent<{
  */
 export const useAnimate = <TElement extends HTMLElement, T = number>(
   animation: Optional<EventSourceLike<T>>,
-  selector: (ev: T) => ReadonlyObjectMapLike<string, CSSStyleKey>,
+  selector: (ev: T) => ReadonlyObjectMapLike<CSSStyleKey, string>,
   deps: readonly unknown[] = [],
 ): React.Ref<TElement> => {
   const ref = useRef<TElement>(null);
@@ -168,7 +168,7 @@ export const useAnimateEvent = <
   selector: (ev: {
     type: TEventType;
     value: T;
-  }) => ReadonlyObjectMapLike<string, CSSStyleKey>,
+  }) => ReadonlyObjectMapLike<CSSStyleKey, string>,
   deps: readonly unknown[] = [],
 ): React.Ref<TElement> => {
   return useAnimate<TElement, { type: TEventType; value: T }>(

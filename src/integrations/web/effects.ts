@@ -32,7 +32,7 @@ const makeRefSetter =
 const animateHtmlElement = <T>(
   element: Optional<HTMLElement | null>,
   animation: EventSourceLike<T>,
-  selector: (ev: T) => ReadonlyObjectMapLike<string, CSSStyleKey>,
+  selector: (ev: T) => ReadonlyObjectMapLike<CSSStyleKey, string>,
 ): DisposableLike =>
   // Just in case a caller sets it to null instead of undefined
   element != null
@@ -51,17 +51,17 @@ const animateHtmlElement = <T>(
 
 interface Animate {
   __animate(
-    animation: EventSourceLike<ReadonlyObjectMapLike<string, CSSStyleKey>>,
+    animation: EventSourceLike<ReadonlyObjectMapLike<CSSStyleKey, string>>,
   ): SideEffect1<Optional<HTMLElement | null>>;
 
   __animate<T>(
     animation: EventSourceLike<T>,
-    selector: (ev: T) => ReadonlyObjectMapLike<string, CSSStyleKey>,
+    selector: (ev: T) => ReadonlyObjectMapLike<CSSStyleKey, string>,
   ): SideEffect1<Optional<HTMLElement | null>>;
 }
 export const __animate: Animate["__animate"] = (
   animation: EventSourceLike,
-  selector?: (ev: unknown) => ReadonlyObjectMapLike<string, CSSStyleKey>,
+  selector?: (ev: unknown) => ReadonlyObjectMapLike<CSSStyleKey, string>,
 ): SideEffect1<Optional<HTMLElement | null>> => {
   const htmlElementState = __state<Optional<HTMLElement | null>>(returnsNone);
   const setRef = __memo(makeRefSetter, htmlElementState);
@@ -82,7 +82,7 @@ interface AnimateEvent {
   __animateEvent(
     animation: EventSourceLike<{
       type: unknown;
-      value: ReadonlyObjectMapLike<string, CSSStyleKey>;
+      value: ReadonlyObjectMapLike<CSSStyleKey, string>;
     }>,
   ): SideEffect1<Optional<HTMLElement | null>>;
 
@@ -91,7 +91,7 @@ interface AnimateEvent {
     selector: (ev: {
       type: TEventType;
       value: T;
-    }) => ReadonlyObjectMapLike<string, CSSStyleKey>,
+    }) => ReadonlyObjectMapLike<CSSStyleKey, string>,
   ): SideEffect1<Optional<HTMLElement | null>>;
 }
 export const __animateEvent: AnimateEvent["__animateEvent"] = <TEventType, T>(
@@ -99,7 +99,7 @@ export const __animateEvent: AnimateEvent["__animateEvent"] = <TEventType, T>(
   selector?: (ev: {
     type: TEventType;
     value: T;
-  }) => ReadonlyObjectMapLike<string, CSSStyleKey>,
+  }) => ReadonlyObjectMapLike<CSSStyleKey, string>,
 ): SideEffect1<Optional<HTMLElement | null>> => {
   return __animate(animation, selector ?? (defaultSelector as any));
 };
