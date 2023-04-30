@@ -32,6 +32,7 @@ import {
   MulticastObservableLike_buffer,
   ObservableContainer,
   ObservableLike,
+  PauseableObservableLike,
   PauseableObservableLike_isPaused,
   PublisherLike,
 } from "../../../rx.js";
@@ -46,13 +47,13 @@ import Publisher_create from "../../../rx/Publisher/__internal__/Publisher.creat
 import Runnable_fromEnumeratorFactory from "../../../rx/Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import {
   AnimationGroupEventHandlerLike,
-  AnimationGroupEventHandlerStreamLike,
+  DisposableStreamOf,
   StreamableLike_stream,
 } from "../../../streaming.js";
 import {
   AssociativeCollectionLike_keys,
   CollectionLike_count,
-  DisposableLike,
+  DictionaryLike,
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
@@ -94,216 +95,226 @@ const createAnimationGroupEventHandlerStream: <
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }>,
-) => AnimationGroupEventHandlerStreamLike<TEventType, T, TKey> &
-  DisposableLike = /*@__PURE__*/ (<
-  TEventType,
-  T,
-  TKey extends string | symbol | number = string,
->() => {
-  type TProperties = {
-    [CollectionLike_count]: number;
-    [PauseableObservableLike_isPaused]: PublisherLike<boolean>;
-  };
+) => DisposableStreamOf<AnimationGroupEventHandlerLike<TEventType, T, TKey>> =
+  /*@__PURE__*/ (<
+    TEventType,
+    T,
+    TKey extends string | symbol | number = string,
+  >() => {
+    type TProperties = {
+      [CollectionLike_count]: number;
+      [PauseableObservableLike_isPaused]: PublisherLike<boolean>;
+    };
 
-  return createInstanceFactory(
-    mix(
-      include(
-        Stream_delegatingMixin<TEventType, boolean>(),
-        Delegating_mixin(),
-      ),
-      function AnimationEventHandlerStream(
-        instance: TProperties &
-          Pick<
-            AnimationGroupEventHandlerStreamLike<TEventType, T, TKey>,
-            | typeof AssociativeCollectionLike_keys
-            | typeof KeyedCollectionLike_get
-            | typeof PauseableObservableLike_isPaused
-            | typeof PauseableLike_isPaused
-            | typeof PauseableLike_pause
-            | typeof PauseableLike_resume
-          >,
-        animationGroup: ReadonlyObjectMapLike<
-          TKey,
-          Function1<
-            TEventType,
-            AnimationConfig<T> | readonly AnimationConfig<T>[]
-          >
-        >,
-        creationOptions: Optional<{
-          readonly mode?: "switching" | "blocking" | "queueing";
-          readonly concurrency?: number;
-          readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          readonly capacity?: number;
-        }>,
-        scheduler: SchedulerLike,
-        streamOptions: Optional<{
-          readonly replay?: number;
-          readonly capacity?: number;
-          readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        }>,
-      ): AnimationGroupEventHandlerStreamLike<TEventType, T, TKey> &
-        DisposableLike {
-        const streamDelegate = Streamable_createEventHandler(
-          (type: TEventType) => {
-            const observables: ReadonlyObjectMapLike<
-              string,
-              ObservableLike<T>
-            > = pipe(
-              animationGroup,
-              ReadonlyObjectMap_mapWithKey<
-                Function1<
-                  TEventType,
-                  AnimationConfig<T> | readonly AnimationConfig<T>[]
-                >,
-                ObservableLike<T>,
-                string
-              >((factory, key: string) =>
-                pipe(
-                  Observable_animate<T>(factory(type)),
-                  Observable_map<
-                    ObservableContainer,
-                    T,
-                    { type: TEventType; value: T }
-                  >(value => ({ type, value })),
-                  Observable_forEach<
-                    ObservableContainer,
-                    { type: TEventType; value: T }
-                  >(value => {
-                    const publisher = publishers[key];
-                    if (isSome(publisher)) {
-                      publisher[EventListenerLike_notify](value);
-                    }
-                  }),
-                  Observable_ignoreElements<ObservableContainer, T>(),
-                ),
-              ),
-            );
-
-            return pipe(
-              Runnable_fromEnumeratorFactory(
-                pipeLazy(observables, ReadonlyObjectMap_values()),
-              ),
-              Observable_map<
-                ObservableContainer,
-                ObservableLike<T>,
-                ObservableLike<T>
-              >(Observable_subscribeOn(animationScheduler)),
-              Observable_mergeAll({
-                concurrency: creationOptions?.concurrency,
-              }),
-            );
-          },
-          creationOptions as any,
-        )[StreamableLike_stream](scheduler, streamOptions);
-
-        init(
+    return createInstanceFactory(
+      mix(
+        include(
           Stream_delegatingMixin<TEventType, boolean>(),
-          instance,
-          streamDelegate,
-        );
-
-        const publishers = pipe(
-          animationGroup,
-          ReadonlyObjectMap_map<
-            unknown,
-            EventPublisherLike<{ type: TEventType; value: T }>,
-            string
-          >(_ =>
-            pipe(
-              EventPublisher_create<{ type: TEventType; value: T }>(),
-              Disposable_addTo(instance),
-            ),
-          ),
-        );
-
-        const animationScheduler: PauseableSchedulerLike = pipe(
-          scheduler,
-          Scheduler_createAnimationFrameScheduler,
-          Disposable_addTo(instance),
-          Scheduler_toPauseableScheduler,
-          Disposable_addTo(instance),
-        );
-
-        instance[CollectionLike_count] = pipe(
-          publishers,
-          ReadonlyObjectMap_reduce<unknown, number, string>(
-            incrementBy(1),
-            returns(0),
-          ),
-        );
-
-        init(Delegating_mixin(), instance, publishers);
-
-        const isPausePublisher = Publisher_create<boolean>({
-          replay: 1,
-        });
-        instance[PauseableObservableLike_isPaused] = isPausePublisher;
-        isPausePublisher[EventListenerLike_notify](false);
-
-        pipe(
-          isPausePublisher,
-          Observable_forEach<ObservableContainer, boolean>(isPaused => {
-            if (isPaused) {
-              animationScheduler[PauseableLike_pause]();
-            } else {
-              animationScheduler[PauseableLike_resume]();
-            }
-          }),
-          Observable_subscribe(scheduler, {
-            capacity: 1,
-            backpressureStrategy: "drop-oldest",
-          }),
-          Disposable_addTo(instance),
-        );
-
-        return instance;
-      },
-      props<TProperties>({
-        [CollectionLike_count]: 0,
-        [PauseableObservableLike_isPaused]: none,
-      }),
-      {
-        get [AssociativeCollectionLike_keys](): EnumeratorLike<TKey> {
-          unsafeCast<DelegatingLike<ReadonlyObjectMapLike<TKey, unknown>>>(
-            this,
-          );
-          return pipe(this[DelegatingLike_delegate], ReadonlyObjectMap_keys());
-        },
-
-        get [PauseableLike_isPaused](): boolean {
-          unsafeCast<TProperties>(this);
-          return this[PauseableObservableLike_isPaused][
-            MulticastObservableLike_buffer
-          ][KeyedCollectionLike_get](0);
-        },
-
-        [PauseableLike_pause](this: TProperties) {
-          this[PauseableObservableLike_isPaused][EventListenerLike_notify](
-            true,
-          );
-        },
-
-        [PauseableLike_resume](this: TProperties) {
-          this[PauseableObservableLike_isPaused][EventListenerLike_notify](
-            false,
-          );
-        },
-
-        [KeyedCollectionLike_get](
-          this: DelegatingLike<
-            ReadonlyObjectMapLike<
-              TKey,
-              EventSourceLike<{ type: TEventType; value: T }>
+          Delegating_mixin(),
+        ),
+        function AnimationEventHandlerStream(
+          instance: TProperties &
+            Pick<
+              DictionaryLike<
+                TKey,
+                EventSourceLike<{ type: TEventType; value: T }>
+              >,
+              | typeof AssociativeCollectionLike_keys
+              | typeof KeyedCollectionLike_get
+            > &
+            Pick<
+              PauseableObservableLike<boolean>,
+              | typeof PauseableObservableLike_isPaused
+              | typeof PauseableLike_isPaused
+              | typeof PauseableLike_pause
+              | typeof PauseableLike_resume
+            >,
+          animationGroup: ReadonlyObjectMapLike<
+            TKey,
+            Function1<
+              TEventType,
+              AnimationConfig<T> | readonly AnimationConfig<T>[]
             >
           >,
-          index: TKey,
-        ): Optional<EventSourceLike<{ type: TEventType; value: T }>> {
-          return this[DelegatingLike_delegate][index];
+          creationOptions: Optional<{
+            readonly mode?: "switching" | "blocking" | "queueing";
+            readonly concurrency?: number;
+            readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+            readonly capacity?: number;
+          }>,
+          scheduler: SchedulerLike,
+          streamOptions: Optional<{
+            readonly replay?: number;
+            readonly capacity?: number;
+            readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          }>,
+        ): DisposableStreamOf<
+          AnimationGroupEventHandlerLike<TEventType, T, TKey>
+        > {
+          const streamDelegate = Streamable_createEventHandler(
+            (type: TEventType) => {
+              const observables: ReadonlyObjectMapLike<
+                string,
+                ObservableLike<T>
+              > = pipe(
+                animationGroup,
+                ReadonlyObjectMap_mapWithKey<
+                  Function1<
+                    TEventType,
+                    AnimationConfig<T> | readonly AnimationConfig<T>[]
+                  >,
+                  ObservableLike<T>,
+                  string
+                >((factory, key: string) =>
+                  pipe(
+                    Observable_animate<T>(factory(type)),
+                    Observable_map<
+                      ObservableContainer,
+                      T,
+                      { type: TEventType; value: T }
+                    >(value => ({ type, value })),
+                    Observable_forEach<
+                      ObservableContainer,
+                      { type: TEventType; value: T }
+                    >(value => {
+                      const publisher = publishers[key];
+                      if (isSome(publisher)) {
+                        publisher[EventListenerLike_notify](value);
+                      }
+                    }),
+                    Observable_ignoreElements<ObservableContainer, T>(),
+                  ),
+                ),
+              );
+
+              return pipe(
+                Runnable_fromEnumeratorFactory(
+                  pipeLazy(observables, ReadonlyObjectMap_values()),
+                ),
+                Observable_map<
+                  ObservableContainer,
+                  ObservableLike<T>,
+                  ObservableLike<T>
+                >(Observable_subscribeOn(animationScheduler)),
+                Observable_mergeAll({
+                  concurrency: creationOptions?.concurrency,
+                }),
+              );
+            },
+            creationOptions as any,
+          )[StreamableLike_stream](scheduler, streamOptions);
+
+          init(
+            Stream_delegatingMixin<TEventType, boolean>(),
+            instance,
+            streamDelegate,
+          );
+
+          const publishers = pipe(
+            animationGroup,
+            ReadonlyObjectMap_map<
+              unknown,
+              EventPublisherLike<{ type: TEventType; value: T }>,
+              string
+            >(_ =>
+              pipe(
+                EventPublisher_create<{ type: TEventType; value: T }>(),
+                Disposable_addTo(instance),
+              ),
+            ),
+          );
+
+          const animationScheduler: PauseableSchedulerLike = pipe(
+            scheduler,
+            Scheduler_createAnimationFrameScheduler,
+            Disposable_addTo(instance),
+            Scheduler_toPauseableScheduler,
+            Disposable_addTo(instance),
+          );
+
+          instance[CollectionLike_count] = pipe(
+            publishers,
+            ReadonlyObjectMap_reduce<unknown, number, string>(
+              incrementBy(1),
+              returns(0),
+            ),
+          );
+
+          init(Delegating_mixin(), instance, publishers);
+
+          const isPausePublisher = Publisher_create<boolean>({
+            replay: 1,
+          });
+          instance[PauseableObservableLike_isPaused] = isPausePublisher;
+          isPausePublisher[EventListenerLike_notify](false);
+
+          pipe(
+            isPausePublisher,
+            Observable_forEach<ObservableContainer, boolean>(isPaused => {
+              if (isPaused) {
+                animationScheduler[PauseableLike_pause]();
+              } else {
+                animationScheduler[PauseableLike_resume]();
+              }
+            }),
+            Observable_subscribe(scheduler, {
+              capacity: 1,
+              backpressureStrategy: "drop-oldest",
+            }),
+            Disposable_addTo(instance),
+          );
+
+          return instance;
         },
-      },
-    ),
-  );
-})();
+        props<TProperties>({
+          [CollectionLike_count]: 0,
+          [PauseableObservableLike_isPaused]: none,
+        }),
+        {
+          get [AssociativeCollectionLike_keys](): EnumeratorLike<TKey> {
+            unsafeCast<DelegatingLike<ReadonlyObjectMapLike<TKey, unknown>>>(
+              this,
+            );
+            return pipe(
+              this[DelegatingLike_delegate],
+              ReadonlyObjectMap_keys(),
+            );
+          },
+
+          get [PauseableLike_isPaused](): boolean {
+            unsafeCast<TProperties>(this);
+            return this[PauseableObservableLike_isPaused][
+              MulticastObservableLike_buffer
+            ][KeyedCollectionLike_get](0);
+          },
+
+          [PauseableLike_pause](this: TProperties) {
+            this[PauseableObservableLike_isPaused][EventListenerLike_notify](
+              true,
+            );
+          },
+
+          [PauseableLike_resume](this: TProperties) {
+            this[PauseableObservableLike_isPaused][EventListenerLike_notify](
+              false,
+            );
+          },
+
+          [KeyedCollectionLike_get](
+            this: DelegatingLike<
+              ReadonlyObjectMapLike<
+                TKey,
+                EventSourceLike<{ type: TEventType; value: T }>
+              >
+            >,
+            index: TKey,
+          ): Optional<EventSourceLike<{ type: TEventType; value: T }>> {
+            return this[DelegatingLike_delegate][index];
+          },
+        },
+      ),
+    );
+  })();
 
 interface CreateAnimationGroupEventHandler {
   createAnimationGroupEventHandler<

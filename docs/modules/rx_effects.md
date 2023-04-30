@@ -505,21 +505,19 @@ ___
 
 ### \_\_stream
 
-▸ **__stream**<`TReq`, `T`, `TStream`\>(`streamable`, `«destructured»?`): `TStream`
+▸ **__stream**<`TStreamable`\>(`streamable`, `«destructured»?`): [`StreamOf`](streaming.md#streamof)<`TStreamable`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TReq` | `TReq` |
-| `T` | `T` |
-| `TStream` | extends [`StreamLike`](../interfaces/streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }, `TStream`\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
+| `streamable` | `TStreamable` |
 | `«destructured»` | `Object` |
 | › `backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | › `capacity?` | `number` |
@@ -528,7 +526,7 @@ ___
 
 #### Returns
 
-`TStream`
+[`StreamOf`](streaming.md#streamof)<`TStreamable`\>
 
 ___
 

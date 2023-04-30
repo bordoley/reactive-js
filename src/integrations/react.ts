@@ -43,7 +43,8 @@ import * as Observable from "../rx/Observable.js";
 import * as Publisher from "../rx/Publisher.js";
 import * as Runnable from "../rx/Runnable.js";
 import {
-  StreamLike,
+  DisposableStreamOf,
+  StreamOf,
   StreamableLike,
   StreamableLike_stream,
 } from "../streaming.js";
@@ -51,7 +52,6 @@ import * as Streamable from "../streaming/Streamable.js";
 import {
   DictionaryLike,
   DispatcherLike,
-  DisposableLike,
   DisposableLike_dispose,
   EventListenerLike_notify,
   EventPublisherLike,
@@ -187,18 +187,18 @@ export const useObservable: UseObservable["useObservable"] = <T>(
 };
 
 interface UseStream {
-  useStream<TReq, T, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>>(
-    streamable: StreamableLike<TReq, T, TStream>,
+  useStream<TStreamable extends StreamableLike>(
+    streamable: TStreamable,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
       readonly replay?: number;
     },
-  ): Optional<TStream>;
+  ): Optional<StreamOf<TStreamable>>;
 
-  useStream<TReq, T, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>>(
-    factory: Factory<StreamableLike<TReq, T, TStream>>,
+  useStream<TStreamable extends StreamableLike>(
+    factory: Factory<TStreamable>,
     dep: readonly unknown[],
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -206,20 +206,16 @@ interface UseStream {
       readonly capacity?: number;
       readonly replay?: number;
     },
-  ): Optional<TStream>;
+  ): Optional<StreamOf<TStreamable>>;
 }
 
 /**
  * @category Hook
  */
 export const useStream: UseStream["useStream"] = <
-  TReq,
-  T,
-  TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
+  TStreamable extends StreamableLike,
 >(
-  streamableOrFactory:
-    | StreamableLike<TReq, T, TStream>
-    | Factory<StreamableLike<TReq, T, TStream>>,
+  streamableOrFactory: TStreamable | Factory<TStreamable>,
   optionsOrDeps:
     | Optional<{
         readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -234,8 +230,8 @@ export const useStream: UseStream["useStream"] = <
     readonly capacity?: number;
     readonly replay?: number;
   },
-): Optional<TStream> => {
-  const [stream, setStream] = useState<Optional<TStream>>(none);
+): Optional<StreamOf<TStreamable>> => {
+  const [stream, setStream] = useState<Optional<StreamOf<TStreamable>>>(none);
 
   const streamable = isFunction(streamableOrFactory)
     ? useMemo(streamableOrFactory, optionsOrDeps as readonly unknown[])
@@ -258,14 +254,13 @@ export const useStream: UseStream["useStream"] = <
   useEffect(() => {
     const scheduler = getScheduler({ priority });
 
-    const stream: TStream & DisposableLike = streamable[StreamableLike_stream](
-      scheduler,
-      {
-        replay,
-        backpressureStrategy,
-        capacity,
-      },
-    );
+    const stream: DisposableStreamOf<TStreamable> = streamable[
+      StreamableLike_stream
+    ](scheduler, {
+      replay,
+      backpressureStrategy,
+      capacity,
+    });
 
     setStream(stream);
 

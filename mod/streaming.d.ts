@@ -1,4 +1,4 @@
-import { __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
+import { __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_TStream as StreamableLike_TStream, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike, PauseableObservableLike } from "./rx.js";
@@ -8,7 +8,6 @@ export { StreamableLike_stream, StreamLike_scheduler };
  * Represents a duplex stream
  *
  * @noInheritDoc
- * @category Stream
  */
 export interface StreamLike<TReq, T, TEvents extends {
     type: "wait" | "drain" | "complete";
@@ -25,8 +24,10 @@ export interface StreamLike<TReq, T, TEvents extends {
  * @typeparam TStream
  *
  * @noInheritDoc
+ * @category Streamable
  */
-export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {
+export interface StreamableLike<TReq = unknown, T = unknown> {
+    readonly [StreamableLike_TStream]?: StreamLike<TReq, T>;
     /**
      * Subscribe to the Streamable.
      *
@@ -44,53 +45,41 @@ export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = S
          */
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): TStream & DisposableLike;
+    }): DisposableStreamOf<this>;
 }
 /**
  * A cache stream that support transaction updates of a collection of keys
  * and observing the changing values of individual keys.
  *
  * @noInheritDoc
- * @category Stream
+ *  @category Streamable
  */
-export interface CacheStreamLike<T> extends StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never>, AssociativeCollectionLike<string, ObservableLike<T>> {
-}
-/**
- * A container that returns a CacheStream when subscribed to.
- *
- * @noInheritDoc
- */
-export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Function1<Optional<T>, Optional<T>>>>, never, CacheStreamLike<T>> {
-}
-/**
- * @noInheritDoc
- * @category Stream
- */
-export interface AnimationGroupEventHandlerStreamLike<TEventType, T, TKey extends string | number | symbol> extends StreamLike<TEventType, boolean>, PauseableObservableLike<boolean>, DictionaryLike<TKey, EventSourceLike<{
-    type: TEventType;
-    value: T;
-}>> {
+export interface CacheLike<T> extends StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> {
+    readonly [StreamableLike_TStream]?: StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> & AssociativeCollectionLike<string, ObservableLike<T>>;
 }
 /**
  *
  * @noInheritDoc
+ * @category Streamable
  */
-export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends string | number | symbol> extends StreamableLike<TEventType, boolean, AnimationGroupEventHandlerStreamLike<TEventType, T, TKey>> {
-}
-/**
- * @noInheritDoc
- * @category Stream
- */
-export interface AnimationEventHandlerStreamLike<TEventType, T> extends StreamLike<TEventType, boolean, {
-    type: TEventType;
-    value: T;
-} & {
-    type: "wait" | "drain" | "complete";
-}>, PauseableObservableLike<boolean> {
+export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends string | number | symbol> extends StreamableLike<TEventType, boolean> {
+    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableObservableLike<boolean> & DictionaryLike<TKey, EventSourceLike<{
+        type: TEventType;
+        value: T;
+    }>>;
 }
 /**
  *
  * @noInheritDoc
+ *  @category Streamable
  */
-export interface AnimationEventHandlerLike<TEventType, T> extends StreamableLike<TEventType, boolean, AnimationEventHandlerStreamLike<TEventType, T>> {
+export interface AnimationEventHandlerLike<TEventType, T> extends StreamableLike<TEventType, boolean> {
+    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean, {
+        type: TEventType;
+        value: T;
+    } & {
+        type: "wait" | "drain" | "complete";
+    }> & PauseableObservableLike<boolean>;
 }
+export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;
+export type DisposableStreamOf<TStreamable extends StreamableLike> = StreamOf<TStreamable> & DisposableLike;

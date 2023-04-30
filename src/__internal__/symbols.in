@@ -38,6 +38,7 @@ SchedulerLike_shouldYield
 SchedulerLike_yield
 StreamLike_scheduler
 StreamableLike_stream
+StreamableLike_TStream
 VirtualTimeSchedulerLike_run
 WindowLocationLike_push
 WindowLocationLike_goBack

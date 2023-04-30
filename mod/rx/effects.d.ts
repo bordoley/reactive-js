@@ -1,6 +1,6 @@
 import { Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Optional, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater } from "../functions.js";
 import { ObservableLike } from "../rx.js";
-import { StreamLike, StreamableLike } from "../streaming.js";
+import { StreamLike, StreamOf, StreamableLike } from "../streaming.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../util.js";
 interface __Memo {
     __memo<T>(fn: Factory<T>): T;
@@ -36,14 +36,12 @@ interface __Using {
 }
 export declare const __using: __Using["__using"];
 export declare function __currentScheduler(): SchedulerLike;
-export declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T, {
-    type: "complete" | "wait" | "drain";
-}>>(streamable: StreamableLike<TReq, T, TStream>, { replay, backpressureStrategy, capacity, scheduler, }?: {
+export declare const __stream: <TStreamable extends StreamableLike<unknown, unknown>>(streamable: TStreamable, { replay, backpressureStrategy, capacity, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
     readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;
-}) => TStream;
+}) => StreamOf<TStreamable>;
 export declare const __state: <T>(initialState: () => T, options?: {
     readonly equality?: Optional<Equality<T>>;
     readonly replay?: number | undefined;

@@ -82,6 +82,8 @@ export const __StreamLike_scheduler = /*@__PURE__*/ symbol("StreamLike_scheduler
 /** @type {unique symbol} */
 export const __StreamableLike_stream = /*@__PURE__*/ symbol("StreamableLike_stream");
 /** @type {unique symbol} */
+export const __StreamableLike_TStream = /*@__PURE__*/ symbol("StreamableLike_TStream");
+/** @type {unique symbol} */
 export const __VirtualTimeSchedulerLike_run = /*@__PURE__*/ symbol("VirtualTimeSchedulerLike_run");
 /** @type {unique symbol} */
 export const __WindowLocationLike_push = /*@__PURE__*/ symbol("WindowLocationLike_push");

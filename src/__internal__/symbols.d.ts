@@ -78,6 +78,8 @@ export declare const __StreamLike_scheduler: unique symbol;
 
 export declare const __StreamableLike_stream: unique symbol;
 
+export declare const __StreamableLike_TStream: unique symbol;
+
 export declare const __VirtualTimeSchedulerLike_run: unique symbol;
 
 export declare const __WindowLocationLike_push: unique symbol;
