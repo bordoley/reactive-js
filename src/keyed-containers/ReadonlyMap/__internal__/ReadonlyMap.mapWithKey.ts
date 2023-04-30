@@ -14,9 +14,7 @@ const ReadonlyMap_mapWithKey: MapWithKey<ReadonlyMapContainerLike>["mapWithKey"]
     >(
       selector: Function2<TA, TKey, TB>,
     ) =>
-    (
-      map: ReadonlyMapContainerLike<TA, TKey>,
-    ): ReadonlyMapContainerLike<TB, TKey> => {
+    (map: ReadonlyMap<TKey, TA>): ReadonlyMap<TKey, TB> => {
       const result = new Map<TKey, TB>();
 
       for (let [key, value] of map) {

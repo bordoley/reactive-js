@@ -16,7 +16,7 @@
 
 ### identity
 
-▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`PromiseContainerLike`](../interfaces/containers.PromiseContainerLike.md)<`unknown`\>, `T`, `T`\>
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`PromiseContainerLike`](../interfaces/containers.PromiseContainerLike.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -26,7 +26,7 @@
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`PromiseContainerLike`](../interfaces/containers.PromiseContainerLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`PromiseContainerLike`](../interfaces/containers.PromiseContainerLike.md), `T`, `T`\>
 
 ___
 

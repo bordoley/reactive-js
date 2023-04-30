@@ -21,8 +21,6 @@ via the pause and resume methods.
 
   ↳ **`PauseableObservableLike`**
 
-  ↳↳ [`PauseableObservableContainerLike`](rx.PauseableObservableContainerLike.md)
-
 ## Table of contents
 
 ### Properties

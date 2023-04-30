@@ -11,7 +11,6 @@ import {
 } from "../../../functions.js";
 import {
   EventListenerLike,
-  EventSourceContainerLike,
   EventSourceLike,
   EventSourceLike_addEventListener,
 } from "../../../util.js";
@@ -19,7 +18,7 @@ import {
 class LiftedEventSource<TIn, TOut>
   implements
     EventSourceLike<TOut>,
-    LiftedLike<EventSourceContainerLike<TIn>, EventListenerLike<any>>
+    LiftedLike<EventSourceLike<TIn>, EventListenerLike<any>>
 {
   readonly [LiftedLike_source]: EventSourceLike<TIn>;
   readonly [LiftedLike_operators]: readonly Function1<

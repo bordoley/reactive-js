@@ -51,7 +51,7 @@ ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md)<`unknown`\>, `T`, `T`\>
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -61,7 +61,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md)<`unknown`\>, `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md), `T`, `T`\>
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 ### flow
 
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -106,7 +106,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 
@@ -152,7 +152,7 @@ ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ReadonlyArrayContainerLike`](../interfaces/containers.ReadonlyArrayContainerLike.md)<`T`\>\>
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>
 
 Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
@@ -164,7 +164,7 @@ Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`ReadonlyArrayContainerLike`](../interfaces/containers.ReadonlyArrayContainerLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>
 
 ___
 

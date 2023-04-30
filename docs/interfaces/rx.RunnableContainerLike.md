@@ -1,18 +1,10 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / RunnableContainerLike
 
-# Interface: RunnableContainerLike<T\>
+# Interface: RunnableContainerLike
 
 [rx](../modules/rx.md).RunnableContainerLike
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
 ## Hierarchy
-
-- [`RunnableLike`](rx.RunnableLike.md)<`T`\>
 
 - [`ContainerLike`](containers.ContainerLike.md)
 

@@ -17,7 +17,7 @@ export interface KeyedContainerLike extends ContainerLike {
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyArrayContainerLike<T = unknown> extends KeyedContainerLike, ReadonlyArray<T> {
+export interface ReadonlyArrayContainerLike extends KeyedContainerLike {
     readonly [ContainerLike_type]?: ReadonlyArray<this[typeof ContainerLike_T]>;
     readonly [KeyedContainerLike_TKey]?: number;
 }
@@ -25,7 +25,7 @@ export interface ReadonlyArrayContainerLike<T = unknown> extends KeyedContainerL
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyMapContainerLike<T = unknown, TKey = unknown> extends ContainerLike, ReadonlyMap<TKey, T> {
+export interface ReadonlyMapContainerLike extends ContainerLike {
     readonly [ContainerLike_type]?: ReadonlyMap<this[typeof KeyedContainerLike_TKey], this[typeof ContainerLike_T]>;
     readonly [KeyedContainerLike_TKey]?: unknown;
 }
@@ -270,7 +270,7 @@ export interface ToReadonlyArray<C extends KeyedContainerLike> {
      *
      * @category Transform
      */
-    toReadonlyArray<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<KeyedContainerOf<C, TKey, T>, ReadonlyArrayContainerLike<T>>;
+    toReadonlyArray<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<KeyedContainerOf<C, TKey, T>, ReadonlyArray<T>>;
 }
 /**
  * @noInheritDoc

@@ -1,22 +1,14 @@
 [Reactive-JS](../README.md) / [keyed-containers](../modules/keyed_containers.md) / ReadonlyArrayContainerLike
 
-# Interface: ReadonlyArrayContainerLike<T\>
+# Interface: ReadonlyArrayContainerLike
 
 [keyed-containers](../modules/keyed_containers.md).ReadonlyArrayContainerLike
 
 A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
 ## Hierarchy
 
 - [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md)
-
-- `ReadonlyArray`<`T`\>
 
   ↳ **`ReadonlyArrayContainerLike`**
 

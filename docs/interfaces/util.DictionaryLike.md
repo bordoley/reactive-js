@@ -18,5 +18,3 @@
   ↳ **`DictionaryLike`**
 
   ↳↳ [`AnimationGroupEventHandlerStreamLike`](streaming.AnimationGroupEventHandlerStreamLike.md)
-
-  ↳↳ [`DictionaryContainerLike`](util.DictionaryContainerLike.md)

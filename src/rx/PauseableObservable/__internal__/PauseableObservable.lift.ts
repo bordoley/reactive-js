@@ -25,7 +25,7 @@ import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom
 class LiftedPauseableObservable<TIn, TOut>
   implements
     PauseableObservableLike<TOut>,
-    LiftedLike<PauseableObservableContainerLike<TIn>, ObserverLike<any>>
+    LiftedLike<PauseableObservableLike<TIn>, ObserverLike<any>>
 {
   readonly [LiftedLike_source]: PauseableObservableLike<TIn>;
   readonly [LiftedLike_operators]: readonly Function1<

@@ -1,18 +1,10 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / ObservableContainerLike
 
-# Interface: ObservableContainerLike<T\>
+# Interface: ObservableContainerLike
 
 [rx](../modules/rx.md).ObservableContainerLike
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
 ## Hierarchy
-
-- [`ObservableLike`](rx.ObservableLike.md)<`T`\>
 
 - [`ContainerLike`](containers.ContainerLike.md)
 

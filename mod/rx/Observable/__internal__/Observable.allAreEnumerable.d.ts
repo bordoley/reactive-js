@@ -1,4 +1,3 @@
-import { ReadonlyArrayContainerLike } from "../../../containers.js";
 import { EnumerableLike, ObservableLike } from "../../../rx.js";
-declare const Observable_allAreEnumerable: (srcs: ReadonlyArrayContainerLike<ObservableLike>) => srcs is ReadonlyArrayContainerLike<EnumerableLike<unknown>>;
+declare const Observable_allAreEnumerable: (srcs: ReadonlyArray<ObservableLike>) => srcs is readonly EnumerableLike<unknown>[];
 export default Observable_allAreEnumerable;

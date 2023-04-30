@@ -34,10 +34,7 @@ interface Flow extends Rx.Flow<IterableContainerLike> {
       readonly delay?: number;
       readonly delayStart?: boolean;
     },
-  ): Function1<
-    IterableContainerLike<T>,
-    Rx.PauseableObservableLike<T> & DisposableLike
-  >;
+  ): Function1<Iterable<T>, Rx.PauseableObservableLike<T> & DisposableLike>;
 }
 export const flow: Flow["flow"] = Iterable_flow;
 

@@ -18,8 +18,6 @@ An `ObservableLike` that supports interactive enumeration.
 
   ↳ **`EnumerableLike`**
 
-  ↳↳ [`EnumerableContainerLike`](rx.EnumerableContainerLike.md)
-
 ## Table of contents
 
 ### Properties

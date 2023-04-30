@@ -53,7 +53,7 @@ does not emit a value in given time span.
 
 | Name | Type |
 | :------ | :------ |
-| `duration` | `C` |
+| `duration` | [`ContainerOf`](../modules/containers.md#containerof)<`C`, `unknown`\> |
 
 #### Returns
 

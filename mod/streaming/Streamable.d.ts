@@ -1,7 +1,7 @@
 /**
  * @category Constructor
  */
-export declare const create: <TReq, T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableContainerLike<unknown>, TReq, T>) => import("../streaming.js").StreamableLike<TReq, T, import("../streaming.js").StreamLike<TReq, T, {
+export declare const create: <TReq, T>(op: import("../containers.js").ContainerOperator<import("../rx.js").ObservableContainerLike, TReq, T>) => import("../streaming.js").StreamableLike<TReq, T, import("../streaming.js").StreamLike<TReq, T, {
     type: "complete" | "wait" | "drain";
 }>>;
 /**

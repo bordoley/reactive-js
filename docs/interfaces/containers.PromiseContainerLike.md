@@ -1,22 +1,14 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / PromiseContainerLike
 
-# Interface: PromiseContainerLike<T\>
+# Interface: PromiseContainerLike
 
 [containers](../modules/containers.md).PromiseContainerLike
 
 A compile time only type for using a Javascript `PromiseLike` as a `ContainerLike`.
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
 ## Hierarchy
 
 - [`ContainerLike`](containers.ContainerLike.md)
-
-- `PromiseLike`<`T`\>
 
   ↳ **`PromiseContainerLike`**
 

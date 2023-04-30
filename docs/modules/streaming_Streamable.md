@@ -32,7 +32,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md)<`unknown`\>, `TReq`, `T`\> |
+| `op` | [`ContainerOperator`](containers.md#containeroperator)<[`ObservableContainerLike`](../interfaces/rx.ObservableContainerLike.md), `TReq`, `T`\> |
 
 #### Returns
 

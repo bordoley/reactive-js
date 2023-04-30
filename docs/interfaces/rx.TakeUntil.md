@@ -32,7 +32,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `notifier` | `C` |
+| `notifier` | [`ContainerOf`](../modules/containers.md#containerof)<`C`, `unknown`\> |
 
 #### Returns
 

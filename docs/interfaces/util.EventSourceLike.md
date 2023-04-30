@@ -14,8 +14,6 @@
 
 - **`EventSourceLike`**
 
-  ↳ [`EventSourceContainerLike`](util.EventSourceContainerLike.md)
-
   ↳ [`EventPublisherLike`](util.EventPublisherLike.md)
 
   ↳ [`DispatcherLike`](util.DispatcherLike.md)

@@ -1,18 +1,10 @@
 [Reactive-JS](../README.md) / [util](../modules/util.md) / EventSourceContainerLike
 
-# Interface: EventSourceContainerLike<T\>
+# Interface: EventSourceContainerLike
 
 [util](../modules/util.md).EventSourceContainerLike
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
 ## Hierarchy
-
-- [`EventSourceLike`](util.EventSourceLike.md)<`T`\>
 
 - [`ContainerLike`](containers.ContainerLike.md)
 

@@ -45,7 +45,7 @@ export interface ObservableLike<T = unknown> {
  * @noInheritDoc
  * @category Container
  */
-export interface ObservableContainerLike<T = unknown> extends ObservableLike<T>, ContainerLike {
+export interface ObservableContainerLike extends ContainerLike {
     readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
 }
 /**
@@ -60,7 +60,7 @@ export interface RunnableLike<T = unknown> extends ObservableLike<T> {
  * @noInheritDoc
  * @category Container
  */
-export interface RunnableContainerLike<T = unknown> extends RunnableLike<T>, ContainerLike {
+export interface RunnableContainerLike extends ContainerLike {
     readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
 }
 /**
@@ -75,7 +75,7 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  * @noInheritDoc
  * @category Container
  */
-export interface EnumerableContainerLike<T = unknown> extends EnumerableLike<T>, ContainerLike {
+export interface EnumerableContainerLike extends ContainerLike {
     readonly [ContainerLike_type]?: EnumerableLike<this[typeof ContainerLike_T]>;
 }
 /**
@@ -113,7 +113,7 @@ export interface PauseableObservableLike<T = unknown> extends ObservableLike<T>,
      */
     readonly [PauseableObservableLike_isPaused]: MulticastObservableLike<boolean>;
 }
-export interface PauseableObservableContainerLike<T = unknown> extends PauseableObservableLike<T>, ContainerLike {
+export interface PauseableObservableContainerLike extends ContainerLike {
     readonly [ContainerLike_type]?: PauseableObservableLike<this[typeof ContainerLike_T]>;
 }
 /**
@@ -596,7 +596,7 @@ export interface TakeUntil<C extends ContainerLike> {
     /**
      * @category Operator
      */
-    takeUntil<T>(notifier: C): ContainerOperator<C, T, T>;
+    takeUntil<T>(notifier: ContainerOf<C, unknown>): ContainerOperator<C, T, T>;
 }
 /**
  * @noInheritDoc
@@ -611,7 +611,7 @@ export interface Throttle<C extends ContainerLike> {
      *
      * @category Operator
      */
-    throttle<T>(duration: Function1<T, C>, options?: {
+    throttle<T>(duration: Function1<T, ContainerOf<C, unknown>>, options?: {
         readonly mode?: "first" | "last" | "interval";
     }): ContainerOperator<C, T, T>;
     /**
@@ -674,7 +674,7 @@ export interface Timeout<C extends ContainerLike> {
      *
      * @category Operator
      */
-    timeout<T>(duration: C): ContainerOperator<C, T, T>;
+    timeout<T>(duration: ContainerOf<C, unknown>): ContainerOperator<C, T, T>;
 }
 /**
  * @noInheritDoc

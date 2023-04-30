@@ -1,22 +1,14 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / IterableContainerLike
 
-# Interface: IterableContainerLike<T\>
+# Interface: IterableContainerLike
 
 [containers](../modules/containers.md).IterableContainerLike
 
 A compile time only type for using a Javascript `Iterable` as a `ContainerLike`.
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
 ## Hierarchy
 
 - [`ContainerLike`](containers.ContainerLike.md)
-
-- `Iterable`<`T`\>
 
   ↳ **`IterableContainerLike`**
 

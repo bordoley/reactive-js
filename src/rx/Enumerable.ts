@@ -177,10 +177,7 @@ export const enqueue: Enqueue<EnumerableContainerLike>["enqueue"] =
 export const endWith: EndWith<EnumerableContainerLike>["endWith"] =
   Observable_endWith;
 
-interface EnumerableEnumeratorContainerLike<T = unknown>
-  extends EnumeratorLike<T>,
-    DisposableLike,
-    ContainerLike {
+interface EnumerableEnumeratorContainerLike extends ContainerLike {
   readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]> &
     DisposableLike;
 }

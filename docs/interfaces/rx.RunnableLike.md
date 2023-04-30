@@ -18,8 +18,6 @@ An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
 
   ↳ **`RunnableLike`**
 
-  ↳↳ [`RunnableContainerLike`](rx.RunnableContainerLike.md)
-
   ↳↳ [`EnumerableLike`](rx.EnumerableLike.md)
 
 ## Table of contents

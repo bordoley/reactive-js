@@ -1,18 +1,10 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / EnumeratorContainerLike
 
-# Interface: EnumeratorContainerLike<T\>
+# Interface: EnumeratorContainerLike
 
 [containers](../modules/containers.md).EnumeratorContainerLike
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
 ## Hierarchy
-
-- [`EnumeratorLike`](containers.EnumeratorLike.md)<`T`\>
 
 - [`ContainerLike`](containers.ContainerLike.md)
 

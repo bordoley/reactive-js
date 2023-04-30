@@ -1,4 +1,3 @@
-import { ReadonlyArrayContainerLike } from "../../../containers.js";
 import { Function1, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
@@ -20,29 +19,26 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
 interface ReadonlyArrayToObservable {
-  toObservable<T>(): Function1<
-    ReadonlyArrayContainerLike<T>,
-    EnumerableLike<T>
-  >;
+  toObservable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
   toObservable<T>(options: {
     readonly count: number;
-  }): Function1<ReadonlyArrayContainerLike<T>, EnumerableLike<T>>;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
   toObservable<T>(options: {
     readonly count: number;
     readonly start: number;
-  }): Function1<ReadonlyArrayContainerLike<T>, EnumerableLike<T>>;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
   toObservable<T>(options: {
     readonly start: number;
-  }): Function1<ReadonlyArrayContainerLike<T>, EnumerableLike<T>>;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
   toObservable<T>(options: {
     readonly delay: number;
     readonly delayStart?: boolean;
     readonly count?: number;
     readonly start?: number;
-  }): Function1<ReadonlyArrayContainerLike<T>, RunnableLike<T>>;
+  }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
   toObservable<T>(
     options: unknown,
-  ): Function1<ReadonlyArrayContainerLike<T>, RunnableLike<T>>;
+  ): Function1<ReadonlyArray<T>, RunnableLike<T>>;
 }
 const ReadonlyArray_toObservable: ReadonlyArrayToObservable["toObservable"] =
   /*@__PURE__*/

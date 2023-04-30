@@ -1,19 +1,10 @@
 [Reactive-JS](../README.md) / [util](../modules/util.md) / DictionaryContainerLike
 
-# Interface: DictionaryContainerLike<T, TKey\>
+# Interface: DictionaryContainerLike
 
 [util](../modules/util.md).DictionaryContainerLike
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-| `TKey` | `unknown` |
-
 ## Hierarchy
-
-- [`DictionaryLike`](util.DictionaryLike.md)<`T`, `TKey`\>
 
 - [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md)
 

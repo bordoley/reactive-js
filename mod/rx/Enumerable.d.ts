@@ -23,7 +23,7 @@ export declare const empty: Empty<EnumerableContainerLike>["empty"];
 export declare const encodeUtf8: EncodeUtf8<EnumerableContainerLike>["encodeUtf8"];
 export declare const enqueue: Enqueue<EnumerableContainerLike>["enqueue"];
 export declare const endWith: EndWith<EnumerableContainerLike>["endWith"];
-interface EnumerableEnumeratorContainerLike<T = unknown> extends EnumeratorLike<T>, DisposableLike, ContainerLike {
+interface EnumerableEnumeratorContainerLike extends ContainerLike {
     readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]> & DisposableLike;
 }
 export declare const enumerate: Enumerate<EnumerableContainerLike, EnumerableEnumeratorContainerLike>["enumerate"];

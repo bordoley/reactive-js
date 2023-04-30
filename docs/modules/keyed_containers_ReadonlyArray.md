@@ -158,7 +158,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `T`, `T`\>
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -178,13 +178,13 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `T`, `T`\>
 
 Returns a KeyedContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -204,13 +204,13 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`, `TKey`\>(): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `T`, `T`\>
+▸ **identity**<`T`, `TKey`\>(): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `T`, `T`\>
 
 #### Type parameters
 
@@ -221,13 +221,13 @@ ___
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -247,13 +247,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -271,13 +271,13 @@ ___
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -297,13 +297,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -332,13 +332,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -367,7 +367,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md), `TKey`, `TA`, `TB`\>
 
 ___
 
@@ -426,7 +426,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+▸ **enumerate**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -444,7 +444,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
 ___
 
@@ -492,7 +492,7 @@ ___
 
 ### flow
 
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -515,7 +515,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](../interfaces/rx.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 ___
 
@@ -559,7 +559,7 @@ ___
 
 ### toEnumerable
 
-▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+▸ **toEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -577,13 +577,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\>
 
 ___
 
 ### toIterable
 
-▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, `Iterable`<`T`\>\>
+▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
 
 #### Type parameters
 
@@ -601,13 +601,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, `Iterable`<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
 
 ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -627,13 +627,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>\>
+▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
@@ -646,13 +646,13 @@ Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<readonly `T`[], [`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 ___
 
 ### toRunnable
 
-▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+▸ **toRunnable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -672,4 +672,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyArrayContainerLike`](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>, [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\>

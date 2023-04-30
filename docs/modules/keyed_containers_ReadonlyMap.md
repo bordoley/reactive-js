@@ -43,7 +43,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md), `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -72,13 +72,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md), `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -107,7 +107,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)<`unknown`, `unknown`\>, `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](keyed_containers.md#keyedcontaineroperator)<[`ReadonlyMapContainerLike`](../interfaces/keyed_containers.ReadonlyMapContainerLike.md), `TKey`, `TA`, `TB`\>
 
 ___
 

@@ -54,7 +54,7 @@ export declare const firstAsync: FirstAsync<ObservableContainerLike>["firstAsync
 /**
  * @category Operator
  */
-export declare const flatMapAsync: <TA, TB>(f: import("../functions.js").Function2<TA, AbortSignal, Promise<TB>>) => ContainerOperator<ObservableContainerLike<unknown>, TA, TB>;
+export declare const flatMapAsync: <TA, TB>(f: import("../functions.js").Function2<TA, AbortSignal, Promise<TB>>) => ContainerOperator<ObservableContainerLike, TA, TB>;
 export declare const flatMapIterable: FlatMapIterable<ObservableContainerLike>["flatMapIterable"];
 export declare const forEach: ForEach<ObservableContainerLike>["forEach"];
 export declare const forkCombineLatest: ForkCombineLatest<ObservableContainerLike>["forkCombineLatest"];

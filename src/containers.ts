@@ -42,9 +42,7 @@ export interface ContainerLike {
  * @noInheritDoc
  * @category Container
  */
-export interface IterableContainerLike<T = unknown>
-  extends ContainerLike,
-    Iterable<T> {
+export interface IterableContainerLike extends ContainerLike {
   readonly [ContainerLike_type]?: Iterable<this[typeof ContainerLike_T]>;
 }
 
@@ -54,9 +52,7 @@ export interface IterableContainerLike<T = unknown>
  * @noInheritDoc
  * @category Container
  */
-export interface AsyncIterableContainerLike<T = unknown>
-  extends ContainerLike,
-    AsyncIterable<T> {
+export interface AsyncIterableContainerLike extends ContainerLike {
   readonly [ContainerLike_type]?: AsyncIterable<this[typeof ContainerLike_T]>;
 }
 
@@ -66,9 +62,7 @@ export interface AsyncIterableContainerLike<T = unknown>
  * @noInheritDoc
  * @category Container
  */
-export interface PromiseContainerLike<T = unknown>
-  extends ContainerLike,
-    PromiseLike<T> {
+export interface PromiseContainerLike extends ContainerLike {
   readonly [ContainerLike_type]?: PromiseLike<this[typeof ContainerLike_T]>;
 }
 
@@ -78,9 +72,7 @@ export interface PromiseContainerLike<T = unknown>
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyArrayContainerLike<T = unknown>
-  extends ContainerLike,
-    ReadonlyArray<T> {
+export interface ReadonlyArrayContainerLike extends ContainerLike {
   readonly [ContainerLike_type]?: ReadonlyArray<this[typeof ContainerLike_T]>;
 }
 
@@ -111,9 +103,7 @@ export interface EnumeratorLike<T = unknown> {
  * @noInheritDoc
  * @category Container
  */
-export interface EnumeratorContainerLike<T = unknown>
-  extends EnumeratorLike<T>,
-    ContainerLike {
+export interface EnumeratorContainerLike extends ContainerLike {
   readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]>;
 }
 
@@ -834,10 +824,7 @@ export interface ToReadonlyArray<C extends ContainerLike> {
    *
    * @category Transform
    */
-  toReadonlyArray<T>(): Function1<
-    ContainerOf<C, T>,
-    ReadonlyArrayContainerLike<T>
-  >;
+  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
 }
 
 /**

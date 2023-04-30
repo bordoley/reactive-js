@@ -13,12 +13,6 @@ over an underlying source of data.
 | :------ | :------ |
 | `T` | `unknown` |
 
-## Hierarchy
-
-- **`EnumeratorLike`**
-
-  ↳ [`EnumeratorContainerLike`](containers.EnumeratorContainerLike.md)
-
 ## Table of contents
 
 ### Properties

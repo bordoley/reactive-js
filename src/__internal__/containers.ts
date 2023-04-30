@@ -1,4 +1,3 @@
-import { ContainerLike } from "../containers.js";
 import { Function1, Predicate, Reducer, SideEffect1 } from "../functions.js";
 import {
   __ForEachLike_effect as ForEachLike_effect,
@@ -20,8 +19,8 @@ export {
   ReducerAccumulatorLike_reducer,
 };
 
-export interface LiftedLike<C extends ContainerLike, TState> {
-  readonly [LiftedLike_source]: C;
+export interface LiftedLike<TSrc, TState> {
+  readonly [LiftedLike_source]: TSrc;
   readonly [LiftedLike_operators]: readonly Function1<TState, TState>[];
 }
 

@@ -1,21 +1,12 @@
 [Reactive-JS](../README.md) / [keyed-containers](../modules/keyed_containers.md) / ReadonlyMapContainerLike
 
-# Interface: ReadonlyMapContainerLike<T, TKey\>
+# Interface: ReadonlyMapContainerLike
 
 [keyed-containers](../modules/keyed_containers.md).ReadonlyMapContainerLike
-
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-| `TKey` | `unknown` |
 
 ## Hierarchy
 
 - [`ContainerLike`](containers.ContainerLike.md)
-
-- `ReadonlyMap`<`TKey`, `T`\>
 
   ↳ **`ReadonlyMapContainerLike`**
 

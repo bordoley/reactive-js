@@ -1,4 +1,3 @@
-import { ReadonlyArrayContainerLike } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
 import { PauseableObservableLike } from "../../../rx.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../../../util.js";
@@ -9,5 +8,5 @@ declare const ReadonlyArray_toFlowable: <T>(scheduler: SchedulerLike, options?: 
     readonly delayStart?: boolean;
     readonly start?: number;
     readonly count?: number;
-}) => Function1<ReadonlyArrayContainerLike<T>, PauseableObservableLike<T> & DisposableLike>;
+}) => Function1<readonly T[], PauseableObservableLike<T> & DisposableLike>;
 export default ReadonlyArray_toFlowable;

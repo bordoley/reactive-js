@@ -1,4 +1,3 @@
-import { ReadonlyArrayContainerLike } from "../../../containers.js";
 import { Function1, compose } from "../../../functions.js";
 import { PauseableObservableLike } from "../../../rx.js";
 import Runnable_flow from "../../../rx/Runnable/__internal__/Runnable.flow.js";
@@ -20,10 +19,7 @@ const ReadonlyArray_toFlowable = <T>(
     readonly start?: number;
     readonly count?: number;
   },
-): Function1<
-  ReadonlyArrayContainerLike<T>,
-  PauseableObservableLike<T> & DisposableLike
-> =>
+): Function1<ReadonlyArray<T>, PauseableObservableLike<T> & DisposableLike> =>
   compose(
     ReadonlyArray_toObservable(options),
     Runnable_flow(scheduler, options),

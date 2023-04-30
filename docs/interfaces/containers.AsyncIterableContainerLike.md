@@ -1,22 +1,14 @@
 [Reactive-JS](../README.md) / [containers](../modules/containers.md) / AsyncIterableContainerLike
 
-# Interface: AsyncIterableContainerLike<T\>
+# Interface: AsyncIterableContainerLike
 
 [containers](../modules/containers.md).AsyncIterableContainerLike
 
 A compile time only type for using a Javascript `AsyncIterable` as a `ContainerLike`.
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
 ## Hierarchy
 
 - [`ContainerLike`](containers.ContainerLike.md)
-
-- `AsyncIterable`<`T`\>
 
   ↳ **`AsyncIterableContainerLike`**
 

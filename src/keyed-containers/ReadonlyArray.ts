@@ -77,7 +77,7 @@ interface Enumerate extends Containers.Enumerate<ReadonlyArrayContainerLike> {
   enumerate<T>(options?: {
     readonly start?: number;
     readonly count?: number;
-  }): Function1<ReadonlyArrayContainerLike<T>, EnumeratorLike<T>>;
+  }): Function1<ReadonlyArray<T>, EnumeratorLike<T>>;
 }
 
 export const enumerate: Enumerate["enumerate"] = ReadonlyArray_enumerate;
@@ -100,10 +100,7 @@ interface Flow extends Rx.Flow<ReadonlyArrayContainerLike> {
       readonly start?: number;
       readonly count?: number;
     },
-  ): Function1<
-    ReadonlyArrayContainerLike<T>,
-    PauseableObservableLike<T> & DisposableLike
-  >;
+  ): Function1<ReadonlyArray<T>, PauseableObservableLike<T> & DisposableLike>;
 }
 export const flow: Flow["flow"] = ReadonlyArray_flow;
 
@@ -162,7 +159,7 @@ interface ToEnumerable extends Rx.ToEnumerable<ReadonlyArrayContainerLike> {
   toEnumerable<T>(options?: {
     readonly start: number;
     readonly count: number;
-  }): Function1<ReadonlyArrayContainerLike<T>, EnumerableLike<T>>;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
 }
 export const toEnumerable: ToEnumerable["toEnumerable"] =
   ReadonlyArray_toObservable;
@@ -172,7 +169,7 @@ interface ToIterable extends Containers.ToIterable<ReadonlyArrayContainerLike> {
   toIterable<T>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<ReadonlyArrayContainerLike<T>, Iterable<T>>;
+  }): Function1<ReadonlyArray<T>, Iterable<T>>;
 }
 export const toIterable: ToIterable["toIterable"] =
   ReadonlyArray_toReadonlyArray;
@@ -184,7 +181,7 @@ interface ToObservable extends Rx.ToObservable<ReadonlyArrayContainerLike> {
     readonly delay?: number;
     readonly delayStart?: boolean;
     readonly start?: number;
-  }) => Function1<ReadonlyArrayContainerLike<T>, ObservableLike<T>>;
+  }) => Function1<ReadonlyArray<T>, ObservableLike<T>>;
 }
 export const toObservable: ToObservable["toObservable"] =
   ReadonlyArray_toObservable;
@@ -199,6 +196,6 @@ interface ToRunnable extends Rx.ToRunnable<ReadonlyArrayContainerLike> {
     readonly delay?: number;
     readonly delayStart?: boolean;
     readonly start?: number;
-  }) => Function1<ReadonlyArrayContainerLike<T>, RunnableLike<T>>;
+  }) => Function1<ReadonlyArray<T>, RunnableLike<T>>;
 }
 export const toRunnable: ToRunnable["toRunnable"] = ReadonlyArray_toObservable;

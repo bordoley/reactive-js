@@ -34,7 +34,7 @@ Emits a value from the source, then ignores subsequent source values for a durat
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `duration` | [`Function1`](../modules/functions.md#function1)<`T`, `C`\> | Function function that is used to determine the silence duration in between emitted values. |
+| `duration` | [`Function1`](../modules/functions.md#function1)<`T`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `unknown`\>\> | Function function that is used to determine the silence duration in between emitted values. |
 | `options?` | `Object` | - |
 | `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` | - |
 

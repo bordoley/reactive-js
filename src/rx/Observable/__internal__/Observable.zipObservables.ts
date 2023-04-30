@@ -21,7 +21,6 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
-  ReadonlyArrayContainerLike,
 } from "../../../containers.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
 import ReadonlyArray_everySatisfy from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
@@ -241,7 +240,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
 
   const enumerableOnSubscribe =
     (observables: readonly EnumerableLike[]) =>
-    (observer: ObserverLike<ReadonlyArrayContainerLike>) => {
+    (observer: ObserverLike<ReadonlyArray<unknown>>) => {
       const enumerators = pipe(
         observables,
         ReadonlyArray_map(Enumerable_enumerate()),
@@ -269,7 +268,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
 
   const onSubscribe =
     (observables: readonly ObservableLike[]) =>
-    (observer: ObserverLike<ReadonlyArrayContainerLike>) => {
+    (observer: ObserverLike<ReadonlyArray<unknown>>) => {
       const enumerators: (EnumeratorLike & DisposableLike)[] = [];
 
       for (const next of observables) {

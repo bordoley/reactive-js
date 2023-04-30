@@ -16,8 +16,6 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
 - **`ObservableLike`**
 
-  ↳ [`ObservableContainerLike`](rx.ObservableContainerLike.md)
-
   ↳ [`RunnableLike`](rx.RunnableLike.md)
 
   ↳ [`MulticastObservableLike`](rx.MulticastObservableLike.md)

@@ -20,7 +20,7 @@
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`ReadonlyArrayContainerLike`](keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>\>
+▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `T`\>, readonly `T`[]\>
 
 Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
@@ -33,4 +33,4 @@ Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`ReadonlyArrayContainerLike`](keyed_containers.ReadonlyArrayContainerLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `T`\>, readonly `T`[]\>
