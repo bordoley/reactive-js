@@ -18,7 +18,7 @@ import {
 import {
   MulticastObservableLike,
   MulticastObservableLike_buffer,
-  ObservableLike,
+  ObservableContainerLike,
   PauseableObservableLike,
   PauseableObservableLike_isPaused,
 } from "../../../rx.js";
@@ -44,7 +44,7 @@ import Observable_mergeWith from "../../Observable/__internal__/Observable.merge
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
 const PauseableObservable_create: <T>(
-  op: ContainerOperator<ObservableLike, boolean, T>,
+  op: ContainerOperator<ObservableContainerLike, boolean, T>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -66,7 +66,7 @@ const PauseableObservable_create: <T>(
             | typeof PauseableLike_pause
             | typeof PauseableLike_resume
           >,
-        op: ContainerOperator<ObservableLike, boolean, T>,
+        op: ContainerOperator<ObservableContainerLike, boolean, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           capacity?: number;
@@ -77,15 +77,15 @@ const PauseableObservable_create: <T>(
 
         const liftedOp = compose(
           Observable_backpressureStrategy<
-            ObservableLike,
+            ObservableContainerLike,
             boolean | Updater<boolean>
           >(1, "drop-oldest"),
-          Observable_mergeWith<ObservableLike, boolean>(
+          Observable_mergeWith<ObservableContainerLike, boolean>(
             // Initialize to paused state
             pipe(true, Optional_toObservable()),
           ),
-          Observable_distinctUntilChanged<ObservableLike, boolean>(),
-          Observable_forEach<ObservableLike, boolean>(
+          Observable_distinctUntilChanged<ObservableContainerLike, boolean>(),
+          Observable_forEach<ObservableContainerLike, boolean>(
             bindMethod(publisher, EventListenerLike_notify),
           ),
           op,

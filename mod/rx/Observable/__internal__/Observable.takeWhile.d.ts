@@ -1,7 +1,7 @@
 import { ContainerOperator } from "../../../containers.js";
 import { Predicate } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
-type ObservableTakeWhile = <C extends ObservableLike, T>(predicate: Predicate<T>, options?: {
+import { ObservableContainerLike } from "../../../rx.js";
+type ObservableTakeWhile = <C extends ObservableContainerLike, T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T, T>;
 declare const Observable_takeWhile: ObservableTakeWhile;

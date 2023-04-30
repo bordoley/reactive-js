@@ -21,26 +21,17 @@ via the pause and resume methods.
 
   ↳ **`PauseableObservableLike`**
 
+  ↳↳ [`PauseableObservableContainerLike`](rx.PauseableObservableContainerLike.md)
+
 ## Table of contents
 
 ### Properties
 
-- [[\_\_\_ContainerLike\_type]](rx.PauseableObservableLike.md#[___containerlike_type])
 - [[\_\_\_ObservableLike\_isEnumerable]](rx.PauseableObservableLike.md#[___observablelike_isenumerable])
 - [[\_\_\_ObservableLike\_isRunnable]](rx.PauseableObservableLike.md#[___observablelike_isrunnable])
 - [[\_\_\_PauseableObservableLike\_isPaused]](rx.PauseableObservableLike.md#[___pauseableobservablelike_ispaused])
 
 ## Properties
-
-### [\_\_\_ContainerLike\_type]
-
-• `Optional` `Readonly` **[\_\_\_ContainerLike\_type]**: [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`unknown`\>
-
-#### Overrides
-
-[ObservableLike](rx.ObservableLike.md).[[___ContainerLike_type]](rx.ObservableLike.md#[___containerlike_type])
-
-___
 
 ### [\_\_\_ObservableLike\_isEnumerable]
 

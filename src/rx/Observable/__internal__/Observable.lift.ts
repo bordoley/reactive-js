@@ -6,6 +6,7 @@ import {
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
   EnumerableLike,
+  ObservableContainerLike,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -18,7 +19,7 @@ import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom
 class LiftedObservable<TIn, TOut>
   implements
     ObservableLike<TOut>,
-    LiftedLike<ObservableLike<TIn>, ObserverLike<any>>
+    LiftedLike<ObservableContainerLike<TIn>, ObserverLike<any>>
 {
   readonly [LiftedLike_source]: ObservableLike<TIn>;
   readonly [LiftedLike_operators]: readonly Function1<

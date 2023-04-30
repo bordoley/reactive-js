@@ -12,7 +12,7 @@ import { ContainerOperator } from "../../../containers.js";
 import { invoke, none, partial, pipe } from "../../../functions.js";
 import ReadonlyArray_toObservable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
-  ObservableLike,
+  ObservableContainerLike,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
@@ -25,7 +25,7 @@ import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-type ObservableTakeLast = <C extends ObservableLike, T>(options?: {
+type ObservableTakeLast = <C extends ObservableContainerLike, T>(options?: {
   readonly count?: number;
 }) => ContainerOperator<C, T, T>;
 const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {

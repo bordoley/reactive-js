@@ -1,4 +1,4 @@
 import { ConcatWith } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
-declare const Observable_concatWith: ConcatWith<ObservableLike>["concatWith"];
+import { ObservableContainerLike } from "../../../rx.js";
+declare const Observable_concatWith: ConcatWith<ObservableContainerLike>["concatWith"];
 export default Observable_concatWith;

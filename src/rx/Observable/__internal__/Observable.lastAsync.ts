@@ -6,7 +6,7 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import { ObservableContainerLike, ObservableLike } from "../../../rx.js";
 import {
   DisposableLike_dispose,
   QueueableLike,
@@ -49,7 +49,7 @@ const Observable_lastAsync =
 
         pipe(
           observable,
-          Observable_forEach<ObservableLike, T>(next => {
+          Observable_forEach<ObservableContainerLike, T>(next => {
             result = next;
           }),
           Observable_subscribe(scheduler, options),

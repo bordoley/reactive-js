@@ -28,7 +28,9 @@ Base type for all Containers.
 
   ↳ [`ReadonlyObjectMapContainerLike`](keyed_containers.ReadonlyObjectMapContainerLike.md)
 
-  ↳ [`ObservableLike`](rx.ObservableLike.md)
+  ↳ [`ObservableContainerLike`](rx.ObservableContainerLike.md)
+
+  ↳ [`PauseableObservableContainerLike`](rx.PauseableObservableContainerLike.md)
 
   ↳ [`EventSourceLike`](util.EventSourceLike.md)
 

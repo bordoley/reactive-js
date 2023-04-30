@@ -26,7 +26,11 @@ import ReadonlyObjectMap_map from "../../../keyed-containers/ReadonlyObjectMap/_
 import ReadonlyObjectMap_mapWithKey from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
 import ReadonlyObjectMap_reduce from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_values from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
-import { AnimationConfig, ObservableLike } from "../../../rx.js";
+import {
+  AnimationConfig,
+  ObservableContainerLike,
+  ObservableLike,
+} from "../../../rx.js";
 import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
@@ -141,12 +145,12 @@ const createAnimationGroupEventHandlerStream: <
                 pipe(
                   Observable_animate<T>(factory(type)),
                   Observable_map<
-                    ObservableLike,
+                    ObservableContainerLike,
                     T,
                     { type: TEventType; value: T }
                   >(value => ({ type, value })),
                   Observable_forEach<
-                    ObservableLike,
+                    ObservableContainerLike,
                     { type: TEventType; value: T }
                   >(value => {
                     const publisher = publishers[key];
@@ -154,7 +158,7 @@ const createAnimationGroupEventHandlerStream: <
                       publisher[EventListenerLike_notify](value);
                     }
                   }),
-                  Observable_ignoreElements<ObservableLike, T>(),
+                  Observable_ignoreElements<ObservableContainerLike, T>(),
                 ),
               ),
             );
@@ -164,7 +168,7 @@ const createAnimationGroupEventHandlerStream: <
                 pipeLazy(observables, ReadonlyObjectMap_values()),
               ),
               Observable_map<
-                ObservableLike,
+                ObservableContainerLike,
                 ObservableLike<T>,
                 ObservableLike<T>
               >(

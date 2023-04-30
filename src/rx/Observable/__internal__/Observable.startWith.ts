@@ -1,10 +1,10 @@
 import { ContainerOperator } from "../../../containers.js";
 import Container_startWith from "../../../containers/Container/__internal__/Container.startWith.js";
 import ReadonlyArray_toObservable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { ObservableLike } from "../../../rx.js";
+import { ObservableContainerLike } from "../../../rx.js";
 import Observable_concatWith from "./Observable.concatWith.js";
 
-type ObservableStartWith = <C extends ObservableLike, T>(
+type ObservableStartWith = <C extends ObservableContainerLike, T>(
   value: T,
   ...values: readonly T[]
 ) => ContainerOperator<C, T, T>;

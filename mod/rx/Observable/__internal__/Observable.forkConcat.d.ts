@@ -1,4 +1,4 @@
 import { ForkConcat } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
-declare const Observable_forkConcat: ForkConcat<ObservableLike>["forkConcat"];
+import { ObservableContainerLike } from "../../../rx.js";
+declare const Observable_forkConcat: ForkConcat<ObservableContainerLike>["forkConcat"];
 export default Observable_forkConcat;

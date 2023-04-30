@@ -25,8 +25,7 @@ export interface ObserverLike<T = unknown> extends DispatcherLike<T>, Disposable
  * @noInheritDoc
  * @category Container
  */
-export interface ObservableLike<T = unknown> extends ContainerLike {
-    readonly [ContainerLike_type]?: ObservableLike<this[typeof ContainerLike_T]>;
+export interface ObservableLike<T = unknown> {
     /**
      * Indicates if the `ObservableLike` supports interactive enumeration.
      */
@@ -43,13 +42,16 @@ export interface ObservableLike<T = unknown> extends ContainerLike {
      */
     [ObservableLike_observe](observer: ObserverLike<T>): void;
 }
+export interface ObservableContainerLike<T = unknown> extends ObservableLike<T>, ContainerLike {
+    readonly [ContainerLike_type]?: ObservableContainerLike<this[typeof ContainerLike_T]>;
+}
 /**
  * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
  *
  * @noInheritDoc
  * @category Container
  */
-export interface RunnableLike<T = unknown> extends ObservableLike<T> {
+export interface RunnableLike<T = unknown> extends ObservableContainerLike<T> {
     readonly [ContainerLike_type]?: RunnableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isRunnable]: true;
 }
@@ -94,13 +96,15 @@ export interface PublisherLike<T = unknown> extends ErrorSafeEventListenerLike<T
  * @category Container
  */
 export interface PauseableObservableLike<T = unknown> extends ObservableLike<T>, PauseableLike {
-    readonly [ContainerLike_type]?: PauseableObservableLike<this[typeof ContainerLike_T]>;
     readonly [ObservableLike_isEnumerable]: false;
     readonly [ObservableLike_isRunnable]: false;
     /**
      * Reactive property indicating if the observable is paused or not.
      */
     readonly [PauseableObservableLike_isPaused]: MulticastObservableLike<boolean>;
+}
+export interface PauseableObservableContainerLike<T = unknown> extends PauseableObservableLike<T>, ContainerLike {
+    readonly [ContainerLike_type]?: PauseableObservableLike<this[typeof ContainerLike_T]>;
 }
 /**
  * @noInheritDoc

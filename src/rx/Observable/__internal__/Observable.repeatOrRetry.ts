@@ -7,6 +7,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
+  ObservableContainerLike,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -21,12 +22,12 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-type ObservableRepeatOrRetry = <C extends ObservableLike, T>(
+type ObservableRepeatOrRetry = <C extends ObservableContainerLike, T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
 ) => ContainerOperator<C, T, T>;
 
 const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
-  C extends ObservableLike,
+  C extends ObservableContainerLike,
   T,
 >() => {
   const createRepeatObserver = (
@@ -52,7 +53,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
 
         pipe(
           observable,
-          Observable_forEach<ObservableLike, T>(
+          Observable_forEach<ObservableContainerLike, T>(
             bindMethod(delegate, ObserverLike_notify),
           ),
           Observable_subscribeWithConfig(delegate, delegate),

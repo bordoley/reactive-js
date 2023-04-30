@@ -18,6 +18,7 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { partial, pipe } from "../../../functions.js";
 import {
+  ObservableContainerLike,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -29,7 +30,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 import Observable_lift from "./Observable.lift.js";
 
-type ObservableSkipFirst = <C extends ObservableLike, T>(options?: {
+type ObservableSkipFirst = <C extends ObservableContainerLike, T>(options?: {
   readonly count?: number;
 }) => ContainerOperator<C, T, T>;
 

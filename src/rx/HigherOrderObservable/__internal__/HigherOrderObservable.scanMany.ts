@@ -9,7 +9,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  ObservableLike,
+  ObservableContainerLike,
   ObservableLike_observe,
   ObserverLike,
   ScanMany,
@@ -26,7 +26,7 @@ import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observab
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
 const HigherOrderObservable_scanMany =
-  <C extends ObservableLike>(
+  <C extends ObservableContainerLike>(
     createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ContainerOf<C, T>,
   ): ScanMany<C>["scanMany"] =>
   <T, TAcc>(
@@ -45,13 +45,13 @@ const HigherOrderObservable_scanMany =
         Observable_zipWithLatestFrom(accFeedbackStream, (next, acc: TAcc) =>
           scanner(acc, next),
         ),
-        Observable_forkMerge<ContainerOf<ObservableLike, TAcc>, TAcc>(
+        Observable_forkMerge<ContainerOf<ObservableContainerLike, TAcc>, TAcc>(
           compose(
             Observable_concatMap(Observable_takeLast<C, TAcc>()),
-            Observable_forEach<ObservableLike, TAcc>(
+            Observable_forEach<ObservableContainerLike, TAcc>(
               bindMethod(accFeedbackStream, EventListenerLike_notify),
             ),
-            Observable_ignoreElements<ObservableLike, TAcc>(),
+            Observable_ignoreElements<ObservableContainerLike, TAcc>(),
           ),
           Observable_concatAll<TAcc>(),
         ),

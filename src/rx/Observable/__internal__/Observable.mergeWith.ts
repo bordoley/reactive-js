@@ -1,14 +1,14 @@
 import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import Container_concatWith from "../../../containers/Container/__internal__/Container.concatWith.js";
-import { ObservableLike } from "../../../rx.js";
+import { ObservableContainerLike } from "../../../rx.js";
 import Observable_merge from "./Observable.merge.js";
 
-type ObservableMergeWith = <C extends ObservableLike, T>(
+type ObservableMergeWith = <C extends ObservableContainerLike, T>(
   snd: ContainerOf<C, T>,
   ...tail: readonly ContainerOf<C, T>[]
 ) => ContainerOperator<C, T, T>;
 const Observable_mergeWith: ObservableMergeWith =
-  /*@__PURE__*/ Container_concatWith<ObservableLike>(
+  /*@__PURE__*/ Container_concatWith<ObservableContainerLike>(
     Observable_merge,
   ) as ObservableMergeWith;
 

@@ -1,6 +1,6 @@
 import ReadonlyArray_toObservable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
-  ObservableLike,
+  ObservableContainerLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
 } from "../../../rx.js";
@@ -8,7 +8,7 @@ import HigherOrderObservable_throttle from "../../HigherOrderObservable/__intern
 import Observable_lift from "./Observable.lift.js";
 
 const Observable_throttle = /*@__PURE__*/ (<T>() =>
-  HigherOrderObservable_throttle<ObservableLike, T>(
+  HigherOrderObservable_throttle<ObservableContainerLike, T>(
     ReadonlyArray_toObservable,
     Observable_lift({
       [ObservableLike_isEnumerable]: false,

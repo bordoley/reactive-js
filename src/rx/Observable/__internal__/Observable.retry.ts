@@ -1,11 +1,11 @@
 import { ContainerOperator } from "../../../containers.js";
 import { Function2, isNone, isSome } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import { ObservableContainerLike } from "../../../rx.js";
 import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
 
 interface ObservableRetry {
-  retry<C extends ObservableLike, T>(): ContainerOperator<C, T, T>;
-  retry<C extends ObservableLike, T>(
+  retry<C extends ObservableContainerLike, T>(): ContainerOperator<C, T, T>;
+  retry<C extends ObservableContainerLike, T>(
     predicate: Function2<number, unknown, boolean>,
   ): ContainerOperator<C, T, T>;
 }

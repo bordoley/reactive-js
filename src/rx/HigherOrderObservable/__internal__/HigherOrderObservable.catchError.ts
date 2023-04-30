@@ -20,7 +20,7 @@ import {
 } from "../../../functions.js";
 import {
   CatchError,
-  ObservableLike,
+  ObservableContainerLike,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
@@ -32,7 +32,7 @@ import Disposable_onError from "../../../util/Disposable/__internal__/Disposable
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-const HigherOrderObservable_catchError = <C extends ObservableLike>(
+const HigherOrderObservable_catchError = <C extends ObservableContainerLike>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
   ) => ContainerOperator<C, T, T>,

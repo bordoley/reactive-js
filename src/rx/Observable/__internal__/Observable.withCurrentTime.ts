@@ -14,7 +14,7 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
 import {
-  ObservableLike,
+  ObservableContainerLike,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -24,7 +24,7 @@ import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
-type ObservableWithCurrentTime = <C extends ObservableLike, TA, TB>(
+type ObservableWithCurrentTime = <C extends ObservableContainerLike, TA, TB>(
   selector: Function2<number, TA, TB>,
 ) => ContainerOperator<C, TA, TB>;
 const Observable_withCurrentTime: ObservableWithCurrentTime = /*@__PURE__*/ (<

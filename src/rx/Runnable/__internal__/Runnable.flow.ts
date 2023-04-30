@@ -1,5 +1,10 @@
 import { pipe } from "../../../functions.js";
-import { Flow, ObservableLike, RunnableLike } from "../../../rx.js";
+import {
+  Flow,
+  ObservableContainerLike,
+  ObservableLike,
+  RunnableLike,
+} from "../../../rx.js";
 import PauseableObservable_create from "../../../rx/PauseableObservable/__internal__/PauseableObservable.create.js";
 import {
   PauseableLike_pause,
@@ -43,7 +48,7 @@ const Runnable_flow: Flow<RunnableLike>["flow"] =
           Disposable_add(
             pipe(
               modeObs,
-              Observable_forEach<ObservableLike, boolean>(isPaused => {
+              Observable_forEach<ObservableContainerLike, boolean>(isPaused => {
                 if (isPaused) {
                   pauseableScheduler[PauseableLike_pause]();
                 } else {

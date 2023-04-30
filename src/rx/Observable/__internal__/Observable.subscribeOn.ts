@@ -1,5 +1,5 @@
 import { Factory, isFunction, pipe } from "../../../functions.js";
-import { ObservableLike } from "../../../rx.js";
+import { ObservableContainerLike, ObservableLike } from "../../../rx.js";
 import {
   BufferLike_capacity,
   DisposableLike,
@@ -29,7 +29,7 @@ const Observable_subscribeOn =
 
       pipe(
         observable,
-        Observable_dispatchTo<ObservableLike, T>(observer),
+        Observable_dispatchTo<ObservableContainerLike, T>(observer),
         Observable_subscribeWithConfig(scheduler, {
           [BufferLike_capacity]:
             options?.capacity ?? observer[BufferLike_capacity],

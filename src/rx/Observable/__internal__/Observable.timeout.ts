@@ -19,6 +19,7 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { isNumber, none, partial, pipe, returns } from "../../../functions.js";
 import {
+  ObservableContainerLike,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -39,11 +40,13 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 import Observable_throws from "./Observable.throws.js";
 
 interface ObservableTimeout {
-  timeout<C extends ObservableLike, T>(
+  timeout<C extends ObservableContainerLike, T>(
     duration: number,
   ): ContainerOperator<C, T, T>;
   timeout<T>(duration: RunnableLike): ContainerOperator<RunnableLike, T, T>;
-  timeout<T>(duration: ObservableLike): ContainerOperator<ObservableLike, T, T>;
+  timeout<T>(
+    duration: ObservableLike,
+  ): ContainerOperator<ObservableContainerLike, T, T>;
 }
 
 const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<

@@ -22,7 +22,9 @@
 
 ### Other Interfaces
 
+- [ObservableContainerLike](../interfaces/rx.ObservableContainerLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
+- [PauseableObservableContainerLike](../interfaces/rx.PauseableObservableContainerLike.md)
 
 ### TypeClass Interfaces
 

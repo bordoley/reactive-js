@@ -18,7 +18,7 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { partial, pipe } from "../../../functions.js";
 import {
-  ObservableLike,
+  ObservableContainerLike,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -28,7 +28,7 @@ import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
-type ObservableTakeFirst = <C extends ObservableLike, T>(options?: {
+type ObservableTakeFirst = <C extends ObservableContainerLike, T>(options?: {
   readonly count?: number;
 }) => ContainerOperator<C, T, T>;
 const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {

@@ -18,6 +18,7 @@ import {
 import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
 import {
+  ObservableContainerLike,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
@@ -35,7 +36,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-type ObservableWithLastestFrom = <C extends ObservableLike, TA, TB, T>(
+type ObservableWithLastestFrom = <C extends ObservableContainerLike, TA, TB, T>(
   other: ContainerOf<C, TB>,
   selector: Function2<TA, TB, T>,
 ) => ContainerOperator<C, TA, T>;
@@ -65,7 +66,7 @@ const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
 
           pipe(
             other,
-            Observable_forEach<ObservableLike, TB>(next => {
+            Observable_forEach<ObservableContainerLike, TB>(next => {
               instance[__WithLatestLike_hasLatest] = true;
               instance[__WithLatestLike_otherLatest] = next;
             }),

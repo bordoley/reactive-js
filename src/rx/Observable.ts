@@ -67,6 +67,7 @@ import {
   MergeWith,
   Multicast,
   Never,
+  ObservableContainerLike,
   ObservableLike,
   ObserverLike,
   Retry,
@@ -174,23 +175,25 @@ import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js"
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 
-export const animate: Animate<ObservableLike>["animate"] = Observable_animate;
+export const animate: Animate<ObservableContainerLike>["animate"] =
+  Observable_animate;
 
-export const backpressureStrategy: BackpressureStrategy<ObservableLike>["backpressureStrategy"] =
+export const backpressureStrategy: BackpressureStrategy<ObservableContainerLike>["backpressureStrategy"] =
   Observable_backpressureStrategy;
 
 /**
  * @category Operator
  */
 export const buffer: <T>(options?: {
-  readonly duration?: number | Function1<T, ObservableLike>;
+  readonly duration?: number | Function1<T, ObservableContainerLike>;
   readonly count?: number;
-}) => ContainerOperator<ObservableLike, T, readonly T[]> = Observable_buffer;
+}) => ContainerOperator<ObservableContainerLike, T, readonly T[]> =
+  Observable_buffer;
 
-export const catchError: CatchError<ObservableLike>["catchError"] =
+export const catchError: CatchError<ObservableContainerLike>["catchError"] =
   Observable_catchError;
 
-export const combineLatest: CombineLatest<ObservableLike>["combineLatest"] =
+export const combineLatest: CombineLatest<ObservableContainerLike>["combineLatest"] =
   Observable_combineLatest;
 
 /**
@@ -198,16 +201,17 @@ export const combineLatest: CombineLatest<ObservableLike>["combineLatest"] =
  */
 export const compute = Observable_compute;
 
-export const concat: Concat<ObservableLike>["concat"] = Observable_concat;
+export const concat: Concat<ObservableContainerLike>["concat"] =
+  Observable_concat;
 
-export const concatAll: ConcatAll<ObservableLike>["concatAll"] =
+export const concatAll: ConcatAll<ObservableContainerLike>["concatAll"] =
   Observable_concatAll;
 
-export const concatMap: ConcatMap<ObservableLike>["concatMap"] =
+export const concatMap: ConcatMap<ObservableContainerLike>["concatMap"] =
   Observable_concatMap;
 
-export const concatWith: ConcatWith<ObservableLike>["concatWith"] =
-  Observable_concatWith as ConcatWith<ObservableLike>["concatWith"];
+export const concatWith: ConcatWith<ObservableContainerLike>["concatWith"] =
+  Observable_concatWith as ConcatWith<ObservableContainerLike>["concatWith"];
 
 /**
  * @category Constructor
@@ -215,21 +219,21 @@ export const concatWith: ConcatWith<ObservableLike>["concatWith"] =
 export const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T> =
   Observable_create;
 
-export const currentTime: CurrentTime<ObservableLike>["currentTime"] =
+export const currentTime: CurrentTime<ObservableContainerLike>["currentTime"] =
   Observable_currentTime;
 
-export const decodeWithCharset: DecodeWithCharset<ObservableLike>["decodeWithCharset"] =
+export const decodeWithCharset: DecodeWithCharset<ObservableContainerLike>["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-export const defer: Defer<ObservableLike>["defer"] = Observable_defer;
+export const defer: Defer<ObservableContainerLike>["defer"] = Observable_defer;
 
-export const dispatchTo: DispatchTo<ObservableLike>["dispatchTo"] =
+export const dispatchTo: DispatchTo<ObservableContainerLike>["dispatchTo"] =
   Observable_dispatchTo;
 
-export const distinctUntilChanged: DistinctUntilChanged<ObservableLike>["distinctUntilChanged"] =
+export const distinctUntilChanged: DistinctUntilChanged<ObservableContainerLike>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
-interface Empty extends Containers.Empty<ObservableLike> {
+interface Empty extends Containers.Empty<ObservableContainerLike> {
   /**
    * Return an ContainerLike that emits no items.
    *
@@ -239,19 +243,22 @@ interface Empty extends Containers.Empty<ObservableLike> {
 }
 export const empty: Empty["empty"] = Observable_empty;
 
-export const encodeUtf8: EncodeUtf8<ObservableLike>["encodeUtf8"] =
+export const encodeUtf8: EncodeUtf8<ObservableContainerLike>["encodeUtf8"] =
   Observable_encodeUtf8;
 
-export const enqueue: Enqueue<ObservableLike>["enqueue"] = Observable_enqueue;
+export const enqueue: Enqueue<ObservableContainerLike>["enqueue"] =
+  Observable_enqueue;
 
-export const endWith: EndWith<ObservableLike>["endWith"] = Observable_endWith;
+export const endWith: EndWith<ObservableContainerLike>["endWith"] =
+  Observable_endWith;
 
-export const exhaust: Exhaust<ObservableLike>["exhaust"] = Observable_exhaust;
+export const exhaust: Exhaust<ObservableContainerLike>["exhaust"] =
+  Observable_exhaust;
 
-export const exhaustMap: ExhaustMap<ObservableLike>["exhaustMap"] =
+export const exhaustMap: ExhaustMap<ObservableContainerLike>["exhaustMap"] =
   Observable_exhaustMap;
 
-export const firstAsync: FirstAsync<ObservableLike>["firstAsync"] =
+export const firstAsync: FirstAsync<ObservableContainerLike>["firstAsync"] =
   Observable_firstAsync;
 
 /**
@@ -259,23 +266,25 @@ export const firstAsync: FirstAsync<ObservableLike>["firstAsync"] =
  */
 export const flatMapAsync = Observable_flatMapAsync;
 
-export const flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"] =
+export const flatMapIterable: FlatMapIterable<ObservableContainerLike>["flatMapIterable"] =
   Observable_flatMapIterable;
 
-export const forEach: ForEach<ObservableLike>["forEach"] = Observable_forEach;
+export const forEach: ForEach<ObservableContainerLike>["forEach"] =
+  Observable_forEach;
 
-export const forkCombineLatest: ForkCombineLatest<ObservableLike>["forkCombineLatest"] =
+export const forkCombineLatest: ForkCombineLatest<ObservableContainerLike>["forkCombineLatest"] =
   Observable_forkCombineLatest;
 
-export const forkConcat: ForkConcat<ObservableLike>["forkConcat"] =
+export const forkConcat: ForkConcat<ObservableContainerLike>["forkConcat"] =
   Observable_forkConcat;
 
-export const forkMerge: ForkMerge<ObservableLike>["forkMerge"] =
+export const forkMerge: ForkMerge<ObservableContainerLike>["forkMerge"] =
   Observable_forkMerge;
 
-export const forkZip: ForkZip<ObservableLike>["forkZip"] = Observable_forkZip;
+export const forkZip: ForkZip<ObservableContainerLike>["forkZip"] =
+  Observable_forkZip;
 
-export const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"] =
+export const forkZipLatest: ForkZipLatest<ObservableContainerLike>["forkZipLatest"] =
   Observable_forkZipLatest;
 
 /**
@@ -283,11 +292,11 @@ export const forkZipLatest: ForkZipLatest<ObservableLike>["forkZipLatest"] =
  */
 export const fromAsyncFactory = Observable_fromAsyncFactory;
 
-export const fromAsyncIterable: FromAsyncIterable<ObservableLike>["fromAsyncIterable"] =
+export const fromAsyncIterable: FromAsyncIterable<ObservableContainerLike>["fromAsyncIterable"] =
   AsyncIterable_toObservable;
 
 interface FromEnumeratorFactory
-  extends Containers.FromEnumeratorFactory<ObservableLike> {
+  extends Containers.FromEnumeratorFactory<ObservableContainerLike> {
   /**
    * @category Constructor
    */
@@ -302,7 +311,7 @@ interface FromEnumeratorFactory
 export const fromEnumeratorFactory: FromEnumeratorFactory["fromEnumeratorFactory"] =
   Runnable_fromEnumeratorFactory;
 
-interface FromFactory extends Containers.FromFactory<ObservableLike> {
+interface FromFactory extends Containers.FromFactory<ObservableContainerLike> {
   /**
    * @category Constructor
    */
@@ -315,7 +324,8 @@ interface FromFactory extends Containers.FromFactory<ObservableLike> {
 }
 export const fromFactory: FromFactory["fromFactory"] = Observable_fromFactory;
 
-interface FromIterable extends Containers.FromIterable<ObservableLike> {
+interface FromIterable
+  extends Containers.FromIterable<ObservableContainerLike> {
   /**
    * @category Constructor
    */
@@ -326,7 +336,8 @@ interface FromIterable extends Containers.FromIterable<ObservableLike> {
 }
 export const fromIterable: FromIterable["fromIterable"] = Iterable_toObservable;
 
-interface FromOptional extends Containers.FromOptional<ObservableLike> {
+interface FromOptional
+  extends Containers.FromOptional<ObservableContainerLike> {
   /**
    * @category Constructor
    */
@@ -337,7 +348,7 @@ interface FromOptional extends Containers.FromOptional<ObservableLike> {
 export const fromOptional: FromOptional["fromOptional"] = Optional_toObservable;
 
 interface FromReadonlyArray
-  extends Containers.FromReadonlyArray<ObservableLike> {
+  extends Containers.FromReadonlyArray<ObservableContainerLike> {
   /**
    * @category Constructor
    */
@@ -351,7 +362,7 @@ interface FromReadonlyArray
 export const fromReadonlyArray: FromReadonlyArray["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 
-interface Generate extends Containers.Generate<ObservableLike> {
+interface Generate extends Containers.Generate<ObservableContainerLike> {
   /**
    * @category Constructor
    */
@@ -366,76 +377,77 @@ interface Generate extends Containers.Generate<ObservableLike> {
 }
 export const generate: Generate["generate"] = Observable_generate;
 
-export const identity: Identity<ObservableLike>["identity"] =
+export const identity: Identity<ObservableContainerLike>["identity"] =
   Container_identity;
 
-export const ignoreElements: IgnoreElements<ObservableLike>["ignoreElements"] =
+export const ignoreElements: IgnoreElements<ObservableContainerLike>["ignoreElements"] =
   Observable_ignoreElements;
 
-export const keep: Keep<ObservableLike>["keep"] = Observable_keep;
+export const keep: Keep<ObservableContainerLike>["keep"] = Observable_keep;
 
-export const keepType: KeepType<ObservableLike>["keepType"] =
-  Observable_keepType as KeepType<ObservableLike>["keepType"];
+export const keepType: KeepType<ObservableContainerLike>["keepType"] =
+  Observable_keepType as KeepType<ObservableContainerLike>["keepType"];
 
-export const lastAsync: LastAsync<ObservableLike>["lastAsync"] =
+export const lastAsync: LastAsync<ObservableContainerLike>["lastAsync"] =
   Observable_lastAsync;
 
-export const map: Map<ObservableLike>["map"] = Observable_map;
+export const map: Map<ObservableContainerLike>["map"] = Observable_map;
 
-export const mapTo: MapTo<ObservableLike>["mapTo"] = Observable_mapTo;
+export const mapTo: MapTo<ObservableContainerLike>["mapTo"] = Observable_mapTo;
 
-export const merge: Merge<ObservableLike>["merge"] = Observable_merge;
+export const merge: Merge<ObservableContainerLike>["merge"] = Observable_merge;
 
-export const mergeAll: MergeAll<ObservableLike>["mergeAll"] =
+export const mergeAll: MergeAll<ObservableContainerLike>["mergeAll"] =
   Observable_mergeAll;
 
-export const mergeMap: MergeMap<ObservableLike>["mergeMap"] =
+export const mergeMap: MergeMap<ObservableContainerLike>["mergeMap"] =
   Observable_mergeMap;
 
-export const mergeWith: MergeWith<ObservableLike>["mergeWith"] =
-  Observable_mergeWith as MergeWith<ObservableLike>["mergeWith"];
+export const mergeWith: MergeWith<ObservableContainerLike>["mergeWith"] =
+  Observable_mergeWith as MergeWith<ObservableContainerLike>["mergeWith"];
 
-export const multicast: Multicast<ObservableLike>["multicast"] =
+export const multicast: Multicast<ObservableContainerLike>["multicast"] =
   Observable_multicast;
 
-export const never: Never<ObservableLike>["never"] = Observable_never;
+export const never: Never<ObservableContainerLike>["never"] = Observable_never;
 
 /**
  * @category Operator
  */
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
-) => ContainerOperator<ObservableLike, T, T> = Observable_onSubscribe;
+) => ContainerOperator<ObservableContainerLike, T, T> = Observable_onSubscribe;
 
-export const pairwise: Pairwise<ObservableLike>["pairwise"] =
+export const pairwise: Pairwise<ObservableContainerLike>["pairwise"] =
   Observable_pairwise;
 
-export const pick: Pick<ObservableLike>["pick"] = Observable_pick;
+export const pick: Pick<ObservableContainerLike>["pick"] = Observable_pick;
 
-export const repeat: Repeat<ObservableLike>["repeat"] = Observable_repeat;
+export const repeat: Repeat<ObservableContainerLike>["repeat"] =
+  Observable_repeat;
 
-export const retry: Retry<ObservableLike>["retry"] = Observable_retry;
+export const retry: Retry<ObservableContainerLike>["retry"] = Observable_retry;
 
-export const scan: Scan<ObservableLike>["scan"] = Observable_scan;
+export const scan: Scan<ObservableContainerLike>["scan"] = Observable_scan;
 
-export const scanLast: ScanLast<ObservableLike>["scanLast"] =
+export const scanLast: ScanLast<ObservableContainerLike>["scanLast"] =
   Observable_scanLast;
 
-export const scanMany: ScanMany<ObservableLike>["scanMany"] =
+export const scanMany: ScanMany<ObservableContainerLike>["scanMany"] =
   Observable_scanLast;
 
-export const share: Share<ObservableLike>["share"] = Observable_share;
+export const share: Share<ObservableContainerLike>["share"] = Observable_share;
 
-export const skipFirst: SkipFirst<ObservableLike>["skipFirst"] =
+export const skipFirst: SkipFirst<ObservableContainerLike>["skipFirst"] =
   Observable_skipFirst;
 
-export const startWith: StartWith<ObservableLike>["startWith"] =
+export const startWith: StartWith<ObservableContainerLike>["startWith"] =
   Observable_startWith;
 
-export const switchAll: SwitchAll<ObservableLike>["switchAll"] =
+export const switchAll: SwitchAll<ObservableContainerLike>["switchAll"] =
   Observable_switchAll;
 
-export const switchMap: SwitchMap<ObservableLike>["switchMap"] =
+export const switchMap: SwitchMap<ObservableContainerLike>["switchMap"] =
   Observable_switchMap;
 
 export const subscribe: <T>(
@@ -451,25 +463,25 @@ export const subscribe: <T>(
  */
 export const subscribeOn = Observable_subscribeOn;
 
-export const takeFirst: TakeFirst<ObservableLike>["takeFirst"] =
+export const takeFirst: TakeFirst<ObservableContainerLike>["takeFirst"] =
   Observable_takeFirst;
 
-export const takeLast: TakeLast<ObservableLike>["takeLast"] =
+export const takeLast: TakeLast<ObservableContainerLike>["takeLast"] =
   Observable_takeLast;
 
-export const takeUntil: TakeUntil<ObservableLike>["takeUntil"] =
+export const takeUntil: TakeUntil<ObservableContainerLike>["takeUntil"] =
   Observable_takeUntil;
 
-export const takeWhile: TakeWhile<ObservableLike>["takeWhile"] =
+export const takeWhile: TakeWhile<ObservableContainerLike>["takeWhile"] =
   Observable_takeWhile;
 
-export const throttle: Throttle<ObservableLike>["throttle"] =
+export const throttle: Throttle<ObservableContainerLike>["throttle"] =
   Observable_throttle;
 
-export const throwIfEmpty: ThrowIfEmpty<ObservableLike>["throwIfEmpty"] =
+export const throwIfEmpty: ThrowIfEmpty<ObservableContainerLike>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-interface Throws extends Rx.Throws<ObservableLike> {
+interface Throws extends Rx.Throws<ObservableContainerLike> {
   /**
    * @category Constructor
    */
@@ -480,9 +492,10 @@ interface Throws extends Rx.Throws<ObservableLike> {
 }
 export const throws: Throws["throws"] = Observable_throws;
 
-export const timeout: Timeout<ObservableLike>["timeout"] = Observable_timeout;
+export const timeout: Timeout<ObservableContainerLike>["timeout"] =
+  Observable_timeout;
 
-export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
+export const toEnumerable: ToEnumerable<ObservableContainerLike>["toEnumerable"] =
   Observable_toEnumerable;
 
 /**
@@ -490,24 +503,25 @@ export const toEnumerable: ToEnumerable<ObservableLike>["toEnumerable"] =
  */
 export const toEventSource = Observable_toEventSource;
 
-export const toObservable: ToObservable<ObservableLike>["toObservable"] =
+export const toObservable: ToObservable<ObservableContainerLike>["toObservable"] =
   identity;
 
-export const toRunnable: ToRunnable<ObservableLike>["toRunnable"] =
+export const toRunnable: ToRunnable<ObservableContainerLike>["toRunnable"] =
   Observable_toRunnable;
 
-export const withCurrentTime: WithCurrentTime<ObservableLike>["withCurrentTime"] =
+export const withCurrentTime: WithCurrentTime<ObservableContainerLike>["withCurrentTime"] =
   Observable_withCurrentTime;
 
-export const withLatestFrom: WithLatestFrom<ObservableLike>["withLatestFrom"] =
-  Observable_withLatestFrom as WithLatestFrom<ObservableLike>["withLatestFrom"];
+export const withLatestFrom: WithLatestFrom<ObservableContainerLike>["withLatestFrom"] =
+  Observable_withLatestFrom as WithLatestFrom<ObservableContainerLike>["withLatestFrom"];
 
-export const zip: Zip<ObservableLike>["zip"] = Observable_zip;
+export const zip: Zip<ObservableContainerLike>["zip"] = Observable_zip;
 
-export const zipLatest: ZipLatest<ObservableLike>["zipLatest"] =
+export const zipLatest: ZipLatest<ObservableContainerLike>["zipLatest"] =
   Observable_zipLatest;
 
-export const zipWith: ZipWith<ObservableLike>["zipWith"] = Observable_zipWith;
+export const zipWith: ZipWith<ObservableContainerLike>["zipWith"] =
+  Observable_zipWith;
 
-export const zipWithLatestFrom: ZipWithLatestFrom<ObservableLike>["zipWithLatestFrom"] =
+export const zipWithLatestFrom: ZipWithLatestFrom<ObservableContainerLike>["zipWithLatestFrom"] =
   Observable_zipWithLatestFrom;

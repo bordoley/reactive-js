@@ -24,7 +24,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  ObservableLike,
+  ObservableContainerLike,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -34,7 +34,7 @@ import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
-type ObservableScan = <C extends ObservableLike, T, TAcc>(
+type ObservableScan = <C extends ObservableContainerLike, T, TAcc>(
   scanner: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) => ContainerOperator<C, T, TAcc>;

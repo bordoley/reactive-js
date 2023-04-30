@@ -1,4 +1,4 @@
 import { Pick } from "../../../containers.js";
-import { PauseableObservableLike } from "../../../rx.js";
-declare const PauseableObservable_pick: Pick<PauseableObservableLike>["pick"];
+import { PauseableObservableContainerLike } from "../../../rx.js";
+declare const PauseableObservable_pick: Pick<PauseableObservableContainerLike>["pick"];
 export default PauseableObservable_pick;

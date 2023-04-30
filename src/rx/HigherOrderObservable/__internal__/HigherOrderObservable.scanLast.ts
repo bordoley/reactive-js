@@ -8,7 +8,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  ObservableLike,
+  ObservableContainerLike,
   ObservableLike_observe,
   ObserverLike,
   ScanLast,
@@ -22,7 +22,7 @@ import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observab
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
 const HigherOrderObservable_scanLast =
-  <C extends ObservableLike>(
+  <C extends ObservableContainerLike>(
     createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ContainerOf<C, T>,
   ): ScanLast<C>["scanLast"] =>
   <T, TAcc>(
@@ -42,7 +42,7 @@ const HigherOrderObservable_scanLast =
           pipe(scanner(acc, next), Observable_takeLast()),
         ),
         Observable_concatAll(),
-        Observable_forEach<ObservableLike, TAcc>(
+        Observable_forEach<ObservableContainerLike, TAcc>(
           bindMethod(accFeedbackStream, EventListenerLike_notify),
         ),
         invoke(ObservableLike_observe, observer),

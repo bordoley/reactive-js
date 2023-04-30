@@ -1,3 +1,3 @@
-import { ForkMerge, ObservableLike } from "../../../rx.js";
-declare const Observable_forkMerge: ForkMerge<ObservableLike>["forkMerge"];
+import { ForkMerge, ObservableContainerLike } from "../../../rx.js";
+declare const Observable_forkMerge: ForkMerge<ObservableContainerLike>["forkMerge"];
 export default Observable_forkMerge;

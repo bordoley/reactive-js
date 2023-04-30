@@ -1,3 +1,3 @@
-import { DispatchTo, PauseableObservableLike } from "../../../rx.js";
-declare const PauseableObservable_dispatchTo: DispatchTo<PauseableObservableLike>["dispatchTo"];
+import { DispatchTo, PauseableObservableContainerLike } from "../../../rx.js";
+declare const PauseableObservable_dispatchTo: DispatchTo<PauseableObservableContainerLike>["dispatchTo"];
 export default PauseableObservable_dispatchTo;

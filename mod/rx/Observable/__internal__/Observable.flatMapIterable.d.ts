@@ -1,4 +1,4 @@
 import { FlatMapIterable } from "../../../containers.js";
-import { ObservableLike } from "../../../rx.js";
-declare const Observable_flatMapIterable: FlatMapIterable<ObservableLike>["flatMapIterable"];
+import { ObservableContainerLike } from "../../../rx.js";
+declare const Observable_flatMapIterable: FlatMapIterable<ObservableContainerLike>["flatMapIterable"];
 export default Observable_flatMapIterable;

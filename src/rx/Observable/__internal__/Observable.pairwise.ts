@@ -17,7 +17,7 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { none, pipe, returns } from "../../../functions.js";
 import {
-  ObservableLike,
+  ObservableContainerLike,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -26,11 +26,10 @@ import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
-type ObservablePairwise = <C extends ObservableLike, T>() => ContainerOperator<
-  C,
+type ObservablePairwise = <
+  C extends ObservableContainerLike,
   T,
-  readonly [T, T]
->;
+>() => ContainerOperator<C, T, readonly [T, T]>;
 const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
   const createPairwiseObserver: <T>(
     delegate: ObserverLike<readonly [T, T]>,

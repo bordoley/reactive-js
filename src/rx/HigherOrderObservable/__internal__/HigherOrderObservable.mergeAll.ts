@@ -37,6 +37,7 @@ import {
 } from "../../../functions.js";
 import {
   MergeAll,
+  ObservableContainerLike,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
@@ -59,7 +60,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
+const HigherOrderObservable_mergeAll = <C extends ObservableContainerLike>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>,
   ) => ContainerOperator<C, ContainerOf<C, T>, T>,
@@ -89,7 +90,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableLike>(
 
       pipe(
         nextObs,
-        Observable_forEach<ObservableLike, T>(
+        Observable_forEach<ObservableContainerLike, T>(
           bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify),
         ),
         Observable_subscribeWithConfig(

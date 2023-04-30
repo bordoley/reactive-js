@@ -4,6 +4,7 @@ import {
   DispatchTo,
   Enqueue,
   ObservableLike,
+  PauseableObservableContainerLike,
   PauseableObservableLike,
 } from "../rx.js";
 import { DispatcherLike } from "../util.js";
@@ -15,16 +16,17 @@ import PauseableObservable_map from "./PauseableObservable/__internal__/Pauseabl
 import PauseableObservable_pick from "./PauseableObservable/__internal__/PauseableObservable.pick.js";
 import PauseableObservable_sinkInto from "./PauseableObservable/__internal__/PauseableObservable.sinkInto.js";
 
-export const dispatchTo: DispatchTo<PauseableObservableLike>["dispatchTo"] =
+export const dispatchTo: DispatchTo<PauseableObservableContainerLike>["dispatchTo"] =
   PauseableObservable_dispatchTo;
-export const enqueue: Enqueue<PauseableObservableLike>["enqueue"] =
+export const enqueue: Enqueue<PauseableObservableContainerLike>["enqueue"] =
   PauseableObservable_enqueue;
-export const forEach: ForEach<PauseableObservableLike>["forEach"] =
+export const forEach: ForEach<PauseableObservableContainerLike>["forEach"] =
   PauseableObservable_forEach;
-export const keep: Keep<PauseableObservableLike>["keep"] =
+export const keep: Keep<PauseableObservableContainerLike>["keep"] =
   PauseableObservable_keep;
-export const map: Map<PauseableObservableLike>["map"] = PauseableObservable_map;
-export const pick: Pick<PauseableObservableLike>["pick"] =
+export const map: Map<PauseableObservableContainerLike>["map"] =
+  PauseableObservable_map;
+export const pick: Pick<PauseableObservableContainerLike>["pick"] =
   PauseableObservable_pick;
 export const sinkInto: <T>(
   sink: DispatcherLike<T>,

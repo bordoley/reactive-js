@@ -1,6 +1,11 @@
 import { AsyncIterableLike } from "../../../containers.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
-import { Flow, ObservableLike, ObserverLike } from "../../../rx.js";
+import {
+  Flow,
+  ObservableContainerLike,
+  ObservableLike,
+  ObserverLike,
+} from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../../rx/Observable/__internal__/Observable.subscribeWithConfig.js";
@@ -74,17 +79,19 @@ const AsyncIterable_flow: Flow<AsyncIterableLike>["flow"] =
 
         pipe(
           modeObs,
-          Observable_forEach<ObservableLike, boolean>((mode: boolean) => {
-            const wasPaused = isPaused;
-            isPaused = mode;
+          Observable_forEach<ObservableContainerLike, boolean>(
+            (mode: boolean) => {
+              const wasPaused = isPaused;
+              isPaused = mode;
 
-            if (!isPaused && wasPaused) {
-              pipe(
-                observer[SchedulerLike_schedule](continuation),
-                Disposable_addTo(observer),
-              );
-            }
-          }),
+              if (!isPaused && wasPaused) {
+                pipe(
+                  observer[SchedulerLike_schedule](continuation),
+                  Disposable_addTo(observer),
+                );
+              }
+            },
+          ),
           Observable_subscribeWithConfig(observer, observer),
           Disposable_addTo(observer),
           Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
