@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, readonly `T`[]\>
 
-Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
+Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Type parameters
 

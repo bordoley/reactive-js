@@ -1,6 +1,6 @@
-import { First, ReadonlyArrayContainerLike } from "../../../containers.js";
+import { First, ReadonlyArrayContainer } from "../../../containers.js";
 
-const ReadonlyArray_first: First<ReadonlyArrayContainerLike>["first"] =
+const ReadonlyArray_first: First<ReadonlyArrayContainer>["first"] =
   <T>() =>
   (values: ReadonlyArray<T>) =>
     values[0];

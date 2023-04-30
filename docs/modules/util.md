@@ -17,8 +17,8 @@
 
 ### Container Interfaces
 
-- [DictionaryContainerLike](../interfaces/util.DictionaryContainerLike.md)
-- [EventSourceContainerLike](../interfaces/util.EventSourceContainerLike.md)
+- [DictionaryContainer](../interfaces/util.DictionaryContainer.md)
+- [EventSourceContainer](../interfaces/util.EventSourceContainer.md)
 
 ### Other Interfaces
 

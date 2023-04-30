@@ -1,9 +1,9 @@
 import { Map } from "../../../containers.js";
 import { bindMethod, newInstance, pipe } from "../../../functions.js";
-import { Defer, EncodeUtf8, ObservableContainerLike } from "../../../rx.js";
+import { Defer, EncodeUtf8, ObservableContainer } from "../../../rx.js";
 
 const HigherOrderObservable_encodeUtf8 =
-  <C extends ObservableContainerLike>(
+  <C extends ObservableContainer>(
     defer: Defer<C>["defer"],
     map: Map<C>["map"],
   ): EncodeUtf8<C>["encodeUtf8"] =>

@@ -38,7 +38,7 @@ import {
 import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   EnumerableLike,
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -285,7 +285,7 @@ class ComputeContext {
 
       const subscription = pipe(
         observable,
-        Observable_forEach<ObservableContainerLike, T>(next => {
+        Observable_forEach<ObservableContainer, T>(next => {
           effect[__AwaitOrObserveEffect_value] = next;
           effect[__AwaitOrObserveEffect_hasValue] = true;
 

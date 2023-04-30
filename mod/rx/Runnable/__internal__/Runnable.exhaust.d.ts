@@ -1,3 +1,3 @@
-import { Exhaust, RunnableContainerLike } from "../../../rx.js";
-declare const Runnable_exhaust: Exhaust<RunnableContainerLike>["exhaust"];
+import { Exhaust, RunnableContainer } from "../../../rx.js";
+declare const Runnable_exhaust: Exhaust<RunnableContainer>["exhaust"];
 export default Runnable_exhaust;

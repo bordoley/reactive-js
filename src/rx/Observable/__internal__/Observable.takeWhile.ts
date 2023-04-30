@@ -18,7 +18,7 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { Predicate, none, partial, pipe } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -28,7 +28,7 @@ import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
-type ObservableTakeWhile = <C extends ObservableContainerLike, T>(
+type ObservableTakeWhile = <C extends ObservableContainer, T>(
   predicate: Predicate<T>,
   options?: {
     readonly inclusive?: boolean;

@@ -1,3 +1,3 @@
-import { Entries, ReadonlyObjectMapContainerLike } from "../../../keyed-containers.js";
-declare const ReadonlyObjectMap_entries: Entries<ReadonlyObjectMapContainerLike>["entries"];
+import { Entries, ReadonlyObjectMapContainer } from "../../../keyed-containers.js";
+declare const ReadonlyObjectMap_entries: Entries<ReadonlyObjectMapContainer>["entries"];
 export default ReadonlyObjectMap_entries;

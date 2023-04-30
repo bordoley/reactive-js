@@ -23,7 +23,7 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
@@ -48,7 +48,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableContainerLike>["zipWithLatestFrom"] =
+const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableContainer>["zipWithLatestFrom"] =
   /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver: <TA, TB, T>(
       delegate: ObserverLike<T>,
@@ -112,7 +112,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableContainerLike>["
 
             const otherSubscription = pipe(
               other,
-              Observable_forEach<ObservableContainerLike, TB>(otherLatest => {
+              Observable_forEach<ObservableContainer, TB>(otherLatest => {
                 instance[__WithLatestLike_hasLatest] = true;
                 instance[__WithLatestLike_otherLatest] = otherLatest;
                 notifyDelegate(instance);
@@ -168,7 +168,7 @@ const Observable_zipWithLatestFrom: ZipWithLatestFrom<ObservableContainerLike>["
         createZipWithLatestFromObserver,
         partial(other, selector),
         Observable_lift(other),
-      ) as ContainerOperator<ObservableContainerLike, TA, T>;
+      ) as ContainerOperator<ObservableContainer, TA, T>;
   })();
 
 export default Observable_zipWithLatestFrom;

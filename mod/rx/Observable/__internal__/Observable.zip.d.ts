@@ -1,4 +1,4 @@
 import { Zip } from "../../../containers.js";
-import { ObservableContainerLike } from "../../../rx.js";
-declare const Observable_zip: Zip<ObservableContainerLike>["zip"];
+import { ObservableContainer } from "../../../rx.js";
+declare const Observable_zip: Zip<ObservableContainer>["zip"];
 export default Observable_zip;

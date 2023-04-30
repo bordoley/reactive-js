@@ -1,5 +1,5 @@
 import { Function1, bindMethod, pipe } from "../../../functions.js";
-import { ObservableContainerLike, ObservableLike } from "../../../rx.js";
+import { ObservableContainer, ObservableLike } from "../../../rx.js";
 import {
   EventListenerLike_notify,
   EventSourceLike,
@@ -24,7 +24,7 @@ const Observable_toEventSource =
     EventSource_create(publisher =>
       pipe(
         obs,
-        Observable_forEach<ObservableContainerLike, T>(
+        Observable_forEach<ObservableContainer, T>(
           bindMethod(publisher, EventListenerLike_notify),
         ),
         Observable_subscribe(scheduler, options),

@@ -1,8 +1,8 @@
-import { ContainerLike, ContainerOf, Map } from "../../../containers.js";
+import { Container, ContainerOf, Map } from "../../../containers.js";
 import { Factory, Function1, Optional, pipe } from "../../../functions.js";
 
 const Container_fromFactory =
-  <C extends ContainerLike, O = never>(
+  <C extends Container, O = never>(
     fromOptional: <T>(options?: O) => Function1<Optional<T>, ContainerOf<C, T>>,
     map: Map<C>["map"],
   ) =>

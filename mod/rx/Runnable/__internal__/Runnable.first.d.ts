@@ -1,4 +1,4 @@
 import { First } from "../../../containers.js";
-import { RunnableContainerLike } from "../../../rx.js";
-declare const Runnable_first: First<RunnableContainerLike>["first"];
+import { RunnableContainer } from "../../../rx.js";
+declare const Runnable_first: First<RunnableContainer>["first"];
 export default Runnable_first;

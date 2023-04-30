@@ -1,11 +1,11 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { abs, clamp, min } from "../../../__internal__/math.js";
-import { ContainerLike, ContainerOf } from "../../../containers.js";
+import { Container, ContainerOf } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
 import ReadonlyArray_getLength from "./ReadonlyArray.getLength.js";
 
 const ReadonlyArray_toContainer =
-  <C extends ContainerLike, O extends unknown = unknown>(
+  <C extends Container, O extends unknown = unknown>(
     factory: <T>(
       values: readonly T[],
       start: number,

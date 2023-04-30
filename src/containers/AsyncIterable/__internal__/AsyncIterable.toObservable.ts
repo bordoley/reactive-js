@@ -1,4 +1,4 @@
-import { AsyncIterableContainerLike } from "../../../containers.js";
+import { AsyncIterableContainer } from "../../../containers.js";
 import { error, pipe } from "../../../functions.js";
 import { ObserverLike, ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
@@ -13,7 +13,7 @@ import {
 } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 
-const AsyncIterable_toObservable: ToObservable<AsyncIterableContainerLike>["toObservable"] =
+const AsyncIterable_toObservable: ToObservable<AsyncIterableContainer>["toObservable"] =
 
     <T>() =>
     (iterable: AsyncIterable<T>) =>

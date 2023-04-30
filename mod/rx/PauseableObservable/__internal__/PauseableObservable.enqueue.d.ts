@@ -1,3 +1,3 @@
-import { Enqueue, PauseableObservableContainerLike } from "../../../rx.js";
-declare const PauseableObservable_enqueue: Enqueue<PauseableObservableContainerLike>["enqueue"];
+import { Enqueue, PauseableObservableContainer } from "../../../rx.js";
+declare const PauseableObservable_enqueue: Enqueue<PauseableObservableContainer>["enqueue"];
 export default PauseableObservable_enqueue;

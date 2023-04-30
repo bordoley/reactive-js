@@ -1,6 +1,6 @@
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { Function1, compose, pipe } from "../../../functions.js";
-import { ObservableContainerLike, ObservableLike } from "../../../rx.js";
+import { ObservableContainer, ObservableLike } from "../../../rx.js";
 import Observable_endWith from "../../../rx/Observable/__internal__/Observable.endWith.js";
 import Observable_exhaustMap from "../../../rx/Observable/__internal__/Observable.exhaustMap.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
@@ -53,30 +53,30 @@ const Streamable_createEventHandler: CreateEventHandler["createEventHandler"] =
           ? Observable_switchMap<TEventType, never>(
               compose(
                 op,
-                Observable_ignoreElements<ObservableContainerLike, never>(),
-                Observable_startWith<ObservableContainerLike, boolean>(true),
-                Observable_endWith<ObservableContainerLike, boolean>(false),
+                Observable_ignoreElements<ObservableContainer, never>(),
+                Observable_startWith<ObservableContainer, boolean>(true),
+                Observable_endWith<ObservableContainer, boolean>(false),
               ),
             )
           : mode === "blocking"
           ? Observable_exhaustMap<TEventType, boolean>(
               compose(
                 op,
-                Observable_ignoreElements<ObservableContainerLike, boolean>(),
-                Observable_startWith<ObservableContainerLike, boolean>(true),
-                Observable_endWith<ObservableContainerLike, boolean>(false),
+                Observable_ignoreElements<ObservableContainer, boolean>(),
+                Observable_startWith<ObservableContainer, boolean>(true),
+                Observable_endWith<ObservableContainer, boolean>(false),
               ),
             )
           : Observable_mergeMap<TEventType, never>(
               compose(
                 op,
-                Observable_ignoreElements<ObservableContainerLike, never>(),
-                Observable_startWith<ObservableContainerLike, boolean>(true),
-                Observable_endWith<ObservableContainerLike, boolean>(false),
+                Observable_ignoreElements<ObservableContainer, never>(),
+                Observable_startWith<ObservableContainer, boolean>(true),
+                Observable_endWith<ObservableContainer, boolean>(false),
               ),
               { ...options, concurrency: 1 },
             ),
-        Observable_mergeWith<ObservableContainerLike, boolean>(
+        Observable_mergeWith<ObservableContainer, boolean>(
           pipe(false, Optional_toObservable()),
         ),
       ),

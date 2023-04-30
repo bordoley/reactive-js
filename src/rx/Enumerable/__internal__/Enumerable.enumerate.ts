@@ -93,7 +93,7 @@ const Enumerable_enumerate: <T>() => (
         instance[__EnumerableEnumerator_continuationQueue] =
           Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
 
-        // FIXME: Cast needed to coalesce the type of[ContainerLike_type] field
+        // FIXME: Cast needed to coalesce the type of[Container_type] field
         return instance as EnumeratorScheduler<T>;
       },
       props<TEnumeratorSchedulerProperties>({

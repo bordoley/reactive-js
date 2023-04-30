@@ -1,3 +1,3 @@
-import { ReadonlyArrayContainerLike, ToReadonlyArray } from "../../../keyed-containers.js";
-declare const ReadonlyArray_toReadonlyArray: ToReadonlyArray<ReadonlyArrayContainerLike>["toReadonlyArray"];
+import { ReadonlyArrayContainer, ToReadonlyArray } from "../../../keyed-containers.js";
+declare const ReadonlyArray_toReadonlyArray: ToReadonlyArray<ReadonlyArrayContainer>["toReadonlyArray"];
 export default ReadonlyArray_toReadonlyArray;

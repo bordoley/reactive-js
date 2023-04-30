@@ -1,9 +1,9 @@
 import { pipe } from "../../../functions.js";
 import {
   Flow,
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
-  RunnableContainerLike,
+  RunnableContainer,
   RunnableLike,
 } from "../../../rx.js";
 import PauseableObservable_create from "../../../rx/PauseableObservable/__internal__/PauseableObservable.create.js";
@@ -24,7 +24,7 @@ import Observable_subscribeOn from "../../Observable/__internal__/Observable.sub
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
-const Runnable_flow: Flow<RunnableContainerLike>["flow"] =
+const Runnable_flow: Flow<RunnableContainer>["flow"] =
   <T>(
     scheduler: SchedulerLike,
     options?: {
@@ -49,7 +49,7 @@ const Runnable_flow: Flow<RunnableContainerLike>["flow"] =
           Disposable_add(
             pipe(
               modeObs,
-              Observable_forEach<ObservableContainerLike, boolean>(isPaused => {
+              Observable_forEach<ObservableContainer, boolean>(isPaused => {
                 if (isPaused) {
                   pauseableScheduler[PauseableLike_pause]();
                 } else {

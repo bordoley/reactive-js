@@ -1,3 +1,3 @@
-import { Entries, ReadonlyArrayContainerLike } from "../../../keyed-containers.js";
-declare const ReadonlyArray_entries: Entries<ReadonlyArrayContainerLike>["entries"];
+import { Entries, ReadonlyArrayContainer } from "../../../keyed-containers.js";
+declare const ReadonlyArray_entries: Entries<ReadonlyArrayContainer>["entries"];
 export default ReadonlyArray_entries;

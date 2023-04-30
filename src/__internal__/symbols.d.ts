@@ -4,9 +4,9 @@ export declare const __BufferLike_capacity: unique symbol;
 
 export declare const __CollectionLike_count: unique symbol;
 
-export declare const __ContainerLike_T: unique symbol;
+export declare const __Container_T: unique symbol;
 
-export declare const __ContainerLike_type: unique symbol;
+export declare const __Container_type: unique symbol;
 
 export declare const __DispatcherLike_complete: unique symbol;
 
@@ -34,7 +34,7 @@ export declare const __EventPublisherLike_listenerCount: unique symbol;
 
 export declare const __KeyedCollectionLike_get: unique symbol;
 
-export declare const __KeyedContainerLike_TKey: unique symbol;
+export declare const __KeyedContainer_TKey: unique symbol;
 
 export declare const __MulticastObservableLike_buffer: unique symbol;
 

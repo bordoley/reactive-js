@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **toIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>
 
-Converts the ContainerLike to a `IterableLike`.
+Converts the Container to a `IterableLike`.
 
 #### Type parameters
 

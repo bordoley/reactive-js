@@ -1,12 +1,12 @@
 import {
   ConcatWith,
-  ContainerLike,
+  Container,
   ContainerOperator,
   FromReadonlyArray,
 } from "../../../containers.js";
 
 const Container_endWith =
-  <C extends ContainerLike>(
+  <C extends Container>(
     concatWith: ConcatWith<C>["concatWith"],
     fromReadonlyArray: FromReadonlyArray<C>["fromReadonlyArray"],
   ) =>

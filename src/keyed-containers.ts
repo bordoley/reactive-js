@@ -1,8 +1,8 @@
-import { __KeyedContainerLike_TKey as KeyedContainerLike_TKey } from "./__internal__/symbols.js";
+import { __KeyedContainer_TKey as KeyedContainer_TKey } from "./__internal__/symbols.js";
 import {
-  ContainerLike,
-  ContainerLike_T,
-  ContainerLike_type,
+  Container,
+  Container_T,
+  Container_type,
   EnumeratorLike,
 } from "./containers.js";
 
@@ -18,7 +18,7 @@ import {
   TypePredicate,
 } from "./functions.js";
 
-export { KeyedContainerLike_TKey };
+export { KeyedContainer_TKey };
 
 /**
  * Base type for all Containers.
@@ -26,33 +26,33 @@ export { KeyedContainerLike_TKey };
  * @noInheritDoc
  * @category Container
  */
-export interface KeyedContainerLike extends ContainerLike {
-  readonly [KeyedContainerLike_TKey]?: unknown;
+export interface KeyedContainer extends Container {
+  readonly [KeyedContainer_TKey]?: unknown;
 }
 
 /**
- * A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
+ * A compile time only type for using a Javascript `ReadonlyArray` as a `Container`.
  *
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyArrayContainerLike extends KeyedContainerLike {
-  readonly [ContainerLike_type]?: ReadonlyArray<this[typeof ContainerLike_T]>;
+export interface ReadonlyArrayContainer extends KeyedContainer {
+  readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
 
-  readonly [KeyedContainerLike_TKey]?: number;
+  readonly [KeyedContainer_TKey]?: number;
 }
 
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyMapContainerLike extends ContainerLike {
-  readonly [ContainerLike_type]?: ReadonlyMap<
-    this[typeof KeyedContainerLike_TKey],
-    this[typeof ContainerLike_T]
+export interface ReadonlyMapContainer extends Container {
+  readonly [Container_type]?: ReadonlyMap<
+    this[typeof KeyedContainer_TKey],
+    this[typeof Container_T]
   >;
 
-  readonly [KeyedContainerLike_TKey]?: unknown;
+  readonly [KeyedContainer_TKey]?: unknown;
 }
 
 /**
@@ -64,31 +64,31 @@ export type ReadonlyObjectMapLike<
 > = { readonly [P in TKey]?: T };
 
 /**
- * A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
+ * A compile time only type for using a Javascript `ReadonlyArray` as a `Container`.
  *
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyObjectMapContainerLike extends ContainerLike {
-  readonly [ContainerLike_type]?: ReadonlyObjectMapLike<
-    NonNullable<this[typeof KeyedContainerLike_TKey]>,
-    this[typeof ContainerLike_T]
+export interface ReadonlyObjectMapContainer extends Container {
+  readonly [Container_type]?: ReadonlyObjectMapLike<
+    NonNullable<this[typeof KeyedContainer_TKey]>,
+    this[typeof Container_T]
   >;
 
-  readonly [KeyedContainerLike_TKey]?: symbol | number | string;
+  readonly [KeyedContainer_TKey]?: symbol | number | string;
 }
 
 /**
  * Utility type for higher order programming with keyed-containers.
  */
-export type KeyedContainerOf<C extends ContainerLike, TKey, T> = C extends {
-  readonly [ContainerLike_type]?: unknown;
+export type KeyedContainerOf<C extends Container, TKey, T> = C extends {
+  readonly [Container_type]?: unknown;
 }
   ? NonNullable<
       (C & {
-        readonly [ContainerLike_T]: T;
-        readonly [KeyedContainerLike_TKey]: TKey;
-      })[typeof ContainerLike_type]
+        readonly [Container_T]: T;
+        readonly [KeyedContainer_TKey]: TKey;
+      })[typeof Container_type]
     >
   : {
       readonly _C: C;
@@ -100,16 +100,16 @@ export type KeyedContainerOf<C extends ContainerLike, TKey, T> = C extends {
  * Utility type for a generic operator function that transforms a Container's inner value type.
  */
 export type KeyedContainerOperator<
-  C extends KeyedContainerLike,
+  C extends KeyedContainer,
   TKey,
   TA,
   TB,
 > = Function1<KeyedContainerOf<C, TKey, TA>, KeyedContainerOf<C, TKey, TB>>;
 
-export type KeyOf<C extends KeyedContainerLike> = C extends {
-  readonly [ContainerLike_type]?: unknown;
+export type KeyOf<C extends KeyedContainer> = C extends {
+  readonly [Container_type]?: unknown;
 }
-  ? NonNullable<C[typeof KeyedContainerLike_TKey]>
+  ? NonNullable<C[typeof KeyedContainer_TKey]>
   : // eslint-disable-next-line @typescript-eslint/ban-types
     {};
 
@@ -117,9 +117,9 @@ export type KeyOf<C extends KeyedContainerLike> = C extends {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Empty<C extends KeyedContainerLike> {
+export interface Empty<C extends KeyedContainer> {
   /**
-   * Return an ContainerLike that emits no items.
+   * Return an Container that emits no items.
    *
    * @category Constructor
    */
@@ -130,7 +130,7 @@ export interface Empty<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Entries<C extends KeyedContainerLike> {
+export interface Entries<C extends KeyedContainer> {
   /**
    *
    * @category Transform
@@ -145,7 +145,7 @@ export interface Entries<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForEach<C extends KeyedContainerLike> {
+export interface ForEach<C extends KeyedContainer> {
   /**
    * Returns a ContainerOperator that applies the side effect function to each
    * value emitted by the source.
@@ -161,7 +161,7 @@ export interface ForEach<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForEachWithKey<C extends KeyedContainerLike> {
+export interface ForEachWithKey<C extends KeyedContainer> {
   /**
    * Returns a KeyedContainerOperator that applies the side effect function to each
    * value emitted by the source.
@@ -177,7 +177,7 @@ export interface ForEachWithKey<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromEntries<C extends KeyedContainerLike> {
+export interface FromEntries<C extends KeyedContainer> {
   /**
    * @category Constructor
    */
@@ -191,13 +191,13 @@ export interface FromEntries<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromReadonlyArray<C extends KeyedContainerLike> {
+export interface FromReadonlyArray<C extends KeyedContainer> {
   /**
    * @category Constructor
    */
   fromReadonlyArray<
     T,
-    TKey extends KeyOf<ReadonlyArrayContainerLike> = KeyOf<ReadonlyArrayContainerLike>,
+    TKey extends KeyOf<ReadonlyArrayContainer> = KeyOf<ReadonlyArrayContainer>,
   >(options?: {
     readonly start?: number;
     readonly count?: number;
@@ -208,7 +208,7 @@ export interface FromReadonlyArray<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Identity<C extends KeyedContainerLike> {
+export interface Identity<C extends KeyedContainer> {
   /**
    * @category Operator
    */
@@ -224,7 +224,7 @@ export interface Identity<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Keep<C extends KeyedContainerLike> {
+export interface Keep<C extends KeyedContainer> {
   /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
@@ -240,7 +240,7 @@ export interface Keep<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeepType<C extends KeyedContainerLike> {
+export interface KeepType<C extends KeyedContainer> {
   /**
    *
    * @category Operator
@@ -254,7 +254,7 @@ export interface KeepType<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeepWithKey<C extends KeyedContainerLike> {
+export interface KeepWithKey<C extends KeyedContainer> {
   /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
@@ -270,7 +270,7 @@ export interface KeepWithKey<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Keys<C extends KeyedContainerLike> {
+export interface Keys<C extends KeyedContainer> {
   /**
    *
    * @category Transform
@@ -285,7 +285,7 @@ export interface Keys<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeySet<C extends KeyedContainerLike> {
+export interface KeySet<C extends KeyedContainer> {
   /**
    *
    * @category Transform
@@ -300,7 +300,7 @@ export interface KeySet<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Map<C extends KeyedContainerLike> {
+export interface Map<C extends KeyedContainer> {
   /**
    * Returns a ContainerOperator that applies the `selector` function to each
    * value emitted by the source.
@@ -320,7 +320,7 @@ export interface Map<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface MapWithKey<C extends KeyedContainerLike> {
+export interface MapWithKey<C extends KeyedContainer> {
   /**
    * Returns a ContainerOperator that applies the `selector` function to each
    * value emitted by the source.
@@ -340,7 +340,7 @@ export interface MapWithKey<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Reduce<C extends KeyedContainerLike> {
+export interface Reduce<C extends KeyedContainer> {
   /**
    * @category Transform
    */
@@ -354,7 +354,7 @@ export interface Reduce<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ReduceWithKey<C extends KeyedContainerLike> {
+export interface ReduceWithKey<C extends KeyedContainer> {
   /**
    * @category Transform
    */
@@ -368,9 +368,9 @@ export interface ReduceWithKey<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToReadonlyArray<C extends KeyedContainerLike> {
+export interface ToReadonlyArray<C extends KeyedContainer> {
   /**
-   * Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
+   * Converts the Container to a `ReadonlyArrayContainer`.
    *
    * @category Transform
    */
@@ -384,7 +384,7 @@ export interface ToReadonlyArray<C extends KeyedContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Values<C extends KeyedContainerLike> {
+export interface Values<C extends KeyedContainer> {
   /**
    *
    * @category Transform

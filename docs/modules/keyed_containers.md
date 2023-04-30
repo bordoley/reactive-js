@@ -6,10 +6,10 @@
 
 ### Container Interfaces
 
-- [KeyedContainerLike](../interfaces/keyed_containers.KeyedContainerLike.md)
-- [ReadonlyArrayContainerLike](../interfaces/keyed_containers.ReadonlyArrayContainerLike.md)
-- [ReadonlyMapContainerLike](../interfaces/keyed_containers.ReadonlyMapContainerLike.md)
-- [ReadonlyObjectMapContainerLike](../interfaces/keyed_containers.ReadonlyObjectMapContainerLike.md)
+- [KeyedContainer](../interfaces/keyed_containers.KeyedContainer.md)
+- [ReadonlyArrayContainer](../interfaces/keyed_containers.ReadonlyArrayContainer.md)
+- [ReadonlyMapContainer](../interfaces/keyed_containers.ReadonlyMapContainer.md)
+- [ReadonlyObjectMapContainer](../interfaces/keyed_containers.ReadonlyObjectMapContainer.md)
 
 ### TypeClass Interfaces
 
@@ -43,19 +43,19 @@
 
 ### KeyOf
 
-Ƭ **KeyOf**<`C`\>: `C` extends { `[___ContainerLike_type]?`: `unknown`  } ? `NonNullable`<`C`[typeof `KeyedContainerLike_TKey`]\> : {}
+Ƭ **KeyOf**<`C`\>: `C` extends { `[___Container_type]?`: `unknown`  } ? `NonNullable`<`C`[typeof `KeyedContainer_TKey`]\> : {}
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`KeyedContainerLike`](../interfaces/keyed_containers.KeyedContainerLike.md) |
+| `C` | extends [`KeyedContainer`](../interfaces/keyed_containers.KeyedContainer.md) |
 
 ___
 
 ### KeyedContainerOf
 
-Ƭ **KeyedContainerOf**<`C`, `TKey`, `T`\>: `C` extends { `[___ContainerLike_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[___ContainerLike_T]`: `T` ; `[___KeyedContainerLike_TKey]`: `TKey`  }[typeof `ContainerLike_type`]\> : { `_C`: `C` ; `_T`: () => `T` ; `_TKey`: () => `TKey`  }
+Ƭ **KeyedContainerOf**<`C`, `TKey`, `T`\>: `C` extends { `[___Container_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[___Container_T]`: `T` ; `[___KeyedContainer_TKey]`: `TKey`  }[typeof `Container_type`]\> : { `_C`: `C` ; `_T`: () => `T` ; `_TKey`: () => `TKey`  }
 
 Utility type for higher order programming with keyed-containers.
 
@@ -63,7 +63,7 @@ Utility type for higher order programming with keyed-containers.
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `C` | extends [`Container`](../interfaces/containers.Container.md) |
 | `TKey` | `TKey` |
 | `T` | `T` |
 
@@ -79,7 +79,7 @@ Utility type for a generic operator function that transforms a Container's inner
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`KeyedContainerLike`](../interfaces/keyed_containers.KeyedContainerLike.md) |
+| `C` | extends [`KeyedContainer`](../interfaces/keyed_containers.KeyedContainer.md) |
 | `TKey` | `TKey` |
 | `TA` | `TA` |
 | `TB` | `TB` |

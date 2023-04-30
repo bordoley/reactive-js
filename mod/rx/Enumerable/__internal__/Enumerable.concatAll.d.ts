@@ -1,4 +1,4 @@
 import { ConcatAll } from "../../../containers.js";
-import { EnumerableContainerLike } from "../../../rx.js";
-declare const Enumerable_concatAll: ConcatAll<EnumerableContainerLike>["concatAll"];
+import { EnumerableContainer } from "../../../rx.js";
+declare const Enumerable_concatAll: ConcatAll<EnumerableContainer>["concatAll"];
 export default Enumerable_concatAll;

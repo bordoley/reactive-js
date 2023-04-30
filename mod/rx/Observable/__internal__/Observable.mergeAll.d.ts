@@ -1,3 +1,3 @@
-import { MergeAll, ObservableContainerLike } from "../../../rx.js";
-declare const Observable_mergeAll: MergeAll<ObservableContainerLike>["mergeAll"];
+import { MergeAll, ObservableContainer } from "../../../rx.js";
+declare const Observable_mergeAll: MergeAll<ObservableContainer>["mergeAll"];
 export default Observable_mergeAll;

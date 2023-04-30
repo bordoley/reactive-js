@@ -5,9 +5,9 @@ export const __BufferLike_capacity: unique symbol;
 /** @type {unique symbol} */
 export const __CollectionLike_count: unique symbol;
 /** @type {unique symbol} */
-export const __ContainerLike_T: unique symbol;
+export const __Container_T: unique symbol;
 /** @type {unique symbol} */
-export const __ContainerLike_type: unique symbol;
+export const __Container_type: unique symbol;
 /** @type {unique symbol} */
 export const __DispatcherLike_complete: unique symbol;
 /** @type {unique symbol} */
@@ -35,7 +35,7 @@ export const __EventPublisherLike_listenerCount: unique symbol;
 /** @type {unique symbol} */
 export const __KeyedCollectionLike_get: unique symbol;
 /** @type {unique symbol} */
-export const __KeyedContainerLike_TKey: unique symbol;
+export const __KeyedContainer_TKey: unique symbol;
 /** @type {unique symbol} */
 export const __MulticastObservableLike_buffer: unique symbol;
 /** @type {unique symbol} */

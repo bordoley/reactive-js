@@ -3,15 +3,15 @@ import { Function1, SideEffect2 } from "../../../functions.js";
 import {
   ForEachWithKey,
   KeyOf,
-  ReadonlyObjectMapContainerLike,
+  ReadonlyObjectMapContainer,
   ReadonlyObjectMapLike,
 } from "../../../keyed-containers.js";
 
-const ReadonlyObjectMap_forEachWithKey: ForEachWithKey<ReadonlyObjectMapContainerLike>["forEachWithKey"] =
+const ReadonlyObjectMap_forEachWithKey: ForEachWithKey<ReadonlyObjectMapContainer>["forEachWithKey"] =
 
     <
       T,
-      TKey extends KeyOf<ReadonlyObjectMapContainerLike> = KeyOf<ReadonlyObjectMapContainerLike>,
+      TKey extends KeyOf<ReadonlyObjectMapContainer> = KeyOf<ReadonlyObjectMapContainer>,
     >(
       effect: SideEffect2<T, TKey>,
     ): Function1<

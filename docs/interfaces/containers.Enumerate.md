@@ -8,8 +8,8 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
-| `CEnumerator` | extends [`EnumeratorContainerLike`](containers.EnumeratorContainerLike.md) = [`EnumeratorContainerLike`](containers.EnumeratorContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
+| `CEnumerator` | extends [`EnumeratorContainer`](containers.EnumeratorContainer.md) = [`EnumeratorContainer`](containers.EnumeratorContainer.md) |
 
 ## Table of contents
 

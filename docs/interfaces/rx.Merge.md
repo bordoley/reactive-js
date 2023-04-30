@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 

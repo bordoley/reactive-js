@@ -1,11 +1,11 @@
 import { ToReadonlyArray } from "../../../containers.js";
 import Enumerator_toReadonlyArray from "../../../containers/Enumerator/__internal__/Enumerator.toReadonlyArray.js";
 import { isSome, pipe, raiseError } from "../../../functions.js";
-import { EnumerableContainerLike, EnumerableLike } from "../../../rx.js";
+import { EnumerableContainer, EnumerableLike } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_error } from "../../../util.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
-const Enumerable_toReadonlyArray: ToReadonlyArray<EnumerableContainerLike>["toReadonlyArray"] =
+const Enumerable_toReadonlyArray: ToReadonlyArray<EnumerableContainer>["toReadonlyArray"] =
 
     <T>() =>
     (enumerable: EnumerableLike<T>) => {

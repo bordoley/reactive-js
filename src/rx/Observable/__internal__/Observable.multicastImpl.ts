@@ -9,7 +9,7 @@ import {
 } from "../../../functions.js";
 import {
   MulticastObservableLike,
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
   PublisherLike,
 } from "../../../rx.js";
@@ -58,7 +58,7 @@ const Observable_multicastImpl =
 
     pipe(
       observable,
-      Observable_forEach<ObservableContainerLike, T>(
+      Observable_forEach<ObservableContainer, T>(
         bindMethod(publisher, EventListenerLike_notify),
       ),
       Observable_subscribeWithConfig(scheduler, {

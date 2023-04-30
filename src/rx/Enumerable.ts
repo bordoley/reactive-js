@@ -4,9 +4,9 @@ import {
   ConcatAll,
   ConcatMap,
   ConcatWith,
-  ContainerLike,
-  ContainerLike_T,
-  ContainerLike_type,
+  Container,
+  Container_T,
+  Container_type,
   Contains,
   DistinctUntilChanged,
   Empty,
@@ -60,7 +60,7 @@ import {
   DispatchTo,
   EncodeUtf8,
   Enqueue,
-  EnumerableContainerLike,
+  EnumerableContainer,
   FirstAsync,
   Flow,
   LastAsync,
@@ -126,13 +126,12 @@ import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.j
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 
-export const backpressureStrategy: BackpressureStrategy<EnumerableContainerLike>["backpressureStrategy"] =
+export const backpressureStrategy: BackpressureStrategy<EnumerableContainer>["backpressureStrategy"] =
   Observable_backpressureStrategy;
 
-export const buffer: Buffer<EnumerableContainerLike>["buffer"] =
-  Observable_buffer;
+export const buffer: Buffer<EnumerableContainer>["buffer"] = Observable_buffer;
 
-export const catchError: CatchError<EnumerableContainerLike>["catchError"] =
+export const catchError: CatchError<EnumerableContainer>["catchError"] =
   Enumerable_catchError;
 
 /**
@@ -140,162 +139,158 @@ export const catchError: CatchError<EnumerableContainerLike>["catchError"] =
  */
 export const compute = Enumerable_compute;
 
-export const concat: Concat<EnumerableContainerLike>["concat"] =
-  Observable_concat;
+export const concat: Concat<EnumerableContainer>["concat"] = Observable_concat;
 
-export const concatAll: ConcatAll<EnumerableContainerLike>["concatAll"] =
+export const concatAll: ConcatAll<EnumerableContainer>["concatAll"] =
   Enumerable_concatAll;
 
-export const concatMap: ConcatMap<EnumerableContainerLike>["concatMap"] =
+export const concatMap: ConcatMap<EnumerableContainer>["concatMap"] =
   Enumerable_concatMap;
 
-export const concatWith: ConcatWith<EnumerableContainerLike>["concatWith"] =
-  Observable_concatWith as ConcatWith<EnumerableContainerLike>["concatWith"];
+export const concatWith: ConcatWith<EnumerableContainer>["concatWith"] =
+  Observable_concatWith as ConcatWith<EnumerableContainer>["concatWith"];
 
-export const contains: Contains<EnumerableContainerLike>["contains"] =
+export const contains: Contains<EnumerableContainer>["contains"] =
   Runnable_contains;
 
-export const decodeWithCharset: DecodeWithCharset<EnumerableContainerLike>["decodeWithCharset"] =
+export const decodeWithCharset: DecodeWithCharset<EnumerableContainer>["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-export const defer: Defer<EnumerableContainerLike>["defer"] = Enumerable_defer;
+export const defer: Defer<EnumerableContainer>["defer"] = Enumerable_defer;
 
-export const dispatchTo: DispatchTo<EnumerableContainerLike>["dispatchTo"] =
+export const dispatchTo: DispatchTo<EnumerableContainer>["dispatchTo"] =
   Observable_dispatchTo;
 
-export const distinctUntilChanged: DistinctUntilChanged<EnumerableContainerLike>["distinctUntilChanged"] =
+export const distinctUntilChanged: DistinctUntilChanged<EnumerableContainer>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
-export const empty: Empty<EnumerableContainerLike>["empty"] = Observable_empty;
+export const empty: Empty<EnumerableContainer>["empty"] = Observable_empty;
 
-export const encodeUtf8: EncodeUtf8<EnumerableContainerLike>["encodeUtf8"] =
+export const encodeUtf8: EncodeUtf8<EnumerableContainer>["encodeUtf8"] =
   Enumerable_encodeUtf8;
 
-export const enqueue: Enqueue<EnumerableContainerLike>["enqueue"] =
+export const enqueue: Enqueue<EnumerableContainer>["enqueue"] =
   Observable_enqueue;
 
-export const endWith: EndWith<EnumerableContainerLike>["endWith"] =
+export const endWith: EndWith<EnumerableContainer>["endWith"] =
   Observable_endWith;
 
-interface EnumerableEnumeratorContainerLike extends ContainerLike {
-  readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]> &
+interface EnumerableEnumeratorContainer extends Container {
+  readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]> &
     DisposableLike;
 }
 export const enumerate: Enumerate<
-  EnumerableContainerLike,
-  EnumerableEnumeratorContainerLike
+  EnumerableContainer,
+  EnumerableEnumeratorContainer
 >["enumerate"] = Enumerable_enumerate;
 
-export const everySatisfy: EverySatisfy<EnumerableContainerLike>["everySatisfy"] =
+export const everySatisfy: EverySatisfy<EnumerableContainer>["everySatisfy"] =
   Runnable_everySatisfy;
 
-export const first: First<EnumerableContainerLike>["first"] = Runnable_first;
+export const first: First<EnumerableContainer>["first"] = Runnable_first;
 
-export const firstAsync: FirstAsync<EnumerableContainerLike>["firstAsync"] =
+export const firstAsync: FirstAsync<EnumerableContainer>["firstAsync"] =
   Observable_firstAsync;
 
-export const flatMapIterable: FlatMapIterable<EnumerableContainerLike>["flatMapIterable"] =
+export const flatMapIterable: FlatMapIterable<EnumerableContainer>["flatMapIterable"] =
   Enumerable_flatMapIterable;
 
-export const flow: Flow<EnumerableContainerLike>["flow"] = Runnable_flow;
+export const flow: Flow<EnumerableContainer>["flow"] = Runnable_flow;
 
-export const forEach: ForEach<EnumerableContainerLike>["forEach"] =
+export const forEach: ForEach<EnumerableContainer>["forEach"] =
   Observable_forEach;
 
-export const forkConcat: ForkConcat<EnumerableContainerLike>["forkConcat"] =
-  Observable_forkConcat as ForkConcat<EnumerableContainerLike>["forkConcat"];
+export const forkConcat: ForkConcat<EnumerableContainer>["forkConcat"] =
+  Observable_forkConcat as ForkConcat<EnumerableContainer>["forkConcat"];
 
-export const forkZip: ForkZip<EnumerableContainerLike>["forkZip"] =
-  Observable_forkZip as ForkZip<EnumerableContainerLike>["forkZip"];
+export const forkZip: ForkZip<EnumerableContainer>["forkZip"] =
+  Observable_forkZip as ForkZip<EnumerableContainer>["forkZip"];
 
-export const fromEnumeratorFactory: FromEnumeratorFactory<EnumerableContainerLike>["fromEnumeratorFactory"] =
+export const fromEnumeratorFactory: FromEnumeratorFactory<EnumerableContainer>["fromEnumeratorFactory"] =
   Runnable_fromEnumeratorFactory;
 
-export const fromFactory: FromFactory<EnumerableContainerLike>["fromFactory"] =
+export const fromFactory: FromFactory<EnumerableContainer>["fromFactory"] =
   Observable_fromFactory;
 
-export const fromIterable: FromIterable<EnumerableContainerLike>["fromIterable"] =
+export const fromIterable: FromIterable<EnumerableContainer>["fromIterable"] =
   Iterable_toObservable;
 
-export const fromOptional: FromOptional<EnumerableContainerLike>["fromOptional"] =
+export const fromOptional: FromOptional<EnumerableContainer>["fromOptional"] =
   Optional_toObservable;
 
-export const fromReadonlyArray: FromReadonlyArray<EnumerableContainerLike>["fromReadonlyArray"] =
+export const fromReadonlyArray: FromReadonlyArray<EnumerableContainer>["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 
-export const generate: Generate<EnumerableContainerLike>["generate"] =
+export const generate: Generate<EnumerableContainer>["generate"] =
   Observable_generate;
 
-export const identity: Identity<EnumerableContainerLike>["identity"] =
+export const identity: Identity<EnumerableContainer>["identity"] =
   Container_identity;
 
-export const ignoreElements: IgnoreElements<EnumerableContainerLike>["ignoreElements"] =
+export const ignoreElements: IgnoreElements<EnumerableContainer>["ignoreElements"] =
   Observable_ignoreElements;
 
-export const keep: Keep<EnumerableContainerLike>["keep"] = Observable_keep;
+export const keep: Keep<EnumerableContainer>["keep"] = Observable_keep;
 
-export const keepType: KeepType<EnumerableContainerLike>["keepType"] =
-  Observable_keepType as KeepType<EnumerableContainerLike>["keepType"];
+export const keepType: KeepType<EnumerableContainer>["keepType"] =
+  Observable_keepType as KeepType<EnumerableContainer>["keepType"];
 
-export const last: Last<EnumerableContainerLike>["last"] = Runnable_last;
+export const last: Last<EnumerableContainer>["last"] = Runnable_last;
 
-export const lastAsync: LastAsync<EnumerableContainerLike>["lastAsync"] =
+export const lastAsync: LastAsync<EnumerableContainer>["lastAsync"] =
   Observable_lastAsync;
 
-export const map: Map<EnumerableContainerLike>["map"] = Observable_map;
+export const map: Map<EnumerableContainer>["map"] = Observable_map;
 
-export const mapTo: MapTo<EnumerableContainerLike>["mapTo"] = Observable_mapTo;
+export const mapTo: MapTo<EnumerableContainer>["mapTo"] = Observable_mapTo;
 
-export const noneSatisfy: NoneSatisfy<EnumerableContainerLike>["noneSatisfy"] =
+export const noneSatisfy: NoneSatisfy<EnumerableContainer>["noneSatisfy"] =
   Runnable_noneSatisfy;
 
-export const pairwise: Pairwise<EnumerableContainerLike>["pairwise"] =
+export const pairwise: Pairwise<EnumerableContainer>["pairwise"] =
   Observable_pairwise;
 
-export const pick: Pick<EnumerableContainerLike>["pick"] = Observable_pick;
+export const pick: Pick<EnumerableContainer>["pick"] = Observable_pick;
 
-export const reduce: Reduce<EnumerableContainerLike>["reduce"] =
-  Runnable_reduce;
+export const reduce: Reduce<EnumerableContainer>["reduce"] = Runnable_reduce;
 
-export const repeat: Repeat<EnumerableContainerLike>["repeat"] =
-  Observable_repeat;
+export const repeat: Repeat<EnumerableContainer>["repeat"] = Observable_repeat;
 
-export const retry: Retry<EnumerableContainerLike>["retry"] = Observable_retry;
+export const retry: Retry<EnumerableContainer>["retry"] = Observable_retry;
 
-export const scan: Scan<EnumerableContainerLike>["scan"] = Observable_scan;
+export const scan: Scan<EnumerableContainer>["scan"] = Observable_scan;
 
-export const scanLast: ScanLast<EnumerableContainerLike>["scanLast"] =
+export const scanLast: ScanLast<EnumerableContainer>["scanLast"] =
   Enumerable_scanLast;
 
-export const skipFirst: SkipFirst<EnumerableContainerLike>["skipFirst"] =
+export const skipFirst: SkipFirst<EnumerableContainer>["skipFirst"] =
   Observable_skipFirst;
 
-export const someSatisfy: SomeSatisfy<EnumerableContainerLike>["someSatisfy"] =
+export const someSatisfy: SomeSatisfy<EnumerableContainer>["someSatisfy"] =
   Runnable_someSatisfy;
 
-export const startWith: StartWith<EnumerableContainerLike>["startWith"] =
+export const startWith: StartWith<EnumerableContainer>["startWith"] =
   Observable_startWith;
 
-export const takeFirst: TakeFirst<EnumerableContainerLike>["takeFirst"] =
+export const takeFirst: TakeFirst<EnumerableContainer>["takeFirst"] =
   Observable_takeFirst;
 
-export const takeLast: TakeLast<EnumerableContainerLike>["takeLast"] =
+export const takeLast: TakeLast<EnumerableContainer>["takeLast"] =
   Observable_takeLast;
 
-export const takeWhile: TakeWhile<EnumerableContainerLike>["takeWhile"] =
+export const takeWhile: TakeWhile<EnumerableContainer>["takeWhile"] =
   Observable_takeWhile;
 
-export const throws: Throws<EnumerableContainerLike>["throws"] =
-  Observable_throws;
+export const throws: Throws<EnumerableContainer>["throws"] = Observable_throws;
 
-export const throwIfEmpty: ThrowIfEmpty<EnumerableContainerLike>["throwIfEmpty"] =
+export const throwIfEmpty: ThrowIfEmpty<EnumerableContainer>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-export const toReadonlyArray: ToReadonlyArray<EnumerableContainerLike>["toReadonlyArray"] =
+export const toReadonlyArray: ToReadonlyArray<EnumerableContainer>["toReadonlyArray"] =
   Enumerable_toReadonlyArray;
 
-export const zip: Zip<EnumerableContainerLike>["zip"] =
-  Observable_zip as Zip<EnumerableContainerLike>["zip"];
+export const zip: Zip<EnumerableContainer>["zip"] =
+  Observable_zip as Zip<EnumerableContainer>["zip"];
 
-export const zipWith: ZipWith<EnumerableContainerLike>["zipWith"] =
-  Observable_zipWith as ZipWith<EnumerableContainerLike>["zipWith"];
+export const zipWith: ZipWith<EnumerableContainer>["zipWith"] =
+  Observable_zipWith as ZipWith<EnumerableContainer>["zipWith"];

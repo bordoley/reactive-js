@@ -21,7 +21,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -33,7 +33,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-type ObservableThrowIfEmpty = <C extends ObservableContainerLike, T>(
+type ObservableThrowIfEmpty = <C extends ObservableContainer, T>(
   factory: Factory<unknown>,
   options?: undefined,
 ) => ContainerOperator<C, T, T>;

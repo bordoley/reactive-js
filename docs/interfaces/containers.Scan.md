@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `TAcc`\>
 
-Returns a ContainerLike that applies an accumulator function over the source,
+Returns a Container that applies an accumulator function over the source,
 and emits each intermediate result.
 
 #### Type parameters

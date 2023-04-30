@@ -1,11 +1,11 @@
 import { ContainerOperator } from "../../../containers.js";
 import { partial, pipe } from "../../../functions.js";
-import { ObservableContainerLike } from "../../../rx.js";
+import { ObservableContainer } from "../../../rx.js";
 import { QueueableLike } from "../../../util.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_createEnqueueObserver from "../../Observer/__internal__/Observer.createEnqueueObserver.js";
 
-type ObservableEnqueue = <C extends ObservableContainerLike, T = unknown>(
+type ObservableEnqueue = <C extends ObservableContainer, T = unknown>(
   queue: QueueableLike<T>,
 ) => ContainerOperator<C, T, T>;
 const Observable_enqueue: ObservableEnqueue = (<T>(queue: QueueableLike<T>) =>

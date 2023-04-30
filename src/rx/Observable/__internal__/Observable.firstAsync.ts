@@ -1,5 +1,5 @@
 import { Optional, pipe } from "../../../functions.js";
-import { ObservableContainerLike, ObservableLike } from "../../../rx.js";
+import { ObservableContainer, ObservableLike } from "../../../rx.js";
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -19,7 +19,7 @@ const Observable_firstAsync =
   (observable: ObservableLike<T>): Promise<Optional<T>> =>
     pipe(
       observable,
-      Observable_takeFirst<ObservableContainerLike, T>(),
+      Observable_takeFirst<ObservableContainer, T>(),
       Observable_lastAsync(scheduler, options),
     );
 

@@ -1,5 +1,5 @@
 import { clampPositiveInteger } from "../../../__internal__/math.js";
-import { ContainerLike, ContainerOf } from "../../../containers.js";
+import { Container, ContainerOf } from "../../../containers.js";
 import {
   Predicate,
   alwaysTrue,
@@ -9,7 +9,7 @@ import {
 } from "../../../functions.js";
 
 const Container_repeat =
-  <C extends ContainerLike, T>(
+  <C extends Container, T>(
     repeat: (
       c: ContainerOf<C, T>,
       predicate: Predicate<number>,

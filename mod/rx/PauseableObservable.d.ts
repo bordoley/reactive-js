@@ -1,11 +1,11 @@
 import { ForEach, Keep, Map, Pick } from "../containers.js";
 import { Function1 } from "../functions.js";
-import { DispatchTo, Enqueue, ObservableLike, PauseableObservableContainerLike, PauseableObservableLike } from "../rx.js";
+import { DispatchTo, Enqueue, ObservableLike, PauseableObservableContainer, PauseableObservableLike } from "../rx.js";
 import { DispatcherLike } from "../util.js";
-export declare const dispatchTo: DispatchTo<PauseableObservableContainerLike>["dispatchTo"];
-export declare const enqueue: Enqueue<PauseableObservableContainerLike>["enqueue"];
-export declare const forEach: ForEach<PauseableObservableContainerLike>["forEach"];
-export declare const keep: Keep<PauseableObservableContainerLike>["keep"];
-export declare const map: Map<PauseableObservableContainerLike>["map"];
-export declare const pick: Pick<PauseableObservableContainerLike>["pick"];
+export declare const dispatchTo: DispatchTo<PauseableObservableContainer>["dispatchTo"];
+export declare const enqueue: Enqueue<PauseableObservableContainer>["enqueue"];
+export declare const forEach: ForEach<PauseableObservableContainer>["forEach"];
+export declare const keep: Keep<PauseableObservableContainer>["keep"];
+export declare const map: Map<PauseableObservableContainer>["map"];
+export declare const pick: Pick<PauseableObservableContainer>["pick"];
 export declare const sinkInto: <T>(sink: DispatcherLike<T>) => Function1<PauseableObservableLike<T>, ObservableLike<void>>;

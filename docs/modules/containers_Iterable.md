@@ -51,7 +51,7 @@ ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md), `T`, `T`\>
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`IterableContainer`](../interfaces/containers.IterableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -61,7 +61,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`IterableContainerLike`](../interfaces/containers.IterableContainerLike.md), `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`IterableContainer`](../interfaces/containers.IterableContainer.md), `T`, `T`\>
 
 ___
 
@@ -154,7 +154,7 @@ ___
 
 ▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>
 
-Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
+Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Type parameters
 

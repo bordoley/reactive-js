@@ -2,14 +2,14 @@ import { Function2 } from "../../../functions.js";
 import {
   KeepWithKey,
   KeyOf,
-  ReadonlyArrayContainerLike,
+  ReadonlyArrayContainer,
 } from "../../../keyed-containers.js";
 
-const ReadonlyArray_keepWithKey: KeepWithKey<ReadonlyArrayContainerLike>["keepWithKey"] =
+const ReadonlyArray_keepWithKey: KeepWithKey<ReadonlyArrayContainer>["keepWithKey"] =
 
     <
       T,
-      TKey extends KeyOf<ReadonlyArrayContainerLike> = KeyOf<ReadonlyArrayContainerLike>,
+      TKey extends KeyOf<ReadonlyArrayContainer> = KeyOf<ReadonlyArrayContainer>,
     >(
       predicate: Function2<T, TKey, boolean>,
     ) =>

@@ -1,6 +1,6 @@
 import {
-  __ContainerLike_T as ContainerLike_T,
-  __ContainerLike_type as ContainerLike_type,
+  __Container_T as Container_T,
+  __Container_type as Container_type,
   __EnumeratorLike_current as EnumeratorLike_current,
   __EnumeratorLike_hasCurrent as EnumeratorLike_hasCurrent,
   __EnumeratorLike_move as EnumeratorLike_move,
@@ -18,8 +18,8 @@ import {
 } from "./functions.js";
 
 export {
-  ContainerLike_T,
-  ContainerLike_type,
+  Container_T,
+  Container_type,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
@@ -31,49 +31,49 @@ export {
  * @noInheritDoc
  * @category Container
  */
-export interface ContainerLike {
-  readonly [ContainerLike_T]?: unknown;
-  readonly [ContainerLike_type]?: unknown;
+export interface Container {
+  readonly [Container_T]?: unknown;
+  readonly [Container_type]?: unknown;
 }
 
 /**
- * A compile time only type for using a Javascript `Iterable` as a `ContainerLike`.
+ * A compile time only type for using a Javascript `Iterable` as a `Container`.
  *
  * @noInheritDoc
  * @category Container
  */
-export interface IterableContainerLike extends ContainerLike {
-  readonly [ContainerLike_type]?: Iterable<this[typeof ContainerLike_T]>;
+export interface IterableContainer extends Container {
+  readonly [Container_type]?: Iterable<this[typeof Container_T]>;
 }
 
 /**
- * A compile time only type for using a Javascript `AsyncIterable` as a `ContainerLike`.
+ * A compile time only type for using a Javascript `AsyncIterable` as a `Container`.
  *
  * @noInheritDoc
  * @category Container
  */
-export interface AsyncIterableContainerLike extends ContainerLike {
-  readonly [ContainerLike_type]?: AsyncIterable<this[typeof ContainerLike_T]>;
+export interface AsyncIterableContainer extends Container {
+  readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
 }
 
 /**
- * A compile time only type for using a Javascript `PromiseLike` as a `ContainerLike`.
+ * A compile time only type for using a Javascript `PromiseLike` as a `Container`.
  *
  * @noInheritDoc
  * @category Container
  */
-export interface PromiseContainerLike extends ContainerLike {
-  readonly [ContainerLike_type]?: PromiseLike<this[typeof ContainerLike_T]>;
+export interface PromiseContainer extends Container {
+  readonly [Container_type]?: PromiseLike<this[typeof Container_T]>;
 }
 
 /**
- * A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
+ * A compile time only type for using a Javascript `ReadonlyArray` as a `Container`.
  *
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyArrayContainerLike extends ContainerLike {
-  readonly [ContainerLike_type]?: ReadonlyArray<this[typeof ContainerLike_T]>;
+export interface ReadonlyArrayContainer extends Container {
+  readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
 }
 
 /**
@@ -103,20 +103,20 @@ export interface EnumeratorLike<T = unknown> {
  * @noInheritDoc
  * @category Container
  */
-export interface EnumeratorContainerLike extends ContainerLike {
-  readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]>;
+export interface EnumeratorContainer extends Container {
+  readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
 }
 
 /**
  * Utility type for higher order programming with Containers.
  */
-export type ContainerOf<C extends ContainerLike, T> = C extends {
-  readonly [ContainerLike_type]?: unknown;
+export type ContainerOf<C extends Container, T> = C extends {
+  readonly [Container_type]?: unknown;
 }
   ? NonNullable<
       (C & {
-        readonly [ContainerLike_T]: T;
-      })[typeof ContainerLike_type]
+        readonly [Container_T]: T;
+      })[typeof Container_type]
     >
   : {
       readonly _C: C;
@@ -126,7 +126,7 @@ export type ContainerOf<C extends ContainerLike, T> = C extends {
 /**
  * Utility type for a generic operator function that transforms a Container's inner value type.
  */
-export type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<
+export type ContainerOperator<C extends Container, TA, TB> = Function1<
   ContainerOf<C, TA>,
   ContainerOf<C, TB>
 >;
@@ -135,9 +135,9 @@ export type ContainerOperator<C extends ContainerLike, TA, TB> = Function1<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Buffer<C extends ContainerLike> {
+export interface Buffer<C extends Container> {
   /**
-   * Returns a ContainerLike which buffers items produced by the source until the
+   * Returns a Container which buffers items produced by the source until the
    * number of items reaches the specified maximum buffer size.
    *
    * @category Operator
@@ -151,9 +151,9 @@ export interface Buffer<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Concat<C extends ContainerLike> {
+export interface Concat<C extends Container> {
   /**
-   * Returns a ContainerLike which emits all values from each source sequentially.
+   * Returns a Container which emits all values from each source sequentially.
    *
    * @category Constructor
    */
@@ -168,10 +168,10 @@ export interface Concat<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ConcatAll<C extends ContainerLike> {
+export interface ConcatAll<C extends Container> {
   /**
-   * Converts a higher-order ContainerLike into a first-order
-   * ContainerLike by concatenating the inner sources in order.
+   * Converts a higher-order Container into a first-order
+   * Container by concatenating the inner sources in order.
    *
    * @category Operator
    */
@@ -182,7 +182,7 @@ export interface ConcatAll<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ConcatMap<C extends ContainerLike> {
+export interface ConcatMap<C extends Container> {
   /**
    * @category Operator
    */
@@ -195,7 +195,7 @@ export interface ConcatMap<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ConcatWith<C extends ContainerLike> {
+export interface ConcatWith<C extends Container> {
   /**
    * @category Operator
    */
@@ -209,7 +209,7 @@ export interface ConcatWith<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Contains<C extends ContainerLike> {
+export interface Contains<C extends Container> {
   /**
    * @category Transform
    */
@@ -225,7 +225,7 @@ export interface Contains<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface DistinctUntilChanged<C extends ContainerLike> {
+export interface DistinctUntilChanged<C extends Container> {
   /**
    * Returns a ContainerOperator that emits all items emitted by the source that
    * are distinct by comparison from the previous item.
@@ -241,9 +241,9 @@ export interface DistinctUntilChanged<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Empty<C extends ContainerLike> {
+export interface Empty<C extends Container> {
   /**
-   * Return an ContainerLike that emits no items.
+   * Return an Container that emits no items.
    *
    * @category Constructor
    */
@@ -254,7 +254,7 @@ export interface Empty<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface EndWith<C extends ContainerLike> {
+export interface EndWith<C extends Container> {
   /**
    * @category Operator
    */
@@ -266,8 +266,8 @@ export interface EndWith<C extends ContainerLike> {
  * @category TypeClass
  */
 export interface Enumerate<
-  C extends ContainerLike,
-  CEnumerator extends EnumeratorContainerLike = EnumeratorContainerLike,
+  C extends Container,
+  CEnumerator extends EnumeratorContainer = EnumeratorContainer,
 > {
   /**
    *
@@ -280,7 +280,7 @@ export interface Enumerate<
  * @noInheritDoc
  * @category TypeClass
  */
-export interface EverySatisfy<C extends ContainerLike> {
+export interface EverySatisfy<C extends Container> {
   /**
    * Determines whether all the members of an Container satisfy the predicate.
    * The predicate function is invoked for each element in the Container until the
@@ -298,7 +298,7 @@ export interface EverySatisfy<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface First<C extends ContainerLike> {
+export interface First<C extends Container> {
   /**
    *
    * @category Transform
@@ -310,7 +310,7 @@ export interface First<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FlatMapIterable<C extends ContainerLike> {
+export interface FlatMapIterable<C extends Container> {
   /**
    * @category Operator
    */
@@ -323,7 +323,7 @@ export interface FlatMapIterable<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForEach<C extends ContainerLike> {
+export interface ForEach<C extends Container> {
   /**
    * Returns a ContainerOperator that applies the side effect function to each
    * value emitted by the source.
@@ -337,7 +337,7 @@ export interface ForEach<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForkConcat<C extends ContainerLike> {
+export interface ForkConcat<C extends Container> {
   /**
    * @category Operator
    */
@@ -352,7 +352,7 @@ export interface ForkConcat<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ForkZip<C extends ContainerLike> {
+export interface ForkZip<C extends Container> {
   /**
    * @category Operator
    */
@@ -422,7 +422,7 @@ export interface ForkZip<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromAsyncIterable<C extends ContainerLike> {
+export interface FromAsyncIterable<C extends Container> {
   /**
    * @category Constructor
    */
@@ -433,7 +433,7 @@ export interface FromAsyncIterable<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromEnumeratorFactory<C extends ContainerLike> {
+export interface FromEnumeratorFactory<C extends Container> {
   /**
    * @category Constructor
    */
@@ -446,7 +446,7 @@ export interface FromEnumeratorFactory<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromFactory<C extends ContainerLike> {
+export interface FromFactory<C extends Container> {
   /**
    * @category Constructor
    */
@@ -457,7 +457,7 @@ export interface FromFactory<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromIterable<C extends ContainerLike> {
+export interface FromIterable<C extends Container> {
   /**
    * @category Constructor
    */
@@ -468,7 +468,7 @@ export interface FromIterable<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromOptional<C extends ContainerLike> {
+export interface FromOptional<C extends Container> {
   /**
    * @category Constructor
    */
@@ -479,7 +479,7 @@ export interface FromOptional<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface FromReadonlyArray<C extends ContainerLike> {
+export interface FromReadonlyArray<C extends Container> {
   /**
    * @category Constructor
    */
@@ -493,9 +493,9 @@ export interface FromReadonlyArray<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Generate<C extends ContainerLike> {
+export interface Generate<C extends Container> {
   /**
-   * Generates a ContainerLike from a generator function
+   * Generates a Container from a generator function
    * that is applied to an accumulator value between emitted items.
    *
    * @param generator - The generator function.
@@ -513,7 +513,7 @@ export interface Generate<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Identity<C extends ContainerLike> {
+export interface Identity<C extends Container> {
   /**
    * @category Operator
    */
@@ -524,7 +524,7 @@ export interface Identity<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface IgnoreElements<C extends ContainerLike> {
+export interface IgnoreElements<C extends Container> {
   /**
    * @category Operator
    */
@@ -535,7 +535,7 @@ export interface IgnoreElements<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Keep<C extends ContainerLike> {
+export interface Keep<C extends Container> {
   /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
@@ -549,7 +549,7 @@ export interface Keep<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface KeepType<C extends ContainerLike> {
+export interface KeepType<C extends Container> {
   /**
    *
    * @category Operator
@@ -563,7 +563,7 @@ export interface KeepType<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Last<C extends ContainerLike> {
+export interface Last<C extends Container> {
   /**
    *
    * @category Transform
@@ -575,7 +575,7 @@ export interface Last<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Map<C extends ContainerLike> {
+export interface Map<C extends Container> {
   /**
    * Returns a ContainerOperator that applies the `selector` function to each
    * value emitted by the source.
@@ -593,7 +593,7 @@ export interface Map<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface MapTo<C extends ContainerLike> {
+export interface MapTo<C extends Container> {
   /**
    * @category Operator
    */
@@ -604,7 +604,7 @@ export interface MapTo<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface NoneSatisfy<C extends ContainerLike> {
+export interface NoneSatisfy<C extends Container> {
   /**
    * @category Transform
    */
@@ -617,7 +617,7 @@ export interface NoneSatisfy<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Pairwise<C extends ContainerLike> {
+export interface Pairwise<C extends Container> {
   /**
    * @category Operator
    */
@@ -627,7 +627,7 @@ export interface Pairwise<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Pick<C extends ContainerLike> {
+export interface Pick<C extends Container> {
   /**
    * @category Operator
    */
@@ -652,7 +652,7 @@ export interface Pick<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Reduce<C extends ContainerLike> {
+export interface Reduce<C extends Container> {
   /**
    * @category Transform
    */
@@ -666,9 +666,9 @@ export interface Reduce<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Repeat<C extends ContainerLike> {
+export interface Repeat<C extends Container> {
   /**
-   * Returns a ContainerLike that mirrors the source, repeating it whenever the predicate returns true.
+   * Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
    *
    * @param predicate
    *
@@ -676,7 +676,7 @@ export interface Repeat<C extends ContainerLike> {
    */
   repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
   /**
-   * Returns a ContainerLike that mirrors the source, repeating it `count` times.
+   * Returns a Container that mirrors the source, repeating it `count` times.
    *
    * @param count
    *
@@ -685,7 +685,7 @@ export interface Repeat<C extends ContainerLike> {
   repeat<T>(count: number): ContainerOperator<C, T, T>;
 
   /**
-   * Returns a ContainerLike that mirrors the source, continually repeating it.
+   * Returns a Container that mirrors the source, continually repeating it.
    *
    * @category Operator
    */
@@ -696,9 +696,9 @@ export interface Repeat<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Scan<C extends ContainerLike> {
+export interface Scan<C extends Container> {
   /**
-   * Returns a ContainerLike that applies an accumulator function over the source,
+   * Returns a Container that applies an accumulator function over the source,
    * and emits each intermediate result.
    *
    * @param scanner - The accumulator function called on each source value.
@@ -716,9 +716,9 @@ export interface Scan<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface SkipFirst<C extends ContainerLike> {
+export interface SkipFirst<C extends Container> {
   /**
-   * Returns a ContainerLike that skips the first count items emitted by the source.
+   * Returns a Container that skips the first count items emitted by the source.
    *
    * @category Operator
    */
@@ -731,7 +731,7 @@ export interface SkipFirst<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface SomeSatisfy<C extends ContainerLike> {
+export interface SomeSatisfy<C extends Container> {
   /**
    * @category Transform
    */
@@ -744,7 +744,7 @@ export interface SomeSatisfy<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface StartWith<C extends ContainerLike> {
+export interface StartWith<C extends Container> {
   /**
    * @category Operator
    */
@@ -755,9 +755,9 @@ export interface StartWith<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface TakeFirst<C extends ContainerLike> {
+export interface TakeFirst<C extends Container> {
   /**
-   * Returns a ContainerLike that only emits the first `count` values emitted by the source.
+   * Returns a Container that only emits the first `count` values emitted by the source.
    *
    * @category Operator
    */
@@ -770,9 +770,9 @@ export interface TakeFirst<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface TakeLast<C extends ContainerLike> {
+export interface TakeLast<C extends Container> {
   /**
-   *  Returns a ContainerLike that only emits the last `count` items emitted by the source.
+   *  Returns a Container that only emits the last `count` items emitted by the source.
    *
    * @category Operator
    */
@@ -785,9 +785,9 @@ export interface TakeLast<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface TakeWhile<C extends ContainerLike> {
+export interface TakeWhile<C extends Container> {
   /**
-   * Returns a ContainerLike which emits values emitted by the source as long
+   * Returns a Container which emits values emitted by the source as long
    * as each value satisfies the given predicate, and then completes as soon as
    * this predicate is not satisfied.
    *
@@ -805,9 +805,9 @@ export interface TakeWhile<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToIterable<C extends ContainerLike> {
+export interface ToIterable<C extends Container> {
   /**
-   * Converts the ContainerLike to a `IterableLike`.
+   * Converts the Container to a `IterableLike`.
    *
    * @category Transform
    */
@@ -818,9 +818,9 @@ export interface ToIterable<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ToReadonlyArray<C extends ContainerLike> {
+export interface ToReadonlyArray<C extends Container> {
   /**
-   * Converts the ContainerLike to a `ReadonlyArrayContainerLike`.
+   * Converts the Container to a `ReadonlyArrayContainer`.
    *
    * @category Transform
    */
@@ -831,9 +831,9 @@ export interface ToReadonlyArray<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface Zip<C extends ContainerLike> {
+export interface Zip<C extends Container> {
   /**
-   * Combines multiple sources to create a ContainerLike whose values are calculated from the values,
+   * Combines multiple sources to create a Container whose values are calculated from the values,
    * in order, of each of its input sources.
    *
    * @category Constructor
@@ -904,7 +904,7 @@ export interface Zip<C extends ContainerLike> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface ZipWith<C extends ContainerLike> {
+export interface ZipWith<C extends Container> {
   /**
    * @category Operator
    */

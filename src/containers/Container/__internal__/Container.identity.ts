@@ -1,12 +1,12 @@
-import { ContainerLike, ContainerOperator } from "../../../containers.js";
+import { Container, ContainerOperator } from "../../../containers.js";
 import { identity, returns } from "../../../functions.js";
 
-const Container_identity: <C extends ContainerLike, T>() => ContainerOperator<
+const Container_identity: <C extends Container, T>() => ContainerOperator<
   C,
   T,
   T
 > = /*@__PURE__*/ returns(identity) as <
-  C extends ContainerLike,
+  C extends Container,
   T,
 >() => ContainerOperator<C, T, T>;
 

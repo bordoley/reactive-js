@@ -5,7 +5,7 @@ import {
   identity,
   pipe,
 } from "../../../functions.js";
-import { ObservableContainerLike, ObservableLike } from "../../../rx.js";
+import { ObservableContainer, ObservableLike } from "../../../rx.js";
 import Observable_concatMap from "../../../rx/Observable/__internal__/Observable.concatMap.js";
 import Observable_dispatchTo from "../../../rx/Observable/__internal__/Observable.dispatchTo.js";
 import Observable_forkMerge from "../../../rx/Observable/__internal__/Observable.forkMerge.js";
@@ -40,20 +40,20 @@ const Stream_syncState = <T>(
       stateStore,
       Observable_forkMerge(
         compose(
-          Observable_takeFirst<ObservableContainerLike, T>(),
+          Observable_takeFirst<ObservableContainer, T>(),
           Observable_concatMap(onInit),
         ),
         compose(
           throttleDuration > 0
             ? Observable_throttle(throttleDuration)
             : identity,
-          Observable_pairwise<ObservableContainerLike, T>(),
+          Observable_pairwise<ObservableContainer, T>(),
           Observable_concatMap(([oldValue, newValue]) =>
             onChange(oldValue, newValue),
           ),
         ),
       ),
-      Observable_dispatchTo<ObservableContainerLike, Updater<T>>(stateStore),
+      Observable_dispatchTo<ObservableContainer, Updater<T>>(stateStore),
       Observable_subscribe(scheduler, {
         backpressureStrategy: options?.backpressureStrategy,
         capacity: options?.capacity,

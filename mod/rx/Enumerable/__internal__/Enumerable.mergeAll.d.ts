@@ -1,3 +1,3 @@
-import { EnumerableContainerLike, MergeAll } from "../../../rx.js";
-declare const Enumerable_mergeAll: MergeAll<EnumerableContainerLike>["mergeAll"];
+import { EnumerableContainer, MergeAll } from "../../../rx.js";
+declare const Enumerable_mergeAll: MergeAll<EnumerableContainer>["mergeAll"];
 export default Enumerable_mergeAll;

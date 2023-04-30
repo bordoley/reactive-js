@@ -1,13 +1,13 @@
 import { Map } from "../../../containers.js";
-import { EncodeUtf8, EnumerableContainerLike } from "../../../rx.js";
+import { EncodeUtf8, EnumerableContainer } from "../../../rx.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import HigherOrderObservable_encodeUtf8 from "../../HigherOrderObservable/__internal__/HigherOrderObservable.encodeUtf8.js";
 import Enumerable_defer from "./Enumerable.defer.js";
 
-const map: Map<EnumerableContainerLike>["map"] = Observable_map;
+const map: Map<EnumerableContainer>["map"] = Observable_map;
 
-const Enumerable_encodeUtf8: EncodeUtf8<EnumerableContainerLike>["encodeUtf8"] =
-  /*@__PURE__*/ HigherOrderObservable_encodeUtf8<EnumerableContainerLike>(
+const Enumerable_encodeUtf8: EncodeUtf8<EnumerableContainer>["encodeUtf8"] =
+  /*@__PURE__*/ HigherOrderObservable_encodeUtf8<EnumerableContainer>(
     Enumerable_defer,
     map,
   );

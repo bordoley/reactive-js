@@ -1,9 +1,9 @@
-import { ObservableContainerLike, ScanLast } from "../../../rx.js";
+import { ObservableContainer, ScanLast } from "../../../rx.js";
 import HigherOrderObservable_scanLast from "../../HigherOrderObservable/__internal__/HigherOrderObservable.scanLast.js";
 import Observable_create from "./Observable.create.js";
 
-const Observable_scanLast: ScanLast<ObservableContainerLike>["scanLast"] =
-  /*@__PURE__*/ HigherOrderObservable_scanLast<ObservableContainerLike>(
+const Observable_scanLast: ScanLast<ObservableContainer>["scanLast"] =
+  /*@__PURE__*/ HigherOrderObservable_scanLast<ObservableContainer>(
     Observable_create,
   );
 

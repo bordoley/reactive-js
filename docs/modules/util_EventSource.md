@@ -53,7 +53,7 @@ ___
 
 ▸ **empty**<`T`\>(): [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
 
-Return an ContainerLike that emits no items.
+Return an Container that emits no items.
 
 #### Type parameters
 
@@ -71,7 +71,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -90,13 +90,13 @@ value emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `T`, `T`\>
 
 ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `unknown`, `T`\>
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `unknown`, `T`\>
 
 #### Type parameters
 
@@ -106,13 +106,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `unknown`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `unknown`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -131,13 +131,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -165,13 +165,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `TA`, `TB`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `TA`, `TB`\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -188,9 +188,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `T`, `T`[`TKey`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -209,9 +209,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -232,7 +232,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainerLike`](../interfaces/util.EventSourceContainerLike.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`ContainerOperator`](containers.md#containeroperator)<[`EventSourceContainer`](../interfaces/util.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 

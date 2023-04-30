@@ -7,15 +7,15 @@ import {
   toEnumerableTests,
   toRunnableTest,
 } from "../../__tests__/operators.js";
-import { ReadonlyArrayContainerLike } from "../../keyed-containers.js";
+import { ReadonlyArrayContainer } from "../../keyed-containers.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 
 testModule(
   "ReadonlyArray",
-  forEachTests<ReadonlyArrayContainerLike>(ReadonlyArray),
-  fromReadonlyArrayTests<ReadonlyArrayContainerLike>(ReadonlyArray),
-  keepTests<ReadonlyArrayContainerLike>(ReadonlyArray),
-  mapTests<ReadonlyArrayContainerLike>(ReadonlyArray),
-  toEnumerableTests<ReadonlyArrayContainerLike>(ReadonlyArray),
-  toRunnableTest<ReadonlyArrayContainerLike>(ReadonlyArray),
+  forEachTests<ReadonlyArrayContainer>(ReadonlyArray),
+  fromReadonlyArrayTests<ReadonlyArrayContainer>(ReadonlyArray),
+  keepTests<ReadonlyArrayContainer>(ReadonlyArray),
+  mapTests<ReadonlyArrayContainer>(ReadonlyArray),
+  toEnumerableTests<ReadonlyArrayContainer>(ReadonlyArray),
+  toRunnableTest<ReadonlyArrayContainer>(ReadonlyArray),
 );

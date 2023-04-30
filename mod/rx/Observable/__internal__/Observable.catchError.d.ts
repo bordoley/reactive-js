@@ -1,3 +1,3 @@
-import { CatchError, ObservableContainerLike } from "../../../rx.js";
-declare const Observable_catchError: CatchError<ObservableContainerLike>["catchError"];
+import { CatchError, ObservableContainer } from "../../../rx.js";
+declare const Observable_catchError: CatchError<ObservableContainer>["catchError"];
 export default Observable_catchError;

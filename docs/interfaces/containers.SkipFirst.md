@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
-Returns a ContainerLike that skips the first count items emitted by the source.
+Returns a Container that skips the first count items emitted by the source.
 
 #### Type parameters
 

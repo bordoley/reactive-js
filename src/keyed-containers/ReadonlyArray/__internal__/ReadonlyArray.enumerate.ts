@@ -12,7 +12,7 @@ import {
   __ReadonlyArrayEnumerator_values,
 } from "../../../__internal__/symbols.js";
 import {
-  EnumeratorContainerLike,
+  EnumeratorContainer,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -98,7 +98,7 @@ const ReadonlyArray_enumerate: <T>(options?: {
     o?: unknown,
   ) => EnumeratorLike<T>;
 
-  return ReadonlyArray_toContainer<EnumeratorContainerLike>(createEnumerator);
+  return ReadonlyArray_toContainer<EnumeratorContainer>(createEnumerator);
 })();
 
 export default ReadonlyArray_enumerate;

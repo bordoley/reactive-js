@@ -1,3 +1,3 @@
-import { KeepType, ReadonlyArrayContainerLike } from "../../../keyed-containers.js";
-declare const ReadonlyArray_keepType: KeepType<ReadonlyArrayContainerLike>["keepType"];
+import { KeepType, ReadonlyArrayContainer } from "../../../keyed-containers.js";
+declare const ReadonlyArray_keepType: KeepType<ReadonlyArrayContainer>["keepType"];
 export default ReadonlyArray_keepType;

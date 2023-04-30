@@ -13,9 +13,9 @@
 
 ### Container Interfaces
 
-- [EnumerableContainerLike](../interfaces/rx.EnumerableContainerLike.md)
-- [ObservableContainerLike](../interfaces/rx.ObservableContainerLike.md)
-- [RunnableContainerLike](../interfaces/rx.RunnableContainerLike.md)
+- [EnumerableContainer](../interfaces/rx.EnumerableContainer.md)
+- [ObservableContainer](../interfaces/rx.ObservableContainer.md)
+- [RunnableContainer](../interfaces/rx.RunnableContainer.md)
 
 ### Other Interfaces
 
@@ -23,7 +23,7 @@
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
-- [PauseableObservableContainerLike](../interfaces/rx.PauseableObservableContainerLike.md)
+- [PauseableObservableContainer](../interfaces/rx.PauseableObservableContainer.md)
 - [PauseableObservableLike](../interfaces/rx.PauseableObservableLike.md)
 - [PublisherLike](../interfaces/rx.PublisherLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)

@@ -1,4 +1,4 @@
 import { FlatMapIterable } from "../../../containers.js";
-import { EnumerableContainerLike } from "../../../rx.js";
-declare const Enumerable_flatMapIterable: FlatMapIterable<EnumerableContainerLike>["flatMapIterable"];
+import { EnumerableContainer } from "../../../rx.js";
+declare const Enumerable_flatMapIterable: FlatMapIterable<EnumerableContainer>["flatMapIterable"];
 export default Enumerable_flatMapIterable;

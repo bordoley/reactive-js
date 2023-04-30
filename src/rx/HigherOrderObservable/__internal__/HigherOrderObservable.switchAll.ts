@@ -20,7 +20,7 @@ import {
 } from "../../../containers.js";
 import { Function1, bind, bindMethod, none, pipe } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -40,7 +40,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-const HigherOrderObservable_switchAll = <C extends ObservableContainerLike>(
+const HigherOrderObservable_switchAll = <C extends ObservableContainer>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>,
   ) => ContainerOperator<C, ContainerOf<C, T>, T>,

@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -26,8 +26,8 @@
 
 ▸ <`T`\>(): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>, `T`\>
 
-Converts a higher-order ContainerLike into a first-order
-ContainerLike by concatenating the inner sources in order.
+Converts a higher-order Container into a first-order
+Container by concatenating the inner sources in order.
 
 ##### Type parameters
 

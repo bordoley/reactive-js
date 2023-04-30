@@ -3,15 +3,15 @@ import { Function1, Function2 } from "../../../functions.js";
 import {
   KeepWithKey,
   KeyOf,
-  ReadonlyObjectMapContainerLike,
+  ReadonlyObjectMapContainer,
   ReadonlyObjectMapLike,
 } from "../../../keyed-containers.js";
 
-const ReadonlyObjectMap_keepWithKey: KeepWithKey<ReadonlyObjectMapContainerLike>["keepWithKey"] =
+const ReadonlyObjectMap_keepWithKey: KeepWithKey<ReadonlyObjectMapContainer>["keepWithKey"] =
 
     <
       T,
-      TKey extends KeyOf<ReadonlyObjectMapContainerLike> = KeyOf<ReadonlyObjectMapContainerLike>,
+      TKey extends KeyOf<ReadonlyObjectMapContainer> = KeyOf<ReadonlyObjectMapContainer>,
     >(
       predicate: Function2<T, TKey, boolean>,
     ): Function1<

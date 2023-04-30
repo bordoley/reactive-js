@@ -1,10 +1,10 @@
-import { Identity, PromiseContainerLike } from "../containers.js";
+import { Identity, PromiseContainer } from "../containers.js";
 import { ToObservable } from "../rx.js";
 import Container_identity from "./Container/__internal__/Container.identity.js";
 import Promise_toObservable from "./Promise/__internal__/Promise.toObservable.js";
 
-export const identity: Identity<PromiseContainerLike>["identity"] =
+export const identity: Identity<PromiseContainer>["identity"] =
   Container_identity;
 
-export const toObservable: ToObservable<PromiseContainerLike>["toObservable"] =
+export const toObservable: ToObservable<PromiseContainer>["toObservable"] =
   Promise_toObservable;

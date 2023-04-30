@@ -1,3 +1,3 @@
-import { Map, ReadonlyArrayContainerLike } from "../../../keyed-containers.js";
-declare const ReadonlyArray_map: Map<ReadonlyArrayContainerLike>["map"];
+import { Map, ReadonlyArrayContainer } from "../../../keyed-containers.js";
+declare const ReadonlyArray_map: Map<ReadonlyArrayContainer>["map"];
 export default ReadonlyArray_map;

@@ -5,7 +5,7 @@ import {
   test,
 } from "../__internal__/testing.js";
 import {
-  ContainerLike,
+  Container,
   ForEach,
   FromReadonlyArray,
   Keep,
@@ -16,7 +16,7 @@ import { ToEnumerable, ToRunnable } from "../rx.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Runnable from "../rx/Runnable.js";
 
-export const forEachTests = <C extends ContainerLike>(
+export const forEachTests = <C extends Container>(
   m: ForEach<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
@@ -54,7 +54,7 @@ export const forEachTests = <C extends ContainerLike>(
     }),
   );
 
-export const fromReadonlyArrayTests = <C extends ContainerLike>(
+export const fromReadonlyArrayTests = <C extends Container>(
   m: FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
@@ -115,7 +115,7 @@ export const fromReadonlyArrayTests = <C extends ContainerLike>(
     }),
   );
 
-export const keepTests = <C extends ContainerLike>(
+export const keepTests = <C extends Container>(
   m: Keep<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
@@ -150,7 +150,7 @@ export const keepTests = <C extends ContainerLike>(
     }),
   );
 
-export const mapTests = <C extends ContainerLike>(
+export const mapTests = <C extends Container>(
   m: Map<C> & FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   describe(
@@ -185,7 +185,7 @@ export const mapTests = <C extends ContainerLike>(
     }),
   );
 
-export const toEnumerableTests = <C extends ContainerLike>(
+export const toEnumerableTests = <C extends Container>(
   m: FromReadonlyArray<C> & ToEnumerable<C>,
 ) =>
   describe(
@@ -202,7 +202,7 @@ export const toEnumerableTests = <C extends ContainerLike>(
     ),
   );
 
-export const toRunnableTest = <C extends ContainerLike>(
+export const toRunnableTest = <C extends Container>(
   m: FromReadonlyArray<C> & ToRunnable<C>,
 ) =>
   test(

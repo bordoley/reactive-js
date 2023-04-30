@@ -17,7 +17,7 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { none, pipe, returns } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -27,7 +27,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
 type ObservablePairwise = <
-  C extends ObservableContainerLike,
+  C extends ObservableContainer,
   T,
 >() => ContainerOperator<C, T, readonly [T, T]>;
 const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {

@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
-Returns a ContainerLike that mirrors the source, repeating it whenever the predicate returns true.
+Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
 
 #### Type parameters
 
@@ -42,7 +42,7 @@ Returns a ContainerLike that mirrors the source, repeating it whenever the predi
 
 ▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
-Returns a ContainerLike that mirrors the source, repeating it `count` times.
+Returns a Container that mirrors the source, repeating it `count` times.
 
 #### Type parameters
 
@@ -62,7 +62,7 @@ Returns a ContainerLike that mirrors the source, repeating it `count` times.
 
 ▸ **repeat**<`T`\>(): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
-Returns a ContainerLike that mirrors the source, continually repeating it.
+Returns a Container that mirrors the source, continually repeating it.
 
 #### Type parameters
 

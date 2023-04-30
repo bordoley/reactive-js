@@ -1,8 +1,8 @@
 AssociativeCollectionLike_keys
 BufferLike_capacity
 CollectionLike_count
-ContainerLike_T
-ContainerLike_type
+Container_T
+Container_type
 DispatcherLike_complete
 DisposableLike_add
 DisposableLike_dispose
@@ -16,7 +16,7 @@ EventListenerLike_isErrorSafe
 EventListenerLike_notify
 EventPublisherLike_listenerCount
 KeyedCollectionLike_get
-KeyedContainerLike_TKey
+KeyedContainer_TKey
 MulticastObservableLike_buffer
 ObserverLike_notify
 ObservableLike_observe

@@ -27,7 +27,7 @@ import {
   strictEquality,
 } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -37,7 +37,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
 type ObservableDistinctUntilChanged = <
-  C extends ObservableContainerLike,
+  C extends ObservableContainer,
   T,
 >(options?: {
   readonly equality?: Equality<T>;
@@ -109,7 +109,7 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
         partial(equality),
         Enumerable_lift,
       );
-    }) as DistinctUntilChanged<ObservableContainerLike>["distinctUntilChanged"];
+    }) as DistinctUntilChanged<ObservableContainer>["distinctUntilChanged"];
   })() as ObservableDistinctUntilChanged;
 
 export default Observable_distinctUntilChanged;

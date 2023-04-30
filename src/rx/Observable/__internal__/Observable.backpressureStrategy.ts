@@ -12,7 +12,7 @@ import {
 import { ContainerOperator } from "../../../containers.js";
 import { partial, pipe } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -26,7 +26,7 @@ import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Di
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 
-type ObservableBackpressureStrategy = <C extends ObservableContainerLike, T>(
+type ObservableBackpressureStrategy = <C extends ObservableContainer, T>(
   capacity: number,
   backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
 ) => ContainerOperator<C, T, T>;

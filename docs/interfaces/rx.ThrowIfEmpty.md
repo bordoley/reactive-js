@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **throwIfEmpty**<`T`\>(`factory`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
-Returns a ContainerLike that emits an error if the source completes without emitting a value.
+Returns a Container that emits an error if the source completes without emitting a value.
 
 #### Type parameters
 

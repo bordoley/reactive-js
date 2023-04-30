@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`KeyedContainerLike`](keyed_containers.KeyedContainerLike.md) |
+| `C` | extends [`KeyedContainer`](keyed_containers.KeyedContainer.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **empty**<`T`, `TKey`\>(): [`KeyedContainerOf`](../modules/keyed_containers.md#keyedcontainerof)<`C`, `TKey`, `T`\>
 
-Return an ContainerLike that emits no items.
+Return an Container that emits no items.
 
 #### Type parameters
 

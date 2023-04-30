@@ -8,8 +8,7 @@ import { EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../../
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
-const EventSource_map = 
-/*@__PURE__*/ (() => {
+const EventSource_map = /*@__PURE__*/ (() => {
     const createMapEventListener = (() => createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function MapEventListener(instance, delegate, selector) {
         init(Delegating_mixin(), instance, delegate);
         init(Disposable_delegatingMixin, instance, delegate);

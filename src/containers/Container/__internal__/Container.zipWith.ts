@@ -1,12 +1,12 @@
 import {
-  ContainerLike,
+  Container,
   ContainerOf,
   ContainerOperator,
   Zip,
 } from "../../../containers.js";
 
 const Container_zipWith =
-  <C extends ContainerLike>(zip: Zip<C>["zip"]) =>
+  <C extends Container>(zip: Zip<C>["zip"]) =>
   (
     snd: ContainerOf<C, any>,
     ...tail: readonly ContainerOf<C, any>[]

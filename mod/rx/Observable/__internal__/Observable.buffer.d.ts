@@ -1,7 +1,7 @@
 import { ContainerOperator } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
-import { ObservableContainerLike } from "../../../rx.js";
-type ObservableBuffer = <C extends ObservableContainerLike, T>(options?: {
+import { ObservableContainer } from "../../../rx.js";
+type ObservableBuffer = <C extends ObservableContainer, T>(options?: {
     readonly duration?: number | Function1<T, C>;
     readonly count?: number;
 }) => ContainerOperator<C, T, readonly T[]>;

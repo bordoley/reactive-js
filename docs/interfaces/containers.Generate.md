@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
-Generates a ContainerLike from a generator function
+Generates a Container from a generator function
 that is applied to an accumulator value between emitted items.
 
 #### Type parameters

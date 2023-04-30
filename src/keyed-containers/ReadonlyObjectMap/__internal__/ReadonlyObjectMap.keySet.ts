@@ -2,24 +2,23 @@ import { hasOwn } from "../../../__internal__/Object.js";
 import {
   KeyOf,
   KeySet,
-  ReadonlyObjectMapContainerLike,
+  ReadonlyObjectMapContainer,
   ReadonlyObjectMapLike,
 } from "../../../keyed-containers.js";
 
-const ReadonlyObjectMap_keySet: KeySet<ReadonlyObjectMapContainerLike>["keySet"] =
+const ReadonlyObjectMap_keySet: KeySet<ReadonlyObjectMapContainer>["keySet"] =
+  <
+    TKey extends KeyOf<ReadonlyObjectMapContainer> = KeyOf<ReadonlyObjectMapContainer>,
+  >() =>
+  (obj: ReadonlyObjectMapLike<TKey, unknown>): ReadonlySet<TKey> => {
+    const keys = new Set<TKey>();
 
-    <
-      TKey extends KeyOf<ReadonlyObjectMapContainerLike> = KeyOf<ReadonlyObjectMapContainerLike>,
-    >() =>
-    (obj: ReadonlyObjectMapLike<TKey, unknown>): ReadonlySet<TKey> => {
-      const keys = new Set<TKey>();
-
-      for (const key in obj) {
-        if (hasOwn(obj, key)) {
-          keys.add(key as TKey);
-        }
+    for (const key in obj) {
+      if (hasOwn(obj, key)) {
+        keys.add(key as TKey);
       }
-      return keys;
-    };
+    }
+    return keys;
+  };
 
 export default ReadonlyObjectMap_keySet;

@@ -17,7 +17,7 @@
 
 ### identity
 
-▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncIterableContainerLike`](../interfaces/containers.AsyncIterableContainerLike.md), `T`, `T`\>
+▸ **identity**<`T`\>(): [`ContainerOperator`](containers.md#containeroperator)<[`AsyncIterableContainer`](../interfaces/containers.AsyncIterableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -27,7 +27,7 @@
 
 #### Returns
 
-[`ContainerOperator`](containers.md#containeroperator)<[`AsyncIterableContainerLike`](../interfaces/containers.AsyncIterableContainerLike.md), `T`, `T`\>
+[`ContainerOperator`](containers.md#containeroperator)<[`AsyncIterableContainer`](../interfaces/containers.AsyncIterableContainer.md), `T`, `T`\>
 
 ___
 

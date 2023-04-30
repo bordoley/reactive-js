@@ -1,12 +1,12 @@
 import { ContainerOperator } from "../../../containers.js";
 import { pipe } from "../../../functions.js";
 import {
-  EnumerableContainerLike,
+  EnumerableContainer,
   EnumerableLike,
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
   ObserverLike,
-  RunnableContainerLike,
+  RunnableContainer,
   RunnableLike,
 } from "../../../rx.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -19,13 +19,13 @@ import Observable_takeFirst from "./Observable.takeFirst.js";
 interface ObservableTakeUntil {
   takeUntil<T>(
     notifier: EnumerableLike,
-  ): ContainerOperator<EnumerableContainerLike, T, T>;
+  ): ContainerOperator<EnumerableContainer, T, T>;
   takeUntil<T>(
     notifier: RunnableLike,
-  ): ContainerOperator<RunnableContainerLike, T, T>;
+  ): ContainerOperator<RunnableContainer, T, T>;
   takeUntil<T>(
     notifier: ObservableLike,
-  ): ContainerOperator<ObservableContainerLike, T, T>;
+  ): ContainerOperator<ObservableContainer, T, T>;
 }
 const Observable_takeUntil: ObservableTakeUntil["takeUntil"] = (<T>(
   notifier: ObservableLike,
@@ -37,7 +37,7 @@ const Observable_takeUntil: ObservableTakeUntil["takeUntil"] = (<T>(
       Disposable_bindTo(
         pipe(
           notifier,
-          Observable_takeFirst<ObservableContainerLike, T>(),
+          Observable_takeFirst<ObservableContainer, T>(),
           Observable_subscribeWithConfig(delegate, delegate),
           Disposable_addTo(delegate),
         ),

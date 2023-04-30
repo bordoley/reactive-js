@@ -1,4 +1,4 @@
 import { Keep } from "../../../containers.js";
-import { PauseableObservableContainerLike } from "../../../rx.js";
-declare const PauseableObservable_keep: Keep<PauseableObservableContainerLike>["keep"];
+import { PauseableObservableContainer } from "../../../rx.js";
+declare const PauseableObservable_keep: Keep<PauseableObservableContainer>["keep"];
 export default PauseableObservable_keep;

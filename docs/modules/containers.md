@@ -6,12 +6,12 @@
 
 ### Container Interfaces
 
-- [AsyncIterableContainerLike](../interfaces/containers.AsyncIterableContainerLike.md)
-- [ContainerLike](../interfaces/containers.ContainerLike.md)
-- [EnumeratorContainerLike](../interfaces/containers.EnumeratorContainerLike.md)
-- [IterableContainerLike](../interfaces/containers.IterableContainerLike.md)
-- [PromiseContainerLike](../interfaces/containers.PromiseContainerLike.md)
-- [ReadonlyArrayContainerLike](../interfaces/containers.ReadonlyArrayContainerLike.md)
+- [AsyncIterableContainer](../interfaces/containers.AsyncIterableContainer.md)
+- [Container](../interfaces/containers.Container.md)
+- [EnumeratorContainer](../interfaces/containers.EnumeratorContainer.md)
+- [IterableContainer](../interfaces/containers.IterableContainer.md)
+- [PromiseContainer](../interfaces/containers.PromiseContainer.md)
+- [ReadonlyArrayContainer](../interfaces/containers.ReadonlyArrayContainer.md)
 
 ### Other Interfaces
 
@@ -75,7 +75,7 @@
 
 ### ContainerOf
 
-Ƭ **ContainerOf**<`C`, `T`\>: `C` extends { `[___ContainerLike_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[___ContainerLike_T]`: `T`  }[typeof `ContainerLike_type`]\> : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **ContainerOf**<`C`, `T`\>: `C` extends { `[___Container_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[___Container_T]`: `T`  }[typeof `Container_type`]\> : { `_C`: `C` ; `_T`: () => `T`  }
 
 Utility type for higher order programming with Containers.
 
@@ -83,7 +83,7 @@ Utility type for higher order programming with Containers.
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `C` | extends [`Container`](../interfaces/containers.Container.md) |
 | `T` | `T` |
 
 ___
@@ -98,6 +98,6 @@ Utility type for a generic operator function that transforms a Container's inner
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/containers.ContainerLike.md) |
+| `C` | extends [`Container`](../interfaces/containers.Container.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |

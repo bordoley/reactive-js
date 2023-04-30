@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, `T`\>
 
-Returns a ContainerLike which emits values emitted by the source as long
+Returns a Container which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
 this predicate is not satisfied.
 

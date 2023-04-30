@@ -1,11 +1,11 @@
 import { ContainerOperator } from "../../../containers.js";
 import { partial, pipe } from "../../../functions.js";
-import { ObservableContainerLike } from "../../../rx.js";
+import { ObservableContainer } from "../../../rx.js";
 import { DispatcherLike } from "../../../util.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_createDispatchToObserver from "../../Observer/__internal__/Observer.createDispatchToObserver.js";
 
-type ObservableDispatchTo = <C extends ObservableContainerLike, T = unknown>(
+type ObservableDispatchTo = <C extends ObservableContainer, T = unknown>(
   dispatcher: DispatcherLike<T>,
 ) => ContainerOperator<C, T, T>;
 const Observable_dispatchTo: ObservableDispatchTo = (<T>(

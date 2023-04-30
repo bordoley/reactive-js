@@ -1,3 +1,3 @@
-import { KeepType, ReadonlyObjectMapContainerLike } from "../../../keyed-containers.js";
-declare const ReadonlyObjectMap_keepType: KeepType<ReadonlyObjectMapContainerLike>["keepType"];
+import { KeepType, ReadonlyObjectMapContainer } from "../../../keyed-containers.js";
+declare const ReadonlyObjectMap_keepType: KeepType<ReadonlyObjectMapContainer>["keepType"];
 export default ReadonlyObjectMap_keepType;

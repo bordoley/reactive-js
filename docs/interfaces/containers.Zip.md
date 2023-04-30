@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ContainerOf`](../modules/containers.md#containerof)<`C`, readonly [`TA`, `TB`]\>
 
-Combines multiple sources to create a ContainerLike whose values are calculated from the values,
+Combines multiple sources to create a Container whose values are calculated from the values,
 in order, of each of its input sources.
 
 #### Type parameters

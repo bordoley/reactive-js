@@ -1,6 +1,6 @@
 import { errorWithDebugMessage } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
   ToEnumerable,
 } from "../../../rx.js";
@@ -11,7 +11,7 @@ const throwOptions = {
   raise: () => errorWithDebugMessage("Observable is not Enumerable"),
 };
 
-const Observable_toEnumerable: ToEnumerable<ObservableContainerLike>["toEnumerable"] =
+const Observable_toEnumerable: ToEnumerable<ObservableContainer>["toEnumerable"] =
 
     <T>() =>
     (obs: ObservableLike<T>) =>

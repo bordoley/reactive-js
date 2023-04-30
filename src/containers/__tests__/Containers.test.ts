@@ -11,7 +11,7 @@ import {
   ConcatAll,
   ConcatMap,
   ConcatWith,
-  ContainerLike,
+  Container,
   Contains,
   DistinctUntilChanged,
   Empty,
@@ -65,7 +65,7 @@ import {
   returns,
 } from "../../functions.js";
 
-export interface Container<C extends ContainerLike>
+export interface ContainerModule<C extends Container>
   extends Buffer<C>,
     Concat<C>,
     ConcatAll<C>,
@@ -110,7 +110,7 @@ export interface Container<C extends ContainerLike>
     Zip<C>,
     ZipWith<C> {}
 
-const Containers_test = <C extends ContainerLike>(m: Container<C>) =>
+const Containers_test = <C extends Container>(m: ContainerModule<C>) =>
   describe(
     "container",
     describe(

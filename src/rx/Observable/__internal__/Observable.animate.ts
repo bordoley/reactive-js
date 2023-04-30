@@ -4,7 +4,7 @@ import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__interna
 import {
   Animate,
   AnimationConfig,
-  RunnableContainerLike,
+  RunnableContainer,
   RunnableLike,
 } from "../../../rx.js";
 import Observable_concatObservables from "./Observable.concatObservables.js";
@@ -25,7 +25,7 @@ const parseAnimationConfig = <T = number>(
   config.type === "loop"
     ? pipe(
         Observable_animate<T>(config.animation),
-        Observable_repeat<RunnableContainerLike, T>(config.count),
+        Observable_repeat<RunnableContainer, T>(config.count),
       )
     : config.type === "delay"
     ? Observable_empty({ delay: config.duration })
@@ -33,17 +33,15 @@ const parseAnimationConfig = <T = number>(
         config.type === "tween"
           ? Observable_tween(config.duration, config)
           : Observable_spring(config),
-        Observable_map<RunnableContainerLike, number, number>(
+        Observable_map<RunnableContainer, number, number>(
           scale(config.from, config.to),
         ),
         isSome(config.selector)
-          ? Observable_map<RunnableContainerLike, number, T>(config.selector)
-          : (identity as ContainerOperator<RunnableContainerLike, number, T>),
+          ? Observable_map<RunnableContainer, number, T>(config.selector)
+          : (identity as ContainerOperator<RunnableContainer, number, T>),
       );
 
-const Observable_animate: Animate<RunnableContainerLike>["animate"] = <
-  T = number,
->(
+const Observable_animate: Animate<RunnableContainer>["animate"] = <T = number>(
   config: AnimationConfig<T> | readonly AnimationConfig<T>[],
 ) => {
   const configs = isReadonlyArray<AnimationConfig<T>>(config)

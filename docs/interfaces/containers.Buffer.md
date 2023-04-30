@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -26,7 +26,7 @@
 
 ▸ <`T`\>(`options?`): [`ContainerOperator`](../modules/containers.md#containeroperator)<`C`, `T`, readonly `T`[]\>
 
-Returns a ContainerLike which buffers items produced by the source until the
+Returns a Container which buffers items produced by the source until the
 number of items reaches the specified maximum buffer size.
 
 ##### Type parameters

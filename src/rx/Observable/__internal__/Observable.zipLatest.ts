@@ -1,11 +1,7 @@
-import {
-  ObservableContainerLike,
-  ObservableLike,
-  ZipLatest,
-} from "../../../rx.js";
+import { ObservableContainer, ObservableLike, ZipLatest } from "../../../rx.js";
 import Observable_latest from "./Observable.latest.js";
 
-const Observable_zipLatest: ZipLatest<ObservableContainerLike>["zipLatest"] = (
+const Observable_zipLatest: ZipLatest<ObservableContainer>["zipLatest"] = (
   ...observables: readonly ObservableLike<any>[]
 ): ObservableLike<readonly unknown[]> => Observable_latest(observables, 2);
 

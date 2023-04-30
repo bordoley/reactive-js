@@ -1,4 +1,4 @@
 import { ConcatAll } from "../../../containers.js";
-import { RunnableContainerLike } from "../../../rx.js";
-declare const Runnable_concatAll: ConcatAll<RunnableContainerLike>["concatAll"];
+import { RunnableContainer } from "../../../rx.js";
+declare const Runnable_concatAll: ConcatAll<RunnableContainer>["concatAll"];
 export default Runnable_concatAll;

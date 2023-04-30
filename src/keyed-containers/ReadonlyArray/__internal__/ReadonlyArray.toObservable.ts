@@ -3,7 +3,7 @@ import {
   EnumerableLike,
   ObserverLike,
   ObserverLike_notify,
-  RunnableContainerLike,
+  RunnableContainer,
   RunnableLike,
 } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
@@ -43,7 +43,7 @@ interface ReadonlyArrayToObservable {
 const ReadonlyArray_toObservable: ReadonlyArrayToObservable["toObservable"] =
   /*@__PURE__*/
   ReadonlyArray_toContainer<
-    RunnableContainerLike,
+    RunnableContainer,
     {
       delay?: number;
       delayStart?: boolean;

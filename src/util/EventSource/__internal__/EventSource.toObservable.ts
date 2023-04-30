@@ -3,7 +3,7 @@ import { ToObservable } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import {
   DispatcherLike_complete,
-  EventSourceContainerLike,
+  EventSourceContainer,
   EventSourceLike,
   QueueableLike_enqueue,
 } from "../../../util.js";
@@ -11,7 +11,7 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 
-const EventSource_toObservable: ToObservable<EventSourceContainerLike>["toObservable"] =
+const EventSource_toObservable: ToObservable<EventSourceContainer>["toObservable"] =
 
     <T>() =>
     (eventSource: EventSourceLike<T>) =>

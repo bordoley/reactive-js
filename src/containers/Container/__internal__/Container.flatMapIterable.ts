@@ -1,13 +1,13 @@
 import {
   ConcatMap,
-  ContainerLike,
+  Container,
   ContainerOperator,
   FromIterable,
 } from "../../../containers.js";
 import { Function1, compose } from "../../../functions.js";
 
 const Container_flatMapIterable =
-  <C extends ContainerLike>(
+  <C extends Container>(
     concatMap: ConcatMap<C>["concatMap"],
     fromIterable: FromIterable<C>["fromIterable"],
   ) =>

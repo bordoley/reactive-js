@@ -1,4 +1,4 @@
-import { ContainerLike, ContainerOperator } from "../containers.js";
+import { Container, ContainerOperator } from "../containers.js";
 import { Function1, Function2, Optional } from "../functions.js";
 import { ObserverLike } from "../rx.js";
 import {
@@ -7,7 +7,7 @@ import {
   __WithLatestLike_selector,
 } from "./symbols.js";
 
-export interface Lift<C extends ContainerLike> {
+export interface Lift<C extends Container> {
   lift<TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ): ContainerOperator<C, TA, TB>;

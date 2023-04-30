@@ -1,5 +1,5 @@
 /// <reference types="./keyed-containers.d.ts" />
 
-import { __KeyedContainerLike_TKey as KeyedContainerLike_TKey } from "./__internal__/symbols.js";
-import { ContainerLike_T, ContainerLike_type, } from "./containers.js";
-export { KeyedContainerLike_TKey };
+import { __KeyedContainer_TKey as KeyedContainer_TKey } from "./__internal__/symbols.js";
+import { Container_T, Container_type, } from "./containers.js";
+export { KeyedContainer_TKey };

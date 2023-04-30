@@ -20,7 +20,7 @@
 
 ▸ **empty**<`T`, `TKey`\>(): [`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, `T`\>
 
-Return an ContainerLike that emits no items.
+Return an Container that emits no items.
 
 #### Type parameters
 

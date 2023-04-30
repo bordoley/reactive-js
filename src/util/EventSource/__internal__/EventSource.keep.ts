@@ -19,13 +19,13 @@ import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
-  EventSourceContainerLike,
+  EventSourceContainer,
 } from "../../../util.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_keep: Keep<EventSourceContainerLike>["keep"] =
+const EventSource_keep: Keep<EventSourceContainer>["keep"] =
   /*@__PURE__*/ (() => {
     const createKeepEventListener: <T>(
       delegate: EventListenerLike<T>,
@@ -72,6 +72,6 @@ const EventSource_keep: Keep<EventSourceContainerLike>["keep"] =
 
     return <T>(predicate: Predicate<T>) =>
       pipe(createKeepEventListener, partial(predicate), EventSource_lift);
-  })() as Keep<EventSourceContainerLike>["keep"];
+  })() as Keep<EventSourceContainer>["keep"];
 
 export default EventSource_keep;

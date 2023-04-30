@@ -1,6 +1,6 @@
 import { errorWithDebugMessage } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
   ToRunnable,
 } from "../../../rx.js";
@@ -11,10 +11,9 @@ const throwOptions = {
   raise: () => errorWithDebugMessage("Observable is not Runnable"),
 };
 
-const Observable_toRunnable: ToRunnable<ObservableContainerLike>["toRunnable"] =
-
-    <T>() =>
-    (obs: ObservableLike<T>) =>
-      Observable_isRunnable(obs) ? obs : Observable_throws(throwOptions);
+const Observable_toRunnable: ToRunnable<ObservableContainer>["toRunnable"] =
+  <T>() =>
+  (obs: ObservableLike<T>) =>
+    Observable_isRunnable(obs) ? obs : Observable_throws(throwOptions);
 
 export default Observable_toRunnable;

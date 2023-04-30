@@ -1,5 +1,5 @@
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   SwitchAll,
@@ -7,8 +7,8 @@ import {
 import HigherOrderObservable_switchAll from "../../HigherOrderObservable/__internal__/HigherOrderObservable.switchAll.js";
 import Observable_lift from "./Observable.lift.js";
 
-const Observable_switchAll: SwitchAll<ObservableContainerLike>["switchAll"] =
-  /*@__PURE__*/ HigherOrderObservable_switchAll<ObservableContainerLike>(
+const Observable_switchAll: SwitchAll<ObservableContainer>["switchAll"] =
+  /*@__PURE__*/ HigherOrderObservable_switchAll<ObservableContainer>(
     Observable_lift({
       [ObservableLike_isEnumerable]: false,
       [ObservableLike_isRunnable]: false,

@@ -1,3 +1,3 @@
-import { Animate, RunnableContainerLike } from "../../../rx.js";
-declare const Observable_animate: Animate<RunnableContainerLike>["animate"];
+import { Animate, RunnableContainer } from "../../../rx.js";
+declare const Observable_animate: Animate<RunnableContainer>["animate"];
 export default Observable_animate;

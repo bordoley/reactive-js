@@ -1,4 +1,4 @@
 import { Last } from "../../../containers.js";
-import { RunnableContainerLike } from "../../../rx.js";
-declare const Runnable_last: Last<RunnableContainerLike>["last"];
+import { RunnableContainer } from "../../../rx.js";
+declare const Runnable_last: Last<RunnableContainer>["last"];
 export default Runnable_last;

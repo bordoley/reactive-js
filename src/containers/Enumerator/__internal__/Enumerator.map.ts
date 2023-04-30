@@ -14,7 +14,7 @@ import {
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
 import {
-  EnumeratorContainerLike,
+  EnumeratorContainer,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
@@ -27,7 +27,7 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike_reset,
 } from "./MutableEnumerator.mixin.js";
 
-const Enumerator_map: Map<EnumeratorContainerLike>["map"] = /*@__PURE__*/ (<
+const Enumerator_map: Map<EnumeratorContainer>["map"] = /*@__PURE__*/ (<
   TA,
   TB,
 >() => {

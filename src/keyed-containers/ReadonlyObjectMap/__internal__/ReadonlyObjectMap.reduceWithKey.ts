@@ -2,17 +2,17 @@ import { hasOwn } from "../../../__internal__/Object.js";
 import { Factory, Function3 } from "../../../functions.js";
 import {
   KeyOf,
-  ReadonlyObjectMapContainerLike,
+  ReadonlyObjectMapContainer,
   ReadonlyObjectMapLike,
   ReduceWithKey,
 } from "../../../keyed-containers.js";
 
-const ReadonlyObjectMap_reduceWithKey: ReduceWithKey<ReadonlyObjectMapContainerLike>["reduceWithKey"] =
+const ReadonlyObjectMap_reduceWithKey: ReduceWithKey<ReadonlyObjectMapContainer>["reduceWithKey"] =
 
     <
       T,
       TAcc,
-      TKey extends KeyOf<ReadonlyObjectMapContainerLike> = KeyOf<ReadonlyObjectMapContainerLike>,
+      TKey extends KeyOf<ReadonlyObjectMapContainer> = KeyOf<ReadonlyObjectMapContainer>,
     >(
       reducer: Function3<TAcc, T, TKey, TAcc>,
       initialValue: Factory<TAcc>,

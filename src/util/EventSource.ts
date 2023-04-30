@@ -10,7 +10,7 @@ import { Function1, SideEffect1 } from "../functions.js";
 import { ToObservable } from "../rx.js";
 import {
   DisposableLike,
-  EventSourceContainerLike,
+  EventSourceContainer,
   EventSourceLike,
 } from "../util.js";
 import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.addEventHandler.js";
@@ -33,14 +33,13 @@ export const addEventHandler: <T>(
  */
 export const create = EventSource_create;
 
-export const empty: Empty<EventSourceContainerLike>["empty"] =
-  EventSource_empty;
-export const forEach: ForEach<EventSourceContainerLike>["forEach"] =
+export const empty: Empty<EventSourceContainer>["empty"] = EventSource_empty;
+export const forEach: ForEach<EventSourceContainer>["forEach"] =
   EventSource_forEach;
-export const ignoreElements: IgnoreElements<EventSourceContainerLike>["ignoreElements"] =
+export const ignoreElements: IgnoreElements<EventSourceContainer>["ignoreElements"] =
   EventSource_ignoreElements;
-export const keep: Keep<EventSourceContainerLike>["keep"] = EventSource_keep;
-export const map: Map<EventSourceContainerLike>["map"] = EventSource_map;
-export const pick: Pick<EventSourceContainerLike>["pick"] = EventSource_pick;
-export const toObservable: ToObservable<EventSourceContainerLike>["toObservable"] =
+export const keep: Keep<EventSourceContainer>["keep"] = EventSource_keep;
+export const map: Map<EventSourceContainer>["map"] = EventSource_map;
+export const pick: Pick<EventSourceContainer>["pick"] = EventSource_pick;
+export const toObservable: ToObservable<EventSourceContainer>["toObservable"] =
   EventSource_toObservable;

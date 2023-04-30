@@ -33,7 +33,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -77,7 +77,7 @@ const createThrottleObserver: <T>(
       SerialDisposableLike_current
     ] = pipe(
       observer[__ThrottleObserver_durationFunction](next),
-      Observable_forEach<ObservableContainerLike>(
+      Observable_forEach<ObservableContainer>(
         observer[__ThrottleObserver_onNotify],
       ),
       Observable_subscribeWithConfig(
@@ -177,7 +177,7 @@ const createThrottleObserver: <T>(
   );
 })();
 
-const throttleImpl = <C extends ObservableContainerLike, T>(
+const throttleImpl = <C extends ObservableContainer, T>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
   ) => ContainerOperator<C, T, T>,
@@ -197,7 +197,7 @@ const throttleImpl = <C extends ObservableContainerLike, T>(
 };
 
 const HigherOrderObservable_throttle =
-  <C extends ObservableContainerLike, T>(
+  <C extends ObservableContainer, T>(
     fromReadonlyArray: <T>(options?: {
       readonly count?: number;
       readonly delay?: number;

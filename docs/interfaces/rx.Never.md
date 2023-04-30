@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](containers.ContainerLike.md) |
+| `C` | extends [`Container`](containers.Container.md) |
 
 ## Table of contents
 
@@ -22,7 +22,7 @@
 
 ▸ **never**<`T`\>(): [`ContainerOf`](../modules/containers.md#containerof)<`C`, `T`\>
 
-Returns a ContainerLike instance that emits no items and never disposes its state.
+Returns a Container instance that emits no items and never disposes its state.
 
 #### Type parameters
 

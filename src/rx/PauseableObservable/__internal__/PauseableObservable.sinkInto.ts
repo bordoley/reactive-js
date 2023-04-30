@@ -1,6 +1,6 @@
 import { Function1, pipe } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
   PauseableObservableLike,
 } from "../../../rx.js";
@@ -37,7 +37,7 @@ const PauseableObservable_sinkInto =
 
       pipe(
         pauseableObservable,
-        Observable_dispatchTo<ObservableContainerLike>(sink),
+        Observable_dispatchTo<ObservableContainer>(sink),
         Observable_subscribe(observer),
         Disposable_addTo(observer),
       );

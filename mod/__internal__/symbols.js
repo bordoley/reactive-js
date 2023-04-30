@@ -8,9 +8,9 @@ export const __BufferLike_capacity = /*@__PURE__*/ symbol("BufferLike_capacity")
 /** @type {unique symbol} */
 export const __CollectionLike_count = /*@__PURE__*/ symbol("CollectionLike_count");
 /** @type {unique symbol} */
-export const __ContainerLike_T = /*@__PURE__*/ symbol("ContainerLike_T");
+export const __Container_T = /*@__PURE__*/ symbol("Container_T");
 /** @type {unique symbol} */
-export const __ContainerLike_type = /*@__PURE__*/ symbol("ContainerLike_type");
+export const __Container_type = /*@__PURE__*/ symbol("Container_type");
 /** @type {unique symbol} */
 export const __DispatcherLike_complete = /*@__PURE__*/ symbol("DispatcherLike_complete");
 /** @type {unique symbol} */
@@ -38,7 +38,7 @@ export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol("EventPub
 /** @type {unique symbol} */
 export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol("KeyedCollectionLike_get");
 /** @type {unique symbol} */
-export const __KeyedContainerLike_TKey = /*@__PURE__*/ symbol("KeyedContainerLike_TKey");
+export const __KeyedContainer_TKey = /*@__PURE__*/ symbol("KeyedContainer_TKey");
 /** @type {unique symbol} */
 export const __MulticastObservableLike_buffer = /*@__PURE__*/ symbol("MulticastObservableLike_buffer");
 /** @type {unique symbol} */

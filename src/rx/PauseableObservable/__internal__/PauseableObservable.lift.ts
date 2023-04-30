@@ -11,7 +11,7 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  PauseableObservableContainerLike,
+  PauseableObservableContainer,
   PauseableObservableLike,
   PauseableObservableLike_isPaused,
 } from "../../../rx.js";
@@ -68,19 +68,18 @@ class LiftedPauseableObservable<TIn, TOut>
   }
 }
 
-const PauseableObservable_lift: Lift<PauseableObservableContainerLike>["lift"] =
+const PauseableObservable_lift: Lift<PauseableObservableContainer>["lift"] =
+  <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ): Function1<PauseableObservableLike<TA>, PauseableObservableLike<TB>> =>
+  source => {
+    const sourceSource = (source as any)[LiftedLike_source] ?? source;
+    const allFunctions = [
+      operator,
+      ...((source as any)[LiftedLike_operators] ?? []),
+    ];
 
-    <TA, TB>(
-      operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-    ): Function1<PauseableObservableLike<TA>, PauseableObservableLike<TB>> =>
-    source => {
-      const sourceSource = (source as any)[LiftedLike_source] ?? source;
-      const allFunctions = [
-        operator,
-        ...((source as any)[LiftedLike_operators] ?? []),
-      ];
-
-      return newInstance(LiftedPauseableObservable, sourceSource, allFunctions);
-    };
+    return newInstance(LiftedPauseableObservable, sourceSource, allFunctions);
+  };
 
 export default PauseableObservable_lift;

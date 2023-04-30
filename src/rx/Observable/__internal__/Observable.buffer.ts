@@ -27,7 +27,7 @@ import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__i
 import ReadonlyArray_isEmpty from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_toObservable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -52,7 +52,7 @@ import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-type ObservableBuffer = <C extends ObservableContainerLike, T>(options?: {
+type ObservableBuffer = <C extends ObservableContainer, T>(options?: {
   readonly duration?: number | Function1<T, C>;
   readonly count?: number;
 }) => ContainerOperator<C, T, readonly T[]>;
@@ -149,7 +149,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
             ] = pipe(
               next,
               this[__BufferObserver_durationFunction],
-              Observable_forEach<ObservableContainerLike>(doOnNotify),
+              Observable_forEach<ObservableContainer>(doOnNotify),
               Observable_subscribeWithConfig(this, this),
               Disposable_addTo(this),
             );

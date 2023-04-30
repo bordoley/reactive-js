@@ -28,7 +28,7 @@ import ReadonlyObjectMap_reduce from "../../../keyed-containers/ReadonlyObjectMa
 import ReadonlyObjectMap_values from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 import {
   AnimationConfig,
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike,
 } from "../../../rx.js";
 import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
@@ -145,12 +145,12 @@ const createAnimationGroupEventHandlerStream: <
                 pipe(
                   Observable_animate<T>(factory(type)),
                   Observable_map<
-                    ObservableContainerLike,
+                    ObservableContainer,
                     T,
                     { type: TEventType; value: T }
                   >(value => ({ type, value })),
                   Observable_forEach<
-                    ObservableContainerLike,
+                    ObservableContainer,
                     { type: TEventType; value: T }
                   >(value => {
                     const publisher = publishers[key];
@@ -158,7 +158,7 @@ const createAnimationGroupEventHandlerStream: <
                       publisher[EventListenerLike_notify](value);
                     }
                   }),
-                  Observable_ignoreElements<ObservableContainerLike, T>(),
+                  Observable_ignoreElements<ObservableContainer, T>(),
                 ),
               ),
             );
@@ -168,7 +168,7 @@ const createAnimationGroupEventHandlerStream: <
                 pipeLazy(observables, ReadonlyObjectMap_values()),
               ),
               Observable_map<
-                ObservableContainerLike,
+                ObservableContainer,
                 ObservableLike<T>,
                 ObservableLike<T>
               >(

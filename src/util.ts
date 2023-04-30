@@ -27,16 +27,13 @@ import {
   __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run,
 } from "./__internal__/symbols.js";
 import {
-  ContainerLike,
-  ContainerLike_T,
-  ContainerLike_type,
+  Container,
+  Container_T,
+  Container_type,
   EnumeratorLike,
 } from "./containers.js";
 import { Optional, SideEffect1 } from "./functions.js";
-import {
-  KeyedContainerLike,
-  KeyedContainerLike_TKey,
-} from "./keyed-containers.js";
+import { KeyedContainer, KeyedContainer_TKey } from "./keyed-containers.js";
 
 export {
   AssociativeCollectionLike_keys,
@@ -176,13 +173,13 @@ export interface DictionaryLike<TKey = unknown, T = unknown>
  * @noInheritDoc
  * @category Container
  */
-export interface DictionaryContainerLike extends KeyedContainerLike {
-  readonly [ContainerLike_type]?: DictionaryLike<
-    this[typeof KeyedContainerLike_TKey],
-    this[typeof ContainerLike_T]
+export interface DictionaryContainer extends KeyedContainer {
+  readonly [Container_type]?: DictionaryLike<
+    this[typeof KeyedContainer_TKey],
+    this[typeof Container_T]
   >;
 
-  readonly [KeyedContainerLike_TKey]?: unknown;
+  readonly [KeyedContainer_TKey]?: unknown;
 }
 
 /**
@@ -228,8 +225,8 @@ export interface EventSourceLike<T = unknown> {
  * @noInheritDoc
  * @category Container
  */
-export interface EventSourceContainerLike extends ContainerLike {
-  readonly [ContainerLike_type]?: EventSourceLike<this[typeof ContainerLike_T]>;
+export interface EventSourceContainer extends Container {
+  readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
 }
 
 /**

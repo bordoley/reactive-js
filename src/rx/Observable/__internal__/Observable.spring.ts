@@ -1,7 +1,7 @@
 import { MAX_VALUE, __DEV__ } from "../../../__internal__/constants.js";
 import { abs, min } from "../../../__internal__/math.js";
 import { isNotEqualTo, pipe, returns } from "../../../functions.js";
-import { RunnableContainerLike, RunnableLike } from "../../../rx.js";
+import { RunnableContainer, RunnableLike } from "../../../rx.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
@@ -20,7 +20,7 @@ const Observable_spring = (options?: {
 
   return pipe(
     Observable_currentTime(),
-    Observable_scan<RunnableContainerLike, number, [number, number, number]>(
+    Observable_scan<RunnableContainer, number, [number, number, number]>(
       ([lastTime, last, value], now) => {
         lastTime = min(now, lastTime);
 
@@ -40,8 +40,8 @@ const Observable_spring = (options?: {
       },
       returns([MAX_VALUE, 0, 0]),
     ),
-    Observable_pick<RunnableContainerLike, [unknown, unknown, number], 2>(2),
-    Observable_takeWhile<RunnableContainerLike, number>(isNotEqualTo(1), {
+    Observable_pick<RunnableContainer, [unknown, unknown, number], 2>(2),
+    Observable_takeWhile<RunnableContainer, number>(isNotEqualTo(1), {
       inclusive: true,
     }),
   );

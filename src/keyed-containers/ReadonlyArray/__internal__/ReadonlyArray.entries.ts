@@ -4,13 +4,13 @@ import { pipe } from "../../../functions.js";
 import {
   Entries,
   KeyOf,
-  ReadonlyArrayContainerLike,
+  ReadonlyArrayContainer,
 } from "../../../keyed-containers.js";
 
-const ReadonlyArray_entries: Entries<ReadonlyArrayContainerLike>["entries"] =
+const ReadonlyArray_entries: Entries<ReadonlyArrayContainer>["entries"] =
   <
     T,
-    TKey extends KeyOf<ReadonlyArrayContainerLike> = KeyOf<ReadonlyArrayContainerLike>,
+    TKey extends KeyOf<ReadonlyArrayContainer> = KeyOf<ReadonlyArrayContainer>,
   >() =>
   (arr: ReadonlyArray<T>): EnumeratorLike<[TKey, T]> => {
     const count = arr.length;

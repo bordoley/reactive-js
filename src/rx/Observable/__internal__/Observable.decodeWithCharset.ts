@@ -21,7 +21,7 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  ObservableContainerLike,
+  ObservableContainer,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
@@ -34,9 +34,7 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
-type ObservableDecodeWithCharset = <
-  C extends ObservableContainerLike,
->(options?: {
+type ObservableDecodeWithCharset = <C extends ObservableContainer>(options?: {
   readonly charset?: string;
 }) => ContainerOperator<C, ArrayBuffer, string>;
 

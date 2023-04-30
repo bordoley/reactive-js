@@ -1,13 +1,13 @@
 import {
   ConcatWith,
-  ContainerLike,
+  Container,
   ContainerOperator,
   FromReadonlyArray,
 } from "../../../containers.js";
 import { pipe } from "../../../functions.js";
 
 const Container_startWith =
-  <C extends ContainerLike>(
+  <C extends Container>(
     concatWith: ConcatWith<C>["concatWith"],
     fromReadonlyArray: FromReadonlyArray<C>["fromReadonlyArray"],
   ) =>
