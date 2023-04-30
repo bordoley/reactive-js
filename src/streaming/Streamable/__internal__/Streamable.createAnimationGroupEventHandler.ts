@@ -15,6 +15,7 @@ import {
   Optional,
   incrementBy,
   isSome,
+  none,
   pipe,
   pipeLazy,
   returns,
@@ -28,15 +29,20 @@ import ReadonlyObjectMap_reduce from "../../../keyed-containers/ReadonlyObjectMa
 import ReadonlyObjectMap_values from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 import {
   AnimationConfig,
+  MulticastObservableLike_buffer,
   ObservableContainer,
   ObservableLike,
+  PauseableObservableLike_isPaused,
+  PublisherLike,
 } from "../../../rx.js";
 import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_mergeAll from "../../../rx/Observable/__internal__/Observable.mergeAll.js";
+import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
+import Publisher_create from "../../../rx/Publisher/__internal__/Publisher.create.js";
 import Runnable_fromEnumeratorFactory from "../../../rx/Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import {
   AnimationGroupEventHandlerLike,
@@ -51,6 +57,10 @@ import {
   EventPublisherLike,
   EventSourceLike,
   KeyedCollectionLike_get,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
+  PauseableSchedulerLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
@@ -59,6 +69,7 @@ import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.m
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
 import Scheduler_createAnimationFrameScheduler from "../../../util/Scheduler/__internal__/Scheduler.createAnimationFrameScheduler.js";
+import Scheduler_toPauseableScheduler from "../../../util/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 
@@ -91,6 +102,7 @@ const createAnimationGroupEventHandlerStream: <
 >() => {
   type TProperties = {
     [CollectionLike_count]: number;
+    [PauseableObservableLike_isPaused]: PublisherLike<boolean>;
   };
 
   return createInstanceFactory(
@@ -105,6 +117,10 @@ const createAnimationGroupEventHandlerStream: <
             AnimationGroupEventHandlerStreamLike<TEventType, T, TKey>,
             | typeof AssociativeCollectionLike_keys
             | typeof KeyedCollectionLike_get
+            | typeof PauseableObservableLike_isPaused
+            | typeof PauseableLike_isPaused
+            | typeof PauseableLike_pause
+            | typeof PauseableLike_resume
           >,
         animationGroup: ReadonlyObjectMapLike<
           TKey,
@@ -171,11 +187,7 @@ const createAnimationGroupEventHandlerStream: <
                 ObservableContainer,
                 ObservableLike<T>,
                 ObservableLike<T>
-              >(
-                Observable_subscribeOn(
-                  pipeLazy(scheduler, Scheduler_createAnimationFrameScheduler),
-                ),
-              ),
+              >(Observable_subscribeOn(animationScheduler)),
               Observable_mergeAll({
                 concurrency: creationOptions?.concurrency,
               }),
@@ -204,6 +216,14 @@ const createAnimationGroupEventHandlerStream: <
           ),
         );
 
+        const animationScheduler: PauseableSchedulerLike = pipe(
+          scheduler,
+          Scheduler_createAnimationFrameScheduler,
+          Disposable_addTo(instance),
+          Scheduler_toPauseableScheduler,
+          Disposable_addTo(instance),
+        );
+
         instance[CollectionLike_count] = pipe(
           publishers,
           ReadonlyObjectMap_reduce<unknown, number, string>(
@@ -214,10 +234,33 @@ const createAnimationGroupEventHandlerStream: <
 
         init(Delegating_mixin(), instance, publishers);
 
+        const isPausePublisher = Publisher_create<boolean>({
+          replay: 1,
+        });
+        instance[PauseableObservableLike_isPaused] = isPausePublisher;
+        isPausePublisher[EventListenerLike_notify](false);
+
+        pipe(
+          isPausePublisher,
+          Observable_forEach<ObservableContainer, boolean>(isPaused => {
+            if (isPaused) {
+              animationScheduler[PauseableLike_pause]();
+            } else {
+              animationScheduler[PauseableLike_resume]();
+            }
+          }),
+          Observable_subscribe(scheduler, {
+            capacity: 1,
+            backpressureStrategy: "drop-oldest",
+          }),
+          Disposable_addTo(instance),
+        );
+
         return instance;
       },
       props<TProperties>({
         [CollectionLike_count]: 0,
+        [PauseableObservableLike_isPaused]: none,
       }),
       {
         get [AssociativeCollectionLike_keys](): EnumeratorLike<TKey> {
@@ -225,6 +268,25 @@ const createAnimationGroupEventHandlerStream: <
             this,
           );
           return pipe(this[DelegatingLike_delegate], ReadonlyObjectMap_keys());
+        },
+
+        get [PauseableLike_isPaused](): boolean {
+          unsafeCast<TProperties>(this);
+          return this[PauseableObservableLike_isPaused][
+            MulticastObservableLike_buffer
+          ][KeyedCollectionLike_get](0);
+        },
+
+        [PauseableLike_pause](this: TProperties) {
+          this[PauseableObservableLike_isPaused][EventListenerLike_notify](
+            true,
+          );
+        },
+
+        [PauseableLike_resume](this: TProperties) {
+          this[PauseableObservableLike_isPaused][EventListenerLike_notify](
+            false,
+          );
         },
 
         [KeyedCollectionLike_get](

@@ -21,6 +21,10 @@ via the pause and resume methods.
 
   ↳ **`PauseableObservableLike`**
 
+  ↳↳ [`AnimationGroupEventHandlerStreamLike`](streaming.AnimationGroupEventHandlerStreamLike.md)
+
+  ↳↳ [`AnimationEventHandlerStreamLike`](streaming.AnimationEventHandlerStreamLike.md)
+
 ## Table of contents
 
 ### Properties

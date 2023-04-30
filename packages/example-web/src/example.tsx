@@ -30,11 +30,16 @@ import {
   returns,
 } from "@reactive-js/core/functions";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
-import { ObservableLike } from "@reactive-js/core/rx";
+import {
+  ObservableLike,
+  PauseableObservableLike_isPaused,
+} from "@reactive-js/core/rx";
 import {
   QueueableLike_enqueue,
   KeyedCollectionLike_get,
   EventSourceLike,
+  PauseableLike_pause,
+  PauseableLike_resume,
 } from "@reactive-js/core/util";
 import { CacheStreamLike } from "@reactive-js/core/streaming";
 import * as Dictionary from "@reactive-js/core/util/Dictionary";
@@ -270,9 +275,21 @@ const RxComponent = createComponent(
 
       const animationEventHandler = __stream(createAnimationEventHandler);
       const isAnimationRunning = __observe(animationEventHandler) ?? false;
+      const isAnimationPaused =
+        __observe(animationEventHandler[PauseableObservableLike_isPaused]) ??
+        false;
       const runAnimation = __bindMethod(
         animationEventHandler,
         QueueableLike_enqueue,
+      );
+
+      const pauseAnimation = __bindMethod(
+        animationEventHandler,
+        PauseableLike_pause,
+      );
+      const resumeAnimation = __bindMethod(
+        animationEventHandler,
+        PauseableLike_resume,
       );
 
       // FIXME: Who should filter out events? Maybe __animateEvent should take an array of events
@@ -296,10 +313,12 @@ const RxComponent = createComponent(
             }}
           />
           <div>
-            {isAnimationRunning ? (
-              <button onClick={() => runAnimation("cancel")}>
-                Cancel Animation
+            {isAnimationRunning && isAnimationPaused ? (
+              <button onClick={() => resumeAnimation()}>
+                Resume Animation
               </button>
+            ) : isAnimationRunning && !isAnimationPaused ? (
+              <button onClick={() => pauseAnimation()}>Pause Animation</button>
             ) : (
               <button onClick={() => runAnimation("animate")}>
                 Run Animation

@@ -16,6 +16,8 @@
 
 - [`StreamLike`](streaming.StreamLike.md)<`TEventType`, `boolean`\>
 
+- [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`boolean`\>
+
 - [`DictionaryLike`](util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>
 
   ↳ **`AnimationGroupEventHandlerStreamLike`**

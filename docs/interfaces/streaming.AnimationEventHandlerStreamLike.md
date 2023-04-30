@@ -15,4 +15,6 @@
 
 - [`StreamLike`](streaming.StreamLike.md)<`TEventType`, `boolean`, { `type`: `TEventType` ; `value`: `T`  } & { `type`: ``"wait"`` \| ``"drain"`` \| ``"complete"``  }\>
 
+- [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`boolean`\>
+
   ↳ **`AnimationEventHandlerStreamLike`**
