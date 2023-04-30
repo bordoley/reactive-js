@@ -160,7 +160,7 @@ export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
 /**
  * @noInheritDoc
  */
-export interface DictionaryLike<T = unknown, TKey = unknown>
+export interface DictionaryLike<TKey = unknown, T = unknown>
   extends AssociativeCollectionLike<TKey, Optional<T>> {}
 
 /**
@@ -170,8 +170,8 @@ export interface DictionaryContainerLike<T = unknown, TKey = unknown>
   extends DictionaryLike<T, TKey>,
     KeyedContainerLike {
   readonly [ContainerLike_type]?: DictionaryLike<
-    this[typeof ContainerLike_T],
-    this[typeof KeyedContainerLike_TKey]
+    this[typeof KeyedContainerLike_TKey],
+    this[typeof ContainerLike_T]
   >;
 
   readonly [KeyedContainerLike_TKey]?: unknown;

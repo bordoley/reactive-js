@@ -2,7 +2,7 @@ import { __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_stream
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike } from "./rx.js";
-import { AssociativeCollectionLike, DispatcherLike, DisposableLike, EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
+import { AssociativeCollectionLike, DictionaryLike, DispatcherLike, DisposableLike, EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { StreamableLike_stream, StreamLike_scheduler };
 /**
  * Represents a duplex stream
@@ -68,10 +68,10 @@ export interface CacheLike<T> extends StreamableLike<Readonly<Record<string, Fun
  * @noInheritDoc
  * @category Stream
  */
-export interface AnimationGroupEventHandlerStreamLike<TEventType, T, TKey extends string | number | symbol> extends StreamLike<TEventType, boolean>, AssociativeCollectionLike<TKey, Optional<EventSourceLike<{
+export interface AnimationGroupEventHandlerStreamLike<TEventType, T, TKey extends string | number | symbol> extends StreamLike<TEventType, boolean>, DictionaryLike<TKey, EventSourceLike<{
     type: TEventType;
     value: T;
-}>>> {
+}>> {
 }
 /**
  *

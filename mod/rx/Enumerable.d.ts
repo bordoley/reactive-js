@@ -23,10 +23,10 @@ export declare const empty: Empty<EnumerableContainerLike>["empty"];
 export declare const encodeUtf8: EncodeUtf8<EnumerableContainerLike>["encodeUtf8"];
 export declare const enqueue: Enqueue<EnumerableContainerLike>["enqueue"];
 export declare const endWith: EndWith<EnumerableContainerLike>["endWith"];
-interface EnumerableEnumerator<T = unknown> extends EnumeratorLike<T>, DisposableLike, ContainerLike {
+interface EnumerableEnumeratorContainerLike<T = unknown> extends EnumeratorLike<T>, DisposableLike, ContainerLike {
     readonly [ContainerLike_type]?: EnumeratorLike<this[typeof ContainerLike_T]> & DisposableLike;
 }
-export declare const enumerate: Enumerate<EnumerableContainerLike, EnumerableEnumerator>["enumerate"];
+export declare const enumerate: Enumerate<EnumerableContainerLike, EnumerableEnumeratorContainerLike>["enumerate"];
 export declare const everySatisfy: EverySatisfy<EnumerableContainerLike>["everySatisfy"];
 export declare const first: First<EnumerableContainerLike>["first"];
 export declare const firstAsync: FirstAsync<EnumerableContainerLike>["firstAsync"];

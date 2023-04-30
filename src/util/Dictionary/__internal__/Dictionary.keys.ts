@@ -10,7 +10,7 @@ const Dictionary_keys: Keys<DictionaryContainerLike>["keys"] =
   <
     TKey extends KeyOf<DictionaryContainerLike> = KeyOf<DictionaryContainerLike>,
   >() =>
-  (dict: DictionaryLike<unknown, TKey>): EnumeratorLike<TKey> =>
+  (dict: DictionaryLike<TKey, unknown>): EnumeratorLike<TKey> =>
     dict[AssociativeCollectionLike_keys];
 
 export default Dictionary_keys;

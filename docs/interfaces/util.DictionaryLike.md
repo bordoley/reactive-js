@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [util](../modules/util.md) / DictionaryLike
 
-# Interface: DictionaryLike<T, TKey\>
+# Interface: DictionaryLike<TKey, T\>
 
 [util](../modules/util.md).DictionaryLike
 
@@ -8,13 +8,15 @@
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `unknown` |
 | `TKey` | `unknown` |
+| `T` | `unknown` |
 
 ## Hierarchy
 
 - [`AssociativeCollectionLike`](util.AssociativeCollectionLike.md)<`TKey`, [`Optional`](../modules/functions.md#optional)<`T`\>\>
 
   ↳ **`DictionaryLike`**
+
+  ↳↳ [`AnimationGroupEventHandlerStreamLike`](streaming.AnimationGroupEventHandlerStreamLike.md)
 
   ↳↳ [`DictionaryContainerLike`](util.DictionaryContainerLike.md)

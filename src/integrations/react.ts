@@ -49,7 +49,6 @@ import {
 } from "../streaming.js";
 import * as Streamable from "../streaming/Streamable.js";
 import {
-  AssociativeCollectionLike,
   DictionaryLike,
   DispatcherLike,
   DisposableLike,
@@ -602,7 +601,7 @@ interface UseAnimationGroup {
       readonly capacity?: number;
     },
   ): readonly [
-    DictionaryLike<EventSourceLike<{ type: TEventType; value: T }>, TKey>,
+    DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>,
     SideEffect1<TEventType>,
     boolean,
   ];
@@ -633,7 +632,7 @@ interface UseAnimationGroup {
       readonly capacity?: number;
     },
   ): readonly [
-    DictionaryLike<EventSourceLike<{ type: TEventType; value: T }>, TKey>,
+    DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>,
     SideEffect1<TEventType>,
     boolean,
   ];
@@ -664,7 +663,7 @@ interface UseAnimationGroup {
       readonly capacity?: number;
     },
   ): readonly [
-    DictionaryLike<EventSourceLike<{ type: TEventType; value: T }>, TKey>,
+    DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>,
     SideEffect1<TEventType>,
     never,
   ];
@@ -694,7 +693,7 @@ interface UseAnimationGroup {
       readonly capacity?: number;
     },
   ): readonly [
-    DictionaryLike<EventSourceLike<{ type: TEventType; value: T }>, TKey>,
+    DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>,
     SideEffect1<TEventType>,
     never,
   ];
@@ -719,7 +718,7 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
     readonly capacity?: number;
   } = {},
 ): readonly [
-  DictionaryLike<EventSourceLike<{ type: TEventType; value: T }>, TKey>,
+  DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>,
   SideEffect1<TEventType>,
   unknown,
 ] => {
@@ -733,10 +732,7 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
   );
 
   const dict: Optional<
-    AssociativeCollectionLike<
-      TKey,
-      Optional<EventSourceLike<{ type: TEventType; value: T }>>
-    >
+    DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>
   > = stream;
 
   const dispatch = useDispatcher(stream);

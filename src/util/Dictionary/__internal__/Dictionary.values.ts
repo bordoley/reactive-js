@@ -14,7 +14,7 @@ const Dictionary_values =
     T,
     TKey extends KeyOf<DictionaryContainerLike> = KeyOf<DictionaryContainerLike>,
   >() =>
-  (dict: DictionaryLike<T, TKey>): EnumeratorLike<T> =>
+  (dict: DictionaryLike<TKey, T>): EnumeratorLike<T> =>
     pipe(
       dict,
       Dictionary_keys(),

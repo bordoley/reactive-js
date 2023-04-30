@@ -19,8 +19,6 @@
 
   ↳↳ [`CacheStreamLike`](streaming.CacheStreamLike.md)
 
-  ↳↳ [`AnimationGroupEventHandlerStreamLike`](streaming.AnimationGroupEventHandlerStreamLike.md)
-
   ↳↳ [`DictionaryLike`](util.DictionaryLike.md)
 
 ## Table of contents

@@ -127,7 +127,7 @@ ___
 
 ### useAnimationGroup
 
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
 #### Type parameters
 
@@ -152,9 +152,9 @@ ___
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
 #### Type parameters
 
@@ -179,9 +179,9 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `boolean`]
 
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 #### Type parameters
 
@@ -206,9 +206,9 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options?`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options?`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 #### Type parameters
 
@@ -232,7 +232,7 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSource
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, `TKey`\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
+readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\>, `never`]
 
 ___
 

@@ -8,6 +8,7 @@ import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike } from "./rx.js";
 import {
   AssociativeCollectionLike,
+  DictionaryLike,
   DispatcherLike,
   DisposableLike,
   EventSourceLike,
@@ -111,10 +112,7 @@ export interface AnimationGroupEventHandlerStreamLike<
   T,
   TKey extends string | number | symbol,
 > extends StreamLike<TEventType, boolean>,
-    AssociativeCollectionLike<
-      TKey,
-      Optional<EventSourceLike<{ type: TEventType; value: T }>>
-    > {}
+    DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>> {}
 
 /**
  *

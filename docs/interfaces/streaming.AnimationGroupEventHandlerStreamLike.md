@@ -16,6 +16,6 @@
 
 - [`StreamLike`](streaming.StreamLike.md)<`TEventType`, `boolean`\>
 
-- [`AssociativeCollectionLike`](util.AssociativeCollectionLike.md)<`TKey`, [`Optional`](../modules/functions.md#optional)<[`EventSourceLike`](util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>\>
+- [`DictionaryLike`](util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>
 
   ↳ **`AnimationGroupEventHandlerStreamLike`**
