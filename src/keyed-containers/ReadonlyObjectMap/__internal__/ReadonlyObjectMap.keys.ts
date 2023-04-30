@@ -5,12 +5,13 @@ import { pipe } from "../../../functions.js";
 import {
   KeyOf,
   Keys,
+  ReadonlyObjectMapContainerLike,
   ReadonlyObjectMapLike,
 } from "../../../keyed-containers.js";
 
-const ReadonlyObjectMap_keys: Keys<ReadonlyObjectMapLike>["keys"] =
+const ReadonlyObjectMap_keys: Keys<ReadonlyObjectMapContainerLike>["keys"] =
   <
-    TKey extends KeyOf<ReadonlyObjectMapLike> = KeyOf<ReadonlyObjectMapLike>,
+    TKey extends KeyOf<ReadonlyObjectMapContainerLike> = KeyOf<ReadonlyObjectMapContainerLike>,
   >() =>
   (obj: ReadonlyObjectMapLike<unknown, TKey>): EnumeratorLike<TKey> => {
     function* ReadonlyObjectMapKeys(): Iterator<TKey> {

@@ -29,10 +29,6 @@ export interface ReadonlyMapContainerLike<T = unknown, TKey = unknown> extends C
     readonly [ContainerLike_type]?: ReadonlyMap<this[typeof KeyedContainerLike_TKey], this[typeof ContainerLike_T]>;
     readonly [KeyedContainerLike_TKey]?: unknown;
 }
-export interface ReadonlyObjectMapContainerLike extends ContainerLike {
-    readonly [ContainerLike_type]?: ReadonlyObjectMapLike<this[typeof ContainerLike_T], NonNullable<this[typeof KeyedContainerLike_TKey]>>;
-    readonly [KeyedContainerLike_TKey]?: symbol | number | string;
-}
 /**
  * A compile time only type for using a Javascript `ReadonlyArray` as a `ContainerLike`.
  *
@@ -41,7 +37,11 @@ export interface ReadonlyObjectMapContainerLike extends ContainerLike {
  */
 export type ReadonlyObjectMapLike<T = unknown, TKey extends symbol | number | string = string> = {
     readonly [P in TKey]?: T;
-} & ReadonlyObjectMapContainerLike;
+};
+export interface ReadonlyObjectMapContainerLike extends ContainerLike {
+    readonly [ContainerLike_type]?: ReadonlyObjectMapLike<this[typeof ContainerLike_T], NonNullable<this[typeof KeyedContainerLike_TKey]>>;
+    readonly [KeyedContainerLike_TKey]?: symbol | number | string;
+}
 /**
  * Utility type for higher order programming with keyed-containers.
  */

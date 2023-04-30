@@ -3,15 +3,16 @@ import { Function2 } from "../../../functions.js";
 import {
   KeyOf,
   MapWithKey,
+  ReadonlyObjectMapContainerLike,
   ReadonlyObjectMapLike,
 } from "../../../keyed-containers.js";
 
-const ReadonlyObjectMap_mapWithKey: MapWithKey<ReadonlyObjectMapLike>["mapWithKey"] =
+const ReadonlyObjectMap_mapWithKey: MapWithKey<ReadonlyObjectMapContainerLike>["mapWithKey"] =
 
     <
       TA,
       TB,
-      TKey extends KeyOf<ReadonlyObjectMapLike> = KeyOf<ReadonlyObjectMapLike>,
+      TKey extends KeyOf<ReadonlyObjectMapContainerLike> = KeyOf<ReadonlyObjectMapContainerLike>,
     >(
       selector: Function2<TA, TKey, TB>,
     ) =>
