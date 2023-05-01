@@ -2,7 +2,7 @@
 
 import { compose, identity, none, pipe, returns, } from "../../functions.js";
 import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
-import { __memo, __observe, __state, __using } from "../../rx/effects.js";
+import { __constant, __memo, __observe, __state, __using, } from "../../rx/effects.js";
 import { QueueableLike_enqueue, } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as EventSource from "../../util/EventSource.js";
@@ -16,13 +16,17 @@ element != null
     }))))
     : Disposable.disposed;
 export const __animate = (animation, selector) => {
+    const memoizedSelector = __constant(selector);
     const htmlElementState = __state(returnsNone);
     const setRef = __memo(makeRefSetter, htmlElementState);
     const htmlElement = __observe(htmlElementState);
-    __using(animateHtmlElement, htmlElement, animation, selector ?? identity);
+    __using(animateHtmlElement, htmlElement, animation, memoizedSelector ?? identity);
     return setRef;
 };
 const defaultSelector = (ev) => ev.value;
-export const __animateEvent = (animation, selector) => {
-    return __animate(animation, selector ?? defaultSelector);
+const filterEvents = (animation, events) => pipe(animation, EventSource.keep(ev => events?.includes(ev.type) ?? true));
+export const __animateEvent = (animation, events, selector) => {
+    const memoizedEvents = __constant(events);
+    const filteredAnimations = __memo(filterEvents, animation, memoizedEvents);
+    return __animate(filteredAnimations, selector ?? defaultSelector);
 };

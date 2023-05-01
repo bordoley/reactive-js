@@ -36,6 +36,7 @@ import { StreamLike, StreamLike_scheduler } from "../../../streaming.js";
 import {
   BufferLike_capacity,
   CollectionLike_count,
+  DispatcherEventMap,
   DispatcherLike,
   DispatcherLike_complete,
   DisposableLike,
@@ -166,9 +167,9 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
 
           [EventSourceLike_addEventListener](
             this: TProperties,
-            listener: EventListenerLike<{
-              type: "wait" | "drain" | "complete";
-            }>,
+            listener: EventListenerLike<
+              DispatcherEventMap[keyof DispatcherEventMap]
+            >,
           ): void {
             const observer = this[
               __DispatchedObservable_observer

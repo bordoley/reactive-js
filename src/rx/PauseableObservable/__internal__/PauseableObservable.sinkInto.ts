@@ -5,6 +5,7 @@ import {
   PauseableObservableLike,
 } from "../../../rx.js";
 import {
+  DispatcherEventMap,
   DispatcherLike,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -24,7 +25,7 @@ const PauseableObservable_sinkInto =
       pipe(
         sink,
         EventSource_addEventHandler(
-          ({ type }: { type: "wait" | "complete" | "drain" }) => {
+          ({ type }: DispatcherEventMap[keyof DispatcherEventMap]) => {
             if (type === "wait" || type === "complete") {
               pauseableObservable[PauseableLike_pause]();
             } else if (type === "drain") {

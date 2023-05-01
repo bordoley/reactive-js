@@ -20,6 +20,10 @@
 - [DictionaryContainer](../interfaces/util.DictionaryContainer.md)
 - [EventSourceContainer](../interfaces/util.EventSourceContainer.md)
 
+### EventMap Interfaces
+
+- [DispatcherEventMap](../interfaces/util.DispatcherEventMap.md)
+
 ### Other Interfaces
 
 - [DispatcherLike](../interfaces/util.DispatcherLike.md)
@@ -28,10 +32,10 @@
 - [EventListenerLike](../interfaces/util.EventListenerLike.md)
 - [EventPublisherLike](../interfaces/util.EventPublisherLike.md)
 - [EventSourceLike](../interfaces/util.EventSourceLike.md)
-- [PauseableLike](../interfaces/util.PauseableLike.md)
 
 ### Scheduler Interfaces
 
+- [PauseableLike](../interfaces/util.PauseableLike.md)
 - [PauseableSchedulerLike](../interfaces/util.PauseableSchedulerLike.md)
 - [SchedulerLike](../interfaces/util.SchedulerLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/util.VirtualTimeSchedulerLike.md)

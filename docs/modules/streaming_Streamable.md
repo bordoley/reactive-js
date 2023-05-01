@@ -48,7 +48,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TEventType` | `unknown` |
+| `TEventType` | extends `string` \| `symbol` |
 | `T` | `number` |
 
 #### Parameters
@@ -70,7 +70,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TEventType_1` | `unknown` |
+| `TEventType_1` | extends `string` \| `symbol` |
 | `T_1` | `number` |
 
 #### Parameters
@@ -92,7 +92,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TEventType_2` | `unknown` |
+| `TEventType_2` | extends `string` \| `symbol` |
 | `T_2` | `number` |
 
 #### Parameters
@@ -116,7 +116,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TEventType_3` | `unknown` |
+| `TEventType_3` | extends `string` \| `symbol` |
 | `T_3` | `number` |
 
 #### Parameters

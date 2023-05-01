@@ -7,7 +7,5 @@ declare const Stream_syncState: <T>(onInit: (initialValue: T) => ObservableLike<
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly scheduler: SchedulerLike;
-}) => Function1<StreamLike<Updater<T>, T, {
-    type: "complete" | "wait" | "drain";
-}>, DisposableLike>;
+}) => Function1<StreamLike<Updater<T>, T>, DisposableLike>;
 export default Stream_syncState;

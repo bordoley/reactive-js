@@ -6,10 +6,10 @@
 
 ## Type parameters
 
-| Name |
-| :------ |
-| `TEventType` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TEventType` | extends `Exclude`<`string` \| `symbol`, keyof [`DispatcherEventMap`](util.DispatcherEventMap.md)\> |
+| `T` | `T` |
 
 ## Hierarchy
 
@@ -27,7 +27,7 @@
 
 ### [\_\_\_StreamableLike\_TStream]
 
-• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](streaming.StreamLike.md)<`TEventType`, `boolean`, { `type`: `TEventType` ; `value`: `T`  } & { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> & [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`boolean`\>
+• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](streaming.StreamLike.md)<`TEventType`, `boolean`\> & [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`boolean`\> & [`EventSourceLike`](util.EventSourceLike.md)<{ `type`: ``"wait"``  } \| { `type`: ``"drain"``  } \| { `type`: ``"complete"``  } \| { `type`: `TEventType` ; `value`: `T`  }\>
 
 #### Overrides
 

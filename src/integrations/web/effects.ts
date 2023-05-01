@@ -10,7 +10,13 @@ import {
 } from "../../functions.js";
 import { ReadonlyObjectMapLike } from "../../keyed-containers.js";
 import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
-import { __memo, __observe, __state, __using } from "../../rx/effects.js";
+import {
+  __constant,
+  __memo,
+  __observe,
+  __state,
+  __using,
+} from "../../rx/effects.js";
 import {
   DisposableLike,
   EventSourceLike,
@@ -63,6 +69,7 @@ export const __animate: Animate["__animate"] = (
   animation: EventSourceLike,
   selector?: (ev: unknown) => ReadonlyObjectMapLike<CSSStyleKey, string>,
 ): SideEffect1<Optional<HTMLElement | null>> => {
+  const memoizedSelector = __constant(selector);
   const htmlElementState = __state<Optional<HTMLElement | null>>(returnsNone);
   const setRef = __memo(makeRefSetter, htmlElementState);
   const htmlElement: Optional<HTMLElement | null> = __observe(htmlElementState);
@@ -71,12 +78,21 @@ export const __animate: Animate["__animate"] = (
     animateHtmlElement,
     htmlElement,
     animation,
-    selector ?? (identity as any),
+    memoizedSelector ?? (identity as any),
   );
 
   return setRef;
 };
 const defaultSelector = <T>(ev: { type: unknown; value: T }) => ev.value;
+
+const filterEvents = (
+  animation: EventSourceLike<{ type: unknown }>,
+  events?: readonly unknown[],
+) =>
+  pipe(
+    animation,
+    EventSource.keep(ev => events?.includes(ev.type) ?? true),
+  );
 
 interface AnimateEvent {
   __animateEvent(
@@ -86,8 +102,27 @@ interface AnimateEvent {
     }>,
   ): SideEffect1<Optional<HTMLElement | null>>;
 
-  __animateEvent<TEventType, T>(
-    animation: EventSourceLike<{ type: TEventType; value: T }>,
+  __animateEvent<
+    TEvent extends {
+      type: TEventType;
+      value: ReadonlyObjectMapLike<CSSStyleKey, string>;
+    },
+    TEventType extends string | symbol,
+  >(
+    animation: EventSourceLike<TEvent>,
+    events: readonly TEventType[],
+  ): SideEffect1<Optional<HTMLElement | null>>;
+
+  __animateEvent<
+    TEvent extends {
+      type: TEventType;
+      value: ReadonlyObjectMapLike<CSSStyleKey, string>;
+    },
+    TEventType extends string | symbol,
+    T,
+  >(
+    animation: EventSourceLike<TEvent>,
+    events: ReadonlyArray<unknown>,
     selector: (ev: {
       type: TEventType;
       value: T;
@@ -96,10 +131,14 @@ interface AnimateEvent {
 }
 export const __animateEvent: AnimateEvent["__animateEvent"] = <TEventType, T>(
   animation: EventSourceLike<{ type: TEventType; value: T }>,
+  events?: ReadonlyArray<unknown>,
   selector?: (ev: {
     type: TEventType;
     value: T;
   }) => ReadonlyObjectMapLike<CSSStyleKey, string>,
 ): SideEffect1<Optional<HTMLElement | null>> => {
-  return __animate(animation, selector ?? (defaultSelector as any));
+  const memoizedEvents = __constant(events);
+  const filteredAnimations = __memo(filterEvents, animation, memoizedEvents);
+
+  return __animate(filteredAnimations, selector ?? (defaultSelector as any));
 };

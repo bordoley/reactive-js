@@ -478,7 +478,7 @@ ___
 
 ### \_\_state
 
-▸ **__state**<`T`\>(`initialState`, `options?`): [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>
+▸ **__state**<`T`\>(`initialState`, `options?`): [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -499,7 +499,7 @@ ___
 
 #### Returns
 
-[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>
+[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 ___
 

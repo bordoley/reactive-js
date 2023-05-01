@@ -33,7 +33,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> |
+| `dispatcher` | [`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`T`\> |
 
 #### Returns
 
@@ -230,7 +230,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> |
+| `sink` | [`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`T`\> |
 
 #### Returns
 

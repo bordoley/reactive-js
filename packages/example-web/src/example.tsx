@@ -52,10 +52,7 @@ import {
   __stream,
   __using,
 } from "@reactive-js/core/rx/effects";
-import {
-  __animate,
-  __animateEvent,
-} from "@reactive-js/core/integrations/web/effects";
+import { __animateEvent } from "@reactive-js/core/integrations/web/effects";
 import { Wordle } from "./wordle";
 import Measure from "./measure";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
@@ -296,9 +293,7 @@ const RxComponent = createComponent(
         PauseableLike_resume,
       );
 
-      // FIXME: Who should filter out events? Maybe __animateEvent should take an array of events
-      // as an argument?
-      const animatedDivRef = __animateEvent(animationEventHandler);
+      const animatedDivRef = __animateEvent(animationEventHandler, ["animate"]);
 
       return (
         <div>

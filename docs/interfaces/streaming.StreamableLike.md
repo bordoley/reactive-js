@@ -49,13 +49,13 @@ TStream
 
 ### [\_\_\_StreamableLike\_TStream]
 
-• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>
+• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`\>
 
 ## Methods
 
 ### [\_\_\_StreamableLike\_stream]
 
-▸ **[___StreamableLike_stream]**(`scheduler`, `options?`): [`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> & [`DisposableLike`](util.DisposableLike.md)
+▸ **[___StreamableLike_stream]**(`scheduler`, `options?`): [`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`\> & [`DisposableLike`](util.DisposableLike.md)
 
 Subscribe to the Streamable.
 
@@ -71,4 +71,4 @@ Subscribe to the Streamable.
 
 #### Returns
 
-[`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> & [`DisposableLike`](util.DisposableLike.md)
+[`StreamLike`](streaming.StreamLike.md)<`TReq`, `T`\> & [`DisposableLike`](util.DisposableLike.md)

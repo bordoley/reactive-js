@@ -27,6 +27,7 @@ import {
   StreamableLike_stream,
 } from "../../../streaming.js";
 import {
+  DispatcherEventMap,
   EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
@@ -45,7 +46,10 @@ import EventPublisher_create from "../../../util/EventPublisher/__internal__/Eve
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createAnimationGroupEventHandler from "./Streamable.createAnimationGroupEventHandler.js";
 
-const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
+const createAnimationEventHandlerStream: <
+  TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>,
+  T = number,
+>(
   animation: Function1<
     TEventType,
     AnimationConfig<T> | readonly AnimationConfig<T>[]
@@ -62,12 +66,14 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }>,
 ) => DisposableStreamOf<AnimationEventHandlerLike<TEventType, T>> =
-  /*@__PURE__*/ (<TEventType, T>() => {
+  /*@__PURE__*/ (<
+    TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>,
+    T,
+  >() => {
     type TProperties = {
       publisher: EventPublisherLike<
-        { type: TEventType; value: T } & {
-          type: "wait" | "drain" | "complete";
-        }
+        | { type: TEventType; value: T }
+        | DispatcherEventMap[keyof DispatcherEventMap]
       >;
     };
 
@@ -163,9 +169,8 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
           [EventSourceLike_addEventListener](
             this: TProperties,
             listener: EventListenerLike<
-              { type: TEventType; value: T } & {
-                type: "wait" | "drain" | "complete";
-              }
+              | { type: TEventType; value: T }
+              | DispatcherEventMap[keyof DispatcherEventMap]
             >,
           ) {
             this.publisher[EventSourceLike_addEventListener](listener);
@@ -176,21 +181,30 @@ const createAnimationEventHandlerStream: <TEventType = unknown, T = number>(
   })();
 
 interface CreateAnimationEventHandler {
-  createAnimationEventHandler<TEventType = unknown, T = number>(
+  createAnimationEventHandler<
+    TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>,
+    T = number,
+  >(
     animation: Function1<
       TEventType,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
     options: { readonly mode: "switching"; readonly concurrency?: number },
   ): AnimationEventHandlerLike<TEventType, T>;
-  createAnimationEventHandler<TEventType = unknown, T = number>(
+  createAnimationEventHandler<
+    TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>,
+    T = number,
+  >(
     animation: Function1<
       TEventType,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
     >,
     options: { readonly mode: "blocking"; readonly concurrency?: number },
   ): AnimationEventHandlerLike<TEventType, T>;
-  createAnimationEventHandler<TEventType = unknown, T = number>(
+  createAnimationEventHandler<
+    TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>,
+    T = number,
+  >(
     animation: Function1<
       TEventType,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
@@ -202,7 +216,10 @@ interface CreateAnimationEventHandler {
       readonly capacity?: number;
     },
   ): AnimationEventHandlerLike<TEventType, T>;
-  createAnimationEventHandler<TEventType = unknown, T = number>(
+  createAnimationEventHandler<
+    TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>,
+    T = number,
+  >(
     animation: Function1<
       TEventType,
       AnimationConfig<T> | readonly AnimationConfig<T>[]
@@ -211,7 +228,10 @@ interface CreateAnimationEventHandler {
 }
 
 const Streamable_createAnimationEventHandler: CreateAnimationEventHandler["createAnimationEventHandler"] =
-  (<TEventType = unknown, T = number>(
+  (<
+    TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>,
+    T = number,
+  >(
     animation: Function1<
       TEventType,
       AnimationConfig<T> | readonly AnimationConfig<T>[]

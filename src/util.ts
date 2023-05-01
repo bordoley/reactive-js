@@ -239,18 +239,23 @@ export interface EventPublisherLike<T = unknown>
 }
 
 /**
+ * @category EventMap
+ */
+export interface DispatcherEventMap {
+  wait: { type: "wait" };
+  drain: { type: "drain" };
+  complete: { type: "complete" };
+}
+
+/**
  * A `QueueableLike` type that consumes enqueued events to
  * be dispatched from any execution constext.
  *
  * @noInheritDoc
  */
-export interface DispatcherLike<
-  T = unknown,
-  TEvents extends { type: "wait" | "drain" | "complete" } = {
-    type: "wait" | "drain" | "complete";
-  },
-> extends QueueableLike<T>,
-    EventSourceLike<TEvents> {
+export interface DispatcherLike<T = unknown>
+  extends QueueableLike<T>,
+    EventSourceLike<DispatcherEventMap[keyof DispatcherEventMap]> {
   /**
    * Communicates to the dispatcher that no more events will be enqueued.
    */
@@ -259,6 +264,7 @@ export interface DispatcherLike<
 
 /**
  * @noInheritDoc
+ * @category Scheduler
  */
 export interface PauseableLike {
   /**

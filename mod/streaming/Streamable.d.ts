@@ -6,21 +6,21 @@ export declare const create: <TReq, T>(op: import("../containers.js").ContainerO
  * @category Constructor
  */
 export declare const createAnimationEventHandler: {
-    <TEventType = unknown, T = number>(animation: import("../functions.js").Function1<TEventType, import("../rx.js").AnimationConfig<T> | readonly import("../rx.js").AnimationConfig<T>[]>, options: {
+    <TEventType extends string | symbol, T = number>(animation: import("../functions.js").Function1<TEventType, import("../rx.js").AnimationConfig<T> | readonly import("../rx.js").AnimationConfig<T>[]>, options: {
         readonly mode: "switching";
         readonly concurrency?: number | undefined;
     }): import("../streaming.js").AnimationEventHandlerLike<TEventType, T>;
-    <TEventType_1 = unknown, T_1 = number>(animation: import("../functions.js").Function1<TEventType_1, import("../rx.js").AnimationConfig<T_1> | readonly import("../rx.js").AnimationConfig<T_1>[]>, options: {
+    <TEventType_1 extends string | symbol, T_1 = number>(animation: import("../functions.js").Function1<TEventType_1, import("../rx.js").AnimationConfig<T_1> | readonly import("../rx.js").AnimationConfig<T_1>[]>, options: {
         readonly mode: "blocking";
         readonly concurrency?: number | undefined;
     }): import("../streaming.js").AnimationEventHandlerLike<TEventType_1, T_1>;
-    <TEventType_2 = unknown, T_2 = number>(animation: import("../functions.js").Function1<TEventType_2, import("../rx.js").AnimationConfig<T_2> | readonly import("../rx.js").AnimationConfig<T_2>[]>, options: {
+    <TEventType_2 extends string | symbol, T_2 = number>(animation: import("../functions.js").Function1<TEventType_2, import("../rx.js").AnimationConfig<T_2> | readonly import("../rx.js").AnimationConfig<T_2>[]>, options: {
         readonly mode: "queueing";
         readonly concurrency?: number | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
     }): import("../streaming.js").AnimationEventHandlerLike<TEventType_2, T_2>;
-    <TEventType_3 = unknown, T_3 = number>(animation: import("../functions.js").Function1<TEventType_3, import("../rx.js").AnimationConfig<T_3> | readonly import("../rx.js").AnimationConfig<T_3>[]>): import("../streaming.js").AnimationEventHandlerLike<TEventType_3, T_3>;
+    <TEventType_3 extends string | symbol, T_3 = number>(animation: import("../functions.js").Function1<TEventType_3, import("../rx.js").AnimationConfig<T_3> | readonly import("../rx.js").AnimationConfig<T_3>[]>): import("../streaming.js").AnimationEventHandlerLike<TEventType_3, T_3>;
 };
 /**
  * @category Constructor

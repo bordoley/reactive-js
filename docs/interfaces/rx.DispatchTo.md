@@ -32,7 +32,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](util.DispatcherLike.md)<`T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\> |
+| `dispatcher` | [`DispatcherLike`](util.DispatcherLike.md)<`T`\> |
 
 #### Returns
 

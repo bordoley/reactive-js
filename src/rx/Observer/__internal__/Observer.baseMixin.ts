@@ -27,6 +27,7 @@ import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import {
   BufferLike_capacity,
   CollectionLike_count,
+  DispatcherEventMap,
   DispatcherLike_complete,
   DisposableLike,
   DisposableLike_dispose,
@@ -67,7 +68,7 @@ const Observer_baseMixin: <T>() => Mixin1<
     [__ObserverMixin_isCompleted]: boolean;
     [__ObserverMixin_dispatchSubscription]: DisposableLike;
     [__ObserverMixin_queuePublisher]: Optional<
-      EventPublisherLike<{ type: "wait" | "drain" | "complete" }>
+      EventPublisherLike<DispatcherEventMap[keyof DispatcherEventMap]>
     >;
   };
 
@@ -186,14 +187,17 @@ const Observer_baseMixin: <T>() => Mixin1<
         },
         [EventSourceLike_addEventListener](
           this: TProperties & ObserverLike,
-          listener: EventListenerLike<{ type: "wait" | "drain" | "complete" }>,
+          listener: EventListenerLike<
+            DispatcherEventMap[keyof DispatcherEventMap]
+          >,
         ): void {
           const publisher =
             this[__ObserverMixin_queuePublisher] ??
             (() => {
-              const publisher = EventPublisher_create<{
-                type: "wait" | "drain" | "complete";
-              }>();
+              const publisher =
+                EventPublisher_create<
+                  DispatcherEventMap[keyof DispatcherEventMap]
+                >();
               this[__ObserverMixin_queuePublisher] = publisher;
 
               return pipe(publisher, Disposable_addTo(this));

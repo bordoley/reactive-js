@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [util](../modules/util.md) / DispatcherLike
 
-# Interface: DispatcherLike<T, TEvents\>
+# Interface: DispatcherLike<T\>
 
 [util](../modules/util.md).DispatcherLike
 
@@ -12,13 +12,12 @@ be dispatched from any execution constext.
 | Name | Type |
 | :------ | :------ |
 | `T` | `unknown` |
-| `TEvents` | extends `Object` = { `type`: ``"wait"`` \| ``"drain"`` \| ``"complete"``  } |
 
 ## Hierarchy
 
 - [`QueueableLike`](util.QueueableLike.md)<`T`\>
 
-- [`EventSourceLike`](util.EventSourceLike.md)<`TEvents`\>
+- [`EventSourceLike`](util.EventSourceLike.md)<[`DispatcherEventMap`](util.DispatcherEventMap.md)[keyof [`DispatcherEventMap`](util.DispatcherEventMap.md)]\>
 
   ↳ **`DispatcherLike`**
 

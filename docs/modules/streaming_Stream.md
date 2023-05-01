@@ -12,7 +12,7 @@
 
 ### syncState
 
-▸ **syncState**<`T`\>(`onInit`, `onChange`, `options?`): [`Function1`](functions.md#function1)<[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+▸ **syncState**<`T`\>(`onInit`, `onChange`, `options?`): [`Function1`](functions.md#function1)<[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -34,4 +34,4 @@
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, { `type`: ``"complete"`` \| ``"wait"`` \| ``"drain"``  }\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>, [`DisposableLike`](../interfaces/util.DisposableLike.md)\>

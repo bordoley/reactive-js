@@ -13,6 +13,7 @@ import {
 import {
   AssociativeCollectionLike,
   DictionaryLike,
+  DispatcherEventMap,
   DispatcherLike,
   DisposableLike,
   EventSourceLike,
@@ -28,13 +29,8 @@ export { StreamableLike_stream, StreamLike_scheduler };
  *
  * @noInheritDoc
  */
-export interface StreamLike<
-  TReq,
-  T,
-  TEvents extends { type: "wait" | "drain" | "complete" } = {
-    type: "wait" | "drain" | "complete";
-  },
-> extends DispatcherLike<TReq, TEvents>,
+export interface StreamLike<TReq, T>
+  extends DispatcherLike<TReq>,
     MulticastObservableLike<T> {
   readonly [StreamLike_scheduler]: SchedulerLike;
 }
@@ -115,16 +111,16 @@ export interface AnimationGroupEventHandlerLike<
  * @noInheritDoc
  *  @category Streamable
  */
-export interface AnimationEventHandlerLike<TEventType, T>
-  extends StreamableLike<TEventType, boolean> {
-  readonly [StreamableLike_TStream]?: StreamLike<
-    TEventType,
-    boolean,
-    { type: TEventType; value: T } & {
-      type: "wait" | "drain" | "complete";
-    }
-  > &
-    PauseableObservableLike<boolean>;
+export interface AnimationEventHandlerLike<
+  TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>,
+  T,
+> extends StreamableLike<TEventType, boolean> {
+  readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> &
+    PauseableObservableLike<boolean> &
+    EventSourceLike<
+      | { type: TEventType; value: T }
+      | DispatcherEventMap[keyof DispatcherEventMap]
+    >;
 }
 
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<

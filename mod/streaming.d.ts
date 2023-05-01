@@ -2,18 +2,14 @@ import { __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_TStrea
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike, PauseableObservableLike } from "./rx.js";
-import { AssociativeCollectionLike, DictionaryLike, DispatcherLike, DisposableLike, EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
+import { AssociativeCollectionLike, DictionaryLike, DispatcherEventMap, DispatcherLike, DisposableLike, EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { StreamableLike_stream, StreamLike_scheduler };
 /**
  * Represents a duplex stream
  *
  * @noInheritDoc
  */
-export interface StreamLike<TReq, T, TEvents extends {
-    type: "wait" | "drain" | "complete";
-} = {
-    type: "wait" | "drain" | "complete";
-}> extends DispatcherLike<TReq, TEvents>, MulticastObservableLike<T> {
+export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
     readonly [StreamLike_scheduler]: SchedulerLike;
 }
 /**
@@ -73,13 +69,11 @@ export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends stri
  * @noInheritDoc
  *  @category Streamable
  */
-export interface AnimationEventHandlerLike<TEventType, T> extends StreamableLike<TEventType, boolean> {
-    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean, {
+export interface AnimationEventHandlerLike<TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>, T> extends StreamableLike<TEventType, boolean> {
+    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableObservableLike<boolean> & EventSourceLike<{
         type: TEventType;
         value: T;
-    } & {
-        type: "wait" | "drain" | "complete";
-    }> & PauseableObservableLike<boolean>;
+    } | DispatcherEventMap[keyof DispatcherEventMap]>;
 }
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;
 export type DisposableStreamOf<TStreamable extends StreamableLike> = StreamOf<TStreamable> & DisposableLike;
