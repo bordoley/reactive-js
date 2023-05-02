@@ -160,7 +160,7 @@ export interface PauseableObservableLike<T = unknown>
   readonly [ObservableLike_isRunnable]: false;
 }
 
-/*
+/**
  * @noInheritDoc
  * @category Container
  */

@@ -109,6 +109,10 @@ export interface PauseableObservableLike<T = unknown> extends ObservableLike<T>,
     readonly [ObservableLike_isEnumerable]: false;
     readonly [ObservableLike_isRunnable]: false;
 }
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface PauseableObservableContainer extends Container {
     readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
 }
