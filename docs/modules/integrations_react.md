@@ -146,7 +146,6 @@ ___
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
 | `options.mode` | ``"switching"`` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
@@ -173,7 +172,6 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`Eve
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
 | `options.mode` | ``"blocking"`` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
@@ -200,7 +198,6 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`Eve
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
 | `options.mode` | ``"queueing"`` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
@@ -227,7 +224,6 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`Eve
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
 #### Returns

@@ -9,9 +9,11 @@ import {
   returns,
 } from "@reactive-js/core/functions";
 import {
+  PauseableLike_isPaused,
   PauseableLike_pause, 
   PauseableLike_resume
 } from "@reactive-js/core/util";
+import * as EventSource from "@reactive-js/core/util/EventSource";
 
   const scheduler = Scheduler.createHostScheduler();
 
@@ -25,8 +27,10 @@ import {
 
   const isPaused = pipe(
     counter,
+    EventSource.keep(ev => ev.type === "paused" || ev.type === "resumed"),
+    EventSource.map(ev => ev.type === "paused"),
     EventSource.toObservable(),
-    EventSource.keep(ev => ev.type === "paused" | ev.type === "resumed"),
+    subscribe(scheduler),
   );
 
   const counterValue = pipe(
@@ -37,5 +41,10 @@ import {
 
 <main>
 	<h1>{$counterValue ?? 0}</h1>
-   <button on:click={$isPaused ? resume : pause}>{$isPaused ? "Resume" : "Pause"}</button>
+   <button 
+     on:click={
+      ($isPaused ?? counter[PauseableLike_isPaused]) ? resume : pause
+    }>{
+      ($isPaused ?? counter[PauseableLike_isPaused]) ? "Resume" : "Pause"
+    }</button>
 </main>

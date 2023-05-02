@@ -3,7 +3,9 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __AnimationGroupEventHandler_eventPublisher } from "../../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
-import { incrementBy, isSome, none, pipe, pipeLazy, returns, unsafeCast, } from "../../../functions.js";
+import Enumerator_map from "../../../containers/Enumerator/__internal__/Enumerator.map.js";
+import Enumerator_toReadonlyArray from "../../../containers/Enumerator/__internal__/Enumerator.toReadonlyArray.js";
+import { incrementBy, isSome, none, pipe, returns, unsafeCast, } from "../../../functions.js";
 import ReadonlyObjectMap_keys from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
 import ReadonlyObjectMap_map from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.map.js";
 import ReadonlyObjectMap_mapWithKey from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
@@ -13,9 +15,8 @@ import Observable_animate from "../../../rx/Observable/__internal__/Observable.a
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
-import Observable_mergeAll from "../../../rx/Observable/__internal__/Observable.mergeAll.js";
+import Observable_mergeObservables from "../../../rx/Observable/__internal__/Observable.mergeObservables.js";
 import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
-import Runnable_fromEnumeratorFactory from "../../../rx/Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import { AssociativeCollectionLike_keys, CollectionLike_count, EventListenerLike_notify, EventSourceLike_addEventListener, KeyedCollectionLike_get, PauseableLike_resume, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
@@ -35,9 +36,7 @@ const createAnimationGroupEventHandlerStream =
                     publisher[EventListenerLike_notify](value);
                 }
             }), Observable_ignoreElements())));
-            return pipe(Runnable_fromEnumeratorFactory(pipeLazy(observables, ReadonlyObjectMap_values())), Observable_map(Observable_subscribeOn(animationScheduler)), Observable_mergeAll({
-                concurrency: creationOptions?.concurrency,
-            }));
+            return pipe(observables, ReadonlyObjectMap_values(), Enumerator_map(Observable_subscribeOn(animationScheduler)), Enumerator_toReadonlyArray(), Observable_mergeObservables);
         }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         init(Stream_delegatingMixin(), instance, streamDelegate);
         const publishers = pipe(animationGroup, ReadonlyObjectMap_map(_ => pipe(EventPublisher_create(), Disposable_addTo(instance))));

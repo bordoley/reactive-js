@@ -149,7 +149,6 @@ ___
 | :------ | :------ |
 | `animationGroup` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[]\>\> |
 | `options` | `Object` |
-| `options.concurrency?` | `number` |
 | `options.mode` | ``"switching"`` |
 
 #### Returns
@@ -172,7 +171,6 @@ ___
 | :------ | :------ |
 | `animationGroup` | [`ReadonlyObjectMapLike`](keyed_containers.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEventType_1`, [`AnimationConfig`](rx.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T_1`\>[]\>\> |
 | `options` | `Object` |
-| `options.concurrency?` | `number` |
 | `options.mode` | ``"blocking"`` |
 
 #### Returns
@@ -197,7 +195,6 @@ ___
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
 | `options.mode` | ``"queueing"`` |
 
 #### Returns

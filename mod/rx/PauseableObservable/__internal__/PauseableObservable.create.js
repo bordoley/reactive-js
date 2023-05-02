@@ -30,7 +30,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [__PauseableObservable_eventPublisher]: none,
-        [PauseableLike_isPaused]: false,
+        [PauseableLike_isPaused]: true,
     }), {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,

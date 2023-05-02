@@ -605,7 +605,6 @@ interface UseAnimationGroup {
     deps: readonly unknown[],
     options: {
       readonly mode: "switching";
-      readonly concurrency?: number;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
@@ -643,7 +642,6 @@ interface UseAnimationGroup {
     deps: readonly unknown[],
     options: {
       readonly mode: "blocking";
-      readonly concurrency?: number;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
@@ -681,7 +679,6 @@ interface UseAnimationGroup {
     deps: readonly unknown[],
     options: {
       readonly mode: "queueing";
-      readonly concurrency?: number;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
@@ -718,7 +715,6 @@ interface UseAnimationGroup {
     >,
     deps: readonly unknown[],
     options?: {
-      readonly concurrency?: number;
       readonly priority?: 1 | 2 | 3 | 4 | 5;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
@@ -750,7 +746,6 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
   deps: readonly unknown[],
   options: {
     readonly mode?: "switching" | "blocking" | "queueing";
-    readonly concurrency?: number;
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
@@ -792,7 +787,7 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
         },
       };
     },
-    [animations, options.concurrency, options.mode, options?.priority],
+    [animations, options.mode, options?.priority],
     options,
   );
 
@@ -984,7 +979,6 @@ export const useAnimation: UseAnimation["useAnimation"] = (<
   deps: readonly unknown[],
   options: {
     readonly mode?: "switching" | "blocking" | "queueing";
-    readonly concurrency?: number;
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;

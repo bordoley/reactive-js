@@ -6,15 +6,12 @@ import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util
 interface CreateAnimationGroupEventHandler {
     createAnimationGroupEventHandler<TEventType = unknown, T = number, TKey extends string | symbol | number = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>>, options: {
         readonly mode: "switching";
-        readonly concurrency?: number;
     }): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
     createAnimationGroupEventHandler<TEventType = unknown, T = number, TKey extends string | symbol | number = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>>, options: {
         readonly mode: "blocking";
-        readonly concurrency?: number;
     }): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
     createAnimationGroupEventHandler<TEventType = unknown, T = number, TKey extends string | symbol | number = string>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>>, options: {
         readonly mode: "queueing";
-        readonly concurrency?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): AnimationGroupEventHandlerLike<TEventType, T, TKey>;

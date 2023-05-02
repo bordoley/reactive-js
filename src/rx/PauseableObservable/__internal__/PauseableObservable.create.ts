@@ -102,7 +102,7 @@ const PauseableObservable_create: <T>(
       },
       props<TProperties>({
         [__PauseableObservable_eventPublisher]: none,
-        [PauseableLike_isPaused]: false,
+        [PauseableLike_isPaused]: true,
       }),
       {
         [ObservableLike_isEnumerable]: false as const,

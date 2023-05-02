@@ -11,6 +11,8 @@ import {
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
 import { EnumeratorLike } from "../../../containers.js";
+import Enumerator_map from "../../../containers/Enumerator/__internal__/Enumerator.map.js";
+import Enumerator_toReadonlyArray from "../../../containers/Enumerator/__internal__/Enumerator.toReadonlyArray.js";
 import {
   Function1,
   Optional,
@@ -18,7 +20,6 @@ import {
   isSome,
   none,
   pipe,
-  pipeLazy,
   returns,
   unsafeCast,
 } from "../../../functions.js";
@@ -37,9 +38,8 @@ import Observable_animate from "../../../rx/Observable/__internal__/Observable.a
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
-import Observable_mergeAll from "../../../rx/Observable/__internal__/Observable.mergeAll.js";
+import Observable_mergeObservables from "../../../rx/Observable/__internal__/Observable.mergeObservables.js";
 import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
-import Runnable_fromEnumeratorFactory from "../../../rx/Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import {
   AnimationGroupEventHandlerLike,
   DisposableStreamOf,
@@ -83,7 +83,6 @@ const createAnimationGroupEventHandlerStream: <
   >,
   creationOptions: Optional<{
     readonly mode?: "switching" | "blocking" | "queueing";
-    readonly concurrency?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
   }>,
@@ -137,7 +136,6 @@ const createAnimationGroupEventHandlerStream: <
           >,
           creationOptions: Optional<{
             readonly mode?: "switching" | "blocking" | "queueing";
-            readonly concurrency?: number;
             readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
             readonly capacity?: number;
           }>,
@@ -187,17 +185,11 @@ const createAnimationGroupEventHandlerStream: <
               );
 
               return pipe(
-                Runnable_fromEnumeratorFactory(
-                  pipeLazy(observables, ReadonlyObjectMap_values()),
-                ),
-                Observable_map<
-                  ObservableContainer,
-                  ObservableLike<T>,
-                  ObservableLike<T>
-                >(Observable_subscribeOn(animationScheduler)),
-                Observable_mergeAll({
-                  concurrency: creationOptions?.concurrency,
-                }),
+                observables,
+                ReadonlyObjectMap_values(),
+                Enumerator_map(Observable_subscribeOn(animationScheduler)),
+                Enumerator_toReadonlyArray(),
+                Observable_mergeObservables,
               );
             },
             creationOptions as any,
@@ -309,7 +301,7 @@ interface CreateAnimationGroupEventHandler {
       TKey,
       Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
     >,
-    options: { readonly mode: "switching"; readonly concurrency?: number },
+    options: { readonly mode: "switching" },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
   createAnimationGroupEventHandler<
     TEventType = unknown,
@@ -320,7 +312,7 @@ interface CreateAnimationGroupEventHandler {
       TKey,
       Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
     >,
-    options: { readonly mode: "blocking"; readonly concurrency?: number },
+    options: { readonly mode: "blocking" },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
   createAnimationGroupEventHandler<
     TEventType = unknown,
@@ -333,7 +325,6 @@ interface CreateAnimationGroupEventHandler {
     >,
     options: {
       readonly mode: "queueing";
-      readonly concurrency?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
@@ -361,7 +352,6 @@ const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHand
     >,
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";
-      readonly concurrency?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },

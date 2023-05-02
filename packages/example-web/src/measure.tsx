@@ -1,6 +1,11 @@
-import { Optional, pipeLazy, pipeSome } from "@reactive-js/core/functions";
-import React, { useEffect, useState } from "react";
-import { Rect } from "@reactive-js/core/integrations/web";
+import {
+  Optional,
+  compose,
+  pipe,
+  pipeLazy,
+  pipeSome,
+} from "@reactive-js/core/functions";
+import React, { useState } from "react";
 import * as Observable from "@reactive-js/core/rx/Observable";
 import {
   useAnimation,
@@ -9,21 +14,10 @@ import {
 import { useAnimateEvent } from "@reactive-js/core/integrations/react/web";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
+import { Rect } from "@reactive-js/core/integrations/web";
 
 const Measure = () => {
-  const [open, toggle] = useState(false);
-
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
-
-  const { width: boxWidth } = useObservable(
-    () =>
-      pipeSome(
-        container,
-        WebElement.observeMeasure(),
-        Observable.throttle(50),
-      ) ?? Observable.empty<Rect>(),
-    [container],
-  ) ?? { width: 0 };
 
   const [animation, { dispatch }] = useAnimation<
     number,
@@ -33,12 +27,40 @@ const Measure = () => {
       type: "spring",
       from: prevWidth,
       to: width,
-      precision: 0.1,
+      precision: 0.2,
     }),
-
     [],
     { mode: "switching" },
   );
+
+  const { width: boxWidth } = useObservable<Rect>(
+    () =>
+      pipeSome(
+        container,
+        WebElement.observeMeasure(),
+        Observable.throttle(50),
+        Observable.forkMerge(
+          compose(
+            Observable.withLatestFrom(
+              pipe(animation, EventSource.toObservable()),
+              ({ width: boxWidth }, ev) => [boxWidth, ev.value],
+            ),
+            Observable.forEach(([boxWidth, width]) => {
+              // FIXME: This logic can result in the number bouncint around a bit.
+              // Could probably be cleaned up.
+              if (boxWidth > width && width > 0) {
+                dispatch({ prevWidth: width, width: boxWidth });
+              } else if (width > boxWidth) {
+                dispatch({ prevWidth: width, width: boxWidth });
+              }
+            }),
+            Observable.ignoreElements(),
+          ),
+          Observable.identity(),
+        ),
+      ) ?? Observable.empty<Rect>(),
+    [container, animation, dispatch],
+  ) ?? { width: 0 };
 
   const width =
     useObservable(
@@ -51,18 +73,6 @@ const Measure = () => {
       ),
       [animation],
     ) ?? 0;
-
-  useEffect(() => {
-    if (width > 0 && boxWidth > width && open) {
-      dispatch({ prevWidth: width, width: boxWidth });
-    } else if (width === 0 && open) {
-      dispatch({ prevWidth: 0, width: boxWidth });
-    } else if (width >= boxWidth && !open) {
-      dispatch({ prevWidth: boxWidth, width: 0 });
-    } else if (width >= boxWidth && open) {
-      dispatch({ prevWidth: boxWidth, width: boxWidth });
-    }
-  }, [width, open, boxWidth, dispatch]);
 
   const fillRef = useAnimateEvent<HTMLDivElement, number>(animation, ev => ({
     width: `${ev.value}px`,
@@ -88,7 +98,11 @@ const Measure = () => {
           overflow: "hidden",
         }}
         onClick={() => {
-          toggle(s => !s);
+          if (width > 0) {
+            dispatch({ prevWidth: width, width: 0 });
+          } else {
+            dispatch({ prevWidth: 0, width: boxWidth });
+          }
         }}
       >
         <div
