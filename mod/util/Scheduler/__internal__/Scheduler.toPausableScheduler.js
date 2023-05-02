@@ -3,16 +3,18 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { __PauseableScheduler_delayed, __PauseableScheduler_dueTime, __PauseableScheduler_hostContinuation, __PauseableScheduler_hostScheduler, __PauseableScheduler_queue, __PauseableScheduler_taskIDCounter, } from "../../../__internal__/symbols.js";
+import { __PauseableScheduler_delayed, __PauseableScheduler_dueTime, __PauseableScheduler_eventPublisher, __PauseableScheduler_hostContinuation, __PauseableScheduler_hostScheduler, __PauseableScheduler_queue, __PauseableScheduler_taskIDCounter, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, QueueLike_head, SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, SerialDisposableLike_current, } from "../../../__internal__/util.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
-import { isNone, isSome, none, unsafeCast, } from "../../../functions.js";
-import { DisposableLike_isDisposed, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../../util.js";
+import { isNone, isSome, none, pipe, unsafeCast, } from "../../../functions.js";
+import { DisposableLike_isDisposed, EventListenerLike_notify, EventSourceLike_addEventListener, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
+import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
+import EventPublisher_create from "../../EventPublisher/__internal__/EventPublisher.create.js";
 import { SchedulerImplementationLike_runContinuation, SchedulerImplementationLike_scheduleContinuation, SchedulerImplementationLike_shouldYield, SchedulerImplementation_mixin, } from "./SchedulerImplementation.mixin.js";
 const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
     const delayedComparator = (a, b) => {
@@ -100,6 +102,7 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
     }, props({
         [__PauseableScheduler_delayed]: none,
         [__PauseableScheduler_dueTime]: 0,
+        [__PauseableScheduler_eventPublisher]: none,
         [__PauseableScheduler_hostScheduler]: none,
         [__PauseableScheduler_hostContinuation]: none,
         [PauseableLike_isPaused]: true,
@@ -121,13 +124,24 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
                         this[__PauseableScheduler_hostScheduler][SchedulerLike_now]) ||
                 this[__PauseableScheduler_hostScheduler][SchedulerLike_shouldYield]);
         },
+        [EventSourceLike_addEventListener](listener) {
+            const publisher = this[__PauseableScheduler_eventPublisher] ??
+                (() => {
+                    const publisher = pipe(EventPublisher_create(), Disposable_addTo(this));
+                    this[__PauseableScheduler_eventPublisher] = publisher;
+                    return publisher;
+                })();
+            publisher[EventSourceLike_addEventListener](listener);
+        },
         [PauseableLike_pause]() {
             this[PauseableLike_isPaused] = true;
             this[SerialDisposableLike_current] = Disposable_disposed;
+            this[__PauseableScheduler_eventPublisher]?.[EventListenerLike_notify]({ type: "paused" });
         },
         [PauseableLike_resume]() {
             this[PauseableLike_isPaused] = false;
             scheduleOnHost(this);
+            this[__PauseableScheduler_eventPublisher]?.[EventListenerLike_notify]({ type: "resumed" });
         },
         [EnumeratorLike_move]() {
             // First fast forward through disposed tasks.

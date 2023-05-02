@@ -6,11 +6,13 @@
 
 ## Hierarchy
 
-- **`PauseableLike`**
+- [`EventSourceLike`](util.EventSourceLike.md)<[`PauseableEventMap`](util.PauseableEventMap.md)[keyof [`PauseableEventMap`](util.PauseableEventMap.md)]\>
 
-  ↳ [`PauseableObservableLike`](rx.PauseableObservableLike.md)
+  ↳ **`PauseableLike`**
 
-  ↳ [`PauseableSchedulerLike`](util.PauseableSchedulerLike.md)
+  ↳↳ [`PauseableObservableLike`](rx.PauseableObservableLike.md)
+
+  ↳↳ [`PauseableSchedulerLike`](util.PauseableSchedulerLike.md)
 
 ## Table of contents
 

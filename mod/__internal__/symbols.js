@@ -192,6 +192,8 @@ export const __WithLatestLike_otherLatest = /*@__PURE__*/ symbol("WithLatestLike
 /** @type {unique symbol} */
 export const __WithLatestLike_selector = /*@__PURE__*/ symbol("WithLatestLike_selector");
 /** @type {unique symbol} */
+export const __AnimationGroupEventHandler_eventPublisher = /*@__PURE__*/ symbol("AnimationGroupEventHandler_eventPublisher");
+/** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable = /*@__PURE__*/ symbol("AwaitOrObserveEffect_observable");
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_subscription = /*@__PURE__*/ symbol("AwaitOrObserveEffect_subscription");
@@ -307,13 +309,13 @@ export const __PairwiseObserver_prev = /*@__PURE__*/ symbol("PairwiseObserver_pr
 /** @type {unique symbol} */
 export const __PairwiseObserver_hasPrev = /*@__PURE__*/ symbol("PairwiseObserver_hasPrev");
 /** @type {unique symbol} */
-export const __PriorityQueueImpl_comparator = /*@__PURE__*/ symbol("PriorityQueueImpl_comparator ");
-/** @type {unique symbol} */
-export const __Publisher_observers = /*@__PURE__*/ symbol("Publisher_observers");
+export const __PauseableObservable_eventPublisher = /*@__PURE__*/ symbol("PauseableObservable_eventPublisher");
 /** @type {unique symbol} */
 export const __PauseableScheduler_delayed = /*@__PURE__*/ symbol("PauseableScheduler_delayed ");
 /** @type {unique symbol} */
 export const __PauseableScheduler_dueTime = /*@__PURE__*/ symbol("PauseableScheduler_dueTime ");
+/** @type {unique symbol} */
+export const __PauseableScheduler_eventPublisher = /*@__PURE__*/ symbol("PauseableScheduler_eventPublisher");
 /** @type {unique symbol} */
 export const __PauseableScheduler_hostContinuation = /*@__PURE__*/ symbol("PauseableScheduler_hostContinuation ");
 /** @type {unique symbol} */
@@ -322,6 +324,10 @@ export const __PauseableScheduler_hostScheduler = /*@__PURE__*/ symbol("Pauseabl
 export const __PauseableScheduler_queue = /*@__PURE__*/ symbol("PauseableScheduler_queue ");
 /** @type {unique symbol} */
 export const __PauseableScheduler_taskIDCounter = /*@__PURE__*/ symbol("PauseableScheduler_taskIDCounter ");
+/** @type {unique symbol} */
+export const __PriorityQueueImpl_comparator = /*@__PURE__*/ symbol("PriorityQueueImpl_comparator ");
+/** @type {unique symbol} */
+export const __Publisher_observers = /*@__PURE__*/ symbol("Publisher_observers");
 /** @type {unique symbol} */
 export const __ReadonlyArrayEnumerator_values = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_values");
 /** @type {unique symbol} */

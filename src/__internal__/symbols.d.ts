@@ -182,6 +182,8 @@ export declare const __WithLatestLike_otherLatest: unique symbol;
 
 export declare const __WithLatestLike_selector: unique symbol;
 
+export declare const __AnimationGroupEventHandler_eventPublisher: unique symbol;
+
 export declare const __AwaitOrObserveEffect_observable: unique symbol;
 
 export declare const __AwaitOrObserveEffect_subscription: unique symbol;
@@ -296,13 +298,13 @@ export declare const __PairwiseObserver_prev: unique symbol;
 
 export declare const __PairwiseObserver_hasPrev: unique symbol;
 
-export declare const __PriorityQueueImpl_comparator: unique symbol;
-
-export declare const __Publisher_observers: unique symbol;
+export declare const __PauseableObservable_eventPublisher: unique symbol;
 
 export declare const __PauseableScheduler_delayed: unique symbol;
 
 export declare const __PauseableScheduler_dueTime: unique symbol;
+
+export declare const __PauseableScheduler_eventPublisher: unique symbol;
 
 export declare const __PauseableScheduler_hostContinuation: unique symbol;
 
@@ -311,6 +313,10 @@ export declare const __PauseableScheduler_hostScheduler: unique symbol;
 export declare const __PauseableScheduler_queue: unique symbol;
 
 export declare const __PauseableScheduler_taskIDCounter: unique symbol;
+
+export declare const __PriorityQueueImpl_comparator: unique symbol;
+
+export declare const __Publisher_observers: unique symbol;
 
 export declare const __ReadonlyArrayEnumerator_values: unique symbol;
 

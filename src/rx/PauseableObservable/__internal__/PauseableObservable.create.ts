@@ -5,9 +5,15 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { __PauseableObservable_eventPublisher } from "../../../__internal__/symbols.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import {
+  Optional,
   Updater,
   bindMethod,
   compose,
@@ -19,15 +25,23 @@ import {
   MulticastObservableLike,
   MulticastObservableLike_buffer,
   ObservableContainer,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
+  ObservableLike_observe,
+  ObserverLike,
   PauseableObservableLike,
   PauseableObservableLike_isPaused,
 } from "../../../rx.js";
 import { StreamLike } from "../../../streaming.js";
-import Stream_mixin from "../../../streaming/Stream/__internal__/Stream.mixin.js";
+import Stream_create from "../../../streaming/Stream/__internal__/Stream.create.js";
 import {
   DisposableLike,
+  EventListenerLike,
   EventListenerLike_notify,
+  EventPublisherLike,
+  EventSourceLike_addEventListener,
   KeyedCollectionLike_get,
+  PauseableEventMap,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -36,7 +50,11 @@ import {
   QueueableLike_enqueue,
   SchedulerLike,
 } from "../../../util.js";
+import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
+import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
+import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
 import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -52,20 +70,17 @@ const PauseableObservable_create: <T>(
   },
 ) => PauseableObservableLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   type TProperties = {
+    [__PauseableObservable_eventPublisher]: Optional<
+      EventPublisherLike<PauseableEventMap[keyof PauseableEventMap]>
+    >;
     [PauseableObservableLike_isPaused]: MulticastObservableLike<boolean>;
   };
 
   return createInstanceFactory(
     mix(
-      include(Stream_mixin<boolean, T>()),
+      include(Disposable_delegatingMixin, Delegating_mixin()),
       function PauseableObservable(
-        instance: TProperties &
-          Pick<
-            PauseableObservableLike<T>,
-            | typeof PauseableLike_isPaused
-            | typeof PauseableLike_pause
-            | typeof PauseableLike_resume
-          >,
+        instance: TProperties & PauseableObservableLike<T>,
         op: ContainerOperator<ObservableContainer, boolean, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
@@ -88,27 +103,32 @@ const PauseableObservable_create: <T>(
           Observable_forEach<ObservableContainer, boolean>(
             bindMethod(publisher, EventListenerLike_notify),
           ),
+          Observable_forEach<ObservableContainer, boolean>(ev => {
+            instance[__PauseableObservable_eventPublisher]?.[
+              EventListenerLike_notify
+            ](ev ? { type: "paused" } : { type: "resumed" });
+          }),
           op,
         );
 
-        init(
-          Stream_mixin<boolean, T>(),
-          instance,
-          liftedOp,
-          scheduler,
-          multicastOptions,
-        );
+        const stream = Stream_create(liftedOp, scheduler, multicastOptions);
+        init(Disposable_delegatingMixin, instance, stream);
+        init(Delegating_mixin(), instance, stream);
 
         pipe(instance, Disposable_add(publisher));
 
         instance[PauseableObservableLike_isPaused] = publisher;
 
-        return instance as PauseableObservableLike<T> & DisposableLike;
+        return instance;
       },
       props<TProperties>({
         [PauseableObservableLike_isPaused]: none,
+        [__PauseableObservable_eventPublisher]: none,
       }),
       {
+        [ObservableLike_isEnumerable]: false as const,
+        [ObservableLike_isRunnable]: false as const,
+
         get [PauseableLike_isPaused](): boolean {
           unsafeCast<TProperties>(this);
           return (
@@ -118,11 +138,39 @@ const PauseableObservable_create: <T>(
           );
         },
 
-        [PauseableLike_pause](this: StreamLike<boolean, T>) {
-          this[QueueableLike_enqueue](true);
+        [EventSourceLike_addEventListener](
+          this: TProperties & DisposableLike,
+          listener: EventListenerLike<
+            PauseableEventMap[keyof PauseableEventMap]
+          >,
+        ): void {
+          const publisher =
+            this[__PauseableObservable_eventPublisher] ??
+            (() => {
+              const publisher = pipe(
+                EventPublisher_create(),
+                Disposable_addTo(this),
+              );
+              this[__PauseableObservable_eventPublisher] = publisher;
+              return publisher;
+            })();
+
+          publisher[EventSourceLike_addEventListener](listener);
         },
-        [PauseableLike_resume](this: StreamLike<boolean, T>) {
-          this[QueueableLike_enqueue](false);
+
+        [ObservableLike_observe](
+          this: DelegatingLike<StreamLike<boolean, T>>,
+          observer: ObserverLike<T>,
+        ) {
+          this[DelegatingLike_delegate][ObservableLike_observe](observer);
+        },
+
+        [PauseableLike_pause](this: DelegatingLike<StreamLike<boolean, T>>) {
+          this[DelegatingLike_delegate][QueueableLike_enqueue](true);
+        },
+
+        [PauseableLike_resume](this: DelegatingLike<StreamLike<boolean, T>>) {
+          this[DelegatingLike_delegate][QueueableLike_enqueue](false);
         },
       },
     ),

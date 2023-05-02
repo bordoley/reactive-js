@@ -2,7 +2,7 @@ import { __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_TStrea
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import { MulticastObservableLike, ObservableLike, PauseableObservableLike } from "./rx.js";
-import { AssociativeCollectionLike, DictionaryLike, DispatcherEventMap, DispatcherLike, DisposableLike, EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
+import { AssociativeCollectionLike, DictionaryLike, DispatcherEventMap, DispatcherLike, DisposableLike, EventSourceLike, PauseableEventMap, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { StreamableLike_stream, StreamLike_scheduler };
 /**
  * Represents a duplex stream
@@ -62,7 +62,7 @@ export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends stri
     readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableObservableLike<boolean> & DictionaryLike<TKey, EventSourceLike<{
         type: TEventType;
         value: T;
-    }>>;
+    }>> & EventSourceLike<DispatcherEventMap[keyof DispatcherEventMap] | PauseableEventMap[keyof PauseableEventMap]>;
 }
 /**
  *
@@ -73,7 +73,7 @@ export interface AnimationEventHandlerLike<TEventType extends Exclude<string | s
     readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableObservableLike<boolean> & EventSourceLike<{
         type: TEventType;
         value: T;
-    } | DispatcherEventMap[keyof DispatcherEventMap]>;
+    } | DispatcherEventMap[keyof DispatcherEventMap] | PauseableEventMap[keyof PauseableEventMap]>;
 }
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;
 export type DisposableStreamOf<TStreamable extends StreamableLike> = StreamOf<TStreamable> & DisposableLike;

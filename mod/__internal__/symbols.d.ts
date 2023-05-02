@@ -183,6 +183,8 @@ export const __WithLatestLike_otherLatest: unique symbol;
 /** @type {unique symbol} */
 export const __WithLatestLike_selector: unique symbol;
 /** @type {unique symbol} */
+export const __AnimationGroupEventHandler_eventPublisher: unique symbol;
+/** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable: unique symbol;
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_subscription: unique symbol;
@@ -297,13 +299,13 @@ export const __PairwiseObserver_prev: unique symbol;
 /** @type {unique symbol} */
 export const __PairwiseObserver_hasPrev: unique symbol;
 /** @type {unique symbol} */
-export const __PriorityQueueImpl_comparator: unique symbol;
-/** @type {unique symbol} */
-export const __Publisher_observers: unique symbol;
+export const __PauseableObservable_eventPublisher: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableScheduler_delayed: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableScheduler_dueTime: unique symbol;
+/** @type {unique symbol} */
+export const __PauseableScheduler_eventPublisher: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableScheduler_hostContinuation: unique symbol;
 /** @type {unique symbol} */
@@ -312,6 +314,10 @@ export const __PauseableScheduler_hostScheduler: unique symbol;
 export const __PauseableScheduler_queue: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableScheduler_taskIDCounter: unique symbol;
+/** @type {unique symbol} */
+export const __PriorityQueueImpl_comparator: unique symbol;
+/** @type {unique symbol} */
+export const __Publisher_observers: unique symbol;
 /** @type {unique symbol} */
 export const __ReadonlyArrayEnumerator_values: unique symbol;
 /** @type {unique symbol} */

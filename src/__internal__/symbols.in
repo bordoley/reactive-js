@@ -94,6 +94,7 @@ WithLatestLike_hasLatest
 WithLatestLike_otherLatest
 WithLatestLike_selector
 
+AnimationGroupEventHandler_eventPublisher
 AwaitOrObserveEffect_observable
 AwaitOrObserveEffect_subscription
 AwaitOrObserveEffect_value
@@ -151,14 +152,16 @@ Object_prototype
 Object_private_initializedProperties
 PairwiseObserver_prev
 PairwiseObserver_hasPrev
-PriorityQueueImpl_comparator 
-Publisher_observers
+PauseableObservable_eventPublisher
 PauseableScheduler_delayed 
 PauseableScheduler_dueTime 
+PauseableScheduler_eventPublisher
 PauseableScheduler_hostContinuation 
 PauseableScheduler_hostScheduler
 PauseableScheduler_queue 
 PauseableScheduler_taskIDCounter 
+PriorityQueueImpl_comparator 
+Publisher_observers
 ReadonlyArrayEnumerator_values
 ReadonlyArrayEnumerator_index
 ReadonlyArrayEnumerator_count

@@ -3,7 +3,7 @@
 import { LiftedLike_operators, LiftedLike_source, } from "../../../__internal__/containers.js";
 import { newInstance, pipeUnsafe } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PauseableObservableLike_isPaused, } from "../../../rx.js";
-import { PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../../util.js";
+import { EventSourceLike_addEventListener, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../../util.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 class LiftedPauseableObservable {
     [LiftedLike_source];
@@ -19,6 +19,9 @@ class LiftedPauseableObservable {
     }
     get [PauseableLike_isPaused]() {
         return this[LiftedLike_source][PauseableLike_isPaused];
+    }
+    [EventSourceLike_addEventListener](listener) {
+        this[LiftedLike_source][EventSourceLike_addEventListener](listener);
     }
     [PauseableLike_pause]() {
         this[LiftedLike_source][PauseableLike_pause]();

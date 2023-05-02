@@ -34,6 +34,9 @@ const createAnimationEventHandlerStream =
             unsafeCast(this);
             return this[DelegatingLike_delegate][PauseableLike_isPaused];
         },
+        [EventSourceLike_addEventListener](listener) {
+            this[DelegatingLike_delegate][EventSourceLike_addEventListener](listener);
+        },
         [PauseableLike_pause]() {
             this[DelegatingLike_delegate][PauseableLike_pause]();
         },

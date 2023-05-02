@@ -263,10 +263,19 @@ export interface DispatcherLike<T = unknown>
 }
 
 /**
+ * @category EventMap
+ */
+export interface PauseableEventMap {
+  paused: { type: "paused" };
+  resumed: { type: "resumed" };
+}
+
+/**
  * @noInheritDoc
  * @category Scheduler
  */
-export interface PauseableLike {
+export interface PauseableLike
+  extends EventSourceLike<PauseableEventMap[keyof PauseableEventMap]> {
   /**
    * Boolean flag indicating if the PauseableLike is currently paused or not.
    */

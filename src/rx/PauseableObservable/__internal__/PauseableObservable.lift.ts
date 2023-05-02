@@ -16,6 +16,9 @@ import {
   PauseableObservableLike_isPaused,
 } from "../../../rx.js";
 import {
+  EventListenerLike,
+  EventSourceLike_addEventListener,
+  PauseableEventMap,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -49,6 +52,12 @@ class LiftedPauseableObservable<TIn, TOut>
 
   get [PauseableLike_isPaused](): boolean {
     return this[LiftedLike_source][PauseableLike_isPaused];
+  }
+
+  [EventSourceLike_addEventListener](
+    listener: EventListenerLike<PauseableEventMap[keyof PauseableEventMap]>,
+  ): void {
+    this[LiftedLike_source][EventSourceLike_addEventListener](listener);
   }
 
   [PauseableLike_pause]() {

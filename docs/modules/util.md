@@ -23,6 +23,7 @@
 ### EventMap Interfaces
 
 - [DispatcherEventMap](../interfaces/util.DispatcherEventMap.md)
+- [PauseableEventMap](../interfaces/util.PauseableEventMap.md)
 
 ### Other Interfaces
 

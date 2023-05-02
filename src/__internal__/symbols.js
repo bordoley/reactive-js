@@ -435,6 +435,11 @@ export const __WithLatestLike_selector = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __AnimationGroupEventHandler_eventPublisher = /*@__PURE__*/ symbol(
+  "AnimationGroupEventHandler_eventPublisher",
+);
+
+/** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable = /*@__PURE__*/ symbol(
   "AwaitOrObserveEffect_observable",
 );
@@ -705,13 +710,8 @@ export const __PairwiseObserver_hasPrev = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __PriorityQueueImpl_comparator = /*@__PURE__*/ symbol(
-  "PriorityQueueImpl_comparator ",
-);
-
-/** @type {unique symbol} */
-export const __Publisher_observers = /*@__PURE__*/ symbol(
-  "Publisher_observers",
+export const __PauseableObservable_eventPublisher = /*@__PURE__*/ symbol(
+  "PauseableObservable_eventPublisher",
 );
 
 /** @type {unique symbol} */
@@ -722,6 +722,11 @@ export const __PauseableScheduler_delayed = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __PauseableScheduler_dueTime = /*@__PURE__*/ symbol(
   "PauseableScheduler_dueTime ",
+);
+
+/** @type {unique symbol} */
+export const __PauseableScheduler_eventPublisher = /*@__PURE__*/ symbol(
+  "PauseableScheduler_eventPublisher",
 );
 
 /** @type {unique symbol} */
@@ -742,6 +747,16 @@ export const __PauseableScheduler_queue = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __PauseableScheduler_taskIDCounter = /*@__PURE__*/ symbol(
   "PauseableScheduler_taskIDCounter ",
+);
+
+/** @type {unique symbol} */
+export const __PriorityQueueImpl_comparator = /*@__PURE__*/ symbol(
+  "PriorityQueueImpl_comparator ",
+);
+
+/** @type {unique symbol} */
+export const __Publisher_observers = /*@__PURE__*/ symbol(
+  "Publisher_observers",
 );
 
 /** @type {unique symbol} */

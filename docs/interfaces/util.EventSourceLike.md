@@ -18,6 +18,8 @@
 
   ↳ [`DispatcherLike`](util.DispatcherLike.md)
 
+  ↳ [`PauseableLike`](util.PauseableLike.md)
+
 ## Table of contents
 
 ### Methods

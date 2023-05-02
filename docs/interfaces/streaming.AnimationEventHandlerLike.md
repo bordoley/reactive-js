@@ -27,7 +27,7 @@
 
 ### [\_\_\_StreamableLike\_TStream]
 
-• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](streaming.StreamLike.md)<`TEventType`, `boolean`\> & [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`boolean`\> & [`EventSourceLike`](util.EventSourceLike.md)<{ `type`: ``"wait"``  } \| { `type`: ``"drain"``  } \| { `type`: ``"complete"``  } \| { `type`: `TEventType` ; `value`: `T`  }\>
+• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](streaming.StreamLike.md)<`TEventType`, `boolean`\> & [`PauseableObservableLike`](rx.PauseableObservableLike.md)<`boolean`\> & [`EventSourceLike`](util.EventSourceLike.md)<{ `type`: ``"wait"``  } \| { `type`: ``"drain"``  } \| { `type`: ``"complete"``  } \| { `type`: ``"paused"``  } \| { `type`: ``"resumed"``  } \| { `type`: `TEventType` ; `value`: `T`  }\>
 
 #### Overrides
 

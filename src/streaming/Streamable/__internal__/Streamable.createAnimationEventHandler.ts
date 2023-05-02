@@ -24,6 +24,7 @@ import {
 import {
   AnimationEventHandlerLike,
   DisposableStreamOf,
+  StreamOf,
   StreamableLike_stream,
 } from "../../../streaming.js";
 import {
@@ -33,6 +34,7 @@ import {
   EventSourceLike,
   EventSourceLike_addEventListener,
   KeyedCollectionLike_get,
+  PauseableEventMap,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -85,6 +87,10 @@ const createAnimationEventHandlerStream: <
         ),
         function AnimationEventHandlerStream(
           instance: TProperties &
+            Pick<
+              StreamOf<AnimationEventHandlerLike<TEventType, T>>,
+              typeof EventSourceLike_addEventListener
+            > &
             Pick<
               PauseableObservableLike,
               | typeof PauseableObservableLike_isPaused
@@ -154,6 +160,19 @@ const createAnimationEventHandlerStream: <
           get [PauseableLike_isPaused](): boolean {
             unsafeCast<DelegatingLike<PauseableObservableLike>>(this);
             return this[DelegatingLike_delegate][PauseableLike_isPaused];
+          },
+
+          [EventSourceLike_addEventListener](
+            this: DelegatingLike<PauseableObservableLike>,
+            listener: EventListenerLike<
+              | { type: TEventType; value: T }
+              | DispatcherEventMap[keyof DispatcherEventMap]
+              | PauseableEventMap[keyof PauseableEventMap]
+            >,
+          ): void {
+            this[DelegatingLike_delegate][EventSourceLike_addEventListener](
+              listener,
+            );
           },
 
           [PauseableLike_pause](this: DelegatingLike<PauseableObservableLike>) {
