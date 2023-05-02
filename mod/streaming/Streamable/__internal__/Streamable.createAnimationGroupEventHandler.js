@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.createAnimationGroupEventHandler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { __AnimationGroupEventHandler_eventPublisher } from "../../../__internal__/symbols.js";
+import { __AnimationGroupEventHandler_eventPublisher, __AnimationGroupEventHandler_scheduler, } from "../../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { incrementBy, isSome, none, pipe, pipeLazy, returns, unsafeCast, } from "../../../functions.js";
 import ReadonlyObjectMap_keys from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
@@ -9,15 +9,12 @@ import ReadonlyObjectMap_map from "../../../keyed-containers/ReadonlyObjectMap/_
 import ReadonlyObjectMap_mapWithKey from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
 import ReadonlyObjectMap_reduce from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_values from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
-import { MulticastObservableLike_buffer, PauseableObservableLike_isPaused, } from "../../../rx.js";
 import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_mergeAll from "../../../rx/Observable/__internal__/Observable.mergeAll.js";
-import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
-import Publisher_create from "../../../rx/Publisher/__internal__/Publisher.create.js";
 import Runnable_fromEnumeratorFactory from "../../../rx/Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import { AssociativeCollectionLike_keys, CollectionLike_count, EventListenerLike_notify, EventSourceLike_addEventListener, KeyedCollectionLike_get, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../../util.js";
@@ -45,34 +42,20 @@ const createAnimationGroupEventHandlerStream =
         init(Stream_delegatingMixin(), instance, streamDelegate);
         const publishers = pipe(animationGroup, ReadonlyObjectMap_map(_ => pipe(EventPublisher_create(), Disposable_addTo(instance))));
         const animationScheduler = pipe(scheduler, Scheduler_createAnimationFrameScheduler, Disposable_addTo(instance), Scheduler_toPauseableScheduler, Disposable_addTo(instance));
+        instance[__AnimationGroupEventHandler_scheduler] = animationScheduler;
         instance[CollectionLike_count] = pipe(publishers, ReadonlyObjectMap_reduce(incrementBy(1), returns(0)));
         init(Delegating_mixin(), instance, publishers);
-        const isPausePublisher = Publisher_create({
-            replay: 1,
-        });
-        instance[PauseableObservableLike_isPaused] = isPausePublisher;
-        isPausePublisher[EventListenerLike_notify](false);
         const eventPublisher = pipe(EventPublisher_create(), Disposable_addTo(instance));
         instance[__AnimationGroupEventHandler_eventPublisher] =
             eventPublisher;
         animationScheduler[EventSourceLike_addEventListener](eventPublisher);
         streamDelegate[EventSourceLike_addEventListener](eventPublisher);
-        pipe(isPausePublisher, Observable_forEach(isPaused => {
-            if (isPaused) {
-                animationScheduler[PauseableLike_pause]();
-            }
-            else {
-                animationScheduler[PauseableLike_resume]();
-            }
-        }), Observable_subscribe(scheduler, {
-            capacity: 1,
-            backpressureStrategy: "drop-oldest",
-        }), Disposable_addTo(instance));
+        animationScheduler[PauseableLike_resume]();
         return instance;
     }, props({
         [__AnimationGroupEventHandler_eventPublisher]: none,
+        [__AnimationGroupEventHandler_scheduler]: none,
         [CollectionLike_count]: 0,
-        [PauseableObservableLike_isPaused]: none,
     }), {
         get [AssociativeCollectionLike_keys]() {
             unsafeCast(this);
@@ -80,16 +63,16 @@ const createAnimationGroupEventHandlerStream =
         },
         get [PauseableLike_isPaused]() {
             unsafeCast(this);
-            return this[PauseableObservableLike_isPaused][MulticastObservableLike_buffer][KeyedCollectionLike_get](0);
+            return this[__AnimationGroupEventHandler_scheduler][PauseableLike_isPaused];
         },
         [EventSourceLike_addEventListener](listener) {
             this[__AnimationGroupEventHandler_eventPublisher][EventSourceLike_addEventListener](listener);
         },
         [PauseableLike_pause]() {
-            this[PauseableObservableLike_isPaused][EventListenerLike_notify](true);
+            this[__AnimationGroupEventHandler_scheduler][PauseableLike_pause]();
         },
         [PauseableLike_resume]() {
-            this[PauseableObservableLike_isPaused][EventListenerLike_notify](false);
+            this[__AnimationGroupEventHandler_scheduler][PauseableLike_resume]();
         },
         [KeyedCollectionLike_get](index) {
             return this[DelegatingLike_delegate][index];

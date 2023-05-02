@@ -56,8 +56,6 @@ export const __PauseableLike_pause = /*@__PURE__*/ symbol("PauseableLike_pause")
 /** @type {unique symbol} */
 export const __PauseableLike_resume = /*@__PURE__*/ symbol("PauseableLike_resume");
 /** @type {unique symbol} */
-export const __PauseableObservableLike_isPaused = /*@__PURE__*/ symbol("PauseableObservableLike_isPaused");
-/** @type {unique symbol} */
 export const __PublisherLike_observerCount = /*@__PURE__*/ symbol("PublisherLike_observerCount");
 /** @type {unique symbol} */
 export const __QueueableLike_enqueue = /*@__PURE__*/ symbol("QueueableLike_enqueue");
@@ -193,6 +191,8 @@ export const __WithLatestLike_otherLatest = /*@__PURE__*/ symbol("WithLatestLike
 export const __WithLatestLike_selector = /*@__PURE__*/ symbol("WithLatestLike_selector");
 /** @type {unique symbol} */
 export const __AnimationGroupEventHandler_eventPublisher = /*@__PURE__*/ symbol("AnimationGroupEventHandler_eventPublisher");
+/** @type {unique symbol} */
+export const __AnimationGroupEventHandler_scheduler = /*@__PURE__*/ symbol("AnimationGroupEventHandler_scheduler");
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable = /*@__PURE__*/ symbol("AwaitOrObserveEffect_observable");
 /** @type {unique symbol} */

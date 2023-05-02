@@ -53,8 +53,6 @@ export const __PauseableLike_pause: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableLike_resume: unique symbol;
 /** @type {unique symbol} */
-export const __PauseableObservableLike_isPaused: unique symbol;
-/** @type {unique symbol} */
 export const __PublisherLike_observerCount: unique symbol;
 /** @type {unique symbol} */
 export const __QueueableLike_enqueue: unique symbol;
@@ -184,6 +182,8 @@ export const __WithLatestLike_otherLatest: unique symbol;
 export const __WithLatestLike_selector: unique symbol;
 /** @type {unique symbol} */
 export const __AnimationGroupEventHandler_eventPublisher: unique symbol;
+/** @type {unique symbol} */
+export const __AnimationGroupEventHandler_scheduler: unique symbol;
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable: unique symbol;
 /** @type {unique symbol} */

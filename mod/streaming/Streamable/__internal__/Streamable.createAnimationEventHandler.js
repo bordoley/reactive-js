@@ -3,7 +3,6 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { none, pipe, unsafeCast, } from "../../../functions.js";
-import { PauseableObservableLike_isPaused, } from "../../../rx.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
 import { EventSourceLike_addEventListener, KeyedCollectionLike_get, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
@@ -26,10 +25,6 @@ const createAnimationEventHandlerStream =
     }, props({
         publisher: none,
     }), {
-        get [PauseableObservableLike_isPaused]() {
-            unsafeCast(this);
-            return this[DelegatingLike_delegate][PauseableObservableLike_isPaused];
-        },
         get [PauseableLike_isPaused]() {
             unsafeCast(this);
             return this[DelegatingLike_delegate][PauseableLike_isPaused];

@@ -16,11 +16,7 @@ import {
   pipe,
   unsafeCast,
 } from "../../../functions.js";
-import {
-  AnimationConfig,
-  PauseableObservableLike,
-  PauseableObservableLike_isPaused,
-} from "../../../rx.js";
+import { AnimationConfig, PauseableObservableLike } from "../../../rx.js";
 import {
   AnimationEventHandlerLike,
   DisposableStreamOf,
@@ -93,7 +89,6 @@ const createAnimationEventHandlerStream: <
             > &
             Pick<
               PauseableObservableLike,
-              | typeof PauseableObservableLike_isPaused
               | typeof PauseableLike_isPaused
               | typeof PauseableLike_pause
               | typeof PauseableLike_resume
@@ -150,13 +145,6 @@ const createAnimationEventHandlerStream: <
           publisher: none,
         }),
         {
-          get [PauseableObservableLike_isPaused]() {
-            unsafeCast<DelegatingLike<PauseableObservableLike>>(this);
-            return this[DelegatingLike_delegate][
-              PauseableObservableLike_isPaused
-            ];
-          },
-
           get [PauseableLike_isPaused](): boolean {
             unsafeCast<DelegatingLike<PauseableObservableLike>>(this);
             return this[DelegatingLike_delegate][PauseableLike_isPaused];

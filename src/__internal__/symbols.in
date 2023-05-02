@@ -25,7 +25,6 @@ ObservableLike_isRunnable
 PauseableLike_isPaused
 PauseableLike_pause
 PauseableLike_resume
-PauseableObservableLike_isPaused
 PublisherLike_observerCount
 QueueableLike_enqueue
 QueueableLike_backpressureStrategy
@@ -95,6 +94,7 @@ WithLatestLike_otherLatest
 WithLatestLike_selector
 
 AnimationGroupEventHandler_eventPublisher
+AnimationGroupEventHandler_scheduler
 AwaitOrObserveEffect_observable
 AwaitOrObserveEffect_subscription
 AwaitOrObserveEffect_value

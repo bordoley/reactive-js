@@ -30,22 +30,21 @@ import {
   returns,
 } from "@reactive-js/core/functions";
 import * as Streamable from "@reactive-js/core/streaming/Streamable";
-import {
-  ObservableLike,
-  PauseableObservableLike_isPaused,
-} from "@reactive-js/core/rx";
+import { ObservableLike } from "@reactive-js/core/rx";
 import {
   QueueableLike_enqueue,
   KeyedCollectionLike_get,
   EventSourceLike,
   PauseableLike_pause,
   PauseableLike_resume,
+  PauseableLike_isPaused,
 } from "@reactive-js/core/util";
 import * as Dictionary from "@reactive-js/core/util/Dictionary";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
 import {
   __await,
   __bindMethod,
+  __constant,
   __currentScheduler,
   __memo,
   __observe,
@@ -59,6 +58,7 @@ import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocati
 import * as Scheduler from "@reactive-js/core/integrations/scheduler";
 import { ReadonlyObjectMapLike } from "@reactive-js/core/keyed-containers";
 import { CacheLike, StreamOf } from "@reactive-js/core/streaming";
+import * as EventSource from "@reactive-js/core/util/EventSource";
 
 const CacheInner = ({ cache }: { cache: StreamOf<CacheLike<string>> }) => {
   const values = cache[KeyedCollectionLike_get]("a");
@@ -276,9 +276,19 @@ const RxComponent = createComponent(
 
       const animationEventHandler = __stream(createAnimationEventHandler);
       const isAnimationRunning = __observe(animationEventHandler) ?? false;
+      const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
+        pipe(
+          animationEventHandler,
+          EventSource.pick("type"),
+          EventSource.keep(type => type === "paused" || type === "resumed"),
+          EventSource.map(type => type === "paused"),
+          EventSource.toObservable(),
+        ),
+      );
+
       const isAnimationPaused =
-        __observe(animationEventHandler[PauseableObservableLike_isPaused]) ??
-        false;
+        __observe(isAnimationPausedObservable) ??
+        animationEventHandler[PauseableLike_isPaused];
       const runAnimation = __bindMethod(
         animationEventHandler,
         QueueableLike_enqueue,

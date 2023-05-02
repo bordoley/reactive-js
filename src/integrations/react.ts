@@ -34,7 +34,6 @@ import {
   EnumerableLike,
   ObservableLike,
   PauseableObservableLike,
-  PauseableObservableLike_isPaused,
   PublisherLike,
   RunnableLike,
 } from "../rx.js";
@@ -58,6 +57,8 @@ import {
   EventPublisherLike,
   EventSourceLike,
   KeyedCollectionLike_get,
+  PauseableEventMap,
+  PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
   QueueableLike,
@@ -408,7 +409,10 @@ export const useFlow: UseFlow["useFlow"] = <T>(
   value: Optional<T>;
   isPaused: boolean;
 } => {
-  const flowObservableRef = useRef<Optional<PauseableObservableLike<T>>>(none);
+  const pauseableObservableStableRef =
+    useRef<Optional<PauseableObservableLike<T>>>(none);
+  const [pauseableObservable, setPauseableObservable] =
+    useState<Optional<PauseableObservableLike<T>>>(none);
 
   const runnable = isFunction(runnableOrFactory)
     ? useMemo(runnableOrFactory, optionsOrDeps as unknown[])
@@ -431,34 +435,47 @@ export const useFlow: UseFlow["useFlow"] = <T>(
 
   useEffect(() => {
     const scheduler = getScheduler({ priority });
-    const PauseableObservable = pipe(
+    const pauseableObservable = pipe(
       runnable,
       Runnable.flow(scheduler, options),
     );
-    flowObservableRef.current = PauseableObservable;
+    pauseableObservableStableRef.current = pauseableObservable;
+    setPauseableObservable(pauseableObservable);
 
-    return bindMethod(PauseableObservable, DisposableLike_dispose);
-  }, [runnable, priority, backpressureStrategy, capacity]);
+    return bindMethod(pauseableObservable, DisposableLike_dispose);
+  }, [
+    runnable,
+    priority,
+    backpressureStrategy,
+    capacity,
+    setPauseableObservable,
+  ]);
 
   const value = useObservable<T>(
-    flowObservableRef.current ?? emptyObservable,
+    pauseableObservable ?? emptyObservable,
     options,
   );
 
-  const isPaused =
-    useObservable<boolean>(
-      flowObservableRef.current?.[PauseableObservableLike_isPaused] ??
-        emptyObservable,
-      options,
-    ) ?? true;
+  const isPausedObservable = useMemo(
+    pipeLazy(
+      pauseableObservable ??
+        EventSource.empty<PauseableEventMap[keyof PauseableEventMap]>(),
+      EventSource.pick("type"),
+      EventSource.map(type => type === "paused"),
+      EventSource.toObservable(),
+    ),
+    [pauseableObservable],
+  );
+
+  const isPaused = useObservable<boolean>(isPausedObservable, options) ?? true;
 
   const pause = useCallback(() => {
-    flowObservableRef.current?.[PauseableLike_pause]();
-  }, [flowObservableRef]);
+    pauseableObservableStableRef.current?.[PauseableLike_pause]();
+  }, [pauseableObservableStableRef]);
 
   const resume = useCallback(() => {
-    flowObservableRef.current?.[PauseableLike_resume]();
-  }, [flowObservableRef]);
+    pauseableObservableStableRef.current?.[PauseableLike_resume]();
+  }, [pauseableObservableStableRef]);
 
   return { resume, pause, value, isPaused };
 };
@@ -792,11 +809,22 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
 
   const isAnimationRunning =
     useObservable<boolean>(stream ?? emptyObservable, options) ?? false;
+
+  const isAnimationPausedObservable = useMemo(
+    pipeLazy(
+      stream ?? EventSource.empty<{ type: unknown }>(),
+      EventSource.pick("type"),
+      EventSource.keep(type => type === "paused" || type === "resumed"),
+      EventSource.map(type => type === "paused"),
+      EventSource.toObservable(),
+    ),
+    [stream],
+  );
+
   const isAnimationPaused =
-    useObservable<boolean>(
-      stream?.[PauseableObservableLike_isPaused] ?? emptyObservable,
-      options,
-    ) ?? false;
+    useObservable<boolean>(isAnimationPausedObservable, options) ??
+    streamRef.current?.[PauseableLike_isPaused] ??
+    false;
 
   const controller = {
     dispatch,

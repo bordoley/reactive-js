@@ -52,8 +52,6 @@ export declare const __PauseableLike_pause: unique symbol;
 
 export declare const __PauseableLike_resume: unique symbol;
 
-export declare const __PauseableObservableLike_isPaused: unique symbol;
-
 export declare const __PublisherLike_observerCount: unique symbol;
 
 export declare const __QueueableLike_enqueue: unique symbol;
@@ -183,6 +181,8 @@ export declare const __WithLatestLike_otherLatest: unique symbol;
 export declare const __WithLatestLike_selector: unique symbol;
 
 export declare const __AnimationGroupEventHandler_eventPublisher: unique symbol;
+
+export declare const __AnimationGroupEventHandler_scheduler: unique symbol;
 
 export declare const __AwaitOrObserveEffect_observable: unique symbol;
 

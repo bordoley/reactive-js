@@ -9,9 +9,6 @@ import {
   returns,
 } from "@reactive-js/core/functions";
 import {
-  PauseableObservableLike_isPaused, 
-} from "@reactive-js/core/rx";
-import {
   PauseableLike_pause, 
   PauseableLike_resume
 } from "@reactive-js/core/util";
@@ -27,8 +24,9 @@ import {
   const resume = bindMethod(counter, PauseableLike_resume);
 
   const isPaused = pipe(
-    counter[PauseableObservableLike_isPaused],
-    subscribe(scheduler),
+    counter,
+    EventSource.toObservable(),
+    EventSource.keep(ev => ev.type === "paused" | ev.type === "resumed"),
   );
 
   const counterValue = pipe(

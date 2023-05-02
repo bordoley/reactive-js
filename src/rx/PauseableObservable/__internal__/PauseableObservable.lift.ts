@@ -6,14 +6,12 @@ import {
 import { Lift } from "../../../__internal__/rx.js";
 import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
-  MulticastObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
   PauseableObservableContainer,
   PauseableObservableLike,
-  PauseableObservableLike_isPaused,
 } from "../../../rx.js";
 import {
   EventListenerLike,
@@ -44,10 +42,6 @@ class LiftedPauseableObservable<TIn, TOut>
   ) {
     this[LiftedLike_source] = source;
     this[LiftedLike_operators] = operators;
-  }
-
-  get [PauseableObservableLike_isPaused](): MulticastObservableLike<boolean> {
-    return this[LiftedLike_source][PauseableObservableLike_isPaused];
   }
 
   get [PauseableLike_isPaused](): boolean {

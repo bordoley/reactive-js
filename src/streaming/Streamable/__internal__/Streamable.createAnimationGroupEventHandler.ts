@@ -5,7 +5,10 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { __AnimationGroupEventHandler_eventPublisher } from "../../../__internal__/symbols.js";
+import {
+  __AnimationGroupEventHandler_eventPublisher,
+  __AnimationGroupEventHandler_scheduler,
+} from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -30,21 +33,16 @@ import ReadonlyObjectMap_reduce from "../../../keyed-containers/ReadonlyObjectMa
 import ReadonlyObjectMap_values from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 import {
   AnimationConfig,
-  MulticastObservableLike_buffer,
   ObservableContainer,
   ObservableLike,
   PauseableObservableLike,
-  PauseableObservableLike_isPaused,
-  PublisherLike,
 } from "../../../rx.js";
 import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_mergeAll from "../../../rx/Observable/__internal__/Observable.mergeAll.js";
-import Observable_subscribe from "../../../rx/Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
-import Publisher_create from "../../../rx/Publisher/__internal__/Publisher.create.js";
 import Runnable_fromEnumeratorFactory from "../../../rx/Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import {
   AnimationGroupEventHandlerLike,
@@ -108,12 +106,12 @@ const createAnimationGroupEventHandlerStream: <
     TKey extends string | symbol | number = string,
   >() => {
     type TProperties = {
-      [__AnimationGroupEventHandler_eventPublisher]: EventSourceLike<
+      [__AnimationGroupEventHandler_eventPublisher]: EventPublisherLike<
         | DispatcherEventMap[keyof DispatcherEventMap]
         | PauseableEventMap[keyof PauseableEventMap]
       >;
+      [__AnimationGroupEventHandler_scheduler]: PauseableSchedulerLike;
       [CollectionLike_count]: number;
-      [PauseableObservableLike_isPaused]: PublisherLike<boolean>;
     };
 
     return createInstanceFactory(
@@ -134,7 +132,6 @@ const createAnimationGroupEventHandlerStream: <
             > &
             Pick<
               PauseableObservableLike<boolean>,
-              | typeof PauseableObservableLike_isPaused
               | typeof PauseableLike_isPaused
               | typeof PauseableLike_pause
               | typeof PauseableLike_resume
@@ -245,6 +242,7 @@ const createAnimationGroupEventHandlerStream: <
             Scheduler_toPauseableScheduler,
             Disposable_addTo(instance),
           );
+          instance[__AnimationGroupEventHandler_scheduler] = animationScheduler;
 
           instance[CollectionLike_count] = pipe(
             publishers,
@@ -256,14 +254,11 @@ const createAnimationGroupEventHandlerStream: <
 
           init(Delegating_mixin(), instance, publishers);
 
-          const isPausePublisher = Publisher_create<boolean>({
-            replay: 1,
-          });
-          instance[PauseableObservableLike_isPaused] = isPausePublisher;
-          isPausePublisher[EventListenerLike_notify](false);
-
           const eventPublisher = pipe(
-            EventPublisher_create(),
+            EventPublisher_create<
+              | DispatcherEventMap[keyof DispatcherEventMap]
+              | PauseableEventMap[keyof PauseableEventMap]
+            >(),
             Disposable_addTo(instance),
           );
           instance[__AnimationGroupEventHandler_eventPublisher] =
@@ -271,28 +266,14 @@ const createAnimationGroupEventHandlerStream: <
           animationScheduler[EventSourceLike_addEventListener](eventPublisher);
           streamDelegate[EventSourceLike_addEventListener](eventPublisher);
 
-          pipe(
-            isPausePublisher,
-            Observable_forEach<ObservableContainer, boolean>(isPaused => {
-              if (isPaused) {
-                animationScheduler[PauseableLike_pause]();
-              } else {
-                animationScheduler[PauseableLike_resume]();
-              }
-            }),
-            Observable_subscribe(scheduler, {
-              capacity: 1,
-              backpressureStrategy: "drop-oldest",
-            }),
-            Disposable_addTo(instance),
-          );
+          animationScheduler[PauseableLike_resume]();
 
           return instance;
         },
         props<TProperties>({
           [__AnimationGroupEventHandler_eventPublisher]: none,
+          [__AnimationGroupEventHandler_scheduler]: none,
           [CollectionLike_count]: 0,
-          [PauseableObservableLike_isPaused]: none,
         }),
         {
           get [AssociativeCollectionLike_keys](): EnumeratorLike<TKey> {
@@ -305,11 +286,11 @@ const createAnimationGroupEventHandlerStream: <
             );
           },
 
-          get [PauseableLike_isPaused](): boolean {
+          get [PauseableLike_isPaused]() {
             unsafeCast<TProperties>(this);
-            return this[PauseableObservableLike_isPaused][
-              MulticastObservableLike_buffer
-            ][KeyedCollectionLike_get](0);
+            return this[__AnimationGroupEventHandler_scheduler][
+              PauseableLike_isPaused
+            ];
           },
 
           [EventSourceLike_addEventListener](
@@ -325,15 +306,13 @@ const createAnimationGroupEventHandlerStream: <
           },
 
           [PauseableLike_pause](this: TProperties) {
-            this[PauseableObservableLike_isPaused][EventListenerLike_notify](
-              true,
-            );
+            this[__AnimationGroupEventHandler_scheduler][PauseableLike_pause]();
           },
 
           [PauseableLike_resume](this: TProperties) {
-            this[PauseableObservableLike_isPaused][EventListenerLike_notify](
-              false,
-            );
+            this[__AnimationGroupEventHandler_scheduler][
+              PauseableLike_resume
+            ]();
           },
 
           [KeyedCollectionLike_get](

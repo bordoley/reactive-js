@@ -1,8 +1,8 @@
-import { __MulticastObservableLike_buffer as MulticastObservableLike_buffer, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PauseableObservableLike_isPaused as PauseableObservableLike_isPaused, __PublisherLike_observerCount as PublisherLike_observerCount } from "./__internal__/symbols.js";
+import { __MulticastObservableLike_buffer as MulticastObservableLike_buffer, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PublisherLike_observerCount as PublisherLike_observerCount } from "./__internal__/symbols.js";
 import { Container, ContainerOf, ContainerOperator, Container_T, Container_type } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
 import { DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, IndexedBufferCollectionLike, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
-export { PauseableObservableLike_isPaused, MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, };
+export { MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, };
 /**
  * A consumer of push-based notifications.
  *
@@ -108,10 +108,6 @@ export interface PublisherLike<T = unknown> extends ErrorSafeEventListenerLike<T
 export interface PauseableObservableLike<T = unknown> extends ObservableLike<T>, PauseableLike {
     readonly [ObservableLike_isEnumerable]: false;
     readonly [ObservableLike_isRunnable]: false;
-    /**
-     * Reactive property indicating if the observable is paused or not.
-     */
-    readonly [PauseableObservableLike_isPaused]: MulticastObservableLike<boolean>;
 }
 export interface PauseableObservableContainer extends Container {
     readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;

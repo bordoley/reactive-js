@@ -130,11 +130,6 @@ export const __PauseableLike_resume = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __PauseableObservableLike_isPaused = /*@__PURE__*/ symbol(
-  "PauseableObservableLike_isPaused",
-);
-
-/** @type {unique symbol} */
 export const __PublisherLike_observerCount = /*@__PURE__*/ symbol(
   "PublisherLike_observerCount",
 );
@@ -437,6 +432,11 @@ export const __WithLatestLike_selector = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __AnimationGroupEventHandler_eventPublisher = /*@__PURE__*/ symbol(
   "AnimationGroupEventHandler_eventPublisher",
+);
+
+/** @type {unique symbol} */
+export const __AnimationGroupEventHandler_scheduler = /*@__PURE__*/ symbol(
+  "AnimationGroupEventHandler_scheduler",
 );
 
 /** @type {unique symbol} */

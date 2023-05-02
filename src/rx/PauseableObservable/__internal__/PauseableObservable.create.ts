@@ -12,25 +12,14 @@ import {
 } from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
+import { Optional, Updater, compose, none, pipe } from "../../../functions.js";
 import {
-  Optional,
-  Updater,
-  bindMethod,
-  compose,
-  none,
-  pipe,
-  unsafeCast,
-} from "../../../functions.js";
-import {
-  MulticastObservableLike,
-  MulticastObservableLike_buffer,
   ObservableContainer,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
   PauseableObservableLike,
-  PauseableObservableLike_isPaused,
 } from "../../../rx.js";
 import { StreamLike } from "../../../streaming.js";
 import Stream_create from "../../../streaming/Stream/__internal__/Stream.create.js";
@@ -40,7 +29,6 @@ import {
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike_addEventListener,
-  KeyedCollectionLike_get,
   PauseableEventMap,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -51,7 +39,6 @@ import {
   SchedulerLike,
 } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
-import Disposable_add from "../../../util/Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
@@ -59,7 +46,6 @@ import Observable_backpressureStrategy from "../../Observable/__internal__/Obser
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
-import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
 const PauseableObservable_create: <T>(
   op: ContainerOperator<ObservableContainer, boolean, T>,
@@ -73,7 +59,7 @@ const PauseableObservable_create: <T>(
     [__PauseableObservable_eventPublisher]: Optional<
       EventPublisherLike<PauseableEventMap[keyof PauseableEventMap]>
     >;
-    [PauseableObservableLike_isPaused]: MulticastObservableLike<boolean>;
+    [PauseableLike_isPaused]: boolean;
   };
 
   return createInstanceFactory(
@@ -88,8 +74,6 @@ const PauseableObservable_create: <T>(
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
       ): PauseableObservableLike<T> & DisposableLike {
-        const publisher = Publisher_create<boolean>({ replay: 1 });
-
         const liftedOp = compose(
           Observable_backpressureStrategy<
             ObservableContainer,
@@ -100,13 +84,12 @@ const PauseableObservable_create: <T>(
             pipe(true, Optional_toObservable()),
           ),
           Observable_distinctUntilChanged<ObservableContainer, boolean>(),
-          Observable_forEach<ObservableContainer, boolean>(
-            bindMethod(publisher, EventListenerLike_notify),
-          ),
           Observable_forEach<ObservableContainer, boolean>(ev => {
             instance[__PauseableObservable_eventPublisher]?.[
               EventListenerLike_notify
             ](ev ? { type: "paused" } : { type: "resumed" });
+
+            instance[PauseableLike_isPaused] = ev;
           }),
           op,
         );
@@ -115,28 +98,15 @@ const PauseableObservable_create: <T>(
         init(Disposable_delegatingMixin, instance, stream);
         init(Delegating_mixin(), instance, stream);
 
-        pipe(instance, Disposable_add(publisher));
-
-        instance[PauseableObservableLike_isPaused] = publisher;
-
         return instance;
       },
       props<TProperties>({
-        [PauseableObservableLike_isPaused]: none,
         [__PauseableObservable_eventPublisher]: none,
+        [PauseableLike_isPaused]: false,
       }),
       {
         [ObservableLike_isEnumerable]: false as const,
         [ObservableLike_isRunnable]: false as const,
-
-        get [PauseableLike_isPaused](): boolean {
-          unsafeCast<TProperties>(this);
-          return (
-            this[PauseableObservableLike_isPaused][
-              MulticastObservableLike_buffer
-            ][KeyedCollectionLike_get](0) ?? true
-          );
-        },
 
         [EventSourceLike_addEventListener](
           this: TProperties & DisposableLike,
