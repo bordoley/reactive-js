@@ -5,11 +5,7 @@ import {
 } from "./__internal__/symbols.js";
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
-import {
-  MulticastObservableLike,
-  ObservableLike,
-  PauseableObservableLike,
-} from "./rx.js";
+import { MulticastObservableLike, ObservableLike } from "./rx.js";
 import {
   AssociativeCollectionLike,
   DictionaryLike,
@@ -18,6 +14,7 @@ import {
   DisposableLike,
   EventSourceLike,
   PauseableEventMap,
+  PauseableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
@@ -104,7 +101,7 @@ export interface AnimationGroupEventHandlerLike<
   TKey extends string | number | symbol,
 > extends StreamableLike<TEventType, boolean> {
   readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> &
-    PauseableObservableLike<boolean> &
+    PauseableLike &
     DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>> &
     EventSourceLike<
       | DispatcherEventMap[keyof DispatcherEventMap]
@@ -121,7 +118,7 @@ export interface AnimationEventHandlerLike<
   T,
 > extends StreamableLike<TEventType, boolean> {
   readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> &
-    PauseableObservableLike<boolean> &
+    PauseableLike &
     EventSourceLike<
       | { type: TEventType; value: T }
       | DispatcherEventMap[keyof DispatcherEventMap]

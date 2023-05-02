@@ -1,8 +1,8 @@
 import { __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_TStream as StreamableLike_TStream, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
 import { Function1, Optional } from "./functions.js";
 import { ReadonlyObjectMapLike } from "./keyed-containers.js";
-import { MulticastObservableLike, ObservableLike, PauseableObservableLike } from "./rx.js";
-import { AssociativeCollectionLike, DictionaryLike, DispatcherEventMap, DispatcherLike, DisposableLike, EventSourceLike, PauseableEventMap, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
+import { MulticastObservableLike, ObservableLike } from "./rx.js";
+import { AssociativeCollectionLike, DictionaryLike, DispatcherEventMap, DispatcherLike, DisposableLike, EventSourceLike, PauseableEventMap, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { StreamableLike_stream, StreamLike_scheduler };
 /**
  * Represents a duplex stream
@@ -59,7 +59,7 @@ export interface CacheLike<T> extends StreamableLike<ReadonlyObjectMapLike<strin
  * @category Streamable
  */
 export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends string | number | symbol> extends StreamableLike<TEventType, boolean> {
-    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableObservableLike<boolean> & DictionaryLike<TKey, EventSourceLike<{
+    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableLike & DictionaryLike<TKey, EventSourceLike<{
         type: TEventType;
         value: T;
     }>> & EventSourceLike<DispatcherEventMap[keyof DispatcherEventMap] | PauseableEventMap[keyof PauseableEventMap]>;
@@ -70,7 +70,7 @@ export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends stri
  *  @category Streamable
  */
 export interface AnimationEventHandlerLike<TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>, T> extends StreamableLike<TEventType, boolean> {
-    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableObservableLike<boolean> & EventSourceLike<{
+    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableLike & EventSourceLike<{
         type: TEventType;
         value: T;
     } | DispatcherEventMap[keyof DispatcherEventMap] | PauseableEventMap[keyof PauseableEventMap]>;

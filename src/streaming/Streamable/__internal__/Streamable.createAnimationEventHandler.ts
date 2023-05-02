@@ -10,7 +10,7 @@ import {
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
 import { Function1, Optional, none, pipe } from "../../../functions.js";
-import { AnimationConfig, PauseableObservableLike } from "../../../rx.js";
+import { AnimationConfig } from "../../../rx.js";
 import {
   AnimationEventHandlerLike,
   DisposableStreamOf,
@@ -25,6 +25,7 @@ import {
   EventSourceLike_addEventListener,
   KeyedCollectionLike_get,
   PauseableEventMap,
+  PauseableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
@@ -133,7 +134,7 @@ const createAnimationEventHandlerStream: <
         }),
         {
           [EventSourceLike_addEventListener](
-            this: DelegatingLike<PauseableObservableLike>,
+            this: DelegatingLike<PauseableLike>,
             listener: EventListenerLike<
               | { type: TEventType; value: T }
               | DispatcherEventMap[keyof DispatcherEventMap]
