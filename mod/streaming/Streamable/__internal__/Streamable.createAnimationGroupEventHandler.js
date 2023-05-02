@@ -1,7 +1,7 @@
 /// <reference types="./Streamable.createAnimationGroupEventHandler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { __AnimationGroupEventHandler_eventPublisher, __AnimationGroupEventHandler_scheduler, } from "../../../__internal__/symbols.js";
+import { __AnimationGroupEventHandler_eventPublisher } from "../../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import { incrementBy, isSome, none, pipe, pipeLazy, returns, unsafeCast, } from "../../../functions.js";
 import ReadonlyObjectMap_keys from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
@@ -17,16 +17,17 @@ import Observable_mergeAll from "../../../rx/Observable/__internal__/Observable.
 import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
 import Runnable_fromEnumeratorFactory from "../../../rx/Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 import { StreamableLike_stream, } from "../../../streaming.js";
-import { AssociativeCollectionLike_keys, CollectionLike_count, EventListenerLike_notify, EventSourceLike_addEventListener, KeyedCollectionLike_get, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../../util.js";
+import { AssociativeCollectionLike_keys, CollectionLike_count, EventListenerLike_notify, EventSourceLike_addEventListener, KeyedCollectionLike_get, PauseableLike_resume, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
+import Pauseable_delegatingMixin from "../../../util/Pauseable/__internal__/Pauseable.delegatingMixin.js";
 import Scheduler_toPauseableScheduler from "../../../util/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 const createAnimationGroupEventHandlerStream = 
 /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
+    return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin(), Pauseable_delegatingMixin), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
         const streamDelegate = Streamable_createEventHandler((type) => {
             const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(factory(type)), Observable_map(value => ({ type, value })), Observable_forEach(value => {
                 const publisher = publishers[key];
@@ -41,7 +42,7 @@ const createAnimationGroupEventHandlerStream =
         init(Stream_delegatingMixin(), instance, streamDelegate);
         const publishers = pipe(animationGroup, ReadonlyObjectMap_map(_ => pipe(EventPublisher_create(), Disposable_addTo(instance))));
         const animationScheduler = pipe(scheduler, Scheduler_toPauseableScheduler, Disposable_addTo(instance));
-        instance[__AnimationGroupEventHandler_scheduler] = animationScheduler;
+        init(Pauseable_delegatingMixin, instance, animationScheduler);
         instance[CollectionLike_count] = pipe(publishers, ReadonlyObjectMap_reduce(incrementBy(1), returns(0)));
         init(Delegating_mixin(), instance, publishers);
         const eventPublisher = pipe(EventPublisher_create(), Disposable_addTo(instance));
@@ -53,25 +54,14 @@ const createAnimationGroupEventHandlerStream =
         return instance;
     }, props({
         [__AnimationGroupEventHandler_eventPublisher]: none,
-        [__AnimationGroupEventHandler_scheduler]: none,
         [CollectionLike_count]: 0,
     }), {
         get [AssociativeCollectionLike_keys]() {
             unsafeCast(this);
             return pipe(this[DelegatingLike_delegate], ReadonlyObjectMap_keys());
         },
-        get [PauseableLike_isPaused]() {
-            unsafeCast(this);
-            return this[__AnimationGroupEventHandler_scheduler][PauseableLike_isPaused];
-        },
         [EventSourceLike_addEventListener](listener) {
             this[__AnimationGroupEventHandler_eventPublisher][EventSourceLike_addEventListener](listener);
-        },
-        [PauseableLike_pause]() {
-            this[__AnimationGroupEventHandler_scheduler][PauseableLike_pause]();
-        },
-        [PauseableLike_resume]() {
-            this[__AnimationGroupEventHandler_scheduler][PauseableLike_resume]();
         },
         [KeyedCollectionLike_get](index) {
             return this[DelegatingLike_delegate][index];

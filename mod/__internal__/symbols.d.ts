@@ -127,6 +127,8 @@ export const __DelegatingDisposableMixin_delegate: unique symbol;
 /** @type {unique symbol} */
 export const __DelegatingMulticastObservableMixin_delegate: unique symbol;
 /** @type {unique symbol} */
+export const __DelegatingPauseableMixin_delegate: unique symbol;
+/** @type {unique symbol} */
 export const __DelegatingQueueableMixin_delegate: unique symbol;
 /** @type {unique symbol} */
 export const __DelegatingSchedulerImplementationMixin_delegate: unique symbol;
@@ -182,8 +184,6 @@ export const __WithLatestLike_otherLatest: unique symbol;
 export const __WithLatestLike_selector: unique symbol;
 /** @type {unique symbol} */
 export const __AnimationGroupEventHandler_eventPublisher: unique symbol;
-/** @type {unique symbol} */
-export const __AnimationGroupEventHandler_scheduler: unique symbol;
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable: unique symbol;
 /** @type {unique symbol} */

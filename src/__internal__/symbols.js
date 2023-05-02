@@ -302,6 +302,11 @@ export const __DelegatingMulticastObservableMixin_delegate =
   /*@__PURE__*/ symbol("DelegatingMulticastObservableMixin_delegate");
 
 /** @type {unique symbol} */
+export const __DelegatingPauseableMixin_delegate = /*@__PURE__*/ symbol(
+  "DelegatingPauseableMixin_delegate",
+);
+
+/** @type {unique symbol} */
 export const __DelegatingQueueableMixin_delegate = /*@__PURE__*/ symbol(
   "DelegatingQueueableMixin_delegate",
 );
@@ -432,11 +437,6 @@ export const __WithLatestLike_selector = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __AnimationGroupEventHandler_eventPublisher = /*@__PURE__*/ symbol(
   "AnimationGroupEventHandler_eventPublisher",
-);
-
-/** @type {unique symbol} */
-export const __AnimationGroupEventHandler_scheduler = /*@__PURE__*/ symbol(
-  "AnimationGroupEventHandler_scheduler",
 );
 
 /** @type {unique symbol} */

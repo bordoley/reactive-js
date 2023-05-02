@@ -9,13 +9,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
-import {
-  Function1,
-  Optional,
-  none,
-  pipe,
-  unsafeCast,
-} from "../../../functions.js";
+import { Function1, Optional, none, pipe } from "../../../functions.js";
 import { AnimationConfig, PauseableObservableLike } from "../../../rx.js";
 import {
   AnimationEventHandlerLike,
@@ -31,9 +25,6 @@ import {
   EventSourceLike_addEventListener,
   KeyedCollectionLike_get,
   PauseableEventMap,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
@@ -41,6 +32,7 @@ import {
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
+import Pauseable_delegatingMixin from "../../../util/Pauseable/__internal__/Pauseable.delegatingMixin.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createAnimationGroupEventHandler from "./Streamable.createAnimationGroupEventHandler.js";
 
@@ -80,18 +72,13 @@ const createAnimationEventHandlerStream: <
         include(
           Stream_delegatingMixin<TEventType, boolean>(),
           Delegating_mixin(),
+          Pauseable_delegatingMixin,
         ),
         function AnimationEventHandlerStream(
           instance: TProperties &
             Pick<
               StreamOf<AnimationEventHandlerLike<TEventType, T>>,
               typeof EventSourceLike_addEventListener
-            > &
-            Pick<
-              PauseableObservableLike,
-              | typeof PauseableLike_isPaused
-              | typeof PauseableLike_pause
-              | typeof PauseableLike_resume
             >,
           animation: Function1<
             TEventType,
@@ -121,6 +108,7 @@ const createAnimationEventHandlerStream: <
           );
 
           init(Delegating_mixin(), instance, streamDelegate);
+          init(Pauseable_delegatingMixin, instance, streamDelegate);
 
           const animationEventsPublisher = streamDelegate[
             KeyedCollectionLike_get
@@ -136,7 +124,6 @@ const createAnimationEventHandlerStream: <
           instance.publisher = publisher;
 
           animationEventsPublisher[EventSourceLike_addEventListener](publisher);
-
           streamDelegate[EventSourceLike_addEventListener](publisher);
 
           return instance;
@@ -145,11 +132,6 @@ const createAnimationEventHandlerStream: <
           publisher: none,
         }),
         {
-          get [PauseableLike_isPaused](): boolean {
-            unsafeCast<DelegatingLike<PauseableObservableLike>>(this);
-            return this[DelegatingLike_delegate][PauseableLike_isPaused];
-          },
-
           [EventSourceLike_addEventListener](
             this: DelegatingLike<PauseableObservableLike>,
             listener: EventListenerLike<
@@ -161,16 +143,6 @@ const createAnimationEventHandlerStream: <
             this[DelegatingLike_delegate][EventSourceLike_addEventListener](
               listener,
             );
-          },
-
-          [PauseableLike_pause](this: DelegatingLike<PauseableObservableLike>) {
-            this[DelegatingLike_delegate][PauseableLike_pause]();
-          },
-
-          [PauseableLike_resume](
-            this: DelegatingLike<PauseableObservableLike>,
-          ) {
-            this[DelegatingLike_delegate][PauseableLike_resume]();
           },
 
           [EventSourceLike_addEventListener](

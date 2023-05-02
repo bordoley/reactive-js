@@ -126,6 +126,8 @@ export declare const __DelegatingDisposableMixin_delegate: unique symbol;
 
 export declare const __DelegatingMulticastObservableMixin_delegate: unique symbol;
 
+export declare const __DelegatingPauseableMixin_delegate: unique symbol;
+
 export declare const __DelegatingQueueableMixin_delegate: unique symbol;
 
 export declare const __DelegatingSchedulerImplementationMixin_delegate: unique symbol;
@@ -181,8 +183,6 @@ export declare const __WithLatestLike_otherLatest: unique symbol;
 export declare const __WithLatestLike_selector: unique symbol;
 
 export declare const __AnimationGroupEventHandler_eventPublisher: unique symbol;
-
-export declare const __AnimationGroupEventHandler_scheduler: unique symbol;
 
 export declare const __AwaitOrObserveEffect_observable: unique symbol;
 
