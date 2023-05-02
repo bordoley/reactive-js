@@ -84,22 +84,22 @@ const timeoutTests = describe("timeout", test("throws when a timeout occurs", pi
 // FIXME Move these tests into container?
 const flow = describe("flow", test("flow a generating source", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
-    const generateStream = pipe(Runnable.generate(increment, returns(-1), {
+    const generateObservable = pipe(Runnable.generate(increment, returns(-1), {
         delay: 1,
         delayStart: true,
     }), Runnable.flow(scheduler));
-    scheduler[SchedulerLike_schedule](() => generateStream[PauseableLike_resume]());
-    scheduler[SchedulerLike_schedule](() => generateStream[PauseableLike_pause](), {
+    scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_resume]());
+    scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_pause](), {
         delay: 2,
     });
-    scheduler[SchedulerLike_schedule](() => generateStream[PauseableLike_resume](), {
+    scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_resume](), {
         delay: 4,
     });
-    scheduler[SchedulerLike_schedule](() => generateStream[DisposableLike_dispose](), {
+    scheduler[SchedulerLike_schedule](() => generateObservable[DisposableLike_dispose](), {
         delay: 6,
     });
     const f = mockFn();
-    const subscription = pipe(generateStream, Observable.forEach(x => {
+    const subscription = pipe(generateObservable, Observable.forEach(x => {
         f(scheduler[SchedulerLike_now], x);
     }), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();

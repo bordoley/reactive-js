@@ -313,6 +313,10 @@ export const __PauseableScheduler_hostScheduler: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableScheduler_queue: unique symbol;
 /** @type {unique symbol} */
+export const __PauseableScheduler_initialTime: unique symbol;
+/** @type {unique symbol} */
+export const __PauseableScheduler_resumedTime: unique symbol;
+/** @type {unique symbol} */
 export const __PauseableScheduler_taskIDCounter: unique symbol;
 /** @type {unique symbol} */
 export const __PriorityQueueImpl_comparator: unique symbol;

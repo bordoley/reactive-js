@@ -423,7 +423,7 @@ const flow = describe(
   test("flow a generating source", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
 
-    const generateStream = pipe(
+    const generateObservable = pipe(
       Runnable.generate(increment, returns(-1), {
         delay: 1,
         delayStart: true,
@@ -432,26 +432,25 @@ const flow = describe(
     );
 
     scheduler[SchedulerLike_schedule](() =>
-      generateStream[PauseableLike_resume](),
+      generateObservable[PauseableLike_resume](),
     );
 
     scheduler[SchedulerLike_schedule](
-      () => generateStream[PauseableLike_pause](),
-
+      () => generateObservable[PauseableLike_pause](),
       {
         delay: 2,
       },
     );
 
     scheduler[SchedulerLike_schedule](
-      () => generateStream[PauseableLike_resume](),
+      () => generateObservable[PauseableLike_resume](),
       {
         delay: 4,
       },
     );
 
     scheduler[SchedulerLike_schedule](
-      () => generateStream[DisposableLike_dispose](),
+      () => generateObservable[DisposableLike_dispose](),
       {
         delay: 6,
       },
@@ -459,7 +458,7 @@ const flow = describe(
 
     const f = mockFn();
     const subscription = pipe(
-      generateStream,
+      generateObservable,
       Observable.forEach<number>(x => {
         f(scheduler[SchedulerLike_now], x);
       }),

@@ -323,6 +323,10 @@ export const __PauseableScheduler_hostScheduler = /*@__PURE__*/ symbol("Pauseabl
 /** @type {unique symbol} */
 export const __PauseableScheduler_queue = /*@__PURE__*/ symbol("PauseableScheduler_queue ");
 /** @type {unique symbol} */
+export const __PauseableScheduler_initialTime = /*@__PURE__*/ symbol("PauseableScheduler_initialTime ");
+/** @type {unique symbol} */
+export const __PauseableScheduler_resumedTime = /*@__PURE__*/ symbol("PauseableScheduler_resumedTime ");
+/** @type {unique symbol} */
 export const __PauseableScheduler_taskIDCounter = /*@__PURE__*/ symbol("PauseableScheduler_taskIDCounter ");
 /** @type {unique symbol} */
 export const __PriorityQueueImpl_comparator = /*@__PURE__*/ symbol("PriorityQueueImpl_comparator ");

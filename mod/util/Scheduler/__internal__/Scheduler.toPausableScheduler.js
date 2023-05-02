@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { __PauseableScheduler_delayed, __PauseableScheduler_dueTime, __PauseableScheduler_eventPublisher, __PauseableScheduler_hostContinuation, __PauseableScheduler_hostScheduler, __PauseableScheduler_queue, __PauseableScheduler_taskIDCounter, } from "../../../__internal__/symbols.js";
+import { __PauseableScheduler_delayed, __PauseableScheduler_dueTime, __PauseableScheduler_eventPublisher, __PauseableScheduler_hostContinuation, __PauseableScheduler_hostScheduler, __PauseableScheduler_initialTime, __PauseableScheduler_queue, __PauseableScheduler_resumedTime, __PauseableScheduler_taskIDCounter, } from "../../../__internal__/symbols.js";
 import { QueueLike_dequeue, QueueLike_head, SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, SerialDisposableLike_current, } from "../../../__internal__/util.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
@@ -29,7 +29,7 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
     };
     const peek = (instance) => {
         const { [__PauseableScheduler_delayed]: delayed, [__PauseableScheduler_queue]: queue, } = instance;
-        const now = instance[__PauseableScheduler_hostScheduler][SchedulerLike_now];
+        const now = instance[SchedulerLike_now];
         while (true) {
             const task = delayed[QueueLike_head];
             if (isNone(task)) {
@@ -68,18 +68,16 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
             return;
         }
         const dueTime = task[SchedulerTaskLike_dueTime];
-        const delay = clampPositiveInteger(dueTime - instance[__PauseableScheduler_hostScheduler][SchedulerLike_now]);
+        const delay = clampPositiveInteger(dueTime - instance[SchedulerLike_now]);
         instance[__PauseableScheduler_dueTime] = dueTime;
         const continuation = instance[__PauseableScheduler_hostContinuation] ??
             ((scheduler) => {
                 for (let task = peek(instance); isSome(task) && !instance[DisposableLike_isDisposed]; task = peek(instance)) {
                     const { [SchedulerTaskLike_continuation]: continuation, [SchedulerTaskLike_dueTime]: dueTime, } = task;
-                    const delay = clampPositiveInteger(dueTime -
-                        instance[__PauseableScheduler_hostScheduler][SchedulerLike_now]);
+                    const delay = clampPositiveInteger(dueTime - instance[SchedulerLike_now]);
                     if (delay > 0) {
                         instance[__PauseableScheduler_dueTime] =
-                            instance[__PauseableScheduler_hostScheduler][SchedulerLike_now] +
-                                delay;
+                            instance[SchedulerLike_now] + delay;
                     }
                     else {
                         instance[EnumeratorLike_move]();
@@ -98,6 +96,9 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
         instance[__PauseableScheduler_delayed] = Queue_createPriorityQueue(delayedComparator, MAX_SAFE_INTEGER, "overflow");
         instance[__PauseableScheduler_queue] = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
         instance[__PauseableScheduler_hostScheduler] = host;
+        instance[__PauseableScheduler_initialTime] = host[SchedulerLike_now];
+        instance[__PauseableScheduler_resumedTime] =
+            instance[__PauseableScheduler_initialTime];
         return instance;
     }, props({
         [__PauseableScheduler_delayed]: none,
@@ -108,10 +109,14 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
         [PauseableLike_isPaused]: true,
         [__PauseableScheduler_queue]: none,
         [__PauseableScheduler_taskIDCounter]: 0,
+        [__PauseableScheduler_initialTime]: 0,
+        [__PauseableScheduler_resumedTime]: 0,
     }), {
         get [SchedulerLike_now]() {
             unsafeCast(this);
-            return this[__PauseableScheduler_hostScheduler][SchedulerLike_now];
+            const hostNow = this[__PauseableScheduler_hostScheduler][SchedulerLike_now];
+            return (this[__PauseableScheduler_initialTime] +
+                (hostNow - this[__PauseableScheduler_resumedTime]));
         },
         get [SchedulerImplementationLike_shouldYield]() {
             unsafeCast(this);
@@ -120,8 +125,7 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
                 this[PauseableLike_isPaused] ||
                 (isSome(next) &&
                     this[EnumeratorLike_current] !== next &&
-                    next[SchedulerTaskLike_dueTime] <=
-                        this[__PauseableScheduler_hostScheduler][SchedulerLike_now]) ||
+                    next[SchedulerTaskLike_dueTime] <= this[SchedulerLike_now]) ||
                 this[__PauseableScheduler_hostScheduler][SchedulerLike_shouldYield]);
         },
         [EventSourceLike_addEventListener](listener) {
@@ -134,11 +138,14 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
             publisher[EventSourceLike_addEventListener](listener);
         },
         [PauseableLike_pause]() {
+            this[__PauseableScheduler_initialTime] = this[SchedulerLike_now];
             this[PauseableLike_isPaused] = true;
             this[SerialDisposableLike_current] = Disposable_disposed;
             this[__PauseableScheduler_eventPublisher]?.[EventListenerLike_notify]({ type: "paused" });
         },
         [PauseableLike_resume]() {
+            this[__PauseableScheduler_resumedTime] =
+                this[__PauseableScheduler_hostScheduler][SchedulerLike_now];
             this[PauseableLike_isPaused] = false;
             scheduleOnHost(this);
             this[__PauseableScheduler_eventPublisher]?.[EventListenerLike_notify]({ type: "resumed" });

@@ -15,12 +15,7 @@ const Observable_spring = (options) => {
     return pipe(Observable_currentTime(), Observable_scan(([lastTime, last, value], now) => {
         lastTime = min(now, lastTime);
         const delta = 1 - value;
-        // FIXME: This caps the elapsed time at roughly the upper bound of the
-        // observed frame rate delta, but it only work at 60fps.
-        // It would be better to record the actual frame rate and cap accordingly.
-        // The intent here is to prevent overshooting when the animation paused by
-        // the scheduler.
-        const elapseTime = min(now - lastTime, 20);
+        const elapseTime = now - lastTime;
         const dt = (elapseTime * 60) / 1000;
         const velocity = (value - last) / (dt || 1 / 60);
         const spring = stiffness * delta;

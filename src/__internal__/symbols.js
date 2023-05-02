@@ -745,6 +745,16 @@ export const __PauseableScheduler_queue = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __PauseableScheduler_initialTime = /*@__PURE__*/ symbol(
+  "PauseableScheduler_initialTime ",
+);
+
+/** @type {unique symbol} */
+export const __PauseableScheduler_resumedTime = /*@__PURE__*/ symbol(
+  "PauseableScheduler_resumedTime ",
+);
+
+/** @type {unique symbol} */
 export const __PauseableScheduler_taskIDCounter = /*@__PURE__*/ symbol(
   "PauseableScheduler_taskIDCounter ",
 );

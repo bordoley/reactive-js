@@ -312,6 +312,10 @@ export declare const __PauseableScheduler_hostScheduler: unique symbol;
 
 export declare const __PauseableScheduler_queue: unique symbol;
 
+export declare const __PauseableScheduler_initialTime: unique symbol;
+
+export declare const __PauseableScheduler_resumedTime: unique symbol;
+
 export declare const __PauseableScheduler_taskIDCounter: unique symbol;
 
 export declare const __PriorityQueueImpl_comparator: unique symbol;

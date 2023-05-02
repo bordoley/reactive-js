@@ -159,6 +159,8 @@ PauseableScheduler_eventPublisher
 PauseableScheduler_hostContinuation 
 PauseableScheduler_hostScheduler
 PauseableScheduler_queue 
+PauseableScheduler_initialTime 
+PauseableScheduler_resumedTime 
 PauseableScheduler_taskIDCounter 
 PriorityQueueImpl_comparator 
 Publisher_observers
