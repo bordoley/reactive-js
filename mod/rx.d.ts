@@ -124,8 +124,8 @@ export interface DelayAnimationConfig {
  * @noInheritDoc
  * @category AnimationConfig
  */
-export interface TweenAnimationConfig {
-    readonly type: "tween";
+export interface KeyFrameAnimationConfig {
+    readonly type: "keyframe";
     readonly from: number;
     readonly to: number;
     readonly duration: number;
@@ -152,9 +152,9 @@ export interface SpringAnimationConfig {
     readonly damping?: number;
     readonly precision?: number;
 }
-export type AnimationConfig<T = number> = DelayAnimationConfig | LoopAnimationConfig<T> | (T extends number ? (TweenAnimationConfig | SpringAnimationConfig) & {
+export type AnimationConfig<T = number> = DelayAnimationConfig | LoopAnimationConfig<T> | (T extends number ? (KeyFrameAnimationConfig | SpringAnimationConfig) & {
     readonly selector?: never;
-} : (TweenAnimationConfig | SpringAnimationConfig) & {
+} : (KeyFrameAnimationConfig | SpringAnimationConfig) & {
     readonly selector: Function1<number, T>;
 });
 /**

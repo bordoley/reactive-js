@@ -7,9 +7,9 @@
 ### AnimationConfig Interfaces
 
 - [DelayAnimationConfig](../interfaces/rx.DelayAnimationConfig.md)
+- [KeyFrameAnimationConfig](../interfaces/rx.KeyFrameAnimationConfig.md)
 - [LoopAnimationConfig](../interfaces/rx.LoopAnimationConfig.md)
 - [SpringAnimationConfig](../interfaces/rx.SpringAnimationConfig.md)
-- [TweenAnimationConfig](../interfaces/rx.TweenAnimationConfig.md)
 
 ### Container Interfaces
 
@@ -83,7 +83,7 @@
 
 ### AnimationConfig
 
-Ƭ **AnimationConfig**<`T`\>: [`DelayAnimationConfig`](../interfaces/rx.DelayAnimationConfig.md) \| [`LoopAnimationConfig`](../interfaces/rx.LoopAnimationConfig.md)<`T`\> \| `T` extends `number` ? [`TweenAnimationConfig`](../interfaces/rx.TweenAnimationConfig.md) \| [`SpringAnimationConfig`](../interfaces/rx.SpringAnimationConfig.md) & { `selector?`: `never`  } : [`TweenAnimationConfig`](../interfaces/rx.TweenAnimationConfig.md) \| [`SpringAnimationConfig`](../interfaces/rx.SpringAnimationConfig.md) & { `selector`: [`Function1`](functions.md#function1)<`number`, `T`\>  }
+Ƭ **AnimationConfig**<`T`\>: [`DelayAnimationConfig`](../interfaces/rx.DelayAnimationConfig.md) \| [`LoopAnimationConfig`](../interfaces/rx.LoopAnimationConfig.md)<`T`\> \| `T` extends `number` ? [`KeyFrameAnimationConfig`](../interfaces/rx.KeyFrameAnimationConfig.md) \| [`SpringAnimationConfig`](../interfaces/rx.SpringAnimationConfig.md) & { `selector?`: `never`  } : [`KeyFrameAnimationConfig`](../interfaces/rx.KeyFrameAnimationConfig.md) \| [`SpringAnimationConfig`](../interfaces/rx.SpringAnimationConfig.md) & { `selector`: [`Function1`](functions.md#function1)<`number`, `T`\>  }
 
 #### Type parameters
 

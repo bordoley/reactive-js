@@ -9,10 +9,10 @@ import {
 } from "../../../rx.js";
 import Observable_concatObservables from "./Observable.concatObservables.js";
 import Observable_empty from "./Observable.empty.js";
+import Observable_keyFrame from "./Observable.keyFrame.js";
 import Observable_map from "./Observable.map.js";
 import Observable_repeat from "./Observable.repeat.js";
 import Observable_spring from "./Observable.spring.js";
-import Observable_tween from "./Observable.tween.js";
 
 const scale = (start: number, end: number) => (v: number) => {
   const diff = end - start;
@@ -30,8 +30,8 @@ const parseAnimationConfig = <T = number>(
     : config.type === "delay"
     ? Observable_empty({ delay: config.duration })
     : pipe(
-        config.type === "tween"
-          ? Observable_tween(config.duration, config)
+        config.type === "keyframe"
+          ? Observable_keyFrame(config.duration, config)
           : Observable_spring(config),
         Observable_map<RunnableContainer, number, number>(
           scale(config.from, config.to),

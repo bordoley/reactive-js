@@ -162,14 +162,14 @@ const Root = () => {
           type: "loop",
           count: 2,
           animation: [
-            { type: "tween", duration: 500, from: 0, to: 1 },
+            { type: "keyframe", duration: 500, from: 0, to: 1 },
             { type: "delay", duration: 250 },
-            { type: "tween", duration: 500, from: 1, to: 0 },
+            { type: "keyframe", duration: 500, from: 1, to: 0 },
           ],
         }),
 
         def: () => [
-          { type: "tween", duration: 500, from: 0, to: 1 },
+          { type: "keyframe", duration: 500, from: 0, to: 1 },
           { type: "delay", duration: 250 },
           { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
         ],
@@ -244,7 +244,7 @@ const RxComponent = createComponent(
         ev === "animate"
           ? [
               {
-                type: "tween",
+                type: "keyframe",
                 duration: 1000,
                 from: 0,
                 to: 50,

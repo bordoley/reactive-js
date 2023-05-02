@@ -13,7 +13,7 @@ import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
-const Observable_tween = (
+const Observable_keyFrame = (
   duration: number,
   options?: {
     readonly easing?: Function1<number, number>;
@@ -40,4 +40,4 @@ const Observable_tween = (
   );
 };
 
-export default Observable_tween;
+export default Observable_keyFrame;
