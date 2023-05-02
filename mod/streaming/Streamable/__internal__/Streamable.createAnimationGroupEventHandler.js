@@ -21,7 +21,6 @@ import { AssociativeCollectionLike_keys, CollectionLike_count, EventListenerLike
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
-import Scheduler_createAnimationFrameScheduler from "../../../util/Scheduler/__internal__/Scheduler.createAnimationFrameScheduler.js";
 import Scheduler_toPauseableScheduler from "../../../util/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
@@ -41,7 +40,7 @@ const createAnimationGroupEventHandlerStream =
         }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         init(Stream_delegatingMixin(), instance, streamDelegate);
         const publishers = pipe(animationGroup, ReadonlyObjectMap_map(_ => pipe(EventPublisher_create(), Disposable_addTo(instance))));
-        const animationScheduler = pipe(scheduler, Scheduler_createAnimationFrameScheduler, Disposable_addTo(instance), Scheduler_toPauseableScheduler, Disposable_addTo(instance));
+        const animationScheduler = pipe(scheduler, Scheduler_toPauseableScheduler, Disposable_addTo(instance));
         instance[__AnimationGroupEventHandler_scheduler] = animationScheduler;
         instance[CollectionLike_count] = pipe(publishers, ReadonlyObjectMap_reduce(incrementBy(1), returns(0)));
         init(Delegating_mixin(), instance, publishers);

@@ -73,7 +73,6 @@ import {
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
-import Scheduler_createAnimationFrameScheduler from "../../../util/Scheduler/__internal__/Scheduler.createAnimationFrameScheduler.js";
 import Scheduler_toPauseableScheduler from "../../../util/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
@@ -237,8 +236,6 @@ const createAnimationGroupEventHandlerStream: <
 
           const animationScheduler: PauseableSchedulerLike = pipe(
             scheduler,
-            Scheduler_createAnimationFrameScheduler,
-            Disposable_addTo(instance),
             Scheduler_toPauseableScheduler,
             Disposable_addTo(instance),
           );

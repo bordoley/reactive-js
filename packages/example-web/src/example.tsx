@@ -55,7 +55,8 @@ import { __animateEvent } from "@reactive-js/core/integrations/web/effects";
 import { Wordle } from "./wordle";
 import Measure from "./measure";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
-import * as Scheduler from "@reactive-js/core/integrations/scheduler";
+import * as Scheduler from "@reactive-js/core/util/Scheduler";
+import { getScheduler } from "@reactive-js/core/integrations/scheduler";
 import { ReadonlyObjectMapLike } from "@reactive-js/core/keyed-containers";
 import { CacheLike, StreamOf } from "@reactive-js/core/streaming";
 import * as EventSource from "@reactive-js/core/util/EventSource";
@@ -274,7 +275,14 @@ const RxComponent = createComponent(
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
 
-      const animationEventHandler = __stream(createAnimationEventHandler);
+      const scheduler = __currentScheduler();
+      const animationScheduler = __using(
+        Scheduler.createAnimationFrameScheduler,
+        scheduler,
+      );
+      const animationEventHandler = __stream(createAnimationEventHandler, {
+        scheduler: animationScheduler,
+      });
       const isAnimationRunning = __observe(animationEventHandler) ?? false;
       const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
         pipe(
@@ -341,7 +349,7 @@ const RxComponent = createComponent(
 );
 
 // Subscribe to the window location using react's normal priority scheduler.
-const windowLocation = WindowLocation.subscribe(Scheduler.getScheduler());
+const windowLocation = WindowLocation.subscribe(getScheduler());
 const rootElement = document.getElementById("root");
 
 ReactDOMClient.createRoot(rootElement as any).render(

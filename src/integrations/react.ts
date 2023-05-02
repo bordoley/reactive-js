@@ -69,6 +69,7 @@ import * as Dictionary from "../util/Dictionary.js";
 import * as Disposable from "../util/Disposable.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 import * as EventSource from "../util/EventSource.js";
+import * as Scheduler from "../util/Scheduler.js";
 import { getScheduler } from "./scheduler.js";
 
 interface UseEventSource {
@@ -768,9 +769,29 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
 ] => {
   const animations = useMemo(animationGroupFactory, deps);
 
-  const stream = useStream(
-    () =>
-      Streamable.createAnimationGroupEventHandler(animations, options as any),
+  const stream = useStream<AnimationGroupEventHandlerLike<TEventType, T, TKey>>(
+    () => {
+      const animationGroupEV = Streamable.createAnimationGroupEventHandler(
+        animations,
+        options as any,
+      );
+
+      return {
+        [StreamableLike_stream](
+          scheduler,
+          options,
+        ): DisposableStreamOf<
+          AnimationGroupEventHandlerLike<TEventType, T, TKey>
+        > {
+          const animationScheduler =
+            Scheduler.createAnimationFrameScheduler(scheduler);
+          return animationGroupEV[StreamableLike_stream](
+            animationScheduler,
+            options,
+          );
+        },
+      };
+    },
     [animations, options.concurrency, options.mode, options?.priority],
     options,
   );
