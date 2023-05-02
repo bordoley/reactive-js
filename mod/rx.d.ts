@@ -135,6 +135,10 @@ export interface KeyFrameAnimationConfig {
     readonly duration: number;
     readonly easing?: Function1<number, number>;
 }
+export interface FrameAnimationConfig {
+    readonly type: "frame";
+    readonly value: number;
+}
 /**
  * @noInheritDoc
  * @category AnimationConfig
@@ -156,9 +160,9 @@ export interface SpringAnimationConfig {
     readonly damping?: number;
     readonly precision?: number;
 }
-export type AnimationConfig<T = number> = DelayAnimationConfig | LoopAnimationConfig<T> | (T extends number ? (KeyFrameAnimationConfig | SpringAnimationConfig) & {
+export type AnimationConfig<T = number> = DelayAnimationConfig | LoopAnimationConfig<T> | (T extends number ? (KeyFrameAnimationConfig | SpringAnimationConfig | FrameAnimationConfig) & {
     readonly selector?: never;
-} : (KeyFrameAnimationConfig | SpringAnimationConfig) & {
+} : (KeyFrameAnimationConfig | SpringAnimationConfig | FrameAnimationConfig) & {
     readonly selector: Function1<number, T>;
 });
 /**

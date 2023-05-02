@@ -20,9 +20,9 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
         const liftedOp = compose(Observable_backpressureStrategy(1, "drop-oldest"), Observable_mergeWith(
         // Initialize to paused state
-        pipe(true, Optional_toObservable())), Observable_distinctUntilChanged(), Observable_forEach(ev => {
-            instance[__PauseableObservable_eventPublisher]?.[EventListenerLike_notify](ev ? { type: "paused" } : { type: "resumed" });
-            instance[PauseableLike_isPaused] = ev;
+        pipe(true, Optional_toObservable())), Observable_distinctUntilChanged(), Observable_forEach(isPause => {
+            instance[PauseableLike_isPaused] = isPause;
+            instance[__PauseableObservable_eventPublisher]?.[EventListenerLike_notify](isPause ? { type: "paused" } : { type: "resumed" });
         }), op);
         const stream = Stream_create(liftedOp, scheduler, multicastOptions);
         init(Disposable_delegatingMixin, instance, stream);

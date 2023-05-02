@@ -1,4 +1,5 @@
 import { ContainerOperator } from "../../../containers.js";
+import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../../functions.js";
 import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import {
@@ -29,6 +30,14 @@ const parseAnimationConfig = <T = number>(
       )
     : config.type === "delay"
     ? Observable_empty({ delay: config.duration })
+    : config.type === "frame"
+    ? pipe(
+        config.value,
+        Optional_toObservable(),
+        isSome(config.selector)
+          ? Observable_map<RunnableContainer, number, T>(config.selector)
+          : (identity as ContainerOperator<RunnableContainer, number, T>),
+      )
     : pipe(
         config.type === "keyframe"
           ? Observable_keyFrame(config.duration, config)

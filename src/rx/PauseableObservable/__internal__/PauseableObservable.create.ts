@@ -84,12 +84,11 @@ const PauseableObservable_create: <T>(
             pipe(true, Optional_toObservable()),
           ),
           Observable_distinctUntilChanged<ObservableContainer, boolean>(),
-          Observable_forEach<ObservableContainer, boolean>(ev => {
+          Observable_forEach<ObservableContainer, boolean>(isPause => {
+            instance[PauseableLike_isPaused] = isPause;
             instance[__PauseableObservable_eventPublisher]?.[
               EventListenerLike_notify
-            ](ev ? { type: "paused" } : { type: "resumed" });
-
-            instance[PauseableLike_isPaused] = ev;
+            ](isPause ? { type: "paused" } : { type: "resumed" });
           }),
           op,
         );

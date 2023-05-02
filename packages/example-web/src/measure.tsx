@@ -1,6 +1,7 @@
 import {
   Optional,
   compose,
+  isSome,
   pipe,
   pipeLazy,
   pipeSome,
@@ -21,16 +22,22 @@ const Measure = () => {
 
   const [animation, { dispatch }] = useAnimation<
     number,
-    { prevWidth: number; width: number }
+    { prevWidth?: number; width: number }
   >(
-    ({ prevWidth, width }) => ({
-      type: "spring",
-      from: prevWidth,
-      to: width,
-      precision: 0.2,
-    }),
+    ({ prevWidth, width }) =>
+      isSome(prevWidth)
+        ? {
+            type: "spring",
+            from: prevWidth,
+            to: width,
+            precision: 0.2,
+          }
+        : {
+            type: "frame",
+            value: width,
+          },
     [],
-    { mode: "switching" },
+    { mode: "switching", capacity: 1, backpressureStrategy: "drop-oldest" },
   );
 
   const { width: boxWidth } = useObservable<Rect>(
@@ -38,7 +45,6 @@ const Measure = () => {
       pipeSome(
         container,
         WebElement.observeMeasure(),
-        Observable.throttle(50),
         Observable.forkMerge(
           compose(
             Observable.withLatestFrom(
@@ -46,18 +52,15 @@ const Measure = () => {
               ({ width: boxWidth }, ev) => [boxWidth, ev.value],
             ),
             Observable.forEach(([boxWidth, width]) => {
-              // FIXME: This logic can result in the number bouncint around a bit.
-              // Could probably be cleaned up.
-              if (boxWidth > width && width > 0) {
-                dispatch({ prevWidth: width, width: boxWidth });
-              } else if (width > boxWidth) {
-                dispatch({ prevWidth: width, width: boxWidth });
+              if (width > 0) {
+                dispatch({ width: boxWidth });
               }
             }),
             Observable.ignoreElements(),
           ),
           Observable.identity(),
         ),
+        Observable.throttle(50, { mode: "interval" }),
       ) ?? Observable.empty<Rect>(),
     [container, animation, dispatch],
   ) ?? { width: 0 };
