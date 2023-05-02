@@ -1,50 +1,68 @@
 import {
-  LiftedLike,
   LiftedLike_operators,
   LiftedLike_source,
 } from "../../../__internal__/containers.js";
 import {
-  Function1,
-  bindMethod,
-  newInstance,
-  pipeUnsafe,
-} from "../../../functions.js";
+  createInstanceFactory,
+  mix,
+  props,
+} from "../../../__internal__/mixins.js";
+import { Function1, bindMethod, none, pipeUnsafe } from "../../../functions.js";
 import {
   EventListenerLike,
   EventSourceLike,
   EventSourceLike_addEventListener,
 } from "../../../util.js";
 
-class LiftedEventSource<TIn, TOut>
-  implements
-    EventSourceLike<TOut>,
-    LiftedLike<EventSourceLike<TIn>, EventListenerLike<any>>
-{
-  readonly [LiftedLike_source]: EventSourceLike<TIn>;
-  readonly [LiftedLike_operators]: readonly Function1<
-    EventListenerLike<any>,
-    EventListenerLike<any>
-  >[];
-
-  constructor(
-    source: EventSourceLike<TIn>,
-    operators: readonly Function1<
+const createLiftedEventSource: <TIn, TOut>(
+  source: EventSourceLike<TIn>,
+  ops: readonly Function1<EventListenerLike<any>, EventListenerLike<any>>[],
+) => EventSourceLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
+  type TProperties = {
+    [LiftedLike_source]: EventSourceLike<TIn>;
+    [LiftedLike_operators]: readonly Function1<
       EventListenerLike<any>,
       EventListenerLike<any>
-    >[],
-  ) {
-    this[LiftedLike_source] = source;
-    this[LiftedLike_operators] = operators;
-  }
+    >[];
+  };
+  return createInstanceFactory(
+    mix(
+      function LiftedEventSource(
+        instance: TProperties &
+          Pick<EventSourceLike, typeof EventSourceLike_addEventListener>,
+        source: EventSourceLike<TIn>,
+        ops: readonly Function1<
+          EventListenerLike<any>,
+          EventListenerLike<any>
+        >[],
+      ) {
+        instance[LiftedLike_source] = source;
+        instance[LiftedLike_operators] = ops;
 
-  [EventSourceLike_addEventListener](listener: EventListenerLike<TOut>) {
-    pipeUnsafe(
-      listener,
-      ...this[LiftedLike_operators],
-      bindMethod(this[LiftedLike_source], EventSourceLike_addEventListener),
-    );
-  }
-}
+        return instance;
+      },
+      props<TProperties>({
+        [LiftedLike_source]: none,
+        [LiftedLike_operators]: none,
+      }),
+      {
+        [EventSourceLike_addEventListener](
+          this: TProperties,
+          listener: EventListenerLike<TOut>,
+        ) {
+          pipeUnsafe(
+            listener,
+            ...this[LiftedLike_operators],
+            bindMethod(
+              this[LiftedLike_source],
+              EventSourceLike_addEventListener,
+            ),
+          );
+        },
+      },
+    ),
+  );
+})();
 
 const EventSource_lift =
   <TA, TB>(
@@ -57,11 +75,7 @@ const EventSource_lift =
       ...((source as any)[LiftedLike_operators] ?? []),
     ];
 
-    return newInstance(
-      LiftedEventSource,
-      sourceSource,
-      allFunctions,
-    ) as EventSourceLike<TB>;
+    return createLiftedEventSource<TA, TB>(sourceSource, allFunctions);
   };
 
 export default EventSource_lift;

@@ -1,75 +1,50 @@
 import {
-  LiftedLike,
   LiftedLike_operators,
   LiftedLike_source,
 } from "../../../__internal__/containers.js";
-import { Lift } from "../../../__internal__/rx.js";
-import { Function1, newInstance, pipeUnsafe } from "../../../functions.js";
 import {
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
-  ObservableLike_observe,
+  createInstanceFactory,
+  include,
+  init,
+  mix,
+} from "../../../__internal__/mixins.js";
+import { Lift } from "../../../__internal__/rx.js";
+import { Function1 } from "../../../functions.js";
+import {
   ObserverLike,
   PauseableObservableContainer,
   PauseableObservableLike,
 } from "../../../rx.js";
-import {
-  EventListenerLike,
-  EventSourceLike_addEventListener,
-  PauseableEventMap,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
-} from "../../../util.js";
-import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
+import Pauseable_delegatingMixin from "../../../util/Pauseable/__internal__/Pauseable.delegatingMixin.js";
+import Observable_liftMixin from "../../Observable/__internal__/Observable.liftMixin.js";
 
-class LiftedPauseableObservable<TIn, TOut>
-  implements
-    PauseableObservableLike<TOut>,
-    LiftedLike<PauseableObservableLike<TIn>, ObserverLike<any>>
-{
-  readonly [LiftedLike_source]: PauseableObservableLike<TIn>;
-  readonly [LiftedLike_operators]: readonly Function1<
-    ObserverLike<any>,
-    ObserverLike<any>
-  >[];
-  readonly [ObservableLike_isEnumerable]: false = false as const;
-  readonly [ObservableLike_isRunnable]: false = false as const;
+const createLiftedPauseableObservable: <TIn, TOut>(
+  source: PauseableObservableLike<TIn>,
+  ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
+) => PauseableObservableLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
+  return createInstanceFactory(
+    mix(
+      include(Observable_liftMixin(), Pauseable_delegatingMixin),
+      function LiftedPauseableObservable(
+        instance: unknown,
+        source: PauseableObservableLike<TIn>,
+        ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
+      ): PauseableObservableLike<TOut> {
+        init(
+          Observable_liftMixin<TIn, TOut>(),
+          instance,
+          source,
+          ops,
+          false,
+          false,
+        );
+        init(Pauseable_delegatingMixin, instance, source);
 
-  constructor(
-    source: PauseableObservableLike<TIn>,
-    operators: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
-  ) {
-    this[LiftedLike_source] = source;
-    this[LiftedLike_operators] = operators;
-  }
-
-  get [PauseableLike_isPaused](): boolean {
-    return this[LiftedLike_source][PauseableLike_isPaused];
-  }
-
-  [EventSourceLike_addEventListener](
-    listener: EventListenerLike<PauseableEventMap[keyof PauseableEventMap]>,
-  ): void {
-    this[LiftedLike_source][EventSourceLike_addEventListener](listener);
-  }
-
-  [PauseableLike_pause]() {
-    this[LiftedLike_source][PauseableLike_pause]();
-  }
-
-  [PauseableLike_resume]() {
-    this[LiftedLike_source][PauseableLike_resume]();
-  }
-
-  [ObservableLike_observe](observer: ObserverLike<TOut>) {
-    pipeUnsafe(
-      observer,
-      ...this[LiftedLike_operators],
-      Observer_sourceFrom(this[LiftedLike_source]),
-    );
-  }
-}
+        return instance as PauseableObservableLike<TOut>;
+      },
+    ),
+  );
+})();
 
 const PauseableObservable_lift: Lift<PauseableObservableContainer>["lift"] =
   <TA, TB>(
@@ -82,7 +57,7 @@ const PauseableObservable_lift: Lift<PauseableObservableContainer>["lift"] =
       ...((source as any)[LiftedLike_operators] ?? []),
     ];
 
-    return newInstance(LiftedPauseableObservable, sourceSource, allFunctions);
+    return createLiftedPauseableObservable(sourceSource, allFunctions);
   };
 
 export default PauseableObservable_lift;
