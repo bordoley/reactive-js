@@ -24,7 +24,11 @@ import {
   QueueLike,
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
-import { ContainerOf, ContainerOperator } from "../../../containers.js";
+import {
+  CollectionLike_count,
+  ContainerOf,
+  ContainerOperator,
+} from "../../../containers.js";
 import {
   Function1,
   Optional,
@@ -43,7 +47,6 @@ import {
   Reactive,
 } from "../../../rx.js";
 import {
-  CollectionLike_count,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike,

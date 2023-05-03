@@ -5,6 +5,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { KeyedCollectionLike_get } from "../../../containers.js";
 import { Function1, Optional, none, pipe } from "../../../functions.js";
 import {
   AnimationEventHandlerLike,
@@ -19,7 +20,6 @@ import {
   EventPublisherLike,
   EventSourceLike,
   EventSourceLike_addEventListener,
-  KeyedCollectionLike_get,
   PauseableEventMap,
   QueueableLike,
   QueueableLike_backpressureStrategy,

@@ -17,6 +17,7 @@ import {
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
 import {
+  CollectionLike_count,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -37,7 +38,6 @@ import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.cr
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
 import {
   BufferLike_capacity,
-  CollectionLike_count,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,

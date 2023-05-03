@@ -1,7 +1,7 @@
-import { __AssociativeCollectionLike_keys as AssociativeCollectionLike_keys, __BufferLike_capacity as BufferLike_capacity, __CollectionLike_count as CollectionLike_count, __DispatcherLike_complete as DispatcherLike_complete, __DisposableLike_add as DisposableLike_add, __DisposableLike_dispose as DisposableLike_dispose, __DisposableLike_error as DisposableLike_error, __DisposableLike_isDisposed as DisposableLike_isDisposed, __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe, __EventListenerLike_notify as EventListenerLike_notify, __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount, __EventSourceLike_addEventListener as EventSourceLike_addEventListener, __KeyedCollectionLike_get as KeyedCollectionLike_get, __PauseableLike_isPaused as PauseableLike_isPaused, __PauseableLike_pause as PauseableLike_pause, __PauseableLike_resume as PauseableLike_resume, __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy, __QueueableLike_enqueue as QueueableLike_enqueue, __SchedulerLike_inContinuation as SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval as SchedulerLike_maxYieldInterval, __SchedulerLike_now as SchedulerLike_now, __SchedulerLike_requestYield as SchedulerLike_requestYield, __SchedulerLike_schedule as SchedulerLike_schedule, __SchedulerLike_shouldYield as SchedulerLike_shouldYield, __SchedulerLike_yield as SchedulerLike_yield, __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
-import { Container, Container_T, Container_type, EnumeratorLike, KeyedContainer, KeyedContainer_TKey } from "./containers.js";
+import { __BufferLike_capacity as BufferLike_capacity, __DispatcherLike_complete as DispatcherLike_complete, __DisposableLike_add as DisposableLike_add, __DisposableLike_dispose as DisposableLike_dispose, __DisposableLike_error as DisposableLike_error, __DisposableLike_isDisposed as DisposableLike_isDisposed, __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe, __EventListenerLike_notify as EventListenerLike_notify, __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount, __EventSourceLike_addEventListener as EventSourceLike_addEventListener, __PauseableLike_isPaused as PauseableLike_isPaused, __PauseableLike_pause as PauseableLike_pause, __PauseableLike_resume as PauseableLike_resume, __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy, __QueueableLike_enqueue as QueueableLike_enqueue, __SchedulerLike_inContinuation as SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval as SchedulerLike_maxYieldInterval, __SchedulerLike_now as SchedulerLike_now, __SchedulerLike_requestYield as SchedulerLike_requestYield, __SchedulerLike_schedule as SchedulerLike_schedule, __SchedulerLike_shouldYield as SchedulerLike_shouldYield, __SchedulerLike_yield as SchedulerLike_yield, __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
+import { Container, Container_T, Container_type, IndexedCollectionLike } from "./containers.js";
 import { Optional, SideEffect1 } from "./functions.js";
-export { AssociativeCollectionLike_keys, BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventSourceLike_addEventListener, KeyedCollectionLike_get, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, };
+export { BufferLike_capacity, DispatcherLike_complete, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventSourceLike_addEventListener, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, VirtualTimeSchedulerLike_run, };
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -59,47 +59,6 @@ export interface QueueableLike<T = unknown> extends BufferLike {
      * @returns `true` if the queue has additional remaining capacity otherwise `false`.
      */
     [QueueableLike_enqueue](req: T): boolean;
-}
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface CollectionLike {
-    readonly [CollectionLike_count]: number;
-}
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface KeyedCollectionLike<TKey = unknown, T = unknown> extends CollectionLike {
-    [KeyedCollectionLike_get](index: TKey): T;
-}
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface AssociativeCollectionLike<TKey = unknown, T = unknown> extends KeyedCollectionLike<TKey, T> {
-    readonly [AssociativeCollectionLike_keys]: EnumeratorLike<TKey>;
-}
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface DictionaryLike<TKey = unknown, T = unknown> extends AssociativeCollectionLike<TKey, Optional<T>> {
-}
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface DictionaryContainer extends KeyedContainer {
-    readonly [Container_type]?: DictionaryLike<this[typeof KeyedContainer_TKey], this[typeof Container_T]>;
-    readonly [KeyedContainer_TKey]?: unknown;
-}
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface IndexedCollectionLike<T = unknown> extends KeyedCollectionLike<number, T> {
 }
 /**
  * @noInheritDoc

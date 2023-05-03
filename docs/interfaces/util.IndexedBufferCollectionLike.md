@@ -14,6 +14,6 @@
 
 - [`BufferLike`](util.BufferLike.md)
 
-- [`IndexedCollectionLike`](util.IndexedCollectionLike.md)<`T`\>
+- [`IndexedCollectionLike`](containers.IndexedCollectionLike.md)<`T`\>
 
   ↳ **`IndexedBufferCollectionLike`**

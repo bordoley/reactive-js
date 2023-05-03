@@ -49,6 +49,7 @@
   "exports": {
     "./containers": "./containers.js",
     "./containers/AsyncIterable": "./containers/AsyncIterable.js",
+    "./containers/Dictionary": "./containers/Dictionary.js",
     "./containers/Enumerator": "./containers/Enumerator.js",
     "./containers/Iterable": "./containers/Iterable.js",
     "./containers/ReadonlyArray": "./containers/ReadonlyArray.js",
@@ -76,7 +77,6 @@
     "./rx/Stream": "./rx/Stream.js",
     "./rx/Streamable": "./rx/Streamable.js",
     "./util": "./util.js",
-    "./util/Dictionary": "./util/Dictionary.js",
     "./util/Disposable": "./util/Disposable.js",
     "./util/EventListener": "./util/EventListener.js",
     "./util/EventPublisher": "./util/EventPublisher.js",

@@ -1,7 +1,5 @@
 import {
-  __AssociativeCollectionLike_keys as AssociativeCollectionLike_keys,
   __BufferLike_capacity as BufferLike_capacity,
-  __CollectionLike_count as CollectionLike_count,
   __DispatcherLike_complete as DispatcherLike_complete,
   __DisposableLike_add as DisposableLike_add,
   __DisposableLike_dispose as DisposableLike_dispose,
@@ -11,7 +9,6 @@ import {
   __EventListenerLike_notify as EventListenerLike_notify,
   __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount,
   __EventSourceLike_addEventListener as EventSourceLike_addEventListener,
-  __KeyedCollectionLike_get as KeyedCollectionLike_get,
   __PauseableLike_isPaused as PauseableLike_isPaused,
   __PauseableLike_pause as PauseableLike_pause,
   __PauseableLike_resume as PauseableLike_resume,
@@ -30,16 +27,12 @@ import {
   Container,
   Container_T,
   Container_type,
-  EnumeratorLike,
-  KeyedContainer,
-  KeyedContainer_TKey,
+  IndexedCollectionLike,
 } from "./containers.js";
 import { Optional, SideEffect1 } from "./functions.js";
 
 export {
-  AssociativeCollectionLike_keys,
   BufferLike_capacity,
-  CollectionLike_count,
   DispatcherLike_complete,
   DisposableLike_add,
   DisposableLike_dispose,
@@ -49,7 +42,6 @@ export {
   EventListenerLike_notify,
   EventPublisherLike_listenerCount,
   EventSourceLike_addEventListener,
-  KeyedCollectionLike_get,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -136,59 +128,6 @@ export interface QueueableLike<T = unknown> extends BufferLike {
    */
   [QueueableLike_enqueue](req: T): boolean;
 }
-
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface CollectionLike {
-  readonly [CollectionLike_count]: number;
-}
-
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface KeyedCollectionLike<TKey = unknown, T = unknown>
-  extends CollectionLike {
-  [KeyedCollectionLike_get](index: TKey): T;
-}
-
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
-  extends KeyedCollectionLike<TKey, T> {
-  readonly [AssociativeCollectionLike_keys]: EnumeratorLike<TKey>;
-}
-
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface DictionaryLike<TKey = unknown, T = unknown>
-  extends AssociativeCollectionLike<TKey, Optional<T>> {}
-
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface DictionaryContainer extends KeyedContainer {
-  readonly [Container_type]?: DictionaryLike<
-    this[typeof KeyedContainer_TKey],
-    this[typeof Container_T]
-  >;
-
-  readonly [KeyedContainer_TKey]?: unknown;
-}
-
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface IndexedCollectionLike<T = unknown>
-  extends KeyedCollectionLike<number, T> {}
 
 /**
  * @noInheritDoc

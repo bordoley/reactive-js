@@ -4,8 +4,9 @@ import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { floor, random } from "../../__internal__/math.js";
 import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../../__internal__/testing.js";
 import { QueueLike_dequeue, QueueLike_head } from "../../__internal__/util.js";
+import { CollectionLike_count } from "../../containers.js";
 import { newInstance, none, pipe } from "../../functions.js";
-import { CollectionLike_count, QueueableLike_enqueue } from "../../util.js";
+import { QueueableLike_enqueue } from "../../util.js";
 import Queue_createIndexedQueue from "../Queue/__internal__/Queue.createIndexedQueue.js";
 import Queue_createPriorityQueue from "../Queue/__internal__/Queue.createPriorityQueue.js";
 const createPriorityQueue = /*@__PURE__*/ (() => {

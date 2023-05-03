@@ -4,7 +4,10 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { ReadonlyObjectMapLike } from "../../containers.js";
+import {
+  KeyedCollectionLike_get,
+  ReadonlyObjectMapLike,
+} from "../../containers.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
 import {
@@ -20,7 +23,6 @@ import * as Observable from "../../rx/Observable.js";
 import {
   DispatcherLike_complete,
   DisposableLike_dispose,
-  KeyedCollectionLike_get,
   QueueableLike_enqueue,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,

@@ -17,6 +17,10 @@ import {
   StackLike_pop,
 } from "../../../__internal__/util.js";
 import {
+  CollectionLike_count,
+  KeyedCollectionLike_get,
+} from "../../../containers.js";
+import {
   Comparator,
   Optional,
   call,
@@ -27,8 +31,6 @@ import {
 } from "../../../functions.js";
 import {
   BufferLike_capacity,
-  CollectionLike_count,
-  KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,

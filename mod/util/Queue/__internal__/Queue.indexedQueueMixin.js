@@ -5,8 +5,9 @@ import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { mix, props } from "../../../__internal__/mixins.js";
 import { __IndexedQueueMixin_capacityMask, __IndexedQueueMixin_head, __IndexedQueueMixin_tail, __IndexedQueueMixin_values, } from "../../../__internal__/symbols.js";
 import { MutableKeyedCollectionLike_set, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../../__internal__/util.js";
+import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../containers.js";
 import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
+import { BufferLike_capacity, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 const Queue_indexedQueueMixin = /*@__PURE__*/ (() => {
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;

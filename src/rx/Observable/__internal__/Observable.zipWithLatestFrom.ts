@@ -20,7 +20,10 @@ import {
   QueueLike,
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
-import { ContainerOperator } from "../../../containers.js";
+import {
+  CollectionLike_count,
+  ContainerOperator,
+} from "../../../containers.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
 import {
   ObservableContainer,
@@ -31,7 +34,6 @@ import {
 } from "../../../rx.js";
 import {
   BufferLike_capacity,
-  CollectionLike_count,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   QueueableLike_backpressureStrategy,

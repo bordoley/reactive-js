@@ -1,7 +1,7 @@
 /// <reference types="./Indexed.toReadonlyArray.d.ts" />
 
+import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../containers.js";
 import { newInstance } from "../../../functions.js";
-import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../util.js";
 const Indexed_toReadonlyArray = () => (queue) => {
     const count = queue[CollectionLike_count];
     const result = newInstance(Array, count);

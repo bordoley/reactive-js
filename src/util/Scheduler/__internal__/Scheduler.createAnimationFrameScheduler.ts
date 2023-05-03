@@ -14,6 +14,7 @@ import {
   DelegatingLike_delegate,
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
+import { CollectionLike_count } from "../../../containers.js";
 import {
   Optional,
   SideEffect,
@@ -24,7 +25,6 @@ import {
   pipeLazy,
 } from "../../../functions.js";
 import {
-  CollectionLike_count,
   DisposableLike,
   QueueableLike_enqueue,
   SchedulerLike,

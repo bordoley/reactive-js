@@ -1,5 +1,4 @@
-import { KeyedContainer } from "../containers.js";
-import { DictionaryContainer } from "../util.js";
+import { DictionaryContainer, KeyedContainer } from "../containers.js";
 import Dictionary_empty from "./Dictionary/__internal__/Dictionary.empty.js";
 import Dictionary_entries from "./Dictionary/__internal__/Dictionary.entries.js";
 import Dictionary_keys from "./Dictionary/__internal__/Dictionary.keys.js";

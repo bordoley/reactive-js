@@ -25,6 +25,7 @@ import {
   ContinuationSchedulerLike,
   ContinuationSchedulerLike_schedule,
 } from "../../../__internal__/util.js";
+import { CollectionLike_count } from "../../../containers.js";
 import {
   Optional,
   SideEffect1,
@@ -37,7 +38,6 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  CollectionLike_count,
   DisposableLike,
   DisposableLike_isDisposed,
   QueueableLike_enqueue,

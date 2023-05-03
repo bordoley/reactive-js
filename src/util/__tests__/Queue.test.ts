@@ -8,8 +8,9 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import { QueueLike_dequeue, QueueLike_head } from "../../__internal__/util.js";
+import { CollectionLike_count } from "../../containers.js";
 import { Optional, newInstance, none, pipe } from "../../functions.js";
-import { CollectionLike_count, QueueableLike_enqueue } from "../../util.js";
+import { QueueableLike_enqueue } from "../../util.js";
 import Queue_createIndexedQueue from "../Queue/__internal__/Queue.createIndexedQueue.js";
 import Queue_createPriorityQueue from "../Queue/__internal__/Queue.createPriorityQueue.js";
 

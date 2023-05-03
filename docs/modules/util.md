@@ -6,18 +6,12 @@
 
 ### Collection Interfaces
 
-- [AssociativeCollectionLike](../interfaces/util.AssociativeCollectionLike.md)
 - [BufferLike](../interfaces/util.BufferLike.md)
-- [CollectionLike](../interfaces/util.CollectionLike.md)
-- [DictionaryLike](../interfaces/util.DictionaryLike.md)
 - [IndexedBufferCollectionLike](../interfaces/util.IndexedBufferCollectionLike.md)
-- [IndexedCollectionLike](../interfaces/util.IndexedCollectionLike.md)
-- [KeyedCollectionLike](../interfaces/util.KeyedCollectionLike.md)
 - [QueueableLike](../interfaces/util.QueueableLike.md)
 
 ### Container Interfaces
 
-- [DictionaryContainer](../interfaces/util.DictionaryContainer.md)
 - [EventSourceContainer](../interfaces/util.EventSourceContainer.md)
 
 ### EventMap Interfaces

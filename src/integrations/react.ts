@@ -9,11 +9,14 @@ import {
 } from "react";
 import { unstable_NormalPriority } from "scheduler";
 import {
+  DictionaryLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
+  KeyedCollectionLike_get,
   ReadonlyObjectMapLike,
 } from "../containers.js";
+import * as Dictionary from "../containers/Dictionary.js";
 import {
   Factory,
   Function1,
@@ -48,13 +51,11 @@ import * as Publisher from "../rx/Publisher.js";
 import * as Runnable from "../rx/Runnable.js";
 import * as Streamable from "../rx/Streamable.js";
 import {
-  DictionaryLike,
   DispatcherLike,
   DisposableLike_dispose,
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
-  KeyedCollectionLike_get,
   PauseableEventMap,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -63,7 +64,6 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../util.js";
-import * as Dictionary from "../util/Dictionary.js";
 import * as Disposable from "../util/Disposable.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 import * as EventSource from "../util/EventSource.js";

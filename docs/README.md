@@ -8,6 +8,7 @@ Reactive-JS
 
 - [containers](modules/containers.md)
 - [containers/AsyncIterable](modules/containers_AsyncIterable.md)
+- [containers/Dictionary](modules/containers_Dictionary.md)
 - [containers/Enumerator](modules/containers_Enumerator.md)
 - [containers/Iterable](modules/containers_Iterable.md)
 - [containers/Promise](modules/containers_Promise.md)
@@ -35,7 +36,6 @@ Reactive-JS
 - [rx/Streamable](modules/rx_Streamable.md)
 - [rx/effects](modules/rx_effects.md)
 - [util](modules/util.md)
-- [util/Dictionary](modules/util_Dictionary.md)
 - [util/Disposable](modules/util_Disposable.md)
 - [util/EventListener](modules/util_EventListener.md)
 - [util/EventPublisher](modules/util_EventPublisher.md)
