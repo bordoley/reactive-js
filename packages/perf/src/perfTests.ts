@@ -7,18 +7,17 @@ import {
   returns,
 } from "@reactive-js/core/functions";
 import {
-  ContainerLike,
+  Container,
   FromReadonlyArray,
   Keep,
   Map,
-  ReadonlyArrayLike,
+  ReadonlyArrayContainer,
   Scan,
   ToReadonlyArray,
 } from "@reactive-js/core/containers";
 import * as Enumerable from "@reactive-js/core/rx/Enumerable";
 import * as ReadonlyArray from "@reactive-js/core/keyed-containers/ReadonlyArray";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
-import { ToRunnable } from "@reactive-js/core/rx";
 
 /**
  * A function that returns the result of summing
@@ -42,7 +41,7 @@ export const createArray = (n: number): ReadonlyArray<number> => {
   return src;
 };
 
-const createMapPerfTest = <C extends ContainerLike>(
+const createMapPerfTest = <C extends Container>(
   name: string,
   m: FromReadonlyArray<C> & Map<C> & ToReadonlyArray<C>,
 ) =>
@@ -56,15 +55,15 @@ export const map = (n: number) =>
     pipeLazy<number, readonly number[]>(n, createArray),
     createMapPerfTest("Enumerable", Enumerable),
     createMapPerfTest("Runnable", Runnable),
-    createMapPerfTest<ReadonlyArrayLike>("readonlyArray", ReadonlyArray),
+    createMapPerfTest<ReadonlyArrayContainer>("readonlyArray", ReadonlyArray),
     benchmarkTest("array methods", async src => {
       return () => src.map(increment);
     }),
   );
 
-const createFilterMapFusionPerfTest = <C extends ContainerLike>(
+const createFilterMapFusionPerfTest = <C extends Container>(
   name: string,
-  m: FromReadonlyArray<C> & Keep<C> & Map<C> & ToRunnable<C>,
+  m: FromReadonlyArray<C> & Keep<C> & Map<C> & ToReadonlyArray<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(
@@ -75,8 +74,7 @@ const createFilterMapFusionPerfTest = <C extends ContainerLike>(
       m.map(increment),
       m.map(increment),
       m.keep(isEven),
-      m.toRunnable(),
-      Runnable.reduce(sum, returns(0)),
+      m.toReadonlyArray(),
     ),
   );
 
@@ -99,9 +97,9 @@ export const filterMapFusion = (n: number) =>
     ),
   );
 
-const createFilterMapReducePerfTest = <C extends ContainerLike>(
+const createFilterMapReducePerfTest = <C extends Container>(
   name: string,
-  m: FromReadonlyArray<C> & Keep<C> & Map<C> & ToRunnable<C>,
+  m: FromReadonlyArray<C> & Keep<C> & Map<C> & ToReadonlyArray<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(
@@ -109,8 +107,7 @@ const createFilterMapReducePerfTest = <C extends ContainerLike>(
       m.fromReadonlyArray(),
       m.keep(isEven),
       m.map(increment),
-      m.toRunnable(),
-      Runnable.reduce(sum, returns(0)),
+      m.toReadonlyArray(),
     ),
   );
 
@@ -126,7 +123,6 @@ export const filterMapReduce = (n: number) =>
         src
           .filter(isEven)
           .map(increment)
-          .reduce((a, b) => sum(a, b), 0),
     ),
     benchmarkTest("most", async src => {
       const { map, filter } = await import("@most/core");
@@ -138,17 +134,16 @@ export const filterMapReduce = (n: number) =>
     }),
   );
 
-const createScanReducePerfTest = <C extends ContainerLike>(
+const createScanReducePerfTest = <C extends Container>(
   name: string,
-  m: FromReadonlyArray<C> & Map<C> & Scan<C> & ToRunnable<C>,
+  m: FromReadonlyArray<C> & Map<C> & Scan<C> & ToReadonlyArray<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(
       src,
       m.fromReadonlyArray(),
       m.scan(sum, returns(0)),
-      m.toRunnable(),
-      Runnable.reduce<number, number>(passthrough, returns(0)),
+      m.toReadonlyArray(),
     ),
   );
 
