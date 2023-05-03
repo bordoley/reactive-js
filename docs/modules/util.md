@@ -4,12 +4,6 @@
 
 ## Table of contents
 
-### Collection Interfaces
-
-- [BufferLike](../interfaces/util.BufferLike.md)
-- [IndexedBufferCollectionLike](../interfaces/util.IndexedBufferCollectionLike.md)
-- [QueueableLike](../interfaces/util.QueueableLike.md)
-
 ### Container Interfaces
 
 - [EventSourceContainer](../interfaces/util.EventSourceContainer.md)
@@ -21,12 +15,18 @@
 
 ### Other Interfaces
 
-- [DispatcherLike](../interfaces/util.DispatcherLike.md)
 - [DisposableLike](../interfaces/util.DisposableLike.md)
 - [ErrorSafeEventListenerLike](../interfaces/util.ErrorSafeEventListenerLike.md)
 - [EventListenerLike](../interfaces/util.EventListenerLike.md)
 - [EventPublisherLike](../interfaces/util.EventPublisherLike.md)
 - [EventSourceLike](../interfaces/util.EventSourceLike.md)
+
+### Queueing Interfaces
+
+- [BufferLike](../interfaces/util.BufferLike.md)
+- [DispatcherLike](../interfaces/util.DispatcherLike.md)
+- [IndexedBufferCollectionLike](../interfaces/util.IndexedBufferCollectionLike.md)
+- [QueueableLike](../interfaces/util.QueueableLike.md)
 
 ### Scheduler Interfaces
 
