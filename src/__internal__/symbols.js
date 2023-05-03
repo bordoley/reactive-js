@@ -341,6 +341,11 @@ export const __IndexedQueueMixin_values = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __LazyInitEventMixin_eventPublisher = /*@__PURE__*/ symbol(
+  "LazyInitEventMixin_eventPublisher",
+);
+
+/** @type {unique symbol} */
 export const __ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol(
   "ObserverMixin_dispatchSubscription",
 );
@@ -348,11 +353,6 @@ export const __ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol(
   "ObserverMixin_isCompleted",
-);
-
-/** @type {unique symbol} */
-export const __ObserverMixin_queuePublisher = /*@__PURE__*/ symbol(
-  "ObserverMixin_queuePublisher",
 );
 
 /** @type {unique symbol} */
@@ -710,11 +710,6 @@ export const __PairwiseObserver_hasPrev = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __PauseableObservable_eventPublisher = /*@__PURE__*/ symbol(
-  "PauseableObservable_eventPublisher",
-);
-
-/** @type {unique symbol} */
 export const __PauseableScheduler_delayed = /*@__PURE__*/ symbol(
   "PauseableScheduler_delayed ",
 );
@@ -722,11 +717,6 @@ export const __PauseableScheduler_delayed = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __PauseableScheduler_dueTime = /*@__PURE__*/ symbol(
   "PauseableScheduler_dueTime ",
-);
-
-/** @type {unique symbol} */
-export const __PauseableScheduler_eventPublisher = /*@__PURE__*/ symbol(
-  "PauseableScheduler_eventPublisher",
 );
 
 /** @type {unique symbol} */

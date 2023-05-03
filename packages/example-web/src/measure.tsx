@@ -45,6 +45,9 @@ const Measure = () => {
       pipeSome(
         container,
         WebElement.observeMeasure(),
+        Observable.distinctUntilChanged({
+          equality: (a, b) => a.width === b.width,
+        }),
         Observable.forkMerge(
           compose(
             Observable.withLatestFrom(
@@ -58,9 +61,8 @@ const Measure = () => {
             }),
             Observable.ignoreElements(),
           ),
-          Observable.identity(),
+          Observable.throttle(50, { mode: "interval" }),
         ),
-        Observable.throttle(50, { mode: "interval" }),
       ) ?? Observable.empty<Rect>(),
     [container, animation, dispatch],
   ) ?? { width: 0 };

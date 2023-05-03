@@ -5,10 +5,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-} from "../../../__internal__/util.js";
 import { Function1, Optional, none, pipe } from "../../../functions.js";
 import { AnimationConfig } from "../../../rx.js";
 import {
@@ -25,12 +21,10 @@ import {
   EventSourceLike_addEventListener,
   KeyedCollectionLike_get,
   PauseableEventMap,
-  PauseableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
 } from "../../../util.js";
-import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
 import Pauseable_delegatingMixin from "../../../util/Pauseable/__internal__/Pauseable.delegatingMixin.js";
@@ -65,6 +59,7 @@ const createAnimationEventHandlerStream: <
       publisher: EventPublisherLike<
         | { type: TEventType; value: T }
         | DispatcherEventMap[keyof DispatcherEventMap]
+        | PauseableEventMap[keyof PauseableEventMap]
       >;
     };
 
@@ -72,7 +67,6 @@ const createAnimationEventHandlerStream: <
       mix(
         include(
           Stream_delegatingMixin<TEventType, boolean>(),
-          Delegating_mixin(),
           Pauseable_delegatingMixin,
         ),
         function AnimationEventHandlerStream(
@@ -108,7 +102,6 @@ const createAnimationEventHandlerStream: <
             streamDelegate,
           );
 
-          init(Delegating_mixin(), instance, streamDelegate);
           init(Pauseable_delegatingMixin, instance, streamDelegate);
 
           const animationEventsPublisher = streamDelegate[
@@ -134,23 +127,11 @@ const createAnimationEventHandlerStream: <
         }),
         {
           [EventSourceLike_addEventListener](
-            this: DelegatingLike<PauseableLike>,
-            listener: EventListenerLike<
-              | { type: TEventType; value: T }
-              | DispatcherEventMap[keyof DispatcherEventMap]
-              | PauseableEventMap[keyof PauseableEventMap]
-            >,
-          ): void {
-            this[DelegatingLike_delegate][EventSourceLike_addEventListener](
-              listener,
-            );
-          },
-
-          [EventSourceLike_addEventListener](
             this: TProperties,
             listener: EventListenerLike<
               | { type: TEventType; value: T }
               | DispatcherEventMap[keyof DispatcherEventMap]
+              | PauseableEventMap[keyof PauseableEventMap]
             >,
           ) {
             this.publisher[EventSourceLike_addEventListener](listener);

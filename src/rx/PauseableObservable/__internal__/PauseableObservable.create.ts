@@ -5,14 +5,13 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { __PauseableObservable_eventPublisher } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
-import { Optional, Updater, compose, none, pipe } from "../../../functions.js";
+import { Updater, compose, pipe } from "../../../functions.js";
 import {
   ObservableContainer,
   ObservableLike_isEnumerable,
@@ -25,11 +24,8 @@ import { StreamLike } from "../../../streaming.js";
 import Stream_create from "../../../streaming/Stream/__internal__/Stream.create.js";
 import {
   DisposableLike,
-  EventListenerLike,
   EventListenerLike_notify,
-  EventPublisherLike,
   EventSourceLike_addEventListener,
-  PauseableEventMap,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -39,9 +35,8 @@ import {
   SchedulerLike,
 } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
-import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
+import EventPublisher_lazyInitMixin from "../../../util/EventPublisher/__internal__/EventPublisher.lazyInitMixin.js";
 import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -56,17 +51,22 @@ const PauseableObservable_create: <T>(
   },
 ) => PauseableObservableLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [__PauseableObservable_eventPublisher]: Optional<
-      EventPublisherLike<PauseableEventMap[keyof PauseableEventMap]>
-    >;
     [PauseableLike_isPaused]: boolean;
   };
 
   return createInstanceFactory(
     mix(
-      include(Disposable_delegatingMixin, Delegating_mixin()),
+      include(
+        Disposable_delegatingMixin,
+        Delegating_mixin(),
+        EventPublisher_lazyInitMixin(),
+      ),
       function PauseableObservable(
-        instance: TProperties & PauseableObservableLike<T>,
+        instance: TProperties &
+          Omit<
+            PauseableObservableLike<T>,
+            typeof EventSourceLike_addEventListener
+          >,
         op: ContainerOperator<ObservableContainer, boolean, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
@@ -84,48 +84,32 @@ const PauseableObservable_create: <T>(
             pipe(true, Optional_toObservable()),
           ),
           Observable_distinctUntilChanged<ObservableContainer, boolean>(),
-          Observable_forEach<ObservableContainer, boolean>(isPause => {
-            instance[PauseableLike_isPaused] = isPause;
-            instance[__PauseableObservable_eventPublisher]?.[
-              EventListenerLike_notify
-            ](isPause ? { type: "paused" } : { type: "resumed" });
-          }),
+          Observable_forEach<ObservableContainer, boolean>(isPaused =>
+            notifyPauseState(isPaused),
+          ),
           op,
         );
 
         const stream = Stream_create(liftedOp, scheduler, multicastOptions);
         init(Disposable_delegatingMixin, instance, stream);
         init(Delegating_mixin(), instance, stream);
+        init(EventPublisher_lazyInitMixin(), instance);
+
+        const notifyPauseState = (isPause: boolean) => {
+          instance[PauseableLike_isPaused] = isPause;
+          instance[EventListenerLike_notify](
+            isPause ? { type: "paused" } : { type: "resumed" },
+          );
+        };
 
         return instance;
       },
       props<TProperties>({
-        [__PauseableObservable_eventPublisher]: none,
         [PauseableLike_isPaused]: true,
       }),
       {
         [ObservableLike_isEnumerable]: false as const,
         [ObservableLike_isRunnable]: false as const,
-
-        [EventSourceLike_addEventListener](
-          this: TProperties & DisposableLike,
-          listener: EventListenerLike<
-            PauseableEventMap[keyof PauseableEventMap]
-          >,
-        ): void {
-          const publisher =
-            this[__PauseableObservable_eventPublisher] ??
-            (() => {
-              const publisher = pipe(
-                EventPublisher_create(),
-                Disposable_addTo(this),
-              );
-              this[__PauseableObservable_eventPublisher] = publisher;
-              return publisher;
-            })();
-
-          publisher[EventSourceLike_addEventListener](listener);
-        },
 
         [ObservableLike_observe](
           this: DelegatingLike<StreamLike<boolean, T>>,

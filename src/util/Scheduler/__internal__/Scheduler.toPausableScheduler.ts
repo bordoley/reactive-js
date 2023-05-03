@@ -11,7 +11,6 @@ import {
 import {
   __PauseableScheduler_delayed,
   __PauseableScheduler_dueTime,
-  __PauseableScheduler_eventPublisher,
   __PauseableScheduler_hostContinuation,
   __PauseableScheduler_hostScheduler,
   __PauseableScheduler_initialTime,
@@ -47,7 +46,6 @@ import {
   isNone,
   isSome,
   none,
-  pipe,
   unsafeCast,
 } from "../../../functions.js";
 import {
@@ -55,8 +53,6 @@ import {
   DisposableLike_isDisposed,
   EventListenerLike,
   EventListenerLike_notify,
-  EventPublisherLike,
-  EventSourceLike_addEventListener,
   PauseableEventMap,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -75,8 +71,7 @@ import Disposable_disposed from "../../../util/Disposable/__internal__/Disposabl
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
-import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
-import EventPublisher_create from "../../EventPublisher/__internal__/EventPublisher.create.js";
+import EventPublisher_lazyInitMixin from "../../EventPublisher/__internal__/EventPublisher.lazyInitMixin.js";
 import {
   SchedulerImplementationLike,
   SchedulerImplementationLike_runContinuation,
@@ -209,9 +204,6 @@ const Scheduler_toPauseableScheduler: Function1<
   type TProperties = {
     readonly [__PauseableScheduler_delayed]: QueueLike<SchedulerTaskLike>;
     [__PauseableScheduler_dueTime]: number;
-    [__PauseableScheduler_eventPublisher]: Optional<
-      EventPublisherLike<PauseableEventMap[keyof PauseableEventMap]>
-    >;
     readonly [__PauseableScheduler_hostScheduler]: SchedulerLike;
     [__PauseableScheduler_hostContinuation]: Optional<
       SideEffect1<SchedulerLike>
@@ -229,11 +221,11 @@ const Scheduler_toPauseableScheduler: Function1<
         SchedulerImplementation_mixin,
         MutableEnumerator_mixin<SchedulerTaskLike>(),
         SerialDisposable_mixin(),
+        EventPublisher_lazyInitMixin(),
       ),
       function PauseableScheduler(
         instance: Pick<
           PauseableSchedulerLike & SchedulerImplementationLike,
-          | typeof EventSourceLike_addEventListener
           | typeof SchedulerLike_now
           | typeof SchedulerImplementationLike_shouldYield
           | typeof SchedulerImplementationLike_scheduleContinuation
@@ -250,6 +242,7 @@ const Scheduler_toPauseableScheduler: Function1<
         );
         init(MutableEnumerator_mixin<SchedulerTaskLike>(), instance);
         init(SerialDisposable_mixin(), instance, Disposable_disposed);
+        init(EventPublisher_lazyInitMixin(), instance);
 
         instance[__PauseableScheduler_delayed] = Queue_createPriorityQueue(
           delayedComparator,
@@ -271,7 +264,6 @@ const Scheduler_toPauseableScheduler: Function1<
       props<TProperties>({
         [__PauseableScheduler_delayed]: none,
         [__PauseableScheduler_dueTime]: 0,
-        [__PauseableScheduler_eventPublisher]: none,
         [__PauseableScheduler_hostScheduler]: none,
         [__PauseableScheduler_hostContinuation]: none,
         [PauseableLike_isPaused]: true,
@@ -310,51 +302,30 @@ const Scheduler_toPauseableScheduler: Function1<
             this[__PauseableScheduler_hostScheduler][SchedulerLike_shouldYield]
           );
         },
-        [EventSourceLike_addEventListener](
-          this: TProperties & DisposableLike,
-          listener: EventListenerLike<
-            PauseableEventMap[keyof PauseableEventMap]
-          >,
-        ): void {
-          const publisher =
-            this[__PauseableScheduler_eventPublisher] ??
-            (() => {
-              const publisher = pipe(
-                EventPublisher_create(),
-                Disposable_addTo(this),
-              );
-              this[__PauseableScheduler_eventPublisher] = publisher;
-              return publisher;
-            })();
-
-          publisher[EventSourceLike_addEventListener](listener);
-        },
         [PauseableLike_pause](
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike &
-            SchedulerImplementationLike,
+            SchedulerImplementationLike &
+            EventListenerLike<PauseableEventMap[keyof PauseableEventMap]>,
         ) {
           this[__PauseableScheduler_initialTime] = this[SchedulerLike_now];
           this[PauseableLike_isPaused] = true;
           this[SerialDisposableLike_current] = Disposable_disposed;
-          this[__PauseableScheduler_eventPublisher]?.[EventListenerLike_notify](
-            { type: "paused" },
-          );
+          this[EventListenerLike_notify]({ type: "paused" });
         },
         [PauseableLike_resume](
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike &
-            SchedulerImplementationLike,
+            SchedulerImplementationLike &
+            EventListenerLike<PauseableEventMap[keyof PauseableEventMap]>,
         ) {
           this[__PauseableScheduler_resumedTime] =
             this[__PauseableScheduler_hostScheduler][SchedulerLike_now];
           this[PauseableLike_isPaused] = false;
           scheduleOnHost(this);
-          this[__PauseableScheduler_eventPublisher]?.[EventListenerLike_notify](
-            { type: "resumed" },
-          );
+          this[EventListenerLike_notify]({ type: "resumed" });
         },
         [EnumeratorLike_move](
           this: TProperties &

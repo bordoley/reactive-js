@@ -143,11 +143,11 @@ export const __IndexedQueueMixin_capacityMask: unique symbol;
 /** @type {unique symbol} */
 export const __IndexedQueueMixin_values: unique symbol;
 /** @type {unique symbol} */
+export const __LazyInitEventMixin_eventPublisher: unique symbol;
+/** @type {unique symbol} */
 export const __ObserverMixin_dispatchSubscription: unique symbol;
 /** @type {unique symbol} */
 export const __ObserverMixin_isCompleted: unique symbol;
-/** @type {unique symbol} */
-export const __ObserverMixin_queuePublisher: unique symbol;
 /** @type {unique symbol} */
 export const __SchedulerImplementationMixin_currentContinuation: unique symbol;
 /** @type {unique symbol} */
@@ -299,13 +299,9 @@ export const __PairwiseObserver_prev: unique symbol;
 /** @type {unique symbol} */
 export const __PairwiseObserver_hasPrev: unique symbol;
 /** @type {unique symbol} */
-export const __PauseableObservable_eventPublisher: unique symbol;
-/** @type {unique symbol} */
 export const __PauseableScheduler_delayed: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableScheduler_dueTime: unique symbol;
-/** @type {unique symbol} */
-export const __PauseableScheduler_eventPublisher: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableScheduler_hostContinuation: unique symbol;
 /** @type {unique symbol} */

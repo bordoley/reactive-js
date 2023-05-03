@@ -142,11 +142,11 @@ export declare const __IndexedQueueMixin_capacityMask: unique symbol;
 
 export declare const __IndexedQueueMixin_values: unique symbol;
 
+export declare const __LazyInitEventMixin_eventPublisher: unique symbol;
+
 export declare const __ObserverMixin_dispatchSubscription: unique symbol;
 
 export declare const __ObserverMixin_isCompleted: unique symbol;
-
-export declare const __ObserverMixin_queuePublisher: unique symbol;
 
 export declare const __SchedulerImplementationMixin_currentContinuation: unique symbol;
 
@@ -298,13 +298,9 @@ export declare const __PairwiseObserver_prev: unique symbol;
 
 export declare const __PairwiseObserver_hasPrev: unique symbol;
 
-export declare const __PauseableObservable_eventPublisher: unique symbol;
-
 export declare const __PauseableScheduler_delayed: unique symbol;
 
 export declare const __PauseableScheduler_dueTime: unique symbol;
-
-export declare const __PauseableScheduler_eventPublisher: unique symbol;
 
 export declare const __PauseableScheduler_hostContinuation: unique symbol;
 
