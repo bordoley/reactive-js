@@ -1,8 +1,8 @@
 import { returns } from "../../../functions.js";
-import { Exhaust, RunnableContainer } from "../../../rx.js";
+import { Reactive, RunnableContainer } from "../../../rx.js";
 import Runnable_mergeAll from "./Runnable.mergeAll.js";
 
-const Runnable_exhaust: Exhaust<RunnableContainer>["exhaust"] =
+const Runnable_exhaust: Reactive.Exhaust<RunnableContainer>["exhaust"] =
   /*@__PURE__*/ (() =>
     returns(
       Runnable_mergeAll({

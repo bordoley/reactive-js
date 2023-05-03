@@ -6,12 +6,14 @@ import {
 } from "../__internal__/testing.js";
 import { Container } from "../containers.js";
 import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
-import { ToEnumerable, ToRunnable } from "../rx.js";
+import { Reactive } from "../rx.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Runnable from "../rx/Runnable.js";
 
 export const forEachTests = <C extends Container>(
-  m: Container.ForEach<C> & Container.FromReadonlyArray<C> & ToRunnable<C>,
+  m: Container.ForEach<C> &
+    Container.FromReadonlyArray<C> &
+    Reactive.ToRunnable<C>,
 ) =>
   describe(
     "forEach",
@@ -49,7 +51,7 @@ export const forEachTests = <C extends Container>(
   );
 
 export const fromReadonlyArrayTests = <C extends Container>(
-  m: Container.FromReadonlyArray<C> & ToRunnable<C>,
+  m: Container.FromReadonlyArray<C> & Reactive.ToRunnable<C>,
 ) =>
   describe(
     "fromReadonlyArray",
@@ -110,7 +112,9 @@ export const fromReadonlyArrayTests = <C extends Container>(
   );
 
 export const keepTests = <C extends Container>(
-  m: Container.Keep<C> & Container.FromReadonlyArray<C> & ToRunnable<C>,
+  m: Container.Keep<C> &
+    Container.FromReadonlyArray<C> &
+    Reactive.ToRunnable<C>,
 ) =>
   describe(
     "keep",
@@ -145,7 +149,7 @@ export const keepTests = <C extends Container>(
   );
 
 export const mapTests = <C extends Container>(
-  m: Container.Map<C> & Container.FromReadonlyArray<C> & ToRunnable<C>,
+  m: Container.Map<C> & Container.FromReadonlyArray<C> & Reactive.ToRunnable<C>,
 ) =>
   describe(
     "map",
@@ -180,7 +184,7 @@ export const mapTests = <C extends Container>(
   );
 
 export const toEnumerableTests = <C extends Container>(
-  m: Container.FromReadonlyArray<C> & ToEnumerable<C>,
+  m: Container.FromReadonlyArray<C> & Reactive.ToEnumerable<C>,
 ) =>
   describe(
     "toEnumerable",
@@ -197,7 +201,7 @@ export const toEnumerableTests = <C extends Container>(
   );
 
 export const toRunnableTest = <C extends Container>(
-  m: Container.FromReadonlyArray<C> & ToRunnable<C>,
+  m: Container.FromReadonlyArray<C> & Reactive.ToRunnable<C>,
 ) =>
   test(
     "without delay",

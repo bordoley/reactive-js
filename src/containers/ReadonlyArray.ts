@@ -10,13 +10,11 @@ import Optional_toReadonlyArray from "../containers/Optional/__internal__/Option
 import { Function1 } from "../functions.js";
 import {
   EnumerableLike,
-  FromEnumerable,
-  FromRunnable,
   ObservableLike,
   PauseableObservableLike,
+  Reactive,
   RunnableLike,
 } from "../rx.js";
-import type * as Rx from "../rx.js";
 import Runnable_toReadonlyArray from "../rx/Runnable/__internal__/Runnable.toReadonlyArray.js";
 import {
   DisposableLike,
@@ -69,7 +67,7 @@ export const everySatisfy: Container.EverySatisfy<ReadonlyArrayContainer>["every
 export const first: Container.First<ReadonlyArrayContainer>["first"] =
   ReadonlyArray_first;
 
-interface Flow extends Rx.Flow<ReadonlyArrayContainer> {
+interface Flow extends Reactive.Flow<ReadonlyArrayContainer> {
   /** @category Transform */
   flow<T>(
     scheduler: SchedulerLike,
@@ -91,7 +89,7 @@ export const forEach: KeyedContainer.ForEach<ReadonlyArrayContainer>["forEach"] 
 export const forEachWithKey: KeyedContainer.ForEachWithKey<ReadonlyArrayContainer>["forEachWithKey"] =
   ReadonlyArray_forEachWithKey;
 
-export const fromEnumerable: FromEnumerable<ReadonlyArrayContainer>["fromEnumerable"] =
+export const fromEnumerable: Reactive.FromEnumerable<ReadonlyArrayContainer>["fromEnumerable"] =
   Runnable_toReadonlyArray;
 
 export const fromIterable: Container.FromIterable<ReadonlyArrayContainer>["fromIterable"] =
@@ -103,7 +101,7 @@ export const fromOptional: Container.FromOptional<ReadonlyArrayContainer>["fromO
 export const fromReadonlyArray: KeyedContainer.FromReadonlyArray<ReadonlyArrayContainer>["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 
-export const fromRunnable: FromRunnable<ReadonlyArrayContainer>["fromRunnable"] =
+export const fromRunnable: Reactive.FromRunnable<ReadonlyArrayContainer>["fromRunnable"] =
   Runnable_toReadonlyArray;
 
 export const getLength = ReadonlyArray_getLength;
@@ -134,7 +132,7 @@ export const mapWithKey: KeyedContainer.MapWithKey<ReadonlyArrayContainer>["mapW
 export const someSatisfy: Container.SomeSatisfy<ReadonlyArrayContainer>["someSatisfy"] =
   ReadonlyArray_someSatisfy;
 
-interface ToEnumerable extends Rx.ToEnumerable<ReadonlyArrayContainer> {
+interface ToEnumerable extends Reactive.ToEnumerable<ReadonlyArrayContainer> {
   /**
    * @category Transform
    */
@@ -156,7 +154,7 @@ interface ToIterable extends Container.ToIterable<ReadonlyArrayContainer> {
 export const toIterable: ToIterable["toIterable"] =
   ReadonlyArray_toReadonlyArray;
 
-interface ToObservable extends Rx.ToObservable<ReadonlyArrayContainer> {
+interface ToObservable extends Reactive.ToObservable<ReadonlyArrayContainer> {
   /** @category Transform */
   toObservable: <T>(options?: {
     readonly count?: number;
@@ -171,7 +169,7 @@ export const toObservable: ToObservable["toObservable"] =
 export const toReadonlyArray: KeyedContainer.ToReadonlyArray<ReadonlyArrayContainer>["toReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 
-interface ToRunnable extends Rx.ToRunnable<ReadonlyArrayContainer> {
+interface ToRunnable extends Reactive.ToRunnable<ReadonlyArrayContainer> {
   /** @category Transform */
   toRunnable: <T>(options?: {
     readonly count?: number;

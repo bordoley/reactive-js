@@ -1,6 +1,6 @@
 import { Container } from "../containers.js";
 import { Function1, SideEffect1 } from "../functions.js";
-import { ToObservable } from "../rx.js";
+import { Reactive } from "../rx.js";
 import { DisposableLike, EventSourceContainer, EventSourceLike } from "../util.js";
 export declare const addEventHandler: <T>(handler: SideEffect1<T>) => Function1<EventSourceLike<T>, DisposableLike>;
 /**
@@ -13,4 +13,4 @@ export declare const ignoreElements: Container.IgnoreElements<EventSourceContain
 export declare const keep: Container.Keep<EventSourceContainer>["keep"];
 export declare const map: Container.Map<EventSourceContainer>["map"];
 export declare const pick: Container.Pick<EventSourceContainer>["pick"];
-export declare const toObservable: ToObservable<EventSourceContainer>["toObservable"];
+export declare const toObservable: Reactive.ToObservable<EventSourceContainer>["toObservable"];

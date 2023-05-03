@@ -1,7 +1,6 @@
 import { Container, EnumeratorLike, KeyedContainer, ReadonlyArrayContainer } from "../containers.js";
 import { Function1 } from "../functions.js";
-import { EnumerableLike, FromEnumerable, FromRunnable, ObservableLike, PauseableObservableLike, RunnableLike } from "../rx.js";
-import type * as Rx from "../rx.js";
+import { EnumerableLike, ObservableLike, PauseableObservableLike, Reactive, RunnableLike } from "../rx.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../util.js";
 export declare const empty: KeyedContainer.Empty<ReadonlyArrayContainer>["empty"];
 export declare const entries: KeyedContainer.Entries<ReadonlyArrayContainer>["entries"];
@@ -18,7 +17,7 @@ interface Enumerate extends Container.Enumerate<ReadonlyArrayContainer> {
 export declare const enumerate: Enumerate["enumerate"];
 export declare const everySatisfy: Container.EverySatisfy<ReadonlyArrayContainer>["everySatisfy"];
 export declare const first: Container.First<ReadonlyArrayContainer>["first"];
-interface Flow extends Rx.Flow<ReadonlyArrayContainer> {
+interface Flow extends Reactive.Flow<ReadonlyArrayContainer> {
     /** @category Transform */
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
@@ -32,11 +31,11 @@ interface Flow extends Rx.Flow<ReadonlyArrayContainer> {
 export declare const flow: Flow["flow"];
 export declare const forEach: KeyedContainer.ForEach<ReadonlyArrayContainer>["forEach"];
 export declare const forEachWithKey: KeyedContainer.ForEachWithKey<ReadonlyArrayContainer>["forEachWithKey"];
-export declare const fromEnumerable: FromEnumerable<ReadonlyArrayContainer>["fromEnumerable"];
+export declare const fromEnumerable: Reactive.FromEnumerable<ReadonlyArrayContainer>["fromEnumerable"];
 export declare const fromIterable: Container.FromIterable<ReadonlyArrayContainer>["fromIterable"];
 export declare const fromOptional: Container.FromOptional<ReadonlyArrayContainer>["fromOptional"];
 export declare const fromReadonlyArray: KeyedContainer.FromReadonlyArray<ReadonlyArrayContainer>["fromReadonlyArray"];
-export declare const fromRunnable: FromRunnable<ReadonlyArrayContainer>["fromRunnable"];
+export declare const fromRunnable: Reactive.FromRunnable<ReadonlyArrayContainer>["fromRunnable"];
 export declare const getLength: (arr: readonly unknown[]) => number;
 export declare const identity: KeyedContainer.Identity<ReadonlyArrayContainer>["identity"];
 export declare const isEmpty: (arr: readonly unknown[]) => boolean;
@@ -47,7 +46,7 @@ export declare const last: Container.Last<ReadonlyArrayContainer>["last"];
 export declare const map: KeyedContainer.Map<ReadonlyArrayContainer>["map"];
 export declare const mapWithKey: KeyedContainer.MapWithKey<ReadonlyArrayContainer>["mapWithKey"];
 export declare const someSatisfy: Container.SomeSatisfy<ReadonlyArrayContainer>["someSatisfy"];
-interface ToEnumerable extends Rx.ToEnumerable<ReadonlyArrayContainer> {
+interface ToEnumerable extends Reactive.ToEnumerable<ReadonlyArrayContainer> {
     /**
      * @category Transform
      */
@@ -65,7 +64,7 @@ interface ToIterable extends Container.ToIterable<ReadonlyArrayContainer> {
     }): Function1<ReadonlyArray<T>, Iterable<T>>;
 }
 export declare const toIterable: ToIterable["toIterable"];
-interface ToObservable extends Rx.ToObservable<ReadonlyArrayContainer> {
+interface ToObservable extends Reactive.ToObservable<ReadonlyArrayContainer> {
     /** @category Transform */
     toObservable: <T>(options?: {
         readonly count?: number;
@@ -76,7 +75,7 @@ interface ToObservable extends Rx.ToObservable<ReadonlyArrayContainer> {
 }
 export declare const toObservable: ToObservable["toObservable"];
 export declare const toReadonlyArray: KeyedContainer.ToReadonlyArray<ReadonlyArrayContainer>["toReadonlyArray"];
-interface ToRunnable extends Rx.ToRunnable<ReadonlyArrayContainer> {
+interface ToRunnable extends Reactive.ToRunnable<ReadonlyArrayContainer> {
     /** @category Transform */
     toRunnable: <T>(options?: {
         readonly count?: number;

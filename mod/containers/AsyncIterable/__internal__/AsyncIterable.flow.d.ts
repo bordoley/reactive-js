@@ -1,4 +1,4 @@
 import { AsyncIterableContainer } from "../../../containers.js";
-import { Flow } from "../../../rx.js";
-declare const AsyncIterable_flow: Flow<AsyncIterableContainer>["flow"];
+import { Reactive } from "../../../rx.js";
+declare const AsyncIterable_flow: Reactive.Flow<AsyncIterableContainer>["flow"];
 export default AsyncIterable_flow;

@@ -1,3 +1,3 @@
-import { Flow, RunnableContainer } from "../../../rx.js";
-declare const Runnable_flow: Flow<RunnableContainer>["flow"];
+import { Reactive, RunnableContainer } from "../../../rx.js";
+declare const Runnable_flow: Reactive.Flow<RunnableContainer>["flow"];
 export default Runnable_flow;

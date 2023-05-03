@@ -8,23 +8,7 @@ import Container_identity from "../containers/Container/__internal__/Container.i
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import {
-  BackpressureStrategy,
-  CatchError,
-  DecodeWithCharset,
-  Defer,
-  DispatchTo,
-  EncodeUtf8,
-  Enqueue,
-  EnumerableContainer,
-  FirstAsync,
-  Flow,
-  LastAsync,
-  Retry,
-  ScanLast,
-  ThrowIfEmpty,
-  Throws,
-} from "../rx.js";
+import { EnumerableContainer, Reactive } from "../rx.js";
 import Enumerable_catchError from "../rx/Enumerable/__internal__/Enumerable.catchError.js";
 import Enumerable_concatAll from "../rx/Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "../rx/Enumerable/__internal__/Enumerable.concatMap.js";
@@ -82,13 +66,13 @@ import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.j
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 
-export const backpressureStrategy: BackpressureStrategy<EnumerableContainer>["backpressureStrategy"] =
+export const backpressureStrategy: Reactive.BackpressureStrategy<EnumerableContainer>["backpressureStrategy"] =
   Observable_backpressureStrategy;
 
 export const buffer: Container.Buffer<EnumerableContainer>["buffer"] =
   Observable_buffer;
 
-export const catchError: CatchError<EnumerableContainer>["catchError"] =
+export const catchError: Reactive.CatchError<EnumerableContainer>["catchError"] =
   Enumerable_catchError;
 
 /**
@@ -111,12 +95,13 @@ export const concatWith: Container.ConcatWith<EnumerableContainer>["concatWith"]
 export const contains: Container.Contains<EnumerableContainer>["contains"] =
   Runnable_contains;
 
-export const decodeWithCharset: DecodeWithCharset<EnumerableContainer>["decodeWithCharset"] =
+export const decodeWithCharset: Reactive.DecodeWithCharset<EnumerableContainer>["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-export const defer: Defer<EnumerableContainer>["defer"] = Enumerable_defer;
+export const defer: Reactive.Defer<EnumerableContainer>["defer"] =
+  Enumerable_defer;
 
-export const dispatchTo: DispatchTo<EnumerableContainer>["dispatchTo"] =
+export const dispatchTo: Reactive.DispatchTo<EnumerableContainer>["dispatchTo"] =
   Observable_dispatchTo;
 
 export const distinctUntilChanged: Container.DistinctUntilChanged<EnumerableContainer>["distinctUntilChanged"] =
@@ -125,10 +110,10 @@ export const distinctUntilChanged: Container.DistinctUntilChanged<EnumerableCont
 export const empty: Container.Empty<EnumerableContainer>["empty"] =
   Observable_empty;
 
-export const encodeUtf8: EncodeUtf8<EnumerableContainer>["encodeUtf8"] =
+export const encodeUtf8: Reactive.EncodeUtf8<EnumerableContainer>["encodeUtf8"] =
   Enumerable_encodeUtf8;
 
-export const enqueue: Enqueue<EnumerableContainer>["enqueue"] =
+export const enqueue: Reactive.Enqueue<EnumerableContainer>["enqueue"] =
   Observable_enqueue;
 
 export const endWith: Container.EndWith<EnumerableContainer>["endWith"] =
@@ -149,13 +134,13 @@ export const everySatisfy: Container.EverySatisfy<EnumerableContainer>["everySat
 export const first: Container.First<EnumerableContainer>["first"] =
   Runnable_first;
 
-export const firstAsync: FirstAsync<EnumerableContainer>["firstAsync"] =
+export const firstAsync: Reactive.FirstAsync<EnumerableContainer>["firstAsync"] =
   Observable_firstAsync;
 
 export const flatMapIterable: Container.FlatMapIterable<EnumerableContainer>["flatMapIterable"] =
   Enumerable_flatMapIterable;
 
-export const flow: Flow<EnumerableContainer>["flow"] = Runnable_flow;
+export const flow: Reactive.Flow<EnumerableContainer>["flow"] = Runnable_flow;
 
 export const forEach: Container.ForEach<EnumerableContainer>["forEach"] =
   Observable_forEach;
@@ -198,7 +183,7 @@ export const keepType: Container.KeepType<EnumerableContainer>["keepType"] =
 
 export const last: Container.Last<EnumerableContainer>["last"] = Runnable_last;
 
-export const lastAsync: LastAsync<EnumerableContainer>["lastAsync"] =
+export const lastAsync: Reactive.LastAsync<EnumerableContainer>["lastAsync"] =
   Observable_lastAsync;
 
 export const map: Container.Map<EnumerableContainer>["map"] = Observable_map;
@@ -221,12 +206,13 @@ export const reduce: Container.Reduce<EnumerableContainer>["reduce"] =
 export const repeat: Container.Repeat<EnumerableContainer>["repeat"] =
   Observable_repeat;
 
-export const retry: Retry<EnumerableContainer>["retry"] = Observable_retry;
+export const retry: Reactive.Retry<EnumerableContainer>["retry"] =
+  Observable_retry;
 
 export const scan: Container.Scan<EnumerableContainer>["scan"] =
   Observable_scan;
 
-export const scanLast: ScanLast<EnumerableContainer>["scanLast"] =
+export const scanLast: Reactive.ScanLast<EnumerableContainer>["scanLast"] =
   Enumerable_scanLast;
 
 export const skipFirst: Container.SkipFirst<EnumerableContainer>["skipFirst"] =
@@ -247,9 +233,10 @@ export const takeLast: Container.TakeLast<EnumerableContainer>["takeLast"] =
 export const takeWhile: Container.TakeWhile<EnumerableContainer>["takeWhile"] =
   Observable_takeWhile;
 
-export const throws: Throws<EnumerableContainer>["throws"] = Observable_throws;
+export const throws: Reactive.Throws<EnumerableContainer>["throws"] =
+  Observable_throws;
 
-export const throwIfEmpty: ThrowIfEmpty<EnumerableContainer>["throwIfEmpty"] =
+export const throwIfEmpty: Reactive.ThrowIfEmpty<EnumerableContainer>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
 export const toReadonlyArray: Container.ToReadonlyArray<EnumerableContainer>["toReadonlyArray"] =

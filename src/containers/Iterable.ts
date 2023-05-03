@@ -1,8 +1,12 @@
 import { Container, IterableContainer } from "../containers.js";
 import ReadonlyArray_toReadonlyArray from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import { Function1 } from "../functions.js";
-import type * as Rx from "../rx.js";
-import { ObservableLike, RunnableLike, ToEnumerable } from "../rx.js";
+import {
+  ObservableLike,
+  PauseableObservableLike,
+  Reactive,
+  RunnableLike,
+} from "../rx.js";
 import {
   DisposableLike,
   QueueableLike,
@@ -18,7 +22,7 @@ import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonl
 export const enumerate: Container.Enumerate<IterableContainer>["enumerate"] =
   Iterable_enumerate;
 
-interface Flow extends Rx.Flow<IterableContainer> {
+interface Flow extends Reactive.Flow<IterableContainer> {
   /** @category Transform */
   flow<T>(
     scheduler: SchedulerLike,
@@ -28,7 +32,7 @@ interface Flow extends Rx.Flow<IterableContainer> {
       readonly delay?: number;
       readonly delayStart?: boolean;
     },
-  ): Function1<Iterable<T>, Rx.PauseableObservableLike<T> & DisposableLike>;
+  ): Function1<Iterable<T>, PauseableObservableLike<T> & DisposableLike>;
 }
 export const flow: Flow["flow"] = Iterable_flow;
 
@@ -38,10 +42,10 @@ export const fromReadonlyArray: Container.FromReadonlyArray<IterableContainer>["
 export const identity: Container.Identity<IterableContainer>["identity"] =
   Container_identity;
 
-export const toEnumerable: ToEnumerable<IterableContainer>["toEnumerable"] =
+export const toEnumerable: Reactive.ToEnumerable<IterableContainer>["toEnumerable"] =
   Iterable_toObservable;
 
-interface ToObservable extends Rx.ToObservable<IterableContainer> {
+interface ToObservable extends Reactive.ToObservable<IterableContainer> {
   /** @category Transform */
   toObservable: <T>(options?: {
     readonly delay?: number;
@@ -53,7 +57,7 @@ export const toObservable: ToObservable["toObservable"] = Iterable_toObservable;
 export const toReadonlyArray: Container.ToReadonlyArray<IterableContainer>["toReadonlyArray"] =
   Iterable_toReadonlyArray;
 
-interface ToRunnable extends Rx.ToRunnable<IterableContainer> {
+interface ToRunnable extends Reactive.ToRunnable<IterableContainer> {
   /** @category Transform */
   toRunnable: <T>(options?: {
     readonly delay?: number;

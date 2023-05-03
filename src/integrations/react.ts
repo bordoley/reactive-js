@@ -30,13 +30,13 @@ import {
   returns,
 } from "../functions.js";
 import {
-  AnimationConfig,
   AnimationGroupEventHandlerLike,
   DisposableStreamOf,
   EnumerableLike,
   ObservableLike,
   PauseableObservableLike,
   PublisherLike,
+  Reactive,
   RunnableLike,
   StreamOf,
   StreamableLike,
@@ -596,7 +596,7 @@ interface UseAnimationGroup {
         TKey,
         Function1<
           TEventType,
-          AnimationConfig<T> | readonly AnimationConfig<T>[]
+          Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
         >
       >
     >,
@@ -633,7 +633,7 @@ interface UseAnimationGroup {
         TKey,
         Function1<
           TEventType,
-          AnimationConfig<T> | readonly AnimationConfig<T>[]
+          Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
         >
       >
     >,
@@ -670,7 +670,7 @@ interface UseAnimationGroup {
         TKey,
         Function1<
           TEventType,
-          AnimationConfig<T> | readonly AnimationConfig<T>[]
+          Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
         >
       >
     >,
@@ -707,7 +707,7 @@ interface UseAnimationGroup {
         TKey,
         Function1<
           TEventType,
-          AnimationConfig<T> | readonly AnimationConfig<T>[]
+          Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
         >
       >
     >,
@@ -738,7 +738,10 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
   animationGroupFactory: Factory<
     ReadonlyObjectMapLike<
       TKey,
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      Function1<
+        TEventType,
+        Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+      >
     >
   >,
   deps: readonly unknown[],
@@ -861,7 +864,7 @@ interface UseAnimation {
   useAnimation<T = number, TEventType = unknown>(
     animationFactory: Function1<
       TEventType,
-      AnimationConfig<T> | readonly AnimationConfig<T>[]
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
     deps: readonly unknown[],
     options: {
@@ -889,7 +892,7 @@ interface UseAnimation {
   useAnimation<T = number, TEventType = unknown>(
     animationFactory: Function1<
       TEventType,
-      AnimationConfig<T> | readonly AnimationConfig<T>[]
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
     deps: readonly unknown[],
     options: {
@@ -917,7 +920,7 @@ interface UseAnimation {
   useAnimation<T = number, TEventType = unknown>(
     animationFactory: Function1<
       TEventType,
-      AnimationConfig<T> | readonly AnimationConfig<T>[]
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
     deps: readonly unknown[],
     options: {
@@ -945,7 +948,7 @@ interface UseAnimation {
   useAnimation<T = number, TEventType = unknown>(
     animationFactory: Function1<
       TEventType,
-      AnimationConfig<T> | readonly AnimationConfig<T>[]
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
     deps: readonly unknown[],
     options?: {
@@ -972,7 +975,7 @@ export const useAnimation: UseAnimation["useAnimation"] = (<
 >(
   animationFactory: Function1<
     TEventType,
-    AnimationConfig<T> | readonly AnimationConfig<T>[]
+    Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
   >,
   deps: readonly unknown[],
   options: {

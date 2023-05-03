@@ -36,11 +36,11 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  MergeAll,
   ObservableContainer,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
+  Reactive,
 } from "../../../rx.js";
 import {
   CollectionLike_count,
@@ -64,7 +64,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableContainer>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>,
   ) => ContainerOperator<C, ContainerOf<C, T>, T>,
-): MergeAll<C>["mergeAll"] => {
+): Reactive.MergeAll<C>["mergeAll"] => {
   const createMergeAllObserver: <T>(
     delegate: ObserverLike<T>,
     capacity: number,

@@ -1,4 +1,4 @@
 import { AsyncIterableContainer } from "../../../containers.js";
-import { ToObservable } from "../../../rx.js";
-declare const AsyncIterable_toObservable: ToObservable<AsyncIterableContainer>["toObservable"];
+import { Reactive } from "../../../rx.js";
+declare const AsyncIterable_toObservable: Reactive.ToObservable<AsyncIterableContainer>["toObservable"];
 export default AsyncIterable_toObservable;
