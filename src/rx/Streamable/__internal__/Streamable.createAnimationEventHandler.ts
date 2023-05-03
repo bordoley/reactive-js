@@ -7,9 +7,9 @@ import {
 } from "../../../__internal__/mixins.js";
 import { Function1, Optional, none, pipe } from "../../../functions.js";
 import {
-  AnimationConfig,
   AnimationEventHandlerLike,
   DisposableStreamOf,
+  Reactive,
   StreamOf,
   StreamableLike_stream,
 } from "../../../rx.js";
@@ -37,7 +37,7 @@ const createAnimationEventHandlerStream: <
 >(
   animation: Function1<
     TEventType,
-    AnimationConfig<T> | readonly AnimationConfig<T>[]
+    Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
   >,
   creationOptions: Optional<{
     readonly mode?: "switching" | "blocking" | "queueing";
@@ -77,7 +77,7 @@ const createAnimationEventHandlerStream: <
             >,
           animation: Function1<
             TEventType,
-            AnimationConfig<T> | readonly AnimationConfig<T>[]
+            Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
           >,
           creationOptions: Optional<{
             readonly mode?: "switching" | "blocking" | "queueing";
@@ -148,7 +148,7 @@ interface CreateAnimationEventHandler {
   >(
     animation: Function1<
       TEventType,
-      AnimationConfig<T> | readonly AnimationConfig<T>[]
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
     options: { readonly mode: "switching"; readonly concurrency?: number },
   ): AnimationEventHandlerLike<TEventType, T>;
@@ -158,7 +158,7 @@ interface CreateAnimationEventHandler {
   >(
     animation: Function1<
       TEventType,
-      AnimationConfig<T> | readonly AnimationConfig<T>[]
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
     options: { readonly mode: "blocking"; readonly concurrency?: number },
   ): AnimationEventHandlerLike<TEventType, T>;
@@ -168,7 +168,7 @@ interface CreateAnimationEventHandler {
   >(
     animation: Function1<
       TEventType,
-      AnimationConfig<T> | readonly AnimationConfig<T>[]
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
     options: {
       readonly mode: "queueing";
@@ -183,7 +183,7 @@ interface CreateAnimationEventHandler {
   >(
     animation: Function1<
       TEventType,
-      AnimationConfig<T> | readonly AnimationConfig<T>[]
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
   ): AnimationEventHandlerLike<TEventType, T>;
 }
@@ -195,7 +195,7 @@ const Streamable_createAnimationEventHandler: CreateAnimationEventHandler["creat
   >(
     animation: Function1<
       TEventType,
-      AnimationConfig<T> | readonly AnimationConfig<T>[]
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";

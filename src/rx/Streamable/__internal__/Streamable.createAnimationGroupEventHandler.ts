@@ -29,11 +29,11 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  AnimationConfig,
   AnimationGroupEventHandlerLike,
   DisposableStreamOf,
   ObservableContainer,
   ObservableLike,
+  Reactive,
   StreamOf,
   StreamableLike_stream,
 } from "../../../rx.js";
@@ -76,7 +76,10 @@ const createAnimationGroupEventHandlerStream: <
 >(
   animationGroup: ReadonlyObjectMapLike<
     TKey,
-    Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+    Function1<
+      TEventType,
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+    >
   >,
   creationOptions: Optional<{
     readonly mode?: "switching" | "blocking" | "queueing";
@@ -128,7 +131,8 @@ const createAnimationGroupEventHandlerStream: <
             TKey,
             Function1<
               TEventType,
-              AnimationConfig<T> | readonly AnimationConfig<T>[]
+              | Reactive.AnimationConfig<T>
+              | readonly Reactive.AnimationConfig<T>[]
             >
           >,
           creationOptions: Optional<{
@@ -155,7 +159,8 @@ const createAnimationGroupEventHandlerStream: <
                 ReadonlyObjectMap_mapWithKey<
                   Function1<
                     TEventType,
-                    AnimationConfig<T> | readonly AnimationConfig<T>[]
+                    | Reactive.AnimationConfig<T>
+                    | readonly Reactive.AnimationConfig<T>[]
                   >,
                   ObservableLike<T>,
                   string
@@ -296,7 +301,10 @@ interface CreateAnimationGroupEventHandler {
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      Function1<
+        TEventType,
+        Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+      >
     >,
     options: { readonly mode: "switching" },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
@@ -307,7 +315,10 @@ interface CreateAnimationGroupEventHandler {
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      Function1<
+        TEventType,
+        Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+      >
     >,
     options: { readonly mode: "blocking" },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
@@ -318,7 +329,10 @@ interface CreateAnimationGroupEventHandler {
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      Function1<
+        TEventType,
+        Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+      >
     >,
     options: {
       readonly mode: "queueing";
@@ -333,7 +347,10 @@ interface CreateAnimationGroupEventHandler {
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      Function1<
+        TEventType,
+        Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+      >
     >,
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
 }
@@ -345,7 +362,10 @@ const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHand
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<TEventType, AnimationConfig<T> | readonly AnimationConfig<T>[]>
+      Function1<
+        TEventType,
+        Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+      >
     >,
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";

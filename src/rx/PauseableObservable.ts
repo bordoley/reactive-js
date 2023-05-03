@@ -1,11 +1,10 @@
 import { Container } from "../containers.js";
 import { Function1 } from "../functions.js";
 import {
-  DispatchTo,
-  Enqueue,
   ObservableLike,
   PauseableObservableContainer,
   PauseableObservableLike,
+  Reactive,
 } from "../rx.js";
 import { DispatcherLike } from "../util.js";
 import PauseableObservable_dispatchTo from "./PauseableObservable/__internal__/PauseableObservable.dispatchTo.js";
@@ -16,9 +15,9 @@ import PauseableObservable_map from "./PauseableObservable/__internal__/Pauseabl
 import PauseableObservable_pick from "./PauseableObservable/__internal__/PauseableObservable.pick.js";
 import PauseableObservable_sinkInto from "./PauseableObservable/__internal__/PauseableObservable.sinkInto.js";
 
-export const dispatchTo: DispatchTo<PauseableObservableContainer>["dispatchTo"] =
+export const dispatchTo: Reactive.DispatchTo<PauseableObservableContainer>["dispatchTo"] =
   PauseableObservable_dispatchTo;
-export const enqueue: Enqueue<PauseableObservableContainer>["enqueue"] =
+export const enqueue: Reactive.Enqueue<PauseableObservableContainer>["enqueue"] =
   PauseableObservable_enqueue;
 export const forEach: Container.ForEach<PauseableObservableContainer>["forEach"] =
   PauseableObservable_forEach;

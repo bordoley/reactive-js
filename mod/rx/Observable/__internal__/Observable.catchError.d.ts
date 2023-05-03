@@ -1,3 +1,3 @@
-import { CatchError, ObservableContainer } from "../../../rx.js";
-declare const Observable_catchError: CatchError<ObservableContainer>["catchError"];
+import { ObservableContainer, Reactive } from "../../../rx.js";
+declare const Observable_catchError: Reactive.CatchError<ObservableContainer>["catchError"];
 export default Observable_catchError;

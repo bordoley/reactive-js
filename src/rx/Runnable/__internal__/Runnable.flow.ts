@@ -1,8 +1,8 @@
 import { pipe } from "../../../functions.js";
 import {
-  Flow,
   ObservableContainer,
   ObservableLike,
+  Reactive,
   RunnableContainer,
   RunnableLike,
 } from "../../../rx.js";
@@ -24,7 +24,7 @@ import Observable_subscribeOn from "../../Observable/__internal__/Observable.sub
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
-const Runnable_flow: Flow<RunnableContainer>["flow"] =
+const Runnable_flow: Reactive.Flow<RunnableContainer>["flow"] =
   <T>(
     scheduler: SchedulerLike,
     options?: {

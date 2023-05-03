@@ -113,7 +113,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `configs` | [`AnimationConfig`](rx.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.md#animationconfig)<`T`\>[] |
+| `configs` | [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[] |
 
 #### Returns
 

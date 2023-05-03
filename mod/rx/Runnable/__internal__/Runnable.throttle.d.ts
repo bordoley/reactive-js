@@ -1,3 +1,3 @@
-import { RunnableContainer, Throttle } from "../../../rx.js";
-declare const Runnable_throttle: Throttle<RunnableContainer>["throttle"];
+import { Reactive, RunnableContainer } from "../../../rx.js";
+declare const Runnable_throttle: Reactive.Throttle<RunnableContainer>["throttle"];
 export default Runnable_throttle;

@@ -2,12 +2,7 @@ import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../../functions.js";
-import {
-  Animate,
-  AnimationConfig,
-  RunnableContainer,
-  RunnableLike,
-} from "../../../rx.js";
+import { Reactive, RunnableContainer, RunnableLike } from "../../../rx.js";
 import Observable_concatObservables from "./Observable.concatObservables.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_keyFrame from "./Observable.keyFrame.js";
@@ -21,7 +16,7 @@ const scale = (start: number, end: number) => (v: number) => {
 };
 
 const parseAnimationConfig = <T = number>(
-  config: AnimationConfig<T>,
+  config: Reactive.AnimationConfig<T>,
 ): RunnableLike<T> =>
   config.type === "loop"
     ? pipe(
@@ -50,10 +45,12 @@ const parseAnimationConfig = <T = number>(
           : (identity as ContainerOperator<RunnableContainer, number, T>),
       );
 
-const Observable_animate: Animate<RunnableContainer>["animate"] = <T = number>(
-  config: AnimationConfig<T> | readonly AnimationConfig<T>[],
+const Observable_animate: Reactive.Animate<RunnableContainer>["animate"] = <
+  T = number,
+>(
+  config: Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[],
 ) => {
-  const configs = isReadonlyArray<AnimationConfig<T>>(config)
+  const configs = isReadonlyArray<Reactive.AnimationConfig<T>>(config)
     ? config
     : [config];
   const observables = pipe(configs, ReadonlyArray_map(parseAnimationConfig));

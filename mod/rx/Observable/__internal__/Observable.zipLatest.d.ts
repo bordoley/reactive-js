@@ -1,3 +1,3 @@
-import { ObservableContainer, ZipLatest } from "../../../rx.js";
-declare const Observable_zipLatest: ZipLatest<ObservableContainer>["zipLatest"];
+import { ObservableContainer, Reactive } from "../../../rx.js";
+declare const Observable_zipLatest: Reactive.ZipLatest<ObservableContainer>["zipLatest"];
 export default Observable_zipLatest;

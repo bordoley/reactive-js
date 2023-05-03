@@ -19,11 +19,11 @@ import {
   pipe,
 } from "../../../functions.js";
 import {
-  CatchError,
   ObservableContainer,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
+  Reactive,
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
@@ -36,7 +36,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
   ) => ContainerOperator<C, T, T>,
-): CatchError<C>["catchError"] => {
+): Reactive.CatchError<C>["catchError"] => {
   const createCatchErrorObserver = (<T>() => {
     return createInstanceFactory(
       mix(
@@ -87,7 +87,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer>(
       createCatchErrorObserver,
       partial(errorHandler),
       lift,
-    )) as CatchError<C>["catchError"];
+    )) as Reactive.CatchError<C>["catchError"];
 };
 
 export default HigherOrderObservable_catchError;

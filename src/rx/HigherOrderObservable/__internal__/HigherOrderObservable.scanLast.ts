@@ -11,7 +11,7 @@ import {
   ObservableContainer,
   ObservableLike_observe,
   ObserverLike,
-  ScanLast,
+  Reactive,
 } from "../../../rx.js";
 import { EventListenerLike_notify } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
@@ -24,7 +24,7 @@ import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 const HigherOrderObservable_scanLast =
   <C extends ObservableContainer>(
     createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ContainerOf<C, T>,
-  ): ScanLast<C>["scanLast"] =>
+  ): Reactive.ScanLast<C>["scanLast"] =>
   <T, TAcc>(
     scanner: Function2<TAcc, T, ContainerOf<C, TAcc>>,
     initialValue: Factory<TAcc>,

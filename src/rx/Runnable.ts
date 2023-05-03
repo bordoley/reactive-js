@@ -4,46 +4,7 @@ import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.
 import Optional_toObservable from "../containers/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { Factory, Function1, Optional, Updater } from "../functions.js";
-import {
-  Animate,
-  BackpressureStrategy,
-  CatchError,
-  CombineLatest,
-  CurrentTime,
-  DecodeWithCharset,
-  Defer,
-  DispatchTo,
-  EncodeUtf8,
-  Enqueue,
-  Exhaust,
-  ExhaustMap,
-  FirstAsync,
-  Flow,
-  ForkMerge,
-  ForkZipLatest,
-  LastAsync,
-  Merge,
-  MergeAll,
-  MergeMap,
-  MergeWith,
-  Retry,
-  RunnableContainer,
-  RunnableLike,
-  ScanLast,
-  ScanMany,
-  SwitchAll,
-  SwitchMap,
-  TakeUntil,
-  Throttle,
-  ThrowIfEmpty,
-  Timeout,
-  ToEnumerable,
-  WithCurrentTime,
-  WithLatestFrom,
-  ZipLatest,
-  ZipWithLatestFrom,
-} from "../rx.js";
-import type * as Rx from "../rx.js";
+import { Reactive, RunnableContainer, RunnableLike } from "../rx.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -122,19 +83,19 @@ import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 
-export const animate: Animate<RunnableContainer>["animate"] =
+export const animate: Reactive.Animate<RunnableContainer>["animate"] =
   Observable_animate;
 
-export const backpressureStrategy: BackpressureStrategy<RunnableContainer>["backpressureStrategy"] =
+export const backpressureStrategy: Reactive.BackpressureStrategy<RunnableContainer>["backpressureStrategy"] =
   Observable_backpressureStrategy;
 
 export const buffer: Container.Buffer<RunnableContainer>["buffer"] =
   Observable_buffer;
 
-export const catchError: CatchError<RunnableContainer>["catchError"] =
+export const catchError: Reactive.CatchError<RunnableContainer>["catchError"] =
   Runnable_catchError;
 
-export const combineLatest: CombineLatest<RunnableContainer>["combineLatest"] =
+export const combineLatest: Reactive.CombineLatest<RunnableContainer>["combineLatest"] =
   Observable_combineLatest;
 
 /**
@@ -157,15 +118,15 @@ export const concatWith: Container.ConcatWith<RunnableContainer>["concatWith"] =
 export const contains: Container.Contains<RunnableContainer>["contains"] =
   Runnable_contains;
 
-export const currentTime: CurrentTime<RunnableContainer>["currentTime"] =
+export const currentTime: Reactive.CurrentTime<RunnableContainer>["currentTime"] =
   Observable_currentTime;
 
-export const decodeWithCharset: DecodeWithCharset<RunnableContainer>["decodeWithCharset"] =
+export const decodeWithCharset: Reactive.DecodeWithCharset<RunnableContainer>["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-export const defer: Defer<RunnableContainer>["defer"] = Runnable_defer;
+export const defer: Reactive.Defer<RunnableContainer>["defer"] = Runnable_defer;
 
-export const dispatchTo: DispatchTo<RunnableContainer>["dispatchTo"] =
+export const dispatchTo: Reactive.DispatchTo<RunnableContainer>["dispatchTo"] =
   Observable_dispatchTo;
 
 export const distinctUntilChanged: Container.DistinctUntilChanged<RunnableContainer>["distinctUntilChanged"] =
@@ -179,10 +140,10 @@ interface Empty extends Container.Empty<RunnableContainer> {
 }
 export const empty: Empty["empty"] = Observable_empty;
 
-export const encodeUtf8: EncodeUtf8<RunnableContainer>["encodeUtf8"] =
+export const encodeUtf8: Reactive.EncodeUtf8<RunnableContainer>["encodeUtf8"] =
   Runnable_encodeUtf8;
 
-export const enqueue: Enqueue<RunnableContainer>["enqueue"] =
+export const enqueue: Reactive.Enqueue<RunnableContainer>["enqueue"] =
   Observable_enqueue;
 
 export const endWith: Container.EndWith<RunnableContainer>["endWith"] =
@@ -191,21 +152,22 @@ export const endWith: Container.EndWith<RunnableContainer>["endWith"] =
 export const everySatisfy: Container.EverySatisfy<RunnableContainer>["everySatisfy"] =
   Runnable_everySatisfy;
 
-export const exhaust: Exhaust<RunnableContainer>["exhaust"] = Runnable_exhaust;
+export const exhaust: Reactive.Exhaust<RunnableContainer>["exhaust"] =
+  Runnable_exhaust;
 
-export const exhaustMap: ExhaustMap<RunnableContainer>["exhaustMap"] =
+export const exhaustMap: Reactive.ExhaustMap<RunnableContainer>["exhaustMap"] =
   Runnable_exhaustMap;
 
 export const first: Container.First<RunnableContainer>["first"] =
   Runnable_first;
 
-export const firstAsync: FirstAsync<RunnableContainer>["firstAsync"] =
+export const firstAsync: Reactive.FirstAsync<RunnableContainer>["firstAsync"] =
   Observable_firstAsync;
 
 export const flatMapIterable: Container.FlatMapIterable<RunnableContainer>["flatMapIterable"] =
   Runnable_flatMapIterable;
 
-export const flow: Flow<RunnableContainer>["flow"] = Runnable_flow;
+export const flow: Reactive.Flow<RunnableContainer>["flow"] = Runnable_flow;
 
 export const forEach: Container.ForEach<RunnableContainer>["forEach"] =
   Observable_forEach;
@@ -213,14 +175,14 @@ export const forEach: Container.ForEach<RunnableContainer>["forEach"] =
 export const forkConcat: Container.ForkConcat<RunnableContainer>["forkConcat"] =
   Observable_forkConcat as Container.ForkConcat<RunnableContainer>["forkConcat"];
 
-export const forkMerge: ForkMerge<RunnableContainer>["forkMerge"] =
-  Observable_forkMerge as ForkMerge<RunnableContainer>["forkMerge"];
+export const forkMerge: Reactive.ForkMerge<RunnableContainer>["forkMerge"] =
+  Observable_forkMerge as Reactive.ForkMerge<RunnableContainer>["forkMerge"];
 
 export const forkZip: Container.ForkZip<RunnableContainer>["forkZip"] =
   Observable_forkZip as Container.ForkZip<RunnableContainer>["forkZip"];
 
-export const forkZipLatest: ForkZipLatest<RunnableContainer>["forkZipLatest"] =
-  Observable_forkZipLatest as ForkZipLatest<RunnableContainer>["forkZipLatest"];
+export const forkZipLatest: Reactive.ForkZipLatest<RunnableContainer>["forkZipLatest"] =
+  Observable_forkZipLatest as Reactive.ForkZipLatest<RunnableContainer>["forkZipLatest"];
 
 interface FromEnumeratorFactory
   extends Container.FromEnumeratorFactory<RunnableContainer> {
@@ -316,7 +278,7 @@ export const keepType: Container.KeepType<RunnableContainer>["keepType"] =
 
 export const last: Container.Last<RunnableContainer>["last"] = Runnable_last;
 
-export const lastAsync: LastAsync<RunnableContainer>["lastAsync"] =
+export const lastAsync: Reactive.LastAsync<RunnableContainer>["lastAsync"] =
   Observable_lastAsync;
 
 export const noneSatisfy: Container.NoneSatisfy<RunnableContainer>["noneSatisfy"] =
@@ -327,16 +289,17 @@ export const map: Container.Map<RunnableContainer>["map"] = Observable_map;
 export const mapTo: Container.MapTo<RunnableContainer>["mapTo"] =
   Observable_mapTo;
 
-export const merge: Merge<RunnableContainer>["merge"] = Observable_merge;
+export const merge: Reactive.Merge<RunnableContainer>["merge"] =
+  Observable_merge;
 
-export const mergeAll: MergeAll<RunnableContainer>["mergeAll"] =
+export const mergeAll: Reactive.MergeAll<RunnableContainer>["mergeAll"] =
   Runnable_mergeAll;
 
-export const mergeMap: MergeMap<RunnableContainer>["mergeMap"] =
+export const mergeMap: Reactive.MergeMap<RunnableContainer>["mergeMap"] =
   Runnable_mergeMap;
 
-export const mergeWith: MergeWith<RunnableContainer>["mergeWith"] =
-  Observable_mergeWith as MergeWith<RunnableContainer>["mergeWith"];
+export const mergeWith: Reactive.MergeWith<RunnableContainer>["mergeWith"] =
+  Observable_mergeWith as Reactive.MergeWith<RunnableContainer>["mergeWith"];
 
 export const pairwise: Container.Pairwise<RunnableContainer>["pairwise"] =
   Observable_pairwise;
@@ -349,16 +312,17 @@ export const reduce: Container.Reduce<RunnableContainer>["reduce"] =
 export const repeat: Container.Repeat<RunnableContainer>["repeat"] =
   Observable_repeat;
 
-export const retry: Retry<RunnableContainer>["retry"] = Observable_retry;
+export const retry: Reactive.Retry<RunnableContainer>["retry"] =
+  Observable_retry;
 
 export const run = Runnable_run;
 
 export const scan: Container.Scan<RunnableContainer>["scan"] = Observable_scan;
 
-export const scanLast: ScanLast<RunnableContainer>["scanLast"] =
+export const scanLast: Reactive.ScanLast<RunnableContainer>["scanLast"] =
   Runnable_scanLast;
 
-export const scanMany: ScanMany<RunnableContainer>["scanMany"] =
+export const scanMany: Reactive.ScanMany<RunnableContainer>["scanMany"] =
   Runnable_scanMany;
 
 export const skipFirst: Container.SkipFirst<RunnableContainer>["skipFirst"] =
@@ -370,10 +334,10 @@ export const someSatisfy: Container.SomeSatisfy<RunnableContainer>["someSatisfy"
 export const startWith: Container.StartWith<RunnableContainer>["startWith"] =
   Observable_startWith;
 
-export const switchAll: SwitchAll<RunnableContainer>["switchAll"] =
+export const switchAll: Reactive.SwitchAll<RunnableContainer>["switchAll"] =
   Runnable_switchAll;
 
-export const switchMap: SwitchMap<RunnableContainer>["switchMap"] =
+export const switchMap: Reactive.SwitchMap<RunnableContainer>["switchMap"] =
   Runnable_switchMap;
 
 export const takeFirst: Container.TakeFirst<RunnableContainer>["takeFirst"] =
@@ -382,19 +346,19 @@ export const takeFirst: Container.TakeFirst<RunnableContainer>["takeFirst"] =
 export const takeLast: Container.TakeLast<RunnableContainer>["takeLast"] =
   Observable_takeLast;
 
-export const takeUntil: TakeUntil<RunnableContainer>["takeUntil"] =
+export const takeUntil: Reactive.TakeUntil<RunnableContainer>["takeUntil"] =
   Observable_takeUntil;
 
 export const takeWhile: Container.TakeWhile<RunnableContainer>["takeWhile"] =
   Observable_takeWhile;
 
-export const throttle: Throttle<RunnableContainer>["throttle"] =
+export const throttle: Reactive.Throttle<RunnableContainer>["throttle"] =
   Runnable_throttle;
 
-export const throwIfEmpty: ThrowIfEmpty<RunnableContainer>["throwIfEmpty"] =
+export const throwIfEmpty: Reactive.ThrowIfEmpty<RunnableContainer>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-interface Throws extends Rx.Throws<RunnableContainer> {
+interface Throws extends Reactive.Throws<RunnableContainer> {
   /**
    * @category Constructor
    */
@@ -405,29 +369,29 @@ interface Throws extends Rx.Throws<RunnableContainer> {
 }
 export const throws: Throws["throws"] = Observable_throws;
 
-export const timeout: Timeout<RunnableContainer>["timeout"] =
+export const timeout: Reactive.Timeout<RunnableContainer>["timeout"] =
   Observable_timeout;
 
-export const toEnumerable: ToEnumerable<RunnableContainer>["toEnumerable"] =
+export const toEnumerable: Reactive.ToEnumerable<RunnableContainer>["toEnumerable"] =
   Observable_toEnumerable;
 
 export const toReadonlyArray: Container.ToReadonlyArray<RunnableContainer>["toReadonlyArray"] =
   Runnable_toReadonlyArray;
 
-export const withCurrentTime: WithCurrentTime<RunnableContainer>["withCurrentTime"] =
+export const withCurrentTime: Reactive.WithCurrentTime<RunnableContainer>["withCurrentTime"] =
   Observable_withCurrentTime;
 
-export const withLatestFrom: WithLatestFrom<RunnableContainer>["withLatestFrom"] =
-  Observable_withLatestFrom as WithLatestFrom<RunnableContainer>["withLatestFrom"];
+export const withLatestFrom: Reactive.WithLatestFrom<RunnableContainer>["withLatestFrom"] =
+  Observable_withLatestFrom as Reactive.WithLatestFrom<RunnableContainer>["withLatestFrom"];
 
 export const zip: Container.Zip<RunnableContainer>["zip"] =
   Observable_zip as Container.Zip<RunnableContainer>["zip"];
 
-export const zipLatest: ZipLatest<RunnableContainer>["zipLatest"] =
-  Observable_zipLatest as ZipLatest<RunnableContainer>["zipLatest"];
+export const zipLatest: Reactive.ZipLatest<RunnableContainer>["zipLatest"] =
+  Observable_zipLatest as Reactive.ZipLatest<RunnableContainer>["zipLatest"];
 
 export const zipWith: Container.ZipWith<RunnableContainer>["zipWith"] =
   Observable_zipWith as Container.ZipWith<RunnableContainer>["zipWith"];
 
-export const zipWithLatestFrom: ZipWithLatestFrom<RunnableContainer>["zipWithLatestFrom"] =
-  Observable_zipWithLatestFrom as ZipWithLatestFrom<RunnableContainer>["zipWithLatestFrom"];
+export const zipWithLatestFrom: Reactive.ZipWithLatestFrom<RunnableContainer>["zipWithLatestFrom"] =
+  Observable_zipWithLatestFrom as Reactive.ZipWithLatestFrom<RunnableContainer>["zipWithLatestFrom"];

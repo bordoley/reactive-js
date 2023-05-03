@@ -1,10 +1,10 @@
 import { AsyncIterableContainer } from "../../../containers.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
 import {
-  Flow,
   ObservableContainer,
   ObservableLike,
   ObserverLike,
+  Reactive,
 } from "../../../rx.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
@@ -25,7 +25,7 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 
-const AsyncIterable_flow: Flow<AsyncIterableContainer>["flow"] =
+const AsyncIterable_flow: Reactive.Flow<AsyncIterableContainer>["flow"] =
   <T>(
     scheduler: SchedulerLike,
     options?: {

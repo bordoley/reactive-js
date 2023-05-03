@@ -1,3 +1,3 @@
-import { ObservableContainer, SwitchAll } from "../../../rx.js";
-declare const Observable_switchAll: SwitchAll<ObservableContainer>["switchAll"];
+import { ObservableContainer, Reactive } from "../../../rx.js";
+declare const Observable_switchAll: Reactive.SwitchAll<ObservableContainer>["switchAll"];
 export default Observable_switchAll;

@@ -1,6 +1,6 @@
 import { ContainerOf, ContainerOperator } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
-import { MergeAll, ObservableContainer, ObserverLike } from "../../../rx.js";
+import { ObservableContainer, ObserverLike, Reactive } from "../../../rx.js";
 declare const HigherOrderObservable_mergeAll: <C extends ObservableContainer>(lift: <T>(f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>) => ContainerOperator<C, ContainerOf<C, T>, T>) => <T_1>(options?: {
     readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
     readonly capacity?: number | undefined;

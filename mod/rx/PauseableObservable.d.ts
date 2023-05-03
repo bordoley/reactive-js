@@ -1,9 +1,9 @@
 import { Container } from "../containers.js";
 import { Function1 } from "../functions.js";
-import { DispatchTo, Enqueue, ObservableLike, PauseableObservableContainer, PauseableObservableLike } from "../rx.js";
+import { ObservableLike, PauseableObservableContainer, PauseableObservableLike, Reactive } from "../rx.js";
 import { DispatcherLike } from "../util.js";
-export declare const dispatchTo: DispatchTo<PauseableObservableContainer>["dispatchTo"];
-export declare const enqueue: Enqueue<PauseableObservableContainer>["enqueue"];
+export declare const dispatchTo: Reactive.DispatchTo<PauseableObservableContainer>["dispatchTo"];
+export declare const enqueue: Reactive.Enqueue<PauseableObservableContainer>["enqueue"];
 export declare const forEach: Container.ForEach<PauseableObservableContainer>["forEach"];
 export declare const keep: Container.Keep<PauseableObservableContainer>["keep"];
 export declare const map: Container.Map<PauseableObservableContainer>["map"];
