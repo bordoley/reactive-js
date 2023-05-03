@@ -3,12 +3,11 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/util.js";
 import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../functions.js";
-import { MulticastObservableLike_buffer, ObservableLike_observe, } from "../../rx.js";
+import { MulticastObservableLike_buffer, ObservableLike_observe, StreamableLike_stream, } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
-import { StreamableLike_stream } from "../../streaming.js";
-import * as Stream from "../../streaming/Stream.js";
-import Stream_delegatingMixin from "../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
-import * as Streamable from "../../streaming/Streamable.js";
+import * as Stream from "../../rx/Stream.js";
+import Stream_delegatingMixin from "../../rx/Stream/__internal__/Stream.delegatingMixin.js";
+import * as Streamable from "../../rx/Streamable.js";
 import { QueueableLike_enqueue, } from "../../util.js";
 import Delegating_mixin from "../../util/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../util/Disposable.js";

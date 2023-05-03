@@ -19,9 +19,9 @@ import {
   ObservableLike_observe,
   ObserverLike,
   PauseableObservableLike,
+  StreamLike,
 } from "../../../rx.js";
-import { StreamLike } from "../../../streaming.js";
-import Stream_create from "../../../streaming/Stream/__internal__/Stream.create.js";
+import Stream_create from "../../../rx/Stream/__internal__/Stream.create.js";
 import {
   DisposableLike,
   EventListenerLike_notify,
