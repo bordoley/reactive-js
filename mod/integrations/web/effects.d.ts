@@ -1,5 +1,5 @@
+import { ReadonlyObjectMapLike } from "../../containers.js";
 import { Optional, SideEffect1 } from "../../functions.js";
-import { ReadonlyObjectMapLike } from "../../keyed-containers.js";
 import { EventSourceLike } from "../../util.js";
 import { CSSStyleKey } from "../web.js";
 interface Animate {

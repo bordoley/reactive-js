@@ -57,7 +57,7 @@ import Measure from "./measure";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
 import * as Scheduler from "@reactive-js/core/util/Scheduler";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
-import { ReadonlyObjectMapLike } from "@reactive-js/core/keyed-containers";
+import { ReadonlyObjectMapLike } from "@reactive-js/core/containers";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 
 const CacheInner = ({ cache }: { cache: StreamOf<CacheLike<string>> }) => {

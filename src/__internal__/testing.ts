@@ -1,3 +1,4 @@
+import ReadonlyArray_getLength from "../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Equality,
   Factory,
@@ -12,7 +13,6 @@ import {
   raise,
   strictEquality,
 } from "../functions.js";
-import ReadonlyArray_getLength from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { __DENO__ } from "./constants.js";
 
 export const DescribeType = 1;

@@ -12,6 +12,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
+  ReadonlyObjectMapLike,
 } from "../containers.js";
 import {
   Factory,
@@ -28,7 +29,6 @@ import {
   raiseError,
   returns,
 } from "../functions.js";
-import { ReadonlyObjectMapLike } from "../keyed-containers.js";
 import {
   AnimationConfig,
   AnimationGroupEventHandlerLike,

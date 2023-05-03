@@ -1,3 +1,5 @@
+import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
+import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import {
   Factory,
   Function1,
@@ -8,8 +10,6 @@ import {
   isFunction,
   pipe,
 } from "../../../functions.js";
-import ReadonlyArray_forEach from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../util.js";
 
 interface DisposableUsingAsync {

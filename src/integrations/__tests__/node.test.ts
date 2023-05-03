@@ -7,6 +7,7 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
+import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import {
   Optional,
   bindMethod,
@@ -15,7 +16,6 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
-import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import * as Observable from "../../rx/Observable.js";
 import * as PauseableObservable from "../../rx/PauseableObservable.js";
 import {

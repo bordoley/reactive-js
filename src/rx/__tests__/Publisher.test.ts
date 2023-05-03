@@ -4,8 +4,8 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
+import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { bindMethod, pipe } from "../../functions.js";
-import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import { PublisherLike_observerCount } from "../../rx.js";
 import {
   DisposableLike_dispose,

@@ -10,9 +10,14 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
-import { EnumeratorLike } from "../../../containers.js";
+import { EnumeratorLike, ReadonlyObjectMapLike } from "../../../containers.js";
 import Enumerator_map from "../../../containers/Enumerator/__internal__/Enumerator.map.js";
 import Enumerator_toReadonlyArray from "../../../containers/Enumerator/__internal__/Enumerator.toReadonlyArray.js";
+import ReadonlyObjectMap_keys from "../../../containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
+import ReadonlyObjectMap_map from "../../../containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.map.js";
+import ReadonlyObjectMap_mapWithKey from "../../../containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
+import ReadonlyObjectMap_reduce from "../../../containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
+import ReadonlyObjectMap_values from "../../../containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 import {
   Function1,
   Optional,
@@ -23,12 +28,6 @@ import {
   returns,
   unsafeCast,
 } from "../../../functions.js";
-import { ReadonlyObjectMapLike } from "../../../keyed-containers.js";
-import ReadonlyObjectMap_keys from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
-import ReadonlyObjectMap_map from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.map.js";
-import ReadonlyObjectMap_mapWithKey from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
-import ReadonlyObjectMap_reduce from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
-import ReadonlyObjectMap_values from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 import {
   AnimationConfig,
   AnimationGroupEventHandlerLike,

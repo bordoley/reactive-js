@@ -4,8 +4,8 @@ import {
   __WindowLocationLike_push as WindowLocationLike_push,
   __WindowLocationLike_replace as WindowLocationLike_replace,
 } from "../__internal__/symbols.js";
+import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { Updater, error, newInstance, pipe } from "../functions.js";
-import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
 import { MulticastObservableLike, ObservableLike } from "../rx.js";
 import * as Observable from "../rx/Observable.js";
 import { DisposableLike_dispose, QueueableLike_enqueue } from "../util.js";

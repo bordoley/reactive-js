@@ -9,8 +9,8 @@ import {
 import { __TakeLastObserver_takeLastQueue } from "../../../__internal__/symbols.js";
 import { IndexedQueueLike, QueueLike } from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
+import ReadonlyArray_toObservable from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { invoke, none, partial, pipe } from "../../../functions.js";
-import ReadonlyArray_toObservable from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   ObservableContainer,
   ObservableLike_observe,

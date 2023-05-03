@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`KeyedContainer`](keyed_containers.KeyedContainer.md)
+- [`KeyedContainer`](containers.KeyedContainer-1.md)
 
   ↳ **`DictionaryContainer`**
 
@@ -35,4 +35,4 @@ ___
 
 #### Overrides
 
-[KeyedContainer](keyed_containers.KeyedContainer.md).[[___KeyedContainer_TKey]](keyed_containers.KeyedContainer.md#[___keyedcontainer_tkey])
+[KeyedContainer](containers.KeyedContainer-1.md).[[___KeyedContainer_TKey]](containers.KeyedContainer-1.md#[___keyedcontainer_tkey])

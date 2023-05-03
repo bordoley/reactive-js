@@ -8,15 +8,10 @@ import {
 } from "@reactive-js/core/functions";
 import {
   Container,
-  FromReadonlyArray,
-  Keep,
-  Map,
   ReadonlyArrayContainer,
-  Scan,
-  ToReadonlyArray,
 } from "@reactive-js/core/containers";
 import * as Enumerable from "@reactive-js/core/rx/Enumerable";
-import * as ReadonlyArray from "@reactive-js/core/keyed-containers/ReadonlyArray";
+import * as ReadonlyArray from "@reactive-js/core/containers/ReadonlyArray";
 import * as Runnable from "@reactive-js/core/rx/Runnable";
 
 /**
@@ -43,7 +38,7 @@ export const createArray = (n: number): ReadonlyArray<number> => {
 
 const createMapPerfTest = <C extends Container>(
   name: string,
-  m: FromReadonlyArray<C> & Map<C> & ToReadonlyArray<C>,
+  m: Container.FromReadonlyArray<C> & Container.Map<C> & Container.ToReadonlyArray<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(src, m.fromReadonlyArray(), m.map(increment), m.toReadonlyArray()),
@@ -63,7 +58,7 @@ export const map = (n: number) =>
 
 const createFilterMapFusionPerfTest = <C extends Container>(
   name: string,
-  m: FromReadonlyArray<C> & Keep<C> & Map<C> & ToReadonlyArray<C>,
+  m: Container.FromReadonlyArray<C> & Container.Keep<C> & Container.Map<C> & Container.ToReadonlyArray<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(
@@ -99,7 +94,7 @@ export const filterMapFusion = (n: number) =>
 
 const createFilterMapReducePerfTest = <C extends Container>(
   name: string,
-  m: FromReadonlyArray<C> & Keep<C> & Map<C> & ToReadonlyArray<C>,
+  m: Container.FromReadonlyArray<C> & Container.Keep<C> & Container.Map<C> & Container.ToReadonlyArray<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(
@@ -133,7 +128,7 @@ export const filterMapReduce = (n: number) =>
 
 const createScanReducePerfTest = <C extends Container>(
   name: string,
-  m: FromReadonlyArray<C> & Map<C> & Scan<C> & ToReadonlyArray<C>,
+  m: Container.FromReadonlyArray<C> & Container.Map<C> & Container.Scan<C> & Container.ToReadonlyArray<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(

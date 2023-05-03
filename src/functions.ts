@@ -1,5 +1,5 @@
 import { __DEV__ } from "./__internal__/constants.js";
-import ReadonlyArray_getLength from "./keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_getLength from "./containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 
 export type Constructor<T> = new () => T;
 export type Constructor1<TA, T> = new (a: TA) => T;

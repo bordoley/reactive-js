@@ -1,8 +1,8 @@
 /// <reference types="./Observable.test.d.ts" />
 
 import { describe, expectArrayEquals, expectEquals, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
+import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import { pipe, raise } from "../../functions.js";
-import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
 import * as Streamable from "../../rx/Streamable.js";
 import { DisposableLike_error, QueueableLike_enqueue, VirtualTimeSchedulerLike_run, } from "../../util.js";
 import * as Scheduler from "../../util/Scheduler.js";

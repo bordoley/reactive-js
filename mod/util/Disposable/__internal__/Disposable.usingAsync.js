@@ -1,8 +1,8 @@
 /// <reference types="./Disposable.usingAsync.d.ts" />
 
+import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
+import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { invoke, isFunction, pipe, } from "../../../functions.js";
-import ReadonlyArray_forEach from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { DisposableLike_dispose } from "../../../util.js";
 const Disposable_usingAsync = ((...factoryOrDisposables) => async (f) => {
     const disposables = pipe(factoryOrDisposables, ReadonlyArray_map(factoryOrDisposable => isFunction(factoryOrDisposable)

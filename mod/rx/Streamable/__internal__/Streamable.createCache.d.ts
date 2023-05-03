@@ -1,5 +1,5 @@
+import { ReadonlyObjectMapLike } from "../../../containers.js";
 import { Optional } from "../../../functions.js";
-import { ReadonlyObjectMapLike } from "../../../keyed-containers.js";
 import { CacheLike, ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../util.js";
 declare const Streamable_createCache: <T>(persistentStore: Optional<{

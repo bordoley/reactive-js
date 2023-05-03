@@ -31,9 +31,10 @@ import {
   Container_T,
   Container_type,
   EnumeratorLike,
+  KeyedContainer,
+  KeyedContainer_TKey,
 } from "./containers.js";
 import { Optional, SideEffect1 } from "./functions.js";
-import { KeyedContainer, KeyedContainer_TKey } from "./keyed-containers.js";
 
 export {
   AssociativeCollectionLike_keys,
